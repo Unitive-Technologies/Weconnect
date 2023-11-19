@@ -4,13 +4,13 @@ import { Navigate } from "react-router-dom";
 // // Profile
 import UserProfile from "../pages/Authentication/user-profile";
 
-// // Authentication related pages
+// Authentication related pages
 import Login from "../pages/Authentication/Login";
 import Logout from "../pages/Authentication/Logout";
 import Register from "../pages/Authentication/Register";
 import ForgetPwd from "../pages/Authentication/ForgetPassword";
 
-// // Dashboard
+// Dashboard
 import Dashboard from "../pages/Dashboard/index";
 
 const authProtectedRoutes = [

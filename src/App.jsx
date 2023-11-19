@@ -15,46 +15,23 @@ import Authmiddleware from "./routes/route";
 
 // layouts Format
 import VerticalLayout from "./components/VerticalLayout/";
-import HorizontalLayout from "./components/HorizontalLayout/";
 import NonAuthLayout from "./components/NonAuthLayout";
 
 // Import scss
 import "./assets/scss/theme.scss";
-
-// Import Firebase Configuration file
-// import { initFirebaseBackend } from "./helpers/firebase_helper"
 
 import fakeBackend from "/src/helpers/AuthType/fakeBackend";
 
 // Activating fake backend
 fakeBackend();
 
-// const firebaseConfig = {
-//   apiKey: import.meta.env.VITE_APP_APIKEY,
-//   authDomain: import.meta.env.VITE_APP_AUTHDOMAIN,
-//   databaseURL: import.meta.env.VITE_APP_DATABASEURL,
-//   projectId: import.meta.env.VITE_APP_PROJECTID,
-//   storageBucket: import.meta.env.VITE_APP_STORAGEBUCKET,
-//   messagingSenderId: import.meta.env.VITE_APP_MESSAGINGSENDERID,
-//   appId: import.meta.env.VITE_APP_APPID,
-//   measurementId: import.meta.env.VITE_APP_MEASUREMENTID,
-// };
-
-// init firebase backend
-// initFirebaseBackend(firebaseConfig)
-
 const App = (props) => {
   const selectLayoutState = (state) => state.Layout;
-  const LayoutProperties = createSelector(
-    selectLayoutState,
-      (layout) => ({
-        layoutType: layout.layoutType,
-      })
-  );
+  const LayoutProperties = createSelector(selectLayoutState, (layout) => ({
+    layoutType: layout.layoutType,
+  }));
 
-    const {
-      layoutType
-  } = useSelector(LayoutProperties);
+  const { layoutType } = useSelector(LayoutProperties);
 
   function getLayout(layoutType) {
     let layoutCls = VerticalLayout;
@@ -71,6 +48,9 @@ const App = (props) => {
 
   const Layout = getLayout(layoutType);
 
+  // App has two sections, 
+  // AuthProtectedRouts - Only logged In users can see
+  // PublicRoutes - All Users can access
   return (
     <React.Fragment>
       <Routes>
