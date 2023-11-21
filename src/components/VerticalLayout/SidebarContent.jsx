@@ -251,31 +251,169 @@ const SidebarContent = (props) => {
                   <Link to="#" className="has-arrow">
                     {props.t("Services")}
                   </Link>
+                  <ul className="sub-menu" aria-expanded="false">
+                    <li>
+                      <Link to="#">{props.t("Broadcaster List")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Genre List")} </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Language List")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Channel List")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">
+                          {props.t("Broadcaster Bouquet List")}
+                        </span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Package List")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("OSD Configuration List")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("OSD Template List")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("LCN List")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">
+                          {props.t("SMS Message Template List")}
+                        </span>
+                      </Link>
+                    </li>
+                  </ul>
                 </li>
                 <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Inventory")}
                   </Link>
+                  <ul>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Company List")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Brand List")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Warehouse List")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Inventory State List")}</span>
+                      </Link>
+                    </li>
+                  </ul>
                 </li>
                 <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Billing")}
                   </Link>
+                  <ul>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Tax List")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Reason List")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Bank List")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Promo Vocher List")}</span>
+                      </Link>
+                    </li>
+                  </ul>
                 </li>
                 <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Subscription")}
                   </Link>
+                  <ul>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("NCF List")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Bouquet List")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Connection Scheme List")}</span>
+                      </Link>
+                    </li>
+                  </ul>
                 </li>
                 <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Complaint")}
                   </Link>
+                  <ul>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">
+                          {props.t("Complaint Category List")}
+                        </span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">
+                          {props.t("Complaint Sub-Category List")}
+                        </span>
+                      </Link>
+                    </li>
+                  </ul>
                 </li>
                 <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Upload Logs")}
                   </Link>
+                  <ul>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">
+                          {props.t("Configuration Upload List")}
+                        </span>
+                      </Link>
+                    </li>
+                  </ul>
                 </li>
               </ul>
             </li>
@@ -283,14 +421,256 @@ const SidebarContent = (props) => {
             <li>
               <Link to="#" className="has-arrow">
                 <i className="bx bx-chat"></i>
-                <span>{props.t("Inventory Master")}</span>
+                <span>{props.t("Inventory")}</span>
               </Link>
+              <ul>
+                <li>
+                  <Link to="/#" className="has-arrow">
+                    <span key="#">{props.t("Stock")}</span>
+                  </Link>
+                  <ul>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Smartcard List")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("STB List")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Pairing List")}</span>
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <Link to="/#" className="has-arrow">
+                    <span key="#">{props.t("Faulty")}</span>
+                  </Link>
+                  <ul>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Faulty Smartcard List")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Faulty STB List")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Faulty Pairing List")}</span>
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <Link to="/#" className="has-arrow">
+                    <span key="#">{props.t("Blacklisting")}</span>
+                  </Link>
+                  <ul>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">
+                          {props.t("Blacklisted Smartcard List")}
+                        </span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Blacklisted STB List")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">
+                          {props.t("Blacklisted Pairing List")}
+                        </span>
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <Link to="/#" className="has-arrow">
+                    <span key="#">{props.t("Allotted")}</span>
+                  </Link>
+                  <ul>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Allotted Pairing List")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Allotted STB List")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Allotted Pairing List")}</span>
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <Link to="/#" className="has-arrow">
+                    <span key="#">{props.t("Track")}</span>
+                  </Link>
+                  <ul>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Track SC/STB")}</span>
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <Link to="/#" className="has-arrow">
+                    <span key="#">{props.t("Upload Logs")}</span>
+                  </Link>
+                  <ul>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Inventory Uploads")}</span>
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
             </li>
             <li>
               <Link to="#" className="has-arrow">
                 <i className="bx bx-file"></i>
                 <span>{props.t("Subscription Master")}</span>
               </Link>
+              <ul>
+                <li>
+                  <Link to="/#" className="has-arrow">
+                    <span key="#">{props.t("Subscription")}</span>
+                  </Link>
+                  <ul>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Subscriber List")}</span>
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <Link to="/#" className="has-arrow">
+                    <span key="#">{props.t("Bulk Operations")}</span>
+                  </Link>
+                  <ul>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Accounts Renewal")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Bouquet Renewal")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Bouquet Assignment")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">
+                          {props.t("Base Bouquet Replacement")}
+                        </span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">
+                          {props.t("Addon Bouquet Replacement")}
+                        </span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Accounts Suspend")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Account Resume")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Bulk Deactivate")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Bulk Activate")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Bulk Terminate")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Bulk Accounts Refresh")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">
+                          {props.t("Bulk Terminated Accounts Refresh")}
+                        </span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Subscriber Shifting")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Set Auto Renewal")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Un-Set Auto Renewal")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Bulk STB Replacement")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Scheduled Jobs Logs")}</span>
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <Link to="/#" className="has-arrow">
+                    <span key="#">{props.t("Upload Logs")}</span>
+                  </Link>
+                  <ul>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Subscriber uploads")}</span>
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
             </li>
             <li>
               <Link to="/#" className="has-arrow ">
