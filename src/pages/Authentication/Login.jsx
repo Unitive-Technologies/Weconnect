@@ -41,7 +41,8 @@ const Login = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      email: "admin@themesbrand.com" || "",
+      // email: "admin@themesbrand.com" || "",
+      email: "admin" || "",
       password: "123456" || "",
     },
     validationSchema: Yup.object({
@@ -126,12 +127,12 @@ const Login = (props) => {
                       {error ? <Alert color="danger">{error}</Alert> : null}
 
                       <div className="mb-3">
-                        <Label className="form-label">Email</Label>
+                        <Label className="form-label">Username</Label>
                         <Input
                           name="email"
                           className="form-control"
                           placeholder="Enter email"
-                          type="email"
+                          type="text"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
                           value={validation.values.email || ""}
@@ -173,7 +174,33 @@ const Login = (props) => {
                         ) : null}
                       </div>
 
-                      <div className="form-check">
+                      {/* <div className="mb-3">
+                        
+                      </div>
+                      <div className="mb-3">
+                        <Input
+                          name="password"
+                          autoComplete="off"
+                          value={validation.values.password || ""}
+                          type="password"
+                          placeholder="Enter Password"
+                          onChange={validation.handleChange}
+                          onBlur={validation.handleBlur}
+                          invalid={
+                            validation.touched.password &&
+                            validation.errors.password
+                              ? true
+                              : false
+                          }
+                        />
+                        {validation.touched.password &&
+                        validation.errors.password ? (
+                          <FormFeedback type="invalid">
+                            {validation.errors.password}
+                          </FormFeedback>
+                        ) : null}
+                      </div> */}
+                      {/* <div className="form-check">
                         <input
                           type="checkbox"
                           className="form-check-input"
@@ -185,7 +212,7 @@ const Login = (props) => {
                         >
                           Remember me
                         </label>
-                      </div>
+                      </div> */}
 
                       <div className="mt-3 d-grid">
                         <button
@@ -194,58 +221,6 @@ const Login = (props) => {
                         >
                           Log In
                         </button>
-                      </div>
-
-                      <div className="mt-4 text-center">
-                        <h5 className="font-size-14 mb-3">Sign in with</h5>
-
-                        <ul className="list-inline">
-                          <li className="list-inline-item">
-                          <Link
-                              to="#"
-                              className="social-list-item bg-primary text-white border-primary"
-                              onClick={e => {
-                                e.preventDefault();
-                                socialResponse("facebook");
-                              }}
-                            >
-                              <i className="mdi mdi-facebook" />
-                            </Link>
-                          </li>
-                          {/*<li className="list-inline-item">*/}
-                          {/*  <TwitterLogin*/}
-                          {/*    loginUrl={*/}
-                          {/*      "http://localhost:4000/api/v1/auth/twitter"*/}
-                          {/*    }*/}
-                          {/*    onSuccess={this.twitterResponse}*/}
-                          {/*    onFailure={this.onFailure}*/}
-                          {/*    requestTokenUrl={*/}
-                          {/*      "http://localhost:4000/api/v1/auth/twitter/revers"*/}
-                          {/*    }*/}
-                          {/*    showIcon={false}*/}
-                          {/*    tag={"div"}*/}
-                          {/*  >*/}
-                          {/*    <a*/}
-                          {/*      href=""*/}
-                          {/*      className="social-list-item bg-info text-white border-info"*/}
-                          {/*    >*/}
-                          {/*      <i className="mdi mdi-twitter"/>*/}
-                          {/*    </a>*/}
-                          {/*  </TwitterLogin>*/}
-                          {/*</li>*/}
-                          <li className="list-inline-item">
-                          <Link
-                              to="#"
-                              className="social-list-item bg-danger text-white border-danger"
-                              onClick={e => {
-                                e.preventDefault();
-                                socialResponse("google");
-                              }}
-                            >
-                              <i className="mdi mdi-google" />
-                            </Link>
-                          </li>
-                        </ul>
                       </div>
 
                       <div className="mt-4 text-center">
@@ -258,7 +233,7 @@ const Login = (props) => {
                   </div>
                 </CardBody>
               </Card>
-              <div className="mt-5 text-center">
+              {/* <div className="mt-5 text-center">
                 <p>
                   Don&#39;t have an account ?{" "}
                   <Link to="/register" className="fw-medium text-primary">
@@ -270,7 +245,7 @@ const Login = (props) => {
                   © {new Date().getFullYear()} Skote. Crafted with{" "}
                   <i className="mdi mdi-heart text-danger" /> by Themesbrand
                 </p>
-              </div>
+              </div> */}
             </Col>
           </Row>
         </Container>
