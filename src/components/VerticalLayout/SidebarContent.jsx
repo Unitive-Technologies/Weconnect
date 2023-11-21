@@ -308,7 +308,7 @@ const SidebarContent = (props) => {
                   <Link to="#" className="has-arrow">
                     {props.t("Inventory")}
                   </Link>
-                  <ul>
+                  <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/#">
                         <span key="#">{props.t("Company List")}</span>
@@ -335,7 +335,7 @@ const SidebarContent = (props) => {
                   <Link to="#" className="has-arrow">
                     {props.t("Billing")}
                   </Link>
-                  <ul>
+                  <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/#">
                         <span key="#">{props.t("Tax List")}</span>
@@ -362,7 +362,7 @@ const SidebarContent = (props) => {
                   <Link to="#" className="has-arrow">
                     {props.t("Subscription")}
                   </Link>
-                  <ul>
+                  <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/#">
                         <span key="#">{props.t("NCF List")}</span>
@@ -384,7 +384,7 @@ const SidebarContent = (props) => {
                   <Link to="#" className="has-arrow">
                     {props.t("Complaint")}
                   </Link>
-                  <ul>
+                  <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/#">
                         <span key="#">
@@ -405,7 +405,7 @@ const SidebarContent = (props) => {
                   <Link to="#" className="has-arrow">
                     {props.t("Upload Logs")}
                   </Link>
-                  <ul>
+                  <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/#">
                         <span key="#">
@@ -423,12 +423,12 @@ const SidebarContent = (props) => {
                 <i className="bx bx-chat"></i>
                 <span>{props.t("Inventory")}</span>
               </Link>
-              <ul>
+              <ul className="sub-menu" aria-expanded="false">
                 <li>
                   <Link to="/#" className="has-arrow">
                     <span key="#">{props.t("Stock")}</span>
                   </Link>
-                  <ul>
+                  <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/#">
                         <span key="#">{props.t("Smartcard List")}</span>
@@ -450,7 +450,7 @@ const SidebarContent = (props) => {
                   <Link to="/#" className="has-arrow">
                     <span key="#">{props.t("Faulty")}</span>
                   </Link>
-                  <ul>
+                  <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/#">
                         <span key="#">{props.t("Faulty Smartcard List")}</span>
@@ -472,7 +472,7 @@ const SidebarContent = (props) => {
                   <Link to="/#" className="has-arrow">
                     <span key="#">{props.t("Blacklisting")}</span>
                   </Link>
-                  <ul>
+                  <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/#">
                         <span key="#">
@@ -498,7 +498,7 @@ const SidebarContent = (props) => {
                   <Link to="/#" className="has-arrow">
                     <span key="#">{props.t("Allotted")}</span>
                   </Link>
-                  <ul>
+                  <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/#">
                         <span key="#">{props.t("Allotted Pairing List")}</span>
@@ -520,7 +520,7 @@ const SidebarContent = (props) => {
                   <Link to="/#" className="has-arrow">
                     <span key="#">{props.t("Track")}</span>
                   </Link>
-                  <ul>
+                  <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/#">
                         <span key="#">{props.t("Track SC/STB")}</span>
@@ -532,7 +532,7 @@ const SidebarContent = (props) => {
                   <Link to="/#" className="has-arrow">
                     <span key="#">{props.t("Upload Logs")}</span>
                   </Link>
-                  <ul>
+                  <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/#">
                         <span key="#">{props.t("Inventory Uploads")}</span>
@@ -547,12 +547,12 @@ const SidebarContent = (props) => {
                 <i className="bx bx-file"></i>
                 <span>{props.t("Subscription Master")}</span>
               </Link>
-              <ul>
+              <ul className="sub-menu" aria-expanded="false">
                 <li>
                   <Link to="/#" className="has-arrow">
                     <span key="#">{props.t("Subscription")}</span>
                   </Link>
-                  <ul>
+                  <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/#">
                         <span key="#">{props.t("Subscriber List")}</span>
@@ -564,7 +564,7 @@ const SidebarContent = (props) => {
                   <Link to="/#" className="has-arrow">
                     <span key="#">{props.t("Bulk Operations")}</span>
                   </Link>
-                  <ul>
+                  <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/#">
                         <span key="#">{props.t("Accounts Renewal")}</span>
@@ -662,7 +662,7 @@ const SidebarContent = (props) => {
                   <Link to="/#" className="has-arrow">
                     <span key="#">{props.t("Upload Logs")}</span>
                   </Link>
-                  <ul>
+                  <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/#">
                         <span key="#">{props.t("Subscriber uploads")}</span>
@@ -673,35 +673,49 @@ const SidebarContent = (props) => {
               </ul>
             </li>
             <li>
-              <Link to="/#" className="has-arrow ">
+              <Link to="/#" className="has-arrow">
                 <i className="bx bx-bitcoin"></i>
                 <span>{props.t("DAS Operations")}</span>
               </Link>
               <ul className="sub-menu" aria-expanded="false">
                 <li>
-                  <Link to="#">{props.t("Wallet")}</Link>
+                  <Link to="#" className="has-arrow">
+                    {props.t("CAS Reconciliation")}
+                  </Link>
+                  <ul className="sub-menu" aria-expanded="false">
+                    <li>
+                      <Link to="#">{props.t("CAS Reconciliation Logs")}</Link>
+                    </li>
+                  </ul>
                 </li>
                 <li>
-                  <Link to="#">{props.t("Buy/Sell")}</Link>
+                  <Link to="#" className="has-arrow">
+                    {props.t("NSTV")}
+                  </Link>
+                  <ul className="sub-menu" aria-expanded="false">
+                    <li>
+                      <Link to="#">{props.t("CAS Commands")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Command Logs")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Message Command Logs")}</Link>
+                    </li>
+                  </ul>
                 </li>
                 <li>
-                  <Link to="#">{props.t("Exchange")}</Link>
-                </li>
-                <li>
-                  <Link to="#">{props.t("Lending")}</Link>
-                </li>
-                <li>
-                  <Link to="#">{props.t("Orders")}</Link>
-                </li>
-                <li>
-                  <Link to="#">{props.t("KYC Application")}</Link>
-                </li>
-                <li>
-                  <Link to="#">{props.t("ICO Landing")}</Link>
+                  <Link to="#" className="has-arrow">
+                    {props.t("AADHARKYC")}
+                  </Link>
+                  <ul className="sub-menu" aria-expanded="false">
+                    <li>
+                      <Link to="#">{props.t("Command Logs")}</Link>
+                    </li>
+                  </ul>
                 </li>
               </ul>
             </li>
-
             <li>
               <Link to="/#" className="has-arrow">
                 <i className="bx bx-envelope"></i>
@@ -709,24 +723,143 @@ const SidebarContent = (props) => {
               </Link>
               <ul className="sub-menu" aria-expanded="false">
                 <li>
-                  <Link to="#">{props.t("Inbox")}</Link>
-                </li>
-                <li>
-                  <Link to="#">{props.t("Read Email")} </Link>
-                </li>
-                <li>
-                  <Link to="/#" className="has-arrow">
-                    <span key="#">{props.t("Templates")}</span>
+                  <Link to="#" className="has-arrow">
+                    {props.t("Billing & Accounting")}
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
-                      <Link to="#">{props.t("Basic Action")}</Link>
+                      <Link to="#">{props.t("LCO Collection Report")}</Link>
                     </li>
                     <li>
-                      <Link to="#">{props.t("Alert Email")} </Link>
+                      <Link to="#">{props.t("Effective Collection")} </Link>
                     </li>
                     <li>
-                      <Link to="#">{props.t("Billing Email")} </Link>
+                      <Link to="#">{props.t("Oneline SOA")} </Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Online Payment Reconcile")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("LCO Ledger")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("DebitNote/Voucher List")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Credit Note/Voucher List")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Deposit Cheque List")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Reconcile Cheque List")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Un-Reconcile Cheque List")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Pending Recovery Report")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Journal Voucher List")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Bill Summary Report")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">
+                        {props.t("Productwise Billing Report")}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("RSD Billing Report")}</Link>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <Link to="/#" className="has-arrow">
+                    <span key="#">{props.t("Customer")}</span>
+                  </Link>
+                  <ul className="sub-menu" aria-expanded="false">
+                    <li>
+                      <Link to="#">{props.t("Customer Ledger")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Customer Transaction")} </Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Advance Renewals")} </Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Monthly Bill Statement")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Customer Billling")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Bulk Customer COllection")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Collection Report")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Bulk Bill Payment")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Bill Payment Report")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Bulk Customer Report")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Discount Report")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Recurring Discount Report")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">
+                        {props.t("Bulk Customer Additional Charges")}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Additionl Charges Report")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">
+                        {props.t("Recurring Additional Charges Report")}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="#">
+                        {props.t("Bulk Customer Previous Dues")}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Previous Dues Report")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Bulk Customer Bad Debt")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Customer Bad Debt Report")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Payment Deposit")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Payment Reconcile")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Payment Un-Reconcile")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Reconcilation Report")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">
+                        {props.t("ONline Payment Reconcile Report")}
+                      </Link>
                     </li>
                   </ul>
                 </li>
