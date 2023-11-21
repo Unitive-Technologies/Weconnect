@@ -220,25 +220,62 @@ const SidebarContent = (props) => {
                   </ul>
                 </li>
                 <li>
-                  <Link to="#">{props.t("Territory")}</Link>
+                  <Link to="#" className="has-arrow">
+                    {props.t("Territory")}
+                  </Link>
+                  <ul className="sub-menu" aria-expanded="false">
+                    <li>
+                      <Link to="#">{props.t("State List")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("District List")} </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("City List")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Location List")}</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/#">
+                        <span key="#">{props.t("Sublocation List")}</span>
+                      </Link>
+                    </li>
+                  </ul>
                 </li>
                 <li>
-                  <Link to="#">{props.t("Services")}</Link>
+                  <Link to="#" className="has-arrow">
+                    {props.t("Services")}
+                  </Link>
                 </li>
                 <li>
-                  <Link to="#">{props.t("Inventory")}</Link>
+                  <Link to="#" className="has-arrow">
+                    {props.t("Inventory")}
+                  </Link>
                 </li>
                 <li>
-                  <Link to="#">{props.t("Billing")}</Link>
+                  <Link to="#" className="has-arrow">
+                    {props.t("Billing")}
+                  </Link>
                 </li>
                 <li>
-                  <Link to="#">{props.t("Subscription")}</Link>
+                  <Link to="#" className="has-arrow">
+                    {props.t("Subscription")}
+                  </Link>
                 </li>
                 <li>
-                  <Link to="#">{props.t("Complaint")}</Link>
+                  <Link to="#" className="has-arrow">
+                    {props.t("Complaint")}
+                  </Link>
                 </li>
                 <li>
-                  <Link to="#">{props.t("Upload Logs")}</Link>
+                  <Link to="#" className="has-arrow">
+                    {props.t("Upload Logs")}
+                  </Link>
                 </li>
               </ul>
             </li>
@@ -255,40 +292,6 @@ const SidebarContent = (props) => {
                 <span>{props.t("Subscription Master")}</span>
               </Link>
             </li>
-
-            <li>
-              <Link to="/#" className="has-arrow">
-                <i className="bx bx-store"></i>
-                <span>{props.t("Ecommerce")}</span>
-              </Link>
-              <ul className="sub-menu" aria-expanded="false">
-                <li>
-                  <Link to="#">{props.t("Products")}</Link>
-                </li>
-                <li>
-                  <Link to="#">{props.t("Product Detail")}</Link>
-                </li>
-                <li>
-                  <Link to="#">{props.t("Orders")}</Link>
-                </li>
-                <li>
-                  <Link to="#">{props.t("Customers")}</Link>
-                </li>
-                <li>
-                  <Link to="#">{props.t("Cart")}</Link>
-                </li>
-                <li>
-                  <Link to="#">{props.t("Checkout")}</Link>
-                </li>
-                <li>
-                  <Link to="#">{props.t("Shops")}</Link>
-                </li>
-                <li>
-                  <Link to="#">{props.t("Add Product")}</Link>
-                </li>
-              </ul>
-            </li>
-
             <li>
               <Link to="/#" className="has-arrow ">
                 <i className="bx bx-bitcoin"></i>
