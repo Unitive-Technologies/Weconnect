@@ -858,7 +858,7 @@ const SidebarContent = (props) => {
                     </li>
                     <li>
                       <Link to="#">
-                        {props.t("ONline Payment Reconcile Report")}
+                        {props.t("Online Payment Reconcile Report")}
                       </Link>
                     </li>
                   </ul>
@@ -867,41 +867,106 @@ const SidebarContent = (props) => {
             </li>
 
             <li>
-              <Link to="/#" className="has-arrow ">
+              <Link to="/#" className="has-arrow">
                 <i className="bx bx-receipt"></i>
                 <span>{props.t("Reports")}</span>
               </Link>
               <ul className="sub-menu" aria-expanded="false">
                 <li>
-                  <Link to="#">{props.t("Invoice List")}</Link>
+                  <Link to="#" className="has-arrow">
+                    {props.t("TRAI Reports")}
+                  </Link>
+                  <ul className="sub-menu" aria-expanded="false">
+                    <li>
+                      <Link to="#">{props.t("Registered Customer")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("STB Location Report")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Active Customer")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Inactive Customer")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Expired Customer")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Terminated Customer")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Total Customer")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Authorized Customer")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Alacarte Vs Customers")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Package Vs Customers")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Bouquet Vs Customers")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Bouquet Rp Vs Customers")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Bouquet Configuration")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Current Subscription")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">
+                        {props.t("Current Inactive Subscription")}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Customer Aging")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Bouquet Aging")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Product Subscription")}</Link>
+                    </li>
+                  </ul>
                 </li>
                 <li>
-                  <Link to="#">{props.t("Invoice Detail")}</Link>
+                  <Link to="#" className="has-arrow">
+                    {props.t("Broadcaster Reports")}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="#" className="has-arrow">
+                    {props.t("Historical Reports")}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="#" className="has-arrow">
+                    {props.t("Inventory Reports")}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="#" className="has-arrow">
+                    {props.t("Miscellaneous")}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="#" className="has-arrow">
+                    {props.t("Logs")}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="#" className="has-arrow">
+                    {props.t("Advanced Reports")}
+                  </Link>
                 </li>
               </ul>
             </li>
-
-            <li>
-              <Link to="/#" className="has-arrow ">
-                <i className="bx bx-briefcase-alt-2"></i>
-                <span>{props.t("Projects")}</span>
-              </Link>
-              <ul className="sub-menu" aria-expanded="false">
-                <li>
-                  <Link to="#">{props.t("Projects Grid")}</Link>
-                </li>
-                <li>
-                  <Link to="#">{props.t("Projects List")}</Link>
-                </li>
-                <li>
-                  <Link to="#">{props.t("Project Overview")}</Link>
-                </li>
-                <li>
-                  <Link to="#">{props.t("Create New")}</Link>
-                </li>
-              </ul>
-            </li>
-
             <li>
               <Link to="/#" className="has-arrow ">
                 <i className="bx bx-task"></i>
@@ -909,13 +974,19 @@ const SidebarContent = (props) => {
               </Link>
               <ul className="sub-menu" aria-expanded="false">
                 <li>
-                  <Link to="#">{props.t("Task List")}</Link>
+                  <Link to="#" className="has-arrow">
+                    {props.t("Tickets")}
+                  </Link>
                 </li>
                 <li>
-                  <Link to="#">{props.t("Tasks Kanban")}</Link>
+                  <Link to="#" className="has-arrow">
+                    {props.t("Prospect")}
+                  </Link>
                 </li>
                 <li>
-                  <Link to="#">{props.t("Create Task")}</Link>
+                  <Link to="#" className="has-arrow">
+                    {props.t("Reporting")}
+                  </Link>
                 </li>
               </ul>
             </li>
