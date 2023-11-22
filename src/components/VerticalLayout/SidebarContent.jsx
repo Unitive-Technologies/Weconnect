@@ -939,31 +939,182 @@ const SidebarContent = (props) => {
                   <Link to="#" className="has-arrow">
                     {props.t("Broadcaster Reports")}
                   </Link>
+                  <ul className="sub-menu" aria-expanded="false">
+                    <li>
+                      <Link to="#">{props.t("Broadcaster Subscription")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Broadcaster Bouquetwise")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("HD-SD Count")}</Link>
+                    </li>
+                  </ul>
                 </li>
                 <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Historical Reports")}
                   </Link>
+                  <ul className="sub-menu" aria-expanded="false">
+                    <li>
+                      <Link to="#">{props.t("Registered Subscription")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Active Subscription")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Expired Subscription")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Suspended Subscription")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Disconnected Subscription")}</Link>
+                    </li>
+                  </ul>
                 </li>
                 <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Inventory Reports")}
                   </Link>
+                  <ul className="sub-menu" aria-expanded="false">
+                    <li>
+                      <Link to="#">{props.t("Inventory Summary")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("CAS Summary")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Smartcard Stock")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("STB Stock")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Paired Stock")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Smartcard PO Report")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("STB PO Report")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Available Stock")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Outward Stock")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Return Stock")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Inward Report")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("VC Current Status")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Smartcard Status")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("STB Status")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("STB VC Replacement")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Brandwise Report")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Challan Summary")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Brand VS LCO")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Allotted Scheme")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Subscriber Shifting")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Device Status")}</Link>
+                    </li>
+                  </ul>
                 </li>
                 <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Miscellaneous")}
                   </Link>
+                  <ul className="sub-menu" aria-expanded="false">
+                    <li>
+                      <Link to="#">{props.t("LCO Bouquet")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("LCO Scheme")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("LCO Vs Alacarte")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("LCO Vs Package")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("LCO Vs Bouquet")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">
+                        {props.t("Activation Deactivation Log LCO Wise")}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="#">
+                        {props.t("Activation Deactivation Log Summary")}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("History Status Linear")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Assigned NCF")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("LCO Transaction Summary")}</Link>
+                    </li>
+                  </ul>
                 </li>
                 <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Logs")}
                   </Link>
+                  <ul className="sub-menu" aria-expanded="false">
+                    <li>
+                      <Link to="#">{props.t("Broadcaster Subscription")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Broadcaster Bouquetwise")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("HD-SD Count")}</Link>
+                    </li>
+                  </ul>
                 </li>
                 <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Advanced Reports")}
                   </Link>
+                  <ul className="sub-menu" aria-expanded="false">
+                    <li>
+                      <Link to="#">{props.t("Broadcaster Subscription")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Broadcaster Bouquetwise")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("HD-SD Count")}</Link>
+                    </li>
+                  </ul>
                 </li>
               </ul>
             </li>
@@ -977,16 +1128,49 @@ const SidebarContent = (props) => {
                   <Link to="#" className="has-arrow">
                     {props.t("Tickets")}
                   </Link>
+                  <ul className="sub-menu" aria-expanded="false">
+                    <li>
+                      <Link to="#">{props.t("Broadcaster Subscription")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Broadcaster Bouquetwise")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("HD-SD Count")}</Link>
+                    </li>
+                  </ul>
                 </li>
                 <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Prospect")}
                   </Link>
+                  <ul className="sub-menu" aria-expanded="false">
+                    <li>
+                      <Link to="#">{props.t("Broadcaster Subscription")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Broadcaster Bouquetwise")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("HD-SD Count")}</Link>
+                    </li>
+                  </ul>
                 </li>
                 <li>
                   <Link to="#" className="has-arrow">
                     {props.t("Reporting")}
                   </Link>
+                  <ul className="sub-menu" aria-expanded="false">
+                    <li>
+                      <Link to="#">{props.t("Broadcaster Subscription")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Broadcaster Bouquetwise")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("HD-SD Count")}</Link>
+                    </li>
+                  </ul>
                 </li>
               </ul>
             </li>
