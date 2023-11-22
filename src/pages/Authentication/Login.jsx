@@ -41,8 +41,8 @@ const Login = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      username: "MSO" || "",
-      password: "admin" || "",
+      email: "admin@themesbrand.com" || "",
+      password: "123456" || "",
     },
     validationSchema: Yup.object({
       username: Yup.string().required("Please Enter Your Username"),
@@ -130,8 +130,8 @@ const Login = (props) => {
                         <Input
                           name="username"
                           className="form-control"
-                          placeholder="Enter Username"
-                          type="text"
+                          placeholder="Enter email"
+                          type="email"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
                           value={validation.values.username || ""}
@@ -173,7 +173,33 @@ const Login = (props) => {
                         ) : null}
                       </div>
 
-                      <div className="form-check">
+                      {/* <div className="mb-3">
+                        
+                      </div>
+                      <div className="mb-3">
+                        <Input
+                          name="password"
+                          autoComplete="off"
+                          value={validation.values.password || ""}
+                          type="password"
+                          placeholder="Enter Password"
+                          onChange={validation.handleChange}
+                          onBlur={validation.handleBlur}
+                          invalid={
+                            validation.touched.password &&
+                            validation.errors.password
+                              ? true
+                              : false
+                          }
+                        />
+                        {validation.touched.password &&
+                        validation.errors.password ? (
+                          <FormFeedback type="invalid">
+                            {validation.errors.password}
+                          </FormFeedback>
+                        ) : null}
+                      </div> */}
+                      {/* <div className="form-check">
                         <input
                           type="checkbox"
                           className="form-check-input"
@@ -185,7 +211,7 @@ const Login = (props) => {
                         >
                           Remember me
                         </label>
-                      </div>
+                      </div> */}
 
                       <div className="mt-3 d-grid">
                         <button
@@ -208,10 +234,17 @@ const Login = (props) => {
               </Card>
               <div className="mt-5 text-center">
                 <p>
+                  Don&#39;t have an account ?{" "}
+                  <Link to="/register" className="fw-medium text-primary">
+                    {" "}
+                    Signup now{" "}
+                  </Link>{" "}
+                </p>
+                <p>
                   © {new Date().getFullYear()} Skote. Crafted with{" "}
                   <i className="mdi mdi-heart text-danger" /> by Unitive
                 </p>
-              </div>
+              </div> */}
             </Col>
           </Row>
         </Container>
