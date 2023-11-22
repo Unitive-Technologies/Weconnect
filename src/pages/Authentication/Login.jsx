@@ -25,7 +25,7 @@ import {
 } from "reactstrap";
 
 // actions
-import { loginUser } from "../../store/actions";
+import { loginUser, socialLogin } from "../../store/actions";
 
 // import images
 import profile from "../../assets/images/profile-img.png";
@@ -33,7 +33,7 @@ import logo from "../../assets/images/logo.svg";
 
 const Login = (props) => {
   //meta title
-  document.title = "VINSAT Digital SMS | Login";
+  document.title = "Login | Skote - Vite React Admin & Dashboard Template";
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -41,11 +41,12 @@ const Login = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      email: "admin@themesbrand.com" || "",
+      // email: "admin@themesbrand.com" || "",
+      email: "admin" || "",
       password: "123456" || "",
     },
     validationSchema: Yup.object({
-      username: Yup.string().required("Please Enter Your Username"),
+      email: Yup.string().required("Please Enter Your Email"),
       password: Yup.string().required("Please Enter Your Password"),
     }),
     onSubmit: (values) => {
@@ -57,7 +58,7 @@ const Login = (props) => {
     const LoginProperties = createSelector(
       selectLoginState,
         (login) => ({
-          error: login.error
+          error: login.error          
         })
     );
 
@@ -65,14 +66,14 @@ const Login = (props) => {
       error
   } = useSelector(LoginProperties);
 
-  // const signIn = type => {
-  //   dispatch(socialLogin(type, props.router.navigate));
-  // };
+  const signIn = type => {
+    dispatch(socialLogin(type, props.router.navigate));
+  };
 
   //for facebook and google authentication
-  // const socialResponse = type => {
-  //   signIn(type);
-  // };
+  const socialResponse = type => {
+    signIn(type);
+  };
   
   return (
     <React.Fragment>
@@ -88,13 +89,13 @@ const Login = (props) => {
               <Card className="overflow-hidden">
                 <div className="bg-primary-subtle">
                   <Row>
-                    <Col xs={8}>
+                    <Col xs={7}>
                       <div className="text-primary p-4">
                         <h5 className="text-primary">Welcome Back !</h5>
-                        <p>Sign in to continue to VINSAT SMS.</p>
+                        <p>Sign in to continue to Skote.</p>
                       </div>
                     </Col>
-                    <Col className="col-4 align-self-end">
+                    <Col className="col-5 align-self-end">
                       <img src={profile} alt="" className="img-fluid" />
                     </Col>
                   </Row>
@@ -128,22 +129,22 @@ const Login = (props) => {
                       <div className="mb-3">
                         <Label className="form-label">Username</Label>
                         <Input
-                          name="username"
+                          name="email"
                           className="form-control"
                           placeholder="Enter email"
-                          type="email"
+                          type="text"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
-                          value={validation.values.username || ""}
+                          value={validation.values.email || ""}
                           invalid={
-                            validation.touched.username && validation.errors.username
+                            validation.touched.email && validation.errors.email
                               ? true
                               : false
                           }
                         />
-                        {validation.touched.username && validation.errors.username ? (
+                        {validation.touched.email && validation.errors.email ? (
                           <FormFeedback type="invalid">
-                            {validation.errors.username}
+                            {validation.errors.email}
                           </FormFeedback>
                         ) : null}
                       </div>
@@ -232,7 +233,7 @@ const Login = (props) => {
                   </div>
                 </CardBody>
               </Card>
-              <div className="mt-5 text-center">
+              {/* <div className="mt-5 text-center">
                 <p>
                   Don&#39;t have an account ?{" "}
                   <Link to="/register" className="fw-medium text-primary">
@@ -242,7 +243,7 @@ const Login = (props) => {
                 </p>
                 <p>
                   © {new Date().getFullYear()} Skote. Crafted with{" "}
-                  <i className="mdi mdi-heart text-danger" /> by Unitive
+                  <i className="mdi mdi-heart text-danger" /> by Themesbrand
                 </p>
               </div> */}
             </Col>
