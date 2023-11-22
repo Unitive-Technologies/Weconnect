@@ -1082,6 +1082,45 @@ const SidebarContent = (props) => {
                     <li>
                       <Link to="#">{props.t("LCO Transaction Summary")}</Link>
                     </li>
+                    <li>
+                      <Link to="#">{props.t("LCO Transaction Detail")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Combine Operator")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Auto Renewal")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Bouquet Rate Bifuracation")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Daily Accounts Renewed")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Mobile SMS")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("User Activity")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Subscriber Transfer")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Package Log")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Bouquet Log")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Operator Bouquet Rates")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Operator Documents")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("LCO Wise Promo Voucher")}</Link>
+                    </li>
                   </ul>
                 </li>
                 <li>
@@ -1090,13 +1129,13 @@ const SidebarContent = (props) => {
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
-                      <Link to="#">{props.t("Broadcaster Subscription")}</Link>
+                      <Link to="#">{props.t("Package Composition")}</Link>
                     </li>
                     <li>
-                      <Link to="#">{props.t("Broadcaster Bouquetwise")}</Link>
+                      <Link to="#">{props.t("Activation Disconnection")}</Link>
                     </li>
                     <li>
-                      <Link to="#">{props.t("HD-SD Count")}</Link>
+                      <Link to="#">{props.t("Bouquet Composition")}</Link>
                     </li>
                   </ul>
                 </li>
@@ -1106,13 +1145,13 @@ const SidebarContent = (props) => {
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
-                      <Link to="#">{props.t("Broadcaster Subscription")}</Link>
+                      <Link to="#">{props.t("Download Logs")}</Link>
                     </li>
                     <li>
-                      <Link to="#">{props.t("Broadcaster Bouquetwise")}</Link>
+                      <Link to="#">{props.t("Auto Generate Logs")}</Link>
                     </li>
                     <li>
-                      <Link to="#">{props.t("HD-SD Count")}</Link>
+                      <Link to="#">{props.t("Extract History Logs")}</Link>
                     </li>
                   </ul>
                 </li>
@@ -1130,13 +1169,13 @@ const SidebarContent = (props) => {
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
-                      <Link to="#">{props.t("Broadcaster Subscription")}</Link>
+                      <Link to="#">{props.t("Open")}</Link>
                     </li>
                     <li>
-                      <Link to="#">{props.t("Broadcaster Bouquetwise")}</Link>
+                      <Link to="#">{props.t("Closed")}</Link>
                     </li>
                     <li>
-                      <Link to="#">{props.t("HD-SD Count")}</Link>
+                      <Link to="#">{props.t("Invalid")}</Link>
                     </li>
                   </ul>
                 </li>
@@ -1146,13 +1185,16 @@ const SidebarContent = (props) => {
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
-                      <Link to="#">{props.t("Broadcaster Subscription")}</Link>
+                      <Link to="#">{props.t("Open")}</Link>
                     </li>
                     <li>
-                      <Link to="#">{props.t("Broadcaster Bouquetwise")}</Link>
+                      <Link to="#">{props.t("Pending")}</Link>
                     </li>
                     <li>
-                      <Link to="#">{props.t("HD-SD Count")}</Link>
+                      <Link to="#">{props.t("Closed")}</Link>
+                    </li>
+                    <li>
+                      <Link to="#">{props.t("Invalid")}</Link>
                     </li>
                   </ul>
                 </li>
@@ -1162,13 +1204,13 @@ const SidebarContent = (props) => {
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
-                      <Link to="#">{props.t("Broadcaster Subscription")}</Link>
+                      <Link to="#">{props.t("Complaint Reply")}</Link>
                     </li>
                     <li>
-                      <Link to="#">{props.t("Broadcaster Bouquetwise")}</Link>
+                      <Link to="#">{props.t("Ticket Details")}</Link>
                     </li>
                     <li>
-                      <Link to="#">{props.t("HD-SD Count")}</Link>
+                      <Link to="#">{props.t("Engineers Performance")}</Link>
                     </li>
                   </ul>
                 </li>
