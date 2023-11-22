@@ -12,6 +12,7 @@ import ForgetPwd from "../pages/Authentication/ForgetPassword";
 
 // Dashboard
 import Dashboard from "../pages/Dashboard/index";
+import UserList from "../pages/Mso-Master/Access";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -22,6 +23,7 @@ const authProtectedRoutes = [
   //   // this route should be at the end of all other routes
   //   // eslint-disable-next-line react/display-name
   { path: "/", exact: true, component: <Navigate to="/dashboard" /> },
+  { path: "/userlist", exact: true, component: <UserList />},
 ];
 
 const publicRoutes = [
