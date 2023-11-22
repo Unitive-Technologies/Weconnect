@@ -102,7 +102,7 @@ const SidebarContent = (props) => {
     const pathName = path.pathname;
     let matchingMenuItem = null;
     const ul = document.getElementById("side-menu");
-    const items = ul.getElementsByTagName("a");
+    const items = ul.getElementsByTagName("s");
     removeActivation(items);
 
     for (let i = 0; i < items.length; ++i) {
