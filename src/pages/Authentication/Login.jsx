@@ -132,7 +132,7 @@ const Login = (props) => {
                           name="username"
                           className="form-control"
                           placeholder="Enter Username"
-                          type="email"
+                          type="text"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
                           value={validation.values.username || ""}
