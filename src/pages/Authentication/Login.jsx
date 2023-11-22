@@ -41,8 +41,7 @@ const Login = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      // email: "admin@themesbrand.com" || "",
-      email: "admin" || "",
+      email: "admin@themesbrand.com" || "",
       password: "123456" || "",
     },
     validationSchema: Yup.object({
@@ -233,7 +232,7 @@ const Login = (props) => {
                   </div>
                 </CardBody>
               </Card>
-              {/* <div className="mt-5 text-center">
+              <div className="mt-5 text-center">
                 <p>
                   Don&#39;t have an account ?{" "}
                   <Link to="/register" className="fw-medium text-primary">
