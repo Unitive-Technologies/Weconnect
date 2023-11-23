@@ -9,6 +9,7 @@ import Account from "./auth/register/reducer";
 import ForgetPassword from "./auth/forgetpwd/reducer";
 import Profile from "./auth/profile/reducer";
 
+import contacts from "./contacts/reducer";
 const rootReducer = combineReducers({
   // public
   Layout,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   Account,
   ForgetPassword,
   Profile,
+  contacts,
 });
 
 export default rootReducer;
