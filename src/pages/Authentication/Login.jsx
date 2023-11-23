@@ -31,7 +31,7 @@ import { loginUser, socialLogin } from "../../store/actions";
 // import images
 import profile from "../../assets/images/profile-img.png";
 import logo from "../../assets/images/logo.svg";
-import Captcha from "./Captcha";
+
 
 const Login = (props) => {
   //meta title

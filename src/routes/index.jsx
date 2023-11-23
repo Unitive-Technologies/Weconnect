@@ -12,13 +12,14 @@ import ForgetPwd from "../pages/Authentication/ForgetPassword";
 
 // Dashboard
 import Dashboard from "../pages/Dashboard/index";
+import UserList from "../pages/MsoMaster/Access/UserList/index";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
 
   //   // //profile
   { path: "/profile", component: <UserProfile /> },
-
+  { path: "/mso-master-access-user-list", component: <UserList /> },
   //   // this route should be at the end of all other routes
   //   // eslint-disable-next-line react/display-name
   { path: "/", exact: true, component: <Navigate to="/dashboard" /> },
