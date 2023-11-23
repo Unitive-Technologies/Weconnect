@@ -6,7 +6,8 @@ import withRouter from "../../components/Common/withRouter";
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
-
+import { useState, useEffect, useRef } from 'react'; 
+import './style.css'; 
 // Formik validation
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -31,28 +32,40 @@ import { loginUser, socialLogin } from "../../store/actions";
 import profile from "../../assets/images/profile-img.png";
 import logo from "../../assets/images/logo.svg";
 
+
 const Login = (props) => {
   //meta title
   document.title = "Login | Skote - Vite React Admin & Dashboard Template";
   const dispatch = useDispatch();
 
   const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
-
-    initialValues: {
-      // email: "admin@themesbrand.com" || "",
-      email: "admin" || "",
-      password: "123456" || "",
-    },
-    validationSchema: Yup.object({
-      email: Yup.string().required("Please Enter Your Email"),
-      password: Yup.string().required("Please Enter Your Password"),
-    }),
-    onSubmit: (values) => {
+  enableReinitialize: true,
+  initialValues: {
+    email: "admin" || "",
+    password: "123456" || "",
+  },
+  validationSchema: Yup.object({
+    email: Yup.string().required("Please Enter Your Email"),
+    password: Yup.string().required("Please Enter Your Password"),
+  }),
+  onSubmit: (values) => {
+    const numericCaptcha = captchaText.replace(/\D/g, ''); // Extract only numeric characters
+    console.log('userInput:', userInput);
+    console.log('numericCaptcha:', numericCaptcha);
+  
+    if (userInput === numericCaptcha) {
       dispatch(loginUser(values, props.router.navigate));
-    },
-  });
+    } else {
+      // Handle incorrect captcha
+      alert('Incorrect captcha. Please try again.');
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext('2d');
+      initializeCaptcha(ctx);
+    }
+  },
+  
+  
+});
 
   const selectLoginState = (state) => state.Login;
     const LoginProperties = createSelector(
@@ -75,6 +88,61 @@ const Login = (props) => {
     signIn(type);
   };
   
+  const [captchaText, setCaptchaText] = useState(''); 
+  const [userInput, setUserInput] = useState(''); 
+  const canvasRef = useRef(null); 
+
+  useEffect(() => { 
+      const canvas = canvasRef.current; 
+      const ctx = canvas.getContext('2d'); 
+      initializeCaptcha(ctx); 
+  }, []); 
+
+          const generateCaptchaText = () => {
+            return generateRandomNumber(100000, 999999).toString();
+          };
+          
+          
+          const drawCaptchaOnCanvas = (ctx, captcha) => {
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+          
+            const textColors = ['rgb(0,0,0)', 'rgb(130,130,130)'];
+            const letterSpace = 150 / captcha.length;
+          
+            for (let i = 0; i < captcha.length; i++) {
+              const xInitialSpace = 25;
+              ctx.font = '20px Roboto Mono';
+              ctx.fillStyle = textColors[Math.floor(Math.random() * 2)];
+              ctx.fillText(
+                captcha[i],
+                xInitialSpace + i * letterSpace,
+                Math.floor(Math.random() * 16 + 25),
+                100
+              );
+            }
+          };
+          
+
+const generateRandomNumber = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+const initializeCaptcha = () => {
+  setUserInput('');
+  const newCaptcha = generateCaptchaText();
+  setCaptchaText(newCaptcha);
+  const canvas = canvasRef.current;
+  const ctx = canvas.getContext('2d');
+  drawCaptchaOnCanvas(ctx, newCaptcha);
+};
+
+
+  
+  const handleUserInputChange = (e) => {
+    setUserInput(e.target.value);
+  };
+  
+
   return (
     <React.Fragment>
       <div className="home-btn d-none d-sm-block">
@@ -174,47 +242,29 @@ const Login = (props) => {
                         ) : null}
                       </div>
 
-                      {/* <div className="mb-3">
-                        
-                      </div>
-                      <div className="mb-3">
-                        <Input
-                          name="password"
-                          autoComplete="off"
-                          value={validation.values.password || ""}
-                          type="password"
-                          placeholder="Enter Password"
-                          onChange={validation.handleChange}
-                          onBlur={validation.handleBlur}
-                          invalid={
-                            validation.touched.password &&
-                            validation.errors.password
-                              ? true
-                              : false
-                          }
-                        />
-                        {validation.touched.password &&
-                        validation.errors.password ? (
-                          <FormFeedback type="invalid">
-                            {validation.errors.password}
-                          </FormFeedback>
-                        ) : null}
-                      </div> */}
-                      {/* <div className="form-check">
-                        <input
-                          type="checkbox"
-                          className="form-check-input"
-                          id="customControlInline"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="customControlInline"
-                        >
-                          Remember me
-                        </label>
-                      </div> */}
+                      <>
+                      <div className="wrapper">
+  <canvas ref={canvasRef} width="200" height="70" />
+  {/* <button id="reload-button" onClick={handleReloadClick}>
+    <i className="bx bx-aperture"></i>
+  </button> */}
+</div>
 
-                      <div className="mt-3 d-grid">
+                <div className="mb-3">
+                        <Input
+                          name="userInput"
+                          // className="form-control"
+                          placeholder="Enter the text in the image"
+                          type="text"
+                          onChange={handleUserInputChange}                          
+                          value={userInput}
+                          // id="user-input"
+                        />
+                    
+                      </div>
+              
+                    </>
+                   <div className="mt-3 d-grid">
                         <button
                           className="btn btn-primary btn-block"
                           type="submit"

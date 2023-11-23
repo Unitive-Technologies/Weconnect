@@ -12,16 +12,25 @@ import ForgetPwd from "../pages/Authentication/ForgetPassword";
 
 // Dashboard
 import Dashboard from "../pages/Dashboard/index";
+// import UserList from "../pages/MsoMaster/Access/UserList/index";
 
+import ContactsGrid from "../pages/Contacts/contacts-grid";
+import ContactsList from "../pages/Contacts/ContactList/contacts-list";
+import ContactsProfile from "../pages/Contacts/ContactsProfile/contacts-profile";
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
 
   //   // //profile
   { path: "/profile", component: <UserProfile /> },
-
+  // { path: "/mso-master-access-user-list", component: <UserList /> },
   //   // this route should be at the end of all other routes
   //   // eslint-disable-next-line react/display-name
   { path: "/", exact: true, component: <Navigate to="/dashboard" /> },
+
+  { path: "/contacts-grid", component: <ContactsGrid /> },
+  { path: "/contacts-list", component: <ContactsList /> },
+  { path: "/contacts-profile", component: <ContactsProfile /> },
+
 ];
 
 const publicRoutes = [
