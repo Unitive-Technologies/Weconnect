@@ -107,25 +107,32 @@ const Login = (props) => {
           () => Math.random() - 0.5).join(''); 
   }; 
 
-  const drawCaptchaOnCanvas = (ctx, captcha) => { 
-      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); 
-      const textColors = ['rgb(0,0,0)', 'rgb(130,130,130)']; 
-      const letterSpace = 150 / captcha.length; 
-      for (let i = 0; i < captcha.length; i++) { 
-          const xInitialSpace = 25; 
-          ctx.font = '20px Roboto Mono'; 
-          ctx.fillStyle = textColors[Math.floor( 
-              Math.random() * 2)]; 
-          ctx.fillText( 
-              captcha[i], 
-              xInitialSpace + i * letterSpace, 
-                
-              // Randomize Y position slightly 
-              Math.floor(Math.random() * 16 + 25), 
-              100 
-          ); 
-      } 
-  }; 
+  const drawCaptchaOnCanvas = (ctx) => {
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+    const textColors = ['rgb(0,0,0)', 'rgb(130,130,130)'];
+    const captcha = generateRandomNumber(100000, 999999); 
+
+    const letterSpace = 150 / captcha.toString().length;
+
+    for (let i = 0; i < captcha.toString().length; i++) {
+        const xInitialSpace = 25;
+        ctx.font = '20px Roboto Mono';
+        ctx.fillStyle = textColors[Math.floor(Math.random() * 2)];
+        ctx.fillText(
+            captcha.toString()[i],
+            xInitialSpace + i * letterSpace,
+            Math.floor(Math.random() * 16 + 25),
+            100
+        );
+    }
+};
+
+// Function to generate a random number in a given range
+const generateRandomNumber = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
 
   const initializeCaptcha = () => {
     setUserInput('');
@@ -257,20 +264,20 @@ const Login = (props) => {
 <>
 <div className="wrapper">
   <canvas ref={canvasRef} width="200" height="70" />
-  <button id="reload-button" onClick={handleReloadClick}>
+  {/* <button id="reload-button" onClick={handleReloadClick}>
     <i className="bx bx-aperture"></i>
-  </button>
+  </button> */}
 </div>
 
                 <div className="mb-3">
                         <Input
-                          // name="email"
-                          className="form-control"
+                          name="userInput"
+                          // className="form-control"
                           placeholder="Enter the text in the image"
                           type="text"
                           onChange={handleUserInputChange}                          
                           value={userInput}
-                          id="user-input"
+                          // id="user-input"
                         />
                     
                       </div>
