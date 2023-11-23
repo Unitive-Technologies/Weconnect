@@ -49,7 +49,11 @@ const Login = (props) => {
     password: Yup.string().required("Please Enter Your Password"),
   }),
   onSubmit: (values) => {
-    if (userInput === captchaText) {
+    const numericCaptcha = captchaText.replace(/\D/g, ''); // Extract only numeric characters
+    console.log('userInput:', userInput);
+    console.log('numericCaptcha:', numericCaptcha);
+  
+    if (userInput === numericCaptcha) {
       dispatch(loginUser(values, props.router.navigate));
     } else {
       // Handle incorrect captcha
@@ -59,6 +63,8 @@ const Login = (props) => {
       initializeCaptcha(ctx);
     }
   },
+  
+  
 });
 
   const selectLoginState = (state) => state.Login;
@@ -92,73 +98,48 @@ const Login = (props) => {
       initializeCaptcha(ctx); 
   }, []); 
 
-  const generateRandomChar = (min, max) => 
-      String.fromCharCode(Math.floor 
-          (Math.random() * (max - min + 1) + min)); 
+          const generateCaptchaText = () => {
+            return generateRandomNumber(100000, 999999).toString();
+          };
+          
+          
+          const drawCaptchaOnCanvas = (ctx, captcha) => {
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+          
+            const textColors = ['rgb(0,0,0)', 'rgb(130,130,130)'];
+            const letterSpace = 150 / captcha.length;
+          
+            for (let i = 0; i < captcha.length; i++) {
+              const xInitialSpace = 25;
+              ctx.font = '20px Roboto Mono';
+              ctx.fillStyle = textColors[Math.floor(Math.random() * 2)];
+              ctx.fillText(
+                captcha[i],
+                xInitialSpace + i * letterSpace,
+                Math.floor(Math.random() * 16 + 25),
+                100
+              );
+            }
+          };
+          
 
-  const generateCaptchaText = () => { 
-      let captcha = ''; 
-      for (let i = 0; i < 3; i++) { 
-          captcha += generateRandomChar(65, 90); 
-          captcha += generateRandomChar(97, 122); 
-          captcha += generateRandomChar(48, 57); 
-      } 
-      return captcha.split('').sort( 
-          () => Math.random() - 0.5).join(''); 
-  }; 
-
-  const drawCaptchaOnCanvas = (ctx) => {
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-
-    const textColors = ['rgb(0,0,0)', 'rgb(130,130,130)'];
-    const captcha = generateRandomNumber(100000, 999999); 
-
-    const letterSpace = 150 / captcha.toString().length;
-
-    for (let i = 0; i < captcha.toString().length; i++) {
-        const xInitialSpace = 25;
-        ctx.font = '20px Roboto Mono';
-        ctx.fillStyle = textColors[Math.floor(Math.random() * 2)];
-        ctx.fillText(
-            captcha.toString()[i],
-            xInitialSpace + i * letterSpace,
-            Math.floor(Math.random() * 16 + 25),
-            100
-        );
-    }
-};
-
-// Function to generate a random number in a given range
 const generateRandomNumber = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
+const initializeCaptcha = () => {
+  setUserInput('');
+  const newCaptcha = generateCaptchaText();
+  setCaptchaText(newCaptcha);
+  const canvas = canvasRef.current;
+  const ctx = canvas.getContext('2d');
+  drawCaptchaOnCanvas(ctx, newCaptcha);
+};
 
-  const initializeCaptcha = () => {
-    setUserInput('');
-    const newCaptcha = generateCaptchaText();
-    setCaptchaText(newCaptcha);
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    drawCaptchaOnCanvas(ctx, newCaptcha);
-  };
-  
-  const handleReloadClick = () => {
-    initializeCaptcha();
-  };
+
   
   const handleUserInputChange = (e) => {
     setUserInput(e.target.value);
-  };
-  
-  const handleSubmit = () => {
-    if (userInput === captchaText) {
-      // Handle successful captcha verification
-      dispatch(loginUser(values, props.router.navigate));
-    } else {
-      // Handle incorrect captcha (you can choose not to show an alert here)
-      initializeCaptcha();
-    }
   };
   
 
@@ -261,8 +242,8 @@ const generateRandomNumber = (min, max) => {
                         ) : null}
                       </div>
 
-<>
-<div className="wrapper">
+                      <>
+                      <div className="wrapper">
   <canvas ref={canvasRef} width="200" height="70" />
   {/* <button id="reload-button" onClick={handleReloadClick}>
     <i className="bx bx-aperture"></i>
