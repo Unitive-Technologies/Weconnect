@@ -2,7 +2,7 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import * as url from "../url_helper";
 import accessToken from "../jwt-token-access/accessToken";
-
+import { users as members } from "../../common/data";
 let users = [
   {
     uid: 1,
@@ -10,7 +10,7 @@ let users = [
     role: "admin",
     password: "123456",
     // email: "admin@themesbrand.com",
-    email: "admin"
+    email: "admin",
   },
 ];
 
@@ -135,7 +135,7 @@ const fakeBackend = () => {
 
   mock.onPost("/post-fake-profile").reply((config) => {
     const user = JSON.parse(config["data"]);
-    
+
     const validUser = users.filter((usr) => usr.uid === user.idx);
 
     return new Promise((resolve, reject) => {
@@ -170,6 +170,19 @@ const fakeBackend = () => {
       });
     });
   });
+
+  // mock.onGet(url.GET_USERS).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (members) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, members]);
+  //       } else {
+  //         reject([400, "Cannot get users"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onPost("/social-login").reply((config) => {
     const user = JSON.parse(config["data"]);

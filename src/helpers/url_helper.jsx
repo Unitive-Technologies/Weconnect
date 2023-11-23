@@ -11,3 +11,9 @@ export const SOCIAL_LOGIN = "/social-login";
 //PROFILE
 export const POST_EDIT_JWT_PROFILE = "/post-jwt-profile";
 export const POST_EDIT_PROFILE = "/post-fake-profile";
+
+export const GET_USERS = "/userslist";
+export const GET_USER_PROFILE = "/user";
+export const ADD_NEW_USER = "/add/user";
+export const UPDATE_USER = "/update/user";
+export const DELETE_USER = "/delete/user";

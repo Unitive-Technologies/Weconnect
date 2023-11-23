@@ -25,7 +25,7 @@ const contacts = (state = INIT_STATE, action) => {
       return {
         ...state,
         users: action.payload,
-        loading: true,
+        loading: false,
       };
 
     case GET_USERS_FAIL:
