@@ -36416,5 +36416,58 @@
         "name": "User"
       }
     ]
+  },
+  "designation-list": {
+    "success": true,
+    "status": 200,
+    "data": [
+      {
+        "id": 1,
+        "name": "Director",
+        "code": "DIR",
+        "parent_id": 0,
+        "type": 0,
+        "description": "Director",
+        "status": 1,
+        "created_at": "2020-01-28 16:54:42",
+        "updated_at": null,
+        "created_by": 1,
+        "updated_by": 0,
+        "status_lbl": "Active",
+        "created_by_lbl": "EFFICIENSE(trai_dpo)",
+        "parent_lbl": "",
+        "type_lbl": "STAFF"
+      }
+    ]
+  },
+  "designation-type": {
+    "success": true,
+    "status": 200,
+    "data": [
+      {
+        "id": 0,
+        "value": "STAFF"
+      },
+      {
+        "id": 1,
+        "value": "Management User"
+      },
+      {
+        "id": 3,
+        "value": "Engineer"
+      },
+      {
+        "id": 2,
+        "value": "Customer Care"
+      },
+      {
+        "id": 4,
+        "value": "Collection"
+      },
+      {
+        "id": 5,
+        "value": "LCO"
+      }
+    ]
   }
 }

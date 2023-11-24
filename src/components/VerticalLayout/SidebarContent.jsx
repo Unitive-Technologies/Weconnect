@@ -176,7 +176,7 @@ const SidebarContent = (props) => {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/#">
+                      <Link to="/designationlist">
                         <span key="#">{props.t("Designation List")}</span>
                       </Link>
                     </li>

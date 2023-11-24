@@ -17,6 +17,7 @@ import Dashboard from "../pages/Dashboard/index";
 import ContactsList from "../pages/Contacts/ContactList/contacts-list";
 import CustomerUserlist from "../pages/Contacts/CustomerUserList/customer-userlist";
 import GroupPolicyList from "../pages/Contacts/GroupPolicyList/groupPolicyList";
+import DesignationList from "../pages/Contacts/DesignationList/designationList";
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
 
@@ -30,6 +31,7 @@ const authProtectedRoutes = [
   { path: "/grouppolicylist", component: <GroupPolicyList /> },
   { path: "/userslist", component: <ContactsList /> },
   { path: "/customer-userslist", component: <CustomerUserlist /> },
+  { path: "/designationlist", component: <DesignationList /> },
 ];
 
 const publicRoutes = [
