@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
-import Spinners from "../../../components/Common/Spinner"
+import Spinners from "../../../components/Common/Spinner";
 import {
   Card,
   CardBody,
@@ -105,16 +105,14 @@ const ContactsList = (props) => {
     selectContactsState,
     (Contacts) => ({
       users: Contacts.users,
-      loading: Contacts.loading
+      loading: Contacts.loading,
     })
   );
 
-  const {
-    users, loading
-  } = useSelector(ContactsProperties);
+  const { users, loading } = useSelector(ContactsProperties);
 
   useEffect(() => {
-    console.log('Users data in component:', users);
+    console.log("Users data in component:", users);
   }, [users]);
   const [isLoading, setLoading] = useState(loading);
 
@@ -126,105 +124,156 @@ const ContactsList = (props) => {
     () => [
       {
         Header: "#",
-        // accessor: "name",
         disableFilters: true,
         filterable: true,
-        accessor: (cellProps) => (
-          <>
-            {!cellProps.img ? (
-              <div className="avatar-xs">
-                <span className="avatar-title rounded-circle">
-                  {cellProps.name.charAt(0)}
-                </span>
-              </div>
-            ) : (
-              <div>
-                <img
-                  className="rounded-circle avatar-xs"
-                  src={cellProps.img}
-                  alt=""
-                />
-              </div>
-            )}
-          </>
-        ),
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.index + 1}
+                </Link>
+              </h5>
+            </>
+          );
+        },
       },
       {
         Header: "Name",
         accessor: "name",
         filterable: true,
-        Cell: cellProps => {
+        Cell: (cellProps) => {
           return (
             <>
               <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">{cellProps.row.original.name}</Link>
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.name}
+                </Link>
               </h5>
-              <p className="text-muted mb-0">{cellProps.row.original.designation}</p>
+              <p className="text-muted mb-0">
+                {cellProps.row.original.designation}
+              </p>
             </>
-          )
+          );
         },
       },
       {
         Header: "Login ID",
         accessor: "login",
         filterable: true,
-        Cell: cellProps => {
-          // return <Login {...cellProps} />;
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.username}
+                </Link>
+              </h5>
+            </>
+          );
         },
       },
       {
         Header: "Mobile",
         accessor: "mobile",
         filterable: true,
-        Cell: cellProps => {
-          // return <Login {...cellProps} />;
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.mobile_no}
+                </Link>
+              </h5>
+            </>
+          );
         },
       },
       {
         Header: "Status",
         accessor: "status",
         filterable: true,
-        Cell: cellProps => {
-          // return <Login {...cellProps} />;
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.status}
+                </Link>
+              </h5>
+            </>
+          );
         },
       },
       {
         Header: "Type",
         accessor: "type",
         filterable: true,
-        Cell: cellProps => {
-          // return <Login {...cellProps} />;
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.type}
+                </Link>
+              </h5>
+            </>
+          );
         },
       },
       {
         Header: "Role",
         accessor: "role",
         filterable: true,
-        Cell: cellProps => {
-          // return <Login {...cellProps} />;
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.role}
+                </Link>
+              </h5>
+            </>
+          );
         },
       },
       {
         Header: "Organization",
         accessor: "organization",
         filterable: true,
-        Cell: cellProps => {
-          // return <Email {...cellProps} />;
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.operator_lbl}
+                </Link>
+              </h5>
+            </>
+          );
         },
       },
       {
         Header: "Parent",
         accessor: "parent",
         filterable: true,
-        Cell: cellProps => {
-          // return <Tags {...cellProps} />;
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.parent_lbl}
+                </Link>
+              </h5>
+            </>
+          );
         },
       },
       {
         Header: "Group Policy",
         accessor: "grouppolicy",
         filterable: true,
-        Cell: cellProps => {
+        Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
         },
       },
@@ -232,32 +281,64 @@ const ContactsList = (props) => {
         Header: "LAST LOGIN TIME",
         accessor: "lastlogintime",
         filterable: true,
-        Cell: cellProps => {
-          // return <Tags {...cellProps} />;
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.last_login_at}
+                </Link>
+              </h5>
+            </>
+          );
         },
       },
       {
         Header: "Settings",
         accessor: "settings",
         filterable: true,
-        Cell: cellProps => {
-          // return <Tags {...cellProps} />;
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {/* {cellProps.row.original.setting} */}
+                </Link>
+              </h5>
+            </>
+          );
         },
       },
       {
         Header: "Created At",
         accessor: "createat",
         filterable: true,
-        Cell: cellProps => {
-          // return <Tags {...cellProps} />;
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.created_at}
+                </Link>
+              </h5>
+            </>
+          );
         },
       },
       {
         Header: "Created BY",
         accessor: "createdby",
         filterable: true,
-        Cell: cellProps => {
-          // return <Tags {...cellProps} />;
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.created_by_lbl}
+                </Link>
+              </h5>
+            </>
+          );
         },
       },
 
@@ -276,7 +357,7 @@ const ContactsList = (props) => {
       // },
       {
         Header: "Action",
-        Cell: cellProps => {
+        Cell: (cellProps) => {
           return (
             <div className="d-flex gap-3">
               <Link
@@ -312,7 +393,6 @@ const ContactsList = (props) => {
     ],
     []
   );
-
 
   useEffect(() => {
     if (users && !users.length) {
@@ -402,194 +482,196 @@ const ContactsList = (props) => {
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Contacts" breadcrumbItem="User List" />
-          {
-            isLoading ? <Spinners setLoading={setLoading} />
-              :
-              <Row>
-                <Col lg="12">
-                  <Card>
-                    <CardBody>
-                      {console.log("users:" + JSON.stringify(users))}
-                      <TableContainer
-                        isPagination={true}
-                        columns={columns}
-                        data={users}
-                        isGlobalFilter={true}
-                        isAddUserList={true}
-                        isShowingPageLength={true}
-                        iscustomPageSizeOptions={true}
-                        handleUserClick={handleUserClicks}
-                        customPageSize={8}
-                        tableClass="table align-middle table-nowrap table-hover"
-                        theadClass="table-light"
-                        paginationDiv="col-sm-12 col-md-7"
-                        pagination="pagination pagination-rounded justify-content-end mt-4"
-                      />
-                      <Modal isOpen={modal} toggle={toggle}>
-                        <ModalHeader toggle={toggle} tag="h4">
-                          {!!isEdit ? "Edit User" : "Add User"}
-                        </ModalHeader>
-                        <ModalBody>
-                          <Form
-                            onSubmit={(e) => {
-                              e.preventDefault();
-                              validation.handleSubmit();
-                              return false;
-                            }}
-                          >
-                            <Row>
-                              <Col xs={12}>
-                                <div className="mb-3">
-                                  <Label className="form-label">Name</Label>
-                                  <Input
-                                    name="name"
-                                    type="text"
-                                    placeholder="Insert Name"
-                                    onChange={validation.handleChange}
-                                    onBlur={validation.handleBlur}
-                                    value={validation.values.name || ""}
-                                    invalid={
-                                      validation.touched.name &&
-                                        validation.errors.name
-                                        ? true
-                                        : false
-                                    }
-                                  />
-                                  {validation.touched.name &&
-                                    validation.errors.name ? (
-                                    <FormFeedback type="invalid">
-                                      {validation.errors.name}
-                                    </FormFeedback>
-                                  ) : null}
-                                </div>
-                                <div className="mb-3">
-                                  <Label className="form-label">Designation</Label>
-                                  <Input
-                                    name="designation"
-                                    label="Designation"
-                                    placeholder="Insert Designation"
-                                    type="text"
-                                    onChange={validation.handleChange}
-                                    onBlur={validation.handleBlur}
-                                    value={validation.values.designation || ""}
-                                    invalid={
-                                      validation.touched.designation &&
-                                        validation.errors.designation
-                                        ? true
-                                        : false
-                                    }
-                                  />
-                                  {validation.touched.designation &&
-                                    validation.errors.designation ? (
-                                    <FormFeedback type="invalid">
-                                      {validation.errors.designation}
-                                    </FormFeedback>
-                                  ) : null}
-                                </div>
-                                <div className="mb-3">
-                                  <Label className="form-label">Email</Label>
-                                  <Input
-                                    name="email"
-                                    label="Email"
-                                    type="email"
-                                    placeholder="Insert Email"
-                                    onChange={validation.handleChange}
-                                    onBlur={validation.handleBlur}
-                                    value={validation.values.email || ""}
-                                    invalid={
-                                      validation.touched.email &&
-                                        validation.errors.email
-                                        ? true
-                                        : false
-                                    }
-                                  />
-                                  {validation.touched.email &&
-                                    validation.errors.email ? (
-                                    <FormFeedback type="invalid">
-                                      {validation.errors.email}
-                                    </FormFeedback>
-                                  ) : null}
-                                </div>
-                                <div className="mb-3">
-                                  <Label className="form-label">Option</Label>
-                                  <Input
-                                    type="select"
-                                    name="tags"
-                                    className="form-select"
-                                    multiple={true}
-                                    onChange={validation.handleChange}
-                                    onBlur={validation.handleBlur}
-                                    value={validation.values.tags || []}
-                                    invalid={
-                                      validation.touched.tags &&
-                                        validation.errors.tags
-                                        ? true
-                                        : false
-                                    }
-                                  >
-                                    <option>Photoshop</option>
-                                    <option>illustrator</option>
-                                    <option>Html</option>
-                                    <option>Php</option>
-                                    <option>Java</option>
-                                    <option>Python</option>
-                                    <option>UI/UX Designer</option>
-                                    <option>Ruby</option>
-                                    <option>Css</option>
-                                  </Input>
-                                  {validation.touched.tags &&
-                                    validation.errors.tags ? (
-                                    <FormFeedback type="invalid">
-                                      {validation.errors.tags}
-                                    </FormFeedback>
-                                  ) : null}
-                                </div>
-                                <div className="mb-3">
-                                  <Label className="form-label">Projects</Label>
-                                  <Input
-                                    name="projects"
-                                    label="Projects"
-                                    type="text"
-                                    placeholder="Insert Projects"
-                                    onChange={validation.handleChange}
-                                    onBlur={validation.handleBlur}
-                                    value={validation.values.projects || ""}
-                                    invalid={
-                                      validation.touched.projects &&
-                                        validation.errors.projects
-                                        ? true
-                                        : false
-                                    }
-                                  />
-                                  {validation.touched.projects &&
-                                    validation.errors.projects ? (
-                                    <FormFeedback type="invalid">
-                                      {validation.errors.projects}
-                                    </FormFeedback>
-                                  ) : null}
-                                </div>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col>
-                                <div className="text-end">
-                                  <button
-                                    type="submit"
-                                    className="btn btn-success save-user"
-                                  >
-                                    Save
-                                  </button>
-                                </div>
-                              </Col>
-                            </Row>
-                          </Form>
-                        </ModalBody>
-                      </Modal>
-                    </CardBody>
-                  </Card>
-                </Col>
-              </Row>
-          }
+          {isLoading ? (
+            <Spinners setLoading={setLoading} />
+          ) : (
+            <Row>
+              <Col lg="12">
+                <Card>
+                  <CardBody>
+                    {console.log("users:" + JSON.stringify(users))}
+                    <TableContainer
+                      isPagination={true}
+                      columns={columns}
+                      data={users}
+                      isGlobalFilter={true}
+                      isAddUserList={true}
+                      isShowingPageLength={true}
+                      iscustomPageSizeOptions={true}
+                      handleUserClick={handleUserClicks}
+                      customPageSize={8}
+                      tableClass="table align-middle table-nowrap table-hover"
+                      theadClass="table-light"
+                      paginationDiv="col-sm-12 col-md-7"
+                      pagination="pagination pagination-rounded justify-content-end mt-4"
+                    />
+                    <Modal isOpen={modal} toggle={toggle}>
+                      <ModalHeader toggle={toggle} tag="h4">
+                        {!!isEdit ? "Edit User" : "Add User"}
+                      </ModalHeader>
+                      <ModalBody>
+                        <Form
+                          onSubmit={(e) => {
+                            e.preventDefault();
+                            validation.handleSubmit();
+                            return false;
+                          }}
+                        >
+                          <Row>
+                            <Col xs={12}>
+                              <div className="mb-3">
+                                <Label className="form-label">Name</Label>
+                                <Input
+                                  name="name"
+                                  type="text"
+                                  placeholder="Insert Name"
+                                  onChange={validation.handleChange}
+                                  onBlur={validation.handleBlur}
+                                  value={validation.values.name || ""}
+                                  invalid={
+                                    validation.touched.name &&
+                                    validation.errors.name
+                                      ? true
+                                      : false
+                                  }
+                                />
+                                {validation.touched.name &&
+                                validation.errors.name ? (
+                                  <FormFeedback type="invalid">
+                                    {validation.errors.name}
+                                  </FormFeedback>
+                                ) : null}
+                              </div>
+                              <div className="mb-3">
+                                <Label className="form-label">
+                                  Designation
+                                </Label>
+                                <Input
+                                  name="designation"
+                                  label="Designation"
+                                  placeholder="Insert Designation"
+                                  type="text"
+                                  onChange={validation.handleChange}
+                                  onBlur={validation.handleBlur}
+                                  value={validation.values.designation || ""}
+                                  invalid={
+                                    validation.touched.designation &&
+                                    validation.errors.designation
+                                      ? true
+                                      : false
+                                  }
+                                />
+                                {validation.touched.designation &&
+                                validation.errors.designation ? (
+                                  <FormFeedback type="invalid">
+                                    {validation.errors.designation}
+                                  </FormFeedback>
+                                ) : null}
+                              </div>
+                              <div className="mb-3">
+                                <Label className="form-label">Email</Label>
+                                <Input
+                                  name="email"
+                                  label="Email"
+                                  type="email"
+                                  placeholder="Insert Email"
+                                  onChange={validation.handleChange}
+                                  onBlur={validation.handleBlur}
+                                  value={validation.values.email || ""}
+                                  invalid={
+                                    validation.touched.email &&
+                                    validation.errors.email
+                                      ? true
+                                      : false
+                                  }
+                                />
+                                {validation.touched.email &&
+                                validation.errors.email ? (
+                                  <FormFeedback type="invalid">
+                                    {validation.errors.email}
+                                  </FormFeedback>
+                                ) : null}
+                              </div>
+                              <div className="mb-3">
+                                <Label className="form-label">Option</Label>
+                                <Input
+                                  type="select"
+                                  name="tags"
+                                  className="form-select"
+                                  multiple={true}
+                                  onChange={validation.handleChange}
+                                  onBlur={validation.handleBlur}
+                                  value={validation.values.tags || []}
+                                  invalid={
+                                    validation.touched.tags &&
+                                    validation.errors.tags
+                                      ? true
+                                      : false
+                                  }
+                                >
+                                  <option>Photoshop</option>
+                                  <option>illustrator</option>
+                                  <option>Html</option>
+                                  <option>Php</option>
+                                  <option>Java</option>
+                                  <option>Python</option>
+                                  <option>UI/UX Designer</option>
+                                  <option>Ruby</option>
+                                  <option>Css</option>
+                                </Input>
+                                {validation.touched.tags &&
+                                validation.errors.tags ? (
+                                  <FormFeedback type="invalid">
+                                    {validation.errors.tags}
+                                  </FormFeedback>
+                                ) : null}
+                              </div>
+                              <div className="mb-3">
+                                <Label className="form-label">Projects</Label>
+                                <Input
+                                  name="projects"
+                                  label="Projects"
+                                  type="text"
+                                  placeholder="Insert Projects"
+                                  onChange={validation.handleChange}
+                                  onBlur={validation.handleBlur}
+                                  value={validation.values.projects || ""}
+                                  invalid={
+                                    validation.touched.projects &&
+                                    validation.errors.projects
+                                      ? true
+                                      : false
+                                  }
+                                />
+                                {validation.touched.projects &&
+                                validation.errors.projects ? (
+                                  <FormFeedback type="invalid">
+                                    {validation.errors.projects}
+                                  </FormFeedback>
+                                ) : null}
+                              </div>
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col>
+                              <div className="text-end">
+                                <button
+                                  type="submit"
+                                  className="btn btn-success save-user"
+                                >
+                                  Save
+                                </button>
+                              </div>
+                            </Col>
+                          </Row>
+                        </Form>
+                      </ModalBody>
+                    </Modal>
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+          )}
         </Container>
       </div>
       <ToastContainer />
