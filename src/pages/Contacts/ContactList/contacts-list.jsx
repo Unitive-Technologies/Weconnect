@@ -39,6 +39,7 @@ import { isEmpty } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import Login from "../../Authentication/Login";
 
 const ContactsList = (props) => {
   //meta title
@@ -164,34 +165,115 @@ const ContactsList = (props) => {
         },
       },
       {
-        Header: "Email",
-        accessor: "email",
+        Header: "Login ID",
+        accessor: "login",
         filterable: true,
         Cell: cellProps => {
-          return <Email {...cellProps} />;
+          // return <Login {...cellProps} />;
         },
       },
       {
-        Header: "Tags",
-        accessor: "tags",
+        Header: "Mobile",
+        accessor: "mobile",
         filterable: true,
         Cell: cellProps => {
-          return <Tags {...cellProps} />;
+          // return <Login {...cellProps} />;
         },
       },
       {
-        Header: "Projects",
-        accessor: "projects",
+        Header: "Status",
+        accessor: "status",
         filterable: true,
         Cell: cellProps => {
-          return (
-            <>
-              {" "}
-              <Projects {...cellProps} />{" "}
-            </>
-          );
+          // return <Login {...cellProps} />;
         },
       },
+      {
+        Header: "Type",
+        accessor: "type",
+        filterable: true,
+        Cell: cellProps => {
+          // return <Login {...cellProps} />;
+        },
+      },
+      {
+        Header: "Role",
+        accessor: "role",
+        filterable: true,
+        Cell: cellProps => {
+          // return <Login {...cellProps} />;
+        },
+      },
+      {
+        Header: "Organization",
+        accessor: "organization",
+        filterable: true,
+        Cell: cellProps => {
+          // return <Email {...cellProps} />;
+        },
+      },
+      {
+        Header: "Parent",
+        accessor: "parent",
+        filterable: true,
+        Cell: cellProps => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "Group Policy",
+        accessor: "grouppolicy",
+        filterable: true,
+        Cell: cellProps => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "LAST LOGIN TIME",
+        accessor: "lastlogintime",
+        filterable: true,
+        Cell: cellProps => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "Settings",
+        accessor: "settings",
+        filterable: true,
+        Cell: cellProps => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "Created At",
+        accessor: "createat",
+        filterable: true,
+        Cell: cellProps => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "Created BY",
+        accessor: "createdby",
+        filterable: true,
+        Cell: cellProps => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+
+      // {
+      //   Header: "Projects",
+      //   accessor: "projects",
+      //   filterable: true,
+      //   Cell: cellProps => {
+      //     return (
+      //       <>
+      //         {" "}
+      //         <Projects {...cellProps} />{" "}
+      //       </>
+      //     );
+      //   },
+      // },
       {
         Header: "Action",
         Cell: cellProps => {
@@ -327,7 +409,7 @@ const ContactsList = (props) => {
                 <Col lg="12">
                   <Card>
                     <CardBody>
-                    {console.log("users:" + JSON.stringify(users))}
+                      {console.log("users:" + JSON.stringify(users))}
                       <TableContainer
                         isPagination={true}
                         columns={columns}
