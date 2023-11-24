@@ -42,7 +42,7 @@ import { ToastContainer } from "react-toastify";
 
 const CustomerUserList = (props) => {
   //meta title
-  document.title = "User List | Skote - Vite React Admin & Dashboard Template";
+  document.title = "Customer User List | Skote - Vite React Admin & Dashboard Template";
 
   const dispatch = useDispatch();
   const [contact, setContact] = useState();
@@ -363,7 +363,7 @@ const CustomerUserList = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Contacts" breadcrumbItem="User List" />
+          <Breadcrumbs title="Contacts" breadcrumbItem="Customer User List" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
