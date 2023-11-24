@@ -154,12 +154,10 @@ const CustomerUserList = (props) => {
       },
       {
         Header: "LCO",
-        accessor: "lco",//"operator_lbl",
+        accessor: "lco", //"operator_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          <p className="text-muted mb-0">
-          {cellProps.row.original.lco}
-          </p>;
+          <p className="text-muted mb-0">{cellProps.row.original.lco}</p>;
         },
       },
       {
@@ -167,9 +165,7 @@ const CustomerUserList = (props) => {
         accessor: "lco_code",
         filterable: true,
         Cell: (cellProps) => {
-          <p className="text-muted mb-0">
-            {cellProps.row.original.lco_code}
-          </p>;
+          <p className="text-muted mb-0">{cellProps.row.original.lco_code}</p>;
         },
       },
       {
@@ -178,20 +174,24 @@ const CustomerUserList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           <p className="font-size-14 mb-1">
-              <Link className="text-dark" to="#">
-                {cellProps.row.original.last_login_at === null
-                  ? "Never Logged In"
-                  : cellProps.row.original.last_login_at}
-              </Link>
-            </p>
+            <Link className="text-dark" to="#">
+              {cellProps.row.original.last_login_at === null
+                ? "Never Logged In"
+                : cellProps.row.original.last_login_at}
+            </Link>
+          </p>;
         },
       },
       {
         Header: "Created At",
-        accessor: "createdat",
+        accessor: "created_at",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_at}
+            </p>
+          );
         },
       },
       {
