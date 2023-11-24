@@ -36554,5 +36554,89 @@
         "multi": true
       }
     }
+  },
+  "notification-template-list": {
+    "success": true,
+    "status": 200,
+    "data": [
+      {
+        "_id": 2,
+        "msg_head": "Announcement",
+        "msg_content": "వి డిజిటల్ ఆపరేటర్లకు ముఖ్య గమనిక,ఈరోజు 02.11.2023 9:00 PM గంటల నుండి కొత్త పోర్టల్ UPGRADE జరుగుచుండటం వలన మీ యొక్క యాప్ కొంత సమయం పనిచేయబడదు, దయచేసి ఏమైనా యాక్టివేషన్స్ ఉంటే 8:00 PM గంటల లోపు ప్లాన్ చేసుకొని యాక్టివ్ చేసుకోగలరు.",
+        "msg_type": 1,
+        "status": 1,
+        "msg_fontsize": "20",
+        "msg_fontcolor": "#e0421a",
+        "msg_fontbackgroundcolor": "#f8f7f8",
+        "msg_fontfamily": "Times New Roman",
+        "msg_logo": [],
+        "created_at": 1692714021,
+        "updated_at": 1698919871,
+        "created_by": 2,
+        "updated_by": 2,
+        "id": 2,
+        "status_lbl": "Active",
+        "created_by_lbl": "my mso(mso)",
+        "created_at_lbl": "2023-08-22 19:50:21",
+        "msg_type_lbl": "Alert"
+      },
+      {
+        "_id": 1,
+        "msg_head": "Welcome",
+        "msg_content": "వి డిజిటల్ ఆపరేటర్లకు ముఖ్య గమనిక,ఈరోజు 02.11.2023 9:00 PM గంటల నుండి కొత్త పోర్టల్ UPGRADE జరుగుచుండటం వలన మీ యొక్క యాప్ కొంత సమయం పనిచేయబడదు, దయచేసి ఏమైనా యాక్టివేషన్స్ ఉంటే 8:00 PM గంటల లోపు ప్లాన్ చేసుకొని యాక్టివ్ చేసుకోగలరు.",
+        "msg_type": 2,
+        "status": 1,
+        "msg_fontsize": "18",
+        "msg_fontcolor": "#ce340d",
+        "msg_fontbackgroundcolor": "#fcfcfc",
+        "msg_fontfamily": "Times New Roman",
+        "msg_logo": [],
+        "created_at": 1692623572,
+        "updated_at": 1698919855,
+        "created_by": 2,
+        "updated_by": 2,
+        "id": 1,
+        "status_lbl": "Active",
+        "created_by_lbl": "my mso(mso)",
+        "created_at_lbl": "2023-08-21 18:42:52",
+        "msg_type_lbl": "Scroll"
+      }
+    ]
+  },
+  "notification-template-search": {
+    "success": true,
+    "status": 200,
+    "data": {
+      "msg_head": {
+        "data": null,
+        "type": "file_string",
+        "label": "Name",
+        "not": false,
+        "file_search": true,
+        "multi": true,
+        "delimited": true
+      },
+      "status": {
+        "data": [
+          {
+            "id": 1,
+            "name": "Active"
+          },
+          {
+            "id": 0,
+            "name": "In-Active"
+          }
+        ],
+        "type": "enum",
+        "label": "Status",
+        "multi": true
+      },
+      "created_at": {
+        "data": null,
+        "type": "date_range",
+        "label": "Added On",
+        "not": false
+      }
+    }
   }
 }

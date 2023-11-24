@@ -19,6 +19,7 @@ import CustomerUserlist from "../pages/Contacts/CustomerUserList/customer-userli
 import GroupPolicyList from "../pages/Contacts/GroupPolicyList/groupPolicyList";
 import DesignationList from "../pages/Contacts/DesignationList/designationList";
 import UserHierarchyList from "../pages/Contacts/UserHierarchyList/userHierarchyList";
+import NotificationTemplateList from "../pages/Contacts/NotificationTemplateList/notificationTemplateList";
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
 
@@ -34,6 +35,10 @@ const authProtectedRoutes = [
   { path: "/customer-userslist", component: <CustomerUserlist /> },
   { path: "/designationlist", component: <DesignationList /> },
   { path: "/user-hierarchylist", component: <UserHierarchyList /> },
+  {
+    path: "/notification-templatelist",
+    component: <NotificationTemplateList />,
+  },
 ];
 
 const publicRoutes = [
