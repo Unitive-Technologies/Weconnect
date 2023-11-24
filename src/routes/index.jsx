@@ -14,9 +14,9 @@ import ForgetPwd from "../pages/Authentication/ForgetPassword";
 import Dashboard from "../pages/Dashboard/index";
 // import UserList from "../pages/MsoMaster/Access/UserList/index";
 
-import ContactsGrid from "../pages/Contacts/contacts-grid";
 import ContactsList from "../pages/Contacts/ContactList/contacts-list";
 import CustomerUserlist from "../pages/Contacts/CustomerUserList/customer-userlist";
+import GroupPolicyList from "../pages/Contacts/GroupPolicyList/groupPolicyList";
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
 
@@ -27,7 +27,7 @@ const authProtectedRoutes = [
   //   // eslint-disable-next-line react/display-name
   { path: "/", exact: true, component: <Navigate to="/dashboard" /> },
 
-  { path: "/contacts-grid", component: <ContactsGrid /> },
+  { path: "/grouppolicylist", component: <GroupPolicyList /> },
   { path: "/userslist", component: <ContactsList /> },
   { path: "/customer-userslist", component: <CustomerUserlist /> },
 ];

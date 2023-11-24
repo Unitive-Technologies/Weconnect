@@ -171,7 +171,7 @@ const SidebarContent = (props) => {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/contacts-profile">
+                      <Link to="/grouppolicylist">
                         <span key="#">{props.t("Group Policy List")}</span>
                       </Link>
                     </li>
