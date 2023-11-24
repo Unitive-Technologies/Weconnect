@@ -36469,5 +36469,90 @@
         "value": "LCO"
       }
     ]
+  },
+  "user-hierarchy": { "success": true, "status": 200, "data": [] },
+  "user-hierarchy-search": {
+    "success": true,
+    "status": 200,
+    "data": {
+      "name": {
+        "data": null,
+        "type": "string",
+        "label": "Name"
+      },
+      "code": {
+        "data": null,
+        "type": "string",
+        "label": "Code"
+      },
+      "email": {
+        "data": null,
+        "type": "string",
+        "label": "Email"
+      },
+      "description": {
+        "data": null,
+        "type": "string",
+        "label": "Description"
+      },
+      "status": {
+        "data": [
+          {
+            "id": 1,
+            "name": "Active"
+          },
+          {
+            "id": 0,
+            "name": "In-Active"
+          }
+        ],
+        "type": "enum",
+        "label": "Status"
+      },
+      "operator_ids": {
+        "data": null,
+        "type": "string",
+        "label": "Operators"
+      },
+      "reports": {
+        "data": null,
+        "type": "string",
+        "label": "Reports"
+      },
+      "designation_id": {
+        "data": null,
+        "type": "string",
+        "label": "Designation"
+      },
+      "parent_id": {
+        "data": null,
+        "type": "string",
+        "label": "Parent"
+      },
+      "created_at": {
+        "data": null,
+        "type": "date_range",
+        "label": "Created At",
+        "not": false
+      },
+      "updated_at": {
+        "data": null,
+        "type": "date_range",
+        "label": "Updated At",
+        "not": false
+      },
+      "created_by": {
+        "data": "https://sms.vdigital.co.in/api/index.php/v1/user/list",
+        "type": "lookup",
+        "label": "Created By",
+        "multi": true
+      },
+      "updated_by": {
+        "data": "https://sms.vdigital.co.in/api/index.php/v1/user/list",
+        "type": "lookup",
+        "label": "Updated By",
+        "multi": true
+      }
+    }
   }
 }

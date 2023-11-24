@@ -181,6 +181,11 @@ const SidebarContent = (props) => {
                       </Link>
                     </li>
                     <li>
+                      <Link to="/user-hierarchylist">
+                        <span key="#">{props.t("User Hierarchy List")}</span>
+                      </Link>
+                    </li>
+                    <li>
                       <Link to="/#">
                         <span key="#">
                           {props.t("Notification Template List")}
