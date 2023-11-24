@@ -60,4 +60,5 @@ const Img = (cell) => {
     </>
   );
 };
+
 export { Name, Email, Tags, Projects, Img };

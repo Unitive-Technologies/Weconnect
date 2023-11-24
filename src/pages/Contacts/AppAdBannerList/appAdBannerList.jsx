@@ -21,7 +21,7 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import { Email, Tags, Projects } from "./contactlistCol";
+import { Email, Tags, Projects } from "./appAdBannerListCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -39,11 +39,11 @@ import { isEmpty } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
-import Login from "../../Authentication/Login";
 
-const ContactsList = (props) => {
+const CustomerUserList = (props) => {
   //meta title
-  document.title = "User List | Skote - Vite React Admin & Dashboard Template";
+  document.title =
+    "App Advertisement Banner List | Skote - Vite React Admin & Dashboard Template";
 
   const dispatch = useDispatch();
   const [contact, setContact] = useState();
@@ -124,27 +124,32 @@ const ContactsList = (props) => {
     () => [
       {
         Header: "#",
+        // accessor: "name",
         disableFilters: true,
         filterable: true,
-        Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
-
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {reverseIndex}
-                </Link>
-              </h5>
-            </>
-          );
-        },
+        accessor: (cellProps) => (
+          <>
+            {!cellProps.img ? (
+              <div className="avatar-xs">
+                <span className="avatar-title rounded-circle">
+                  {cellProps.name.charAt(0)}
+                </span>
+              </div>
+            ) : (
+              <div>
+                <img
+                  className="rounded-circle avatar-xs"
+                  src={cellProps.img}
+                  alt=""
+                />
+              </div>
+            )}
+          </>
+        ),
       },
-
       {
-        Header: "Name",
-        accessor: "name",
+        Header: "Title",
+        accessor: "title",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -162,35 +167,35 @@ const ContactsList = (props) => {
         },
       },
       {
-        Header: "Login ID",
-        accessor: "login",
+        Header: "Caption",
+        accessor: "caption",
         filterable: true,
         Cell: (cellProps) => {
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.username}
-                </Link>
-              </h5>
-            </>
-          );
+          // return <Email {...cellProps} />;
         },
       },
       {
-        Header: "Mobile",
-        accessor: "mobile",
+        Header: "Description",
+        accessor: "description",
         filterable: true,
         Cell: (cellProps) => {
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.mobile_no}
-                </Link>
-              </h5>
-            </>
-          );
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "Start Date",
+        accessor: "startdate",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "End date",
+        accessor: "enddate",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Tags {...cellProps} />;
         },
       },
       {
@@ -198,183 +203,25 @@ const ContactsList = (props) => {
         accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.status === 1
-                    ? "Active"
-                    : cellProps.row.original.status === 0
-                    ? "In-Active"
-                    : "Blocked"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Type",
-        accessor: "type",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.status === 0
-                    ? "MSO"
-                    : cellProps.row.original.status === 1
-                    ? "RO"
-                    : cellProps.row.original.status === 2
-                    ? "DISTRIBUTOR"
-                    : "LCO"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Role",
-        accessor: "role",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.status === 1
-                    ? "Administrator"
-                    : cellProps.row.original.status === 2
-                    ? "Staff"
-                    : "User"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Organization",
-        accessor: "organization",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.operator_lbl}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Parent",
-        accessor: "parent",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.parent_lbl}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Group Policy",
-        accessor: "grouppolicy",
-        filterable: true,
-        Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
         },
       },
       {
-        Header: "LAST LOGIN TIME",
-        accessor: "lastlogintime",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.last_login_at
-                    ? cellProps.row.original.last_login_at
-                    : "Never Logged In"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Settings",
-        accessor: "settings",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {/* {cellProps.row.original.setting} */}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
         Header: "Created At",
-        accessor: "createat",
+        accessor: "createdat",
         filterable: true,
         Cell: (cellProps) => {
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.created_at}
-                </Link>
-              </h5>
-            </>
-          );
+          // return <Projects {...cellProps} />           
         },
       },
       {
-        Header: "Created BY",
+        Header: "Created By",
         accessor: "createdby",
         filterable: true,
         Cell: (cellProps) => {
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.created_by_lbl}
-                </Link>
-              </h5>
-            </>
-          );
+          // return <Projects {...cellProps} />           
         },
       },
-
-      // {
-      //   Header: "Projects",
-      //   accessor: "projects",
-      //   filterable: true,
-      //   Cell: cellProps => {
-      //     return (
-      //       <>
-      //         {" "}
-      //         <Projects {...cellProps} />{" "}
-      //       </>
-      //     );
-      //   },
-      // },
       {
         Header: "Action",
         Cell: (cellProps) => {
@@ -501,7 +348,10 @@ const ContactsList = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Contacts" breadcrumbItem="User List" />
+          <Breadcrumbs
+            title="Access"
+            breadcrumbItem="App Advertisement Banner List"
+          />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -514,12 +364,12 @@ const ContactsList = (props) => {
                       isPagination={true}
                       columns={columns}
                       data={users}
-                      // isGlobalFilter={true}
+                      isGlobalFilter={true}
                       isAddUserList={true}
                       isShowingPageLength={true}
                       iscustomPageSizeOptions={true}
                       handleUserClick={handleUserClicks}
-                      customPageSize={10}
+                      customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
@@ -550,13 +400,13 @@ const ContactsList = (props) => {
                                   value={validation.values.name || ""}
                                   invalid={
                                     validation.touched.name &&
-                                    validation.errors.name
+                                      validation.errors.name
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.name &&
-                                validation.errors.name ? (
+                                  validation.errors.name ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.name}
                                   </FormFeedback>
@@ -576,13 +426,13 @@ const ContactsList = (props) => {
                                   value={validation.values.designation || ""}
                                   invalid={
                                     validation.touched.designation &&
-                                    validation.errors.designation
+                                      validation.errors.designation
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.designation &&
-                                validation.errors.designation ? (
+                                  validation.errors.designation ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.designation}
                                   </FormFeedback>
@@ -600,13 +450,13 @@ const ContactsList = (props) => {
                                   value={validation.values.email || ""}
                                   invalid={
                                     validation.touched.email &&
-                                    validation.errors.email
+                                      validation.errors.email
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.email &&
-                                validation.errors.email ? (
+                                  validation.errors.email ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.email}
                                   </FormFeedback>
@@ -624,7 +474,7 @@ const ContactsList = (props) => {
                                   value={validation.values.tags || []}
                                   invalid={
                                     validation.touched.tags &&
-                                    validation.errors.tags
+                                      validation.errors.tags
                                       ? true
                                       : false
                                   }
@@ -640,7 +490,7 @@ const ContactsList = (props) => {
                                   <option>Css</option>
                                 </Input>
                                 {validation.touched.tags &&
-                                validation.errors.tags ? (
+                                  validation.errors.tags ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.tags}
                                   </FormFeedback>
@@ -658,13 +508,13 @@ const ContactsList = (props) => {
                                   value={validation.values.projects || ""}
                                   invalid={
                                     validation.touched.projects &&
-                                    validation.errors.projects
+                                      validation.errors.projects
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.projects &&
-                                validation.errors.projects ? (
+                                  validation.errors.projects ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.projects}
                                   </FormFeedback>
@@ -699,4 +549,4 @@ const ContactsList = (props) => {
   );
 };
 
-export default withRouter(ContactsList);
+export default withRouter(CustomerUserList);
