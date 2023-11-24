@@ -23,6 +23,9 @@ import NotificationTemplateList from "../pages/Contacts/NotificationTemplateList
 import ScheduledNotificationList from "../pages/Contacts/ScheduledNotificationList/scheduledNotificationList";
 import ScheduleCustomerNotificationList from "../pages/Contacts/ScheduleCustomerNotificationList/scheduleCustomerNotificationList";
 import AppAdBannerList from "../pages/Contacts/AppAdBannerList/appAdBannerList";
+
+// path from organization
+import re 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
 
