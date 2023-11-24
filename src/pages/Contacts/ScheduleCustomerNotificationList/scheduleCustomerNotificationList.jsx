@@ -167,32 +167,99 @@ const CustomerUserList = (props) => {
         },
       },
       {
-        Header: "Email",
-        accessor: "email",
+        Header: "Type",
+        accessor: "type",
         filterable: true,
         Cell: (cellProps) => {
-          return <Email {...cellProps} />;
+          // return <Email {...cellProps} />;
         },
       },
       {
-        Header: "Tags",
-        accessor: "tags",
+        Header: "Schedule Days",
+        accessor: "scheduledays",
         filterable: true,
         Cell: (cellProps) => {
-          return <Tags {...cellProps} />;
+          // return <Email {...cellProps} />;
         },
       },
       {
-        Header: "Projects",
-        accessor: "projects",
+        Header: "OSD Template",
+        accessor: "OSDtemplate",
         filterable: true,
         Cell: (cellProps) => {
-          return (
-            <>
-              {" "}
-              <Projects {...cellProps} />{" "}
-            </>
-          );
+          // return <Email {...cellProps} />;
+        },
+      },
+      {
+        Header: "OSD configuration",
+        accessor: "OSD",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Email {...cellProps} />;
+        },
+      },
+      {
+        Header: "Bmail Template",
+        accessor: "Bmail",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Email {...cellProps} />;
+        },
+      },
+      {
+        Header: "SMS Template",
+        accessor: "SMS",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "Start Date",
+        accessor: "startdate",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return  <Projects {...cellProps} />;
+        },
+      },
+      {
+        Header: "End Date",
+        accessor: "enddate",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return  <Projects {...cellProps} />;
+        },
+      },
+      {
+        Header: "Description",
+        accessor: "description",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return  <Projects {...cellProps} />;
+        },
+      },
+      {
+        Header: "Status",
+        accessor: "status",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return  <Projects {...cellProps} />;
+        },
+      },
+      {
+        Header: "Created At",
+        accessor: "createdat",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return  <Projects {...cellProps} />;
+        },
+      },
+      {
+        Header: "Created BY",
+        accessor: "createdby",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return  <Projects {...cellProps} />;
         },
       },
       {
@@ -373,13 +440,13 @@ const CustomerUserList = (props) => {
                                   value={validation.values.name || ""}
                                   invalid={
                                     validation.touched.name &&
-                                    validation.errors.name
+                                      validation.errors.name
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.name &&
-                                validation.errors.name ? (
+                                  validation.errors.name ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.name}
                                   </FormFeedback>
@@ -399,13 +466,13 @@ const CustomerUserList = (props) => {
                                   value={validation.values.designation || ""}
                                   invalid={
                                     validation.touched.designation &&
-                                    validation.errors.designation
+                                      validation.errors.designation
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.designation &&
-                                validation.errors.designation ? (
+                                  validation.errors.designation ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.designation}
                                   </FormFeedback>
@@ -423,13 +490,13 @@ const CustomerUserList = (props) => {
                                   value={validation.values.email || ""}
                                   invalid={
                                     validation.touched.email &&
-                                    validation.errors.email
+                                      validation.errors.email
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.email &&
-                                validation.errors.email ? (
+                                  validation.errors.email ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.email}
                                   </FormFeedback>
@@ -447,7 +514,7 @@ const CustomerUserList = (props) => {
                                   value={validation.values.tags || []}
                                   invalid={
                                     validation.touched.tags &&
-                                    validation.errors.tags
+                                      validation.errors.tags
                                       ? true
                                       : false
                                   }
@@ -463,7 +530,7 @@ const CustomerUserList = (props) => {
                                   <option>Css</option>
                                 </Input>
                                 {validation.touched.tags &&
-                                validation.errors.tags ? (
+                                  validation.errors.tags ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.tags}
                                   </FormFeedback>
@@ -481,13 +548,13 @@ const CustomerUserList = (props) => {
                                   value={validation.values.projects || ""}
                                   invalid={
                                     validation.touched.projects &&
-                                    validation.errors.projects
+                                      validation.errors.projects
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.projects &&
-                                validation.errors.projects ? (
+                                  validation.errors.projects ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.projects}
                                   </FormFeedback>
