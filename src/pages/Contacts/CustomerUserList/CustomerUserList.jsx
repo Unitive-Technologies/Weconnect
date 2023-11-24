@@ -28,11 +28,9 @@ import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
 
 import {
-  getUsers as onGetUsers,
-  addNewUser as onAddNewUser,
-  updateUser as onUpdateUser,
-  deleteUser as onDeleteUser,
-} from "/src/store/contacts/actions";
+  getCustomerUsers as onGetCustomerUsers,
+} from "/src/store/actions";
+
 import { isEmpty } from "lodash";
 
 //redux
@@ -42,80 +40,26 @@ import { ToastContainer } from "react-toastify";
 
 const CustomerUserList = (props) => {
   //meta title
-  document.title = "Customer User List | Skote - Vite React Admin & Dashboard Template";
+  document.title = "Customer User List | VConnect";
 
   const dispatch = useDispatch();
-  const [contact, setContact] = useState();
-  // validation
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
 
-    initialValues: {
-      name: (contact && contact.name) || "",
-      designation: (contact && contact.designation) || "",
-      tags: (contact && contact.tags) || "",
-      email: (contact && contact.email) || "",
-      projects: (contact && contact.projects) || "",
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
-      designation: Yup.string().required("Please Enter Your Designation"),
-      tags: Yup.array().required("Please Enter Tag"),
-      email: Yup.string()
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-        .required("Please Enter Your Email"),
-      projects: Yup.string().required("Please Enter Your Project"),
-    }),
-    onSubmit: (values) => {
-      if (isEdit) {
-        const updateUser = {
-          id: contact.id,
-          name: values.name,
-          designation: values.designation,
-          tags: values.tags,
-          email: values.email,
-          projects: values.projects,
-        };
-
-        // update user
-        dispatch(onUpdateUser(updateUser));
-        validation.resetForm();
-        setIsEdit(false);
-      } else {
-        const newUser = {
-          id: Math.floor(Math.random() * (30 - 20)) + 20,
-          name: values["name"],
-          designation: values["designation"],
-          email: values["email"],
-          tags: values["tags"],
-          projects: values["projects"],
-        };
-        // save new user
-        dispatch(onAddNewUser(newUser));
-        validation.resetForm();
-      }
-      toggle();
-    },
-  });
-
-  const selectContactsState = (state) => state.contacts;
-  const ContactsProperties = createSelector(
-    selectContactsState,
-    (Contacts) => ({
-      users: Contacts.users,
-      loading: Contacts.loading,
+  const selectCustomerUsersState = (state) => state.customerUsers;
+  const customerUsersProperties = createSelector(
+    selectCustomerUsersState,
+    (customerUsers) => ({
+      cusUsers: customerUsers.customerUsers,
+      loading: customerUsers.loading,
     })
   );
 
-  const { users, loading } = useSelector(ContactsProperties);
+  const { cusUsers, loading } = useSelector(customerUsersProperties);
 
   useEffect(() => {
-    console.log("Users data in component:", users);
-  }, [users]);
+    console.log("Users data in component:", cusUsers);
+  }, [cusUsers]);
   const [isLoading, setLoading] = useState(loading);
 
-  const [userList, setUserList] = useState([]);
   const [modal, setModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
@@ -247,7 +191,7 @@ const CustomerUserList = (props) => {
                 className="text-success"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  handleUserClick(userData);
+                  // handleUserClick(userData);
                 }}
               >
                 <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
@@ -260,7 +204,7 @@ const CustomerUserList = (props) => {
                 className="text-danger"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  onClickDelete(userData);
+                  // onClickDelete(userData);
                 }}
               >
                 <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
@@ -277,43 +221,43 @@ const CustomerUserList = (props) => {
   );
 
   useEffect(() => {
-    if (users && !users.length) {
-      dispatch(onGetUsers());
+    if (cusUsers && !cusUsers.length) {
+      dispatch(onGetCustomerUsers());
       setIsEdit(false);
     }
-  }, [dispatch, users]);
+  }, [dispatch, cusUsers]);
 
-  useEffect(() => {
-    setContact(users);
-    setIsEdit(false);
-  }, [users]);
+  // useEffect(() => {
+  //   setContact(cusUsers);
+  //   setIsEdit(false);
+  // }, [cusUsers]);
 
-  useEffect(() => {
-    if (!isEmpty(users) && !!isEdit) {
-      setContact(users);
-      setIsEdit(false);
-    }
-  }, [users]);
+  // useEffect(() => {
+  //   if (!isEmpty(cusUsers) && !!isEdit) {
+  //     setContact(cusUsers);
+  //     setIsEdit(false);
+  //   }
+  // }, [cusUsers]);
 
   const toggle = () => {
     setModal(!modal);
   };
 
-  const handleUserClick = (arg) => {
-    const user = arg;
+  // const handleUserClick = (arg) => {
+  //   const user = arg;
 
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-    setIsEdit(true);
+  //   setContact({
+  //     id: user.id,
+  //     name: user.name,
+  //     designation: user.designation,
+  //     email: user.email,
+  //     tags: user.tags,
+  //     projects: user.projects,
+  //   });
+  //   setIsEdit(true);
 
-    toggle();
-  };
+  //   toggle();
+  // };
 
   var node = useRef();
   const onPaginationPageChange = (page) => {
@@ -329,65 +273,60 @@ const CustomerUserList = (props) => {
   };
 
   //delete customer
-  const [deleteModal, setDeleteModal] = useState(false);
+  // const [deleteModal, setDeleteModal] = useState(false);
 
-  const onClickDelete = (users) => {
-    setContact(users);
-    setDeleteModal(true);
-  };
+  // const onClickDelete = (users) => {
+  //   setContact(users);
+  //   setDeleteModal(true);
+  // };
 
-  const handleDeleteUser = () => {
-    if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
-    }
-    setContact("");
-    onPaginationPageChange(1);
-    setDeleteModal(false);
-  };
+  // const handleDeleteUser = () => {
+  //   if (contact && contact.id) {
+  //     dispatch(onDeleteUser(contact.id));
+  //   }
+  //   setContact("");
+  //   onPaginationPageChange(1);
+  //   setDeleteModal(false);
+  // };
 
-  const handleUserClicks = () => {
-    setUserList("");
-    setIsEdit(false);
-    toggle();
-  };
+  // const handleUserClicks = () => {
+  //   setUserList("");
+  //   setIsEdit(false);
+  //   toggle();
+  // };
 
   const keyField = "id";
 
   return (
     <React.Fragment>
-      <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
-      />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Contacts" breadcrumbItem="Customer User List" />
-          {isLoading ? (
+          {/* <Breadcrumbs title="Contacts" breadcrumbItem="Customer User List" /> */}
+          {/* {isLoading ? (
             <Spinners setLoading={setLoading} />
-          ) : (
+          ) : ( */}
             <Row>
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("users:" + JSON.stringify(users))}
+                    {console.log("users:" + JSON.stringify(cusUsers))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
-                      data={users}
+                      data={cusUsers}
                       isGlobalFilter={true}
                       isAddUserList={true}
                       isShowingPageLength={true}
                       iscustomPageSizeOptions={true}
-                      handleUserClick={handleUserClicks}
+                      handleUserClick={()=>{}}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
                     />
-                    <Modal isOpen={modal} toggle={toggle}>
+                    {/* <Modal isOpen={modal} toggle={toggle}>
                       <ModalHeader toggle={toggle} tag="h4">
                         {!!isEdit ? "Edit User" : "Add User"}
                       </ModalHeader>
@@ -548,12 +487,12 @@ const CustomerUserList = (props) => {
                           </Row>
                         </Form>
                       </ModalBody>
-                    </Modal>
+                    </Modal> */}
                   </CardBody>
                 </Card>
               </Col>
             </Row>
-          )}
+          {/* )} */}
         </Container>
       </div>
       <ToastContainer />

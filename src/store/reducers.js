@@ -10,6 +10,8 @@ import ForgetPassword from "./auth/forgetpwd/reducer";
 import Profile from "./auth/profile/reducer";
 
 import contacts from "./contacts/reducer";
+import customerUsers from "./customerusers/reducer";
+
 const rootReducer = combineReducers({
   // public
   Layout,
@@ -18,6 +20,7 @@ const rootReducer = combineReducers({
   ForgetPassword,
   Profile,
   contacts,
+  customerUsers,
 });
 
 export default rootReducer;

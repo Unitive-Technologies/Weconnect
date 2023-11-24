@@ -7922,7 +7922,7 @@
       }
     ]
   },
-  "customers-userslist": {
+  "customeruserlist": {
     "success": true,
     "status": 200,
     "data": [

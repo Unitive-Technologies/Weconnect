@@ -15,7 +15,7 @@ import Dashboard from "../pages/Dashboard/index";
 // import UserList from "../pages/MsoMaster/Access/UserList/index";
 
 import ContactsList from "../pages/Contacts/ContactList/contacts-list";
-import CustomerUserlist from "../pages/Contacts/CustomerUserList/customer-userlist";
+import CustomerUserlist from "../pages/Contacts/CustomerUserList/CustomerUserList";
 import GroupPolicyList from "../pages/Contacts/GroupPolicyList/groupPolicyList";
 import DesignationList from "../pages/Contacts/DesignationList/designationList";
 import UserHierarchyList from "../pages/Contacts/UserHierarchyList/userHierarchyList";
