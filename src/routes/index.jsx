@@ -25,7 +25,10 @@ import ScheduleCustomerNotificationList from "../pages/Contacts/ScheduleCustomer
 import AppAdBannerList from "../pages/Contacts/AppAdBannerList/appAdBannerList";
 
 // path from organization
-import re 
+import RegionalOfficeList from "../pages/Organization/RegionalOfficeList/regionalOfficeList";
+import LcoList from "../pages/Organization/LCOList/lcoList";
+import DistributorList from "../pages/Organization/DistributorList/distributorList";
+
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
 
@@ -56,6 +59,20 @@ const authProtectedRoutes = [
   {
     path: "/app-adbannerlist",
     component: <AppAdBannerList />,
+  },
+
+
+  {
+    path: "/regional-office-list",
+    component: <RegionalOfficeList />,
+  },
+  {
+    path: "/lco-list",
+    component: <LcoList />,
+  },
+  {
+    path: "/distributor-list",
+    component: <DistributorList />,
   },
 ];
 

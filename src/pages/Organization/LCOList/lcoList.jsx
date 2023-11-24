@@ -21,7 +21,7 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import { Email, Tags, Projects } from "./appAdBannerListCol";
+import { Email, Tags, Projects } from "./LCOListCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
