@@ -163,10 +163,12 @@ const SidebarContent = (props) => {
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
-                      <Link to="/contacts-list">{props.t("User List")}</Link>
+                      <Link to="/userslist">{props.t("User List")}</Link>
                     </li>
                     <li>
-                      <Link to="/contacts-grid">{props.t("Customer User List")} </Link>
+                      <Link to="/customer-userslist">
+                        {props.t("Customer User List")}{" "}
+                      </Link>
                     </li>
                     <li>
                       <Link to="/contacts-profile">
