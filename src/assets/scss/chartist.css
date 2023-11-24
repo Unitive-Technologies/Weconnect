@@ -1,0 +1,104 @@
+.ct-golden-section:before {
+  float: none;
+}
+
+.ct-chart {
+  max-height: 300px;
+}
+.ct-chart .ct-label {
+  fill: #f8f9fa !important;
+  color: #adb5bd;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.ct-chart.simple-pie-chart-chartist .ct-label {
+  color: #adb5bd;
+  fill: #adb5bd;
+  font-size: 16px;
+}
+
+.ct-chart .ct-series.ct-series-a .ct-bar,
+.ct-chart .ct-series.ct-series-a .ct-line,
+.ct-chart .ct-series.ct-series-a .ct-point,
+.ct-chart .ct-series.ct-series-a .ct-slice-donut {
+  stroke: #556ee6;
+}
+.ct-chart .ct-series.ct-series-b .ct-bar,
+.ct-chart .ct-series.ct-series-b .ct-line,
+.ct-chart .ct-series.ct-series-b .ct-point,
+.ct-chart .ct-series.ct-series-b .ct-slice-donut {
+  stroke: #34c38f;
+}
+.ct-chart .ct-series.ct-series-c .ct-bar,
+.ct-chart .ct-series.ct-series-c .ct-line,
+.ct-chart .ct-series.ct-series-c .ct-point,
+.ct-chart .ct-series.ct-series-c .ct-slice-donut {
+  stroke: #f1b44c;
+}
+.ct-chart .ct-series.ct-series-d .ct-bar,
+.ct-chart .ct-series.ct-series-d .ct-line,
+.ct-chart .ct-series.ct-series-d .ct-point,
+.ct-chart .ct-series.ct-series-d .ct-slice-donut {
+  stroke: #f46a6a;
+}
+.ct-chart .ct-series.ct-series-e .ct-bar,
+.ct-chart .ct-series.ct-series-e .ct-line,
+.ct-chart .ct-series.ct-series-e .ct-point,
+.ct-chart .ct-series.ct-series-e .ct-slice-donut {
+  stroke: #50a5f1;
+}
+.ct-chart .ct-series.ct-series-f .ct-bar,
+.ct-chart .ct-series.ct-series-f .ct-line,
+.ct-chart .ct-series.ct-series-f .ct-point,
+.ct-chart .ct-series.ct-series-f .ct-slice-donut {
+  stroke: #e83e8c;
+}
+.ct-chart .ct-series.ct-series-g .ct-bar,
+.ct-chart .ct-series.ct-series-g .ct-line,
+.ct-chart .ct-series.ct-series-g .ct-point,
+.ct-chart .ct-series.ct-series-g .ct-slice-donut {
+  stroke: #556ee6;
+}
+
+.ct-series-a .ct-area,
+.ct-series-a .ct-slice-pie {
+  fill: #556ee6 !important;
+}
+
+.ct-series-b .ct-area,
+.ct-series-b .ct-slice-pie {
+  fill: #34c38f !important;
+}
+
+.ct-series-c .ct-area,
+.ct-series-c .ct-slice-pie {
+  fill: #f1b44c;
+}
+
+.ct-series-d .ct-area,
+.ct-series-d .ct-slice-pie {
+  fill: #f46a6a !important;
+}
+
+.ct-area {
+  fill-opacity: 0.33 !important;
+}
+
+.chartist-tooltip {
+  position: absolute;
+  display: inline-block;
+  opacity: 0;
+  min-width: 10px;
+  padding: 2px 10px;
+  border-radius: 3px;
+  background: #343a40;
+  color: #fff;
+  text-align: center;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.2s linear;
+}
+.chartist-tooltip.tooltip-show {
+  opacity: 1;
+}/*# sourceMappingURL=chartist.css.map */
