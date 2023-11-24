@@ -20,6 +20,9 @@ import GroupPolicyList from "../pages/Contacts/GroupPolicyList/groupPolicyList";
 import DesignationList from "../pages/Contacts/DesignationList/designationList";
 import UserHierarchyList from "../pages/Contacts/UserHierarchyList/userHierarchyList";
 import NotificationTemplateList from "../pages/Contacts/NotificationTemplateList/notificationTemplateList";
+import ScheduledNotificationList from "../pages/Contacts/ScheduledNotificationList/scheduledNotificationList";
+import ScheduleCustomerNotificationList from "../pages/Contacts/ScheduleCustomerNotificationList/scheduleCustomerNotificationList";
+import AppAdBannerList from "../pages/Contacts/AppAdBannerList/appAdBannerList";
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
 
@@ -38,6 +41,18 @@ const authProtectedRoutes = [
   {
     path: "/notification-templatelist",
     component: <NotificationTemplateList />,
+  },
+  {
+    path: "/scheduled-notificationlist",
+    component: <ScheduledNotificationList />,
+  },
+  {
+    path: "/schedule-customer-notificationlist",
+    component: <ScheduleCustomerNotificationList />,
+  },
+  {
+    path: "/app-adbannerlist",
+    component: <AppAdBannerList />,
   },
 ];
 

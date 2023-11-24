@@ -193,14 +193,21 @@ const SidebarContent = (props) => {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/#">
+                      <Link to="/scheduled-notificationlist">
                         <span key="#">
                           {props.t("Scheduled Notification List")}
                         </span>
                       </Link>
                     </li>
                     <li>
-                      <Link to="/#">
+                      <Link to="/app-adbannerlist">
+                        <span key="#">
+                          {props.t("App Advertisement Banner List")}
+                        </span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/schedule-customer-notificationlist">
                         <span key="#">
                           {props.t("Scheule Customer Notification List")}
                         </span>

@@ -36638,5 +36638,218 @@
         "not": false
       }
     }
+  },
+  "scheduled-notification": {
+    "success": true,
+    "status": 200,
+    "data": []
+  },
+  "app-adbannerlist": { "success": true, "status": 200, "data": [] },
+  "app-adbanner-search": {
+    "success": true,
+    "status": 200,
+    "data": {
+      "title": {
+        "data": null,
+        "type": "string",
+        "label": "Title",
+        "not": false,
+        "multi": true
+      },
+      "start_date": {
+        "data": null,
+        "type": "date_range",
+        "label": "Start Date",
+        "not": false
+      },
+      "end_date": {
+        "data": null,
+        "type": "date_range",
+        "label": "End Date",
+        "not": false
+      },
+      "status": {
+        "data": [
+          {
+            "id": 1,
+            "name": "Active"
+          },
+          {
+            "id": 0,
+            "name": "In-Active"
+          }
+        ],
+        "type": "enum",
+        "label": "Status",
+        "multi": false
+      }
+    }
+  },
+  "schedule-customer-notificationlist": {
+    "success": true,
+    "status": 200,
+    "data": [
+      {
+        "id": 2,
+        "name": "test",
+        "type": 1,
+        "schedule_days": [1, 3, 28, 27, 24, 23, 22, 20, 18, 17, 15, 14],
+        "criteria": {
+          "criteria_filter": {
+            "operator_id": "4"
+          },
+          "criteria_not_filter": []
+        },
+        "osd_template_id": 2,
+        "bmail_template_id": null,
+        "osd_configuration_id": [2],
+        "sms_template_id": null,
+        "start_date": "2023-11-23",
+        "end_date": "2023-11-24",
+        "description": "TEST",
+        "status": 1,
+        "created_at": "2023-11-23 10:48:45",
+        "updated_at": "2023-11-23 10:48:45",
+        "created_by": 2,
+        "updated_by": 2,
+        "status_lbl": "Active",
+        "created_by_lbl": "my mso(mso)",
+        "osd_template_id_lbl": "Expiring STB",
+        "bmail_template_id_lbl": "",
+        "sms_template_id_lbl": "",
+        "osd_configuration_id_lbl": ["TEST OSD"],
+        "type_lbl": "Account Expiring"
+      },
+      {
+        "id": 1,
+        "name": "STB Expring",
+        "type": 1,
+        "schedule_days": [1, 3, 6],
+        "criteria": {
+          "criteria_filter": {
+            "branch_id": "@FILESEARCH_664"
+          },
+          "criteria_not_filter": []
+        },
+        "osd_template_id": 2,
+        "bmail_template_id": null,
+        "osd_configuration_id": [1],
+        "sms_template_id": null,
+        "start_date": "2023-11-23",
+        "end_date": "2023-12-31",
+        "description": "STB Expring",
+        "status": 1,
+        "created_at": "2023-11-23 10:41:30",
+        "updated_at": "2023-11-23 10:41:30",
+        "created_by": 2,
+        "updated_by": 2,
+        "status_lbl": "Active",
+        "created_by_lbl": "my mso(mso)",
+        "osd_template_id_lbl": "Expiring STB",
+        "bmail_template_id_lbl": "",
+        "sms_template_id_lbl": "",
+        "osd_configuration_id_lbl": ["OSD"],
+        "type_lbl": "Account Expiring"
+      }
+    ]
+  },
+  "schedule-customer-notification-search": {
+    "success": true,
+    "status": 200,
+    "data": {
+      "name": {
+        "data": null,
+        "type": "string",
+        "label": "Name"
+      },
+      "type": {
+        "data": null,
+        "type": "string",
+        "label": "Type"
+      },
+      "schedule_days": {
+        "data": null,
+        "type": "string",
+        "label": "Schedule Days"
+      },
+      "criteria": {
+        "data": null,
+        "type": "string",
+        "label": "Criteria"
+      },
+      "osd_template_id": {
+        "data": null,
+        "type": "string",
+        "label": "Osd Template"
+      },
+      "osd_configuration_id": {
+        "data": null,
+        "type": "string",
+        "label": "Osd Configuration"
+      },
+      "bmail_template_id": {
+        "data": null,
+        "type": "string",
+        "label": "Bmail Template"
+      },
+      "sms_template_id": {
+        "data": null,
+        "type": "string",
+        "label": "Sms Template"
+      },
+      "start_date": {
+        "data": null,
+        "type": "string",
+        "label": "Start Date"
+      },
+      "end_date": {
+        "data": null,
+        "type": "string",
+        "label": "End Date"
+      },
+      "description": {
+        "data": null,
+        "type": "string",
+        "label": "Description"
+      },
+      "status": {
+        "data": [
+          {
+            "id": 1,
+            "name": "Active"
+          },
+          {
+            "id": 0,
+            "name": "In-Active"
+          }
+        ],
+        "type": "enum",
+        "label": "Status"
+      },
+      "created_at": {
+        "data": null,
+        "type": "date_range",
+        "label": "Created At",
+        "not": false
+      },
+      "updated_at": {
+        "data": null,
+        "type": "date_range",
+        "label": "Updated At",
+        "not": false
+      },
+      "created_by": {
+        "data": "https://sms.vdigital.co.in/api/index.php/v1/user/list",
+        "type": "lookup",
+        "label": "Created By",
+        "multi": true
+      },
+      "updated_by": {
+        "data": "https://sms.vdigital.co.in/api/index.php/v1/user/list",
+        "type": "lookup",
+        "label": "Updated By",
+        "multi": true
+      }
+    }
   }
 }
