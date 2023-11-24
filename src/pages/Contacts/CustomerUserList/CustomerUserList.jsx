@@ -27,9 +27,7 @@ import { Email, Tags, Projects } from "./customerUserlistCol";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
 
-import {
-  getCustomerUsers as onGetCustomerUsers,
-} from "/src/store/actions";
+import { getCustomerUsers as onGetCustomerUsers } from "/src/store/actions";
 
 import { isEmpty } from "lodash";
 
@@ -102,27 +100,30 @@ const CustomerUserList = (props) => {
                   {cellProps.row.original.name}
                 </Link>
               </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
             </>
           );
         },
       },
       {
         Header: "Login ID",
-        accessor: "login",
+        accessor: "login_id",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.login_id}</p>
+          );
         },
       },
       {
         Header: "Mobile",
-        accessor: "mobile",
+        accessor: "mobile_no",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by_lbl}
+            </p>
+          );
         },
       },
       {
@@ -138,31 +139,51 @@ const CustomerUserList = (props) => {
         accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <h5 className="font-size-14 mb-1">
+              <Link className="text-dark" to="#">
+                {cellProps.row.original.status === 1
+                  ? "Active"
+                  : cellProps.row.original.status === 0
+                  ? "In-Active"
+                  : "Blocked"}
+              </Link>
+            </h5>
+          );
         },
       },
       {
         Header: "LCO",
-        accessor: "LCO",
+        accessor: "lco",//"operator_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          <p className="text-muted mb-0">
+          {cellProps.row.original.lco}
+          </p>;
         },
       },
       {
         Header: "LCO Code",
-        accessor: "LCOcode",
+        accessor: "lco_code",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          <p className="text-muted mb-0">
+            {cellProps.row.original.lco_code}
+          </p>;
         },
       },
       {
         Header: "LAST LOGIN TIME",
-        accessor: "lastlogintime",
+        accessor: "last_login_at",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          <p className="font-size-14 mb-1">
+              <Link className="text-dark" to="#">
+                {cellProps.row.original.last_login_at === null
+                  ? "Never Logged In"
+                  : cellProps.row.original.last_login_at}
+              </Link>
+            </p>
         },
       },
       {
@@ -175,10 +196,12 @@ const CustomerUserList = (props) => {
       },
       {
         Header: "Created By",
-        accessor: "createdby",
+        accessor: "created_by_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          <p className="text-muted mb-0">
+            {cellProps.row.original.created_by_lbl}
+          </p>;
         },
       },
       {
@@ -306,27 +329,27 @@ const CustomerUserList = (props) => {
           {/* {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : ( */}
-            <Row>
-              <Col lg="12">
-                <Card>
-                  <CardBody>
-                    {console.log("users:" + JSON.stringify(cusUsers))}
-                    <TableContainer
-                      isPagination={true}
-                      columns={columns}
-                      data={cusUsers}
-                      isGlobalFilter={true}
-                      isAddUserList={true}
-                      isShowingPageLength={true}
-                      iscustomPageSizeOptions={true}
-                      handleUserClick={()=>{}}
-                      customPageSize={8}
-                      tableClass="table align-middle table-nowrap table-hover"
-                      theadClass="table-light"
-                      paginationDiv="col-sm-12 col-md-7"
-                      pagination="pagination pagination-rounded justify-content-end mt-4"
-                    />
-                    {/* <Modal isOpen={modal} toggle={toggle}>
+          <Row>
+            <Col lg="12">
+              <Card>
+                <CardBody>
+                  {console.log("users:" + JSON.stringify(cusUsers))}
+                  <TableContainer
+                    isPagination={true}
+                    columns={columns}
+                    data={cusUsers}
+                    isGlobalFilter={true}
+                    isAddUserList={true}
+                    isShowingPageLength={true}
+                    iscustomPageSizeOptions={true}
+                    handleUserClick={() => {}}
+                    customPageSize={8}
+                    tableClass="table align-middle table-nowrap table-hover"
+                    theadClass="table-light"
+                    paginationDiv="col-sm-12 col-md-7"
+                    pagination="pagination pagination-rounded justify-content-end mt-4"
+                  />
+                  {/* <Modal isOpen={modal} toggle={toggle}>
                       <ModalHeader toggle={toggle} tag="h4">
                         {!!isEdit ? "Edit User" : "Add User"}
                       </ModalHeader>
@@ -488,10 +511,10 @@ const CustomerUserList = (props) => {
                         </Form>
                       </ModalBody>
                     </Modal> */}
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
           {/* )} */}
         </Container>
       </div>
