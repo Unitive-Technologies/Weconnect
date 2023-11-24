@@ -304,7 +304,9 @@ const ContactsList = (props) => {
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.last_login_at}
+                  {cellProps.row.original.last_login_at
+                    ? cellProps.row.original.last_login_at
+                    : "Never Logged In"}
                 </Link>
               </h5>
             </>
