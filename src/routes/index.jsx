@@ -16,7 +16,7 @@ import Dashboard from "../pages/Dashboard/index";
 
 import ContactsGrid from "../pages/Contacts/contacts-grid";
 import ContactsList from "../pages/Contacts/ContactList/contacts-list";
-import ContactsProfile from "../pages/Contacts/ContactsProfile/contacts-profile";
+import CustomerUserlist from "../pages/Contacts/CustomerUserList/customer-userlist";
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
 
@@ -28,9 +28,8 @@ const authProtectedRoutes = [
   { path: "/", exact: true, component: <Navigate to="/dashboard" /> },
 
   { path: "/contacts-grid", component: <ContactsGrid /> },
-  { path: "/contacts-list", component: <ContactsList /> },
-  { path: "/contacts-profile", component: <ContactsProfile /> },
-
+  { path: "/userslist", component: <ContactsList /> },
+  { path: "/customer-userslist", component: <CustomerUserlist /> },
 ];
 
 const publicRoutes = [
