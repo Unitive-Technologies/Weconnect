@@ -127,17 +127,21 @@ const ContactsList = (props) => {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
+          const totalRows = cellProps.rows.length;
+          const reverseIndex = totalRows - cellProps.row.index;
+
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.index + 1}
+                  {reverseIndex}
                 </Link>
               </h5>
             </>
           );
         },
       },
+
       {
         Header: "Name",
         accessor: "name",
@@ -198,7 +202,11 @@ const ContactsList = (props) => {
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.status}
+                  {cellProps.row.original.status === 1
+                    ? "Active"
+                    : cellProps.row.original.status === 0
+                    ? "In-Active"
+                    : "Blocked"}
                 </Link>
               </h5>
             </>
@@ -214,7 +222,13 @@ const ContactsList = (props) => {
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.type}
+                  {cellProps.row.original.status === 0
+                    ? "MSO"
+                    : cellProps.row.original.status === 1
+                    ? "RO"
+                    : cellProps.row.original.status === 2
+                    ? "DISTRIBUTOR"
+                    : "LCO"}
                 </Link>
               </h5>
             </>
@@ -230,7 +244,11 @@ const ContactsList = (props) => {
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.role}
+                  {cellProps.row.original.status === 1
+                    ? "Administrator"
+                    : cellProps.row.original.status === 2
+                    ? "Staff"
+                    : "User"}
                 </Link>
               </h5>
             </>
@@ -494,12 +512,12 @@ const ContactsList = (props) => {
                       isPagination={true}
                       columns={columns}
                       data={users}
-                      isGlobalFilter={true}
+                      // isGlobalFilter={true}
                       isAddUserList={true}
                       isShowingPageLength={true}
                       iscustomPageSizeOptions={true}
                       handleUserClick={handleUserClicks}
-                      customPageSize={8}
+                      customPageSize={10}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
