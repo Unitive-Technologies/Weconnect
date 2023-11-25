@@ -18,7 +18,7 @@ function GlobalFilter({
   preGlobalFilteredRows,
   globalFilter,
   setGlobalFilter,
-  isJobListGlobalFilter
+  isJobListGlobalFilter,
 }) {
   const count = preGlobalFilteredRows.length;
   const [value, setValue] = React.useState(globalFilter);
@@ -36,9 +36,9 @@ function GlobalFilter({
                 Search this table
               </span>
               <input
-                onChange={e => {
-                  setValue(e.target.value)
-                  onChange(e.target.value)
+                onChange={(e) => {
+                  setValue(e.target.value);
+                  onChange(e.target.value);
                 }}
                 id="search-bar-0"
                 type="text"
@@ -51,9 +51,11 @@ function GlobalFilter({
           </div>
         </div>
       </Col>
-      {isJobListGlobalFilter && <JobListGlobalFilter setGlobalFilter={setGlobalFilter} />}
+      {isJobListGlobalFilter && (
+        <JobListGlobalFilter setGlobalFilter={setGlobalFilter} />
+      )}
     </React.Fragment>
-  )
+  );
 }
 
 const TableContainer = ({
@@ -75,7 +77,7 @@ const TableContainer = ({
   pagination,
   iscustomPageSizeOptions,
   theadClass,
-  isJobListGlobalFilter
+  isJobListGlobalFilter,
 }) => {
   const {
     getTableProps,
@@ -128,7 +130,7 @@ const TableContainer = ({
   return (
     <Fragment>
       <Row className="mb-2">
-        {iscustomPageSizeOptions &&
+        {iscustomPageSizeOptions && (
           <Col md={customPageSizeOptions ? 2 : 1}>
             <select
               className="form-select"
@@ -142,15 +144,15 @@ const TableContainer = ({
               ))}
             </select>
           </Col>
-        }
-        {isGlobalFilter && (
+        )}
+        {/* {isGlobalFilter && (
           <GlobalFilter
             preGlobalFilteredRows={preGlobalFilteredRows}
             globalFilter={state.globalFilter}
             setGlobalFilter={setGlobalFilter}
             isJobListGlobalFilter={isJobListGlobalFilter}
           />
-        )}
+        )} */}
         {isAddOptions && (
           <Col sm="7">
             <div className="text-sm-end">
@@ -204,7 +206,10 @@ const TableContainer = ({
             {headerGroups.map((headerGroup) => (
               <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th key={column.id} className={column.isSort ? "sorting" : ''}>
+                  <th
+                    key={column.id}
+                    className={column.isSort ? "sorting" : ""}
+                  >
                     <div {...column.getSortByToggleProps()}>
                       {column.render("Header")}
                       {/* {generateSortingIndicator(column)} */}
@@ -237,37 +242,49 @@ const TableContainer = ({
         </Table>
       </div>
 
-      {
-        isPagination && (
-          <Row className="justify-content-between align-items-center">
-            {isShowingPageLength && <div className="col-sm">
-              <div className="text-muted">Showing <span className="fw-semibold">{page.length}</span> of <span className="fw-semibold">{data.length}</span> entries</div>
-            </div>}
-            <div className={paginationDiv}>
-              <ul className={pagination}>
-                <li className={`page-item ${!canPreviousPage ? "disabled" : ''}`}>
-                  <Link to="#" className="page-link" onClick={previousPage}>
-                    <i className="mdi mdi-chevron-left"></i>
-                  </Link>
-                </li>
-                {pageOptions.map((item, key) => (
-                  <React.Fragment key={key}>
-                    <li className={pageIndex === item ? "page-item active" : "page-item"}>
-                      <Link to="#" className="page-link" onClick={() => gotoPage(item)}>{item + 1}</Link>
-                    </li>
-                  </React.Fragment>
-                ))}
-                <li className={`page-item ${!canNextPage ? "disabled" : ''}`}>
-                  <Link to="#" className="page-link" onClick={nextPage}>
-                    <i className="mdi mdi-chevron-right"></i>
-                  </Link>
-                </li>
-              </ul>
+      {isPagination && (
+        <Row className="justify-content-between align-items-center">
+          {isShowingPageLength && (
+            <div className="col-sm">
+              <div className="text-muted">
+                Showing <span className="fw-semibold">{page.length}</span> of{" "}
+                <span className="fw-semibold">{data.length}</span> entries
+              </div>
             </div>
-          </Row>
-        )
-      }
-
+          )}
+          <div className={paginationDiv}>
+            <ul className={pagination}>
+              <li className={`page-item ${!canPreviousPage ? "disabled" : ""}`}>
+                <Link to="#" className="page-link" onClick={previousPage}>
+                  <i className="mdi mdi-chevron-left"></i>
+                </Link>
+              </li>
+              {pageOptions.map((item, key) => (
+                <React.Fragment key={key}>
+                  <li
+                    className={
+                      pageIndex === item ? "page-item active" : "page-item"
+                    }
+                  >
+                    <Link
+                      to="#"
+                      className="page-link"
+                      onClick={() => gotoPage(item)}
+                    >
+                      {item + 1}
+                    </Link>
+                  </li>
+                </React.Fragment>
+              ))}
+              <li className={`page-item ${!canNextPage ? "disabled" : ""}`}>
+                <Link to="#" className="page-link" onClick={nextPage}>
+                  <i className="mdi mdi-chevron-right"></i>
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </Row>
+      )}
     </Fragment>
   );
 };
