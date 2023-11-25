@@ -43,7 +43,7 @@ import Login from "../../Authentication/Login";
 
 const ContactsList = (props) => {
   //meta title
-  document.title = "User List | Skote - Vite React Admin & Dashboard Template";
+  document.title = "Users List | VDigitals";
 
   const dispatch = useDispatch();
   const [contact, setContact] = useState();

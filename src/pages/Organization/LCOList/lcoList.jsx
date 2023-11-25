@@ -42,7 +42,7 @@ import { ToastContainer } from "react-toastify";
 
 const LCOList = (props) => {
   //meta title
-  document.title = "LCO List | Skote - Vite React Admin & Dashboard Template";
+  document.title = "LCO List | VDigital";
 
   const dispatch = useDispatch();
   const [contact, setContact] = useState();

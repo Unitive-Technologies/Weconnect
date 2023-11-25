@@ -31,9 +31,8 @@ import avatar from "../../assets/images/users/avatar-1.jpg";
 import { editProfile, resetProfileFlag } from "../../store/actions";
 
 const UserProfile = (props) => {
-
   //meta title
-  document.title = "Profile | Skote - React Admin & Dashboard Template";
+  document.title = "Profile | VDigital";
 
   const dispatch = useDispatch();
 
@@ -42,18 +41,12 @@ const UserProfile = (props) => {
   const [idx, setidx] = useState(1);
 
   const selectProfileState = (state) => state.Profile;
-    const ProfileProperties = createSelector(
-      selectProfileState,
-        (profile) => ({
-          error: profile.error,
-          success: profile.success,
-        })
-    );
+  const ProfileProperties = createSelector(selectProfileState, (profile) => ({
+    error: profile.error,
+    success: profile.success,
+  }));
 
-    const {
-      error,
-      success
-  } = useSelector(ProfileProperties);
+  const { error, success } = useSelector(ProfileProperties);
 
   useEffect(() => {
     if (localStorage.getItem("authUser")) {
@@ -81,15 +74,15 @@ const UserProfile = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      username: name || '',
-      idx: idx || '',
+      username: name || "",
+      idx: idx || "",
     },
     validationSchema: Yup.object({
       username: Yup.string().required("Please Enter Your UserName"),
     }),
     onSubmit: (values) => {
       dispatch(editProfile(values));
-    }
+    },
   });
 
   return (
@@ -97,7 +90,7 @@ const UserProfile = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumb */}
-          <Breadcrumb title="Skote" breadcrumbItem="Profile" />
+          <Breadcrumb title="VDigital" breadcrumbItem="Profile" />
 
           <Row>
             <Col lg="12">
@@ -151,11 +144,15 @@ const UserProfile = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.username || ""}
                     invalid={
-                      validation.touched.username && validation.errors.username ? true : false
+                      validation.touched.username && validation.errors.username
+                        ? true
+                        : false
                     }
                   />
                   {validation.touched.username && validation.errors.username ? (
-                    <FormFeedback type="invalid">{validation.errors.username}</FormFeedback>
+                    <FormFeedback type="invalid">
+                      {validation.errors.username}
+                    </FormFeedback>
                   ) : null}
                   <Input name="idx" value={idx} type="hidden" />
                 </div>

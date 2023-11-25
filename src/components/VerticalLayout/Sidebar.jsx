@@ -13,6 +13,7 @@ import logo from "../../assets/images/logo.svg";
 import logoLightPng from "../../assets/images/logo-light.png";
 import logoLightSvg from "../../assets/images/logo-light.svg";
 import logoDark from "../../assets/images/logo-dark.png";
+import vdigitallogo from "../../assets/images/vdigital-logo.png";
 
 const Sidebar = (props) => {
   return (
@@ -21,19 +22,19 @@ const Sidebar = (props) => {
         <div className="navbar-brand-box">
           <Link to="/" className="logo logo-dark">
             <span className="logo-sm">
-              <img src={logo} alt="" height="22" />
+              <img src={vdigitallogo} alt="" height="22" />
             </span>
             <span className="logo-lg">
-              <img src={logoDark} alt="" height="17" />
+              <img src={vdigitallogo} alt="" height="22" />
             </span>
           </Link>
 
           <Link to="/" className="logo logo-light">
             <span className="logo-sm">
-              <img src={logoLightSvg} alt="" height="22" />
+              <img src={vdigitallogo} alt="" height="22" />
             </span>
             <span className="logo-lg">
-              <img src={logoLightPng} alt="" height="19" />
+              <img src={vdigitallogo} alt="" height="40" />
             </span>
           </Link>
         </div>

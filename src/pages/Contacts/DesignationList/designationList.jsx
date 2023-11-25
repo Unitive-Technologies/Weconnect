@@ -38,7 +38,7 @@ import { ToastContainer } from "react-toastify";
 
 const DesignationList = (props) => {
   //meta title
-  document.title = "Designation List | VConnect";
+  document.title = "Designation List | VDigital";
 
   const dispatch = useDispatch();
 
@@ -108,10 +108,8 @@ const DesignationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.code}
-            </p>
-          )
+            <p className="text-muted mb-0">{cellProps.row.original.code}</p>
+          );
         },
       },
       {
@@ -121,7 +119,7 @@ const DesignationList = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">{cellProps.row.original.parent}</p>
-          )
+          );
         },
       },
       {
@@ -130,8 +128,10 @@ const DesignationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.description}</p>
-          )
+            <p className="text-muted mb-0">
+              {cellProps.row.original.description}
+            </p>
+          );
         },
       },
       {
@@ -141,7 +141,7 @@ const DesignationList = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">{cellProps.row.original.type}</p>
-          )
+          );
         },
       },
       {
@@ -151,7 +151,7 @@ const DesignationList = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">{cellProps.row.original.status}</p>
-          )
+          );
         },
       },
       {
@@ -160,8 +160,10 @@ const DesignationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.created_at}</p>
-          )
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_at}
+            </p>
+          );
         },
       },
       {
@@ -170,8 +172,10 @@ const DesignationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.created_by}</p>
-          )
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by}
+            </p>
+          );
         },
       },
       {

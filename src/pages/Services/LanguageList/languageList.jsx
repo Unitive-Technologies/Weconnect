@@ -42,8 +42,7 @@ import { ToastContainer } from "react-toastify";
 
 const LanguageList = (props) => {
   //meta title
-  document.title =
-    "Language List | Skote - Vite React Admin & Dashboard Template";
+  document.title = "Language List | VDigital";
 
   const dispatch = useDispatch();
   const [contact, setContact] = useState();
@@ -195,7 +194,7 @@ const LanguageList = (props) => {
         accessor: "createdat",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
+          // return <Projects {...cellProps} />
         },
       },
       {
@@ -203,7 +202,7 @@ const LanguageList = (props) => {
         accessor: "createdby",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
+          // return <Projects {...cellProps} />
         },
       },
       {
@@ -332,10 +331,7 @@ const LanguageList = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs
-            title="Services"
-            breadcrumbItem="Lanugage List"
-          />
+          <Breadcrumbs title="Services" breadcrumbItem="Lanugage List" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -384,13 +380,13 @@ const LanguageList = (props) => {
                                   value={validation.values.name || ""}
                                   invalid={
                                     validation.touched.name &&
-                                      validation.errors.name
+                                    validation.errors.name
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.name &&
-                                  validation.errors.name ? (
+                                validation.errors.name ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.name}
                                   </FormFeedback>
@@ -410,13 +406,13 @@ const LanguageList = (props) => {
                                   value={validation.values.designation || ""}
                                   invalid={
                                     validation.touched.designation &&
-                                      validation.errors.designation
+                                    validation.errors.designation
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.designation &&
-                                  validation.errors.designation ? (
+                                validation.errors.designation ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.designation}
                                   </FormFeedback>
@@ -434,13 +430,13 @@ const LanguageList = (props) => {
                                   value={validation.values.email || ""}
                                   invalid={
                                     validation.touched.email &&
-                                      validation.errors.email
+                                    validation.errors.email
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.email &&
-                                  validation.errors.email ? (
+                                validation.errors.email ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.email}
                                   </FormFeedback>
@@ -458,7 +454,7 @@ const LanguageList = (props) => {
                                   value={validation.values.tags || []}
                                   invalid={
                                     validation.touched.tags &&
-                                      validation.errors.tags
+                                    validation.errors.tags
                                       ? true
                                       : false
                                   }
@@ -474,7 +470,7 @@ const LanguageList = (props) => {
                                   <option>Css</option>
                                 </Input>
                                 {validation.touched.tags &&
-                                  validation.errors.tags ? (
+                                validation.errors.tags ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.tags}
                                   </FormFeedback>
@@ -492,13 +488,13 @@ const LanguageList = (props) => {
                                   value={validation.values.projects || ""}
                                   invalid={
                                     validation.touched.projects &&
-                                      validation.errors.projects
+                                    validation.errors.projects
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.projects &&
-                                  validation.errors.projects ? (
+                                validation.errors.projects ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.projects}
                                   </FormFeedback>

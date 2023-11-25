@@ -1,8 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import {
-  Container
-} from "reactstrap";
+import { Container } from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from "../../components/Common/Breadcrumb";
@@ -10,10 +8,9 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 //i18n
 import { withTranslation } from "react-i18next";
 
-const Dashboard = props => {
-
+const Dashboard = (props) => {
   //meta title
-  document.title = "Dashboard | Skote - Vite React Admin & Dashboard Template";
+  document.title = "Dashboard | VDigital";
 
   return (
     <React.Fragment>
@@ -26,7 +23,6 @@ const Dashboard = props => {
           />
         </Container>
       </div>
-
     </React.Fragment>
   );
 };

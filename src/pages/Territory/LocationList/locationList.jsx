@@ -42,8 +42,7 @@ import { ToastContainer } from "react-toastify";
 
 const LocationList = (props) => {
   //meta title
-  document.title =
-    "Location List | Skote - Vite React Admin & Dashboard Template";
+  document.title = "Location List | VDigital";
 
   const dispatch = useDispatch();
   const [contact, setContact] = useState();
@@ -203,7 +202,7 @@ const LocationList = (props) => {
         accessor: "createdat",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
+          // return <Projects {...cellProps} />
         },
       },
       {
@@ -211,7 +210,7 @@ const LocationList = (props) => {
         accessor: "createdby",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
+          // return <Projects {...cellProps} />
         },
       },
       {
@@ -340,10 +339,7 @@ const LocationList = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs
-            title="Territory"
-            breadcrumbItem="Location List"
-          />
+          <Breadcrumbs title="Territory" breadcrumbItem="Location List" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -392,13 +388,13 @@ const LocationList = (props) => {
                                   value={validation.values.name || ""}
                                   invalid={
                                     validation.touched.name &&
-                                      validation.errors.name
+                                    validation.errors.name
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.name &&
-                                  validation.errors.name ? (
+                                validation.errors.name ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.name}
                                   </FormFeedback>
@@ -418,13 +414,13 @@ const LocationList = (props) => {
                                   value={validation.values.designation || ""}
                                   invalid={
                                     validation.touched.designation &&
-                                      validation.errors.designation
+                                    validation.errors.designation
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.designation &&
-                                  validation.errors.designation ? (
+                                validation.errors.designation ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.designation}
                                   </FormFeedback>
@@ -442,13 +438,13 @@ const LocationList = (props) => {
                                   value={validation.values.email || ""}
                                   invalid={
                                     validation.touched.email &&
-                                      validation.errors.email
+                                    validation.errors.email
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.email &&
-                                  validation.errors.email ? (
+                                validation.errors.email ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.email}
                                   </FormFeedback>
@@ -466,7 +462,7 @@ const LocationList = (props) => {
                                   value={validation.values.tags || []}
                                   invalid={
                                     validation.touched.tags &&
-                                      validation.errors.tags
+                                    validation.errors.tags
                                       ? true
                                       : false
                                   }
@@ -482,7 +478,7 @@ const LocationList = (props) => {
                                   <option>Css</option>
                                 </Input>
                                 {validation.touched.tags &&
-                                  validation.errors.tags ? (
+                                validation.errors.tags ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.tags}
                                   </FormFeedback>
@@ -500,13 +496,13 @@ const LocationList = (props) => {
                                   value={validation.values.projects || ""}
                                   invalid={
                                     validation.touched.projects &&
-                                      validation.errors.projects
+                                    validation.errors.projects
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.projects &&
-                                  validation.errors.projects ? (
+                                validation.errors.projects ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.projects}
                                   </FormFeedback>

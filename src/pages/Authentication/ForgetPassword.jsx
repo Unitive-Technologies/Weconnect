@@ -32,8 +32,7 @@ import logo from "../../assets/images/logo.svg";
 
 const ForgetPasswordPage = (props) => {
   //meta title
-  document.title =
-    "Forget Password | Skote - Vite React Admin & Dashboard Template";
+  document.title = "Forget Password | VDigital";
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -52,18 +51,17 @@ const ForgetPasswordPage = (props) => {
   });
 
   const selectForgotPasswordState = (state) => state.ForgetPassword;
-    const ForgotPasswordProperties = createSelector(
-      selectForgotPasswordState,
-        (forgetPassword) => ({
-          forgetError: forgetPassword.forgetError,
-          forgetSuccessMsg: forgetPassword.forgetSuccessMsg,
-        })
-    );
+  const ForgotPasswordProperties = createSelector(
+    selectForgotPasswordState,
+    (forgetPassword) => ({
+      forgetError: forgetPassword.forgetError,
+      forgetSuccessMsg: forgetPassword.forgetSuccessMsg,
+    })
+  );
 
-    const {
-      forgetError,
-      forgetSuccessMsg
-  } = useSelector(ForgotPasswordProperties);    
+  const { forgetError, forgetSuccessMsg } = useSelector(
+    ForgotPasswordProperties
+  );
 
   return (
     <React.Fragment>
@@ -82,7 +80,7 @@ const ForgetPasswordPage = (props) => {
                     <Col xs={7}>
                       <div className="text-primary p-4">
                         <h5 className="text-primary">Welcome Back !</h5>
-                        <p>Sign in to continue to Skote.</p>
+                        <p>Sign in to continue to VDigital.</p>
                       </div>
                     </Col>
                     <Col className="col-5 align-self-end">
@@ -169,7 +167,7 @@ const ForgetPasswordPage = (props) => {
                   </Link>{" "}
                 </p>
                 <p>
-                  © {new Date().getFullYear()} Skote. Crafted with{" "}
+                  © {new Date().getFullYear()} VDigital. Crafted with{" "}
                   <i className="mdi mdi-heart text-danger" /> by Themesbrand
                 </p>
               </div>

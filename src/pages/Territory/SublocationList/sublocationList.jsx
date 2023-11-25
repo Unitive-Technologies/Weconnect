@@ -42,8 +42,7 @@ import { ToastContainer } from "react-toastify";
 
 const SublocationList = (props) => {
   //meta title
-  document.title =
-    "Sublocation List | Skote - Vite React Admin & Dashboard Template";
+  document.title = "Sublocation List | VDigital";
 
   const dispatch = useDispatch();
   const [contact, setContact] = useState();
@@ -211,7 +210,7 @@ const SublocationList = (props) => {
         accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
+          // return <Projects {...cellProps} />
         },
       },
       {
@@ -219,7 +218,7 @@ const SublocationList = (props) => {
         accessor: "createdat",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
+          // return <Projects {...cellProps} />
         },
       },
       {
@@ -227,7 +226,7 @@ const SublocationList = (props) => {
         accessor: "createdby",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
+          // return <Projects {...cellProps} />
         },
       },
       {
@@ -356,10 +355,7 @@ const SublocationList = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs
-            title="Territory"
-            breadcrumbItem="Sublocation List"
-          />
+          <Breadcrumbs title="Territory" breadcrumbItem="Sublocation List" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -408,13 +404,13 @@ const SublocationList = (props) => {
                                   value={validation.values.name || ""}
                                   invalid={
                                     validation.touched.name &&
-                                      validation.errors.name
+                                    validation.errors.name
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.name &&
-                                  validation.errors.name ? (
+                                validation.errors.name ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.name}
                                   </FormFeedback>
@@ -434,13 +430,13 @@ const SublocationList = (props) => {
                                   value={validation.values.designation || ""}
                                   invalid={
                                     validation.touched.designation &&
-                                      validation.errors.designation
+                                    validation.errors.designation
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.designation &&
-                                  validation.errors.designation ? (
+                                validation.errors.designation ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.designation}
                                   </FormFeedback>
@@ -458,13 +454,13 @@ const SublocationList = (props) => {
                                   value={validation.values.email || ""}
                                   invalid={
                                     validation.touched.email &&
-                                      validation.errors.email
+                                    validation.errors.email
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.email &&
-                                  validation.errors.email ? (
+                                validation.errors.email ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.email}
                                   </FormFeedback>
@@ -482,7 +478,7 @@ const SublocationList = (props) => {
                                   value={validation.values.tags || []}
                                   invalid={
                                     validation.touched.tags &&
-                                      validation.errors.tags
+                                    validation.errors.tags
                                       ? true
                                       : false
                                   }
@@ -498,7 +494,7 @@ const SublocationList = (props) => {
                                   <option>Css</option>
                                 </Input>
                                 {validation.touched.tags &&
-                                  validation.errors.tags ? (
+                                validation.errors.tags ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.tags}
                                   </FormFeedback>
@@ -516,13 +512,13 @@ const SublocationList = (props) => {
                                   value={validation.values.projects || ""}
                                   invalid={
                                     validation.touched.projects &&
-                                      validation.errors.projects
+                                    validation.errors.projects
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.projects &&
-                                  validation.errors.projects ? (
+                                validation.errors.projects ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.projects}
                                   </FormFeedback>

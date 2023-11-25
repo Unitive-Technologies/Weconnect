@@ -38,7 +38,7 @@ import { ToastContainer } from "react-toastify";
 
 const GroupPolicyList = (props) => {
   //meta title
-  document.title = "Group Policy List | VConnect";
+  document.title = "Group Policy List | VDigital";
 
   const dispatch = useDispatch();
 

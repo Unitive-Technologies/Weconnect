@@ -41,7 +41,7 @@ const Layout = (props) => {
     layoutModeType,
     layoutWidth,
     isPreloader,
-    showRightSidebar
+    showRightSidebar,
   } = useSelector(selectLayoutProperties);
 
   /*
@@ -54,8 +54,7 @@ const Layout = (props) => {
     const title = pathName.pathname;
     let currentage = title.charAt(1).toUpperCase() + title.slice(2);
 
-    document.title =
-      currentage + " | Skote - Vite React Admin & Dashboard Template";
+    document.title = currentage + " | VDigital";
   }, [pathName.pathname]);
 
   useEffect(() => {

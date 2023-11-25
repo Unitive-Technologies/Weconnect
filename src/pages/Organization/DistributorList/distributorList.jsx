@@ -42,8 +42,7 @@ import { ToastContainer } from "react-toastify";
 
 const DistributorList = (props) => {
   //meta title
-  document.title =
-    "Distributor List | Skote - Vite React Admin & Dashboard Template";
+  document.title = "Distributor List | VDigital";
 
   const dispatch = useDispatch();
   const [contact, setContact] = useState();
@@ -211,7 +210,7 @@ const DistributorList = (props) => {
         accessor: "state",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
+          // return <Projects {...cellProps} />
         },
       },
       {
@@ -219,7 +218,7 @@ const DistributorList = (props) => {
         accessor: "district",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
+          // return <Projects {...cellProps} />
         },
       },
       {
@@ -227,7 +226,7 @@ const DistributorList = (props) => {
         accessor: "city",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
+          // return <Projects {...cellProps} />
         },
       },
       {
@@ -235,7 +234,7 @@ const DistributorList = (props) => {
         accessor: "GST",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
+          // return <Projects {...cellProps} />
         },
       },
       {
@@ -243,7 +242,7 @@ const DistributorList = (props) => {
         accessor: "PAN",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
+          // return <Projects {...cellProps} />
         },
       },
       {
@@ -251,7 +250,7 @@ const DistributorList = (props) => {
         accessor: "loginID",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
+          // return <Projects {...cellProps} />
         },
       },
       {
@@ -259,7 +258,7 @@ const DistributorList = (props) => {
         accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
+          // return <Projects {...cellProps} />
         },
       },
       {
@@ -267,7 +266,7 @@ const DistributorList = (props) => {
         accessor: "createat",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
+          // return <Projects {...cellProps} />
         },
       },
       {
@@ -275,7 +274,7 @@ const DistributorList = (props) => {
         accessor: "createdby",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
+          // return <Projects {...cellProps} />
         },
       },
       {
@@ -404,10 +403,7 @@ const DistributorList = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs
-            title="Organization"
-            breadcrumbItem="Distributor List"
-          />
+          <Breadcrumbs title="Organization" breadcrumbItem="Distributor List" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -456,13 +452,13 @@ const DistributorList = (props) => {
                                   value={validation.values.name || ""}
                                   invalid={
                                     validation.touched.name &&
-                                      validation.errors.name
+                                    validation.errors.name
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.name &&
-                                  validation.errors.name ? (
+                                validation.errors.name ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.name}
                                   </FormFeedback>
@@ -482,13 +478,13 @@ const DistributorList = (props) => {
                                   value={validation.values.designation || ""}
                                   invalid={
                                     validation.touched.designation &&
-                                      validation.errors.designation
+                                    validation.errors.designation
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.designation &&
-                                  validation.errors.designation ? (
+                                validation.errors.designation ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.designation}
                                   </FormFeedback>
@@ -506,13 +502,13 @@ const DistributorList = (props) => {
                                   value={validation.values.email || ""}
                                   invalid={
                                     validation.touched.email &&
-                                      validation.errors.email
+                                    validation.errors.email
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.email &&
-                                  validation.errors.email ? (
+                                validation.errors.email ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.email}
                                   </FormFeedback>
@@ -530,7 +526,7 @@ const DistributorList = (props) => {
                                   value={validation.values.tags || []}
                                   invalid={
                                     validation.touched.tags &&
-                                      validation.errors.tags
+                                    validation.errors.tags
                                       ? true
                                       : false
                                   }
@@ -546,7 +542,7 @@ const DistributorList = (props) => {
                                   <option>Css</option>
                                 </Input>
                                 {validation.touched.tags &&
-                                  validation.errors.tags ? (
+                                validation.errors.tags ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.tags}
                                   </FormFeedback>
@@ -564,13 +560,13 @@ const DistributorList = (props) => {
                                   value={validation.values.projects || ""}
                                   invalid={
                                     validation.touched.projects &&
-                                      validation.errors.projects
+                                    validation.errors.projects
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.projects &&
-                                  validation.errors.projects ? (
+                                validation.errors.projects ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.projects}
                                   </FormFeedback>
