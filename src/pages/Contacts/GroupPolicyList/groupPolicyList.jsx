@@ -333,9 +333,9 @@ const GroupPolicyList = (props) => {
                     isGlobalFilter={true}
                     isAddGpPolicyList={true}
                     isShowingPageLength={true}
-                    iscustomPageSizeOptions={true}
+                    // iscustomPageSizeOptions={true}
                     handleUserClick={() => {}}
-                    customPageSize={5}
+                    customPageSize={50}
                     tableClass="table align-middle table-nowrap table-hover"
                     theadClass="table-light"
                     paginationDiv="col-sm-12 col-md-7"

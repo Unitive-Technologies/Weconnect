@@ -158,8 +158,8 @@ const TableContainer = ({
             <div className="text-sm-end">
               <Button
                 type="button"
-                color="success"
-                className="btn-rounded  mb-2 me-2"
+                color="primary"
+                className="btn mb-2 me-2"
                 onClick={handleOrderClicks}
               >
                 <i className="mdi mdi-plus me-1" />
@@ -169,7 +169,7 @@ const TableContainer = ({
           </Col>
         )}
         {isAddUserList && (
-          <Col sm="11">
+          <Col sm="12">
             <div className="text-sm-end">
               <Button
                 type="button"
@@ -184,12 +184,12 @@ const TableContainer = ({
           </Col>
         )}
         {isAddGpPolicyList && (
-          <Col sm="11">
+          <Col sm="12">
             <div className="text-sm-end">
               <Button
                 type="button"
-                color="success"
-                className="btn-rounded mb-2 me-2"
+                color="primary"
+                className="btn mb-2 me-2"
                 onClick={handleGroupPolicyClick}
               >
                 <i className="mdi mdi-plus me-1" />
