@@ -9,3 +9,5 @@ export * from "./auth/profile/actions";
 export * from "./contacts/actions";
 export * from "./customerusers/actions";
 export * from "./grouppolicy/actions";
+export * from "./designation/actions";
+

@@ -139,8 +139,8 @@ const CustomerUserList = (props) => {
                 {cellProps.row.original.status === 1
                   ? "Active"
                   : cellProps.row.original.status === 0
-                  ? "In-Active"
-                  : "Blocked"}
+                    ? "In-Active"
+                    : "Blocked"}
               </Link>
             </h5>
           );
@@ -350,7 +350,7 @@ const CustomerUserList = (props) => {
                     // isAddUserList={true}
                     isShowingPageLength={true}
                     iscustomPageSizeOptions={true}
-                    handleUserClick={() => {}}
+                    handleUserClick={() => { }}
                     customPageSize={5}
                     tableClass="table align-middle table-nowrap table-hover"
                     theadClass="table-light"

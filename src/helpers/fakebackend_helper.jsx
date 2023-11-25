@@ -224,6 +224,9 @@ export const getUsers = () => get(url.GET_USERS);
 export const getCustomerUsers = () => get(url.GET_CUSTOMERUSERS);
 
 export const getGroupPolicy = () => get(url.GET_GROUPPOLICY);
+
+export const getDesignation = () => get(url.GET_DESIGNATION);
+
 // add user
 export const addNewUser = (user) => post(url.ADD_NEW_USER, user);
 

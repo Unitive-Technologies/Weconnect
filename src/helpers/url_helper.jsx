@@ -16,6 +16,9 @@ export const GET_CUSTOMERUSERS = "/customeruserlist"
 
 export const GET_GROUPPOLICY = "/grouppolicylist"
 
+export const GET_DESIGNATION = "/designationlist"
+
+
 export const GET_USERS = "/userslist";
 export const GET_USER_PROFILE = "/user";
 export const ADD_NEW_USER = "/add/user";

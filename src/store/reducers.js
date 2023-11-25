@@ -12,6 +12,7 @@ import Profile from "./auth/profile/reducer";
 import contacts from "./contacts/reducer";
 import customerUsers from "./customerusers/reducer";
 import groupPolicy from "./grouppolicy/reducer";
+import designation from "./designation/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   contacts,
   customerUsers,
   groupPolicy,
+  designation,
 });
 
 export default rootReducer;
