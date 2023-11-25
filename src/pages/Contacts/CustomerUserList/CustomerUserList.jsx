@@ -347,7 +347,7 @@ const CustomerUserList = (props) => {
                     columns={columns}
                     data={cusUsers}
                     isGlobalFilter={true}
-                    isAddUserList={true}
+                    // isAddUserList={true}
                     isShowingPageLength={true}
                     iscustomPageSizeOptions={true}
                     handleUserClick={() => {}}

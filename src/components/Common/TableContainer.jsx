@@ -169,7 +169,7 @@ const TableContainer = ({
           </Col>
         )}
         {isAddUserList && (
-          <Col sm="7">
+          <Col sm="11">
             <div className="text-sm-end">
               <Button
                 type="button"
@@ -184,7 +184,7 @@ const TableContainer = ({
           </Col>
         )}
         {isAddGpPolicyList && (
-          <Col sm="7">
+          <Col sm="11">
             <div className="text-sm-end">
               <Button
                 type="button"
