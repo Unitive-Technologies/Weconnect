@@ -1,3 +1,15 @@
-import { users, userProfile } from "./contacts";
+import { userslist } from "./userslist";
+import { customeruserlist } from "./customeruserlist";
+import { designationlist } from "./designationlist";
+import { grouppolicylist } from "./grouppolicylist";
+import { notificationtemplatelist } from "./notificationtemplatelist";
+import { schedulecustomernotificationlist } from "./schedulecustomernotificationlist";
 
-export { users, userProfile };
+export {
+  userslist,
+  customeruserlist,
+  designationlist,
+  grouppolicylist,
+  notificationtemplatelist,
+  schedulecustomernotificationlist,
+};

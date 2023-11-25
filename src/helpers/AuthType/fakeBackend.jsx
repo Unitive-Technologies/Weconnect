@@ -2,7 +2,11 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import * as url from "../url_helper";
 import accessToken from "../jwt-token-access/accessToken";
-import { users as members } from "../../common/data";
+import {
+  userslist as members,
+  customeruserlist as custusers,
+  grouppolicylist as gppolicy,
+} from "../../common/data";
 let users = [
   {
     uid: 1,
@@ -171,19 +175,44 @@ const fakeBackend = () => {
     });
   });
 
-  // mock.onGet(url.GET_USERS).reply(() => {
-  //   return new Promise((resolve, reject) => {
-  //     setTimeout(() => {
-  //       if (members) {
-  //         // Passing fake JSON data as response
-  //         resolve([200, members]);
-  //       } else {
-  //         reject([400, "Cannot get users"]);
-  //       }
-  //     });
-  //   });
-  // });
+  mock.onGet(url.GET_USERS).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (members) {
+          // Passing fake JSON data as response
+          resolve([200, members]);
+        } else {
+          reject([400, "Cannot get users"]);
+        }
+      });
+    });
+  });
 
+  mock.onGet(url.GET_CUSTOMERUSERS).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (custusers) {
+          // Passing fake JSON data as response
+          resolve([200, custusers]);
+        } else {
+          reject([400, "Cannot get Customer users"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_GROUPPOLICY).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (gppolicy) {
+          // Passing fake JSON data as response
+          resolve([200, gppolicy]);
+        } else {
+          reject([400, "Cannot get Group Policy"]);
+        }
+      });
+    });
+  });
   mock.onPost("/social-login").reply((config) => {
     const user = JSON.parse(config["data"]);
 
