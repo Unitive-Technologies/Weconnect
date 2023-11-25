@@ -249,23 +249,31 @@ const SidebarContent = (props) => {
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
-                      <Link to="#">{props.t("State List")}</Link>
+                      <Link to="/state-list">
+                        <span key="#">
+                          {props.t("State List")}
+                        </span>
+                      </Link>
                     </li>
                     <li>
-                      <Link to="#">{props.t("District List")} </Link>
+                      <Link to="/district-list">
+                        <span key="#">
+                          {props.t("District List")}
+                        </span>
+                      </Link>
                     </li>
                     <li>
-                      <Link to="/#">
+                      <Link to="/city-list">
                         <span key="#">{props.t("City List")}</span>
                       </Link>
                     </li>
                     <li>
-                      <Link to="/#">
+                      <Link to="/location-list">
                         <span key="#">{props.t("Location List")}</span>
                       </Link>
                     </li>
                     <li>
-                      <Link to="/#">
+                      <Link to="/sublocation-list">
                         <span key="#">{props.t("Sublocation List")}</span>
                       </Link>
                     </li>
@@ -277,50 +285,53 @@ const SidebarContent = (props) => {
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
-                      <Link to="#">{props.t("Broadcaster List")}</Link>
+                      <Link to="/broadcaster-list">
+                        <span key="#">
+                          {props.t("Broadcaster List")}</span></Link>
                     </li>
                     <li>
-                      <Link to="#">{props.t("Genre List")} </Link>
+                      <Link to="/genre-list">
+                        <span key="#">{props.t("Genre List")}</span></Link>
                     </li>
                     <li>
-                      <Link to="/#">
+                      <Link to="/language-list">
                         <span key="#">{props.t("Language List")}</span>
                       </Link>
                     </li>
                     <li>
-                      <Link to="/#">
+                      <Link to="/channel-list">
                         <span key="#">{props.t("Channel List")}</span>
                       </Link>
                     </li>
                     <li>
-                      <Link to="/#">
+                      <Link to="/broadcaster-bouquet-list">
                         <span key="#">
                           {props.t("Broadcaster Bouquet List")}
                         </span>
                       </Link>
                     </li>
                     <li>
-                      <Link to="/#">
+                      <Link to="/package-list">
                         <span key="#">{props.t("Package List")}</span>
                       </Link>
                     </li>
                     <li>
-                      <Link to="/#">
+                      <Link to="/OSDConfiguration-list">
                         <span key="#">{props.t("OSD Configuration List")}</span>
                       </Link>
                     </li>
                     <li>
-                      <Link to="/#">
+                      <Link to="/OSDTemplate-list">
                         <span key="#">{props.t("OSD Template List")}</span>
                       </Link>
                     </li>
                     <li>
-                      <Link to="/#">
+                      <Link to="/local-channel-number-list">
                         <span key="#">{props.t("LCN List")}</span>
                       </Link>
                     </li>
                     <li>
-                      <Link to="/#">
+                      <Link to="/SMS-Message-Template-list">
                         <span key="#">
                           {props.t("SMS Message Template List")}
                         </span>

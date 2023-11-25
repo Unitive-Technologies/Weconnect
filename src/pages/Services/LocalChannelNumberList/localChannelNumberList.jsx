@@ -21,7 +21,7 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import { Email, Tags, Projects } from "./regionalOfficeListCol";
+import { Email, Tags, Projects } from "./localChannelNumberListCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -40,10 +40,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const RegionalOfficeList = (props) => {
+const LocalChannelNumberList = (props) => {
   //meta title
   document.title =
-    "Regional Office List | Skote - Vite React Admin & Dashboard Template";
+    "Local Channel Number List | Skote - Vite React Admin & Dashboard Template";
 
   const dispatch = useDispatch();
   const [contact, setContact] = useState();
@@ -148,8 +148,8 @@ const RegionalOfficeList = (props) => {
         ),
       },
       {
-        Header: "Name",
-        accessor: "name",
+        Header: "Channel Name",
+        accessor: "channelname",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -167,105 +167,32 @@ const RegionalOfficeList = (props) => {
         },
       },
       {
-        Header: "Code",
-        accessor: "code",
+        Header: "Genre Name",
+        accessor: "genrename",
         filterable: true,
         Cell: (cellProps) => {
           // return <Email {...cellProps} />;
         },
       },
       {
-        Header: "Address",
-        accessor: "address",
+        Header: "Local Channel Number",
+        accessor: "localchannelnumber",
         filterable: true,
         Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
         },
       },
       {
-        Header: "Contact Person",
-        accessor: "contactperson",
+        Header: "Rank",
+        accessor: "rank",
         filterable: true,
         Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
-        },
-      },
-      {
-        Header: "Mobile",
-        accessor: "mobile",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
-        },
-      },
-      {
-        Header: "State",
-        accessor: "state",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
-        },
-      },
-      {
-        Header: "District",
-        accessor: "District",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
-        },
-      },
-      {
-        Header: "City",
-        accessor: "city",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
-        },
-      },
-      {
-        Header: "GST",
-        accessor: "GST",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return 
-          <Projects {...cellProps} />
-        },
-      },
-      {
-        Header: "PAN",
-        accessor: "PAN",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
-        },
-      },
-      {
-        Header: "Login ID",
-        accessor: "LoginID",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
-        },
-      },
-      {
-        Header: "Status",
-        accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
         },
       },
       {
         Header: "Created At",
         accessor: "createdat",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
-        },
-      },
-      {
-        Header: "Created By",
-        accessor: "createdby",
         filterable: true,
         Cell: (cellProps) => {
           // return <Projects {...cellProps} />           
@@ -398,8 +325,8 @@ const RegionalOfficeList = (props) => {
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs
-            title="Organization"
-            breadcrumbItem="Regional Office List"
+            title="Services"
+            breadcrumbItem="Local Channel Number List"
           />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
@@ -598,4 +525,4 @@ const RegionalOfficeList = (props) => {
   );
 };
 
-export default withRouter(RegionalOfficeList);
+export default withRouter(LocalChannelNumberList);

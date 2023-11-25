@@ -21,7 +21,7 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import { Email, Tags, Projects } from "./regionalOfficeListCol";
+import { Email, Tags, Projects } from "./packageListCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -40,10 +40,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const RegionalOfficeList = (props) => {
+const PackageList = (props) => {
   //meta title
   document.title =
-    "Regional Office List | Skote - Vite React Admin & Dashboard Template";
+    "Package List | Skote - Vite React Admin & Dashboard Template";
 
   const dispatch = useDispatch();
   const [contact, setContact] = useState();
@@ -175,80 +175,47 @@ const RegionalOfficeList = (props) => {
         },
       },
       {
-        Header: "Address",
-        accessor: "address",
+        Header: "Type",
+        accessor: "type",
         filterable: true,
         Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
         },
       },
       {
-        Header: "Contact Person",
-        accessor: "contactperson",
+        Header: "Package Type",
+        accessor: "packagetype",
         filterable: true,
         Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
         },
       },
       {
-        Header: "Mobile",
-        accessor: "mobile",
+        Header: "CAS CODES",
+        accessor: "cascodes",
         filterable: true,
         Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
         },
       },
       {
-        Header: "State",
-        accessor: "state",
+        Header: "CHANNELS",
+        accessor: "channels",
         filterable: true,
         Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
         },
       },
       {
-        Header: "District",
-        accessor: "District",
+        Header: "BBQ",
+        accessor: "bbq",
         filterable: true,
         Cell: (cellProps) => {
           // return <Projects {...cellProps} />           
         },
       },
       {
-        Header: "City",
-        accessor: "city",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
-        },
-      },
-      {
-        Header: "GST",
-        accessor: "GST",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return 
-          <Projects {...cellProps} />
-        },
-      },
-      {
-        Header: "PAN",
-        accessor: "PAN",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
-        },
-      },
-      {
-        Header: "Login ID",
-        accessor: "LoginID",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
-        },
-      },
-      {
-        Header: "Status",
+        Header: "Staus",
         accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
@@ -398,8 +365,8 @@ const RegionalOfficeList = (props) => {
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs
-            title="Organization"
-            breadcrumbItem="Regional Office List"
+            title="Services"
+            breadcrumbItem="Package List"
           />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
@@ -598,4 +565,4 @@ const RegionalOfficeList = (props) => {
   );
 };
 
-export default withRouter(RegionalOfficeList);
+export default withRouter(PackageList);

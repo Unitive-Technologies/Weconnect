@@ -29,6 +29,26 @@ import RegionalOfficeList from "../pages/Organization/RegionalOfficeList/regiona
 import LcoList from "../pages/Organization/LCOList/lcoList";
 import DistributorList from "../pages/Organization/DistributorList/distributorList";
 
+// path from territory
+import DistrictList from "../pages/Territory/DistrictList/districtList";
+import CityList from "../pages/Territory/CityList/cityList";
+import LocationList from "../pages/Territory/LocationList/locationList";
+import StateList from '../pages/Territory/StateList/stateList';
+import SublocationList from '../pages/Territory/SublocationList/sublocationList';
+
+//  path from services
+import BroadcasterBouquetList from '../pages/Services/BroadcasterBouquetList/broadcasterBouquetList';
+import BroadcasterList from '../pages/Services/BroadcasterList/broadcasterList';
+import ChannelList from '../pages/Services/ChannelList/channelList';
+import DocumentUploadPolicyList from '../pages/Services/DocumentUploadPolicyList/documentUploadPolicyList';
+import GenreList from '../pages/Services/GenreList/genreList';
+import LanguageList from '../pages/Services/LanguageList/languageList';
+import LocalChannelNumberList from '../pages/Services/LocalChannelNumberList/localChannelNumberList';
+import OSDConfigurationList from '../pages/Services/OSDConfigurationList/osdConfigurationList';
+import OSDTemplateList from '../pages/Services/OSDTemplateList/osdTemplateList';
+import PackageList from '../pages/Services/PackageList/packageList';
+import SMSMessageTemplateList from '../pages/Services/SMSMessageTemplateList/SMSMessageTemplateList'
+
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
 
@@ -61,6 +81,7 @@ const authProtectedRoutes = [
     component: <AppAdBannerList />,
   },
 
+  // path from organization
 
   {
     path: "/regional-office-list",
@@ -74,6 +95,76 @@ const authProtectedRoutes = [
     path: "/distributor-list",
     component: <DistributorList />,
   },
+
+  // path from Territory
+
+  {
+    path: "/city-list",
+    component: <CityList />,
+  },
+  {
+    path: "/district-list",
+    component: <DistrictList />,
+  },
+  {
+    path: "/location-list",
+    component: <LocationList />,
+  },
+  {
+    path: "/state-list",
+    component: <StateList />,
+  },
+  {
+    path: "/sublocation-list",
+    component: <SublocationList />,
+  },
+
+  // path from Services
+  {
+    path: "/broadcaster-bouquet-list",
+    component: <BroadcasterBouquetList />,
+  },
+  {
+    path: "/broadcaster-list",
+    component: <BroadcasterList />,
+  },
+  {
+    path: "/channel-list",
+    component: <ChannelList />,
+  },
+  {
+    path: "/document-upload-policy-list",
+    component: <DocumentUploadPolicyList />,
+  },
+  {
+    path: "/genre-list",
+    component: <GenreList />,
+  },
+  {
+    path: "/language-list",
+    component: <LanguageList />,
+  },
+  {
+    path: "/local-channel-number-list",
+    component: <LocalChannelNumberList />,
+  },
+  {
+    path: "/OSDConfiguration-list",
+    component: <OSDConfigurationList />,
+  },
+  {
+    path: "/OSDTemplate-list",
+    component: <OSDTemplateList />,
+  },
+  {
+    path: "/package-list",
+    component: <PackageList />,
+  },
+  {
+    path: "/SMS-Message-Template-list",
+    component: <SMSMessageTemplateList />,
+  },
+
 ];
 
 const publicRoutes = [

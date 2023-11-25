@@ -43,7 +43,7 @@ import { ToastContainer } from "react-toastify";
 const DistributorList = (props) => {
   //meta title
   document.title =
-    "App Advertisement Banner List | Skote - Vite React Admin & Dashboard Template";
+    "Distributor List | Skote - Vite React Admin & Dashboard Template";
 
   const dispatch = useDispatch();
   const [contact, setContact] = useState();
@@ -148,8 +148,8 @@ const DistributorList = (props) => {
         ),
       },
       {
-        Header: "Title",
-        accessor: "title",
+        Header: "Name",
+        accessor: "name",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -167,35 +167,91 @@ const DistributorList = (props) => {
         },
       },
       {
-        Header: "Caption",
-        accessor: "caption",
+        Header: "Code",
+        accessor: "code",
         filterable: true,
         Cell: (cellProps) => {
           // return <Email {...cellProps} />;
         },
       },
       {
-        Header: "Description",
-        accessor: "description",
+        Header: "Regional Office",
+        accessor: "regionaloffcie",
         filterable: true,
         Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
         },
       },
       {
-        Header: "Start Date",
-        accessor: "startdate",
+        Header: "Address",
+        accessor: "address",
         filterable: true,
         Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
         },
       },
       {
-        Header: "End date",
-        accessor: "enddate",
+        Header: "Contact Person",
+        accessor: "contactperson",
         filterable: true,
         Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "Mobile",
+        accessor: "mobile",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "State",
+        accessor: "state",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Projects {...cellProps} />           
+        },
+      },
+      {
+        Header: "District",
+        accessor: "district",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Projects {...cellProps} />           
+        },
+      },
+      {
+        Header: "City",
+        accessor: "city",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Projects {...cellProps} />           
+        },
+      },
+      {
+        Header: "GST",
+        accessor: "GST",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Projects {...cellProps} />           
+        },
+      },
+      {
+        Header: "PAN",
+        accessor: "PAN",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Projects {...cellProps} />           
+        },
+      },
+      {
+        Header: "Login ID",
+        accessor: "loginID",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Projects {...cellProps} />           
         },
       },
       {
@@ -203,12 +259,12 @@ const DistributorList = (props) => {
         accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          // return <Projects {...cellProps} />           
         },
       },
       {
         Header: "Created At",
-        accessor: "createdat",
+        accessor: "createat",
         filterable: true,
         Cell: (cellProps) => {
           // return <Projects {...cellProps} />           
@@ -349,8 +405,8 @@ const DistributorList = (props) => {
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs
-            title="Access"
-            breadcrumbItem="App Advertisement Banner List"
+            title="Organization"
+            breadcrumbItem="Distributor List"
           />
           {isLoading ? (
             <Spinners setLoading={setLoading} />

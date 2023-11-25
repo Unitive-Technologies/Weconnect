@@ -43,7 +43,7 @@ import { ToastContainer } from "react-toastify";
 const LCOList = (props) => {
   //meta title
   document.title =
-    "App Advertisement Banner List | Skote - Vite React Admin & Dashboard Template";
+    "LCO List | Skote - Vite React Admin & Dashboard Template";
 
   const dispatch = useDispatch();
   const [contact, setContact] = useState();
@@ -148,8 +148,8 @@ const LCOList = (props) => {
         ),
       },
       {
-        Header: "Title",
-        accessor: "title",
+        Header: "Name",
+        accessor: "name",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -167,32 +167,112 @@ const LCOList = (props) => {
         },
       },
       {
-        Header: "Caption",
-        accessor: "caption",
+        Header: "Code",
+        accessor: "code",
         filterable: true,
         Cell: (cellProps) => {
           // return <Email {...cellProps} />;
         },
       },
       {
-        Header: "Description",
-        accessor: "description",
+        Header: "Distributor",
+        accessor: "distributor",
         filterable: true,
         Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
         },
       },
       {
-        Header: "Start Date",
-        accessor: "startdate",
+        Header: "Regional Office",
+        accessor: "regionaloffice",
         filterable: true,
         Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
         },
       },
       {
-        Header: "End date",
-        accessor: "enddate",
+        Header: "Regional Office Code",
+        accessor: "regionalofficecode",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "Address",
+        accessor: "address",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "Contact Person",
+        accessor: "contactperson",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "Mobile",
+        accessor: "mobile",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "State",
+        accessor: "state",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "District",
+        accessor: "district",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "City",
+        accessor: "city",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "GST",
+        accessor: "GST",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "PAN",
+        accessor: "PAN",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "Login ID",
+        accessor: "loginID",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "UID",
+        accessor: "UID",
         filterable: true,
         Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
@@ -201,6 +281,22 @@ const LCOList = (props) => {
       {
         Header: "Status",
         accessor: "status",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "Settings",
+        accessor: "settings",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "Balance",
+        accessor: "balance",
         filterable: true,
         Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
@@ -349,8 +445,8 @@ const LCOList = (props) => {
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs
-            title="Access"
-            breadcrumbItem="App Advertisement Banner List"
+            title="Organization"
+            breadcrumbItem="LCO List"
           />
           {isLoading ? (
             <Spinners setLoading={setLoading} />

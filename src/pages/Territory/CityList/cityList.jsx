@@ -21,7 +21,7 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import { Email, Tags, Projects } from "./regionalOfficeListCol";
+import { Email, Tags, Projects } from "./cityListCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -40,10 +40,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const RegionalOfficeList = (props) => {
+const CityList = (props) => {
   //meta title
   document.title =
-    "Regional Office List | Skote - Vite React Admin & Dashboard Template";
+    "City List | Skote - Vite React Admin & Dashboard Template";
 
   const dispatch = useDispatch();
   const [contact, setContact] = useState();
@@ -175,30 +175,6 @@ const RegionalOfficeList = (props) => {
         },
       },
       {
-        Header: "Address",
-        accessor: "address",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
-        },
-      },
-      {
-        Header: "Contact Person",
-        accessor: "contactperson",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
-        },
-      },
-      {
-        Header: "Mobile",
-        accessor: "mobile",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
-        },
-      },
-      {
         Header: "State",
         accessor: "state",
         filterable: true,
@@ -207,44 +183,35 @@ const RegionalOfficeList = (props) => {
         },
       },
       {
+        Header: "State Code",
+        accessor: "statecode",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
         Header: "District",
-        accessor: "District",
+        accessor: "district",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
+          // return <Tags {...cellProps} />;
         },
       },
       {
-        Header: "City",
-        accessor: "city",
+        Header: "District Code",
+        accessor: "districtcode",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
+          // return <Tags {...cellProps} />;
         },
       },
       {
-        Header: "GST",
-        accessor: "GST",
+        Header: "Description",
+        accessor: "description",
         filterable: true,
         Cell: (cellProps) => {
-          // return 
-          <Projects {...cellProps} />
-        },
-      },
-      {
-        Header: "PAN",
-        accessor: "PAN",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
-        },
-      },
-      {
-        Header: "Login ID",
-        accessor: "LoginID",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
+          // return <Tags {...cellProps} />;
         },
       },
       {
@@ -252,7 +219,7 @@ const RegionalOfficeList = (props) => {
         accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
+          // return <Tags {...cellProps} />;
         },
       },
       {
@@ -260,7 +227,7 @@ const RegionalOfficeList = (props) => {
         accessor: "createdat",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
+          // return <Tags {...cellProps} />;
         },
       },
       {
@@ -268,7 +235,7 @@ const RegionalOfficeList = (props) => {
         accessor: "createdby",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
+          // return <Tags {...cellProps} />;
         },
       },
       {
@@ -398,8 +365,8 @@ const RegionalOfficeList = (props) => {
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs
-            title="Organization"
-            breadcrumbItem="Regional Office List"
+            title="Territory"
+            breadcrumbItem="City List"
           />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
@@ -598,4 +565,4 @@ const RegionalOfficeList = (props) => {
   );
 };
 
-export default withRouter(RegionalOfficeList);
+export default withRouter(CityList);
