@@ -16,7 +16,7 @@ import Dashboard from "../pages/Dashboard/index";
 
 import ContactsList from "../pages/Contacts/ContactList/contacts-list";
 import CustomerUserlist from "../pages/Contacts/CustomerUserList/CustomerUserList";
-import GroupPolicyList from "../pages/Contacts/GroupPolicyList/GroupPolicyList";
+import groupPolicyList from "../pages/Contacts/GroupPolicyList/groupPolicyList";
 import DesignationList from "../pages/Contacts/DesignationList/designationList";
 import UserHierarchyList from "../pages/Contacts/UserHierarchyList/userHierarchyList";
 import NotificationTemplateList from "../pages/Contacts/NotificationTemplateList/notificationTemplateList";
@@ -33,21 +33,21 @@ import DistributorList from "../pages/Organization/DistributorList/distributorLi
 import DistrictList from "../pages/Territory/DistrictList/districtList";
 import CityList from "../pages/Territory/CityList/cityList";
 import LocationList from "../pages/Territory/LocationList/locationList";
-import StateList from '../pages/Territory/StateList/stateList';
-import SublocationList from '../pages/Territory/SublocationList/sublocationList';
+import StateList from "../pages/Territory/StateList/stateList";
+import SublocationList from "../pages/Territory/SublocationList/sublocationList";
 
 //  path from services
-import BroadcasterBouquetList from '../pages/Services/BroadcasterBouquetList/broadcasterBouquetList';
-import BroadcasterList from '../pages/Services/BroadcasterList/broadcasterList';
-import ChannelList from '../pages/Services/ChannelList/channelList';
-import DocumentUploadPolicyList from '../pages/Services/DocumentUploadPolicyList/documentUploadPolicyList';
-import GenreList from '../pages/Services/GenreList/genreList';
-import LanguageList from '../pages/Services/LanguageList/languageList';
-import LocalChannelNumberList from '../pages/Services/LocalChannelNumberList/localChannelNumberList';
-import OSDConfigurationList from '../pages/Services/OSDConfigurationList/osdConfigurationList';
-import OSDTemplateList from '../pages/Services/OSDTemplateList/osdTemplateList';
-import PackageList from '../pages/Services/PackageList/packageList';
-import SMSMessageTemplateList from '../pages/Services/SMSMessageTemplateList/SMSMessageTemplateList'
+import BroadcasterBouquetList from "../pages/Services/BroadcasterBouquetList/broadcasterBouquetList";
+import BroadcasterList from "../pages/Services/BroadcasterList/broadcasterList";
+import ChannelList from "../pages/Services/ChannelList/channelList";
+import DocumentUploadPolicyList from "../pages/Services/DocumentUploadPolicyList/documentUploadPolicyList";
+import GenreList from "../pages/Services/GenreList/genreList";
+import LanguageList from "../pages/Services/LanguageList/languageList";
+import LocalChannelNumberList from "../pages/Services/LocalChannelNumberList/localChannelNumberList";
+import OSDConfigurationList from "../pages/Services/OSDConfigurationList/osdConfigurationList";
+import OSDTemplateList from "../pages/Services/OSDTemplateList/osdTemplateList";
+import PackageList from "../pages/Services/PackageList/packageList";
+import SMSMessageTemplateList from "../pages/Services/SMSMessageTemplateList/SMSMessageTemplateList";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -80,7 +80,6 @@ const authProtectedRoutes = [
     path: "/app-adbannerlist",
     component: <AppAdBannerList />,
   },
-
 
   {
     path: "/regional-office-list",
@@ -163,7 +162,6 @@ const authProtectedRoutes = [
     path: "/SMS-Message-Template-list",
     component: <SMSMessageTemplateList />,
   },
-
 ];
 
 const publicRoutes = [
