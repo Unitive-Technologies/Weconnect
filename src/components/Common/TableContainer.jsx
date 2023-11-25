@@ -66,8 +66,8 @@ const TableContainer = ({
   isAddUserList,
   handleOrderClicks,
   handleUserClick,
-  handleCustomerClick,
-  isAddCustList,
+  handleGroupPolicyClick,
+  isAddGpPolicyList,
   customPageSize,
   tableClass,
   customPageSizeOptions,
@@ -183,17 +183,17 @@ const TableContainer = ({
             </div>
           </Col>
         )}
-        {isAddCustList && (
+        {isAddGpPolicyList && (
           <Col sm="7">
             <div className="text-sm-end">
               <Button
                 type="button"
                 color="success"
                 className="btn-rounded mb-2 me-2"
-                onClick={handleCustomerClick}
+                onClick={handleGroupPolicyClick}
               >
                 <i className="mdi mdi-plus me-1" />
-                New Customers
+                Create Group Policy
               </Button>
             </div>
           </Col>

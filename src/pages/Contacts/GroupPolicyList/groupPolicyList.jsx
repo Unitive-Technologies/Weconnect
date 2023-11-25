@@ -331,7 +331,7 @@ const GroupPolicyList = (props) => {
                     columns={columns}
                     data={gpPolicy}
                     isGlobalFilter={true}
-                    isAddUserList={true}
+                    isAddGpPolicyList={true}
                     isShowingPageLength={true}
                     iscustomPageSizeOptions={true}
                     handleUserClick={() => {}}
