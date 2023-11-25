@@ -115,7 +115,7 @@ const CustomerUserList = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.created_by_lbl}
+              {cellProps.row.original.mobile_no}
             </p>
           );
         },

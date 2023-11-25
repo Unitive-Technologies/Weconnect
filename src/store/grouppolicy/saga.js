@@ -5,7 +5,7 @@ import { GET_GROUPPOLICY } from "./actionTypes";
 import { getGroupPolicySuccess, getGroupPolicyFail } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getCustomerUsers as getGroupPolicy } from "../../helpers/fakebackend_helper";
+import { getGroupPolicy } from "../../helpers/fakebackend_helper";
 import { toast } from "react-toastify";
 
 const convertGroupPolicyListObject = (groupPolicyList) => {
