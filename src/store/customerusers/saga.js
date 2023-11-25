@@ -21,8 +21,8 @@ const convertCustomerUsersListObject = (customerUserList) => {
         customerUser.status === 1
           ? "ACTIVE"
           : customerUser.status === 0
-            ? "INACTIVE"
-            : "BLOCKED",
+          ? "INACTIVE"
+          : "BLOCKED",
       lco: customerUser.operator_lbl,
       lco_code: customerUser.operator.code,
       last_login_at: customerUser.last_login_ats
@@ -38,7 +38,7 @@ function* fetchCustomerUsers() {
   try {
     const response = yield call(getCustomerUsers);
     console.log("response:" + JSON.stringify(response));
-    const customerUserList = convertCustomerUsersListObject(response.data);
+    const customerUserList = convertCustomerUsersListObject(response);
     yield put(getCustomerUsersSuccess(customerUserList));
   } catch (error) {
     yield put(getCustomerUsersFail(error));

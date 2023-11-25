@@ -7,7 +7,6 @@ import { getGroupPolicySuccess, getGroupPolicyFail } from "./actions";
 //Include Both Helper File with needed methods
 import { getGroupPolicy } from "../../helpers/fakebackend_helper";
 
-
 const convertGroupPolicyListObject = (groupPolicyList) => {
   // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
   return groupPolicyList.map((groupPolicy) => {
@@ -42,7 +41,7 @@ function* fetchGroupPolicy() {
   try {
     const response = yield call(getGroupPolicy);
     console.log("response:" + JSON.stringify(response));
-    const groupPolicyList = convertGroupPolicyListObject(response.data);
+    const groupPolicyList = convertGroupPolicyListObject(response);
     yield put(getGroupPolicySuccess(groupPolicyList));
   } catch (error) {
     yield put(getGroupPolicyFail(error));

@@ -6,6 +6,7 @@ import {
   userslist as members,
   customeruserlist as custusers,
   grouppolicylist as gppolicy,
+  designationlist as designation,
 } from "../../common/data";
 let users = [
   {
@@ -205,6 +206,7 @@ const fakeBackend = () => {
       setTimeout(() => {
         if (members) {
           // Passing fake JSON data as response
+          console.log("users on mock:" + JSON.stringify(members));
           resolve([200, members]);
         } else {
           reject([400, "Cannot get users"]);
@@ -231,9 +233,24 @@ const fakeBackend = () => {
       setTimeout(() => {
         if (gppolicy) {
           // Passing fake JSON data as response
+
           resolve([200, gppolicy]);
         } else {
           reject([400, "Cannot get Group Policy"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_DESIGNATION).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (designation) {
+          // Passing fake JSON data as response
+
+          resolve([200, designation]);
+        } else {
+          reject([400, "Cannot get Designation List"]);
         }
       });
     });
