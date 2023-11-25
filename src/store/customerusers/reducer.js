@@ -12,7 +12,7 @@ const INIT_STATE = {
 const CustomerUsers = (state = INIT_STATE, action) => {
   switch (action.type) {
     case GET_CUSTOMERUSERS_SUCCESS:
-      console.log("Users data in reducer:", action.payload);
+      console.log("CustomerUsers data in reducer:", action.payload);
       return {
         ...state,
         customerUsers: action.payload,

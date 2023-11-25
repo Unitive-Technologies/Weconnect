@@ -8,6 +8,7 @@ import ProfileSaga from "./auth/profile/saga";
 import LayoutSaga from "./layout/saga";
 import contactsSaga from "./contacts/saga";
 import customerUsersSaga from "./customerusers/saga";
+import groupPolicySaga from "./grouppolicy/saga";
 
 export default function* rootSaga() {
   yield all([
@@ -19,5 +20,6 @@ export default function* rootSaga() {
     fork(LayoutSaga),
     fork(contactsSaga),
     fork(customerUsersSaga),
+    fork(groupPolicySaga),
   ]);
 }

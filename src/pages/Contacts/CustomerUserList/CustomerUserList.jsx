@@ -54,7 +54,7 @@ const CustomerUserList = (props) => {
   const { cusUsers, loading } = useSelector(customerUsersProperties);
 
   useEffect(() => {
-    console.log("Users data in component:", cusUsers);
+    console.log("Customer Users data in component:", cusUsers);
   }, [cusUsers]);
   const [isLoading, setLoading] = useState(loading);
 
@@ -65,28 +65,22 @@ const CustomerUserList = (props) => {
     () => [
       {
         Header: "#",
-        // accessor: "name",
         disableFilters: true,
         filterable: true,
-        accessor: (cellProps) => (
-          <>
-            {!cellProps.img ? (
-              <div className="avatar-xs">
-                <span className="avatar-title rounded-circle">
-                  {cellProps.name.charAt(0)}
-                </span>
-              </div>
-            ) : (
-              <div>
-                <img
-                  className="rounded-circle avatar-xs"
-                  src={cellProps.img}
-                  alt=""
-                />
-              </div>
-            )}
-          </>
-        ),
+        Cell: (cellProps) => {
+          const totalRows = cellProps.rows.length;
+          const reverseIndex = totalRows - cellProps.row.index;
+
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {reverseIndex}
+                </Link>
+              </h5>
+            </>
+          );
+        },
       },
       {
         Header: "Name",
@@ -121,7 +115,7 @@ const CustomerUserList = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.created_by_lbl}
+              {cellProps.row.original.mobile_no}
             </p>
           );
         },
@@ -325,7 +319,7 @@ const CustomerUserList = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          {/* <Breadcrumbs title="Contacts" breadcrumbItem="Customer User List" /> */}
+          <Breadcrumbs title="Access" breadcrumbItem="Customer User List" />
           {/* {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : ( */}
@@ -333,7 +327,7 @@ const CustomerUserList = (props) => {
             <Col lg="12">
               <Card>
                 <CardBody>
-                  {console.log("users:" + JSON.stringify(cusUsers))}
+                  {console.log("Customer users:" + JSON.stringify(cusUsers))}
                   <TableContainer
                     isPagination={true}
                     columns={columns}
