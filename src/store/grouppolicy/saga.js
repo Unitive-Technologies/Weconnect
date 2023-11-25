@@ -16,12 +16,24 @@ const convertGroupPolicyListObject = (groupPolicyList) => {
       ...groupPolicy,
       id: groupPolicy.id,
       name: groupPolicy.user_id,
-      type: groupPolicy.type,
-      role: groupPolicy.role,
+      type:
+        groupPolicy.user_type === 0
+          ? "MSO"
+          : groupPolicy.user_type === 1
+          ? "RO"
+          : groupPolicy.user_type === 2
+          ? "DISTRIBUTOR"
+          : "LCO",
+      role:
+        groupPolicy.role === 1
+          ? "Administrator"
+          : groupPolicy.role === 2
+          ? "Staff"
+          : "User",
       description: groupPolicy.description,
       count: groupPolicy.user_count,
-      created_at: groupPolicy.created_at,
-      created_by: groupPolicy.created_by,
+      created_at: groupPolicy.insert_timestamp,
+      created_by: groupPolicy.inserted_by,
     };
   });
 };

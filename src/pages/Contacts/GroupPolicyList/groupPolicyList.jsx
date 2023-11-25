@@ -150,13 +150,11 @@ const GroupPolicyList = (props) => {
       },
       {
         Header: "Count",
-        accessor: "user_count",
+        accessor: "count",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.user_count}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.count}</p>
           );
         },
       },
@@ -165,7 +163,13 @@ const GroupPolicyList = (props) => {
         accessor: "viewusers", //"operator_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          <p className="text-muted mb-0">{cellProps.row.original.lco}</p>;
+          return (
+            <h5 className="font-size-14 mb-1">
+              <Link className="text-dark" to="#">
+                <p className="text-muted mb-0">View User</p>
+              </Link>
+            </h5>
+          );
         },
       },
       {
@@ -182,12 +186,14 @@ const GroupPolicyList = (props) => {
       },
       {
         Header: "Created By",
-        accessor: "created_by_lbl",
+        accessor: "created_by",
         filterable: true,
         Cell: (cellProps) => {
-          <p className="text-muted mb-0">
-            {cellProps.row.original.created_by_lbl}
-          </p>;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by}
+            </p>
+          );
         },
       },
       {
