@@ -11,26 +11,17 @@ import { toast } from "react-toastify";
 const convertGroupPolicyListObject = (groupPolicyList) => {
   // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
   return groupPolicyList.map((groupPolicy) => {
+    console.log("groupPolicy:" + JSON.stringify(groupPolicy));
     return {
       ...groupPolicy,
       id: groupPolicy.id,
-      name: groupPolicy.name,
-      login_id: groupPolicy.username,
-      mobile_no: groupPolicy.mobile_no,
-      email: groupPolicy.email,
-      status:
-        groupPolicy.status === 1
-          ? "ACTIVE"
-          : groupPolicy.status === 0
-          ? "INACTIVE"
-          : "BLOCKED",
-      lco: groupPolicy.operator_lbl,
-      lco_code: groupPolicy.operator.code,
-      last_login_at:
-        groupPolicy.last_login_at === null
-          ? "NEVER"
-          : groupPolicy.last_login_at,
+      name: groupPolicy.user_id,
+      type: groupPolicy.type,
+      role: groupPolicy.role,
+      description: groupPolicy.description,
+      count: groupPolicy.user_count,
       created_at: groupPolicy.created_at,
+      created_by: groupPolicy.created_by,
     };
   });
 };

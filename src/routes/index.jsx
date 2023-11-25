@@ -16,7 +16,7 @@ import Dashboard from "../pages/Dashboard/index";
 
 import ContactsList from "../pages/Contacts/ContactList/contacts-list";
 import CustomerUserlist from "../pages/Contacts/CustomerUserList/CustomerUserList";
-import GroupPolicyList from "../pages/Contacts/GroupPolicyList/groupPolicyList";
+import GroupPolicyList from "../pages/Contacts/GroupPolicyList/GroupPolicyList";
 import DesignationList from "../pages/Contacts/DesignationList/designationList";
 import UserHierarchyList from "../pages/Contacts/UserHierarchyList/userHierarchyList";
 import NotificationTemplateList from "../pages/Contacts/NotificationTemplateList/notificationTemplateList";
@@ -60,7 +60,6 @@ const authProtectedRoutes = [
     path: "/app-adbannerlist",
     component: <AppAdBannerList />,
   },
-
 
   {
     path: "/regional-office-list",

@@ -1,41 +1,39 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import {
-  GET_CUSTOMERUSERS,
-} from "./actionTypes";
+import { GET_CUSTOMERUSERS } from "./actionTypes";
 
-import {
-  getCustomerUsersSuccess,
-  getCustomerUsersFail,
-} from "./actions";
+import { getCustomerUsersSuccess, getCustomerUsersFail } from "./actions";
 
 //Include Both Helper File with needed methods
-import {
-  getCustomerUsers,
-} from "../../helpers/fakebackend_helper";
+import { getCustomerUsers } from "../../helpers/fakebackend_helper";
 import { toast } from "react-toastify";
 
 const convertCustomerUsersListObject = (customerUserList) => {
   // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
   return customerUserList.map((customerUser) => {
     return {
-      ... customerUser,
+      ...customerUser,
       id: customerUser.id,
       name: customerUser.name,
       login_id: customerUser.username,
       mobile_no: customerUser.mobile_no,
       email: customerUser.email,
-      status: customerUser.status === 1 ? "ACTIVE" : 
-                customerUser.status === 0 ? "INACTIVE" : "BLOCKED",
+      status:
+        customerUser.status === 1
+          ? "ACTIVE"
+          : customerUser.status === 0
+          ? "INACTIVE"
+          : "BLOCKED",
       lco: customerUser.operator_lbl,
       lco_code: customerUser.operator.code,
-      last_login_at: customerUser.last_login_at === null ? "NEVER" : customerUser.last_login_at,
+      last_login_at:
+        customerUser.last_login_at === null
+          ? "NEVER LOGGED IN"
+          : customerUser.last_login_at,
       created_at: customerUser.created_at,
-    }
+    };
   });
-
-
-}
+};
 
 function* fetchCustomerUsers() {
   try {
