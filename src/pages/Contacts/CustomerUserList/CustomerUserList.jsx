@@ -151,7 +151,15 @@ const CustomerUserList = (props) => {
         accessor: "lco", //"operator_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          <p className="text-muted mb-0">{cellProps.row.original.lco}</p>;
+          // {
+          //   console.log("lco:" + JSON.stringify(cellProps.row.original));
+          // }
+          // {
+          //   console.log("lco2:" + JSON.stringify(cellProps.row.original.lco));
+          // }
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.lco}</p>
+          );
         },
       },
       {
@@ -159,7 +167,9 @@ const CustomerUserList = (props) => {
         accessor: "lco_code",
         filterable: true,
         Cell: (cellProps) => {
-          <p className="text-muted mb-0">{cellProps.row.original.lco_code}</p>;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.lco_code}</p>
+          );
         },
       },
       {
@@ -167,13 +177,15 @@ const CustomerUserList = (props) => {
         accessor: "last_login_at",
         filterable: true,
         Cell: (cellProps) => {
-          <p className="font-size-14 mb-1">
-            <Link className="text-dark" to="#">
-              {cellProps.row.original.last_login_at === null
-                ? "Never Logged In"
-                : cellProps.row.original.last_login_at}
-            </Link>
-          </p>;
+          return (
+            <p className="font-size-14 mb-1">
+              <Link className="text-dark" to="#">
+                {cellProps.row.original.last_login_at === null
+                  ? "Never Logged In"
+                  : cellProps.row.original.last_login_at}
+              </Link>
+            </p>
+          );
         },
       },
       {
@@ -193,9 +205,11 @@ const CustomerUserList = (props) => {
         accessor: "created_by_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          <p className="text-muted mb-0">
-            {cellProps.row.original.created_by_lbl}
-          </p>;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by_lbl}
+            </p>
+          );
         },
       },
       {
@@ -337,7 +351,7 @@ const CustomerUserList = (props) => {
                     isShowingPageLength={true}
                     iscustomPageSizeOptions={true}
                     handleUserClick={() => {}}
-                    customPageSize={8}
+                    customPageSize={5}
                     tableClass="table align-middle table-nowrap table-hover"
                     theadClass="table-light"
                     paginationDiv="col-sm-12 col-md-7"

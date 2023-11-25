@@ -26,10 +26,10 @@ const convertCustomerUsersListObject = (customerUserList) => {
           : "BLOCKED",
       lco: customerUser.operator_lbl,
       lco_code: customerUser.operator.code,
-      last_login_at:
-        customerUser.last_login_at === null
-          ? "NEVER LOGGED IN"
-          : customerUser.last_login_at,
+      last_login_at: customerUser.last_login_ats
+        ? customerUser.last_login_at
+        : "NEVER LOGGED IN",
+
       created_at: customerUser.created_at,
     };
   });
