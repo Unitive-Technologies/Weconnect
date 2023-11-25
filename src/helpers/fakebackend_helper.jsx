@@ -222,6 +222,8 @@ export const deleteKanban = (kanban) =>
 export const getUsers = () => get(url.GET_USERS);
 
 export const getCustomerUsers = () => get(url.GET_CUSTOMERUSERS);
+
+export const getGroupPolicy = () => get(url.GET_GROUPPOLICY);
 // add user
 export const addNewUser = (user) => post(url.ADD_NEW_USER, user);
 

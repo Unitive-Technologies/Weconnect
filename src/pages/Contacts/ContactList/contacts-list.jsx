@@ -501,7 +501,7 @@ const ContactsList = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Contacts" breadcrumbItem="User List" />
+          <Breadcrumbs title="Access" breadcrumbItem="User List" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
