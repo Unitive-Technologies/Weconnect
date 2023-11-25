@@ -175,6 +175,31 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onPost("/social-login").reply((config) => {
+    const user = JSON.parse(config["data"]);
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (user && user.token) {
+          // You have to generate AccessToken by jwt. but this is fakeBackend so, right now its dummy
+          const token = accessToken;
+          const userName = user.name;
+
+          // JWT AccessToken
+          const tokenObj = { accessToken: token, username: userName }; // Token Obj
+          const validUserObj = { ...user[0], ...tokenObj, ...user.name }; // validUser Obj
+
+          resolve([200, validUserObj]);
+        } else {
+          reject([
+            400,
+            "Username and password are invalid. Please enter correct username and password",
+          ]);
+        }
+      });
+    });
+  });
+
   mock.onGet(url.GET_USERS).reply(() => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -209,30 +234,6 @@ const fakeBackend = () => {
           resolve([200, gppolicy]);
         } else {
           reject([400, "Cannot get Group Policy"]);
-        }
-      });
-    });
-  });
-  mock.onPost("/social-login").reply((config) => {
-    const user = JSON.parse(config["data"]);
-
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (user && user.token) {
-          // You have to generate AccessToken by jwt. but this is fakeBackend so, right now its dummy
-          const token = accessToken;
-          const userName = user.name;
-
-          // JWT AccessToken
-          const tokenObj = { accessToken: token, username: userName }; // Token Obj
-          const validUserObj = { ...user[0], ...tokenObj, ...user.name }; // validUser Obj
-
-          resolve([200, validUserObj]);
-        } else {
-          reject([
-            400,
-            "Username and password are invalid. Please enter correct username and password",
-          ]);
         }
       });
     });
