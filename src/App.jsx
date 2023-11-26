@@ -36,9 +36,6 @@ const App = (props) => {
   function getLayout(layoutType) {
     let layoutCls = VerticalLayout;
     switch (layoutType) {
-      case "horizontal":
-        layoutCls = HorizontalLayout;
-        break;
       default:
         layoutCls = VerticalLayout;
         break;
