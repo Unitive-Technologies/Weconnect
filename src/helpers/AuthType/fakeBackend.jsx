@@ -7,6 +7,7 @@ import {
   customeruserlist as custusers,
   grouppolicylist as gppolicy,
   designationlist as designation,
+  notificationtemplatelist as notemplate,
 } from "../../common/data";
 let users = [
   {
@@ -251,6 +252,20 @@ const fakeBackend = () => {
           resolve([200, designation]);
         } else {
           reject([400, "Cannot get Designation List"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_NOTIFICATIONTEMPLATE).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (notemplate) {
+          // Passing fake JSON data as response
+
+          resolve([200, notemplate]);
+        } else {
+          reject([400, "Cannot get NotificationTemplate"]);
         }
       });
     });

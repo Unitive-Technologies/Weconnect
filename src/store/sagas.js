@@ -10,6 +10,7 @@ import contactsSaga from "./contacts/saga";
 import customerUsersSaga from "./customerusers/saga";
 import groupPolicySaga from "./grouppolicy/saga";
 import designationSaga from "./designation/saga";
+import notificationTemplateSaga from "./notificationtemplate/saga";
 
 export default function* rootSaga() {
   yield all([
@@ -23,5 +24,6 @@ export default function* rootSaga() {
     fork(customerUsersSaga),
     fork(groupPolicySaga),
     fork(designationSaga),
+    fork(notificationTemplateSaga),
   ]);
 }

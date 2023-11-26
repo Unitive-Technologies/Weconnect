@@ -1,52 +1,51 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_CUSTOMERUSERS } from "./actionTypes";
+import { GET_NOTIFICATIONTEMPLATE } from "./actionTypes";
 
-import { getCustomerUsersSuccess, getCustomerUsersFail } from "./actions";
+import { getNotificationTemplateSuccess, getNotificationTemplateFail } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getCustomerUsers } from "../../helpers/fakebackend_helper";
+import { getNotificationTemplate } from "../../helpers/fakebackend_helper";
 
-const convertCustomerUsersListObject = (customerUserList) => {
-  // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
-  return customerUserList.map((customerUser) => {
+const convertNotificationTemplateListObject = (notificationTemplateList) => {
+  // Notification Template has more data than what we need, we need to convert each of the Notification Template user object in the list with needed colums of the table
+  return notificationTemplateList.map((notificationTemplate) => {
     return {
-      ...customerUser,
-      id: customerUser.id,
-      name: customerUser.name,
-      login_id: customerUser.username,
-      mobile_no: customerUser.mobile_no,
-      email: customerUser.email,
+      ...notificationTemplate,
+      id: notificationTemplate.id,
+      msg_head: notificationTemplate.msg_head,
+      msg_content: notificationTemplate.msg_content,
+      msg_type: notificationTemplate.msg_type,
+      msg_fontsize: notificationTemplate.msg_fontsize,
+      msg_fontcolor: notificationTemplate.msg_fontcolor,
+      msg_fontbackgroundcolor: notificationTemplate.msg_fontbackgroundcolor,
+      msg_fontfamily: notificationTemplate.msg_fontfamily,
       status:
-        customerUser.status === 1
+        notificationTemplate.status === 1
           ? "ACTIVE"
-          : customerUser.status === 0
-          ? "INACTIVE"
-          : "BLOCKED",
-      lco: customerUser.operator_lbl,
-      lco_code: customerUser.operator.code,
-      last_login_at: customerUser.last_login_ats
-        ? customerUser.last_login_at
-        : "NEVER LOGGED IN",
-
-      created_at: customerUser.created_at,
+          : notificationTemplate.status === 0
+            ? "INACTIVE"
+            : "BLOCKED",
+      created_at: notificationTemplate.created_at,
+      created_by: notificationTemplate.created_by,
     };
   });
 };
 
-function* fetchCustomerUsers() {
+function* fetchNotificationTemplate() {
   try {
-    const response = yield call(getCustomerUsers);
-    console.log("response:" + JSON.stringify(response));
-    const customerUserList = convertCustomerUsersListObject(response);
-    yield put(getCustomerUsersSuccess(customerUserList));
+    const response = yield call(getNotificationTemplate);
+    const notificationTemplateList = convertNotificationTemplateListObject(response);
+    yield put(getNotificationTemplateSuccess(notificationTemplateList));
   } catch (error) {
-    yield put(getCustomerUsersFail(error));
+    console.error("Error fetching notification templates:", error);
+    yield put(getNotificationTemplateFail(error));
   }
 }
 
-function* customerUsersSaga() {
-  yield takeEvery(GET_CUSTOMERUSERS, fetchCustomerUsers);
+
+function* notificationTemplateSaga() {
+  yield takeEvery(GET_NOTIFICATIONTEMPLATE, fetchNotificationTemplate);
 }
 
-export default customerUsersSaga;
+export default notificationTemplateSaga;

@@ -227,6 +227,9 @@ export const getGroupPolicy = () => get(url.GET_GROUPPOLICY);
 
 export const getDesignation = () => get(url.GET_DESIGNATION);
 
+export const getNotificationTemplate = () => get(url.GET_NOTIFICATIONTEMPLATE);
+
+
 // add user
 export const addNewUser = (user) => post(url.ADD_NEW_USER, user);
 

@@ -4,393 +4,323 @@ import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
 import Spinners from "../../../components/Common/Spinner";
 import {
-  Card,
-  CardBody,
-  Col,
-  Container,
-  Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
-  UncontrolledTooltip,
-  Input,
-  Form,
+    Card,
+    CardBody,
+    Col,
+    Container,
+    Row, UncontrolledTooltip
 } from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-
-import { Email, Tags, Projects } from "./notificationTemplateListCol";
-
-//Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
-
-import {
-  getUsers as onGetUsers,
-  addNewUser as onAddNewUser,
-  updateUser as onUpdateUser,
-  deleteUser as onDeleteUser,
-} from "/src/store/contacts/actions";
-import { isEmpty } from "lodash";
-
-//redux
+import { getNotificationTemplate as onGetNotificationTemplate } from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const CustomerUserList = (props) => {
-  //meta title
-  document.title = "Notification Template List | VDigital";
+const NotificationTemplateList = (props) => {
+    //meta title
+    document.title = "Notification Template List | VDigital";
 
-  const dispatch = useDispatch();
-  const [contact, setContact] = useState();
-  // validation
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
+    const dispatch = useDispatch();
 
-    initialValues: {
-      name: (contact && contact.name) || "",
-      designation: (contact && contact.designation) || "",
-      tags: (contact && contact.tags) || "",
-      email: (contact && contact.email) || "",
-      projects: (contact && contact.projects) || "",
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
-      designation: Yup.string().required("Please Enter Your Designation"),
-      tags: Yup.array().required("Please Enter Tag"),
-      email: Yup.string()
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-        .required("Please Enter Your Email"),
-      projects: Yup.string().required("Please Enter Your Project"),
-    }),
-    onSubmit: (values) => {
-      if (isEdit) {
-        const updateUser = {
-          id: contact.id,
-          name: values.name,
-          designation: values.designation,
-          tags: values.tags,
-          email: values.email,
-          projects: values.projects,
-        };
+    const selectNotificationTemplateState = (state) => state.notificationTemplate;
+    const notificationTemplateProperties = createSelector(
+        selectNotificationTemplateState,
+        (notificationTemplate) => ({
+            noTemplate: notificationTemplate.notificationTemplate,
+            loading: notificationTemplate.loading,
+        })
+    );
 
-        // update user
-        dispatch(onUpdateUser(updateUser));
-        validation.resetForm();
+    const { noTemplate, loading } = useSelector(notificationTemplateProperties);
+
+    useEffect(() => {
+        console.log("Notificaiton Template data in component:", noTemplate);
+    }, [noTemplate]);
+
+
+    const [isLoading, setLoading] = useState(loading);
+
+
+    const [userList, setUserList] = useState([]);
+    const [modal, setModal] = useState(false);
+    const [isEdit, setIsEdit] = useState(false);
+
+    const columns = useMemo(
+        () => [
+            {
+                Header: "#",
+                // accessor: "name",
+                disableFilters: true,
+                filterable: true,
+                Cell: (cellProps) => {
+                    const totalRows = cellProps.rows.length;
+                    const reverseIndex = totalRows - cellProps.row.index;
+
+                    return (
+                        <>
+                            <h5 className="font-size-14 mb-1">
+                                <Link className="text-dark" to="#">
+                                    {reverseIndex}
+                                </Link>
+                            </h5>
+                        </>
+                    );
+                },
+            },
+            {
+                Header: "Name",
+                accessor: "msg_head",
+                filterable: true,
+                Cell: (cellProps) => {
+                    return (
+                        <>
+                            <h5 className="font-size-14 mb-1">
+                                <Link className="text-dark" to="#">
+                                    {cellProps.row.original.msg_head}
+                                </Link>
+                            </h5>
+                        </>
+                    );
+                },
+            },
+            {
+                Header: "Content",
+                accessor: "msg_content",
+                filterable: true,
+                Cell: (cellProps) => {
+                    return (
+                        <p className="text-muted mb-0">{cellProps.row.original.msg_content}</p>
+                    );
+                },
+            },
+            {
+                Header: "Type",
+                accessor: "msg_type_lbl",
+                filterable: true,
+                Cell: (cellProps) => {
+                    return (
+                        <p className="text-muted mb-0">{cellProps.row.original.msg_type_lbl}</p>
+                    );
+                },
+            },
+            {
+                Header: "Font Size",
+                accessor: "msg_fontsize",
+                filterable: true,
+                Cell: (cellProps) => {
+                    return (
+                        <p className="text-muted mb-0">{cellProps.row.original.msg_fontsize}</p>
+                    );
+                },
+            },
+            {
+                Header: "Font Color",
+                accessor: "msg_fontcolor",
+                filterable: true,
+                Cell: (cellProps) => {
+                    return (
+                        <p className="text-muted mb-0">{cellProps.row.original.msg_fontcolor}</p>
+                    );
+                },
+            },
+            {
+                Header: "Font Background",
+                accessor: "msg_fontbackgroundcolor",
+                filterable: true,
+                Cell: (cellProps) => {
+                    return (
+                        <p className="text-muted mb-0">{cellProps.row.original.msg_fontbackgroundcolor}</p>
+                    );
+                },
+            },
+            {
+                Header: "Font Family",
+                accessor: "msg_fontfamily",
+                filterable: true,
+                Cell: (cellProps) => {
+                    return (
+                        <p className="text-muted mb-0">{cellProps.row.original.msg_fontfamily}</p>
+                    );
+                },
+            },
+            {
+                Header: "status",
+                accessor: "status",
+                filterable: true,
+                Cell: (cellProps) => {
+                    return (
+                        <p className="text-muted mb-0">{cellProps.row.original.status}</p>
+                    );
+                },
+            },
+            {
+                Header: "Created At",
+                accessor: "created_at_lbl",
+                filterable: true,
+                Cell: (cellProps) => {
+                    return (
+                        <p className="text-muted mb-0">{cellProps.row.original.created_at_lbl}</p>
+                    );
+                },
+            },
+            {
+                Header: "Created By",
+                accessor: "created_by_lbl",
+                filterable: true,
+                Cell: (cellProps) => {
+                    return (
+                        <p className="text-muted mb-0">{cellProps.row.original.created_by_lbl}</p>
+                    );
+                },
+            },
+            {
+                Header: "Action",
+                Cell: (cellProps) => {
+                    return (
+                        <div className="d-flex gap-3">
+                            <Link
+                                to="#"
+                                className="text-success"
+                                onClick={() => {
+                                    const userData = cellProps.row.original;
+                                    handleUserClick(userData);
+                                }}
+                            >
+                                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
+                                <UncontrolledTooltip placement="top" target="edittooltip">
+                                    Edit
+                                </UncontrolledTooltip>
+                            </Link>
+                            <Link
+                                to="#"
+                                className="text-danger"
+                                onClick={() => {
+                                    const userData = cellProps.row.original;
+                                    onClickDelete(userData);
+                                }}
+                            >
+                                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
+                                <UncontrolledTooltip placement="top" target="deletetooltip">
+                                    Delete
+                                </UncontrolledTooltip>
+                            </Link>
+                        </div>
+                    );
+                },
+            },
+        ],
+        []
+    );
+
+    useEffect(() => {
+        if (noTemplate && !noTemplate.length) {
+            dispatch(onGetNotificationTemplate());
+            setIsEdit(false);
+        }
+    }, [dispatch, noTemplate]);
+
+    // useEffect(() => {
+    //   setContact(notificationTemplate);
+    //   setIsEdit(false);
+    // }, [notificationTemplate]);
+    // useEffect(() => {
+    //   if (!isEmpty(users) && !!isEdit) {
+    //     setContact(users);
+    //     setIsEdit(false);
+    //   }
+    // }, [users]);
+    const toggle = () => {
+        setModal(!modal);
+    };
+
+    const handleUserClick = (arg) => {
+        const user = arg;
+
+        setContact({
+            id: user.id,
+            name: user.name,
+            designation: user.designation,
+            email: user.email,
+            tags: user.tags,
+            projects: user.projects,
+        });
+        setIsEdit(true);
+
+        toggle();
+    };
+
+    var node = useRef();
+    const onPaginationPageChange = (page) => {
+        if (node &&
+            node.current &&
+            node.current.props &&
+            node.current.props.pagination &&
+            node.current.props.pagination.options) {
+            node.current.props.pagination.options.onPageChange(page);
+        }
+    };
+
+    //delete customer
+    const [deleteModal, setDeleteModal] = useState(false);
+
+    const onClickDelete = (users) => {
+        setContact(users);
+        setDeleteModal(true);
+    };
+
+    const handleDeleteUser = () => {
+        if (contact && contact.id) {
+            dispatch(onDeleteUser(contact.id));
+        }
+        setContact("");
+        onPaginationPageChange(1);
+        setDeleteModal(false);
+    };
+
+    const handleUserClicks = () => {
+        setUserList("");
         setIsEdit(false);
-      } else {
-        const newUser = {
-          id: Math.floor(Math.random() * (30 - 20)) + 20,
-          name: values["name"],
-          designation: values["designation"],
-          email: values["email"],
-          tags: values["tags"],
-          projects: values["projects"],
-        };
-        // save new user
-        dispatch(onAddNewUser(newUser));
-        validation.resetForm();
-      }
-      toggle();
-    },
-  });
+        toggle();
+    };
 
-  const selectContactsState = (state) => state.contacts;
-  const ContactsProperties = createSelector(
-    selectContactsState,
-    (Contacts) => ({
-      users: Contacts.users,
-      loading: Contacts.loading,
-    })
-  );
+    const keyField = "id";
 
-  const { users, loading } = useSelector(ContactsProperties);
-
-  useEffect(() => {
-    console.log("Users data in component:", users);
-  }, [users]);
-  const [isLoading, setLoading] = useState(loading);
-
-  const [userList, setUserList] = useState([]);
-  const [modal, setModal] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
-
-  const columns = useMemo(
-    () => [
-      {
-        Header: "#",
-        // accessor: "name",
-        disableFilters: true,
-        filterable: true,
-        accessor: (cellProps) => (
-          <>
-            {!cellProps.img ? (
-              <div className="avatar-xs">
-                <span className="avatar-title rounded-circle">
-                  {cellProps.name.charAt(0)}
-                </span>
-              </div>
-            ) : (
-              <div>
-                <img
-                  className="rounded-circle avatar-xs"
-                  src={cellProps.img}
-                  alt=""
-                />
-              </div>
-            )}
-          </>
-        ),
-      },
-      {
-        Header: "Name",
-        accessor: "name",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.name}
-                </Link>
-              </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Content",
-        accessor: "content",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
-        },
-      },
-      {
-        Header: "Type",
-        accessor: "type",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
-        },
-      },
-      {
-        Header: "Font Size",
-        accessor: "fontsize",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
-        },
-      },
-      {
-        Header: "Font Color",
-        accessor: "fontcolor",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
-        },
-      },
-      {
-        Header: "Font Background",
-        accessor: "fontbackground",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
-        },
-      },
-      {
-        Header: "Font Family",
-        accessor: "fontfamily",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
-        },
-      },
-      {
-        Header: "status",
-        accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
-        },
-      },
-      {
-        Header: "Created At",
-        accessor: "createdat",
-        filterable: true,
-        Cell: (cellProps) => {
-          return <Projects {...cellProps} />;
-        },
-      },
-      {
-        Header: "Created By",
-        accessor: "createdby",
-        filterable: true,
-        Cell: (cellProps) => {
-          return <Projects {...cellProps} />;
-        },
-      },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
-          );
-        },
-      },
-    ],
-    []
-  );
-
-  useEffect(() => {
-    if (users && !users.length) {
-      dispatch(onGetUsers());
-      setIsEdit(false);
-    }
-  }, [dispatch, users]);
-
-  useEffect(() => {
-    setContact(users);
-    setIsEdit(false);
-  }, [users]);
-
-  useEffect(() => {
-    if (!isEmpty(users) && !!isEdit) {
-      setContact(users);
-      setIsEdit(false);
-    }
-  }, [users]);
-
-  const toggle = () => {
-    setModal(!modal);
-  };
-
-  const handleUserClick = (arg) => {
-    const user = arg;
-
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-    setIsEdit(true);
-
-    toggle();
-  };
-
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
-
-  //delete customer
-  const [deleteModal, setDeleteModal] = useState(false);
-
-  const onClickDelete = (users) => {
-    setContact(users);
-    setDeleteModal(true);
-  };
-
-  const handleDeleteUser = () => {
-    if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
-    }
-    setContact("");
-    onPaginationPageChange(1);
-    setDeleteModal(false);
-  };
-
-  const handleUserClicks = () => {
-    setUserList("");
-    setIsEdit(false);
-    toggle();
-  };
-
-  const keyField = "id";
-
-  return (
-    <React.Fragment>
-      <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
-      />
-      <div className="page-content">
-        <Container fluid>
-          {/* Render Breadcrumbs */}
-          <Breadcrumbs
-            title="Access"
-            breadcrumbItem="Notification Template List"
-          />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
-          ) : (
-            <Row>
-              <Col lg="12">
-                <Card>
-                  <CardBody>
-                    {console.log("users:" + JSON.stringify(users))}
-                    <TableContainer
-                      isPagination={true}
-                      columns={columns}
-                      data={users}
-                      isGlobalFilter={true}
-                      isAddUserList={true}
-                      isShowingPageLength={true}
-                      // iscustomPageSizeOptions={true}
-                      handleUserClick={handleUserClicks}
-                      customPageSize={50}
-                      tableClass="table align-middle table-nowrap table-hover"
-                      theadClass="table-light"
-                      paginationDiv="col-sm-12 col-md-7"
-                      pagination="pagination pagination-rounded justify-content-end mt-4"
-                    />
-                    <Modal isOpen={modal} toggle={toggle}>
+    return (
+        <React.Fragment>
+            <DeleteModal
+                show={deleteModal}
+                onDeleteClick={handleDeleteUser}
+                onCloseClick={() => setDeleteModal(false)} />
+            <div className="page-content">
+                <Container fluid>
+                    {/* Render Breadcrumbs */}
+                    <Breadcrumbs
+                        title="Access"
+                        breadcrumbItem="Notification Template List" />
+                    {isLoading ? (
+                        <Spinners setLoading={setLoading} />
+                    ) : (
+                        <Row>
+                            <Col lg="12">
+                                <Card>
+                                    <CardBody>
+                                        {console.log("template:" + JSON.stringify(noTemplate))}
+                                        <TableContainer
+                                            isPagination={true}
+                                            columns={columns}
+                                            data={noTemplate}
+                                            isGlobalFilter={true}
+                                            isAddUserList={true}
+                                            isShowingPageLength={true}
+                                            // iscustomPageSizeOptions={true}
+                                            handleUserClick={handleUserClicks}
+                                            customPageSize={50}
+                                            tableClass="table align-middle table-nowrap table-hover"
+                                            theadClass="table-light"
+                                            paginationDiv="col-sm-12 col-md-7"
+                                            pagination="pagination pagination-rounded justify-content-end mt-4" />
+                                        {/* <Modal isOpen={modal} toggle={toggle}>
                       <ModalHeader toggle={toggle} tag="h4">
                         {!!isEdit ? "Edit User" : "Add User"}
                       </ModalHeader>
@@ -415,13 +345,13 @@ const CustomerUserList = (props) => {
                                   value={validation.values.name || ""}
                                   invalid={
                                     validation.touched.name &&
-                                    validation.errors.name
+                                      validation.errors.name
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.name &&
-                                validation.errors.name ? (
+                                  validation.errors.name ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.name}
                                   </FormFeedback>
@@ -441,13 +371,13 @@ const CustomerUserList = (props) => {
                                   value={validation.values.designation || ""}
                                   invalid={
                                     validation.touched.designation &&
-                                    validation.errors.designation
+                                      validation.errors.designation
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.designation &&
-                                validation.errors.designation ? (
+                                  validation.errors.designation ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.designation}
                                   </FormFeedback>
@@ -465,13 +395,13 @@ const CustomerUserList = (props) => {
                                   value={validation.values.email || ""}
                                   invalid={
                                     validation.touched.email &&
-                                    validation.errors.email
+                                      validation.errors.email
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.email &&
-                                validation.errors.email ? (
+                                  validation.errors.email ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.email}
                                   </FormFeedback>
@@ -489,7 +419,7 @@ const CustomerUserList = (props) => {
                                   value={validation.values.tags || []}
                                   invalid={
                                     validation.touched.tags &&
-                                    validation.errors.tags
+                                      validation.errors.tags
                                       ? true
                                       : false
                                   }
@@ -505,7 +435,7 @@ const CustomerUserList = (props) => {
                                   <option>Css</option>
                                 </Input>
                                 {validation.touched.tags &&
-                                validation.errors.tags ? (
+                                  validation.errors.tags ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.tags}
                                   </FormFeedback>
@@ -523,13 +453,13 @@ const CustomerUserList = (props) => {
                                   value={validation.values.projects || ""}
                                   invalid={
                                     validation.touched.projects &&
-                                    validation.errors.projects
+                                      validation.errors.projects
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.projects &&
-                                validation.errors.projects ? (
+                                  validation.errors.projects ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.projects}
                                   </FormFeedback>
@@ -551,17 +481,18 @@ const CustomerUserList = (props) => {
                           </Row>
                         </Form>
                       </ModalBody>
-                    </Modal>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
-          )}
-        </Container>
-      </div>
-      <ToastContainer />
-    </React.Fragment>
-  );
+                    </Modal> */}
+                                    </CardBody>
+                                </Card>
+                            </Col>
+                        </Row>
+                    )}
+                </Container>
+            </div>
+            <ToastContainer />
+        </React.Fragment>
+    );
 };
 
-export default withRouter(CustomerUserList);
+export default withRouter(NotificationTemplateList);
+
