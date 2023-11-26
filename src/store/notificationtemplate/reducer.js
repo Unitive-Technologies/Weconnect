@@ -1,25 +1,25 @@
 import {
-  GET_CUSTOMERUSERS_SUCCESS,
-  GET_CUSTOMERUSERS_FAIL,
+  GET_NOTIFICATIONTEMPLATE_SUCCESS,
+  GET_NOTIFICATIONTEMPLATE_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
-  customerUsers: [],
+  notificationTemplate: [],
   error: {},
   loading: true,
 };
 
-const CustomerUsers = (state = INIT_STATE, action) => {
+const NotificationTemplate = (state = INIT_STATE, action) => {
   switch (action.type) {
-    case GET_CUSTOMERUSERS_SUCCESS:
-      console.log("CustomerUsers data in reducer:", action.payload);
+    case GET_NOTIFICATIONTEMPLATE_SUCCESS:
+      console.log("Notification Template data in reducer:", action.payload);
       return {
         ...state,
-        customerUsers: action.payload,
+        notificationTemplate: action.payload,
         loading: false,
       };
 
-    case GET_CUSTOMERUSERS_FAIL:
+    case GET_NOTIFICATIONTEMPLATE_FAIL:
       return {
         ...state,
         error: action.payload,
@@ -30,4 +30,4 @@ const CustomerUsers = (state = INIT_STATE, action) => {
   }
 };
 
-export default CustomerUsers;
+export default NotificationTemplate;

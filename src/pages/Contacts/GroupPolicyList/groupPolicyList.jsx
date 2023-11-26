@@ -51,7 +51,6 @@ const GroupPolicyList = (props) => {
     })
   );
 
-  const { gpPolicy: gpPolicy, loading } = useSelector(groupPolicyProperties);
 
   useEffect(() => {
     console.log("Group Policy data in component:", gpPolicy);
@@ -110,10 +109,10 @@ const GroupPolicyList = (props) => {
                   {cellProps.row.original.status === 0
                     ? "MSO"
                     : cellProps.row.original.status === 1
-                    ? "RO"
-                    : cellProps.row.original.status === 2
-                    ? "DISTRIBUTOR"
-                    : "LCO"}
+                      ? "RO"
+                      : cellProps.row.original.status === 2
+                        ? "DISTRIBUTOR"
+                        : "LCO"}
                 </Link>
               </h5>
             </>
@@ -132,8 +131,8 @@ const GroupPolicyList = (props) => {
                   {cellProps.row.original.status === 1
                     ? "Administrator"
                     : cellProps.row.original.status === 2
-                    ? "Staff"
-                    : "User"}
+                      ? "Staff"
+                      : "User"}
                 </Link>
               </h5>
             </>
@@ -334,7 +333,7 @@ const GroupPolicyList = (props) => {
                     isAddGpPolicyList={true}
                     isShowingPageLength={true}
                     // iscustomPageSizeOptions={true}
-                    handleUserClick={() => {}}
+                    handleUserClick={() => { }}
                     customPageSize={50}
                     tableClass="table align-middle table-nowrap table-hover"
                     theadClass="table-light"

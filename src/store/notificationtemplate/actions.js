@@ -1,22 +1,22 @@
 import {
-  GET_CUSTOMERUSERS,
-  GET_CUSTOMERUSERS_FAIL,
-  GET_CUSTOMERUSERS_SUCCESS,
+  GET_NOTIFICATIONTEMPLATE,
+  GET_NOTIFICATIONTEMPLATE_FAIL,
+  GET_NOTIFICATIONTEMPLATE_SUCCESS,
 } from "./actionTypes";
 
 export const getNotificationTemplate = () => ({
-  type: GET_CUSTOMERUSERS,
+  type: GET_NOTIFICATIONTEMPLATE,
 });
 
-export const getCustomerUsersSuccess = (notificationTemplate) => {
+export const getNotificationTemplateSuccess = (notificationTemplate) => {
   console.log("Received Notification Template:", notificationTemplate);
   return {
-    type: GET_CUSTOMERUSERS_SUCCESS,
+    type: GET_NOTIFICATIONTEMPLATE_SUCCESS,
     payload: notificationTemplate,
   };
 };
 
 export const getNotificationTemplateFail = (error) => ({
-  type: GET_CUSTOMERUSERS_FAIL,
+  type: GET_NOTIFICATIONTEMPLATE_FAIL,
   payload: error,
 });

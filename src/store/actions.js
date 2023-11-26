@@ -10,4 +10,5 @@ export * from "./contacts/actions";
 export * from "./customerusers/actions";
 export * from "./grouppolicy/actions";
 export * from "./designation/actions";
+export * from "./notificationtemplate/actions";
 

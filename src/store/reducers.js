@@ -13,6 +13,7 @@ import contacts from "./contacts/reducer";
 import customerUsers from "./customerusers/reducer";
 import groupPolicy from "./grouppolicy/reducer";
 import designation from "./designation/reducer";
+import notificationTemplate from './notificationtemplate/reducer'
 
 const rootReducer = combineReducers({
   // public
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   customerUsers,
   groupPolicy,
   designation,
+  notificationTemplate,
 });
 
 export default rootReducer;
