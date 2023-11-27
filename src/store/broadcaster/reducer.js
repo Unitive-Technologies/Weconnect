@@ -12,7 +12,7 @@ const BroadCaster = (state = INIT_STATE, action) => {
       console.log("BroadCasters data in reducer:", action.payload);
       return {
         ...state,
-        broadcasters: action.payload,
+        broadCasters: action.payload,
         loading: false,
       };
 
