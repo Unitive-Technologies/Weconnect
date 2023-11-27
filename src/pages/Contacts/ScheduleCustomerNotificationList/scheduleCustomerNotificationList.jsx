@@ -542,7 +542,6 @@ const ScheduleCustomerNotificationList = (props) => {
               </Card>
             </Col>
           </Row>
-          )}
         </Container>
       </div>
       <ToastContainer />
