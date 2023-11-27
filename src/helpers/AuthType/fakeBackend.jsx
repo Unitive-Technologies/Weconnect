@@ -12,6 +12,7 @@ import {
   regionalofficelist as regOff,
   stateuserlist as stateUser,
   broadcasterlist as broadcast,
+  genrelist as genre,
 } from "../../common/data";
 let users = [
   {
@@ -301,6 +302,19 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onGet(url.GET_GENRELIST).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (genre) {
+          // Passing fake JSON data as response
+
+          resolve([200, genre]);
+        } else {
+          reject([400, "Cannot get Genre list"]);
+        }
+      });
+    });
+  });
   mock.onGet(url.GET_REGIONALOFFICE).reply(() => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

@@ -27,6 +27,7 @@ export const GET_SCHEDULECUSTOMERNOTIFICATION =
 export const GET_STATEUSERS = "/stateuserlist";
 
 export const GET_BROADCASTER = "/broadcasterlist";
+export const GET_GENRELIST = "/genrelist";
 export const GET_USERS = "/userslist";
 export const GET_USER_PROFILE = "/user";
 export const ADD_NEW_USER = "/add/user";
