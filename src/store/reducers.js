@@ -20,6 +20,7 @@ import stateUsers from "./stateusers/reducer";
 
 import broadCasters from "./broadcaster/reducer";
 import genreLists from "./genre/reducer";
+import distributors from "./distributorslist/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -38,6 +39,7 @@ const rootReducer = combineReducers({
   stateUsers,
   broadCasters,
   genreLists,
+  distributors,
 });
 
 export default rootReducer;

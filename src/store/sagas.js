@@ -15,6 +15,7 @@ import scheduleCustomerNotificationSaga from "./schedulecustomernotification/sag
 import stateUsersSaga from "./stateusers/saga";
 import broadCasterSaga from "./broadcaster/saga";
 import genreSaga from "./genre/saga";
+import distributorsSaga from "./distributorslist/saga";
 
 import regionalOfficeSaga from "./regionalofficelist/saga";
 export default function* rootSaga() {
@@ -35,5 +36,6 @@ export default function* rootSaga() {
     fork(stateUsersSaga),
     fork(broadCasterSaga),
     fork(genreSaga),
+    fork(distributorsSaga),
   ]);
 }
