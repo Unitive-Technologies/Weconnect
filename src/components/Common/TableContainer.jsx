@@ -64,6 +64,10 @@ const TableContainer = ({
   isGlobalFilter,
   isAddOptions,
   isAddUserList,
+  isAddBroadCaster,
+  isAddGenreList,
+  handleBroadCasterClick,
+  handleGenreClick,
   handleOrderClicks,
   handleUserClick,
   handleGroupPolicyClick,
@@ -194,6 +198,38 @@ const TableContainer = ({
               >
                 <i className="mdi mdi-plus me-1" />
                 Create Group Policy
+              </Button>
+            </div>
+          </Col>
+        )}
+
+        {isAddBroadCaster && (
+          <Col sm="12">
+            <div className="text-sm-end">
+              <Button
+                type="button"
+                color="primary"
+                className="btn mb-2 me-2"
+                onClick={handleBroadCasterClick}
+              >
+                <i className="mdi mdi-plus me-1" />
+                Create Broad Caster
+              </Button>
+            </div>
+          </Col>
+        )}
+
+        {isAddGenreList && (
+          <Col sm="12">
+            <div className="text-sm-end">
+              <Button
+                type="button"
+                color="primary"
+                className="btn mb-2 me-2"
+                onClick={handleGenreClick}
+              >
+                <i className="mdi mdi-plus me-1" />
+                Create Genre
               </Button>
             </div>
           </Col>

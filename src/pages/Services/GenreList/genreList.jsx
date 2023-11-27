@@ -319,7 +319,7 @@ const GenreList = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Services" breadcrumbItem="Genrel List" />
+          <Breadcrumbs title="Services" breadcrumbItem="Genre List" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -333,7 +333,7 @@ const GenreList = (props) => {
                       columns={columns}
                       data={genrelist}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isAddGenreList={true}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
                       handleUserClick={() => {}}

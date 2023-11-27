@@ -367,7 +367,7 @@ const BroadcasterList = (props) => {
                       columns={columns}
                       data={brodcast}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isAddBroadCaster={true}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
                       handleUserClick={() => {}}
