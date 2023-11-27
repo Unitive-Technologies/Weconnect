@@ -12,16 +12,18 @@ export const SOCIAL_LOGIN = "/social-login";
 export const POST_EDIT_JWT_PROFILE = "/post-jwt-profile";
 export const POST_EDIT_PROFILE = "/post-fake-profile";
 
-export const GET_CUSTOMERUSERS = "/customeruserlist"
+export const GET_CUSTOMERUSERS = "/customeruserlist";
 
-export const GET_GROUPPOLICY = "/grouppolicylist"
+export const GET_GROUPPOLICY = "/grouppolicylist";
 
-export const GET_DESIGNATION = "/designationlist"
+export const GET_DESIGNATION = "/designationlist";
 
-export const GET_NOTIFICATIONTEMPLATE = "/notificationtemplatelist"
+export const GET_NOTIFICATIONTEMPLATE = "/notificationtemplatelist";
 
-export const GET_SCHEDULECUSTOMERNOTIFICATION = "/schedulecustomernotificationlist"
+export const GET_REGIONALOFFICE = "/regionaloffice";
 
+export const GET_SCHEDULECUSTOMERNOTIFICATION =
+  "/schedulecustomernotificationlist";
 
 export const GET_USERS = "/userslist";
 export const GET_USER_PROFILE = "/user";

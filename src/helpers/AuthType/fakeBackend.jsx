@@ -9,6 +9,7 @@ import {
   designationlist as designation,
   notificationtemplatelist as notemplate,
   schedulecustomernotificationlist as schCusNotification,
+  regionalofficelist as regOff,
 } from "../../common/data";
 let users = [
   {
@@ -272,6 +273,7 @@ const fakeBackend = () => {
     });
   });
 
+
   mock.onGet(url.GET_SCHEDULECUSTOMERNOTIFICATION).reply(() => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -280,6 +282,21 @@ const fakeBackend = () => {
           resolve([200, schCusNotification]);
         } else {
           reject([400, "Cannot get Schedule Customer Notification"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_REGIONALOFFICE).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (regOff) {
+          // Passing fake JSON data as response
+
+          resolve([200, regOff]);
+        } else {
+          reject([400, "Cannot get Regional office list"]);
+
         }
       });
     });

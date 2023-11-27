@@ -27,12 +27,7 @@ import { Email, Tags, Projects } from "./regionalOfficeListCol";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
 
-import {
-  getUsers as onGetUsers,
-  addNewUser as onAddNewUser,
-  updateUser as onUpdateUser,
-  deleteUser as onDeleteUser,
-} from "/src/store/contacts/actions";
+import { getRegionalOffice as onGetRegionalOffice } from "/src/store/actions";
 import { isEmpty } from "lodash";
 
 //redux
@@ -45,74 +40,21 @@ const RegionalOfficeList = (props) => {
   document.title = "Regional Office List | VDigital";
 
   const dispatch = useDispatch();
-  const [contact, setContact] = useState();
-  // validation
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
 
-    initialValues: {
-      name: (contact && contact.name) || "",
-      designation: (contact && contact.designation) || "",
-      tags: (contact && contact.tags) || "",
-      email: (contact && contact.email) || "",
-      projects: (contact && contact.projects) || "",
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
-      designation: Yup.string().required("Please Enter Your Designation"),
-      tags: Yup.array().required("Please Enter Tag"),
-      email: Yup.string()
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-        .required("Please Enter Your Email"),
-      projects: Yup.string().required("Please Enter Your Project"),
-    }),
-    onSubmit: (values) => {
-      if (isEdit) {
-        const updateUser = {
-          id: contact.id,
-          name: values.name,
-          designation: values.designation,
-          tags: values.tags,
-          email: values.email,
-          projects: values.projects,
-        };
-
-        // update user
-        dispatch(onUpdateUser(updateUser));
-        validation.resetForm();
-        setIsEdit(false);
-      } else {
-        const newUser = {
-          id: Math.floor(Math.random() * (30 - 20)) + 20,
-          name: values["name"],
-          designation: values["designation"],
-          email: values["email"],
-          tags: values["tags"],
-          projects: values["projects"],
-        };
-        // save new user
-        dispatch(onAddNewUser(newUser));
-        validation.resetForm();
-      }
-      toggle();
-    },
-  });
-
-  const selectContactsState = (state) => state.contacts;
-  const ContactsProperties = createSelector(
-    selectContactsState,
-    (Contacts) => ({
-      users: Contacts.users,
-      loading: Contacts.loading,
+  const selectRegionalOfficeState = (state) => state.regionalOffice;
+  const RegionalOfficeProperties = createSelector(
+    selectRegionalOfficeState,
+    (regionalOffice) => ({
+      regOff: regionalOffice.regionalOffice,
+      loading: regionalOffice.loading,
     })
   );
 
-  const { users, loading } = useSelector(ContactsProperties);
+  const { regOff, loading } = useSelector(RegionalOfficeProperties);
 
   useEffect(() => {
-    console.log("Users data in component:", users);
-  }, [users]);
+    console.log("Regional Office data in component:", regOff);
+  }, [regOff]);
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
@@ -175,7 +117,7 @@ const RegionalOfficeList = (props) => {
       },
       {
         Header: "Address",
-        accessor: "address",
+        accessor: "addr",
         filterable: true,
         Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
@@ -183,7 +125,7 @@ const RegionalOfficeList = (props) => {
       },
       {
         Header: "Contact Person",
-        accessor: "contactperson",
+        accessor: "contact_person",
         filterable: true,
         Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
@@ -191,7 +133,7 @@ const RegionalOfficeList = (props) => {
       },
       {
         Header: "Mobile",
-        accessor: "mobile",
+        accessor: "mobile_no",
         filterable: true,
         Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
@@ -199,7 +141,7 @@ const RegionalOfficeList = (props) => {
       },
       {
         Header: "State",
-        accessor: "state",
+        accessor: "state_lbl",
         filterable: true,
         Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
@@ -207,7 +149,7 @@ const RegionalOfficeList = (props) => {
       },
       {
         Header: "District",
-        accessor: "District",
+        accessor: "District_lbl",
         filterable: true,
         Cell: (cellProps) => {
           // return <Projects {...cellProps} />
@@ -215,7 +157,7 @@ const RegionalOfficeList = (props) => {
       },
       {
         Header: "City",
-        accessor: "city",
+        accessor: "city_lbl",
         filterable: true,
         Cell: (cellProps) => {
           // return <Projects {...cellProps} />
@@ -223,7 +165,7 @@ const RegionalOfficeList = (props) => {
       },
       {
         Header: "GST",
-        accessor: "GST",
+        accessor: "gstno",
         filterable: true,
         Cell: (cellProps) => {
           // return
@@ -232,7 +174,7 @@ const RegionalOfficeList = (props) => {
       },
       {
         Header: "PAN",
-        accessor: "PAN",
+        accessor: "panno",
         filterable: true,
         Cell: (cellProps) => {
           // return <Projects {...cellProps} />
@@ -240,7 +182,7 @@ const RegionalOfficeList = (props) => {
       },
       {
         Header: "Login ID",
-        accessor: "LoginID",
+        accessor: "username",
         filterable: true,
         Cell: (cellProps) => {
           // return <Projects {...cellProps} />
@@ -256,7 +198,7 @@ const RegionalOfficeList = (props) => {
       },
       {
         Header: "Created At",
-        accessor: "createdat",
+        accessor: "created_at",
         filterable: true,
         Cell: (cellProps) => {
           // return <Projects {...cellProps} />
@@ -264,7 +206,7 @@ const RegionalOfficeList = (props) => {
       },
       {
         Header: "Created By",
-        accessor: "createdby",
+        accessor: "created_by",
         filterable: true,
         Cell: (cellProps) => {
           // return <Projects {...cellProps} />
@@ -310,23 +252,23 @@ const RegionalOfficeList = (props) => {
   );
 
   useEffect(() => {
-    if (users && !users.length) {
-      dispatch(onGetUsers());
+    if (regOff && !regOff.length) {
+      dispatch(onGetRegionalOffice());
       setIsEdit(false);
     }
-  }, [dispatch, users]);
+  }, [dispatch, regOff]);
 
-  useEffect(() => {
-    setContact(users);
-    setIsEdit(false);
-  }, [users]);
+  // useEffect(() => {
+  //   setContact(regOff);
+  //   setIsEdit(false);
+  // }, [regOff]);
 
-  useEffect(() => {
-    if (!isEmpty(users) && !!isEdit) {
-      setContact(users);
-      setIsEdit(false);
-    }
-  }, [users]);
+  // useEffect(() => {
+  //   if (!isEmpty(regOff) && !!isEdit) {
+  //     setContact(regOff);
+  //     setIsEdit(false);
+  //   }
+  // }, [regOff]);
 
   const toggle = () => {
     setModal(!modal);
@@ -407,11 +349,11 @@ const RegionalOfficeList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("users:" + JSON.stringify(users))}
+                    {console.log("regoff:" + JSON.stringify(regOff))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
-                      data={users}
+                      data={regOff}
                       isGlobalFilter={true}
                       isAddUserList={true}
                       isShowingPageLength={true}

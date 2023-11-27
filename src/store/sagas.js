@@ -13,6 +13,7 @@ import designationSaga from "./designation/saga";
 import notificationTemplateSaga from "./notificationtemplate/saga";
 import scheduleCustomerNotificationSaga from "./schedulecustomernotification/saga";
 
+import regionalOfficeSaga from "./regionalofficelist/saga";
 export default function* rootSaga() {
   yield all([
     //public
@@ -27,5 +28,6 @@ export default function* rootSaga() {
     fork(designationSaga),
     fork(notificationTemplateSaga),
     fork(scheduleCustomerNotificationSaga),
+    fork(regionalOfficeSaga),
   ]);
 }
