@@ -16,6 +16,7 @@ import {
   distributorlist as distributor,
   districtlist as disTrict,
   citylist as cits,
+  languagelist as langlist,
 } from "../../common/data";
 let users = [
   {
@@ -318,6 +319,21 @@ const fakeBackend = () => {
       });
     });
   });
+
+  mock.onGet(url.GET_LANGUAGELIST).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (langlist) {
+          // Passing fake JSON data as response
+
+          resolve([200, langlist]);
+        } else {
+          reject([400, "Cannot get Language list"]);
+        }
+      });
+    });
+  });
+
   mock.onGet(url.GET_REGIONALOFFICE).reply(() => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -379,7 +395,6 @@ const fakeBackend = () => {
           resolve([200, disTrict]);
         } else {
           reject([400, "Cannot get District List"]);
-
         }
       });
     });

@@ -10,9 +10,9 @@ import { lcolist } from "./lcolist";
 import { stateuserlist } from "./stateuserlist";
 import { broadcasterlist } from "./broadcasterlist";
 import { genrelist } from "./genrelist";
-import { districtlist } from './districtlist'
-import { citylist } from './citylist'
-
+import { districtlist } from "./districtlist";
+import { citylist } from "./citylist";
+import { languagelist } from "./languagelist";
 
 export {
   userslist,
@@ -27,6 +27,7 @@ export {
   stateuserlist,
   broadcasterlist,
   genrelist,
+  languagelist,
   districtlist,
   citylist,
 };

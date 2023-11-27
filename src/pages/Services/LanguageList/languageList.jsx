@@ -21,98 +21,99 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import { Email, Tags, Projects } from "./languageListCol";
-
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
 
-import {
-  getUsers as onGetUsers,
-  addNewUser as onAddNewUser,
-  updateUser as onUpdateUser,
-  deleteUser as onDeleteUser,
-} from "/src/store/contacts/actions";
+import { getlanguageList as onGetLanguageList } from "/src/store/language/actions";
 import { isEmpty } from "lodash";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import {
+  Description,
+  Name,
+  Code,
+  Status,
+  CreatedAt,
+  CreatedBy,
+} from "../GenreList/genreListCol";
 
 const LanguageList = (props) => {
   //meta title
   document.title = "Language List | VDigital";
 
   const dispatch = useDispatch();
-  const [contact, setContact] = useState();
+  // const [contact, setContact] = useState();
   // validation
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
+  // const validation = useFormik({
+  //   // enableReinitialize : use this flag when initial values needs to be changed
+  //   enableReinitialize: true,
 
-    initialValues: {
-      name: (contact && contact.name) || "",
-      designation: (contact && contact.designation) || "",
-      tags: (contact && contact.tags) || "",
-      email: (contact && contact.email) || "",
-      projects: (contact && contact.projects) || "",
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
-      designation: Yup.string().required("Please Enter Your Designation"),
-      tags: Yup.array().required("Please Enter Tag"),
-      email: Yup.string()
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-        .required("Please Enter Your Email"),
-      projects: Yup.string().required("Please Enter Your Project"),
-    }),
-    onSubmit: (values) => {
-      if (isEdit) {
-        const updateUser = {
-          id: contact.id,
-          name: values.name,
-          designation: values.designation,
-          tags: values.tags,
-          email: values.email,
-          projects: values.projects,
-        };
+  //   initialValues: {
+  //     name: (contact && contact.name) || "",
+  //     designation: (contact && contact.designation) || "",
+  //     tags: (contact && contact.tags) || "",
+  //     email: (contact && contact.email) || "",
+  //     projects: (contact && contact.projects) || "",
+  //   },
+  //   validationSchema: Yup.object({
+  //     name: Yup.string().required("Please Enter Your Name"),
+  //     designation: Yup.string().required("Please Enter Your Designation"),
+  //     tags: Yup.array().required("Please Enter Tag"),
+  //     email: Yup.string()
+  //       .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
+  //       .required("Please Enter Your Email"),
+  //     projects: Yup.string().required("Please Enter Your Project"),
+  //   }),
+  //   onSubmit: (values) => {
+  //     if (isEdit) {
+  //       const updateUser = {
+  //         id: contact.id,
+  //         name: values.name,
+  //         designation: values.designation,
+  //         tags: values.tags,
+  //         email: values.email,
+  //         projects: values.projects,
+  //       };
 
-        // update user
-        dispatch(onUpdateUser(updateUser));
-        validation.resetForm();
-        setIsEdit(false);
-      } else {
-        const newUser = {
-          id: Math.floor(Math.random() * (30 - 20)) + 20,
-          name: values["name"],
-          designation: values["designation"],
-          email: values["email"],
-          tags: values["tags"],
-          projects: values["projects"],
-        };
-        // save new user
-        dispatch(onAddNewUser(newUser));
-        validation.resetForm();
-      }
-      toggle();
-    },
-  });
+  //       // update user
+  //       dispatch(onUpdateUser(updateUser));
+  //       validation.resetForm();
+  //       setIsEdit(false);
+  //     } else {
+  //       const newUser = {
+  //         id: Math.floor(Math.random() * (30 - 20)) + 20,
+  //         name: values["name"],
+  //         designation: values["designation"],
+  //         email: values["email"],
+  //         tags: values["tags"],
+  //         projects: values["projects"],
+  //       };
+  //       // save new user
+  //       dispatch(onAddNewUser(newUser));
+  //       validation.resetForm();
+  //     }
+  //     toggle();
+  //   },
+  // });
 
-  const selectContactsState = (state) => state.contacts;
-  const ContactsProperties = createSelector(
-    selectContactsState,
-    (Contacts) => ({
-      users: Contacts.users,
-      loading: Contacts.loading,
+  const selectLanguageState = (state) => state.languageList;
+  const LanguageProperties = createSelector(
+    selectLanguageState,
+    (Language) => ({
+      langlist: Language.langlist,
+      loading: Language.loading,
     })
   );
 
-  const { users, loading } = useSelector(ContactsProperties);
+  const { langlist, loading } = useSelector(LanguageProperties);
 
   useEffect(() => {
-    console.log("Users data in component:", users);
-  }, [users]);
+    console.log("Language List data in component:", langlist);
+  }, [langlist]);
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
@@ -170,7 +171,7 @@ const LanguageList = (props) => {
         accessor: "code",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return <Code {...cellProps} />;
         },
       },
       {
@@ -178,7 +179,7 @@ const LanguageList = (props) => {
         accessor: "description",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <Description {...cellProps} />;
         },
       },
       {
@@ -186,23 +187,23 @@ const LanguageList = (props) => {
         accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <Status {...cellProps} />;
         },
       },
       {
         Header: "Created At",
-        accessor: "createdat",
+        accessor: "created_at",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return <CreatedAt {...cellProps} />;
         },
       },
       {
         Header: "Created By",
-        accessor: "createdby",
+        accessor: "created_by",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return <CreatedBy {...cellProps} />;
         },
       },
       {
@@ -245,43 +246,43 @@ const LanguageList = (props) => {
   );
 
   useEffect(() => {
-    if (users && !users.length) {
-      dispatch(onGetUsers());
+    if (langlist && !langlist.length) {
+      dispatch(onGetLanguageList());
       setIsEdit(false);
     }
-  }, [dispatch, users]);
+  }, [dispatch, langlist]);
 
-  useEffect(() => {
-    setContact(users);
-    setIsEdit(false);
-  }, [users]);
+  // useEffect(() => {
+  //   setContact(users);
+  //   setIsEdit(false);
+  // }, [users]);
 
-  useEffect(() => {
-    if (!isEmpty(users) && !!isEdit) {
-      setContact(users);
-      setIsEdit(false);
-    }
-  }, [users]);
+  // useEffect(() => {
+  //   if (!isEmpty(users) && !!isEdit) {
+  //     setContact(users);
+  //     setIsEdit(false);
+  //   }
+  // }, [users]);
 
-  const toggle = () => {
-    setModal(!modal);
-  };
+  // const toggle = () => {
+  //   setModal(!modal);
+  // };
 
-  const handleUserClick = (arg) => {
-    const user = arg;
+  // const handleUserClick = (arg) => {
+  //   const user = arg;
 
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-    setIsEdit(true);
+  //   setContact({
+  //     id: user.id,
+  //     name: user.name,
+  //     designation: user.designation,
+  //     email: user.email,
+  //     tags: user.tags,
+  //     projects: user.projects,
+  //   });
+  //   setIsEdit(true);
 
-    toggle();
-  };
+  //   toggle();
+  // };
 
   var node = useRef();
   const onPaginationPageChange = (page) => {
@@ -297,37 +298,37 @@ const LanguageList = (props) => {
   };
 
   //delete customer
-  const [deleteModal, setDeleteModal] = useState(false);
+  // const [deleteModal, setDeleteModal] = useState(false);
 
-  const onClickDelete = (users) => {
-    setContact(users);
-    setDeleteModal(true);
-  };
+  // const onClickDelete = (users) => {
+  //   setContact(users);
+  //   setDeleteModal(true);
+  // };
 
-  const handleDeleteUser = () => {
-    if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
-    }
-    setContact("");
-    onPaginationPageChange(1);
-    setDeleteModal(false);
-  };
+  // const handleDeleteUser = () => {
+  //   if (contact && contact.id) {
+  //     dispatch(onDeleteUser(contact.id));
+  //   }
+  //   setContact("");
+  //   onPaginationPageChange(1);
+  //   setDeleteModal(false);
+  // };
 
-  const handleUserClicks = () => {
-    setUserList("");
-    setIsEdit(false);
-    toggle();
-  };
+  // const handleUserClicks = () => {
+  //   setUserList("");
+  //   setIsEdit(false);
+  //   toggle();
+  // };
 
   const keyField = "id";
 
   return (
     <React.Fragment>
-      <DeleteModal
+      {/* <DeleteModal
         show={deleteModal}
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
-      />
+      /> */}
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -339,23 +340,23 @@ const LanguageList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("users:" + JSON.stringify(users))}
+                    {console.log("languagelist:" + JSON.stringify(langlist))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
-                      data={users}
+                      data={langlist}
                       isGlobalFilter={true}
                       isAddUserList={true}
                       isShowingPageLength={true}
-                      iscustomPageSizeOptions={true}
-                      handleUserClick={handleUserClicks}
-                      customPageSize={8}
+                      // iscustomPageSizeOptions={true}
+                      handleUserClick={() => {}}
+                      customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
                     />
-                    <Modal isOpen={modal} toggle={toggle}>
+                    {/* <Modal isOpen={modal} toggle={toggle}>
                       <ModalHeader toggle={toggle} tag="h4">
                         {!!isEdit ? "Edit User" : "Add User"}
                       </ModalHeader>
@@ -516,7 +517,7 @@ const LanguageList = (props) => {
                           </Row>
                         </Form>
                       </ModalBody>
-                    </Modal>
+                    </Modal> */}
                   </CardBody>
                 </Card>
               </Col>

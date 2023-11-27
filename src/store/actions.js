@@ -13,13 +13,13 @@ export * from "./designation/actions";
 export * from "./notificationtemplate/actions";
 export * from "./schedulecustomernotification/actions";
 
-
 export * from "./stateusers/actions";
 export * from "./district/actions";
-export * from "./city/actions"
+export * from "./city/actions";
 
 export * from "./regionalofficelist/actions";
 
 export * from "./broadcaster/actions";
 export * from "./genre/actions";
+export * from "./language/actions";
 export * from "./distributorslist/actions";

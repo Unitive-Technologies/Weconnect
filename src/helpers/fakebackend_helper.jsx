@@ -236,11 +236,10 @@ export const getStateUsers = () => get(url.GET_STATEUSERS);
 export const getDistrict = () => get(url.GET_DISTRICT);
 export const getCity = () => get(url.GET_CITY);
 
-
 export const getRegionalOffice = () => get(url.GET_REGIONALOFFICE);
 export const getBroadCasters = () => get(url.GET_BROADCASTER);
 export const getGenreList = () => get(url.GET_GENRELIST);
-
+export const getLanguageList = () => get(url.GET_LANGUAGELIST);
 export const getDistributors = () => get(url.GET_DISTRIBUTORS);
 
 // add user

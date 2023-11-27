@@ -23,7 +23,7 @@ import broadCasters from "./broadcaster/reducer";
 
 import genreList from "./genre/reducer";
 
-import genreLists from "./genre/reducer";
+import languageList from "./language/reducer";
 import distributors from "./distributorslist/reducer";
 
 const rootReducer = combineReducers({
@@ -44,8 +44,7 @@ const rootReducer = combineReducers({
   broadCasters,
 
   genreList,
-
-  genreLists,
+  languageList,
   distributors,
   district,
   city,

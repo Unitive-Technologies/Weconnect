@@ -13,12 +13,12 @@ import designationSaga from "./designation/saga";
 import notificationTemplateSaga from "./notificationtemplate/saga";
 import scheduleCustomerNotificationSaga from "./schedulecustomernotification/saga";
 import stateUsersSaga from "./stateusers/saga";
-import districtSaga from './district/saga';
+import districtSaga from "./district/saga";
 import citySaga from "./city/saga";
 import broadCasterSaga from "./broadcaster/saga";
 import genreSaga from "./genre/saga";
 import distributorsSaga from "./distributorslist/saga";
-
+import languageSaga from "./language/saga";
 import regionalOfficeSaga from "./regionalofficelist/saga";
 export default function* rootSaga() {
   yield all([
@@ -38,9 +38,9 @@ export default function* rootSaga() {
     fork(stateUsersSaga),
     fork(broadCasterSaga),
     fork(genreSaga),
+    fork(languageSaga),
     fork(distributorsSaga),
     fork(districtSaga),
     fork(citySaga),
-
   ]);
 }

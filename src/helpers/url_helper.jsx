@@ -29,11 +29,11 @@ export const GET_STATEUSERS = "/stateuserlist";
 export const GET_DISTRICT = "/districtlist";
 export const GET_CITY = "/citylist";
 
-
 export const GET_DISTRIBUTORS = "/distributors";
 
 export const GET_BROADCASTER = "/broadcasterlist";
 export const GET_GENRELIST = "/genrelist";
+export const GET_LANGUAGELIST = "/languagelist";
 export const GET_USERS = "/userslist";
 export const GET_USER_PROFILE = "/user";
 export const ADD_NEW_USER = "/add/user";
