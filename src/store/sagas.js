@@ -13,6 +13,7 @@ import designationSaga from "./designation/saga";
 import notificationTemplateSaga from "./notificationtemplate/saga";
 import scheduleCustomerNotificationSaga from "./schedulecustomernotification/saga";
 import stateUsersSaga from "./stateusers/saga";
+import broadCasterSaga from "./broadcaster/saga";
 
 import regionalOfficeSaga from "./regionalofficelist/saga";
 export default function* rootSaga() {
@@ -31,5 +32,6 @@ export default function* rootSaga() {
     fork(scheduleCustomerNotificationSaga),
     fork(regionalOfficeSaga),
     fork(stateUsersSaga),
+    fork(broadCasterSaga),
   ]);
 }

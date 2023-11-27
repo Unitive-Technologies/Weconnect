@@ -235,6 +235,7 @@ export const getScheduleCustomerNotification = () =>
 export const getStateUsers = () => get(url.GET_STATEUSERS);
 
 export const getRegionalOffice = () => get(url.GET_REGIONALOFFICE);
+export const getBroadCasters = () => get(url.GET_BROADCASTER);
 
 // add user
 export const addNewUser = (user) => post(url.ADD_NEW_USER, user);

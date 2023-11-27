@@ -11,6 +11,7 @@ import {
   schedulecustomernotificationlist as schCusNotification,
   regionalofficelist as regOff,
   stateuserlist as stateUser,
+  broadcasterlist as broadcast,
 } from "../../common/data";
 let users = [
   {
@@ -302,14 +303,16 @@ const fakeBackend = () => {
   });
 
   mock.onGet(url.GET_STATEUSERS).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (stateUser) {
-          // Passing fake JSON data as response
-          resolve([200, stateUser]);
-        } else {
-          reject([400, "Cannot get State Users"]);
-        }
+    mock.onGet(url.GET_BROADCASTER).reply(() => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          if (broadcast) {
+            // Passing fake JSON data as response
+            resolve([200, broadcast]);
+          } else {
+            reject([400, "Cannot get Broad Caster List"]);
+          }
+        });
       });
     });
   });
