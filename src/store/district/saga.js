@@ -18,10 +18,10 @@ const convertDistrictListObject = (districtList) => {
       state_id: district.state_id,
       district_id: district.district_id,
       description: district.description,
-      status_lbl:
-        district.status_lbl === 1
+      status:
+        district.status === 1
           ? "ACTIVE"
-          : district.status_lbl === 0
+          : district.status === 0
             ? "INACTIVE"
             : "BLOCKED",
       created_at: district.created_at,

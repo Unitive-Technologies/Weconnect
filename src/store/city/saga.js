@@ -8,45 +8,50 @@ import { getCitySuccess, getCityFail } from "./actions";
 import { getCity } from "../../helpers/fakebackend_helper";
 
 const convertCityListObject = (cityList) => {
-  // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
-  return customerUserList.map((customerUser) => {
+  // customer city list has more data than what we need, we need to convert each of the city user object in the list with needed colums of the table
+  return cityList.map((city) => {
     return {
-      ...customerUser,
-      id: customerUser.id,
-      name: customerUser.name,
-      login_id: customerUser.username,
-      mobile_no: customerUser.mobile_no,
-      email: customerUser.email,
+      ...city,
+      id: city.id,
+      name: city.name,
+      code: city.code,
+      state_lbl: city.state_lbl,
+      state_code_lbl: city.state_code_lbl,
+      district_lbl: city.district_lbl,
+      district_code_lbl: city.district_code_lbl,
+      description: city.description,
       status:
-        customerUser.status === 1
+        city.status === 1
           ? "ACTIVE"
-          : customerUser.status === 0
+          : city.status === 0
             ? "INACTIVE"
             : "BLOCKED",
-      lco: customerUser.operator_lbl,
-      lco_code: customerUser.operator.code,
-      last_login_at: customerUser.last_login_ats
-        ? customerUser.last_login_at
-        : "NEVER LOGGED IN",
 
-      created_at: customerUser.created_at,
+      // status_lbl:
+      //   city.status_lbl === 1
+      //     ? "ACTIVE"
+      //     : city.status_lbl === 0
+      //       ? "INACTIVE"
+      //       : "BLOCKED",
+      created_at: city.created_at,
+      created_by_lbl: city.created_by_lbl,
     };
   });
 };
 
-function* fetchCustomerUsers() {
+function* fetchCity() {
   try {
-    const response = yield call(getCustomerUsers);
+    const response = yield call(getCity);
     console.log("response:" + JSON.stringify(response));
-    const customerUserList = convertCustomerUsersListObject(response);
-    yield put(getCustomerUsersSuccess(customerUserList));
+    const cityList = convertCityListObject(response);
+    yield put(getCitySuccess(cityList));
   } catch (error) {
-    yield put(getCustomerUsersFail(error));
+    yield put(getCityFail(error));
   }
 }
 
-function* customerUsersSaga() {
-  yield takeEvery(GET_CUSTOMERUSERS, fetchCustomerUsers);
+function* citySaga() {
+  yield takeEvery(GET_CITY, fetchCity);
 }
 
-export default customerUsersSaga;
+export default citySaga;

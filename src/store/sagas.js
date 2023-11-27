@@ -14,6 +14,7 @@ import notificationTemplateSaga from "./notificationtemplate/saga";
 import scheduleCustomerNotificationSaga from "./schedulecustomernotification/saga";
 import stateUsersSaga from "./stateusers/saga";
 import districtSaga from './district/saga';
+import citySaga from "./city/saga";
 import broadCasterSaga from "./broadcaster/saga";
 import genreSaga from "./genre/saga";
 import distributorsSaga from "./distributorslist/saga";
@@ -39,6 +40,7 @@ export default function* rootSaga() {
     fork(genreSaga),
     fork(distributorsSaga),
     fork(districtSaga),
+    fork(citySaga),
 
   ]);
 }

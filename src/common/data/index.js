@@ -11,6 +11,8 @@ import { stateuserlist } from "./stateuserlist";
 import { broadcasterlist } from "./broadcasterlist";
 import { genrelist } from "./genrelist";
 import { districtlist } from './districtlist'
+import { citylist } from './citylist'
+
 
 export {
   userslist,
@@ -26,4 +28,5 @@ export {
   broadcasterlist,
   genrelist,
   districtlist,
+  citylist,
 };
