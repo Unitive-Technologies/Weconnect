@@ -13,6 +13,7 @@ import {
   stateuserlist as stateUser,
   broadcasterlist as broadcast,
   genrelist as genre,
+  distributorlist as distributor,
 } from "../../common/data";
 let users = [
   {
@@ -335,6 +336,19 @@ const fakeBackend = () => {
         if (stateUser) {
           // Passing fake JSON data as response
           resolve([200, stateUser]);
+        } else {
+          reject([400, "Cannot get State User List"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_DISTRIBUTORS).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (distributor) {
+          // Passing fake JSON data as response
+          resolve([200, distributor]);
         } else {
           reject([400, "Cannot get State User List"]);
         }

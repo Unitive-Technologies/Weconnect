@@ -33,6 +33,7 @@ import {
   updateUser as onUpdateUser,
   deleteUser as onDeleteUser,
 } from "/src/store/contacts/actions";
+import { getDistributors as onGetDistributors } from "/src/store/actions";
 import { isEmpty } from "lodash";
 
 //redux
@@ -99,20 +100,20 @@ const DistributorList = (props) => {
     },
   });
 
-  const selectContactsState = (state) => state.contacts;
-  const ContactsProperties = createSelector(
-    selectContactsState,
-    (Contacts) => ({
-      users: Contacts.users,
-      loading: Contacts.loading,
+  const selectDistributorsState = (state) => state.distributors;
+  const DistributorsProperties = createSelector(
+    selectDistributorsState,
+    (distributors) => ({
+      distributor: distributors.distributors,
+      loading: distributors.loading,
     })
   );
 
-  const { users, loading } = useSelector(ContactsProperties);
+  const { distributor, loading } = useSelector(DistributorsProperties);
 
   useEffect(() => {
-    console.log("Users data in component:", users);
-  }, [users]);
+    console.log("Distributors data in component:", distributor);
+  }, [distributor]);
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
@@ -122,7 +123,7 @@ const DistributorList = (props) => {
   const columns = useMemo(
     () => [
       {
-        Header: "#",
+        Header: "S.No",
         // accessor: "name",
         disableFilters: true,
         filterable: true,
@@ -317,23 +318,23 @@ const DistributorList = (props) => {
   );
 
   useEffect(() => {
-    if (users && !users.length) {
-      dispatch(onGetUsers());
+    if (distributor && !distributor.length) {
+      dispatch(onGetDistributors());
       setIsEdit(false);
     }
-  }, [dispatch, users]);
+  }, [dispatch, distributor]);
 
-  useEffect(() => {
-    setContact(users);
-    setIsEdit(false);
-  }, [users]);
+  // useEffect(() => {
+  //   setContact(users);
+  //   setIsEdit(false);
+  // }, [users]);
 
-  useEffect(() => {
-    if (!isEmpty(users) && !!isEdit) {
-      setContact(users);
-      setIsEdit(false);
-    }
-  }, [users]);
+  // useEffect(() => {
+  //   if (!isEmpty(users) && !!isEdit) {
+  //     setContact(users);
+  //     setIsEdit(false);
+  //   }
+  // }, [users]);
 
   const toggle = () => {
     setModal(!modal);
@@ -411,11 +412,11 @@ const DistributorList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("users:" + JSON.stringify(users))}
+                    {console.log("Distributors:" + JSON.stringify(distributor))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
-                      data={users}
+                      data={distributor}
                       isGlobalFilter={true}
                       isAddUserList={true}
                       isShowingPageLength={true}
@@ -427,7 +428,7 @@ const DistributorList = (props) => {
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
                     />
-                    <Modal isOpen={modal} toggle={toggle}>
+                    {/* <Modal isOpen={modal} toggle={toggle}>
                       <ModalHeader toggle={toggle} tag="h4">
                         {!!isEdit ? "Edit User" : "Add User"}
                       </ModalHeader>
@@ -588,7 +589,7 @@ const DistributorList = (props) => {
                           </Row>
                         </Form>
                       </ModalBody>
-                    </Modal>
+                    </Modal> */}
                   </CardBody>
                 </Card>
               </Col>

@@ -26,6 +26,8 @@ export const GET_SCHEDULECUSTOMERNOTIFICATION =
   "/schedulecustomernotificationlist";
 export const GET_STATEUSERS = "/stateuserlist";
 
+export const GET_DISTRIBUTORS = "/distributors";
+
 export const GET_BROADCASTER = "/broadcasterlist";
 export const GET_GENRELIST = "/genrelist";
 export const GET_USERS = "/userslist";
