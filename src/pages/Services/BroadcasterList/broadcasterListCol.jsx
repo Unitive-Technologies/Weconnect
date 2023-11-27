@@ -6,6 +6,38 @@ const Name = (cell) => {
   return cell.value ? cell.value : "";
 };
 
+const FullName = (cell) => {
+  return cell.value ? cell.value : "";
+};
+
+const Address = (cell) => {
+  return cell.value ? cell.value : "";
+};
+
+const ContactPerson = (cell) => {
+  return cell.value ? cell.value : "";
+};
+
+const Mobile = (cell) => {
+  return cell.value ? cell.value : "";
+};
+
+const Status = (cell) => {
+  return cell.value ? cell.value : "";
+};
+
+const Description = (cell) => {
+  return cell.value ? cell.value : "";
+};
+
+const CreatedAt = (cell) => {
+  return cell.value ? cell.value : "";
+};
+
+const CreatedBy = (cell) => {
+  return cell.value ? cell.value : "";
+};
+
 const Email = (cell) => {
   return cell.value ? cell.value : "";
 };
@@ -61,4 +93,4 @@ const Img = (cell) => {
   );
 };
 
-export { Name, Email, Tags, Projects, Img };
+export { Name, FullName, Address, ContactPerson, Description, Mobile, Status, CreatedAt, CreatedBy, Email, Tags, Projects, Img };

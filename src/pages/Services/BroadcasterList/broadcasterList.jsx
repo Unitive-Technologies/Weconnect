@@ -21,18 +21,27 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import { Email, Tags, Projects } from "./broadcasterListCol";
+import {
+  Name,
+  FullName,
+  Address,
+  ContactPerson,
+  Description,
+  Mobile,
+  Status,
+  CreatedAt,
+  CreatedBy,
+  Email,
+  Tags,
+  Projects,
+  Img,
+} from "./broadcasterListCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
 
-import {
-  getUsers as onGetUsers,
-  addNewUser as onAddNewUser,
-  updateUser as onUpdateUser,
-  deleteUser as onDeleteUser,
-} from "/src/store/contacts/actions";
+import { getBroadCaster as onGetBroadCasters } from "/src/store/broadcaster/actions";
 import { isEmpty } from "lodash";
 
 //redux
@@ -99,20 +108,20 @@ const BroadcasterList = (props) => {
     },
   });
 
-  const selectContactsState = (state) => state.contacts;
-  const ContactsProperties = createSelector(
-    selectContactsState,
-    (Contacts) => ({
-      users: Contacts.users,
-      loading: Contacts.loading,
+  const selectBroadCasterState = (state) => state.broadcaster;
+  const BroadCasterProperties = createSelector(
+    selectBroadCasterState,
+    (broadcaster) => ({
+      brodcast: broadcaster.broadcaster,
+      loading: broadcaster.loading,
     })
   );
 
-  const { users, loading } = useSelector(ContactsProperties);
+  const { brodcast, loading } = useSelector(BroadCasterProperties);
 
   useEffect(() => {
-    console.log("Users data in component:", users);
-  }, [users]);
+    console.log("BroadCaster data in component:", brodcast);
+  }, [brodcast]);
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
@@ -123,28 +132,22 @@ const BroadcasterList = (props) => {
     () => [
       {
         Header: "#",
-        // accessor: "name",
         disableFilters: true,
         filterable: true,
-        accessor: (cellProps) => (
-          <>
-            {!cellProps.img ? (
-              <div className="avatar-xs">
-                <span className="avatar-title rounded-circle">
-                  {cellProps.name.charAt(0)}
-                </span>
-              </div>
-            ) : (
-              <div>
-                <img
-                  className="rounded-circle avatar-xs"
-                  src={cellProps.img}
-                  alt=""
-                />
-              </div>
-            )}
-          </>
-        ),
+        Cell: (cellProps) => {
+          const totalRows = cellProps.rows.length;
+          const reverseIndex = totalRows - cellProps.row.index;
+
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {reverseIndex}
+                </Link>
+              </h5>
+            </>
+          );
+        },
       },
       {
         Header: "Name",
@@ -152,16 +155,11 @@ const BroadcasterList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.name}
-                </Link>
-              </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
-            </>
+            <h5 className="font-size-14 mb-1">
+              <Link className="text-dark" to="#">
+                {cellProps.row.original.name}
+              </Link>
+            </h5>
           );
         },
       },
@@ -170,7 +168,7 @@ const BroadcasterList = (props) => {
         accessor: "fullname",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return <FullName {...cellProps} />;
         },
       },
       {
@@ -178,7 +176,7 @@ const BroadcasterList = (props) => {
         accessor: "address",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <Address {...cellProps} />;
         },
       },
       {
@@ -186,7 +184,7 @@ const BroadcasterList = (props) => {
         accessor: "contactperson",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <ContactPerson {...cellProps} />;
         },
       },
       {
@@ -194,7 +192,7 @@ const BroadcasterList = (props) => {
         accessor: "mobile",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <Mobile {...cellProps} />;
         },
       },
       {
@@ -202,7 +200,7 @@ const BroadcasterList = (props) => {
         accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <Status {...cellProps} />;
         },
       },
       {
@@ -210,7 +208,7 @@ const BroadcasterList = (props) => {
         accessor: "description",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <Description {...cellProps} />;
         },
       },
       {
@@ -218,7 +216,7 @@ const BroadcasterList = (props) => {
         accessor: "createdat",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return <CreatedAt {...cellProps} />;
         },
       },
       {
@@ -226,7 +224,7 @@ const BroadcasterList = (props) => {
         accessor: "createdby",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return <CreatedBy {...cellProps} />;
         },
       },
       {
@@ -269,23 +267,23 @@ const BroadcasterList = (props) => {
   );
 
   useEffect(() => {
-    if (users && !users.length) {
-      dispatch(onGetUsers());
+    if (brodcast && !brodcast.length) {
+      dispatch(onGetBroadCasters());
       setIsEdit(false);
     }
-  }, [dispatch, users]);
+  }, [dispatch, brodcast]);
 
-  useEffect(() => {
-    setContact(users);
-    setIsEdit(false);
-  }, [users]);
+  // useEffect(() => {
+  //   setContact(brodcast);
+  //   setIsEdit(false);
+  // }, [broadcast]);
 
-  useEffect(() => {
-    if (!isEmpty(users) && !!isEdit) {
-      setContact(users);
-      setIsEdit(false);
-    }
-  }, [users]);
+  // useEffect(() => {
+  //   if (!isEmpty(brodcast) && !!isEdit) {
+  //     setContact(brodcast);
+  //     setIsEdit(false);
+  //   }
+  // }, [brodcast]);
 
   const toggle = () => {
     setModal(!modal);
@@ -363,11 +361,11 @@ const BroadcasterList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("users:" + JSON.stringify(users))}
+                    {console.log("broadcasterlist:" + JSON.stringify(brodcast))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
-                      data={users}
+                      data={brodcast}
                       isGlobalFilter={true}
                       isAddUserList={true}
                       isShowingPageLength={true}

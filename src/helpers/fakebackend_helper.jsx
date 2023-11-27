@@ -229,9 +229,12 @@ export const getDesignation = () => get(url.GET_DESIGNATION);
 
 export const getNotificationTemplate = () => get(url.GET_NOTIFICATIONTEMPLATE);
 
-export const getScheduleCustomerNotification = () => get(url.GET_SCHEDULECUSTOMERNOTIFICATION);
+export const getScheduleCustomerNotification = () =>
+  get(url.GET_SCHEDULECUSTOMERNOTIFICATION);
 
 export const getStateUsers = () => get(url.GET_STATEUSERS);
+
+export const getBroadCasters = () => get(url.GET_BROADCASTER);
 
 // add user
 export const addNewUser = (user) => post(url.ADD_NEW_USER, user);
