@@ -16,7 +16,7 @@ const convertDistributorsListObject = (distributorsList) => {
       name: distributors.name,
       code: distributors.code,
       contact_person: distributors.contact_person,
-      addr: distributors.addr,
+      addr1: distributors.addr1,
       mobile_no: distributors.mobile_no,
       state_lbl: distributors.state_lbl,
       district_lbl: distributors.district_lbl,
