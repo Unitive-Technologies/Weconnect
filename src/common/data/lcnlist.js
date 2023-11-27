@@ -1,0 +1,3 @@
+const lcnlist = [];
+
+export { lcnlist };
