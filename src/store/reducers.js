@@ -14,6 +14,7 @@ import customerUsers from "./customerusers/reducer";
 import groupPolicy from "./grouppolicy/reducer";
 import designation from "./designation/reducer";
 import notificationTemplate from './notificationtemplate/reducer'
+import scheduleCustomerNotification from './schedulecustomernotification/reducer'
 
 const rootReducer = combineReducers({
   // public
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   groupPolicy,
   designation,
   notificationTemplate,
+  scheduleCustomerNotification,
 });
 
 export default rootReducer;
