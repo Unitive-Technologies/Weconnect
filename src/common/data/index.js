@@ -6,6 +6,7 @@ import { notificationtemplatelist } from "./notificationtemplatelist";
 import { schedulecustomernotificationlist } from "./schedulecustomernotificationlist";
 import { regionalofficelist } from "./regionalofficelist";
 import { distributorlist } from "./distributorlist";
+import { lcolist } from "./lcolist";
 
 export {
   userslist,
@@ -16,4 +17,5 @@ export {
   schedulecustomernotificationlist,
   regionalofficelist,
   distributorlist,
+  lcolist,
 };
