@@ -8,6 +8,7 @@ import {
   grouppolicylist as gppolicy,
   designationlist as designation,
   notificationtemplatelist as notemplate,
+  schedulecustomernotificationlist as schCusNotification,
 } from "../../common/data";
 let users = [
   {
@@ -270,6 +271,20 @@ const fakeBackend = () => {
       });
     });
   });
+
+  mock.onGet(url.GET_SCHEDULECUSTOMERNOTIFICATION).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (schCusNotification) {
+          // Passing fake JSON data as response
+          resolve([200, schCusNotification]);
+        } else {
+          reject([400, "Cannot get Schedule Customer Notification"]);
+        }
+      });
+    });
+  });
+
 };
 
 export default fakeBackend;

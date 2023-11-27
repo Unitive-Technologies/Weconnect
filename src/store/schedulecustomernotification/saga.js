@@ -31,7 +31,7 @@ const convertScheduleCustomerNotificationListObject = (scheduleCustomerNotificat
             ? "INACTIVE"
             : "BLOCKED",
       created_at: scheduleCustomerNotification.created_at,
-      created_by: scheduleCustomerNotification.created_by,
+      created_by_lbl: scheduleCustomerNotification.created_by_lbl,
     };
   });
 };

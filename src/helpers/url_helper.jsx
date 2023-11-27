@@ -20,6 +20,8 @@ export const GET_DESIGNATION = "/designationlist"
 
 export const GET_NOTIFICATIONTEMPLATE = "/notificationtemplatelist"
 
+export const GET_SCHEDULECUSTOMERNOTIFICATION = "/schedulecustomernotificationlist"
+
 
 export const GET_USERS = "/userslist";
 export const GET_USER_PROFILE = "/user";
