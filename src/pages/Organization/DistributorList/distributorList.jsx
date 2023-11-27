@@ -33,6 +33,7 @@ import {
   updateUser as onUpdateUser,
   deleteUser as onDeleteUser,
 } from "/src/store/contacts/actions";
+import { getDistributors as onGetDistributors } from "/src/store/actions";
 import { isEmpty } from "lodash";
 
 //redux
@@ -99,20 +100,20 @@ const DistributorList = (props) => {
     },
   });
 
-  const selectContactsState = (state) => state.contacts;
-  const ContactsProperties = createSelector(
-    selectContactsState,
-    (Contacts) => ({
-      users: Contacts.users,
-      loading: Contacts.loading,
+  const selectDistributorsState = (state) => state.distributors;
+  const DistributorsProperties = createSelector(
+    selectDistributorsState,
+    (distributors) => ({
+      distributor: distributors.distributors,
+      loading: distributors.loading,
     })
   );
 
-  const { users, loading } = useSelector(ContactsProperties);
+  const { distributor, loading } = useSelector(DistributorsProperties);
 
   useEffect(() => {
-    console.log("Users data in component:", users);
-  }, [users]);
+    console.log("Distributors data in component:", distributor);
+  }, [distributor]);
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
@@ -126,25 +127,20 @@ const DistributorList = (props) => {
         // accessor: "name",
         disableFilters: true,
         filterable: true,
-        accessor: (cellProps) => (
-          <>
-            {!cellProps.img ? (
-              <div className="avatar-xs">
-                <span className="avatar-title rounded-circle">
-                  {cellProps.name.charAt(0)}
-                </span>
-              </div>
-            ) : (
-              <div>
-                <img
-                  className="rounded-circle avatar-xs"
-                  src={cellProps.img}
-                  alt=""
-                />
-              </div>
-            )}
-          </>
-        ),
+        Cell: (cellProps) => {
+          const totalRows = cellProps.rows.length;
+          const reverseIndex = totalRows - cellProps.row.index;
+
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {reverseIndex}
+                </Link>
+              </h5>
+            </>
+          );
+        },
       },
       {
         Header: "Name",
@@ -170,87 +166,107 @@ const DistributorList = (props) => {
         accessor: "code",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
-        },
-      },
-      {
-        Header: "Regional Office",
-        accessor: "regionaloffcie",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.code}</p>
+          );
         },
       },
       {
         Header: "Address",
-        accessor: "address",
+        accessor: "addr1",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.addr1}</p>
+          );
         },
       },
       {
         Header: "Contact Person",
-        accessor: "contactperson",
+        accessor: "contact_person",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.contact_person}
+            </p>
+          );
         },
       },
       {
         Header: "Mobile",
-        accessor: "mobile",
+        accessor: "mobile_no",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.mobile_no}
+            </p>
+          );
         },
       },
       {
         Header: "State",
-        accessor: "state",
+        accessor: "state_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.state_lbl}
+            </p>
+          );
         },
       },
       {
         Header: "District",
-        accessor: "district",
+        accessor: "District_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.district_lbl}
+            </p>
+          );
         },
       },
       {
         Header: "City",
-        accessor: "city",
+        accessor: "city_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.city_lbl}</p>
+          );
         },
       },
       {
         Header: "GST",
-        accessor: "GST",
+        accessor: "gstno",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.gstno}</p>
+          );
         },
       },
       {
         Header: "PAN",
-        accessor: "PAN",
+        accessor: "panno",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.panno}</p>
+          );
         },
       },
       {
         Header: "Login ID",
-        accessor: "loginID",
+        accessor: "username",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.username}</p>
+          );
         },
       },
       {
@@ -258,82 +274,92 @@ const DistributorList = (props) => {
         accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.status}</p>
+          );
         },
       },
       {
         Header: "Created At",
-        accessor: "createat",
+        accessor: "created_at",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_at}
+            </p>
+          );
         },
       },
       {
         Header: "Created By",
-        accessor: "createdby",
+        accessor: "created_by",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
-        },
-      },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
           return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by}
+            </p>
           );
         },
       },
+      // {
+      //   Header: "Action",
+      //   Cell: (cellProps) => {
+      //     return (
+      //       <div className="d-flex gap-3">
+      //         <Link
+      //           to="#"
+      //           className="text-success"
+      //           onClick={() => {
+      //             const userData = cellProps.row.original;
+      //             handleUserClick(userData);
+      //           }}
+      //         >
+      //           <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
+      //           <UncontrolledTooltip placement="top" target="edittooltip">
+      //             Edit
+      //           </UncontrolledTooltip>
+      //         </Link>
+      //         <Link
+      //           to="#"
+      //           className="text-danger"
+      //           onClick={() => {
+      //             const userData = cellProps.row.original;
+      //             onClickDelete(userData);
+      //           }}
+      //         >
+      //           <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
+      //           <UncontrolledTooltip placement="top" target="deletetooltip">
+      //             Delete
+      //           </UncontrolledTooltip>
+      //         </Link>
+      //       </div>
+      //     );
+      //   },
+      // },
     ],
     []
   );
 
   useEffect(() => {
-    if (users && !users.length) {
-      dispatch(onGetUsers());
+    if (distributor && !distributor.length) {
+      dispatch(onGetDistributors());
       setIsEdit(false);
     }
-  }, [dispatch, users]);
+  }, [dispatch, distributor]);
 
-  useEffect(() => {
-    setContact(users);
-    setIsEdit(false);
-  }, [users]);
+  // useEffect(() => {
+  //   setContact(users);
+  //   setIsEdit(false);
+  // }, [users]);
 
-  useEffect(() => {
-    if (!isEmpty(users) && !!isEdit) {
-      setContact(users);
-      setIsEdit(false);
-    }
-  }, [users]);
+  // useEffect(() => {
+  //   if (!isEmpty(users) && !!isEdit) {
+  //     setContact(users);
+  //     setIsEdit(false);
+  //   }
+  // }, [users]);
 
   const toggle = () => {
     setModal(!modal);
@@ -411,11 +437,11 @@ const DistributorList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("users:" + JSON.stringify(users))}
+                    {console.log("Distributors:" + JSON.stringify(distributor))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
-                      data={users}
+                      data={distributor}
                       isGlobalFilter={true}
                       isAddUserList={true}
                       isShowingPageLength={true}
@@ -427,7 +453,7 @@ const DistributorList = (props) => {
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
                     />
-                    <Modal isOpen={modal} toggle={toggle}>
+                    {/* <Modal isOpen={modal} toggle={toggle}>
                       <ModalHeader toggle={toggle} tag="h4">
                         {!!isEdit ? "Edit User" : "Add User"}
                       </ModalHeader>
@@ -588,7 +614,7 @@ const DistributorList = (props) => {
                           </Row>
                         </Form>
                       </ModalBody>
-                    </Modal>
+                    </Modal> */}
                   </CardBody>
                 </Card>
               </Col>

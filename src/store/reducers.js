@@ -17,9 +17,14 @@ import notificationTemplate from "./notificationtemplate/reducer";
 import scheduleCustomerNotification from "./schedulecustomernotification/reducer";
 import regionaloffice from "./regionalofficelist/reducer";
 import stateUsers from "./stateusers/reducer";
-
+import district from "./district/reducer";
+import city from "./city/reducer";
 import broadCasters from "./broadcaster/reducer";
+
 import genreList from "./genre/reducer";
+
+import genreLists from "./genre/reducer";
+import distributors from "./distributorslist/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -37,7 +42,13 @@ const rootReducer = combineReducers({
   regionaloffice,
   stateUsers,
   broadCasters,
+
   genreList,
+
+  genreLists,
+  distributors,
+  district,
+  city,
 });
 
 export default rootReducer;
