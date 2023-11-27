@@ -64,7 +64,7 @@ const RegionalOfficeList = (props) => {
   const columns = useMemo(
     () => [
       {
-        Header: "S.No",
+        Header: "#",
         // accessor: "name",
         disableFilters: true,
         filterable: true,
