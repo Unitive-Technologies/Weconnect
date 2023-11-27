@@ -9,6 +9,7 @@ import {
   designationlist as designation,
   notificationtemplatelist as notemplate,
   schedulecustomernotificationlist as schCusNotification,
+  broadcasterlist as broadcast,
 } from "../../common/data";
 let users = [
   {
@@ -280,6 +281,19 @@ const fakeBackend = () => {
           resolve([200, schCusNotification]);
         } else {
           reject([400, "Cannot get Schedule Customer Notification"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_BROADCASTER).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (broadcast) {
+          // Passing fake JSON data as response
+          resolve([200, broadcast]);
+        } else {
+          reject([400, "Cannot get Broad Caster List"]);
         }
       });
     });

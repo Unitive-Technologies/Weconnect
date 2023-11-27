@@ -13,9 +13,10 @@ import contacts from "./contacts/reducer";
 import customerUsers from "./customerusers/reducer";
 import groupPolicy from "./grouppolicy/reducer";
 import designation from "./designation/reducer";
-import notificationTemplate from './notificationtemplate/reducer'
-import scheduleCustomerNotification from './schedulecustomernotification/reducer'
-import stateUsers from './stateusers/reducer'
+import notificationTemplate from "./notificationtemplate/reducer";
+import scheduleCustomerNotification from "./schedulecustomernotification/reducer";
+import stateUsers from "./stateusers/reducer";
+import broadCasters from "./broadcaster/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   notificationTemplate,
   scheduleCustomerNotification,
   stateUsers,
+  broadCasters,
 });
 
 export default rootReducer;
