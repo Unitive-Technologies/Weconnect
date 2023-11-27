@@ -29,7 +29,6 @@ import DeleteModal from "/src/components/Common/DeleteModal";
 
 import { getScheduleCustomerNotification as onGetScheduleCustomerNotification } from "/src/store/actions";
 
-
 import { isEmpty } from "lodash";
 
 //redux
@@ -43,19 +42,26 @@ const ScheduleCustomerNotificationList = (props) => {
 
   const dispatch = useDispatch();
 
-  const selectScheduleCustomerNotificationState = (state) => state.scheduleCustomerNotification;
+  const selectScheduleCustomerNotificationState = (state) =>
+    state.scheduleCustomerNotification;
   const scheduleCustomerNotificationProperties = createSelector(
     selectScheduleCustomerNotificationState,
     (scheduleCustomerNotification) => ({
-      schCusNotification: scheduleCustomerNotification.scheduleCustomerNotification,
+      schCusNotification:
+        scheduleCustomerNotification.scheduleCustomerNotification,
       loading: scheduleCustomerNotification.loading,
     })
   );
 
-  const { schCusNotification, loading } = useSelector(scheduleCustomerNotificationProperties);
+  const { schCusNotification, loading } = useSelector(
+    scheduleCustomerNotificationProperties
+  );
 
   useEffect(() => {
-    console.log("Schedule Customer Notification data in component:", schCusNotification);
+    console.log(
+      "Schedule Customer Notification data in component:",
+      schCusNotification
+    );
   }, [schCusNotification]);
 
   const [userList, setUserList] = useState([]);
@@ -118,18 +124,22 @@ const ScheduleCustomerNotificationList = (props) => {
         accessor: "schedule_days",
         filterable: true,
         Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">{cellProps.row.original.schedule_days}</p>
-          );
+          const scheduleDaysString =
+            cellProps.row.original.schedule_days.join(", ");
+
+          return <p className="text-muted mb-0">{scheduleDaysString}</p>;
         },
       },
+
       {
         Header: "OSD Template",
         accessor: "osd_template_id_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.osd_template_id_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.osd_template_id_lbl}
+            </p>
           );
         },
       },
@@ -139,7 +149,9 @@ const ScheduleCustomerNotificationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.osd_configuration_id_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.osd_configuration_id_lbl}
+            </p>
           );
         },
       },
@@ -149,7 +161,9 @@ const ScheduleCustomerNotificationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.bmail_template_id_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.bmail_template_id_lbl}
+            </p>
           );
         },
       },
@@ -159,7 +173,9 @@ const ScheduleCustomerNotificationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.sms_template_id_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.sms_template_id_lbl}
+            </p>
           );
         },
       },
@@ -169,7 +185,9 @@ const ScheduleCustomerNotificationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.start_date}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.start_date}
+            </p>
           );
         },
       },
@@ -189,7 +207,9 @@ const ScheduleCustomerNotificationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.description}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.description}
+            </p>
           );
         },
       },
@@ -199,7 +219,9 @@ const ScheduleCustomerNotificationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.status_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.status_lbl}
+            </p>
           );
         },
       },
@@ -209,7 +231,9 @@ const ScheduleCustomerNotificationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.created_at}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_at}
+            </p>
           );
         },
       },
@@ -219,7 +243,9 @@ const ScheduleCustomerNotificationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.created_by_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by_lbl}
+            </p>
           );
         },
       },
