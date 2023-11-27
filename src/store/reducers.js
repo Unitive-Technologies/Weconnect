@@ -15,7 +15,7 @@ import groupPolicy from "./grouppolicy/reducer";
 import designation from "./designation/reducer";
 import notificationTemplate from "./notificationtemplate/reducer";
 import scheduleCustomerNotification from "./schedulecustomernotification/reducer";
-import RegionalOffice from "./regionalofficelist/reducer";
+import regionaloffice from "./regionalofficelist/reducer";
 import stateUsers from "./stateusers/reducer";
 
 import broadCasters from "./broadcaster/reducer";
@@ -33,7 +33,7 @@ const rootReducer = combineReducers({
   designation,
   notificationTemplate,
   scheduleCustomerNotification,
-  RegionalOffice,
+  regionaloffice,
   stateUsers,
   broadCasters,
 });

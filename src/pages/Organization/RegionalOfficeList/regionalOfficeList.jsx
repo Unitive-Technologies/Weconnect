@@ -41,12 +41,12 @@ const RegionalOfficeList = (props) => {
 
   const dispatch = useDispatch();
 
-  const selectRegionalOfficeState = (state) => state.regionalOffice;
+  const selectRegionalOfficeState = (state) => state.regionaloffice;
   const RegionalOfficeProperties = createSelector(
     selectRegionalOfficeState,
-    (regionalOffice) => ({
-      regOff: regionalOffice.regionalOffice,
-      loading: regionalOffice.loading,
+    (regionaloffice) => ({
+      regOff: regionaloffice.regionaloffice,
+      loading: regionaloffice.loading,
     })
   );
 
@@ -365,7 +365,7 @@ const RegionalOfficeList = (props) => {
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
                     />
-                    <Modal isOpen={modal} toggle={toggle}>
+                    {/* <Modal isOpen={modal} toggle={toggle}>
                       <ModalHeader toggle={toggle} tag="h4">
                         {!!isEdit ? "Edit User" : "Add User"}
                       </ModalHeader>
@@ -526,7 +526,7 @@ const RegionalOfficeList = (props) => {
                           </Row>
                         </Form>
                       </ModalBody>
-                    </Modal>
+                    </Modal> */}
                   </CardBody>
                 </Card>
               </Col>
