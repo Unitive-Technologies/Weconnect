@@ -27,9 +27,9 @@ const convertRegionalOfficeListObject = (regionalofficeList) => {
       panno: regionaloffice.panno,
       username: regionaloffice.username,
       status:
-        notificationTemplate.status === 1
+        regionaloffice.status === 1
           ? "ACTIVE"
-          : notificationTemplate.status === 0
+          : regionaloffice.status === 0
           ? "INACTIVE"
           : "BLOCKED",
     };

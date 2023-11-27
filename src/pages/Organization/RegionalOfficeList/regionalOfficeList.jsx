@@ -64,29 +64,24 @@ const RegionalOfficeList = (props) => {
   const columns = useMemo(
     () => [
       {
-        Header: "#",
+        Header: "S.No",
         // accessor: "name",
         disableFilters: true,
         filterable: true,
-        accessor: (cellProps) => (
-          <>
-            {!cellProps.img ? (
-              <div className="avatar-xs">
-                <span className="avatar-title rounded-circle">
-                  {cellProps.name.charAt(0)}
-                </span>
-              </div>
-            ) : (
-              <div>
-                <img
-                  className="rounded-circle avatar-xs"
-                  src={cellProps.img}
-                  alt=""
-                />
-              </div>
-            )}
-          </>
-        ),
+        Cell: (cellProps) => {
+          const totalRows = cellProps.rows.length;
+          const reverseIndex = totalRows - cellProps.row.index;
+
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {reverseIndex}
+                </Link>
+              </h5>
+            </>
+          );
+        },
       },
       {
         Header: "Name",
@@ -112,7 +107,9 @@ const RegionalOfficeList = (props) => {
         accessor: "code",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.code}</p>
+          );
         },
       },
       {
@@ -120,7 +117,9 @@ const RegionalOfficeList = (props) => {
         accessor: "addr",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.addr}</p>
+          );
         },
       },
       {
@@ -128,7 +127,11 @@ const RegionalOfficeList = (props) => {
         accessor: "contact_person",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.contact_person}
+            </p>
+          );
         },
       },
       {
@@ -136,7 +139,11 @@ const RegionalOfficeList = (props) => {
         accessor: "mobile_no",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.mobile_no}
+            </p>
+          );
         },
       },
       {
@@ -144,7 +151,11 @@ const RegionalOfficeList = (props) => {
         accessor: "state_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.state_lbl}
+            </p>
+          );
         },
       },
       {
@@ -152,7 +163,11 @@ const RegionalOfficeList = (props) => {
         accessor: "District_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.district_lbl}
+            </p>
+          );
         },
       },
       {
@@ -160,7 +175,9 @@ const RegionalOfficeList = (props) => {
         accessor: "city_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.city_lbl}</p>
+          );
         },
       },
       {
@@ -168,8 +185,9 @@ const RegionalOfficeList = (props) => {
         accessor: "gstno",
         filterable: true,
         Cell: (cellProps) => {
-          // return
-          <Projects {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.gstno}</p>
+          );
         },
       },
       {
@@ -177,7 +195,9 @@ const RegionalOfficeList = (props) => {
         accessor: "panno",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.panno}</p>
+          );
         },
       },
       {
@@ -185,7 +205,9 @@ const RegionalOfficeList = (props) => {
         accessor: "username",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.username}</p>
+          );
         },
       },
       {
@@ -193,7 +215,9 @@ const RegionalOfficeList = (props) => {
         accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.status}</p>
+          );
         },
       },
       {
@@ -201,7 +225,11 @@ const RegionalOfficeList = (props) => {
         accessor: "created_at",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_at}
+            </p>
+          );
         },
       },
       {
@@ -209,44 +237,48 @@ const RegionalOfficeList = (props) => {
         accessor: "created_by",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
-        },
-      },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
           return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by}
+            </p>
           );
         },
       },
+      // {
+      //   Header: "Action",
+      //   Cell: (cellProps) => {
+      //     return (
+      //       <div className="d-flex gap-3">
+      //         <Link
+      //           to="#"
+      //           className="text-success"
+      //           onClick={() => {
+      //             const userData = cellProps.row.original;
+      //             handleUserClick(userData);
+      //           }}
+      //         >
+      //           <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
+      //           <UncontrolledTooltip placement="top" target="edittooltip">
+      //             Edit
+      //           </UncontrolledTooltip>
+      //         </Link>
+      //         <Link
+      //           to="#"
+      //           className="text-danger"
+      //           onClick={() => {
+      //             const userData = cellProps.row.original;
+      //             onClickDelete(userData);
+      //           }}
+      //         >
+      //           <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
+      //           <UncontrolledTooltip placement="top" target="deletetooltip">
+      //             Delete
+      //           </UncontrolledTooltip>
+      //         </Link>
+      //       </div>
+      //     );
+      //   },
+      // },
     ],
     []
   );
