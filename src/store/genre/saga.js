@@ -14,17 +14,14 @@ const convertGenreListObject = (genreList) => {
       ...genre,
       id: genre.id,
       name: genre.name,
-      fullname: genre.fullname,
-      address: genre.addr,
-      contactperson: genre.contact_person,
-      mobile: genre.mobile_no,
+      code: genre.code,
+      description: genre.description,
       status:
         genre.status === 1
           ? "ACTIVE"
           : genre.status === 0
           ? "INACTIVE"
           : "BLOCKED",
-      description: genre.description,
       created_at: genre.created_at,
       created_by: genre.created_at,
     };

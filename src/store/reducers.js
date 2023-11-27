@@ -19,7 +19,7 @@ import regionaloffice from "./regionalofficelist/reducer";
 import stateUsers from "./stateusers/reducer";
 
 import broadCasters from "./broadcaster/reducer";
-import genreLists from "./genre/reducer";
+import genreList from "./genre/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -37,7 +37,7 @@ const rootReducer = combineReducers({
   regionaloffice,
   stateUsers,
   broadCasters,
-  genreLists,
+  genreList,
 });
 
 export default rootReducer;

@@ -369,9 +369,9 @@ const BroadcasterList = (props) => {
                       isGlobalFilter={true}
                       isAddUserList={true}
                       isShowingPageLength={true}
-                      iscustomPageSizeOptions={true}
+                      // iscustomPageSizeOptions={true}
                       handleUserClick={() => {}}
-                      customPageSize={8}
+                      customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"

@@ -21,7 +21,14 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import { Email, Tags, Projects } from "./genreListCol";
+import {
+  Name,
+  Description,
+  Code,
+  CreatedAt,
+  CreatedBy,
+  Status,
+} from "./genreListCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -104,7 +111,7 @@ const GenreList = (props) => {
 
   useEffect(() => {
     console.log("GenreList data in component:", genrelist);
-  }, [users]);
+  }, [genrelist]);
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
@@ -115,28 +122,22 @@ const GenreList = (props) => {
     () => [
       {
         Header: "#",
-        // accessor: "name",
         disableFilters: true,
         filterable: true,
-        accessor: (cellProps) => (
-          <>
-            {!cellProps.img ? (
-              <div className="avatar-xs">
-                <span className="avatar-title rounded-circle">
-                  {cellProps.name.charAt(0)}
-                </span>
-              </div>
-            ) : (
-              <div>
-                <img
-                  className="rounded-circle avatar-xs"
-                  src={cellProps.img}
-                  alt=""
-                />
-              </div>
-            )}
-          </>
-        ),
+        Cell: (cellProps) => {
+          const totalRows = cellProps.rows.length;
+          const reverseIndex = totalRows - cellProps.row.index;
+
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {reverseIndex}
+                </Link>
+              </h5>
+            </>
+          );
+        },
       },
       {
         Header: "Name",
@@ -144,16 +145,11 @@ const GenreList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.name}
-                </Link>
-              </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
-            </>
+            <h5 className="font-size-14 mb-1">
+              <Link className="text-dark" to="#">
+                {cellProps.row.original.name}
+              </Link>
+            </h5>
           );
         },
       },
@@ -162,7 +158,7 @@ const GenreList = (props) => {
         accessor: "code",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return <Code {...cellProps} />;
         },
       },
       {
@@ -170,7 +166,7 @@ const GenreList = (props) => {
         accessor: "description",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <Description {...cellProps} />;
         },
       },
       {
@@ -178,23 +174,23 @@ const GenreList = (props) => {
         accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <Status {...cellProps} />;
         },
       },
       {
         Header: "Created At",
-        accessor: "createdat",
+        accessor: "created_at",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return <CreatedAt {...cellProps} />;
         },
       },
       {
         Header: "Created By",
-        accessor: "createdby",
+        accessor: "created_by",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return <CreatedBy {...cellProps} />;
         },
       },
       {
@@ -331,7 +327,7 @@ const GenreList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("users:" + JSON.stringify(users))}
+                    {console.log("Genre List:" + JSON.stringify(genrelist))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
@@ -339,9 +335,9 @@ const GenreList = (props) => {
                       isGlobalFilter={true}
                       isAddUserList={true}
                       isShowingPageLength={true}
-                      iscustomPageSizeOptions={true}
+                      // iscustomPageSizeOptions={true}
                       handleUserClick={() => {}}
-                      customPageSize={8}
+                      customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
