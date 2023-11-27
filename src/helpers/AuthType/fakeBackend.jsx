@@ -288,6 +288,19 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onGet(url.GET_BROADCASTER).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (broadcast) {
+          // Passing fake JSON data as response
+          resolve([200, broadcast]);
+        } else {
+          reject([400, "Cannot get BroadCaster List"]);
+        }
+      });
+    });
+  });
+
   mock.onGet(url.GET_REGIONALOFFICE).reply(() => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
