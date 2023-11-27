@@ -118,21 +118,21 @@ const DistrictList = (props) => {
       },
       {
         Header: "State",
-        accessor: "state_id",
+        accessor: "state_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.state_id}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.state_lbl}</p>
           );
         },
       },
       {
         Header: "State Code",
-        accessor: "district_id",
+        accessor: "state_code_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.district_id}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.state_code_lbl}</p>
           );
         },
       },
@@ -168,11 +168,11 @@ const DistrictList = (props) => {
       },
       {
         Header: "Created By",
-        accessor: "created_by",
+        accessor: "created_by_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.created_by}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.created_by_lbl}</p>
           );
         },
       },

@@ -15,8 +15,9 @@ const convertDistrictListObject = (districtList) => {
       id: district.id,
       name: district.name,
       code: district.code,
-      state_id: district.state_id,
-      district_id: district.district_id,
+      state_lbl: district.state_lbl,
+      created_by_lbl: district.created_by_lbl,
+      state_code_lbl: district.state_code_lbl,
       description: district.description,
       status:
         district.status === 1
@@ -25,7 +26,7 @@ const convertDistrictListObject = (districtList) => {
             ? "INACTIVE"
             : "BLOCKED",
       created_at: district.created_at,
-      created_by: district.created_by,
+
     };
   });
 };
