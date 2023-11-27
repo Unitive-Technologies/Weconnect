@@ -10,6 +10,8 @@ import { lcolist } from "./lcolist";
 import { stateuserlist } from "./stateuserlist";
 import { broadcasterlist } from "./broadcasterlist";
 import { genrelist } from "./genrelist";
+import { districtlist } from './districtlist'
+
 export {
   userslist,
   customeruserlist,
@@ -23,4 +25,5 @@ export {
   stateuserlist,
   broadcasterlist,
   genrelist,
+  districtlist,
 };

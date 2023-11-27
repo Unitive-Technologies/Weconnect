@@ -14,6 +14,7 @@ import {
   broadcasterlist as broadcast,
   genrelist as genre,
   distributorlist as distributor,
+  districtlist as disTrict,
 } from "../../common/data";
 let users = [
   {
@@ -351,6 +352,20 @@ const fakeBackend = () => {
           resolve([200, distributor]);
         } else {
           reject([400, "Cannot get State User List"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_DISTRICT).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (disTrict) {
+          // Passing fake JSON data as response
+          resolve([200, disTrict]);
+        } else {
+          reject([400, "Cannot get District List"]);
+
         }
       });
     });
