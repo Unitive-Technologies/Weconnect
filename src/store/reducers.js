@@ -16,6 +16,7 @@ import designation from "./designation/reducer";
 import notificationTemplate from "./notificationtemplate/reducer";
 import scheduleCustomerNotification from "./schedulecustomernotification/reducer";
 import RegionalOffice from "./regionalofficelist/reducer";
+import stateUsers from "./stateusers/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   notificationTemplate,
   scheduleCustomerNotification,
   RegionalOffice,
+  stateUsers,
 });
 
 export default rootReducer;

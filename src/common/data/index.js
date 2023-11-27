@@ -7,6 +7,8 @@ import { schedulecustomernotificationlist } from "./schedulecustomernotification
 import { regionalofficelist } from "./regionalofficelist";
 import { distributorlist } from "./distributorlist";
 import { lcolist } from "./lcolist";
+import { stateuserlist } from './stateuserlist';
+
 
 export {
   userslist,
@@ -18,4 +20,5 @@ export {
   regionalofficelist,
   distributorlist,
   lcolist,
+  stateuserlist
 };

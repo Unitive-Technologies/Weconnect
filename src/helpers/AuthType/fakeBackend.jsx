@@ -10,6 +10,7 @@ import {
   notificationtemplatelist as notemplate,
   schedulecustomernotificationlist as schCusNotification,
   regionalofficelist as regOff,
+  stateuserlist as stateUser,
 } from "../../common/data";
 let users = [
   {
@@ -273,7 +274,6 @@ const fakeBackend = () => {
     });
   });
 
-
   mock.onGet(url.GET_SCHEDULECUSTOMERNOTIFICATION).reply(() => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -296,12 +296,23 @@ const fakeBackend = () => {
           resolve([200, regOff]);
         } else {
           reject([400, "Cannot get Regional office list"]);
-
         }
       });
     });
   });
 
+  mock.onGet(url.GET_STATEUSERS).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (stateUser) {
+          // Passing fake JSON data as response
+          resolve([200, stateUser]);
+        } else {
+          reject([400, "Cannot get State Users"]);
+        }
+      });
+    });
+  });
 };
 
 export default fakeBackend;

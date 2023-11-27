@@ -1,4 +1,4 @@
-const statelist = [
+const stateuserlist = [
   {
     id: 37,
     name: "Delhi",
@@ -704,4 +704,4 @@ const statelist = [
   },
 ];
 
-export { statelist };
+export { stateuserlist };

@@ -232,6 +232,8 @@ export const getNotificationTemplate = () => get(url.GET_NOTIFICATIONTEMPLATE);
 export const getScheduleCustomerNotification = () =>
   get(url.GET_SCHEDULECUSTOMERNOTIFICATION);
 
+export const getStateUsers = () => get(url.GET_STATEUSERS);
+
 export const getRegionalOffice = () => get(url.GET_REGIONALOFFICE);
 
 // add user

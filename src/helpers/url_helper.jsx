@@ -24,6 +24,7 @@ export const GET_REGIONALOFFICE = "/regionaloffice";
 
 export const GET_SCHEDULECUSTOMERNOTIFICATION =
   "/schedulecustomernotificationlist";
+export const GET_STATEUSERS = "/stateuserlist";
 
 export const GET_USERS = "/userslist";
 export const GET_USER_PROFILE = "/user";
