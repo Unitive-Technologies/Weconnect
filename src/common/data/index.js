@@ -4,6 +4,7 @@ import { designationlist } from "./designationlist";
 import { grouppolicylist } from "./grouppolicylist";
 import { notificationtemplatelist } from "./notificationtemplatelist";
 import { schedulecustomernotificationlist } from "./schedulecustomernotificationlist";
+import { regionalofficelist } from "./regionalofficelist";
 
 export {
   userslist,
@@ -12,4 +13,5 @@ export {
   grouppolicylist,
   notificationtemplatelist,
   schedulecustomernotificationlist,
+  regionalofficelist,
 };
