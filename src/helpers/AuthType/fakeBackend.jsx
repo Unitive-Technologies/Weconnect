@@ -9,6 +9,7 @@ import {
   designationlist as designation,
   notificationtemplatelist as notemplate,
   schedulecustomernotificationlist as schCusNotification,
+  stateuserlist as stateUser
 } from "../../common/data";
 let users = [
   {
@@ -280,6 +281,19 @@ const fakeBackend = () => {
           resolve([200, schCusNotification]);
         } else {
           reject([400, "Cannot get Schedule Customer Notification"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_STATEUSERS).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (stateUser) {
+          // Passing fake JSON data as response
+          resolve([200, stateUser]);
+        } else {
+          reject([400, "Cannot get State Users"]);
         }
       });
     });

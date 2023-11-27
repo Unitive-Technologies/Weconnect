@@ -12,6 +12,7 @@ import groupPolicySaga from "./grouppolicy/saga";
 import designationSaga from "./designation/saga";
 import notificationTemplateSaga from "./notificationtemplate/saga";
 import scheduleCustomerNotificationSaga from "./schedulecustomernotification/saga";
+import stateUsersSaga from './stateusers/saga'
 
 export default function* rootSaga() {
   yield all([
@@ -27,5 +28,6 @@ export default function* rootSaga() {
     fork(designationSaga),
     fork(notificationTemplateSaga),
     fork(scheduleCustomerNotificationSaga),
+    fork(stateUsersSaga),
   ]);
 }
