@@ -9,6 +9,7 @@ import { distributorlist } from "./distributorlist";
 import { lcolist } from "./lcolist";
 import { stateuserlist } from "./stateuserlist";
 import { broadcasterlist } from "./broadcasterlist";
+import { genrelist } from "./genrelist";
 export {
   userslist,
   customeruserlist,
@@ -21,4 +22,5 @@ export {
   lcolist,
   stateuserlist,
   broadcasterlist,
+  genrelist,
 };

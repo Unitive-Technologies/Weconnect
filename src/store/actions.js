@@ -15,4 +15,6 @@ export * from "./schedulecustomernotification/actions";
 export * from "./stateusers/actions";
 
 export * from "./regionalofficelist/actions";
+
 export * from "./broadcaster/actions";
+export * from "./genre/actions";
