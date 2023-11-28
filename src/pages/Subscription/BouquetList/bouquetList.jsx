@@ -32,7 +32,7 @@ import {
   addNewUser as onAddNewUser,
   updateUser as onUpdateUser,
   deleteUser as onDeleteUser,
-} from "/src/store/contacts/actions";
+} from "/src/store/users/actions";
 import { isEmpty } from "lodash";
 
 //redux
@@ -174,32 +174,32 @@ const BouquetList = (props) => {
         },
       },
       {
-        Header: "IFSC Code",
-        accessor: "IFSC Code",
+        Header: "Category",
+        accessor: "category",
         filterable: true,
         Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
         },
       },
       {
-        Header: "Branch",
-        accessor: "branch",
+        Header: "Type",
+        accessor: "type",
         filterable: true,
         Cell: (cellProps) => {
           // return <Projects {...cellProps} />
         },
       },
       {
-        Header: "Branch Address",
-        accessor: "branchaddress",
+        Header: "Bouquet Type",
+        accessor: "bouquettype",
         filterable: true,
         Cell: (cellProps) => {
           // return <Projects {...cellProps} />
         },
       },
       {
-        Header: "For MSO",
-        accessor: "forMSO",
+        Header: "Description",
+        accessor: "description",
         filterable: true,
         Cell: (cellProps) => {
           // return <Projects {...cellProps} />

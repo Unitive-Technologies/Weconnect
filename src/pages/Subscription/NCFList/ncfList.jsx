@@ -32,7 +32,7 @@ import {
   addNewUser as onAddNewUser,
   updateUser as onUpdateUser,
   deleteUser as onDeleteUser,
-} from "/src/store/contacts/actions";
+} from "/src/store/users/actions";
 import { isEmpty } from "lodash";
 
 //redux

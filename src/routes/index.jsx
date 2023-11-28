@@ -215,8 +215,6 @@ const authProtectedRoutes = [
     path: "/tax-list",
     component: <TaxList />,
   },
-<<<<<<< Updated upstream
-=======
 
   // path from NCF
   {
@@ -225,14 +223,14 @@ const authProtectedRoutes = [
   },
   {
     path: "/connection-scheme-list",
-    component: <PromoVoucherList />,
+    component: <ConnectionSchemeList />,
   },
   {
     path: "/ncf-list",
     component: <NCFList />,
   },
 
->>>>>>> Stashed changes
+
 ];
 
 const publicRoutes = [
