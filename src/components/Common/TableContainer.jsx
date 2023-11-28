@@ -68,6 +68,7 @@ const TableContainer = ({
   isAddGenreList,
   isAddLanguageList,
   isAddChannelList,
+  isAddBroadcasterBouquetList,
   handleBroadCasterClick,
   handleGenreClick,
   handleOrderClicks,
@@ -75,6 +76,7 @@ const TableContainer = ({
   handleGroupPolicyClick,
   handleLanguageClick,
   handleChannelClick,
+  handleBroadcasterBouquetClick,
   isAddGpPolicyList,
   customPageSize,
   tableClass,
@@ -266,6 +268,22 @@ const TableContainer = ({
               >
                 <i className="mdi mdi-plus me-1" />
                 Create Channel
+              </Button>
+            </div>
+          </Col>
+        )}
+
+        {isAddBroadcasterBouquetList && (
+          <Col sm="12">
+            <div className="text-sm-end">
+              <Button
+                type="button"
+                color="primary"
+                className="btn mb-2 me-2"
+                onClick={handleBroadcasterBouquetClick}
+              >
+                <i className="mdi mdi-plus me-1" />
+                Create Broadcaster Bouquet
               </Button>
             </div>
           </Col>

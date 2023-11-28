@@ -389,7 +389,7 @@ const BroadcasterBouquetList = (props) => {
                       columns={columns}
                       data={brodcastbouquet}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isAddBroadcasterBouquetList={true}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
                       handleUserClick={() => {}}
