@@ -18,6 +18,7 @@ import { languagelist } from "./languagelist";
 import { channellist } from "./channellist";
 import { broadcasterbouquet } from "./broadcasterbouquet";
 import { packagelist } from "./packagelist";
+import { appadbannerlist } from "./appadbannerlist";
 
 export {
   userslist,
@@ -40,4 +41,5 @@ export {
   channellist,
   broadcasterbouquet,
   packagelist,
+  appadbannerlist,
 };

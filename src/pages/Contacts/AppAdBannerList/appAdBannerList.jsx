@@ -27,12 +27,7 @@ import { Email, Tags, Projects } from "./appAdBannerListCol";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
 
-import {
-  getUsers as onGetUsers,
-  addNewUser as onAddNewUser,
-  updateUser as onUpdateUser,
-  deleteUser as onDeleteUser,
-} from "/src/store/contacts/actions";
+import { getAppAdBanner as onGetAppAdBanner } from "/src/store/actions";
 import { isEmpty } from "lodash";
 
 //redux
@@ -40,7 +35,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const CustomerUserList = (props) => {
+const AppAdBannerList = (props) => {
   //meta title
   document.title = "App Advertisement Banner List | VDigital";
 
@@ -99,20 +94,23 @@ const CustomerUserList = (props) => {
     },
   });
 
-  const selectContactsState = (state) => state.contacts;
-  const ContactsProperties = createSelector(
-    selectContactsState,
-    (Contacts) => ({
-      users: Contacts.users,
-      loading: Contacts.loading,
+  const selectAppAdBannerState = (state) => state.appadbanner;
+  const AppAdBannerProperties = createSelector(
+    selectAppAdBannerState,
+    (appadbanner) => ({
+      appAdvertiseBan: appadbanner.appadbanner,
+      loading: appadbanner.loading,
     })
   );
 
-  const { users, loading } = useSelector(ContactsProperties);
+  const { appAdvertiseBan, loading } = useSelector(AppAdBannerProperties);
 
   useEffect(() => {
-    console.log("Users data in component:", users);
-  }, [users]);
+    console.log(
+      "App advertising banner list data in component:",
+      appAdvertiseBan
+    );
+  }, [appAdvertiseBan]);
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
@@ -183,18 +181,24 @@ const CustomerUserList = (props) => {
       },
       {
         Header: "Start Date",
-        accessor: "startdate",
+        accessor: "start_date",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.start_date}
+            </p>
+          );
         },
       },
       {
         Header: "End date",
-        accessor: "enddate",
+        accessor: "end_date",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.end_date}</p>
+          );
         },
       },
       {
@@ -202,23 +206,33 @@ const CustomerUserList = (props) => {
         accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.status}</p>
+          );
         },
       },
       {
         Header: "Created At",
-        accessor: "createdat",
+        accessor: "created_at",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_at}
+            </p>
+          );
         },
       },
       {
         Header: "Created By",
-        accessor: "createdby",
+        accessor: "created_by",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by}
+            </p>
+          );
         },
       },
       {
@@ -261,23 +275,23 @@ const CustomerUserList = (props) => {
   );
 
   useEffect(() => {
-    if (users && !users.length) {
-      dispatch(onGetUsers());
+    if (appAdvertiseBan && !appAdvertiseBan.length) {
+      dispatch(onGetAppAdBanner());
       setIsEdit(false);
     }
-  }, [dispatch, users]);
+  }, [dispatch, appAdvertiseBan]);
 
-  useEffect(() => {
-    setContact(users);
-    setIsEdit(false);
-  }, [users]);
+  // useEffect(() => {
+  //   setContact(users);
+  //   setIsEdit(false);
+  // }, [users]);
 
-  useEffect(() => {
-    if (!isEmpty(users) && !!isEdit) {
-      setContact(users);
-      setIsEdit(false);
-    }
-  }, [users]);
+  // useEffect(() => {
+  //   if (!isEmpty(users) && !!isEdit) {
+  //     setContact(users);
+  //     setIsEdit(false);
+  //   }
+  // }, [users]);
 
   const toggle = () => {
     setModal(!modal);
@@ -358,11 +372,14 @@ const CustomerUserList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("users:" + JSON.stringify(users))}
+                    {console.log(
+                      "App Advertising banner list:" +
+                        JSON.stringify(appAdvertiseBan)
+                    )}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
-                      data={users}
+                      data={appAdvertiseBan}
                       isGlobalFilter={true}
                       isAddUserList={true}
                       isShowingPageLength={true}
@@ -374,7 +391,7 @@ const CustomerUserList = (props) => {
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
                     />
-                    <Modal isOpen={modal} toggle={toggle}>
+                    {/* <Modal isOpen={modal} toggle={toggle}>
                       <ModalHeader toggle={toggle} tag="h4">
                         {!!isEdit ? "Edit User" : "Add User"}
                       </ModalHeader>
@@ -535,7 +552,7 @@ const CustomerUserList = (props) => {
                           </Row>
                         </Form>
                       </ModalBody>
-                    </Modal>
+                    </Modal> */}
                   </CardBody>
                 </Card>
               </Col>
@@ -548,4 +565,4 @@ const CustomerUserList = (props) => {
   );
 };
 
-export default withRouter(CustomerUserList);
+export default withRouter(AppAdBannerList);

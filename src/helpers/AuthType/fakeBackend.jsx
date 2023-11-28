@@ -23,7 +23,9 @@ import {
   channellist as channel,
   broadcasterbouquet as broadcastbouquet,
   packagelist as packlist,
+  appadbannerlist as appAdvertiseBan,
 } from "../../common/data";
+
 let users = [
   {
     uid: 1,
@@ -474,6 +476,19 @@ const fakeBackend = () => {
           resolve([200, lcos]);
         } else {
           reject([400, "Cannot get District List"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_APPADBANNER).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (appAdvertiseBan) {
+          // Passing fake JSON data as response
+          resolve([200, appAdvertiseBan]);
+        } else {
+          reject([400, "Cannot get appAdvertiseBanner List"]);
         }
       });
     });
