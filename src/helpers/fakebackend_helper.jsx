@@ -251,6 +251,7 @@ export const getPackageList = () => get(url.GET_PACKAGELIST);
 
 export const getDistributors = () => get(url.GET_DISTRIBUTORS);
 export const getLco = () => get(url.GET_LCO);
+export const getAppAdBanner = () => get(url.GET_APPADBANNER);
 
 // add user
 export const addNewUser = (user) => post(url.ADD_NEW_USER, user);

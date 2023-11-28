@@ -33,6 +33,7 @@ export const GET_SUBLOCATION = "/sublocationlist";
 
 export const GET_DISTRIBUTORS = "/distributors";
 export const GET_LCO = "/lco";
+export const GET_APPADBANNER = "/appadbanner";
 
 export const GET_BROADCASTER = "/broadcasterlist";
 export const GET_GENRELIST = "/genrelist";
