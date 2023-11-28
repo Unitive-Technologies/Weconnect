@@ -18,8 +18,8 @@ import {
   citylist as cits,
   locationlist as locations,
   languagelist as langlist,
-  lcolist as lcos,
   sublocationlist as subloc,
+  lcolist as lcos,
 } from "../../common/data";
 let users = [
   {
