@@ -37,6 +37,8 @@ export const GET_LCO = "/lco";
 export const GET_BROADCASTER = "/broadcasterlist";
 export const GET_GENRELIST = "/genrelist";
 export const GET_LANGUAGELIST = "/languagelist";
+export const GET_CHANNELLIST = "/channellist";
+
 export const GET_USERS = "/userslist";
 export const GET_USER_PROFILE = "/user";
 export const ADD_NEW_USER = "/add/user";

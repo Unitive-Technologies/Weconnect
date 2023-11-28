@@ -21,18 +21,28 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import { Email, Tags, Projects } from "./channelListCol";
+import {
+  Name,
+  Code,
+  Broadcaster,
+  Genre,
+  Language,
+  Type,
+  Alacarte,
+  FTA,
+  NCF,
+  CasCodes,
+  Status,
+  Rate,
+  CreatedAt,
+  CreatedBy,
+} from "./channelListCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
 
-import {
-  getUsers as onGetUsers,
-  addNewUser as onAddNewUser,
-  updateUser as onUpdateUser,
-  deleteUser as onDeleteUser,
-} from "/src/store/contacts/actions";
+import { getChannelList as onGetChannelList } from "/src/store/channel/actions";
 import { isEmpty } from "lodash";
 
 //redux
@@ -45,74 +55,74 @@ const ChannelList = (props) => {
   document.title = "Channel List | VDigital";
 
   const dispatch = useDispatch();
-  const [contact, setContact] = useState();
+  // const [contact, setContact] = useState();
   // validation
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
+  // const validation = useFormik({
+  //   // enableReinitialize : use this flag when initial values needs to be changed
+  //   enableReinitialize: true,
 
-    initialValues: {
-      name: (contact && contact.name) || "",
-      designation: (contact && contact.designation) || "",
-      tags: (contact && contact.tags) || "",
-      email: (contact && contact.email) || "",
-      projects: (contact && contact.projects) || "",
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
-      designation: Yup.string().required("Please Enter Your Designation"),
-      tags: Yup.array().required("Please Enter Tag"),
-      email: Yup.string()
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-        .required("Please Enter Your Email"),
-      projects: Yup.string().required("Please Enter Your Project"),
-    }),
-    onSubmit: (values) => {
-      if (isEdit) {
-        const updateUser = {
-          id: contact.id,
-          name: values.name,
-          designation: values.designation,
-          tags: values.tags,
-          email: values.email,
-          projects: values.projects,
-        };
+  //   initialValues: {
+  //     name: (contact && contact.name) || "",
+  //     designation: (contact && contact.designation) || "",
+  //     tags: (contact && contact.tags) || "",
+  //     email: (contact && contact.email) || "",
+  //     projects: (contact && contact.projects) || "",
+  //   },
+  //   validationSchema: Yup.object({
+  //     name: Yup.string().required("Please Enter Your Name"),
+  //     designation: Yup.string().required("Please Enter Your Designation"),
+  //     tags: Yup.array().required("Please Enter Tag"),
+  //     email: Yup.string()
+  //       .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
+  //       .required("Please Enter Your Email"),
+  //     projects: Yup.string().required("Please Enter Your Project"),
+  //   }),
+  //   onSubmit: (values) => {
+  //     if (isEdit) {
+  //       const updateUser = {
+  //         id: contact.id,
+  //         name: values.name,
+  //         designation: values.designation,
+  //         tags: values.tags,
+  //         email: values.email,
+  //         projects: values.projects,
+  //       };
 
-        // update user
-        dispatch(onUpdateUser(updateUser));
-        validation.resetForm();
-        setIsEdit(false);
-      } else {
-        const newUser = {
-          id: Math.floor(Math.random() * (30 - 20)) + 20,
-          name: values["name"],
-          designation: values["designation"],
-          email: values["email"],
-          tags: values["tags"],
-          projects: values["projects"],
-        };
-        // save new user
-        dispatch(onAddNewUser(newUser));
-        validation.resetForm();
-      }
-      toggle();
-    },
-  });
+  //       // update user
+  //       dispatch(onUpdateUser(updateUser));
+  //       validation.resetForm();
+  //       setIsEdit(false);
+  //     } else {
+  //       const newUser = {
+  //         id: Math.floor(Math.random() * (30 - 20)) + 20,
+  //         name: values["name"],
+  //         designation: values["designation"],
+  //         email: values["email"],
+  //         tags: values["tags"],
+  //         projects: values["projects"],
+  //       };
+  //       // save new user
+  //       dispatch(onAddNewUser(newUser));
+  //       validation.resetForm();
+  //     }
+  //     toggle();
+  //   },
+  // });
 
-  const selectContactsState = (state) => state.contacts;
-  const ContactsProperties = createSelector(
-    selectContactsState,
-    (Contacts) => ({
-      users: Contacts.users,
-      loading: Contacts.loading,
+  const selectChannelState = (state) => state.channelList;
+  const ChannelProperties = createSelector(
+    selectChannelState,
+    (channelList) => ({
+      channel: channelList.channelList,
+      loading: channelList.loading,
     })
   );
 
-  const { users, loading } = useSelector(ContactsProperties);
+  const { channel, loading } = useSelector(ChannelProperties);
 
   useEffect(() => {
-    console.log("Users data in component:", users);
-  }, [users]);
+    console.log("Channel List data in component:", channel);
+  }, [channel]);
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
@@ -123,28 +133,22 @@ const ChannelList = (props) => {
     () => [
       {
         Header: "#",
-        // accessor: "name",
         disableFilters: true,
         filterable: true,
-        accessor: (cellProps) => (
-          <>
-            {!cellProps.img ? (
-              <div className="avatar-xs">
-                <span className="avatar-title rounded-circle">
-                  {cellProps.name.charAt(0)}
-                </span>
-              </div>
-            ) : (
-              <div>
-                <img
-                  className="rounded-circle avatar-xs"
-                  src={cellProps.img}
-                  alt=""
-                />
-              </div>
-            )}
-          </>
-        ),
+        Cell: (cellProps) => {
+          const totalRows = cellProps.rows.length;
+          const reverseIndex = totalRows - cellProps.row.index;
+
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {reverseIndex}
+                </Link>
+              </h5>
+            </>
+          );
+        },
       },
       {
         Header: "Name",
@@ -170,7 +174,7 @@ const ChannelList = (props) => {
         accessor: "code",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return <Code {...cellProps} />;
         },
       },
       {
@@ -178,7 +182,7 @@ const ChannelList = (props) => {
         accessor: "broadcaster",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <Broadcaster {...cellProps} />;
         },
       },
       {
@@ -186,7 +190,7 @@ const ChannelList = (props) => {
         accessor: "genre",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <Genre {...cellProps} />;
         },
       },
       {
@@ -194,7 +198,7 @@ const ChannelList = (props) => {
         accessor: "language",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <Language {...cellProps} />;
         },
       },
       {
@@ -202,7 +206,7 @@ const ChannelList = (props) => {
         accessor: "type",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <Type {...cellProps} />;
         },
       },
       {
@@ -210,7 +214,7 @@ const ChannelList = (props) => {
         accessor: "alacarte",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <Alacarte {...cellProps} />;
         },
       },
       {
@@ -218,7 +222,7 @@ const ChannelList = (props) => {
         accessor: "FTA",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <FTA {...cellProps} />;
         },
       },
       {
@@ -226,7 +230,7 @@ const ChannelList = (props) => {
         accessor: "NCF",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <NCF {...cellProps} />;
         },
       },
       {
@@ -234,7 +238,7 @@ const ChannelList = (props) => {
         accessor: "CAS Codes",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <CasCodes {...cellProps} />;
         },
       },
       {
@@ -242,7 +246,7 @@ const ChannelList = (props) => {
         accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <Status {...cellProps} />;
         },
       },
       {
@@ -250,23 +254,23 @@ const ChannelList = (props) => {
         accessor: "rate",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <Rate {...cellProps} />;
         },
       },
       {
         Header: "Created At",
-        accessor: "createdat",
+        accessor: "created_at",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return <CreatedAt {...cellProps} />;
         },
       },
       {
         Header: "Created By",
-        accessor: "createdby",
+        accessor: "created_by",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return <CreatedBy {...cellProps} />;
         },
       },
       {
@@ -309,43 +313,43 @@ const ChannelList = (props) => {
   );
 
   useEffect(() => {
-    if (users && !users.length) {
-      dispatch(onGetUsers());
+    if (channel && !channel.length) {
+      dispatch(onGetChannelList());
       setIsEdit(false);
     }
-  }, [dispatch, users]);
+  }, [dispatch, channel]);
 
-  useEffect(() => {
-    setContact(users);
-    setIsEdit(false);
-  }, [users]);
+  // useEffect(() => {
+  //   setContact(channel);
+  //   setIsEdit(false);
+  // }, [channel]);
 
-  useEffect(() => {
-    if (!isEmpty(users) && !!isEdit) {
-      setContact(users);
-      setIsEdit(false);
-    }
-  }, [users]);
+  // useEffect(() => {
+  //   if (!isEmpty(channel) && !!isEdit) {
+  //     setContact(channel);
+  //     setIsEdit(false);
+  //   }
+  // }, [channel]);
 
-  const toggle = () => {
-    setModal(!modal);
-  };
+  // const toggle = () => {
+  //   setModal(!modal);
+  // };
 
-  const handleUserClick = (arg) => {
-    const user = arg;
+  // const handleUserClick = (arg) => {
+  //   const user = arg;
 
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-    setIsEdit(true);
+  //   setContact({
+  //     id: user.id,
+  //     name: user.name,
+  //     designation: user.designation,
+  //     email: user.email,
+  //     tags: user.tags,
+  //     projects: user.projects,
+  //   });
+  //   setIsEdit(true);
 
-    toggle();
-  };
+  //   toggle();
+  // };
 
   var node = useRef();
   const onPaginationPageChange = (page) => {
@@ -361,37 +365,37 @@ const ChannelList = (props) => {
   };
 
   //delete customer
-  const [deleteModal, setDeleteModal] = useState(false);
+  // const [deleteModal, setDeleteModal] = useState(false);
 
-  const onClickDelete = (users) => {
-    setContact(users);
-    setDeleteModal(true);
-  };
+  // const onClickDelete = (users) => {
+  //   setContact(users);
+  //   setDeleteModal(true);
+  // };
 
-  const handleDeleteUser = () => {
-    if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
-    }
-    setContact("");
-    onPaginationPageChange(1);
-    setDeleteModal(false);
-  };
+  // const handleDeleteUser = () => {
+  //   if (contact && contact.id) {
+  //     dispatch(onDeleteUser(contact.id));
+  //   }
+  //   setContact("");
+  //   onPaginationPageChange(1);
+  //   setDeleteModal(false);
+  // };
 
-  const handleUserClicks = () => {
-    setUserList("");
-    setIsEdit(false);
-    toggle();
-  };
+  // const handleUserClicks = () => {
+  //   setUserList("");
+  //   setIsEdit(false);
+  //   toggle();
+  // };
 
   const keyField = "id";
 
   return (
     <React.Fragment>
-      <DeleteModal
+      {/* <DeleteModal
         show={deleteModal}
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
-      />
+      /> */}
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -403,23 +407,23 @@ const ChannelList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("users:" + JSON.stringify(users))}
+                    {console.log("Channel List:" + JSON.stringify(channel))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
-                      data={users}
+                      data={channel}
                       isGlobalFilter={true}
                       isAddUserList={true}
                       isShowingPageLength={true}
-                      iscustomPageSizeOptions={true}
-                      handleUserClick={handleUserClicks}
-                      customPageSize={8}
+                      // iscustomPageSizeOptions={true}
+                      handleUserClick={() => {}}
+                      customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
                     />
-                    <Modal isOpen={modal} toggle={toggle}>
+                    {/* <Modal isOpen={modal} toggle={toggle}>
                       <ModalHeader toggle={toggle} tag="h4">
                         {!!isEdit ? "Edit User" : "Add User"}
                       </ModalHeader>
@@ -580,7 +584,7 @@ const ChannelList = (props) => {
                           </Row>
                         </Form>
                       </ModalBody>
-                    </Modal>
+                    </Modal> */}
                   </CardBody>
                 </Card>
               </Col>

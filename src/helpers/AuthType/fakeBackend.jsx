@@ -20,6 +20,7 @@ import {
   languagelist as langlist,
   sublocationlist as subloc,
   lcolist as lcos,
+  channellist as channel,
 } from "../../common/data";
 let users = [
   {
@@ -332,6 +333,18 @@ const fakeBackend = () => {
           resolve([200, langlist]);
         } else {
           reject([400, "Cannot get Language list"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_CHANNELLIST).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (channel) {
+          resolve([200, channel]);
+        } else {
+          reject([400, "Cannot get Channel list"]);
         }
       });
     });

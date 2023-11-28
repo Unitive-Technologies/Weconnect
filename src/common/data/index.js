@@ -15,6 +15,7 @@ import { districtlist } from "./districtlist";
 import { citylist } from "./citylist";
 import { sublocationlist } from "./sublocationlist";
 import { languagelist } from "./languagelist";
+import { channellist } from "./channellist";
 
 export {
   userslist,
@@ -34,4 +35,5 @@ export {
   citylist,
   locationlist,
   sublocationlist,
+  channellist,
 };
