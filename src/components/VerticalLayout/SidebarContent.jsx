@@ -417,14 +417,14 @@ const SidebarContent = (props) => {
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
-                      <Link to="/#">
+                      <Link to="/complaint-category-list">
                         <span key="#">
                           {props.t("Complaint Category List")}
                         </span>
                       </Link>
                     </li>
                     <li>
-                      <Link to="/#">
+                      <Link to="/complaint-subcategory-list">
                         <span key="#">
                           {props.t("Complaint Sub-Category List")}
                         </span>
@@ -438,9 +438,9 @@ const SidebarContent = (props) => {
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
-                      <Link to="/#">
+                      <Link to="/configuration-upload-logs">
                         <span key="#">
-                          {props.t("Configuration Upload List")}
+                          {props.t("Configuration Upload Logs")}
                         </span>
                       </Link>
                     </li>

@@ -66,6 +66,12 @@ import BouquetList from "../pages/Subscription/BouquetList/bouquetList";
 import ConnectionSchemeList from "../pages/Subscription/ConnectionSchemeList/connectionSchemeList";
 import NCFList from "../pages/Subscription/NCFList/ncfList"
 
+// path from Complaint
+import ComplaintCategoryList from '../pages/Complaint/ComplaintCategoryList/complaintCategoryList'
+import ComplaintSubCategoryList from '../pages/Complaint/ComplaintSubCategoryList/complaintSubCategoryList'
+
+import ConfigurationUploadLogs from '../pages/UploadLogs/ConfigurationUploadLogs/configurationUploadLogs';
+
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
 
@@ -230,6 +236,21 @@ const authProtectedRoutes = [
     component: <NCFList />,
   },
 
+  // path from Complaint
+  {
+    path: "/complaint-category-list",
+    component: <ComplaintCategoryList />,
+  },
+  {
+    path: "/complaint-subCategory-list",
+    component: <ComplaintSubCategoryList />,
+  },
+
+  //path from Configuration Upload Logs
+  {
+    path: "/configuration-upload-logs",
+    component: <ConfigurationUploadLogs />,
+  }
 
 ];
 
