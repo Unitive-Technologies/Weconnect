@@ -23,7 +23,7 @@ const convertLanguageListObject = (languageList) => {
           ? "INACTIVE"
           : "BLOCKED",
       created_at: langlist.created_at,
-      created_by: langlist.created_at,
+      created_by: langlist.created_by_lbl,
     };
   });
 };

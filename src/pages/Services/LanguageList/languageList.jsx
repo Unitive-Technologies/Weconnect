@@ -39,7 +39,7 @@ import {
   Status,
   CreatedAt,
   CreatedBy,
-} from "../GenreList/genreListCol";
+} from "./languageListCol";
 
 const LanguageList = (props) => {
   //meta title
@@ -100,12 +100,17 @@ const LanguageList = (props) => {
   //   },
   // });
 
+  // const selectLanguageState = (state) => {
+  //   state.languageList;
+  //   console.log("state lang:" + JSON.stringify(state.languageList));
+  // };
   const selectLanguageState = (state) => state.languageList;
+
   const LanguageProperties = createSelector(
     selectLanguageState,
-    (Language) => ({
-      langlist: Language.langlist,
-      loading: Language.loading,
+    (languageList) => ({
+      langlist: languageList.languageList,
+      loading: languageList.loading,
     })
   );
 

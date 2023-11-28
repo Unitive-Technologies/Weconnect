@@ -328,7 +328,7 @@ const fakeBackend = () => {
       setTimeout(() => {
         if (langlist) {
           // Passing fake JSON data as response
-
+          console.log("langlist:" + JSON.stringify(langlist));
           resolve([200, langlist]);
         } else {
           reject([400, "Cannot get Language list"]);
