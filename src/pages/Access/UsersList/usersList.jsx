@@ -559,32 +559,7 @@ const ContactsList = (props) => {
                                   </FormFeedback>
                                 ) : null}
                               </div>
-                              <div className="mb-3">
-                                <Label className="form-label">
-                                  Designation
-                                </Label>
-                                <Input
-                                  name="designation"
-                                  label="Designation"
-                                  placeholder="Insert Designation"
-                                  type="text"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.designation || ""}
-                                  invalid={
-                                    validation.touched.designation &&
-                                    validation.errors.designation
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.designation &&
-                                validation.errors.designation ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.designation}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
+
                               <div className="mb-3">
                                 <Label className="form-label">Email</Label>
                                 <Input
@@ -610,10 +585,34 @@ const ContactsList = (props) => {
                                 ) : null}
                               </div>
                               <div className="mb-3">
-                                <Label className="form-label">Option</Label>
+                                <Label className="form-label">Mobile No.</Label>
+                                <Input
+                                  name="mobile"
+                                  label="Mobile No."
+                                  placeholder="Insert Mobile Number"
+                                  type="text"
+                                  onChange={validation.handleChange}
+                                  onBlur={validation.handleBlur}
+                                  value={validation.values.designation || ""}
+                                  invalid={
+                                    validation.touched.designation &&
+                                    validation.errors.designation
+                                      ? true
+                                      : false
+                                  }
+                                />
+                                {validation.touched.designation &&
+                                validation.errors.designation ? (
+                                  <FormFeedback type="invalid">
+                                    {validation.errors.designation}
+                                  </FormFeedback>
+                                ) : null}
+                              </div>
+                              <div className="mb-3">
+                                <Label className="form-label">User Type</Label>
                                 <Input
                                   type="select"
-                                  name="tags"
+                                  name="usertype"
                                   className="form-select"
                                   multiple={true}
                                   onChange={validation.handleChange}
@@ -626,15 +625,10 @@ const ContactsList = (props) => {
                                       : false
                                   }
                                 >
-                                  <option>Photoshop</option>
-                                  <option>illustrator</option>
-                                  <option>Html</option>
-                                  <option>Php</option>
-                                  <option>Java</option>
-                                  <option>Python</option>
-                                  <option>UI/UX Designer</option>
-                                  <option>Ruby</option>
-                                  <option>Css</option>
+                                  <option>MSO</option>
+                                  <option>RO</option>
+                                  <option>Distributor</option>
+                                  <option>LCO</option>
                                 </Input>
                                 {validation.touched.tags &&
                                 validation.errors.tags ? (
@@ -644,12 +638,177 @@ const ContactsList = (props) => {
                                 ) : null}
                               </div>
                               <div className="mb-3">
-                                <Label className="form-label">Projects</Label>
+                                <Label className="form-label">Status</Label>
                                 <Input
-                                  name="projects"
-                                  label="Projects"
+                                  type="select"
+                                  name="usertype"
+                                  className="form-select"
+                                  multiple={true}
+                                  onChange={validation.handleChange}
+                                  onBlur={validation.handleBlur}
+                                  value={validation.values.tags || []}
+                                  invalid={
+                                    validation.touched.tags &&
+                                    validation.errors.tags
+                                      ? true
+                                      : false
+                                  }
+                                >
+                                  <option>Active</option>
+                                  <option>BLOCKED</option>
+                                  <option>In-Active</option>
+                                </Input>
+                                {validation.touched.tags &&
+                                validation.errors.tags ? (
+                                  <FormFeedback type="invalid">
+                                    {validation.errors.tags}
+                                  </FormFeedback>
+                                ) : null}
+                              </div>
+                              <div className="mb-3">
+                                <Label className="form-label">Role</Label>
+                                <Input
+                                  type="select"
+                                  name="usertype"
+                                  className="form-select"
+                                  multiple={true}
+                                  onChange={validation.handleChange}
+                                  onBlur={validation.handleBlur}
+                                  value={validation.values.tags || []}
+                                  invalid={
+                                    validation.touched.tags &&
+                                    validation.errors.tags
+                                      ? true
+                                      : false
+                                  }
+                                >
+                                  <option>Administrator</option>
+                                  <option>Staff</option>
+                                  <option>User</option>
+                                </Input>
+                                {validation.touched.tags &&
+                                validation.errors.tags ? (
+                                  <FormFeedback type="invalid">
+                                    {validation.errors.tags}
+                                  </FormFeedback>
+                                ) : null}
+                              </div>
+                              <div className="mb-3">
+                                <Label className="form-label">
+                                  Designation
+                                </Label>
+                                <Input
+                                  type="select"
+                                  name="designation"
+                                  className="form-select"
+                                  multiple={true}
+                                  onChange={validation.handleChange}
+                                  onBlur={validation.handleBlur}
+                                  value={validation.values.tags || []}
+                                  invalid={
+                                    validation.touched.tags &&
+                                    validation.errors.tags
+                                      ? true
+                                      : false
+                                  }
+                                >
+                                  <option>Director</option>
+                                </Input>
+                                {validation.touched.tags &&
+                                validation.errors.tags ? (
+                                  <FormFeedback type="invalid">
+                                    {validation.errors.tags}
+                                  </FormFeedback>
+                                ) : null}
+                              </div>
+                              <div className="mb-3">
+                                <Label className="form-label">
+                                  Group Policy
+                                </Label>
+                                <Input
+                                  type="select"
+                                  name="grouppolicy"
+                                  className="form-select"
+                                  multiple={true}
+                                  onChange={validation.handleChange}
+                                  onBlur={validation.handleBlur}
+                                  value={validation.values.tags || []}
+                                  invalid={
+                                    validation.touched.tags &&
+                                    validation.errors.tags
+                                      ? true
+                                      : false
+                                  }
+                                >
+                                  <option>MSO</option>
+                                  <option>RO</option>
+                                  <option>Distributor</option>
+                                  <option>LCO</option>
+                                </Input>
+                                {validation.touched.tags &&
+                                validation.errors.tags ? (
+                                  <FormFeedback type="invalid">
+                                    {validation.errors.tags}
+                                  </FormFeedback>
+                                ) : null}
+                              </div>
+                              <div className="mb-3">
+                                <Label className="form-label">Login ID</Label>
+                                <Input
+                                  name="loginid"
+                                  label="Login ID"
                                   type="text"
-                                  placeholder="Insert Projects"
+                                  placeholder="Login ID"
+                                  onChange={validation.handleChange}
+                                  onBlur={validation.handleBlur}
+                                  value={validation.values.projects || ""}
+                                  invalid={
+                                    validation.touched.projects &&
+                                    validation.errors.projects
+                                      ? true
+                                      : false
+                                  }
+                                />
+                                {validation.touched.projects &&
+                                validation.errors.projects ? (
+                                  <FormFeedback type="invalid">
+                                    {validation.errors.projects}
+                                  </FormFeedback>
+                                ) : null}
+                              </div>
+                              <div className="mb-3">
+                                <Label className="form-label">Password</Label>
+                                <Input
+                                  name="password"
+                                  label="Password"
+                                  type="text"
+                                  placeholder="Password"
+                                  onChange={validation.handleChange}
+                                  onBlur={validation.handleBlur}
+                                  value={validation.values.projects || ""}
+                                  invalid={
+                                    validation.touched.projects &&
+                                    validation.errors.projects
+                                      ? true
+                                      : false
+                                  }
+                                />
+                                {validation.touched.projects &&
+                                validation.errors.projects ? (
+                                  <FormFeedback type="invalid">
+                                    {validation.errors.projects}
+                                  </FormFeedback>
+                                ) : null}
+                              </div>
+                              <div className="mb-3">
+                                <Label className="form-label">
+                                  Confirm-Password
+                                </Label>
+                                <Input
+                                  name="confirmpassword"
+                                  label="Confirm Password"
+                                  type="text"
+                                  placeholder="Retype Password"
                                   onChange={validation.handleChange}
                                   onBlur={validation.handleBlur}
                                   value={validation.values.projects || ""}
