@@ -48,12 +48,18 @@ import OSDConfigurationList from "../pages/Services/OSDConfigurationList/osdConf
 import OSDTemplateList from "../pages/Services/OSDTemplateList/osdTemplateList";
 import PackageList from "../pages/Services/PackageList/packageList";
 import SMSMessageTemplateList from "../pages/Services/SMSMessageTemplateList/SMSMessageTemplateList";
+
 //  path from Inventory
 import CompanyList from "../pages/Inventory/CompanyList/companyList";
 import WarehouseList from '../pages/Inventory/WarehouseList/warehouselist';
 import InventoryStateList from '../pages/Inventory/InventoryStateList/inventorystatelist';
 import BrandList from '../pages/Inventory/BrandList/brandList';
 
+// path from Billing
+import BankList from "../pages/Billing/BankList/bankList";
+import PromoVoucherList from "../pages/Billing/PromoVoucherList/promoVoucherList"
+import ReasonList from "../pages/Billing/ReasonList/reasonList";
+import TaxList from '../pages/Billing/TaxList/taxList'
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -185,6 +191,24 @@ const authProtectedRoutes = [
   {
     path: "/inventory-state-list",
     component: <InventoryStateList />,
+  },
+
+  // path from Billing
+  {
+    path: "/bank-list",
+    component: <BankList />,
+  },
+  {
+    path: "/promo-voucher-list",
+    component: <PromoVoucherList />,
+  },
+  {
+    path: "/reason-list",
+    component: <ReasonList />,
+  },
+  {
+    path: "/tax-list",
+    component: <TaxList />,
   },
 
 

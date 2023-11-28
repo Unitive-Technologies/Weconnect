@@ -372,23 +372,23 @@ const SidebarContent = (props) => {
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
-                      <Link to="/#">
+                      <Link to="/tax-list">
                         <span key="#">{props.t("Tax List")}</span>
                       </Link>
                     </li>
                     <li>
-                      <Link to="/#">
+                      <Link to="/reason-list">
                         <span key="#">{props.t("Reason List")}</span>
                       </Link>
                     </li>
                     <li>
-                      <Link to="/#">
+                      <Link to="/bank-list">
                         <span key="#">{props.t("Bank List")}</span>
                       </Link>
                     </li>
                     <li>
-                      <Link to="/#">
-                        <span key="#">{props.t("Promo Vocher List")}</span>
+                      <Link to="/promo-voucher-list">
+                        <span key="#">{props.t("Promo Voucher List")}</span>
                       </Link>
                     </li>
                   </ul>
