@@ -608,88 +608,101 @@ const ContactsList = (props) => {
                                   </FormFeedback>
                                 ) : null}
                               </div>
+
                               <div className="mb-3">
                                 <Label className="form-label">User Type</Label>
                                 <Input
-                                  type="select"
                                   name="usertype"
+                                  type="select"
+                                  placeholder="Select User Type"
                                   className="form-select"
-                                  multiple={true}
                                   onChange={validation.handleChange}
                                   onBlur={validation.handleBlur}
-                                  value={validation.values.tags || []}
-                                  invalid={
-                                    validation.touched.tags &&
-                                    validation.errors.tags
-                                      ? true
-                                      : false
-                                  }
+                                  value={validation.values.paymentStatus || ""}
                                 >
+                                  <option>Select User Type</option>
                                   <option>MSO</option>
                                   <option>RO</option>
                                   <option>Distributor</option>
                                   <option>LCO</option>
                                 </Input>
-                                {validation.touched.tags &&
-                                validation.errors.tags ? (
+                                {validation.touched.paymentStatus &&
+                                validation.errors.paymentStatus ? (
                                   <FormFeedback type="invalid">
-                                    {validation.errors.tags}
+                                    {validation.errors.paymentStatus}
                                   </FormFeedback>
                                 ) : null}
                               </div>
+
                               <div className="mb-3">
                                 <Label className="form-label">Status</Label>
                                 <Input
+                                  name="status"
                                   type="select"
-                                  name="usertype"
+                                  placeholder="Select Status"
                                   className="form-select"
-                                  multiple={true}
                                   onChange={validation.handleChange}
                                   onBlur={validation.handleBlur}
-                                  value={validation.values.tags || []}
-                                  invalid={
-                                    validation.touched.tags &&
-                                    validation.errors.tags
-                                      ? true
-                                      : false
-                                  }
+                                  value={validation.values.paymentStatus || ""}
                                 >
+                                  <option>Select Status</option>
                                   <option>Active</option>
                                   <option>BLOCKED</option>
                                   <option>In-Active</option>
                                 </Input>
-                                {validation.touched.tags &&
-                                validation.errors.tags ? (
+                                {validation.touched.paymentStatus &&
+                                validation.errors.paymentStatus ? (
                                   <FormFeedback type="invalid">
-                                    {validation.errors.tags}
+                                    {validation.errors.paymentStatus}
+                                  </FormFeedback>
+                                ) : null}
+                              </div>
+                              <div className="mb-3">
+                                <Label className="form-label">
+                                  InActive/Block Message
+                                </Label>
+                                <Input
+                                  name="message"
+                                  type="textarea"
+                                  placeholder="Enter Message"
+                                  rows="3"
+                                  onChange={validation.handleChange}
+                                  onBlur={validation.handleBlur}
+                                  value={validation.values.address || ""}
+                                  invalid={
+                                    validation.touched.address &&
+                                    validation.errors.address
+                                      ? true
+                                      : false
+                                  }
+                                />
+                                {validation.touched.address &&
+                                validation.errors.address ? (
+                                  <FormFeedback type="invalid">
+                                    {validation.errors.address}
                                   </FormFeedback>
                                 ) : null}
                               </div>
                               <div className="mb-3">
                                 <Label className="form-label">Role</Label>
                                 <Input
+                                  name="role"
                                   type="select"
-                                  name="usertype"
+                                  placeholder="Select Role"
                                   className="form-select"
-                                  multiple={true}
                                   onChange={validation.handleChange}
                                   onBlur={validation.handleBlur}
-                                  value={validation.values.tags || []}
-                                  invalid={
-                                    validation.touched.tags &&
-                                    validation.errors.tags
-                                      ? true
-                                      : false
-                                  }
+                                  value={validation.values.paymentStatus || ""}
                                 >
+                                  <option>Select Role</option>
                                   <option>Administrator</option>
                                   <option>Staff</option>
                                   <option>User</option>
                                 </Input>
-                                {validation.touched.tags &&
-                                validation.errors.tags ? (
+                                {validation.touched.paymentStatus &&
+                                validation.errors.paymentStatus ? (
                                   <FormFeedback type="invalid">
-                                    {validation.errors.tags}
+                                    {validation.errors.paymentStatus}
                                   </FormFeedback>
                                 ) : null}
                               </div>
@@ -698,26 +711,21 @@ const ContactsList = (props) => {
                                   Designation
                                 </Label>
                                 <Input
-                                  type="select"
                                   name="designation"
+                                  type="select"
+                                  placeholder="Select Designation"
                                   className="form-select"
-                                  multiple={true}
                                   onChange={validation.handleChange}
                                   onBlur={validation.handleBlur}
-                                  value={validation.values.tags || []}
-                                  invalid={
-                                    validation.touched.tags &&
-                                    validation.errors.tags
-                                      ? true
-                                      : false
-                                  }
+                                  value={validation.values.paymentStatus || ""}
                                 >
+                                  <option>Select Designation</option>
                                   <option>Director</option>
                                 </Input>
-                                {validation.touched.tags &&
-                                validation.errors.tags ? (
+                                {validation.touched.paymentStatus &&
+                                validation.errors.paymentStatus ? (
                                   <FormFeedback type="invalid">
-                                    {validation.errors.tags}
+                                    {validation.errors.paymentStatus}
                                   </FormFeedback>
                                 ) : null}
                               </div>
@@ -726,29 +734,23 @@ const ContactsList = (props) => {
                                   Group Policy
                                 </Label>
                                 <Input
-                                  type="select"
                                   name="grouppolicy"
+                                  type="select"
+                                  placeholder="Select Group Policy"
                                   className="form-select"
-                                  multiple={true}
                                   onChange={validation.handleChange}
                                   onBlur={validation.handleBlur}
-                                  value={validation.values.tags || []}
-                                  invalid={
-                                    validation.touched.tags &&
-                                    validation.errors.tags
-                                      ? true
-                                      : false
-                                  }
+                                  value={validation.values.paymentStatus || ""}
                                 >
-                                  <option>MSO</option>
-                                  <option>RO</option>
-                                  <option>Distributor</option>
-                                  <option>LCO</option>
+                                  <option>Select Group Policy</option>
+                                  {/* <option>Active</option>
+                                  <option>BLOCKED</option>
+                                  <option>In-Active</option> */}
                                 </Input>
-                                {validation.touched.tags &&
-                                validation.errors.tags ? (
+                                {validation.touched.paymentStatus &&
+                                validation.errors.paymentStatus ? (
                                   <FormFeedback type="invalid">
-                                    {validation.errors.tags}
+                                    {validation.errors.paymentStatus}
                                   </FormFeedback>
                                 ) : null}
                               </div>
