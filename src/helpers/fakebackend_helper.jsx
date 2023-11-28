@@ -247,6 +247,7 @@ export const getLanguageList = () => get(url.GET_LANGUAGELIST);
 export const getChannelList = () => get(url.GET_CHANNELLIST);
 export const getBroadcasterBouquetList = () =>
   get(url.GET_BROADCASTERBOUQUETLIST);
+export const getPackageList = () => get(url.GET_PACKAGELIST);
 
 export const getDistributors = () => get(url.GET_DISTRIBUTORS);
 export const getLco = () => get(url.GET_LCO);

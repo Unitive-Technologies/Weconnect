@@ -26,6 +26,7 @@ import genreList from "./genre/reducer";
 import languageList from "./language/reducer";
 import channelList from "./channel/reducer";
 import broadcasterBouquetList from "./broadcasterbouquet/reducer";
+import packageList from "./packagelist/reducer";
 
 import distributors from "./distributorslist/reducer";
 import lco from "./lcolist/reducer";
@@ -53,6 +54,7 @@ const rootReducer = combineReducers({
   languageList,
   channelList,
   broadcasterBouquetList,
+  packageList,
   distributors,
   district,
   city,

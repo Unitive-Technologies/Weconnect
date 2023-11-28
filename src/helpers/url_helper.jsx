@@ -39,6 +39,7 @@ export const GET_GENRELIST = "/genrelist";
 export const GET_LANGUAGELIST = "/languagelist";
 export const GET_CHANNELLIST = "/channellist";
 export const GET_BROADCASTERBOUQUETLIST = "/broadcasterbouquet";
+export const GET_PACKAGELIST = "/packagelist";
 
 export const GET_USERS = "/userslist";
 export const GET_USER_PROFILE = "/user";

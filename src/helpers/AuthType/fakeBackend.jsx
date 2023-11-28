@@ -22,6 +22,7 @@ import {
   lcolist as lcos,
   channellist as channel,
   broadcasterbouquet as broadcastbouquet,
+  packagelist as packlist,
 } from "../../common/data";
 let users = [
   {
@@ -362,7 +363,17 @@ const fakeBackend = () => {
       });
     });
   });
-
+  mock.onGet(url.GET_PACKAGELIST).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (packlist) {
+          resolve([200, packlist]);
+        } else {
+          reject([400, "Cannot get Package list"]);
+        }
+      });
+    });
+  });
   mock.onGet(url.GET_REGIONALOFFICE).reply(() => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

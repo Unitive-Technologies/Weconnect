@@ -17,6 +17,7 @@ import { sublocationlist } from "./sublocationlist";
 import { languagelist } from "./languagelist";
 import { channellist } from "./channellist";
 import { broadcasterbouquet } from "./broadcasterbouquet";
+import { packagelist } from "./packagelist";
 
 export {
   userslist,
@@ -38,4 +39,5 @@ export {
   sublocationlist,
   channellist,
   broadcasterbouquet,
+  packagelist,
 };

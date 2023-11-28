@@ -26,6 +26,7 @@ export * from "./genre/actions";
 export * from "./language/actions";
 export * from "./channel/actions";
 export * from "./broadcasterbouquet/actions";
+export * from "./packagelist/actions";
 
 export * from "./distributorslist/actions";
 export * from "./lcolist/actions";
