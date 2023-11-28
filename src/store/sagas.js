@@ -20,6 +20,8 @@ import genreSaga from "./genre/saga";
 import distributorsSaga from "./distributorslist/saga";
 import languageSaga from "./language/saga";
 import regionalOfficeSaga from "./regionalofficelist/saga";
+import lcoSaga from "./lcolist/saga";
+
 export default function* rootSaga() {
   yield all([
     //public
@@ -42,5 +44,6 @@ export default function* rootSaga() {
     fork(distributorsSaga),
     fork(districtSaga),
     fork(citySaga),
+    fork(lcoSaga),
   ]);
 }

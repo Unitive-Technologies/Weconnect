@@ -30,6 +30,7 @@ export const GET_DISTRICT = "/districtlist";
 export const GET_CITY = "/citylist";
 
 export const GET_DISTRIBUTORS = "/distributors";
+export const GET_LCO = "/lco";
 
 export const GET_BROADCASTER = "/broadcasterlist";
 export const GET_GENRELIST = "/genrelist";

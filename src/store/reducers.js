@@ -25,6 +25,7 @@ import genreList from "./genre/reducer";
 
 import languageList from "./language/reducer";
 import distributors from "./distributorslist/reducer";
+import lco from "./lcolist/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -48,6 +49,7 @@ const rootReducer = combineReducers({
   distributors,
   district,
   city,
+  lco
 });
 
 export default rootReducer;

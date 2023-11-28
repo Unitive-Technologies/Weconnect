@@ -23,3 +23,4 @@ export * from "./broadcaster/actions";
 export * from "./genre/actions";
 export * from "./language/actions";
 export * from "./distributorslist/actions";
+export * from "./lcolist/actions";
