@@ -46,32 +46,62 @@ const ContactsList = (props) => {
   document.title = "Users List | VDigitals";
 
   const dispatch = useDispatch();
-  const [contact, setContact] = useState();
+  const [user, setUser] = useState();
   // validation
+  // const validation = useFormik({
+  //   // enableReinitialize : use this flag when initial values needs to be changed
+  //   enableReinitialize: true,
+
+  //   initialValues: {
+  //     username: '',
+  //     password: '',
+  //   },
+  //   validationSchema: Yup.object({
+  //     username: Yup.string().required("Please Enter Your username"),
+  //     password: Yup.string().required("Please Enter Your Password"),
+  //   }),
+  //   onSubmit: (values) => {
+  //   }
+  // });
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
-      name: (contact && contact.name) || "",
-      designation: (contact && contact.designation) || "",
-      tags: (contact && contact.tags) || "",
-      email: (contact && contact.email) || "",
-      projects: (contact && contact.projects) || "",
+      name: (user && user.name) || "",
+      email: (user && user.email) || "",
+      mobile: (user && user.mobile) || "",
+      usertype: (user && user.usertype) || "",
+      status: (user && user.status) || "",
+      message: (user && user.message) || "",
+      role: (user && user.role) || "",
+      designation: (user && user.designation) || "",
+      grouppolicy: (user && user.grouppolicy) || "",
+      loginid: (user && user.loginid) || "",
+      password: (user && user.password) || "",
+      confirmpassword: (user && user.confirmpassword) || "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
-      designation: Yup.string().required("Please Enter Your Designation"),
-      tags: Yup.array().required("Please Enter Tag"),
       email: Yup.string()
         .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
         .required("Please Enter Your Email"),
-      projects: Yup.string().required("Please Enter Your Project"),
+      // mobile: Yup.array().required("Please Enter mobile"),
+      mobile: Yup.string().required("Please Enter mobile Number"),
+      usertype: Yup.string().required("Please Enter User Type"),
+      status: Yup.string().required("Please Enter Status"),
+      message: Yup.string().required("Please Enter Message"),
+      role: Yup.string().required("Please Enter Role"),
+      designation: Yup.string().required("Please Enter Designation"),
+      grouppolicy: Yup.string().required("Please Enter Group Policy"),
+      loginid: Yup.string().required("Please Enter Login ID"),
+      password: Yup.string().required("Please Enter Password"),
+      confirmpassword: Yup.string().required("Please Enter Confirm Password"),
     }),
     onSubmit: (values) => {
       if (isEdit) {
         const updateUser = {
-          id: contact.id,
+          id: user.id,
           name: values.name,
           designation: values.designation,
           tags: values.tags,
@@ -419,13 +449,13 @@ const ContactsList = (props) => {
   }, [dispatch, users]);
 
   useEffect(() => {
-    setContact(users);
+    setUser(users);
     setIsEdit(false);
   }, [users]);
 
   useEffect(() => {
     if (!isEmpty(users) && !!isEdit) {
-      setContact(users);
+      setUser(users);
       setIsEdit(false);
     }
   }, [users]);
@@ -437,7 +467,7 @@ const ContactsList = (props) => {
   const handleUserClick = (arg) => {
     const user = arg;
 
-    setContact({
+    setUser({
       id: user.id,
       name: user.name,
       designation: user.designation,
@@ -467,15 +497,15 @@ const ContactsList = (props) => {
   const [deleteModal, setDeleteModal] = useState(false);
 
   const onClickDelete = (users) => {
-    setContact(users);
+    setUser(users);
     setDeleteModal(true);
   };
 
   const handleDeleteUser = () => {
-    if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
+    if (user && user.id) {
+      dispatch(onDeleteUser(user.id));
     }
-    setContact("");
+    setUser("");
     onPaginationPageChange(1);
     setDeleteModal(false);
   };
@@ -593,18 +623,18 @@ const ContactsList = (props) => {
                                   type="text"
                                   onChange={validation.handleChange}
                                   onBlur={validation.handleBlur}
-                                  value={validation.values.designation || ""}
+                                  value={validation.values.mobile || ""}
                                   invalid={
-                                    validation.touched.designation &&
-                                    validation.errors.designation
+                                    validation.touched.mobile &&
+                                    validation.errors.mobile
                                       ? true
                                       : false
                                   }
                                 />
-                                {validation.touched.designation &&
-                                validation.errors.designation ? (
+                                {validation.touched.mobile &&
+                                validation.errors.mobile ? (
                                   <FormFeedback type="invalid">
-                                    {validation.errors.designation}
+                                    {validation.errors.mobile}
                                   </FormFeedback>
                                 ) : null}
                               </div>
@@ -618,7 +648,7 @@ const ContactsList = (props) => {
                                   className="form-select"
                                   onChange={validation.handleChange}
                                   onBlur={validation.handleBlur}
-                                  value={validation.values.paymentStatus || ""}
+                                  value={validation.values.usertype || ""}
                                 >
                                   <option>Select User Type</option>
                                   <option>MSO</option>
@@ -626,10 +656,10 @@ const ContactsList = (props) => {
                                   <option>Distributor</option>
                                   <option>LCO</option>
                                 </Input>
-                                {validation.touched.paymentStatus &&
-                                validation.errors.paymentStatus ? (
+                                {validation.touched.usertype &&
+                                validation.errors.usertype ? (
                                   <FormFeedback type="invalid">
-                                    {validation.errors.paymentStatus}
+                                    {validation.errors.usertype}
                                   </FormFeedback>
                                 ) : null}
                               </div>
@@ -643,17 +673,17 @@ const ContactsList = (props) => {
                                   className="form-select"
                                   onChange={validation.handleChange}
                                   onBlur={validation.handleBlur}
-                                  value={validation.values.paymentStatus || ""}
+                                  value={validation.values.status || ""}
                                 >
                                   <option>Select Status</option>
                                   <option>Active</option>
                                   <option>BLOCKED</option>
                                   <option>In-Active</option>
                                 </Input>
-                                {validation.touched.paymentStatus &&
-                                validation.errors.paymentStatus ? (
+                                {validation.touched.status &&
+                                validation.errors.status ? (
                                   <FormFeedback type="invalid">
-                                    {validation.errors.paymentStatus}
+                                    {validation.errors.status}
                                   </FormFeedback>
                                 ) : null}
                               </div>
@@ -668,18 +698,18 @@ const ContactsList = (props) => {
                                   rows="3"
                                   onChange={validation.handleChange}
                                   onBlur={validation.handleBlur}
-                                  value={validation.values.address || ""}
+                                  value={validation.values.message || ""}
                                   invalid={
-                                    validation.touched.address &&
-                                    validation.errors.address
+                                    validation.touched.message &&
+                                    validation.errors.message
                                       ? true
                                       : false
                                   }
                                 />
-                                {validation.touched.address &&
-                                validation.errors.address ? (
+                                {validation.touched.message &&
+                                validation.errors.message ? (
                                   <FormFeedback type="invalid">
-                                    {validation.errors.address}
+                                    {validation.errors.message}
                                   </FormFeedback>
                                 ) : null}
                               </div>
@@ -692,17 +722,17 @@ const ContactsList = (props) => {
                                   className="form-select"
                                   onChange={validation.handleChange}
                                   onBlur={validation.handleBlur}
-                                  value={validation.values.paymentStatus || ""}
+                                  value={validation.values.role || ""}
                                 >
                                   <option>Select Role</option>
                                   <option>Administrator</option>
                                   <option>Staff</option>
                                   <option>User</option>
                                 </Input>
-                                {validation.touched.paymentStatus &&
-                                validation.errors.paymentStatus ? (
+                                {validation.touched.role &&
+                                validation.errors.role ? (
                                   <FormFeedback type="invalid">
-                                    {validation.errors.paymentStatus}
+                                    {validation.errors.role}
                                   </FormFeedback>
                                 ) : null}
                               </div>
@@ -717,15 +747,15 @@ const ContactsList = (props) => {
                                   className="form-select"
                                   onChange={validation.handleChange}
                                   onBlur={validation.handleBlur}
-                                  value={validation.values.paymentStatus || ""}
+                                  value={validation.values.designation || ""}
                                 >
                                   <option>Select Designation</option>
                                   <option>Director</option>
                                 </Input>
-                                {validation.touched.paymentStatus &&
-                                validation.errors.paymentStatus ? (
+                                {validation.touched.designation &&
+                                validation.errors.designation ? (
                                   <FormFeedback type="invalid">
-                                    {validation.errors.paymentStatus}
+                                    {validation.errors.designation}
                                   </FormFeedback>
                                 ) : null}
                               </div>
@@ -740,17 +770,17 @@ const ContactsList = (props) => {
                                   className="form-select"
                                   onChange={validation.handleChange}
                                   onBlur={validation.handleBlur}
-                                  value={validation.values.paymentStatus || ""}
+                                  value={validation.values.grouppolicy || ""}
                                 >
                                   <option>Select Group Policy</option>
                                   {/* <option>Active</option>
                                   <option>BLOCKED</option>
                                   <option>In-Active</option> */}
                                 </Input>
-                                {validation.touched.paymentStatus &&
-                                validation.errors.paymentStatus ? (
+                                {validation.touched.grouppolicy &&
+                                validation.errors.grouppolicy ? (
                                   <FormFeedback type="invalid">
-                                    {validation.errors.paymentStatus}
+                                    {validation.errors.grouppolicy}
                                   </FormFeedback>
                                 ) : null}
                               </div>
@@ -763,18 +793,18 @@ const ContactsList = (props) => {
                                   placeholder="Login ID"
                                   onChange={validation.handleChange}
                                   onBlur={validation.handleBlur}
-                                  value={validation.values.projects || ""}
+                                  value={validation.values.loginid || ""}
                                   invalid={
-                                    validation.touched.projects &&
-                                    validation.errors.projects
+                                    validation.touched.loginid &&
+                                    validation.errors.loginid
                                       ? true
                                       : false
                                   }
                                 />
-                                {validation.touched.projects &&
-                                validation.errors.projects ? (
+                                {validation.touched.loginid &&
+                                validation.errors.loginid ? (
                                   <FormFeedback type="invalid">
-                                    {validation.errors.projects}
+                                    {validation.errors.loginid}
                                   </FormFeedback>
                                 ) : null}
                               </div>
@@ -787,18 +817,18 @@ const ContactsList = (props) => {
                                   placeholder="Password"
                                   onChange={validation.handleChange}
                                   onBlur={validation.handleBlur}
-                                  value={validation.values.projects || ""}
+                                  value={validation.values.password || ""}
                                   invalid={
-                                    validation.touched.projects &&
-                                    validation.errors.projects
+                                    validation.touched.password &&
+                                    validation.errors.password
                                       ? true
                                       : false
                                   }
                                 />
-                                {validation.touched.projects &&
-                                validation.errors.projects ? (
+                                {validation.touched.password &&
+                                validation.errors.password ? (
                                   <FormFeedback type="invalid">
-                                    {validation.errors.projects}
+                                    {validation.errors.password}
                                   </FormFeedback>
                                 ) : null}
                               </div>
@@ -813,18 +843,20 @@ const ContactsList = (props) => {
                                   placeholder="Retype Password"
                                   onChange={validation.handleChange}
                                   onBlur={validation.handleBlur}
-                                  value={validation.values.projects || ""}
+                                  value={
+                                    validation.values.confirmpassword || ""
+                                  }
                                   invalid={
-                                    validation.touched.projects &&
-                                    validation.errors.projects
+                                    validation.touched.confirmpassword &&
+                                    validation.errors.confirmpassword
                                       ? true
                                       : false
                                   }
                                 />
-                                {validation.touched.projects &&
-                                validation.errors.projects ? (
+                                {validation.touched.confirmpassword &&
+                                validation.errors.confirmpassword ? (
                                   <FormFeedback type="invalid">
-                                    {validation.errors.projects}
+                                    {validation.errors.confirmpassword}
                                   </FormFeedback>
                                 ) : null}
                               </div>
@@ -837,7 +869,7 @@ const ContactsList = (props) => {
                                   type="submit"
                                   className="btn btn-success save-user"
                                 >
-                                  Save
+                                  Create
                                 </button>
                               </div>
                             </Col>
