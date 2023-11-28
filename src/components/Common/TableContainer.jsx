@@ -69,6 +69,7 @@ const TableContainer = ({
   isAddLanguageList,
   isAddChannelList,
   isAddBroadcasterBouquetList,
+  isAddPackageList,
   handleBroadCasterClick,
   handleGenreClick,
   handleOrderClicks,
@@ -77,6 +78,7 @@ const TableContainer = ({
   handleLanguageClick,
   handleChannelClick,
   handleBroadcasterBouquetClick,
+  handlePackageClick,
   isAddGpPolicyList,
   customPageSize,
   tableClass,
@@ -273,6 +275,21 @@ const TableContainer = ({
           </Col>
         )}
 
+        {isAddPackageList && (
+          <Col sm="12">
+            <div className="text-sm-end">
+              <Button
+                type="button"
+                color="primary"
+                className="btn mb-2 me-2"
+                onClick={handlePackageClick}
+              >
+                <i className="mdi mdi-plus me-1" />
+                Create Package
+              </Button>
+            </div>
+          </Col>
+        )}
         {isAddBroadcasterBouquetList && (
           <Col sm="12">
             <div className="text-sm-end">

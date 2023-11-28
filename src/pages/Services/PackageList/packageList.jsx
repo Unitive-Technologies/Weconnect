@@ -377,7 +377,7 @@ const PackageList = (props) => {
                       columns={columns}
                       data={packlist}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isAddPackageList={true}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
                       handleUserClick={() => {}}
