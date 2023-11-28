@@ -16,8 +16,8 @@ export * from "./schedulecustomernotification/actions";
 export * from "./stateusers/actions";
 export * from "./district/actions";
 export * from "./city/actions";
-export * from './location/actions'
-export * from './sublocation/actions'
+export * from "./location/actions";
+export * from "./sublocation/actions";
 
 export * from "./regionalofficelist/actions";
 
@@ -26,3 +26,4 @@ export * from "./genre/actions";
 export * from "./language/actions";
 export * from "./distributorslist/actions";
 export * from "./lcolist/actions";
+export * from "./schedulednotificationlist/actions";

@@ -28,6 +28,7 @@ import genreList from "./genre/reducer";
 import languageList from "./language/reducer";
 import distributors from "./distributorslist/reducer";
 import lco from "./lcolist/reducer";
+import scheduledNotification from "./schedulednotificationlist/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -52,7 +53,8 @@ const rootReducer = combineReducers({
   distributors,
   district,
   city,
-  lco
+  lco,
+  scheduledNotification,
 });
 
 export default rootReducer;
