@@ -6,7 +6,7 @@ import AuthSaga from "./auth/login/saga";
 import ForgetSaga from "./auth/forgetpwd/saga";
 import ProfileSaga from "./auth/profile/saga";
 import LayoutSaga from "./layout/saga";
-import contactsSaga from "./contacts/saga";
+import contactsSaga from "./users/saga";
 import customerUsersSaga from "./customerusers/saga";
 import groupPolicySaga from "./grouppolicy/saga";
 import designationSaga from "./designation/saga";

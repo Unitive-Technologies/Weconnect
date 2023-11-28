@@ -21,18 +21,14 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import { Email, Tags, Projects } from "./userHierarchyListCol";
+import { Email, Tags, Projects } from "./groupPolicyListCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
 
-import {
-  getUsers as onGetUsers,
-  addNewUser as onAddNewUser,
-  updateUser as onUpdateUser,
-  deleteUser as onDeleteUser,
-} from "/src/store/contacts/actions";
+import { getGroupPolicy as onGetGroupPolicy } from "/src/store/actions";
+
 import { isEmpty } from "lodash";
 
 //redux
@@ -40,82 +36,26 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const CustomerUserList = (props) => {
+const GroupPolicyList = (props) => {
   //meta title
-  document.title = "User Hierarchy List | VDigital";
+  document.title = "Group Policy List | VDigital";
 
   const dispatch = useDispatch();
-  const [contact, setContact] = useState();
-  // validation
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
 
-    initialValues: {
-      name: (contact && contact.name) || "",
-      designation: (contact && contact.designation) || "",
-      tags: (contact && contact.tags) || "",
-      email: (contact && contact.email) || "",
-      projects: (contact && contact.projects) || "",
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
-      designation: Yup.string().required("Please Enter Your Designation"),
-      tags: Yup.array().required("Please Enter Tag"),
-      email: Yup.string()
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-        .required("Please Enter Your Email"),
-      projects: Yup.string().required("Please Enter Your Project"),
-    }),
-    onSubmit: (values) => {
-      if (isEdit) {
-        const updateUser = {
-          id: contact.id,
-          name: values.name,
-          designation: values.designation,
-          tags: values.tags,
-          email: values.email,
-          projects: values.projects,
-        };
-
-        // update user
-        dispatch(onUpdateUser(updateUser));
-        validation.resetForm();
-        setIsEdit(false);
-      } else {
-        const newUser = {
-          id: Math.floor(Math.random() * (30 - 20)) + 20,
-          name: values["name"],
-          designation: values["designation"],
-          email: values["email"],
-          tags: values["tags"],
-          projects: values["projects"],
-        };
-        // save new user
-        dispatch(onAddNewUser(newUser));
-        validation.resetForm();
-      }
-      toggle();
-    },
-  });
-
-  const selectContactsState = (state) => state.contacts;
-  const ContactsProperties = createSelector(
-    selectContactsState,
-    (Contacts) => ({
-      users: Contacts.users,
-      loading: Contacts.loading,
+  const selectGroupPolicyState = (state) => state.groupPolicy;
+  const groupPolicyProperties = createSelector(
+    selectGroupPolicyState,
+    (groupPolicy) => ({
+      gpPolicy: groupPolicy.groupPolicy,
+      loading: groupPolicy.loading,
     })
   );
-
-  const { users, loading } = useSelector(ContactsProperties);
-
+  const { gpPolicy, loading } = useSelector(groupPolicyProperties);
   useEffect(() => {
-    console.log("Users data in component:", users);
-  }, [users]);
+    console.log("Group Policy data in component:", gpPolicy);
+  }, [gpPolicy]);
   const [isLoading, setLoading] = useState(loading);
 
-  const [userList, setUserList] = useState([]);
   const [modal, setModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
@@ -123,28 +63,22 @@ const CustomerUserList = (props) => {
     () => [
       {
         Header: "#",
-        // accessor: "name",
         disableFilters: true,
         filterable: true,
-        accessor: (cellProps) => (
-          <>
-            {!cellProps.img ? (
-              <div className="avatar-xs">
-                <span className="avatar-title rounded-circle">
-                  {cellProps.name.charAt(0)}
-                </span>
-              </div>
-            ) : (
-              <div>
-                <img
-                  className="rounded-circle avatar-xs"
-                  src={cellProps.img}
-                  alt=""
-                />
-              </div>
-            )}
-          </>
-        ),
+        Cell: (cellProps) => {
+          const totalRows = cellProps.rows.length;
+          const reverseIndex = totalRows - cellProps.row.index;
+
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {reverseIndex}
+                </Link>
+              </h5>
+            </>
+          );
+        },
       },
       {
         Header: "Name",
@@ -158,27 +92,50 @@ const CustomerUserList = (props) => {
                   {cellProps.row.original.name}
                 </Link>
               </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
             </>
           );
         },
       },
       {
-        Header: "Code",
-        accessor: "code",
+        Header: "Type",
+        accessor: "type",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.status === 0
+                    ? "MSO"
+                    : cellProps.row.original.status === 1
+                    ? "RO"
+                    : cellProps.row.original.status === 2
+                    ? "DISTRIBUTOR"
+                    : "LCO"}
+                </Link>
+              </h5>
+            </>
+          );
         },
       },
       {
-        Header: "Email",
-        accessor: "email",
+        Header: "Role",
+        accessor: "role",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.status === 1
+                    ? "Administrator"
+                    : cellProps.row.original.status === 2
+                    ? "Staff"
+                    : "User"}
+                </Link>
+              </h5>
+            </>
+          );
         },
       },
       {
@@ -186,55 +143,55 @@ const CustomerUserList = (props) => {
         accessor: "description",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return <Email {...cellProps} />;
         },
       },
       {
-        Header: "Status",
-        accessor: "status",
+        Header: "Count",
+        accessor: "count",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.count}</p>
+          );
         },
       },
       {
-        Header: "Parent",
-        accessor: "parent",
+        Header: "View Users",
+        accessor: "viewusers", //"operator_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
-        },
-      },
-      {
-        Header: "Designation",
-        accessor: "designation",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
-        },
-      },
-      {
-        Header: "Operator Count",
-        accessor: "operatorcount",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <h5 className="font-size-14 mb-1">
+              <Link className="text-dark" to="#">
+                <p className="text-muted mb-0">View User</p>
+              </Link>
+            </h5>
+          );
         },
       },
       {
         Header: "Created At",
-        accessor: "createdat",
+        accessor: "created_at",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_at}
+            </p>
+          );
         },
       },
       {
         Header: "Created By",
-        accessor: "createdBy",
+        accessor: "created_by",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by}
+            </p>
+          );
         },
       },
       {
@@ -247,7 +204,7 @@ const CustomerUserList = (props) => {
                 className="text-success"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  handleUserClick(userData);
+                  // handleUserClick(userData);
                 }}
               >
                 <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
@@ -260,7 +217,7 @@ const CustomerUserList = (props) => {
                 className="text-danger"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  onClickDelete(userData);
+                  // onClickDelete(userData);
                 }}
               >
                 <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
@@ -277,43 +234,43 @@ const CustomerUserList = (props) => {
   );
 
   useEffect(() => {
-    if (users && !users.length) {
-      dispatch(onGetUsers());
+    if (gpPolicy && !gpPolicy.length) {
+      dispatch(onGetGroupPolicy());
       setIsEdit(false);
     }
-  }, [dispatch, users]);
+  }, [dispatch, gpPolicy]);
 
-  useEffect(() => {
-    setContact(users);
-    setIsEdit(false);
-  }, [users]);
+  // useEffect(() => {
+  //   setContact(cusUsers);
+  //   setIsEdit(false);
+  // }, [cusUsers]);
 
-  useEffect(() => {
-    if (!isEmpty(users) && !!isEdit) {
-      setContact(users);
-      setIsEdit(false);
-    }
-  }, [users]);
+  // useEffect(() => {
+  //   if (!isEmpty(cusUsers) && !!isEdit) {
+  //     setContact(cusUsers);
+  //     setIsEdit(false);
+  //   }
+  // }, [cusUsers]);
 
   const toggle = () => {
     setModal(!modal);
   };
 
-  const handleUserClick = (arg) => {
-    const user = arg;
+  // const handleUserClick = (arg) => {
+  //   const user = arg;
 
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-    setIsEdit(true);
+  //   setContact({
+  //     id: user.id,
+  //     name: user.name,
+  //     designation: user.designation,
+  //     email: user.email,
+  //     tags: user.tags,
+  //     projects: user.projects,
+  //   });
+  //   setIsEdit(true);
 
-    toggle();
-  };
+  //   toggle();
+  // };
 
   var node = useRef();
   const onPaginationPageChange = (page) => {
@@ -329,65 +286,60 @@ const CustomerUserList = (props) => {
   };
 
   //delete customer
-  const [deleteModal, setDeleteModal] = useState(false);
+  // const [deleteModal, setDeleteModal] = useState(false);
 
-  const onClickDelete = (users) => {
-    setContact(users);
-    setDeleteModal(true);
-  };
+  // const onClickDelete = (users) => {
+  //   setContact(users);
+  //   setDeleteModal(true);
+  // };
 
-  const handleDeleteUser = () => {
-    if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
-    }
-    setContact("");
-    onPaginationPageChange(1);
-    setDeleteModal(false);
-  };
+  // const handleDeleteUser = () => {
+  //   if (contact && contact.id) {
+  //     dispatch(onDeleteUser(contact.id));
+  //   }
+  //   setContact("");
+  //   onPaginationPageChange(1);
+  //   setDeleteModal(false);
+  // };
 
-  const handleUserClicks = () => {
-    setUserList("");
-    setIsEdit(false);
-    toggle();
-  };
+  // const handleUserClicks = () => {
+  //   setUserList("");
+  //   setIsEdit(false);
+  //   toggle();
+  // };
 
   const keyField = "id";
 
   return (
     <React.Fragment>
-      <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
-      />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Access" breadcrumbItem="User Hierarchy List" />
-          {isLoading ? (
+          <Breadcrumbs title="Access" breadcrumbItem="Group Policy List" />
+          {/* {isLoading ? (
             <Spinners setLoading={setLoading} />
-          ) : (
-            <Row>
-              <Col lg="12">
-                <Card>
-                  <CardBody>
-                    {console.log("users:" + JSON.stringify(users))}
-                    <TableContainer
-                      isPagination={true}
-                      columns={columns}
-                      data={users}
-                      isGlobalFilter={true}
-                      isAddUserList={true}
-                      isShowingPageLength={true}
-                      iscustomPageSizeOptions={true}
-                      handleUserClick={handleUserClicks}
-                      customPageSize={8}
-                      tableClass="table align-middle table-nowrap table-hover"
-                      theadClass="table-light"
-                      paginationDiv="col-sm-12 col-md-7"
-                      pagination="pagination pagination-rounded justify-content-end mt-4"
-                    />
-                    <Modal isOpen={modal} toggle={toggle}>
+          ) : ( */}
+          <Row>
+            <Col lg="12">
+              <Card>
+                <CardBody>
+                  {console.log("groupPolicy:" + JSON.stringify(gpPolicy))}
+                  <TableContainer
+                    isPagination={true}
+                    columns={columns}
+                    data={gpPolicy}
+                    isGlobalFilter={true}
+                    isAddGpPolicyList={true}
+                    isShowingPageLength={true}
+                    // iscustomPageSizeOptions={true}
+                    handleUserClick={() => {}}
+                    customPageSize={50}
+                    tableClass="table align-middle table-nowrap table-hover"
+                    theadClass="table-light"
+                    paginationDiv="col-sm-12 col-md-7"
+                    pagination="pagination pagination-rounded justify-content-end mt-4"
+                  />
+                  {/* <Modal isOpen={modal} toggle={toggle}>
                       <ModalHeader toggle={toggle} tag="h4">
                         {!!isEdit ? "Edit User" : "Add User"}
                       </ModalHeader>
@@ -412,13 +364,13 @@ const CustomerUserList = (props) => {
                                   value={validation.values.name || ""}
                                   invalid={
                                     validation.touched.name &&
-                                    validation.errors.name
+                                      validation.errors.name
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.name &&
-                                validation.errors.name ? (
+                                  validation.errors.name ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.name}
                                   </FormFeedback>
@@ -438,13 +390,13 @@ const CustomerUserList = (props) => {
                                   value={validation.values.designation || ""}
                                   invalid={
                                     validation.touched.designation &&
-                                    validation.errors.designation
+                                      validation.errors.designation
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.designation &&
-                                validation.errors.designation ? (
+                                  validation.errors.designation ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.designation}
                                   </FormFeedback>
@@ -462,13 +414,13 @@ const CustomerUserList = (props) => {
                                   value={validation.values.email || ""}
                                   invalid={
                                     validation.touched.email &&
-                                    validation.errors.email
+                                      validation.errors.email
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.email &&
-                                validation.errors.email ? (
+                                  validation.errors.email ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.email}
                                   </FormFeedback>
@@ -486,7 +438,7 @@ const CustomerUserList = (props) => {
                                   value={validation.values.tags || []}
                                   invalid={
                                     validation.touched.tags &&
-                                    validation.errors.tags
+                                      validation.errors.tags
                                       ? true
                                       : false
                                   }
@@ -502,7 +454,7 @@ const CustomerUserList = (props) => {
                                   <option>Css</option>
                                 </Input>
                                 {validation.touched.tags &&
-                                validation.errors.tags ? (
+                                  validation.errors.tags ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.tags}
                                   </FormFeedback>
@@ -520,13 +472,13 @@ const CustomerUserList = (props) => {
                                   value={validation.values.projects || ""}
                                   invalid={
                                     validation.touched.projects &&
-                                    validation.errors.projects
+                                      validation.errors.projects
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.projects &&
-                                validation.errors.projects ? (
+                                  validation.errors.projects ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.projects}
                                   </FormFeedback>
@@ -548,12 +500,12 @@ const CustomerUserList = (props) => {
                           </Row>
                         </Form>
                       </ModalBody>
-                    </Modal>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
-          )}
+                    </Modal> */}
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+          {/* )} */}
         </Container>
       </div>
       <ToastContainer />
@@ -561,4 +513,4 @@ const CustomerUserList = (props) => {
   );
 };
 
-export default withRouter(CustomerUserList);
+export default withRouter(GroupPolicyList);

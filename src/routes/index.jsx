@@ -14,15 +14,15 @@ import ForgetPwd from "../pages/Authentication/ForgetPassword";
 import Dashboard from "../pages/Dashboard/index";
 // import UserList from "../pages/MsoMaster/Access/UserList/index";
 
-import ContactsList from "../pages/Contacts/ContactList/contacts-list";
-import CustomerUserlist from "../pages/Contacts/CustomerUserList/CustomerUserList";
-import GroupPolicyList from "../pages/Contacts/GroupPolicyList/groupPolicyList";
-import DesignationList from "../pages/Contacts/DesignationList/designationList";
-import UserHierarchyList from "../pages/Contacts/UserHierarchyList/userHierarchyList";
-import NotificationTemplateList from "../pages/Contacts/NotificationTemplateList/notificationTemplateList";
-import ScheduledNotificationList from "../pages/Contacts/ScheduledNotificationList/scheduledNotificationList";
-import ScheduleCustomerNotificationList from "../pages/Contacts/ScheduleCustomerNotificationList/scheduleCustomerNotificationList";
-import AppAdBannerList from "../pages/Contacts/AppAdBannerList/appAdBannerList";
+import ContactsList from "../pages/Access/UsersList/usersList";
+import CustomerUserlist from "../pages/Access/CustomerUserList/CustomerUserList";
+import GroupPolicyList from "../pages/Access/GroupPolicyList/groupPolicyList";
+import DesignationList from "../pages/Access/DesignationList/designationList";
+import UserHierarchyList from "../pages/Access/UserHierarchyList/userHierarchyList";
+import NotificationTemplateList from "../pages/Access/NotificationTemplateList/notificationTemplateList";
+import ScheduledNotificationList from "../pages/Access/ScheduledNotificationList/scheduledNotificationList";
+import ScheduleCustomerNotificationList from "../pages/Access/ScheduleCustomerNotificationList/scheduleCustomerNotificationList";
+import AppAdBannerList from "../pages/Access/AppAdBannerList/appAdBannerList";
 
 // path from organization
 import RegionalOfficeList from "../pages/Organization/RegionalOfficeList/regionalOfficeList";
@@ -51,15 +51,15 @@ import SMSMessageTemplateList from "../pages/Services/SMSMessageTemplateList/SMS
 
 //  path from Inventory
 import CompanyList from "../pages/Inventory/CompanyList/companyList";
-import WarehouseList from '../pages/Inventory/WarehouseList/warehouselist';
-import InventoryStateList from '../pages/Inventory/InventoryStateList/inventorystatelist';
-import BrandList from '../pages/Inventory/BrandList/brandList';
+import WarehouseList from "../pages/Inventory/WarehouseList/warehouselist";
+import InventoryStateList from "../pages/Inventory/InventoryStateList/inventorystatelist";
+import BrandList from "../pages/Inventory/BrandList/brandList";
 
 // path from Billing
 import BankList from "../pages/Billing/BankList/bankList";
-import PromoVoucherList from "../pages/Billing/PromoVoucherList/promoVoucherList"
+import PromoVoucherList from "../pages/Billing/PromoVoucherList/promoVoucherList";
 import ReasonList from "../pages/Billing/ReasonList/reasonList";
-import TaxList from '../pages/Billing/TaxList/taxList'
+import TaxList from "../pages/Billing/TaxList/taxList";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -210,8 +210,6 @@ const authProtectedRoutes = [
     path: "/tax-list",
     component: <TaxList />,
   },
-
-
 ];
 
 const publicRoutes = [

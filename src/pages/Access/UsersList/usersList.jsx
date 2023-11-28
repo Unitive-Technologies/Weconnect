@@ -21,7 +21,7 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import { Email, Tags, Projects } from "./contactlistCol";
+import { Email, Tags, Projects } from "./usersListCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -32,7 +32,7 @@ import {
   addNewUser as onAddNewUser,
   updateUser as onUpdateUser,
   deleteUser as onDeleteUser,
-} from "/src/store/contacts/actions";
+} from "/src/store/users/actions";
 import { isEmpty } from "lodash";
 
 //redux
@@ -100,14 +100,11 @@ const ContactsList = (props) => {
     },
   });
 
-  const selectContactsState = (state) => state.contacts;
-  const ContactsProperties = createSelector(
-    selectContactsState,
-    (Contacts) => ({
-      users: Contacts.users,
-      loading: Contacts.loading,
-    })
-  );
+  const selectContactsState = (state) => state.users;
+  const ContactsProperties = createSelector(selectContactsState, (Users) => ({
+    users: Users.users,
+    loading: Users.loading,
+  }));
 
   const { users, loading } = useSelector(ContactsProperties);
 

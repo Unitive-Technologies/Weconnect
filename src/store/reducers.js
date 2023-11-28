@@ -9,7 +9,7 @@ import Account from "./auth/register/reducer";
 import ForgetPassword from "./auth/forgetpwd/reducer";
 import Profile from "./auth/profile/reducer";
 
-import contacts from "./contacts/reducer";
+import users from "./users/reducer";
 import customerUsers from "./customerusers/reducer";
 import groupPolicy from "./grouppolicy/reducer";
 import designation from "./designation/reducer";
@@ -41,7 +41,7 @@ const rootReducer = combineReducers({
   Account,
   ForgetPassword,
   Profile,
-  contacts,
+  users,
   customerUsers,
   groupPolicy,
   designation,

@@ -32,7 +32,7 @@ import {
   addNewUser as onAddNewUser,
   updateUser as onUpdateUser,
   deleteUser as onDeleteUser,
-} from "/src/store/contacts/actions";
+} from "/src/store/users/actions";
 import { isEmpty } from "lodash";
 
 //redux
@@ -339,7 +339,10 @@ const InventoryStateList = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="inventory" breadcrumbItem="Inventory State List" />
+          <Breadcrumbs
+            title="inventory"
+            breadcrumbItem="Inventory State List"
+          />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -388,13 +391,13 @@ const InventoryStateList = (props) => {
                                   value={validation.values.name || ""}
                                   invalid={
                                     validation.touched.name &&
-                                      validation.errors.name
+                                    validation.errors.name
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.name &&
-                                  validation.errors.name ? (
+                                validation.errors.name ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.name}
                                   </FormFeedback>
@@ -414,13 +417,13 @@ const InventoryStateList = (props) => {
                                   value={validation.values.designation || ""}
                                   invalid={
                                     validation.touched.designation &&
-                                      validation.errors.designation
+                                    validation.errors.designation
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.designation &&
-                                  validation.errors.designation ? (
+                                validation.errors.designation ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.designation}
                                   </FormFeedback>
@@ -438,13 +441,13 @@ const InventoryStateList = (props) => {
                                   value={validation.values.email || ""}
                                   invalid={
                                     validation.touched.email &&
-                                      validation.errors.email
+                                    validation.errors.email
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.email &&
-                                  validation.errors.email ? (
+                                validation.errors.email ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.email}
                                   </FormFeedback>
@@ -462,7 +465,7 @@ const InventoryStateList = (props) => {
                                   value={validation.values.tags || []}
                                   invalid={
                                     validation.touched.tags &&
-                                      validation.errors.tags
+                                    validation.errors.tags
                                       ? true
                                       : false
                                   }
@@ -478,7 +481,7 @@ const InventoryStateList = (props) => {
                                   <option>Css</option>
                                 </Input>
                                 {validation.touched.tags &&
-                                  validation.errors.tags ? (
+                                validation.errors.tags ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.tags}
                                   </FormFeedback>
@@ -496,13 +499,13 @@ const InventoryStateList = (props) => {
                                   value={validation.values.projects || ""}
                                   invalid={
                                     validation.touched.projects &&
-                                      validation.errors.projects
+                                    validation.errors.projects
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.projects &&
-                                  validation.errors.projects ? (
+                                validation.errors.projects ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.projects}
                                   </FormFeedback>
