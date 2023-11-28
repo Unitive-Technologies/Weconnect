@@ -18,6 +18,7 @@ import {
   citylist as cits,
   locationlist as locations,
   languagelist as langlist,
+  lcolist as lcos,
   sublocationlist as subloc,
 } from "../../common/data";
 let users = [
@@ -421,6 +422,19 @@ const fakeBackend = () => {
         if (disTrict) {
           // Passing fake JSON data as response
           resolve([200, disTrict]);
+        } else {
+          reject([400, "Cannot get District List"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_LCO).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (lcos) {
+          // Passing fake JSON data as response
+          resolve([200, lcos]);
         } else {
           reject([400, "Cannot get District List"]);
         }

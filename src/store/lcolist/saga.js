@@ -26,6 +26,10 @@ const convertLcoListObject = (LcoList) => {
       gstno: lco.gstno,
       panno: lco.panno,
       username: lco.username,
+      distributor_lbl: lco.distributor_lbl,
+      branch_code_lbl: lco.branch_code_lbl,
+      branch_lbl: lco.branch_lbl,
+      balance: lco.balance,
       status:
         lco.status === 1 ? "ACTIVE" : lco.status === 0 ? "INACTIVE" : "BLOCKED",
     };

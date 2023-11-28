@@ -27,12 +27,8 @@ import { Email, Tags, Projects } from "./lcoListCol";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
 
-import {
-  getUsers as onGetUsers,
-  addNewUser as onAddNewUser,
-  updateUser as onUpdateUser,
-  deleteUser as onDeleteUser,
-} from "/src/store/contacts/actions";
+import { getLco as onGetLco } from "/src/store/actions";
+
 import { isEmpty } from "lodash";
 
 //redux
@@ -99,20 +95,17 @@ const LCOList = (props) => {
     },
   });
 
-  const selectContactsState = (state) => state.contacts;
-  const ContactsProperties = createSelector(
-    selectContactsState,
-    (Contacts) => ({
-      users: Contacts.users,
-      loading: Contacts.loading,
-    })
-  );
+  const selectLcoState = (state) => state.lco;
+  const LcoProperties = createSelector(selectLcoState, (lco) => ({
+    lcos: lco.lco,
+    loading: lco.loading,
+  }));
 
-  const { users, loading } = useSelector(ContactsProperties);
+  const { lcos, loading } = useSelector(LcoProperties);
 
   useEffect(() => {
-    console.log("Users data in component:", users);
-  }, [users]);
+    console.log("lcos data in component:", lcos);
+  }, [lcos]);
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
@@ -126,25 +119,20 @@ const LCOList = (props) => {
         // accessor: "name",
         disableFilters: true,
         filterable: true,
-        accessor: (cellProps) => (
-          <>
-            {!cellProps.img ? (
-              <div className="avatar-xs">
-                <span className="avatar-title rounded-circle">
-                  {cellProps.name.charAt(0)}
-                </span>
-              </div>
-            ) : (
-              <div>
-                <img
-                  className="rounded-circle avatar-xs"
-                  src={cellProps.img}
-                  alt=""
-                />
-              </div>
-            )}
-          </>
-        ),
+        Cell: (cellProps) => {
+          const totalRows = cellProps.rows.length;
+          const reverseIndex = totalRows - cellProps.row.index;
+
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {reverseIndex}
+                </Link>
+              </h5>
+            </>
+          );
+        },
       },
       {
         Header: "Name",
@@ -170,111 +158,143 @@ const LCOList = (props) => {
         accessor: "code",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.code}</p>
+          );
         },
       },
       {
         Header: "Distributor",
-        accessor: "distributor",
+        accessor: "distributor_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.distributor_lbl}
+            </p>
+          );
         },
       },
       {
         Header: "Regional Office",
-        accessor: "regionaloffice",
+        accessor: "branch_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.branch_lbl}
+            </p>
+          );
         },
       },
       {
         Header: "Regional Office Code",
-        accessor: "regionalofficecode",
+        accessor: "branch_code_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.branch_code_lbl}
+            </p>
+          );
         },
       },
       {
         Header: "Address",
-        accessor: "address",
+        accessor: "addr",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.addr}</p>
+          );
         },
       },
       {
         Header: "Contact Person",
-        accessor: "contactperson",
+        accessor: "contact_person",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.contact_person}
+            </p>
+          );
         },
       },
       {
         Header: "Mobile",
-        accessor: "mobile",
+        accessor: "mobile_no",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.mobile_no}
+            </p>
+          );
         },
       },
       {
         Header: "State",
-        accessor: "state",
+        accessor: "state_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.state_lbl}
+            </p>
+          );
         },
       },
       {
         Header: "District",
-        accessor: "district",
+        accessor: "District_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.district_lbl}
+            </p>
+          );
         },
       },
       {
         Header: "City",
-        accessor: "city",
+        accessor: "city_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.city_lbl}</p>
+          );
         },
       },
       {
         Header: "GST",
-        accessor: "GST",
+        accessor: "gstno",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.gstno}</p>
+          );
         },
       },
       {
         Header: "PAN",
-        accessor: "PAN",
+        accessor: "panno",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.panno}</p>
+          );
         },
       },
       {
         Header: "Login ID",
-        accessor: "loginID",
+        accessor: "username",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
-        },
-      },
-      {
-        Header: "UID",
-        accessor: "UID",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.username}</p>
+          );
         },
       },
       {
@@ -282,15 +302,9 @@ const LCOList = (props) => {
         accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
-        },
-      },
-      {
-        Header: "Settings",
-        accessor: "settings",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.status}</p>
+          );
         },
       },
       {
@@ -298,57 +312,32 @@ const LCOList = (props) => {
         accessor: "balance",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.balance}</p>
+          );
         },
       },
       {
         Header: "Created At",
-        accessor: "createdat",
+        accessor: "created_at",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_at}
+            </p>
+          );
         },
       },
       {
         Header: "Created By",
-        accessor: "createdby",
+        accessor: "created_by",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
-        },
-      },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
           return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by}
+            </p>
           );
         },
       },
@@ -357,23 +346,23 @@ const LCOList = (props) => {
   );
 
   useEffect(() => {
-    if (users && !users.length) {
-      dispatch(onGetUsers());
+    if (lcos && !lcos.length) {
+      dispatch(onGetLco());
       setIsEdit(false);
     }
-  }, [dispatch, users]);
+  }, [dispatch, lcos]);
 
-  useEffect(() => {
-    setContact(users);
-    setIsEdit(false);
-  }, [users]);
+  // useEffect(() => {
+  //   setContact(lcos);
+  //   setIsEdit(false);
+  // }, [lcos]);
 
-  useEffect(() => {
-    if (!isEmpty(users) && !!isEdit) {
-      setContact(users);
-      setIsEdit(false);
-    }
-  }, [users]);
+  // useEffect(() => {
+  //   if (!isEmpty(lcos) && !!isEdit) {
+  //     setContact(lcos);
+  //     setIsEdit(false);
+  //   }
+  // }, [lcos]);
 
   const toggle = () => {
     setModal(!modal);
@@ -411,8 +400,8 @@ const LCOList = (props) => {
   //delete customer
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const onClickDelete = (users) => {
-    setContact(users);
+  const onClickDelete = (lcos) => {
+    setContact(lcos);
     setDeleteModal(true);
   };
 
@@ -451,11 +440,11 @@ const LCOList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("users:" + JSON.stringify(users))}
+                    {console.log("lcos:" + JSON.stringify(lcos))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
-                      data={users}
+                      data={lcos}
                       isGlobalFilter={true}
                       isAddUserList={true}
                       isShowingPageLength={true}
@@ -467,7 +456,7 @@ const LCOList = (props) => {
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
                     />
-                    <Modal isOpen={modal} toggle={toggle}>
+                    {/* <Modal isOpen={modal} toggle={toggle}>
                       <ModalHeader toggle={toggle} tag="h4">
                         {!!isEdit ? "Edit User" : "Add User"}
                       </ModalHeader>
@@ -628,7 +617,7 @@ const LCOList = (props) => {
                           </Row>
                         </Form>
                       </ModalBody>
-                    </Modal>
+                    </Modal> */}
                   </CardBody>
                 </Card>
               </Col>
