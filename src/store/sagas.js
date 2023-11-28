@@ -25,6 +25,7 @@ import regionalOfficeSaga from "./regionalofficelist/saga";
 import lcoSaga from "./lcolist/saga";
 import scheduledNotificationSaga from "./schedulednotificationlist/saga";
 import channelListSaga from "./channel/saga";
+import broadcasterBouquetListSaga from "./broadcasterbouquet/saga";
 
 export default function* rootSaga() {
   yield all([
@@ -53,5 +54,6 @@ export default function* rootSaga() {
     fork(sublocationSaga),
     fork(scheduledNotificationSaga),
     fork(channelListSaga),
+    fork(broadcasterBouquetListSaga),
   ]);
 }

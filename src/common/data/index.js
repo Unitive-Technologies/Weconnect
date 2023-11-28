@@ -16,6 +16,7 @@ import { citylist } from "./citylist";
 import { sublocationlist } from "./sublocationlist";
 import { languagelist } from "./languagelist";
 import { channellist } from "./channellist";
+import { broadcasterbouquet } from "./broadcasterbouquet";
 
 export {
   userslist,
@@ -36,4 +37,5 @@ export {
   locationlist,
   sublocationlist,
   channellist,
+  broadcasterbouquet,
 };

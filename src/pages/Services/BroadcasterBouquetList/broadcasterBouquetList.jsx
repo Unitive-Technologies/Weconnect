@@ -21,18 +21,23 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import { Email, Tags, Projects } from "./broadcasterBouquetListCol";
+import {
+  Code,
+  Broadcaster,
+  Type,
+  FTA,
+  Channels,
+  Status,
+  Rate,
+  CreatedAt,
+  CreatedBy,
+} from "./broadcasterBouquetListCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
 
-import {
-  getUsers as onGetUsers,
-  addNewUser as onAddNewUser,
-  updateUser as onUpdateUser,
-  deleteUser as onDeleteUser,
-} from "/src/store/contacts/actions";
+import { getBroadcasterBouquetList as onGetBroadcasterBouquet } from "/src/store/broadcasterbouquet/actions";
 import { isEmpty } from "lodash";
 
 //redux
@@ -42,78 +47,79 @@ import { ToastContainer } from "react-toastify";
 
 const BroadcasterBouquetList = (props) => {
   //meta title
-  document.title =
-    "Broadcaster Bouquet List | Skote - Vite React Admin & Dashboard Template";
+  document.title = "Broadcaster Bouquet List | VDigital";
 
   const dispatch = useDispatch();
-  const [contact, setContact] = useState();
+  // const [contact, setContact] = useState();
   // validation
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
+  // const validation = useFormik({
+  //   // enableReinitialize : use this flag when initial values needs to be changed
+  //   enableReinitialize: true,
 
-    initialValues: {
-      name: (contact && contact.name) || "",
-      designation: (contact && contact.designation) || "",
-      tags: (contact && contact.tags) || "",
-      email: (contact && contact.email) || "",
-      projects: (contact && contact.projects) || "",
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
-      designation: Yup.string().required("Please Enter Your Designation"),
-      tags: Yup.array().required("Please Enter Tag"),
-      email: Yup.string()
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-        .required("Please Enter Your Email"),
-      projects: Yup.string().required("Please Enter Your Project"),
-    }),
-    onSubmit: (values) => {
-      if (isEdit) {
-        const updateUser = {
-          id: contact.id,
-          name: values.name,
-          designation: values.designation,
-          tags: values.tags,
-          email: values.email,
-          projects: values.projects,
-        };
+  //   initialValues: {
+  //     name: (contact && contact.name) || "",
+  //     designation: (contact && contact.designation) || "",
+  //     tags: (contact && contact.tags) || "",
+  //     email: (contact && contact.email) || "",
+  //     projects: (contact && contact.projects) || "",
+  //   },
+  //   validationSchema: Yup.object({
+  //     name: Yup.string().required("Please Enter Your Name"),
+  //     designation: Yup.string().required("Please Enter Your Designation"),
+  //     tags: Yup.array().required("Please Enter Tag"),
+  //     email: Yup.string()
+  //       .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
+  //       .required("Please Enter Your Email"),
+  //     projects: Yup.string().required("Please Enter Your Project"),
+  //   }),
+  //   onSubmit: (values) => {
+  //     if (isEdit) {
+  //       const updateUser = {
+  //         id: contact.id,
+  //         name: values.name,
+  //         designation: values.designation,
+  //         tags: values.tags,
+  //         email: values.email,
+  //         projects: values.projects,
+  //       };
 
-        // update user
-        dispatch(onUpdateUser(updateUser));
-        validation.resetForm();
-        setIsEdit(false);
-      } else {
-        const newUser = {
-          id: Math.floor(Math.random() * (30 - 20)) + 20,
-          name: values["name"],
-          designation: values["designation"],
-          email: values["email"],
-          tags: values["tags"],
-          projects: values["projects"],
-        };
-        // save new user
-        dispatch(onAddNewUser(newUser));
-        validation.resetForm();
-      }
-      toggle();
-    },
-  });
+  //       // update user
+  //       dispatch(onUpdateUser(updateUser));
+  //       validation.resetForm();
+  //       setIsEdit(false);
+  //     } else {
+  //       const newUser = {
+  //         id: Math.floor(Math.random() * (30 - 20)) + 20,
+  //         name: values["name"],
+  //         designation: values["designation"],
+  //         email: values["email"],
+  //         tags: values["tags"],
+  //         projects: values["projects"],
+  //       };
+  //       // save new user
+  //       dispatch(onAddNewUser(newUser));
+  //       validation.resetForm();
+  //     }
+  //     toggle();
+  //   },
+  // });
 
-  const selectContactsState = (state) => state.contacts;
-  const ContactsProperties = createSelector(
-    selectContactsState,
-    (Contacts) => ({
-      users: Contacts.users,
-      loading: Contacts.loading,
+  const selectBroadcasterBouquetState = (state) => state.broadcasterBouquetList;
+  const BroadcasterBouquetProperties = createSelector(
+    selectBroadcasterBouquetState,
+    (broadcasterBouquetList) => ({
+      brodcastbouquet: broadcasterBouquetList.broadcasterBouquetList,
+      loading: broadcasterBouquetList.loading,
     })
   );
 
-  const { users, loading } = useSelector(ContactsProperties);
+  const { brodcastbouquet, loading } = useSelector(
+    BroadcasterBouquetProperties
+  );
 
   useEffect(() => {
-    console.log("Users data in component:", users);
-  }, [users]);
+    console.log("Broadcaster Bouquet data in component:", brodcastbouquet);
+  }, [brodcastbouquet]);
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
@@ -171,7 +177,7 @@ const BroadcasterBouquetList = (props) => {
         accessor: "code",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return <Code {...cellProps} />;
         },
       },
       {
@@ -179,7 +185,7 @@ const BroadcasterBouquetList = (props) => {
         accessor: "broadcaster",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <Broadcaster {...cellProps} />;
         },
       },
       {
@@ -187,7 +193,7 @@ const BroadcasterBouquetList = (props) => {
         accessor: "type",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <Type {...cellProps} />;
         },
       },
       {
@@ -195,7 +201,7 @@ const BroadcasterBouquetList = (props) => {
         accessor: "FTA",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <FTA {...cellProps} />;
         },
       },
       {
@@ -203,7 +209,7 @@ const BroadcasterBouquetList = (props) => {
         accessor: "channels",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <Channels {...cellProps} />;
         },
       },
       {
@@ -211,7 +217,7 @@ const BroadcasterBouquetList = (props) => {
         accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <Status {...cellProps} />;
         },
       },
       {
@@ -219,23 +225,23 @@ const BroadcasterBouquetList = (props) => {
         accessor: "rate",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return <Rate {...cellProps} />;
         },
       },
       {
         Header: "Created At",
-        accessor: "createdat",
+        accessor: "created_at",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
+          return <CreatedAt {...cellProps} />;
         },
       },
       {
         Header: "Created By",
-        accessor: "createdby",
+        accessor: "created_by",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />           
+          return <CreatedBy {...cellProps} />;
         },
       },
       {
@@ -278,43 +284,43 @@ const BroadcasterBouquetList = (props) => {
   );
 
   useEffect(() => {
-    if (users && !users.length) {
-      dispatch(onGetUsers());
+    if (brodcastbouquet && !brodcastbouquet.length) {
+      dispatch(onGetBroadcasterBouquet());
       setIsEdit(false);
     }
-  }, [dispatch, users]);
+  }, [dispatch, brodcastbouquet]);
 
-  useEffect(() => {
-    setContact(users);
-    setIsEdit(false);
-  }, [users]);
+  // useEffect(() => {
+  //   setContact(brodcastbouquet);
+  //   setIsEdit(false);
+  // }, [brodcastbouquet]);
 
-  useEffect(() => {
-    if (!isEmpty(users) && !!isEdit) {
-      setContact(users);
-      setIsEdit(false);
-    }
-  }, [users]);
+  // useEffect(() => {
+  //   if (!isEmpty(brodcastbouquet) && !!isEdit) {
+  //     setContact(brodcastbouquet);
+  //     setIsEdit(false);
+  //   }
+  // }, [brodcastbouquet]);
 
-  const toggle = () => {
-    setModal(!modal);
-  };
+  // const toggle = () => {
+  //   setModal(!modal);
+  // };
 
-  const handleUserClick = (arg) => {
-    const user = arg;
+  // const handleUserClick = (arg) => {
+  //   const user = arg;
 
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-    setIsEdit(true);
+  //   setContact({
+  //     id: user.id,
+  //     name: user.name,
+  //     designation: user.designation,
+  //     email: user.email,
+  //     tags: user.tags,
+  //     projects: user.projects,
+  //   });
+  //   setIsEdit(true);
 
-    toggle();
-  };
+  //   toggle();
+  // };
 
   var node = useRef();
   const onPaginationPageChange = (page) => {
@@ -330,37 +336,37 @@ const BroadcasterBouquetList = (props) => {
   };
 
   //delete customer
-  const [deleteModal, setDeleteModal] = useState(false);
+  // const [deleteModal, setDeleteModal] = useState(false);
 
-  const onClickDelete = (users) => {
-    setContact(users);
-    setDeleteModal(true);
-  };
+  // const onClickDelete = (users) => {
+  //   setContact(users);
+  //   setDeleteModal(true);
+  // };
 
-  const handleDeleteUser = () => {
-    if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
-    }
-    setContact("");
-    onPaginationPageChange(1);
-    setDeleteModal(false);
-  };
+  // const handleDeleteUser = () => {
+  //   if (contact && contact.id) {
+  //     dispatch(onDeleteUser(contact.id));
+  //   }
+  //   setContact("");
+  //   onPaginationPageChange(1);
+  //   setDeleteModal(false);
+  // };
 
-  const handleUserClicks = () => {
-    setUserList("");
-    setIsEdit(false);
-    toggle();
-  };
+  // const handleUserClicks = () => {
+  //   setUserList("");
+  //   setIsEdit(false);
+  //   toggle();
+  // };
 
   const keyField = "id";
 
   return (
     <React.Fragment>
-      <DeleteModal
+      {/* <DeleteModal
         show={deleteModal}
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
-      />
+      /> */}
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -375,23 +381,25 @@ const BroadcasterBouquetList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("users:" + JSON.stringify(users))}
+                    {console.log(
+                      "broadcasterBouquet:" + JSON.stringify(brodcastbouquet)
+                    )}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
-                      data={users}
+                      data={brodcastbouquet}
                       isGlobalFilter={true}
                       isAddUserList={true}
                       isShowingPageLength={true}
-                      iscustomPageSizeOptions={true}
-                      handleUserClick={handleUserClicks}
-                      customPageSize={8}
+                      // iscustomPageSizeOptions={true}
+                      handleUserClick={() => {}}
+                      customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
                     />
-                    <Modal isOpen={modal} toggle={toggle}>
+                    {/* <Modal isOpen={modal} toggle={toggle}>
                       <ModalHeader toggle={toggle} tag="h4">
                         {!!isEdit ? "Edit User" : "Add User"}
                       </ModalHeader>
@@ -416,13 +424,13 @@ const BroadcasterBouquetList = (props) => {
                                   value={validation.values.name || ""}
                                   invalid={
                                     validation.touched.name &&
-                                      validation.errors.name
+                                    validation.errors.name
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.name &&
-                                  validation.errors.name ? (
+                                validation.errors.name ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.name}
                                   </FormFeedback>
@@ -442,13 +450,13 @@ const BroadcasterBouquetList = (props) => {
                                   value={validation.values.designation || ""}
                                   invalid={
                                     validation.touched.designation &&
-                                      validation.errors.designation
+                                    validation.errors.designation
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.designation &&
-                                  validation.errors.designation ? (
+                                validation.errors.designation ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.designation}
                                   </FormFeedback>
@@ -466,13 +474,13 @@ const BroadcasterBouquetList = (props) => {
                                   value={validation.values.email || ""}
                                   invalid={
                                     validation.touched.email &&
-                                      validation.errors.email
+                                    validation.errors.email
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.email &&
-                                  validation.errors.email ? (
+                                validation.errors.email ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.email}
                                   </FormFeedback>
@@ -490,7 +498,7 @@ const BroadcasterBouquetList = (props) => {
                                   value={validation.values.tags || []}
                                   invalid={
                                     validation.touched.tags &&
-                                      validation.errors.tags
+                                    validation.errors.tags
                                       ? true
                                       : false
                                   }
@@ -506,7 +514,7 @@ const BroadcasterBouquetList = (props) => {
                                   <option>Css</option>
                                 </Input>
                                 {validation.touched.tags &&
-                                  validation.errors.tags ? (
+                                validation.errors.tags ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.tags}
                                   </FormFeedback>
@@ -524,13 +532,13 @@ const BroadcasterBouquetList = (props) => {
                                   value={validation.values.projects || ""}
                                   invalid={
                                     validation.touched.projects &&
-                                      validation.errors.projects
+                                    validation.errors.projects
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.projects &&
-                                  validation.errors.projects ? (
+                                validation.errors.projects ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.projects}
                                   </FormFeedback>
@@ -552,7 +560,7 @@ const BroadcasterBouquetList = (props) => {
                           </Row>
                         </Form>
                       </ModalBody>
-                    </Modal>
+                    </Modal> */}
                   </CardBody>
                 </Card>
               </Col>

@@ -21,6 +21,7 @@ import {
   sublocationlist as subloc,
   lcolist as lcos,
   channellist as channel,
+  broadcasterbouquet as broadcastbouquet,
 } from "../../common/data";
 let users = [
   {
@@ -345,6 +346,18 @@ const fakeBackend = () => {
           resolve([200, channel]);
         } else {
           reject([400, "Cannot get Channel list"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_BROADCASTERBOUQUETLIST).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (broadcastbouquet) {
+          resolve([200, broadcastbouquet]);
+        } else {
+          reject([400, "Cannot get Broadcaster Bouquet list"]);
         }
       });
     });

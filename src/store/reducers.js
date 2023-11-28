@@ -22,10 +22,11 @@ import city from "./city/reducer";
 import location from "./location/reducer";
 import sublocation from "./sublocation/reducer";
 import broadCasters from "./broadcaster/reducer";
-
 import genreList from "./genre/reducer";
 import languageList from "./language/reducer";
 import channelList from "./channel/reducer";
+import broadcasterBouquetList from "./broadcasterbouquet/reducer";
+
 import distributors from "./distributorslist/reducer";
 import lco from "./lcolist/reducer";
 import scheduledNotification from "./schedulednotificationlist/reducer";
@@ -51,6 +52,7 @@ const rootReducer = combineReducers({
   genreList,
   languageList,
   channelList,
+  broadcasterBouquetList,
   distributors,
   district,
   city,
