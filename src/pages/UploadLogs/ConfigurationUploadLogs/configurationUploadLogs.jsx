@@ -21,7 +21,7 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import { Email, Tags, Projects } from "./taxListCol";
+import { Email, Tags, Projects } from "./configurationUploadLogsCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -40,9 +40,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const TaxList = (props) => {
+const ConfigurationUploadLogs = (props) => {
   //meta title
-  document.title = "Tax List | VDigital";
+  document.title = "Configuration Upload Logs | VDigital";
 
   const dispatch = useDispatch();
   const [contact, setContact] = useState();
@@ -147,8 +147,8 @@ const TaxList = (props) => {
         ),
       },
       {
-        Header: "Name",
-        accessor: "name",
+        Header: "Job ID",
+        accessor: "jobid",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -166,35 +166,67 @@ const TaxList = (props) => {
         },
       },
       {
-        Header: "Code",
-        accessor: "code",
+        Header: "Uploaded Type",
+        accessor: "uploadedtype",
         filterable: true,
         Cell: (cellProps) => {
           // return <Email {...cellProps} />;
         },
       },
       {
-        Header: "Tax Value",
-        accessor: "taxvalue",
+        Header: "File Name",
+        accessor: "filename",
         filterable: true,
         Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
         },
       },
       {
-        Header: "Valuetype",
-        accessor: "valuetype",
+        Header: "File Count",
+        accessor: "filecount",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          // return <Projects {...cellProps} />
         },
       },
       {
-        Header: "TaxOn Tax",
-        accessor: "taxontax",
+        Header: "Row Count",
+        accessor: "rowcount",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          // return <Projects {...cellProps} />
+        },
+      },
+      {
+        Header: "Processed",
+        accessor: "processed",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Projects {...cellProps} />
+        },
+      },
+      {
+        Header: "Success",
+        accessor: "success",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Projects {...cellProps} />
+        },
+      },
+      {
+        Header: "Error",
+        accessor: "error",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Projects {...cellProps} />
+        },
+      },
+      {
+        Header: "Processed Status",
+        accessor: "processedstatus",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Projects {...cellProps} />
         },
       },
       {
@@ -206,8 +238,16 @@ const TaxList = (props) => {
         },
       },
       {
+        Header: "Processed link",
+        accessor: "processedlink",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Projects {...cellProps} />
+        },
+      },
+      {
         Header: "Created At",
-        accessor: "createdat",
+        accessor: "create_at",
         filterable: true,
         Cell: (cellProps) => {
           // return <Projects {...cellProps} />
@@ -347,7 +387,7 @@ const TaxList = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Billing" breadcrumbItem="Tax List" />
+          <Breadcrumbs title="Upload Logs" breadcrumbItem="Configuration Upload Logs" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -545,4 +585,4 @@ const TaxList = (props) => {
   );
 };
 
-export default withRouter(TaxList);
+export default withRouter(ConfigurationUploadLogs);

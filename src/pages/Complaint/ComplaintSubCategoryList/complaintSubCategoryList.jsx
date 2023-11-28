@@ -21,7 +21,7 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import { Email, Tags, Projects } from "./taxListCol";
+import { Email, Tags, Projects } from "./complaintSubCategoryListCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -40,9 +40,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const TaxList = (props) => {
+const ComplaintSubCategoryList = (props) => {
   //meta title
-  document.title = "Tax List | VDigital";
+  document.title = "Complaint SubCategory List | VDigital";
 
   const dispatch = useDispatch();
   const [contact, setContact] = useState();
@@ -166,40 +166,32 @@ const TaxList = (props) => {
         },
       },
       {
-        Header: "Code",
-        accessor: "code",
+        Header: "Status",
+        accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
           // return <Email {...cellProps} />;
         },
       },
       {
-        Header: "Tax Value",
-        accessor: "taxvalue",
+        Header: "ShowOnWeb",
+        accessor: "showonweb",
         filterable: true,
         Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
         },
       },
       {
-        Header: "Valuetype",
-        accessor: "valuetype",
+        Header: "Category",
+        accessor: "category",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          // return <Projects {...cellProps} />
         },
       },
       {
-        Header: "TaxOn Tax",
-        accessor: "taxontax",
-        filterable: true,
-        Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
-        },
-      },
-      {
-        Header: "Status",
-        accessor: "status",
+        Header: "Description",
+        accessor: "description",
         filterable: true,
         Cell: (cellProps) => {
           // return <Projects {...cellProps} />
@@ -207,7 +199,7 @@ const TaxList = (props) => {
       },
       {
         Header: "Created At",
-        accessor: "createdat",
+        accessor: "create_at",
         filterable: true,
         Cell: (cellProps) => {
           // return <Projects {...cellProps} />
@@ -347,7 +339,7 @@ const TaxList = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Billing" breadcrumbItem="Tax List" />
+          <Breadcrumbs title="Complaint" breadcrumbItem="Complaint SubCategory List" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -545,4 +537,4 @@ const TaxList = (props) => {
   );
 };
 
-export default withRouter(TaxList);
+export default withRouter(ComplaintSubCategoryList);

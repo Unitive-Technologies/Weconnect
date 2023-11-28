@@ -99,7 +99,7 @@ const NCFList = (props) => {
     },
   });
 
-  const selectContactsState = (state) => state.contacts;
+  const selectContactsState = (state) => state.users;
   const ContactsProperties = createSelector(
     selectContactsState,
     (Contacts) => ({
