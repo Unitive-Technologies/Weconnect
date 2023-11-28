@@ -61,6 +61,11 @@ import PromoVoucherList from "../pages/Billing/PromoVoucherList/promoVoucherList
 import ReasonList from "../pages/Billing/ReasonList/reasonList";
 import TaxList from "../pages/Billing/TaxList/taxList";
 
+// path from Subscription
+import BouquetList from "../pages/Subscription/BouquetList/bouquetList";
+import ConnectionSchemeList from "../pages/Subscription/ConnectionSchemeList/connectionSchemeList";
+import NCFList from "../pages/Subscription/NCFList/ncfList"
+
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
 
@@ -210,6 +215,24 @@ const authProtectedRoutes = [
     path: "/tax-list",
     component: <TaxList />,
   },
+<<<<<<< Updated upstream
+=======
+
+  // path from NCF
+  {
+    path: "/bouquet-list",
+    component: <BouquetList />,
+  },
+  {
+    path: "/connection-scheme-list",
+    component: <PromoVoucherList />,
+  },
+  {
+    path: "/ncf-list",
+    component: <NCFList />,
+  },
+
+>>>>>>> Stashed changes
 ];
 
 const publicRoutes = [
