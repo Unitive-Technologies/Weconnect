@@ -8,6 +8,7 @@ import { regionalofficelist } from "./regionalofficelist";
 import { distributorlist } from "./distributorlist";
 import { lcolist } from "./lcolist";
 import { stateuserlist } from "./stateuserlist";
+import { locationlist } from "./locationlist";
 import { broadcasterlist } from "./broadcasterlist";
 import { genrelist } from "./genrelist";
 import { districtlist } from "./districtlist";
@@ -30,4 +31,5 @@ export {
   languagelist,
   districtlist,
   citylist,
+  locationlist,
 };

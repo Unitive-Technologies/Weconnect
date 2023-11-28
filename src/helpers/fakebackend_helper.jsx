@@ -232,9 +232,12 @@ export const getNotificationTemplate = () => get(url.GET_NOTIFICATIONTEMPLATE);
 export const getScheduleCustomerNotification = () =>
   get(url.GET_SCHEDULECUSTOMERNOTIFICATION);
 
+
 export const getStateUsers = () => get(url.GET_STATEUSERS);
 export const getDistrict = () => get(url.GET_DISTRICT);
 export const getCity = () => get(url.GET_CITY);
+export const getLocation = () => get(url.GET_LOCATION);
+
 
 export const getRegionalOffice = () => get(url.GET_REGIONALOFFICE);
 export const getBroadCasters = () => get(url.GET_BROADCASTER);

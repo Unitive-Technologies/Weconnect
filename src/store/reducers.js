@@ -19,6 +19,7 @@ import regionaloffice from "./regionalofficelist/reducer";
 import stateUsers from "./stateusers/reducer";
 import district from "./district/reducer";
 import city from "./city/reducer";
+import location from "./location/reducer";
 import broadCasters from "./broadcaster/reducer";
 
 import genreList from "./genre/reducer";
@@ -42,8 +43,8 @@ const rootReducer = combineReducers({
   scheduleCustomerNotification,
   regionaloffice,
   stateUsers,
+  location,
   broadCasters,
-
   genreList,
   languageList,
   distributors,

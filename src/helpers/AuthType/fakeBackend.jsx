@@ -16,6 +16,7 @@ import {
   distributorlist as distributor,
   districtlist as disTrict,
   citylist as cits,
+  locationlist as locations,
   languagelist as langlist,
 } from "../../common/data";
 let users = [
@@ -369,6 +370,19 @@ const fakeBackend = () => {
           resolve([200, cits]);
         } else {
           reject([400, "Cannot get City User List"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_LOCATION).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (locations) {
+          // Passing fake JSON data as response
+          resolve([200, locations]);
+        } else {
+          reject([400, "Cannot get Location List"]);
         }
       });
     });

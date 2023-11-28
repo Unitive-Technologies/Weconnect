@@ -28,6 +28,7 @@ export const GET_SCHEDULECUSTOMERNOTIFICATION =
 export const GET_STATEUSERS = "/stateuserlist";
 export const GET_DISTRICT = "/districtlist";
 export const GET_CITY = "/citylist";
+export const GET_LOCATION = "/locationlist";
 
 export const GET_DISTRIBUTORS = "/distributors";
 export const GET_LCO = "/lco";
