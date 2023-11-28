@@ -20,6 +20,7 @@ import stateUsers from "./stateusers/reducer";
 import district from "./district/reducer";
 import city from "./city/reducer";
 import location from "./location/reducer";
+import sublocation from "./sublocation/reducer";
 import broadCasters from "./broadcaster/reducer";
 
 import genreList from "./genre/reducer";
@@ -44,6 +45,7 @@ const rootReducer = combineReducers({
   regionaloffice,
   stateUsers,
   location,
+  sublocation,
   broadCasters,
   genreList,
   languageList,

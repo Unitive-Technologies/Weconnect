@@ -18,6 +18,7 @@ import {
   citylist as cits,
   locationlist as locations,
   languagelist as langlist,
+  sublocationlist as subloc,
 } from "../../common/data";
 let users = [
   {
@@ -383,6 +384,19 @@ const fakeBackend = () => {
           resolve([200, locations]);
         } else {
           reject([400, "Cannot get Location List"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_SUBLOCATION).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (subloc) {
+          // Passing fake JSON data as response
+          resolve([200, subloc]);
+        } else {
+          reject([400, "Cannot get Sub Location List"]);
         }
       });
     });

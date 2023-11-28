@@ -16,6 +16,7 @@ import stateUsersSaga from "./stateusers/saga";
 import districtSaga from "./district/saga";
 import citySaga from "./city/saga";
 import locationSaga from "./location/saga";
+import sublocationSaga from "./sublocation/saga";
 import broadCasterSaga from "./broadcaster/saga";
 import genreSaga from "./genre/saga";
 import distributorsSaga from "./distributorslist/saga";
@@ -47,5 +48,6 @@ export default function* rootSaga() {
     fork(citySaga),
     fork(lcoSaga),
     fork(locationSaga),
+    fork(sublocationSaga),
   ]);
 }

@@ -13,6 +13,7 @@ import { broadcasterlist } from "./broadcasterlist";
 import { genrelist } from "./genrelist";
 import { districtlist } from "./districtlist";
 import { citylist } from "./citylist";
+import { sublocationlist } from "./sublocationlist";
 import { languagelist } from "./languagelist";
 
 export {
@@ -32,4 +33,5 @@ export {
   districtlist,
   citylist,
   locationlist,
+  sublocationlist,
 };
