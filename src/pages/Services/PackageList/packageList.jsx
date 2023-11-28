@@ -207,7 +207,7 @@ const PackageList = (props) => {
       },
       {
         Header: "BBQ",
-        accessor: "bbq",
+        accessor: "BBQ",
         filterable: true,
         Cell: (cellProps) => {
           return <BBQ {...cellProps} />;

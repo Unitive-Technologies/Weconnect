@@ -15,19 +15,14 @@ const convertPackageListObject = (packageList) => {
       id: packlist.id,
       name: packlist.name,
       code: packlist.code,
-      broadcaster: packlist.broadcaster_lbl,
-      type: packlist.channel_type_lbl,
-      FTA: packlist.isFta_lbl,
-      channels: packlist.channels
-        .map((channel) => channel.broadcaster_lbl)
-        .join(", "),
 
-      status:
-        packlist.status === 1
-          ? "ACTIVE"
-          : packlist.status === 0
-          ? "INACTIVE"
-          : "BLOCKED",
+      type: packlist.package_type_lbl,
+      packagetype: packlist.isFta_lbl,
+
+      cascodes: packlist.casCodes.map((pack) => pack.cas_lbl).join(", "),
+      channels: packlist.channels.map((pack) => pack.name).join(", "),
+      BBQ: packlist.name,
+      status: packlist.status_lbl,
       rate: packlist.broadcasterRate,
       created_at: packlist.created_at,
       created_by: packlist.created_by_lbl,
