@@ -66,11 +66,13 @@ const TableContainer = ({
   isAddUserList,
   isAddBroadCaster,
   isAddGenreList,
+  isAddLanguageList,
   handleBroadCasterClick,
   handleGenreClick,
   handleOrderClicks,
   handleUserClick,
   handleGroupPolicyClick,
+  handleLanguageClick,
   isAddGpPolicyList,
   customPageSize,
   tableClass,
@@ -230,6 +232,22 @@ const TableContainer = ({
               >
                 <i className="mdi mdi-plus me-1" />
                 Create Genre
+              </Button>
+            </div>
+          </Col>
+        )}
+
+        {isAddLanguageList && (
+          <Col sm="12">
+            <div className="text-sm-end">
+              <Button
+                type="button"
+                color="primary"
+                className="btn mb-2 me-2"
+                onClick={handleLanguageClick}
+              >
+                <i className="mdi mdi-plus me-1" />
+                Create Language
               </Button>
             </div>
           </Col>
