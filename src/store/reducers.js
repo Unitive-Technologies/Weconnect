@@ -30,6 +30,8 @@ import broadcasterBouquetList from "./broadcasterbouquet/reducer";
 import distributors from "./distributorslist/reducer";
 import lco from "./lcolist/reducer";
 import scheduledNotification from "./schedulednotificationlist/reducer";
+import userHierarchy from "./userhierarchy/reducer";
+import appAdBanner from "./appadbannerlist/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -58,6 +60,8 @@ const rootReducer = combineReducers({
   city,
   lco,
   scheduledNotification,
+  userHierarchy,
+  appAdBanner,
 });
 
 export default rootReducer;
