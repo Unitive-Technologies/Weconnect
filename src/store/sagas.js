@@ -23,6 +23,7 @@ import distributorsSaga from "./distributorslist/saga";
 import languageSaga from "./language/saga";
 import regionalOfficeSaga from "./regionalofficelist/saga";
 import lcoSaga from "./lcolist/saga";
+import scheduledNotificationSaga from "./schedulednotificationlist/saga";
 
 export default function* rootSaga() {
   yield all([
@@ -49,5 +50,6 @@ export default function* rootSaga() {
     fork(lcoSaga),
     fork(locationSaga),
     fork(sublocationSaga),
+    fork(scheduledNotificationSaga),
   ]);
 }
