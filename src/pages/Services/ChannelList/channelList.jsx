@@ -235,7 +235,7 @@ const ChannelList = (props) => {
       },
       {
         Header: "CAS CODES",
-        accessor: "CAS Codes",
+        accessor: "cascode",
         filterable: true,
         Cell: (cellProps) => {
           return <CasCodes {...cellProps} />;
@@ -413,7 +413,7 @@ const ChannelList = (props) => {
                       columns={columns}
                       data={channel}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isAddChannelList={true}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
                       handleUserClick={() => {}}

@@ -22,7 +22,7 @@ const convertChannelListObject = (channelList) => {
       alacarte: channel.isAlacarte_lbl,
       FTA: channel.isFta_lbl,
       NCF: channel.isNCF_lbl,
-      cascode: channel.created_at,
+      cascode: channel.casCodes.length > 0 ? channel.casCodes[0].cas_lbl : "",
 
       status:
         channel.status === 1
