@@ -345,22 +345,22 @@ const SidebarContent = (props) => {
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
-                      <Link to="/#">
+                      <Link to="/company-list">
                         <span key="#">{props.t("Company List")}</span>
                       </Link>
                     </li>
                     <li>
-                      <Link to="/#">
+                      <Link to="/brand-list">
                         <span key="#">{props.t("Brand List")}</span>
                       </Link>
                     </li>
                     <li>
-                      <Link to="/#">
+                      <Link to="/warehouse-list">
                         <span key="#">{props.t("Warehouse List")}</span>
                       </Link>
                     </li>
                     <li>
-                      <Link to="/#">
+                      <Link to="/inventory-state-list">
                         <span key="#">{props.t("Inventory State List")}</span>
                       </Link>
                     </li>

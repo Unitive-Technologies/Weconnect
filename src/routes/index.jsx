@@ -48,6 +48,12 @@ import OSDConfigurationList from "../pages/Services/OSDConfigurationList/osdConf
 import OSDTemplateList from "../pages/Services/OSDTemplateList/osdTemplateList";
 import PackageList from "../pages/Services/PackageList/packageList";
 import SMSMessageTemplateList from "../pages/Services/SMSMessageTemplateList/SMSMessageTemplateList";
+//  path from Inventory
+import CompanyList from "../pages/Inventory/CompanyList/companyList";
+import WarehouseList from '../pages/Inventory/WarehouseList/warehouselist';
+import InventoryStateList from '../pages/Inventory/InventoryStateList/inventorystatelist';
+import BrandList from '../pages/Inventory/BrandList/brandList';
+
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -162,6 +168,26 @@ const authProtectedRoutes = [
     path: "/SMS-Message-Template-list",
     component: <SMSMessageTemplateList />,
   },
+
+  // path from Inventory
+  {
+    path: "/company-list",
+    component: <CompanyList />,
+  },
+  {
+    path: "/brand-list",
+    component: <BrandList />,
+  },
+  {
+    path: "/warehouse-list",
+    component: <WarehouseList />,
+  },
+  {
+    path: "/inventory-state-list",
+    component: <InventoryStateList />,
+  },
+
+
 ];
 
 const publicRoutes = [
