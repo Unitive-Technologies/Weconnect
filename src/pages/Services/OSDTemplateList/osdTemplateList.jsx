@@ -27,8 +27,7 @@ import { Email, Tags, Projects } from "./osdTemplateListCol";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
 
-
-import { getOSDTemplate as onGetOSDTemplate } from "/src/store/actions";
+import { getOSDTemplate as onGetOSDTemplate } from "/src/store/OSDTemplate/actions";
 
 import { isEmpty } from "lodash";
 
@@ -43,6 +42,10 @@ const OSDTemplateList = (props) => {
 
   const dispatch = useDispatch();
 
+  // const selectOSDTemplateState = (state) => {
+  //   console.log("osd:" + state.osdTemplate);
+  //   state.osdTemplate;
+  // };
   const selectOSDTemplateState = (state) => state.osdTemplate;
   const osdTemplateProperties = createSelector(
     selectOSDTemplateState,
@@ -55,7 +58,7 @@ const OSDTemplateList = (props) => {
   const { osdTemp, loading } = useSelector(osdTemplateProperties);
 
   useEffect(() => {
-    console.log("Customer Users data in component:", osdTemp);
+    console.log("OSD Temp data in component:", osdTemp);
   }, [osdTemp]);
 
   const [isLoading, setLoading] = useState(loading);
@@ -110,7 +113,9 @@ const OSDTemplateList = (props) => {
         accessor: "template_for_lbl",
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.template_for_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.template_for_lbl}
+            </p>
           );
         },
       },
@@ -120,7 +125,9 @@ const OSDTemplateList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.status_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.status_lbl}
+            </p>
           );
         },
       },
@@ -130,17 +137,21 @@ const OSDTemplateList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.operator_count}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.operator_count}
+            </p>
           );
         },
       },
       {
         Header: "Created At",
-        accessor: "createdat",
+        accessor: "created_at",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.login_id}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_at}
+            </p>
           );
         },
       },
@@ -150,7 +161,9 @@ const OSDTemplateList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.created_by_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by_lbl}
+            </p>
           );
         },
       },
@@ -288,7 +301,7 @@ const OSDTemplateList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("users:" + JSON.stringify(osdTemp))}
+                    {console.log("OSDTemp:" + JSON.stringify(osdTemp))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
