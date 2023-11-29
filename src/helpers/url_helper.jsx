@@ -24,7 +24,7 @@ export const GET_REGIONALOFFICE = "/regionaloffice";
 
 export const GET_SCHEDULECUSTOMERNOTIFICATION =
   "/schedulecustomernotificationlist";
-export const GET_SCHEDULEDNOTIFICATION = "/schedulednotification";
+export const GET_SCHEDULEDNOTIFICATION = "/schedulednotificationlist";
 export const GET_STATEUSERS = "/stateuserlist";
 export const GET_DISTRICT = "/districtlist";
 export const GET_CITY = "/citylist";
@@ -42,8 +42,8 @@ export const GET_LANGUAGELIST = "/languagelist";
 export const GET_CHANNELLIST = "/channellist";
 export const GET_BROADCASTERBOUQUETLIST = "/broadcasterbouquet";
 export const GET_PACKAGELIST = "/packagelist";
-export const GET_OSDCONFIGURATIONLIST = '/osdconfigurationlist'
-export const GET_OSDTEMPLATE = '/osdtemplatelist'
+export const GET_OSDCONFIGURATIONLIST = "/osdconfigurationlist";
+export const GET_OSDTEMPLATE = "/osdtemplatelist";
 
 export const GET_USERS = "/userslist";
 export const GET_USER_PROFILE = "/user";

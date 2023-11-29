@@ -15,7 +15,7 @@ const ScheduledNotification = (state = INIT_STATE, action) => {
       console.log("Scheduled notification data in reducer:", action.payload);
       return {
         ...state,
-        lco: action.payload,
+        schedulednotification: action.payload,
         loading: false,
       };
 
