@@ -31,6 +31,7 @@ import {
   schedulednotificationlist as schedulednotify,
   ncflist as ncfl,
   documentuploadpolicylist as documentupload,
+  companylist as company,
 } from "../../common/data";
 
 let users = [
@@ -585,6 +586,19 @@ const fakeBackend = () => {
           resolve([200, schedulednotify]);
         } else {
           reject([400, "Cannot get scheduled notification List"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_COMPANYLIST).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (company) {
+          // Passing fake JSON data as response
+          resolve([200, company]);
+        } else {
+          reject([400, "Cannot get Company List"]);
         }
       });
     });

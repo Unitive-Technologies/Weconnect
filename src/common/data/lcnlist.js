@@ -1,3 +1,0 @@
-const lcnlist = [];
-
-export { lcnlist };

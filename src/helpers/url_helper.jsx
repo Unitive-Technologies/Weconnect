@@ -43,12 +43,14 @@ export const GET_CHANNELLIST = "/channellist";
 export const GET_BROADCASTERBOUQUETLIST = "/broadcasterbouquet";
 export const GET_PACKAGELIST = "/packagelist";
 export const GET_OSDCONFIGURATIONLIST = "/osdconfigurationlist";
-export const GET_OSDTEMPLATE = "/osdtemplatelist";
 export const GET_LOCALCHANNELNUMBER = "/localchannelnumberlist";
+
 export const GET_DOCUMENTUPLOADPOLICY = "/documentuploadpolicylist";
 
+export const GET_OSDTEMPLATE = "/osdtemplatelist";
 
 export const GET_NCF = "/ncf";
+export const GET_COMPANYLIST = "/companylist";
 
 export const GET_USERS = "/userslist";
 export const GET_USER_PROFILE = "/user";

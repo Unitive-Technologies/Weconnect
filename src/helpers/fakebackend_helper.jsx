@@ -260,6 +260,7 @@ export const getAppAdBanner = () => get(url.GET_APPADBANNER);
 export const getUserHierarchy = () => get(url.GET_USERHIERARCHY);
 export const getNcf = () => get(url.GET_NCF);
 
+export const getCompanyList = () => get(url.GET_COMPANYLIST);
 // add user
 export const addNewUser = (user) => post(url.ADD_NEW_USER, user);
 

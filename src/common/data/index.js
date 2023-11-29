@@ -20,15 +20,18 @@ import { broadcasterbouquet } from "./broadcasterbouquet";
 import { packagelist } from "./packagelist";
 import { appadbannerlist } from "./appadbannerlist";
 import { osdconfigurationlist } from "./osdconfigurationlist";
-
 import { userhierarchy } from "./userhierarchy";
 import { schedulednotificationlist } from "./schedulednotificationlist";
 import { ncflist } from "./ncflist";
 import { connectionschemelist } from "./connectionschemelist";
 import { bouquetlist, bouquetfieldtypes } from "./bouquetlist";
 import { localchannelnumberlist } from "./localchannelnumberlist";
+
 import { osdtemplatelist } from "./osdtemplatelist";
-import { documentuploadpolicylist } from './documentuploadpolicylist';
+
+import { documentuploadpolicylist } from "./documentuploadpolicylist";
+
+import { companylist } from "./companylist";
 
 export {
   userslist,
@@ -62,4 +65,5 @@ export {
   localchannelnumberlist,
   osdtemplatelist,
   documentuploadpolicylist,
+  companylist,
 };

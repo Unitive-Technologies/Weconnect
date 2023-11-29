@@ -42,13 +42,17 @@ const LocalChannelNumberList = (props) => {
 
   const dispatch = useDispatch();
 
-  const selectLocalChannelNumberState = (state) => state.localChannelNumber;
+  // const selectLocalChannelNumberState = (state) => {
+  //   state.localChannelNumber;
+  //   console.log("lcn state in UI:" + JSON.stringify(state.localChannelNumber));
+  // };
 
+  const selectLocalChannelNumberState = (state) => state.localChannelNumber;
   const localChannelNumberProperties = createSelector(
     selectLocalChannelNumberState,
-    (localChannelNumber) => ({
-      localNum: localChannelNumber.localChannelNumber,
-      loading: localChannelNumber.loading,
+    (localChannelNo) => ({
+      localNum: localChannelNo.localChannelNumber,
+      loading: localChannelNo.loading,
     })
   );
 
@@ -91,7 +95,7 @@ const LocalChannelNumberList = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.channelname}
+              {cellProps.row.original.channelname},
             </p>
           );
         },
