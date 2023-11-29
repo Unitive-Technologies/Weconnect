@@ -1851,4 +1851,55 @@ const userslist = [
   },
 ];
 
-export { userslist };
+const usertype = [
+  {
+    id: 0,
+    name: "MSO",
+  },
+  {
+    id: 1,
+    name: "RO",
+  },
+  {
+    id: 2,
+    name: "DISTRIBUTOR",
+  },
+  {
+    id: 3,
+    name: "LCO",
+  },
+];
+
+const userstatus = [
+  {
+    id: 1,
+    name: "Active",
+  },
+  {
+    id: -7,
+    name: "BLOCKED",
+  },
+  {
+    id: 0,
+    name: "In-Active",
+  },
+];
+
+const userrole = [
+  {
+    id: 1,
+    name: "Administrator",
+  },
+  {
+    id: 2,
+    name: "Staff",
+  },
+  {
+    id: 3,
+    name: "User",
+  },
+];
+
+const userdesignation = [{ id: 1, name: "Director", code: "DIR" }];
+
+export { userslist, usertype, userstatus, userrole, userdesignation };
