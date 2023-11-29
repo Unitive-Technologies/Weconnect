@@ -25,7 +25,7 @@ import {
   packagelist as packlist,
   appadbannerlist as appAdvertiseBan,
   osdconfigurationlist as osdconfig,
-  osdtemplate as osdtem,
+  osdtemplatelist as osdtem,
   userhierarchy as userHier,
 } from "../../common/data";
 
