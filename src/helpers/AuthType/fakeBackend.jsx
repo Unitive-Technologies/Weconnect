@@ -408,7 +408,7 @@ const fakeBackend = () => {
     });
   });
 
-  mock.onGet(url.GET_OSDTEMPLATELIST).reply(() => {
+  mock.onGet(url.GET_OSDTEMPLATE).reply(() => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (osdtem) {

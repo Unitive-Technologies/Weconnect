@@ -20,13 +20,14 @@ import { broadcasterbouquet } from "./broadcasterbouquet";
 import { packagelist } from "./packagelist";
 import { appadbannerlist } from "./appadbannerlist";
 import { osdconfigurationlist } from "./osdconfigurationlist";
-import { osdtemplatelist } from "./osdtemplatelist";
+
 import { userhierarchy } from "./userhierarchy";
 import { schedulednotificationlist } from "./schedulednotificationlist";
 import { ncflist } from "./ncflist";
 import { connectionschemelist } from "./connectionschemelist";
 import { bouquetlist, bouquetfieldtypes } from "./bouquetlist";
-import { localchannelnumberlist } from './localchannelnumberlist';
+import { localchannelnumberlist } from "./localchannelnumberlist";
+import { osdtemplatelist } from "./osdtemplatelist";
 
 export {
   userslist,
@@ -51,7 +52,6 @@ export {
   packagelist,
   appadbannerlist,
   osdconfigurationlist,
-  osdtemplatelist,
   userhierarchy,
   schedulednotificationlist,
   ncflist,
@@ -59,4 +59,5 @@ export {
   bouquetfieldtypes,
   connectionschemelist,
   localchannelnumberlist,
+  osdtemplatelist,
 };
