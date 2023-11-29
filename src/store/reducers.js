@@ -35,6 +35,7 @@ import schedulednotification from "./schedulednotificationlist/reducer";
 import userHierarchy from "./userhierarchy/reducer";
 import appadbanner from "./appadbannerlist/reducer";
 import localChannelNumber from "./localchannelnumber/reducer";
+import ncf from "./ncflist/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -69,6 +70,7 @@ const rootReducer = combineReducers({
   osdConfiguration,
   osdTemplate,
   localChannelNumber,
+  ncf,
 });
 
 export default rootReducer;

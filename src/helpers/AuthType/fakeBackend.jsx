@@ -29,6 +29,7 @@ import {
   localchannelnumberlist as localnum,
   userhierarchy as userHier,
   schedulednotificationlist as schedulednotify,
+  ncflist as ncfl,
 } from "../../common/data";
 
 let users = [
@@ -545,6 +546,19 @@ const fakeBackend = () => {
           resolve([200, userHier]);
         } else {
           reject([400, "Cannot get user hierarchy List"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_NCF).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (ncfl) {
+          // Passing fake JSON data as response
+          resolve([200, ncfl]);
+        } else {
+          reject([400, "Cannot get NCF List"]);
         }
       });
     });

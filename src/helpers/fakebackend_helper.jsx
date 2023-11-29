@@ -256,6 +256,7 @@ export const getDistributors = () => get(url.GET_DISTRIBUTORS);
 export const getLco = () => get(url.GET_LCO);
 export const getAppAdBanner = () => get(url.GET_APPADBANNER);
 export const getUserHierarchy = () => get(url.GET_USERHIERARCHY);
+export const getNcf = () => get(url.GET_NCF);
 
 // add user
 export const addNewUser = (user) => post(url.ADD_NEW_USER, user);

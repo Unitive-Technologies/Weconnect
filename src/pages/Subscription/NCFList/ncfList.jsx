@@ -33,6 +33,7 @@ import {
   updateUser as onUpdateUser,
   deleteUser as onDeleteUser,
 } from "/src/store/users/actions";
+import { getNcf as onGetNcf } from "/src/store/actions";
 import { isEmpty } from "lodash";
 
 //redux
@@ -45,74 +46,18 @@ const NCFList = (props) => {
   document.title = "NCF List | VDigital";
 
   const dispatch = useDispatch();
-  const [contact, setContact] = useState();
-  // validation
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
 
-    initialValues: {
-      name: (contact && contact.name) || "",
-      designation: (contact && contact.designation) || "",
-      tags: (contact && contact.tags) || "",
-      email: (contact && contact.email) || "",
-      projects: (contact && contact.projects) || "",
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
-      designation: Yup.string().required("Please Enter Your Designation"),
-      tags: Yup.array().required("Please Enter Tag"),
-      email: Yup.string()
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-        .required("Please Enter Your Email"),
-      projects: Yup.string().required("Please Enter Your Project"),
-    }),
-    onSubmit: (values) => {
-      if (isEdit) {
-        const updateUser = {
-          id: contact.id,
-          name: values.name,
-          designation: values.designation,
-          tags: values.tags,
-          email: values.email,
-          projects: values.projects,
-        };
+  const selectNcfState = (state) => state.ncf;
+  const NcfProperties = createSelector(selectNcfState, (ncf) => ({
+    ncfl: ncf.ncf,
+    loading: ncf.loading,
+  }));
 
-        // update user
-        dispatch(onUpdateUser(updateUser));
-        validation.resetForm();
-        setIsEdit(false);
-      } else {
-        const newUser = {
-          id: Math.floor(Math.random() * (30 - 20)) + 20,
-          name: values["name"],
-          designation: values["designation"],
-          email: values["email"],
-          tags: values["tags"],
-          projects: values["projects"],
-        };
-        // save new user
-        dispatch(onAddNewUser(newUser));
-        validation.resetForm();
-      }
-      toggle();
-    },
-  });
-
-  const selectContactsState = (state) => state.users;
-  const ContactsProperties = createSelector(
-    selectContactsState,
-    (Contacts) => ({
-      users: Contacts.users,
-      loading: Contacts.loading,
-    })
-  );
-
-  const { users, loading } = useSelector(ContactsProperties);
+  const { ncfl, loading } = useSelector(NcfProperties);
 
   useEffect(() => {
-    console.log("Users data in component:", users);
-  }, [users]);
+    console.log("NCF list data in component:", ncfl);
+  }, [ncfl]);
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
@@ -170,63 +115,89 @@ const NCFList = (props) => {
         accessor: "code",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.code}</p>
+          );
         },
       },
       {
         Header: "FROM",
-        accessor: "From",
+        accessor: "from_channel_no",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.from_channel_no}
+            </p>
+          );
         },
       },
       {
         Header: "TO",
-        accessor: "To",
+        accessor: "to_channel_no",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.to_channel_no}
+            </p>
+          );
         },
       },
       {
         Header: "MRP",
-        accessor: "MRP",
+        accessor: "mrp",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.mrp}</p>
+          );
         },
       },
       {
         Header: "LCO Discount(%)",
-        accessor: "LCODiscount",
+        accessor: "lmo_discount",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.lmo_discount}
+            </p>
+          );
         },
       },
       {
         Header: "LCO Rate",
-        accessor: "LCORate",
+        accessor: "lmo_rate",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.lmo_rate}</p>
+          );
         },
       },
       {
         Header: "Per Channel",
-        accessor: "perchannel",
+        accessor: "calculate_per_channel",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.calculate_per_channel}
+            </p>
+          );
         },
       },
       {
         Header: "Is Refundable",
-        accessor: "isrefundable",
+        accessor: "is_refundable",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.is_refundable}
+            </p>
+          );
         },
       },
       {
@@ -234,23 +205,33 @@ const NCFList = (props) => {
         accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.status}</p>
+          );
         },
       },
       {
         Header: "Created At",
-        accessor: "create_at",
+        accessor: "created_at",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_at}
+            </p>
+          );
         },
       },
       {
         Header: "Created By",
-        accessor: "createdby",
+        accessor: "created_by",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by}
+            </p>
+          );
         },
       },
       {
@@ -293,23 +274,23 @@ const NCFList = (props) => {
   );
 
   useEffect(() => {
-    if (users && !users.length) {
-      dispatch(onGetUsers());
+    if (ncfl && !ncfl.length) {
+      dispatch(onGetNcf());
       setIsEdit(false);
     }
-  }, [dispatch, users]);
+  }, [dispatch, ncfl]);
 
-  useEffect(() => {
-    setContact(users);
-    setIsEdit(false);
-  }, [users]);
+  // useEffect(() => {
+  //   setContact(users);
+  //   setIsEdit(false);
+  // }, [users]);
 
-  useEffect(() => {
-    if (!isEmpty(users) && !!isEdit) {
-      setContact(users);
-      setIsEdit(false);
-    }
-  }, [users]);
+  // useEffect(() => {
+  //   if (!isEmpty(users) && !!isEdit) {
+  //     setContact(users);
+  //     setIsEdit(false);
+  //   }
+  // }, [users]);
 
   const toggle = () => {
     setModal(!modal);
@@ -387,11 +368,11 @@ const NCFList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("users:" + JSON.stringify(users))}
+                    {console.log("NCF List:" + JSON.stringify(ncfl))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
-                      data={users}
+                      data={ncfl}
                       isGlobalFilter={true}
                       isAddUserList={true}
                       isShowingPageLength={true}
@@ -403,7 +384,7 @@ const NCFList = (props) => {
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
                     />
-                    <Modal isOpen={modal} toggle={toggle}>
+                    {/* <Modal isOpen={modal} toggle={toggle}>
                       <ModalHeader toggle={toggle} tag="h4">
                         {!!isEdit ? "Edit User" : "Add User"}
                       </ModalHeader>
@@ -428,13 +409,13 @@ const NCFList = (props) => {
                                   value={validation.values.name || ""}
                                   invalid={
                                     validation.touched.name &&
-                                      validation.errors.name
+                                    validation.errors.name
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.name &&
-                                  validation.errors.name ? (
+                                validation.errors.name ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.name}
                                   </FormFeedback>
@@ -454,13 +435,13 @@ const NCFList = (props) => {
                                   value={validation.values.designation || ""}
                                   invalid={
                                     validation.touched.designation &&
-                                      validation.errors.designation
+                                    validation.errors.designation
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.designation &&
-                                  validation.errors.designation ? (
+                                validation.errors.designation ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.designation}
                                   </FormFeedback>
@@ -478,13 +459,13 @@ const NCFList = (props) => {
                                   value={validation.values.email || ""}
                                   invalid={
                                     validation.touched.email &&
-                                      validation.errors.email
+                                    validation.errors.email
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.email &&
-                                  validation.errors.email ? (
+                                validation.errors.email ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.email}
                                   </FormFeedback>
@@ -502,7 +483,7 @@ const NCFList = (props) => {
                                   value={validation.values.tags || []}
                                   invalid={
                                     validation.touched.tags &&
-                                      validation.errors.tags
+                                    validation.errors.tags
                                       ? true
                                       : false
                                   }
@@ -518,7 +499,7 @@ const NCFList = (props) => {
                                   <option>Css</option>
                                 </Input>
                                 {validation.touched.tags &&
-                                  validation.errors.tags ? (
+                                validation.errors.tags ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.tags}
                                   </FormFeedback>
@@ -536,13 +517,13 @@ const NCFList = (props) => {
                                   value={validation.values.projects || ""}
                                   invalid={
                                     validation.touched.projects &&
-                                      validation.errors.projects
+                                    validation.errors.projects
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.projects &&
-                                  validation.errors.projects ? (
+                                validation.errors.projects ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.projects}
                                   </FormFeedback>
@@ -564,7 +545,7 @@ const NCFList = (props) => {
                           </Row>
                         </Form>
                       </ModalBody>
-                    </Modal>
+                    </Modal> */}
                   </CardBody>
                 </Card>
               </Col>

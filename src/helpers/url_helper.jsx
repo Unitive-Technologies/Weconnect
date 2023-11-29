@@ -46,6 +46,8 @@ export const GET_OSDCONFIGURATIONLIST = "/osdconfigurationlist";
 export const GET_OSDTEMPLATE = "/osdtemplatelist";
 export const GET_LOCALCHANNELNUMBER = "/localchannelnumberlist";
 
+export const GET_NCF = "/ncf";
+
 export const GET_USERS = "/userslist";
 export const GET_USER_PROFILE = "/user";
 export const ADD_NEW_USER = "/add/user";
