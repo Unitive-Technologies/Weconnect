@@ -129,7 +129,7 @@ const LocalChannelNumberList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.createat}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.createdat}</p>
           );
         },
       },
