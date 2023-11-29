@@ -147,8 +147,8 @@ const DocumentUploadPolicyList = (props) => {
         ),
       },
       {
-        Header: "Title",
-        accessor: "title",
+        Header: "Name",
+        accessor: "name",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -166,32 +166,56 @@ const DocumentUploadPolicyList = (props) => {
         },
       },
       {
-        Header: "Caption",
-        accessor: "caption",
+        Header: "Code",
+        accessor: "code",
         filterable: true,
         Cell: (cellProps) => {
           // return <Email {...cellProps} />;
         },
       },
       {
-        Header: "Description",
-        accessor: "description",
+        Header: "Policy Start Date",
+        accessor: "policystartdate",
         filterable: true,
         Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
         },
       },
       {
-        Header: "Start Date",
-        accessor: "startdate",
+        Header: "Policy Upload Date",
+        accessor: "policyuploaddate",
         filterable: true,
         Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
         },
       },
       {
-        Header: "End date",
-        accessor: "enddate",
+        Header: "Initiated By",
+        accessor: "initiatedby",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "Approved By",
+        accessor: "approvedby",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "Financial Year",
+        accessor: "financialyear",
+        filterable: true,
+        Cell: (cellProps) => {
+          // return <Tags {...cellProps} />;
+        },
+      },
+      {
+        Header: "Remark",
+        accessor: "remark",
         filterable: true,
         Cell: (cellProps) => {
           // return <Tags {...cellProps} />;
@@ -399,13 +423,13 @@ const DocumentUploadPolicyList = (props) => {
                                   value={validation.values.name || ""}
                                   invalid={
                                     validation.touched.name &&
-                                    validation.errors.name
+                                      validation.errors.name
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.name &&
-                                validation.errors.name ? (
+                                  validation.errors.name ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.name}
                                   </FormFeedback>
@@ -425,13 +449,13 @@ const DocumentUploadPolicyList = (props) => {
                                   value={validation.values.designation || ""}
                                   invalid={
                                     validation.touched.designation &&
-                                    validation.errors.designation
+                                      validation.errors.designation
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.designation &&
-                                validation.errors.designation ? (
+                                  validation.errors.designation ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.designation}
                                   </FormFeedback>
@@ -449,13 +473,13 @@ const DocumentUploadPolicyList = (props) => {
                                   value={validation.values.email || ""}
                                   invalid={
                                     validation.touched.email &&
-                                    validation.errors.email
+                                      validation.errors.email
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.email &&
-                                validation.errors.email ? (
+                                  validation.errors.email ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.email}
                                   </FormFeedback>
@@ -473,7 +497,7 @@ const DocumentUploadPolicyList = (props) => {
                                   value={validation.values.tags || []}
                                   invalid={
                                     validation.touched.tags &&
-                                    validation.errors.tags
+                                      validation.errors.tags
                                       ? true
                                       : false
                                   }
@@ -489,7 +513,7 @@ const DocumentUploadPolicyList = (props) => {
                                   <option>Css</option>
                                 </Input>
                                 {validation.touched.tags &&
-                                validation.errors.tags ? (
+                                  validation.errors.tags ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.tags}
                                   </FormFeedback>
@@ -507,13 +531,13 @@ const DocumentUploadPolicyList = (props) => {
                                   value={validation.values.projects || ""}
                                   invalid={
                                     validation.touched.projects &&
-                                    validation.errors.projects
+                                      validation.errors.projects
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.projects &&
-                                validation.errors.projects ? (
+                                  validation.errors.projects ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.projects}
                                   </FormFeedback>

@@ -28,6 +28,7 @@ import { connectionschemelist } from "./connectionschemelist";
 import { bouquetlist, bouquetfieldtypes } from "./bouquetlist";
 import { localchannelnumberlist } from "./localchannelnumberlist";
 import { osdtemplatelist } from "./osdtemplatelist";
+import { documentuploadpolicylist } from './documentuploadpolicylist';
 
 export {
   userslist,
@@ -60,4 +61,5 @@ export {
   connectionschemelist,
   localchannelnumberlist,
   osdtemplatelist,
+  documentuploadpolicylist,
 };

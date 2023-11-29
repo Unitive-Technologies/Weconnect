@@ -251,6 +251,8 @@ export const getPackageList = () => get(url.GET_PACKAGELIST);
 export const getOSDConfiguration = () => get(url.GET_OSDCONFIGURATIONLIST);
 export const getOSDTemplate = () => get(url.GET_OSDTEMPLATE);
 export const getLocalChannelNumber = () => get(url.GET_LOCALCHANNELNUMBER);
+export const getDocumentUploadPolicy = () => get(url.GET_DOCUMENTUPLOADPOLICY);
+
 
 export const getDistributors = () => get(url.GET_DISTRIBUTORS);
 export const getLco = () => get(url.GET_LCO);

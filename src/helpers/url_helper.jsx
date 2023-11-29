@@ -45,6 +45,8 @@ export const GET_PACKAGELIST = "/packagelist";
 export const GET_OSDCONFIGURATIONLIST = "/osdconfigurationlist";
 export const GET_OSDTEMPLATE = "/osdtemplatelist";
 export const GET_LOCALCHANNELNUMBER = "/localchannelnumberlist";
+export const GET_DOCUMENTUPLOADPOLICY = "/documentuploadpolicylist";
+
 
 export const GET_NCF = "/ncf";
 

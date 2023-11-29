@@ -30,6 +30,7 @@ import {
   userhierarchy as userHier,
   schedulednotificationlist as schedulednotify,
   ncflist as ncfl,
+  documentuploadpolicylist as documentupload,
 } from "../../common/data";
 
 let users = [
@@ -415,6 +416,18 @@ const fakeBackend = () => {
           resolve([200, osdtem]);
         } else {
           reject([400, "Cannot get Osd template list"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_DOCUMENTUPLOADPOLICY).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (documentupload) {
+          resolve([200, documentupload]);
+        } else {
+          reject([400, "Cannot get Document Upload Policy list"]);
         }
       });
     });

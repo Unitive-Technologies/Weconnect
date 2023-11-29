@@ -36,6 +36,7 @@ import userHierarchy from "./userhierarchy/reducer";
 import appadbanner from "./appadbannerlist/reducer";
 import localChannelNumber from "./localchannelnumber/reducer";
 import ncf from "./ncflist/reducer";
+import documentuploadpolicy from "./documentuploadpolicy/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -71,6 +72,7 @@ const rootReducer = combineReducers({
   osdTemplate,
   localChannelNumber,
   ncf,
+  documentuploadpolicy,
 });
 
 export default rootReducer;
