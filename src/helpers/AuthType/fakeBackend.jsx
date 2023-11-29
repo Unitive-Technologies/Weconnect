@@ -26,7 +26,6 @@ import {
   appadbannerlist as appAdvertiseBan,
   osdconfigurationlist as osdconfig,
   osdtemplatelist as osdtem,
-  userhierarchy as userHier,
 } from "../../common/data";
 
 let users = [
