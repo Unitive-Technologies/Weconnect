@@ -19,8 +19,10 @@ import { channellist } from "./channellist";
 import { broadcasterbouquet } from "./broadcasterbouquet";
 import { packagelist } from "./packagelist";
 import { appadbannerlist } from "./appadbannerlist";
-import { osdconfigurationlist } from './osdconfigurationlist';
-import { osdtemplateList } from './osdtemplatelist;'
+import { osdconfigurationlist } from "./osdconfigurationlist";
+import { osdtemplatelist } from "./osdtemplatelist";
+import { userhierarchy } from "./userhierarchy";
+import { schedulednotificationlist } from "./schedulednotificationlist";
 
 export {
   userslist,
@@ -45,5 +47,7 @@ export {
   packagelist,
   appadbannerlist,
   osdconfigurationlist,
-  osdtemplateList,
+  osdtemplatelist,
+  userhierarchy,
+  schedulednotificationlist,
 };

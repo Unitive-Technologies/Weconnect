@@ -14,22 +14,20 @@ const convertUserHierarchyListObject = (userHierarchyList) => {
       ...userHierarchy,
       id: userHierarchy.id,
       name: userHierarchy.name,
-      login_id: userHierarchy.username,
-      mobile_no: userHierarchy.mobile_no,
+      code: userHierarchy.code,
       email: userHierarchy.email,
+      description: userHierarchy.description,
+      parent: userHierarchy.parent,
+      designation: userHierarchy.designation,
+      created_at: userHierarchy.created_at,
+      created_by: userHierarchy.created_by,
+      operationcount: userHierarchy.operationcount,
       status:
         userHierarchy.status === 1
           ? "ACTIVE"
           : userHierarchy.status === 0
-            ? "INACTIVE"
-            : "BLOCKED",
-      lco: userHierarchy.operator_lbl,
-      lco_code: userHierarchy.operator.code,
-      last_login_at: userHierarchy.last_login_ats
-        ? userHierarchy.last_login_at
-        : "NEVER LOGGED IN",
-
-      created_at: userHierarchy.created_at,
+          ? "INACTIVE"
+          : "BLOCKED",
     };
   });
 };

@@ -33,6 +33,7 @@ import {
   updateUser as onUpdateUser,
   deleteUser as onDeleteUser,
 } from "/src/store/users/actions";
+import { getUserHierarchy as onGetUserHierarchy } from "/src/store/actions";
 import { isEmpty } from "lodash";
 
 //redux
@@ -40,7 +41,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const CustomerUserList = (props) => {
+const UserHierarchyList = (props) => {
   //meta title
   document.title = "User Hierarchy List | VDigital";
 
@@ -99,20 +100,20 @@ const CustomerUserList = (props) => {
     },
   });
 
-  const selectContactsState = (state) => state.userHierarchy;
-  const ContactsProperties = createSelector(
-    selectContactsState,
-    (Contacts) => ({
-      users: Contacts.userHierarchy,
-      loading: Contacts.loading,
+  const selectUserHierarchyState = (state) => state.userHierarchy;
+  const UserHierarchyProperties = createSelector(
+    selectUserHierarchyState,
+    (userHierarchy) => ({
+      userHier: userHierarchy.userHierarchy,
+      loading: userHierarchy.loading,
     })
   );
 
-  const { users, loading } = useSelector(ContactsProperties);
+  const { userHier, loading } = useSelector(UserHierarchyProperties);
 
   useEffect(() => {
-    console.log("Users data in component:", users);
-  }, [users]);
+    console.log("Users data in component:", userHier);
+  }, [userHier]);
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
@@ -170,7 +171,9 @@ const CustomerUserList = (props) => {
         accessor: "code",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.code}</p>
+          );
         },
       },
       {
@@ -178,7 +181,9 @@ const CustomerUserList = (props) => {
         accessor: "email",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.email}</p>
+          );
         },
       },
       {
@@ -186,7 +191,11 @@ const CustomerUserList = (props) => {
         accessor: "description",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.description}
+            </p>
+          );
         },
       },
       {
@@ -194,7 +203,9 @@ const CustomerUserList = (props) => {
         accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.status}</p>
+          );
         },
       },
       {
@@ -202,7 +213,9 @@ const CustomerUserList = (props) => {
         accessor: "parent",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.parent}</p>
+          );
         },
       },
       {
@@ -210,7 +223,11 @@ const CustomerUserList = (props) => {
         accessor: "designation",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.designation}
+            </p>
+          );
         },
       },
       {
@@ -218,82 +235,94 @@ const CustomerUserList = (props) => {
         accessor: "operatorcount",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.operatorcount}
+            </p>
+          );
         },
       },
       {
         Header: "Created At",
-        accessor: "createdat",
+        accessor: "created_at",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_at}
+            </p>
+          );
         },
       },
       {
         Header: "Created By",
-        accessor: "createdBy",
+        accessor: "created_By",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
-        },
-      },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
           return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by}
+            </p>
           );
         },
       },
+      // {
+      //   Header: "Action",
+      //   Cell: (cellProps) => {
+      //     return (
+      //       <div className="d-flex gap-3">
+      //         <Link
+      //           to="#"
+      //           className="text-success"
+      //           onClick={() => {
+      //             const userData = cellProps.row.original;
+      //             handleUserClick(userData);
+      //           }}
+      //         >
+      //           <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
+      //           <UncontrolledTooltip placement="top" target="edittooltip">
+      //             Edit
+      //           </UncontrolledTooltip>
+      //         </Link>
+      //         <Link
+      //           to="#"
+      //           className="text-danger"
+      //           onClick={() => {
+      //             const userData = cellProps.row.original;
+      //             onClickDelete(userData);
+      //           }}
+      //         >
+      //           <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
+      //           <UncontrolledTooltip placement="top" target="deletetooltip">
+      //             Delete
+      //           </UncontrolledTooltip>
+      //         </Link>
+      //       </div>
+      //     );
+      //   },
+      // },
     ],
     []
   );
 
   useEffect(() => {
-    if (users && !users.length) {
-      dispatch(onGetUsers());
+    if (userHier && !userHier.length) {
+      dispatch(onGetUserHierarchy());
       setIsEdit(false);
     }
-  }, [dispatch, users]);
+  }, [dispatch, userHier]);
 
-  useEffect(() => {
-    setContact(users);
-    setIsEdit(false);
-  }, [users]);
+  // useEffect(() => {
+  //   setContact(users);
+  //   setIsEdit(false);
+  // }, [users]);
 
-  useEffect(() => {
-    if (!isEmpty(users) && !!isEdit) {
-      setContact(users);
-      setIsEdit(false);
-    }
-  }, [users]);
+  // useEffect(() => {
+  //   if (!isEmpty(users) && !!isEdit) {
+  //     setContact(users);
+  //     setIsEdit(false);
+  //   }
+  // }, [users]);
 
   const toggle = () => {
     setModal(!modal);
@@ -371,11 +400,11 @@ const CustomerUserList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("users:" + JSON.stringify(users))}
+                    {console.log("user hierarchy:" + JSON.stringify(userHier))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
-                      data={users}
+                      data={userHier}
                       isGlobalFilter={true}
                       isAddUserList={true}
                       isShowingPageLength={true}
@@ -387,7 +416,7 @@ const CustomerUserList = (props) => {
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
                     />
-                    <Modal isOpen={modal} toggle={toggle}>
+                    {/* <Modal isOpen={modal} toggle={toggle}>
                       <ModalHeader toggle={toggle} tag="h4">
                         {!!isEdit ? "Edit User" : "Add User"}
                       </ModalHeader>
@@ -548,7 +577,7 @@ const CustomerUserList = (props) => {
                           </Row>
                         </Form>
                       </ModalBody>
-                    </Modal>
+                    </Modal> */}
                   </CardBody>
                 </Card>
               </Col>
@@ -561,4 +590,4 @@ const CustomerUserList = (props) => {
   );
 };
 
-export default withRouter(CustomerUserList);
+export default withRouter(UserHierarchyList);

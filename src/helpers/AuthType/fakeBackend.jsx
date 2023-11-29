@@ -26,6 +26,7 @@ import {
   appadbannerlist as appAdvertiseBan,
   osdconfigurationlist as osdconfig,
   osdtemplate as osdtem,
+  userhierarchy as userHier,
 } from "../../common/data";
 
 let users = [
@@ -517,6 +518,19 @@ const fakeBackend = () => {
           resolve([200, appAdvertiseBan]);
         } else {
           reject([400, "Cannot get appAdvertiseBanner List"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_USERHIERARCHY).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (userHier) {
+          // Passing fake JSON data as response
+          resolve([200, userHier]);
+        } else {
+          reject([400, "Cannot get user hierarchy List"]);
         }
       });
     });
