@@ -26,6 +26,7 @@ import {
   appadbannerlist as appAdvertiseBan,
   osdconfigurationlist as osdconfig,
   osdtemplatelist as osdtem,
+  localchannelnumberlist as localnum,
   userhierarchy as userHier,
   schedulednotificationlist as schedulednotify,
 } from "../../common/data";
@@ -389,6 +390,19 @@ const fakeBackend = () => {
           resolve([200, osdconfig]);
         } else {
           reject([400, "Cannot get Osd configuration list"]);
+        }
+      });
+    });
+  });
+
+
+  mock.onGet(url.GET_LOCALCHANNELNUMBERLIST).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (localnum) {
+          resolve([200, localnum]);
+        } else {
+          reject([400, "Cannot get Local Channel Number list"]);
         }
       });
     });

@@ -26,6 +26,7 @@ import { schedulednotificationlist } from "./schedulednotificationlist";
 import { ncflist } from "./ncflist";
 import { connectionschemelist } from "./connectionschemelist";
 import { bouquetlist, bouquetfieldtypes } from "./bouquetlist";
+import { localchannelnumberlist } from './localchannelnumberlist';
 
 export {
   userslist,
@@ -57,4 +58,5 @@ export {
   bouquetlist,
   bouquetfieldtypes,
   connectionschemelist,
+  localchannelnumberlist,
 };

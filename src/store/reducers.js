@@ -34,6 +34,7 @@ import lco from "./lcolist/reducer";
 import schedulednotification from "./schedulednotificationlist/reducer";
 import userHierarchy from "./userhierarchy/reducer";
 import appadbanner from "./appadbannerlist/reducer";
+import localChannelNumber from "./localchannelnumber/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -67,6 +68,7 @@ const rootReducer = combineReducers({
   appadbanner,
   osdConfiguration,
   osdTemplate,
+  localChannelNumber,
 });
 
 export default rootReducer;

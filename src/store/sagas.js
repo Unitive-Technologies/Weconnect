@@ -31,6 +31,7 @@ import appAdBannerSaga from "./appadbannerlist/saga";
 import osdConfigurationSaga from "./OSDConfiguration/saga";
 import osdTemplateSaga from "./OSDTemplate/saga";
 import userHierarchySaga from "./userhierarchy/saga";
+import localChannelNumberSaga from "./localchannelnumber/saga";
 
 export default function* rootSaga() {
   yield all([
@@ -65,5 +66,6 @@ export default function* rootSaga() {
     fork(appAdBannerSaga),
     fork(osdTemplateSaga),
     fork(userHierarchySaga),
+    fork(localChannelNumberSaga),
   ]);
 }
