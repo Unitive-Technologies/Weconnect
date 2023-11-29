@@ -7,22 +7,22 @@ import { getOSDTemplateSuccess, getOSDTemplateFail } from "./actions";
 //Include Both Helper File with needed methods
 import { getOSDTemplate } from "../../helpers/fakebackend_helper";
 
-const convertOSDTemplateListObject = (osdTemplateList) => {
-  return osdTemplateList.map((osdTemplate) => {
+const convertOSDTemplateListObject = (osdTemplate) => {
+  return osdTemplate.map((osdTemp) => {
     return {
-      ...osdTemplate,
-      id: osdTemplate.id,
-      name: osdTemplate.name,
-      template_for_lbl: osdTemplate.template_for_lbl,
+      ...osdTemp,
+      id: osdTemp.id,
+      name: osdTemp.name,
+      template_for_lbl: osdTemp.template_for_lbl,
       status_lbl:
-        osdTemplate.status_lbl === 1
+        osdTemp.status_lbl === 1
           ? "ACTIVE"
-          : osdTemplate.status_lbl === 0
-            ? "INACTIVE"
-            : "BLOCKED",
-      operator_count: osdTemplate.operator_count,
-      created_at: osdTemplate.created_at,
-      created_by_lbl: osdTemplate.created_by_lbl,
+          : osdTemp.status_lbl === 0
+          ? "INACTIVE"
+          : "BLOCKED",
+      operator_count: osdTemp.operator_count,
+      created_at: osdTemp.created_at,
+      created_by_lbl: osdTemp.created_by_lbl,
     };
   });
 };

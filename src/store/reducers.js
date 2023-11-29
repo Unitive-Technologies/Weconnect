@@ -28,7 +28,7 @@ import channelList from "./channel/reducer";
 import broadcasterBouquetList from "./broadcasterbouquet/reducer";
 import packageList from "./packagelist/reducer";
 import osdConfiguration from "./OSDConfiguration/reducer";
-import OSDTemplate from "./OSDTemplate/reducer";
+import osdTemplate from "./OSDTemplate/reducer";
 import distributors from "./distributorslist/reducer";
 import lco from "./lcolist/reducer";
 import schedulednotification from "./schedulednotificationlist/reducer";
@@ -66,7 +66,7 @@ const rootReducer = combineReducers({
   userHierarchy,
   appadbanner,
   osdConfiguration,
-  OSDTemplate,
+  osdTemplate,
 });
 
 export default rootReducer;
