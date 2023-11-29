@@ -85,7 +85,7 @@ function* onAddNewUser({ payload: user }) {
   }
 }
 
-function* contactsSaga() {
+function* usersSaga() {
   yield takeEvery(GET_USERS, fetchUsers);
   yield takeEvery(GET_USER_PROFILE, fetchUserProfile);
   yield takeEvery(ADD_NEW_USER, onAddNewUser);
@@ -93,4 +93,4 @@ function* contactsSaga() {
   yield takeEvery(DELETE_USER, onDeleteUser);
 }
 
-export default contactsSaga;
+export default usersSaga;

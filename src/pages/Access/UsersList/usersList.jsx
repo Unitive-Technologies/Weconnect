@@ -47,22 +47,7 @@ const ContactsList = (props) => {
 
   const dispatch = useDispatch();
   const [user, setUser] = useState();
-  // validation
-  // const validation = useFormik({
-  //   // enableReinitialize : use this flag when initial values needs to be changed
-  //   enableReinitialize: true,
 
-  //   initialValues: {
-  //     username: '',
-  //     password: '',
-  //   },
-  //   validationSchema: Yup.object({
-  //     username: Yup.string().required("Please Enter Your username"),
-  //     password: Yup.string().required("Please Enter Your Password"),
-  //   }),
-  //   onSubmit: (values) => {
-  //   }
-  // });
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -99,35 +84,50 @@ const ContactsList = (props) => {
       confirmpassword: Yup.string().required("Please Enter Confirm Password"),
     }),
     onSubmit: (values) => {
-      if (isEdit) {
-        const updateUser = {
-          id: user.id,
-          name: values.name,
-          designation: values.designation,
-          tags: values.tags,
-          email: values.email,
-          projects: values.projects,
-        };
+      // if (isEdit) {
+      //   const updateUser = {
+      //     id: user.id,
+      //     name: values.name,
+      //     email: values.email,
+      //     mobile: values.mobile,
+      //     usertype: values.usertype,
+      //     status: values.status,
+      //     message: values.message,
+      //     role: values.role,
+      //     designation: values.designation,
+      //     grouppolicy: values.grouppolicy,
+      //     loginid: values.loginid,
+      //     password: values.password,
+      //     confirmpassword: values.confirmpassword,
+      //   };
 
-        // update user
-        dispatch(onUpdateUser(updateUser));
-        validation.resetForm();
-        setIsEdit(false);
-      } else {
-        const newUser = {
-          id: Math.floor(Math.random() * (30 - 20)) + 20,
-          name: values["name"],
-          designation: values["designation"],
-          email: values["email"],
-          tags: values["tags"],
-          projects: values["projects"],
-        };
-        // save new user
-        dispatch(onAddNewUser(newUser));
-        validation.resetForm();
-      }
+      //   // update user
+      //   dispatch(onUpdateUser(updateUser));
+      //   validation.resetForm();
+      //   setIsEdit(false);
+      // } else {
+      const newUser = {
+        id: Math.floor(Math.random() * (30 - 20)) + 20,
+        name: values["name"],
+        email: values["email"],
+        mobile: values["mobile"],
+        usertype: values["usertype"],
+        status: values["status"],
+        message: values["message"],
+        role: values["role"],
+        designation: values["designation"],
+        grouppolicy: values["grouppolicy"],
+        loginid: values["loginid"],
+        password: values["password"],
+        confirmpassword: values["confirmpassword"],
+      };
+      console.log("newUser:" + newUser);
+      // save new user
+      dispatch(onAddNewUser(newUser));
+      validation.resetForm();
       toggle();
     },
+    // toggle()
   });
 
   const selectContactsState = (state) => state.users;
@@ -470,10 +470,17 @@ const ContactsList = (props) => {
     setUser({
       id: user.id,
       name: user.name,
-      designation: user.designation,
       email: user.email,
-      tags: user.tags,
-      projects: user.projects,
+      mobile: user.mobile,
+      usertype: user.usertype,
+      status: user.status,
+      message: user.message,
+      role: user.role,
+      designation: user.designation,
+      grouppolicy: user.grouppolicy,
+      loginid: user.loginid,
+      password: user.password,
+      confirmpassword: user.confirmpassword,
     });
     setIsEdit(true);
 
@@ -536,7 +543,7 @@ const ContactsList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("users:" + JSON.stringify(users))}
+                    {/* {console.log("users:" + JSON.stringify(users))} */}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
@@ -650,11 +657,11 @@ const ContactsList = (props) => {
                                   onBlur={validation.handleBlur}
                                   value={validation.values.usertype || ""}
                                 >
-                                  <option>Select User Type</option>
-                                  <option>MSO</option>
-                                  <option>RO</option>
-                                  <option>Distributor</option>
-                                  <option>LCO</option>
+                                  <option value="">Select User Type</option>
+                                  <option value="1">MSO</option>
+                                  <option value="2">RO</option>
+                                  <option value="3">Distributor</option>
+                                  <option value="4">LCO</option>
                                 </Input>
                                 {validation.touched.usertype &&
                                 validation.errors.usertype ? (
@@ -675,10 +682,10 @@ const ContactsList = (props) => {
                                   onBlur={validation.handleBlur}
                                   value={validation.values.status || ""}
                                 >
-                                  <option>Select Status</option>
-                                  <option>Active</option>
-                                  <option>BLOCKED</option>
-                                  <option>In-Active</option>
+                                  <option value="">Select Status</option>
+                                  <option value="11">Active</option>
+                                  <option value="12">BLOCKED</option>
+                                  <option value="13">In-Active</option>
                                 </Input>
                                 {validation.touched.status &&
                                 validation.errors.status ? (
@@ -724,10 +731,10 @@ const ContactsList = (props) => {
                                   onBlur={validation.handleBlur}
                                   value={validation.values.role || ""}
                                 >
-                                  <option>Select Role</option>
-                                  <option>Administrator</option>
-                                  <option>Staff</option>
-                                  <option>User</option>
+                                  <option value="">Select Role</option>
+                                  <option value="21">Administrator</option>
+                                  <option value="22">Staff</option>
+                                  <option value="23">User</option>
                                 </Input>
                                 {validation.touched.role &&
                                 validation.errors.role ? (
@@ -749,8 +756,8 @@ const ContactsList = (props) => {
                                   onBlur={validation.handleBlur}
                                   value={validation.values.designation || ""}
                                 >
-                                  <option>Select Designation</option>
-                                  <option>Director</option>
+                                  <option value="">Select Designation</option>
+                                  <option value="dir">Director</option>
                                 </Input>
                                 {validation.touched.designation &&
                                 validation.errors.designation ? (
@@ -772,10 +779,10 @@ const ContactsList = (props) => {
                                   onBlur={validation.handleBlur}
                                   value={validation.values.grouppolicy || ""}
                                 >
-                                  <option>Select Group Policy</option>
-                                  {/* <option>Active</option>
-                                  <option>BLOCKED</option>
-                                  <option>In-Active</option> */}
+                                  <option value="">Select Group Policy</option>
+                                  <option value="A">Active</option>
+                                  <option value="B">BLOCKED</option>
+                                  <option value="C">In-Active</option>
                                 </Input>
                                 {validation.touched.grouppolicy &&
                                 validation.errors.grouppolicy ? (
