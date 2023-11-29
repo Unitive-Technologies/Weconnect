@@ -25,7 +25,7 @@ const convertNcfListObject = (ncflist) => {
       calculate_per_channel: ncf.calculate_per_channel,
       is_refundable: ncf.is_refundable === 1 ? "Yes" : "No",
       created_at: ncf.created_at,
-      created_by: ncf.created_by,
+      created_by: ncf.created_by === -1 ? "console" : "other",
     };
   });
 };
