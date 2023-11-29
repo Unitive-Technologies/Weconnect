@@ -23,6 +23,9 @@ import { osdconfigurationlist } from "./osdconfigurationlist";
 import { osdtemplatelist } from "./osdtemplatelist";
 import { userhierarchy } from "./userhierarchy";
 import { schedulednotificationlist } from "./schedulednotificationlist";
+import { ncflist } from "./ncflist";
+import { connectionschemelist } from "./connectionschemelist";
+import { bouquetlist, bouquetfieldtypes } from "./bouquetlist";
 
 export {
   userslist,
@@ -50,4 +53,8 @@ export {
   osdtemplatelist,
   userhierarchy,
   schedulednotificationlist,
+  ncflist,
+  bouquetlist,
+  bouquetfieldtypes,
+  connectionschemelist,
 };
