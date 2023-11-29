@@ -26,10 +26,9 @@ import lcoSaga from "./lcolist/saga";
 import scheduledNotificationSaga from "./schedulednotificationlist/saga";
 import channelListSaga from "./channel/saga";
 import broadcasterBouquetListSaga from "./broadcasterbouquet/saga";
-
 import packageListSaga from "./packagelist/saga";
-
 import appAdBannerSaga from "./appadbannerlist/saga";
+import osdConfiguration from "./OSDConfiguration/reducer";
 
 export default function* rootSaga() {
   yield all([
@@ -59,9 +58,8 @@ export default function* rootSaga() {
     fork(scheduledNotificationSaga),
     fork(channelListSaga),
     fork(broadcasterBouquetListSaga),
-
     fork(packageListSaga),
-
+    fork(osdConfiguration),
     fork(appAdBannerSaga),
   ]);
 }
