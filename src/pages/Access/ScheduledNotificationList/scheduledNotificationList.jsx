@@ -33,6 +33,7 @@ import {
   updateUser as onUpdateUser,
   deleteUser as onDeleteUser,
 } from "/src/store/users/actions";
+import { getScheduledNotification as onGetScheduledNotification } from "/src/store/actions";
 import { isEmpty } from "lodash";
 
 //redux
@@ -40,79 +41,82 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const CustomerUserList = (props) => {
+const ScheduledNotificationList = (props) => {
   //meta title
   document.title = "Scheduled Notification List | VDigital";
 
   const dispatch = useDispatch();
   const [contact, setContact] = useState();
   // validation
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
+  // const validation = useFormik({
+  //   // enableReinitialize : use this flag when initial values needs to be changed
+  //   enableReinitialize: true,
 
-    initialValues: {
-      name: (contact && contact.name) || "",
-      designation: (contact && contact.designation) || "",
-      tags: (contact && contact.tags) || "",
-      email: (contact && contact.email) || "",
-      projects: (contact && contact.projects) || "",
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
-      designation: Yup.string().required("Please Enter Your Designation"),
-      tags: Yup.array().required("Please Enter Tag"),
-      email: Yup.string()
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-        .required("Please Enter Your Email"),
-      projects: Yup.string().required("Please Enter Your Project"),
-    }),
-    onSubmit: (values) => {
-      if (isEdit) {
-        const updateUser = {
-          id: contact.id,
-          name: values.name,
-          designation: values.designation,
-          tags: values.tags,
-          email: values.email,
-          projects: values.projects,
-        };
+  //   initialValues: {
+  //     name: (contact && contact.name) || "",
+  //     designation: (contact && contact.designation) || "",
+  //     tags: (contact && contact.tags) || "",
+  //     email: (contact && contact.email) || "",
+  //     projects: (contact && contact.projects) || "",
+  //   },
+  //   validationSchema: Yup.object({
+  //     name: Yup.string().required("Please Enter Your Name"),
+  //     designation: Yup.string().required("Please Enter Your Designation"),
+  //     tags: Yup.array().required("Please Enter Tag"),
+  //     email: Yup.string()
+  //       .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
+  //       .required("Please Enter Your Email"),
+  //     projects: Yup.string().required("Please Enter Your Project"),
+  //   }),
+  //   onSubmit: (values) => {
+  //     if (isEdit) {
+  //       const updateUser = {
+  //         id: contact.id,
+  //         name: values.name,
+  //         designation: values.designation,
+  //         tags: values.tags,
+  //         email: values.email,
+  //         projects: values.projects,
+  //       };
 
-        // update user
-        dispatch(onUpdateUser(updateUser));
-        validation.resetForm();
-        setIsEdit(false);
-      } else {
-        const newUser = {
-          id: Math.floor(Math.random() * (30 - 20)) + 20,
-          name: values["name"],
-          designation: values["designation"],
-          email: values["email"],
-          tags: values["tags"],
-          projects: values["projects"],
-        };
-        // save new user
-        dispatch(onAddNewUser(newUser));
-        validation.resetForm();
-      }
-      toggle();
-    },
-  });
+  //       // update user
+  //       dispatch(onUpdateUser(updateUser));
+  //       validation.resetForm();
+  //       setIsEdit(false);
+  //     } else {
+  //       const newUser = {
+  //         id: Math.floor(Math.random() * (30 - 20)) + 20,
+  //         name: values["name"],
+  //         designation: values["designation"],
+  //         email: values["email"],
+  //         tags: values["tags"],
+  //         projects: values["projects"],
+  //       };
+  //       // save new user
+  //       dispatch(onAddNewUser(newUser));
+  //       validation.resetForm();
+  //     }
+  //     toggle();
+  //   },
+  // });
 
-  const selectContactsState = (state) => state.contacts;
-  const ContactsProperties = createSelector(
-    selectContactsState,
-    (Contacts) => ({
-      users: Contacts.users,
-      loading: Contacts.loading,
+  const selectScheduledNotificationState = (state) =>
+    state.schedulednotification;
+  const ScheduledNotificationProperties = createSelector(
+    selectScheduledNotificationState,
+    (schedulednotification) => ({
+      schedulednotify: schedulednotification.schedulednotification,
+      loading: schedulednotification.loading,
     })
   );
 
-  const { users, loading } = useSelector(ContactsProperties);
+  const { schedulednotify, loading } = useSelector(
+    ScheduledNotificationProperties
+  );
 
   useEffect(() => {
-    console.log("Users data in component:", users);
-  }, [users]);
+    console.log("Users data in component:", schedulednotify);
+  }, [schedulednotify]);
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
@@ -170,7 +174,9 @@ const CustomerUserList = (props) => {
         accessor: "content",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.content}</p>
+          );
         },
       },
       {
@@ -178,7 +184,9 @@ const CustomerUserList = (props) => {
         accessor: "type",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.type}</p>
+          );
         },
       },
       {
@@ -186,7 +194,11 @@ const CustomerUserList = (props) => {
         accessor: "starttime",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.starttime}
+            </p>
+          );
         },
       },
       {
@@ -194,7 +206,9 @@ const CustomerUserList = (props) => {
         accessor: "endtime",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.endtime}</p>
+          );
         },
       },
       {
@@ -202,15 +216,21 @@ const CustomerUserList = (props) => {
         accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.status}</p>
+          );
         },
       },
       {
         Header: "Broadcast Status",
-        accessor: "broadcast status",
+        accessor: "broadcast_status",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.broadcast_status}
+            </p>
+          );
         },
       },
       {
@@ -218,7 +238,11 @@ const CustomerUserList = (props) => {
         accessor: "usercount",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.usercount}
+            </p>
+          );
         },
       },
       {
@@ -226,7 +250,11 @@ const CustomerUserList = (props) => {
         accessor: "scheduledat",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.scheduledat}
+            </p>
+          );
         },
       },
       {
@@ -234,7 +262,11 @@ const CustomerUserList = (props) => {
         accessor: "scheduledby",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.sheduledby}
+            </p>
+          );
         },
       },
       {
@@ -277,23 +309,23 @@ const CustomerUserList = (props) => {
   );
 
   useEffect(() => {
-    if (users && !users.length) {
-      dispatch(onGetUsers());
+    if (schedulednotify && !schedulednotify.length) {
+      dispatch(onGetScheduledNotification());
       setIsEdit(false);
     }
-  }, [dispatch, users]);
+  }, [dispatch, schedulednotify]);
 
-  useEffect(() => {
-    setContact(users);
-    setIsEdit(false);
-  }, [users]);
+  // useEffect(() => {
+  //   setContact(users);
+  //   setIsEdit(false);
+  // }, [users]);
 
-  useEffect(() => {
-    if (!isEmpty(users) && !!isEdit) {
-      setContact(users);
-      setIsEdit(false);
-    }
-  }, [users]);
+  // useEffect(() => {
+  //   if (!isEmpty(users) && !!isEdit) {
+  //     setContact(users);
+  //     setIsEdit(false);
+  //   }
+  // }, [users]);
 
   const toggle = () => {
     setModal(!modal);
@@ -374,11 +406,14 @@ const CustomerUserList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("users:" + JSON.stringify(users))}
+                    {console.log(
+                      "Scheduled notification:" +
+                        JSON.stringify(schedulednotify)
+                    )}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
-                      data={users}
+                      data={schedulednotify}
                       isGlobalFilter={true}
                       isAddUserList={true}
                       isShowingPageLength={true}
@@ -390,7 +425,7 @@ const CustomerUserList = (props) => {
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
                     />
-                    <Modal isOpen={modal} toggle={toggle}>
+                    {/* <Modal isOpen={modal} toggle={toggle}>
                       <ModalHeader toggle={toggle} tag="h4">
                         {!!isEdit ? "Edit User" : "Add User"}
                       </ModalHeader>
@@ -551,7 +586,7 @@ const CustomerUserList = (props) => {
                           </Row>
                         </Form>
                       </ModalBody>
-                    </Modal>
+                    </Modal> */}
                   </CardBody>
                 </Card>
               </Col>
@@ -564,4 +599,4 @@ const CustomerUserList = (props) => {
   );
 };
 
-export default withRouter(CustomerUserList);
+export default withRouter(ScheduledNotificationList);

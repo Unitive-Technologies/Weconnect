@@ -10,29 +10,21 @@ import {
 //Include Both Helper File with needed methods
 import { getScheduledNotification } from "../../helpers/fakebackend_helper";
 
-const convertScheduledNotificationListObject = (ScheduleNotificationList) => {
+const convertScheduledNotificationListObject = (ScheduledNotificationList) => {
   // Notification Template has more data than what we need, we need to convert each of the Notification Template user object in the list with needed colums of the table
-  return ScheuledNotificationList.map((scheduledNotification) => {
+  return ScheduledNotificationList.map((scheduledNotification) => {
     return {
       ...scheduledNotification,
       id: scheduledNotification.id,
       name: scheduledNotification.name,
-      code: scheduledNotification.code,
-      contact_person: scheduledNotification.contact_person,
-      addr: scheduledNotification.addr,
-      mobile_no: scheduledNotification.mobile_no,
-      state_lbl: scheduledNotification.state_lbl,
-      district_lbl: scheduledNotification.district_lbl,
-      created_at: scheduledNotification.created_at,
-      created_by: scheduledNotification.created_by,
-      city_lbl: scheduledNotification.city_lbl,
-      gstno: scheduledNotification.gstno,
-      panno: scheduledNotification.panno,
-      username: scheduledNotification.username,
-      distributor_lbl: scheduledNotification.distributor_lbl,
-      branch_code_lbl: scheduledNotification.branch_code_lbl,
-      branch_lbl: scheduledNotification.branch_lbl,
-      balance: scheduledNotification.balance,
+      content: scheduledNotification.content,
+      type: scheduledNotification.type,
+      starttime: scheduledNotification.starttime,
+      endtime: scheduledNotification.endtime,
+      broadcast_status: scheduledNotification.broadcast_status,
+      usercount: scheduledNotification.usercount,
+      scheduledat: scheduledNotification.created_at,
+      scheduledby: scheduledNotification.created_by,
       status:
         scheduledNotification.status === 1
           ? "ACTIVE"

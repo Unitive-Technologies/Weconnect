@@ -26,6 +26,8 @@ import {
   appadbannerlist as appAdvertiseBan,
   osdconfigurationlist as osdconfig,
   osdtemplatelist as osdtem,
+  userhierarchy as userHier,
+  schedulednotificationlist as schedulednotify,
 } from "../../common/data";
 
 let users = [
@@ -530,6 +532,19 @@ const fakeBackend = () => {
           resolve([200, userHier]);
         } else {
           reject([400, "Cannot get user hierarchy List"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_SCHEDULEDNOTIFICATION).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (schedulednotify) {
+          // Passing fake JSON data as response
+          resolve([200, schedulednotify]);
+        } else {
+          reject([400, "Cannot get scheduled notification List"]);
         }
       });
     });

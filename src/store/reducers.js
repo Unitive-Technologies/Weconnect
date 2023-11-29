@@ -27,11 +27,11 @@ import languageList from "./language/reducer";
 import channelList from "./channel/reducer";
 import broadcasterBouquetList from "./broadcasterbouquet/reducer";
 import packageList from "./packagelist/reducer";
-import osdConfiguration from './OSDConfiguration/reducer'
+import osdConfiguration from "./OSDConfiguration/reducer";
 import OSDTemplate from "./OSDTemplate/reducer";
 import distributors from "./distributorslist/reducer";
 import lco from "./lcolist/reducer";
-import scheduledNotification from "./schedulednotificationlist/reducer";
+import schedulednotification from "./schedulednotificationlist/reducer";
 import userHierarchy from "./userhierarchy/reducer";
 import appadbanner from "./appadbannerlist/reducer";
 
@@ -62,7 +62,7 @@ const rootReducer = combineReducers({
   district,
   city,
   lco,
-  scheduledNotification,
+  schedulednotification,
   userHierarchy,
   appadbanner,
   osdConfiguration,
