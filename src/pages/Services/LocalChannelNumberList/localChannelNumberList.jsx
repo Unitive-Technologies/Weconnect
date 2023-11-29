@@ -27,7 +27,7 @@ import { Email, Tags, Projects } from "./localChannelNumberListCol";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
 
-import { getLocalChannelNumber as onGetLocalChannelNumber } from "/src/store/actions";
+import { getLocalChannelNumber as onGetLocalChannelNumber } from "/src/store/localchannelnumber/actions";
 
 import { isEmpty } from "lodash";
 
@@ -43,6 +43,7 @@ const LocalChannelNumberList = (props) => {
   const dispatch = useDispatch();
 
   const selectLocalChannelNumberState = (state) => state.localChannelNumber;
+
   const localChannelNumberProperties = createSelector(
     selectLocalChannelNumberState,
     (localChannelNumber) => ({
@@ -54,7 +55,7 @@ const LocalChannelNumberList = (props) => {
   const { localNum, loading } = useSelector(localChannelNumberProperties);
 
   useEffect(() => {
-    console.log("Designation data in component:", localNum);
+    console.log("LCN data in component:", localNum);
   }, [localNum]);
   const [isLoading, setLoading] = useState(loading);
 
@@ -89,7 +90,9 @@ const LocalChannelNumberList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.channelname}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.channelname}
+            </p>
           );
         },
       },
@@ -99,7 +102,9 @@ const LocalChannelNumberList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.genrename}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.genrename}
+            </p>
           );
         },
       },
@@ -109,7 +114,9 @@ const LocalChannelNumberList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.localchannelnumber}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.localchannelnumber}
+            </p>
           );
         },
       },
@@ -129,7 +136,9 @@ const LocalChannelNumberList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.createdat}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.createdat}
+            </p>
           );
         },
       },
@@ -270,7 +279,7 @@ const LocalChannelNumberList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("users:" + JSON.stringify(localNum))}
+                    {console.log("LCN List:" + JSON.stringify(localNum))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}

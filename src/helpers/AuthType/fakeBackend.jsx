@@ -395,8 +395,7 @@ const fakeBackend = () => {
     });
   });
 
-
-  mock.onGet(url.GET_LOCALCHANNELNUMBERLIST).reply(() => {
+  mock.onGet(url.GET_LOCALCHANNELNUMBER).reply(() => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (localnum) {

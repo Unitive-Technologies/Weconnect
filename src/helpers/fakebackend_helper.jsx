@@ -252,8 +252,6 @@ export const getOSDConfiguration = () => get(url.GET_OSDCONFIGURATIONLIST);
 export const getOSDTemplate = () => get(url.GET_OSDTEMPLATE);
 export const getLocalChannelNumber = () => get(url.GET_LOCALCHANNELNUMBER);
 
-
-
 export const getDistributors = () => get(url.GET_DISTRIBUTORS);
 export const getLco = () => get(url.GET_LCO);
 export const getAppAdBanner = () => get(url.GET_APPADBANNER);
