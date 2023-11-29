@@ -28,7 +28,8 @@ import channelListSaga from "./channel/saga";
 import broadcasterBouquetListSaga from "./broadcasterbouquet/saga";
 import packageListSaga from "./packagelist/saga";
 import appAdBannerSaga from "./appadbannerlist/saga";
-import osdConfiguration from "./OSDConfiguration/reducer";
+import osdConfigurationSaga from "./OSDConfiguration/saga"
+import osdTemplateSaga from "./OSDTemplate/saga";
 
 export default function* rootSaga() {
   yield all([
@@ -59,7 +60,8 @@ export default function* rootSaga() {
     fork(channelListSaga),
     fork(broadcasterBouquetListSaga),
     fork(packageListSaga),
-    fork(osdConfiguration),
+    fork(osdConfigurationSaga),
     fork(appAdBannerSaga),
+    fork(osdTemplateSaga),
   ]);
 }

@@ -24,6 +24,8 @@ import {
   broadcasterbouquet as broadcastbouquet,
   packagelist as packlist,
   appadbannerlist as appAdvertiseBan,
+  osdconfigurationlist as osdconfig,
+  osdtemplate as osdtem,
 } from "../../common/data";
 
 let users = [
@@ -365,6 +367,7 @@ const fakeBackend = () => {
       });
     });
   });
+
   mock.onGet(url.GET_PACKAGELIST).reply(() => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -376,6 +379,31 @@ const fakeBackend = () => {
       });
     });
   });
+
+  mock.onGet(url.GET_OSDCONFIGURATIONLIST).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (osdconfig) {
+          resolve([200, osdconfig]);
+        } else {
+          reject([400, "Cannot get Osd configuration list"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_OSDTEMPLATELIST).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (osdtem) {
+          resolve([200, osdtem]);
+        } else {
+          reject([400, "Cannot get Osd template list"]);
+        }
+      });
+    });
+  });
+
   mock.onGet(url.GET_REGIONALOFFICE).reply(() => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

@@ -28,6 +28,7 @@ export * from "./channel/actions";
 export * from "./broadcasterbouquet/actions";
 export * from "./packagelist/actions";
 export * from './OSDConfiguration/actions'
+export * from './OSDTemplate/actions'
 
 export * from "./distributorslist/actions";
 export * from "./lcolist/actions";

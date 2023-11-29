@@ -15,19 +15,16 @@ const convertOSDConfigurationListObject = (osdConfigurationList) => {
       id: osdConfiguration.id,
       name: osdConfiguration.name,
       cas_code: osdConfiguration.cas_code,
-      status:
+      status_lbl:
         osdConfiguration.status === 1
           ? "ACTIVE"
-          : osdConfiguration.status === 0
+          : osdConfiguration.status_lbl === 0
             ? "INACTIVE"
             : "BLOCKED",
       is_reserved_lbl: osdConfiguration.is_reserved_lbl,
       type_lbl: osdConfiguration.type_lbl,
       start_time: osdConfiguration.start_time,
       end_time: osdConfiguration.end_time,
-      last_login_at: osdConfiguration.last_login_ats
-        ? osdConfiguration.last_login_at
-        : "NEVER LOGGED IN",
       created_at: osdConfiguration.created_at,
       created_by_lbl: osdConfiguration.created_by_lbl,
     };

@@ -248,6 +248,10 @@ export const getChannelList = () => get(url.GET_CHANNELLIST);
 export const getBroadcasterBouquetList = () =>
   get(url.GET_BROADCASTERBOUQUETLIST);
 export const getPackageList = () => get(url.GET_PACKAGELIST);
+export const getOSDConfiguration = () => get(url.GET_OSDCONFIGURATIONLIST);
+export const getOSDTemplate = () => get(url.GET_OSDTEMPLATE);
+
+
 
 export const getDistributors = () => get(url.GET_DISTRIBUTORS);
 export const getLco = () => get(url.GET_LCO);

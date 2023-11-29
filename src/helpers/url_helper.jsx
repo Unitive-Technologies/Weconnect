@@ -41,6 +41,8 @@ export const GET_LANGUAGELIST = "/languagelist";
 export const GET_CHANNELLIST = "/channellist";
 export const GET_BROADCASTERBOUQUETLIST = "/broadcasterbouquet";
 export const GET_PACKAGELIST = "/packagelist";
+export const GET_OSDCONFIGURATIONLIST = '/osdconfigurationlist'
+export const GET_OSDTEMPLATE = '/osdtemplatelist'
 
 export const GET_USERS = "/userslist";
 export const GET_USER_PROFILE = "/user";
