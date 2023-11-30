@@ -261,6 +261,7 @@ export const getNcf = () => get(url.GET_NCF);
 export const getBouquet = () => get(url.GET_BOUQUET);
 
 export const getCompanyList = () => get(url.GET_COMPANYLIST);
+export const getSMSMessageTempList = () => get(url.GET_SMSMESSAGETEMPLIST);
 // add user
 export const addNewUser = (user) => post(url.ADD_NEW_USER, user);
 

@@ -38,6 +38,7 @@ import localChannelNumber from "./localchannelnumber/reducer";
 import ncf from "./ncflist/reducer";
 import bouquet from "./bouquetlist/reducer";
 import documentUploadPolicy from "./documentuploadpolicy/reducer";
+import smsmessagetemp from "./smsmessage/reducer";
 
 import companylist from "./companylist/reducer";
 
@@ -77,7 +78,7 @@ const rootReducer = combineReducers({
   ncf,
   bouquet,
   documentUploadPolicy,
-
+  smsmessagetemp,
   companylist,
 });
 

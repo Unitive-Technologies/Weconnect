@@ -31,6 +31,7 @@ export * from "./OSDConfiguration/actions";
 export * from "./OSDTemplate/actions";
 export * from "./localchannelnumber/actions";
 export * from "./documentuploadpolicy/actions";
+export * from "./smsmessage/actions";
 
 export * from "./distributorslist/actions";
 export * from "./lcolist/actions";

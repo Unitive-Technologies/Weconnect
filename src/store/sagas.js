@@ -35,7 +35,7 @@ import localChannelNumberSaga from "./localchannelnumber/saga";
 import ncfSaga from "./ncflist/saga";
 import bouquetSaga from "./bouquetlist/saga";
 import documentUploadPolicySaga from "./documentuploadpolicy/saga";
-
+import smsMessageTempListSaga from "./smsmessage/saga";
 import companyListSaga from "./companylist/saga";
 
 export default function* rootSaga() {
@@ -75,6 +75,7 @@ export default function* rootSaga() {
     fork(ncfSaga),
     fork(documentUploadPolicySaga),
     fork(bouquetSaga),
+    fork(smsMessageTempListSaga),
     fork(companyListSaga),
   ]);
 }

@@ -30,7 +30,7 @@ import { localchannelnumberlist } from "./localchannelnumberlist";
 import { osdtemplatelist } from "./osdtemplatelist";
 
 import { documentuploadpolicylist } from "./documentuploadpolicy";
-
+import { smsmsgtemplatelist } from "./smsmsgtemplatelist";
 import { companylist } from "./companylist";
 
 export {
@@ -65,5 +65,6 @@ export {
   localchannelnumberlist,
   osdtemplatelist,
   documentuploadpolicylist,
+  smsmsgtemplatelist,
   companylist,
 };
