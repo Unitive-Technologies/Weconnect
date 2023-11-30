@@ -30,7 +30,7 @@ export * from "./packagelist/actions";
 export * from "./OSDConfiguration/actions";
 export * from "./OSDTemplate/actions";
 export * from "./localchannelnumber/actions";
-export * from './documentuploadpolicy/actions'
+export * from "./documentuploadpolicy/actions";
 
 export * from "./distributorslist/actions";
 export * from "./lcolist/actions";

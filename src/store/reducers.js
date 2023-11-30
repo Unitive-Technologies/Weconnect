@@ -37,7 +37,7 @@ import appadbanner from "./appadbannerlist/reducer";
 import localChannelNumber from "./localchannelnumber/reducer";
 import ncf from "./ncflist/reducer";
 import bouquet from "./bouquetlist/reducer";
-import documentuploadpolicy from "./documentuploadpolicy/reducer";
+import documentUploadPolicy from "./documentuploadpolicy/reducer";
 
 import companylist from "./companylist/reducer";
 
@@ -76,7 +76,7 @@ const rootReducer = combineReducers({
   localChannelNumber,
   ncf,
   bouquet,
-  documentuploadpolicy,
+  documentUploadPolicy,
 
   companylist,
 });

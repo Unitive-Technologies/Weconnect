@@ -6,59 +6,47 @@ const Name = (cell) => {
   return cell.value ? cell.value : "";
 };
 
-const Email = (cell) => {
+const Code = (cell) => {
+  return cell.value ? cell.value : "";
+};
+const PolicyStart = (cell) => {
+  return cell.value ? cell.value : "";
+};
+const PolicyUpload = (cell) => {
+  return cell.value ? cell.value : "";
+};
+const Status = (cell) => {
+  return cell.value ? cell.value : "";
+};
+const Financial = (cell) => {
+  return cell.value ? cell.value : "";
+};
+const Remark = (cell) => {
+  return cell.value ? cell.value : "";
+};
+const Initiated = (cell) => {
+  return cell.value ? cell.value : "";
+};
+const Approved = (cell) => {
+  return cell.value ? cell.value : "";
+};
+const CreatedAt = (cell) => {
+  return cell.value ? cell.value : "";
+};
+const CreatedBy = (cell) => {
   return cell.value ? cell.value : "";
 };
 
-const Tags = (cell) => {
-  return (
-    <>
-      {map(
-        cell.value,
-        (tag, index) =>
-          index < 2 && (
-            <Link
-              to="#"
-              className="badge badge-soft-primary font-size-11 m-1"
-              key={"_skill_" + cell.value + index}
-            >
-              {tag}
-            </Link>
-          )
-      )}
-      {size(cell.value) > 2 && (
-        <Link
-          to="#"
-          className="badge badge-soft-primary font-size-11 m-1"
-          key={"_skill_" + cell.value}
-        >
-          {size(cell.value) - 1} + more
-        </Link>
-      )}
-    </>
-  );
+export {
+  Name,
+  Code,
+  PolicyStart,
+  PolicyUpload,
+  Status,
+  Financial,
+  Remark,
+  Initiated,
+  Approved,
+  CreatedAt,
+  CreatedBy,
 };
-
-const Projects = (cell) => {
-  return cell.value ? cell.value : "";
-};
-
-const Img = (cell) => {
-  return (
-    <>
-      {!cell.value ? (
-        <div className="avatar-xs">
-          <span className="avatar-title rounded-circle">
-            {cell.data[0].name.charAt(0)}
-          </span>
-        </div>
-      ) : (
-        <div>
-          <img className="rounded-circle avatar-xs" src={cell.value} alt="" />
-        </div>
-      )}
-    </>
-  );
-};
-
-export { Name, Email, Tags, Projects, Img };

@@ -12,7 +12,7 @@ const INIT_STATE = {
 const DocumentUploadPolicy = (state = INIT_STATE, action) => {
   switch (action.type) {
     case GET_DOCUMENTUPLOADPOLICY_SUCCESS:
-      console.log("Local Channel Number data in reducer:", action.payload);
+      console.log("Document Upload data in reducer:", action.payload);
       return {
         ...state,
         documentUploadPolicy: action.payload,
