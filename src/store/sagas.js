@@ -39,7 +39,7 @@ import smsMessageTempListSaga from "./smsmessage/saga";
 import companyListSaga from "./companylist/saga";
 
 import connectionSchemeSaga from "./connectionschemelist/saga";
-
+import complaintCategorySaga from "./complaintcategorylist/saga";
 import brandListSaga from "./brandlist/saga";
 
 export default function* rootSaga() {
@@ -83,7 +83,7 @@ export default function* rootSaga() {
     fork(companyListSaga),
 
     fork(connectionSchemeSaga),
-
+    fork(complaintCategorySaga),
     fork(brandListSaga),
   ]);
 }

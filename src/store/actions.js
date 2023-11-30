@@ -44,3 +44,4 @@ export * from "./companylist/actions";
 export * from "./brandlist/actions";
 export * from "./bouquetlist/actions";
 export * from "./connectionschemelist/actions";
+export * from "./complaintcategorylist/actions";

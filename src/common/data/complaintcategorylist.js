@@ -1,7 +1,7 @@
 const complaintcategorylist = [
   {
     id: 3,
-    name: "STB Power Issue",
+    name: "STB won't Power Issue",
     status: 1,
     showonweb: 1,
     description: "STB Power Issue",
@@ -12,6 +12,7 @@ const complaintcategorylist = [
     status_lbl: "Active",
     created_by_lbl: "my mso(mso)",
     showonweb_lbl: "Active",
+    category_lbl: "STB Power Issue",
   },
 ];
 
