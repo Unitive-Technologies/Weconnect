@@ -37,7 +37,10 @@ import bouquetSaga from "./bouquetlist/saga";
 import documentUploadPolicySaga from "./documentuploadpolicy/saga";
 import smsMessageTempListSaga from "./smsmessage/saga";
 import companyListSaga from "./companylist/saga";
+
 import connectionSchemeSaga from "./connectionschemelist/saga";
+
+import brandListSaga from "./brandlist/saga";
 
 export default function* rootSaga() {
   yield all([
@@ -78,6 +81,9 @@ export default function* rootSaga() {
     fork(bouquetSaga),
     fork(smsMessageTempListSaga),
     fork(companyListSaga),
+
     fork(connectionSchemeSaga),
+
+    fork(brandListSaga),
   ]);
 }

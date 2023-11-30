@@ -32,9 +32,12 @@ import { osdtemplatelist } from "./osdtemplatelist";
 import { documentuploadpolicylist } from "./documentuploadpolicy";
 import { smsmsgtemplatelist } from "./smsmsgtemplatelist";
 import { companylist } from "./companylist";
+
 import { complaintcategorylist } from "./complaintcategorylist";
 import { complaintsubcategorylist } from "./complaintsubcategorylist";
 import { configurationuploadlist } from "./configurationuploadlogs";
+
+import { brandlist } from "./brandlist";
 
 export {
   userslist,
@@ -73,4 +76,5 @@ export {
   complaintcategorylist,
   complaintsubcategorylist,
   configurationuploadlist,
+  brandlist,
 };

@@ -35,6 +35,7 @@ import {
   bouquetlist as bouquets,
   smsmsgtemplatelist as smsmsg,
   connectionschemelist as connectscheme,
+  brandlist as brand,
 } from "../../common/data";
 
 let users = [
@@ -606,6 +607,20 @@ const fakeBackend = () => {
       });
     });
   });
+
+  mock.onGet(url.GET_BRANDLIST).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (brand) {
+          // Passing fake JSON data as response
+          resolve([200, brand]);
+        } else {
+          reject([400, "Cannot get Brand List"]);
+        }
+      });
+    });
+  });
+
   mock.onGet(url.GET_SMSMESSAGETEMPLIST).reply(() => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

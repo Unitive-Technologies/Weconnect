@@ -262,6 +262,7 @@ export const getBouquet = () => get(url.GET_BOUQUET);
 export const getConnectionScheme = () => get(url.GET_CONNECTIONSCHEME);
 
 export const getCompanyList = () => get(url.GET_COMPANYLIST);
+export const getBrandList = () => get(url.GET_BRANDLIST);
 export const getSMSMessageTempList = () => get(url.GET_SMSMESSAGETEMPLIST);
 // add user
 export const addNewUser = (user) => post(url.ADD_NEW_USER, user);

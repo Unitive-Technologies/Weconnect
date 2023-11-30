@@ -26,7 +26,7 @@ const convertCompanyListObject = (companylist) => {
       pan_no: company.pan_no,
       status: company.status,
       created_at: company.created_at,
-      created_by: company.created_at,
+      created_by: company.created_by,
     };
   });
 };

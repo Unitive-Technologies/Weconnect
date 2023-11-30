@@ -41,6 +41,7 @@ import documentUploadPolicy from "./documentuploadpolicy/reducer";
 import smsmessagetemp from "./smsmessage/reducer";
 import connectionscheme from "./connectionschemelist/reducer";
 import companylist from "./companylist/reducer";
+import brandlist from "./brandlist/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -81,6 +82,7 @@ const rootReducer = combineReducers({
   smsmessagetemp,
   connectionscheme,
   companylist,
+  brandlist,
 });
 
 export default rootReducer;
