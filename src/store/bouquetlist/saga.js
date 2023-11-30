@@ -15,17 +15,12 @@ const convertBouquetListObject = (bouquetList) => {
       id: bouquet.id,
       name: bouquet.name,
       code: bouquet.code,
-      start_date: bouquet.start_date,
-      end_date: bouquet.end_date,
-      mobile_no: bouquet.mobile_no,
-      state_lbl: bouquet.state_lbl,
-      district_lbl: bouquet.district_lbl,
+      category_lbl: bouquet.category_lbl,
+      type_lbl: bouquet.type_lbl,
+      boxtype_lbl: bouquet.boxtype_lbl,
+      description: bouquet.description,
       created_at: bouquet.created_at,
-      created_by: bouquet.created_by,
-      city_lbl: bouquet.city_lbl,
-      gstno: bouquet.gstno,
-      panno: bouquet.panno,
-      username: bouquet.username,
+      created_by: bouquet.created_by === -1 ? "console" : "My MSO(mso)",
       status:
         bouquet.status === 1
           ? "ACTIVE"

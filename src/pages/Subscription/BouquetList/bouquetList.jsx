@@ -65,25 +65,20 @@ const BouquetList = (props) => {
         // accessor: "name",
         disableFilters: true,
         filterable: true,
-        accessor: (cellProps) => (
-          <>
-            {!cellProps.img ? (
-              <div className="avatar-xs">
-                <span className="avatar-title rounded-circle">
-                  {cellProps.name.charAt(0)}
-                </span>
-              </div>
-            ) : (
-              <div>
-                <img
-                  className="rounded-circle avatar-xs"
-                  src={cellProps.img}
-                  alt=""
-                />
-              </div>
-            )}
-          </>
-        ),
+        Cell: (cellProps) => {
+          const totalRows = cellProps.rows.length;
+          const reverseIndex = totalRows - cellProps.row.index;
+
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {reverseIndex}
+                </Link>
+              </h5>
+            </>
+          );
+        },
       },
       {
         Header: "Name",
@@ -109,23 +104,33 @@ const BouquetList = (props) => {
         accessor: "code",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.code}</p>
+          );
         },
       },
       {
         Header: "Category",
-        accessor: "category",
+        accessor: "category_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.category_lbl}
+            </p>
+          );
         },
       },
       {
         Header: "Type",
-        accessor: "type",
+        accessor: "type_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.boxtype_lbl}
+            </p>
+          );
         },
       },
       {
@@ -133,7 +138,9 @@ const BouquetList = (props) => {
         accessor: "bouquettype",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.type_lbl}</p>
+          );
         },
       },
       {
@@ -141,7 +148,11 @@ const BouquetList = (props) => {
         accessor: "description",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.description}
+            </p>
+          );
         },
       },
       {
@@ -149,23 +160,33 @@ const BouquetList = (props) => {
         accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.status}</p>
+          );
         },
       },
       {
         Header: "Created At",
-        accessor: "createdat",
+        accessor: "created_at",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_at}
+            </p>
+          );
         },
       },
       {
         Header: "Created By",
-        accessor: "createdby",
+        accessor: "created_by",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by}
+            </p>
+          );
         },
       },
       {

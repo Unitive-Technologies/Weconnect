@@ -71,25 +71,20 @@ const NCFList = (props) => {
         // accessor: "name",
         disableFilters: true,
         filterable: true,
-        accessor: (cellProps) => (
-          <>
-            {!cellProps.img ? (
-              <div className="avatar-xs">
-                <span className="avatar-title rounded-circle">
-                  {cellProps.name.charAt(0)}
-                </span>
-              </div>
-            ) : (
-              <div>
-                <img
-                  className="rounded-circle avatar-xs"
-                  src={cellProps.img}
-                  alt=""
-                />
-              </div>
-            )}
-          </>
-        ),
+        Cell: (cellProps) => {
+          const totalRows = cellProps.rows.length;
+          const reverseIndex = totalRows - cellProps.row.index;
+
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {reverseIndex}
+                </Link>
+              </h5>
+            </>
+          );
+        },
       },
       {
         Header: "Name",
