@@ -44,7 +44,7 @@ import companylist from "./companylist/reducer";
 import brandlist from "./brandlist/reducer";
 
 import complaintcategory from "./complaintcategorylist/reducer";
-
+import complaintsubcategory from "./complaintsubcategorylist/reducer";
 import warehouselist from "./warehouse/reducer";
 import inventorystatelist from "./inventorystate/reducer";
 
@@ -89,6 +89,7 @@ const rootReducer = combineReducers({
   companylist,
   brandlist,
   complaintcategory,
+  complaintsubcategory,
   warehouselist,
   inventorystatelist,
 });

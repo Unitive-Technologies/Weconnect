@@ -261,6 +261,7 @@ export const getNcf = () => get(url.GET_NCF);
 export const getBouquet = () => get(url.GET_BOUQUET);
 export const getConnectionScheme = () => get(url.GET_CONNECTIONSCHEME);
 export const getComplaintCategory = () => get(url.GET_COMPLAINTCATEGORY);
+export const getComplaintSubCategory = () => get(url.GET_COMPLAINTSUBCATEGORY);
 
 export const getCompanyList = () => get(url.GET_COMPANYLIST);
 export const getBrandList = () => get(url.GET_BRANDLIST);
