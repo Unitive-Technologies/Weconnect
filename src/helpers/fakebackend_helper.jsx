@@ -259,6 +259,7 @@ export const getAppAdBanner = () => get(url.GET_APPADBANNER);
 export const getUserHierarchy = () => get(url.GET_USERHIERARCHY);
 export const getNcf = () => get(url.GET_NCF);
 export const getBouquet = () => get(url.GET_BOUQUET);
+export const getConnectionScheme = () => get(url.GET_CONNECTIONSCHEME);
 
 export const getCompanyList = () => get(url.GET_COMPANYLIST);
 export const getSMSMessageTempList = () => get(url.GET_SMSMESSAGETEMPLIST);

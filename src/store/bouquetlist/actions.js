@@ -9,7 +9,7 @@ export const getBouquet = () => ({
 });
 
 export const getBouquetSuccess = (bouquet) => {
-  console.log("Received Notification Template:", bouquet);
+  console.log("Received Bouquet list:", bouquet);
   return {
     type: GET_BOUQUET_SUCCESS,
     payload: bouquet,

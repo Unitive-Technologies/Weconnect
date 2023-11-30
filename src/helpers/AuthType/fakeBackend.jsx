@@ -34,6 +34,7 @@ import {
   companylist as company,
   bouquetlist as bouquets,
   smsmsgtemplatelist as smsmsg,
+  connectionschemelist as connectscheme,
 } from "../../common/data";
 
 let users = [
@@ -617,6 +618,7 @@ const fakeBackend = () => {
       });
     });
   });
+
   mock.onGet(url.GET_BOUQUET).reply(() => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -625,6 +627,19 @@ const fakeBackend = () => {
           resolve([200, bouquets]);
         } else {
           reject([400, "Cannot get Bouquet List"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_CONNECTIONSCHEME).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (connectscheme) {
+          // Passing fake JSON data as response
+          resolve([200, connectscheme]);
+        } else {
+          reject([400, "Cannot get Connection scheme List"]);
         }
       });
     });

@@ -39,7 +39,7 @@ import ncf from "./ncflist/reducer";
 import bouquet from "./bouquetlist/reducer";
 import documentUploadPolicy from "./documentuploadpolicy/reducer";
 import smsmessagetemp from "./smsmessage/reducer";
-
+import connectionscheme from "./connectionschemelist/reducer";
 import companylist from "./companylist/reducer";
 
 const rootReducer = combineReducers({
@@ -79,6 +79,7 @@ const rootReducer = combineReducers({
   bouquet,
   documentUploadPolicy,
   smsmessagetemp,
+  connectionscheme,
   companylist,
 });
 
