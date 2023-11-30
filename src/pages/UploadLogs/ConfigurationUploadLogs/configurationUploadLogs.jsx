@@ -27,12 +27,7 @@ import { Email, Tags, Projects } from "./configurationUploadLogsCol";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
 
-import {
-  getUsers as onGetUsers,
-  addNewUser as onAddNewUser,
-  updateUser as onUpdateUser,
-  deleteUser as onDeleteUser,
-} from "/src/store/users/actions";
+import { getConfigurationUploadLogs as onGetConfigurationUploadLogs } from "/src/store/actions";
 import { isEmpty } from "lodash";
 
 //redux
@@ -45,74 +40,24 @@ const ConfigurationUploadLogs = (props) => {
   document.title = "Configuration Upload Logs | VDigital";
 
   const dispatch = useDispatch();
-  const [contact, setContact] = useState();
-  // validation
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
 
-    initialValues: {
-      name: (contact && contact.name) || "",
-      designation: (contact && contact.designation) || "",
-      tags: (contact && contact.tags) || "",
-      email: (contact && contact.email) || "",
-      projects: (contact && contact.projects) || "",
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
-      designation: Yup.string().required("Please Enter Your Designation"),
-      tags: Yup.array().required("Please Enter Tag"),
-      email: Yup.string()
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-        .required("Please Enter Your Email"),
-      projects: Yup.string().required("Please Enter Your Project"),
-    }),
-    onSubmit: (values) => {
-      if (isEdit) {
-        const updateUser = {
-          id: contact.id,
-          name: values.name,
-          designation: values.designation,
-          tags: values.tags,
-          email: values.email,
-          projects: values.projects,
-        };
-
-        // update user
-        dispatch(onUpdateUser(updateUser));
-        validation.resetForm();
-        setIsEdit(false);
-      } else {
-        const newUser = {
-          id: Math.floor(Math.random() * (30 - 20)) + 20,
-          name: values["name"],
-          designation: values["designation"],
-          email: values["email"],
-          tags: values["tags"],
-          projects: values["projects"],
-        };
-        // save new user
-        dispatch(onAddNewUser(newUser));
-        validation.resetForm();
-      }
-      toggle();
-    },
-  });
-
-  const selectContactsState = (state) => state.users;
-  const ContactsProperties = createSelector(
-    selectContactsState,
-    (Contacts) => ({
-      users: Contacts.users,
-      loading: Contacts.loading,
+  const selectConfigurationUplodLogsState = (state) =>
+    state.configurationuploadlogs;
+  const ConfigurationUploadLogsProperties = createSelector(
+    selectConfigurationUplodLogsState,
+    (configurationuploadlogs) => ({
+      configuplog: configurationuploadlogs.configurationuploadlogs,
+      loading: configurationuploadlogs.loading,
     })
   );
 
-  const { users, loading } = useSelector(ContactsProperties);
+  const { configuplog, loading } = useSelector(
+    ConfigurationUploadLogsProperties
+  );
 
   useEffect(() => {
-    console.log("Users data in component:", users);
-  }, [users]);
+    console.log("configuplog data in component:", configuplog);
+  }, [configuplog]);
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
@@ -126,99 +71,110 @@ const ConfigurationUploadLogs = (props) => {
         // accessor: "name",
         disableFilters: true,
         filterable: true,
-        accessor: (cellProps) => (
-          <>
-            {!cellProps.img ? (
-              <div className="avatar-xs">
-                <span className="avatar-title rounded-circle">
-                  {cellProps.name.charAt(0)}
-                </span>
-              </div>
-            ) : (
-              <div>
-                <img
-                  className="rounded-circle avatar-xs"
-                  src={cellProps.img}
-                  alt=""
-                />
-              </div>
-            )}
-          </>
-        ),
-      },
-      {
-        Header: "Job ID",
-        accessor: "jobid",
-        filterable: true,
         Cell: (cellProps) => {
+          const totalRows = cellProps.rows.length;
+          const reverseIndex = totalRows - cellProps.row.index;
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.name}
+                  {reverseIndex}
                 </Link>
               </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
             </>
           );
         },
       },
       {
-        Header: "Uploaded Type",
-        accessor: "uploadedtype",
+        Header: "Job ID",
+        accessor: "job_id",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.job_id}</p>
+          );
+        },
+      },
+      {
+        Header: "Uploaded Type",
+        accessor: "type",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.type}</p>
+          );
         },
       },
       {
         Header: "File Name",
-        accessor: "filename",
+        accessor: "uploaded_file",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.uploaded_file}
+            </p>
+          );
         },
       },
       {
         Header: "File Count",
-        accessor: "filecount",
+        accessor: "file_count",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.file_count}
+            </p>
+          );
         },
       },
       {
         Header: "Row Count",
-        accessor: "rowcount",
+        accessor: "row_count",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.row_count}
+            </p>
+          );
         },
       },
       {
         Header: "Processed",
-        accessor: "processed",
+        accessor: "processed_count",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.processed_count}
+            </p>
+          );
         },
       },
       {
         Header: "Success",
-        accessor: "success",
+        accessor: "success_count",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.success_count}
+            </p>
+          );
         },
       },
       {
         Header: "Error",
-        accessor: "error",
+        accessor: "error_count",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.error_count}
+            </p>
+          );
         },
       },
       {
@@ -231,34 +187,50 @@ const ConfigurationUploadLogs = (props) => {
       },
       {
         Header: "Status",
-        accessor: "status",
+        accessor: "status_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.status_lbl}
+            </p>
+          );
         },
       },
       {
         Header: "Processed link",
-        accessor: "processedlink",
+        accessor: "processed_rows_file",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.processed_rows_file}
+            </p>
+          );
         },
       },
       {
-        Header: "Created At",
-        accessor: "create_at",
+        Header: "Uploaded At",
+        accessor: "updated_at",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.updated_at}
+            </p>
+          );
         },
       },
       {
-        Header: "Created By",
-        accessor: "createdby",
+        Header: "Uploaded By",
+        accessor: "created_by_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by_lbl}
+            </p>
+          );
         },
       },
       {
@@ -301,23 +273,23 @@ const ConfigurationUploadLogs = (props) => {
   );
 
   useEffect(() => {
-    if (users && !users.length) {
-      dispatch(onGetUsers());
+    if (configuplog && !configuplog.length) {
+      dispatch(onGetConfigurationUploadLogs());
       setIsEdit(false);
     }
-  }, [dispatch, users]);
+  }, [dispatch, configuplog]);
 
-  useEffect(() => {
-    setContact(users);
-    setIsEdit(false);
-  }, [users]);
+  // useEffect(() => {
+  //   setContact(users);
+  //   setIsEdit(false);
+  // }, [users]);
 
-  useEffect(() => {
-    if (!isEmpty(users) && !!isEdit) {
-      setContact(users);
-      setIsEdit(false);
-    }
-  }, [users]);
+  // useEffect(() => {
+  //   if (!isEmpty(users) && !!isEdit) {
+  //     setContact(users);
+  //     setIsEdit(false);
+  //   }
+  // }, [users]);
 
   const toggle = () => {
     setModal(!modal);
@@ -387,7 +359,10 @@ const ConfigurationUploadLogs = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Upload Logs" breadcrumbItem="Configuration Upload Logs" />
+          <Breadcrumbs
+            title="Upload Logs"
+            breadcrumbItem="Configuration Upload Logs"
+          />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -395,11 +370,13 @@ const ConfigurationUploadLogs = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("users:" + JSON.stringify(users))}
+                    {console.log(
+                      "Configuration upload logs:" + JSON.stringify(configuplog)
+                    )}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
-                      data={users}
+                      data={configuplog}
                       isGlobalFilter={true}
                       isAddUserList={true}
                       isShowingPageLength={true}
@@ -411,7 +388,7 @@ const ConfigurationUploadLogs = (props) => {
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
                     />
-                    <Modal isOpen={modal} toggle={toggle}>
+                    {/* <Modal isOpen={modal} toggle={toggle}>
                       <ModalHeader toggle={toggle} tag="h4">
                         {!!isEdit ? "Edit User" : "Add User"}
                       </ModalHeader>
@@ -436,13 +413,13 @@ const ConfigurationUploadLogs = (props) => {
                                   value={validation.values.name || ""}
                                   invalid={
                                     validation.touched.name &&
-                                      validation.errors.name
+                                    validation.errors.name
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.name &&
-                                  validation.errors.name ? (
+                                validation.errors.name ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.name}
                                   </FormFeedback>
@@ -462,13 +439,13 @@ const ConfigurationUploadLogs = (props) => {
                                   value={validation.values.designation || ""}
                                   invalid={
                                     validation.touched.designation &&
-                                      validation.errors.designation
+                                    validation.errors.designation
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.designation &&
-                                  validation.errors.designation ? (
+                                validation.errors.designation ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.designation}
                                   </FormFeedback>
@@ -486,13 +463,13 @@ const ConfigurationUploadLogs = (props) => {
                                   value={validation.values.email || ""}
                                   invalid={
                                     validation.touched.email &&
-                                      validation.errors.email
+                                    validation.errors.email
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.email &&
-                                  validation.errors.email ? (
+                                validation.errors.email ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.email}
                                   </FormFeedback>
@@ -510,7 +487,7 @@ const ConfigurationUploadLogs = (props) => {
                                   value={validation.values.tags || []}
                                   invalid={
                                     validation.touched.tags &&
-                                      validation.errors.tags
+                                    validation.errors.tags
                                       ? true
                                       : false
                                   }
@@ -526,7 +503,7 @@ const ConfigurationUploadLogs = (props) => {
                                   <option>Css</option>
                                 </Input>
                                 {validation.touched.tags &&
-                                  validation.errors.tags ? (
+                                validation.errors.tags ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.tags}
                                   </FormFeedback>
@@ -544,13 +521,13 @@ const ConfigurationUploadLogs = (props) => {
                                   value={validation.values.projects || ""}
                                   invalid={
                                     validation.touched.projects &&
-                                      validation.errors.projects
+                                    validation.errors.projects
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.projects &&
-                                  validation.errors.projects ? (
+                                validation.errors.projects ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.projects}
                                   </FormFeedback>
@@ -572,7 +549,7 @@ const ConfigurationUploadLogs = (props) => {
                           </Row>
                         </Form>
                       </ModalBody>
-                    </Modal>
+                    </Modal> */}
                   </CardBody>
                 </Card>
               </Col>

@@ -40,6 +40,7 @@ import {
   warehouselist as warehouse,
   inventorystatelist as inventstate,
   complaintsubcategorylist as complaintsubcate,
+  configurationuploadlogs as configuplog,
 } from "../../common/data";
 
 let users = [
@@ -698,6 +699,19 @@ const fakeBackend = () => {
           resolve([200, complaintsubcate]);
         } else {
           reject([400, "Cannot get complaint sub category List"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_CONFIGURATIONUPLOADLOGS).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (configuplog) {
+          // Passing fake JSON data as response
+          resolve([200, configuplog]);
+        } else {
+          reject([400, "Cannot get configuration upload logs"]);
         }
       });
     });

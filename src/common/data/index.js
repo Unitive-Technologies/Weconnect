@@ -34,7 +34,7 @@ import { smsmsgtemplatelist } from "./smsmsgtemplatelist";
 
 import { complaintcategorylist } from "./complaintcategorylist";
 import { complaintsubcategorylist } from "./complaintsubcategorylist";
-import { configurationuploadlist } from "./configurationuploadlogs";
+import { configurationuploadlogs } from "./configurationuploadlogs";
 
 import { companylist } from "./companylist";
 import { brandlist } from "./brandlist";
@@ -77,7 +77,7 @@ export {
   companylist,
   complaintcategorylist,
   complaintsubcategorylist,
-  configurationuploadlist,
+  configurationuploadlogs,
   brandlist,
   warehouselist,
   inventorystatelist,

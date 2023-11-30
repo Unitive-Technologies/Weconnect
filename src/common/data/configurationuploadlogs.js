@@ -1,4 +1,4 @@
-const configurationuploadlist = [
+const configurationuploadlogs = [
   {
     _id: 1787,
     meta_data: {
@@ -2919,4 +2919,4 @@ const configurationuploadlist = [
   },
 ];
 
-export { configurationuploadlist };
+export { configurationuploadlogs };

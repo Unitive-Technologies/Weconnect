@@ -42,7 +42,7 @@ import smsmessagetemp from "./smsmessage/reducer";
 import connectionscheme from "./connectionschemelist/reducer";
 import companylist from "./companylist/reducer";
 import brandlist from "./brandlist/reducer";
-
+import configurationuploadlogs from "./configurationuploadlogs/reducer";
 import complaintcategory from "./complaintcategorylist/reducer";
 import complaintsubcategory from "./complaintsubcategorylist/reducer";
 import warehouselist from "./warehouse/reducer";
@@ -92,6 +92,7 @@ const rootReducer = combineReducers({
   complaintsubcategory,
   warehouselist,
   inventorystatelist,
+  configurationuploadlogs,
 });
 
 export default rootReducer;
