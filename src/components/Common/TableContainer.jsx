@@ -139,6 +139,10 @@ const TableContainer = ({
     setPageSize(Number(event.target.value));
   };
 
+  // const getColumnWidth = (column) => {
+  //   const defaultWidth = 100;
+  //   return column.width || defaultWidth;
+  // };
   return (
     <Fragment>
       <Row className="mb-2">
@@ -319,7 +323,7 @@ const TableContainer = ({
                   >
                     <div {...column.getSortByToggleProps()}>
                       {column.render("Header")}
-                      {/* {generateSortingIndicator(column)} */}
+                      {generateSortingIndicator(column)}
                     </div>
                     {/* <Filter column={column} /> */}
                   </th>
@@ -336,7 +340,11 @@ const TableContainer = ({
                   <tr>
                     {row.cells.map((cell) => {
                       return (
-                        <td key={cell.id} {...cell.getCellProps()}>
+                        <td
+                          key={cell.id}
+                          {...cell.getCellProps()}
+                          // style={{ width: `${getColumnWidth(cell.column)}px` }}
+                        >
                           {cell.render("Cell")}
                         </td>
                       );

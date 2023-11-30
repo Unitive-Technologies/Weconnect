@@ -572,7 +572,7 @@ const ContactsList = (props) => {
                           }}
                         >
                           <Row>
-                            <Col xs={12}>
+                            <Col sm="6">
                               <div className="mb-3">
                                 <Label className="form-label">Name</Label>
                                 <Input
@@ -720,6 +720,8 @@ const ContactsList = (props) => {
                                   </FormFeedback>
                                 ) : null}
                               </div>
+                            </Col>
+                            <Col sm="6">
                               <div className="mb-3">
                                 <Label className="form-label">Role</Label>
                                 <Input
