@@ -41,6 +41,7 @@ import warehouseListSaga from "./warehouse/saga";
 import connectionSchemeSaga from "./connectionschemelist/saga";
 import complaintCategorySaga from "./complaintcategorylist/saga";
 import brandListSaga from "./brandlist/saga";
+import inventoryStateListSaga from "./inventorystate/saga";
 
 export default function* rootSaga() {
   yield all([
@@ -85,5 +86,6 @@ export default function* rootSaga() {
     fork(connectionSchemeSaga),
     fork(complaintCategorySaga),
     fork(brandListSaga),
+    fork(inventoryStateListSaga),
   ]);
 }

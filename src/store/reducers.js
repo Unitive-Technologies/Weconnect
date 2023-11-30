@@ -46,6 +46,7 @@ import brandlist from "./brandlist/reducer";
 import complaintcategory from "./complaintcategorylist/reducer";
 
 import warehouselist from "./warehouse/reducer";
+import inventorystatelist from "./inventorystate/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -87,10 +88,9 @@ const rootReducer = combineReducers({
   connectionscheme,
   companylist,
   brandlist,
-
   complaintcategory,
-
   warehouselist,
+  inventorystatelist,
 });
 
 export default rootReducer;

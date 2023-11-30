@@ -38,6 +38,7 @@ import {
   brandlist as brand,
   complaintcategorylist as complaintcate,
   warehouselist as warehouse,
+  inventorystatelist as inventstate,
 } from "../../common/data";
 
 let users = [
@@ -631,6 +632,19 @@ const fakeBackend = () => {
           resolve([200, warehouse]);
         } else {
           reject([400, "Cannot get Warehouse List"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_INVENTORYSTATELIST).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (inventstate) {
+          // Passing fake JSON data as response
+          resolve([200, inventstate]);
+        } else {
+          reject([400, "Cannot get Inventory State List"]);
         }
       });
     });
