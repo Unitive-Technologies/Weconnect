@@ -42,7 +42,10 @@ import smsmessagetemp from "./smsmessage/reducer";
 import connectionscheme from "./connectionschemelist/reducer";
 import companylist from "./companylist/reducer";
 import brandlist from "./brandlist/reducer";
+
 import complaintcategory from "./complaintcategorylist/reducer";
+
+import warehouselist from "./warehouse/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -84,7 +87,10 @@ const rootReducer = combineReducers({
   connectionscheme,
   companylist,
   brandlist,
+
   complaintcategory,
+
+  warehouselist,
 });
 
 export default rootReducer;

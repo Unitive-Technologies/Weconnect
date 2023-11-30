@@ -37,6 +37,7 @@ import {
   connectionschemelist as connectscheme,
   brandlist as brand,
   complaintcategorylist as complaintcate,
+  warehouselist as warehouse,
 } from "../../common/data";
 
 let users = [
@@ -617,6 +618,19 @@ const fakeBackend = () => {
           resolve([200, brand]);
         } else {
           reject([400, "Cannot get Brand List"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_WAREHOUSELIST).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (warehouse) {
+          // Passing fake JSON data as response
+          resolve([200, warehouse]);
+        } else {
+          reject([400, "Cannot get Warehouse List"]);
         }
       });
     });

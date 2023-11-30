@@ -37,7 +37,7 @@ import bouquetSaga from "./bouquetlist/saga";
 import documentUploadPolicySaga from "./documentuploadpolicy/saga";
 import smsMessageTempListSaga from "./smsmessage/saga";
 import companyListSaga from "./companylist/saga";
-
+import warehouseListSaga from "./warehouse/saga";
 import connectionSchemeSaga from "./connectionschemelist/saga";
 import complaintCategorySaga from "./complaintcategorylist/saga";
 import brandListSaga from "./brandlist/saga";
@@ -81,7 +81,7 @@ export default function* rootSaga() {
     fork(bouquetSaga),
     fork(smsMessageTempListSaga),
     fork(companyListSaga),
-
+    fork(warehouseListSaga),
     fork(connectionSchemeSaga),
     fork(complaintCategorySaga),
     fork(brandListSaga),

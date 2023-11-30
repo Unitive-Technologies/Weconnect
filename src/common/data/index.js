@@ -38,7 +38,7 @@ import { complaintsubcategorylist } from "./complaintsubcategorylist";
 import { configurationuploadlist } from "./configurationuploadlogs";
 
 import { brandlist } from "./brandlist";
-
+import { warehouselist } from "./warehouselist";
 export {
   userslist,
   customeruserlist,
@@ -77,4 +77,5 @@ export {
   complaintsubcategorylist,
   configurationuploadlist,
   brandlist,
+  warehouselist,
 };

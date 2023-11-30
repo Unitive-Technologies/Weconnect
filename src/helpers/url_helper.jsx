@@ -52,6 +52,8 @@ export const GET_OSDTEMPLATE = "/osdtemplatelist";
 export const GET_NCF = "/ncf";
 export const GET_COMPANYLIST = "/companylist";
 export const GET_BRANDLIST = "/brandlist";
+export const GET_WAREHOUSELIST = "/warehouselist";
+
 export const GET_SMSMESSAGETEMPLIST = "/smsmsgtemplatelist";
 export const GET_BOUQUET = "/bouquet";
 export const GET_CONNECTIONSCHEME = "/connectionscheme";
