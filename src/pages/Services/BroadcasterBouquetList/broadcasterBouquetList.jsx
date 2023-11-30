@@ -203,7 +203,7 @@ const BroadcasterBouquetList = (props) => {
         accessor: "channels",
         filterable: true,
         Cell: (cellProps) => {
-          return <Channels {...cellProps} />;
+          return <Channels {...cellProps} style={{ maxWidth: "300px" }} />;
         },
       },
       {
@@ -388,6 +388,7 @@ const BroadcasterBouquetList = (props) => {
                       // iscustomPageSizeOptions={true}
                       handleUserClick={() => {}}
                       customPageSize={50}
+                      // sisChannel={true}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"

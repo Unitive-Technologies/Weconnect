@@ -23,7 +23,19 @@ const FTA = (cell) => {
 };
 
 const Channels = (cell) => {
-  return cell.value ? cell.value : "";
+  return (
+    <p
+      style={{
+        maxWidth: 300,
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        paddingTop: 15,
+      }}
+    >
+      {cell.value ? cell.value : ""}
+    </p>
+  );
 };
 
 const Status = (cell) => {
