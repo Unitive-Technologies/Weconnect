@@ -33,7 +33,7 @@ import osdTemplateSaga from "./OSDTemplate/saga";
 import userHierarchySaga from "./userhierarchy/saga";
 import localChannelNumberSaga from "./localchannelnumber/saga";
 import ncfSaga from "./ncflist/saga";
-
+import bouquetSaga from "./bouquetlist/saga";
 import documentUploadPolicySaga from "./documentuploadpolicy/saga";
 
 import companyListSaga from "./companylist/saga";
@@ -74,7 +74,7 @@ export default function* rootSaga() {
     fork(localChannelNumberSaga),
     fork(ncfSaga),
     fork(documentUploadPolicySaga),
-
+    fork(bouquetSaga),
     fork(companyListSaga),
   ]);
 }

@@ -32,6 +32,7 @@ import {
   ncflist as ncfl,
   documentuploadpolicylist as documentupload,
   companylist as company,
+  bouquetlist as bouquets,
 } from "../../common/data";
 
 let users = [
@@ -599,6 +600,19 @@ const fakeBackend = () => {
           resolve([200, company]);
         } else {
           reject([400, "Cannot get Company List"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_BOUQUET).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (bouquets) {
+          // Passing fake JSON data as response
+          resolve([200, bouquets]);
+        } else {
+          reject([400, "Cannot get Bouquet List"]);
         }
       });
     });

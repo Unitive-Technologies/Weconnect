@@ -29,7 +29,7 @@ import { localchannelnumberlist } from "./localchannelnumberlist";
 
 import { osdtemplatelist } from "./osdtemplatelist";
 
-import { documentuploadpolicylist } from "./documentuploadpolicylist";
+import { documentuploadpolicylist } from "./documentuploadpolicy";
 
 import { companylist } from "./companylist";
 

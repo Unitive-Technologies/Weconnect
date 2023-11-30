@@ -16,7 +16,7 @@ export const getDocumentUploadPolicySuccess = (documentUploadPolicy) => {
   };
 };
 
-export const getLocalChannelNumberFail = (error) => ({
+export const getDocumentUploadPolicyFail = (error) => ({
   type: GET_DOCUMENTUPLOADPOLICY_FAIL,
   payload: error,
 });
