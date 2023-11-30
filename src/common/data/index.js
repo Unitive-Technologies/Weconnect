@@ -31,14 +31,16 @@ import { osdtemplatelist } from "./osdtemplatelist";
 
 import { documentuploadpolicylist } from "./documentuploadpolicy";
 import { smsmsgtemplatelist } from "./smsmsgtemplatelist";
-import { companylist } from "./companylist";
 
 import { complaintcategorylist } from "./complaintcategorylist";
 import { complaintsubcategorylist } from "./complaintsubcategorylist";
 import { configurationuploadlist } from "./configurationuploadlogs";
 
+import { companylist } from "./companylist";
 import { brandlist } from "./brandlist";
 import { warehouselist } from "./warehouselist";
+import { inventorystatelist } from "./inventorystatelist";
+
 export {
   userslist,
   customeruserlist,
@@ -78,4 +80,5 @@ export {
   configurationuploadlist,
   brandlist,
   warehouselist,
+  inventorystatelist,
 };
