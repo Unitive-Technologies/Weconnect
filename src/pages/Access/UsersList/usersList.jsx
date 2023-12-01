@@ -492,7 +492,7 @@ const ContactsList = (props) => {
                   <CardBody>
                     <div className="d-flex align-items-center">
                       <h5 className="mb-0 card-title flex-grow-1">
-                        Jobs Lists
+                        {/* Jobs Lists */}
                       </h5>
                       <div className="flex-shrink-0">
                         <Link
@@ -508,8 +508,8 @@ const ContactsList = (props) => {
                             className="btn btn-success"
                             id="dropdownMenuButton1"
                           >
-                            {/* <i className="mdi mdi-dots-vertical"></i> */}
-                            Upload
+                            Upload &nbsp;
+                            <i className="bx bx-upload"></i>
                           </DropdownToggle>
                           <DropdownMenu>
                             <li onClick={() => setModal2(true)}>
@@ -528,7 +528,8 @@ const ContactsList = (props) => {
                             className="btn btn-success"
                             id="dropdownMenuButton1"
                           >
-                            Action
+                            Action &nbsp;
+                            <i className="mdi mdi-dots-vertical"></i>
                           </DropdownToggle>
                           <DropdownMenu>
                             <li>

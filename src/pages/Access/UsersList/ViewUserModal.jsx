@@ -32,14 +32,14 @@ const ViewUserModal = (props) => {
     initialValues: {
       name: user.name,
       email: user.email,
-      mobile: user.mobile,
+      mobile: user.mobile_no,
       usertype: user.usertype,
       status: user.status,
       message: user.message,
       role: user.role,
       designation: user.designation,
       grouppolicy: user.grouppolicy,
-      loginid: user.loginid,
+      loginid: user.username,
       password: user.password,
       confirmpassword: user.confirmpassword,
     },
@@ -186,7 +186,7 @@ const ViewUserModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.initialValues.usertype || ""}
                 >
-                  <option value="">Select User Type</option>
+                  {/* <option value="">Select User Type</option> */}
                   <option value="1">MSO</option>
                   <option value="2">RO</option>
                   <option value="3">Distributor</option>
@@ -210,7 +210,7 @@ const ViewUserModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.initialValues.status || ""}
                 >
-                  <option value="">Select Status</option>
+                  {/* <option value="">Select Status</option> */}
                   <option value="11">Active</option>
                   <option value="12">BLOCKED</option>
                   <option value="13">In-Active</option>
@@ -256,7 +256,7 @@ const ViewUserModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.initialValues.role || ""}
                 >
-                  <option value="">Select Role</option>
+                  {/* <option value="">Select Role</option> */}
                   <option value="21">Administrator</option>
                   <option value="22">Staff</option>
                   <option value="23">User</option>
@@ -278,7 +278,7 @@ const ViewUserModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.initialValues.designation || ""}
                 >
-                  <option value="">Select Designation</option>
+                  {/* <option value="">Select Designation</option> */}
                   <option value="dir">Director</option>
                 </Input>
                 {validation.touched.designation &&
@@ -333,7 +333,7 @@ const ViewUserModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-              <div className="mb-3">
+              {/* <div className="mb-3">
                 <Label className="form-label">Password</Label>
                 <Input
                   name="password"
@@ -378,7 +378,7 @@ const ViewUserModal = (props) => {
                     {validation.errors.confirmpassword}
                   </FormFeedback>
                 ) : null}
-              </div>
+              </div> */}
             </Col>
           </Row>
           <Row>
