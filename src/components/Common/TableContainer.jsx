@@ -43,7 +43,8 @@ function GlobalFilter({
                 id="search-bar-0"
                 type="text"
                 className="form-control"
-                placeholder={`${count} records...`}
+                // placeholder={`${count} records...`}
+                placeholder="Search..."
                 value={value || ""}
               />
             </label>
@@ -163,14 +164,14 @@ const TableContainer = ({
             </select>
           </Col>
         )}
-        {/* {isGlobalFilter && (
+        {isGlobalFilter && (
           <GlobalFilter
             preGlobalFilteredRows={preGlobalFilteredRows}
             globalFilter={state.globalFilter}
             setGlobalFilter={setGlobalFilter}
             isJobListGlobalFilter={isJobListGlobalFilter}
           />
-        )} */}
+        )}
         {isAddOptions && (
           <Col sm="7">
             <div className="text-sm-end">

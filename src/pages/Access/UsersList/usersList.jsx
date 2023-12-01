@@ -491,10 +491,10 @@ const ContactsList = (props) => {
                 <Card>
                   <CardBody>
                     <div className="d-flex align-items-center justify-content-between">
-                      {/* <h5 className="mb-0 card-title flex-grow-1">
-                        Jobs Lists
-                      </h5> */}
-                      <form className="app-search d-none d-lg-block">
+                      <h5 className="mb-0 card-title flex-grow-1">
+                        {/* Jobs Lists */}
+                      </h5>
+                      {/* <form className="app-search d-none d-lg-block">
                         <div className="position-relative">
                           <input
                             type="text"
@@ -503,7 +503,7 @@ const ContactsList = (props) => {
                           />
                           <span className="bx bx-search-alt" />
                         </div>
-                      </form>
+                      </form> */}
                       <div className="flex-shrink-0">
                         <Link
                           to="#!"
