@@ -26,13 +26,7 @@ import { Email, Tags, Projects } from "./promoVoucherListCol";
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
-
-import {
-  getUsers as onGetUsers,
-  addNewUser as onAddNewUser,
-  updateUser as onUpdateUser,
-  deleteUser as onDeleteUser,
-} from "/src/store/users/actions";
+import { getPromoVoucher as onGetPromoVoucher } from "/src/store/actions";
 import { isEmpty } from "lodash";
 
 //redux
@@ -45,74 +39,21 @@ const PromoVoucherList = (props) => {
   document.title = "Promo Voucher List | VDigital";
 
   const dispatch = useDispatch();
-  const [contact, setContact] = useState();
-  // validation
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
 
-    initialValues: {
-      name: (contact && contact.name) || "",
-      designation: (contact && contact.designation) || "",
-      tags: (contact && contact.tags) || "",
-      email: (contact && contact.email) || "",
-      projects: (contact && contact.projects) || "",
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
-      designation: Yup.string().required("Please Enter Your Designation"),
-      tags: Yup.array().required("Please Enter Tag"),
-      email: Yup.string()
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-        .required("Please Enter Your Email"),
-      projects: Yup.string().required("Please Enter Your Project"),
-    }),
-    onSubmit: (values) => {
-      if (isEdit) {
-        const updateUser = {
-          id: contact.id,
-          name: values.name,
-          designation: values.designation,
-          tags: values.tags,
-          email: values.email,
-          projects: values.projects,
-        };
-
-        // update user
-        dispatch(onUpdateUser(updateUser));
-        validation.resetForm();
-        setIsEdit(false);
-      } else {
-        const newUser = {
-          id: Math.floor(Math.random() * (30 - 20)) + 20,
-          name: values["name"],
-          designation: values["designation"],
-          email: values["email"],
-          tags: values["tags"],
-          projects: values["projects"],
-        };
-        // save new user
-        dispatch(onAddNewUser(newUser));
-        validation.resetForm();
-      }
-      toggle();
-    },
-  });
-
-  const selectContactsState = (state) => state.users;
-  const ContactsProperties = createSelector(
-    selectContactsState,
-    (Contacts) => ({
-      users: Contacts.users,
-      loading: Contacts.loading,
+  const selectPromoVoucherState = (state) => state.promovoucher;
+  const PromoVoucherProperties = createSelector(
+    selectPromoVoucherState,
+    (promovoucher) => ({
+      provoucher: promovoucher.promovoucher,
+      loading: promovoucher.loading,
     })
   );
 
-  const { users, loading } = useSelector(ContactsProperties);
+  const { provoucher, loading } = useSelector(PromoVoucherProperties);
 
   useEffect(() => {
-    console.log("Users data in component:", users);
-  }, [users]);
+    console.log("Promo voucher data in component:", provoucher);
+  }, [provoucher]);
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
@@ -126,25 +67,19 @@ const PromoVoucherList = (props) => {
         // accessor: "name",
         disableFilters: true,
         filterable: true,
-        accessor: (cellProps) => (
-          <>
-            {!cellProps.img ? (
-              <div className="avatar-xs">
-                <span className="avatar-title rounded-circle">
-                  {cellProps.name.charAt(0)}
-                </span>
-              </div>
-            ) : (
-              <div>
-                <img
-                  className="rounded-circle avatar-xs"
-                  src={cellProps.img}
-                  alt=""
-                />
-              </div>
-            )}
-          </>
-        ),
+        Cell: (cellProps) => {
+          const totalRows = cellProps.rows.length;
+          const reverseIndex = totalRows - cellProps.row.index;
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {reverseIndex}
+                </Link>
+              </h5>
+            </>
+          );
+        },
       },
       {
         Header: "Operator",
@@ -152,57 +87,68 @@ const PromoVoucherList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.name}
-                </Link>
-              </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
-            </>
+            <p className="text-muted mb-0">{cellProps.row.original.operator}</p>
           );
         },
       },
       {
         Header: "Operator Code",
-        accessor: "operatorcode",
+        accessor: "operator_code",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.operator_code}
+            </p>
+          );
         },
       },
       {
         Header: "Voucher Code",
-        accessor: "vouchercode",
+        accessor: "voucher_code",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.voucher_code}
+            </p>
+          );
         },
       },
       {
         Header: "Expiry Date",
-        accessor: "expirydata",
+        accessor: "expiry_date",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.expiry_date}
+            </p>
+          );
         },
       },
       {
         Header: "Applied On",
-        accessor: "appliedon",
+        accessor: "applied_on",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.applied_on}
+            </p>
+          );
         },
       },
       {
         Header: "Recharge Period",
-        accessor: "rechargeperiod",
+        accessor: "recharge_period",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.recharge_period}
+            </p>
+          );
         },
       },
       {
@@ -210,15 +156,19 @@ const PromoVoucherList = (props) => {
         accessor: "amount",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.amount}</p>
+          );
         },
       },
       {
         Header: "MRP",
-        accessor: "MRP",
+        accessor: "mrp",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.mrp}</p>
+          );
         },
       },
       {
@@ -226,47 +176,67 @@ const PromoVoucherList = (props) => {
         accessor: "bouquets",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.bouquets}</p>
+          );
         },
       },
       {
         Header: "Status",
-        accessor: "status",
+        accessor: "status_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.status_lbl}
+            </p>
+          );
         },
       },
       {
         Header: "Smartcard No",
-        accessor: "smartcardno",
+        accessor: "smartcard_no",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.smartcard_no}
+            </p>
+          );
         },
       },
       {
         Header: "STB No.",
-        accessor: "STBNo",
+        accessor: "stb_no",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.stb_no}</p>
+          );
         },
       },
       {
         Header: "Created At",
-        accessor: "createdat",
+        accessor: "created_at_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_at_lbl}
+            </p>
+          );
         },
       },
       {
         Header: "Created By",
-        accessor: "createdby",
+        accessor: "created_by_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Projects {...cellProps} />
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by_lbl}
+            </p>
+          );
         },
       },
       {
@@ -309,23 +279,23 @@ const PromoVoucherList = (props) => {
   );
 
   useEffect(() => {
-    if (users && !users.length) {
-      dispatch(onGetUsers());
+    if (provoucher && !provoucher.length) {
+      dispatch(onGetPromoVoucher());
       setIsEdit(false);
     }
-  }, [dispatch, users]);
+  }, [dispatch, provoucher]);
 
-  useEffect(() => {
-    setContact(users);
-    setIsEdit(false);
-  }, [users]);
+  // useEffect(() => {
+  //   setContact(users);
+  //   setIsEdit(false);
+  // }, [users]);
 
-  useEffect(() => {
-    if (!isEmpty(users) && !!isEdit) {
-      setContact(users);
-      setIsEdit(false);
-    }
-  }, [users]);
+  // useEffect(() => {
+  //   if (!isEmpty(users) && !!isEdit) {
+  //     setContact(users);
+  //     setIsEdit(false);
+  //   }
+  // }, [users]);
 
   const toggle = () => {
     setModal(!modal);
@@ -403,11 +373,13 @@ const PromoVoucherList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("users:" + JSON.stringify(users))}
+                    {console.log(
+                      "Promo Voucher List:" + JSON.stringify(provoucher)
+                    )}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
-                      data={users}
+                      data={provoucher}
                       isGlobalFilter={true}
                       isAddUserList={true}
                       isShowingPageLength={true}
@@ -419,7 +391,7 @@ const PromoVoucherList = (props) => {
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
                     />
-                    <Modal isOpen={modal} toggle={toggle}>
+                    {/* <Modal isOpen={modal} toggle={toggle}>
                       <ModalHeader toggle={toggle} tag="h4">
                         {!!isEdit ? "Edit User" : "Add User"}
                       </ModalHeader>
@@ -444,13 +416,13 @@ const PromoVoucherList = (props) => {
                                   value={validation.values.name || ""}
                                   invalid={
                                     validation.touched.name &&
-                                      validation.errors.name
+                                    validation.errors.name
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.name &&
-                                  validation.errors.name ? (
+                                validation.errors.name ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.name}
                                   </FormFeedback>
@@ -470,13 +442,13 @@ const PromoVoucherList = (props) => {
                                   value={validation.values.designation || ""}
                                   invalid={
                                     validation.touched.designation &&
-                                      validation.errors.designation
+                                    validation.errors.designation
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.designation &&
-                                  validation.errors.designation ? (
+                                validation.errors.designation ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.designation}
                                   </FormFeedback>
@@ -494,13 +466,13 @@ const PromoVoucherList = (props) => {
                                   value={validation.values.email || ""}
                                   invalid={
                                     validation.touched.email &&
-                                      validation.errors.email
+                                    validation.errors.email
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.email &&
-                                  validation.errors.email ? (
+                                validation.errors.email ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.email}
                                   </FormFeedback>
@@ -518,7 +490,7 @@ const PromoVoucherList = (props) => {
                                   value={validation.values.tags || []}
                                   invalid={
                                     validation.touched.tags &&
-                                      validation.errors.tags
+                                    validation.errors.tags
                                       ? true
                                       : false
                                   }
@@ -534,7 +506,7 @@ const PromoVoucherList = (props) => {
                                   <option>Css</option>
                                 </Input>
                                 {validation.touched.tags &&
-                                  validation.errors.tags ? (
+                                validation.errors.tags ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.tags}
                                   </FormFeedback>
@@ -552,13 +524,13 @@ const PromoVoucherList = (props) => {
                                   value={validation.values.projects || ""}
                                   invalid={
                                     validation.touched.projects &&
-                                      validation.errors.projects
+                                    validation.errors.projects
                                       ? true
                                       : false
                                   }
                                 />
                                 {validation.touched.projects &&
-                                  validation.errors.projects ? (
+                                validation.errors.projects ? (
                                   <FormFeedback type="invalid">
                                     {validation.errors.projects}
                                   </FormFeedback>
@@ -580,7 +552,7 @@ const PromoVoucherList = (props) => {
                           </Row>
                         </Form>
                       </ModalBody>
-                    </Modal>
+                    </Modal> */}
                   </CardBody>
                 </Card>
               </Col>

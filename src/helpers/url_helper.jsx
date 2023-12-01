@@ -64,6 +64,7 @@ export const GET_CONFIGURATIONUPLOADLOGS = "/configurationuploadlogs";
 export const GET_TAX = "/tax";
 export const GET_REASON = "/reason";
 export const GET_BANK = "/bank";
+export const GET_PROMOVOUCHER = "/promovoucher";
 
 export const GET_USERS = "/userslist";
 export const GET_USER_PROFILE = "/user";

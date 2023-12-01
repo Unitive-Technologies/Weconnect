@@ -44,6 +44,7 @@ import {
   taxlist as taxes,
   reasonlist as reasons,
   banklist as banks,
+  promovoucherlist as provoucher,
 } from "../../common/data";
 
 let users = [
@@ -754,6 +755,19 @@ const fakeBackend = () => {
           resolve([200, banks]);
         } else {
           reject([400, "Cannot get Bank list"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_PROMOVOUCHER).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (provoucher) {
+          // Passing fake JSON data as response
+          resolve([200, provoucher]);
+        } else {
+          reject([400, "Cannot get Promo voucher list"]);
         }
       });
     });

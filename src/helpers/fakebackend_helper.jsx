@@ -271,6 +271,7 @@ export const getInventoryStateList = () => get(url.GET_INVENTORYSTATELIST);
 export const getTax = () => get(url.GET_TAX);
 export const getReason = () => get(url.GET_REASON);
 export const getBank = () => get(url.GET_BANK);
+export const getPromoVoucher = () => get(url.GET_PROMOVOUCHER);
 
 export const getSMSMessageTempList = () => get(url.GET_SMSMESSAGETEMPLIST);
 // add user
