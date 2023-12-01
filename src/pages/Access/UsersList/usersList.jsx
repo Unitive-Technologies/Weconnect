@@ -490,10 +490,20 @@ const ContactsList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    <div className="d-flex align-items-center">
-                      <h5 className="mb-0 card-title flex-grow-1">
-                        {/* Jobs Lists */}
-                      </h5>
+                    <div className="d-flex align-items-center justify-content-between">
+                      {/* <h5 className="mb-0 card-title flex-grow-1">
+                        Jobs Lists
+                      </h5> */}
+                      <form className="app-search d-none d-lg-block">
+                        <div className="position-relative">
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Search..."
+                          />
+                          <span className="bx bx-search-alt" />
+                        </div>
+                      </form>
                       <div className="flex-shrink-0">
                         <Link
                           to="#!"
@@ -553,7 +563,7 @@ const ContactsList = (props) => {
                       isPagination={true}
                       columns={columns}
                       data={users}
-                      // isGlobalFilter={true}
+                      isGlobalFilter={true}
                       // isAddUserList={true}
                       // isUploadUser={true}
                       // handleUploadUserClick={() => setModal2(true)}
