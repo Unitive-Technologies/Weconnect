@@ -21,66 +21,68 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const ViewUserModal = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, toggle, user } = props;
+  //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
-    // initialValues: {
-    //   name: user.name,
-    //   email: user.email,
-    //   mobile: user.mobile,
-    //   usertype: user.usertype,
-    //   status: user.status,
-    //   message: user.message,
-    //   role: user.role,
-    //   designation: user.designation,
-    //   grouppolicy: user.grouppolicy,
-    //   loginid: user.loginid,
-    //   password: user.password,
-    //   confirmpassword: user.confirmpassword,
-    // },
-    // validationSchema: Yup.object({
-    //   name: Yup.string().required("Please Enter Your Name"),
-    //   email: Yup.string()
-    //     .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-    //     .required("Please Enter Your Email"),
-    //   // mobile: Yup.array().required("Please Enter mobile"),
-    //   mobile: Yup.string().required("Please Enter mobile Number"),
-    //   usertype: Yup.string().required("Please Enter User Type"),
-    //   status: Yup.string().required("Please Enter Status"),
-    //   message: Yup.string().required("Please Enter Message"),
-    //   role: Yup.string().required("Please Enter Role"),
-    //   designation: Yup.string().required("Please Enter Designation"),
-    //   grouppolicy: Yup.string().required("Please Enter Group Policy"),
-    //   loginid: Yup.string().required("Please Enter Login ID"),
-    //   password: Yup.string().required("Please Enter Password"),
-    //   confirmpassword: Yup.string().required("Please Enter Confirm Password"),
-    // }),
-    // onSubmit: (values) => {
-    //   const updateUser = {
-    //     id: user.id,
-    //     name: values.name,
-    //     email: values.email,
-    //     mobile: values.mobile,
-    //     usertype: values.usertype,
-    //     status: values.status,
-    //     message: values.message,
-    //     role: values.role,
-    //     designation: values.designation,
-    //     grouppolicy: values.grouppolicy,
-    //     loginid: values.loginid,
-    //     password: values.password,
-    //     confirmpassword: values.confirmpassword,
-    //   };
+    initialValues: {
+      name: user.name,
+      email: user.email,
+      mobile: user.mobile,
+      usertype: user.usertype,
+      status: user.status,
+      message: user.message,
+      role: user.role,
+      designation: user.designation,
+      grouppolicy: user.grouppolicy,
+      loginid: user.loginid,
+      password: user.password,
+      confirmpassword: user.confirmpassword,
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required("Please Enter Your Name"),
+      email: Yup.string()
+        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
+        .required("Please Enter Your Email"),
+      // mobile: Yup.array().required("Please Enter mobile"),
+      mobile: Yup.string().required("Please Enter mobile Number"),
+      usertype: Yup.string().required("Please Enter User Type"),
+      status: Yup.string().required("Please Enter Status"),
+      message: Yup.string().required("Please Enter Message"),
+      role: Yup.string().required("Please Enter Role"),
+      designation: Yup.string().required("Please Enter Designation"),
+      grouppolicy: Yup.string().required("Please Enter Group Policy"),
+      loginid: Yup.string().required("Please Enter Login ID"),
+      password: Yup.string().required("Please Enter Password"),
+      confirmpassword: Yup.string().required("Please Enter Confirm Password"),
+    }),
+    onSubmit: (values) => {
+      const updateUser = {
+        id: user.id,
+        name: values.name,
+        email: values.email,
+        mobile: values.mobile,
+        usertype: values.usertype,
+        status: values.status,
+        message: values.message,
+        role: values.role,
+        designation: values.designation,
+        grouppolicy: values.grouppolicy,
+        loginid: values.loginid,
+        password: values.password,
+        confirmpassword: values.confirmpassword,
+      };
 
-    //   // update user
-    //   dispatch(onUpdateUser(updateUser));
-    //   validation.resetForm();
-    //   //   setIsView(false);
-    // },
+      // update user
+      dispatch(onUpdateUser(updateUser));
+      validation.resetForm();
+      //   setIsView(false);
+      toggle();
+    },
   });
   return (
     <Modal
@@ -114,7 +116,7 @@ const ViewUserModal = (props) => {
                   placeholder="Insert Name"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  //   value={validation.values.name || ""}
+                  value={validation.initialValues.name || ""}
                   invalid={
                     validation.touched.name && validation.errors.name
                       ? true
@@ -137,7 +139,7 @@ const ViewUserModal = (props) => {
                   placeholder="Insert Email"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  //   value={validation.values.email || ""}
+                  value={validation.initialValues.email || ""}
                   invalid={
                     validation.touched.email && validation.errors.email
                       ? true
@@ -159,7 +161,7 @@ const ViewUserModal = (props) => {
                   type="text"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  //   value={validation.values.mobile || ""}
+                  value={validation.initialValues.mobile || ""}
                   invalid={
                     validation.touched.mobile && validation.errors.mobile
                       ? true
@@ -182,7 +184,7 @@ const ViewUserModal = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  //   value={validation.values.usertype || ""}
+                  value={validation.initialValues.usertype || ""}
                 >
                   <option value="">Select User Type</option>
                   <option value="1">MSO</option>
@@ -206,7 +208,7 @@ const ViewUserModal = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  //   value={validation.values.status || ""}
+                  value={validation.initialValues.status || ""}
                 >
                   <option value="">Select Status</option>
                   <option value="11">Active</option>
@@ -228,7 +230,7 @@ const ViewUserModal = (props) => {
                   rows="3"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  //   value={validation.values.message || ""}
+                  value={validation.initialValues.message || ""}
                   invalid={
                     validation.touched.message && validation.errors.message
                       ? true
@@ -252,7 +254,7 @@ const ViewUserModal = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  //   value={validation.values.role || ""}
+                  value={validation.initialValues.role || ""}
                 >
                   <option value="">Select Role</option>
                   <option value="21">Administrator</option>
@@ -274,7 +276,7 @@ const ViewUserModal = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  //   value={validation.values.designation || ""}
+                  value={validation.initialValues.designation || ""}
                 >
                   <option value="">Select Designation</option>
                   <option value="dir">Director</option>
@@ -295,7 +297,7 @@ const ViewUserModal = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  //   value={validation.values.grouppolicy || ""}
+                  value={validation.initialValues.grouppolicy || ""}
                 >
                   <option value="">Select Group Policy</option>
                   <option value="A">Active</option>
@@ -318,7 +320,7 @@ const ViewUserModal = (props) => {
                   placeholder="Login ID"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  //   value={validation.values.loginid || ""}
+                  value={validation.initialValues.loginid || ""}
                   invalid={
                     validation.touched.loginid && validation.errors.loginid
                       ? true
@@ -340,7 +342,7 @@ const ViewUserModal = (props) => {
                   placeholder="Password"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  //   value={validation.values.password || ""}
+                  value={validation.initialValues.password || ""}
                   invalid={
                     validation.touched.password && validation.errors.password
                       ? true
@@ -362,7 +364,7 @@ const ViewUserModal = (props) => {
                   placeholder="Retype Password"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  //   value={validation.values.confirmpassword || ""}
+                  value={validation.initialValues.confirmpassword || ""}
                   invalid={
                     validation.touched.confirmpassword &&
                     validation.errors.confirmpassword

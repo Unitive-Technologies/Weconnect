@@ -427,7 +427,7 @@ const ContactsList = (props) => {
   const toggle = () => {
     setModal(!modal);
   };
-  const [ViewUser, setViewUser] = useState({});
+  const [viewUser, setViewUser] = useState({});
   // const toggleViewModal = () => setModal(modal);
   // const handleUserClick = (arg) => {
   const toggleViewModal = (userData) => {
@@ -459,8 +459,8 @@ const ContactsList = (props) => {
 
   return (
     <React.Fragment>
-      {console.log("user initially:" + JSON.stringify(users))}
-      <ViewUserModal isOpen={modal1} toggle={toggleViewModal} user={ViewUser} />
+      {/* {console.log("viewuser initially:" + JSON.stringify(viewUser))} */}
+      <ViewUserModal isOpen={modal1} toggle={toggleViewModal} user={viewUser} />
       <AddUserModal isOpen={modal} toggle={toggle} />
       <div className="page-content">
         <Container fluid>
