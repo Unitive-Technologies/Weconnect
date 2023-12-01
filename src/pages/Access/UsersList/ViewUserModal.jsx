@@ -114,7 +114,7 @@ const ViewUserModal = (props) => {
                   placeholder="Insert Name"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.name || ""}
+                  //   value={validation.values.name || ""}
                   invalid={
                     validation.touched.name && validation.errors.name
                       ? true
@@ -137,7 +137,7 @@ const ViewUserModal = (props) => {
                   placeholder="Insert Email"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.email || ""}
+                  //   value={validation.values.email || ""}
                   invalid={
                     validation.touched.email && validation.errors.email
                       ? true
@@ -159,7 +159,7 @@ const ViewUserModal = (props) => {
                   type="text"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.mobile || ""}
+                  //   value={validation.values.mobile || ""}
                   invalid={
                     validation.touched.mobile && validation.errors.mobile
                       ? true
@@ -182,7 +182,7 @@ const ViewUserModal = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.usertype || ""}
+                  //   value={validation.values.usertype || ""}
                 >
                   <option value="">Select User Type</option>
                   <option value="1">MSO</option>
@@ -206,7 +206,7 @@ const ViewUserModal = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.status || ""}
+                  //   value={validation.values.status || ""}
                 >
                   <option value="">Select Status</option>
                   <option value="11">Active</option>
@@ -228,7 +228,7 @@ const ViewUserModal = (props) => {
                   rows="3"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.message || ""}
+                  //   value={validation.values.message || ""}
                   invalid={
                     validation.touched.message && validation.errors.message
                       ? true
@@ -252,7 +252,7 @@ const ViewUserModal = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.role || ""}
+                  //   value={validation.values.role || ""}
                 >
                   <option value="">Select Role</option>
                   <option value="21">Administrator</option>
@@ -274,7 +274,7 @@ const ViewUserModal = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.designation || ""}
+                  //   value={validation.values.designation || ""}
                 >
                   <option value="">Select Designation</option>
                   <option value="dir">Director</option>
@@ -295,7 +295,7 @@ const ViewUserModal = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.grouppolicy || ""}
+                  //   value={validation.values.grouppolicy || ""}
                 >
                   <option value="">Select Group Policy</option>
                   <option value="A">Active</option>
@@ -318,7 +318,7 @@ const ViewUserModal = (props) => {
                   placeholder="Login ID"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.loginid || ""}
+                  //   value={validation.values.loginid || ""}
                   invalid={
                     validation.touched.loginid && validation.errors.loginid
                       ? true
@@ -340,7 +340,7 @@ const ViewUserModal = (props) => {
                   placeholder="Password"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.password || ""}
+                  //   value={validation.values.password || ""}
                   invalid={
                     validation.touched.password && validation.errors.password
                       ? true
@@ -362,7 +362,7 @@ const ViewUserModal = (props) => {
                   placeholder="Retype Password"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.confirmpassword || ""}
+                  //   value={validation.values.confirmpassword || ""}
                   invalid={
                     validation.touched.confirmpassword &&
                     validation.errors.confirmpassword

@@ -50,88 +50,88 @@ const ContactsList = (props) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState();
 
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
+  // const validation = useFormik({
+  //   // enableReinitialize : use this flag when initial values needs to be changed
+  //   enableReinitialize: true,
 
-    initialValues: {
-      name: (user && user.name) || "",
-      email: (user && user.email) || "",
-      mobile: (user && user.mobile) || "",
-      usertype: (user && user.usertype) || "",
-      status: (user && user.status) || "",
-      message: (user && user.message) || "",
-      role: (user && user.role) || "",
-      designation: (user && user.designation) || "",
-      grouppolicy: (user && user.grouppolicy) || "",
-      loginid: (user && user.loginid) || "",
-      password: (user && user.password) || "",
-      confirmpassword: (user && user.confirmpassword) || "",
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
-      email: Yup.string()
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-        .required("Please Enter Your Email"),
-      // mobile: Yup.array().required("Please Enter mobile"),
-      mobile: Yup.string().required("Please Enter mobile Number"),
-      usertype: Yup.string().required("Please Enter User Type"),
-      status: Yup.string().required("Please Enter Status"),
-      message: Yup.string().required("Please Enter Message"),
-      role: Yup.string().required("Please Enter Role"),
-      designation: Yup.string().required("Please Enter Designation"),
-      grouppolicy: Yup.string().required("Please Enter Group Policy"),
-      loginid: Yup.string().required("Please Enter Login ID"),
-      password: Yup.string().required("Please Enter Password"),
-      confirmpassword: Yup.string().required("Please Enter Confirm Password"),
-    }),
-    onSubmit: (values) => {
-      // if (isView) {
-      //   const updateUser = {
-      //     id: user.id,
-      //     name: values.name,
-      //     email: values.email,
-      //     mobile: values.mobile,
-      //     usertype: values.usertype,
-      //     status: values.status,
-      //     message: values.message,
-      //     role: values.role,
-      //     designation: values.designation,
-      //     grouppolicy: values.grouppolicy,
-      //     loginid: values.loginid,
-      //     password: values.password,
-      //     confirmpassword: values.confirmpassword,
-      //   };
+  //   initialValues: {
+  //     name: (user && user.name) || "",
+  //     email: (user && user.email) || "",
+  //     mobile: (user && user.mobile) || "",
+  //     usertype: (user && user.usertype) || "",
+  //     status: (user && user.status) || "",
+  //     message: (user && user.message) || "",
+  //     role: (user && user.role) || "",
+  //     designation: (user && user.designation) || "",
+  //     grouppolicy: (user && user.grouppolicy) || "",
+  //     loginid: (user && user.loginid) || "",
+  //     password: (user && user.password) || "",
+  //     confirmpassword: (user && user.confirmpassword) || "",
+  //   },
+  //   validationSchema: Yup.object({
+  //     name: Yup.string().required("Please Enter Your Name"),
+  //     email: Yup.string()
+  //       .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
+  //       .required("Please Enter Your Email"),
+  //     // mobile: Yup.array().required("Please Enter mobile"),
+  //     mobile: Yup.string().required("Please Enter mobile Number"),
+  //     usertype: Yup.string().required("Please Enter User Type"),
+  //     status: Yup.string().required("Please Enter Status"),
+  //     message: Yup.string().required("Please Enter Message"),
+  //     role: Yup.string().required("Please Enter Role"),
+  //     designation: Yup.string().required("Please Enter Designation"),
+  //     grouppolicy: Yup.string().required("Please Enter Group Policy"),
+  //     loginid: Yup.string().required("Please Enter Login ID"),
+  //     password: Yup.string().required("Please Enter Password"),
+  //     confirmpassword: Yup.string().required("Please Enter Confirm Password"),
+  //   }),
+  //   onSubmit: (values) => {
+  //     // if (isView) {
+  //     //   const updateUser = {
+  //     //     id: user.id,
+  //     //     name: values.name,
+  //     //     email: values.email,
+  //     //     mobile: values.mobile,
+  //     //     usertype: values.usertype,
+  //     //     status: values.status,
+  //     //     message: values.message,
+  //     //     role: values.role,
+  //     //     designation: values.designation,
+  //     //     grouppolicy: values.grouppolicy,
+  //     //     loginid: values.loginid,
+  //     //     password: values.password,
+  //     //     confirmpassword: values.confirmpassword,
+  //     //   };
 
-      //   // update user
-      //   dispatch(onUpdateUser(updateUser));
-      //   validation.resetForm();
-      //   setIsView(false);
-      // } else {
-      const newUser = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
-        name: values["name"],
-        email: values["email"],
-        mobile: values["mobile"],
-        usertype: values["usertype"],
-        status: values["status"],
-        message: values["message"],
-        role: values["role"],
-        designation: values["designation"],
-        grouppolicy: values["grouppolicy"],
-        loginid: values["loginid"],
-        password: values["password"],
-        confirmpassword: values["confirmpassword"],
-      };
-      console.log("newUser:" + newUser);
-      // save new user
-      dispatch(onAddNewUser(newUser));
-      validation.resetForm();
-      toggle();
-    },
-    // toggle()
-    // },
-  });
+  //     //   // update user
+  //     //   dispatch(onUpdateUser(updateUser));
+  //     //   validation.resetForm();
+  //     //   setIsView(false);
+  //     // } else {
+  //     const newUser = {
+  //       id: Math.floor(Math.random() * (30 - 20)) + 20,
+  //       name: values["name"],
+  //       email: values["email"],
+  //       mobile: values["mobile"],
+  //       usertype: values["usertype"],
+  //       status: values["status"],
+  //       message: values["message"],
+  //       role: values["role"],
+  //       designation: values["designation"],
+  //       grouppolicy: values["grouppolicy"],
+  //       loginid: values["loginid"],
+  //       password: values["password"],
+  //       confirmpassword: values["confirmpassword"],
+  //     };
+  //     console.log("newUser:" + newUser);
+  //     // save new user
+  //     dispatch(onAddNewUser(newUser));
+  //     validation.resetForm();
+  //     toggle();
+  //   },
+  //   // toggle()
+  //   // },
+  // });
 
   const selectContactsState = (state) => state.users;
   const ContactsProperties = createSelector(selectContactsState, (Users) => ({
@@ -190,7 +190,7 @@ const ContactsList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  handleUserClick(userData);
+                  toggleViewModal(userData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -427,30 +427,13 @@ const ContactsList = (props) => {
   const toggle = () => {
     setModal(!modal);
   };
-  const toggleViewModal = () => setModal(modal);
+  const [ViewUser, setViewUser] = useState({});
+  // const toggleViewModal = () => setModal(modal);
   // const handleUserClick = (arg) => {
-  const handleUserClick = (arg) => {
+  const toggleViewModal = (userData) => {
     setModal1(!modal1);
-    const user = arg;
-
-    setUser({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      mobile: user.mobile,
-      usertype: user.usertype,
-      status: user.status,
-      message: user.message,
-      role: user.role,
-      designation: user.designation,
-      grouppolicy: user.grouppolicy,
-      loginid: user.loginid,
-      password: user.password,
-      confirmpassword: user.confirmpassword,
-    });
-    // setIsView(true);
-
-    toggle();
+    setViewUser(userData);
+    // toggle();
   };
 
   var node = useRef();
@@ -477,7 +460,7 @@ const ContactsList = (props) => {
   return (
     <React.Fragment>
       {console.log("user initially:" + JSON.stringify(users))}
-      {/* <ViewUserModal isOpen={modal1} toggle={toggleViewModal} user={user} /> */}
+      <ViewUserModal isOpen={modal1} toggle={toggleViewModal} user={ViewUser} />
       <AddUserModal isOpen={modal} toggle={toggle} />
       <div className="page-content">
         <Container fluid>
