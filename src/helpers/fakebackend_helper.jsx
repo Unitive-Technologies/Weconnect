@@ -269,6 +269,7 @@ export const getBrandList = () => get(url.GET_BRANDLIST);
 export const getWarehouseList = () => get(url.GET_WAREHOUSELIST);
 export const getInventoryStateList = () => get(url.GET_INVENTORYSTATELIST);
 export const getTax = () => get(url.GET_TAX);
+export const getReason = () => get(url.GET_REASON);
 
 export const getSMSMessageTempList = () => get(url.GET_SMSMESSAGETEMPLIST);
 // add user

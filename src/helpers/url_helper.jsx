@@ -62,6 +62,7 @@ export const GET_COMPLAINTCATEGORY = "/complaintcategory";
 export const GET_COMPLAINTSUBCATEGORY = "/complaintsubcategory";
 export const GET_CONFIGURATIONUPLOADLOGS = "/configurationuploadlogs";
 export const GET_TAX = "/tax";
+export const GET_REASON = "/reason";
 
 export const GET_USERS = "/userslist";
 export const GET_USER_PROFILE = "/user";

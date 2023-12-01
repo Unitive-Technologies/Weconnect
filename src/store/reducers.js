@@ -48,6 +48,7 @@ import complaintsubcategory from "./complaintsubcategorylist/reducer";
 import warehouselist from "./warehouse/reducer";
 import inventorystatelist from "./inventorystate/reducer";
 import tax from "./taxlist/reducer";
+import reason from "./reasonlist/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -95,6 +96,7 @@ const rootReducer = combineReducers({
   inventorystatelist,
   configurationuploadlogs,
   tax,
+  reason,
 });
 
 export default rootReducer;

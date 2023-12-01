@@ -42,6 +42,7 @@ import {
   complaintsubcategorylist as complaintsubcate,
   configurationuploadlogs as configuplog,
   taxlist as taxes,
+  reasonlist as reasons,
 } from "../../common/data";
 
 let users = [
@@ -724,6 +725,19 @@ const fakeBackend = () => {
         if (taxes) {
           // Passing fake JSON data as response
           resolve([200, taxes]);
+        } else {
+          reject([400, "Cannot get configuration upload logs"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_REASON).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (reasons) {
+          // Passing fake JSON data as response
+          resolve([200, reasons]);
         } else {
           reject([400, "Cannot get configuration upload logs"]);
         }
