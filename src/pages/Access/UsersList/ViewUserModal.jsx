@@ -80,7 +80,6 @@ const ViewUserModal = (props) => {
       // update user
       dispatch(onUpdateUser(updateUser));
       validation.resetForm();
-      //   setIsView(false);
       toggle();
     },
   });
@@ -385,7 +384,7 @@ const ViewUserModal = (props) => {
             <Col>
               <div className="text-end">
                 <button type="submit" className="btn btn-success save-user">
-                  Create
+                  Save
                 </button>
               </div>
             </Col>

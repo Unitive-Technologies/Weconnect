@@ -129,7 +129,7 @@ const UploadUserModal = (props) => {
 
             <div className="text-center mt-4">
               <button type="button" className="btn btn-primary ">
-                Send Files
+                Upload File
               </button>
             </div>
           </CardBody>
