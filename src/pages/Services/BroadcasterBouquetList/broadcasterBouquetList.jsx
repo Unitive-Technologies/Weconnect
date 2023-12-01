@@ -203,7 +203,7 @@ const BroadcasterBouquetList = (props) => {
         accessor: "channels",
         filterable: true,
         Cell: (cellProps) => {
-          return <Channels {...cellProps} style={{ maxWidth: "300px" }} />;
+          return <Channels {...cellProps} />;
         },
       },
       {

@@ -3,7 +3,19 @@ import { Link } from "react-router-dom";
 import { size, map } from "lodash";
 
 const Name = (cell) => {
-  return cell.value ? cell.value : "";
+  return (
+    <p
+      style={{
+        maxWidth: 200,
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        paddingTop: 15,
+      }}
+    >
+      {cell.value ? cell.value : ""}
+    </p>
+  );
 };
 
 const Email = (cell) => {

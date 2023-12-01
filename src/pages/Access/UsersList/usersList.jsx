@@ -84,50 +84,51 @@ const ContactsList = (props) => {
       confirmpassword: Yup.string().required("Please Enter Confirm Password"),
     }),
     onSubmit: (values) => {
-      // if (isEdit) {
-      //   const updateUser = {
-      //     id: user.id,
-      //     name: values.name,
-      //     email: values.email,
-      //     mobile: values.mobile,
-      //     usertype: values.usertype,
-      //     status: values.status,
-      //     message: values.message,
-      //     role: values.role,
-      //     designation: values.designation,
-      //     grouppolicy: values.grouppolicy,
-      //     loginid: values.loginid,
-      //     password: values.password,
-      //     confirmpassword: values.confirmpassword,
-      //   };
+      if (isView) {
+        const updateUser = {
+          id: user.id,
+          name: values.name,
+          email: values.email,
+          mobile: values.mobile,
+          usertype: values.usertype,
+          status: values.status,
+          message: values.message,
+          role: values.role,
+          designation: values.designation,
+          grouppolicy: values.grouppolicy,
+          loginid: values.loginid,
+          password: values.password,
+          confirmpassword: values.confirmpassword,
+        };
 
-      //   // update user
-      //   dispatch(onUpdateUser(updateUser));
-      //   validation.resetForm();
-      //   setIsEdit(false);
-      // } else {
-      const newUser = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
-        name: values["name"],
-        email: values["email"],
-        mobile: values["mobile"],
-        usertype: values["usertype"],
-        status: values["status"],
-        message: values["message"],
-        role: values["role"],
-        designation: values["designation"],
-        grouppolicy: values["grouppolicy"],
-        loginid: values["loginid"],
-        password: values["password"],
-        confirmpassword: values["confirmpassword"],
-      };
-      console.log("newUser:" + newUser);
-      // save new user
-      dispatch(onAddNewUser(newUser));
-      validation.resetForm();
-      toggle();
+        // update user
+        dispatch(onUpdateUser(updateUser));
+        validation.resetForm();
+        setIsView(false);
+      } else {
+        const newUser = {
+          id: Math.floor(Math.random() * (30 - 20)) + 20,
+          name: values["name"],
+          email: values["email"],
+          mobile: values["mobile"],
+          usertype: values["usertype"],
+          status: values["status"],
+          message: values["message"],
+          role: values["role"],
+          designation: values["designation"],
+          grouppolicy: values["grouppolicy"],
+          loginid: values["loginid"],
+          password: values["password"],
+          confirmpassword: values["confirmpassword"],
+        };
+        console.log("newUser:" + newUser);
+        // save new user
+        dispatch(onAddNewUser(newUser));
+        validation.resetForm();
+        toggle();
+      }
+      // toggle()
     },
-    // toggle()
   });
 
   const selectContactsState = (state) => state.users;
@@ -145,7 +146,7 @@ const ContactsList = (props) => {
 
   const [userList, setUserList] = useState([]);
   const [modal, setModal] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
+  const [isView, setIsView] = useState(false);
 
   const columns = useMemo(
     () => [
@@ -176,14 +177,23 @@ const ContactsList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5
+                style={{
+                  maxWidth: 200,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  handleUserClick(userData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
               </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
             </>
           );
         },
@@ -388,55 +398,6 @@ const ContactsList = (props) => {
           );
         },
       },
-
-      // {
-      //   Header: "Projects",
-      //   accessor: "projects",
-      //   filterable: true,
-      //   Cell: cellProps => {
-      //     return (
-      //       <>
-      //         {" "}
-      //         <Projects {...cellProps} />{" "}
-      //       </>
-      //     );
-      //   },
-      // },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
-          );
-        },
-      },
     ],
     []
   );
@@ -444,19 +405,19 @@ const ContactsList = (props) => {
   useEffect(() => {
     if (users && !users.length) {
       dispatch(onGetUsers());
-      setIsEdit(false);
+      setIsView(false);
     }
   }, [dispatch, users]);
 
   useEffect(() => {
     setUser(users);
-    setIsEdit(false);
+    setIsView(false);
   }, [users]);
 
   useEffect(() => {
-    if (!isEmpty(users) && !!isEdit) {
+    if (!isEmpty(users) && !!isView) {
       setUser(users);
-      setIsEdit(false);
+      setIsView(false);
     }
   }, [users]);
 
@@ -482,7 +443,7 @@ const ContactsList = (props) => {
       password: user.password,
       confirmpassword: user.confirmpassword,
     });
-    setIsEdit(true);
+    setIsView(true);
 
     toggle();
   };
@@ -519,7 +480,7 @@ const ContactsList = (props) => {
 
   const handleUserClicks = () => {
     setUserList("");
-    setIsEdit(false);
+    setIsView(false);
     toggle();
   };
 
@@ -527,11 +488,12 @@ const ContactsList = (props) => {
 
   return (
     <React.Fragment>
-      <DeleteModal
+      {/* <DeleteModal
         show={deleteModal}
         onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
-      />
+        onCloseClick={() => setDeleteModal(
+          false)}
+      /> */}
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -561,7 +523,7 @@ const ContactsList = (props) => {
                     />
                     <Modal isOpen={modal} toggle={toggle}>
                       <ModalHeader toggle={toggle} tag="h4">
-                        {!!isEdit ? "Edit User" : "Add User"}
+                        {!!isView ? "View User" : "Add User"}
                       </ModalHeader>
                       <ModalBody>
                         <Form
