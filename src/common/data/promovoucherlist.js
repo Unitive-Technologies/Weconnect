@@ -1,0 +1,3 @@
+const promovoucherlist = [];
+
+export { promovoucherlist };

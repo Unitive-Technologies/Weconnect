@@ -1,0 +1,3 @@
+const banklist = [];
+
+export { banklist };

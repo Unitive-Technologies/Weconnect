@@ -40,6 +40,10 @@ import { companylist } from "./companylist";
 import { brandlist } from "./brandlist";
 import { warehouselist } from "./warehouselist";
 import { inventorystatelist } from "./inventorystatelist";
+import { taxlist } from "./taxlist";
+import { reasonlist } from "./reasonlist";
+import { banklist } from "./banklist";
+import { promovoucherlist } from "./promovoucherlist";
 
 export {
   userslist,
@@ -81,4 +85,8 @@ export {
   brandlist,
   warehouselist,
   inventorystatelist,
+  taxlist,
+  reasonlist,
+  banklist,
+  promovoucherlist,
 };
