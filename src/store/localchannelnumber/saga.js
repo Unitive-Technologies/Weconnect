@@ -18,9 +18,10 @@ const convertLocalChannelNumberListObject = (localChannelNumberList) => {
     return {
       ...localChannelNumber,
       id: localChannelNumber.id,
-      channelname: localChannelNumber.channelname
-        .map((channel) => channel.name)
-        .join(", "),
+      channelname:
+        localChannelNumber.channelname.name +
+        " " +
+        localChannelNumber.channelname.designation,
       genrename: localChannelNumber.genrename,
       localchannelnumber: localChannelNumber.localchannelnumber,
       rank: localChannelNumber.rank,
