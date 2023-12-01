@@ -9,14 +9,18 @@ import {
   Col,
   Container,
   Row,
+  UncontrolledTooltip,
   Modal,
   ModalHeader,
   ModalBody,
-  Label,
-  FormFeedback,
-  UncontrolledTooltip,
-  Input,
   Form,
+  Input,
+  FormFeedback,
+  Label,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -43,6 +47,7 @@ import Login from "../../Authentication/Login";
 import ViewUserModal from "./ViewUserModal";
 import AddUserModal from "./AddUserModal";
 import UploadUserModal from "./UploadUserModal";
+import BulkUpdateUserModal from "./BulkUpdateUserModal";
 
 const ContactsList = (props) => {
   //meta title
@@ -151,7 +156,7 @@ const ContactsList = (props) => {
   const [modal, setModal] = useState(false);
   const [modal1, setModal1] = useState(false);
   const [modal2, setModal2] = useState(false);
-  // const [isView, setIsView] = useState(false);
+  const [modal3, setModal3] = useState(false);
 
   const columns = useMemo(
     () => [
@@ -433,6 +438,10 @@ const ContactsList = (props) => {
   const toggle2 = () => {
     setModal2(!modal2);
   };
+
+  const toggle3 = () => {
+    setModal3(!modal3);
+  };
   const [viewUser, setViewUser] = useState({});
   // const toggleViewModal = () => setModal(modal);
   // const handleUserClick = (arg) => {
@@ -469,6 +478,7 @@ const ContactsList = (props) => {
       <ViewUserModal isOpen={modal1} toggle={toggleViewModal} user={viewUser} />
       <AddUserModal isOpen={modal} toggle={toggle} />
       <UploadUserModal isOpen={modal2} toggle={toggle2} />
+      <BulkUpdateUserModal isOpen={modal3} toggle={toggle3} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -480,18 +490,75 @@ const ContactsList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
+                    <div className="d-flex align-items-center">
+                      <h5 className="mb-0 card-title flex-grow-1">
+                        Jobs Lists
+                      </h5>
+                      <div className="flex-shrink-0">
+                        <Link
+                          to="#!"
+                          onClick={() => setModal(true)}
+                          className="btn btn-primary me-1"
+                        >
+                          Create New User
+                        </Link>
+                        <UncontrolledDropdown className="dropdown d-inline-block me-1">
+                          <DropdownToggle
+                            type="menu"
+                            className="btn btn-success"
+                            id="dropdownMenuButton1"
+                          >
+                            {/* <i className="mdi mdi-dots-vertical"></i> */}
+                            Upload
+                          </DropdownToggle>
+                          <DropdownMenu>
+                            <li onClick={() => setModal2(true)}>
+                              <DropdownItem href="#">Upload User</DropdownItem>
+                            </li>
+                            <li onClick={() => setModal3(true)}>
+                              <DropdownItem href="#">
+                                Bulk Update User
+                              </DropdownItem>
+                            </li>
+                          </DropdownMenu>
+                        </UncontrolledDropdown>
+                        <UncontrolledDropdown className="dropdown d-inline-block me-1">
+                          <DropdownToggle
+                            type="menu"
+                            className="btn btn-success"
+                            id="dropdownMenuButton1"
+                          >
+                            Action
+                          </DropdownToggle>
+                          <DropdownMenu>
+                            <li>
+                              <DropdownItem href="#">
+                                Bulk Active/Inactive User
+                              </DropdownItem>
+                            </li>
+                            <li>
+                              <DropdownItem href="#">
+                                Bulk User Settings
+                              </DropdownItem>
+                            </li>
+                          </DropdownMenu>
+                        </UncontrolledDropdown>
+                      </div>
+                    </div>
+                  </CardBody>
+                  <CardBody>
                     {/* {console.log("users:" + JSON.stringify(users))} */}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={users}
                       // isGlobalFilter={true}
-                      isAddUserList={true}
-                      isUploadUser={true}
-                      handleUploadUserClick={() => setModal2(true)}
+                      // isAddUserList={true}
+                      // isUploadUser={true}
+                      // handleUploadUserClick={() => setModal2(true)}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
-                      handleUserClick={handleUserClicks}
+                      // handleUserClick={handleUserClicks}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
