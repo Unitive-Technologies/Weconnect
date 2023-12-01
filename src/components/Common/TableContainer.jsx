@@ -79,6 +79,8 @@ const TableContainer = ({
   handleChannelClick,
   handleBroadcasterBouquetClick,
   handlePackageClick,
+  isUploadUser,
+  handleUploadUserClick,
   isAddGpPolicyList,
   customPageSize,
   tableClass,
@@ -274,6 +276,21 @@ const TableContainer = ({
               >
                 <i className="mdi mdi-plus me-1" />
                 Create Channel
+              </Button>
+            </div>
+          </Col>
+        )}
+        {isUploadUser && (
+          <Col sm="12">
+            <div className="text-sm-end">
+              <Button
+                type="button"
+                color="primary"
+                className="btn mb-2 me-2"
+                onClick={handleUploadUserClick}
+              >
+                <i className="mdi mdi-plus me-1" />
+                Upload User
               </Button>
             </div>
           </Col>

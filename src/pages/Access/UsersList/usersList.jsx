@@ -42,6 +42,7 @@ import { ToastContainer } from "react-toastify";
 import Login from "../../Authentication/Login";
 import ViewUserModal from "./ViewUserModal";
 import AddUserModal from "./AddUserModal";
+import UploadUserModal from "./UploadUserModal";
 
 const ContactsList = (props) => {
   //meta title
@@ -149,6 +150,7 @@ const ContactsList = (props) => {
   const [userList, setUserList] = useState([]);
   const [modal, setModal] = useState(false);
   const [modal1, setModal1] = useState(false);
+  const [modal2, setModal2] = useState(false);
   // const [isView, setIsView] = useState(false);
 
   const columns = useMemo(
@@ -427,6 +429,10 @@ const ContactsList = (props) => {
   const toggle = () => {
     setModal(!modal);
   };
+
+  const toggle2 = () => {
+    setModal2(!modal2);
+  };
   const [viewUser, setViewUser] = useState({});
   // const toggleViewModal = () => setModal(modal);
   // const handleUserClick = (arg) => {
@@ -462,6 +468,7 @@ const ContactsList = (props) => {
       {/* {console.log("viewuser initially:" + JSON.stringify(viewUser))} */}
       <ViewUserModal isOpen={modal1} toggle={toggleViewModal} user={viewUser} />
       <AddUserModal isOpen={modal} toggle={toggle} />
+      <UploadUserModal isOpen={modal2} toggle={toggle2} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -480,6 +487,8 @@ const ContactsList = (props) => {
                       data={users}
                       // isGlobalFilter={true}
                       isAddUserList={true}
+                      isUploadUser={true}
+                      handleUploadUserClick={() => setModal2(true)}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
                       handleUserClick={handleUserClicks}
