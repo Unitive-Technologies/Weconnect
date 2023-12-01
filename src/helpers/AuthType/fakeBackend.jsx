@@ -43,6 +43,7 @@ import {
   configurationuploadlogs as configuplog,
   taxlist as taxes,
   reasonlist as reasons,
+  banklist as banks,
 } from "../../common/data";
 
 let users = [
@@ -726,7 +727,7 @@ const fakeBackend = () => {
           // Passing fake JSON data as response
           resolve([200, taxes]);
         } else {
-          reject([400, "Cannot get configuration upload logs"]);
+          reject([400, "Cannot get Tax list"]);
         }
       });
     });
@@ -739,7 +740,20 @@ const fakeBackend = () => {
           // Passing fake JSON data as response
           resolve([200, reasons]);
         } else {
-          reject([400, "Cannot get configuration upload logs"]);
+          reject([400, "Cannot get Reason List"]);
+        }
+      });
+    });
+  });
+
+  mock.onGet(url.GET_BANK).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (banks) {
+          // Passing fake JSON data as response
+          resolve([200, banks]);
+        } else {
+          reject([400, "Cannot get Bank list"]);
         }
       });
     });

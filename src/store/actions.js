@@ -52,3 +52,4 @@ export * from "./complaintsubcategorylist/actions";
 export * from "./configurationuploadlogs/actions";
 export * from "./taxlist/actions";
 export * from "./reasonlist/actions";
+export * from "./banklist/actions";

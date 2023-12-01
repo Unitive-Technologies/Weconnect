@@ -46,6 +46,7 @@ import complaintSubCategorySaga from "./complaintsubcategorylist/saga";
 import configurationUploadLogsSaga from "./configurationuploadlogs/saga";
 import taxSaga from "./taxlist/saga";
 import reasonSaga from "./reasonlist/saga";
+import bankSaga from "./banklist/saga";
 
 export default function* rootSaga() {
   yield all([
@@ -95,5 +96,6 @@ export default function* rootSaga() {
     fork(configurationUploadLogsSaga),
     fork(taxSaga),
     fork(reasonSaga),
+    fork(bankSaga),
   ]);
 }

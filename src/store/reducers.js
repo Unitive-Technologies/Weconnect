@@ -49,6 +49,7 @@ import warehouselist from "./warehouse/reducer";
 import inventorystatelist from "./inventorystate/reducer";
 import tax from "./taxlist/reducer";
 import reason from "./reasonlist/reducer";
+import bank from "./banklist/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -97,6 +98,7 @@ const rootReducer = combineReducers({
   configurationuploadlogs,
   tax,
   reason,
+  bank,
 });
 
 export default rootReducer;
