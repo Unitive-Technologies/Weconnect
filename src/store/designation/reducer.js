@@ -1,6 +1,8 @@
 import {
   GET_DESIGNATION_SUCCESS,
   GET_DESIGNATION_FAIL,
+  ADD_DESIGNATION_SUCCESS,
+  ADD_DESIGNATION_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -20,6 +22,18 @@ const Designation = (state = INIT_STATE, action) => {
       };
 
     case GET_DESIGNATION_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_DESIGNATION_SUCCESS:
+      return {
+        ...state,
+        designation: [...state.designation, action.payload],
+      };
+
+    case ADD_DESIGNATION_FAIL:
       return {
         ...state,
         error: action.payload,

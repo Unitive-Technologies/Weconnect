@@ -35,6 +35,7 @@ import { isEmpty } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import AddNewDesignation from "./AddNewDesignation";
 
 const DesignationList = (props) => {
   //meta title
@@ -301,6 +302,7 @@ const DesignationList = (props) => {
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
       />
+       <AddNewDesignation isOpen={modal} toggle={toggle} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
