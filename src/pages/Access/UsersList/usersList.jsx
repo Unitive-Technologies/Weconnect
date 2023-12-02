@@ -370,9 +370,20 @@ const ContactsList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5
+                className="font-size-14 mb-1"
+                style={{
+                  maxWidth: 200,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 <Link className="text-dark" to="#">
-                  {/* {cellProps.row.original.setting} */}
+                  BULK LIMIT: 0 ALLOWED CLIENT IPS: All PAY MODE ALLOWED:
+                  Cash,Cheque,DD,NEFT/RTFS/IMPS,Online Transfer,Debit
+                  Card,Credit Card,PAY TM,Other,Recharge Coupon, Payment
+                  Gateway, TDS, BANK DEPOSIT
                 </Link>
               </h5>
             </>
