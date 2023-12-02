@@ -2,6 +2,9 @@ import {
   GET_DESIGNATION,
   GET_DESIGNATION_FAIL,
   GET_DESIGNATION_SUCCESS,
+  ADD_NEW_DESIGNATION,
+  ADD_DESIGNATION_SUCCESS,
+  ADD_DESIGNATION_FAIL,
 } from "./actionTypes";
 
 export const getDesignation = () => ({
@@ -18,5 +21,20 @@ export const getDesignationSuccess = (designation) => {
 
 export const getDesignationFail = (error) => ({
   type: GET_DESIGNATION_FAIL,
+  payload: error,
+});
+
+export const addNewDesignation = (designation) => ({
+  type: ADD_NEW_DESIGNATION,
+  payload: designation,
+});
+
+export const addDesignationSuccess = (designation) => ({
+  type: ADD_DESIGNATION_SUCCESS,
+  payload: designation,
+});
+
+export const addDesignationFail = (error) => ({
+  type: ADD_DESIGNATION_FAIL,
   payload: error,
 });
