@@ -221,7 +221,7 @@ const DesignationList = (props) => {
   useEffect(() => {
     if (desigList && !desigList.length) {
       dispatch(onGetDesignation());
-      setIsEdit(false);
+      // setIsEdit(false);
     }
   }, [dispatch, desigList]);
 
@@ -315,6 +315,19 @@ const DesignationList = (props) => {
                 <Card>
                   <CardBody>
                     <div className="d-flex align-items-center justify-content-between">
+                      <h5 className="mb-0 card-title flex-grow-1">
+                        {/* Jobs Lists */}
+                      </h5>
+                      {/* <form className="app-search d-none d-lg-block">
+                        <div className="position-relative">
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Search..."
+                          />
+                          <span className="bx bx-search-alt" />
+                        </div>
+                      </form> */}
                       <div className="flex-shrink-0">
                         <Link
                           to="#!"
@@ -334,9 +347,9 @@ const DesignationList = (props) => {
                       data={desigList}
                       isGlobalFilter={true}
                       // isAddUserList={true}
-                      // isShowingPageLength={true}
+                      isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
-                      handleUserClick={handleUserClicks}
+                      // handleUserClick={handleUserClicks}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
