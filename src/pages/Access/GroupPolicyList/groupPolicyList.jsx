@@ -35,6 +35,8 @@ import { isEmpty } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import ViewGroupPolicyModal from "./ViewGroupPolicyModal";
+import AddGroupPolicyModal from "./AddGroupPolicyModal";
 
 const GroupPolicyList = (props) => {
   //meta title
@@ -57,6 +59,7 @@ const GroupPolicyList = (props) => {
   const [isLoading, setLoading] = useState(loading);
 
   const [modal, setModal] = useState(false);
+  const [modal1, setModal1] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
   const columns = useMemo(
@@ -87,7 +90,13 @@ const GroupPolicyList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  toggleViewModal(userData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -143,7 +152,19 @@ const GroupPolicyList = (props) => {
         accessor: "description",
         filterable: true,
         Cell: (cellProps) => {
-          return <Email {...cellProps} />;
+          return (
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 200,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {cellProps.row.original.description}
+            </p>
+          );
         },
       },
       {
@@ -194,41 +215,6 @@ const GroupPolicyList = (props) => {
           );
         },
       },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  // handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  // onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
-          );
-        },
-      },
     ],
     []
   );
@@ -255,7 +241,12 @@ const GroupPolicyList = (props) => {
   const toggle = () => {
     setModal(!modal);
   };
-
+  const [viewUser, setViewUser] = useState({});
+  const toggleViewModal = (userData) => {
+    setModal1(!modal1);
+    setViewUser(userData);
+    // toggle();
+  };
   // const handleUserClick = (arg) => {
   //   const user = arg;
 
@@ -312,10 +303,16 @@ const GroupPolicyList = (props) => {
 
   return (
     <React.Fragment>
+      <ViewGroupPolicyModal
+        isOpen={modal1}
+        toggle={toggleViewModal}
+        user={viewUser}
+      />
+      <AddGroupPolicyModal isOpen={modal} toggle={toggle} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Access" breadcrumbItem="Group Policy List" />
+          {/* <Breadcrumbs title="Access" breadcrumbItem="Group Policy List" /> */}
           {/* {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : ( */}
@@ -323,16 +320,49 @@ const GroupPolicyList = (props) => {
             <Col lg="12">
               <Card>
                 <CardBody>
+                  <div className="d-flex align-items-center justify-content-between">
+                    <h5 className="mb-0 card-title flex-grow-1">
+                      {/* Jobs Lists */}
+                    </h5>
+                    {/* <form className="app-search d-none d-lg-block">
+                        <div className="position-relative">
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Search..."
+                          />
+                          <span className="bx bx-search-alt" />
+                        </div>
+                      </form> */}
+                    <div className="flex-shrink-0">
+                      <Link
+                        to="#!"
+                        onClick={() => setModal(true)}
+                        className="btn btn-primary me-1"
+                      >
+                        Create Group Policy
+                      </Link>
+                      <Link
+                        to="#!"
+                        // onClick={() => setModal(true)}
+                        className="btn btn-primary me-1"
+                      >
+                        Assign Group Policy
+                      </Link>
+                    </div>
+                  </div>
+                </CardBody>
+                <CardBody>
                   {console.log("groupPolicy:" + JSON.stringify(gpPolicy))}
                   <TableContainer
                     isPagination={true}
                     columns={columns}
                     data={gpPolicy}
                     isGlobalFilter={true}
-                    isAddGpPolicyList={true}
+                    // isAddGpPolicyList={true}
                     isShowingPageLength={true}
                     // iscustomPageSizeOptions={true}
-                    handleUserClick={() => {}}
+                    // handleUserClick={() => {}}
                     customPageSize={50}
                     tableClass="table align-middle table-nowrap table-hover"
                     theadClass="table-light"
