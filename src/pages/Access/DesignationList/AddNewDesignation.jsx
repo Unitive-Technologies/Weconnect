@@ -33,7 +33,7 @@ const AddNewDesignation = (props) => {
       designation: "",
       type: "",
       code: "",
-      parent_designation: "",
+      parent: "",
       status: "",
       description: "",
     },
@@ -41,7 +41,7 @@ const AddNewDesignation = (props) => {
       designation: Yup.string().required("Enter designation Name"),
       type: Yup.string().required("Select Type"),
       code: Yup.string().required("Enter Code"),
-      parent_designation: Yup.string().required("Select Parent Designation"),
+      parent: Yup.string().required("Select Parent Designation"),
       status: Yup.string().required("Select status"),
       description: Yup.string().required("Enter Description"),
     }),
@@ -51,7 +51,7 @@ const AddNewDesignation = (props) => {
         designation: values["designation"],
         type: values["type"],
         code: values["code"],
-        parent_designation: values["parent_designation"],
+        parent: values["parent"],
         status: values["status"],
         description: values["description"],
       };
@@ -65,7 +65,7 @@ const AddNewDesignation = (props) => {
   return (
     <Modal
       isOpen={isOpen}
-      parent
+      Parent
       designation="dialog"
       autoFocus={true}
       centered={true}
@@ -158,23 +158,22 @@ const AddNewDesignation = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Parent designation</Label>
                 <Input
-                  name="Parent designation"
+                  name="parent"
                   type="select"
                   placeholder="Select Parent designation"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.parent_designation || ""}
+                  value={validation.values.parent || ""}
                 >
                   <option value="">Select Parent designation</option>
                   <option value="21">Administrator</option>
                   <option value="22">Staff</option>
                   <option value="23">User</option>
                 </Input>
-                {validation.touched.parent_designation &&
-                validation.errors.parent_designation ? (
+                {validation.touched.parent && validation.errors.parent ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.parent_designation}
+                    {validation.errors.parent}
                   </FormFeedback>
                 ) : null}
               </div>
