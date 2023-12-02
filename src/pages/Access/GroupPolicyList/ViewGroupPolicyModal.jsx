@@ -31,29 +31,20 @@ const ViewGroupPolicyModal = (props) => {
 
     initialValues: {
       name: user.name,
-      login: user.username,
-      mobile: user.mobile_no,
-      email: user.email,
-      status: user.status,
-      lco: user.lco,
-      lcocode: user.lco_code,
-      lastlogin: user.last_login_at,
+      type: user.type,
+      role: user.role,
+      description: user.description,
+      count: user.count,
       createdat: user.created_at,
       createdby: user.created_by,
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
-      login: Yup.string().required("Please Enter Login ID"),
-      mobile: Yup.string().required("Please Enter mobile Number"),
-      email: Yup.string()
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-        .required("Please Enter Your Email"),
-      // mobile: Yup.array().required("Please Enter mobile"),
+      type: Yup.string().required("Please Select Type"),
+      role: Yup.string().required("Please Select Role"),
+      description: Yup.string().required("Please Enter Description"),
 
-      status: Yup.string().required("Please Enter Status"),
-      lco: Yup.string().required("Please Enter LCO"),
-      lcocode: Yup.string().required("Please Enter LCO Code"),
-      lastlogin: Yup.string().required("Please Enter Last Login Time"),
+      count: Yup.string().required("Please Enter Count"),
       createdat: Yup.string().required("Please Enter Created At"),
 
       createdby: Yup.string().required("Please Enter Created By"),
@@ -62,13 +53,10 @@ const ViewGroupPolicyModal = (props) => {
       const updateUser = {
         id: user.id,
         name: values.name,
-        login: values.username,
-        mobile: values.mobile,
-        email: values.email,
-        status: values.status,
-        lco: values.lco,
-        lcocode: values.lcocode,
-        lastlogin: values.lastlogin,
+        type: values.type,
+        role: values.role,
+        description: values.description,
+        count: values.count,
         createdat: values.createdat,
         createdby: values.createdby,
       };
@@ -89,7 +77,6 @@ const ViewGroupPolicyModal = (props) => {
       tabIndex="-1"
       toggle={toggle}
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
       <ModalHeader toggle={toggle} tag="h4">
         View Group Policy
       </ModalHeader>
@@ -111,7 +98,7 @@ const ViewGroupPolicyModal = (props) => {
                   placeholder="Insert Name"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.initialValues.name || ""}
+                  value={validation.values.name || ""}
                   invalid={
                     validation.touched.name && validation.errors.name
                       ? true
@@ -126,166 +113,98 @@ const ViewGroupPolicyModal = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Login ID</Label>
+                <Label className="form-label">Operator Type</Label>
                 <Input
-                  name="login"
-                  label="Login ID"
-                  type="text"
-                  placeholder="Login ID"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.initialValues.login || ""}
-                  invalid={
-                    validation.touched.login && validation.errors.login
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.login && validation.errors.login ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.login}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                <Label className="form-label">Mobile No.</Label>
-                <Input
-                  name="mobile"
-                  label="Mobile No."
-                  placeholder="Insert Mobile Number"
-                  type="text"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.initialValues.mobile || ""}
-                  invalid={
-                    validation.touched.mobile && validation.errors.mobile
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.mobile && validation.errors.mobile ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.mobile}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                <Label className="form-label">Email</Label>
-                <Input
-                  name="email"
-                  label="Email"
-                  type="email"
-                  placeholder="Insert Email"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.initialValues.email || ""}
-                  invalid={
-                    validation.touched.email && validation.errors.email
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.email && validation.errors.email ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.email}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                <Label className="form-label">Status</Label>
-                <Input
-                  name="status"
+                  name="usertype"
                   type="select"
-                  placeholder="Select Status"
+                  placeholder="Select User Type"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.initialValues.status || ""}
+                  value={validation.values.usertype || ""}
                 >
-                  {/* <option value="">Select Status</option> */}
-                  <option value="11">Active</option>
-                  <option value="12">BLOCKED</option>
-                  <option value="13">In-Active</option>
+                  {/* <option value="">Select User Type</option> */}
+                  <option value="1">MSO</option>
+                  <option value="2">RO</option>
+                  <option value="3">Distributor</option>
+                  <option value="4">LCO</option>
                 </Input>
-                {validation.touched.status && validation.errors.status ? (
+                {validation.touched.usertype && validation.errors.usertype ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.status}
+                    {validation.errors.usertype}
+                  </FormFeedback>
+                ) : null}
+              </div>
+              <div className="mb-3">
+                <Label className="form-label">Role Type</Label>
+                <Input
+                  name="role"
+                  type="select"
+                  placeholder="Select Role"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.role || ""}
+                >
+                  {/* <option value="">Select Role</option> */}
+                  <option value="21">Administrator</option>
+                  <option value="22">Staff</option>
+                  <option value="23">User</option>
+                </Input>
+                {validation.touched.role && validation.errors.role ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.role}
+                  </FormFeedback>
+                ) : null}
+              </div>
+              <div className="mb-3">
+                <Label className="form-label">Description</Label>
+                <Input
+                  name="description"
+                  type="textarea"
+                  placeholder="Enter Description"
+                  rows="3"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.description || ""}
+                  invalid={
+                    validation.touched.description &&
+                    validation.errors.description
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.description &&
+                validation.errors.description ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.description}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
             <Col sm="6">
               <div className="mb-3">
-                <Label className="form-label">LCO</Label>
+                <Label className="form-label">Count</Label>
                 <Input
-                  name="lco"
+                  name="count"
+                  label="Count"
                   type="text"
-                  placeholder="LCO"
+                  placeholder="Count"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.initialValues.lco || ""}
+                  value={validation.values.count || ""}
                   invalid={
-                    validation.touched.lco && validation.errors.lco
+                    validation.touched.count && validation.errors.count
                       ? true
                       : false
                   }
                 />
-                {validation.touched.lco && validation.errors.lco ? (
+                {validation.touched.count && validation.errors.count ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.lco}
+                    {validation.errors.count}
                   </FormFeedback>
                 ) : null}
               </div>
-
-              <div className="mb-3">
-                <Label className="form-label">LCO Code</Label>
-                <Input
-                  name="lcocode"
-                  label="LCO Code"
-                  type="text"
-                  placeholder="LCO Code"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.initialValues.lcocode || ""}
-                  invalid={
-                    validation.touched.lcocode && validation.errors.lcocode
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.lcocode && validation.errors.lcocode ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.lcocode}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                <Label className="form-label">Last Login Time</Label>
-                <Input
-                  name="lastlogin"
-                  label="Last Login Time"
-                  placeholder="Last Login Time"
-                  type="text"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.initialValues.lastlogin || ""}
-                  invalid={
-                    validation.touched.lastlogin && validation.errors.lastlogin
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.lastlogin && validation.errors.lastlogin ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.lastlogin}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
               <div className="mb-3">
                 <Label className="form-label">Created At</Label>
                 <Input
@@ -295,7 +214,7 @@ const ViewGroupPolicyModal = (props) => {
                   placeholder="Created At"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.initialValues.createdat || ""}
+                  value={validation.values.createdat || ""}
                   invalid={
                     validation.touched.createdat && validation.errors.createdat
                       ? true
@@ -308,7 +227,6 @@ const ViewGroupPolicyModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
               <div className="mb-3">
                 <Label className="form-label">Created By</Label>
                 <Input
@@ -318,7 +236,7 @@ const ViewGroupPolicyModal = (props) => {
                   placeholder="Created By"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.initialValues.createdby || ""}
+                  value={validation.values.createdby || ""}
                   invalid={
                     validation.touched.createdby && validation.errors.createdby
                       ? true
@@ -337,14 +255,13 @@ const ViewGroupPolicyModal = (props) => {
             <Col>
               <div className="text-end">
                 <button type="submit" className="btn btn-success save-user">
-                  Save
+                  Create
                 </button>
               </div>
             </Col>
           </Row>
         </Form>
       </ModalBody>
-      {/* </Modal> */}
     </Modal>
   );
 };
