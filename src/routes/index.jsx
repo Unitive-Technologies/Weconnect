@@ -51,7 +51,7 @@ import SMSMessageTemplateList from "../pages/Services/SMSMessageTemplateList/SMS
 
 //  path from Inventory
 import CompanyList from "../pages/Inventory/CompanyList/companyList";
-import WarehouseList from "../pages/Inventory/WarehouseList/warehouselist";
+import WarehouseList from "../pages/Inventory/WarehouseList/warehouseList";
 import InventoryStateList from "../pages/Inventory/InventoryStateList/inventorystatelist";
 import BrandList from "../pages/Inventory/BrandList/brandList";
 
@@ -64,13 +64,13 @@ import TaxList from "../pages/Billing/TaxList/taxList";
 // path from Subscription
 import BouquetList from "../pages/Subscription/BouquetList/bouquetList";
 import ConnectionSchemeList from "../pages/Subscription/ConnectionSchemeList/connectionSchemeList";
-import NCFList from "../pages/Subscription/NCFList/ncfList"
+import NCFList from "../pages/Subscription/NCFList/ncfList";
 
 // path from Complaint
-import ComplaintCategoryList from '../pages/Complaint/ComplaintCategoryList/complaintCategoryList'
-import ComplaintSubCategoryList from '../pages/Complaint/ComplaintSubCategoryList/complaintSubCategoryList'
+import ComplaintCategoryList from "../pages/Complaint/ComplaintCategoryList/complaintCategoryList";
+import ComplaintSubCategoryList from "../pages/Complaint/ComplaintSubCategoryList/complaintSubCategoryList";
 
-import ConfigurationUploadLogs from '../pages/UploadLogs/ConfigurationUploadLogs/configurationUploadLogs';
+import ConfigurationUploadLogs from "../pages/UploadLogs/ConfigurationUploadLogs/configurationUploadLogs";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -250,8 +250,7 @@ const authProtectedRoutes = [
   {
     path: "/configuration-upload-logs",
     component: <ConfigurationUploadLogs />,
-  }
-
+  },
 ];
 
 const publicRoutes = [
