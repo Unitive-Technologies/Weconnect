@@ -48,6 +48,8 @@ import ViewUserModal from "./ViewUserModal";
 import AddUserModal from "./AddUserModal";
 import UploadUserModal from "./UploadUserModal";
 import BulkUpdateUserModal from "./BulkUpdateUserModal";
+import BulkInactiveUserModal from "./BulkInactiveUserModal";
+import BulkUserSettings from "./BulkUserSettings";
 
 const ContactsList = (props) => {
   //meta title
@@ -157,7 +159,8 @@ const ContactsList = (props) => {
   const [modal1, setModal1] = useState(false);
   const [modal2, setModal2] = useState(false);
   const [modal3, setModal3] = useState(false);
-
+  const [modal4, setModal4] = useState(false);
+  const [modal5, setModal5] = useState(false);
   const columns = useMemo(
     () => [
       {
@@ -442,6 +445,14 @@ const ContactsList = (props) => {
   const toggle3 = () => {
     setModal3(!modal3);
   };
+
+  const toggle4 = () => {
+    setModal4(!modal4);
+  };
+
+  const toggle5 = () => {
+    setModal5(!modal5);
+  };
   const [viewUser, setViewUser] = useState({});
   // const toggleViewModal = () => setModal(modal);
   // const handleUserClick = (arg) => {
@@ -450,7 +461,16 @@ const ContactsList = (props) => {
     setViewUser(userData);
     // toggle();
   };
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  useEffect(() => {
+    // Filter users based on status values "Bulk" and "Inactive"
+    const filteredData = users.filter(
+      (user) => user.status_lbl === "Bulk" || user.status_lbl === "Inactive"
+    );
 
+    // Update the filteredUsers state
+    setFilteredUsers(filteredData);
+  }, [users]);
   var node = useRef();
   const onPaginationPageChange = (page) => {
     if (
@@ -479,6 +499,12 @@ const ContactsList = (props) => {
       <AddUserModal isOpen={modal} toggle={toggle} />
       <UploadUserModal isOpen={modal2} toggle={toggle2} />
       <BulkUpdateUserModal isOpen={modal3} toggle={toggle3} />
+      <BulkInactiveUserModal
+        isOpen={modal4}
+        toggle={toggle4}
+        user={filteredUsers}
+      />
+      <BulkUserSettings isOpen={modal5} toggle={toggle5} user={filteredUsers} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -542,12 +568,12 @@ const ContactsList = (props) => {
                             <i className="mdi mdi-dots-vertical"></i>
                           </DropdownToggle>
                           <DropdownMenu>
-                            <li>
+                            <li onClick={() => setModal4(true)}>
                               <DropdownItem href="#">
                                 Bulk Active/Inactive User
                               </DropdownItem>
                             </li>
-                            <li>
+                            <li onClick={() => setModal5(true)}>
                               <DropdownItem href="#">
                                 Bulk User Settings
                               </DropdownItem>
