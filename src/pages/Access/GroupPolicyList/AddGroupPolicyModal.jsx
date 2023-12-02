@@ -111,13 +111,13 @@ const AddGroupPolicyModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Operator Type</Label>
                 <Input
-                  name="usertype"
+                  name="type"
                   type="select"
                   placeholder="Select User Type"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.usertype || ""}
+                  value={validation.values.type || ""}
                 >
                   <option value="">Select User Type</option>
                   <option value="1">MSO</option>
@@ -125,9 +125,9 @@ const AddGroupPolicyModal = (props) => {
                   <option value="3">Distributor</option>
                   <option value="4">LCO</option>
                 </Input>
-                {validation.touched.usertype && validation.errors.usertype ? (
+                {validation.touched.type && validation.errors.type ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.usertype}
+                    {validation.errors.type}
                   </FormFeedback>
                 ) : null}
               </div>

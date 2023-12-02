@@ -367,7 +367,7 @@ const GroupPolicyList = (props) => {
                   </div>
                 </CardBody>
                 <CardBody>
-                  {console.log("groupPolicy:" + JSON.stringify(gpPolicy))}
+                  {/* {console.log("groupPolicy:" + JSON.stringify(gpPolicy))} */}
                   <TableContainer
                     isPagination={true}
                     columns={columns}
