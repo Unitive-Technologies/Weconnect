@@ -226,7 +226,8 @@ export const getCustomerUsers = () => get(url.GET_CUSTOMERUSERS);
 export const getGroupPolicy = () => get(url.GET_GROUPPOLICY);
 
 export const getDesignation = () => get(url.GET_DESIGNATION);
-export const addNewDesignation = () => post(url.ADD_NEW_DESIGNATION);
+export const addNewDesignation = (designation) =>
+  post(url.ADD_NEW_DESIGNATION, designation);
 
 export const getNotificationTemplate = () => get(url.GET_NOTIFICATIONTEMPLATE);
 

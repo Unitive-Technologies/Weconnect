@@ -1,11 +1,20 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_DESIGNATION } from "./actionTypes";
+import { GET_DESIGNATION, ADD_NEW_DESIGNATION } from "./actionTypes";
 
-import { getDesignationSuccess, getDesignationFail } from "./actions";
+import {
+  getDesignationSuccess,
+  getDesignationFail,
+  addDesignationSuccess,
+  addDesignationFail,
+} from "./actions";
 
 //Include Both Helper File with needed methods
-import { getDesignation } from "../../helpers/fakebackend_helper";
+import {
+  getDesignation,
+  addNewDesignation,
+} from "../../helpers/fakebackend_helper";
+import { toast } from "react-toastify";
 
 const convertDesignationListObject = (designationList) => {
   return designationList.map((designation) => {
@@ -47,8 +56,21 @@ function* fetchDesignation() {
   }
 }
 
+function* onAddNewDesignation({ payload: designation }) {
+  try {
+    const response = yield call(addNewDesignation, designation);
+
+    yield put(addDesignationSuccess(response));
+    toast.success("Designation Added Successfully", { autoClose: 2000 });
+  } catch (error) {
+    yield put(addDesignationFail(error));
+    toast.error("Designation Added Failed", { autoClose: 2000 });
+  }
+}
+
 function* designationSaga() {
   yield takeEvery(GET_DESIGNATION, fetchDesignation);
+  yield takeEvery(ADD_NEW_DESIGNATION, onAddNewDesignation);
 }
 
 export default designationSaga;

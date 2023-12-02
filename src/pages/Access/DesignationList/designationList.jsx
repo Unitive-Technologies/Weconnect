@@ -302,7 +302,7 @@ const DesignationList = (props) => {
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
       />
-       <AddNewDesignation isOpen={modal} toggle={toggle} />
+      <AddNewDesignation isOpen={modal} toggle={toggle} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -314,14 +314,27 @@ const DesignationList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
+                    <div className="d-flex align-items-center justify-content-between">
+                      <div className="flex-shrink-0">
+                        <Link
+                          to="#!"
+                          onClick={() => setModal(true)}
+                          className="btn btn-primary me-1"
+                        >
+                          Add New Designation
+                        </Link>
+                      </div>
+                    </div>
+                  </CardBody>
+                  <CardBody>
                     {console.log("designation" + JSON.stringify(desigList))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={desigList}
                       isGlobalFilter={true}
-                      isAddUserList={true}
-                      isShowingPageLength={true}
+                      // isAddUserList={true}
+                      // isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
                       handleUserClick={handleUserClicks}
                       customPageSize={50}

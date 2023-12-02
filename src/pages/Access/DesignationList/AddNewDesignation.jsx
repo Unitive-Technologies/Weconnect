@@ -17,7 +17,7 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addNewUser as onAddNewUser } from "/src/store/users/actions";
+import { addNewDesignation as onAddNewDesignation } from "/src/store/designation/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 const AddNewDesignation = (props) => {
@@ -57,7 +57,7 @@ const AddNewDesignation = (props) => {
       };
       console.log("newDesignation:" + newDesignation);
       // save new user
-      dispatch(onAddNewUser(newDesignation));
+      dispatch(onAddNewDesignation(newDesignation));
       validation.resetForm();
       toggle();
     },
@@ -65,7 +65,7 @@ const AddNewDesignation = (props) => {
   return (
     <Modal
       isOpen={isOpen}
-      Parent
+      parent
       designation="dialog"
       autoFocus={true}
       centered={true}
@@ -84,7 +84,7 @@ const AddNewDesignation = (props) => {
           }}
         >
           <Row>
-            <Col sm="6">
+            <Col sm="12">
               <div className="mb-3">
                 <Label className="form-label">Designation</Label>
                 <Input
@@ -156,6 +156,29 @@ const AddNewDesignation = (props) => {
                 ) : null}
               </div>
               <div className="mb-3">
+                <Label className="form-label">Parent designation</Label>
+                <Input
+                  name="Parent designation"
+                  type="select"
+                  placeholder="Select Parent designation"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.parent_designation || ""}
+                >
+                  <option value="">Select Parent designation</option>
+                  <option value="21">Administrator</option>
+                  <option value="22">Staff</option>
+                  <option value="23">User</option>
+                </Input>
+                {validation.touched.parent_designation &&
+                validation.errors.parent_designation ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.parent_designation}
+                  </FormFeedback>
+                ) : null}
+              </div>
+              <div className="mb-3">
                 <Label className="form-label">Status</Label>
                 <Input
                   name="status"
@@ -202,44 +225,19 @@ const AddNewDesignation = (props) => {
                 ) : null}
               </div>
             </Col>
-            <Col sm="6">
-              <div className="mb-3">
-                <Label className="form-label">Parent designation</Label>
-                <Input
-                  name="Parent designation"
-                  type="select"
-                  placeholder="Select Parent designation"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.parent_designation || ""}
-                >
-                  <option value="">Select Parent designation</option>
-                  <option value="21">Administrator</option>
-                  <option value="22">Staff</option>
-                  <option value="23">User</option>
-                </Input>
-                {validation.touched.parent_designation &&
-                validation.errors.parent_designation ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.parent_designation}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
           </Row>
           <Row>
-            <Col>
+            <Col sm="8">
               <div className="text-end">
                 <button type="submit" className="btn btn-success save-user">
                   Save
                 </button>
-                <button type="submit" className="btn btn-success save-user">
+                {/* <button type="submit" className="btn btn-success save-user">
                   Reset
                 </button>
                 <button type="submit" className="btn btn-success save-user">
                   Cancel
-                </button>
+                </button> */}
               </div>
             </Col>
           </Row>
