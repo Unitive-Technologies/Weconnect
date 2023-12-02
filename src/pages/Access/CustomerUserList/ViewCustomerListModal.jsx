@@ -22,7 +22,7 @@ import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const ViewCustomerUserModal = (props) => {
   const { isOpen, toggle, user } = props;
-  console.log("Customeruser in view modal:" + JSON.stringify(user));
+  // console.log("Customeruser in view modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
 
   const validation = useFormik({

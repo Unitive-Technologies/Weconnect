@@ -298,6 +298,17 @@ const CustomerUserList = (props) => {
     setViewUser(userData);
     // toggle();
   };
+
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  useEffect(() => {
+    // Filter users based on status values "Bulk" and "Inactive"
+    const filteredData = cusUsers.filter(
+      (user) => user.status_lbl === "Bulk" || user.status_lbl === "Inactive"
+    );
+
+    // Update the filteredUsers state
+    setFilteredUsers(filteredData);
+  }, [cusUsers]);
   // const handleUserClick = (arg) => {
   //   const user = arg;
 
@@ -359,7 +370,11 @@ const CustomerUserList = (props) => {
         toggle={toggleViewModal}
         user={viewUser}
       />
-      <BulkInactiveCustomerList isOpen={modal1} toggle={toggle1} />
+      <BulkInactiveCustomerList
+        isOpen={modal1}
+        toggle={toggle1}
+        user={filteredUsers}
+      />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}

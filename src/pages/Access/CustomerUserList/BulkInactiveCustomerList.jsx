@@ -27,7 +27,7 @@ import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const BulkInactiveCustomerList = (props) => {
   const { isOpen, toggle, user } = props;
-  console.log("user in viewuser modal:" + JSON.stringify(user));
+  // console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
 
   const columns = useMemo(
