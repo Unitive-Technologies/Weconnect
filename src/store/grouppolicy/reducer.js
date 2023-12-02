@@ -1,4 +1,9 @@
-import { GET_GROUPPOLICY_SUCCESS, GET_GROUPPOLICY_FAIL } from "./actionTypes";
+import {
+  GET_GROUPPOLICY_SUCCESS,
+  GET_GROUPPOLICY_FAIL,
+  ADD_GROUPPOLICY_SUCCESS,
+  ADD_GROUPPOLICY_FAIL,
+} from "./actionTypes";
 
 const INIT_STATE = {
   groupPolicy: [],
@@ -17,6 +22,18 @@ const GroupPolicy = (state = INIT_STATE, action) => {
       };
 
     case GET_GROUPPOLICY_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_GROUPPOLICY_SUCCESS:
+      return {
+        ...state,
+        groupPolicy: [...state.groupPolicy, action.payload],
+      };
+
+    case ADD_GROUPPOLICY_FAIL:
       return {
         ...state,
         error: action.payload,

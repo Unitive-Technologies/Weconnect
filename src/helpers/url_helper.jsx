@@ -15,7 +15,7 @@ export const POST_EDIT_PROFILE = "/post-fake-profile";
 export const GET_CUSTOMERUSERS = "/customeruserlist";
 
 export const GET_GROUPPOLICY = "/grouppolicylist";
-
+export const ADD_NEW_GROUPPOLICY = "/add/grouppolicy";
 export const GET_DESIGNATION = "/designationlist";
 export const ADD_NEW_DESIGNATION = "/add/designation";
 

@@ -17,7 +17,7 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addNewUser as onAddNewUser } from "/src/store/users/actions";
+import { addNewGroupPolicy as onAddNewGroupPolicy } from "/src/store/grouppolicy/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 const AddGroupPolicyModal = (props) => {
@@ -60,7 +60,7 @@ const AddGroupPolicyModal = (props) => {
       };
       console.log("newGroupPolicy:" + newGroupPolicy);
       // save new user
-      dispatch(onAddNewUser(newGroupPolicy));
+      dispatch(onAddNewGroupPolicy(newGroupPolicy));
       validation.resetForm();
       toggle();
     },

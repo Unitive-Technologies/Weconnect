@@ -799,6 +799,19 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onPost(url.ADD_NEW_GROUPPOLICY).reply((groupPolicy) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (groupPolicy && groupPolicy.data) {
+          // Passing fake JSON data as response
+          resolve([200, groupPolicy.data]);
+        } else {
+          reject([400, "Cannot add Group Policy"]);
+        }
+      });
+    });
+  });
+
   mock.onPost(url.ADD_NEW_DESIGNATION).reply((designation) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
