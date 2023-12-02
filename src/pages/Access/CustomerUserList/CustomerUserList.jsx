@@ -17,6 +17,10 @@ import {
   UncontrolledTooltip,
   Input,
   Form,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -35,11 +39,14 @@ import { isEmpty } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import ViewCustomerUserModal from "./ViewCustomerListModal";
+import BulkInactiveCustomerList from "./BulkInactiveCustomerList";
 
 const CustomerUserList = (props) => {
   //meta title
   document.title = "Customer User List | VDigital";
-
+  const [modal, setModal] = useState(false);
+  const [modal1, setModal1] = useState(false);
   const dispatch = useDispatch();
 
   const selectCustomerUsersState = (state) => state.customerUsers;
@@ -59,7 +66,6 @@ const CustomerUserList = (props) => {
 
   const [isLoading, setLoading] = useState(loading);
 
-  const [modal, setModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
   const columns = useMemo(
@@ -90,7 +96,13 @@ const CustomerUserList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  toggleViewModal(userData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -140,8 +152,8 @@ const CustomerUserList = (props) => {
                 {cellProps.row.original.status === 1
                   ? "Active"
                   : cellProps.row.original.status === 0
-                    ? "In-Active"
-                    : "Blocked"}
+                  ? "In-Active"
+                  : "Blocked"}
               </Link>
             </h5>
           );
@@ -213,41 +225,41 @@ const CustomerUserList = (props) => {
           );
         },
       },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  // handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  // onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
-          );
-        },
-      },
+      // {
+      //   Header: "Action",
+      //   Cell: (cellProps) => {
+      //     return (
+      //       <div className="d-flex gap-3">
+      //         <Link
+      //           to="#"
+      //           className="text-success"
+      //           onClick={() => {
+      //             const userData = cellProps.row.original;
+      //             // handleUserClick(userData);
+      //           }}
+      //         >
+      //           <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
+      //           <UncontrolledTooltip placement="top" target="edittooltip">
+      //             Edit
+      //           </UncontrolledTooltip>
+      //         </Link>
+      //         <Link
+      //           to="#"
+      //           className="text-danger"
+      //           onClick={() => {
+      //             const userData = cellProps.row.original;
+      //             // onClickDelete(userData);
+      //           }}
+      //         >
+      //           <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
+      //           <UncontrolledTooltip placement="top" target="deletetooltip">
+      //             Delete
+      //           </UncontrolledTooltip>
+      //         </Link>
+      //       </div>
+      //     );
+      //   },
+      // },
     ],
     []
   );
@@ -275,6 +287,17 @@ const CustomerUserList = (props) => {
     setModal(!modal);
   };
 
+  const toggle1 = () => {
+    setModal1(!modal1);
+  };
+  const [viewUser, setViewUser] = useState({});
+  // const toggleViewModal = () => setModal(modal);
+  // const handleUserClick = (arg) => {
+  const toggleViewModal = (userData) => {
+    setModal(!modal);
+    setViewUser(userData);
+    // toggle();
+  };
   // const handleUserClick = (arg) => {
   //   const user = arg;
 
@@ -331,6 +354,12 @@ const CustomerUserList = (props) => {
 
   return (
     <React.Fragment>
+      <ViewCustomerUserModal
+        isOpen={modal}
+        toggle={toggleViewModal}
+        user={viewUser}
+      />
+      <BulkInactiveCustomerList isOpen={modal1} toggle={toggle1} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -342,6 +371,42 @@ const CustomerUserList = (props) => {
             <Col lg="12">
               <Card>
                 <CardBody>
+                  <div className="d-flex align-items-center justify-content-between">
+                    <h5 className="mb-0 card-title flex-grow-1">
+                      {/* Jobs Lists */}
+                    </h5>
+                    {/* <form className="app-search d-none d-lg-block">
+                        <div className="position-relative">
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Search..."
+                          />
+                          <span className="bx bx-search-alt" />
+                        </div>
+                      </form> */}
+                    <div className="flex-shrink-0">
+                      <UncontrolledDropdown className="dropdown d-inline-block me-1">
+                        <DropdownToggle
+                          type="menu"
+                          className="btn btn-success"
+                          id="dropdownMenuButton1"
+                        >
+                          Action &nbsp;
+                          <i className="mdi mdi-dots-vertical"></i>
+                        </DropdownToggle>
+                        <DropdownMenu>
+                          <li onClick={() => setModal1(true)}>
+                            <DropdownItem href="#">
+                              Bulk Active/Inactive User
+                            </DropdownItem>
+                          </li>
+                        </DropdownMenu>
+                      </UncontrolledDropdown>
+                    </div>
+                  </div>
+                </CardBody>
+                <CardBody>
                   {console.log("Customer users:" + JSON.stringify(cusUsers))}
                   <TableContainer
                     isPagination={true}
@@ -351,7 +416,7 @@ const CustomerUserList = (props) => {
                     // isAddUserList={true}
                     isShowingPageLength={true}
                     // iscustomPageSizeOptions={true}
-                    handleUserClick={() => { }}
+                    handleUserClick={() => {}}
                     customPageSize={50}
                     tableClass="table align-middle table-nowrap table-hover"
                     theadClass="table-light"
