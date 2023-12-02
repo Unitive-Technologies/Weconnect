@@ -52,7 +52,7 @@ import SMSMessageTemplateList from "../pages/Services/SMSMessageTemplateList/SMS
 //  path from Inventory
 import CompanyList from "../pages/Inventory/CompanyList/companyList";
 import WarehouseList from "../pages/Inventory/WarehouseList/warehouseList";
-import InventoryStateList from "../pages/Inventory/InventoryStateList/inventorystatelist";
+import InventoryStateList from "../pages/Inventory/InventoryStateList/inventoryStateList";
 import BrandList from "../pages/Inventory/BrandList/brandList";
 
 // path from Billing
