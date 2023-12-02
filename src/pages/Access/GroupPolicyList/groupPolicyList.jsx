@@ -4,6 +4,8 @@ import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
 import Spinners from "../../../components/Common/Spinner";
 import {
+  Alert,
+  UncontrolledAlert,
   Card,
   CardBody,
   Col,
@@ -242,6 +244,7 @@ const GroupPolicyList = (props) => {
     setModal(!modal);
   };
   const [viewUser, setViewUser] = useState({});
+  const [show, setShow] = useState(false);
   const toggleViewModal = (userData) => {
     setModal1(!modal1);
     setViewUser(userData);
@@ -309,6 +312,7 @@ const GroupPolicyList = (props) => {
         user={viewUser}
       />
       <AddGroupPolicyModal isOpen={modal} toggle={toggle} />
+
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -344,11 +348,21 @@ const GroupPolicyList = (props) => {
                       </Link>
                       <Link
                         to="#!"
-                        // onClick={() => setModal(true)}
+                        onClick={() => setShow(true)}
                         className="btn btn-primary me-1"
                       >
                         Assign Group Policy
                       </Link>
+                      {show && (
+                        <UncontrolledAlert
+                          color="danger"
+                          className="alert-dismissible fade show"
+                          role="alert"
+                        >
+                          <i className="mdi mdi-alert-outline me-2"></i>Please
+                          select Group Policy to select
+                        </UncontrolledAlert>
+                      )}
                     </div>
                   </div>
                 </CardBody>
