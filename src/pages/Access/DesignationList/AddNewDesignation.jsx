@@ -250,8 +250,8 @@ const AddNewDesignation = (props) => {
                   type="button"
                   className="btn btn-outline-danger"
                   onClick={() => {
-                    validation.resetForm(); // Optionally reset the form when cancel is clicked
-                    toggle(); // Close the popup
+                    validation.resetForm();
+                    toggle();
                   }}
                 >
                   Cancel

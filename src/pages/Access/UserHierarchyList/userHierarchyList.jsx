@@ -17,6 +17,14 @@ import {
   UncontrolledTooltip,
   Input,
   Form,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  Toast,
+  ToastHeader,
+  ToastBody,
+  Button,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -47,6 +55,7 @@ const UserHierarchyList = (props) => {
   document.title = "User Hierarchy List | VDigital";
 
   const dispatch = useDispatch();
+  const [toast, setToast] = useState(false);
 
   const selectUserHierarchyState = (state) => state.userHierarchy;
   const UserHierarchyProperties = createSelector(
@@ -328,6 +337,11 @@ const UserHierarchyList = (props) => {
     toggle();
   };
 
+  const toggleToast = () => {
+    // console.log("button clicked");
+    setToast(!toast);
+  };
+
   const keyField = "id";
 
   return (
@@ -372,6 +386,41 @@ const UserHierarchyList = (props) => {
                           Create User Hierarchy
                         </Link>
                       </div>
+                      <UncontrolledDropdown className="dropdown d-inline-block me-1">
+                        <DropdownToggle
+                          type="menu"
+                          className="btn btn-success"
+                          id="dropdownMenuButton1"
+                        >
+                          Action &nbsp;
+                          <i className="mdi mdi-dots-vertical"></i>
+                        </DropdownToggle>
+                        <DropdownMenu>
+                          <li>
+                            <DropdownItem onClick={toggleToast}>
+                              Bulk assign to Operator
+                            </DropdownItem>
+                          </li>
+                          <li>
+                            <DropdownItem onClick={toggleToast}>
+                              Bulk removel from Operator
+                            </DropdownItem>
+                          </li>
+                        </DropdownMenu>
+                        <div
+                          className="position-fixed top-0 end-0 p-3"
+                          style={{ zIndex: "1005" }}
+                        >
+                          <Toast isOpen={toast}>
+                            <ToastHeader toggle={toggleToast}>
+                              Warning
+                            </ToastHeader>
+                            <ToastBody>
+                              Please selcet atleast on user hierarchy.
+                            </ToastBody>
+                          </Toast>
+                        </div>
+                      </UncontrolledDropdown>
                     </div>
                   </CardBody>
                   <CardBody>
