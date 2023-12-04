@@ -261,7 +261,10 @@ export const getDocumentUploadPolicy = () => get(url.GET_DOCUMENTUPLOADPOLICY);
 
 export const getDistributors = () => get(url.GET_DISTRIBUTORS);
 export const getLco = () => get(url.GET_LCO);
+
 export const getAppAdBanner = () => get(url.GET_APPADBANNER);
+export const addAppAdBanner = (appadbanner) =>
+  post(url.ADD_APPADBANNER, appadbanner);
 
 export const getUserHierarchy = () => get(url.GET_USERHIERARCHY);
 export const addUserHierarchy = (userHierarchy) =>

@@ -1,4 +1,9 @@
-import { GET_APPADBANNER_SUCCESS, GET_APPADBANNER_FAIL } from "./actionTypes";
+import {
+  GET_APPADBANNER_SUCCESS,
+  GET_APPADBANNER_FAIL,
+  ADD_APPADBANNER_SUCCESS,
+  ADD_APPADBANNER_FAIL,
+} from "./actionTypes";
 
 const INIT_STATE = {
   appadbanner: [],
@@ -20,6 +25,18 @@ const AppAdBanner = (state = INIT_STATE, action) => {
       };
 
     case GET_APPADBANNER_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_APPADBANNER_SUCCESS:
+      return {
+        ...state,
+        appadbanner: [...state.appadbanner, action.payload],
+      };
+
+    case ADD_APPADBANNER_FAIL:
       return {
         ...state,
         error: action.payload,

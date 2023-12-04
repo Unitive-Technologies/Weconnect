@@ -34,7 +34,10 @@ export const GET_SUBLOCATION = "/sublocationlist";
 
 export const GET_DISTRIBUTORS = "/distributors";
 export const GET_LCO = "/lco";
+
 export const GET_APPADBANNER = "/appadbanner";
+export const ADD_APPADBANNER = "/add/appadbanner";
+
 export const GET_USERHIERARCHY = "/userhierarchy";
 export const ADD_USERHIERARCHY = "/add/userhierarchy";
 

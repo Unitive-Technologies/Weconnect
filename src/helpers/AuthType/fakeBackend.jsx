@@ -851,6 +851,19 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onPost(url.ADD_APPADBANNER).reply((appadbanner) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (appadbanner && appadbanner.data) {
+          // Passing fake JSON data as response
+          resolve([200, appadbanner.data]);
+        } else {
+          reject([400, "Cannot add app ad banner list"]);
+        }
+      });
+    });
+  });
+
   mock.onPut(url.UPDATE_USER).reply((user) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
