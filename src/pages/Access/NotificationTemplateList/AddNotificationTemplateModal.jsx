@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
+import { SketchPicker } from "react-color";
 import {
   Card,
   CardBody,
@@ -16,6 +17,7 @@ import {
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
+import { optionsList } from "./optionsList";
 import { useFormik } from "formik";
 import { addNewNotificationTemplate as onAddNewNotificationTemplate } from "/src/store/notificationtemplate/actions";
 import { useSelector, useDispatch } from "react-redux";
@@ -24,7 +26,16 @@ const AddNotificationTemplateModal = (props) => {
   const { isOpen, toggle } = props;
   const dispatch = useDispatch();
   const [user, setUser] = useState();
+  const FontSize = Array.from({ length: 93 }, (_, index) => index + 8);
 
+  const [showColorPicker, setShowColorPicker] = useState(false);
+  const [showColorPicker1, setShowColorPicker1] = useState(false);
+  const toggleColorPicker = () => {
+    setShowColorPicker(!showColorPicker);
+  };
+  const toggleColorPicker1 = () => {
+    setShowColorPicker1(!showColorPicker1);
+  };
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -146,17 +157,11 @@ const AddNotificationTemplateModal = (props) => {
                   value={validation.values.fontsize || ""}
                 >
                   <option value="">Select Font Size</option>
-                  <option value="1">8</option>
-                  <option value="2">9</option>
-                  <option value="3">10</option>
-                  <option value="4">11</option>
-                  <option value="5">12</option>
-                  <option value="6">13</option>
-                  <option value="7">14</option>
-                  <option value="8">15</option>
-                  <option value="9">16</option>
-                  <option value="10">17</option>
-                  <option value="11">18</option>
+                  {FontSize.map((size, index) => (
+                    <option key={index} value={size}>
+                      {size}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.fontsize && validation.errors.fontsize ? (
                   <FormFeedback type="invalid">
@@ -167,28 +172,37 @@ const AddNotificationTemplateModal = (props) => {
 
               <div className="mb-3">
                 <Label className="form-label">Font Color</Label>
-                <Input
-                  name="fontcolor"
-                  type="select"
-                  placeholder="Select Font Color"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.fontcolor || ""}
-                >
-                  <option value="">Select Font Color</option>
-                  <option value="1">8</option>
-                  <option value="2">9</option>
-                  <option value="3">10</option>
-                  <option value="4">11</option>
-                  <option value="5">12</option>
-                  <option value="6">13</option>
-                  <option value="7">14</option>
-                  <option value="8">15</option>
-                  <option value="9">16</option>
-                  <option value="10">17</option>
-                  <option value="11">18</option>
-                </Input>
+                <div>
+                  <input
+                    name="fontcolor"
+                    type="text"
+                    // placeholder="Select Font Color"
+                    className="form-control"
+                    onFocus={toggleColorPicker}
+                    value={validation.values.fontcolor || "#000000"}
+                    // style={{
+                    //   color: validation.values.fontcolor || "#000000", // Set initial color as background
+                    // }}
+                    onChange={(e) =>
+                      validation.setFieldValue("fontcolor", e.target.value)
+                    }
+                  />
+                  {showColorPicker && (
+                    <SketchPicker
+                      color={validation.values.fontcolor || "#000000"}
+                      onChange={(color) =>
+                        validation.setFieldValue("fontcolor", color.hex)
+                      }
+                    />
+                  )}
+                </div>
+                <div
+                  style={{
+                    backgroundColor: validation.values.fontcolor || "#000000",
+                    width: "50px",
+                    height: "20px",
+                  }}
+                ></div>
                 {validation.touched.fontcolor && validation.errors.fontcolor ? (
                   <FormFeedback type="invalid">
                     {validation.errors.fontcolor}
@@ -199,28 +213,36 @@ const AddNotificationTemplateModal = (props) => {
             <Col sm="6">
               <div className="mb-3">
                 <Label className="form-label">Font Background Color</Label>
-                <Input
-                  name="fontbgcolor"
-                  type="select"
-                  placeholder="Select Font Background Color"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.fontbgcolor || ""}
-                >
-                  <option value="">Select Font Background Color</option>
-                  <option value="1">8</option>
-                  <option value="2">9</option>
-                  <option value="3">10</option>
-                  <option value="4">11</option>
-                  <option value="5">12</option>
-                  <option value="6">13</option>
-                  <option value="7">14</option>
-                  <option value="8">15</option>
-                  <option value="9">16</option>
-                  <option value="10">17</option>
-                  <option value="11">18</option>
-                </Input>
+                <div>
+                  <input
+                    name="fontbgcolor"
+                    type="text"
+                    placeholder="Select Font Background Color"
+                    className="form-control"
+                    onFocus={toggleColorPicker1}
+                    onBlur={toggleColorPicker1}
+                    value={validation.values.fontbgcolor || "#121314"}
+                    onChange={(e) =>
+                      validation.setFieldValue("fontbgcolor", e.target.value)
+                    }
+                  />
+
+                  {showColorPicker1 && (
+                    <SketchPicker
+                      color={validation.values.fontbgcolor || "#121314"}
+                      onChange={(color) =>
+                        validation.setFieldValue("fontbgcolor", color.hex)
+                      }
+                    />
+                  )}
+                </div>
+                <div
+                  style={{
+                    backgroundColor: validation.values.fontbgcolor || "#121314",
+                    width: "50px",
+                    height: "20px",
+                  }}
+                ></div>
                 {validation.touched.fontbgcolor &&
                 validation.errors.fontbgcolor ? (
                   <FormFeedback type="invalid">
@@ -228,6 +250,7 @@ const AddNotificationTemplateModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+
               <div className="mb-3">
                 <Label className="form-label">Font Family</Label>
                 <Input
@@ -240,13 +263,11 @@ const AddNotificationTemplateModal = (props) => {
                   value={validation.values.fontfamily || ""}
                 >
                   <option value="">Select Font Family</option>
-                  <option value="1">Times New Roman</option>
-                  <option value="2">Georgia</option>
-                  <option value="3">Arial</option>
-                  <option value="4">Verdana</option>
-                  <option value="5">Courier New</option>
-                  <option value="6">Arial</option>
-                  <option value="7">Tahoma</option>
+                  {optionsList.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.fontfamily &&
                 validation.errors.fontfamily ? (
