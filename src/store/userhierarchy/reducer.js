@@ -1,6 +1,8 @@
 import {
   GET_USERHIERARCHY_SUCCESS,
   GET_USERHIERARCHY_FAIL,
+  ADD_USERHIERARCHY_SUCCESS,
+  ADD_USERHIERARCHY_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -20,6 +22,18 @@ const UserHierarchy = (state = INIT_STATE, action) => {
       };
 
     case GET_USERHIERARCHY_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_USERHIERARCHY_SUCCESS:
+      return {
+        ...state,
+        userHierarchy: [...state.userHierarchy, action.payload],
+      };
+
+    case ADD_USERHIERARCHY_FAIL:
       return {
         ...state,
         error: action.payload,

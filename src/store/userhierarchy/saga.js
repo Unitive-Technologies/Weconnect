@@ -1,11 +1,16 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-
-import { GET_USERHIERARCHY } from "./actionTypes";
-
-import { getUserHierarchySuccess, getUserHierarchyFail } from "./actions";
-
-//Include Both Helper File with needed methods
-import { getUserHierarchy } from "../../helpers/fakebackend_helper";
+import { GET_USERHIERARCHY, ADD_USERHIERARCHY } from "./actionTypes";
+import {
+  getUserHierarchySuccess,
+  getUserHierarchyFail,
+  addUserHierarchyFail,
+  addUserHierarchySuccess,
+} from "./actions";
+import { toast } from "react-toastify";
+import {
+  getUserHierarchy,
+  addUserHierarchy,
+} from "../../helpers/fakebackend_helper";
 
 const convertUserHierarchyListObject = (userHierarchyList) => {
   // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
@@ -43,8 +48,20 @@ function* fetchUserHierarchy() {
   }
 }
 
+function* onAddUserHierarchy({ payload: userHierarchy }) {
+  try {
+    const response = yield call(addUserHierarchy, userHierarchy);
+    yield put(addUserHierarchySuccess(response));
+    toast.success("User Hierarchy Added Successfully", { autoClose: 2000 });
+  } catch (error) {
+    yield put(addUserHierarchyFail(error));
+    toast.error("User Hierarchy Added Failed", { autoClose: 2000 });
+  }
+}
+
 function* userHierarchySaga() {
   yield takeEvery(GET_USERHIERARCHY, fetchUserHierarchy);
+  yield takeEvery(ADD_USERHIERARCHY, onAddUserHierarchy);
 }
 
 export default userHierarchySaga;

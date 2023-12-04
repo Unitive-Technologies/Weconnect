@@ -36,6 +36,7 @@ export const GET_DISTRIBUTORS = "/distributors";
 export const GET_LCO = "/lco";
 export const GET_APPADBANNER = "/appadbanner";
 export const GET_USERHIERARCHY = "/userhierarchy";
+export const ADD_USERHIERARCHY = "/add/userhierarchy";
 
 export const GET_BROADCASTER = "/broadcasterlist";
 export const GET_GENRELIST = "/genrelist";

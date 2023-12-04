@@ -825,6 +825,19 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onPost(url.ADD_USERHIERARCHY).reply((userHierarchy) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (userHierarchy && userHierarchy.data) {
+          // Passing fake JSON data as response
+          resolve([200, userHierarchy.data]);
+        } else {
+          reject([400, "Cannot add User hierarchy"]);
+        }
+      });
+    });
+  });
+
   mock.onPut(url.UPDATE_USER).reply((user) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

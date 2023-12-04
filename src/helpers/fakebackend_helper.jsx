@@ -260,7 +260,11 @@ export const getDocumentUploadPolicy = () => get(url.GET_DOCUMENTUPLOADPOLICY);
 export const getDistributors = () => get(url.GET_DISTRIBUTORS);
 export const getLco = () => get(url.GET_LCO);
 export const getAppAdBanner = () => get(url.GET_APPADBANNER);
+
 export const getUserHierarchy = () => get(url.GET_USERHIERARCHY);
+export const addUserHierarchy = (userHierarchy) =>
+  post(url.ADD_USERHIERARCHY, userHierarchy);
+
 export const getNcf = () => get(url.GET_NCF);
 export const getBouquet = () => get(url.GET_BOUQUET);
 export const getConnectionScheme = () => get(url.GET_CONNECTIONSCHEME);
