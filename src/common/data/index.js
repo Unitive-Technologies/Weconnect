@@ -26,7 +26,7 @@ import { ncflist } from "./ncflist";
 import { connectionschemelist } from "./connectionschemelist";
 import { bouquetlist, bouquetfieldtypes } from "./bouquetlist";
 import { localchannelnumberlist } from "./localchannelnumberlist";
-
+import { admindetails } from "./admindetails";
 import { osdtemplatelist } from "./osdtemplatelist";
 
 import { documentuploadpolicylist } from "./documentuploadpolicy";
@@ -89,4 +89,5 @@ export {
   reasonlist,
   banklist,
   promovoucherlist,
+  admindetails,
 };

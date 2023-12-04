@@ -22,6 +22,9 @@ import logo1 from "../../../assets/images/clientlogo.png";
 const ProfileMenu = (props) => {
   // Declare a new state variable, which we'll call "menu"
   const [menu, setMenu] = useState(false);
+  const storedAdminDetails = localStorage.getItem("authUser");
+  const admindetails = storedAdminDetails ? JSON.parse(storedAdminDetails) : {};
+  console.log("admin on topbar:" + JSON.stringify(admindetails));
 
   const [username, setusername] = useState("Admin");
 
@@ -56,11 +59,18 @@ const ProfileMenu = (props) => {
             className="rounded-circle header-profile-user"
             src={logo1}
             alt="Header Avatar"
-          />
+          />{" "}
+          {admindetails.name}
           {/* <span className="d-none d-xl-inline-block ms-2 me-1">{username}</span>
           <i className="mdi mdi-chevron-down d-none d-xl-inline-block" /> */}
         </DropdownToggle>
+
         <DropdownMenu className="dropdown-menu-end">
+          {/* <div>
+            {admindetails.username},{admindetails.loginID},{admindetails.user},
+            {admindetails.type},{admindetails.role}
+          </div>
+          <div className="dropdown-divider" /> */}
           <DropdownItem tag="a" href="/profile">
             {" "}
             <i className="bx bx-user font-size-16 align-middle me-1" />
@@ -85,7 +95,20 @@ const ProfileMenu = (props) => {
           </Link>
           <div className="dropdown-divider" />
           <DropdownItem tag="a" href="#">
-            <span className="badge bg-success float-end">Last Login: </span>
+            <span
+              className="badge bg-success flex-end "
+              style={{ width: "100%" }}
+            >
+              Last Login:{" "}
+              {new Date(admindetails.loginTime).toLocaleString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                hour12: true,
+              })}
+            </span>
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>

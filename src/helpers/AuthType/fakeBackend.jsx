@@ -3,6 +3,7 @@ import MockAdapter from "axios-mock-adapter";
 import * as url from "../url_helper";
 import accessToken from "../jwt-token-access/accessToken";
 import {
+  admindetails,
   userslist as members,
   customeruserlist as custusers,
   grouppolicylist as gppolicy,
@@ -656,6 +657,18 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onGet(url.GET_ADMINDETAILS).reply(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (admindetails) {
+          // Passing fake JSON data as response
+          resolve([200, admindetails]);
+        } else {
+          reject([400, "Cannot get Admin Details"]);
+        }
+      });
+    });
+  });
   mock.onGet(url.GET_SMSMESSAGETEMPLIST).reply(() => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

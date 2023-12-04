@@ -15,30 +15,48 @@ import {
 const fireBaseBackend = getFirebaseBackend();
 
 function* loginUser({ payload: { user, history } }) {
+  const currentTime = new Date();
   try {
+    let response;
+
     if (import.meta.env.VITE_APP_DEFAULTAUTH === "firebase") {
-      const response = yield call(
-        fireBaseBackend.loginUser,
-        user.email,
-        user.password
-      );
-      yield put(loginSuccess(response));
+      response = yield call(fireBaseBackend.loginUser, {
+        email: user.email,
+        password: user.password,
+        loginID: "mso",
+        user: "MY MSO",
+        type: "MSO",
+        role: "ADMIN",
+        loginTime: currentTime.toISOString(),
+      });
     } else if (import.meta.env.VITE_APP_DEFAULTAUTH === "jwt") {
-      const response = yield call(postJwtLogin, {
+      response = yield call(postJwtLogin, {
         email: user.email,
         password: user.password,
+        loginID: "mso",
+        user: "MY MSO",
+        type: "MSO",
+        role: "ADMIN",
+        loginTime: currentTime.toISOString(),
       });
-      localStorage.setItem("authUser", JSON.stringify(response));
-      yield put(loginSuccess(response));
     } else if (import.meta.env.VITE_APP_DEFAULTAUTH === "fake") {
-      const response = yield call(postFakeLogin, {
+      response = yield call(postFakeLogin, {
         email: user.email,
         password: user.password,
+        loginID: "mso",
+        user: "MY MSO",
+        type: "MSO",
+        role: "ADMIN",
+        loginTime: currentTime.toISOString(),
       });
-      localStorage.setItem("authUser", JSON.stringify(response));
-      yield put(loginSuccess(response));
     }
-    history('/dashboard');
+
+    // Include loginTime in the response before saving to localStorage
+    response.loginTime = currentTime.toISOString();
+
+    localStorage.setItem("authUser", JSON.stringify(response));
+    yield put(loginSuccess(response));
+    history("/dashboard");
   } catch (error) {
     yield put(apiError(error));
   }
@@ -52,7 +70,7 @@ function* logoutUser({ payload: { history } }) {
       const response = yield call(fireBaseBackend.logout);
       yield put(logoutUserSuccess(response));
     }
-    history('/login');
+    history("/login");
   } catch (error) {
     yield put(apiError(error));
   }
@@ -70,8 +88,7 @@ function* socialLogin({ payload: { type, history } }) {
       }
       localStorage.setItem("authUser", JSON.stringify(response));
       yield put(loginSuccess(response));
-      if(response)
-      history("/dashboard");
+      if (response) history("/dashboard");
     }
   } catch (error) {
     yield put(apiError(error));

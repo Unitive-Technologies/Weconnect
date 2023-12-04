@@ -218,6 +218,7 @@ export const updateCardData = (card) => put(url.UPDATE_CARD_DATA, card);
 export const deleteKanban = (kanban) =>
   del(url.DELETE_KANBAN, { headers: { kanban } });
 
+export const getAdmindetails = () => get(url.GET_ADMINDETAILS);
 // get Users
 export const getUsers = () => get(url.GET_USERS);
 
