@@ -36,6 +36,8 @@ const AddNewDesignation = (props) => {
       parent: "",
       status: "",
       description: "",
+      created_at: "",
+      created_by: "Admin",
     },
     validationSchema: Yup.object({
       designation: Yup.string().required("Enter designation Name"),
@@ -54,6 +56,8 @@ const AddNewDesignation = (props) => {
         parent: values["parent"],
         status: values["status"],
         description: values["description"],
+        created_at: new Date(),
+        created_by: values["created_by"],
       };
       console.log("newDesignation:" + newDesignation);
       // save new user
@@ -61,7 +65,11 @@ const AddNewDesignation = (props) => {
       validation.resetForm();
       toggle();
     },
+    onReset: (values) => {
+      validation.setValues(validation.initialValues);
+    },
   });
+
   return (
     <Modal
       isOpen={isOpen}
@@ -227,16 +235,28 @@ const AddNewDesignation = (props) => {
           </Row>
           <Row>
             <Col sm="8">
-              <div className="text-end">
+              <div className="d-flex flex-wrap gap-2">
                 <button type="submit" className="btn btn-success save-user">
                   Save
                 </button>
-                {/* <button type="submit" className="btn btn-success save-user">
+                <button
+                  type="reset"
+                  className="btn btn-warning"
+                  onClick={() => validation.resetForm()}
+                >
                   Reset
                 </button>
-                <button type="submit" className="btn btn-success save-user">
+
+                <button
+                  type="button"
+                  className="btn btn-outline-danger"
+                  onClick={() => {
+                    validation.resetForm(); // Optionally reset the form when cancel is clicked
+                    toggle(); // Close the popup
+                  }}
+                >
                   Cancel
-                </button> */}
+                </button>
               </div>
             </Col>
           </Row>
