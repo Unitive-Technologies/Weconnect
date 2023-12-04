@@ -27,6 +27,7 @@ const convertUserHierarchyListObject = (userHierarchyList) => {
       created_at: userHierarchy.created_at,
       created_by: userHierarchy.created_by,
       operationcount: userHierarchy.operationcount,
+      reportType: userHierarchy.reportType,
       status:
         userHierarchy.status === 1
           ? "ACTIVE"

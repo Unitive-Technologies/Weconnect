@@ -17,10 +17,10 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addNewDesignation as onAddNewDesignation } from "/src/store/designation/actions";
+import { addUserHierarchy as onAddUserHierarchy } from "/src/store/userhierarchy/actions";
 import { useSelector, useDispatch } from "react-redux";
 
-const AddNewDesignation = (props) => {
+const AddUserHierarchy = (props) => {
   const { isOpen, toggle } = props;
   const dispatch = useDispatch();
   const [user, setUser] = useState();
@@ -30,38 +30,46 @@ const AddNewDesignation = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      designation: "",
-      type: "",
+      name: "",
+      email: "",
       code: "",
       parent: "",
       status: "",
       description: "",
       created_at: "",
       created_by: "Admin",
+      reportType: "",
+      designation: "",
     },
     validationSchema: Yup.object({
-      designation: Yup.string().required("Enter designation Name"),
-      type: Yup.string().required("Select Type"),
-      code: Yup.string().required("Enter Code"),
-      parent: Yup.string().required("Select Parent Designation"),
+      name: Yup.string().required("Enter name"),
+      code: Yup.string().required("Enter code"),
+      email: Yup.string()
+        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Enter email")
+        .required("Enter email"),
+      description: Yup.string().required("Enter description"),
       status: Yup.string().required("Select status"),
-      description: Yup.string().required("Enter Description"),
+      designation: Yup.string().required("Select designation"),
+      parent: Yup.string().required("Select parent"),
+      reportType: Yup.string().required("Select report type"),
     }),
     onSubmit: (values) => {
-      const newDesignation = {
+      const UserHierarchy = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
-        designation: values["designation"],
-        type: values["type"],
+        name: values["name"],
         code: values["code"],
+        email: values["email"],
         parent: values["parent"],
         status: values["status"],
+        designation: values["designation"],
         description: values["description"],
+        reportType: values["report_type"],
         created_at: new Date(),
         created_by: values["created_by"],
       };
-      console.log("newDesignation:" + newDesignation);
+      console.log("UserHierarchy:" + UserHierarchy);
       // save new user
-      dispatch(onAddNewDesignation(newDesignation));
+      dispatch(onAddUserHierarchy(UserHierarchy));
       validation.resetForm();
       toggle();
     },
@@ -81,7 +89,7 @@ const AddNewDesignation = (props) => {
       toggle={toggle}
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4">Add New Designation</ModalHeader>
+      <ModalHeader tag="h4">Add New User Hierarchy</ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -266,9 +274,9 @@ const AddNewDesignation = (props) => {
   );
 };
 
-AddNewDesignation.propTypes = {
+AddUserHierarchy.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default AddNewDesignation;
+export default AddUserHierarchy;

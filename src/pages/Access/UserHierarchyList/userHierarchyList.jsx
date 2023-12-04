@@ -40,6 +40,7 @@ import { isEmpty } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import AddUserHierarchy from "./AddUserHierarchy";
 
 const UserHierarchyList = (props) => {
   //meta title
@@ -255,7 +256,7 @@ const UserHierarchyList = (props) => {
   useEffect(() => {
     if (userHier && !userHier.length) {
       dispatch(onGetUserHierarchy());
-      setIsEdit(false);
+      // setIsEdit(false);
     }
   }, [dispatch, userHier]);
 
@@ -336,6 +337,7 @@ const UserHierarchyList = (props) => {
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
       />
+      <AddUserHierarchy isOpen={modal} toggle={toggle} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -347,16 +349,42 @@ const UserHierarchyList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
+                    <div className="d-flex align-items-center justify-content-between">
+                      <h5 className="mb-0 card-title flex-grow-1">
+                        {/* Jobs Lists */}
+                      </h5>
+                      {/* <form className="app-search d-none d-lg-block">
+                        <div className="position-relative">
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Search..."
+                          />
+                          <span className="bx bx-search-alt" />
+                        </div>
+                      </form> */}
+                      <div className="flex-shrink-0">
+                        <Link
+                          to="#!"
+                          onClick={() => setModal(true)}
+                          className="btn btn-primary me-1"
+                        >
+                          Create User Hierarchy
+                        </Link>
+                      </div>
+                    </div>
+                  </CardBody>
+                  <CardBody>
                     {console.log("user hierarchy:" + JSON.stringify(userHier))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={userHier}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      // isAddUserList={true}
                       isShowingPageLength={true}
-                      iscustomPageSizeOptions={true}
-                      handleUserClick={handleUserClicks}
+                      // iscustomPageSizeOptions={true}
+                      // handleUserClick={handleUserClicks}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
