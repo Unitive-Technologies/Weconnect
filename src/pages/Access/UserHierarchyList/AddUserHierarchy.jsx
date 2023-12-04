@@ -101,11 +101,152 @@ const AddUserHierarchy = (props) => {
           <Row>
             <Col sm="12">
               <div className="mb-3">
+                <Label className="form-label">Name</Label>
+                <Input
+                  name="name"
+                  type="text"
+                  placeholder="Enter name"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.name || ""}
+                  invalid={
+                    validation.touched.name && validation.errors.name
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.name && validation.errors.name ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.name}
+                  </FormFeedback>
+                ) : null}
+              </div>
+
+              <div className="mb-3">
+                <Label className="form-label">Code</Label>
+                <Input
+                  name="code"
+                  label="code"
+                  type="text"
+                  placeholder="Enter code"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.code || ""}
+                  invalid={
+                    validation.touched.code && validation.errors.code
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.code && validation.errors.code ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.code}
+                  </FormFeedback>
+                ) : null}
+              </div>
+
+              <div className="mb-3">
+                <Label className="form-label">Email</Label>
+                <Input
+                  name="email"
+                  label="code"
+                  type="email"
+                  placeholder="Enter email"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.email || ""}
+                  invalid={
+                    validation.touched.email && validation.errors.email
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.email && validation.errors.email ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.email}
+                  </FormFeedback>
+                ) : null}
+              </div>
+
+              <div className="mb-3">
+                <Label className="form-label">Description</Label>
+                <Input
+                  name="description"
+                  type="textarea"
+                  placeholder="Enter description"
+                  rows="3"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.description || ""}
+                  invalid={
+                    validation.touched.description &&
+                    validation.errors.description
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.description &&
+                validation.errors.description ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.description}
+                  </FormFeedback>
+                ) : null}
+              </div>
+
+              <div className="mb-3">
+                <Label className="form-label">Status</Label>
+                <Input
+                  name="status"
+                  type="select"
+                  placeholder="Select status"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.status || ""}
+                >
+                  <option value="">Select status</option>
+                  <option value="11">Active</option>
+                  <option value="12">BLOCKED</option>
+                  <option value="13">In-Active</option>
+                </Input>
+                {validation.touched.status && validation.errors.status ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.status}
+                  </FormFeedback>
+                ) : null}
+              </div>
+
+              <div className="mb-3">
+                <Label className="form-label">Report Type</Label>
+                <Input
+                  name="reportType"
+                  type="select"
+                  placeholder="report type"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.reportType || ""}
+                >
+                  <option value="">Select Type</option>
+                  <option value="1">MSO</option>
+                  <option value="2">RO</option>
+                  <option value="3">Distributor</option>
+                  <option value="4">LCO</option>
+                </Input>
+                {validation.touched.type && validation.errors.reportType ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.reportType}
+                  </FormFeedback>
+                ) : null}
+              </div>
+
+              <div className="mb-3">
                 <Label className="form-label">Designation</Label>
                 <Input
                   name="designation"
+                  label="designation"
                   type="text"
-                  placeholder="Enter designation name"
+                  placeholder="Enter designation"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.designation || ""}
@@ -123,59 +264,12 @@ const AddUserHierarchy = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
-              <div className="mb-3">
-                <Label className="form-label">Type</Label>
-                <Input
-                  name="type"
-                  type="select"
-                  placeholder="Select Type"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.type || ""}
-                >
-                  <option value="">Select Type</option>
-                  <option value="1">MSO</option>
-                  <option value="2">RO</option>
-                  <option value="3">Distributor</option>
-                  <option value="4">LCO</option>
-                </Input>
-                {validation.touched.type && validation.errors.type ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.type}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                <Label className="form-label">Code</Label>
-                <Input
-                  name="code"
-                  label="code"
-                  type="text"
-                  placeholder="Enter Code"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.code || ""}
-                  invalid={
-                    validation.touched.code && validation.errors.code
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.code && validation.errors.code ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.code}
-                  </FormFeedback>
-                ) : null}
-              </div>
               <div className="mb-3">
                 <Label className="form-label">Parent designation</Label>
                 <Input
                   name="parent"
                   type="select"
-                  placeholder="Select Parent designation"
+                  placeholder="Select parent"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
@@ -189,52 +283,6 @@ const AddUserHierarchy = (props) => {
                 {validation.touched.parent && validation.errors.parent ? (
                   <FormFeedback type="invalid">
                     {validation.errors.parent}
-                  </FormFeedback>
-                ) : null}
-              </div>
-              <div className="mb-3">
-                <Label className="form-label">Status</Label>
-                <Input
-                  name="status"
-                  type="select"
-                  placeholder="Select Status"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.status || ""}
-                >
-                  <option value="">Select Status</option>
-                  <option value="11">Active</option>
-                  <option value="12">BLOCKED</option>
-                  <option value="13">In-Active</option>
-                </Input>
-                {validation.touched.status && validation.errors.status ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.status}
-                  </FormFeedback>
-                ) : null}
-              </div>
-              <div className="mb-3">
-                <Label className="form-label">Description</Label>
-                <Input
-                  name="description"
-                  type="textarea"
-                  placeholder="Enter Description"
-                  rows="3"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.description || ""}
-                  invalid={
-                    validation.touched.description &&
-                    validation.errors.description
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.description &&
-                validation.errors.description ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.description}
                   </FormFeedback>
                 ) : null}
               </div>
