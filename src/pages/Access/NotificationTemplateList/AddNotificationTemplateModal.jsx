@@ -17,7 +17,7 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-// import { addNewNotificationTemplate as onAddNewNotificationTemplate } from "/src/store/users/actions";
+import { addNewNotificationTemplate as onAddNewNotificationTemplate } from "/src/store/notificationtemplate/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 const AddNotificationTemplateModal = (props) => {
@@ -52,13 +52,13 @@ const AddNotificationTemplateModal = (props) => {
     onSubmit: (values) => {
       const newNotification = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
-        name: values["name"],
-        content: values["content"],
-        type: values["type"],
-        fontsize: values["fontsize"],
-        fontcolor: values["fontcolor"],
-        fontbgcolor: values["fontbgcolor"],
-        fontfamily: values["fontfamily"],
+        msg_head: values["name"],
+        msg_content: values["content"],
+        msg_type_lbl: values["type"],
+        msg_fontsize: values["fontsize"],
+        msg_fontcolor: values["fontcolor"],
+        msg_fontbgcolor: values["fontbgcolor"],
+        msg_fontfamily: values["fontfamily"],
         status: values["status"],
       };
       console.log("newUser:" + newNotification);
@@ -206,7 +206,7 @@ const AddNotificationTemplateModal = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.fontcolor || ""}
+                  value={validation.values.fontbgcolor || ""}
                 >
                   <option value="">Select Font Background Color</option>
                   <option value="1">8</option>

@@ -825,6 +825,19 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onPost(url.ADD_NEW_NOTIFICATIONTEMPLATE).reply((notemplate) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (notemplate && notemplate.data) {
+          // Passing fake JSON data as response
+          resolve([200, notemplate.data]);
+        } else {
+          reject([400, "Cannot add Notification Template"]);
+        }
+      });
+    });
+  });
+
   mock.onPost(url.ADD_USERHIERARCHY).reply((userHierarchy) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

@@ -1,6 +1,8 @@
 import {
   GET_NOTIFICATIONTEMPLATE_SUCCESS,
   GET_NOTIFICATIONTEMPLATE_FAIL,
+  ADD_NOTIFICATIONTEMPLATE_SUCCESS,
+  ADD_NOTIFICATIONTEMPLATE_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -20,6 +22,18 @@ const NotificationTemplate = (state = INIT_STATE, action) => {
       };
 
     case GET_NOTIFICATIONTEMPLATE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_NOTIFICATIONTEMPLATE_SUCCESS:
+      return {
+        ...state,
+        notificationTemplate: [...state.notificationTemplate, action.payload],
+      };
+
+    case ADD_NOTIFICATIONTEMPLATE_FAIL:
       return {
         ...state,
         error: action.payload,

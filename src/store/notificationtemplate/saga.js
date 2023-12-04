@@ -1,11 +1,22 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_NOTIFICATIONTEMPLATE } from "./actionTypes";
+import {
+  GET_NOTIFICATIONTEMPLATE,
+  ADD_NEW_NOTIFICATIONTEMPLATE,
+} from "./actionTypes";
 
-import { getNotificationTemplateSuccess, getNotificationTemplateFail } from "./actions";
+import {
+  getNotificationTemplateSuccess,
+  getNotificationTemplateFail,
+  addNotificationTemplateFail,
+  addNotificationTemplateSuccess,
+} from "./actions";
 
 //Include Both Helper File with needed methods
-import { getNotificationTemplate } from "../../helpers/fakebackend_helper";
+import {
+  getNotificationTemplate,
+  addNewNotificationTemplate,
+} from "../../helpers/fakebackend_helper";
 
 const convertNotificationTemplateListObject = (notificationTemplateList) => {
   // Notification Template has more data than what we need, we need to convert each of the Notification Template user object in the list with needed colums of the table
@@ -24,8 +35,8 @@ const convertNotificationTemplateListObject = (notificationTemplateList) => {
         notificationTemplate.status === 1
           ? "ACTIVE"
           : notificationTemplate.status === 0
-            ? "INACTIVE"
-            : "BLOCKED",
+          ? "INACTIVE"
+          : "BLOCKED",
       created_at: notificationTemplate.created_at,
       created_by: notificationTemplate.created_by,
     };
@@ -35,7 +46,8 @@ const convertNotificationTemplateListObject = (notificationTemplateList) => {
 function* fetchNotificationTemplate() {
   try {
     const response = yield call(getNotificationTemplate);
-    const notificationTemplateList = convertNotificationTemplateListObject(response);
+    const notificationTemplateList =
+      convertNotificationTemplateListObject(response);
     yield put(getNotificationTemplateSuccess(notificationTemplateList));
   } catch (error) {
     console.error("Error fetching notification templates:", error);
@@ -43,9 +55,26 @@ function* fetchNotificationTemplate() {
   }
 }
 
+function* onAddNewNotificationTemplate({ payload: notificationTemplate }) {
+  try {
+    const response = yield call(
+      addNewNotificationTemplate,
+      notificationTemplate
+    );
+
+    yield put(addNotificationTemplateSuccess(response));
+    toast.success("Notification Template Added Successfully", {
+      autoClose: 2000,
+    });
+  } catch (error) {
+    yield put(addNotificationTemplateFail(error));
+    toast.error("Notification Template Added Failed", { autoClose: 2000 });
+  }
+}
 
 function* notificationTemplateSaga() {
   yield takeEvery(GET_NOTIFICATIONTEMPLATE, fetchNotificationTemplate);
+  yield takeEvery(ADD_NEW_NOTIFICATIONTEMPLATE, onAddNewNotificationTemplate);
 }
 
 export default notificationTemplateSaga;

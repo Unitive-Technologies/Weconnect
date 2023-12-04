@@ -232,6 +232,8 @@ export const addNewDesignation = (designation) =>
   post(url.ADD_NEW_DESIGNATION, designation);
 
 export const getNotificationTemplate = () => get(url.GET_NOTIFICATIONTEMPLATE);
+export const addNewNotificationTemplate = (notificationTemplate) =>
+  post(url.ADD_NEW_NOTIFICATIONTEMPLATE, notificationTemplate);
 
 export const getScheduleCustomerNotification = () =>
   get(url.GET_SCHEDULECUSTOMERNOTIFICATION);
