@@ -33,7 +33,7 @@ const AddNewAppAdBanner = (props) => {
       title: "",
       start_date: "",
       end_date: "",
-      img: "",
+      //   img: "",
       caption: "",
       description: "",
       status: "",
@@ -44,7 +44,7 @@ const AddNewAppAdBanner = (props) => {
       title: Yup.string().required("Enter title"),
       start_date: Yup.string().required("Select from date"),
       end_date: Yup.string().required("Select end date"),
-      img: Yup.string().required("Select file"),
+      //   img: Yup.string().required("Select file"),
       caption: Yup.string().required("Enter caption"),
       description: Yup.string().required("Enter description"),
       status: Yup.string().required("Select status"),
@@ -55,14 +55,14 @@ const AddNewAppAdBanner = (props) => {
         title: values["title"],
         start_date: values["start_date"],
         end_date: values["end-date"],
-        img: values["img"],
+        // img: values["img"],
         caption: values["caption"],
         status: values["status"],
         description: values["description"],
         created_at: new Date(),
         created_by: values["created_by"],
       };
-      console.log("new App Ad banner list:" + newAppAdBanner);
+      console.log("new App Ad banner list:" + JSON.stringify(newAppAdBanner));
       // save new user
       dispatch(onAddAppAdBanner(newAppAdBanner));
       validation.resetForm();
@@ -165,7 +165,7 @@ const AddNewAppAdBanner = (props) => {
                 ) : null}
               </div>
 
-              <div className="mb-3">
+              {/* <div className="mb-3">
                 <Label className="form-label">Select image(MAX 1MB)</Label>
                 <Input
                   name="img"
@@ -186,7 +186,7 @@ const AddNewAppAdBanner = (props) => {
                     {validation.errors.img}
                   </FormFeedback>
                 ) : null}
-              </div>
+              </div> */}
 
               <div className="mb-3">
                 <Label className="form-label">Caption</Label>

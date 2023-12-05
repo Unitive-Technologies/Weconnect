@@ -29,6 +29,7 @@ const appadbannerlist = [
     sms_template_id_lbl: "",
     osd_configuration_id_lbl: ["TEST OSD"],
     type_lbl: "Account Expiring",
+    caption: "Account Expiring",
   },
   {
     id: 1,
@@ -60,6 +61,7 @@ const appadbannerlist = [
     sms_template_id_lbl: "",
     osd_configuration_id_lbl: ["OSD"],
     type_lbl: "Account Expiring",
+    caption: "Account Expiring",
   },
 ];
 

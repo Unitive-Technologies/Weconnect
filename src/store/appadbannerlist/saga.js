@@ -14,24 +14,26 @@ import {
   getAppAdBanner,
   addAppAdBanner,
 } from "../../helpers/fakebackend_helper";
+import { toast } from "react-toastify";
 
 const convertAppAdBannerListObject = (appAdBannerList) => {
   // Notification Template has more data than what we need, we need to convert each of the Notification Template user object in the list with needed colums of the table
-  return appAdBannerList.map((appabanner) => {
+  return appAdBannerList.map((appadbanner) => {
     return {
-      ...appabanner,
-      id: appabanner.id,
-      title: appabanner.title,
-      caption: appabanner.caption,
-      start_date: appabanner.start_date,
-      end_date: appabanner.end_date,
-      description: appabanner.description,
-      created_at: appabanner.created_at,
-      created_by: appabanner.created_by,
+      ...appadbanner,
+      id: appadbanner.id,
+      title: appadbanner.title,
+      caption: appadbanner.caption,
+      start_date: appadbanner.start_date,
+      end_date: appadbanner.end_date,
+      description: appadbanner.description,
+      // img: appadbanner.img,
+      created_at: appadbanner.created_at,
+      created_by: appadbanner.created_by,
       status:
-        appabanner.status === 1
+        appadbanner.status === 1
           ? "ACTIVE"
-          : appabanner.status === 0
+          : appadbanner.status === 0
           ? "INACTIVE"
           : "BLOCKED",
     };
