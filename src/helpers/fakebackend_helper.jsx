@@ -238,13 +238,18 @@ export const addNewNotificationTemplate = (notificationTemplate) =>
 
 export const getScheduleCustomerNotification = () =>
   get(url.GET_SCHEDULECUSTOMERNOTIFICATION);
-export const addNewScheduleCustomerNotification = (schedulecustomernotification) =>
+export const addNewScheduleCustomerNotification = (
+  schedulecustomernotification
+) =>
   post(url.ADD_NEW_SCHEDULECUSTOMERNOTIFICATION, schedulecustomernotification);
 
 export const getScheduledNotification = () =>
   get(url.GET_SCHEDULEDNOTIFICATION);
 export const getStateUsers = () => get(url.GET_STATEUSERS);
+
 export const getDistrict = () => get(url.GET_DISTRICT);
+export const addDistrict = (district) => post(url.ADD_DISTRICT, district);
+
 export const getCity = () => get(url.GET_CITY);
 export const getLocation = () => get(url.GET_LOCATION);
 export const getSublocation = () => get(url.GET_SUBLOCATION);

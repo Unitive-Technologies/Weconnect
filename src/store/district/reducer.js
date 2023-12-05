@@ -1,6 +1,8 @@
 import {
   GET_DISTRICT_SUCCESS,
   GET_DISTRICT_FAIL,
+  ADD_DISTRICT_SUCCESS,
+  ADD_DISTRICT_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -20,6 +22,18 @@ const District = (state = INIT_STATE, action) => {
       };
 
     case GET_DISTRICT_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_DISTRICT_SUCCESS:
+      return {
+        ...state,
+        district: [...state.district, action.payload],
+      };
+
+    case ADD_DISTRICT_FAIL:
       return {
         ...state,
         error: action.payload,

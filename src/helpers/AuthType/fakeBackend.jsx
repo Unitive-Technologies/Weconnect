@@ -887,18 +887,36 @@ const fakeBackend = () => {
     });
   });
 
-  mock.onPost(url.ADD_NEW_SCHEDULECUSTOMERNOTIFICATION).reply((schedulecustomernotification) => {
+  mock.onPost(url.ADD_DISTRICT).reply((district) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        if (schedulecustomernotification && schedulecustomernotification.data) {
+        if (district && district.data) {
           // Passing fake JSON data as response
-          resolve([200, schedulecustomernotification.data]);
+          resolve([200, district.data]);
         } else {
-          reject([400, "Cannot add schedulecustomernotification"]);
+          reject([400, "Cannot add district list"]);
         }
       });
     });
   });
+
+  mock
+    .onPost(url.ADD_NEW_SCHEDULECUSTOMERNOTIFICATION)
+    .reply((schedulecustomernotification) => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          if (
+            schedulecustomernotification &&
+            schedulecustomernotification.data
+          ) {
+            // Passing fake JSON data as response
+            resolve([200, schedulecustomernotification.data]);
+          } else {
+            reject([400, "Cannot add schedulecustomernotification"]);
+          }
+        });
+      });
+    });
 
   mock.onPut(url.UPDATE_USER).reply((user) => {
     return new Promise((resolve, reject) => {
