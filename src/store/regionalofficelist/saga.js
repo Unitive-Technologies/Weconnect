@@ -21,7 +21,7 @@ const convertRegionalOfficeListObject = (regionalofficeList) => {
       state_lbl: regionaloffice.state_lbl,
       district_lbl: regionaloffice.district_lbl,
       created_at: regionaloffice.created_at,
-      created_by: regionaloffice.created_by,
+      created_by: regionaloffice.created_by_lbl,
       city_lbl: regionaloffice.city_lbl,
       gstno: regionaloffice.gstno,
       panno: regionaloffice.panno,

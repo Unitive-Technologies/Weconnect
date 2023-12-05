@@ -17,6 +17,10 @@ import {
   UncontrolledTooltip,
   Input,
   Form,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -34,6 +38,8 @@ import { isEmpty } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import ViewRegionalOfficeModal from "./ViewRegionalOfficeModal";
+import AddRegionalOfficeModal from "./AddRegionalOfficeModal";
 
 const RegionalOfficeList = (props) => {
   //meta title
@@ -59,6 +65,8 @@ const RegionalOfficeList = (props) => {
 
   const [userList, setUserList] = useState([]);
   const [modal, setModal] = useState(false);
+  const [modal1, setModal1] = useState(false);
+  const [modal2, setModal2] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
   const columns = useMemo(
@@ -90,7 +98,13 @@ const RegionalOfficeList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  toggleViewModal(userData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -305,7 +319,18 @@ const RegionalOfficeList = (props) => {
   const toggle = () => {
     setModal(!modal);
   };
+  const toggle2 = () => {
+    setModal2(!modal2);
+  };
 
+  const [viewUser, setViewUser] = useState({});
+  // const toggleViewModal = () => setModal(modal);
+  // const handleUserClick = (arg) => {
+  const toggleViewModal = (userData) => {
+    setModal1(!modal1);
+    setViewUser(userData);
+    // toggle();
+  };
   const handleUserClick = (arg) => {
     const user = arg;
 
@@ -362,11 +387,17 @@ const RegionalOfficeList = (props) => {
 
   return (
     <React.Fragment>
-      <DeleteModal
+      {/* <DeleteModal
         show={deleteModal}
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
+      /> */}
+      <ViewRegionalOfficeModal
+        isOpen={modal1}
+        toggle={toggleViewModal}
+        user={viewUser}
       />
+      <AddRegionalOfficeModal isOpen={modal} toggle={toggle} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -381,17 +412,50 @@ const RegionalOfficeList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
+                    <div className="d-flex align-items-center justify-content-between">
+                      <h5 className="mb-0 card-title flex-grow-1">
+                        {/* Jobs Lists */}
+                      </h5>
+                      {/* <form className="app-search d-none d-lg-block">
+                        <div className="position-relative">
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Search..."
+                          />
+                          <span className="bx bx-search-alt" />
+                        </div>
+                      </form> */}
+                      <div className="flex-shrink-0">
+                        <Link
+                          to="#!"
+                          onClick={() => setModal(true)}
+                          className="btn btn-primary me-1"
+                        >
+                          Create Regional Office
+                        </Link>
+                        <Link
+                          to="#!"
+                          onClick={() => setModal(true)}
+                          className="btn btn-primary me-1"
+                        >
+                          Upload Regional Office
+                        </Link>
+                      </div>
+                    </div>
+                  </CardBody>
+                  <CardBody>
                     {console.log("regoff:" + JSON.stringify(regOff))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={regOff}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      // isAddUserList={true}
                       isShowingPageLength={true}
-                      iscustomPageSizeOptions={true}
-                      handleUserClick={handleUserClicks}
-                      customPageSize={8}
+                      // iscustomPageSizeOptions={true}
+                      handleUserClick={() => {}}
+                      customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
