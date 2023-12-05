@@ -238,6 +238,8 @@ export const addNewNotificationTemplate = (notificationTemplate) =>
 
 export const getScheduleCustomerNotification = () =>
   get(url.GET_SCHEDULECUSTOMERNOTIFICATION);
+export const addNewScheduleCustomerNotification = (schedulecustomernotification) =>
+  post(url.ADD_NEW_SCHEDULECUSTOMERNOTIFICATION, schedulecustomernotification);
 
 export const getScheduledNotification = () =>
   get(url.GET_SCHEDULEDNOTIFICATION);

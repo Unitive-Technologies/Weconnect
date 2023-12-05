@@ -1,6 +1,8 @@
 import {
   GET_SCHEDULECUSTOMERNOTIFICATION_SUCCESS,
   GET_SCHEDULECUSTOMERNOTIFICATION_FAIL,
+  ADD_SCHEDULECUSTOMERNOTIFICATION_SUCCESS,
+  ADD_SCHEDULECUSTOMERNOTIFICATION_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -20,6 +22,18 @@ const ScheduleCustomerNotification = (state = INIT_STATE, action) => {
       };
 
     case GET_SCHEDULECUSTOMERNOTIFICATION_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_SCHEDULECUSTOMERNOTIFICATION_SUCCESS:
+      return {
+        ...state,
+        designation: [...state.scheduleCustomerNotification, action.payload],
+      };
+
+    case ADD_SCHEDULECUSTOMERNOTIFICATION_FAIL:
       return {
         ...state,
         error: action.payload,

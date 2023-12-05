@@ -1,11 +1,13 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_SCHEDULECUSTOMERNOTIFICATION } from "./actionTypes";
+import { GET_SCHEDULECUSTOMERNOTIFICATION, ADD_NEW_SCHEDULECUSTOMERNOTIFICATION } from "./actionTypes";
 
-import { getScheduleCustomerNotificationSuccess, getScheduleCustomerNotificationFail } from "./actions";
+import { getScheduleCustomerNotificationSuccess, getScheduleCustomerNotificationFail, addScheduleCustomerNotificationSuccess, addScheduleCustomerNotificationFail } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getScheduleCustomerNotification } from "../../helpers/fakebackend_helper";
+import { getScheduleCustomerNotification, addNewScheduleCustomerNotification } from "../../helpers/fakebackend_helper";
+import { toast } from "react-toastify";
+
 
 const convertScheduleCustomerNotificationListObject = (scheduleCustomerNotificationList) => {
   // Schedule Customer Notification list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
@@ -47,8 +49,21 @@ function* fetchScheduleCustomerNotification() {
   }
 }
 
+function* onAddNewScheduleCustomerNotification({ payload: schedulecustomernotification }) {
+  try {
+    const response = yield call(addNewScheduleCustomerNotification, schedulecustomernotification);
+
+    yield put(addScheduleCustomerNotificationSuccess(response));
+    toast.success("ScheduleCustomerNotification Added Successfully", { autoClose: 2000 });
+  } catch (error) {
+    yield put(addScheduleCustomerNotificationFail(error));
+    toast.error("ScheduleCustomerNotification Added Failed", { autoClose: 2000 });
+  }
+}
+
 function* scheduleCustomerNotificationSaga() {
   yield takeEvery(GET_SCHEDULECUSTOMERNOTIFICATION, fetchScheduleCustomerNotification);
+  yield takeEvery(ADD_NEW_SCHEDULECUSTOMERNOTIFICATION, onAddNewScheduleCustomerNotification);
 }
 
 export default scheduleCustomerNotificationSaga;

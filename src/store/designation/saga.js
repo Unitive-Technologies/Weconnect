@@ -29,16 +29,16 @@ const convertDesignationListObject = (designationList) => {
         designation.type === 0
           ? "MSO"
           : designation.type === 1
-          ? "RO"
-          : designation.type === 2
-          ? "DISTRIBUTOR"
-          : "LCO",
+            ? "RO"
+            : designation.type === 2
+              ? "DISTRIBUTOR"
+              : "LCO",
       status:
         designation.status === 1
           ? "ACTIVE"
           : designation.status === 0
-          ? "INACTIVE"
-          : "BLOCKED",
+            ? "INACTIVE"
+            : "BLOCKED",
       created_at: designation.created_at,
       created_by: designation.created_by,
     };
