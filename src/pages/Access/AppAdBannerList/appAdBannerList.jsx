@@ -303,7 +303,7 @@ const AppAdBannerList = (props) => {
           {/* Render Breadcrumbs */}
           <Breadcrumbs
             title="Access"
-            breadcrumbItem="App Advertisement Banner List"
+            breadcrumbItem="App Advertisement Banners"
           />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
@@ -332,7 +332,7 @@ const AppAdBannerList = (props) => {
                           onClick={() => setModal(true)}
                           className="btn btn-primary me-1"
                         >
-                          Create App Advertisement Banner
+                          Create
                         </Link>
                       </div>
                     </div>

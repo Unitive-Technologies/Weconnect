@@ -29,7 +29,6 @@ import DeleteModal from "/src/components/Common/DeleteModal";
 
 import { getDistrict as onGetDistrict } from "/src/store/actions";
 
-
 import { isEmpty } from "lodash";
 
 //redux
@@ -59,7 +58,6 @@ const DistrictList = (props) => {
   }, [districts]);
 
   const [isLoading, setLoading] = useState(loading);
-
 
   const [userList, setUserList] = useState([]);
   const [modal, setModal] = useState(false);
@@ -122,7 +120,9 @@ const DistrictList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.state_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.state_lbl}
+            </p>
           );
         },
       },
@@ -132,7 +132,9 @@ const DistrictList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.state_code_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.state_code_lbl}
+            </p>
           );
         },
       },
@@ -142,7 +144,9 @@ const DistrictList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.description}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.description}
+            </p>
           );
         },
       },
@@ -152,7 +156,9 @@ const DistrictList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.status_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.status_lbl}
+            </p>
           );
         },
       },
@@ -162,7 +168,9 @@ const DistrictList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.created_at}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_at}
+            </p>
           );
         },
       },
@@ -172,7 +180,9 @@ const DistrictList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.created_by_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by_lbl}
+            </p>
           );
         },
       },
@@ -302,7 +312,7 @@ const DistrictList = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Territory" breadcrumbItem="District List" />
+          <Breadcrumbs title="Territory" breadcrumbItem="Districts" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (

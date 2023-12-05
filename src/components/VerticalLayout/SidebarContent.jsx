@@ -163,53 +163,51 @@ const SidebarContent = (props) => {
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
-                      <Link to="/userslist">{props.t("User List")}</Link>
+                      <Link to="/userslist">{props.t("Users")}</Link>
                     </li>
                     <li>
                       <Link to="/customer-userslist">
-                        {props.t("Customer User List")}{" "}
+                        {props.t("Customer Users")}{" "}
                       </Link>
                     </li>
                     <li>
                       <Link to="/grouppolicylist">
-                        <span key="#">{props.t("Group Policy List")}</span>
+                        <span key="#">{props.t("Group Policies")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/designationlist">
-                        <span key="#">{props.t("Designation List")}</span>
+                        <span key="#">{props.t("Designations")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/user-hierarchylist">
-                        <span key="#">{props.t("User Hierarchy List")}</span>
+                        <span key="#">{props.t("User Hierarchies")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/notification-templatelist">
-                        <span key="#">
-                          {props.t("Notification Template List")}
-                        </span>
+                        <span key="#">{props.t("Notification Templates")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/scheduled-notificationlist">
                         <span key="#">
-                          {props.t("Scheduled Notification List")}
+                          {props.t("Scheduled Notifications")}
                         </span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/app-adbannerlist">
                         <span key="#">
-                          {props.t("App Advertisement Banner List")}
+                          {props.t("App Advertisement Banners")}
                         </span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/schedule-customer-notificationlist">
                         <span key="#">
-                          {props.t("Scheule Customer Notification List")}
+                          {props.t("Scheule Customer Notifications")}
                         </span>
                       </Link>
                     </li>
@@ -222,17 +220,17 @@ const SidebarContent = (props) => {
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/regional-office-list">
-                        <span key="#">{props.t("Regional Office List")}</span>
+                        <span key="#">{props.t("Regional Offices")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/distributor-list">
-                        <span key="#">{props.t("Distributor List")}</span>
+                        <span key="#">{props.t("Distributors")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/LCO-list">
-                        <span key="#">{props.t("LCO List")}</span>
+                        <span key="#">{props.t("LCOs")}</span>
                       </Link>
                     </li>
                   </ul>
@@ -244,27 +242,27 @@ const SidebarContent = (props) => {
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/state-list">
-                        <span key="#">{props.t("State List")}</span>
+                        <span key="#">{props.t("States")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/district-list">
-                        <span key="#">{props.t("District List")}</span>
+                        <span key="#">{props.t("Districts")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/city-list">
-                        <span key="#">{props.t("City List")}</span>
+                        <span key="#">{props.t("Cities")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/location-list">
-                        <span key="#">{props.t("Location List")}</span>
+                        <span key="#">{props.t("Locations")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/sublocation-list">
-                        <span key="#">{props.t("Sublocation List")}</span>
+                        <span key="#">{props.t("Sublocations")}</span>
                       </Link>
                     </li>
                   </ul>
@@ -276,61 +274,59 @@ const SidebarContent = (props) => {
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/broadcaster-list">
-                        <span key="#">{props.t("Broadcaster List")}</span>
+                        <span key="#">{props.t("Broadcasters")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/genre-list">
-                        <span key="#">{props.t("Genre List")}</span>
+                        <span key="#">{props.t("Genres")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/language-list">
-                        <span key="#">{props.t("Language List")}</span>
+                        <span key="#">{props.t("Languages")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/channel-list">
-                        <span key="#">{props.t("Channel List")}</span>
+                        <span key="#">{props.t("Channels")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/broadcaster-bouquet-list">
-                        <span key="#">
-                          {props.t("Broadcaster Bouquet List")}
-                        </span>
+                        <span key="#">{props.t("Broadcaster Bouquets")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/package-list">
-                        <span key="#">{props.t("Package List")}</span>
+                        <span key="#">{props.t("Packages")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/OSDConfiguration-list">
-                        <span key="#">{props.t("OSD Configuration List")}</span>
+                        <span key="#">{props.t("OSD Configurations")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/OSDTemplate-list">
-                        <span key="#">{props.t("OSD Template List")}</span>
+                        <span key="#">{props.t("OSD Templates")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/local-channel-number-list">
-                        <span key="#">{props.t("LCN List")}</span>
+                        <span key="#">{props.t("LCNs")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/document-upload-policy-list">
-                        <span key="#">{props.t("Document Upload Policy")}</span>
+                        <span key="#">
+                          {props.t("Document Upload Policies")}
+                        </span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/SMS-Message-Template-list">
-                        <span key="#">
-                          {props.t("SMS Message Template List")}
-                        </span>
+                        <span key="#">{props.t("SMS Message Templates")}</span>
                       </Link>
                     </li>
                   </ul>
@@ -342,22 +338,22 @@ const SidebarContent = (props) => {
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/company-list">
-                        <span key="#">{props.t("Company List")}</span>
+                        <span key="#">{props.t("Companies")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/brand-list">
-                        <span key="#">{props.t("Brand List")}</span>
+                        <span key="#">{props.t("Brands")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/warehouse-list">
-                        <span key="#">{props.t("Warehouse List")}</span>
+                        <span key="#">{props.t("Warehouses")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/inventory-state-list">
-                        <span key="#">{props.t("Inventory State List")}</span>
+                        <span key="#">{props.t("Inventory States")}</span>
                       </Link>
                     </li>
                   </ul>
@@ -369,22 +365,22 @@ const SidebarContent = (props) => {
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/tax-list">
-                        <span key="#">{props.t("Tax List")}</span>
+                        <span key="#">{props.t("Taxes")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/reason-list">
-                        <span key="#">{props.t("Reason List")}</span>
+                        <span key="#">{props.t("Reasons")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/bank-list">
-                        <span key="#">{props.t("Bank List")}</span>
+                        <span key="#">{props.t("Banks")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/promo-voucher-list">
-                        <span key="#">{props.t("Promo Voucher List")}</span>
+                        <span key="#">{props.t("Promo Vouchers")}</span>
                       </Link>
                     </li>
                   </ul>
@@ -396,17 +392,17 @@ const SidebarContent = (props) => {
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/ncf-list">
-                        <span key="#">{props.t("NCF List")}</span>
+                        <span key="#">{props.t("NCFs")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/bouquet-list">
-                        <span key="#">{props.t("Bouquet List")}</span>
+                        <span key="#">{props.t("Bouquets")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/connection-scheme-list">
-                        <span key="#">{props.t("Connection Scheme List")}</span>
+                        <span key="#">{props.t("Connection Schemes")}</span>
                       </Link>
                     </li>
                   </ul>
@@ -418,15 +414,13 @@ const SidebarContent = (props) => {
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/complaint-category-list">
-                        <span key="#">
-                          {props.t("Complaint Category List")}
-                        </span>
+                        <span key="#">{props.t("Complaint Categories")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/complaint-subcategory-list">
                         <span key="#">
-                          {props.t("Complaint Sub-Category List")}
+                          {props.t("Complaint Sub-Categories")}
                         </span>
                       </Link>
                     </li>
@@ -462,17 +456,17 @@ const SidebarContent = (props) => {
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/#">
-                        <span key="#">{props.t("Smartcard List")}</span>
+                        <span key="#">{props.t("Smartcards")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/#">
-                        <span key="#">{props.t("STB List")}</span>
+                        <span key="#">{props.t("STBs")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/#">
-                        <span key="#">{props.t("Pairing List")}</span>
+                        <span key="#">{props.t("Pairings")}</span>
                       </Link>
                     </li>
                   </ul>
@@ -484,17 +478,17 @@ const SidebarContent = (props) => {
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/#">
-                        <span key="#">{props.t("Faulty Smartcard List")}</span>
+                        <span key="#">{props.t("Faulty Smartcards")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/#">
-                        <span key="#">{props.t("Faulty STB List")}</span>
+                        <span key="#">{props.t("Faulty STBs")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/#">
-                        <span key="#">{props.t("Faulty Pairing List")}</span>
+                        <span key="#">{props.t("Faulty Pairings")}</span>
                       </Link>
                     </li>
                   </ul>
@@ -506,21 +500,17 @@ const SidebarContent = (props) => {
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/#">
-                        <span key="#">
-                          {props.t("Blacklisted Smartcard List")}
-                        </span>
+                        <span key="#">{props.t("Blacklisted Smartcards")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/#">
-                        <span key="#">{props.t("Blacklisted STB List")}</span>
+                        <span key="#">{props.t("Blacklisted STBs")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/#">
-                        <span key="#">
-                          {props.t("Blacklisted Pairing List")}
-                        </span>
+                        <span key="#">{props.t("Blacklisted Pairings")}</span>
                       </Link>
                     </li>
                   </ul>
@@ -532,17 +522,17 @@ const SidebarContent = (props) => {
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/#">
-                        <span key="#">{props.t("Allotted Pairing List")}</span>
+                        <span key="#">{props.t("Allotted Pairings")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/#">
-                        <span key="#">{props.t("Allotted STB List")}</span>
+                        <span key="#">{props.t("Allotted STBs")}</span>
                       </Link>
                     </li>
                     <li>
                       <Link to="/#">
-                        <span key="#">{props.t("Allotted Pairing List")}</span>
+                        <span key="#">{props.t("Allotted Pairings")}</span>
                       </Link>
                     </li>
                   </ul>
@@ -586,7 +576,7 @@ const SidebarContent = (props) => {
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
                       <Link to="/#">
-                        <span key="#">{props.t("Subscriber List")}</span>
+                        <span key="#">{props.t("Subscribers")}</span>
                       </Link>
                     </li>
                   </ul>
@@ -774,25 +764,25 @@ const SidebarContent = (props) => {
                       <Link to="#">{props.t("LCO Ledger")}</Link>
                     </li>
                     <li>
-                      <Link to="#">{props.t("DebitNote/Voucher List")}</Link>
+                      <Link to="#">{props.t("DebitNote/Vouchers")}</Link>
                     </li>
                     <li>
-                      <Link to="#">{props.t("Credit Note/Voucher List")}</Link>
+                      <Link to="#">{props.t("Credit Note/Vouchers")}</Link>
                     </li>
                     <li>
-                      <Link to="#">{props.t("Deposit Cheque List")}</Link>
+                      <Link to="#">{props.t("Deposit Cheques")}</Link>
                     </li>
                     <li>
-                      <Link to="#">{props.t("Reconcile Cheque List")}</Link>
+                      <Link to="#">{props.t("Reconcile Cheques")}</Link>
                     </li>
                     <li>
-                      <Link to="#">{props.t("Un-Reconcile Cheque List")}</Link>
+                      <Link to="#">{props.t("Un-Reconcile Cheques")}</Link>
                     </li>
                     <li>
                       <Link to="#">{props.t("Pending Recovery Report")}</Link>
                     </li>
                     <li>
-                      <Link to="#">{props.t("Journal Voucher List")}</Link>
+                      <Link to="#">{props.t("Journal Vouchers")}</Link>
                     </li>
                     <li>
                       <Link to="#">{props.t("Bill Summary Report")}</Link>

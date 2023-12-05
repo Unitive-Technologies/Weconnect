@@ -306,7 +306,7 @@ const DesignationList = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Access" breadcrumbItem="Designation List" />
+          <Breadcrumbs title="Access" breadcrumbItem="Designations" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (

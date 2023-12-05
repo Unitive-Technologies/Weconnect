@@ -355,7 +355,7 @@ const UserHierarchyList = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Access" breadcrumbItem="User Hierarchy List" />
+          <Breadcrumbs title="Access" breadcrumbItem="User Hierarchies" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (

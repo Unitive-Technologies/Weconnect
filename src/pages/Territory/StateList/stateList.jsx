@@ -130,7 +130,9 @@ const StateList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.created_at}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_at}
+            </p>
           );
         },
       },
@@ -225,7 +227,7 @@ const StateList = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Territory" breadcrumbItem="State List" />
+          <Breadcrumbs title="Territory" breadcrumbItem="States" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
