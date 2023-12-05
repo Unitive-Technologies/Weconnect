@@ -48,16 +48,20 @@ import {
   promovoucherlist as provoucher,
 } from "../../common/data";
 
-let users = [
-  {
-    uid: 1,
-    username: "admin",
-    role: "admin",
-    password: "123456",
-    // email: "admin@themesbrand.com",
-    email: "admin",
-  },
-];
+// let users = [
+//   {
+//     uid: 1,
+//     username: "admin",
+//     role: "admin",
+//     password: "123456",
+//     // email: "admin@themesbrand.com",
+//     email: "admin",
+//     loginID: "mso",
+//     user: "MY MSO",
+//     type: "MSO",
+//     role: "ADMIN",
+//   },
+// ];
 
 const fakeBackend = () => {
   // This sets the mock adapter on the default instance
@@ -65,7 +69,7 @@ const fakeBackend = () => {
 
   mock.onPost(url.POST_FAKE_REGISTER).reply((config) => {
     const user = JSON.parse(config["data"]);
-    users.push(user);
+    admindetails.push(user);
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve([200, user]);
@@ -75,7 +79,7 @@ const fakeBackend = () => {
 
   mock.onPost("/post-fake-login").reply((config) => {
     const user = JSON.parse(config["data"]);
-    const validUser = users.filter(
+    const validUser = admindetails.filter(
       (usr) => usr.email === user.email && usr.password === user.password
     );
 
@@ -104,7 +108,7 @@ const fakeBackend = () => {
 
   mock.onPost("/post-jwt-register").reply((config) => {
     const user = JSON.parse(config["data"]);
-    users.push(user);
+    admindetails.push(user);
 
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -115,7 +119,7 @@ const fakeBackend = () => {
 
   mock.onPost("/post-jwt-login").reply((config) => {
     const user = JSON.parse(config["data"]);
-    const validUser = users.filter(
+    const validUser = admindetails.filter(
       (usr) => usr.email === user.email && usr.password === user.password
     );
 
@@ -148,7 +152,7 @@ const fakeBackend = () => {
 
     let finalToken = one.Authorization;
 
-    const validUser = users.filter((usr) => usr.uid === user.idx);
+    const validUser = admindetails.filter((usr) => usr.uid === user.idx);
 
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -158,14 +162,17 @@ const fakeBackend = () => {
             let objIndex;
 
             //Find index of specific object using findIndex method.
-            objIndex = users.findIndex((obj) => obj.uid === user.idx);
+            objIndex = admindetails.findIndex((obj) => obj.uid === user.idx);
 
             //Update object's name property.
-            users[objIndex].username = user.username;
+            admindetails[objIndex].username = user.username;
 
             // Assign a value to locastorage
             localStorage.removeItem("authUser");
-            localStorage.setItem("authUser", JSON.stringify(users[objIndex]));
+            localStorage.setItem(
+              "authUser",
+              JSON.stringify(admindetails[objIndex])
+            );
 
             resolve([200, "Profile Updated Successfully"]);
           } else {
@@ -181,7 +188,7 @@ const fakeBackend = () => {
   mock.onPost("/post-fake-profile").reply((config) => {
     const user = JSON.parse(config["data"]);
 
-    const validUser = users.filter((usr) => usr.uid === user.idx);
+    const validUser = admindetails.filter((usr) => usr.uid === user.idx);
 
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -189,14 +196,17 @@ const fakeBackend = () => {
           let objIndex;
 
           //Find index of specific object using findIndex method.
-          objIndex = users.findIndex((obj) => obj.uid === user.idx);
+          objIndex = admindetails.findIndex((obj) => obj.uid === user.idx);
 
           //Update object's name property.
-          users[objIndex].username = user.username;
+          admindetails[objIndex].username = user.username;
 
           // Assign a value to locastorage
           localStorage.removeItem("authUser");
-          localStorage.setItem("authUser", JSON.stringify(users[objIndex]));
+          localStorage.setItem(
+            "authUser",
+            JSON.stringify(admindetails[objIndex])
+          );
 
           resolve([200, "Profile Updated Successfully"]);
         } else {

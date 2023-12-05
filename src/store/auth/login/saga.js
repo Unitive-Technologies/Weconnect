@@ -23,31 +23,16 @@ function* loginUser({ payload: { user, history } }) {
       response = yield call(fireBaseBackend.loginUser, {
         email: user.email,
         password: user.password,
-        loginID: "mso",
-        user: "MY MSO",
-        type: "MSO",
-        role: "ADMIN",
-        loginTime: currentTime.toISOString(),
       });
     } else if (import.meta.env.VITE_APP_DEFAULTAUTH === "jwt") {
       response = yield call(postJwtLogin, {
         email: user.email,
         password: user.password,
-        loginID: "mso",
-        user: "MY MSO",
-        type: "MSO",
-        role: "ADMIN",
-        loginTime: currentTime.toISOString(),
       });
     } else if (import.meta.env.VITE_APP_DEFAULTAUTH === "fake") {
       response = yield call(postFakeLogin, {
         email: user.email,
         password: user.password,
-        loginID: "mso",
-        user: "MY MSO",
-        type: "MSO",
-        role: "ADMIN",
-        loginTime: currentTime.toISOString(),
       });
     }
 

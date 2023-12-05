@@ -27,7 +27,7 @@ import {
 
 // actions
 import { loginUser, socialLogin } from "../../store/actions";
-
+import { getAdmindetails } from "../../store/actions";
 // import images
 import profile from "../../assets/images/profile-img.png";
 import logo from "../../assets/images/vdigital.png";
@@ -54,6 +54,7 @@ const Login = (props) => {
 
       if (userInput === numericCaptcha) {
         dispatch(loginUser(values, props.router.navigate));
+        dispatch(getAdmindetails());
       } else {
         // Handle incorrect captcha
         alert("Incorrect captcha. Please try again.");

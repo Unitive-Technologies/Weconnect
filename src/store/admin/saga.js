@@ -14,42 +14,28 @@ const convertAdmindetailsObject = (admindetails) => {
       ...admin,
       id: admin.id,
       name: admin.name,
-      code: admin.code,
-      broadcaster: admin.broadcaster_lbl,
-      genre: admin.genre_lbl,
-      language: admin.language_lbl,
-      type: admin.channel_type_lbl,
-      alacarte: admin.isAlacarte_lbl,
-      FTA: admin.isFta_lbl,
-      NCF: admin.isNCF_lbl,
-      cascode: admin.casCodes.length > 0 ? admin.casCodes[0].cas_lbl : "",
-
-      status:
-        admin.status === 1
-          ? "ACTIVE"
-          : admin.status === 0
-          ? "INACTIVE"
-          : "BLOCKED",
-      rate: admin.broadcasterRate,
-      created_at: admin.created_at,
-      created_by: admin.created_by_lbl,
+      username: admin.username,
+      email: admin.email,
+      mobile: admin.mobile_no,
+      type: admin.type_label,
+      lastlogin: last_login_at,
     };
   });
 };
 
-function* fetchChannelList() {
+function* fetchAdmindetails() {
   try {
-    const response = yield call(getChannelList);
+    const response = yield call(getAdmindetails);
     console.log("response:" + JSON.stringify(response));
-    const channelList = convertAdmindetailsObject(response);
-    yield put(getChannelListSuccess(channelList));
+    const admindetails = convertAdmindetailsObject(response);
+    yield put(getAdmindetailsSuccess(admindetails));
   } catch (error) {
-    yield put(getChannelListFail(error));
+    yield put(getAdmindetailsFail(error));
   }
 }
 
-function* channelListSaga() {
-  yield takeEvery(GET_ADMINDETAILS, fetchChannelList);
+function* admindetailsSaga() {
+  yield takeEvery(GET_ADMINDETAILS, fetchAdmindetails);
 }
 
-export default channelListSaga;
+export default admindetailsSaga;

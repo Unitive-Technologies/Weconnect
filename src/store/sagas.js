@@ -48,6 +48,7 @@ import taxSaga from "./taxlist/saga";
 import reasonSaga from "./reasonlist/saga";
 import bankSaga from "./banklist/saga";
 import promoVoucherSaga from "./promovoucherlist/saga";
+import admindetailsSaga from "./admin/saga";
 
 export default function* rootSaga() {
   yield all([
@@ -99,5 +100,6 @@ export default function* rootSaga() {
     fork(reasonSaga),
     fork(bankSaga),
     fork(promoVoucherSaga),
+    fork(admindetailsSaga),
   ]);
 }
