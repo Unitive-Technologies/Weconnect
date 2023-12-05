@@ -60,21 +60,50 @@ const ProfileMenu = (props) => {
             src={logo1}
             alt="Header Avatar"
           />{" "}
-          {admindetails.name}
+          {/* {admindetails.name} */}
           {/* <span className="d-none d-xl-inline-block ms-2 me-1">{username}</span>
           <i className="mdi mdi-chevron-down d-none d-xl-inline-block" /> */}
         </DropdownToggle>
 
         <DropdownMenu className="dropdown-menu-end">
-          <div>
-            <ul>
-              <li>{admindetails.name}</li>
-              <li>Login ID: {admindetails.username}</li>
-              <li>User of:{admindetails.name}</li>
-              <li>Type:{admindetails.type_label}</li>
-              <li>Role:{admindetails.role === 1 && "ADMIN"}</li>
-            </ul>
-          </div>
+          <DropdownItem>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "top",
+                justifyContent: "center",
+              }}
+            >
+              <div className="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
+                <span className="avatar-title rounded-circle bg-primary font-size-16">
+                  M
+                </span>
+              </div>
+
+              <ul
+                style={{
+                  listStyle: "none",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 5,
+                  marginBottom: -5,
+                }}
+              >
+                <li className="color-primary font-size-15">
+                  <b>{admindetails.name.toUpperCase()}</b>
+                </li>
+                <li>Login ID: {admindetails.username}</li>
+                <li>User of: {admindetails.name}</li>
+                <li>
+                  Type: &nbsp;<b>{admindetails.type_label}</b>
+                </li>
+                <li>
+                  Role: &nbsp;
+                  <b> {admindetails.role === 1 && "ADMIN"}</b>
+                </li>
+              </ul>
+            </div>
+          </DropdownItem>
           <div className="dropdown-divider" />
           <DropdownItem tag="a" href="/profile">
             {" "}
