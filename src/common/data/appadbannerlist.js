@@ -1,7 +1,7 @@
 const appadbannerlist = [
   {
     id: 2,
-    name: "test",
+    title: "test",
     type: 1,
     schedule_days: [1, 3, 28, 27, 24, 23, 22, 20, 18, 17, 15, 14],
     criteria: {
@@ -32,7 +32,7 @@ const appadbannerlist = [
   },
   {
     id: 1,
-    name: "STB Expring",
+    title: "STB Expring",
     type: 1,
     schedule_days: [1, 3, 6],
     criteria: {

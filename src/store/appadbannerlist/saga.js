@@ -21,19 +21,13 @@ const convertAppAdBannerListObject = (appAdBannerList) => {
     return {
       ...appabanner,
       id: appabanner.id,
-      name: appabanner.name,
-      code: appabanner.code,
+      title: appabanner.title,
+      caption: appabanner.caption,
       start_date: appabanner.start_date,
       end_date: appabanner.end_date,
-      mobile_no: appabanner.mobile_no,
-      state_lbl: appabanner.state_lbl,
-      district_lbl: appabanner.district_lbl,
+      description: appabanner.description,
       created_at: appabanner.created_at,
       created_by: appabanner.created_by,
-      city_lbl: appabanner.city_lbl,
-      gstno: appabanner.gstno,
-      panno: appabanner.panno,
-      username: appabanner.username,
       status:
         appabanner.status === 1
           ? "ACTIVE"

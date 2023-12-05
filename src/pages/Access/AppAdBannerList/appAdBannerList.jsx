@@ -34,65 +34,13 @@ import { isEmpty } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import AddNewAppAdBanner from "./AddNewAppAdBanner";
 
 const AppAdBannerList = (props) => {
   //meta title
   document.title = "App Advertisement Banner List | VDigital";
 
   const dispatch = useDispatch();
-  const [contact, setContact] = useState();
-  // validation
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
-
-    initialValues: {
-      name: (contact && contact.name) || "",
-      designation: (contact && contact.designation) || "",
-      tags: (contact && contact.tags) || "",
-      email: (contact && contact.email) || "",
-      projects: (contact && contact.projects) || "",
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
-      designation: Yup.string().required("Please Enter Your Designation"),
-      tags: Yup.array().required("Please Enter Tag"),
-      email: Yup.string()
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-        .required("Please Enter Your Email"),
-      projects: Yup.string().required("Please Enter Your Project"),
-    }),
-    onSubmit: (values) => {
-      if (isEdit) {
-        const updateUser = {
-          id: contact.id,
-          name: values.name,
-          designation: values.designation,
-          tags: values.tags,
-          email: values.email,
-          projects: values.projects,
-        };
-
-        // update user
-        dispatch(onUpdateUser(updateUser));
-        validation.resetForm();
-        setIsEdit(false);
-      } else {
-        const newUser = {
-          id: Math.floor(Math.random() * (30 - 20)) + 20,
-          name: values["name"],
-          designation: values["designation"],
-          email: values["email"],
-          tags: values["tags"],
-          projects: values["projects"],
-        };
-        // save new user
-        dispatch(onAddNewUser(newUser));
-        validation.resetForm();
-      }
-      toggle();
-    },
-  });
 
   const selectAppAdBannerState = (state) => state.appadbanner;
   const AppAdBannerProperties = createSelector(
@@ -124,25 +72,19 @@ const AppAdBannerList = (props) => {
         // accessor: "name",
         disableFilters: true,
         filterable: true,
-        accessor: (cellProps) => (
-          <>
-            {!cellProps.img ? (
-              <div className="avatar-xs">
-                <span className="avatar-title rounded-circle">
-                  {cellProps.name.charAt(0)}
-                </span>
-              </div>
-            ) : (
-              <div>
-                <img
-                  className="rounded-circle avatar-xs"
-                  src={cellProps.img}
-                  alt=""
-                />
-              </div>
-            )}
-          </>
-        ),
+        Cell: (cellProps) => {
+          const totalRows = cellProps.rows.length;
+          const reverseIndex = totalRows - cellProps.row.index;
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {reverseIndex}
+                </Link>
+              </h5>
+            </>
+          );
+        },
       },
       {
         Header: "Title",
@@ -150,16 +92,7 @@ const AppAdBannerList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.name}
-                </Link>
-              </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
-            </>
+            <p className="text-muted mb-0">{cellProps.row.original.title}</p>
           );
         },
       },
@@ -168,7 +101,9 @@ const AppAdBannerList = (props) => {
         accessor: "caption",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.caption}</p>
+          );
         },
       },
       {
@@ -176,7 +111,11 @@ const AppAdBannerList = (props) => {
         accessor: "description",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.description}
+            </p>
+          );
         },
       },
       {
@@ -358,6 +297,7 @@ const AppAdBannerList = (props) => {
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
       />
+      <AddNewAppAdBanner isOpen={modal} toggle={toggle} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -372,6 +312,32 @@ const AppAdBannerList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
+                    <div className="d-flex align-items-center justify-content-between">
+                      <h5 className="mb-0 card-title flex-grow-1">
+                        {/* Jobs Lists */}
+                      </h5>
+                      {/* <form className="app-search d-none d-lg-block">
+                        <div className="position-relative">
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Search..."
+                          />
+                          <span className="bx bx-search-alt" />
+                        </div>
+                      </form> */}
+                      <div className="flex-shrink-0">
+                        <Link
+                          to="#!"
+                          onClick={() => setModal(true)}
+                          className="btn btn-primary me-1"
+                        >
+                          Create App Advertisement Banner
+                        </Link>
+                      </div>
+                    </div>
+                  </CardBody>
+                  <CardBody>
                     {console.log(
                       "App Advertising banner list:" +
                         JSON.stringify(appAdvertiseBan)
@@ -381,10 +347,10 @@ const AppAdBannerList = (props) => {
                       columns={columns}
                       data={appAdvertiseBan}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      // isAddUserList={true}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
-                      handleUserClick={handleUserClicks}
+                      // handleUserClick={handleUserClicks}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
