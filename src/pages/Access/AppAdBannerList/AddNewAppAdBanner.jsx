@@ -54,7 +54,7 @@ const AddNewAppAdBanner = (props) => {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         title: values["title"],
         start_date: values["start_date"],
-        end_date: values["end-date"],
+        end_date: values["end_date"],
         // img: values["img"],
         caption: values["caption"],
         status: values["status"],

@@ -53,7 +53,7 @@ function* fetchAppAdBanner() {
 
 function* onAddAppAdBanner({ payload: appadbanner }) {
   try {
-    const response = yield call(addNewDesignation, appadbanner);
+    const response = yield call(addAppAdBanner, appadbanner);
     yield put(addAppAdBannerSuccess(response));
     toast.success("App ad banner list Added Successfully", { autoClose: 2000 });
   } catch (error) {
