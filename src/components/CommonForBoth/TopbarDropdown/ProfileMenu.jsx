@@ -66,11 +66,11 @@ const ProfileMenu = (props) => {
         </DropdownToggle>
 
         <DropdownMenu className="dropdown-menu-end">
-          {/* <div>
-            {admindetails.username},{admindetails.loginID},{admindetails.user},
-            {admindetails.type},{admindetails.role}
+          <div>
+            {admindetails.username},{admindetails.username},{admindetails.name},
+            {admindetails.type_label},{admindetails.role}
           </div>
-          <div className="dropdown-divider" /> */}
+          <div className="dropdown-divider" />
           <DropdownItem tag="a" href="/profile">
             {" "}
             <i className="bx bx-user font-size-16 align-middle me-1" />
@@ -100,7 +100,7 @@ const ProfileMenu = (props) => {
               style={{ width: "100%" }}
             >
               Last Login:{" "}
-              {new Date(admindetails.loginTime).toLocaleString("en-US", {
+              {new Date(admindetails.last_login_at).toLocaleString("en-US", {
                 month: "short",
                 day: "numeric",
                 year: "numeric",
