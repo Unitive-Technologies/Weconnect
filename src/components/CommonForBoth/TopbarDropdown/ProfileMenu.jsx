@@ -67,8 +67,13 @@ const ProfileMenu = (props) => {
 
         <DropdownMenu className="dropdown-menu-end">
           <div>
-            {admindetails.username},{admindetails.username},{admindetails.name},
-            {admindetails.type_label},{admindetails.role}
+            <ul>
+              <li>{admindetails.name}</li>
+              <li>Login ID: {admindetails.username}</li>
+              <li>User of:{admindetails.name}</li>
+              <li>Type:{admindetails.type_label}</li>
+              <li>Role:{admindetails.role === 1 && "ADMIN"}</li>
+            </ul>
           </div>
           <div className="dropdown-divider" />
           <DropdownItem tag="a" href="/profile">
