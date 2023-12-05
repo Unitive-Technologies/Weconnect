@@ -11,7 +11,9 @@ export const getScheduleCustomerNotification = () => ({
   type: GET_SCHEDULECUSTOMERNOTIFICATION,
 });
 
-export const getScheduleCustomerNotificationSuccess = (scheduleCustomerNotification) => {
+export const getScheduleCustomerNotificationSuccess = (
+  scheduleCustomerNotification
+) => {
   console.log("Received Customer Users:", scheduleCustomerNotification);
   return {
     type: GET_SCHEDULECUSTOMERNOTIFICATION_SUCCESS,
@@ -24,12 +26,16 @@ export const getScheduleCustomerNotificationFail = (error) => ({
   payload: error,
 });
 
-export const addNewScheduleCustomerNotification = (scheduleCustomerNotification) => ({
+export const addNewScheduleCustomerNotification = (
+  scheduleCustomerNotification
+) => ({
   type: ADD_NEW_SCHEDULECUSTOMERNOTIFICATION,
   payload: scheduleCustomerNotification,
 });
 
-export const addScheduleCustomerNotificationSuccess = (scheduleCustomerNotification) => ({
+export const addScheduleCustomerNotificationSuccess = (
+  scheduleCustomerNotification
+) => ({
   type: ADD_SCHEDULECUSTOMERNOTIFICATION_SUCCESS,
   payload: scheduleCustomerNotification,
 });

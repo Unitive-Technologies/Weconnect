@@ -37,7 +37,6 @@ import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddNewScheduleCustomerNotification from "./AddNewScheduleCustomerNotification";
 
-
 const ScheduleCustomerNotificationList = (props) => {
   //meta title
   document.title = "Schedule Customer Notification | VDigital";
@@ -126,10 +125,15 @@ const ScheduleCustomerNotificationList = (props) => {
         accessor: "schedule_days",
         filterable: true,
         Cell: (cellProps) => {
-          const scheduleDaysString =
-            cellProps.row.original.schedule_days.join(", ");
+          const scheduleDaysArray = cellProps.row.original.schedule_days;
 
-          return <p className="text-muted mb-0">{scheduleDaysString}</p>;
+          if (Array.isArray(scheduleDaysArray)) {
+            const scheduleDaysString = scheduleDaysArray.join(",");
+            return <p className="text-muted mb-0">{scheduleDaysString}</p>;
+          } else {
+            // Handle the case when schedule_days is not an array
+            return <p className="text-muted mb-0">Invalid Schedule Days</p>;
+          }
         },
       },
 

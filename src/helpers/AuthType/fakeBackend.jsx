@@ -861,6 +861,20 @@ const fakeBackend = () => {
     });
   });
 
+  mock
+    .onPost(url.ADD_NEW_SCHEDULECUSTOMERNOTIFICATION)
+    .reply((schCusNotification) => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          if (schCusNotification && schCusNotification.data) {
+            // Passing fake JSON data as response
+            resolve([200, schCusNotification.data]);
+          } else {
+            reject([400, "Cannot add Schedule Customer Notification Template"]);
+          }
+        });
+      });
+    });
   mock.onPost(url.ADD_USERHIERARCHY).reply((userHierarchy) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

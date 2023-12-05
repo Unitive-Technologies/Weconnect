@@ -14,7 +14,10 @@ const INIT_STATE = {
 const ScheduleCustomerNotification = (state = INIT_STATE, action) => {
   switch (action.type) {
     case GET_SCHEDULECUSTOMERNOTIFICATION_SUCCESS:
-      console.log("Schedule Customer Notification data in reducer:", action.payload);
+      console.log(
+        "Schedule Customer Notification data in reducer:",
+        action.payload
+      );
       return {
         ...state,
         scheduleCustomerNotification: action.payload,
@@ -30,7 +33,10 @@ const ScheduleCustomerNotification = (state = INIT_STATE, action) => {
     case ADD_SCHEDULECUSTOMERNOTIFICATION_SUCCESS:
       return {
         ...state,
-        designation: [...state.scheduleCustomerNotification, action.payload],
+        scheduleCustomerNotification: [
+          ...state.scheduleCustomerNotification,
+          action.payload,
+        ],
       };
 
     case ADD_SCHEDULECUSTOMERNOTIFICATION_FAIL:
