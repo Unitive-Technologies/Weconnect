@@ -35,6 +35,8 @@ import { isEmpty } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import AddNewScheduleCustomerNotification from "./AddNewScheduleCustomerNotification";
+
 
 const ScheduleCustomerNotificationList = (props) => {
   //meta title
@@ -372,6 +374,7 @@ const ScheduleCustomerNotificationList = (props) => {
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
       />
+      <AddNewScheduleCustomerNotification isOpen={modal} toggle={toggle} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
