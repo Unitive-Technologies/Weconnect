@@ -40,7 +40,7 @@ const AddNewScheduleCustomerNotification = (props) => {
       sms_template_id_lbl: "",
       start_date: "",
       end_date: "",
-      status: "",
+      status_lbl: "",
       description: "",
       created_at: "",
       created_by: "Admin",
@@ -59,7 +59,7 @@ const AddNewScheduleCustomerNotification = (props) => {
       // start_date: Yup.string().required("Select start date"),
       // end_date: Yup.string().required("Select end date"),
       description: Yup.string().required("Select description"),
-      status: Yup.string().required("Select status"),
+      status_lbl: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
       const newScheduleCustomerNotification = {
@@ -75,7 +75,7 @@ const AddNewScheduleCustomerNotification = (props) => {
         start_date: values["start_date"],
         end_date: values["end_date"],
         description: values["description"],
-        status: values["status"],
+        status_lbl: values["status_lbl"],
         created_at: new Date(),
         created_by: values["created_by"],
       };
@@ -166,38 +166,38 @@ const AddNewScheduleCustomerNotification = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.schedule_days || ""}
                 >
-                  <option value="2">Select schedule days</option>
-                  <option value="3">1</option>
-                  <option value="4">2</option>
-                  <option value="5">3</option>
-                  <option value="6">4</option>
-                  <option value="7">5</option>
-                  <option value="8">6</option>
-                  <option value="9">7</option>
-                  <option value="10">8</option>
-                  <option value="11">9</option>
-                  <option value="12">10</option>
-                  <option value="13">11</option>
-                  <option value="14">12</option>
-                  <option value="15">13</option>
-                  <option value="16">14</option>
-                  <option value="17">15</option>
-                  <option value="18">16</option>
-                  <option value="19">17</option>
-                  <option value="20">18</option>
-                  <option value="21">19</option>
-                  <option value="22">20</option>
-                  <option value="23">21</option>
-                  <option value="24">22</option>
-                  <option value="25">23</option>
-                  <option value="26">24</option>
-                  <option value="27">25</option>
-                  <option value="28">26</option>
-                  <option value="29">27</option>
-                  <option value="30">28</option>
+                  <option value="11">Select schedule days</option>
+                  <option value="12">1</option>
+                  <option value="13">2</option>
+                  <option value="14">3</option>
+                  <option value="15">4</option>
+                  <option value="16">5</option>
+                  <option value="17">6</option>
+                  <option value="18">7</option>
+                  <option value="19">8</option>
+                  <option value="20">9</option>
+                  <option value="21">10</option>
+                  <option value="22">11</option>
+                  <option value="23">12</option>
+                  <option value="24">13</option>
+                  <option value="25">14</option>
+                  <option value="26">15</option>
+                  <option value="27">16</option>
+                  <option value="28">17</option>
+                  <option value="29">18</option>
+                  <option value="30">19</option>
+                  <option value="31">20</option>
+                  <option value="32">21</option>
+                  <option value="33">22</option>
+                  <option value="34">23</option>
+                  <option value="35">24</option>
+                  <option value="36">25</option>
+                  <option value="37">26</option>
+                  <option value="38">27</option>
+                  <option value="39">28</option>
                 </Input>
                 {validation.touched.schedule_days &&
-                validation.errors.schedule_days ? (
+                  validation.errors.schedule_days ? (
                   <FormFeedback type="invalid">
                     {validation.errors.schedule_days}
                   </FormFeedback>
@@ -217,14 +217,14 @@ const AddNewScheduleCustomerNotification = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.osd_configuration_id_lbl || ""}
                 >
-                  <option value="31">Select osd configuration</option>
-                  <option value="32">TEST OSD</option>
-                  <option value="33">CAS: NSTV</option>
-                  <option value="34">OSD</option>
-                  <option value="35">CAS: NSTV</option>
+                  <option value="51">Select osd configuration</option>
+                  <option value="52">TEST OSD</option>
+                  <option value="53">CAS: NSTV</option>
+                  <option value="54">OSD</option>
+                  <option value="55">CAS: NSTV</option>
                 </Input>
                 {validation.touched.osd_configuration_id_lbl &&
-                validation.errors.osd_configuration_id_lbl ? (
+                  validation.errors.osd_configuration_id_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.osd_configuration_id_lbl}
                   </FormFeedback>
@@ -241,12 +241,12 @@ const AddNewScheduleCustomerNotification = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.osd_template_id_lbl || ""}
                 >
-                  <option value="36">Select osd template</option>
-                  <option value="37">Expiring STB</option>
-                  <option value="38">NXT</option>
+                  <option value="61">Select osd template</option>
+                  <option value="62">Expiring STB</option>
+                  <option value="63">NXT</option>
                 </Input>
                 {validation.touched.osd_template_id_lbl &&
-                validation.errors.osd_template_id_lbl ? (
+                  validation.errors.osd_template_id_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.osd_template_id_lbl}
                   </FormFeedback>
@@ -263,10 +263,10 @@ const AddNewScheduleCustomerNotification = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.bmail_template_id_lbl || ""}
                 >
-                  <option value="39">Select bmail template</option>
+                  <option value="71">Select bmail template</option>
                 </Input>
                 {validation.touched.bmail_template_id_lbl &&
-                validation.errors.bmail_template_id_lbl ? (
+                  validation.errors.bmail_template_id_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.bmail_template_id_lbl}
                   </FormFeedback>
@@ -283,64 +283,18 @@ const AddNewScheduleCustomerNotification = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.sms_template_id_lbl || ""}
                 >
-                  <option value="40">Select sms template</option>
-                  <option value="41">Administrator</option>
-                  <option value="42">Staff</option>
-                  <option value="43">User</option>
+                  <option value="81">Select sms template</option>
+                  <option value="82">Administrator</option>
+                  <option value="83">Staff</option>
+                  <option value="84">User</option>
                 </Input>
                 {validation.touched.sms_template_id_lbl &&
-                validation.errors.sms_template_id_lbl ? (
+                  validation.errors.sms_template_id_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.sms_template_id_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
-              {/* <div className="mb-3">
-                                <Label className="form-label">Bmail Template</Label>
-                                <Input
-                                    name="bmail_template_id_lbl"
-                                    type="select"
-                                    placeholder="Select bmail template"
-                                    className="form-select"
-                                    onChange={validation.handleChange}
-                                    onBlur={validation.handleBlur}
-                                    value={validation.values.bmail_template_id_lbl || ""}
-                                >
-                                    <option value="">Select bmail template</option>
-                                    <option value="51">Administrator</option>
-                                    <option value="52">Staff</option>
-                                    <option value="53">User</option>
-                                </Input>
-                                {validation.touched.bmail_template_id_lbl && validation.errors.bmail_template_id_lbl ? (
-                                    <FormFeedback type="invalid">
-                                        {validation.errors.bmail_template_id_lbl}
-                                    </FormFeedback>
-                                ) : null}
-                            </div> */}
-
-              {/* <div className="mb-3">
-                                <Label className="form-label">SMS Template</Label>
-                                <Input
-                                    name="sms_template_id_lbl"
-                                    type="select"
-                                    placeholder="Select sms template"
-                                    className="form-select"
-                                    onChange={validation.handleChange}
-                                    onBlur={validation.handleBlur}
-                                    value={validation.values.sms_template_id_lbl || ""}
-                                >
-                                    <option value="">Select sms template</option>
-                                    <option value="21">Administrator</option>
-                                    <option value="22">Staff</option>
-                                    <option value="23">User</option>
-                                </Input>
-                                {validation.touched.sms_template_id_lbl && validation.errors.sms_template_id_lbl ? (
-                                    <FormFeedback type="invalid">
-                                        {validation.errors.sms_template_id_lbl}
-                                    </FormFeedback>
-                                ) : null}
-                            </div> */}
-
               <div className="mb-3">
                 <Label className="form-label">Start Date</Label>
                 <Input
@@ -353,13 +307,13 @@ const AddNewScheduleCustomerNotification = (props) => {
                   value={validation.values.start_date || ""}
                   invalid={
                     validation.touched.start_date &&
-                    validation.errors.start_date
+                      validation.errors.start_date
                       ? true
                       : false
                   }
                 />
                 {validation.touched.start_date &&
-                validation.errors.start_date ? (
+                  validation.errors.start_date ? (
                   <FormFeedback type="invalid">
                     {validation.errors.start_date}
                   </FormFeedback>
@@ -401,13 +355,13 @@ const AddNewScheduleCustomerNotification = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -417,21 +371,21 @@ const AddNewScheduleCustomerNotification = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Status</Label>
                 <Input
-                  name="status"
+                  name="status_lbl"
                   type="select"
                   placeholder="Select Status"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.status || ""}
+                  value={validation.values.status_lbl || ""}
                 >
-                  <option value="51">Select Status</option>
-                  <option value="52">Active</option>
-                  <option value="53">In-Active</option>
+                  <option value="101">Select Status</option>
+                  <option value="102">Active</option>
+                  <option value="103">In-Active</option>
                 </Input>
-                {validation.touched.status && validation.errors.status ? (
+                {validation.touched.status_lbl && validation.errors.status_lbl ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.status}
+                    {validation.errors.status_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
