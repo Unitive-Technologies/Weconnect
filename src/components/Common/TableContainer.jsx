@@ -12,6 +12,7 @@ import { Table, Row, Col, Button, Input } from "reactstrap";
 import { Filter, DefaultColumnFilter } from "./filters";
 import { Link } from "react-router-dom";
 import JobListGlobalFilter from "./GlobalSearchFilter";
+import Buttons from "./Buttons";
 
 // Define a default UI for filtering
 function GlobalFilter({
@@ -65,6 +66,8 @@ const TableContainer = ({
   isGlobalFilter,
   isAddOptions,
   isAddUserList,
+  handleUploadUser,
+  handleBulkUpdateUser,
   isAddBroadCaster,
   isAddGenreList,
   isAddLanguageList,
@@ -148,46 +151,61 @@ const TableContainer = ({
   // };
   return (
     <Fragment>
-      <Row className="mb-2">
-        {iscustomPageSizeOptions && (
-          <Col md={customPageSizeOptions ? 2 : 1}>
-            <select
-              className="form-select"
-              value={pageSize}
-              onChange={onChangeInSelect}
-            >
-              {[10, 20, 30, 40, 50].map((pageSize) => (
-                <option key={pageSize} value={pageSize}>
-                  Show {pageSize}
-                </option>
-              ))}
-            </select>
-          </Col>
-        )}
-        {isGlobalFilter && (
-          <GlobalFilter
-            preGlobalFilteredRows={preGlobalFilteredRows}
-            globalFilter={state.globalFilter}
-            setGlobalFilter={setGlobalFilter}
-            isJobListGlobalFilter={isJobListGlobalFilter}
-          />
-        )}
-        {isAddOptions && (
-          <Col sm="7">
-            <div className="text-sm-end">
-              <Button
-                type="button"
-                color="primary"
-                className="btn mb-2 me-2"
-                onClick={handleOrderClicks}
+      <Row className="mb-2  ">
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          {iscustomPageSizeOptions && (
+            <Col md={customPageSizeOptions ? 2 : 1}>
+              <select
+                className="form-select"
+                value={pageSize}
+                onChange={onChangeInSelect}
               >
-                <i className="mdi mdi-plus me-1" />
-                Add New Order
-              </Button>
-            </div>
-          </Col>
-        )}
-        {isAddUserList && (
+                {[10, 20, 30, 40, 50].map((pageSize) => (
+                  <option key={pageSize} value={pageSize}>
+                    Show {pageSize}
+                  </option>
+                ))}
+              </select>
+            </Col>
+          )}
+          {isGlobalFilter && (
+            <GlobalFilter
+              preGlobalFilteredRows={preGlobalFilteredRows}
+              globalFilter={state.globalFilter}
+              setGlobalFilter={setGlobalFilter}
+              isJobListGlobalFilter={isJobListGlobalFilter}
+            />
+          )}
+          {isAddOptions && (
+            <Col sm="7">
+              <div className="text-sm-end">
+                <Button
+                  type="button"
+                  color="primary"
+                  className="btn mb-2 me-2"
+                  onClick={handleOrderClicks}
+                >
+                  <i className="mdi mdi-plus me-1" />
+                  Add New Order
+                </Button>
+              </div>
+            </Col>
+          )}
+          {isAddUserList && (
+            <Buttons
+              isAddUserList={isAddUserList}
+              handleUserClick={handleUserClick}
+              handleUploadUser={handleUploadUser}
+              handleBulkUpdateUser={handleBulkUpdateUser}
+            />
+          )}
+          {/* {isAddUserList && (
           <Col sm="12">
             <div className="text-sm-end">
               <Button
@@ -201,132 +219,133 @@ const TableContainer = ({
               </Button>
             </div>
           </Col>
-        )}
-        {isAddGpPolicyList && (
-          <Col sm="12">
-            <div className="text-sm-end">
-              <Button
-                type="button"
-                color="primary"
-                className="btn mb-2 me-2"
-                onClick={handleGroupPolicyClick}
-              >
-                <i className="mdi mdi-plus me-1" />
-                Create Group Policy
-              </Button>
-            </div>
-          </Col>
-        )}
+        )} */}
+          {isAddGpPolicyList && (
+            <Col sm="12">
+              <div className="text-sm-end">
+                <Button
+                  type="button"
+                  color="primary"
+                  className="btn mb-2 me-2"
+                  onClick={handleGroupPolicyClick}
+                >
+                  <i className="mdi mdi-plus me-1" />
+                  Create Group Policy
+                </Button>
+              </div>
+            </Col>
+          )}
 
-        {isAddBroadCaster && (
-          <Col sm="12">
-            <div className="text-sm-end">
-              <Button
-                type="button"
-                color="primary"
-                className="btn mb-2 me-2"
-                onClick={handleBroadCasterClick}
-              >
-                <i className="mdi mdi-plus me-1" />
-                Create Broad Caster
-              </Button>
-            </div>
-          </Col>
-        )}
+          {isAddBroadCaster && (
+            <Col sm="12">
+              <div className="text-sm-end">
+                <Button
+                  type="button"
+                  color="primary"
+                  className="btn mb-2 me-2"
+                  onClick={handleBroadCasterClick}
+                >
+                  <i className="mdi mdi-plus me-1" />
+                  Create Broad Caster
+                </Button>
+              </div>
+            </Col>
+          )}
 
-        {isAddGenreList && (
-          <Col sm="12">
-            <div className="text-sm-end">
-              <Button
-                type="button"
-                color="primary"
-                className="btn mb-2 me-2"
-                onClick={handleGenreClick}
-              >
-                <i className="mdi mdi-plus me-1" />
-                Create Genre
-              </Button>
-            </div>
-          </Col>
-        )}
+          {isAddGenreList && (
+            <Col sm="12">
+              <div className="text-sm-end">
+                <Button
+                  type="button"
+                  color="primary"
+                  className="btn mb-2 me-2"
+                  onClick={handleGenreClick}
+                >
+                  <i className="mdi mdi-plus me-1" />
+                  Create Genre
+                </Button>
+              </div>
+            </Col>
+          )}
 
-        {isAddLanguageList && (
-          <Col sm="12">
-            <div className="text-sm-end">
-              <Button
-                type="button"
-                color="primary"
-                className="btn mb-2 me-2"
-                onClick={handleLanguageClick}
-              >
-                <i className="mdi mdi-plus me-1" />
-                Create Language
-              </Button>
-            </div>
-          </Col>
-        )}
+          {isAddLanguageList && (
+            <Col sm="12">
+              <div className="text-sm-end">
+                <Button
+                  type="button"
+                  color="primary"
+                  className="btn mb-2 me-2"
+                  onClick={handleLanguageClick}
+                >
+                  <i className="mdi mdi-plus me-1" />
+                  Create Language
+                </Button>
+              </div>
+            </Col>
+          )}
 
-        {isAddChannelList && (
-          <Col sm="12">
-            <div className="text-sm-end">
-              <Button
-                type="button"
-                color="primary"
-                className="btn mb-2 me-2"
-                onClick={handleChannelClick}
-              >
-                <i className="mdi mdi-plus me-1" />
-                Create Channel
-              </Button>
-            </div>
-          </Col>
-        )}
-        {isUploadUser && (
-          <Col sm="12">
-            <div className="text-sm-end">
-              <Button
-                type="button"
-                color="primary"
-                className="btn mb-2 me-2"
-                onClick={handleUploadUserClick}
-              >
-                <i className="mdi mdi-plus me-1" />
-                Upload User
-              </Button>
-            </div>
-          </Col>
-        )}
+          {isAddChannelList && (
+            <Col sm="12">
+              <div className="text-sm-end">
+                <Button
+                  type="button"
+                  color="primary"
+                  className="btn mb-2 me-2"
+                  onClick={handleChannelClick}
+                >
+                  <i className="mdi mdi-plus me-1" />
+                  Create Channel
+                </Button>
+              </div>
+            </Col>
+          )}
+          {isUploadUser && (
+            <Col sm="12">
+              <div className="text-sm-end">
+                <Button
+                  type="button"
+                  color="primary"
+                  className="btn mb-2 me-2"
+                  onClick={handleUploadUserClick}
+                >
+                  <i className="mdi mdi-plus me-1" />
+                  Upload User
+                </Button>
+              </div>
+            </Col>
+          )}
 
-        {isAddPackageList && (
-          <Col sm="12">
-            <div className="text-sm-end">
-              <Button
-                type="button"
-                color="primary"
-                className="btn mb-2 me-2"
-                onClick={handlePackageClick}
-              >
-                <i className="mdi mdi-plus me-1" />
-                Create Package
-              </Button>
-            </div>
-          </Col>
-        )}
-        {isAddBroadcasterBouquetList && (
-          <Col sm="12">
-            <div className="text-sm-end">
-              <Button
-                type="button"
-                color="primary"
-                className="btn mb-2 me-2"
-                onClick={handleBroadcasterBouquetClick}
-              >
-                <i className="mdi mdi-plus me-1" />
-                Create Broadcaster Bouquet
-              </Button>
-            </div>
-          </Col>
-        )}
+          {isAddPackageList && (
+            <Col sm="12">
+              <div className="text-sm-end">
+                <Button
+                  type="button"
+                  color="primary"
+                  className="btn mb-2 me-2"
+                  onClick={handlePackageClick}
+                >
+                  <i className="mdi mdi-plus me-1" />
+                  Create Package
+                </Button>
+              </div>
+            </Col>
+          )}
+          {isAddBroadcasterBouquetList && (
+            <Col sm="12">
+              <div className="text-sm-end">
+                <Button
+                  type="button"
+                  color="primary"
+                  className="btn mb-2 me-2"
+                  onClick={handleBroadcasterBouquetClick}
+                >
+                  <i className="mdi mdi-plus me-1" />
+                  Create Broadcaster Bouquet
+                </Button>
+              </div>
+            </Col>
+          )}
+        </div>
       </Row>
 
       <div className="table-responsive react-table">

@@ -526,21 +526,9 @@ const ContactsList = (props) => {
             <Row>
               <Col lg="12">
                 <Card>
-                  <CardBody>
+                  {/* <CardBody>
                     <div className="d-flex align-items-center justify-content-between">
-                      <h5 className="mb-0 card-title flex-grow-1">
-                        {/* Jobs Lists */}
-                      </h5>
-                      {/* <form className="app-search d-none d-lg-block">
-                        <div className="position-relative">
-                          <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Search..."
-                          />
-                          <span className="bx bx-search-alt" />
-                        </div>
-                      </form> */}
+                      
                       <div className="flex-shrink-0">
                         <Link
                           to="#!"
@@ -593,7 +581,7 @@ const ContactsList = (props) => {
                         </UncontrolledDropdown>
                       </div>
                     </div>
-                  </CardBody>
+                  </CardBody> */}
                   <CardBody>
                     {/* {console.log("users:" + JSON.stringify(users))} */}
                     <TableContainer
@@ -601,12 +589,12 @@ const ContactsList = (props) => {
                       columns={columns}
                       data={users}
                       isGlobalFilter={true}
-                      // isAddUserList={true}
-                      // isUploadUser={true}
-                      // handleUploadUserClick={() => setModal2(true)}
+                      isAddUserList={true}
+                      handleUserClick={() => setModal(true)}
+                      handleUploadUser={() => setModal2(true)}
+                      handleBulkUpdateUser={() => setModal3(true)}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
-                      // handleUserClick={handleUserClicks}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

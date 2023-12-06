@@ -95,7 +95,7 @@ const ViewRegionalOfficeModal = (props) => {
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
       <ModalHeader toggle={toggle} tag="h4">
-        View User
+        View Regional Office
       </ModalHeader>
       <ModalBody>
         <Form
