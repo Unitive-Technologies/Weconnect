@@ -71,6 +71,9 @@ export const GET_LOCALCHANNELNUMBER = "/localchannelnumberlist";
 export const GET_DOCUMENTUPLOADPOLICY = "/documentuploadpolicylist";
 
 export const GET_OSDTEMPLATE = "/osdtemplatelist";
+export const ADD_NEW_OSDTEMPLATE =
+  "/add/osdtemplatelist";
+
 
 export const GET_NCF = "/ncf";
 export const GET_COMPANYLIST = "/companylist";

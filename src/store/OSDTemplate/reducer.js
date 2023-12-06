@@ -1,6 +1,8 @@
 import {
   GET_OSDTEMPLATE_SUCCESS,
   GET_OSDTEMPLATE_FAIL,
+  ADD_OSDTEMPLATE_SUCCESS,
+  ADD_OSDTEMPLATE_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -20,6 +22,21 @@ const OSDTemplate = (state = INIT_STATE, action) => {
       };
 
     case GET_OSDTEMPLATE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_OSDTEMPLATE_SUCCESS:
+      return {
+        ...state,
+        osdTemplate: [
+          ...state.osdTemplate,
+          action.payload,
+        ],
+      };
+
+    case ADD_OSDTEMPLATE_FAIL:
       return {
         ...state,
         error: action.payload,

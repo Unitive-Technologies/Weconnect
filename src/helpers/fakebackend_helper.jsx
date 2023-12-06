@@ -274,6 +274,9 @@ export const getBroadcasterBouquetList = () =>
 export const getPackageList = () => get(url.GET_PACKAGELIST);
 export const getOSDConfiguration = () => get(url.GET_OSDCONFIGURATIONLIST);
 export const getOSDTemplate = () => get(url.GET_OSDTEMPLATE);
+export const addNewOSDTemplate = (osdtem) =>
+  post(url.ADD_NEW_OSDTEMPLATE, osdtem);
+
 export const getLocalChannelNumber = () => get(url.GET_LOCALCHANNELNUMBER);
 export const getDocumentUploadPolicy = () => get(url.GET_DOCUMENTUPLOADPOLICY);
 
