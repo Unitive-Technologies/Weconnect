@@ -14,6 +14,8 @@ import {
   ModalBody,
   Label,
   FormFeedback,
+  UncontrolledDropdown,
+  DropdownToggle,
   UncontrolledTooltip,
   Input,
   Form,
@@ -35,6 +37,7 @@ import { isEmpty } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import UploadLocalChannelNumberList from './UploadLocalChannelNumberList'
 
 const LocalChannelNumberList = (props) => {
   //meta title
@@ -65,6 +68,8 @@ const LocalChannelNumberList = (props) => {
 
   const [userList, setUserList] = useState([]);
   const [modal, setModal] = useState(false);
+  const [modal1, setModal1] = useState(false);
+
   const [isEdit, setIsEdit] = useState(false);
 
   const columns = useMemo(
@@ -208,6 +213,9 @@ const LocalChannelNumberList = (props) => {
     setModal(!modal);
   };
 
+  const toggle1 = () => {
+    setModal1(!modal1);
+  };
   const handleUserClick = (arg) => {
     const user = arg;
 
@@ -264,11 +272,12 @@ const LocalChannelNumberList = (props) => {
 
   return (
     <React.Fragment>
-      <DeleteModal
+      {/* <DeleteModal
         show={deleteModal}
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
-      />
+      /> */}
+      <UploadLocalChannelNumberList isOpen={modal1} toggle={toggle1} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -283,15 +292,37 @@ const LocalChannelNumberList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
+
+                    <div className="d-flex align-items-center justify-content-between">
+                      <h5 className="mb-0 card-title flex-grow-1">
+                        {/* Jobs Lists */}
+                      </h5>
+                      <div className="flex-shrink-0">
+
+                        <UncontrolledDropdown className="dropdown d-inline-block me-1">
+                          <DropdownToggle
+                            type="menu"
+                            className="btn btn-success"
+                            id="dropdownMenuButton1"
+                            onClick={() => setModal1(true)}
+                          >
+                            Bulk Update LCN
+                            {/* <i className="bx bx-upload"></i> */}
+                          </DropdownToggle>
+                        </UncontrolledDropdown>
+                      </div>
+                    </div>
+                  </CardBody>
+                  <CardBody>
                     {console.log("LCN List:" + JSON.stringify(localNum))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={localNum}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      // isAddUserList={true}
                       isShowingPageLength={true}
-                      iscustomPageSizeOptions={true}
+                      // iscustomPageSizeOptions={true}
                       handleUserClick={handleUserClicks}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
