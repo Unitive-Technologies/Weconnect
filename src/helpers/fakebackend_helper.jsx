@@ -264,6 +264,10 @@ export const addNewGenreList = (genre) =>
   post(url.ADD_NEW_GENRELIST, genre);
 
 export const getLanguageList = () => get(url.GET_LANGUAGELIST);
+export const addNewLanguageList = (langlist) =>
+  post(url.ADD_NEW_LANGUAGELIST, langlist);
+
+
 export const getChannelList = () => get(url.GET_CHANNELLIST);
 export const getBroadcasterBouquetList = () =>
   get(url.GET_BROADCASTERBOUQUETLIST);

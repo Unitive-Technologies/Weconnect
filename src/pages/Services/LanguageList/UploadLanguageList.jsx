@@ -24,7 +24,7 @@ import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
-const UploadBroadCaster = (props) => {
+const UploadLanguageList = (props) => {
     const { isOpen, toggle } = props;
     //   console.log("user in viewuser modal:" + JSON.stringify(user));
     const dispatch = useDispatch();
@@ -62,7 +62,7 @@ const UploadBroadCaster = (props) => {
         >
             {/* <Modal isOpen={modal} toggle={toggle}> */}
             <ModalHeader toggle={toggle} tag="h4">
-                Upload User
+                Upload Languages
             </ModalHeader>
             <ModalBody>
                 <Card>
@@ -140,9 +140,9 @@ const UploadBroadCaster = (props) => {
     );
 };
 
-UploadBroadCaster.propTypes = {
+UploadLanguageList.propTypes = {
     toggle: PropTypes.func,
     isOpen: PropTypes.bool,
 };
 
-export default UploadBroadCaster;
+export default UploadLanguageList;

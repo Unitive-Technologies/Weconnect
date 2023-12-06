@@ -58,6 +58,10 @@ export const ADD_NEW_GENRELIST =
   "/add/genrelist";
 
 export const GET_LANGUAGELIST = "/languagelist";
+export const ADD_NEW_LANGUAGELIST =
+  "/add/languagelist";
+
+
 export const GET_CHANNELLIST = "/channellist";
 export const GET_BROADCASTERBOUQUETLIST = "/broadcasterbouquet";
 export const GET_PACKAGELIST = "/packagelist";

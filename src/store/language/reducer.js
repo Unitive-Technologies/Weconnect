@@ -1,4 +1,7 @@
-import { GET_LANGUAGELIST_SUCCESS, GET_LANGUAGELIST_FAIL } from "./actionTypes";
+import {
+  GET_LANGUAGELIST_SUCCESS, GET_LANGUAGELIST_FAIL, ADD_LANGUAGELIST_SUCCESS,
+  ADD_LANGUAGELIST_FAIL,
+} from "./actionTypes";
 
 const INIT_STATE = {
   languageList: [],
@@ -17,6 +20,21 @@ const LanguageList = (state = INIT_STATE, action) => {
       };
 
     case GET_LANGUAGELIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_LANGUAGELIST_SUCCESS:
+      return {
+        ...state,
+        languageList: [
+          ...state.languageList,
+          action.payload,
+        ],
+      };
+
+    case ADD_LANGUAGELIST_FAIL:
       return {
         ...state,
         error: action.payload,

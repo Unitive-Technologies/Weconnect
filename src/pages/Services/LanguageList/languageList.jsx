@@ -15,6 +15,8 @@ import {
   Label,
   FormFeedback,
   UncontrolledTooltip,
+  UncontrolledDropdown,
+  DropdownToggle,
   Input,
   Form,
 } from "reactstrap";
@@ -32,6 +34,10 @@ import { isEmpty } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import AddNewLanguageList from './AddNewLanguageList'
+import UploadLanguageList from './UploadLanguageList'
+
+
 import {
   Description,
   Name,
@@ -123,6 +129,9 @@ const LanguageList = (props) => {
 
   const [userList, setUserList] = useState([]);
   const [modal, setModal] = useState(false);
+  const [modal1, setModal1] = useState(false);
+
+
   const [isEdit, setIsEdit] = useState(false);
 
   const columns = useMemo(
@@ -263,9 +272,14 @@ const LanguageList = (props) => {
   //   }
   // }, [users]);
 
-  // const toggle = () => {
-  //   setModal(!modal);
-  // };
+  const toggle = () => {
+    setModal(!modal);
+  };
+
+  const toggle1 = () => {
+    setModal1(!modal1);
+  };
+
 
   // const handleUserClick = (arg) => {
   //   const user = arg;
@@ -328,6 +342,10 @@ const LanguageList = (props) => {
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
       /> */}
+
+      <AddNewLanguageList isOpen={modal} toggle={toggle} />
+      <UploadLanguageList isOpen={modal1} toggle={toggle1} />
+
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -339,6 +357,33 @@ const LanguageList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
+                    <div className="d-flex align-items-center justify-content-between">
+                      <h5 className="mb-0 card-title flex-grow-1">
+                        {/* Jobs Lists */}
+                      </h5>
+                      <div className="flex-shrink-0">
+                        <Link
+                          to="#!"
+                          onClick={() => setModal(true)}
+                          className="btn btn-primary me-1"
+                        >
+                          Create Language
+                        </Link>
+                        <UncontrolledDropdown className="dropdown d-inline-block me-1">
+                          <DropdownToggle
+                            type="menu"
+                            className="btn btn-success"
+                            id="dropdownMenuButton1"
+                            onClick={() => setModal1(true)}
+                          >
+                            Upload Language
+                            {/* <i className="bx bx-upload"></i> */}
+                          </DropdownToggle>
+                        </UncontrolledDropdown>
+                      </div>
+                    </div>
+                  </CardBody>
+                  <CardBody>
                     {console.log("languagelist:" + JSON.stringify(langlist))}
                     <TableContainer
                       isPagination={true}
@@ -348,7 +393,7 @@ const LanguageList = (props) => {
                       isAddLanguageList={true}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
-                      handleUserClick={() => {}}
+                      handleUserClick={() => { }}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

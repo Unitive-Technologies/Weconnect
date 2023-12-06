@@ -55,7 +55,6 @@ import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddNewBroadCaster from './AddNewBroadCaster'
 import UploadBroadCaster from './UploadBroadCaster'
-import BulkUpdateBroadCaster from "./BulkUpdateBroadCaster";
 
 const BroadcasterList = (props) => {
   //meta title
@@ -135,8 +134,6 @@ const BroadcasterList = (props) => {
   const [userList, setUserList] = useState([]);
   const [modal, setModal] = useState(false);
   const [modal1, setModal1] = useState(false);
-  const [modal2, setModal2] = useState(false);
-  // const [modal3, setModal3] = useState(false);
 
   const [isEdit, setIsEdit] = useState(false);
 
@@ -305,9 +302,6 @@ const BroadcasterList = (props) => {
     setModal1(!modal1);
   };
 
-  const toggle2 = () => {
-    setModal2(!modal2);
-  };
 
 
   // const handleUserClick = (arg) => {
@@ -373,7 +367,6 @@ const BroadcasterList = (props) => {
       /> */}
       <AddNewBroadCaster isOpen={modal} toggle={toggle} />
       <UploadBroadCaster isOpen={modal1} toggle={toggle1} />
-      <BulkUpdateBroadCaster isOpen={modal2} toggle={toggle2} />
 
       <div className="page-content">
         <Container fluid>
@@ -390,16 +383,6 @@ const BroadcasterList = (props) => {
                       <h5 className="mb-0 card-title flex-grow-1">
                         {/* Jobs Lists */}
                       </h5>
-                      {/* <form className="app-search d-none d-lg-block">
-                        <div className="position-relative">
-                          <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Search..."
-                          />
-                          <span className="bx bx-search-alt" />
-                        </div>
-                      </form> */}
                       <div className="flex-shrink-0">
                         <Link
                           to="#!"
@@ -413,58 +396,20 @@ const BroadcasterList = (props) => {
                             type="menu"
                             className="btn btn-success"
                             id="dropdownMenuButton1"
+                            onClick={() => setModal1(true)}
                           >
                             Upload Broadcaster
                             {/* <i className="bx bx-upload"></i> */}
                           </DropdownToggle>
-                          <DropdownMenu>
-                            <li onClick={() => setModal1(true)}>
-                              <DropdownItem href="#">Upload User</DropdownItem>
-                            </li>
-                            <li onClick={() => setModal2(true)}>
-                              <DropdownItem href="#">
-                                Bulk Update User
-                              </DropdownItem>
-                            </li>
-                          </DropdownMenu>
-                        </UncontrolledDropdown>
-
-                        <UncontrolledDropdown className="dropdown d-inline-block me-1">
-
                           {/* <DropdownMenu>
-                            <li onClick={() => setModal2(true)}>
-                              <DropdownItem href="#">Upload User</DropdownItem>
-                            </li>
-                            <li onClick={() => setModal3(true)}>
-                              <DropdownItem href="#">
-                                Bulk Update User
-                              </DropdownItem>
+                            <li onClick={() => setModal1(true)}>
+                              <DropdownItem href="#">Upload Broadcasters</DropdownItem>
                             </li>
                           </DropdownMenu> */}
                         </UncontrolledDropdown>
-                        {/* <UncontrolledDropdown className="dropdown d-inline-block me-1">
-                          <DropdownToggle
-                            type="menu"
-                            className="btn btn-success"
-                            id="dropdownMenuButton1"
-                          >
-                            Action &nbsp;
-                            <i className="mdi mdi-dots-vertical"></i>
-                          </DropdownToggle>
-                          <DropdownMenu>
-                            <li onClick={() => setModal4(true)}>
-                              <DropdownItem href="#">
-                                Bulk Active/Inactive User
-                              </DropdownItem>
-                            </li>
-                            <li onClick={() => setModal5(true)}>
-                              <DropdownItem href="#">
-                                Bulk User Settings
-                              </DropdownItem>
-                            </li>
-                          </DropdownMenu>
-                        </UncontrolledDropdown> */}
 
+                        <UncontrolledDropdown className="dropdown d-inline-block me-1">
+                        </UncontrolledDropdown>
                       </div>
                     </div>
                   </CardBody>

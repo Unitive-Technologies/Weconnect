@@ -24,7 +24,7 @@ import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
-const BulkUpdateBroadCaster = (props) => {
+const UploadGenreList = (props) => {
     const { isOpen, toggle } = props;
     //   console.log("user in viewuser modal:" + JSON.stringify(user));
     const dispatch = useDispatch();
@@ -62,7 +62,7 @@ const BulkUpdateBroadCaster = (props) => {
         >
             {/* <Modal isOpen={modal} toggle={toggle}> */}
             <ModalHeader toggle={toggle} tag="h4">
-                Bulk Update User
+                Upload Genres
             </ModalHeader>
             <ModalBody>
                 <Card>
@@ -140,9 +140,9 @@ const BulkUpdateBroadCaster = (props) => {
     );
 };
 
-BulkUpdateBroadCaster.propTypes = {
+UploadGenreList.propTypes = {
     toggle: PropTypes.func,
     isOpen: PropTypes.bool,
 };
 
-export default BulkUpdateBroadCaster;
+export default UploadGenreList;

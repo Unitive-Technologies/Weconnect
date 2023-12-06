@@ -37,6 +37,8 @@ const AddNewBroadCaster = (props) => {
             contactperson: "",
             mobile: "",
             status: "",
+            phone: "",
+            emailaddress: "",
             description: "",
             created_at: "",
             created_by: "Admin",
@@ -49,6 +51,8 @@ const AddNewBroadCaster = (props) => {
                 "Select contact person"
             ),
             mobile: Yup.string().required("Select mobile"),
+            phone: Yup.string().required("Select phone number"),
+            emailaddress: Yup.string().required("Select email"),
             status: Yup.string().required("Select status"),
             description: Yup.string().required("Select description"),
 
@@ -61,6 +65,8 @@ const AddNewBroadCaster = (props) => {
                 address: values["address"],
                 contactperson: values["contactperson"],
                 mobile: values["mobile"],
+                phone: values["phone"],
+                emailaddress: values["emailaddress"],
                 description: values["description"],
                 status: values["status"],
                 created_at: new Date(),
@@ -181,6 +187,51 @@ const AddNewBroadCaster = (props) => {
                                     </FormFeedback>
                                 ) : null}
                             </div>
+
+                            <div className="mb-3">
+                                <Label className="form-label">
+                                    Phone No.
+                                </Label>
+                                <Input
+                                    name="mobile"
+                                    type="text"
+                                    placeholder="Enter phone number"
+                                    // className="form-select"
+                                    onChange={validation.handleChange}
+                                    onBlur={validation.handleBlur}
+                                    value={validation.values.phone || ""}
+                                >
+                                </Input>
+                                {validation.touched.phone &&
+                                    validation.errors.phone ? (
+                                    <FormFeedback type="invalid">
+                                        {validation.errors.phone}
+                                    </FormFeedback>
+                                ) : null}
+                            </div>
+
+                            <div className="mb-3">
+                                <Label className="form-label">
+                                    Email address
+                                </Label>
+                                <Input
+                                    name="emailaddress"
+                                    type="text"
+                                    placeholder="Enter email"
+                                    // className="form-select"
+                                    onChange={validation.handleChange}
+                                    onBlur={validation.handleBlur}
+                                    value={validation.values.emailaddress || ""}
+                                >
+                                </Input>
+                                {validation.touched.emailaddress &&
+                                    validation.errors.emailaddress ? (
+                                    <FormFeedback type="invalid">
+                                        {validation.errors.emailaddress}
+                                    </FormFeedback>
+                                ) : null}
+                            </div>
+
                             <div className="mb-3">
                                 <Label className="form-label">Address</Label>
                                 <Input

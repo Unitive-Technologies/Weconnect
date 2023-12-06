@@ -17,10 +17,10 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addNewGenreList as onAddNewGenreList } from "/src/store/genre/actions";
+import { addNewLanguageList as onAddNewLanguageList } from "/src/store/language/actions";
 import { useSelector, useDispatch } from "react-redux";
 
-const AddNewGenreList = (props) => {
+const AddNewLanguageList = (props) => {
     const { isOpen, toggle } = props;
     const dispatch = useDispatch();
     const [user, setUser] = useState();
@@ -31,32 +31,35 @@ const AddNewGenreList = (props) => {
 
         initialValues: {
             //BroadCaster: "",
-            name: "",
-            status: "",
+            language: "",
+            languagecode: "",
             description: "",
+            status: "",
             created_at: "",
             created_by: "Admin",
         },
         validationSchema: Yup.object({
-            name: Yup.string().required("Enter genre title"),
+            language: Yup.string().required("Enter language"),
+            languagecode: Yup.string().required("Enter language code"),
             status: Yup.string().required("Select status"),
             description: Yup.string().required("Enter description"),
         }),
         onSubmit: (values) => {
-            const newGenreList = {
+            const newLanguageList = {
                 id: Math.floor(Math.random() * (30 - 20)) + 20,
-                name: values["name"],
+                language: values["language"],
+                languagecode: values["languagecode"],
                 status: values["status"],
                 description: values["description"],
                 created_at: new Date(),
                 created_by: values["created_by"],
             };
             console.log(
-                "newGenreList:" + newGenreList
+                "newList:" + newLanguageList
             );
             // save new user
             dispatch(
-                onAddNewGenreList(newGenreList)
+                onAddNewLanguageList(newLanguageList)
             );
             validation.resetForm();
             toggle();
@@ -77,7 +80,7 @@ const AddNewGenreList = (props) => {
             toggle={toggle}
         >
             {/* <Modal isOpen={modal} toggle={toggle}> */}
-            <ModalHeader tag="h4">Add New Genre</ModalHeader>
+            <ModalHeader tag="h4">Add New Language</ModalHeader>
             <ModalBody>
                 <Form
                     onSubmit={(e) => {
@@ -89,19 +92,38 @@ const AddNewGenreList = (props) => {
                     <Row>
                         <Col sm="12">
                             <div className="mb-3">
-                                <Label className="form-label">Genre Title</Label>
+                                <Label className="form-label">Language</Label>
                                 <Input
-                                    name="name"
+                                    name="language"
                                     type="text"
-                                    placeholder="Enter genre title"
+                                    placeholder="Enter language"
                                     // className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.name || ""}
+                                    value={validation.values.language || ""}
                                 ></Input>
-                                {validation.touched.name && validation.errors.name ? (
+                                {validation.touched.language && validation.errors.language ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.name}
+                                        {validation.errors.language}
+                                    </FormFeedback>
+                                ) : null}
+                            </div>
+
+                            <div className="mb-3">
+                                <Label className="form-label">Language Code</Label>
+                                <Input
+                                    name="languagecode"
+                                    type="text"
+                                    placeholder="Enter language code"
+                                    // className="form-select"
+                                    onChange={validation.handleChange}
+                                    onBlur={validation.handleBlur}
+                                    value={validation.values.languagecode || ""}
+                                >
+                                </Input>
+                                {validation.touched.languagecode && validation.errors.languagecode ? (
+                                    <FormFeedback type="invalid">
+                                        {validation.errors.languagecode}
                                     </FormFeedback>
                                 ) : null}
                             </div>
@@ -189,9 +211,9 @@ const AddNewGenreList = (props) => {
     );
 };
 
-AddNewGenreList.propTypes = {
+AddNewLanguageList.propTypes = {
     toggle: PropTypes.func,
     isOpen: PropTypes.bool,
 };
 
-export default AddNewGenreList;
+export default AddNewLanguageList;

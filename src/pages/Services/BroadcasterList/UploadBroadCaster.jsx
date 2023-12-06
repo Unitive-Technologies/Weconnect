@@ -62,7 +62,7 @@ const UploadBroadCaster = (props) => {
         >
             {/* <Modal isOpen={modal} toggle={toggle}> */}
             <ModalHeader toggle={toggle} tag="h4">
-                Upload User
+                Upload Broadcasters
             </ModalHeader>
             <ModalBody>
                 <Card>

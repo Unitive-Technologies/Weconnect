@@ -16,6 +16,10 @@ import {
   FormFeedback,
   UncontrolledTooltip,
   Input,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
@@ -43,7 +47,6 @@ import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddNewGenreList from './AddNewGenreList'
 import UploadGenreList from './UploadGenreList'
-import BulkUpdateGenreList from "./BulkUpdateGenreList";
 
 
 const GenreList = (props) => {
@@ -120,6 +123,8 @@ const GenreList = (props) => {
 
   const [userList, setUserList] = useState([]);
   const [modal, setModal] = useState(false);
+  const [modal1, setModal1] = useState(false);
+
   const [isEdit, setIsEdit] = useState(false);
 
   const columns = useMemo(
@@ -255,9 +260,14 @@ const GenreList = (props) => {
   //   }
   // }, [users]);
 
-  // const toggle = () => {
-  //   setModal(!modal);
-  // };
+  const toggle = () => {
+    setModal(!modal);
+  };
+
+  const toggle1 = () => {
+    setModal1(!modal1);
+  };
+
 
   // const handleUserClick = (arg) => {
   //   const user = arg;
@@ -320,6 +330,9 @@ const GenreList = (props) => {
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
       /> */}
+      <AddNewGenreList isOpen={modal} toggle={toggle} />
+      <UploadGenreList isOpen={modal1} toggle={toggle1} />
+
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -331,13 +344,40 @@ const GenreList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
+                    <div className="d-flex align-items-center justify-content-between">
+                      <h5 className="mb-0 card-title flex-grow-1">
+                        {/* Jobs Lists */}
+                      </h5>
+                      <div className="flex-shrink-0">
+                        <Link
+                          to="#!"
+                          onClick={() => setModal(true)}
+                          className="btn btn-primary me-1"
+                        >
+                          Create Genre
+                        </Link>
+                        <UncontrolledDropdown className="dropdown d-inline-block me-1">
+                          <DropdownToggle
+                            type="menu"
+                            className="btn btn-success"
+                            id="dropdownMenuButton1"
+                            onClick={() => setModal1(true)}
+                          >
+                            Upload Genre
+                            {/* <i className="bx bx-upload"></i> */}
+                          </DropdownToggle>
+                        </UncontrolledDropdown>
+                      </div>
+                    </div>
+                  </CardBody>
+                  <CardBody>
                     {console.log("Genre List:" + JSON.stringify(genrelist))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={genrelist}
                       isGlobalFilter={true}
-                      isAddGenreList={true}
+                      // isAddGenreList={true}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
                       handleUserClick={() => { }}
@@ -517,7 +557,9 @@ const GenreList = (props) => {
         </Container>
       </div>
       <ToastContainer />
+
     </React.Fragment>
+
   );
 };
 
