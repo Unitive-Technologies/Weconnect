@@ -49,6 +49,10 @@ export const GET_USERHIERARCHY = "/userhierarchy";
 export const ADD_USERHIERARCHY = "/add/userhierarchy";
 
 export const GET_BROADCASTER = "/broadcasterlist";
+export const ADD_NEW_BROADCASTER =
+  "/add/broadcasterlist";
+
+
 export const GET_GENRELIST = "/genrelist";
 export const GET_LANGUAGELIST = "/languagelist";
 export const GET_CHANNELLIST = "/channellist";

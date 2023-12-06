@@ -932,6 +932,19 @@ const fakeBackend = () => {
       });
     });
 
+  mock.onPost(url.ADD_NEW_BROADCASTER).reply((broadcast) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (broadcast && broadcast.data) {
+          // Passing fake JSON data as response
+          resolve([200, broadcast.data]);
+        } else {
+          reject([400, "Cannot add broadcaster"]);
+        }
+      });
+    });
+  });
+
   mock.onPut(url.UPDATE_USER).reply((user) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

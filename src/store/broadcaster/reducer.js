@@ -1,4 +1,8 @@
-import { GET_BROADCASTER_SUCCESS, GET_BROADCASTER_FAIL } from "./actionTypes";
+import {
+  GET_BROADCASTER_SUCCESS, GET_BROADCASTER_FAIL,
+  ADD_BROADCASTER_SUCCESS,
+  ADD_BROADCASTER_FAIL,
+} from "./actionTypes";
 
 const INIT_STATE = {
   broadCasters: [],
@@ -17,6 +21,21 @@ const BroadCaster = (state = INIT_STATE, action) => {
       };
 
     case GET_BROADCASTER_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_BROADCASTER_SUCCESS:
+      return {
+        ...state,
+        broadCasters: [
+          ...state.broadCasters,
+          action.payload,
+        ],
+      };
+
+    case ADD_BROADCASTER_FAIL:
       return {
         ...state,
         error: action.payload,
