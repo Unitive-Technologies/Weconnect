@@ -945,6 +945,19 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onPost(url.ADD_NEW_GENRELIST).reply((genre) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (genre && genre.data) {
+          // Passing fake JSON data as response
+          resolve([200, genre.data]);
+        } else {
+          reject([400, "Cannot add genrelist"]);
+        }
+      });
+    });
+  });
+
   mock.onPut(url.UPDATE_USER).reply((user) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

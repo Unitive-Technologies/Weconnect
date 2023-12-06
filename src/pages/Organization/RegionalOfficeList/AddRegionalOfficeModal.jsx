@@ -31,50 +31,50 @@ const AddRegionalOfficeModal = (props) => {
 
     initialValues: {
       name: "",
-      email: "",
-      mobile: "",
-      usertype: "",
+      code: "",
+      addr: "",
+      contact_person: "",
+      mobile_no: "",
+      state_lbl: "",
+      district_lbl: "",
+      city_lbl: "",
+      gstno: "",
+      panno: "",
+      username: "",
       status: "",
-      message: "",
-      role: "",
-      designation: "",
-      grouppolicy: "",
-      loginid: "",
-      password: "",
-      confirmpassword: "",
+      // created_at: "",
+      // created_by: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
-      email: Yup.string()
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-        .required("Please Enter Your Email"),
-      // mobile: Yup.array().required("Please Enter mobile"),
-      mobile: Yup.string().required("Please Enter mobile Number"),
-      usertype: Yup.string().required("Please Enter User Type"),
+      code: Yup.string().required("Please Enter Code"),
+      addr: Yup.string().required("Please Address"),
+      contact_person: Yup.string().required("Please Enter Contact Person"),
+      mobile_no: Yup.string().required("Please Enter Mobile"),
+      state_lbl: Yup.string().required("Please Enter State"),
+      district_lbl: Yup.string().required("Please Enter District"),
+      city_lbl: Yup.string().required("Please Enter City"),
+      gstno: Yup.string().required("Please Enter GST"),
+      panno: Yup.string().required("Please Enter PAN"),
+      username: Yup.string().required("Please Enter LoginID"),
       status: Yup.string().required("Please Enter Status"),
-      message: Yup.string().required("Please Enter Message"),
-      role: Yup.string().required("Please Enter Role"),
-      designation: Yup.string().required("Please Enter Designation"),
-      grouppolicy: Yup.string().required("Please Enter Group Policy"),
-      loginid: Yup.string().required("Please Enter Login ID"),
-      password: Yup.string().required("Please Enter Password"),
-      confirmpassword: Yup.string().required("Please Enter Confirm Password"),
     }),
     onSubmit: (values) => {
       const newUser = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
-        email: values["email"],
-        mobile: values["mobile"],
-        usertype: values["usertype"],
-        status: values["status"],
+        code: values["code"],
+        addr: values["addr"],
+        contact_person: values["contact_person"],
+        mobile_no: values["mobile_no"],
         message: values["message"],
-        role: values["role"],
-        designation: values["designation"],
-        grouppolicy: values["grouppolicy"],
-        loginid: values["loginid"],
-        password: values["password"],
-        confirmpassword: values["confirmpassword"],
+        state_lbl: values["state_lbl"],
+        district_lbl: values["district_lbl"],
+        city: values["city_lbl"],
+        gstno: values["gstno"],
+        panno: values["panno"],
+        username: values["username"],
+        status: values["status"],
       };
       console.log("newUser:" + newUser);
       // save new user
@@ -86,6 +86,7 @@ const AddRegionalOfficeModal = (props) => {
   return (
     <Modal
       isOpen={isOpen}
+      size="xl"
       role="dialog"
       autoFocus={true}
       centered={true}
@@ -104,7 +105,7 @@ const AddRegionalOfficeModal = (props) => {
           }}
         >
           <Row>
-            <Col sm="6">
+            <Col sm="4">
               <div className="form-check form-switch form-switch-lg mb-3">
                 <input
                   type="checkbox"
@@ -166,22 +167,24 @@ const AddRegionalOfficeModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Contact Person</Label>
                 <Input
-                  name="contact"
+                  name="contact_person"
                   label="Contact Person"
                   type="text"
                   placeholder="Enter Contact Person Name"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.contact || ""}
+                  value={validation.values.contact_person || ""}
                   invalid={
-                    validation.touched.contact && validation.errors.contact
+                    validation.touched.contact_person &&
+                    validation.errors.contact_person
                       ? true
                       : false
                   }
                 />
-                {validation.touched.contact && validation.errors.contact ? (
+                {validation.touched.contact_person &&
+                validation.errors.contact_person ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.contact}
+                    {validation.errors.contact_person}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -209,22 +212,22 @@ const AddRegionalOfficeModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Mobile No.</Label>
                 <Input
-                  name="mobile"
+                  name="mobile_no"
                   label="Mobile No."
                   placeholder="Insert Mobile Number"
                   type="text"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.mobile || ""}
+                  value={validation.values.mobile_no || ""}
                   invalid={
-                    validation.touched.mobile && validation.errors.mobile
+                    validation.touched.mobile_no && validation.errors.mobile_no
                       ? true
                       : false
                   }
                 />
-                {validation.touched.mobile && validation.errors.mobile ? (
+                {validation.touched.mobile_no && validation.errors.mobile_no ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.mobile}
+                    {validation.errors.mobile_no}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -431,6 +434,9 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+            {/* <Col sm="1"></Col> */}
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Postal Office Registration(POR)
@@ -455,8 +461,292 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+              <div className="mb-3">
+                <Label className="form-label">Phase</Label>
+                <Input
+                  name="phase"
+                  type="select"
+                  placeholder="Select Phase"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.phase || ""}
+                >
+                  <option value="">Select Phase</option>
+                  <option value="1">Phase 1</option>
+                  <option value="2">Phase 2</option>
+                  <option value="3">Phase 3</option>
+                  <option value="4">Phase 4</option>
+                </Input>
+                {validation.touched.phase && validation.errors.phase ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.phase}
+                  </FormFeedback>
+                ) : null}
+              </div>
+              <div className="mb-3">
+                <Label className="form-label">Registration Start Date</Label>
+                <Input
+                  name="startdate"
+                  type="date"
+                  placeholder="Select Start Date"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.startdate || ""}
+                  invalid={
+                    validation.touched.startdate && validation.errors.startdate
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.startdate && validation.errors.startdate ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.startdate}
+                  </FormFeedback>
+                ) : null}
+              </div>
+              <div className="mb-3">
+                <Label className="form-label">Registration End Date</Label>
+                <Input
+                  name="enddate"
+                  type="date"
+                  placeholder="Select End Date"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.enddate || ""}
+                  invalid={
+                    validation.touched.enddate && validation.errors.enddate
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.enddate && validation.errors.enddate ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.enddate}
+                  </FormFeedback>
+                ) : null}
+              </div>
+              <div className="mb-3">
+                <Label className="form-label">Fax No.</Label>
+                <Input
+                  name="fax"
+                  type="text"
+                  placeholder="Select Fax No."
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.fax || ""}
+                  invalid={
+                    validation.touched.fax && validation.errors.fax
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.fax && validation.errors.fax ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.fax}
+                  </FormFeedback>
+                ) : null}
+              </div>
+              <div className="mb-3">
+                <Label className="form-label">GST No.</Label>
+                <Input
+                  name="gst"
+                  type="text"
+                  placeholder="Select GST No."
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.gst || ""}
+                  invalid={
+                    validation.touched.gst && validation.errors.gst
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.gst && validation.errors.gst ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.gst}
+                  </FormFeedback>
+                ) : null}
+              </div>
+              <div className="mb-3">
+                <Label className="form-label">GST Reg. Date</Label>
+                <Input
+                  name="gstdate"
+                  type="date"
+                  placeholder="Select GST Reg Date"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.gstdate || ""}
+                  invalid={
+                    validation.touched.gstdate && validation.errors.gstdate
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.gstdate && validation.errors.gstdate ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.gstdate}
+                  </FormFeedback>
+                ) : null}
+              </div>
+              <div className="mb-3">
+                <Label className="form-label">PAN No.</Label>
+                <Input
+                  name="pan"
+                  type="text"
+                  placeholder="Select PAN No."
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.pan || ""}
+                  invalid={
+                    validation.touched.pan && validation.errors.pan
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.pan && validation.errors.pan ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.pan}
+                  </FormFeedback>
+                ) : null}
+              </div>
+              <div className="mb-3">
+                <Label className="form-label">Credit Limit</Label>
+                <Input
+                  name="credit"
+                  type="text"
+                  placeholder="Enter Credit Limit"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.credit || ""}
+                  invalid={
+                    validation.touched.credit && validation.errors.credit
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.credit && validation.errors.credit ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.credit}
+                  </FormFeedback>
+                ) : null}
+              </div>
+              <div className="mb-3">
+                <Label className="form-label">Area ID</Label>
+                <Input
+                  name="area"
+                  type="text"
+                  placeholder="Enter Area ID"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.area || ""}
+                  invalid={
+                    validation.touched.area && validation.errors.area
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.area && validation.errors.area ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.area}
+                  </FormFeedback>
+                ) : null}
+              </div>
+
+              <div className="mb-3">
+                <Label className="form-label">Login ID</Label>
+                <Input
+                  name="loginid"
+                  label="Login ID"
+                  type="text"
+                  placeholder="Login ID"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.loginid || ""}
+                  invalid={
+                    validation.touched.loginid && validation.errors.loginid
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.loginid && validation.errors.loginid ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.loginid}
+                  </FormFeedback>
+                ) : null}
+              </div>
+              <div className="mb-3">
+                <Label className="form-label">Password</Label>
+                <Input
+                  name="password"
+                  label="Password"
+                  type="text"
+                  placeholder="Password"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.password || ""}
+                  invalid={
+                    validation.touched.password && validation.errors.password
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.password && validation.errors.password ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.password}
+                  </FormFeedback>
+                ) : null}
+              </div>
+              <div className="mb-3">
+                <Label className="form-label">Confirm-Password</Label>
+                <Input
+                  name="confirmpassword"
+                  label="Confirm Password"
+                  type="text"
+                  placeholder="Retype Password"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.confirmpassword || ""}
+                  invalid={
+                    validation.touched.confirmpassword &&
+                    validation.errors.confirmpassword
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.confirmpassword &&
+                validation.errors.confirmpassword ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.confirmpassword}
+                  </FormFeedback>
+                ) : null}
+              </div>
             </Col>
-            <Col sm="6">
+            <Col sm="4">
+              <div className="mb-3">
+                <Label className="form-label">
+                  Postal Office Registration(POR)
+                </Label>
+                <Input
+                  name="por"
+                  label="Postal Office Registration"
+                  type="text"
+                  placeholder="Enter POR Number"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.por || ""}
+                  invalid={
+                    validation.touched.por && validation.errors.por
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.por && validation.errors.por ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.por}
+                  </FormFeedback>
+                ) : null}
+              </div>
               <div className="mb-3">
                 <Label className="form-label">Phase</Label>
                 <Input

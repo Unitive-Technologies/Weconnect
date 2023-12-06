@@ -1,4 +1,8 @@
-import { GET_GENRELIST_SUCCESS, GET_GENRELIST_FAIL } from "./actionTypes";
+import {
+  GET_GENRELIST_SUCCESS, GET_GENRELIST_FAIL,
+  ADD_GENRELIST_SUCCESS,
+  ADD_GENRELIST_FAIL,
+} from "./actionTypes";
 
 const INIT_STATE = {
   genreList: [],
@@ -17,6 +21,21 @@ const GenreList = (state = INIT_STATE, action) => {
       };
 
     case GET_GENRELIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_GENRELIST_SUCCESS:
+      return {
+        ...state,
+        genreList: [
+          ...state.genreList,
+          action.payload,
+        ],
+      };
+
+    case ADD_GENRELIST_FAIL:
       return {
         ...state,
         error: action.payload,
