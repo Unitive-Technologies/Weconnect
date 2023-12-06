@@ -12,7 +12,7 @@ import { Table, Row, Col, Button, Input } from "reactstrap";
 import { Filter, DefaultColumnFilter } from "./filters";
 import { Link } from "react-router-dom";
 import JobListGlobalFilter from "./GlobalSearchFilter";
-import Buttons from "./Buttons";
+import TableActionButtons from "./TableActionButtons";
 
 // Define a default UI for filtering
 function GlobalFilter({
@@ -63,6 +63,7 @@ function GlobalFilter({
 const TableContainer = ({
   columns,
   data,
+  tableActions,
   isGlobalFilter,
   isAddOptions,
   isAddUserList,
@@ -198,12 +199,7 @@ const TableContainer = ({
             </Col>
           )}
           {isAddUserList && (
-            <Buttons
-              isAddUserList={isAddUserList}
-              handleUserClick={handleUserClick}
-              handleUploadUser={handleUploadUser}
-              handleBulkUpdateUser={handleBulkUpdateUser}
-            />
+            <TableActionButtons tableActions={tableActions} />
           )}
           {/* {isAddUserList && (
           <Col sm="12">

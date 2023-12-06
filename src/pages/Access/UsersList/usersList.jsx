@@ -155,12 +155,12 @@ const ContactsList = (props) => {
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
-  const [modal, setModal] = useState(false);
-  const [modal1, setModal1] = useState(false);
-  const [modal2, setModal2] = useState(false);
-  const [modal3, setModal3] = useState(false);
-  const [modal4, setModal4] = useState(false);
-  const [modal5, setModal5] = useState(false);
+  const [showAddUser, setShowAddUser] = useState(false);
+  const [showViewUser, setShowViewUser] = useState(false);
+  const [showUploadUser, setShowUploadUser] = useState(false);
+  const [showBulkUpdateUser, setShowBulkUpdateUser] = useState(false);
+  const [showInactivateUser, setShowInactivateUser] = useState(false);
+  const [showBulkUserSettings, setBulkUserSettings] = useState(false);
   const columns = useMemo(
     () => [
       {
@@ -446,29 +446,29 @@ const ContactsList = (props) => {
   }, [users]);
 
   const toggle = () => {
-    setModal(!modal);
+    setShowAddUser(!showAddUser);
   };
 
   const toggle2 = () => {
-    setModal2(!modal2);
+    setShowUploadUser(!showUploadUser);
   };
 
   const toggle3 = () => {
-    setModal3(!modal3);
+    setShowBulkUpdateUser(!showBulkUpdateUser);
   };
 
   const toggle4 = () => {
-    setModal4(!modal4);
+    setShowInactivateUser(!showInactivateUser);
   };
 
   const toggle5 = () => {
-    setModal5(!modal5);
+    setBulkUserSettings(!showBulkUserSettings);
   };
   const [viewUser, setViewUser] = useState({});
   // const toggleViewModal = () => setModal(modal);
   // const handleUserClick = (arg) => {
   const toggleViewModal = (userData) => {
-    setModal1(!modal1);
+    setShowViewUser(!showViewUser);
     setViewUser(userData);
     // toggle();
   };
@@ -503,19 +503,53 @@ const ContactsList = (props) => {
 
   const keyField = "id";
 
+  const getTableActions = () => {
+    return [
+      {
+        name: "Create",
+        action: setShowAddUser,
+        type: "normal",
+      },
+      {
+        name: "Upload",
+        action: setShowUploadUser,
+        type: "dropdown",
+        dropdownName: "Upload"
+      },
+      {
+        name: "Bulk Update",
+        action: setShowBulkUpdateUser,
+        type: "dropdown",
+        dropdownName: "Upload"
+      },
+      {
+        name: "Bulk Active/Inactive User",
+        action: setShowInactivateUser,
+        type: "dropdown",
+        dropdownName: "Actions"
+      },
+      {
+        name: "Bulk User Settings",
+        action: setBulkUserSettings,
+        type: "dropdown",
+        dropdownName: "Actions"
+      },
+    ];
+  }
+
   return (
     <React.Fragment>
       {/* {console.log("viewuser initially:" + JSON.stringify(viewUser))} */}
-      <ViewUserModal isOpen={modal1} toggle={toggleViewModal} user={viewUser} />
-      <AddUserModal isOpen={modal} toggle={toggle} />
-      <UploadUserModal isOpen={modal2} toggle={toggle2} />
-      <BulkUpdateUserModal isOpen={modal3} toggle={toggle3} />
+      <ViewUserModal isOpen={showViewUser} toggle={toggleViewModal} user={viewUser} />
+      <AddUserModal isOpen={showAddUser} toggle={toggle} />
+      <UploadUserModal isOpen={showUploadUser} toggle={toggle2} />
+      <BulkUpdateUserModal isOpen={showBulkUpdateUser} toggle={toggle3} />
       <BulkInactiveUserModal
-        isOpen={modal4}
+        isOpen={showInactivateUser}
         toggle={toggle4}
         user={filteredUsers}
       />
-      <BulkUserSettings isOpen={modal5} toggle={toggle5} user={filteredUsers} />
+      <BulkUserSettings isOpen={showBulkUserSettings} toggle={toggle5} user={filteredUsers} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -590,9 +624,10 @@ const ContactsList = (props) => {
                       data={users}
                       isGlobalFilter={true}
                       isAddUserList={true}
-                      handleUserClick={() => setModal(true)}
-                      handleUploadUser={() => setModal2(true)}
-                      handleBulkUpdateUser={() => setModal3(true)}
+                      tableActions={getTableActions()}
+                      handleUserClick={() => setShowAddUser(true)}
+                      handleUploadUser={() => setShowUploadUser(true)}
+                      handleBulkUpdateUser={() => setShowBulkUpdateUser(true)}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
                       customPageSize={50}
