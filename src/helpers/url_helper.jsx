@@ -54,6 +54,9 @@ export const ADD_NEW_BROADCASTER =
 
 
 export const GET_GENRELIST = "/genrelist";
+export const ADD_NEW_GENRELIST =
+  "/add/genrelist";
+
 export const GET_LANGUAGELIST = "/languagelist";
 export const GET_CHANNELLIST = "/channellist";
 export const GET_BROADCASTERBOUQUETLIST = "/broadcasterbouquet";

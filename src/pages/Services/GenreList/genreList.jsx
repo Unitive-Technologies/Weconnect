@@ -41,6 +41,10 @@ import { isEmpty } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import AddNewGenreList from './AddNewGenreList'
+import UploadGenreList from './UploadGenreList'
+import BulkUpdateGenreList from "./BulkUpdateGenreList";
+
 
 const GenreList = (props) => {
   //meta title
@@ -336,7 +340,7 @@ const GenreList = (props) => {
                       isAddGenreList={true}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
-                      handleUserClick={() => {}}
+                      handleUserClick={() => { }}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

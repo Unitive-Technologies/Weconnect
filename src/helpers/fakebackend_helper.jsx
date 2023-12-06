@@ -260,6 +260,9 @@ export const addNewBroadCaster = (broadcast) =>
   post(url.ADD_NEW_GROUPPOLICY, broadcast);
 
 export const getGenreList = () => get(url.GET_GENRELIST);
+export const addNewGenreList = (genre) =>
+  post(url.ADD_NEW_GENRELIST, genre);
+
 export const getLanguageList = () => get(url.GET_LANGUAGELIST);
 export const getChannelList = () => get(url.GET_CHANNELLIST);
 export const getBroadcasterBouquetList = () =>
