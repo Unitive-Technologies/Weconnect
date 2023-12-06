@@ -40,6 +40,7 @@ import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import ViewRegionalOfficeModal from "./ViewRegionalOfficeModal";
 import AddRegionalOfficeModal from "./AddRegionalOfficeModal";
+import UploadRegionalOfficeModal from "./UploadRegionalOfficeModal";
 
 const RegionalOfficeList = (props) => {
   //meta title
@@ -398,6 +399,7 @@ const RegionalOfficeList = (props) => {
         user={viewUser}
       />
       <AddRegionalOfficeModal isOpen={modal} toggle={toggle} />
+      <UploadRegionalOfficeModal isOpen={modal2} toggle={toggle2} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -436,7 +438,7 @@ const RegionalOfficeList = (props) => {
                         </Link>
                         <Link
                           to="#!"
-                          onClick={() => setModal(true)}
+                          onClick={() => setModal2(true)}
                           className="btn btn-primary me-1"
                         >
                           Upload Regional Office
