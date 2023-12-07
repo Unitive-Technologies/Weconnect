@@ -4,6 +4,10 @@ import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
 import Spinners from "../../../components/Common/Spinner";
 import {
+  Toast,
+  ToastHeader,
+  ToastBody,
+  Button,
   Alert,
   UncontrolledAlert,
   Card,
@@ -45,6 +49,11 @@ const GroupPolicyList = (props) => {
   document.title = "Group Policy List | VDigital";
 
   const dispatch = useDispatch();
+  const [toast, setToast] = useState(true);
+
+  const toggleToast = () => {
+    setToast(!toast);
+  };
 
   const selectGroupPolicyState = (state) => state.groupPolicy;
   const groupPolicyProperties = createSelector(
@@ -346,13 +355,29 @@ const GroupPolicyList = (props) => {
                       >
                         Create Group Policy
                       </Link>
+
                       <Link
-                        to="#!"
-                        onClick={() => setShow(true)}
+                        id="liveToastBtn"
+                        onClick={toggleToast}
                         className="btn btn-primary me-1"
                       >
                         Assign Group Policy
                       </Link>
+
+                      <div
+                        className="position-fixed top-0 end-0 p-3"
+                        style={{ zIndex: "1005" }}
+                      >
+                        <Toast isOpen={toast}>
+                          <ToastHeader toggle={toggleToast}>
+                            <i className="mdi mdi-alert-outline me-2"></i>{" "}
+                            Warning
+                          </ToastHeader>
+                          <ToastBody>
+                            Please select Group Policy to apply
+                          </ToastBody>
+                        </Toast>
+                      </div>
                       {show && (
                         <UncontrolledAlert
                           color="danger"
