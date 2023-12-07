@@ -60,7 +60,7 @@ const DesignationList = (props) => {
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
-  const [modal, setModal] = useState(false);
+  const [showAddDesignation, setShowAddDesignation] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
   const columns = useMemo(
@@ -238,7 +238,7 @@ const DesignationList = (props) => {
   // }, [users]);
 
   const toggle = () => {
-    setModal(!modal);
+    setShowAddDesignation(!showAddDesignation);
   };
 
   const handleUserClick = (arg) => {
@@ -295,6 +295,16 @@ const DesignationList = (props) => {
 
   const keyField = "id";
 
+  const getTableActions = () => {
+    return [
+      {
+        name: "Create",
+        action: setShowAddDesignation,
+        type: "normal",
+      },
+    ];
+  };
+
   return (
     <React.Fragment>
       <DeleteModal
@@ -302,7 +312,7 @@ const DesignationList = (props) => {
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
       />
-      <AddNewDesignation isOpen={modal} toggle={toggle} />
+      <AddNewDesignation isOpen={showAddDesignation} toggle={toggle} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -314,42 +324,16 @@ const DesignationList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    <div className="d-flex align-items-center justify-content-between">
-                      <h5 className="mb-0 card-title flex-grow-1">
-                        {/* Jobs Lists */}
-                      </h5>
-                      {/* <form className="app-search d-none d-lg-block">
-                        <div className="position-relative">
-                          <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Search..."
-                          />
-                          <span className="bx bx-search-alt" />
-                        </div>
-                      </form> */}
-                      <div className="flex-shrink-0">
-                        <Link
-                          to="#!"
-                          onClick={() => setModal(true)}
-                          className="btn btn-primary me-1"
-                        >
-                          Add New Designation
-                        </Link>
-                      </div>
-                    </div>
-                  </CardBody>
-                  <CardBody>
                     {console.log("designation" + JSON.stringify(desigList))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={desigList}
                       isGlobalFilter={true}
-                      // isAddUserList={true}
+                      isAddUserList={true}
                       isShowingPageLength={true}
-                      // iscustomPageSizeOptions={true}
-                      // handleUserClick={handleUserClicks}
+                      tableActions={getTableActions()}
+                      handleDesignationClick={() => setShowAddDesignation(true)}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
