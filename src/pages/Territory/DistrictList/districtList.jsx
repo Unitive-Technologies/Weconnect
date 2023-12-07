@@ -314,11 +314,13 @@ const DistrictList = (props) => {
         name: "Create",
         action: setShowAddDistrict,
         type: "normal",
+        icon: "create"
       },
       {
         name: "Upload",
         action: setShowUploadDistrict,
         type: "normal",
+        icon: "upload"
       },
     ];
   };

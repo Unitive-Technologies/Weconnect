@@ -31,6 +31,22 @@ const TableActionButtons = ({ tableActions }) => {
     return acc;
   }, {});
 
+  const getClassNameForIcon = (iconType) => {
+    if (iconType == null) {
+      return "";
+    }
+    switch (iconType) {
+      case "create":
+        return "mdi mdi-plus-circle-outline me-1";
+      case "upload":
+        return "bx bx-upload me-1";
+      case "action":
+        return "mdi mdi-dots-vertical";
+      default:
+        return "";
+    }
+  }
+
   return (
     <div>
       <Col sm="12">
@@ -43,7 +59,7 @@ const TableActionButtons = ({ tableActions }) => {
             mb-2
             onClick={action.action}
           >
-            <i className="mdi mdi-plus-circle-outline me-1" />
+            <i className={getClassNameForIcon(action.icon)} />
             {action.name}
           </Button>
         ))}

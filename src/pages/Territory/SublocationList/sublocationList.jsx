@@ -321,11 +321,13 @@ const SublocationList = (props) => {
         name: "Create",
         action: setShowAddSubLocation,
         type: "normal",
+        icon: "create"
       },
       {
         name: "Upload",
         action: setShowUploadSubLocation,
         type: "normal",
+        icon: "upload"
       },
     ];
   };

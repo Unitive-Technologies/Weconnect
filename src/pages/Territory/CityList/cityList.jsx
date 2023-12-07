@@ -335,11 +335,13 @@ const CityList = (props) => {
         name: "Create",
         action: setShowAddCity,
         type: "normal",
+        icon: "create"
       },
       {
         name: "Upload",
         action: setShowUploadCity,
         type: "normal",
+        icon: "upload"
       },
     ];
   };

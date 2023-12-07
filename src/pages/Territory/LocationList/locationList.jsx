@@ -300,11 +300,13 @@ const LocationList = (props) => {
         name: "Create",
         action: setShowAddLocation,
         type: "normal",
+        icon: "create"
       },
       {
         name: "Upload",
         action: setShowUploadLocation,
         type: "normal",
+        icon: "upload"
       },
     ];
   };
