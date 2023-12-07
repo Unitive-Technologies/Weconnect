@@ -50,6 +50,39 @@ const UploadUserModal = (props) => {
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
   }
+
+  const handleDownloadSampleFile = () => {
+    // Create a sample CSV file with headers
+    const headers = [
+      "username",
+      "name",
+      "mobile_no",
+      "email",
+      "password",
+      "role_name",
+      "status",
+      "operator_type_name",
+      "operator_code",
+      "designation_code",
+      "block_message",
+    ];
+    const data = [headers];
+
+    // Convert the data to CSV format
+    const csvContent = data.map((row) => row.join(",")).join("\n");
+
+    // Create a Blob containing the data in CSV format
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+
+    // Create a download link
+    const link = document.createElement("a");
+    link.href = window.URL.createObjectURL(blob);
+    link.download = "sample_upload_user_file.csv";
+
+    // Trigger a click on the link to start the download
+    link.click();
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -61,14 +94,22 @@ const UploadUserModal = (props) => {
       tabIndex="-1"
       toggle={toggle}
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
       <ModalHeader toggle={toggle} tag="h4">
         Upload User
       </ModalHeader>
       <ModalBody>
         <Card>
           <CardBody>
-            {/* <CardTitle>Dropzone</CardTitle> */}
+            <div className="text-left mb-4 r-0" style={{ marginLeft: "78%" }}>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleDownloadSampleFile}
+              >
+                Download Sample Upload File
+              </button>
+            </div>
+
             <CardSubtitle className="mb-3"> Select File to Upload</CardSubtitle>
             <Form>
               <Dropzone
@@ -136,7 +177,6 @@ const UploadUserModal = (props) => {
           </CardBody>
         </Card>
       </ModalBody>
-      {/* </Modal> */}
     </Modal>
   );
 };
