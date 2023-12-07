@@ -35,6 +35,7 @@ import { isEmpty } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import AddNewCity from "./AddNewCity";
 
 const CityList = (props) => {
   //meta title
@@ -43,20 +44,16 @@ const CityList = (props) => {
   const dispatch = useDispatch();
 
   const selectCityState = (state) => state.city;
-  const cityProperties = createSelector(
-    selectCityState,
-    (city) => ({
-      cits: city.city,
-      loading: city.loading,
-    })
-  );
+  const cityProperties = createSelector(selectCityState, (city) => ({
+    cits: city.city,
+    loading: city.loading,
+  }));
 
   const { cits, loading } = useSelector(cityProperties);
 
   useEffect(() => {
     console.log("Customer Users data in component:", cits);
   }, [cits]);
-
 
   const [isLoading, setLoading] = useState(loading);
 
@@ -121,7 +118,9 @@ const CityList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.state_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.state_lbl}
+            </p>
           );
         },
       },
@@ -131,7 +130,9 @@ const CityList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.state_code_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.state_code_lbl}
+            </p>
           );
         },
       },
@@ -141,7 +142,9 @@ const CityList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.district_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.district_lbl}
+            </p>
           );
         },
       },
@@ -151,7 +154,9 @@ const CityList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.district_code_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.district_code_lbl}
+            </p>
           );
         },
       },
@@ -161,7 +166,9 @@ const CityList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.description}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.description}
+            </p>
           );
         },
       },
@@ -171,7 +178,9 @@ const CityList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.status_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.status_lbl}
+            </p>
           );
         },
       },
@@ -181,7 +190,9 @@ const CityList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.created_at}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_at}
+            </p>
           );
         },
       },
@@ -191,7 +202,9 @@ const CityList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.created_by_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by_lbl}
+            </p>
           );
         },
       },
@@ -318,6 +331,7 @@ const CityList = (props) => {
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
       />
+      <AddNewCity isOpen={modal} toggle={toggle} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -329,16 +343,51 @@ const CityList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
+                    <div className="d-flex align-items-center justify-content-between">
+                      <h5 className="mb-0 card-title flex-grow-1">
+                        {/* Jobs Lists */}
+                      </h5>
+                      {/* <form className="app-search d-none d-lg-block">
+                        <div className="position-relative">
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Search..."
+                          />
+                          <span className="bx bx-search-alt" />
+                        </div>
+                      </form> */}
+                      <div className="flex-shrink-0">
+                        <Link
+                          to="#!"
+                          onClick={() => setModal(true)}
+                          className="btn btn-primary me-1"
+                        >
+                          Create
+                        </Link>
+                      </div>
+                      <div className="flex-shrink-0">
+                        <Link
+                          to="#!"
+                          onClick={() => setModal1(true)}
+                          className="btn btn-success"
+                        >
+                          Upload
+                        </Link>
+                      </div>
+                    </div>
+                  </CardBody>
+                  <CardBody>
                     {console.log("users:" + JSON.stringify(cits))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={cits}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      // isAddUserList={true}
                       isShowingPageLength={true}
-                      iscustomPageSizeOptions={true}
-                      handleUserClick={handleUserClicks}
+                      // iscustomPageSizeOptions={true}
+                      // handleUserClick={handleUserClicks}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
