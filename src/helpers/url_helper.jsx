@@ -66,11 +66,14 @@ export const GET_CHANNELLIST = "/channellist";
 export const ADD_NEW_CHANNELLIST = "/add/channellist";
 
 export const GET_BROADCASTERBOUQUETLIST = "/broadcasterbouquet";
+export const ADD_NEW_BROADCASTERBOUQUETLIST = "/add/broadcasterbouquet";
+
 export const GET_PACKAGELIST = "/packagelist";
 export const GET_OSDCONFIGURATIONLIST = "/osdconfigurationlist";
 export const GET_LOCALCHANNELNUMBER = "/localchannelnumberlist";
 
 export const GET_DOCUMENTUPLOADPOLICY = "/documentuploadpolicylist";
+export const ADD_NEW_DOCUMENTUPLOADPOLICY = "/add/documentuploadpolicylist";
 
 export const GET_OSDTEMPLATE = "/osdtemplatelist";
 export const ADD_NEW_OSDTEMPLATE = "/add/osdtemplatelist";

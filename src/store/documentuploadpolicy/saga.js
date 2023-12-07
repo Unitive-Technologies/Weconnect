@@ -1,14 +1,15 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_DOCUMENTUPLOADPOLICY } from "./actionTypes";
+import { GET_DOCUMENTUPLOADPOLICY, ADD_NEW_DOCUMENTUPLOADPOLICY } from "./actionTypes";
 
 import {
   getDocumentUploadPolicySuccess,
   getDocumentUploadPolicyFail,
+  addDocumentUploadPolicySuccess, addDocumentUploadPolicyFail
 } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getDocumentUploadPolicy } from "../../helpers/fakebackend_helper";
+import { getDocumentUploadPolicy, addNewDocumentUploadPolicy } from "../../helpers/fakebackend_helper";
 
 const convertDocumentUploadPolicyListObject = (documentUploadPolicyList) => {
   // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
@@ -46,8 +47,20 @@ function* fetchDocumentUploadPolicy() {
   }
 }
 
+function* onAddNewDocumentUploadPolicy({ payload: documentUploadPolicy }) {
+  try {
+    const response = yield call(addNewDocumentUploadPolicy, documentUploadPolicy);
+    yield put(addDocumentUploadPolicySuccess(response));
+    toast.success("DocumentUploadPolicy Added Successfully", { autoClose: 2000 });
+  } catch (error) {
+    yield put(addDocumentUploadPolicyFail(error));
+    toast.error("DocumentUploadPolicy Added Failed", { autoClose: 2000 });
+  }
+}
+
 function* documentUploadPolicySaga() {
   yield takeEvery(GET_DOCUMENTUPLOADPOLICY, fetchDocumentUploadPolicy);
+  yield takeEvery(ADD_NEW_DOCUMENTUPLOADPOLICY, onAddNewDocumentUploadPolicy);
 }
 
 export default documentUploadPolicySaga;

@@ -1,6 +1,8 @@
 import {
   GET_DOCUMENTUPLOADPOLICY_SUCCESS,
   GET_DOCUMENTUPLOADPOLICY_FAIL,
+  ADD_DOCUMENTUPLOADPOLICY_SUCCESS,
+  ADD_DOCUMENTUPLOADPOLICY_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -25,6 +27,20 @@ const DocumentUploadPolicy = (state = INIT_STATE, action) => {
         error: action.payload,
       };
 
+    case ADD_DOCUMENTUPLOADPOLICY_SUCCESS:
+      return {
+        ...state,
+        documentUploadPolicy: [
+          ...state.documentUploadPolicy,
+          action.payload,
+        ],
+      };
+
+    case ADD_DOCUMENTUPLOADPOLICY_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
     default:
       return state;
   }

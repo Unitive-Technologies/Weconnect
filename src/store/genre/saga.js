@@ -39,7 +39,6 @@ function* fetchGenreList() {
   }
 }
 
-
 function* onAddNewGenreList({ payload: GenreList }) {
   try {
     const response = yield call(addNewGenreList, GenreList);

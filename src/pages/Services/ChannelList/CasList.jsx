@@ -138,7 +138,6 @@ const CasList = (props) => {
           isPagination={true}
           columns={columns}
           data={casData}
-
           // isGlobalFilter={true}
           // isShowingPageLength={true}
           // customPageSize={50}

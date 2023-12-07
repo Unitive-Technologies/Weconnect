@@ -1,6 +1,8 @@
 import {
   GET_BROADCASTERBOUQUETLIST_SUCCESS,
   GET_BROADCASTERBOUQUETLIST_FAIL,
+  ADD_BROADCASTERBOUQUETLIST_SUCCESS,
+  ADD_BROADCASTERBOUQUETLIST_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -20,6 +22,21 @@ const BroadcasterBouquetList = (state = INIT_STATE, action) => {
       };
 
     case GET_BROADCASTERBOUQUETLIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_BROADCASTERBOUQUETLIST_SUCCESS:
+      return {
+        ...state,
+        broadcasterBouquetList: [
+          ...state.broadcasterBouquetList,
+          action.payload,
+        ],
+      };
+
+    case ADD_BROADCASTERBOUQUETLIST_FAIL:
       return {
         ...state,
         error: action.payload,

@@ -277,6 +277,8 @@ export const addNewChannelList = (channel) =>
 
 export const getBroadcasterBouquetList = () =>
   get(url.GET_BROADCASTERBOUQUETLIST);
+export const addNewBroadcasterBouquetList = (broadcastbouquet) => post(url.ADD_NEW_BROADCASTERBOUQUETLIST, broadcastbouquet);
+
 export const getPackageList = () => get(url.GET_PACKAGELIST);
 export const getOSDConfiguration = () => get(url.GET_OSDCONFIGURATIONLIST);
 export const getOSDTemplate = () => get(url.GET_OSDTEMPLATE);
@@ -285,6 +287,8 @@ export const addNewOSDTemplate = (osdtem) =>
 
 export const getLocalChannelNumber = () => get(url.GET_LOCALCHANNELNUMBER);
 export const getDocumentUploadPolicy = () => get(url.GET_DOCUMENTUPLOADPOLICY);
+export const addNewDocumentUploadPolicy = (documentupload) =>
+  post(url.ADD_NEW_DOCUMENTUPLOADPOLICY, documentupload);
 
 export const getDistributors = () => get(url.GET_DISTRIBUTORS);
 export const getLco = () => get(url.GET_LCO);

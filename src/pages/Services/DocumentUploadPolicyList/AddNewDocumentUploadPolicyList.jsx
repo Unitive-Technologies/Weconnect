@@ -17,11 +17,11 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addNewChannelList as onAddNewChannelList } from "/src/store/channel/actions";
+import { addNewDocumentUploadPolicy as onAddNewDocumentUploadPolicy } from "/src/store/documentuploadpolicy/actions";
 import { useSelector, useDispatch } from "react-redux";
-import CasList from './CasList';
+import UploadDocument from './UploadDocument';
 
-const AddNewChannelList = (props) => {
+const AddNewDocumentUploadPolicy = (props) => {
     const { isOpen, toggle } = props;
     const dispatch = useDispatch();
     const [user, setUser] = useState();
@@ -32,19 +32,15 @@ const AddNewChannelList = (props) => {
 
         initialValues: {
             //BroadCaster: "",
-            code: "",
-            logo: "",
             name: "",
-            description: "",
-            definition: "",
-            type: "",
-            broadcaster: "",
-            genre: "",
-            language: "",
-            isalacarte: "",
-            rate: "",
+            startdate: "",
+            enddate: "",
+            uploaddate: "",
+            initiatedby: "",
+            approvedby: "",
+            financial: "",
             status: "",
-            cas: "",
+            remark: "",
             cascode: "",
             serviceid: "",
             created_by: "Admin",
@@ -493,7 +489,7 @@ const AddNewChannelList = (props) => {
                     </Row>
                     <Row>
                         <Col sm="12">
-                            <CasList />
+                            <UploadDocument />
                         </Col>
 
                     </Row>
@@ -536,4 +532,4 @@ AddNewChannelList.propTypes = {
     isOpen: PropTypes.bool,
 };
 
-export default AddNewChannelList;
+export default AddNewDocumentUploadPolicy;

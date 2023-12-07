@@ -997,6 +997,20 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onPost(url.ADD_NEW_BROADCASTERBOUQUETLIST).reply((broadcastbouquet) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (broadcastbouquet && broadcastbouquet.data) {
+          // Passing fake JSON data as response
+          resolve([200, broadcastbouquet.data]);
+        } else {
+          reject([400, "Cannot add broadcastbouquet list"]);
+        }
+      });
+    });
+  });
+
+
   mock.onPost(url.ADD_NEW_CHANNELLIST).reply((channel) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -1005,6 +1019,19 @@ const fakeBackend = () => {
           resolve([200, channel.data]);
         } else {
           reject([400, "Cannot add channellist"]);
+        }
+      });
+    });
+  });
+
+  mock.onPost(url.ADD_NEW_DOCUMENTUPLOADPOLICY).reply((documentupload) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (documentupload && documentupload.data) {
+          // Passing fake JSON data as response
+          resolve([200, documentupload.data]);
+        } else {
+          reject([400, "Cannot add documentupload"]);
         }
       });
     });
