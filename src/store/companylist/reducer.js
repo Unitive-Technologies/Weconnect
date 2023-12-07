@@ -1,4 +1,7 @@
-import { GET_COMPANYLIST_SUCCESS, GET_COMPANYLIST_FAIL } from "./actionTypes";
+import {
+  GET_COMPANYLIST_SUCCESS, GET_COMPANYLIST_FAIL, ADD_COMPANYLIST_SUCCESS,
+  ADD_COMPANYLIST_FAIL,
+} from "./actionTypes";
 
 const INIT_STATE = {
   companylist: [],
@@ -17,6 +20,21 @@ const CompanyList = (state = INIT_STATE, action) => {
       };
 
     case GET_COMPANYLIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_COMPANYLIST_SUCCESS:
+      return {
+        ...state,
+        companylist: [
+          ...state.companylist,
+          action.payload,
+        ],
+      };
+
+    case ADD_COMPANYLIST_FAIL:
       return {
         ...state,
         error: action.payload,

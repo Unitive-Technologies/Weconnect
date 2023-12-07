@@ -1,8 +1,8 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_COMPANYLIST } from "./actionTypes";
+import { GET_COMPANYLIST, ADD_NEW_COMPANYLIST } from "./actionTypes";
 
-import { getCompanyListSuccess, getCompanyListFail } from "./actions";
+import { getCompanyListSuccess, getCompanyListFail, addCompanyListSuccess, addCompanyListFail } from "./actions";
 
 //Include Both Helper File with needed methods
 import { getCompanyList } from "../../helpers/fakebackend_helper";
@@ -42,8 +42,20 @@ function* fetchCompanyList() {
   }
 }
 
+function* onAddNewCompanyList({ payload: companyList }) {
+  try {
+    const response = yield call(addNewCompanyList, companyList);
+    yield put(addCompanyListSuccess(response));
+    toast.success("CompanyList Added Successfully", { autoClose: 2000 });
+  } catch (error) {
+    yield put(addCompanyListFail(error));
+    toast.error("Company List Added Failed", { autoClose: 2000 });
+  }
+}
+
 function* companyListSaga() {
   yield takeEvery(GET_COMPANYLIST, fetchCompanyList);
+  yield takeEvery(ADD_NEW_COMPANYLIST, onAddNewCompanyList);
 }
 
 export default companyListSaga;

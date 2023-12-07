@@ -360,6 +360,7 @@ const fakeBackend = () => {
     });
   });
 
+
   mock.onGet(url.GET_LANGUAGELIST).reply(() => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -384,6 +385,8 @@ const fakeBackend = () => {
         }
       });
     });
+
+
   });
 
   mock.onGet(url.GET_BROADCASTERBOUQUETLIST).reply(() => {
@@ -966,6 +969,19 @@ const fakeBackend = () => {
           resolve([200, genre.data]);
         } else {
           reject([400, "Cannot add genrelist"]);
+        }
+      });
+    });
+  });
+
+  mock.onPost(url.ADD_NEW_CHANNELLIST).reply((channel) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (channel && channel.data) {
+          // Passing fake JSON data as response
+          resolve([200, channel.data]);
+        } else {
+          reject([400, "Cannot add channellist"]);
         }
       });
     });

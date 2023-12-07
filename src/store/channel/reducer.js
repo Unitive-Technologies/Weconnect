@@ -1,4 +1,7 @@
-import { GET_CHANNELLIST_SUCCESS, GET_CHANNELLIST_FAIL } from "./actionTypes";
+import {
+  GET_CHANNELLIST_SUCCESS, GET_CHANNELLIST_FAIL, ADD_CHANNELLIST_SUCCESS,
+  ADD_CHANNELLIST_FAIL,
+} from "./actionTypes";
 
 const INIT_STATE = {
   channelList: [],
@@ -17,6 +20,21 @@ const ChannelList = (state = INIT_STATE, action) => {
       };
 
     case GET_CHANNELLIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_CHANNELLIST_SUCCESS:
+      return {
+        ...state,
+        channelList: [
+          ...state.channelList,
+          action.payload,
+        ],
+      };
+
+    case ADD_CHANNELLIST_FAIL:
       return {
         ...state,
         error: action.payload,

@@ -269,6 +269,9 @@ export const addNewLanguageList = (langlist) =>
   post(url.ADD_NEW_LANGUAGELIST, langlist);
 
 export const getChannelList = () => get(url.GET_CHANNELLIST);
+export const addNewChannelList = (channel) =>
+  post(url.ADD_NEW_CHANNELLIST, channel);
+
 export const getBroadcasterBouquetList = () =>
   get(url.GET_BROADCASTERBOUQUETLIST);
 export const getPackageList = () => get(url.GET_PACKAGELIST);
