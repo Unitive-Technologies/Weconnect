@@ -36,6 +36,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddNewCity from "./AddNewCity";
+import UploadCity from "./UploadCity";
 
 const CityList = (props) => {
   //meta title
@@ -60,6 +61,7 @@ const CityList = (props) => {
   const [userList, setUserList] = useState([]);
   const [modal, setModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [modal1, setModal1] = useState(false);
 
   const columns = useMemo(
     () => [
@@ -270,6 +272,9 @@ const CityList = (props) => {
     setModal(!modal);
   };
 
+  const toggle1 = () => {
+    setModal1(!modal1);
+  };
   const handleUserClick = (arg) => {
     const user = arg;
 
@@ -332,6 +337,7 @@ const CityList = (props) => {
         onCloseClick={() => setDeleteModal(false)}
       />
       <AddNewCity isOpen={modal} toggle={toggle} />
+      <UploadCity isOpen={modal1} toggle={toggle1} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
