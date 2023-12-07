@@ -121,8 +121,10 @@ const UploadUserModal = (props) => {
       data.push(rowData);
     }
 
-    return data;
+    // Move dispatch line above the return statement
     dispatch(onAddNewUser(data));
+
+    return data;
   };
 
   return (

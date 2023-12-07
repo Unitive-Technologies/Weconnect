@@ -259,7 +259,7 @@ export const getSublocation = () => get(url.GET_SUBLOCATION);
 export const getRegionalOffice = () => get(url.GET_REGIONALOFFICE);
 export const getBroadCasters = () => get(url.GET_BROADCASTER);
 export const addNewBroadCaster = (broadcast) =>
-  post(url.ADD_NEW_GROUPPOLICY, broadcast);
+  post(url.ADD_NEW_BROADCASTER, broadcast);
 
 export const getGenreList = () => get(url.GET_GENRELIST);
 export const addNewGenreList = (genre) => post(url.ADD_NEW_GENRELIST, genre);

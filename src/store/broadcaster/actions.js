@@ -24,16 +24,12 @@ export const getBroadCasterFail = (error) => ({
   payload: error,
 });
 
-export const addNewBroadCaster = (
-  broadcasters
-) => ({
+export const addNewBroadCaster = (broadcasters) => ({
   type: ADD_NEW_BROADCASTER,
   payload: broadcasters,
 });
 
-export const addBroadCasterSuccess = (
-  broadcasters
-) => ({
+export const addBroadCasterSuccess = (broadcasters) => ({
   type: ADD_BROADCASTER_SUCCESS,
   payload: broadcasters,
 });
@@ -42,4 +38,3 @@ export const addBroadCasterFail = (error) => ({
   type: ADD_BROADCASTER_FAIL,
   payload: error,
 });
-

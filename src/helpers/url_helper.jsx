@@ -60,9 +60,7 @@ export const GET_LANGUAGELIST = "/languagelist";
 export const ADD_NEW_LANGUAGELIST = "/add/languagelist";
 
 export const GET_CHANNELLIST = "/channellist";
-export const ADD_NEW_CHANNELLIST =
-  "/add/channellist";
-
+export const ADD_NEW_CHANNELLIST = "/add/channellist";
 
 export const GET_BROADCASTERBOUQUETLIST = "/broadcasterbouquet";
 export const GET_PACKAGELIST = "/packagelist";
