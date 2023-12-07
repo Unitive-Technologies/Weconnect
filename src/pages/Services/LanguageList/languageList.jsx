@@ -367,7 +367,7 @@ const LanguageList = (props) => {
                           onClick={() => setModal(true)}
                           className="btn btn-primary me-1"
                         >
-                          Create Language
+                          Create
                         </Link>
                         <UncontrolledDropdown className="dropdown d-inline-block me-1">
                           <DropdownToggle
@@ -376,7 +376,7 @@ const LanguageList = (props) => {
                             id="dropdownMenuButton1"
                             onClick={() => setModal1(true)}
                           >
-                            Upload Language
+                            Upload
                             {/* <i className="bx bx-upload"></i> */}
                           </DropdownToggle>
                         </UncontrolledDropdown>

@@ -338,7 +338,7 @@ const OSDTemplateList = (props) => {
                           onClick={() => setModal(true)}
                           className="btn btn-primary me-1"
                         >
-                          Create OSD Template
+                          Create
                         </Link>
                       </div>
                       <UncontrolledDropdown className="dropdown d-inline-block me-1">

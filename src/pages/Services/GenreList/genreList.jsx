@@ -354,7 +354,7 @@ const GenreList = (props) => {
                           onClick={() => setModal(true)}
                           className="btn btn-primary me-1"
                         >
-                          Create Genre
+                          Create
                         </Link>
                         <UncontrolledDropdown className="dropdown d-inline-block me-1">
                           <DropdownToggle
@@ -363,7 +363,7 @@ const GenreList = (props) => {
                             id="dropdownMenuButton1"
                             onClick={() => setModal1(true)}
                           >
-                            Upload Genre
+                            Upload
                             {/* <i className="bx bx-upload"></i> */}
                           </DropdownToggle>
                         </UncontrolledDropdown>

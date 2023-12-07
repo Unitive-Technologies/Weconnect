@@ -19,6 +19,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewChannelList as onAddNewChannelList } from "/src/store/channel/actions";
 import { useSelector, useDispatch } from "react-redux";
+import CasList from './CasList';
 
 const AddNewChannelList = (props) => {
     const { isOpen, toggle } = props;
@@ -102,6 +103,14 @@ const AddNewChannelList = (props) => {
         },
     });
 
+
+    const [modal4, setModal4] = useState(false);
+
+    const toggle4 = () => {
+        setModal4(!modal4);
+    };
+
+
     return (
         <Modal
             isOpen={isOpen}
@@ -124,7 +133,7 @@ const AddNewChannelList = (props) => {
                     }}
                 >
                     <Row>
-                        <Col sm="12">
+                        <Col sm="4">
                             <div className="mb-3">
                                 <Label className="form-label">Channel Code</Label>
                                 <Input
@@ -142,6 +151,43 @@ const AddNewChannelList = (props) => {
                                     </FormFeedback>
                                 ) : null}
                             </div>
+                        </Col>
+
+                        <Col lg={2}>
+                            <div className="form-check form-switch form-switch-lg mb-3">
+                                <input
+                                    type="checkbox"
+                                    className="form-check-input"
+                                    id="customSwitchsizelg"
+                                    defaultChecked
+                                />
+                                <label
+                                    className="form-check-label"
+                                    htmlFor="customSwitchsizelg"
+                                >
+                                    Custom / Auto
+                                </label>
+                            </div>
+                        </Col>
+
+                        <Col lg={2}>
+                            <div className="form-check form-switch form-switch-lg mb-3">
+                                NCF:
+                                <input
+                                    type="checkbox"
+                                    className="form-check-input"
+                                    id="customSwitchsizelg"
+                                    defaultChecked
+                                />
+                                <label
+                                    className="form-check-label"
+                                    htmlFor="customSwitchsizelg"
+                                >
+                                    No / Yes
+                                </label>
+                            </div>
+                        </Col>
+                        <Col sm="4">
                             <div className="mb-3">
                                 <Label className="form-label">Channel Logo</Label>
                                 <Input
@@ -159,7 +205,8 @@ const AddNewChannelList = (props) => {
                                     </FormFeedback>
                                 ) : null}
                             </div>
-
+                        </Col>
+                        <Col sm="4">
                             <div className="mb-3">
                                 <Label className="form-label">Channel Name</Label>
                                 <Input
@@ -177,7 +224,8 @@ const AddNewChannelList = (props) => {
                                     </FormFeedback>
                                 ) : null}
                             </div>
-
+                        </Col>
+                        <Col sm="4">
                             <div className="mb-3">
                                 <Label className="form-label">Description</Label>
                                 <Input
@@ -202,6 +250,8 @@ const AddNewChannelList = (props) => {
                                     </FormFeedback>
                                 ) : null}
                             </div>
+                        </Col>
+                        <Col sm="4">
 
                             <div className="mb-3">
                                 <Label className="form-label">Channel Definition</Label>
@@ -224,7 +274,8 @@ const AddNewChannelList = (props) => {
                                     </FormFeedback>
                                 ) : null}
                             </div>
-
+                        </Col>
+                        <Col sm="4">
                             <div className="mb-3">
                                 <Label className="form-label">Channel Type</Label>
                                 <Input
@@ -246,7 +297,8 @@ const AddNewChannelList = (props) => {
                                     </FormFeedback>
                                 ) : null}
                             </div>
-
+                        </Col>
+                        <Col sm="4">
                             <div className="mb-3">
                                 <Label className="form-label">Broadcaster</Label>
                                 <Input
@@ -268,7 +320,8 @@ const AddNewChannelList = (props) => {
                                     </FormFeedback>
                                 ) : null}
                             </div>
-
+                        </Col>
+                        <Col sm="4">
                             <div className="mb-3">
                                 <Label className="form-label">Genre</Label>
                                 <Input
@@ -291,7 +344,8 @@ const AddNewChannelList = (props) => {
                                     </FormFeedback>
                                 ) : null}
                             </div>
-
+                        </Col>
+                        <Col sm="4">
                             <div className="mb-3">
                                 <Label className="form-label">Language</Label>
                                 <Input
@@ -309,7 +363,8 @@ const AddNewChannelList = (props) => {
                                     </FormFeedback>
                                 ) : null}
                             </div>
-
+                        </Col>
+                        <Col sm="4">
                             <div className="mb-3">
                                 <Label className="form-label">IsAlacarte</Label>
                                 <Input
@@ -330,7 +385,8 @@ const AddNewChannelList = (props) => {
                                     </FormFeedback>
                                 ) : null}
                             </div>
-
+                        </Col>
+                        <Col sm="4">
                             <div className="mb-3">
                                 <Label className="form-label">MRP Rate(INR)</Label>
                                 <Input
@@ -348,7 +404,8 @@ const AddNewChannelList = (props) => {
                                     </FormFeedback>
                                 ) : null}
                             </div>
-
+                        </Col>
+                        <Col sm="4">
                             <div className="mb-3">
                                 <Label className="form-label">Status</Label>
                                 <Input
@@ -370,6 +427,8 @@ const AddNewChannelList = (props) => {
                                     </FormFeedback>
                                 ) : null}
                             </div>
+                        </Col>
+                        <Col sm="4">
                             <div className="mb-3">
                                 {/* <Label className="form-label">Status</Label> */}
                                 <Input
@@ -390,6 +449,8 @@ const AddNewChannelList = (props) => {
                                     </FormFeedback>
                                 ) : null}
                             </div>
+                        </Col>
+                        <Col sm="4">
                             <div className="mb-3">
                                 {/* <Label className="form-label">Status</Label> */}
                                 <Input
@@ -408,6 +469,8 @@ const AddNewChannelList = (props) => {
                                     </FormFeedback>
                                 ) : null}
                             </div>
+                        </Col>
+                        <Col sm="4">
                             <div className="mb-3">
                                 {/* <Label className="form-label">Status</Label> */}
                                 <Input
@@ -427,6 +490,12 @@ const AddNewChannelList = (props) => {
                                 ) : null}
                             </div>
                         </Col>
+                    </Row>
+                    <Row>
+                        <Col sm="12">
+                            <CasList />
+                        </Col>
+
                     </Row>
                     <Row>
                         <Col sm="8">
@@ -458,7 +527,7 @@ const AddNewChannelList = (props) => {
                 </Form>
             </ModalBody>
             {/* </Modal> */}
-        </Modal>
+        </Modal >
     );
 };
 

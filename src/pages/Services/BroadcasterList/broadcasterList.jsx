@@ -389,7 +389,7 @@ const BroadcasterList = (props) => {
                           onClick={() => setModal(true)}
                           className="btn btn-primary me-1"
                         >
-                          Create Broadcaster
+                          Create
                         </Link>
                         <UncontrolledDropdown className="dropdown d-inline-block me-1">
                           <DropdownToggle
@@ -398,7 +398,7 @@ const BroadcasterList = (props) => {
                             id="dropdownMenuButton1"
                             onClick={() => setModal1(true)}
                           >
-                            Upload Broadcaster
+                            Upload
                             {/* <i className="bx bx-upload"></i> */}
                           </DropdownToggle>
                           {/* <DropdownMenu>

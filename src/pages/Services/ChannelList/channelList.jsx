@@ -59,6 +59,7 @@ import BulkUpdateCasCodeChannelList from './BulkUpdateCasCodeChannelList';
 import BulkUpdateChannelList from './BulkUpdateChannelList';
 import UploadChannelList from './UploadChannelList';
 
+
 const ChannelList = (props) => {
   //meta title
   document.title = "Channel List | VDigital";
@@ -139,10 +140,6 @@ const ChannelList = (props) => {
   const [modal1, setModal1] = useState(false);
   const [modal2, setModal2] = useState(false);
   const [modal3, setModal3] = useState(false);
-  const [modal4, setModal4] = useState(false);
-
-
-
 
   const [isEdit, setIsEdit] = useState(false);
 
@@ -364,9 +361,6 @@ const ChannelList = (props) => {
     setModal3(!modal3);
   };
 
-  const toggle4 = () => {
-    setModal4(!modal4);
-  };
 
 
   // const handleUserClick = (arg) => {
@@ -434,6 +428,8 @@ const ChannelList = (props) => {
       <UploadChannelList isOpen={modal1} toggle={toggle1} />
       <BulkUpdateChannelList isOpen={modal2} toggle={toggle2} />
       <BulkUpdateCasCodeChannelList isOpen={modal3} toggle={toggle3} />
+
+
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -455,7 +451,7 @@ const ChannelList = (props) => {
                           onClick={() => setModal(true)}
                           className="btn btn-primary me-1"
                         >
-                          Create Channel
+                          Create
                         </Link>
                         <UncontrolledDropdown className="dropdown d-inline-block me-1">
                           <DropdownToggle
@@ -463,7 +459,7 @@ const ChannelList = (props) => {
                             className="btn btn-success"
                             id="dropdownMenuButton1"
                           >
-                            Upload &nbsp;
+                            Upload&#160;&#160;&#160;
                             <i className="bx bx-upload"></i>
                           </DropdownToggle>
                           <DropdownMenu>
