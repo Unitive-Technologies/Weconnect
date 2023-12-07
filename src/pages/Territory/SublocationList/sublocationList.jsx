@@ -35,6 +35,7 @@ import { isEmpty } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import AddSubLocation from "./AddSubLocation";
 
 const SublocationList = (props) => {
   //meta title
@@ -60,7 +61,9 @@ const SublocationList = (props) => {
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
-  const [modal, setModal] = useState(false);
+  const [showAddSubLocation, setShowAddSubLocation] = useState(false);
+  const [setShowUploadSubLocation, setSetShowUploadSubLocation] =
+    useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
   const columns = useMemo(
@@ -120,7 +123,9 @@ const SublocationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.location_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.location_lbl}
+            </p>
           );
         },
       },
@@ -130,7 +135,9 @@ const SublocationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.location_code}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.location_code}
+            </p>
           );
         },
       },
@@ -140,7 +147,9 @@ const SublocationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.operator_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.operator_lbl}
+            </p>
           );
         },
       },
@@ -150,7 +159,9 @@ const SublocationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.operator_code}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.operator_code}
+            </p>
           );
         },
       },
@@ -170,7 +181,9 @@ const SublocationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.created_at}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_at}
+            </p>
           );
         },
       },
@@ -180,7 +193,9 @@ const SublocationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.created_by_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by_lbl}
+            </p>
           );
         },
       },
@@ -243,7 +258,7 @@ const SublocationList = (props) => {
   // }, [users]);
 
   const toggle = () => {
-    setModal(!modal);
+    setShowAddSubLocation(!showAddSubLocation);
   };
 
   const handleUserClick = (arg) => {
@@ -300,6 +315,21 @@ const SublocationList = (props) => {
 
   const keyField = "id";
 
+  const getTableActions = () => {
+    return [
+      {
+        name: "Create",
+        action: setShowAddSubLocation,
+        type: "normal",
+      },
+      {
+        name: "Upload",
+        action: setShowUploadSubLocation,
+        type: "normal",
+      },
+    ];
+  };
+
   return (
     <React.Fragment>
       <DeleteModal
@@ -307,6 +337,7 @@ const SublocationList = (props) => {
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
       />
+      <AddSubLocation isOpen={showAddSubLocation} toggle={toggle} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -326,8 +357,11 @@ const SublocationList = (props) => {
                       isGlobalFilter={true}
                       isAddUserList={true}
                       isShowingPageLength={true}
-                      iscustomPageSizeOptions={true}
-                      handleUserClick={handleUserClicks}
+                      tableActions={getTableActions()}
+                      handleSubLocationClick={() => setShowAddSubLocation(true)}
+                      handleUploadSubLocation={() =>
+                        setShowUploadSubLocation(true)
+                      }
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
