@@ -36,6 +36,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddNewLocation from "./AddNewLocation";
+import UploadLocation from "./UploadLocation";
 
 const LocationList = (props) => {
   //meta title
@@ -62,6 +63,7 @@ const LocationList = (props) => {
   const [userList, setUserList] = useState([]);
   const [modal, setModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [modal1, setModal1] = useState(false);
 
   const columns = useMemo(
     () => [
@@ -234,6 +236,10 @@ const LocationList = (props) => {
     setModal(!modal);
   };
 
+  const toggle1 = () => {
+    setModal1(!modal1);
+  };
+
   const handleUserClick = (arg) => {
     const user = arg;
 
@@ -296,6 +302,7 @@ const LocationList = (props) => {
         onCloseClick={() => setDeleteModal(false)}
       />
       <AddNewLocation isOpen={modal} toggle={toggle} />
+      <UploadLocation isOpen={modal1} toggle={toggle1} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -330,15 +337,15 @@ const LocationList = (props) => {
                         Create
                       </Link>
                     </div>
-                    {/* <div className="flex-shrink-0">
-                        <Link
-                          to="#!"
-                          onClick={() => setModal1(true)}
-                          className="btn btn-success"
-                        >
-                          Upload
-                        </Link>
-                      </div> */}
+                    <div className="flex-shrink-0">
+                      <Link
+                        to="#!"
+                        onClick={() => setModal1(true)}
+                        className="btn btn-success"
+                      >
+                        Upload
+                      </Link>
+                    </div>
                   </div>
                 </CardBody>
                 <CardBody>
