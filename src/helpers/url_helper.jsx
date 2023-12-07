@@ -39,6 +39,8 @@ export const GET_CITY = "/citylist";
 export const ADD_CITY = "/add/city";
 
 export const GET_LOCATION = "/locationlist";
+export const ADD_LOCATION = "/add/location";
+
 export const GET_SUBLOCATION = "/sublocationlist";
 
 export const GET_DISTRIBUTORS = "/distributors";

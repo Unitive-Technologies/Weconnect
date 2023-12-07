@@ -1,6 +1,8 @@
 import {
   GET_LOCATION_SUCCESS,
   GET_LOCATION_FAIL,
+  ADD_LOCATION_SUCCESS,
+  ADD_LOCATION_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -20,6 +22,18 @@ const Location = (state = INIT_STATE, action) => {
       };
 
     case GET_LOCATION_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_LOCATION_SUCCESS:
+      return {
+        ...state,
+        location: [...state.location, action.payload],
+      };
+
+    case ADD_LOCATION_FAIL:
       return {
         ...state,
         error: action.payload,
