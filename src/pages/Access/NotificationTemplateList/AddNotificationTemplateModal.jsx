@@ -45,8 +45,8 @@ const AddNotificationTemplateModal = (props) => {
       content: "",
       type: "",
       fontsize: "",
-      fontcolor: "",
-      fontbgcolor: "",
+      fontcolor: "#000000",
+      fontbgcolor: "#000000",
       fontfamily: "",
       status: "",
     },
@@ -175,7 +175,7 @@ const AddNotificationTemplateModal = (props) => {
                 <div>
                   <input
                     name="fontcolor"
-                    type="text"
+                    type="color"
                     // placeholder="Select Font Color"
                     className="form-control"
                     onFocus={toggleColorPicker}
@@ -196,13 +196,14 @@ const AddNotificationTemplateModal = (props) => {
                     />
                   )}
                 </div>
-                <div
+                <p>Value: {validation.values.fontcolor}</p>
+                {/* <div
                   style={{
                     backgroundColor: validation.values.fontcolor || "#000000",
                     width: "50px",
                     height: "20px",
                   }}
-                ></div>
+                ></div> */}
                 {validation.touched.fontcolor && validation.errors.fontcolor ? (
                   <FormFeedback type="invalid">
                     {validation.errors.fontcolor}
@@ -216,7 +217,7 @@ const AddNotificationTemplateModal = (props) => {
                 <div>
                   <input
                     name="fontbgcolor"
-                    type="text"
+                    type="color"
                     placeholder="Select Font Background Color"
                     className="form-control"
                     onFocus={toggleColorPicker1}
@@ -236,13 +237,14 @@ const AddNotificationTemplateModal = (props) => {
                     />
                   )}
                 </div>
-                <div
+                <p>Value: {validation.values.fontbgcolor}</p>
+                {/* <div
                   style={{
                     backgroundColor: validation.values.fontbgcolor || "#121314",
                     width: "50px",
                     height: "20px",
                   }}
-                ></div>
+                ></div> */}
                 {validation.touched.fontbgcolor &&
                 validation.errors.fontbgcolor ? (
                   <FormFeedback type="invalid">
