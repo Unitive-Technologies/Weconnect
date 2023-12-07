@@ -1,6 +1,8 @@
 import {
   GET_CITY_SUCCESS,
   GET_CITY_FAIL,
+  ADD_CITY_SUCCESS,
+  ADD_CITY_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -25,10 +27,21 @@ const City = (state = INIT_STATE, action) => {
         error: action.payload,
       };
 
+    case ADD_CITY_SUCCESS:
+      return {
+        ...state,
+        city: [...state.city, action.payload],
+      };
+
+    case ADD_CITY_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
     default:
       return state;
   }
 };
 
 export default City;
-

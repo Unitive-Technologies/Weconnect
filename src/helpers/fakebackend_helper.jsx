@@ -251,6 +251,8 @@ export const getDistrict = () => get(url.GET_DISTRICT);
 export const addDistrict = (district) => post(url.ADD_DISTRICT, district);
 
 export const getCity = () => get(url.GET_CITY);
+export const addCity = (city) => post(url.ADD_CITY, city);
+
 export const getLocation = () => get(url.GET_LOCATION);
 export const getSublocation = () => get(url.GET_SUBLOCATION);
 
@@ -260,13 +262,11 @@ export const addNewBroadCaster = (broadcast) =>
   post(url.ADD_NEW_GROUPPOLICY, broadcast);
 
 export const getGenreList = () => get(url.GET_GENRELIST);
-export const addNewGenreList = (genre) =>
-  post(url.ADD_NEW_GENRELIST, genre);
+export const addNewGenreList = (genre) => post(url.ADD_NEW_GENRELIST, genre);
 
 export const getLanguageList = () => get(url.GET_LANGUAGELIST);
 export const addNewLanguageList = (langlist) =>
   post(url.ADD_NEW_LANGUAGELIST, langlist);
-
 
 export const getChannelList = () => get(url.GET_CHANNELLIST);
 export const getBroadcasterBouquetList = () =>

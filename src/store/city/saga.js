@@ -1,11 +1,17 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_CITY } from "./actionTypes";
+import { GET_CITY, ADD_CITY } from "./actionTypes";
 
-import { getCitySuccess, getCityFail } from "./actions";
+import {
+  getCitySuccess,
+  getCityFail,
+  addCitySuccess,
+  addCityFail,
+} from "./actions";
 
 //Include Both Helper File with needed methods
-import { getCity } from "../../helpers/fakebackend_helper";
+import { getCity, addCity } from "../../helpers/fakebackend_helper";
+import { toast } from "react-toastify";
 
 const convertCityListObject = (cityList) => {
   // customer city list has more data than what we need, we need to convert each of the city user object in the list with needed colums of the table
@@ -24,8 +30,8 @@ const convertCityListObject = (cityList) => {
         city.status === 1
           ? "ACTIVE"
           : city.status === 0
-            ? "INACTIVE"
-            : "BLOCKED",
+          ? "INACTIVE"
+          : "BLOCKED",
 
       // status_lbl:
       //   city.status_lbl === 1
@@ -50,8 +56,20 @@ function* fetchCity() {
   }
 }
 
+function* onAddCity({ payload: city }) {
+  try {
+    const response = yield call(addCity, city);
+    yield put(addCitySuccess(response));
+    toast.success("City list Added Successfully", { autoClose: 2000 });
+  } catch (error) {
+    yield put(addCityFail(error));
+    toast.error("City list Added Failed", { autoClose: 2000 });
+  }
+}
+
 function* citySaga() {
   yield takeEvery(GET_CITY, fetchCity);
+  yield takeEvery(ADD_CITY, onAddCity);
 }
 
 export default citySaga;

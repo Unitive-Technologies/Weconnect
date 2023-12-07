@@ -36,6 +36,8 @@ export const GET_DISTRICT = "/districtlist";
 export const ADD_DISTRICT = "/add/district";
 
 export const GET_CITY = "/citylist";
+export const ADD_CITY = "/add/city";
+
 export const GET_LOCATION = "/locationlist";
 export const GET_SUBLOCATION = "/sublocationlist";
 
@@ -49,18 +51,13 @@ export const GET_USERHIERARCHY = "/userhierarchy";
 export const ADD_USERHIERARCHY = "/add/userhierarchy";
 
 export const GET_BROADCASTER = "/broadcasterlist";
-export const ADD_NEW_BROADCASTER =
-  "/add/broadcasterlist";
-
+export const ADD_NEW_BROADCASTER = "/add/broadcasterlist";
 
 export const GET_GENRELIST = "/genrelist";
-export const ADD_NEW_GENRELIST =
-  "/add/genrelist";
+export const ADD_NEW_GENRELIST = "/add/genrelist";
 
 export const GET_LANGUAGELIST = "/languagelist";
-export const ADD_NEW_LANGUAGELIST =
-  "/add/languagelist";
-
+export const ADD_NEW_LANGUAGELIST = "/add/languagelist";
 
 export const GET_CHANNELLIST = "/channellist";
 export const GET_BROADCASTERBOUQUETLIST = "/broadcasterbouquet";
@@ -71,9 +68,7 @@ export const GET_LOCALCHANNELNUMBER = "/localchannelnumberlist";
 export const GET_DOCUMENTUPLOADPOLICY = "/documentuploadpolicylist";
 
 export const GET_OSDTEMPLATE = "/osdtemplatelist";
-export const ADD_NEW_OSDTEMPLATE =
-  "/add/osdtemplatelist";
-
+export const ADD_NEW_OSDTEMPLATE = "/add/osdtemplatelist";
 
 export const GET_NCF = "/ncf";
 export const GET_COMPANYLIST = "/companylist";
