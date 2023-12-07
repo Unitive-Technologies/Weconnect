@@ -255,8 +255,8 @@ const ContactsList = (props) => {
                   {cellProps.row.original.status === 1
                     ? "Active"
                     : cellProps.row.original.status === 0
-                      ? "In-Active"
-                      : "Blocked"}
+                    ? "In-Active"
+                    : "Blocked"}
                 </Link>
               </h5>
             </>
@@ -275,10 +275,10 @@ const ContactsList = (props) => {
                   {cellProps.row.original.status === 0
                     ? "MSO"
                     : cellProps.row.original.status === 1
-                      ? "RO"
-                      : cellProps.row.original.status === 2
-                        ? "DISTRIBUTOR"
-                        : "LCO"}
+                    ? "RO"
+                    : cellProps.row.original.status === 2
+                    ? "DISTRIBUTOR"
+                    : "LCO"}
                 </Link>
               </h5>
             </>
@@ -297,8 +297,8 @@ const ContactsList = (props) => {
                   {cellProps.row.original.status === 1
                     ? "Administrator"
                     : cellProps.row.original.status === 2
-                      ? "Staff"
-                      : "User"}
+                    ? "Staff"
+                    : "User"}
                 </Link>
               </h5>
             </>
@@ -514,33 +514,37 @@ const ContactsList = (props) => {
         name: "Upload",
         action: setShowUploadUser,
         type: "dropdown",
-        dropdownName: "Upload"
+        dropdownName: "Upload",
       },
       {
         name: "Bulk Update",
         action: setShowBulkUpdateUser,
         type: "dropdown",
-        dropdownName: "Upload"
+        dropdownName: "Upload",
       },
       {
         name: "Bulk Active/Inactive User",
         action: setShowInactivateUser,
         type: "dropdown",
-        dropdownName: "Actions"
+        dropdownName: "Actions",
       },
       {
         name: "Bulk User Settings",
         action: setBulkUserSettings,
         type: "dropdown",
-        dropdownName: "Actions"
+        dropdownName: "Actions",
       },
     ];
-  }
+  };
 
   return (
     <React.Fragment>
       {/* {console.log("viewuser initially:" + JSON.stringify(viewUser))} */}
-      <ViewUserModal isOpen={showViewUser} toggle={toggleViewModal} user={viewUser} />
+      <ViewUserModal
+        isOpen={showViewUser}
+        toggle={toggleViewModal}
+        user={viewUser}
+      />
       <AddUserModal isOpen={showAddUser} toggle={toggle} />
       <UploadUserModal isOpen={showUploadUser} toggle={toggle2} />
       <BulkUpdateUserModal isOpen={showBulkUpdateUser} toggle={toggle3} />
@@ -549,75 +553,22 @@ const ContactsList = (props) => {
         toggle={toggle4}
         user={filteredUsers}
       />
-      <BulkUserSettings isOpen={showBulkUserSettings} toggle={toggle5} user={filteredUsers} />
+      <BulkUserSettings
+        isOpen={showBulkUserSettings}
+        toggle={toggle5}
+        user={filteredUsers}
+      />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Access" breadcrumbItem="User List" />
+          <Breadcrumbs title="Access" breadcrumbItem="Users" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
             <Row>
               <Col lg="12">
                 <Card>
-                  {/* <CardBody>
-                    <div className="d-flex align-items-center justify-content-between">
-                      
-                      <div className="flex-shrink-0">
-                        <Link
-                          to="#!"
-                          onClick={() => setModal(true)}
-                          className="btn btn-primary me-1"
-                        >
-                          Create New User
-                        </Link>
-                        <UncontrolledDropdown className="dropdown d-inline-block me-1">
-                          <DropdownToggle
-                            type="menu"
-                            className="btn btn-success"
-                            id="dropdownMenuButton1"
-                          >
-                            Upload &nbsp;
-                            <i className="bx bx-upload"></i>
-                          </DropdownToggle>
-                          <DropdownMenu>
-                            <li onClick={() => setModal2(true)}>
-                              <DropdownItem href="#">Upload User</DropdownItem>
-                            </li>
-                            <li onClick={() => setModal3(true)}>
-                              <DropdownItem href="#">
-                                Bulk Update User
-                              </DropdownItem>
-                            </li>
-                          </DropdownMenu>
-                        </UncontrolledDropdown>
-                        <UncontrolledDropdown className="dropdown d-inline-block me-1">
-                          <DropdownToggle
-                            type="menu"
-                            className="btn btn-success"
-                            id="dropdownMenuButton1"
-                          >
-                            Action &nbsp;
-                            <i className="mdi mdi-dots-vertical"></i>
-                          </DropdownToggle>
-                          <DropdownMenu>
-                            <li onClick={() => setModal4(true)}>
-                              <DropdownItem href="#">
-                                Bulk Active/Inactive User
-                              </DropdownItem>
-                            </li>
-                            <li onClick={() => setModal5(true)}>
-                              <DropdownItem href="#">
-                                Bulk User Settings
-                              </DropdownItem>
-                            </li>
-                          </DropdownMenu>
-                        </UncontrolledDropdown>
-                      </div>
-                    </div>
-                  </CardBody> */}
                   <CardBody>
-                    {/* {console.log("users:" + JSON.stringify(users))} */}
                     <TableContainer
                       isPagination={true}
                       columns={columns}

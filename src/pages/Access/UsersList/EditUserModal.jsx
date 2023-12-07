@@ -17,77 +17,77 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addNewUser as onAddNewUser } from "/src/store/users/actions";
 import { useSelector, useDispatch } from "react-redux";
+import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
-const AddUserModal = (props) => {
-  const { isOpen, toggle } = props;
+const EditUserModal = (props) => {
+  const { isOpen, toggle, user } = props;
+  //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
-    initialValues: {
-      name: "",
-      email: "",
-      mobile: "",
-      usertype: "",
-      status: "",
-      message: "",
-      role: "",
-      designation: "",
-      grouppolicy: "",
-      loginid: "",
-      password: "",
-      confirmpassword: "",
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
-      email: Yup.string()
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-        .required("Please Enter Your Email"),
-      // mobile: Yup.array().required("Please Enter mobile"),
-      mobile: Yup.string().required("Please Enter mobile Number"),
-      usertype: Yup.string().required("Please Enter User Type"),
-      status: Yup.string().required("Please Enter Status"),
-      message: Yup.string().required("Please Enter Message"),
-      role: Yup.string().required("Please Enter Role"),
-      designation: Yup.string().required("Please Enter Designation"),
-      grouppolicy: Yup.string().required("Please Enter Group Policy"),
-      loginid: Yup.string().required("Please Enter Login ID"),
-      password: Yup.string().required("Please Enter Password"),
-      confirmpassword: Yup.string().required("Please Enter Confirm Password"),
-    }),
-    onSubmit: (values) => {
-      const newUser = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
-        name: values["name"],
-        email: values["email"],
-        mobile: values["mobile"],
-        usertype: values["usertype"],
-        status: values["status"],
-        message: values["message"],
-        role: values["role"],
-        designation: values["designation"],
-        grouppolicy: values["grouppolicy"],
-        loginid: values["loginid"],
-        password: values["password"],
-        confirmpassword: values["confirmpassword"],
-      };
-      console.log("newUser:" + newUser);
-      // save new user
-      dispatch(onAddNewUser(newUser));
-      validation.resetForm();
-      toggle();
-    },
+    // initialValues: {
+    //   name: user.name,
+    //   email: user.email,
+    //   mobile: user.mobile_no,
+    //   usertype: user.usertype,
+    //   status: user.status,
+    //   message: user.message,
+    //   role: user.role,
+    //   designation: user.designation,
+    //   grouppolicy: user.grouppolicy,
+    //   loginid: user.username,
+    //   password: user.password,
+    //   confirmpassword: user.confirmpassword,
+    // },
+    // validationSchema: Yup.object({
+    //   name: Yup.string().required("Please Enter Your Name"),
+    //   email: Yup.string()
+    //     .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
+    //     .required("Please Enter Your Email"),
+    //   // mobile: Yup.array().required("Please Enter mobile"),
+    //   mobile: Yup.string().required("Please Enter mobile Number"),
+    //   usertype: Yup.string().required("Please Enter User Type"),
+    //   status: Yup.string().required("Please Enter Status"),
+    //   message: Yup.string().required("Please Enter Message"),
+    //   role: Yup.string().required("Please Enter Role"),
+    //   designation: Yup.string().required("Please Enter Designation"),
+    //   grouppolicy: Yup.string().required("Please Enter Group Policy"),
+    //   loginid: Yup.string().required("Please Enter Login ID"),
+    //   password: Yup.string().required("Please Enter Password"),
+    //   confirmpassword: Yup.string().required("Please Enter Confirm Password"),
+    // }),
+    // onSubmit: (values) => {
+    //   const updateUser = {
+    //     id: user.id,
+    //     name: values.name,
+    //     email: values.email,
+    //     mobile: values.mobile,
+    //     usertype: values.usertype,
+    //     status: values.status,
+    //     message: values.message,
+    //     role: values.role,
+    //     designation: values.designation,
+    //     grouppolicy: values.grouppolicy,
+    //     loginid: values.loginid,
+    //     password: values.password,
+    //     confirmpassword: values.confirmpassword,
+    //   };
+
+    //   // update user
+    //   dispatch(onUpdateUser(updateUser));
+    //   validation.resetForm();
+    //   toggle();
+    // },
   });
   return (
     <Modal
       isOpen={isOpen}
-      role="dialog"
       size="xl"
+      role="dialog"
       autoFocus={true}
       centered={true}
       className="exampleModal"
@@ -95,7 +95,10 @@ const AddUserModal = (props) => {
       toggle={toggle}
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4">Add User</ModalHeader>
+      <ModalHeader toggle={toggle} tag="h4">
+        Edit User
+        <button>Edit</button>
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -114,7 +117,7 @@ const AddUserModal = (props) => {
                   placeholder="Insert Name"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.name || ""}
+                  //   value={validation.initialValues.name || ""}
                   invalid={
                     validation.touched.name && validation.errors.name
                       ? true
@@ -137,7 +140,7 @@ const AddUserModal = (props) => {
                   placeholder="Insert Email"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.email || ""}
+                  //   value={validation.initialValues.email || ""}
                   invalid={
                     validation.touched.email && validation.errors.email
                       ? true
@@ -159,7 +162,7 @@ const AddUserModal = (props) => {
                   type="text"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.mobile || ""}
+                  //   value={validation.initialValues.mobile || ""}
                   invalid={
                     validation.touched.mobile && validation.errors.mobile
                       ? true
@@ -182,9 +185,9 @@ const AddUserModal = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.usertype || ""}
+                  //   value={validation.initialValues.usertype || ""}
                 >
-                  <option value="">Select User Type</option>
+                  {/* <option value="">Select User Type</option> */}
                   <option value="1">MSO</option>
                   <option value="2">RO</option>
                   <option value="3">Distributor</option>
@@ -207,9 +210,9 @@ const AddUserModal = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.status || ""}
+                  //   value={validation.initialValues.status || ""}
                 >
-                  <option value="">Select Status</option>
+                  {/* <option value="">Select Status</option> */}
                   <option value="11">Active</option>
                   <option value="12">BLOCKED</option>
                   <option value="13">In-Active</option>
@@ -229,7 +232,7 @@ const AddUserModal = (props) => {
                   rows="3"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.message || ""}
+                  //   value={validation.initialValues.message || ""}
                   invalid={
                     validation.touched.message && validation.errors.message
                       ? true
@@ -251,9 +254,9 @@ const AddUserModal = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.role || ""}
+                  //   value={validation.initialValues.role || ""}
                 >
-                  <option value="">Select Role</option>
+                  {/* <option value="">Select Role</option> */}
                   <option value="21">Administrator</option>
                   <option value="22">Staff</option>
                   <option value="23">User</option>
@@ -264,6 +267,8 @@ const AddUserModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">Designation</Label>
                 <Input
@@ -273,9 +278,9 @@ const AddUserModal = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.designation || ""}
+                  //   value={validation.initialValues.designation || ""}
                 >
-                  <option value="">Select Designation</option>
+                  {/* <option value="">Select Designation</option> */}
                   <option value="dir">Director</option>
                 </Input>
                 {validation.touched.designation &&
@@ -285,8 +290,6 @@ const AddUserModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-            </Col>
-            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">Group Policy</Label>
                 <Input
@@ -296,7 +299,7 @@ const AddUserModal = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.grouppolicy || ""}
+                  //   value={validation.initialValues.grouppolicy || ""}
                 >
                   <option value="">Select Group Policy</option>
                   <option value="A">Active</option>
@@ -319,7 +322,7 @@ const AddUserModal = (props) => {
                   placeholder="Login ID"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.loginid || ""}
+                  //   value={validation.initialValues.loginid || ""}
                   invalid={
                     validation.touched.loginid && validation.errors.loginid
                       ? true
@@ -332,59 +335,13 @@ const AddUserModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-              <div className="mb-3">
-                <Label className="form-label">Password</Label>
-                <Input
-                  name="password"
-                  label="Password"
-                  type="text"
-                  placeholder="Password"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.password || ""}
-                  invalid={
-                    validation.touched.password && validation.errors.password
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.password && validation.errors.password ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.password}
-                  </FormFeedback>
-                ) : null}
-              </div>
-              <div className="mb-3">
-                <Label className="form-label">Confirm-Password</Label>
-                <Input
-                  name="confirmpassword"
-                  label="Confirm Password"
-                  type="text"
-                  placeholder="Retype Password"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.confirmpassword || ""}
-                  invalid={
-                    validation.touched.confirmpassword &&
-                    validation.errors.confirmpassword
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.confirmpassword &&
-                validation.errors.confirmpassword ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.confirmpassword}
-                  </FormFeedback>
-                ) : null}
-              </div>
             </Col>
           </Row>
           <Row>
             <Col>
               <div className="text-end">
                 <button type="submit" className="btn btn-success save-user">
-                  Create
+                  Save
                 </button>
               </div>
             </Col>
@@ -396,9 +353,9 @@ const AddUserModal = (props) => {
   );
 };
 
-AddUserModal.propTypes = {
+EditUserModal.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default AddUserModal;
+export default EditUserModal;
