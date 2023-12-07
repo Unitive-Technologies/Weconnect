@@ -42,6 +42,7 @@ export const GET_LOCATION = "/locationlist";
 export const ADD_LOCATION = "/add/location";
 
 export const GET_SUBLOCATION = "/sublocationlist";
+export const ADD_SUBLOCATION = "/add/sublocation"
 
 export const GET_DISTRIBUTORS = "/distributors";
 export const GET_LCO = "/lco";

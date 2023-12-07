@@ -257,6 +257,7 @@ export const getLocation = () => get(url.GET_LOCATION);
 export const addLocation = (location) => post(url.ADD_LOCATION, location);
 
 export const getSublocation = () => get(url.GET_SUBLOCATION);
+export const addSublocation = (sublocation) => post(url.ADD_SUBLOCATION);
 
 export const getRegionalOffice = () => get(url.GET_REGIONALOFFICE);
 export const getBroadCasters = () => get(url.GET_BROADCASTER);

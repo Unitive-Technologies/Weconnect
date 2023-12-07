@@ -360,7 +360,6 @@ const fakeBackend = () => {
     });
   });
 
-
   mock.onGet(url.GET_LANGUAGELIST).reply(() => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -385,8 +384,6 @@ const fakeBackend = () => {
         }
       });
     });
-
-
   });
 
   mock.onGet(url.GET_BROADCASTERBOUQUETLIST).reply(() => {
@@ -938,6 +935,19 @@ const fakeBackend = () => {
           resolve([200, location.data]);
         } else {
           reject([400, "Cannot add location list"]);
+        }
+      });
+    });
+  });
+
+  mock.onPost(url.ADD_SUBLOCATION).reply((sublocation) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (sublocation && sublocation.data) {
+          // Passing fake JSON data as response
+          resolve([200, sublocation.data]);
+        } else {
+          reject([400, "Cannot add sublocation list"]);
         }
       });
     });

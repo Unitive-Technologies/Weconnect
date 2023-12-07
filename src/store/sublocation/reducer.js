@@ -1,6 +1,8 @@
 import {
   GET_SUBLOCATION_SUCCESS,
   GET_SUBLOCATION_FAIL,
+  ADD_SUBLOCATION_SUCCESS,
+  ADD_SUBLOCATION_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -20,6 +22,18 @@ const Sublocation = (state = INIT_STATE, action) => {
       };
 
     case GET_SUBLOCATION_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_SUBLOCATION_SUCCESS:
+      return {
+        ...state,
+        sublocation: [...state.sublocation, action.payload],
+      };
+
+    case ADD_SUBLOCATION_FAIL:
       return {
         ...state,
         error: action.payload,
