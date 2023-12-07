@@ -36,6 +36,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddNewDistrict from "./AddNewDistrict";
+import UploadDistrict from "./UploadDistrict";
 
 const DistrictList = (props) => {
   //meta title
@@ -63,6 +64,7 @@ const DistrictList = (props) => {
   const [userList, setUserList] = useState([]);
   const [modal, setModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [modal1, setModal1] = useState(false);
 
   const columns = useMemo(
     () => [
@@ -248,6 +250,9 @@ const DistrictList = (props) => {
   const toggle = () => {
     setModal(!modal);
   };
+  const toggle1 = () => {
+    setModal1(!modal1);
+  };
 
   const handleUserClick = (arg) => {
     const user = arg;
@@ -311,6 +316,7 @@ const DistrictList = (props) => {
         onCloseClick={() => setDeleteModal(false)}
       />
       <AddNewDistrict isOpen={modal} toggle={toggle} />
+      <UploadDistrict isOpen={modal1} toggle={toggle1} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -343,6 +349,15 @@ const DistrictList = (props) => {
                           className="btn btn-primary me-1"
                         >
                           Create
+                        </Link>
+                      </div>
+                      <div className="flex-shrink-0">
+                        <Link
+                          to="#!"
+                          onClick={() => setModal1(true)}
+                          className="btn btn-success"
+                        >
+                          Upload
                         </Link>
                       </div>
                     </div>
