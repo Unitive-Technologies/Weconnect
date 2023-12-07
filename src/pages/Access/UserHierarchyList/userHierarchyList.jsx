@@ -74,7 +74,7 @@ const UserHierarchyList = (props) => {
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
-  const [modal, setModal] = useState(false);
+  const [showAddUserHierarchy, setShowAddUserHierarchy] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
   const columns = useMemo(
@@ -269,20 +269,8 @@ const UserHierarchyList = (props) => {
     }
   }, [dispatch, userHier]);
 
-  // useEffect(() => {
-  //   setContact(users);
-  //   setIsEdit(false);
-  // }, [users]);
-
-  // useEffect(() => {
-  //   if (!isEmpty(users) && !!isEdit) {
-  //     setContact(users);
-  //     setIsEdit(false);
-  //   }
-  // }, [users]);
-
   const toggle = () => {
-    setModal(!modal);
+    setShowAddUserHierarchy(!showAddUserHierarchy);
   };
 
   const handleUserClick = (arg) => {
@@ -331,18 +319,34 @@ const UserHierarchyList = (props) => {
     setDeleteModal(false);
   };
 
-  const handleUserClicks = () => {
-    setUserList("");
-    setIsEdit(false);
-    toggle();
-  };
-
   const toggleToast = () => {
-    // console.log("button clicked");
     setToast(!toast);
   };
 
   const keyField = "id";
+
+  const getTableActions = () => {
+    return [
+      {
+        name: "Create",
+        action: setShowAddUserHierarchy,
+        type: "normal",
+      },
+      {
+        name: "Bulk Assign to Operator",
+        action: toggleToast,
+        type: "dropdown",
+        dropdownName: "Actions",
+        // onClick={toggleToast}
+      },
+      {
+        name: "Bulk Removel from Operator",
+        action: toggleToast,
+        type: "dropdown",
+        dropdownName: "Actions",
+      },
+    ];
+  };
 
   return (
     <React.Fragment>
@@ -351,7 +355,7 @@ const UserHierarchyList = (props) => {
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
       />
-      <AddUserHierarchy isOpen={modal} toggle={toggle} />
+      <AddUserHierarchy isOpen={showAddUserHierarchy} toggle={toggle} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -364,63 +368,19 @@ const UserHierarchyList = (props) => {
                 <Card>
                   <CardBody>
                     <div className="d-flex align-items-center justify-content-between">
-                      <h5 className="mb-0 card-title flex-grow-1">
-                        {/* Jobs Lists */}
-                      </h5>
-                      {/* <form className="app-search d-none d-lg-block">
-                        <div className="position-relative">
-                          <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Search..."
-                          />
-                          <span className="bx bx-search-alt" />
-                        </div>
-                      </form> */}
-                      <div className="flex-shrink-0">
-                        <Link
-                          to="#!"
-                          onClick={() => setModal(true)}
-                          className="btn btn-primary me-1"
-                        >
-                          Create User Hierarchy
-                        </Link>
+                      <div
+                        className="position-fixed top-0 end-0 p-3"
+                        style={{ zIndex: "1005" }}
+                      >
+                        <Toast isOpen={toast}>
+                          <ToastHeader toggle={toggleToast}>
+                            Warning
+                          </ToastHeader>
+                          <ToastBody>
+                            Please selcet atleast on user hierarchy.
+                          </ToastBody>
+                        </Toast>
                       </div>
-                      <UncontrolledDropdown className="dropdown d-inline-block me-1">
-                        <DropdownToggle
-                          type="menu"
-                          className="btn btn-success"
-                          id="dropdownMenuButton1"
-                        >
-                          Action &nbsp;
-                          <i className="mdi mdi-dots-vertical"></i>
-                        </DropdownToggle>
-                        <DropdownMenu>
-                          <li>
-                            <DropdownItem onClick={toggleToast}>
-                              Bulk assign to Operator
-                            </DropdownItem>
-                          </li>
-                          <li>
-                            <DropdownItem onClick={toggleToast}>
-                              Bulk removel from Operator
-                            </DropdownItem>
-                          </li>
-                        </DropdownMenu>
-                        <div
-                          className="position-fixed top-0 end-0 p-3"
-                          style={{ zIndex: "1005" }}
-                        >
-                          <Toast isOpen={toast}>
-                            <ToastHeader toggle={toggleToast}>
-                              Warning
-                            </ToastHeader>
-                            <ToastBody>
-                              Please selcet atleast on user hierarchy.
-                            </ToastBody>
-                          </Toast>
-                        </div>
-                      </UncontrolledDropdown>
                     </div>
                   </CardBody>
                   <CardBody>
@@ -430,178 +390,18 @@ const UserHierarchyList = (props) => {
                       columns={columns}
                       data={userHier}
                       isGlobalFilter={true}
-                      // isAddUserList={true}
+                      isAddUserList={true}
                       isShowingPageLength={true}
-                      // iscustomPageSizeOptions={true}
-                      // handleUserClick={handleUserClicks}
+                      tableActions={getTableActions()}
+                      handleUserHierarchyClick={() =>
+                        setShowAddUserHierarchy(true)
+                      }
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
                     />
-                    {/* <Modal isOpen={modal} toggle={toggle}>
-                      <ModalHeader toggle={toggle} tag="h4">
-                        {!!isEdit ? "Edit User" : "Add User"}
-                      </ModalHeader>
-                      <ModalBody>
-                        <Form
-                          onSubmit={(e) => {
-                            e.preventDefault();
-                            validation.handleSubmit();
-                            return false;
-                          }}
-                        >
-                          <Row>
-                            <Col xs={12}>
-                              <div className="mb-3">
-                                <Label className="form-label">Name</Label>
-                                <Input
-                                  name="name"
-                                  type="text"
-                                  placeholder="Insert Name"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.name || ""}
-                                  invalid={
-                                    validation.touched.name &&
-                                    validation.errors.name
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.name &&
-                                validation.errors.name ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.name}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">
-                                  Designation
-                                </Label>
-                                <Input
-                                  name="designation"
-                                  label="Designation"
-                                  placeholder="Insert Designation"
-                                  type="text"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.designation || ""}
-                                  invalid={
-                                    validation.touched.designation &&
-                                    validation.errors.designation
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.designation &&
-                                validation.errors.designation ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.designation}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">Email</Label>
-                                <Input
-                                  name="email"
-                                  label="Email"
-                                  type="email"
-                                  placeholder="Insert Email"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.email || ""}
-                                  invalid={
-                                    validation.touched.email &&
-                                    validation.errors.email
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.email &&
-                                validation.errors.email ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.email}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">Option</Label>
-                                <Input
-                                  type="select"
-                                  name="tags"
-                                  className="form-select"
-                                  multiple={true}
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.tags || []}
-                                  invalid={
-                                    validation.touched.tags &&
-                                    validation.errors.tags
-                                      ? true
-                                      : false
-                                  }
-                                >
-                                  <option>Photoshop</option>
-                                  <option>illustrator</option>
-                                  <option>Html</option>
-                                  <option>Php</option>
-                                  <option>Java</option>
-                                  <option>Python</option>
-                                  <option>UI/UX Designer</option>
-                                  <option>Ruby</option>
-                                  <option>Css</option>
-                                </Input>
-                                {validation.touched.tags &&
-                                validation.errors.tags ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.tags}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">Projects</Label>
-                                <Input
-                                  name="projects"
-                                  label="Projects"
-                                  type="text"
-                                  placeholder="Insert Projects"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.projects || ""}
-                                  invalid={
-                                    validation.touched.projects &&
-                                    validation.errors.projects
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.projects &&
-                                validation.errors.projects ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.projects}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                            </Col>
-                          </Row>
-                          <Row>
-                            <Col>
-                              <div className="text-end">
-                                <button
-                                  type="submit"
-                                  className="btn btn-success save-user"
-                                >
-                                  Save
-                                </button>
-                              </div>
-                            </Col>
-                          </Row>
-                        </Form>
-                      </ModalBody>
-                    </Modal> */}
                   </CardBody>
                 </Card>
               </Col>
