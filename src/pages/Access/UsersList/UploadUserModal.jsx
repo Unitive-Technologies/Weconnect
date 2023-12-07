@@ -23,13 +23,14 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
+import { addNewUser as onAddNewUser } from "/src/store/users/actions";
 
 const UploadUserModal = (props) => {
   const { isOpen, toggle } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
 
-  const [selectedFiles, setselectedFiles] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   function handleAcceptedFiles(files) {
     files.map((file) =>
@@ -38,7 +39,7 @@ const UploadUserModal = (props) => {
         formattedSize: formatBytes(file.size),
       })
     );
-    setselectedFiles(files);
+    setSelectedFiles(files);
   }
 
   function formatBytes(bytes, decimals = 2) {
@@ -83,6 +84,47 @@ const UploadUserModal = (props) => {
     link.click();
   };
 
+  const handleUploadFile = () => {
+    if (selectedFiles.length === 0) {
+      // No files selected, handle accordingly
+      return;
+    }
+
+    const file = selectedFiles[0];
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const csvContent = e.target.result;
+
+      // Process the CSV content (you can use a library like papaparse)
+      // For simplicity, let's just log the parsed data
+      const parsedData = parseCSV(csvContent);
+      console.log("Parsed CSV Data:", parsedData);
+    };
+
+    reader.readAsText(file);
+  };
+
+  const parseCSV = (csvContent) => {
+    // Use a CSV parsing library (e.g., papaparse)
+    // For simplicity, we'll split lines and split fields by commas
+    const lines = csvContent.split("\n");
+    const headers = lines[0].split(",");
+    const data = [];
+
+    for (let i = 1; i < lines.length; i++) {
+      const fields = lines[i].split(",");
+      const rowData = {};
+      for (let j = 0; j < headers.length; j++) {
+        rowData[headers[j]] = fields[j];
+      }
+      data.push(rowData);
+    }
+
+    return data;
+    dispatch(onAddNewUser(data));
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -114,7 +156,7 @@ const UploadUserModal = (props) => {
             <Form>
               <Dropzone
                 onDrop={(acceptedFiles) => {
-                  handleAcceptedFiles(acceptedFiles);
+                  setSelectedFiles(acceptedFiles);
                 }}
               >
                 {({ getRootProps, getInputProps }) => (
@@ -170,7 +212,11 @@ const UploadUserModal = (props) => {
             </Form>
 
             <div className="text-center mt-4">
-              <button type="button" className="btn btn-primary ">
+              <button
+                type="button"
+                className="btn btn-primary "
+                onClick={handleUploadFile}
+              >
                 Upload File
               </button>
             </div>
