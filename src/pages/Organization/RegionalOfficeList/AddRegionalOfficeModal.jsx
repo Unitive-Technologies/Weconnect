@@ -105,21 +105,7 @@ const AddRegionalOfficeModal = (props) => {
           }}
         >
           <Row>
-            <Col sm="4">
-              <div className="form-check form-switch form-switch-lg mb-3">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitchsizelg"
-                  defaultChecked
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="customSwitchsizelg"
-                >
-                  Custom / Auto
-                </label>
-              </div>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Regional Office Code</Label>
                 <Input
@@ -141,7 +127,26 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={2}>
+              <div className="form-check form-switch form-switch-lg mb-3">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="customSwitchsizelg"
+                  defaultChecked
+                />
+                <label
+                  className="form-check-label"
+                  htmlFor="customSwitchsizelg"
+                >
+                  Custom / Auto
+                </label>
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Regional Office Name</Label>
                 <Input
@@ -164,6 +169,8 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Contact Person</Label>
                 <Input
@@ -188,6 +195,8 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Status</Label>
                 <Input
@@ -209,6 +218,10 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Mobile No.</Label>
                 <Input
@@ -231,7 +244,8 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Phone No.</Label>
                 <Input
@@ -254,6 +268,8 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Email Address</Label>
                 <Input
@@ -276,6 +292,10 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">State</Label>
                 <Input
@@ -299,6 +319,8 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">District</Label>
                 <Input
@@ -322,6 +344,8 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">City</Label>
                 <Input
@@ -345,7 +369,10 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Address1</Label>
                 <Input
@@ -368,6 +395,9 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Address2</Label>
                 <Input
@@ -390,6 +420,9 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Address3</Label>
                 <Input
@@ -412,6 +445,10 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Pincode</Label>
                 <Input
@@ -435,8 +472,7 @@ const AddRegionalOfficeModal = (props) => {
                 ) : null}
               </div>
             </Col>
-            {/* <Col sm="1"></Col> */}
-            <Col sm="4">
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Postal Office Registration(POR)
@@ -458,295 +494,11 @@ const AddRegionalOfficeModal = (props) => {
                 {validation.touched.por && validation.errors.por ? (
                   <FormFeedback type="invalid">
                     {validation.errors.por}
-                  </FormFeedback>
-                ) : null}
-              </div>
-              <div className="mb-3">
-                <Label className="form-label">Phase</Label>
-                <Input
-                  name="phase"
-                  type="select"
-                  placeholder="Select Phase"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.phase || ""}
-                >
-                  <option value="">Select Phase</option>
-                  <option value="1">Phase 1</option>
-                  <option value="2">Phase 2</option>
-                  <option value="3">Phase 3</option>
-                  <option value="4">Phase 4</option>
-                </Input>
-                {validation.touched.phase && validation.errors.phase ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.phase}
-                  </FormFeedback>
-                ) : null}
-              </div>
-              <div className="mb-3">
-                <Label className="form-label">Registration Start Date</Label>
-                <Input
-                  name="startdate"
-                  type="date"
-                  placeholder="Select Start Date"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.startdate || ""}
-                  invalid={
-                    validation.touched.startdate && validation.errors.startdate
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.startdate && validation.errors.startdate ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.startdate}
-                  </FormFeedback>
-                ) : null}
-              </div>
-              <div className="mb-3">
-                <Label className="form-label">Registration End Date</Label>
-                <Input
-                  name="enddate"
-                  type="date"
-                  placeholder="Select End Date"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.enddate || ""}
-                  invalid={
-                    validation.touched.enddate && validation.errors.enddate
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.enddate && validation.errors.enddate ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.enddate}
-                  </FormFeedback>
-                ) : null}
-              </div>
-              <div className="mb-3">
-                <Label className="form-label">Fax No.</Label>
-                <Input
-                  name="fax"
-                  type="text"
-                  placeholder="Select Fax No."
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.fax || ""}
-                  invalid={
-                    validation.touched.fax && validation.errors.fax
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.fax && validation.errors.fax ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.fax}
-                  </FormFeedback>
-                ) : null}
-              </div>
-              <div className="mb-3">
-                <Label className="form-label">GST No.</Label>
-                <Input
-                  name="gst"
-                  type="text"
-                  placeholder="Select GST No."
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.gst || ""}
-                  invalid={
-                    validation.touched.gst && validation.errors.gst
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.gst && validation.errors.gst ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.gst}
-                  </FormFeedback>
-                ) : null}
-              </div>
-              <div className="mb-3">
-                <Label className="form-label">GST Reg. Date</Label>
-                <Input
-                  name="gstdate"
-                  type="date"
-                  placeholder="Select GST Reg Date"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.gstdate || ""}
-                  invalid={
-                    validation.touched.gstdate && validation.errors.gstdate
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.gstdate && validation.errors.gstdate ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.gstdate}
-                  </FormFeedback>
-                ) : null}
-              </div>
-              <div className="mb-3">
-                <Label className="form-label">PAN No.</Label>
-                <Input
-                  name="pan"
-                  type="text"
-                  placeholder="Select PAN No."
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.pan || ""}
-                  invalid={
-                    validation.touched.pan && validation.errors.pan
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.pan && validation.errors.pan ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.pan}
-                  </FormFeedback>
-                ) : null}
-              </div>
-              <div className="mb-3">
-                <Label className="form-label">Credit Limit</Label>
-                <Input
-                  name="credit"
-                  type="text"
-                  placeholder="Enter Credit Limit"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.credit || ""}
-                  invalid={
-                    validation.touched.credit && validation.errors.credit
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.credit && validation.errors.credit ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.credit}
-                  </FormFeedback>
-                ) : null}
-              </div>
-              <div className="mb-3">
-                <Label className="form-label">Area ID</Label>
-                <Input
-                  name="area"
-                  type="text"
-                  placeholder="Enter Area ID"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.area || ""}
-                  invalid={
-                    validation.touched.area && validation.errors.area
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.area && validation.errors.area ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.area}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                <Label className="form-label">Login ID</Label>
-                <Input
-                  name="loginid"
-                  label="Login ID"
-                  type="text"
-                  placeholder="Login ID"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.loginid || ""}
-                  invalid={
-                    validation.touched.loginid && validation.errors.loginid
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.loginid && validation.errors.loginid ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.loginid}
-                  </FormFeedback>
-                ) : null}
-              </div>
-              <div className="mb-3">
-                <Label className="form-label">Password</Label>
-                <Input
-                  name="password"
-                  label="Password"
-                  type="text"
-                  placeholder="Password"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.password || ""}
-                  invalid={
-                    validation.touched.password && validation.errors.password
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.password && validation.errors.password ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.password}
-                  </FormFeedback>
-                ) : null}
-              </div>
-              <div className="mb-3">
-                <Label className="form-label">Confirm-Password</Label>
-                <Input
-                  name="confirmpassword"
-                  label="Confirm Password"
-                  type="text"
-                  placeholder="Retype Password"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.confirmpassword || ""}
-                  invalid={
-                    validation.touched.confirmpassword &&
-                    validation.errors.confirmpassword
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.confirmpassword &&
-                validation.errors.confirmpassword ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.confirmpassword}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
-            <Col sm="4">
-              <div className="mb-3">
-                <Label className="form-label">
-                  Postal Office Registration(POR)
-                </Label>
-                <Input
-                  name="por"
-                  label="Postal Office Registration"
-                  type="text"
-                  placeholder="Enter POR Number"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.por || ""}
-                  invalid={
-                    validation.touched.por && validation.errors.por
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.por && validation.errors.por ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.por}
-                  </FormFeedback>
-                ) : null}
-              </div>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Phase</Label>
                 <Input
@@ -770,6 +522,10 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Registration Start Date</Label>
                 <Input
@@ -791,6 +547,9 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Registration End Date</Label>
                 <Input
@@ -812,6 +571,9 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Fax No.</Label>
                 <Input
@@ -833,6 +595,10 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">GST No.</Label>
                 <Input
@@ -854,6 +620,9 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">GST Reg. Date</Label>
                 <Input
@@ -875,6 +644,9 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">PAN No.</Label>
                 <Input
@@ -896,6 +668,10 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Credit Limit</Label>
                 <Input
@@ -917,6 +693,8 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Area ID</Label>
                 <Input
@@ -938,7 +716,87 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">Agreement upload</Label>
+                <Input
+                  name="upload"
+                  label="Agreement Upload"
+                  type="file"
+                  placeholder="Agreement Upload"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.upload || ""}
+                  invalid={
+                    validation.touched.upload && validation.errors.upload
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.upload && validation.errors.upload ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.upload}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">Agreement Start Date</Label>
+                <Input
+                  name="agreestart"
+                  label="Agreement Start Date"
+                  type="date"
+                  placeholder="Agreement Start Date"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.agreestart || ""}
+                  invalid={
+                    validation.touched.agreestart &&
+                    validation.errors.agreestart
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.agreestart &&
+                validation.errors.agreestart ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.agreestart}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">Agreement End Date</Label>
+                <Input
+                  name="agreeend"
+                  label="Agreement End Date"
+                  type="date"
+                  placeholder="Agreement End Date"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.agreeend || ""}
+                  invalid={
+                    validation.touched.agreeend && validation.errors.agreeend
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.agreeend && validation.errors.agreeend ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.agreeend}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+          </Row>
 
+          <Row>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Login ID</Label>
                 <Input
@@ -961,6 +819,8 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Password</Label>
                 <Input
@@ -983,6 +843,8 @@ const AddRegionalOfficeModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Confirm-Password</Label>
                 <Input
