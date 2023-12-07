@@ -35,6 +35,7 @@ import { isEmpty } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import AddNewLocation from "./AddNewLocation";
 
 const LocationList = (props) => {
   //meta title
@@ -119,7 +120,9 @@ const LocationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.operator_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.operator_lbl}
+            </p>
           );
         },
       },
@@ -129,7 +132,9 @@ const LocationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.operator_code}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.operator_code}
+            </p>
           );
         },
       },
@@ -149,7 +154,9 @@ const LocationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.created_at}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_at}
+            </p>
           );
         },
       },
@@ -159,7 +166,9 @@ const LocationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.created_by_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by_lbl}
+            </p>
           );
         },
       },
@@ -286,6 +295,7 @@ const LocationList = (props) => {
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
       />
+      <AddNewLocation isOpen={modal} toggle={toggle} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -297,16 +307,51 @@ const LocationList = (props) => {
             <Col lg="12">
               <Card>
                 <CardBody>
+                  <div className="d-flex align-items-center justify-content-between">
+                    <h5 className="mb-0 card-title flex-grow-1">
+                      {/* Jobs Lists */}
+                    </h5>
+                    {/* <form className="app-search d-none d-lg-block">
+                        <div className="position-relative">
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Search..."
+                          />
+                          <span className="bx bx-search-alt" />
+                        </div>
+                      </form> */}
+                    <div className="flex-shrink-0">
+                      <Link
+                        to="#!"
+                        onClick={() => setModal(true)}
+                        className="btn btn-primary me-1"
+                      >
+                        Create
+                      </Link>
+                    </div>
+                    {/* <div className="flex-shrink-0">
+                        <Link
+                          to="#!"
+                          onClick={() => setModal1(true)}
+                          className="btn btn-success"
+                        >
+                          Upload
+                        </Link>
+                      </div> */}
+                  </div>
+                </CardBody>
+                <CardBody>
                   {console.log("Locations:" + JSON.stringify(locations))}
                   <TableContainer
                     isPagination={true}
                     columns={columns}
                     data={locations}
                     isGlobalFilter={true}
-                    isAddUserList={true}
+                    // isAddUserList={true}
                     isShowingPageLength={true}
-                    iscustomPageSizeOptions={true}
-                    handleUserClick={handleUserClicks}
+                    // iscustomPageSizeOptions={true}
+                    // handleUserClick={handleUserClicks}
                     customPageSize={8}
                     tableClass="table align-middle table-nowrap table-hover"
                     theadClass="table-light"
