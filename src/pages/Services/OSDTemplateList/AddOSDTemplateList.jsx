@@ -89,7 +89,7 @@ const AddNewOSDTemplateList = (props) => {
                     <Row>
                         <Col sm="12">
                             <div className="mb-3">
-                                <Label className="form-label">Template Name</Label>
+                                <Label className="form-label">Name</Label>
                                 <Input
                                     name="name"
                                     type="text"

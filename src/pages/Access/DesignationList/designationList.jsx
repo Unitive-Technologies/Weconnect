@@ -301,6 +301,7 @@ const DesignationList = (props) => {
         name: "Create",
         action: setShowAddDesignation,
         type: "normal",
+        icon: "create",
       },
     ];
   };

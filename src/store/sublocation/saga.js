@@ -1,18 +1,21 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_SUBLOCATION, ADD_SUBLOCATION } from "./actionTypes";
+import { GET_SUBLOCATION, ADD_SUBLOCATION, GET_LOCLIST } from "./actionTypes";
 
 import {
   getSublocationSuccess,
   getSublocationFail,
   addSubLocationSuccess,
   addSubLocationFail,
+  getLoclistSuccess,
+  getloclistFail,
 } from "./actions";
 
 //Include Both Helper File with needed methods
 import {
   getSublocation,
   addSublocation,
+  getLoclist,
 } from "../../helpers/fakebackend_helper";
 import { toast } from "react-toastify";
 
@@ -51,6 +54,15 @@ function* fetchSublocation() {
   }
 }
 
+function* fetchLoclist() {
+  try {
+    const response = yield call(getLoclist);
+    yield put(getLoclistSuccess(response));
+  } catch (error) {
+    yield put(getLoclistFail(error));
+  }
+}
+
 function* onAddSubLocation({ payload: sublocation }) {
   try {
     const response = yield call(addSublocation, sublocation);
@@ -65,6 +77,7 @@ function* onAddSubLocation({ payload: sublocation }) {
 function* sublocationSaga() {
   yield takeEvery(GET_SUBLOCATION, fetchSublocation);
   yield takeEvery(ADD_SUBLOCATION, onAddSubLocation);
+  yield takeEvery(GET_LOCLIST, fetchLoclist);
 }
 
 export default sublocationSaga;
