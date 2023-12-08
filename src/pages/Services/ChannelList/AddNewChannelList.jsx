@@ -135,11 +135,11 @@ const AddNewChannelList = (props) => {
                     <Row>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Channel Code</Label>
+                                <Label className="form-label">Code</Label>
                                 <Input
                                     name="code"
                                     type="text"
-                                    placeholder="Enter channel code"
+                                    placeholder="Enter code"
                                     // className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
@@ -189,7 +189,7 @@ const AddNewChannelList = (props) => {
                         </Col>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Channel Logo</Label>
+                                <Label className="form-label">Logo</Label>
                                 <Input
                                     name="logo"
                                     type="text"
@@ -208,11 +208,11 @@ const AddNewChannelList = (props) => {
                         </Col>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Channel Name</Label>
+                                <Label className="form-label">Name</Label>
                                 <Input
                                     name="name"
                                     type="text"
-                                    placeholder="Enter channel name"
+                                    placeholder="Enter name"
                                     // className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
@@ -254,7 +254,7 @@ const AddNewChannelList = (props) => {
                         <Col sm="4">
 
                             <div className="mb-3">
-                                <Label className="form-label">Channel Definition</Label>
+                                <Label className="form-label">Definition</Label>
                                 <Input
                                     name="definition"
                                     type="select"
@@ -277,11 +277,11 @@ const AddNewChannelList = (props) => {
                         </Col>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Channel Type</Label>
+                                <Label className="form-label">Type</Label>
                                 <Input
                                     name="type"
                                     type="select"
-                                    placeholder="Select Channel type"
+                                    placeholder="Select type"
                                     className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}

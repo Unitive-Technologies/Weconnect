@@ -128,8 +128,8 @@ const LanguageList = (props) => {
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
-  const [modal, setModal] = useState(false);
-  const [modal1, setModal1] = useState(false);
+  const [showAddNewLanguageList, setShowAddNewLanguageList] = useState(false);
+  const [showUploadLanguageList, setShowUploadLanguageList] = useState(false);
 
 
   const [isEdit, setIsEdit] = useState(false);
@@ -273,11 +273,11 @@ const LanguageList = (props) => {
   // }, [users]);
 
   const toggle = () => {
-    setModal(!modal);
+    setShowAddNewLanguageList(!showAddNewLanguageList);
   };
 
   const toggle1 = () => {
-    setModal1(!modal1);
+    setShowUploadLanguageList(!showUploadLanguageList);
   };
 
 
@@ -335,6 +335,25 @@ const LanguageList = (props) => {
 
   const keyField = "id";
 
+  const getTableActions = () => {
+    return [
+      {
+        name: "Create",
+        action: setShowAddNewLanguageList,
+        type: "normal",
+        icon: "create"
+      },
+      {
+        name: "Upload",
+        action: setShowUploadLanguageList,
+        type: "normal",
+        icon: "upload",
+      },
+
+    ];
+  };
+
+
   return (
     <React.Fragment>
       {/* <DeleteModal
@@ -343,8 +362,8 @@ const LanguageList = (props) => {
         onCloseClick={() => setDeleteModal(false)}
       /> */}
 
-      <AddNewLanguageList isOpen={modal} toggle={toggle} />
-      <UploadLanguageList isOpen={modal1} toggle={toggle1} />
+      <AddNewLanguageList isOpen={showAddNewLanguageList} toggle={toggle} />
+      <UploadLanguageList isOpen={showUploadLanguageList} toggle={toggle1} />
 
       <div className="page-content">
         <Container fluid>
@@ -357,211 +376,23 @@ const LanguageList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    <div className="d-flex align-items-center justify-content-between">
-                      <h5 className="mb-0 card-title flex-grow-1">
-                        {/* Jobs Lists */}
-                      </h5>
-                      <div className="flex-shrink-0">
-                        <Link
-                          to="#!"
-                          onClick={() => setModal(true)}
-                          className="btn btn-primary me-1"
-                        >
-                          Create
-                        </Link>
-                        <UncontrolledDropdown className="dropdown d-inline-block me-1">
-                          <DropdownToggle
-                            type="menu"
-                            className="btn btn-success"
-                            id="dropdownMenuButton1"
-                            onClick={() => setModal1(true)}
-                          >
-                            Upload
-                            {/* <i className="bx bx-upload"></i> */}
-                          </DropdownToggle>
-                        </UncontrolledDropdown>
-                      </div>
-                    </div>
-                  </CardBody>
-                  <CardBody>
                     {console.log("languagelist:" + JSON.stringify(langlist))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={langlist}
                       isGlobalFilter={true}
-                      isAddLanguageList={true}
+                      isAddUserList={true}
                       isShowingPageLength={true}
-                      // iscustomPageSizeOptions={true}
-                      handleUserClick={() => { }}
+                      tableActions={getTableActions()}
+                      handleAddNewLanguageList={() => setShowAddNewLanguageList(true)}
+                      handleUploadLanguageList={() => setShowUploadLanguageList(true)}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
                     />
-                    {/* <Modal isOpen={modal} toggle={toggle}>
-                      <ModalHeader toggle={toggle} tag="h4">
-                        {!!isEdit ? "Edit User" : "Add User"}
-                      </ModalHeader>
-                      <ModalBody>
-                        <Form
-                          onSubmit={(e) => {
-                            e.preventDefault();
-                            validation.handleSubmit();
-                            return false;
-                          }}
-                        >
-                          <Row>
-                            <Col xs={12}>
-                              <div className="mb-3">
-                                <Label className="form-label">Name</Label>
-                                <Input
-                                  name="name"
-                                  type="text"
-                                  placeholder="Insert Name"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.name || ""}
-                                  invalid={
-                                    validation.touched.name &&
-                                    validation.errors.name
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.name &&
-                                validation.errors.name ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.name}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">
-                                  Designation
-                                </Label>
-                                <Input
-                                  name="designation"
-                                  label="Designation"
-                                  placeholder="Insert Designation"
-                                  type="text"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.designation || ""}
-                                  invalid={
-                                    validation.touched.designation &&
-                                    validation.errors.designation
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.designation &&
-                                validation.errors.designation ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.designation}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">Email</Label>
-                                <Input
-                                  name="email"
-                                  label="Email"
-                                  type="email"
-                                  placeholder="Insert Email"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.email || ""}
-                                  invalid={
-                                    validation.touched.email &&
-                                    validation.errors.email
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.email &&
-                                validation.errors.email ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.email}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">Option</Label>
-                                <Input
-                                  type="select"
-                                  name="tags"
-                                  className="form-select"
-                                  multiple={true}
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.tags || []}
-                                  invalid={
-                                    validation.touched.tags &&
-                                    validation.errors.tags
-                                      ? true
-                                      : false
-                                  }
-                                >
-                                  <option>Photoshop</option>
-                                  <option>illustrator</option>
-                                  <option>Html</option>
-                                  <option>Php</option>
-                                  <option>Java</option>
-                                  <option>Python</option>
-                                  <option>UI/UX Designer</option>
-                                  <option>Ruby</option>
-                                  <option>Css</option>
-                                </Input>
-                                {validation.touched.tags &&
-                                validation.errors.tags ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.tags}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">Projects</Label>
-                                <Input
-                                  name="projects"
-                                  label="Projects"
-                                  type="text"
-                                  placeholder="Insert Projects"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.projects || ""}
-                                  invalid={
-                                    validation.touched.projects &&
-                                    validation.errors.projects
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.projects &&
-                                validation.errors.projects ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.projects}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                            </Col>
-                          </Row>
-                          <Row>
-                            <Col>
-                              <div className="text-end">
-                                <button
-                                  type="submit"
-                                  className="btn btn-success save-user"
-                                >
-                                  Save
-                                </button>
-                              </div>
-                            </Col>
-                          </Row>
-                        </Form>
-                      </ModalBody>
-                    </Modal> */}
                   </CardBody>
                 </Card>
               </Col>

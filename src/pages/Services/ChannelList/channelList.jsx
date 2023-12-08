@@ -134,10 +134,10 @@ const ChannelList = (props) => {
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
-  const [modal, setModal] = useState(false);
-  const [modal1, setModal1] = useState(false);
-  const [modal2, setModal2] = useState(false);
-  const [modal3, setModal3] = useState(false);
+  const [showAddNewChannelList, setShowAddNewChannelList] = useState(false);
+  const [showUploadChannelList, setShowUploadChannelList] = useState(false);
+  const [showBulkUpdateChannelList, setShowBulkUpdateChannelList] = useState(false);
+  const [showBulkUpdateCasCodeChannelList, setShowBulkUpdateCasCodeChannelList] = useState(false);
 
   const [isEdit, setIsEdit] = useState(false);
 
@@ -344,19 +344,19 @@ const ChannelList = (props) => {
   // }, [channel]);
 
   const toggle = () => {
-    setModal(!modal);
+    setShowAddNewChannelList(!showAddNewChannelList);
   };
 
   const toggle1 = () => {
-    setModal1(!modal1);
+    setShowUploadChannelList(!showUploadChannelList);
   };
 
   const toggle2 = () => {
-    setModal2(!modal2);
+    setShowBulkUpdateChannelList(!showBulkUpdateChannelList);
   };
 
   const toggle3 = () => {
-    setModal3(!modal3);
+    setShowBulkUpdateCasCodeChannelList(!showBulkUpdateCasCodeChannelList);
   };
 
 
@@ -415,6 +415,36 @@ const ChannelList = (props) => {
 
   const keyField = "id";
 
+  const getTableActions = () => {
+    return [
+      {
+        name: "Create",
+        action: setShowAddNewChannelList,
+        type: "normal",
+        icon: "create"
+      },
+      {
+        name: "Upload Channel",
+        action: setShowUploadChannelList,
+        type: "dropdown",
+        dropdownName: "Upload",
+      },
+      {
+        name: "Bulk Update Channel",
+        action: setShowBulkUpdateChannelList,
+        type: "dropdown",
+        dropdownName: "Upload",
+      },
+      {
+        name: "Bulk Update Channel Cas Code",
+        action: setShowBulkUpdateCasCodeChannelList,
+        type: "dropdown",
+        dropdownName: "Upload",
+      },
+
+    ];
+  };
+
   return (
     <React.Fragment>
       {/* <DeleteModal
@@ -422,10 +452,10 @@ const ChannelList = (props) => {
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
       /> */}
-      <AddNewChannelList isOpen={modal} toggle={toggle} />
-      <UploadChannelList isOpen={modal1} toggle={toggle1} />
-      <BulkUpdateChannelList isOpen={modal2} toggle={toggle2} />
-      <BulkUpdateCasCodeChannelList isOpen={modal3} toggle={toggle3} />
+      <AddNewChannelList isOpen={showAddNewChannelList} toggle={toggle} />
+      <UploadChannelList isOpen={showUploadChannelList} toggle={toggle1} />
+      <BulkUpdateChannelList isOpen={showBulkUpdateChannelList} toggle={toggle2} />
+      <BulkUpdateCasCodeChannelList isOpen={showBulkUpdateCasCodeChannelList} toggle={toggle3} />
 
       <div className="page-content">
         <Container fluid>
@@ -438,57 +468,19 @@ const ChannelList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    <div className="d-flex align-items-center justify-content-between">
-                      <h5 className="mb-0 card-title flex-grow-1">
-                        {/* Jobs Lists */}
-                      </h5>
-                      <div className="flex-shrink-0">
-                        <Link
-                          to="#!"
-                          onClick={() => setModal(true)}
-                          className="btn btn-primary me-1"
-                        >
-                          Create
-                        </Link>
-                        <UncontrolledDropdown className="dropdown d-inline-block me-1">
-                          <DropdownToggle
-                            type="menu"
-                            className="btn btn-success"
-                            id="dropdownMenuButton1"
-                          >
-                            Upload&#160;&#160;&#160;
-                            <i className="bx bx-upload"></i>
-                          </DropdownToggle>
-                          <DropdownMenu>
-                            <li onClick={() => setModal1(true)}>
-                              <DropdownItem href="#">Upload Channel</DropdownItem>
-                            </li>
-                            <li onClick={() => setModal2(true)}>
-                              <DropdownItem href="#">
-                                Bulk Update Channel
-                              </DropdownItem>
-                            </li>
-                            <li onClick={() => setModal3(true)}>
-                              <DropdownItem href="#">
-                                Bulk Update Channel Cas Code
-                              </DropdownItem>
-                            </li>
-                          </DropdownMenu>
-                        </UncontrolledDropdown>
-                      </div>
-                    </div>
-                  </CardBody>
-                  <CardBody>
                     {console.log("Channel List:" + JSON.stringify(channel))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={channel}
                       isGlobalFilter={true}
-                      isAddChannelList={true}
+                      isAddUserList={true}
                       isShowingPageLength={true}
-                      // iscustomPageSizeOptions={true}
-                      handleUserClick={() => { }}
+                      tableActions={getTableActions()}
+                      handleAddNewChannelList={() => setShowAddNewChannelList(true)}
+                      handleUploadChannelList={() => setShowUploadChannelList(true)}
+                      handleBulkUpdateCasCodeChannelList={() => setShowBulkUpdateCasCodeChannelList(true)}
+                      handleBulkUpdateChannelList={() => setShowBulkUpdateChannelList(true)}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

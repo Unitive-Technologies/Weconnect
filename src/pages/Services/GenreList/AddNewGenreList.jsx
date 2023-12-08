@@ -89,11 +89,11 @@ const AddNewGenreList = (props) => {
                     <Row>
                         <Col sm="12">
                             <div className="mb-3">
-                                <Label className="form-label">Genre Title</Label>
+                                <Label className="form-label">Title</Label>
                                 <Input
                                     name="name"
                                     type="text"
-                                    placeholder="Enter genre title"
+                                    placeholder="Enter title"
                                     // className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}

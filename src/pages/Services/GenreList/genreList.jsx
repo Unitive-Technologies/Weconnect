@@ -48,7 +48,6 @@ import { ToastContainer } from "react-toastify";
 import AddNewGenreList from './AddNewGenreList'
 import UploadGenreList from './UploadGenreList'
 
-
 const GenreList = (props) => {
   //meta title
   document.title = "Genre List | VDigital";
@@ -122,8 +121,8 @@ const GenreList = (props) => {
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
-  const [modal, setModal] = useState(false);
-  const [modal1, setModal1] = useState(false);
+  const [showAddNewGenreList, setShowAddNewGenreList] = useState(false);
+  const [showUploadGenreList, setShowUploadGenreList] = useState(false);
 
   const [isEdit, setIsEdit] = useState(false);
 
@@ -261,11 +260,11 @@ const GenreList = (props) => {
   // }, [users]);
 
   const toggle = () => {
-    setModal(!modal);
+    setShowAddNewGenreList(!showAddNewGenreList);
   };
 
   const toggle1 = () => {
-    setModal1(!modal1);
+    setShowUploadGenreList(!showUploadGenreList);
   };
 
 
@@ -323,6 +322,25 @@ const GenreList = (props) => {
 
   const keyField = "id";
 
+  const getTableActions = () => {
+    return [
+      {
+        name: "Create",
+        action: setShowAddNewGenreList,
+        type: "normal",
+        icon: "create"
+      },
+      {
+        name: "Upload",
+        action: setShowUploadGenreList,
+        type: "normal",
+        icon: "upload",
+      },
+
+    ];
+  };
+
+
   return (
     <React.Fragment>
       {/* <DeleteModal
@@ -330,8 +348,8 @@ const GenreList = (props) => {
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
       /> */}
-      <AddNewGenreList isOpen={modal} toggle={toggle} />
-      <UploadGenreList isOpen={modal1} toggle={toggle1} />
+      <AddNewGenreList isOpen={showAddNewGenreList} toggle={toggle} />
+      <UploadGenreList isOpen={showUploadGenreList} toggle={toggle1} />
 
       <div className="page-content">
         <Container fluid>
@@ -344,43 +362,17 @@ const GenreList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    <div className="d-flex align-items-center justify-content-between">
-                      <h5 className="mb-0 card-title flex-grow-1">
-                        {/* Jobs Lists */}
-                      </h5>
-                      <div className="flex-shrink-0">
-                        <Link
-                          to="#!"
-                          onClick={() => setModal(true)}
-                          className="btn btn-primary me-1"
-                        >
-                          Create
-                        </Link>
-                        <UncontrolledDropdown className="dropdown d-inline-block me-1">
-                          <DropdownToggle
-                            type="menu"
-                            className="btn btn-success"
-                            id="dropdownMenuButton1"
-                            onClick={() => setModal1(true)}
-                          >
-                            Upload
-                            {/* <i className="bx bx-upload"></i> */}
-                          </DropdownToggle>
-                        </UncontrolledDropdown>
-                      </div>
-                    </div>
-                  </CardBody>
-                  <CardBody>
                     {console.log("Genre List:" + JSON.stringify(genrelist))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={genrelist}
                       isGlobalFilter={true}
-                      // isAddGenreList={true}
+                      isAddUserList={true}
                       isShowingPageLength={true}
-                      // iscustomPageSizeOptions={true}
-                      handleUserClick={() => { }}
+                      tableActions={getTableActions()}
+                      handleAddNewGenreList={() => setShowAddNewGenreList(true)}
+                      handleUploadGenreList={() => setShowUploadGenreList(true)}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

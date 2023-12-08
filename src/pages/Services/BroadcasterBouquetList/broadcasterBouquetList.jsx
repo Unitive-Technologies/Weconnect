@@ -126,7 +126,7 @@ const BroadcasterBouquetList = (props) => {
   const [userList, setUserList] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
 
-  const [modal, setModal] = useState(false);
+  const [showAddNewBroadcasterBouquetList, setShowAddNewBroadcasterBouquetList] = useState(false);
 
 
   const columns = useMemo(
@@ -300,7 +300,7 @@ const BroadcasterBouquetList = (props) => {
   // }, [brodcastbouquet]);
 
   const toggle = () => {
-    setModal(!modal);
+    setShowAddNewBroadcasterBouquetList(!showAddNewBroadcasterBouquetList);
   };
 
   // const handleUserClick = (arg) => {
@@ -357,6 +357,17 @@ const BroadcasterBouquetList = (props) => {
 
   const keyField = "id";
 
+  const getTableActions = () => {
+    return [
+      {
+        name: "Create",
+        action: setShowAddNewBroadcasterBouquetList,
+        type: "normal",
+        icon: "create"
+      },
+    ];
+  };
+
   return (
     <React.Fragment>
       {/* <DeleteModal
@@ -364,7 +375,7 @@ const BroadcasterBouquetList = (props) => {
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
       /> */}
-      <AddNewBroadcasterBouquetList isOpen={modal} toggle={toggle} />
+      <AddNewBroadcasterBouquetList isOpen={showAddNewBroadcasterBouquetList} toggle={toggle} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -379,22 +390,6 @@ const BroadcasterBouquetList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    <div className="d-flex align-items-center justify-content-between">
-                      <h5 className="mb-0 card-title flex-grow-1">
-                        {/* Jobs Lists */}
-                      </h5>
-                      <div className="flex-shrink-0">
-                        <Link
-                          to="#!"
-                          onClick={() => setModal(true)}
-                          className="btn btn-primary me-1"
-                        >
-                          Create
-                        </Link>
-                      </div>
-                    </div>
-                  </CardBody>
-                  <CardBody>
                     {console.log(
                       "broadcasterBouquet:" + JSON.stringify(brodcastbouquet)
                     )}
@@ -403,10 +398,11 @@ const BroadcasterBouquetList = (props) => {
                       columns={columns}
                       data={brodcastbouquet}
                       isGlobalFilter={true}
-                      isAddBroadcasterBouquetList={true}
+                      isAddUserList={true}
                       isShowingPageLength={true}
-                      // iscustomPageSizeOptions={true}
-                      handleUserClick={() => { }}
+                      tableActions={getTableActions()}
+                      handleAddNewBroadcasterBouquetList={() => setShowAddNewBroadcasterBouquetList(true)}
+
                       customPageSize={50}
                       // sisChannel={true}
                       tableClass="table align-middle table-nowrap table-hover"

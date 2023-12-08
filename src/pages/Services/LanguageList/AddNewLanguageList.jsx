@@ -110,11 +110,11 @@ const AddNewLanguageList = (props) => {
                             </div>
 
                             <div className="mb-3">
-                                <Label className="form-label">Language Code</Label>
+                                <Label className="form-label">Code</Label>
                                 <Input
                                     name="languagecode"
                                     type="text"
-                                    placeholder="Enter language code"
+                                    placeholder="Enter code"
                                     // className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}

@@ -103,7 +103,7 @@ const AddNewBroadCaster = (props) => {
           <Row>
             <Col sm="12">
               <div className="mb-3">
-                <Label className="form-label">Broadcaster Name</Label>
+                <Label className="form-label">Name</Label>
                 <Input
                   name="name"
                   type="text"
@@ -121,7 +121,7 @@ const AddNewBroadCaster = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Broadcaster Full-Name</Label>
+                <Label className="form-label">Full-Name</Label>
                 <Input
                   name="fullname"
                   type="text"
@@ -150,7 +150,7 @@ const AddNewBroadCaster = (props) => {
                   value={validation.values.contactperson || ""}
                 ></Input>
                 {validation.touched.contactperson &&
-                validation.errors.contactperson ? (
+                  validation.errors.contactperson ? (
                   <FormFeedback type="invalid">
                     {validation.errors.contactperson}
                   </FormFeedback>
@@ -205,7 +205,7 @@ const AddNewBroadCaster = (props) => {
                   value={validation.values.emailaddress || ""}
                 ></Input>
                 {validation.touched.emailaddress &&
-                validation.errors.emailaddress ? (
+                  validation.errors.emailaddress ? (
                   <FormFeedback type="invalid">
                     {validation.errors.emailaddress}
                   </FormFeedback>
@@ -241,13 +241,13 @@ const AddNewBroadCaster = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>

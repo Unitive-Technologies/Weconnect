@@ -327,8 +327,8 @@ const OSDConfigurationList = (props) => {
                       isPagination={true}
                       columns={columns}
                       data={osdConfig}
-                      isGlobalFilter={true}
-                      isAddUserList={true}
+                      // isGlobalFilter={true}
+                      // isAddUserList={true}
                       isShowingPageLength={true}
                       iscustomPageSizeOptions={true}
                       handleUserClick={handleUserClicks}

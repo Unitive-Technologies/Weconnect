@@ -132,8 +132,8 @@ const BroadcasterList = (props) => {
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
-  const [modal, setModal] = useState(false);
-  const [modal1, setModal1] = useState(false);
+  const [showAddNewBroadCaster, setShowAddNewBroadCaster] = useState(false);
+  const [showUploadBroadCaster, setShowUploadBroadCaster] = useState(false);
 
   const [isEdit, setIsEdit] = useState(false);
 
@@ -295,11 +295,11 @@ const BroadcasterList = (props) => {
   // }, [brodcast]);
 
   const toggle = () => {
-    setModal(!modal);
+    setShowAddNewBroadCaster(!showAddNewBroadCaster);
   };
 
   const toggle1 = () => {
-    setModal1(!modal1);
+    setShowUploadBroadCaster(!showUploadBroadCaster);
   };
 
 
@@ -358,6 +358,25 @@ const BroadcasterList = (props) => {
 
   const keyField = "id";
 
+  const getTableActions = () => {
+    return [
+      {
+        name: "Create",
+        action: setShowAddNewBroadCaster,
+        type: "normal",
+        icon: "create"
+      },
+      {
+        name: "Upload",
+        action: setShowUploadBroadCaster,
+        type: "normal",
+        icon: "upload",
+      },
+
+    ];
+  };
+
+
   return (
     <React.Fragment>
       {/* <DeleteModal
@@ -365,8 +384,8 @@ const BroadcasterList = (props) => {
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
       /> */}
-      <AddNewBroadCaster isOpen={modal} toggle={toggle} />
-      <UploadBroadCaster isOpen={modal1} toggle={toggle1} />
+      <AddNewBroadCaster isOpen={showAddNewBroadCaster} toggle={toggle} />
+      <UploadBroadCaster isOpen={showUploadBroadCaster} toggle={toggle1} />
 
       <div className="page-content">
         <Container fluid>
@@ -379,51 +398,16 @@ const BroadcasterList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    <div className="d-flex align-items-center justify-content-between">
-                      <h5 className="mb-0 card-title flex-grow-1">
-                        {/* Jobs Lists */}
-                      </h5>
-                      <div className="flex-shrink-0">
-                        <Link
-                          to="#!"
-                          onClick={() => setModal(true)}
-                          className="btn btn-primary me-1"
-                        >
-                          Create
-                        </Link>
-                        <UncontrolledDropdown className="dropdown d-inline-block me-1">
-                          <DropdownToggle
-                            type="menu"
-                            className="btn btn-success"
-                            id="dropdownMenuButton1"
-                            onClick={() => setModal1(true)}
-                          >
-                            Upload
-                            {/* <i className="bx bx-upload"></i> */}
-                          </DropdownToggle>
-                          {/* <DropdownMenu>
-                            <li onClick={() => setModal1(true)}>
-                              <DropdownItem href="#">Upload Broadcasters</DropdownItem>
-                            </li>
-                          </DropdownMenu> */}
-                        </UncontrolledDropdown>
-
-                        <UncontrolledDropdown className="dropdown d-inline-block me-1">
-                        </UncontrolledDropdown>
-                      </div>
-                    </div>
-                  </CardBody>
-                  <CardBody>
-                    {console.log("broadcasterlist:" + JSON.stringify(brodcast))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={brodcast}
                       isGlobalFilter={true}
-                      // isAddBroadCaster={true}
+                      isAddUserList={true}
                       isShowingPageLength={true}
-                      // iscustomPageSizeOptions={true}
-                      handleUserClick={() => { }}
+                      tableActions={getTableActions()}
+                      handleAddNewBroadCasterClick={() => setShowAddNewBroadCaster(true)}
+                      handleUploadUser={() => setShowUploadBroadCaster(true)}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
