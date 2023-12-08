@@ -68,6 +68,7 @@ const TableContainer = ({
   isAddOptions,
   isAddUserList,
   isAddRegionalOffice,
+  isAddDistributor,
   handleUploadUser,
   handleBulkUpdateUser,
   isAddBroadCaster,
@@ -203,21 +204,10 @@ const TableContainer = ({
           {isAddRegionalOffice && (
             <TableActionButtons tableActions={tableActions} />
           )}
-          {/* {isAddUserList && (
-          <Col sm="12">
-            <div className="text-sm-end">
-              <Button
-                type="button"
-                color="primary"
-                className="btn mb-2 me-2"
-                onClick={handleUserClick}
-              >
-                <i className="mdi mdi-plus-circle-outline me-1" />
-                Create New User
-              </Button>
-            </div>
-          </Col>
-        )} */}
+          {isAddDistributor && (
+            <TableActionButtons tableActions={tableActions} />
+          )}
+
           {isAddGpPolicyList && (
             <Col sm="12">
               <div className="text-sm-end">

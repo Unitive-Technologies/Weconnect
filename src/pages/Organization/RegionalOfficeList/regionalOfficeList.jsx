@@ -20,7 +20,7 @@ import UploadRegionalOfficeModal from "./UploadRegionalOfficeModal";
 
 const RegionalOfficeList = (props) => {
   //meta title
-  document.title = "Regional Office | VDigital";
+  document.title = "Regional Offices | VDigital";
 
   const dispatch = useDispatch();
 
@@ -42,7 +42,7 @@ const RegionalOfficeList = (props) => {
 
   const [userList, setUserList] = useState([]);
   const [showRegionalOffice, setShowRegionalOffice] = useState(false);
-  const [modal1, setModal1] = useState(false);
+  const [viewRegionalOffice, setViewRegionalOffice] = useState(false);
   const [showUploadRegionalOffice, setShowUploadRegionalOffice] =
     useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -305,7 +305,7 @@ const RegionalOfficeList = (props) => {
   // const toggleViewModal = () => setModal(modal);
   // const handleUserClick = (arg) => {
   const toggleViewModal = (userData) => {
-    setModal1(!modal1);
+    setViewRegionalOffice(!viewRegionalOffice);
     setViewUser(userData);
     // toggle();
   };
@@ -334,7 +334,7 @@ const RegionalOfficeList = (props) => {
   return (
     <React.Fragment>
       <ViewRegionalOfficeModal
-        isOpen={modal1}
+        isOpen={viewRegionalOffice}
         toggle={toggleViewModal}
         user={viewUser}
       />
@@ -349,7 +349,7 @@ const RegionalOfficeList = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Organization" breadcrumbItem="Regional Office" />
+          <Breadcrumbs title="Organization" breadcrumbItem="Regional Offices" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (

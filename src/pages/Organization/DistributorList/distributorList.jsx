@@ -40,10 +40,13 @@ import { isEmpty } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import ViewDistributorModal from "./ViewDistributorModal";
+import AddDistributorModal from "./AddDistributorModal";
+import UploadDistributorModal from "./UploadDistributorModal";
 
 const DistributorList = (props) => {
   //meta title
-  document.title = "Distributor List | VDigital";
+  document.title = "Distributors | VDigital";
 
   const dispatch = useDispatch();
   const [contact, setContact] = useState();
@@ -117,7 +120,9 @@ const DistributorList = (props) => {
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
-  const [modal, setModal] = useState(false);
+  const [showDistributor, setShowDistributor] = useState(false);
+  const [viewDistributor, setViewDistributor] = useState(false);
+  const [showUploadDistributor, setShowUploadDistributor] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
   const columns = useMemo(
@@ -361,24 +366,20 @@ const DistributorList = (props) => {
   //   }
   // }, [users]);
 
-  const toggle = () => {
-    setModal(!modal);
+  const handleAddDistributor = () => {
+    setShowDistributor(!showDistributor);
+  };
+  const handleUploadDistributor = () => {
+    setShowUploadDistributor(!showUploadDistributor);
   };
 
-  const handleUserClick = (arg) => {
-    const user = arg;
-
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-    setIsEdit(true);
-
-    toggle();
+  const [viewUser, setViewUser] = useState({});
+  // const toggleViewModal = () => setModal(modal);
+  // const handleUserClick = (arg) => {
+  const toggleViewModal = (userData) => {
+    setViewDistributor(!viewDistributor);
+    setViewUser(userData);
+    // toggle();
   };
 
   var node = useRef();
@@ -394,42 +395,50 @@ const DistributorList = (props) => {
     }
   };
 
-  //delete customer
-  const [deleteModal, setDeleteModal] = useState(false);
-
-  const onClickDelete = (users) => {
-    setContact(users);
-    setDeleteModal(true);
-  };
-
-  const handleDeleteUser = () => {
-    if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
-    }
-    setContact("");
-    onPaginationPageChange(1);
-    setDeleteModal(false);
-  };
-
-  const handleUserClicks = () => {
-    setUserList("");
-    setIsEdit(false);
-    toggle();
+  const getTableActions = () => {
+    return [
+      {
+        name: "Create",
+        action: setShowDistributor,
+        type: "normal",
+        icon: "create",
+      },
+      {
+        name: "Upload",
+        action: setShowUploadDistributor,
+        type: "normal",
+        icon: "upload",
+      },
+      {
+        name: "Bulk Settings",
+        action: setShowUploadDistributor,
+        type: "normal",
+        icon: "upload",
+      },
+    ];
   };
 
   const keyField = "id";
 
   return (
     <React.Fragment>
-      <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
+      <ViewDistributorModal
+        isOpen={viewDistributor}
+        toggle={toggleViewModal}
+        user={viewUser}
+      />
+      <AddDistributorModal
+        isOpen={showDistributor}
+        toggle={handleAddDistributor}
+      />
+      <UploadDistributorModal
+        isOpen={showUploadDistributor}
+        toggle={handleUploadDistributor}
       />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Organization" breadcrumbItem="Distributor List" />
+          <Breadcrumbs title="Organization" breadcrumbItem="Distributors" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -443,10 +452,14 @@ const DistributorList = (props) => {
                       columns={columns}
                       data={distributor}
                       isGlobalFilter={true}
-                      isAddUserList={true}
                       isShowingPageLength={true}
-                      iscustomPageSizeOptions={true}
-                      handleUserClick={handleUserClicks}
+                      // iscustomPageSizeOptions={true}
+                      isAddDistributor={true}
+                      handleAddDistributor={() => setShowDistributor(true)}
+                      handleUploadDistributor={() =>
+                        setShowUploadDistributor(true)
+                      }
+                      tableActions={getTableActions()}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
