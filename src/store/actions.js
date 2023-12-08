@@ -19,7 +19,7 @@ export * from "./city/actions";
 export * from "./location/actions";
 export * from "./sublocation/actions";
 
-export * from "./regionalofficelist/actions";
+export * from "./regionaloffice/actions";
 
 export * from "./broadcaster/actions";
 export * from "./genre/actions";

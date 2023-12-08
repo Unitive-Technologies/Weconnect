@@ -17,7 +17,7 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addNewUser as onAddNewUser } from "/src/store/users/actions";
+import { addNewRegionalOffice as onAddNewRegionalOffice } from "/src/store/regionaloffice/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 const AddRegionalOfficeModal = (props) => {
@@ -32,16 +32,30 @@ const AddRegionalOfficeModal = (props) => {
     initialValues: {
       name: "",
       code: "",
-      addr: "",
+      addr1: "",
+      addr2: "",
+      addr3: "",
       contact_person: "",
       mobile_no: "",
+      phone_no: "",
+      faxno: "",
       state_lbl: "",
       district_lbl: "",
       city_lbl: "",
       gstno: "",
       panno: "",
       username: "",
-      status: "",
+      status_lbl: "",
+      email: "",
+      pincode: "",
+      por_number: "",
+      reg_phase: "",
+      reg_startdate: "",
+      reg_enddate: "",
+      gst_date: "",
+      credit_limit: "",
+      area_id: "",
+      agreement_data: [],
       // created_at: "",
       // created_by: "",
     },
@@ -60,25 +74,39 @@ const AddRegionalOfficeModal = (props) => {
       status: Yup.string().required("Please Enter Status"),
     }),
     onSubmit: (values) => {
-      const newUser = {
+      const newRegionalOffice = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         code: values["code"],
-        addr: values["addr"],
+        addr1: values["addr1"],
+        addr2: values["addr2"],
+        addr3: values["addr3"],
         contact_person: values["contact_person"],
         mobile_no: values["mobile_no"],
+        phone_no: values["phone_no"],
+        faxno: values["faxno"],
         message: values["message"],
         state_lbl: values["state_lbl"],
         district_lbl: values["district_lbl"],
-        city: values["city_lbl"],
+        city_lbl: values["city_lbl"],
         gstno: values["gstno"],
         panno: values["panno"],
         username: values["username"],
-        status: values["status"],
+        status_lbl: values["status_lbl"],
+        email: values["email"],
+        pincode: values["pincode"],
+        por_number: values["por_number"],
+        reg_phase: values["reg_phase"],
+        reg_startdate: values["reg_startdate"],
+        reg_enddate: values["reg_enddate"],
+        gst_date: values["gst_date"],
+        credit_limit: values["credit_limit"],
+        area_id: values["area_id"],
+        agreement_data: values["agreement_data"],
       };
-      console.log("newUser:" + newUser);
+      console.log("newUser:" + newRegionalOffice);
       // save new user
-      dispatch(onAddNewUser(newUser));
+      dispatch(onAddNewRegionalOffice(newRegionalOffice));
       validation.resetForm();
       toggle();
     },
@@ -94,7 +122,6 @@ const AddRegionalOfficeModal = (props) => {
       tabIndex="-1"
       toggle={toggle}
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
       <ModalHeader tag="h4">Add New Regional Office</ModalHeader>
       <ModalBody>
         <Form
@@ -200,21 +227,22 @@ const AddRegionalOfficeModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Status</Label>
                 <Input
-                  name="status"
+                  name="status_lbl"
                   type="select"
                   placeholder="Select Status"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.status || ""}
+                  value={validation.values.status_lbl || ""}
                 >
                   <option value="">Select Status</option>
                   <option value="11">Active</option>
                   <option value="12">In-Active</option>
                 </Input>
-                {validation.touched.status && validation.errors.status ? (
+                {validation.touched.status_lbl &&
+                validation.errors.status_lbl ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.status}
+                    {validation.errors.status_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -249,22 +277,22 @@ const AddRegionalOfficeModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Phone No.</Label>
                 <Input
-                  name="phone"
+                  name="phone_no"
                   label="Phone No."
                   placeholder="Enter Phone Number"
                   type="text"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.phone || ""}
+                  value={validation.values.phone_no || ""}
                   invalid={
-                    validation.touched.phone && validation.errors.phone
+                    validation.touched.phone_no && validation.errors.phone_no
                       ? true
                       : false
                   }
                 />
-                {validation.touched.phone && validation.errors.phone ? (
+                {validation.touched.phone_no && validation.errors.phone_no ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.phone}
+                    {validation.errors.phone_no}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -299,13 +327,13 @@ const AddRegionalOfficeModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">State</Label>
                 <Input
-                  name="state"
+                  name="state_lbl"
                   type="select"
                   placeholder="Select State"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.state || ""}
+                  value={validation.values.state_lbl || ""}
                 >
                   <option value="">Select State</option>
                   <option value="1">Tamilnadu</option>
@@ -313,9 +341,9 @@ const AddRegionalOfficeModal = (props) => {
                   <option value="3">Assam</option>
                   <option value="4">Karnataka</option>
                 </Input>
-                {validation.touched.state && validation.errors.state ? (
+                {validation.touched.state_lbl && validation.errors.state_lbl ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.state}
+                    {validation.errors.state_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -324,13 +352,13 @@ const AddRegionalOfficeModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">District</Label>
                 <Input
-                  name="district"
+                  name="district_lbl"
                   type="select"
                   placeholder="Select District"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.district || ""}
+                  value={validation.values.district_lbl || ""}
                 >
                   <option value="">Select District</option>
                   <option value="1">Virudhunagar</option>
@@ -338,9 +366,10 @@ const AddRegionalOfficeModal = (props) => {
                   <option value="3">Chennai</option>
                   <option value="4">Erode</option>
                 </Input>
-                {validation.touched.district && validation.errors.district ? (
+                {validation.touched.district_lbl &&
+                validation.errors.district_lbl ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.district}
+                    {validation.errors.district_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -349,13 +378,13 @@ const AddRegionalOfficeModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">City</Label>
                 <Input
-                  name="city"
+                  name="city_lbl"
                   type="select"
                   placeholder="Select City"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.city || ""}
+                  value={validation.values.city_lbl || ""}
                 >
                   <option value="">Select City</option>
                   <option value="1">Virudhunagar</option>
@@ -363,9 +392,9 @@ const AddRegionalOfficeModal = (props) => {
                   <option value="3">Kovilpatti</option>
                   <option value="4">Erode</option>
                 </Input>
-                {validation.touched.city && validation.errors.city ? (
+                {validation.touched.city_lbl && validation.errors.city_lbl ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.city}
+                    {validation.errors.city_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -376,22 +405,22 @@ const AddRegionalOfficeModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Address1</Label>
                 <Input
-                  name="address1"
+                  name="addr1"
                   label="Address1"
                   type="text"
                   placeholder="Enter Address"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.address1 || ""}
+                  value={validation.values.addr1 || ""}
                   invalid={
-                    validation.touched.address1 && validation.errors.address1
+                    validation.touched.addr1 && validation.errors.addr1
                       ? true
                       : false
                   }
                 />
-                {validation.touched.address1 && validation.errors.address1 ? (
+                {validation.touched.addr1 && validation.errors.addr1 ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.address1}
+                    {validation.errors.addr1}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -401,22 +430,22 @@ const AddRegionalOfficeModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Address2</Label>
                 <Input
-                  name="address2"
+                  name="addr2"
                   label="Address2"
                   type="text"
                   placeholder="Enter Address"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.address2 || ""}
+                  value={validation.values.addr2 || ""}
                   invalid={
-                    validation.touched.address2 && validation.errors.address2
+                    validation.touched.addr2 && validation.errors.addr2
                       ? true
                       : false
                   }
                 />
-                {validation.touched.address2 && validation.errors.address2 ? (
+                {validation.touched.addr2 && validation.errors.addr2 ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.address2}
+                    {validation.errors.addr2}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -426,22 +455,22 @@ const AddRegionalOfficeModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Address3</Label>
                 <Input
-                  name="address3"
+                  name="addr3"
                   label="Address3"
                   type="text"
                   placeholder="Enter Address"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.address3 || ""}
+                  value={validation.values.addr3 || ""}
                   invalid={
-                    validation.touched.address3 && validation.errors.address3
+                    validation.touched.addr3 && validation.errors.addr3
                       ? true
                       : false
                   }
                 />
-                {validation.touched.address3 && validation.errors.address3 ? (
+                {validation.touched.addr3 && validation.errors.addr3 ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.address3}
+                    {validation.errors.addr3}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -478,22 +507,24 @@ const AddRegionalOfficeModal = (props) => {
                   Postal Office Registration(POR)
                 </Label>
                 <Input
-                  name="por"
+                  name="por_number"
                   label="Postal Office Registration"
                   type="text"
                   placeholder="Enter POR Number"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.por || ""}
+                  value={validation.values.por_number || ""}
                   invalid={
-                    validation.touched.por && validation.errors.por
+                    validation.touched.por_number &&
+                    validation.errors.por_number
                       ? true
                       : false
                   }
                 />
-                {validation.touched.por && validation.errors.por ? (
+                {validation.touched.por_number &&
+                validation.errors.por_number ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.por}
+                    {validation.errors.por_number}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -502,13 +533,13 @@ const AddRegionalOfficeModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Phase</Label>
                 <Input
-                  name="phase"
+                  name="reg_phase"
                   type="select"
                   placeholder="Select Phase"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.phase || ""}
+                  value={validation.values.reg_phase || ""}
                 >
                   <option value="">Select Phase</option>
                   <option value="1">Phase 1</option>
@@ -516,9 +547,9 @@ const AddRegionalOfficeModal = (props) => {
                   <option value="3">Phase 3</option>
                   <option value="4">Phase 4</option>
                 </Input>
-                {validation.touched.phase && validation.errors.phase ? (
+                {validation.touched.reg_phase && validation.errors.reg_phase ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.phase}
+                    {validation.errors.reg_phase}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -529,21 +560,23 @@ const AddRegionalOfficeModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Registration Start Date</Label>
                 <Input
-                  name="startdate"
+                  name="reg_startdate"
                   type="date"
                   placeholder="Select Start Date"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.startdate || ""}
+                  value={validation.values.reg_startdate || ""}
                   invalid={
-                    validation.touched.startdate && validation.errors.startdate
+                    validation.touched.reg_startdate &&
+                    validation.errors.reg_startdate
                       ? true
                       : false
                   }
                 />
-                {validation.touched.startdate && validation.errors.startdate ? (
+                {validation.touched.reg_startdate &&
+                validation.errors.reg_startdate ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.startdate}
+                    {validation.errors.reg_startdate}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -577,21 +610,21 @@ const AddRegionalOfficeModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Fax No.</Label>
                 <Input
-                  name="fax"
+                  name="fax_no"
                   type="text"
                   placeholder="Select Fax No."
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.fax || ""}
+                  value={validation.values.fax_no || ""}
                   invalid={
-                    validation.touched.fax && validation.errors.fax
+                    validation.touched.fax_no && validation.errors.fax_no
                       ? true
                       : false
                   }
                 />
-                {validation.touched.fax && validation.errors.fax ? (
+                {validation.touched.fax_no && validation.errors.fax_no ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.fax}
+                    {validation.errors.fax_no}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -602,21 +635,21 @@ const AddRegionalOfficeModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">GST No.</Label>
                 <Input
-                  name="gst"
+                  name="gstno"
                   type="text"
                   placeholder="Select GST No."
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.gst || ""}
+                  value={validation.values.gstno || ""}
                   invalid={
-                    validation.touched.gst && validation.errors.gst
+                    validation.touched.gstno && validation.errors.gstno
                       ? true
                       : false
                   }
                 />
-                {validation.touched.gst && validation.errors.gst ? (
+                {validation.touched.gstno && validation.errors.gstno ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.gst}
+                    {validation.errors.gstno}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -626,21 +659,21 @@ const AddRegionalOfficeModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">GST Reg. Date</Label>
                 <Input
-                  name="gstdate"
+                  name="gst_date"
                   type="date"
                   placeholder="Select GST Reg Date"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.gstdate || ""}
+                  value={validation.values.gst_date || ""}
                   invalid={
-                    validation.touched.gstdate && validation.errors.gstdate
+                    validation.touched.gst_date && validation.errors.gst_date
                       ? true
                       : false
                   }
                 />
-                {validation.touched.gstdate && validation.errors.gstdate ? (
+                {validation.touched.gst_date && validation.errors.gst_date ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.gstdate}
+                    {validation.errors.gst_date}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -650,21 +683,21 @@ const AddRegionalOfficeModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">PAN No.</Label>
                 <Input
-                  name="pan"
+                  name="panno"
                   type="text"
                   placeholder="Select PAN No."
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.pan || ""}
+                  value={validation.values.panno || ""}
                   invalid={
-                    validation.touched.pan && validation.errors.pan
+                    validation.touched.panno && validation.errors.panno
                       ? true
                       : false
                   }
                 />
-                {validation.touched.pan && validation.errors.pan ? (
+                {validation.touched.panno && validation.errors.panno ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.pan}
+                    {validation.errors.panno}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -675,21 +708,23 @@ const AddRegionalOfficeModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Credit Limit</Label>
                 <Input
-                  name="credit"
+                  name="credit_limit"
                   type="text"
                   placeholder="Enter Credit Limit"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.credit || ""}
+                  value={validation.values.credit_limit || ""}
                   invalid={
-                    validation.touched.credit && validation.errors.credit
+                    validation.touched.credit_limit &&
+                    validation.errors.credit_limit
                       ? true
                       : false
                   }
                 />
-                {validation.touched.credit && validation.errors.credit ? (
+                {validation.touched.credit_limit &&
+                validation.errors.credit_limit ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.credit}
+                    {validation.errors.credit_limit}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -698,21 +733,21 @@ const AddRegionalOfficeModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Area ID</Label>
                 <Input
-                  name="area"
+                  name="area_id"
                   type="text"
                   placeholder="Enter Area ID"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.area || ""}
+                  value={validation.values.area_id || ""}
                   invalid={
-                    validation.touched.area && validation.errors.area
+                    validation.touched.area_id && validation.errors.area_id
                       ? true
                       : false
                   }
                 />
-                {validation.touched.area && validation.errors.area ? (
+                {validation.touched.area_id && validation.errors.area_id ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.area}
+                    {validation.errors.area_id}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -742,18 +777,6 @@ const AddRegionalOfficeModal = (props) => {
               margin: "30px 0px",
             }}
           >
-            {/* <div
-              style={{
-                marginTop: "-30px",
-                zIndex: 2000,
-                backgroundColor: "#fff",
-                width: "115px",
-                marginLeft: "40%",
-              }}
-            >
-              {" "}
-              <h5 style={{}}>Agreement</h5>
-            </div> */}
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Upload</Label>
@@ -917,7 +940,6 @@ const AddRegionalOfficeModal = (props) => {
           </Row>
         </Form>
       </ModalBody>
-      {/* </Modal> */}
     </Modal>
   );
 };

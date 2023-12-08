@@ -260,6 +260,11 @@ export const getSublocation = () => get(url.GET_SUBLOCATION);
 export const addSublocation = (sublocation) => post(url.ADD_SUBLOCATION);
 
 export const getRegionalOffice = () => get(url.GET_REGIONALOFFICE);
+export const addNewRegionalOffice = (regionaloffice) =>
+  post(url.ADD_NEW_REGIONALOFFICE, regionaloffice);
+export const updateRegionalOffice = (regionaloffice) =>
+  put(url.UPDATE_REGIONALOFFICE, regionaloffice);
+
 export const getBroadCasters = () => get(url.GET_BROADCASTER);
 export const addNewBroadCaster = (broadcast) =>
   post(url.ADD_NEW_BROADCASTER, broadcast);
@@ -277,7 +282,8 @@ export const addNewChannelList = (channel) =>
 
 export const getBroadcasterBouquetList = () =>
   get(url.GET_BROADCASTERBOUQUETLIST);
-export const addNewBroadcasterBouquetList = (broadcastbouquet) => post(url.ADD_NEW_BROADCASTERBOUQUETLIST, broadcastbouquet);
+export const addNewBroadcasterBouquetList = (broadcastbouquet) =>
+  post(url.ADD_NEW_BROADCASTERBOUQUETLIST, broadcastbouquet);
 
 export const getPackageList = () => get(url.GET_PACKAGELIST);
 export const getOSDConfiguration = () => get(url.GET_OSDCONFIGURATIONLIST);

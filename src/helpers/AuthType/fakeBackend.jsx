@@ -1010,7 +1010,6 @@ const fakeBackend = () => {
     });
   });
 
-
   mock.onPost(url.ADD_NEW_CHANNELLIST).reply((channel) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -1063,6 +1062,19 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onPost(url.ADD_NEW_REGIONALOFFICE).reply((regionaloffice) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (regionaloffice && regionaloffice.data) {
+          // Passing fake JSON data as response
+          resolve([200, regionaloffice.data]);
+        } else {
+          reject([400, "Cannot add Regional Office"]);
+        }
+      });
+    });
+  });
+
   mock.onPut(url.UPDATE_USER).reply((user) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -1071,6 +1083,19 @@ const fakeBackend = () => {
           resolve([200, user.data]);
         } else {
           reject([400, "Cannot update user"]);
+        }
+      });
+    });
+  });
+
+  mock.onPut(url.UPDATE_USER).reply((regionaloffice) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (regionaloffice && regionaloffice.data) {
+          // Passing fake JSON data as response
+          resolve([200, regionaloffice.data]);
+        } else {
+          reject([400, "Cannot update Regional Office"]);
         }
       });
     });

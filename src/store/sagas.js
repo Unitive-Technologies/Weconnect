@@ -21,7 +21,7 @@ import broadCasterSaga from "./broadcaster/saga";
 import genreSaga from "./genre/saga";
 import distributorsSaga from "./distributorslist/saga";
 import languageSaga from "./language/saga";
-import regionalOfficeSaga from "./regionalofficelist/saga";
+import regionalOfficeSaga from "./regionaloffice/saga";
 import lcoSaga from "./lcolist/saga";
 import scheduledNotificationSaga from "./schedulednotificationlist/saga";
 import channelListSaga from "./channel/saga";

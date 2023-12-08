@@ -15,7 +15,7 @@ import groupPolicy from "./grouppolicy/reducer";
 import designation from "./designation/reducer";
 import notificationTemplate from "./notificationtemplate/reducer";
 import scheduleCustomerNotification from "./schedulecustomernotification/reducer";
-import regionaloffice from "./regionalofficelist/reducer";
+import regionaloffice from "./regionaloffice/reducer";
 import stateUsers from "./stateusers/reducer";
 import district from "./district/reducer";
 import city from "./city/reducer";

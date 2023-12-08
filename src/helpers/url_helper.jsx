@@ -22,7 +22,10 @@ export const ADD_NEW_DESIGNATION = "/add/designation";
 
 export const GET_NOTIFICATIONTEMPLATE = "/notificationtemplatelist";
 export const ADD_NEW_NOTIFICATIONTEMPLATE = "/add/notification";
+
 export const GET_REGIONALOFFICE = "/regionaloffice";
+export const ADD_NEW_REGIONALOFFICE = "/add/regionaloffice";
+export const UPDATE_REGIONALOFFICE = "/update/regionaloffice";
 
 export const GET_SCHEDULECUSTOMERNOTIFICATION =
   "/schedulecustomernotificationlist";
@@ -42,7 +45,7 @@ export const GET_LOCATION = "/locationlist";
 export const ADD_LOCATION = "/add/location";
 
 export const GET_SUBLOCATION = "/sublocationlist";
-export const ADD_SUBLOCATION = "/add/sublocation"
+export const ADD_SUBLOCATION = "/add/sublocation";
 
 export const GET_DISTRIBUTORS = "/distributors";
 export const GET_LCO = "/lco";

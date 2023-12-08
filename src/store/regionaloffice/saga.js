@@ -1,11 +1,26 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_REGIONALOFFICE } from "./actionTypes";
+import {
+  GET_REGIONALOFFICE,
+  ADD_NEW_REGIONALOFFICE,
+  UPDATE_REGIONALOFFICE,
+} from "./actionTypes";
 
-import { getRegionalOfficeSuccess, getRegionalOfficeFail } from "./actions";
+import {
+  getRegionalOfficeSuccess,
+  getRegionalOfficeFail,
+  addRegionalOfficeFail,
+  addRegionalOfficeSuccess,
+  updateRegionalOfficeSuccess,
+  updateRegionalOfficeFail,
+} from "./actions";
 
 //Include Both Helper File with needed methods
-import { getRegionalOffice } from "../../helpers/fakebackend_helper";
+import {
+  getRegionalOffice,
+  addNewRegionalOffice,
+  updateRegionalOffice,
+} from "../../helpers/fakebackend_helper";
 
 const convertRegionalOfficeListObject = (regionalofficeList) => {
   // Notification Template has more data than what we need, we need to convert each of the Notification Template user object in the list with needed colums of the table
@@ -47,8 +62,33 @@ function* fetchRegionalOffice() {
   }
 }
 
+function* onAddNewRegionalOffice({ payload: regionalofficeList }) {
+  try {
+    const response = yield call(addNewRegionalOffice, regionalofficeList);
+
+    yield put(addRegionalOfficeSuccess(response));
+    toast.success("Regional Office Added Successfully", { autoClose: 2000 });
+  } catch (error) {
+    yield put(addRegionalOfficeFail(error));
+    toast.error("Regional Office Added Failed", { autoClose: 2000 });
+  }
+}
+
+function* onUpdateRegionalOffice({ payload: regionaloffice }) {
+  try {
+    const response = yield call(updateRegionalOffice, regionaloffices);
+    yield put(updateRegionalOfficeSuccess(response));
+    toast.success("Regiional Office Updated Successfully", { autoClose: 2000 });
+  } catch (error) {
+    yield put(updateRegionalOfficeFail(error));
+    toast.error("Regional Office Updated Failed", { autoClose: 2000 });
+  }
+}
+
 function* regionalOfficeSaga() {
   yield takeEvery(GET_REGIONALOFFICE, fetchRegionalOffice);
+  yield takeEvery(ADD_NEW_REGIONALOFFICE, onAddNewRegionalOffice);
+  yield takeEvery(UPDATE_REGIONALOFFICE, onUpdateRegionalOffice);
 }
 
 export default regionalOfficeSaga;
