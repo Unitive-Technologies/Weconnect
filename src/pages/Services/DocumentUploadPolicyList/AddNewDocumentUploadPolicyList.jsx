@@ -135,7 +135,7 @@ const AddNewDocumentUploadPolicy = (props) => {
                                 <Label className="form-label">Policy Start Date</Label>
                                 <Input
                                     name="startdate"
-                                    type="datepicker"
+                                    type="date"
                                     placeholder="Select policy start date"
                                     // className="form-select"
                                     onChange={validation.handleChange}
@@ -154,7 +154,7 @@ const AddNewDocumentUploadPolicy = (props) => {
                                 <Label className="form-label">Policy End Date</Label>
                                 <Input
                                     name="enddate"
-                                    type="datepicker"
+                                    type="date"
                                     placeholder="Select policy end date"
                                     // className="form-select"
                                     onChange={validation.handleChange}
@@ -173,7 +173,7 @@ const AddNewDocumentUploadPolicy = (props) => {
                                 <Label className="form-label">Policy Upload Date</Label>
                                 <Input
                                     name="uploaddate"
-                                    type="datepicker"
+                                    type="date"
                                     placeholder="Select policy upload date"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
@@ -231,20 +231,20 @@ const AddNewDocumentUploadPolicy = (props) => {
                             <div className="mb-3">
                                 <Label className="form-label">Financial Year</Label>
                                 <Input
-                                    name="finanical"
+                                    name="financial"
                                     type="select"
-                                    placeholder="Select finanical year"
+                                    placeholder="Select Financial"
                                     className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
                                     value={validation.values.financial || ""}
                                 >
-                                    <option value="110">Select financial year</option>
-                                    <option value="111">2023-2024</option>
-                                    <option value="112">2022-2023</option>
-                                    <option value="113">2021-2022</option>
-                                    <option value="114">2020-2021</option>
-                                    <option value="115">2019-2020</option>
+                                    <option value="101">Select financial year</option>
+                                    <option value="102">2023-2024</option>
+                                    <option value="103">2022-2023</option>
+                                    <option value="104">2021-2022</option>
+                                    <option value="105">2020-2021</option>
+                                    <option value="106">2019-2020</option>
                                 </Input>
                                 {validation.touched.financial && validation.errors.financial ? (
                                     <FormFeedback type="invalid">
@@ -302,7 +302,7 @@ const AddNewDocumentUploadPolicy = (props) => {
                                 <Label className="form-label">Upload Documents</Label>
                                 <Input
                                     name="uploadfile"
-                                    // type="select"
+                                    type="file"
                                     placeholder="Select Upload file"
                                     // className="form-select"
                                     onChange={validation.handleChange}
@@ -322,7 +322,6 @@ const AddNewDocumentUploadPolicy = (props) => {
                         <Col sm="12">
                             <UploadDocument />
                         </Col>
-
                     </Row>
                     <Row>
                         <Col sm="8">

@@ -420,7 +420,6 @@ const DocumentUploadPolicyList = (props) => {
                     </div>
                   </CardBody>
                   <CardBody>
-
                     {console.log(
                       "DocUploadPolicy:" + JSON.stringify(docupload)
                     )}
@@ -430,7 +429,7 @@ const DocumentUploadPolicyList = (props) => {
                       data={docupload}
                       // isGlobalFilter={true}
                       // isAddUserList={true}
-                      // isShowingPageLength={true}
+                      isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
                       handleUserClick={() => { }}
                       customPageSize={8}

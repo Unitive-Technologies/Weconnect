@@ -427,7 +427,6 @@ const ChannelList = (props) => {
       <BulkUpdateChannelList isOpen={modal2} toggle={toggle2} />
       <BulkUpdateCasCodeChannelList isOpen={modal3} toggle={toggle3} />
 
-
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
