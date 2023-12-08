@@ -54,6 +54,7 @@ const UploadUserModal = (props) => {
 
   const handleDownloadSampleFile = () => {
     // Create a sample CSV file with headers
+    // field to be get from api as prop
     const headers = [
       "username",
       "name",

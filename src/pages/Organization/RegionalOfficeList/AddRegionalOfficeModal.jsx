@@ -718,15 +718,50 @@ const AddRegionalOfficeModal = (props) => {
               </div>
             </Col>
           </Row>
-          <Row>
+          <div
+            style={{
+              // margin: "20px 0px",
+              marginTop: "20px",
+              marginBottom: "-18px",
+              zIndex: 12000,
+              backgroundColor: "#fff",
+              width: "fit-content",
+              marginLeft: "40%",
+              position: "absolute",
+              padding: "0px 10px",
+            }}
+          >
+            {" "}
+            <h5 style={{}}>Agreement</h5>
+          </div>
+          <Row
+            style={{
+              position: "relative",
+              border: "1px solid #ced4da",
+              padding: "20px 0px",
+              margin: "30px 0px",
+            }}
+          >
+            {/* <div
+              style={{
+                marginTop: "-30px",
+                zIndex: 2000,
+                backgroundColor: "#fff",
+                width: "115px",
+                marginLeft: "40%",
+              }}
+            >
+              {" "}
+              <h5 style={{}}>Agreement</h5>
+            </div> */}
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Agreement upload</Label>
+                <Label className="form-label">Upload</Label>
                 <Input
                   name="upload"
-                  label="Agreement Upload"
+                  label="Upload"
                   type="file"
-                  placeholder="Agreement Upload"
+                  placeholder="Upload"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.upload || ""}
@@ -745,12 +780,12 @@ const AddRegionalOfficeModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Agreement Start Date</Label>
+                <Label className="form-label">Start Date</Label>
                 <Input
                   name="agreestart"
-                  label="Agreement Start Date"
+                  label="Start Date"
                   type="date"
-                  placeholder="Agreement Start Date"
+                  placeholder="Start Date"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.agreestart || ""}
@@ -771,12 +806,12 @@ const AddRegionalOfficeModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Agreement End Date</Label>
+                <Label className="form-label">End Date</Label>
                 <Input
                   name="agreeend"
-                  label="Agreement End Date"
+                  label="End Date"
                   type="date"
-                  placeholder="Agreement End Date"
+                  placeholder="End Date"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.agreeend || ""}
