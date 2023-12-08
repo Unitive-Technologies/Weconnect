@@ -241,7 +241,7 @@ const StateList = (props) => {
                       columns={columns}
                       data={stateUser}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      // isAddUserList={true}
                       isShowingPageLength={true}
                       iscustomPageSizeOptions={true}
                       handleUserClick={handleUserClicks}
