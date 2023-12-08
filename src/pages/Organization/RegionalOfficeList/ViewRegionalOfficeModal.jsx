@@ -21,7 +21,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateRegionalOffice as onUpdateRegionalOffice } from "/src/store/regionaloffice/actions";
 
 const ViewRegionalOfficeModal = (props) => {
-  const { isOpen, toggle, user } = props;
+  const { isOpen, toggle, regionalOffData } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
   const [showEditRegionalOffice, setShowEditRegionalOffice] = useState(false);
@@ -30,20 +30,20 @@ const ViewRegionalOfficeModal = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      id: (user && user.id) || "",
-      name: "",
-      code: "",
-      addr1: "",
-      addr2: "",
-      addr3: "",
-      contact_person: "",
-      mobile_no: "",
-      phone_no: "",
-      faxno: "",
-      state_lbl: "",
-      district_lbl: "",
-      city_lbl: "",
-      gstno: "",
+      id: (regionalOffData && regionalOffData.id) || "",
+      name: regionalOffData.name,
+      code: regionalOffData.code,
+      addr1: regionalOffData.addr1,
+      addr2: regionalOffData.addr2,
+      addr3: regionalOffData.addr3,
+      contact_person: regionalOffData.contact_person,
+      mobile_no: regionalOffData.mobile_no,
+      phone_no: regionalOffData.phone_no,
+      fax_no: regionalOffData.fax_no,
+      state_lbl: regionalOffData.state_lbl,
+      district_lbl: regionalOffData.district_lbl,
+      city_lbl: regionalOffData.city_lbl,
+      gstno: regionalOffData.gstno,
       panno: "",
       username: "",
       status_lbl: "",
@@ -86,7 +86,7 @@ const ViewRegionalOfficeModal = (props) => {
         contact_person: values["contact_person"],
         mobile_no: values["mobile_no"],
         phone_no: values["phone_no"],
-        faxno: values["faxno"],
+        faxno: values["fax_no"],
         message: values["message"],
         state_lbl: values["state_lbl"],
         district_lbl: values["district_lbl"],

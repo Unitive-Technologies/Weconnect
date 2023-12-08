@@ -80,7 +80,7 @@ const RegionalOfficeList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  toggleViewModal(userData);
+                  handleViewRegionalOffice(userData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -301,12 +301,12 @@ const RegionalOfficeList = (props) => {
     setShowUploadRegionalOffice(!showUploadRegionalOffice);
   };
 
-  const [viewUser, setViewUser] = useState({});
+  const [regOffData, setRegOffData] = useState({});
   // const toggleViewModal = () => setModal(modal);
   // const handleUserClick = (arg) => {
-  const toggleViewModal = (userData) => {
+  const handleViewRegionalOffice = (regOffData) => {
     setViewRegionalOffice(!viewRegionalOffice);
-    setViewUser(userData);
+    setRegOffData(regOffData);
     // toggle();
   };
 
@@ -335,8 +335,8 @@ const RegionalOfficeList = (props) => {
     <React.Fragment>
       <ViewRegionalOfficeModal
         isOpen={viewRegionalOffice}
-        toggle={toggleViewModal}
-        user={viewUser}
+        toggle={handleViewRegionalOffice}
+        regionalOffData={regOffData}
       />
       <AddRegionalOfficeModal
         isOpen={showRegionalOffice}

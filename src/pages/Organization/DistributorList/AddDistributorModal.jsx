@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
+import { createSelector } from "reselect";
 import {
   Card,
   CardBody,
@@ -17,7 +18,10 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addNewRegionalOffice as onAddNewRegionalOffice } from "/src/store/regionaloffice/actions";
+import {
+  addNewRegionalOffice as onAddNewRegionalOffice,
+  getRegionalOffice as onGetRegionalOffice,
+} from "/src/store/regionaloffice/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 const AddDistributorModal = (props) => {
@@ -25,6 +29,22 @@ const AddDistributorModal = (props) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState();
 
+  const selectRegionalOfficeState = (state) => state.regionaloffice;
+  const RegionalOfficeProperties = createSelector(
+    selectRegionalOfficeState,
+    (regionaloffice) => ({
+      regOff: regionaloffice.regionaloffice,
+    })
+  );
+
+  const { regOff } = useSelector(RegionalOfficeProperties);
+
+  useEffect(() => {
+    if (regOff && !regOff.length) {
+      dispatch(onGetRegionalOffice());
+    }
+  }, [dispatch, regOff]);
+  console.log("regOfficelist:" + JSON.stringify(regOff));
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -36,9 +56,10 @@ const AddDistributorModal = (props) => {
       addr2: "",
       addr3: "",
       contact_person: "",
+      parent_regoff: "",
       mobile_no: "",
       phone_no: "",
-      faxno: "",
+      email: "",
       state_lbl: "",
       district_lbl: "",
       city_lbl: "",
@@ -236,8 +257,16 @@ const AddDistributorModal = (props) => {
                   value={validation.values.status_lbl || ""}
                 >
                   <option value="">Select Parent Regional Office</option>
-                  <option value="11">Active</option>
-                  <option value="12">In-Active</option>
+                  {/* {regOff.map((item) => (
+                    <optgroup key={item.id} label={`${item.name}`}>
+                      <option value={item.code}>{item.code}</option>
+                    </optgroup>
+                  ))} */}
+                  {regOff.map((item) => (
+                    <option key={item.id} value={item.code}>
+                      {item.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.status_lbl &&
                 validation.errors.status_lbl ? (
