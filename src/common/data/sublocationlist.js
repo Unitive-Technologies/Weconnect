@@ -902,4 +902,507 @@ const sublocationlist = [
   },
 ];
 
-export { sublocationlist };
+const loclist = [
+  {
+    id: 2194,
+    name: "VD081L18- Sai Venkata Lakshmi Cable Network",
+    operator_lbl: "VD081L18- Sai Venkata Lakshmi Cable Network",
+  },
+  {
+    id: 2193,
+    name: "VD081L17-Sowjanya Cable network",
+    operator_lbl: "VD081L17-Sowjanya Cable network",
+  },
+  {
+    id: 2192,
+    name: "VD191L69-SAI COMMUNICATIONS",
+    operator_lbl: "VD191L69-SAI COMMUNICATIONS",
+  },
+  {
+    id: 2191,
+    name: "VD582L26-SVS CABLE NETWORK",
+    operator_lbl: "VD582L26-SVS CABLE NETWORK",
+  },
+  {
+    id: 2190,
+    name: "VD041L267-Sowmya Cable Network",
+    operator_lbl: "VD041L267-Sowmya Cable Network",
+  },
+  {
+    id: 2189,
+    name: "VD082L71-Shirdi Sai Cable Network",
+    operator_lbl: "VD082L71-Shirdi Sai Cable Network",
+  },
+  {
+    id: 2188,
+    name: "VD582L25-Venkateshwara Cable",
+    operator_lbl: "VD582L25-Venkateshwara Cable",
+  },
+  {
+    id: 2187,
+    name: "VD582L24-Manikanta Cable Network",
+    operator_lbl: "VD582L24-Manikanta Cable Network",
+  },
+  {
+    id: 2186,
+    name: "VD582L23-Sri Sai Cable Network",
+    operator_lbl: "VD582L23-Sri Sai Cable Network",
+  },
+  {
+    id: 2185,
+    name: "VD582L22-Balaji Cable Network",
+    operator_lbl: "VD582L22-Balaji Cable Network",
+  },
+  {
+    id: 2184,
+    name: "VD582L21-Sri Sai Cable Network",
+    operator_lbl: "VD582L21-Sri Sai Cable Network",
+  },
+  {
+    id: 2183,
+    name: "VD582L20-Satya Cable Network",
+    operator_lbl: "VD582L20-Satya Cable Network",
+  },
+  {
+    id: 2182,
+    name: "VD582L19-Shaheen Cable Network",
+    operator_lbl: "VD582L19-Shaheen Cable Network",
+  },
+  {
+    id: 2181,
+    name: "VD582L18-Chary Cable Network",
+    operator_lbl: "VD582L18-Chary Cable Network",
+  },
+  {
+    id: 2180,
+    name: "VD582L17-Manikanta Cable Network",
+    operator_lbl: "VD582L17-Manikanta Cable Network",
+  },
+  {
+    id: 2179,
+    name: "VD582L16-Akshitha Cable",
+    operator_lbl: "VD582L16-Akshitha Cable",
+  },
+  {
+    id: 2178,
+    name: "VD582L15-Sri Sai Cable Network",
+    operator_lbl: "VD582L15-Sri Sai Cable Network",
+  },
+  {
+    id: 2177,
+    name: "VD582L14-Sri Sai Cable Network",
+    operator_lbl: "VD582L14-Sri Sai Cable Network",
+  },
+  {
+    id: 2176,
+    name: "VD582L13-Sri SaiCable Network",
+    operator_lbl: "VD582L13-Sri SaiCable Network",
+  },
+  {
+    id: 2175,
+    name: "VD582L12-Sri Sai Cable Network",
+    operator_lbl: "VD582L12-Sri Sai Cable Network",
+  },
+  {
+    id: 2174,
+    name: "VD582L11-Upender Cable Network",
+    operator_lbl: "VD582L11-Upender Cable Network",
+  },
+  {
+    id: 2173,
+    name: "VD582L10-Sai Cable Network Botia Thanda",
+    operator_lbl: "VD582L10-Sai Cable Network Botia Thanda",
+  },
+  {
+    id: 2172,
+    name: "VD582L9-Uma Cable Network",
+    operator_lbl: "VD582L9-Uma Cable Network",
+  },
+  {
+    id: 2171,
+    name: "VD582L8-Mounika Cable Network",
+    operator_lbl: "VD582L8-Mounika Cable Network",
+  },
+  {
+    id: 2170,
+    name: "VD582L7-Champalal Cable Network",
+    operator_lbl: "VD582L7-Champalal Cable Network",
+  },
+  {
+    id: 2169,
+    name: "VD582L6-Sri Sai Network Balemla",
+    operator_lbl: "VD582L6-Sri Sai Network Balemla",
+  },
+  {
+    id: 2168,
+    name: "VD582L5-Sunny Cable Network",
+    operator_lbl: "VD582L5-Sunny Cable Network",
+  },
+  {
+    id: 2167,
+    name: "VD582L4-Sri Lakshmi Cable Network",
+    operator_lbl: "VD582L4-Sri Lakshmi Cable Network",
+  },
+  {
+    id: 2166,
+    name: "VD582L3-Sushma Cable Network",
+    operator_lbl: "VD582L3-Sushma Cable Network",
+  },
+  {
+    id: 2165,
+    name: "VD582L2-Shiva Sai Cable Network",
+    operator_lbl: "VD582L2-Shiva Sai Cable Network",
+  },
+  {
+    id: 2164,
+    name: "VD582L1-TECHNIC SPOT CABLE NETWORK",
+    operator_lbl: "VD582L1-TECHNIC SPOT CABLE NETWORK",
+  },
+  {
+    id: 2163,
+    name: "VD582-TECHNIC SPOT CABLE NETWORK",
+    operator_lbl: "VD582-TECHNIC SPOT CABLE NETWORK",
+  },
+  {
+    id: 2162,
+    name: "VD125L17-JATHIN CABLE NETWORK",
+    operator_lbl: "VD125L17-JATHIN CABLE NETWORK",
+  },
+  {
+    id: 2161,
+    name: "VD111L28-SRI SIVADANESWARI CABLE & INTERNET SERVICES",
+    operator_lbl: "VD111L28-SRI SIVADANESWARI CABLE & INTERNET SERVICES",
+  },
+  {
+    id: 2160,
+    name: "VD082L70-Srinivas Cable Network",
+    operator_lbl: "VD082L70-Srinivas Cable Network",
+  },
+  {
+    id: 2159,
+    name: "VD121L53-RANI CABLE AND INTERNET",
+    operator_lbl: "VD121L53-RANI CABLE AND INTERNET",
+  },
+  {
+    id: 2158,
+    name: "VD121L52-SRI SAI STAR AND CABLE NETWORK",
+    operator_lbl: "VD121L52-SRI SAI STAR AND CABLE NETWORK",
+  },
+  {
+    id: 2157,
+    name: "VD125L16-RITHIKA CABLE NETWORK",
+    operator_lbl: "VD125L16-RITHIKA CABLE NETWORK",
+  },
+  {
+    id: 2156,
+    name: "VD111L27-SRI VENKATESWARA BROAD BAND SERVICES",
+    operator_lbl: "VD111L27-SRI VENKATESWARA BROAD BAND SERVICES",
+  },
+  {
+    id: 2155,
+    name: "VD041L266-Sri Lakshmi Narasimha Swamy Cable Tv",
+    operator_lbl: "VD041L266-Sri Lakshmi Narasimha Swamy Cable Tv",
+  },
+  {
+    id: 2154,
+    name: "VD201L6-SAI CABLE TV NETWORK",
+    operator_lbl: "VD201L6-SAI CABLE TV NETWORK",
+  },
+  {
+    id: 2153,
+    name: "VD125L15-RATNA CABLE NETWORK",
+    operator_lbl: "VD125L15-RATNA CABLE NETWORK",
+  },
+  {
+    id: 2152,
+    name: "VD181L14-SUHANA KHADRI DIGITAL CABLE TV AND INTERNET",
+    operator_lbl: "VD181L14-SUHANA KHADRI DIGITAL CABLE TV AND INTERNET",
+  },
+  {
+    id: 2151,
+    name: "VD581L26-RAKESH CABLE NETWORK",
+    operator_lbl: "VD581L26-RAKESH CABLE NETWORK",
+  },
+  {
+    id: 2150,
+    name: "VD581L25-SRI SAI BALAJI CABLE NETWORK",
+    operator_lbl: "VD581L25-SRI SAI BALAJI CABLE NETWORK",
+  },
+  {
+    id: 2149,
+    name: "VD581L24-SNEHA CABLE NETWORK",
+    operator_lbl: "VD581L24-SNEHA CABLE NETWORK",
+  },
+  {
+    id: 2148,
+    name: "VD581L23-SRI SAI CBLE NETWORK",
+    operator_lbl: "VD581L23-SRI SAI CBLE NETWORK",
+  },
+  {
+    id: 2147,
+    name: "VD581L22-RAJEEV & SANJEEV CABLE NETWORK",
+    operator_lbl: "VD581L22-RAJEEV & SANJEEV CABLE NETWORK",
+  },
+  {
+    id: 2146,
+    name: "VD581L21-PRABHU CABLE NETWORK",
+    operator_lbl: "VD581L21-PRABHU CABLE NETWORK",
+  },
+  {
+    id: 2145,
+    name: "VD581L20-LAXMINARSIMHA CABLE NETWORK",
+    operator_lbl: "VD581L20-LAXMINARSIMHA CABLE NETWORK",
+  },
+  {
+    id: 2144,
+    name: "VD581L19-THANSHIKA CABLE NETWORK",
+    operator_lbl: "VD581L19-THANSHIKA CABLE NETWORK",
+  },
+  {
+    id: 2143,
+    name: "VD581L18-SRI SAI VENKATESWARA CABLE NETWORK",
+    operator_lbl: "VD581L18-SRI SAI VENKATESWARA CABLE NETWORK",
+  },
+  {
+    id: 2142,
+    name: "VD581L17-MAHALAXMI CABLE NETWORK",
+    operator_lbl: "VD581L17-MAHALAXMI CABLE NETWORK",
+  },
+  {
+    id: 2141,
+    name: "VD581L16-GANESH CABLE NETWORK",
+    operator_lbl: "VD581L16-GANESH CABLE NETWORK",
+  },
+  {
+    id: 2140,
+    name: "VD581L15-SRI RAMA CABLE NETWORK",
+    operator_lbl: "VD581L15-SRI RAMA CABLE NETWORK",
+  },
+  {
+    id: 2139,
+    name: "VD581L14-SAI KRISHNA CABLE NETWORK",
+    operator_lbl: "VD581L14-SAI KRISHNA CABLE NETWORK",
+  },
+  {
+    id: 2138,
+    name: "VD581L13-SRI ANJANEYA CABLE TV",
+    operator_lbl: "VD581L13-SRI ANJANEYA CABLE TV",
+  },
+  {
+    id: 2137,
+    name: "VD581L12-SRI RAMA CABLE NETWORK",
+    operator_lbl: "VD581L12-SRI RAMA CABLE NETWORK",
+  },
+  {
+    id: 2136,
+    name: "VD581L11-KEERTHANA CABLE NETWORK",
+    operator_lbl: "VD581L11-KEERTHANA CABLE NETWORK",
+  },
+  {
+    id: 2135,
+    name: "VD581L10-INDIAN CABLE NETWORK",
+    operator_lbl: "VD581L10-INDIAN CABLE NETWORK",
+  },
+  {
+    id: 2134,
+    name: "VD581L9-SRI LAXMI CABLE NETWORK",
+    operator_lbl: "VD581L9-SRI LAXMI CABLE NETWORK",
+  },
+  {
+    id: 2133,
+    name: "VD581L8-SRI SAI CABLE NETWORK",
+    operator_lbl: "VD581L8-SRI SAI CABLE NETWORK",
+  },
+  {
+    id: 2132,
+    name: "VD581L7-SRI SWATHI CABLE NETWORK",
+    operator_lbl: "VD581L7-SRI SWATHI CABLE NETWORK",
+  },
+  {
+    id: 2131,
+    name: "VD581L6-NAGALAXMI & SOWJANYA CABLE NETWORK",
+    operator_lbl: "VD581L6-NAGALAXMI & SOWJANYA CABLE NETWORK",
+  },
+  {
+    id: 2130,
+    name: "VD581L5-SRI SAI SRINIVASA CABLE NETWORK",
+    operator_lbl: "VD581L5-SRI SAI SRINIVASA CABLE NETWORK",
+  },
+  {
+    id: 2129,
+    name: "VD581L4-J.P.S.CABLE TV",
+    operator_lbl: "VD581L4-J.P.S.CABLE TV",
+  },
+  {
+    id: 2128,
+    name: "VD581L3-SRI YADAGIRI LAXMI NARSIMHA SWAMY CABLE NETWORK",
+    operator_lbl: "VD581L3-SRI YADAGIRI LAXMI NARSIMHA SWAMY CABLE NETWORK",
+  },
+  {
+    id: 2127,
+    name: "VD581L2-SRI VENKATESWARA CABLE NETWORK",
+    operator_lbl: "VD581L2-SRI VENKATESWARA CABLE NETWORK",
+  },
+  {
+    id: 2126,
+    name: "VD581L1-SRI VENKATESWAARA CABLE NETWORK",
+    operator_lbl: "VD581L1-SRI VENKATESWAARA CABLE NETWORK",
+  },
+  {
+    id: 2125,
+    name: "VD581-SRI VENKATESWAARA CABLE NETWORK",
+    operator_lbl: "VD581-SRI VENKATESWAARA CABLE NETWORK",
+  },
+  {
+    id: 2124,
+    name: "VD071L45-sairam cable network",
+    operator_lbl: "VD071L45-sairam cable network",
+  },
+  {
+    id: 2123,
+    name: "VD071L44-LAKSHMI DURGA CABLE NETWORK",
+    operator_lbl: "VD071L44-LAKSHMI DURGA CABLE NETWORK",
+  },
+  {
+    id: 2122,
+    name: "VD111L26-VALLI CABLE NETWORK",
+    operator_lbl: "VD111L26-VALLI CABLE NETWORK",
+  },
+  {
+    id: 2121,
+    name: "VD571L24-VIVEK CABLE NETWORK",
+    operator_lbl: "VD571L24-VIVEK CABLE NETWORK",
+  },
+  {
+    id: 2120,
+    name: "VD571L23-SIVA SAI CABLE NETWORK",
+    operator_lbl: "VD571L23-SIVA SAI CABLE NETWORK",
+  },
+  {
+    id: 2119,
+    name: "VD111L25-SAI CABLE NETWORK",
+    operator_lbl: "VD111L25-SAI CABLE NETWORK",
+  },
+  {
+    id: 2118,
+    name: "VD572L44-PRAVALIKA CABLE TV NETWORKS",
+    operator_lbl: "VD572L44-PRAVALIKA CABLE TV NETWORKS",
+  },
+  {
+    id: 2117,
+    name: "VD121L51-SRI SAI DURGA CABLE NETWORK",
+    operator_lbl: "VD121L51-SRI SAI DURGA CABLE NETWORK",
+  },
+  {
+    id: 2116,
+    name: "VD072L45-Sri Verrabadra Cable Communications",
+    operator_lbl: "VD072L45-Sri Verrabadra Cable Communications",
+  },
+  {
+    id: 2115,
+    name: "VD081L16-AYYAPPA CABLE NET WORK",
+    operator_lbl: "VD081L16-AYYAPPA CABLE NET WORK",
+  },
+  {
+    id: 2114,
+    name: "VD571L22-SRI VIGNESWARA CABLE NETWORK",
+    operator_lbl: "VD571L22-SRI VIGNESWARA CABLE NETWORK",
+  },
+  {
+    id: 2113,
+    name: "VD571L21-LAKSHMI DURGA CABLE NETWORK",
+    operator_lbl: "VD571L21-LAKSHMI DURGA CABLE NETWORK",
+  },
+  {
+    id: 2112,
+    name: "VD531L17-SHAHIN MUNNA CABLE NETWORK",
+    operator_lbl: "VD531L17-SHAHIN MUNNA CABLE NETWORK",
+  },
+  {
+    id: 2111,
+    name: "VD191L68-AS CABLE NETWORK",
+    operator_lbl: "VD191L68-AS CABLE NETWORK",
+  },
+  {
+    id: 2110,
+    name: "VD571L20-RAJEEV SANJEEV CABLE NETWORK",
+    operator_lbl: "VD571L20-RAJEEV SANJEEV CABLE NETWORK",
+  },
+  {
+    id: 2109,
+    name: "VD121L50-SREE FIBER NETWORKS",
+    operator_lbl: "VD121L50-SREE FIBER NETWORKS",
+  },
+  {
+    id: 2108,
+    name: "VD101L6-MEGHANA CABLE NETWORK",
+    operator_lbl: "VD101L6-MEGHANA CABLE NETWORK",
+  },
+  {
+    id: 2107,
+    name: "VD191L67-LAKSHMI NARASIMHA CABLE NETWORK",
+    operator_lbl: "VD191L67-LAKSHMI NARASIMHA CABLE NETWORK",
+  },
+  {
+    id: 2106,
+    name: "VD241L33-SANA CABLE NETWORK",
+    operator_lbl: "VD241L33-SANA CABLE NETWORK",
+  },
+  {
+    id: 2105,
+    name: "VD041L265-SKML Cable Network",
+    operator_lbl: "VD041L265-SKML Cable Network",
+  },
+  {
+    id: 2104,
+    name: "VD041L264-Sri Harsha Cable Network",
+    operator_lbl: "VD041L264-Sri Harsha Cable Network",
+  },
+  {
+    id: 2103,
+    name: "VD043L4-UDAY VDIGITAL CABLE & FIBERNET SERVICES",
+    operator_lbl: "VD043L4-UDAY VDIGITAL CABLE & FIBERNET SERVICES",
+  },
+  {
+    id: 2102,
+    name: "VD121L49-BALU CABLE NETWORK",
+    operator_lbl: "VD121L49-BALU CABLE NETWORK",
+  },
+  {
+    id: 2101,
+    name: "VD125L14-STAR COMMUNICATIONS",
+    operator_lbl: "VD125L14-STAR COMMUNICATIONS",
+  },
+  {
+    id: 2100,
+    name: "VD125L13-ANJALI CABLE TV NETWORK",
+    operator_lbl: "VD125L13-ANJALI CABLE TV NETWORK",
+  },
+  {
+    id: 2099,
+    name: "VD125L12-GOPAL RAO CABLE NETWORK",
+    operator_lbl: "VD125L12-GOPAL RAO CABLE NETWORK",
+  },
+  {
+    id: 2098,
+    name: "VD121L48-RRD COMMUNICATIONS",
+    operator_lbl: "VD121L48-RRD COMMUNICATIONS",
+  },
+  {
+    id: 2097,
+    name: "VD125L11-MEHAK CABLE NETWORK",
+    operator_lbl: "VD125L11-MEHAK CABLE NETWORK",
+  },
+  {
+    id: 2096,
+    name: "VD201L5-SAI RAVI CABLE NETWORK",
+    operator_lbl: "VD201L5-SAI RAVI CABLE NETWORK",
+  },
+  {
+    id: 2095,
+    name: "VD201L4-RJV CABLE TV NETWORK",
+    operator_lbl: "VD201L4-RJV CABLE TV NETWORK",
+  },
+];
+
+export { sublocationlist, loclist };

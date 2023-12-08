@@ -35,7 +35,7 @@ import { smsmsgtemplatelist } from "./smsmsgtemplatelist";
 import { complaintcategorylist } from "./complaintcategorylist";
 import { complaintsubcategorylist } from "./complaintsubcategorylist";
 import { configurationuploadlogs } from "./configurationuploadlogs";
-
+import { loclist } from "./sublocationlist";
 import { companylist } from "./companylist";
 import { brandlist } from "./brandlist";
 import { warehouselist } from "./warehouselist";
@@ -90,4 +90,5 @@ export {
   banklist,
   promovoucherlist,
   admindetails,
+  loclist,
 };
