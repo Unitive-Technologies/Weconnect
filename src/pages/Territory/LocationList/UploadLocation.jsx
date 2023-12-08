@@ -19,17 +19,49 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
-import * as Yup from "yup";
-import { useFormik } from "formik";
+import { createSelector } from "reselect";
+import { getLco as onGetLco } from "/src/store/actions";
+import Select from "react-select";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const UploadLocation = (props) => {
   const { isOpen, toggle } = props;
-  //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
-
   const [selectedFiles, setselectedFiles] = useState([]);
+
+  const selectLcoState = (state) => state.lco;
+  const LcoProperties = createSelector(selectLcoState, (lco) => ({
+    lcos: lco.lco,
+    loading: lco.loading,
+  }));
+
+  const { lcos, loading } = useSelector(LcoProperties);
+
+  useEffect(() => {
+    if (lcos && !lcos.length) {
+      dispatch(onGetLco());
+    }
+  }, [dispatch, lcos]);
+  console.log("Lco In add location: ", lcos);
+
+  const options = lcos.map((option) => ({
+    value: option.code,
+    label: (
+      <div>
+        <h6>{option.name}</h6>
+        <h6>{option.username}</h6>
+        <p>Regional Office: {option.branch_lbl}</p>
+        <p>Distributor: {option.distributor_lbl}</p>
+      </div>
+    ),
+  }));
+
+  const customStyles = {
+    option: (provided) => ({
+      ...provided,
+      backgroundColor: "white",
+    }),
+  };
 
   function handleAcceptedFiles(files) {
     files.map((file) =>
@@ -69,30 +101,18 @@ const UploadLocation = (props) => {
           <CardBody>
             <div className="mb-3">
               <Label className="form-label"> LCO</Label>
-              <Input
-                name="state_lbl"
-                type="select"
-                placeholder="Select state"
-                className="form-select"
-                // onChange={validation.handleChange}
+              <Select
+                name="lco"
+                options={options}
+                // onChange={(selectedOption) =>
+                //   validation.handleChange(selectedOption.value)
+                // }
                 // onBlur={validation.handleBlur}
-                // value={validation.values.state_lbl || ""}
-              >
-                <option value="">Select state</option>
-                <option value="1">Delhi</option>
-                <option value="2">Puducherry</option>
-                <option value="3">Ladakh</option>
-                <option value="4">Andaman and Nicobar Islands</option>
-                <option value="5">Lakshadweep</option>
-                <option value="6">Daman and Diu</option>
-                <option value="7">Dadra and Nagar Haveli</option>
-                <option value="8">Chandigarh</option>
-                <option value="9">West Bengal</option>
-                <option value="10">Uttarakhand</option>
-                <option value="11">Utter Pradesh</option>
-                <option value="12">Tripura</option>
-                <option value="13">Telangana</option>
-              </Input>
+                // value={options.find(
+                //   (opt) => opt.value === validation.values.lco
+                // )}
+                styles={customStyles}
+              />
               {/* {validation.touched.state_lbl && validation.errors.state_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.state_lbl}
