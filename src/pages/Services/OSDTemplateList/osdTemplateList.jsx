@@ -76,8 +76,7 @@ const OSDTemplateList = (props) => {
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
-  const [modal, setModal] = useState(false);
-  const [modal1, setModal1] = useState(false);
+  const [showAddOSDTemplateList, setShowAddOSDTemplateList] = useState(false);
 
   const [isEdit, setIsEdit] = useState(false);
 
@@ -240,12 +239,9 @@ const OSDTemplateList = (props) => {
   // }, [users]);
 
   const toggle = () => {
-    setModal(!modal);
+    setShowAddOSDTemplateList(!showAddOSDTemplateList);
   };
 
-  const toggle1 = () => {
-    setModal1(!modal1);
-  };
 
 
   const handleUserClick = (arg) => {
@@ -308,6 +304,31 @@ const OSDTemplateList = (props) => {
 
   const keyField = "id";
 
+  const getTableActions = () => {
+    return [
+      {
+        name: "Create",
+        action: setShowAddOSDTemplateList,
+        type: "normal",
+      },
+      {
+        name: "Bulk Assign to Operator",
+        action: toggleToast,
+        type: "dropdown",
+        dropdownName: "Actions",
+        // onClick={toggleToast}
+      },
+      {
+        name: "Bulk Removel from Operator",
+        action: toggleToast,
+        type: "dropdown",
+        dropdownName: "Actions",
+      },
+    ];
+  };
+
+
+
   return (
     <React.Fragment>
       {/* <DeleteModal
@@ -315,7 +336,7 @@ const OSDTemplateList = (props) => {
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
       /> */}
-      <AddNewOSDTemplate isOpen={modal} toggle={toggle} />
+      <AddNewOSDTemplate isOpen={showAddOSDTemplateList} toggle={toggle} />
 
       <div className="page-content">
         <Container fluid>
@@ -329,53 +350,19 @@ const OSDTemplateList = (props) => {
                 <Card>
                   <CardBody>
                     <div className="d-flex align-items-center justify-content-between">
-                      <h5 className="mb-0 card-title flex-grow-1">
-                        {/* Jobs Lists */}
-                      </h5>
-                      <div className="flex-shrink-0">
-                        <Link
-                          to="#!"
-                          onClick={() => setModal(true)}
-                          className="btn btn-primary me-1"
-                        >
-                          Create
-                        </Link>
+                      <div
+                        className="position-fixed top-0 end-0 p-3"
+                        style={{ zIndex: "1005" }}
+                      >
+                        <Toast isOpen={toast}>
+                          <ToastHeader toggle={toggleToast}>
+                            Warning
+                          </ToastHeader>
+                          <ToastBody>
+                            Please selcet atleast one OSD template
+                          </ToastBody>
+                        </Toast>
                       </div>
-                      <UncontrolledDropdown className="dropdown d-inline-block me-1">
-                        <DropdownToggle
-                          type="menu"
-                          className="btn btn-success"
-                          id="dropdownMenuButton1"
-                        >
-                          Action &nbsp;
-                          <i className="mdi mdi-dots-vertical"></i>
-                        </DropdownToggle>
-                        <DropdownMenu>
-                          <li>
-                            <DropdownItem onClick={toggleToast}>
-                              Bulk assign to Operator
-                            </DropdownItem>
-                          </li>
-                          <li>
-                            <DropdownItem onClick={toggleToast}>
-                              Bulk removel from Operator
-                            </DropdownItem>
-                          </li>
-                        </DropdownMenu>
-                        <div
-                          className="position-fixed top-0 end-0 p-3"
-                          style={{ zIndex: "1005" }}
-                        >
-                          <Toast isOpen={toast}>
-                            <ToastHeader toggle={toggleToast}>
-                              Warning
-                            </ToastHeader>
-                            <ToastBody>
-                              Please selcet atleast one OSD template
-                            </ToastBody>
-                          </Toast>
-                        </div>
-                      </UncontrolledDropdown>
                     </div>
                   </CardBody>
                   <CardBody>
@@ -384,10 +371,10 @@ const OSDTemplateList = (props) => {
                       isPagination={true}
                       columns={columns}
                       data={osdTemp}
-                      isGlobalFilter={true}
-                      // isAddUserList={true}
+                      isAddUserList={true}
                       isShowingPageLength={true}
-                      // iscustomPageSizeOptions={true}
+                      tableActions={getTableActions()}
+                      handleAddOSDTemplateList={() => setShowAddOSDTemplateList(true)}
                       handleUserClick={handleUserClicks}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"

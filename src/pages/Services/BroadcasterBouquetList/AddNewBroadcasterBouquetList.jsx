@@ -106,7 +106,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                     <Row>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Broadcaster Bouquet Code</Label>
+                                <Label className="form-label">Code</Label>
                                 <Input
                                     name="code"
                                     type="text"
@@ -144,7 +144,7 @@ const AddNewBroadcasterBouquetList = (props) => {
 
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Broadcaster Bouquet Name</Label>
+                                <Label className="form-label">Name</Label>
                                 <Input
                                     name="name"
                                     type="text"
