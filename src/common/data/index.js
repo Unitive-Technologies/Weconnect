@@ -5,7 +5,7 @@ import { grouppolicylist } from "./grouppolicylist";
 import { notificationtemplatelist } from "./notificationtemplatelist";
 import { schedulecustomernotificationlist } from "./schedulecustomernotificationlist";
 import { regionalofficelist } from "./regionalofficelist";
-import { distributorlist } from "./distributorlist";
+import { distributorlist, distributorregionallist } from "./distributorlist";
 import { lcolist } from "./lcolist";
 import { stateuserlist } from "./stateuserlist";
 import { locationlist } from "./locationlist";

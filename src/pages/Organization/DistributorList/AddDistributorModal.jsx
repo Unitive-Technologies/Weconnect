@@ -122,7 +122,7 @@ const AddDistributorModal = (props) => {
       tabIndex="-1"
       toggle={toggle}
     >
-      <ModalHeader tag="h4">Add New Regional Office</ModalHeader>
+      <ModalHeader tag="h4">Add New Distributor</ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -134,7 +134,7 @@ const AddDistributorModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Regional Office Code</Label>
+                <Label className="form-label">Code</Label>
                 <Input
                   name="code"
                   type="text"
@@ -175,7 +175,7 @@ const AddDistributorModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Regional Office Name</Label>
+                <Label className="form-label">Name</Label>
                 <Input
                   name="name"
                   label="Regional Office Name"
@@ -225,17 +225,17 @@ const AddDistributorModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Status</Label>
+                <Label className="form-label">Parent Regional Office</Label>
                 <Input
                   name="status_lbl"
                   type="select"
-                  placeholder="Select Status"
+                  placeholder="Select Parent Regional Office"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status_lbl || ""}
                 >
-                  <option value="">Select Status</option>
+                  <option value="">Select Parent Regional Office</option>
                   <option value="11">Active</option>
                   <option value="12">In-Active</option>
                 </Input>
@@ -605,32 +605,6 @@ const AddDistributorModal = (props) => {
                 ) : null}
               </div>
             </Col>
-
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">Fax No.</Label>
-                <Input
-                  name="fax_no"
-                  type="text"
-                  placeholder="Select Fax No."
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.fax_no || ""}
-                  invalid={
-                    validation.touched.fax_no && validation.errors.fax_no
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.fax_no && validation.errors.fax_no ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.fax_no}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-          </Row>
-          <Row>
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">GST No.</Label>
@@ -654,7 +628,8 @@ const AddDistributorModal = (props) => {
                 ) : null}
               </div>
             </Col>
-
+          </Row>
+          <Row>
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">GST Reg. Date</Label>
@@ -702,8 +677,6 @@ const AddDistributorModal = (props) => {
                 ) : null}
               </div>
             </Col>
-          </Row>
-          <Row>
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Credit Limit</Label>
@@ -729,6 +702,8 @@ const AddDistributorModal = (props) => {
                 ) : null}
               </div>
             </Col>
+          </Row>
+          <Row>
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Area ID</Label>

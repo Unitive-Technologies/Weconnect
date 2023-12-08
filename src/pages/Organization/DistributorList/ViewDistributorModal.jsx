@@ -126,7 +126,7 @@ const ViewDistributorModal = (props) => {
     >
       {!showEditRegionalOffice ? (
         <ModalHeader toggle={toggle} tag="h4">
-          View Regional Office
+          View Distributor
           <i
             className="bx bx bxs-edit"
             style={{ marginLeft: "20px", cursor: "pointer" }}
@@ -135,7 +135,7 @@ const ViewDistributorModal = (props) => {
         </ModalHeader>
       ) : (
         <ModalHeader toggle={toggle} tag="h4">
-          Edit Regional Office
+          Edit Distributor
         </ModalHeader>
       )}
       <ModalBody>

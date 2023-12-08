@@ -3512,4 +3512,306 @@ const distributorlist = [
   },
 ];
 
-export { distributorlist };
+const distributorregionallist = [
+  {
+    id: 448,
+    name: "VD59-Yadadri Bhuvangiri",
+    code: "VD59",
+  },
+  {
+    id: 447,
+    name: "VD58-Suryapet",
+    code: "VD58",
+  },
+  {
+    id: 446,
+    name: "VD54-Mulgu",
+    code: "VD54",
+  },
+  {
+    id: 445,
+    name: "VD53-Mahabubabad",
+    code: "VD53",
+  },
+  {
+    id: 444,
+    name: "VD52-Jayshankar Bhoopalapalli",
+    code: "VD52",
+  },
+  {
+    id: 443,
+    name: "VD51-Jangoan",
+    code: "VD51",
+  },
+  {
+    id: 442,
+    name: "VD50-Warngal",
+    code: "VD50",
+  },
+  {
+    id: 441,
+    name: "VD49-Hanumakonda",
+    code: "VD49",
+  },
+  {
+    id: 440,
+    name: "VD48-Adilabad",
+    code: "VD48",
+  },
+  {
+    id: 439,
+    name: "VD47-Nirmal",
+    code: "VD47",
+  },
+  {
+    id: 438,
+    name: "VD45-Nizamabad",
+    code: "VD45",
+  },
+  {
+    id: 437,
+    name: "VD43-Manciryal",
+    code: "VD43",
+  },
+  {
+    id: 436,
+    name: "VD41-Jagityal",
+    code: "VD41",
+  },
+  {
+    id: 435,
+    name: "VD40-Rajannna Sirsilla",
+    code: "VD40",
+  },
+  {
+    id: 434,
+    name: "VD38-Siddipet",
+    code: "VD38",
+  },
+  {
+    id: 433,
+    name: "VD37-Sangareddy",
+    code: "VD37",
+  },
+  {
+    id: 432,
+    name: "VD36-Medak",
+    code: "VD36",
+  },
+  {
+    id: 431,
+    name: "VD34-Vikarabad",
+    code: "VD34",
+  },
+  {
+    id: 430,
+    name: "VD33-Medcharl- Malkajgiri",
+    code: "VD33",
+  },
+  {
+    id: 429,
+    name: "VD32-Rangareddy",
+    code: "VD32",
+  },
+  {
+    id: 428,
+    name: "VD31-Naryanpet",
+    code: "VD31",
+  },
+  {
+    id: 427,
+    name: "VD30-Wanaparthi",
+    code: "VD30",
+  },
+  {
+    id: 426,
+    name: "VD29-Nagarkurnool",
+    code: "VD29",
+  },
+  {
+    id: 325,
+    name: "VD26-Annamayya",
+    code: "VD26",
+  },
+  {
+    id: 324,
+    name: "VD24-Nandyal",
+    code: "VD24",
+  },
+  {
+    id: 323,
+    name: "VD22-Chittoor",
+    code: "VD22",
+  },
+  {
+    id: 322,
+    name: "VD21-Tirupathi",
+    code: "VD21",
+  },
+  {
+    id: 321,
+    name: "VD20-Sri Satya Sai",
+    code: "VD20",
+  },
+  {
+    id: 320,
+    name: "VD17-Prakasham",
+    code: "VD17",
+  },
+  {
+    id: 319,
+    name: "VD16-Bapatla",
+    code: "VD16",
+  },
+  {
+    id: 318,
+    name: "VD14-Palnadu",
+    code: "VD14",
+  },
+  {
+    id: 317,
+    name: "VD12-NTR",
+    code: "VD12",
+  },
+  {
+    id: 316,
+    name: "VD10-Eluru",
+    code: "VD10",
+  },
+  {
+    id: 315,
+    name: "VD09-Dr B R Ambethkar Konaseema",
+    code: "VD09",
+  },
+  {
+    id: 314,
+    name: "VD07-Kakinada",
+    code: "VD07",
+  },
+  {
+    id: 313,
+    name: "VD06-Anakapalli",
+    code: "VD06",
+  },
+  {
+    id: 312,
+    name: "VD05-Alluri Sitarama raju",
+    code: "VD05",
+  },
+  {
+    id: 311,
+    name: "VD03-Vizayanagaram",
+    code: "VD03",
+  },
+  {
+    id: 310,
+    name: "VD02-Parvathipuram Manyam",
+    code: "VD02",
+  },
+  {
+    id: 309,
+    name: "VD01-Srikakulam",
+    code: "VD01",
+  },
+  {
+    id: 25,
+    name: "VD57-NALGONDA",
+    code: "VD57",
+  },
+  {
+    id: 24,
+    name: "VD27-MAHABUB",
+    code: "VD27",
+  },
+  {
+    id: 23,
+    name: "VD08-EGODAVARI",
+    code: "VD08",
+  },
+  {
+    id: 22,
+    name: "VD13-KRISHNA",
+    code: "VD13",
+  },
+  {
+    id: 21,
+    name: "VD11-WGODAVARI",
+    code: "VD11",
+  },
+  {
+    id: 20,
+    name: "VD25-YSRKADAPA",
+    code: "VD25",
+  },
+  {
+    id: 19,
+    name: "VD18-NELLORE",
+    code: "VD18",
+  },
+  {
+    id: 18,
+    name: "VD28-JGADWAL",
+    code: "VD28",
+  },
+  {
+    id: 17,
+    name: "VD55-KHAMMAM",
+    code: "VD55",
+  },
+  {
+    id: 16,
+    name: "VD15-GUNTUR",
+    code: "VD15",
+  },
+  {
+    id: 15,
+    name: "VD23-KURNOOL",
+    code: "VD23",
+  },
+  {
+    id: 14,
+    name: "VD39-KARIMNAGAR",
+    code: "VD39",
+  },
+  {
+    id: 13,
+    name: "VD19-ANANTAPUR",
+    code: "VD19",
+  },
+  {
+    id: 12,
+    name: "VD46-KAMAREDDY",
+    code: "VD46",
+  },
+  {
+    id: 11,
+    name: "VD44-KBHEEM",
+    code: "VD44",
+  },
+  {
+    id: 10,
+    name: "VD42-PEDAPALLI",
+    code: "VD42",
+  },
+  {
+    id: 9,
+    name: "VD04-VIZAG",
+    code: "VD04",
+  },
+  {
+    id: 8,
+    name: "VD56-Bhadradri Kothagudem",
+    code: "VD56",
+  },
+  {
+    id: 7,
+    name: "VD35-HYDERABAD",
+    code: "VD35",
+  },
+  {
+    id: 2,
+    name: "C000002-VINSAT RO",
+    code: "C000002",
+  },
+];
+export { distributorlist, distributorregionallist };
