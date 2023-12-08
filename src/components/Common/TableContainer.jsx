@@ -67,6 +67,7 @@ const TableContainer = ({
   isGlobalFilter,
   isAddOptions,
   isAddUserList,
+  isAddRegionalOffice,
   handleUploadUser,
   handleBulkUpdateUser,
   isAddBroadCaster,
@@ -198,7 +199,8 @@ const TableContainer = ({
               </div>
             </Col>
           )}
-          {isAddUserList && (
+          {isAddUserList && <TableActionButtons tableActions={tableActions} />}
+          {isAddRegionalOffice && (
             <TableActionButtons tableActions={tableActions} />
           )}
           {/* {isAddUserList && (
@@ -231,7 +233,6 @@ const TableContainer = ({
               </div>
             </Col>
           )}
-
           {isAddBroadCaster && (
             <Col sm="12">
               <div className="text-sm-end">
@@ -247,7 +248,6 @@ const TableContainer = ({
               </div>
             </Col>
           )}
-
           {isAddGenreList && (
             <Col sm="12">
               <div className="text-sm-end">
@@ -263,7 +263,6 @@ const TableContainer = ({
               </div>
             </Col>
           )}
-
           {isAddLanguageList && (
             <Col sm="12">
               <div className="text-sm-end">
@@ -279,7 +278,6 @@ const TableContainer = ({
               </div>
             </Col>
           )}
-
           {isAddChannelList && (
             <Col sm="12">
               <div className="text-sm-end">
@@ -310,7 +308,6 @@ const TableContainer = ({
               </div>
             </Col>
           )}
-
           {isAddPackageList && (
             <Col sm="12">
               <div className="text-sm-end">

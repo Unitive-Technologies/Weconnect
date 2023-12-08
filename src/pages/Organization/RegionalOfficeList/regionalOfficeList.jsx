@@ -3,36 +3,12 @@ import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
 import Spinners from "../../../components/Common/Spinner";
-import {
-  Card,
-  CardBody,
-  Col,
-  Container,
-  Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
-  UncontrolledTooltip,
-  Input,
-  Form,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-
-import { Email, Tags, Projects } from "./regionalOfficeListCol";
+import { Card, CardBody, Col, Container, Row } from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
 
 import { getRegionalOffice as onGetRegionalOffice } from "/src/store/actions";
-import { isEmpty } from "lodash";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -44,7 +20,7 @@ import UploadRegionalOfficeModal from "./UploadRegionalOfficeModal";
 
 const RegionalOfficeList = (props) => {
   //meta title
-  document.title = "Regional Office List | VDigital";
+  document.title = "Regional Office | VDigital";
 
   const dispatch = useDispatch();
 
@@ -65,9 +41,10 @@ const RegionalOfficeList = (props) => {
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
-  const [modal, setModal] = useState(false);
+  const [showRegionalOffice, setShowRegionalOffice] = useState(false);
   const [modal1, setModal1] = useState(false);
-  const [modal2, setModal2] = useState(false);
+  const [showUploadRegionalOffice, setShowUploadRegionalOffice] =
+    useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
   const columns = useMemo(
@@ -317,11 +294,11 @@ const RegionalOfficeList = (props) => {
   //   }
   // }, [regOff]);
 
-  const toggle = () => {
-    setModal(!modal);
+  const handleAddRegionalOffice = () => {
+    setShowRegionalOffice(!showRegionalOffice);
   };
-  const toggle2 = () => {
-    setModal2(!modal2);
+  const handleUploadRegionalOffice = () => {
+    setShowUploadRegionalOffice(!showUploadRegionalOffice);
   };
 
   const [viewUser, setViewUser] = useState({});
@@ -332,81 +309,47 @@ const RegionalOfficeList = (props) => {
     setViewUser(userData);
     // toggle();
   };
-  const handleUserClick = (arg) => {
-    const user = arg;
-
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-    setIsEdit(true);
-
-    toggle();
-  };
 
   var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
-
-  //delete customer
-  const [deleteModal, setDeleteModal] = useState(false);
-
-  const onClickDelete = (users) => {
-    setContact(users);
-    setDeleteModal(true);
-  };
-
-  const handleDeleteUser = () => {
-    if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
-    }
-    setContact("");
-    onPaginationPageChange(1);
-    setDeleteModal(false);
-  };
-
-  const handleUserClicks = () => {
-    setUserList("");
-    setIsEdit(false);
-    toggle();
-  };
 
   const keyField = "id";
 
+  const getTableActions = () => {
+    return [
+      {
+        name: "Create",
+        action: setShowRegionalOffice,
+        type: "normal",
+        icon: "create",
+      },
+      {
+        name: "Upload",
+        action: setShowUploadRegionalOffice,
+        type: "normal",
+        icon: "upload",
+      },
+    ];
+  };
+
   return (
     <React.Fragment>
-      {/* <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
-      /> */}
       <ViewRegionalOfficeModal
         isOpen={modal1}
         toggle={toggleViewModal}
         user={viewUser}
       />
-      <AddRegionalOfficeModal isOpen={modal} toggle={toggle} />
-      <UploadRegionalOfficeModal isOpen={modal2} toggle={toggle2} />
+      <AddRegionalOfficeModal
+        isOpen={showRegionalOffice}
+        toggle={handleAddRegionalOffice}
+      />
+      <UploadRegionalOfficeModal
+        isOpen={showUploadRegionalOffice}
+        toggle={handleUploadRegionalOffice}
+      />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs
-            title="Organization"
-            breadcrumbItem="Regional Office List"
-          />
+          <Breadcrumbs title="Organization" breadcrumbItem="Regional Office" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -414,49 +357,22 @@ const RegionalOfficeList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    <div className="d-flex align-items-center justify-content-between">
-                      <h5 className="mb-0 card-title flex-grow-1">
-                        {/* Jobs Lists */}
-                      </h5>
-                      {/* <form className="app-search d-none d-lg-block">
-                        <div className="position-relative">
-                          <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Search..."
-                          />
-                          <span className="bx bx-search-alt" />
-                        </div>
-                      </form> */}
-                      <div className="flex-shrink-0">
-                        <Link
-                          to="#!"
-                          onClick={() => setModal(true)}
-                          className="btn btn-primary me-1"
-                        >
-                          Create Regional Office
-                        </Link>
-                        <Link
-                          to="#!"
-                          onClick={() => setModal2(true)}
-                          className="btn btn-primary me-1"
-                        >
-                          Upload Regional Office
-                        </Link>
-                      </div>
-                    </div>
-                  </CardBody>
-                  <CardBody>
                     {console.log("regoff:" + JSON.stringify(regOff))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={regOff}
                       isGlobalFilter={true}
-                      // isAddUserList={true}
+                      isAddRegionalOffice={true}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
-                      handleUserClick={() => {}}
+                      handleAddRegionalOffice={() =>
+                        setShowRegionalOffice(true)
+                      }
+                      handleUploadRegionalOffice={() =>
+                        setShowUploadRegionalOffice(true)
+                      }
+                      tableActions={getTableActions()}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

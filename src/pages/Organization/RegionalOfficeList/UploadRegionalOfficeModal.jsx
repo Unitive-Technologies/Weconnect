@@ -54,6 +54,7 @@ const UploadRegionalOfficeModal = (props) => {
     <Modal
       isOpen={isOpen}
       role="dialog"
+      size="xl"
       autoFocus={true}
       centered={true}
       className="exampleModal"
@@ -68,6 +69,15 @@ const UploadRegionalOfficeModal = (props) => {
         <Card>
           <CardBody>
             {/* <CardTitle>Dropzone</CardTitle> */}
+            <div className="text-left mb-4 r-0" style={{ marginLeft: "78%" }}>
+              <button
+                type="button"
+                className="btn btn-primary"
+                // onClick={handleDownloadSampleFile}
+              >
+                Download Sample Upload File
+              </button>
+            </div>
             <div className="mb-3">
               <Label className="form-label">Status</Label>
               <Input
