@@ -41,55 +41,43 @@ const AddNewDocumentUploadPolicy = (props) => {
             financial: "",
             status: "",
             remark: "",
-            cascode: "",
-            serviceid: "",
+            uploadfile: "",
             created_by: "Admin",
         },
         validationSchema: Yup.object({
-            code: Yup.string().required("Enter Channel Code"),
-            logo: Yup.string().required("upload logo"),
-            name: Yup.string().required("Enter channel name"),
-            description: Yup.string().required("Enter description"),
-            definition: Yup.string().required("Enter channel definition"),
-            type: Yup.string().required("Enter channel type"),
-            broadcaster: Yup.string().required("select broadcaster"),
-            genre: Yup.string().required("Enter genre"),
-            language: Yup.string().required("Select language"),
-            isalacarte: Yup.string().required(""),
-            rate: Yup.string().required(""),
-            status: Yup.string().required("Enter status"),
-            cas: Yup.string().required("Enter cas"),
-            cascode: Yup.string().required("cascode"),
-            serviceid: Yup.string().required("serviceid"),
-
+            name: Yup.string().required("Enter policy name"),
+            startdate: Yup.string().required("Select policy start date"),
+            enddate: Yup.string().required("Select policy end date"),
+            uploaddate: Yup.string().required("Select policy upload date"),
+            initiatedby: Yup.string().required("Enter initiated by"),
+            approvedby: Yup.string().required("Enter approved by"),
+            financial: Yup.string().required("select financial year"),
+            status: Yup.string().required("Select status"),
+            remark: Yup.string().required("Enter remark"),
+            uploadfile: Yup.string().required("Select upload file"),
         }),
         onSubmit: (values) => {
-            const newChannelList = {
+            const newDocumentUploadPolicy = {
                 id: Math.floor(Math.random() * (30 - 20)) + 20,
-                code: values["code"],
-                logo: values["logo"],
                 name: values["name"],
-                description: values["description"],
-                definition: values["definition"],
-                type: values["type"],
-                broadcaster: values["broadcaster"],
-                genre: values["genre"],
-                language: values["language"],
-                isalacarte: values["isalacarte"],
-                rate: values["rate"],
+                startdate: values["startdate"],
+                enddate: values["enddate"],
+                uploaddate: values["uploaddate"],
+                initiatedby: values["initiatedby"],
+                approvedby: values["approvedby"],
+                financial: values["financial"],
                 status: values["status"],
-                cas: values["cas"],
-                cascode: values["cascode"],
-                serviceid: values["serviceid"],
+                remark: values["remark"],
+                uploadfile: values["uploadfile"],
                 created_at: new Date(),
                 created_by: values["created_by"],
             };
             console.log(
-                "newChannelList:" + newChannelList
+                "newDocumentUploadPolicy:" + newDocumentUploadPolicy
             );
             // save new user
             dispatch(
-                onAddNewChannelList(newChannelList)
+                onAddNewDocumentUploadPolicy(newDocumentUploadPolicy)
             );
             validation.resetForm();
             toggle();
@@ -98,13 +86,6 @@ const AddNewDocumentUploadPolicy = (props) => {
             validation.setValues(validation.initialValues);
         },
     });
-
-
-    const [modal4, setModal4] = useState(false);
-
-    const toggle4 = () => {
-        setModal4(!modal4);
-    };
 
 
     return (
@@ -119,7 +100,7 @@ const AddNewDocumentUploadPolicy = (props) => {
             size="xl"
         >
             {/* <Modal isOpen={modal} toggle={toggle}> */}
-            <ModalHeader tag="h4">Add New Channel</ModalHeader>
+            <ModalHeader tag="h4">Add New Document Upload Policy</ModalHeader>
             <ModalBody>
                 <Form
                     onSubmit={(e) => {
@@ -131,84 +112,11 @@ const AddNewDocumentUploadPolicy = (props) => {
                     <Row>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Channel Code</Label>
-                                <Input
-                                    name="code"
-                                    type="text"
-                                    placeholder="Enter channel code"
-                                    // className="form-select"
-                                    onChange={validation.handleChange}
-                                    onBlur={validation.handleBlur}
-                                    value={validation.values.code || ""}
-                                ></Input>
-                                {validation.touched.code && validation.errors.code ? (
-                                    <FormFeedback type="invalid">
-                                        {validation.errors.code}
-                                    </FormFeedback>
-                                ) : null}
-                            </div>
-                        </Col>
-
-                        <Col lg={2}>
-                            <div className="form-check form-switch form-switch-lg mb-3">
-                                <input
-                                    type="checkbox"
-                                    className="form-check-input"
-                                    id="customSwitchsizelg"
-                                    defaultChecked
-                                />
-                                <label
-                                    className="form-check-label"
-                                    htmlFor="customSwitchsizelg"
-                                >
-                                    Custom / Auto
-                                </label>
-                            </div>
-                        </Col>
-
-                        <Col lg={2}>
-                            <div className="form-check form-switch form-switch-lg mb-3">
-                                NCF:
-                                <input
-                                    type="checkbox"
-                                    className="form-check-input"
-                                    id="customSwitchsizelg"
-                                    defaultChecked
-                                />
-                                <label
-                                    className="form-check-label"
-                                    htmlFor="customSwitchsizelg"
-                                >
-                                    No / Yes
-                                </label>
-                            </div>
-                        </Col>
-                        <Col sm="4">
-                            <div className="mb-3">
-                                <Label className="form-label">Channel Logo</Label>
-                                <Input
-                                    name="logo"
-                                    type="text"
-                                    // placeholder="Enter channel code"
-                                    // className="form-select"
-                                    onChange={validation.handleChange}
-                                    onBlur={validation.handleBlur}
-                                    value={validation.values.logo || ""}
-                                ></Input>
-                                {validation.touched.logo && validation.errors.logo ? (
-                                    <FormFeedback type="invalid">
-                                        {validation.errors.logo}
-                                    </FormFeedback>
-                                ) : null}
-                            </div>
-                        </Col>
-                        <Col sm="4">
-                            <div className="mb-3">
-                                <Label className="form-label">Channel Name</Label>
+                                <Label className="form-label">Policy Name</Label>
                                 <Input
                                     name="name"
                                     type="text"
-                                    placeholder="Enter channel name"
+                                    placeholder="Enter policy name"
                                     // className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
@@ -221,182 +129,126 @@ const AddNewDocumentUploadPolicy = (props) => {
                                 ) : null}
                             </div>
                         </Col>
-                        <Col sm="4">
-                            <div className="mb-3">
-                                <Label className="form-label">Description</Label>
-                                <Input
-                                    name="description"
-                                    type="textarea"
-                                    placeholder="Enter Description"
-                                    rows="3"
-                                    onChange={validation.handleChange}
-                                    onBlur={validation.handleBlur}
-                                    value={validation.values.description || ""}
-                                    invalid={
-                                        validation.touched.description &&
-                                            validation.errors.description
-                                            ? true
-                                            : false
-                                    }
-                                />
-                                {validation.touched.description &&
-                                    validation.errors.description ? (
-                                    <FormFeedback type="invalid">
-                                        {validation.errors.description}
-                                    </FormFeedback>
-                                ) : null}
-                            </div>
-                        </Col>
-                        <Col sm="4">
 
+                        <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Channel Definition</Label>
+                                <Label className="form-label">Policy Start Date</Label>
                                 <Input
-                                    name="definition"
-                                    type="select"
-                                    placeholder="Select Definition"
-                                    className="form-select"
+                                    name="startdate"
+                                    type="datepicker"
+                                    placeholder="Select policy start date"
+                                    // className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.definition || ""}
-                                >
-                                    <option value="101">Select channel definition</option>
-                                    <option value="102">Standard Definition(SD)</option>
-                                    <option value="103">High Definition(HD)</option>
-                                </Input>
-                                {validation.touched.definition && validation.errors.definition ? (
+                                    value={validation.values.startdate || ""}
+                                ></Input>
+                                {validation.touched.startdate && validation.errors.startdate ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.definition}
+                                        {validation.errors.startdate}
                                     </FormFeedback>
                                 ) : null}
                             </div>
                         </Col>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Channel Type</Label>
+                                <Label className="form-label">Policy End Date</Label>
                                 <Input
-                                    name="type"
-                                    type="select"
-                                    placeholder="Select Channel type"
-                                    className="form-select"
+                                    name="enddate"
+                                    type="datepicker"
+                                    placeholder="Select policy end date"
+                                    // className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.type || ""}
-                                >
-                                    <option value="104">Select channel type</option>
-                                    <option value="105">Pay Channel</option>
-                                    <option value="106">FTA</option>
-                                </Input>
-                                {validation.touched.type && validation.errors.type ? (
+                                    value={validation.values.enddate || ""}
+                                ></Input>
+                                {validation.touched.enddate && validation.errors.enddate ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.type}
+                                        {validation.errors.enddate}
                                     </FormFeedback>
                                 ) : null}
                             </div>
                         </Col>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Broadcaster</Label>
+                                <Label className="form-label">Policy Upload Date</Label>
                                 <Input
-                                    name="broadcaster"
-                                    type="select"
-                                    placeholder="Select broadcaster"
-                                    className="form-select"
+                                    name="uploaddate"
+                                    type="datepicker"
+                                    placeholder="Select policy upload date"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.broadcaster || ""}
-                                >
-                                    <option value="110">Select broadcaster</option>
-                                    <option value="111">Lex Sportal Vision Pvt Ltd.</option>
-                                    <option value="112">Jangama Media Pvt Ltd.</option>
-                                </Input>
-                                {validation.touched.broadcaster && validation.errors.broadcaster ? (
+                                    value={validation.values.uploaddate || ""}
+                                />
+                                {validation.touched.uploaddate &&
+                                    validation.errors.uploaddate ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.broadcaster}
+                                        {validation.errors.uploaddate}
                                     </FormFeedback>
                                 ) : null}
                             </div>
                         </Col>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Genre</Label>
+                                <Label className="form-label">Initiated By</Label>
                                 <Input
-                                    name="genre"
-                                    type="select"
-                                    placeholder="Select genre"
-                                    className="form-select"
-                                    onChange={validation.handleChange}
-                                    onBlur={validation.handleBlur}
-                                    value={validation.values.genre || ""}
-                                >
-                                    <option value="101">Select genre</option>
-                                    <option value="102">TRAVEL</option>
-                                    <option value="103">TELUGU NEWS</option>
-                                    <option value="103">TELUGU GEC</option>
-                                </Input>
-                                {validation.touched.genre && validation.errors.genre ? (
-                                    <FormFeedback type="invalid">
-                                        {validation.errors.genre}
-                                    </FormFeedback>
-                                ) : null}
-                            </div>
-                        </Col>
-                        <Col sm="4">
-                            <div className="mb-3">
-                                <Label className="form-label">Language</Label>
-                                <Input
-                                    name="language"
+                                    name="initiatedby"
                                     type="text"
-                                    placeholder="Select language"
+                                    placeholder="Enter initiated by"
                                     // className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.language || ""}
-                                ></Input>
-                                {validation.touched.language && validation.errors.language ? (
-                                    <FormFeedback type="invalid">
-                                        {validation.errors.language}
-                                    </FormFeedback>
-                                ) : null}
-                            </div>
-                        </Col>
-                        <Col sm="4">
-                            <div className="mb-3">
-                                <Label className="form-label">IsAlacarte</Label>
-                                <Input
-                                    name="isalacarte"
-                                    type="select"
-                                    // placeholder="Enter channel code"
-                                    // className="form-select"
-                                    onChange={validation.handleChange}
-                                    onBlur={validation.handleBlur}
-                                    value={validation.values.isalacarte || ""}
+                                    value={validation.values.initiatedby || ""}
                                 >
-                                    <option value="201">Yes</option>
-                                    <option value="202">No</option>
                                 </Input>
-                                {validation.touched.isalacarte && validation.errors.isalacarte ? (
+                                {validation.touched.initiatedby && validation.errors.initiatedby ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.isalacarte}
+                                        {validation.errors.initiatedby}
                                     </FormFeedback>
                                 ) : null}
                             </div>
                         </Col>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">MRP Rate(INR)</Label>
+                                <Label className="form-label">Approved By</Label>
                                 <Input
-                                    name="rate"
-                                    type="number"
-                                    // placeholder="Enter channel code"
+                                    name="approvedby"
+                                    type="text"
+                                    placeholder="Select approved by"
                                     // className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.rate || ""}
-                                ></Input>
-                                {validation.touched.rate && validation.errors.rate ? (
+                                    value={validation.values.approvedby || ""}
+                                >
+                                </Input>
+                                {validation.touched.approvedby && validation.errors.approvedby ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.rate}
+                                        {validation.errors.approvedby}
+                                    </FormFeedback>
+                                ) : null}
+                            </div>
+                        </Col>
+                        <Col sm="4">
+                            <div className="mb-3">
+                                <Label className="form-label">Financial Year</Label>
+                                <Input
+                                    name="finanical"
+                                    type="select"
+                                    placeholder="Select finanical year"
+                                    className="form-select"
+                                    onChange={validation.handleChange}
+                                    onBlur={validation.handleBlur}
+                                    value={validation.values.financial || ""}
+                                >
+                                    <option value="110">Select financial year</option>
+                                    <option value="111">2023-2024</option>
+                                    <option value="112">2022-2023</option>
+                                    <option value="113">2021-2022</option>
+                                    <option value="114">2020-2021</option>
+                                    <option value="115">2019-2020</option>
+                                </Input>
+                                {validation.touched.financial && validation.errors.financial ? (
+                                    <FormFeedback type="invalid">
+                                        {validation.errors.financial}
                                     </FormFeedback>
                                 ) : null}
                             </div>
@@ -424,64 +276,43 @@ const AddNewDocumentUploadPolicy = (props) => {
                                 ) : null}
                             </div>
                         </Col>
+
                         <Col sm="4">
                             <div className="mb-3">
-                                {/* <Label className="form-label">Status</Label> */}
+                                <Label className="form-label">Remark</Label>
                                 <Input
-                                    name="cas"
-                                    type="select"
-                                    placeholder="Select CAS"
-                                    className="form-select"
+                                    name="remark"
+                                    type="textarea"
+                                    placeholder="Enter remark"
+                                    // className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.cas || ""}
-                                >
-                                    <option value="21">Select CAS</option>
-                                    <option value="22">NSTV</option>
-                                </Input>
-                                {validation.touched.cas && validation.errors.cas ? (
+                                    value={validation.values.remark || ""}
+                                ></Input>
+                                {validation.touched.remark && validation.errors.remark ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.cas}
+                                        {validation.errors.remark}
                                     </FormFeedback>
                                 ) : null}
                             </div>
                         </Col>
+
                         <Col sm="4">
                             <div className="mb-3">
-                                {/* <Label className="form-label">Status</Label> */}
+                                <Label className="form-label">Upload Documents</Label>
                                 <Input
-                                    name="cascode"
+                                    name="uploadfile"
                                     // type="select"
-                                    placeholder="Cascode"
+                                    placeholder="Select Upload file"
                                     // className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.cascode || ""}
+                                    value={validation.values.uploadfile || ""}
                                 >
                                 </Input>
-                                {validation.touched.cascode && validation.errors.cascode ? (
+                                {validation.touched.uploadfile && validation.errors.uploadfile ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.cascode}
-                                    </FormFeedback>
-                                ) : null}
-                            </div>
-                        </Col>
-                        <Col sm="4">
-                            <div className="mb-3">
-                                {/* <Label className="form-label">Status</Label> */}
-                                <Input
-                                    name="serviceid"
-                                    // type="select"
-                                    placeholder="Service id"
-                                    // className="form-select"
-                                    onChange={validation.handleChange}
-                                    onBlur={validation.handleBlur}
-                                    value={validation.values.serviceid || ""}
-                                >
-                                </Input>
-                                {validation.touched.serviceid && validation.errors.serviceid ? (
-                                    <FormFeedback type="invalid">
-                                        {validation.errors.serviceid}
+                                        {validation.errors.uploadfile}
                                     </FormFeedback>
                                 ) : null}
                             </div>
@@ -527,7 +358,7 @@ const AddNewDocumentUploadPolicy = (props) => {
     );
 };
 
-AddNewChannelList.propTypes = {
+AddNewDocumentUploadPolicy.propTypes = {
     toggle: PropTypes.func,
     isOpen: PropTypes.bool,
 };
