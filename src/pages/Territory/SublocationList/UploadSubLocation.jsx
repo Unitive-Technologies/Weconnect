@@ -80,6 +80,27 @@ const UploadSubLocation = (props) => {
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
   }
+
+  const handleDownloadSampleFile = () => {
+    // Create a sample CSV file with headers
+    // field to be get from api as prop
+    const headers = ["name", "location_code", "status"];
+    const data = [headers];
+
+    // Convert the data to CSV format
+    const csvContent = data.map((row) => row.join(",")).join("\n");
+
+    // Create a Blob containing the data in CSV format
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+
+    // Create a download link
+    const link = document.createElement("a");
+    link.href = window.URL.createObjectURL(blob);
+    link.download = "Sublocation.csv";
+
+    // Trigger a click on the link to start the download
+    link.click();
+  };
   return (
     <Modal
       isOpen={isOpen}
@@ -97,6 +118,16 @@ const UploadSubLocation = (props) => {
       <ModalBody>
         <Card>
           <CardBody>
+            <div className="text-left  r-0" style={{ marginLeft: "45%" }}>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleDownloadSampleFile}
+              >
+                Download Sample Upload File
+              </button>
+            </div>
+
             <div className="mb-3">
               <Label className="form-label"> LCO</Label>
               <Select
