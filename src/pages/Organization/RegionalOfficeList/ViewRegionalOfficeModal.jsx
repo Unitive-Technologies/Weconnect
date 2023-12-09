@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import {
   Card,
   CardBody,
@@ -151,7 +152,7 @@ const ViewRegionalOfficeModal = (props) => {
         <ModalHeader toggle={toggle} tag="h4">
           <div
             style={{
-              width: "350%",
+              width: "380%",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
@@ -163,14 +164,17 @@ const ViewRegionalOfficeModal = (props) => {
             style={{ marginLeft: "20px", cursor: "pointer" }}
             onClick={() => setShowEditRegionalOffice(true)}
           ></i> */}
-            <button
+            {/* <button
               onClick={() => setShowEditRegionalOffice(true)}
               type="submit"
               className="btn btn-success save-user"
               style={{ display: "flex", alignItems: "center", gap: "10px" }}
             >
               <i className="bx bx bxs-edit"></i>Edit
-            </button>
+            </button> */}
+            <Link to="#!" className="btn btn-light me-1">
+              <i className="mdi mdi-pencil-outline"></i>
+            </Link>
           </div>
         </ModalHeader>
       ) : (
