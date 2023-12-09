@@ -36,7 +36,7 @@ import { isEmpty } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
-import NSTV from './NSTV';
+import NSTVList from './NSTVList';
 
 const OSDConfigurationList = (props) => {
   //meta title
@@ -329,7 +329,7 @@ const OSDConfigurationList = (props) => {
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
       /> */}
-      <NSTV isOpen={showNSTV}
+      <NSTVList isOpen={showNSTV}
         toggle={toggle}
       />
       <div className="page-content">
