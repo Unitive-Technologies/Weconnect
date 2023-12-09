@@ -14,7 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const OperatorAccountDetails = (props) => {
+const AllottedScheme = (props) => {
   //meta title
   document.title = "Regional Offices | VDigital";
 
@@ -43,7 +43,7 @@ const OperatorAccountDetails = (props) => {
         },
       },
       {
-        Header: "Transaction Date",
+        Header: "Name",
         accessor: "name",
         filterable: true,
         Cell: (cellProps) => {
@@ -68,7 +68,7 @@ const OperatorAccountDetails = (props) => {
         },
       },
       {
-        Header: "Receipt No.",
+        Header: "Code",
         accessor: "code",
         filterable: true,
         Cell: (cellProps) => {
@@ -78,7 +78,7 @@ const OperatorAccountDetails = (props) => {
         },
       },
       {
-        Header: "Amount",
+        Header: "Type",
         accessor: "addr",
         filterable: true,
         Cell: (cellProps) => {
@@ -88,7 +88,7 @@ const OperatorAccountDetails = (props) => {
         },
       },
       {
-        Header: "SGST",
+        Header: "Type",
         accessor: "contact_person",
         filterable: true,
         Cell: (cellProps) => {
@@ -100,7 +100,7 @@ const OperatorAccountDetails = (props) => {
         },
       },
       {
-        Header: "CGST",
+        Header: "Hardware Charge",
         accessor: "mobile_no",
         filterable: true,
         Cell: (cellProps) => {
@@ -112,7 +112,7 @@ const OperatorAccountDetails = (props) => {
         },
       },
       {
-        Header: "IGST",
+        Header: "Installation Charge",
         accessor: "state_lbl",
         filterable: true,
         Cell: (cellProps) => {
@@ -124,7 +124,7 @@ const OperatorAccountDetails = (props) => {
         },
       },
       {
-        Header: "Total Tax",
+        Header: "Status",
         accessor: "District_lbl",
         filterable: true,
         Cell: (cellProps) => {
@@ -136,7 +136,7 @@ const OperatorAccountDetails = (props) => {
         },
       },
       {
-        Header: "Total Amount",
+        Header: "Allotted By",
         accessor: "city_lbl",
         filterable: true,
         Cell: (cellProps) => {
@@ -145,94 +145,6 @@ const OperatorAccountDetails = (props) => {
           );
         },
       },
-      {
-        Header: "Debit Amount",
-        accessor: "gstno",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">{cellProps.row.original.gstno}</p>
-          );
-        },
-      },
-      {
-        Header: "Credit Amount",
-        accessor: "panno",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">{cellProps.row.original.panno}</p>
-          );
-        },
-      },
-      {
-        Header: "Type",
-        accessor: "username",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">{cellProps.row.original.username}</p>
-          );
-        },
-      },
-      {
-        Header: "Remark",
-        accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">{cellProps.row.original.status}</p>
-          );
-        },
-      },
-
-      {
-        Header: "Created By",
-        accessor: "created_by",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.created_by}
-            </p>
-          );
-        },
-      },
-      // {
-      //   Header: "Action",
-      //   Cell: (cellProps) => {
-      //     return (
-      //       <div className="d-flex gap-3">
-      //         <Link
-      //           to="#"
-      //           className="text-success"
-      //           onClick={() => {
-      //             const userData = cellProps.row.original;
-      //             handleUserClick(userData);
-      //           }}
-      //         >
-      //           <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-      //           <UncontrolledTooltip placement="top" target="edittooltip">
-      //             Edit
-      //           </UncontrolledTooltip>
-      //         </Link>
-      //         <Link
-      //           to="#"
-      //           className="text-danger"
-      //           onClick={() => {
-      //             const userData = cellProps.row.original;
-      //             onClickDelete(userData);
-      //           }}
-      //         >
-      //           <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-      //           <UncontrolledTooltip placement="top" target="deletetooltip">
-      //             Delete
-      //           </UncontrolledTooltip>
-      //         </Link>
-      //       </div>
-      //     );
-      //   },
-      // },
     ],
     []
   );
@@ -244,14 +156,8 @@ const OperatorAccountDetails = (props) => {
   const getTableActions = () => {
     return [
       {
-        name: "Pay Online",
+        name: "Remove",
         // action: setShowRegionalOffice,
-        type: "normal",
-        icon: "create",
-      },
-      {
-        name: "Add Credit",
-        // action: setShowUploadRegionalOffice,
         type: "normal",
         icon: "create",
       },
@@ -268,8 +174,8 @@ const OperatorAccountDetails = (props) => {
                 isPagination={true}
                 columns={columns}
                 data={operatorAccount}
-                isTransactionDate={true}
-                // isGlobalFilter={true}
+                // isTransactionDate={true}
+                isGlobalFilter={true}
                 isAddRegionalOffice={true}
                 isShowingPageLength={true}
                 tableActions={getTableActions()}
@@ -287,4 +193,4 @@ const OperatorAccountDetails = (props) => {
   );
 };
 
-export default OperatorAccountDetails;
+export default AllottedScheme;

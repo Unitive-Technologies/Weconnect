@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import PropTypes from "prop-types";
 import {
   useTable,
@@ -8,7 +8,26 @@ import {
   useExpanded,
   usePagination,
 } from "react-table";
-import { Table, Row, Col, Button, Input } from "reactstrap";
+import "flatpickr/dist/themes/material_blue.css";
+import FlatPickr from "react-flatpickr";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+import moment from "moment";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardTitle,
+  Col,
+  Container,
+  Form,
+  FormFeedback,
+  FormGroup,
+  Input,
+  Label,
+  Row,
+  Table,
+} from "reactstrap";
 import { Filter, DefaultColumnFilter } from "./filters";
 import { Link } from "react-router-dom";
 import JobListGlobalFilter from "./GlobalSearchFilter";
@@ -60,11 +79,94 @@ function GlobalFilter({
   );
 }
 
+const TransactionDate = () => {
+  const [selectedFiles, setselectedFiles] = useState([]);
+  const validation = useFormik({
+    // enableReinitialize : use this flag when initial values needs to be changed
+    enableReinitialize: true,
+
+    initialValues: {
+      projectname: "",
+      projectdesc: "",
+      startDate: "",
+      endDate: "",
+      projectbudget: "",
+    },
+    validationSchema: Yup.object({
+      projectname: Yup.string().required("Please Enter Your Project Name"),
+      projectdesc: Yup.string().required("Please Enter Your Project desc"),
+      startDate: Yup.string().required("Please Enter Your Start Date"),
+      endDate: Yup.string().required("Please Enter Your End Date"),
+      projectbudget: Yup.string().required("Please Enter Your Rating"),
+    }),
+    onSubmit: (values) => {
+      validation.resetForm();
+      toggle();
+      setselectedFiles("");
+    },
+  });
+  return (
+    <div>
+      <FormGroup className="mb-4" row>
+        <Label className="col-form-label col-lg-3">Project Date</Label>
+        <Col lg="9">
+          <Row>
+            <Col md={6} className="pr-0">
+              <FlatPickr
+                className="form-control d-block"
+                name="startDate"
+                placeholder="Select time"
+                options={{
+                  dateFormat: "d M, Y",
+                }}
+                onChange={(date) =>
+                  validation.setFieldValue(
+                    "startDate",
+                    moment(date[0]).format("DD MMMM, YYYY")
+                  )
+                }
+                value={validation.values.startDate}
+              />
+              {validation.touched.startDate && validation.errors.startDate ? (
+                <FormFeedback type="invalid" className="d-block">
+                  {validation.errors.startDate}
+                </FormFeedback>
+              ) : null}
+            </Col>
+            <Col md={6} className="pl-0">
+              <FlatPickr
+                className="form-control d-block"
+                name="endDate"
+                placeholder="Select time"
+                options={{
+                  dateFormat: "d M, Y",
+                }}
+                onChange={(date) =>
+                  validation.setFieldValue(
+                    "endDate",
+                    moment(date[0]).format("DD MMMM, YYYY")
+                  )
+                }
+                value={validation.values.endDate}
+              />
+              {validation.touched.endDate && validation.errors.endDate ? (
+                <FormFeedback type="invalid" className="d-block">
+                  {validation.errors.endDate}
+                </FormFeedback>
+              ) : null}
+            </Col>
+          </Row>
+        </Col>
+      </FormGroup>
+    </div>
+  );
+};
 const TableContainer = ({
   columns,
   data,
   tableActions,
   isGlobalFilter,
+  isTransactionDate,
   isAddOptions,
   isAddUserList,
   isAddRegionalOffice,
@@ -185,6 +287,7 @@ const TableContainer = ({
               isJobListGlobalFilter={isJobListGlobalFilter}
             />
           )}
+          {isTransactionDate && <TransactionDate />}
           {isAddOptions && (
             <Col sm="7">
               <div className="text-sm-end">
