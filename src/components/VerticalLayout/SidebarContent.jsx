@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 // //Import Scrollbar
 import SimpleBar from "simplebar-react";
@@ -16,6 +16,7 @@ import { useCallback } from "react";
 const SidebarContent = (props) => {
   const ref = useRef();
   const path = useLocation();
+  const [activeMenuItem, setActiveMenuItem] = useState();
 
   const activateParentDropdown = useCallback((item) => {
     item.classList.add("active");
@@ -51,6 +52,8 @@ const SidebarContent = (props) => {
       scrollElement(item);
       return false;
     }
+    setActiveMenuItem(item);
+    console.log("Active Menu: ", item);
     scrollElement(item);
     return false;
   }, []);
@@ -100,6 +103,8 @@ const SidebarContent = (props) => {
 
   const activeMenu = useCallback(() => {
     const pathName = path.pathname;
+    console.log("Path Name: ", pathName);
+    setActiveMenuItem(pathName);
     let matchingMenuItem = null;
     const ul = document.getElementById("side-menu");
     const items = ul.getElementsByTagName("s");
@@ -162,49 +167,98 @@ const SidebarContent = (props) => {
                     {props.t("Access")}
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/userslist" ? "mm-active" : ""
+                      }
+                    >
                       <Link to="/userslist">{props.t("Users")}</Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/customer-userslist"
+                          ? "mm-active"
+                          : ""
+                      }
+                    >
                       <Link to="/customer-userslist">
                         {props.t("Customer Users")}{" "}
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/grouppolicylist" ? "mm-active" : ""
+                      }
+                    >
                       <Link to="/grouppolicylist">
                         <span key="#">{props.t("Group Policies")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/designationlist" ? "mm-active" : ""
+                      }
+                    >
                       <Link to="/designationlist">
                         <span key="#">{props.t("Designations")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/user-hierarchylist"
+                          ? "mm-active"
+                          : ""
+                      }
+                    >
                       <Link to="/user-hierarchylist">
                         <span key="#">{props.t("User Hierarchies")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/notification-templatelist"
+                          ? "mm-active"
+                          : ""
+                      }
+                    >
                       <Link to="/notification-templatelist">
                         <span key="#">{props.t("Notification Templates")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/scheduled-notificationlist"
+                          ? "mm-active"
+                          : ""
+                      }
+                    >
                       <Link to="/scheduled-notificationlist">
                         <span key="#">
                           {props.t("Scheduled Notifications")}
                         </span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/app-adbannerlist"
+                          ? "mm-active"
+                          : ""
+                      }
+                    >
                       <Link to="/app-adbannerlist">
                         <span key="#">
                           {props.t("App Advertisement Banners")}
                         </span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem ===
+                        "/scheduled-customer-notificationlist"
+                          ? "mm-active"
+                          : ""
+                      }
+                    >
                       <Link to="/schedule-customer-notificationlist">
                         <span key="#">
                           {props.t("Scheule Customer Notifications")}
@@ -218,17 +272,33 @@ const SidebarContent = (props) => {
                     {props.t("Organization")}
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/regional-office-list"
+                          ? "mm-active"
+                          : ""
+                      }
+                    >
                       <Link to="/regional-office-list">
                         <span key="#">{props.t("Regional Offices")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/distributor-list"
+                          ? "mm-active"
+                          : ""
+                      }
+                    >
                       <Link to="/distributor-list">
                         <span key="#">{props.t("Distributors")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/LCO-list" ? "mm-active" : ""
+                      }
+                    >
                       <Link to="/LCO-list">
                         <span key="#">{props.t("LCOs")}</span>
                       </Link>
@@ -240,27 +310,49 @@ const SidebarContent = (props) => {
                     {props.t("Territory")}
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/state-list" ? "mm-active" : ""
+                      }
+                    >
                       <Link to="/state-list">
                         <span key="#">{props.t("States")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/district-list" ? "mm-active" : ""
+                      }
+                    >
                       <Link to="/district-list">
                         <span key="#">{props.t("Districts")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/city-list" ? "mm-active" : ""
+                      }
+                    >
                       <Link to="/city-list">
                         <span key="#">{props.t("Cities")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/location-list" ? "mm-active" : ""
+                      }
+                    >
                       <Link to="/location-list">
                         <span key="#">{props.t("Locations")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/sublocation-list"
+                          ? "mm-active"
+                          : ""
+                      }
+                    >
                       <Link to="/sublocation-list">
                         <span key="#">{props.t("Sublocations")}</span>
                       </Link>
@@ -272,59 +364,117 @@ const SidebarContent = (props) => {
                     {props.t("Services")}
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/broadcaster-list"
+                          ? "mm-active"
+                          : ""
+                      }
+                    >
                       <Link to="/broadcaster-list">
                         <span key="#">{props.t("Broadcasters")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/genre-list" ? "mm-active" : ""
+                      }
+                    >
                       <Link to="/genre-list">
                         <span key="#">{props.t("Genres")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/language-list" ? "mm-active" : ""
+                      }
+                    >
                       <Link to="/language-list">
                         <span key="#">{props.t("Languages")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/channel-list" ? "mm-active" : ""
+                      }
+                    >
                       <Link to="/channel-list">
                         <span key="#">{props.t("Channels")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/broadcaster-bouquet-list"
+                          ? "mm-active"
+                          : ""
+                      }
+                    >
                       <Link to="/broadcaster-bouquet-list">
                         <span key="#">{props.t("Broadcaster Bouquets")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/package-list" ? "mm-active" : ""
+                      }
+                    >
                       <Link to="/package-list">
                         <span key="#">{props.t("Packages")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/OSDConfiguration-list"
+                          ? "mm-active"
+                          : ""
+                      }
+                    >
                       <Link to="/OSDConfiguration-list">
                         <span key="#">{props.t("OSD Configurations")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/OSDTemplate-list"
+                          ? "mm-active"
+                          : ""
+                      }
+                    >
                       <Link to="/OSDTemplate-list">
                         <span key="#">{props.t("OSD Templates")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/local-channel-number-list"
+                          ? "mm-active"
+                          : ""
+                      }
+                    >
                       <Link to="/local-channel-number-list">
                         <span key="#">{props.t("LCNs")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/document-upload-policy-list"
+                          ? "mm-active"
+                          : ""
+                      }
+                    >
                       <Link to="/document-upload-policy-list">
                         <span key="#">
                           {props.t("Document Upload Policies")}
                         </span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/SMS-Message-Template-list"
+                          ? "mm-active"
+                          : ""
+                      }
+                    >
                       <Link to="/SMS-Message-Template-list">
                         <span key="#">{props.t("SMS Message Templates")}</span>
                       </Link>
@@ -336,22 +486,40 @@ const SidebarContent = (props) => {
                     {props.t("Inventory")}
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/company-list" ? "mm-active" : ""
+                      }
+                    >
                       <Link to="/company-list">
                         <span key="#">{props.t("Companies")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/brand-list" ? "mm-active" : ""
+                      }
+                    >
                       <Link to="/brand-list">
                         <span key="#">{props.t("Brands")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/warehouse-list" ? "mm-active" : ""
+                      }
+                    >
                       <Link to="/warehouse-list">
                         <span key="#">{props.t("Warehouses")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/inventory-state-list"
+                          ? "mm-active"
+                          : ""
+                      }
+                    >
                       <Link to="/inventory-state-list">
                         <span key="#">{props.t("Inventory States")}</span>
                       </Link>
@@ -363,22 +531,40 @@ const SidebarContent = (props) => {
                     {props.t("Billing")}
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/tax-list" ? "mm-active" : ""
+                      }
+                    >
                       <Link to="/tax-list">
                         <span key="#">{props.t("Taxes")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/reason-list" ? "mm-active" : ""
+                      }
+                    >
                       <Link to="/reason-list">
                         <span key="#">{props.t("Reasons")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/bank-list" ? "mm-active" : ""
+                      }
+                    >
                       <Link to="/bank-list">
                         <span key="#">{props.t("Banks")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/promo-voucher-list"
+                          ? "mm-active"
+                          : ""
+                      }
+                    >
                       <Link to="/promo-voucher-list">
                         <span key="#">{props.t("Promo Vouchers")}</span>
                       </Link>
@@ -390,17 +576,31 @@ const SidebarContent = (props) => {
                     {props.t("Subscription")}
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/ncf-list" ? "mm-active" : ""
+                      }
+                    >
                       <Link to="/ncf-list">
                         <span key="#">{props.t("NCFs")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/bouquet-list" ? "mm-active" : ""
+                      }
+                    >
                       <Link to="/bouquet-list">
                         <span key="#">{props.t("Bouquets")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/connection-scheme-list"
+                          ? "mm-active"
+                          : ""
+                      }
+                    >
                       <Link to="/connection-scheme-list">
                         <span key="#">{props.t("Connection Schemes")}</span>
                       </Link>
@@ -412,12 +612,24 @@ const SidebarContent = (props) => {
                     {props.t("Complaint")}
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/complaint-category-list"
+                          ? "mm-active"
+                          : ""
+                      }
+                    >
                       <Link to="/complaint-category-list">
                         <span key="#">{props.t("Complaint Categories")}</span>
                       </Link>
                     </li>
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/complaint-subcategory-list"
+                          ? "mm-active"
+                          : ""
+                      }
+                    >
                       <Link to="/complaint-subcategory-list">
                         <span key="#">
                           {props.t("Complaint Sub-Categories")}
@@ -431,7 +643,13 @@ const SidebarContent = (props) => {
                     {props.t("Upload Logs")}
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
-                    <li>
+                    <li
+                      className={
+                        activeMenuItem === "/configuration-upload-logs"
+                          ? "mm-active"
+                          : ""
+                      }
+                    >
                       <Link to="/configuration-upload-logs">
                         <span key="#">
                           {props.t("Configuration Upload Logs")}
@@ -454,8 +672,12 @@ const SidebarContent = (props) => {
                     <span key="#">{props.t("Stock")}</span>
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
-                    <li>
-                      <Link to="/#">
+                    <li
+                      className={
+                        activeMenuItem === "/smartcard" ? "mm-active" : ""
+                      }
+                    >
+                      <Link to="/smartcard">
                         <span key="#">{props.t("Smartcards")}</span>
                       </Link>
                     </li>
