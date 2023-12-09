@@ -26,6 +26,7 @@ const ViewRegionalOfficeModal = (props) => {
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
   const [showEditRegionalOffice, setShowEditRegionalOffice] = useState(false);
+  const [showOperatorDetails, setShowOperatorDetails] = useState(true);
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -193,6 +194,7 @@ const ViewRegionalOfficeModal = (props) => {
                   className="form-check-input"
                   id="customSwitchsizelg"
                   defaultChecked
+                  onClick={() => setShowOperatorDetails(!showOperatorDetails)}
                 />
                 <label
                   className="form-check-label"
@@ -203,183 +205,191 @@ const ViewRegionalOfficeModal = (props) => {
               </div>
             </Col>
           </Row>
-          <div
-            style={{
-              // margin: "20px 0px",
-              marginTop: "20px",
-              marginBottom: "-18px",
-              zIndex: 12000,
-              backgroundColor: "#fff",
-              width: "fit-content",
-              marginLeft: "40%",
-              position: "absolute",
-              padding: "0px 10px",
-            }}
-          >
-            {" "}
-            <h5 style={{}}>Operator Information</h5>
-          </div>
-          <Row
-            style={{
-              position: "relative",
-              border: "1px solid #ced4da",
-              padding: "20px 0px",
-              margin: "30px 0px",
-            }}
-          >
-            <Col lg={3}>
-              <div className="mb-3">
-                <Label className="form-label">Name</Label>
-                <Input
-                  name="name"
-                  label="Name"
-                  type="text"
-                  placeholder="Name"
-                  disabled
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.upload || ""}
-                  invalid={
-                    validation.touched.name && validation.errors.name
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.name && validation.errors.name ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.name}
-                  </FormFeedback>
-                ) : null}
+          {showOperatorDetails ? (
+            <>
+              <div
+                style={{
+                  // margin: "20px 0px",
+                  marginTop: "20px",
+                  marginBottom: "-18px",
+                  zIndex: 12000,
+                  backgroundColor: "#fff",
+                  width: "fit-content",
+                  marginLeft: "40%",
+                  position: "absolute",
+                  padding: "0px 10px",
+                }}
+              >
+                {" "}
+                <h5 style={{}}>Operator Information</h5>
               </div>
-            </Col>
-            <Col lg={3}>
-              <div className="mb-3">
-                <Label className="form-label">Contact Person</Label>
-                <Input
-                  name="contact_person"
-                  label="Contact Person"
-                  type="text"
-                  placeholder="Contact Person"
-                  disabled
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.contact_person || ""}
-                  invalid={
-                    validation.touched.contact_person &&
-                    validation.errors.contact_person
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.contact_person &&
-                validation.errors.contact_person ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.contact_person}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={3}>
-              <div className="mb-3">
-                <Label className="form-label">Mobil No.</Label>
-                <Input
-                  name="mobile_no"
-                  label="Mobile No."
-                  type="text"
-                  placeholder="Mobile No."
-                  disabled
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.mobile_no || ""}
-                  invalid={
-                    validation.touched.mobile_no && validation.errors.mobile_no
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.mobile_no && validation.errors.mobile_no ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.mobile_no}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={3}>
-              <div className="mb-3">
-                <Label className="form-label">Code</Label>
-                <Input
-                  name="code"
-                  label="Code"
-                  type="text"
-                  placeholder="Code"
-                  disabled
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.code || ""}
-                  invalid={
-                    validation.touched.code && validation.errors.code
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.code && validation.errors.code ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.code}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={12}>
-              <div className="mb-3">
-                <Label className="form-label">Address</Label>
-                <Input
-                  name="address"
-                  label="Address"
-                  type="text"
-                  placeholder="Enter Address"
-                  disabled
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.address || ""}
-                  invalid={
-                    validation.touched.address && validation.errors.address
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.address && validation.errors.address ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.address}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={12}>
-              <div className="mb-3">
-                <Label className="form-label">Parent</Label>
-                <Input
-                  name="parent"
-                  label="Parent"
-                  type="text"
-                  placeholder="Enter Parent"
-                  disabled
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.parent || ""}
-                  invalid={
-                    validation.touched.parent && validation.errors.parent
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.parent && validation.errors.parent ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.parent}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-          </Row>
+              <Row
+                style={{
+                  position: "relative",
+                  border: "1px solid #ced4da",
+                  padding: "20px 0px",
+                  margin: "30px 0px",
+                }}
+              >
+                <Col lg={3}>
+                  <div className="mb-3">
+                    <Label className="form-label">Name</Label>
+                    <Input
+                      name="name"
+                      label="Name"
+                      type="text"
+                      placeholder="Name"
+                      disabled
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.upload || ""}
+                      invalid={
+                        validation.touched.name && validation.errors.name
+                          ? true
+                          : false
+                      }
+                    />
+                    {validation.touched.name && validation.errors.name ? (
+                      <FormFeedback type="invalid">
+                        {validation.errors.name}
+                      </FormFeedback>
+                    ) : null}
+                  </div>
+                </Col>
+                <Col lg={3}>
+                  <div className="mb-3">
+                    <Label className="form-label">Contact Person</Label>
+                    <Input
+                      name="contact_person"
+                      label="Contact Person"
+                      type="text"
+                      placeholder="Contact Person"
+                      disabled
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.contact_person || ""}
+                      invalid={
+                        validation.touched.contact_person &&
+                        validation.errors.contact_person
+                          ? true
+                          : false
+                      }
+                    />
+                    {validation.touched.contact_person &&
+                    validation.errors.contact_person ? (
+                      <FormFeedback type="invalid">
+                        {validation.errors.contact_person}
+                      </FormFeedback>
+                    ) : null}
+                  </div>
+                </Col>
+                <Col lg={3}>
+                  <div className="mb-3">
+                    <Label className="form-label">Mobil No.</Label>
+                    <Input
+                      name="mobile_no"
+                      label="Mobile No."
+                      type="text"
+                      placeholder="Mobile No."
+                      disabled
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.mobile_no || ""}
+                      invalid={
+                        validation.touched.mobile_no &&
+                        validation.errors.mobile_no
+                          ? true
+                          : false
+                      }
+                    />
+                    {validation.touched.mobile_no &&
+                    validation.errors.mobile_no ? (
+                      <FormFeedback type="invalid">
+                        {validation.errors.mobile_no}
+                      </FormFeedback>
+                    ) : null}
+                  </div>
+                </Col>
+                <Col lg={3}>
+                  <div className="mb-3">
+                    <Label className="form-label">Code</Label>
+                    <Input
+                      name="code"
+                      label="Code"
+                      type="text"
+                      placeholder="Code"
+                      disabled
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.code || ""}
+                      invalid={
+                        validation.touched.code && validation.errors.code
+                          ? true
+                          : false
+                      }
+                    />
+                    {validation.touched.code && validation.errors.code ? (
+                      <FormFeedback type="invalid">
+                        {validation.errors.code}
+                      </FormFeedback>
+                    ) : null}
+                  </div>
+                </Col>
+                <Col lg={12}>
+                  <div className="mb-3">
+                    <Label className="form-label">Address</Label>
+                    <Input
+                      name="address"
+                      label="Address"
+                      type="text"
+                      placeholder="Enter Address"
+                      disabled
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.address || ""}
+                      invalid={
+                        validation.touched.address && validation.errors.address
+                          ? true
+                          : false
+                      }
+                    />
+                    {validation.touched.address && validation.errors.address ? (
+                      <FormFeedback type="invalid">
+                        {validation.errors.address}
+                      </FormFeedback>
+                    ) : null}
+                  </div>
+                </Col>
+                <Col lg={12}>
+                  <div className="mb-3">
+                    <Label className="form-label">Parent</Label>
+                    <Input
+                      name="parent"
+                      label="Parent"
+                      type="text"
+                      placeholder="Enter Parent"
+                      disabled
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.parent || ""}
+                      invalid={
+                        validation.touched.parent && validation.errors.parent
+                          ? true
+                          : false
+                      }
+                    />
+                    {validation.touched.parent && validation.errors.parent ? (
+                      <FormFeedback type="invalid">
+                        {validation.errors.parent}
+                      </FormFeedback>
+                    ) : null}
+                  </div>
+                </Col>
+              </Row>
+            </>
+          ) : (
+            <></>
+          )}
           <Row>
             <Col lg={12}>
               <TapsOfViewRegionalOffice />
