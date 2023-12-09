@@ -231,26 +231,26 @@ const NSTVList = (props) => {
                                 <Input
                                     name="forced"
                                     type="select"
-                                    placeholder="Select Definition"
+                                    placeholder="Select forced display"
                                     className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.definition || ""}
+                                    value={validation.values.forced || ""}
                                 >
-                                    <option value="101">Select channel definition</option>
-                                    <option value="102">Standard Definition(SD)</option>
-                                    <option value="103">High Definition(HD)</option>
+                                    <option value="101">Select forced display</option>
+                                    <option value="102">Not Forced</option>
+                                    <option value="103">Forced</option>
                                 </Input>
-                                {validation.touched.definition && validation.errors.definition ? (
+                                {validation.touched.forced && validation.errors.forced ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.definition}
+                                        {validation.errors.forced}
                                     </FormFeedback>
                                 ) : null}
                             </div>
                         </Col>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Type</Label>
+                                <Label className="form-label">Display Type</Label>
                                 <Input
                                     name="type"
                                     type="select"
@@ -260,9 +260,11 @@ const NSTVList = (props) => {
                                     onBlur={validation.handleBlur}
                                     value={validation.values.type || ""}
                                 >
-                                    <option value="104">Select channel type</option>
-                                    <option value="105">Pay Channel</option>
-                                    <option value="106">FTA</option>
+                                    <option value="104">Select display type</option>
+                                    <option value="105">Central Display</option>
+                                    <option value="106">Top Scroll</option>
+                                    <option value="106">Bottom Scroll</option>
+                                    <option value="106">Central Display With FP</option>
                                 </Input>
                                 {validation.touched.type && validation.errors.type ? (
                                     <FormFeedback type="invalid">
@@ -273,107 +275,101 @@ const NSTVList = (props) => {
                         </Col>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Broadcaster</Label>
+                                <Label className="form-label">Duration</Label>
                                 <Input
-                                    name="broadcaster"
-                                    type="select"
-                                    placeholder="Select broadcaster"
-                                    className="form-select"
-                                    onChange={validation.handleChange}
-                                    onBlur={validation.handleBlur}
-                                    value={validation.values.broadcaster || ""}
-                                >
-                                    <option value="110">Select broadcaster</option>
-                                    <option value="111">Lex Sportal Vision Pvt Ltd.</option>
-                                    <option value="112">Jangama Media Pvt Ltd.</option>
-                                </Input>
-                                {validation.touched.broadcaster && validation.errors.broadcaster ? (
-                                    <FormFeedback type="invalid">
-                                        {validation.errors.broadcaster}
-                                    </FormFeedback>
-                                ) : null}
-                            </div>
-                        </Col>
-                        <Col sm="4">
-                            <div className="mb-3">
-                                <Label className="form-label">Genre</Label>
-                                <Input
-                                    name="genre"
-                                    type="select"
-                                    placeholder="Select genre"
-                                    className="form-select"
-                                    onChange={validation.handleChange}
-                                    onBlur={validation.handleBlur}
-                                    value={validation.values.genre || ""}
-                                >
-                                    <option value="101">Select genre</option>
-                                    <option value="102">TRAVEL</option>
-                                    <option value="103">TELUGU NEWS</option>
-                                    <option value="103">TELUGU GEC</option>
-                                </Input>
-                                {validation.touched.genre && validation.errors.genre ? (
-                                    <FormFeedback type="invalid">
-                                        {validation.errors.genre}
-                                    </FormFeedback>
-                                ) : null}
-                            </div>
-                        </Col>
-                        <Col sm="4">
-                            <div className="mb-3">
-                                <Label className="form-label">Language</Label>
-                                <Input
-                                    name="language"
-                                    type="text"
-                                    placeholder="Select language"
-                                    // className="form-select"
-                                    onChange={validation.handleChange}
-                                    onBlur={validation.handleBlur}
-                                    value={validation.values.language || ""}
-                                ></Input>
-                                {validation.touched.language && validation.errors.language ? (
-                                    <FormFeedback type="invalid">
-                                        {validation.errors.language}
-                                    </FormFeedback>
-                                ) : null}
-                            </div>
-                        </Col>
-                        <Col sm="4">
-                            <div className="mb-3">
-                                <Label className="form-label">IsAlacarte</Label>
-                                <Input
-                                    name="isalacarte"
-                                    type="select"
-                                    // placeholder="Enter channel code"
-                                    // className="form-select"
-                                    onChange={validation.handleChange}
-                                    onBlur={validation.handleBlur}
-                                    value={validation.values.isalacarte || ""}
-                                >
-                                    <option value="201">Yes</option>
-                                    <option value="202">No</option>
-                                </Input>
-                                {validation.touched.isalacarte && validation.errors.isalacarte ? (
-                                    <FormFeedback type="invalid">
-                                        {validation.errors.isalacarte}
-                                    </FormFeedback>
-                                ) : null}
-                            </div>
-                        </Col>
-                        <Col sm="4">
-                            <div className="mb-3">
-                                <Label className="form-label">MRP Rate(INR)</Label>
-                                <Input
-                                    name="rate"
+                                    name="duration"
                                     type="number"
-                                    // placeholder="Enter channel code"
+                                    // placeholder="Select broadcaster"
+                                    className="form-select"
+                                    onChange={validation.handleChange}
+                                    onBlur={validation.handleBlur}
+                                    value={validation.values.duration || ""}
+                                >
+                                </Input>
+                                {validation.touched.duration && validation.errors.duration ? (
+                                    <FormFeedback type="invalid">
+                                        {validation.errors.duration}
+                                    </FormFeedback>
+                                ) : null}
+                            </div>
+                        </Col>
+                        <Col sm="4">
+                            <div className="mb-3">
+                                <Label className="form-label">Interval (in seconds) (should be greater than duration)</Label>
+                                <Input
+                                    name="" interval
+                                    type="number"
+                                    // placeholder="Select genre"
+                                    className="form-select"
+                                    onChange={validation.handleChange}
+                                    onBlur={validation.handleBlur}
+                                    value={validation.values.interval || ""}
+                                >
+                                </Input>
+                                {validation.touched.interval && validation.errors.interval ? (
+                                    <FormFeedback type="invalid">
+                                        {validation.errors.interval}
+                                    </FormFeedback>
+                                ) : null}
+                            </div>
+                        </Col>
+                        <Col sm="4">
+                            <div className="mb-3">
+                                <Label className="form-label">Repetition</Label>
+                                <Input
+                                    name="repetition"
+                                    type="text"
+                                    // placeholder="Select language"
                                     // className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.rate || ""}
+                                    value={validation.values.repetition || ""}
                                 ></Input>
-                                {validation.touched.rate && validation.errors.rate ? (
+                                {validation.touched.repetition && validation.errors.repetition ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.rate}
+                                        {validation.errors.repetition}
+                                    </FormFeedback>
+                                ) : null}
+                            </div>
+                        </Col>
+                        <Col sm="4">
+                            <div className="mb-3">
+                                <Label className="form-label">Font Size*</Label>
+                                <Input
+                                    name="fontsize"
+                                    type="select"
+                                    placeholder="Select font size"
+                                    className="form-select"
+                                    onChange={validation.handleChange}
+                                    onBlur={validation.handleBlur}
+                                    value={validation.values.fontsize || ""}
+                                >
+                                    <option value="201">Default</option>
+                                    <option value="202">Large</option>
+                                    <option value="202">Small</option>
+                                </Input>
+                                {validation.touched.fontsize && validation.errors.fontsize ? (
+                                    <FormFeedback type="invalid">
+                                        {validation.errors.fontsize}
+                                    </FormFeedback>
+                                ) : null}
+                            </div>
+                        </Col>
+                        <Col sm="4">
+                            <div className="mb-3">
+                                <Label className="form-label">Font Color*</Label>
+                                <Input
+                                    name="fontcolor"
+                                    type="select"
+                                    placeholder="Select font color"
+                                    className="form-select"
+                                    onChange={validation.handleChange}
+                                    onBlur={validation.handleBlur}
+                                    value={validation.values.fontcolor || ""}
+                                ></Input>
+                                {validation.touched.fontcolor && validation.errors.fontcolor ? (
+                                    <FormFeedback type="invalid">
+                                        {validation.errors.fontcolor}
                                     </FormFeedback>
                                 ) : null}
                             </div>
