@@ -1037,6 +1037,19 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onPost(url.ADD_NEW_OSDCONFIGURATIONLIST).reply((osdconfig) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (osdconfig && osdconfig.data) {
+          // Passing fake JSON data as response
+          resolve([200, osdconfig.data]);
+        } else {
+          reject([400, "Cannot add OsdConfiguartion"]);
+        }
+      });
+    });
+  });
+
   mock.onPost(url.ADD_NEW_DOCUMENTUPLOADPOLICY).reply((documentupload) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

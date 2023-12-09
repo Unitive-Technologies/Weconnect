@@ -1,6 +1,8 @@
 import {
   GET_OSDCONFIGURATION_SUCCESS,
   GET_OSDCONFIGURATION_FAIL,
+  ADD_OSDCONFIGURATION_SUCCESS,
+  ADD_OSDCONFIGURATION_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -20,6 +22,21 @@ const OSDConfiguration = (state = INIT_STATE, action) => {
       };
 
     case GET_OSDCONFIGURATION_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_OSDCONFIGURATION_SUCCESS:
+      return {
+        ...state,
+        osdConfiguration: [
+          ...state.osdConfiguration,
+          action.payload,
+        ],
+      };
+
+    case ADD_OSDCONFIGURATION_FAIL:
       return {
         ...state,
         error: action.payload,

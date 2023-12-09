@@ -36,6 +36,7 @@ import { isEmpty } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import NSTV from './NSTV';
 
 const OSDConfigurationList = (props) => {
   //meta title
@@ -61,7 +62,7 @@ const OSDConfigurationList = (props) => {
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
-  const [modal, setModal] = useState(false);
+  const [showNSTV, setShowNSTV] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
   const columns = useMemo(
@@ -244,8 +245,9 @@ const OSDConfigurationList = (props) => {
   // }, [users]);
 
   const toggle = () => {
-    setModal(!modal);
+    setShowNSTV(!showNSTV);
   };
+
 
   const handleUserClick = (arg) => {
     const user = arg;
@@ -301,12 +303,34 @@ const OSDConfigurationList = (props) => {
 
   const keyField = "id";
 
+  const getTableActions = () => {
+    return [
+      {
+        name: "NSTV",
+        action: setShowNSTV,
+        type: "dropdown",
+        dropdownName: "create",
+        // icon: "create"
+      },
+      {
+        name: "AADHAREKYC",
+        // action: setShowBulkUpdateChannelList,
+        type: "dropdown",
+        dropdownName: "create",
+      },
+
+    ];
+  };
+
   return (
     <React.Fragment>
-      <DeleteModal
+      {/* <DeleteModal
         show={deleteModal}
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
+      /> */}
+      <NSTV isOpen={showNSTV}
+        toggle={toggle}
       />
       <div className="page-content">
         <Container fluid>
@@ -327,10 +351,11 @@ const OSDConfigurationList = (props) => {
                       isPagination={true}
                       columns={columns}
                       data={osdConfig}
-                      // isGlobalFilter={true}
-                      // isAddUserList={true}
+                      isGlobalFilter={true}
+                      isAddUserList={true}
                       isShowingPageLength={true}
-                      iscustomPageSizeOptions={true}
+                      tableActions={getTableActions()}
+                      handleNSTV={() => setShowNSTV(true)}
                       handleUserClick={handleUserClicks}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"

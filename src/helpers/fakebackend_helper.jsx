@@ -288,6 +288,9 @@ export const addNewBroadcasterBouquetList = (broadcastbouquet) =>
 
 export const getPackageList = () => get(url.GET_PACKAGELIST);
 export const getOSDConfiguration = () => get(url.GET_OSDCONFIGURATIONLIST);
+export const addNewOSDConfiguration = (osdconfig) =>
+  post(url.ADD_NEW_OSDCONFIGURATIONLIST, osdconfig);
+
 export const getOSDTemplate = () => get(url.GET_OSDTEMPLATE);
 export const addNewOSDTemplate = (osdtem) =>
   post(url.ADD_NEW_OSDTEMPLATE, osdtem);

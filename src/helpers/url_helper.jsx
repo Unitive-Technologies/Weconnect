@@ -77,6 +77,9 @@ export const ADD_NEW_BROADCASTERBOUQUETLIST = "/add/broadcasterbouquet";
 
 export const GET_PACKAGELIST = "/packagelist";
 export const GET_OSDCONFIGURATIONLIST = "/osdconfigurationlist";
+export const ADD_NEW_OSDCONFIGURATIONLIST = "/add/osdconfigurationlist";
+
+
 export const GET_LOCALCHANNELNUMBER = "/localchannelnumberlist";
 
 export const GET_DOCUMENTUPLOADPOLICY = "/documentuploadpolicylist";
