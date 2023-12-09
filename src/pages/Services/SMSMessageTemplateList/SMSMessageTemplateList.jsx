@@ -368,11 +368,11 @@ const SMSMessageTemplateList = (props) => {
                       isPagination={true}
                       columns={columns}
                       data={SMSMsgTemp}
-                      isGlobalFilter={true}
-                      isAddUserList={true}
+                      // isGlobalFilter={true}
+                      // isAddUserList={true}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
-                      handleUserClick={() => {}}
+                      handleUserClick={() => { }}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

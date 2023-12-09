@@ -112,7 +112,7 @@ const AddNewDocumentUploadPolicy = (props) => {
                     <Row>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Policy Name</Label>
+                                <Label className="form-label">Name</Label>
                                 <Input
                                     name="name"
                                     type="text"
@@ -132,11 +132,11 @@ const AddNewDocumentUploadPolicy = (props) => {
 
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Policy Start Date</Label>
+                                <Label className="form-label">Start Date</Label>
                                 <Input
                                     name="startdate"
                                     type="date"
-                                    placeholder="Select policy start date"
+                                    placeholder="Select start date"
                                     // className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
@@ -151,11 +151,11 @@ const AddNewDocumentUploadPolicy = (props) => {
                         </Col>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Policy End Date</Label>
+                                <Label className="form-label">End Date</Label>
                                 <Input
                                     name="enddate"
                                     type="date"
-                                    placeholder="Select policy end date"
+                                    placeholder="Select end date"
                                     // className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
@@ -170,11 +170,11 @@ const AddNewDocumentUploadPolicy = (props) => {
                         </Col>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Policy Upload Date</Label>
+                                <Label className="form-label">Upload Date</Label>
                                 <Input
                                     name="uploaddate"
                                     type="date"
-                                    placeholder="Select policy upload date"
+                                    placeholder="Select upload date"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
                                     value={validation.values.uploaddate || ""}

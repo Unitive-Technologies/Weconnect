@@ -137,8 +137,7 @@ const DocumentUploadPolicyList = (props) => {
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
-  const [modal, setModal] = useState(false);
-  const [modal1, setModal1] = useState(false);
+  const [showAddNewDocumentUploadPolicyList, setShowAddNewDocumentUploadPolicyList] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
   const columns = useMemo(
@@ -320,28 +319,8 @@ const DocumentUploadPolicyList = (props) => {
   // }, [docupload]);
 
   const toggle = () => {
-    setModal(!modal);
+    setShowAddNewDocumentUploadPolicyList(!showAddNewDocumentUploadPolicyList);
   };
-
-  const toggle1 = () => {
-    setModal1(!modal1);
-  };
-
-  // const handleUserClick = (arg) => {
-  //   const user = arg;
-
-  //   setContact({
-  //     id: user.id,
-  //     name: user.name,
-  //     designation: user.designation,
-  //     email: user.email,
-  //     tags: user.tags,
-  //     projects: user.projects,
-  //   });
-  //   setIsEdit(true);
-
-  //   toggle();
-  // };
 
   var node = useRef();
   const onPaginationPageChange = (page) => {
@@ -381,6 +360,17 @@ const DocumentUploadPolicyList = (props) => {
 
   const keyField = "id";
 
+  const getTableActions = () => {
+    return [
+      {
+        name: "Create",
+        action: setShowAddNewDocumentUploadPolicyList,
+        type: "normal",
+        icon: "create"
+      },
+    ];
+  };
+
   return (
     <React.Fragment>
       {/* <DeleteModal
@@ -388,8 +378,7 @@ const DocumentUploadPolicyList = (props) => {
         onDeleteClick={handleDeleteUser}
         onCloseClick={() => setDeleteModal(false)}
       /> */}
-      <AddNewDocumentUploadPolicy isOpen={modal} toggle={toggle} />
-      <UploadDocument isOpen={modal1} toggle={toggle1} />
+      <AddNewDocumentUploadPolicy isOpen={showAddNewDocumentUploadPolicyList} toggle={toggle} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -404,22 +393,6 @@ const DocumentUploadPolicyList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    <div className="d-flex align-items-center justify-content-between">
-                      <h5 className="mb-0 card-title flex-grow-1">
-                        {/* Jobs Lists */}
-                      </h5>
-                      <div className="flex-shrink-0">
-                        <Link
-                          to="#!"
-                          onClick={() => setModal(true)}
-                          className="btn btn-primary me-1"
-                        >
-                          Create
-                        </Link>
-                      </div>
-                    </div>
-                  </CardBody>
-                  <CardBody>
                     {console.log(
                       "DocUploadPolicy:" + JSON.stringify(docupload)
                     )}
@@ -427,11 +400,11 @@ const DocumentUploadPolicyList = (props) => {
                       isPagination={true}
                       columns={columns}
                       data={docupload}
-                      // isGlobalFilter={true}
-                      // isAddUserList={true}
+                      isGlobalFilter={true}
+                      isAddUserList={true}
                       isShowingPageLength={true}
-                      // iscustomPageSizeOptions={true}
-                      handleUserClick={() => { }}
+                      tableActions={getTableActions()}
+                      handleAddNewDocumentUploadPolicyList={() => setShowAddNewDocumentUploadPolicyList(true)}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
