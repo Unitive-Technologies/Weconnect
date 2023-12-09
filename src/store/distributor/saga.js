@@ -1,11 +1,26 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_DISTRIBUTORS } from "./actionTypes";
+import {
+  GET_DISTRIBUTORS,
+  ADD_NEW_DISTRIBUTOR,
+  UPDATE_DISTRIBUTOR,
+} from "./actionTypes";
 
-import { getDistributorsSuccess, getDistributorsFail } from "./actions";
+import {
+  getDistributorsSuccess,
+  getDistributorsFail,
+  addDistributorsFail,
+  addDistributorsSuccess,
+  updateDistributorsSuccess,
+  updateDistributorsFail,
+} from "./actions";
 
 //Include Both Helper File with needed methods
-import { getDistributors } from "../../helpers/fakebackend_helper";
+import {
+  getDistributors,
+  addNewDistributor,
+  updateDistributor,
+} from "../../helpers/fakebackend_helper";
 
 const convertDistributorsListObject = (distributorsList) => {
   // Notification Template has more data than what we need, we need to convert each of the Notification Template user object in the list with needed colums of the table
@@ -47,8 +62,33 @@ function* fetchDistributors() {
   }
 }
 
+function* onAddNewDistributor({ payload: distributors }) {
+  try {
+    const response = yield call(addNewDistributor, distributors);
+
+    yield put(addDistributorsSuccess(response));
+    toast.success("Distributor Added Successfully", { autoClose: 2000 });
+  } catch (error) {
+    yield put(addDistributorsFail(error));
+    toast.error("Distributor Added Failed", { autoClose: 2000 });
+  }
+}
+
+function* onUpdateDistributor({ payload: distributors }) {
+  try {
+    const response = yield call(updateDistributor, distributors);
+    yield put(updateDistributorsSuccess(response));
+    toast.success("Distributor Updated Successfully", { autoClose: 2000 });
+  } catch (error) {
+    yield put(updateDistributorsFail(error));
+    toast.error("Distributor Updated Failed", { autoClose: 2000 });
+  }
+}
+
 function* distributorsSaga() {
   yield takeEvery(GET_DISTRIBUTORS, fetchDistributors);
+  yield takeEvery(ADD_NEW_DISTRIBUTOR, onAddNewDistributor);
+  yield takeEvery(UPDATE_DISTRIBUTOR, onUpdateDistributor);
 }
 
 export default distributorsSaga;

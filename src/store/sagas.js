@@ -19,7 +19,7 @@ import locationSaga from "./location/saga";
 import sublocationSaga from "./sublocation/saga";
 import broadCasterSaga from "./broadcaster/saga";
 import genreSaga from "./genre/saga";
-import distributorsSaga from "./distributorslist/saga";
+import distributorsSaga from "./distributor/saga";
 import languageSaga from "./language/saga";
 import regionalOfficeSaga from "./regionaloffice/saga";
 import lcoSaga from "./lcolist/saga";

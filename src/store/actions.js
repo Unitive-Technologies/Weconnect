@@ -33,7 +33,7 @@ export * from "./localchannelnumber/actions";
 export * from "./documentuploadpolicy/actions";
 export * from "./smsmessage/actions";
 
-export * from "./distributorslist/actions";
+export * from "./distributor/actions";
 export * from "./lcolist/actions";
 export * from "./schedulednotificationlist/actions";
 export * from "./userhierarchy/actions";

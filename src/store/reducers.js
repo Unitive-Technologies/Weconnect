@@ -29,7 +29,7 @@ import broadcasterBouquetList from "./broadcasterbouquet/reducer";
 import packageList from "./packagelist/reducer";
 import osdConfiguration from "./OSDConfiguration/reducer";
 import osdTemplate from "./OSDTemplate/reducer";
-import distributors from "./distributorslist/reducer";
+import distributors from "./distributor/reducer";
 import lco from "./lcolist/reducer";
 import schedulednotification from "./schedulednotificationlist/reducer";
 import userHierarchy from "./userhierarchy/reducer";

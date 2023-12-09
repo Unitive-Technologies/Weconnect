@@ -1089,14 +1089,40 @@ const fakeBackend = () => {
     });
   });
 
-  mock.onPut(url.UPDATE_USER).reply((user) => {
+  mock.onPut(url.UPDATE_REGIONALOFFICE).reply((refOff) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        if (user && user.data) {
+        if (refOff && refOff.data) {
           // Passing fake JSON data as response
-          resolve([200, user.data]);
+          resolve([200, refOff.data]);
         } else {
-          reject([400, "Cannot update user"]);
+          reject([400, "Cannot update Regional Office"]);
+        }
+      });
+    });
+  });
+
+  mock.onPost(url.ADD_NEW_DISTRIBUTOR).reply((distributor) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (distributor && distributor.data) {
+          // Passing fake JSON data as response
+          resolve([200, distributor.data]);
+        } else {
+          reject([400, "Cannot add Distributor"]);
+        }
+      });
+    });
+  });
+
+  mock.onPut(url.UPDATE_DISTRIBUTOR).reply((distributor) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (distributor && distributor.data) {
+          // Passing fake JSON data as response
+          resolve([200, distributor.data]);
+        } else {
+          reject([400, "Cannot update Distributor"]);
         }
       });
     });

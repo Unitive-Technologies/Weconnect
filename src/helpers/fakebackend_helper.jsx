@@ -298,6 +298,11 @@ export const addNewDocumentUploadPolicy = (documentupload) =>
   post(url.ADD_NEW_DOCUMENTUPLOADPOLICY, documentupload);
 
 export const getDistributors = () => get(url.GET_DISTRIBUTORS);
+export const addNewDistributor = (distributors) =>
+  post(url.ADD_NEW_DISTRIBUTOR, distributors);
+export const updateDistributor = (distributors) =>
+  put(url.UPDATE_DISTRIBUTOR, distributors);
+
 export const getLco = () => get(url.GET_LCO);
 
 export const getAppAdBanner = () => get(url.GET_APPADBANNER);

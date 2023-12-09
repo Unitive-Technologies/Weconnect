@@ -18,10 +18,8 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import {
-  addNewRegionalOffice as onAddNewRegionalOffice,
-  getRegionalOffice as onGetRegionalOffice,
-} from "/src/store/regionaloffice/actions";
+import { getRegionalOffice as onGetRegionalOffice } from "/src/store/regionaloffice/actions";
+import { addNewDistributor as onAddNewDistributor } from "/src/store/distributor/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 const AddDistributorModal = (props) => {
@@ -56,7 +54,7 @@ const AddDistributorModal = (props) => {
       addr2: "",
       addr3: "",
       contact_person: "",
-      parent_regoff: "",
+      // parent_regoff: "",
       mobile_no: "",
       phone_no: "",
       email: "",
@@ -65,9 +63,7 @@ const AddDistributorModal = (props) => {
       city_lbl: "",
       gstno: "",
       panno: "",
-      username: "",
-      status_lbl: "",
-      email: "",
+      // status_lbl: "",
       pincode: "",
       por_number: "",
       reg_phase: "",
@@ -76,26 +72,29 @@ const AddDistributorModal = (props) => {
       gst_date: "",
       credit_limit: "",
       area_id: "",
-      agreement_data: [],
+      // agreement_data: [],
+      username: "",
+      password: "",
+      confirmpassword: "",
       // created_at: "",
       // created_by: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
       code: Yup.string().required("Please Enter Code"),
-      addr: Yup.string().required("Please Address"),
+      addr1: Yup.string().required("Please Address"),
       contact_person: Yup.string().required("Please Enter Contact Person"),
       mobile_no: Yup.string().required("Please Enter Mobile"),
       state_lbl: Yup.string().required("Please Enter State"),
       district_lbl: Yup.string().required("Please Enter District"),
       city_lbl: Yup.string().required("Please Enter City"),
-      gstno: Yup.string().required("Please Enter GST"),
-      panno: Yup.string().required("Please Enter PAN"),
-      username: Yup.string().required("Please Enter LoginID"),
-      status: Yup.string().required("Please Enter Status"),
+      // gstno: Yup.string().required("Please Enter GST"),
+      // panno: Yup.string().required("Please Enter PAN"),
+      // username: Yup.string().required("Please Enter LoginID"),
+      // status: Yup.string().required("Please Enter Status"),
     }),
     onSubmit: (values) => {
-      const newRegionalOffice = {
+      const newDistributor = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         code: values["code"],
@@ -105,16 +104,15 @@ const AddDistributorModal = (props) => {
         contact_person: values["contact_person"],
         mobile_no: values["mobile_no"],
         phone_no: values["phone_no"],
-        faxno: values["faxno"],
-        message: values["message"],
+        email: values["email"],
         state_lbl: values["state_lbl"],
         district_lbl: values["district_lbl"],
         city_lbl: values["city_lbl"],
         gstno: values["gstno"],
         panno: values["panno"],
-        username: values["username"],
-        status_lbl: values["status_lbl"],
-        email: values["email"],
+
+        // status_lbl: values["status_lbl"],
+
         pincode: values["pincode"],
         por_number: values["por_number"],
         reg_phase: values["reg_phase"],
@@ -123,11 +121,14 @@ const AddDistributorModal = (props) => {
         gst_date: values["gst_date"],
         credit_limit: values["credit_limit"],
         area_id: values["area_id"],
-        agreement_data: values["agreement_data"],
+        // agreement_data: values["agreement_data"],
+        username: values["username"],
+        password: values["password"],
+        confirmpassword: values["confirmpassword"],
       };
-      console.log("newUser:" + newRegionalOffice);
+      console.log("Distributor values:" + newDistributor);
       // save new user
-      dispatch(onAddNewRegionalOffice(newRegionalOffice));
+      dispatch(onAddNewDistributor(newDistributor));
       validation.resetForm();
       toggle();
     },
@@ -862,22 +863,22 @@ const AddDistributorModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Login ID</Label>
                 <Input
-                  name="loginid"
+                  name="username"
                   label="Login ID"
                   type="text"
                   placeholder="Login ID"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.loginid || ""}
+                  value={validation.values.username || ""}
                   invalid={
-                    validation.touched.loginid && validation.errors.loginid
+                    validation.touched.username && validation.errors.username
                       ? true
                       : false
                   }
                 />
-                {validation.touched.loginid && validation.errors.loginid ? (
+                {validation.touched.username && validation.errors.username ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.loginid}
+                    {validation.errors.username}
                   </FormFeedback>
                 ) : null}
               </div>

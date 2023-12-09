@@ -48,7 +48,10 @@ export const GET_SUBLOCATION = "/sublocationlist";
 export const ADD_SUBLOCATION = "/add/sublocation";
 export const GET_LOCLIST = "/loclist";
 
-export const GET_DISTRIBUTORS = "/distributors";
+export const GET_DISTRIBUTORS = "/distributorlist";
+export const ADD_NEW_DISTRIBUTOR = "/add/distributors";
+export const UPDATE_DISTRIBUTOR = "/update/distributors";
+
 export const GET_LCO = "/lco";
 
 export const GET_APPADBANNER = "/appadbanner";
