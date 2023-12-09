@@ -1,128 +1,49 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
-import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
 import Spinners from "../../../components/Common/Spinner";
-import {
-  Card,
-  CardBody,
-  Col,
-  Container,
-  Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
-  UncontrolledTooltip,
-  Input,
-  Form,
-} from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-
-import { Email, Tags, Projects } from "./distributorListCol";
+import { Card, CardBody, Col, Container, Row } from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
 
-import {
-  getUsers as onGetUsers,
-  addNewUser as onAddNewUser,
-  updateUser as onUpdateUser,
-  deleteUser as onDeleteUser,
-} from "/src/store/users/actions";
-import { getDistributors as onGetDistributors } from "/src/store/actions";
-import { isEmpty } from "lodash";
+import { getRegionalOffice as onGetRegionalOffice } from "/src/store/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
-import ViewDistributorModal from "./ViewDistributorModal";
-import AddDistributorModal from "./AddDistributorModal";
-import UploadDistributorModal from "./UploadDistributorModal";
+import ViewRegionalOfficeModal from "./ViewRegionalOfficeModal";
+import AddRegionalOfficeModal from "./AddRegionalOfficeModal";
+import UploadRegionalOfficeModal from "./UploadRegionalOfficeModal";
 
-const DistributorList = (props) => {
+const OperatorAccountDetails = (props) => {
   //meta title
-  document.title = "Distributors | VDigital";
+  document.title = "Regional Offices | VDigital";
 
   const dispatch = useDispatch();
-  const [contact, setContact] = useState();
-  // validation
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
 
-    initialValues: {
-      name: (contact && contact.name) || "",
-      designation: (contact && contact.designation) || "",
-      tags: (contact && contact.tags) || "",
-      email: (contact && contact.email) || "",
-      projects: (contact && contact.projects) || "",
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
-      designation: Yup.string().required("Please Enter Your Designation"),
-      tags: Yup.array().required("Please Enter Tag"),
-      email: Yup.string()
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-        .required("Please Enter Your Email"),
-      projects: Yup.string().required("Please Enter Your Project"),
-    }),
-    onSubmit: (values) => {
-      if (isEdit) {
-        const updateUser = {
-          id: contact.id,
-          name: values.name,
-          designation: values.designation,
-          tags: values.tags,
-          email: values.email,
-          projects: values.projects,
-        };
-
-        // update user
-        dispatch(onUpdateUser(updateUser));
-        validation.resetForm();
-        setIsEdit(false);
-      } else {
-        const newUser = {
-          id: Math.floor(Math.random() * (30 - 20)) + 20,
-          name: values["name"],
-          designation: values["designation"],
-          email: values["email"],
-          tags: values["tags"],
-          projects: values["projects"],
-        };
-        // save new user
-        dispatch(onAddNewUser(newUser));
-        validation.resetForm();
-      }
-      toggle();
-    },
-  });
-
-  const selectDistributorsState = (state) => state.distributors;
-  const DistributorsProperties = createSelector(
-    selectDistributorsState,
-    (distributors) => ({
-      distributor: distributors.distributors,
-      loading: distributors.loading,
+  const selectRegionalOfficeState = (state) => state.regionaloffice;
+  const RegionalOfficeProperties = createSelector(
+    selectRegionalOfficeState,
+    (regionaloffice) => ({
+      regOff: regionaloffice.regionaloffice,
+      loading: regionaloffice.loading,
     })
   );
 
-  const { distributor, loading } = useSelector(DistributorsProperties);
+  const { regOff, loading } = useSelector(RegionalOfficeProperties);
 
   useEffect(() => {
-    console.log("Distributors data in component:", distributor);
-  }, [distributor]);
+    console.log("Regional Office data in component:", regOff);
+  }, [regOff]);
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
-  const [showDistributor, setShowDistributor] = useState(false);
-  const [viewDistributor, setViewDistributor] = useState(false);
-  const [showUploadDistributor, setShowUploadDistributor] = useState(false);
+  const [showRegionalOffice, setShowRegionalOffice] = useState(false);
+  const [viewRegionalOffice, setViewRegionalOffice] = useState(false);
+  const [showUploadRegionalOffice, setShowUploadRegionalOffice] =
+    useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
   const columns = useMemo(
@@ -158,7 +79,7 @@ const DistributorList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  toggleViewModal(userData);
+                  handleViewRegionalOffice(userData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -184,11 +105,11 @@ const DistributorList = (props) => {
       },
       {
         Header: "Address",
-        accessor: "addr1",
+        accessor: "addr",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.addr1}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.addr}</p>
           );
         },
       },
@@ -354,97 +275,80 @@ const DistributorList = (props) => {
   );
 
   useEffect(() => {
-    if (distributor && !distributor.length) {
-      dispatch(onGetDistributors());
+    if (regOff && !regOff.length) {
+      dispatch(onGetRegionalOffice());
       setIsEdit(false);
     }
-  }, [dispatch, distributor]);
+  }, [dispatch, regOff]);
 
   // useEffect(() => {
-  //   setContact(users);
+  //   setContact(regOff);
   //   setIsEdit(false);
-  // }, [users]);
+  // }, [regOff]);
 
   // useEffect(() => {
-  //   if (!isEmpty(users) && !!isEdit) {
-  //     setContact(users);
+  //   if (!isEmpty(regOff) && !!isEdit) {
+  //     setContact(regOff);
   //     setIsEdit(false);
   //   }
-  // }, [users]);
+  // }, [regOff]);
 
-  const handleAddDistributor = () => {
-    setShowDistributor(!showDistributor);
+  const handleAddRegionalOffice = () => {
+    setShowRegionalOffice(!showRegionalOffice);
   };
-  const handleUploadDistributor = () => {
-    setShowUploadDistributor(!showUploadDistributor);
+  const handleUploadRegionalOffice = () => {
+    setShowUploadRegionalOffice(!showUploadRegionalOffice);
   };
 
-  const [viewUser, setViewUser] = useState({});
+  const [regOffData, setRegOffData] = useState({});
   // const toggleViewModal = () => setModal(modal);
   // const handleUserClick = (arg) => {
-  const toggleViewModal = (userData) => {
-    setViewDistributor(!viewDistributor);
-    setViewUser(userData);
+  const handleViewRegionalOffice = (regOffData) => {
+    setViewRegionalOffice(!viewRegionalOffice);
+    setRegOffData(regOffData);
     // toggle();
   };
 
   var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
+
+  const keyField = "id";
 
   const getTableActions = () => {
     return [
       {
         name: "Create",
-        action: setShowDistributor,
+        action: setShowRegionalOffice,
         type: "normal",
         icon: "create",
       },
       {
         name: "Upload",
-        action: setShowUploadDistributor,
-        type: "normal",
-        icon: "upload",
-      },
-      {
-        name: "Settings",
-        action: setShowUploadDistributor,
+        action: setShowUploadRegionalOffice,
         type: "normal",
         icon: "upload",
       },
     ];
   };
 
-  const keyField = "id";
-
   return (
     <React.Fragment>
-      <ViewDistributorModal
-        isOpen={viewDistributor}
-        toggle={toggleViewModal}
-        user={viewUser}
+      <ViewRegionalOfficeModal
+        isOpen={viewRegionalOffice}
+        toggle={handleViewRegionalOffice}
+        regionalOffData={regOffData}
       />
-      <AddDistributorModal
-        isOpen={showDistributor}
-        toggle={handleAddDistributor}
+      <AddRegionalOfficeModal
+        isOpen={showRegionalOffice}
+        toggle={handleAddRegionalOffice}
       />
-      <UploadDistributorModal
-        isOpen={showUploadDistributor}
-        toggle={handleUploadDistributor}
+      <UploadRegionalOfficeModal
+        isOpen={showUploadRegionalOffice}
+        toggle={handleUploadRegionalOffice}
       />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Organization" breadcrumbItem="Distributors" />
+          <Breadcrumbs title="Organization" breadcrumbItem="Regional Offices" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -452,21 +356,23 @@ const DistributorList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("Distributors:" + JSON.stringify(distributor))}
+                    {console.log("regoff:" + JSON.stringify(regOff))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
-                      data={distributor}
+                      data={regOff}
                       isGlobalFilter={true}
+                      isAddRegionalOffice={true}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
-                      isAddDistributor={true}
-                      handleAddDistributor={() => setShowDistributor(true)}
-                      handleUploadDistributor={() =>
-                        setShowUploadDistributor(true)
+                      handleAddRegionalOffice={() =>
+                        setShowRegionalOffice(true)
+                      }
+                      handleUploadRegionalOffice={() =>
+                        setShowUploadRegionalOffice(true)
                       }
                       tableActions={getTableActions()}
-                      customPageSize={8}
+                      customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
@@ -646,4 +552,4 @@ const DistributorList = (props) => {
   );
 };
 
-export default withRouter(DistributorList);
+export default OperatorAccountDetails;

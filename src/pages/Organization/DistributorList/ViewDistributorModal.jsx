@@ -31,7 +31,7 @@ const ViewDistributorModal = (props) => {
 
     initialValues: {
       id: (user && user.id) || "",
-      name: "",
+      name: (user && user.name) || "",
       code: "",
       addr1: "",
       addr2: "",
@@ -113,6 +113,29 @@ const ViewDistributorModal = (props) => {
       toggle();
     },
   });
+
+  const getTableActions = () => {
+    return [
+      {
+        name: "Create",
+        action: setShowDistributor,
+        type: "normal",
+        icon: "create",
+      },
+      {
+        name: "Upload",
+        action: setShowUploadDistributor,
+        type: "normal",
+        icon: "upload",
+      },
+      {
+        name: "Settings",
+        action: setShowUploadDistributor,
+        type: "normal",
+        icon: "upload",
+      },
+    ];
+  };
   return (
     <Modal
       isOpen={isOpen}
@@ -147,29 +170,6 @@ const ViewDistributorModal = (props) => {
           }}
         >
           <Row>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">Code</Label>
-                <Input
-                  name="code"
-                  type="text"
-                  placeholder="Enter Code"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.code || ""}
-                  invalid={
-                    validation.touched.code && validation.errors.code
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.code && validation.errors.code ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.code}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
             <Col lg={2}>
               <div className="form-check form-switch form-switch-lg mb-3">
                 <input

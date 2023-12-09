@@ -19,9 +19,8 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import { updateRegionalOffice as onUpdateRegionalOffice } from "/src/store/regionaloffice/actions";
-import TapsOfViewRegionalOffice from "./TapsOfViewRegionalOffice";
 
-const ViewRegionalOfficeModal = (props) => {
+const EditRegionalOfficeModal = (props) => {
   const { isOpen, toggle, regionalOffData } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
@@ -127,33 +126,16 @@ const ViewRegionalOfficeModal = (props) => {
     >
       {!showEditRegionalOffice ? (
         <ModalHeader toggle={toggle} tag="h4">
-          <div
-            style={{
-              width: "360%",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <h4>View - {regionalOffData.name}</h4>
-            {/* <i
+          View Regional Office
+          <i
             className="bx bx bxs-edit"
             style={{ marginLeft: "20px", cursor: "pointer" }}
             onClick={() => setShowEditRegionalOffice(true)}
-          ></i> */}
-            <button
-              onClick={() => setShowEditRegionalOffice(true)}
-              type="submit"
-              className="btn btn-success save-user"
-              style={{ display: "flex", alignItems: "center", gap: "10px" }}
-            >
-              <i className="bx bx bxs-edit"></i>Edit
-            </button>
-          </div>
+          ></i>
         </ModalHeader>
       ) : (
         <ModalHeader toggle={toggle} tag="h4">
-          Edit - {regionalOffData.name}
+          Edit Regional Office
         </ModalHeader>
       )}
       <ModalBody>
@@ -165,6 +147,29 @@ const ViewRegionalOfficeModal = (props) => {
           }}
         >
           <Row>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">Regional Office Code</Label>
+                <Input
+                  name="code"
+                  type="text"
+                  placeholder="Enter Code"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.code || ""}
+                  invalid={
+                    validation.touched.code && validation.errors.code
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.code && validation.errors.code ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.code}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
             <Col lg={2}>
               <div className="form-check form-switch form-switch-lg mb-3">
                 <input
@@ -177,46 +182,23 @@ const ViewRegionalOfficeModal = (props) => {
                   className="form-check-label"
                   htmlFor="customSwitchsizelg"
                 >
-                  View Details
+                  Custom / Auto
                 </label>
               </div>
             </Col>
           </Row>
-          <div
-            style={{
-              // margin: "20px 0px",
-              marginTop: "20px",
-              marginBottom: "-18px",
-              zIndex: 12000,
-              backgroundColor: "#fff",
-              width: "fit-content",
-              marginLeft: "40%",
-              position: "absolute",
-              padding: "0px 10px",
-            }}
-          >
-            {" "}
-            <h5 style={{}}>Operator Information</h5>
-          </div>
-          <Row
-            style={{
-              position: "relative",
-              border: "1px solid #ced4da",
-              padding: "20px 0px",
-              margin: "30px 0px",
-            }}
-          >
-            <Col lg={3}>
+          <Row>
+            <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Name</Label>
+                <Label className="form-label">Regional Office Name</Label>
                 <Input
                   name="name"
-                  label="Name"
+                  label="Regional Office Name"
                   type="text"
-                  placeholder="Name"
+                  placeholder="Enter Name"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.upload || ""}
+                  value={validation.values.name || ""}
                   invalid={
                     validation.touched.name && validation.errors.name
                       ? true
@@ -230,14 +212,14 @@ const ViewRegionalOfficeModal = (props) => {
                 ) : null}
               </div>
             </Col>
-            <Col lg={3}>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Contact Person</Label>
                 <Input
                   name="contact_person"
                   label="Contact Person"
                   type="text"
-                  placeholder="Contact Person"
+                  placeholder="Enter Contact Person Name"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.contact_person || ""}
@@ -256,106 +238,29 @@ const ViewRegionalOfficeModal = (props) => {
                 ) : null}
               </div>
             </Col>
-            <Col lg={3}>
+            <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Mobil No.</Label>
+                <Label className="form-label">Status</Label>
                 <Input
-                  name="mobile_no"
-                  label="Mobile No."
-                  type="text"
-                  placeholder="Mobile No."
+                  name="status_lbl"
+                  type="select"
+                  placeholder="Select Status"
+                  className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.mobile_no || ""}
-                  invalid={
-                    validation.touched.mobile_no && validation.errors.mobile_no
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.mobile_no && validation.errors.mobile_no ? (
+                  value={validation.values.status_lbl || ""}
+                >
+                  <option value="">Select Status</option>
+                  <option value="11">Active</option>
+                  <option value="12">In-Active</option>
+                </Input>
+                {validation.touched.status_lbl &&
+                validation.errors.status_lbl ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.mobile_no}
+                    {validation.errors.status_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
-            </Col>
-            <Col lg={3}>
-              <div className="mb-3">
-                <Label className="form-label">Code</Label>
-                <Input
-                  name="code"
-                  label="Code"
-                  type="text"
-                  placeholder="Code"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.code || ""}
-                  invalid={
-                    validation.touched.code && validation.errors.code
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.code && validation.errors.code ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.code}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={12}>
-              <div className="mb-3">
-                <Label className="form-label">Address</Label>
-                <Input
-                  name="address"
-                  label="Address"
-                  type="text"
-                  placeholder="Enter Address"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.address || ""}
-                  invalid={
-                    validation.touched.address && validation.errors.address
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.address && validation.errors.address ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.address}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={12}>
-              <div className="mb-3">
-                <Label className="form-label">Parent</Label>
-                <Input
-                  name="parent"
-                  label="Parent"
-                  type="text"
-                  placeholder="Enter Parent"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.parent || ""}
-                  invalid={
-                    validation.touched.parent && validation.errors.parent
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.parent && validation.errors.parent ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.parent}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col lg={12}>
-              <TapsOfViewRegionalOffice />
             </Col>
           </Row>
           <Row>
@@ -863,6 +768,105 @@ const ViewRegionalOfficeModal = (props) => {
               </div>
             </Col>
           </Row>
+          <div
+            style={{
+              // margin: "20px 0px",
+              marginTop: "20px",
+              marginBottom: "-18px",
+              zIndex: 12000,
+              backgroundColor: "#fff",
+              width: "fit-content",
+              marginLeft: "40%",
+              position: "absolute",
+              padding: "0px 10px",
+            }}
+          >
+            {" "}
+            <h5 style={{}}>Agreement</h5>
+          </div>
+          <Row
+            style={{
+              position: "relative",
+              border: "1px solid #ced4da",
+              padding: "20px 0px",
+              margin: "30px 0px",
+            }}
+          >
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">Upload</Label>
+                <Input
+                  name="upload"
+                  label="Upload"
+                  type="file"
+                  placeholder="Upload"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.upload || ""}
+                  invalid={
+                    validation.touched.upload && validation.errors.upload
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.upload && validation.errors.upload ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.upload}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">Start Date</Label>
+                <Input
+                  name="agreestart"
+                  label="Start Date"
+                  type="date"
+                  placeholder="Start Date"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.agreestart || ""}
+                  invalid={
+                    validation.touched.agreestart &&
+                    validation.errors.agreestart
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.agreestart &&
+                validation.errors.agreestart ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.agreestart}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">End Date</Label>
+                <Input
+                  name="agreeend"
+                  label="End Date"
+                  type="date"
+                  placeholder="End Date"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.agreeend || ""}
+                  invalid={
+                    validation.touched.agreeend && validation.errors.agreeend
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.agreeend && validation.errors.agreeend ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.agreeend}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+          </Row>
 
           <Row>
             <Col lg={4}>
@@ -956,9 +960,9 @@ const ViewRegionalOfficeModal = (props) => {
   );
 };
 
-ViewRegionalOfficeModal.propTypes = {
+EditRegionalOfficeModal.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default ViewRegionalOfficeModal;
+export default EditRegionalOfficeModal;
