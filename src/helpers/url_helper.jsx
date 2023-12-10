@@ -76,6 +76,8 @@ export const GET_BROADCASTERBOUQUETLIST = "/broadcasterbouquet";
 export const ADD_NEW_BROADCASTERBOUQUETLIST = "/add/broadcasterbouquet";
 
 export const GET_PACKAGELIST = "/packagelist";
+export const ADD_NEW_PACKAGELIST = "/add/packagelist";
+
 export const GET_OSDCONFIGURATIONLIST = "/osdconfigurationlist";
 export const ADD_NEW_OSDCONFIGURATIONLIST = "/add/osdconfigurationlist";
 

@@ -1037,6 +1037,19 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onPost(url.ADD_NEW_PACKAGELIST).reply((packlist) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (packlist && packlist.data) {
+          // Passing fake JSON data as response
+          resolve([200, packlist.data]);
+        } else {
+          reject([400, "Cannot add Packagelist"]);
+        }
+      });
+    });
+  });
+
   mock.onPost(url.ADD_NEW_OSDCONFIGURATIONLIST).reply((osdconfig) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

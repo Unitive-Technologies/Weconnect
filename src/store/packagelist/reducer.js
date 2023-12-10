@@ -1,4 +1,7 @@
-import { GET_PACKAGELIST_SUCCESS, GET_PACKAGELIST_FAIL } from "./actionTypes";
+import {
+  GET_PACKAGELIST_SUCCESS, GET_PACKAGELIST_FAIL, ADD_PACKAGELIST_SUCCESS,
+  ADD_PACKAGELIST_FAIL,
+} from "./actionTypes";
 
 const INIT_STATE = {
   packageList: [],
@@ -17,6 +20,21 @@ const PackageList = (state = INIT_STATE, action) => {
       };
 
     case GET_PACKAGELIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_PACKAGELIST_SUCCESS:
+      return {
+        ...state,
+        packageList: [
+          ...state.packageList,
+          action.payload,
+        ],
+      };
+
+    case ADD_PACKAGELIST_FAIL:
       return {
         ...state,
         error: action.payload,
