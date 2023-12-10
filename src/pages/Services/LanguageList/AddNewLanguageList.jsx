@@ -92,7 +92,7 @@ const AddNewLanguageList = (props) => {
                     <Row>
                         <Col sm="12">
                             <div className="mb-3">
-                                <Label className="form-label">Language</Label>
+                                <Label className="form-label">Language<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="language"
                                     type="text"
@@ -110,7 +110,7 @@ const AddNewLanguageList = (props) => {
                             </div>
 
                             <div className="mb-3">
-                                <Label className="form-label">Code</Label>
+                                <Label className="form-label">Code<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="languagecode"
                                     type="text"
@@ -129,7 +129,7 @@ const AddNewLanguageList = (props) => {
                             </div>
 
                             <div className="mb-3">
-                                <Label className="form-label">Status</Label>
+                                <Label className="form-label">Status<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="status"
                                     type="select"

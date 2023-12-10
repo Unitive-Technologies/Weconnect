@@ -89,7 +89,7 @@ const AddNewGenreList = (props) => {
                     <Row>
                         <Col sm="12">
                             <div className="mb-3">
-                                <Label className="form-label">Title</Label>
+                                <Label className="form-label">Title<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="name"
                                     type="text"
@@ -107,7 +107,7 @@ const AddNewGenreList = (props) => {
                             </div>
 
                             <div className="mb-3">
-                                <Label className="form-label">Status</Label>
+                                <Label className="form-label">Status<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="status"
                                     type="select"
@@ -129,7 +129,7 @@ const AddNewGenreList = (props) => {
                             </div>
 
                             <div className="mb-3">
-                                <Label className="form-label">Description</Label>
+                                <Label className="form-label">Description<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="description"
                                     type="textarea"

@@ -141,7 +141,7 @@ const AddNewBroadcasterBouquetList = (props) => {
 
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">Name</Label>
+                <Label className="form-label">Name<span style={{ color: 'red' }}>*</span></Label>
                 <Input
                   name="name"
                   type="text"
@@ -161,7 +161,7 @@ const AddNewBroadcasterBouquetList = (props) => {
 
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">Channel Definition</Label>
+                <Label className="form-label">Definition<span style={{ color: 'red' }}>*</span></Label>
                 <Input
                   name="definition"
                   type="select"
@@ -176,7 +176,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                   <option value="103">High Definition(HD)</option>
                 </Input>
                 {validation.touched.definition &&
-                validation.errors.definition ? (
+                  validation.errors.definition ? (
                   <FormFeedback type="invalid">
                     {validation.errors.definition}
                   </FormFeedback>
@@ -186,7 +186,7 @@ const AddNewBroadcasterBouquetList = (props) => {
 
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">Description</Label>
+                <Label className="form-label">Description<span style={{ color: 'red' }}>*</span></Label>
                 <Input
                   name="description"
                   type="textarea"
@@ -197,13 +197,13 @@ const AddNewBroadcasterBouquetList = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -213,7 +213,7 @@ const AddNewBroadcasterBouquetList = (props) => {
 
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">Channel Type</Label>
+                <Label className="form-label">Type<span style={{ color: 'red' }}>*</span></Label>
                 <Input
                   name="type"
                   type="select"
@@ -236,7 +236,7 @@ const AddNewBroadcasterBouquetList = (props) => {
             </Col>
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">Broadcaster</Label>
+                <Label className="form-label">Broadcaster<span style={{ color: 'red' }}>*</span></Label>
                 <Input
                   name="broadcaster"
                   type="select"
@@ -251,7 +251,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                   <option value="112">Jangama Media Pvt Ltd.</option>
                 </Input>
                 {validation.touched.broadcaster &&
-                validation.errors.broadcaster ? (
+                  validation.errors.broadcaster ? (
                   <FormFeedback type="invalid">
                     {validation.errors.broadcaster}
                   </FormFeedback>
@@ -260,7 +260,7 @@ const AddNewBroadcasterBouquetList = (props) => {
             </Col>
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">Status</Label>
+                <Label className="form-label">Status<span style={{ color: 'red' }}>*</span></Label>
                 <Input
                   name="status"
                   type="select"
@@ -284,7 +284,7 @@ const AddNewBroadcasterBouquetList = (props) => {
 
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">MRP Rate(INR)</Label>
+                <Label className="form-label">MRP Rate(INR)<span style={{ color: 'red' }}>*</span></Label>
                 <Input
                   name="rate"
                   type="number"

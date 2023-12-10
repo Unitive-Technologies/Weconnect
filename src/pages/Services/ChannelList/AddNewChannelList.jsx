@@ -208,7 +208,7 @@ const AddNewChannelList = (props) => {
                         </Col>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Name</Label>
+                                <Label className="form-label">Name<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="name"
                                     type="text"
@@ -227,7 +227,7 @@ const AddNewChannelList = (props) => {
                         </Col>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Description</Label>
+                                <Label className="form-label">Description<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="description"
                                     type="textarea"
@@ -254,7 +254,7 @@ const AddNewChannelList = (props) => {
                         <Col sm="4">
 
                             <div className="mb-3">
-                                <Label className="form-label">Definition</Label>
+                                <Label className="form-label">Definition<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="definition"
                                     type="select"
@@ -277,7 +277,7 @@ const AddNewChannelList = (props) => {
                         </Col>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Type</Label>
+                                <Label className="form-label">Type<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="type"
                                     type="select"
@@ -300,7 +300,7 @@ const AddNewChannelList = (props) => {
                         </Col>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Broadcaster</Label>
+                                <Label className="form-label">Broadcaster<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="broadcaster"
                                     type="select"
@@ -323,7 +323,7 @@ const AddNewChannelList = (props) => {
                         </Col>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Genre</Label>
+                                <Label className="form-label">Genre<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="genre"
                                     type="select"
@@ -347,7 +347,7 @@ const AddNewChannelList = (props) => {
                         </Col>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Language</Label>
+                                <Label className="form-label">Language<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="language"
                                     type="text"
@@ -407,7 +407,7 @@ const AddNewChannelList = (props) => {
                         </Col>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Status</Label>
+                                <Label className="form-label">Status<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="status"
                                     type="select"

@@ -32,8 +32,8 @@ const NSTVList = (props) => {
         initialValues: {
             name: "",
             status: "",
-            starttime: "",
-            endtime: "",
+            starttime: "10:40",
+            endtime: "11:00",
             enable: "",
             forced: "",
             type: "",
@@ -48,14 +48,14 @@ const NSTVList = (props) => {
         validationSchema: Yup.object({
             name: Yup.string().required("Enter  Code"),
             status: Yup.string().required("Select status"),
-            starttime: Yup.string().required(""),
-            endtime: Yup.string().required(""),
+            starttime: Yup.string().required("10:40"),
+            endtime: Yup.string().required("11:00"),
             enable: Yup.string().required("Send OSD"),
             forced: Yup.string().required("Select forced display"),
             type: Yup.string().required("Select display type"),
-            duration: Yup.string().required(""),
-            interval: Yup.string().required(""),
-            repetition: Yup.string().required(""),
+            duration: Yup.string().required("duration"),
+            interval: Yup.string().required("interval"),
+            repetition: Yup.string().required("repetition"),
             fontsize: Yup.string().required("Select font size"),
             fontcolor: Yup.string().required("Select font color"),
             backgroundcolor: Yup.string().required("Select back color"),
@@ -66,8 +66,8 @@ const NSTVList = (props) => {
                 id: Math.floor(Math.random() * (30 - 20)) + 20,
                 name: values["name"],
                 status: values["status"],
-                starttime: values["starttime"],
-                endtime: values["endtime"],
+                starttime: values["10:40"],
+                endtime: values["11:00"],
                 enable: values["enable"],
                 forced: values["forced"],
                 type: values["type"],
@@ -82,7 +82,7 @@ const NSTVList = (props) => {
                 created_by: values["created_by"],
             };
             console.log(
-                "newOSDConfiguration:" + newOSDConfiguration
+                "newOSDConfiguration:" + JSON.stringify(newOSDConfiguration)
             );
             // save new user
             dispatch(
@@ -95,6 +95,17 @@ const NSTVList = (props) => {
             validation.setValues(validation.initialValues);
         },
     });
+
+    const [rangeValue, setRangeValue] = useState(1);
+
+    const handleRangeChange = (event) => {
+        setRangeValue(parseInt(event.target.value, 10));
+    };
+
+    const handleRangeClick = () => {
+        // Increment the range value by 1 when clicked
+        setRangeValue((prevValue) => prevValue + 1);
+    };
 
 
     return (
@@ -121,7 +132,7 @@ const NSTVList = (props) => {
                     <Row>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Name*</Label>
+                                <Label className="form-label">Name<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="name"
                                     type="text"
@@ -141,7 +152,7 @@ const NSTVList = (props) => {
 
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Status*</Label>
+                                <Label className="form-label">Status<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="status"
                                     type="select"
@@ -165,10 +176,10 @@ const NSTVList = (props) => {
 
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Start Time*</Label>
+                                <Label className="form-label">Start Time<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="starttime"
-                                    type="text"
+                                    type="time"
                                     // placeholder="Enter channel code"
                                     // className="form-select"
                                     onChange={validation.handleChange}
@@ -184,10 +195,10 @@ const NSTVList = (props) => {
                         </Col>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">End Time*</Label>
+                                <Label className="form-label">End Time<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="endtime"
-                                    type="text"
+                                    type="time"
                                     // placeholder="Enter name"
                                     // className="form-select"
                                     onChange={validation.handleChange}
@@ -203,7 +214,7 @@ const NSTVList = (props) => {
                         </Col>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Enable*</Label>
+                                <Label className="form-label">Enable<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="enable"
                                     type="select"
@@ -227,7 +238,7 @@ const NSTVList = (props) => {
                         <Col sm="4">
 
                             <div className="mb-3">
-                                <Label className="form-label">Forced Display*</Label>
+                                <Label className="form-label">Forced Display<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="forced"
                                     type="select"
@@ -250,7 +261,7 @@ const NSTVList = (props) => {
                         </Col>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Display Type</Label>
+                                <Label className="form-label">Display Type<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="type"
                                     type="select"
@@ -279,8 +290,8 @@ const NSTVList = (props) => {
                                 <Input
                                     name="duration"
                                     type="number"
-                                    // placeholder="Select broadcaster"
-                                    className="form-select"
+                                    placeholder="1"
+                                    // className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
                                     value={validation.values.duration || ""}
@@ -299,8 +310,8 @@ const NSTVList = (props) => {
                                 <Input
                                     name="" interval
                                     type="number"
-                                    // placeholder="Select genre"
-                                    className="form-select"
+                                    placeholder="1"
+                                    // className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
                                     value={validation.values.interval || ""}
@@ -314,27 +325,32 @@ const NSTVList = (props) => {
                             </div>
                         </Col>
                         <Col sm="4">
-                            <div className="mb-3">
-                                <Label className="form-label">Repetition</Label>
+                            <div>
+                                <Label htmlFor="customRange1" className="form-label">
+                                    Repetition
+                                </Label>
                                 <Input
-                                    name="repetition"
-                                    type="text"
-                                    // placeholder="Select language"
-                                    // className="form-select"
-                                    onChange={validation.handleChange}
-                                    onBlur={validation.handleBlur}
-                                    value={validation.values.repetition || ""}
-                                ></Input>
-                                {validation.touched.repetition && validation.errors.repetition ? (
-                                    <FormFeedback type="invalid">
-                                        {validation.errors.repetition}
-                                    </FormFeedback>
-                                ) : null}
+                                    type="range"
+                                    className="form-range"
+                                    id="customRange1"
+                                    value={rangeValue}
+                                    onChange={handleRangeChange}
+                                    onClick={handleRangeClick}
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        border: 'solid 3px blue',
+                                        cursor: 'pointer',
+                                        borderRadius: '5px',
+                                    }}
+                                />
+                                <div style={{ marginTop: '10px' }}>Value: {rangeValue}</div>
                             </div>
                         </Col>
+
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Font Size*</Label>
+                                <Label className="form-label">Font Size<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="fontsize"
                                     type="select"
@@ -357,7 +373,7 @@ const NSTVList = (props) => {
                         </Col>
                         <Col sm="4">
                             <div className="mb-3">
-                                <Label className="form-label">Font Color*</Label>
+                                <Label className="form-label">Font Color<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="fontcolor"
                                     type="select"
@@ -366,7 +382,14 @@ const NSTVList = (props) => {
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
                                     value={validation.values.fontcolor || ""}
-                                ></Input>
+                                >
+                                    <option value="301">Black</option>
+                                    <option value="302">Navy Blue</option>
+                                    <option value="303">Blue</option>
+                                    <option value="304">Green</option>
+                                    <option value="305">Teal Green</option>
+                                    <option value="306">Lime</option>
+                                </Input>
                                 {validation.touched.fontcolor && validation.errors.fontcolor ? (
                                     <FormFeedback type="invalid">
                                         {validation.errors.fontcolor}
@@ -377,62 +400,55 @@ const NSTVList = (props) => {
 
                         <Col sm="4">
                             <div className="mb-3">
-                                {/* <Label className="form-label">Status</Label> */}
+                                <Label className="form-label">Background Color<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
-                                    name="cas"
+                                    name="backgroundcolor"
                                     type="select"
-                                    placeholder="Select CAS"
+                                    placeholder="Select background color"
                                     className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.cas || ""}
+                                    value={validation.values.backgroundcolor || ""}
                                 >
-                                    <option value="21">Select CAS</option>
-                                    <option value="22">NSTV</option>
+                                    <option value="11">Black</option>
+                                    <option value="12">Navy Blue</option>
+                                    <option value="13">Blue</option>
+                                    <option value="14">Green</option>
+                                    <option value="15">Teal Green</option>
+                                    <option value="16">Lime</option>
                                 </Input>
-                                {validation.touched.cas && validation.errors.cas ? (
+                                {validation.touched.backgroundcolor && validation.errors.backgroundcolor ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.cas}
+                                        {validation.errors.backgroundcolor}
                                     </FormFeedback>
                                 ) : null}
                             </div>
                         </Col>
                         <Col sm="4">
                             <div className="mb-3">
-                                {/* <Label className="form-label">Status</Label> */}
+                                <Label className="form-label">Background Area<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
-                                    name="cascode"
-                                    // type="select"
-                                    placeholder="Cascode"
-                                    // className="form-select"
+                                    name="backgroundarea"
+                                    type="select"
+                                    placeholder="backgroundarea"
+                                    className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.cascode || ""}
+                                    value={validation.values.backgroundarea || ""}
                                 >
+                                    <option value="21">20</option>
+                                    <option value="22">30</option>
+                                    <option value="23">40</option>
+                                    <option value="24">50</option>
+                                    <option value="25">60</option>
+                                    <option value="26">70</option>
+                                    <option value="27">80</option>
+                                    <option value="28">90</option>
+                                    <option value="29">100</option>
                                 </Input>
-                                {validation.touched.cascode && validation.errors.cascode ? (
+                                {validation.touched.backgroundcolor && validation.errors.backgroundcolor ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.cascode}
-                                    </FormFeedback>
-                                ) : null}
-                            </div>
-                        </Col>
-                        <Col sm="4">
-                            <div className="mb-3">
-                                {/* <Label className="form-label">Status</Label> */}
-                                <Input
-                                    name="serviceid"
-                                    // type="select"
-                                    placeholder="Service id"
-                                    // className="form-select"
-                                    onChange={validation.handleChange}
-                                    onBlur={validation.handleBlur}
-                                    value={validation.values.serviceid || ""}
-                                >
-                                </Input>
-                                {validation.touched.serviceid && validation.errors.serviceid ? (
-                                    <FormFeedback type="invalid">
-                                        {validation.errors.serviceid}
+                                        {validation.errors.backgroundcolor}
                                     </FormFeedback>
                                 ) : null}
                             </div>

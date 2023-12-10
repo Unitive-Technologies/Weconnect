@@ -107,7 +107,7 @@ const AddNewDocumentUploadPolicy = (props) => {
           <Row>
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">Name</Label>
+                <Label className="form-label">Name<span style={{ color: 'red' }}>*</span></Label>
                 <Input
                   name="name"
                   type="text"
@@ -127,7 +127,7 @@ const AddNewDocumentUploadPolicy = (props) => {
 
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">Start Date</Label>
+                <Label className="form-label">Start Date<span style={{ color: 'red' }}>*</span></Label>
                 <Input
                   name="startdate"
                   type="date"
@@ -146,7 +146,7 @@ const AddNewDocumentUploadPolicy = (props) => {
             </Col>
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">End Date</Label>
+                <Label className="form-label">End Date<span style={{ color: 'red' }}>*</span></Label>
                 <Input
                   name="enddate"
                   type="date"
@@ -165,7 +165,7 @@ const AddNewDocumentUploadPolicy = (props) => {
             </Col>
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">Upload Date</Label>
+                <Label className="form-label">Upload Date<span style={{ color: 'red' }}>*</span></Label>
                 <Input
                   name="uploaddate"
                   type="date"
@@ -175,7 +175,7 @@ const AddNewDocumentUploadPolicy = (props) => {
                   value={validation.values.uploaddate || ""}
                 />
                 {validation.touched.uploaddate &&
-                validation.errors.uploaddate ? (
+                  validation.errors.uploaddate ? (
                   <FormFeedback type="invalid">
                     {validation.errors.uploaddate}
                   </FormFeedback>
@@ -184,7 +184,7 @@ const AddNewDocumentUploadPolicy = (props) => {
             </Col>
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">Initiated By</Label>
+                <Label className="form-label">Initiated By<span style={{ color: 'red' }}>*</span></Label>
                 <Input
                   name="initiatedby"
                   type="text"
@@ -195,7 +195,7 @@ const AddNewDocumentUploadPolicy = (props) => {
                   value={validation.values.initiatedby || ""}
                 ></Input>
                 {validation.touched.initiatedby &&
-                validation.errors.initiatedby ? (
+                  validation.errors.initiatedby ? (
                   <FormFeedback type="invalid">
                     {validation.errors.initiatedby}
                   </FormFeedback>
@@ -204,7 +204,7 @@ const AddNewDocumentUploadPolicy = (props) => {
             </Col>
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">Approved By</Label>
+                <Label className="form-label">Approved By<span style={{ color: 'red' }}>*</span></Label>
                 <Input
                   name="approvedby"
                   type="text"
@@ -215,7 +215,7 @@ const AddNewDocumentUploadPolicy = (props) => {
                   value={validation.values.approvedby || ""}
                 ></Input>
                 {validation.touched.approvedby &&
-                validation.errors.approvedby ? (
+                  validation.errors.approvedby ? (
                   <FormFeedback type="invalid">
                     {validation.errors.approvedby}
                   </FormFeedback>
@@ -224,7 +224,7 @@ const AddNewDocumentUploadPolicy = (props) => {
             </Col>
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">Financial Year</Label>
+                <Label className="form-label">Financial Year<span style={{ color: 'red' }}>*</span></Label>
                 <Input
                   name="financial"
                   type="select"
@@ -250,7 +250,7 @@ const AddNewDocumentUploadPolicy = (props) => {
             </Col>
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">Status</Label>
+                <Label className="form-label">Status<span style={{ color: 'red' }}>*</span></Label>
                 <Input
                   name="status"
                   type="select"
@@ -274,7 +274,7 @@ const AddNewDocumentUploadPolicy = (props) => {
 
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">Remark</Label>
+                <Label className="form-label">Remark<span style={{ color: 'red' }}>*</span></Label>
                 <Input
                   name="remark"
                   type="textarea"
@@ -305,7 +305,7 @@ const AddNewDocumentUploadPolicy = (props) => {
                   value={validation.values.uploadfile || ""}
                 ></Input>
                 {validation.touched.uploadfile &&
-                validation.errors.uploadfile ? (
+                  validation.errors.uploadfile ? (
                   <FormFeedback type="invalid">
                     {validation.errors.uploadfile}
                   </FormFeedback>

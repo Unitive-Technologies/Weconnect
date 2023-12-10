@@ -89,7 +89,7 @@ const AddNewOSDTemplateList = (props) => {
                     <Row>
                         <Col sm="12">
                             <div className="mb-3">
-                                <Label className="form-label">Name</Label>
+                                <Label className="form-label">Name<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="name"
                                     type="text"
@@ -107,7 +107,7 @@ const AddNewOSDTemplateList = (props) => {
                             </div>
 
                             <div className="mb-3">
-                                <Label className="form-label">Template For</Label>
+                                <Label className="form-label">Template For<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="template_for_lbl"
                                     type="select"
@@ -130,7 +130,7 @@ const AddNewOSDTemplateList = (props) => {
                             </div>
 
                             <div className="mb-3">
-                                <Label className="form-label">Status</Label>
+                                <Label className="form-label">Status<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
                                     name="status_lbl"
                                     type="select"

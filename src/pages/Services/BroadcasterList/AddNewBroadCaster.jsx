@@ -103,7 +103,7 @@ const AddNewBroadCaster = (props) => {
           <Row>
             <Col sm="12">
               <div className="mb-3">
-                <Label className="form-label">Name</Label>
+                <Label className="form-label">Name<span style={{ color: 'red' }}>*</span></Label>
                 <Input
                   name="name"
                   type="text"
@@ -121,7 +121,7 @@ const AddNewBroadCaster = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Full-Name</Label>
+                <Label className="form-label">Full-Name<span style={{ color: 'red' }}>*</span></Label>
                 <Input
                   name="fullname"
                   type="text"
@@ -139,7 +139,7 @@ const AddNewBroadCaster = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Contact Person</Label>
+                <Label className="form-label">Contact Person<span style={{ color: 'red' }}>*</span></Label>
                 <Input
                   name="contactperson"
                   label="contactperson"
@@ -158,7 +158,7 @@ const AddNewBroadCaster = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Mobile No.</Label>
+                <Label className="form-label">Mobile No.<span style={{ color: 'red' }}>*</span></Label>
                 <Input
                   name="mobile"
                   type="text"
@@ -194,7 +194,7 @@ const AddNewBroadCaster = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Email address</Label>
+                <Label className="form-label">Email address<span style={{ color: 'red' }}>*</span></Label>
                 <Input
                   name="emailaddress"
                   type="text"
@@ -213,7 +213,7 @@ const AddNewBroadCaster = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Address</Label>
+                <Label className="form-label">Address<span style={{ color: 'red' }}>*</span></Label>
                 <Input
                   name="address"
                   placeholder="Enter address"
@@ -230,7 +230,7 @@ const AddNewBroadCaster = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Description</Label>
+                <Label className="form-label">Description<span style={{ color: 'red' }}>*</span></Label>
                 <Input
                   name="description"
                   type="textarea"
@@ -255,7 +255,7 @@ const AddNewBroadCaster = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Status</Label>
+                <Label className="form-label">Status<span style={{ color: 'red' }}>*</span></Label>
                 <Input
                   name="status"
                   type="select"

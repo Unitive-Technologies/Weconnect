@@ -21,6 +21,47 @@ label {
   margin-bottom: $form-label-margin-bottom;
 }
 
+.custom-range {
+  width: 100%;
+  /* Set the width of the range input */
+  height: 2px;
+  /* Set the height of the range input */
+  background: linear-gradient(to right, #3498db, #e74c3c);
+  /* Set a gradient background */
+  border: none;
+  /* Remove the default border */
+  border-radius: 5px;
+  /* Set the border radius */
+  outline: none;
+  /* Remove the default outline when focused */
+  cursor: pointer;
+  /* Set a pointer cursor on hover */
+}
+
+.custom-range::-webkit-slider-thumb {
+  width: 20px;
+  /* Set the width of the slider thumb */
+  height: 20px;
+  /* Set the height of the slider thumb */
+  background-color: #3498db;
+  /* Set the color of the slider thumb */
+  border: 2px solid #fff;
+  /* Set the border of the slider thumb */
+  border-radius: 50%;
+  /* Create a circular shape for the slider thumb */
+  cursor: pointer;
+  /* Set a pointer cursor on hover */
+  -webkit-appearance: none;
+  /* Remove default styling for WebKit browsers */
+  margin-top: -9px;
+  /* Adjust the position of the slider thumb */
+}
+
+.custom-range:focus::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5);
+  /* Add a box shadow when the slider thumb is focused */
+}
+
 // blockquote
 
 .blockquote {
@@ -36,16 +77,21 @@ label {
 
 // container
 
-.container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl{
-  @media (min-width: 1200px){
-      max-width: 1140px;
+.container,
+.container-lg,
+.container-md,
+.container-sm,
+.container-xl,
+.container-xxl {
+  @media (min-width: 1200px) {
+    max-width: 1140px;
   }
 }
 
 // row
 
-.row{
-  > * {
-      position: relative;
+.row {
+  >* {
+    position: relative;
   }
 }
