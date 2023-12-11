@@ -24,14 +24,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateRegionalOffice as onUpdateRegionalOffice } from "/src/store/regionaloffice/actions";
 
 const EditRegionalOfficeModal = (props) => {
-  const { isOpen, toggle, regionalOffData, setViewRegionalOffice } = props;
+  const { isOpen, toggle, regionalOffData, setViewRegionalOffice, onClose } =
+    props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
   const [showEditRegionalOffice, setShowEditRegionalOffice] = useState(false);
 
   const handleCancel = () => {
     toggle();
-    setViewRegionalOffice(false);
+    onClose();
   };
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -136,29 +137,8 @@ const EditRegionalOfficeModal = (props) => {
     //   toggle={togglelink}
     // >
     <>
-      <ModalHeader tag="h4">
-        <div
-          style={{
-            width: "500%",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <h4>Edit - {regionalOffData.name}</h4>
-
-          {/* <Link
-            to="#!"
-            className="btn btn-light me-1"
-            onClick={() => setShowEditRegionalOffice(true)}
-          > */}
-          <i
-            className="mdi mdi-close"
-            style={{ cursor: "pointer" }}
-            onClick={handleCancel}
-          ></i>
-          {/* </Link> */}
-        </div>
+      <ModalHeader tag="h4" toggle={handleCancel}>
+        <h4>Edit - {regionalOffData.name}</h4>
       </ModalHeader>
 
       <ModalBody>
@@ -945,10 +925,7 @@ const EditRegionalOfficeModal = (props) => {
         <button
           type="button"
           className="btn btn-outline-danger"
-          onClick={() => {
-            validation.resetForm();
-            toggle();
-          }}
+          onClick={handleCancel}
         >
           Cancel
         </button>

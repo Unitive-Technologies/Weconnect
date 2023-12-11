@@ -162,17 +162,7 @@ const ViewRegionalOfficeModal = (props) => {
         {!showEditRegionalOffice ? (
           <>
             <ModalHeader toggle={toggle} tag="h4" position="relative">
-              {/* <div
-                style={{
-                  width: "380%",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              > */}
               <h4>View - {regionalOffData.name}</h4>
-
-              {/* </div> */}
             </ModalHeader>
             <Link
               style={{
@@ -417,6 +407,7 @@ const ViewRegionalOfficeModal = (props) => {
           <EditRegionalOfficeModal
             regionalOffData={regionalOffData}
             toggle={() => setViewRegionalOffice(false)}
+            onClose={() => setShowEditRegionalOffice(false)}
           />
         )}
         {/* </Modal> */}

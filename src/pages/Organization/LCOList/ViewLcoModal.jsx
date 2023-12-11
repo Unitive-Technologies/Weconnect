@@ -162,25 +162,20 @@ const ViewLcoModal = (props) => {
         {!showEditRegionalOffice ? (
           <>
             <ModalHeader toggle={toggle} tag="h4">
-              <div
-                style={{
-                  width: "380%",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <h4>View - {lcoData.name}</h4>
-
-                <Link
-                  to="#!"
-                  className="btn btn-light me-1"
-                  onClick={() => setShowEditRegionalOffice(true)}
-                >
-                  <i className="mdi mdi-pencil-outline"></i>
-                </Link>
-              </div>
+              <h4>View - {lcoData.name}</h4>
             </ModalHeader>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "92%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowEditRegionalOffice(true)}
+            >
+              <i className="mdi mdi-pencil-outline"></i>
+            </Link>
 
             <ModalBody>
               <Form

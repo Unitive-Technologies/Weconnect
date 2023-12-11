@@ -27,6 +27,11 @@ const EditDistributorModal = (props) => {
   const dispatch = useDispatch();
   const [showEditRegionalOffice, setShowEditRegionalOffice] = useState(false);
 
+  const handleCancel = () => {
+    toggle();
+    onClose();
+  };
+
   const selectRegionalOfficeState = (state) => state.regionaloffice;
   const RegionalOfficeProperties = createSelector(
     selectRegionalOfficeState,
@@ -132,29 +137,8 @@ const EditDistributorModal = (props) => {
   });
   return (
     <>
-      <ModalHeader tag="h4">
-        <div
-          style={{
-            width: "200%",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <h4>Edit - {distributor.name}</h4>
-
-          {/* <Link
-          to="#!"
-          className="btn btn-light me-1"
-          onClick={() => setShowEditRegionalOffice(true)}
-        > */}
-          <i
-            className="mdi mdi-close"
-            style={{ cursor: "pointer" }}
-            onClick={toggle}
-          ></i>
-          {/* </Link> */}
-        </div>
+      <ModalHeader tag="h4" toggle={handleCancel}>
+        <h4>Edit - {distributor.name}</h4>
       </ModalHeader>
 
       <ModalBody>
