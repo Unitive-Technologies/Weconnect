@@ -76,7 +76,7 @@ const ViewDistrict = (props) => {
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
       <ModalHeader toggle={toggle} tag="h4">
-        View {name}
+        View {validation.values.name || ""}
       </ModalHeader>
       <ModalBody>
         <Form
@@ -97,6 +97,7 @@ const ViewDistrict = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}
+                  disabled
                   invalid={
                     validation.touched.name && validation.errors.name
                       ? true
@@ -120,6 +121,7 @@ const ViewDistrict = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.state_lbl || ""}
+                  disabled
                 >
                   {stateNames.map((options) => (
                     <option key={options.id} value={options.name}>
@@ -150,6 +152,7 @@ const ViewDistrict = (props) => {
                       ? true
                       : false
                   }
+                  disabled
                 />
                 {validation.touched.description &&
                 validation.errors.description ? (
@@ -169,6 +172,7 @@ const ViewDistrict = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  disabled
                 >
                   <option value="11">Active</option>
                   <option value="12">BLOCKED</option>

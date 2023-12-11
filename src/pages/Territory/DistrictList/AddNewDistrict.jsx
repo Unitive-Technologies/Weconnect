@@ -37,7 +37,7 @@ const AddNewDistrict = (props) => {
       status_lbl: "",
       description: "",
       created_at: "",
-      created_by: "Admin",
+      created_by_lbl: "my mso(mso)",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter district name"),
@@ -54,7 +54,7 @@ const AddNewDistrict = (props) => {
         status_lbl: values["status"],
         description: values["description"],
         created_at: new Date(),
-        created_by: values["created_by"],
+        created_by_lbl: values["created_by_lbl"],
       };
       console.log("new district:" + newDistrict);
       // save new user
