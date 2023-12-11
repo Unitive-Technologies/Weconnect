@@ -419,7 +419,6 @@ const PackageList = (props) => {
       <BulkUpdatePackageList isOpen={showBulkUpdatePackageList} toggle={toggle2} />
       <BulkUpdateCasCodePackageList isOpen={showBulkUpdateCasCodePackageList} toggle={toggle3} />
 
-
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}

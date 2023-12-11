@@ -376,13 +376,11 @@ const BroadcasterBouquetList = (props) => {
         onCloseClick={() => setDeleteModal(false)}
       /> */}
       <AddNewBroadcasterBouquetList isOpen={showAddNewBroadcasterBouquetList} toggle={toggle} />
+
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs
-            title="Services"
-            breadcrumbItem="Broadcaster Bouquet List"
-          />
+          <Breadcrumbs title="Services" breadcrumbItem="Package List" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -390,9 +388,7 @@ const BroadcasterBouquetList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log(
-                      "broadcasterBouquet:" + JSON.stringify(brodcastbouquet)
-                    )}
+                    {console.log("broadcasterBouquet" + JSON.stringify(brodcastbouquet))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
@@ -402,9 +398,7 @@ const BroadcasterBouquetList = (props) => {
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleAddNewBroadcasterBouquetList={() => setShowAddNewBroadcasterBouquetList(true)}
-
                       customPageSize={50}
-                      // sisChannel={true}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
@@ -417,6 +411,7 @@ const BroadcasterBouquetList = (props) => {
           )}
         </Container>
       </div>
+
       <ToastContainer />
     </React.Fragment>
   );

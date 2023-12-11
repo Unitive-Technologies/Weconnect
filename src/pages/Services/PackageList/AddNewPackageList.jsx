@@ -66,7 +66,7 @@ const AddNewPackageList = (props) => {
                 status: values["status"],
                 cas: values["cas"],
                 cascode: values["cascode"],
-                serviceid: values["serviceid"],
+                // serviceid: values["serviceid"],
                 created_at: new Date(),
                 created_by: values["created_by"],
             };
