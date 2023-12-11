@@ -1,17 +1,14 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import {
   Card,
   CardBody,
-  Button,
   Col,
   Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   Label,
   FormFeedback,
   UncontrolledTooltip,
@@ -20,38 +17,32 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import { addNewRegionalOffice as onAddNewRegionalOffice } from "/src/store/regionaloffice/actions";
 import { useSelector, useDispatch } from "react-redux";
-import { updateRegionalOffice as onUpdateRegionalOffice } from "/src/store/regionaloffice/actions";
 
-const EditRegionalOfficeModal = (props) => {
-  const { isOpen, toggle, regionalOffData, setViewRegionalOffice } = props;
-  //   console.log("user in viewuser modal:" + JSON.stringify(user));
+const AddLcoModal = (props) => {
+  const { isOpen, toggle } = props;
   const dispatch = useDispatch();
-  const [showEditRegionalOffice, setShowEditRegionalOffice] = useState(false);
+  const [user, setUser] = useState();
 
-  const handleCancel = () => {
-    toggle();
-    setViewRegionalOffice(false);
-  };
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
-      id: (regionalOffData && regionalOffData.id) || "",
-      name: regionalOffData.name,
-      code: regionalOffData.code,
-      addr1: regionalOffData.addr1,
-      addr2: regionalOffData.addr2,
-      addr3: regionalOffData.addr3,
-      contact_person: regionalOffData.contact_person,
-      mobile_no: regionalOffData.mobile_no,
-      phone_no: regionalOffData.phone_no,
-      fax_no: regionalOffData.fax_no,
-      state_lbl: regionalOffData.state_lbl,
-      district_lbl: regionalOffData.district_lbl,
-      city_lbl: regionalOffData.city_lbl,
-      gstno: regionalOffData.gstno,
+      name: "",
+      code: "",
+      addr1: "",
+      addr2: "",
+      addr3: "",
+      contact_person: "",
+      mobile_no: "",
+      phone_no: "",
+      faxno: "",
+      state_lbl: "",
+      district_lbl: "",
+      city_lbl: "",
+      gstno: "",
       panno: "",
       username: "",
       status_lbl: "",
@@ -65,26 +56,25 @@ const EditRegionalOfficeModal = (props) => {
       credit_limit: "",
       area_id: "",
       agreement_data: [],
+      // created_at: "",
+      // created_by: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
-      email: Yup.string()
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-        .required("Please Enter Your Email"),
-      // mobile: Yup.array().required("Please Enter mobile"),
-      mobile: Yup.string().required("Please Enter mobile Number"),
-      usertype: Yup.string().required("Please Enter User Type"),
+      code: Yup.string().required("Please Enter Code"),
+      addr: Yup.string().required("Please Address"),
+      contact_person: Yup.string().required("Please Enter Contact Person"),
+      mobile_no: Yup.string().required("Please Enter Mobile"),
+      state_lbl: Yup.string().required("Please Enter State"),
+      district_lbl: Yup.string().required("Please Enter District"),
+      city_lbl: Yup.string().required("Please Enter City"),
+      gstno: Yup.string().required("Please Enter GST"),
+      panno: Yup.string().required("Please Enter PAN"),
+      username: Yup.string().required("Please Enter LoginID"),
       status: Yup.string().required("Please Enter Status"),
-      message: Yup.string().required("Please Enter Message"),
-      role: Yup.string().required("Please Enter Role"),
-      designation: Yup.string().required("Please Enter Designation"),
-      grouppolicy: Yup.string().required("Please Enter Group Policy"),
-      loginid: Yup.string().required("Please Enter Login ID"),
-      password: Yup.string().required("Please Enter Password"),
-      confirmpassword: Yup.string().required("Please Enter Confirm Password"),
     }),
     onSubmit: (values) => {
-      const updateRegionalOffice = {
+      const newRegionalOffice = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         code: values["code"],
@@ -94,7 +84,7 @@ const EditRegionalOfficeModal = (props) => {
         contact_person: values["contact_person"],
         mobile_no: values["mobile_no"],
         phone_no: values["phone_no"],
-        faxno: values["fax_no"],
+        faxno: values["faxno"],
         message: values["message"],
         state_lbl: values["state_lbl"],
         district_lbl: values["district_lbl"],
@@ -114,53 +104,25 @@ const EditRegionalOfficeModal = (props) => {
         area_id: values["area_id"],
         agreement_data: values["agreement_data"],
       };
-
-      // update user
-      dispatch(onUpdateUser(updateRegionalOffice));
+      console.log("newUser:" + newRegionalOffice);
+      // save new user
+      dispatch(onAddNewRegionalOffice(newRegionalOffice));
       validation.resetForm();
       toggle();
     },
-    onReset: (values) => {
-      validation.setValues(validation.initialValues);
-    },
   });
   return (
-    // <Modal
-    //   isOpen={isOpen}
-    //   role="dialog"
-    //   size="xl"
-    //   autoFocus={true}
-    //   centered={true}
-    //   className="exampleModal"
-    //   tabIndex="-1"
-    //   toggle={togglelink}
-    // >
-    <>
-      <ModalHeader tag="h4">
-        <div
-          style={{
-            width: "500%",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <h4>Edit - {regionalOffData.name}</h4>
-
-          {/* <Link
-            to="#!"
-            className="btn btn-light me-1"
-            onClick={() => setShowEditRegionalOffice(true)}
-          > */}
-          <i
-            className="mdi mdi-close"
-            style={{ cursor: "pointer" }}
-            onClick={handleCancel}
-          ></i>
-          {/* </Link> */}
-        </div>
-      </ModalHeader>
-
+    <Modal
+      isOpen={isOpen}
+      size="xl"
+      role="dialog"
+      autoFocus={true}
+      centered={true}
+      className="exampleModal"
+      tabIndex="-1"
+      toggle={toggle}
+    >
+      <ModalHeader tag="h4">Add New Lco</ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -172,12 +134,11 @@ const EditRegionalOfficeModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Regional Office Code</Label>
+                <Label className="form-label">Code</Label>
                 <Input
                   name="code"
                   type="text"
                   placeholder="Enter Code"
-                  disabled
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.code || ""}
@@ -892,74 +853,100 @@ const EditRegionalOfficeModal = (props) => {
             </Col>
           </Row>
 
-          {/* <Row>
-            <Col>
-              <div className="text-end">
-                <button type="submit" className="btn btn-success save-user">
-                  Save
-                </button>
+          <Row>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">Login ID</Label>
+                <Input
+                  name="loginid"
+                  label="Login ID"
+                  type="text"
+                  placeholder="Login ID"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.loginid || ""}
+                  invalid={
+                    validation.touched.loginid && validation.errors.loginid
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.loginid && validation.errors.loginid ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.loginid}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">Password</Label>
+                <Input
+                  name="password"
+                  label="Password"
+                  type="text"
+                  placeholder="Password"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.password || ""}
+                  invalid={
+                    validation.touched.password && validation.errors.password
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.password && validation.errors.password ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.password}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">Confirm-Password</Label>
+                <Input
+                  name="confirmpassword"
+                  label="Confirm Password"
+                  type="text"
+                  placeholder="Retype Password"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.confirmpassword || ""}
+                  invalid={
+                    validation.touched.confirmpassword &&
+                    validation.errors.confirmpassword
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.confirmpassword &&
+                validation.errors.confirmpassword ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.confirmpassword}
+                  </FormFeedback>
+                ) : null}
               </div>
             </Col>
           </Row>
           <Row>
-            <Col sm="12">
-              <div className="d-flex flex-wrap gap-2 flex-end">
+            <Col>
+              <div className="text-end">
                 <button type="submit" className="btn btn-success save-user">
-                  Save
-                </button>
-                <button
-                  type="reset"
-                  className="btn btn-warning"
-                  onClick={() => validation.resetForm()}
-                >
-                  Reset
-                </button>
-
-                <button
-                  type="button"
-                  className="btn btn-outline-danger"
-                  onClick={() => {
-                    validation.resetForm();
-                    toggle();
-                  }}
-                >
-                  Cancel
+                  Create
                 </button>
               </div>
             </Col>
-          </Row> */}
+          </Row>
         </Form>
       </ModalBody>
-      <ModalFooter>
-        <button type="submit" className="btn btn-success save-user">
-          Save
-        </button>
-        <button
-          type="reset"
-          className="btn btn-warning"
-          onClick={() => validation.resetForm()}
-        >
-          Reset
-        </button>
-
-        <button
-          type="button"
-          className="btn btn-outline-danger"
-          onClick={() => {
-            validation.resetForm();
-            toggle();
-          }}
-        >
-          Cancel
-        </button>
-      </ModalFooter>
-    </>
+    </Modal>
   );
 };
 
-EditRegionalOfficeModal.propTypes = {
+AddLcoModal.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default EditRegionalOfficeModal;
+export default AddLcoModal;

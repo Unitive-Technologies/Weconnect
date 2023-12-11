@@ -35,6 +35,8 @@ import { isEmpty } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import ViewLcoModal from "./ViewLcoModal";
+import AddLcoModal from "./AddLcoModal";
 
 const LCOList = (props) => {
   //meta title
@@ -75,7 +77,7 @@ const LCOList = (props) => {
         };
 
         // update user
-        dispatch(onUpdateUser(updateUser));
+        // dispatch(onUpdateUser(updateUser));
         validation.resetForm();
         setIsEdit(false);
       } else {
@@ -88,7 +90,7 @@ const LCOList = (props) => {
           projects: values["projects"],
         };
         // save new user
-        dispatch(onAddNewUser(newUser));
+        // dispatch(onAddNewUser(newUser));
         validation.resetForm();
       }
       toggle();
@@ -111,6 +113,9 @@ const LCOList = (props) => {
   const [userList, setUserList] = useState([]);
   const [modal, setModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [showLco, setShowLco] = useState(false);
+  const [viewLco, setViewLco] = useState(false);
+  const [showUploadLco, setShowUploadLco] = useState(false);
 
   const columns = useMemo(
     () => [
@@ -368,20 +373,20 @@ const LCOList = (props) => {
     setModal(!modal);
   };
 
-  const handleUserClick = (arg) => {
-    const user = arg;
+  const handleAddRegionalOffice = () => {
+    setShowLco(!showLco);
+  };
+  const handleUploadRegionalOffice = () => {
+    setShowUploadLco(!showUploadLco);
+  };
 
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-    setIsEdit(true);
-
-    toggle();
+  const [lcoData, setRegOffData] = useState({});
+  // const toggleViewModal = () => setModal(modal);
+  // const handleUserClick = (arg) => {
+  const handleViewRegionalOffice = (regOffData) => {
+    setViewLco(!viewLco);
+    setRegOffData(regOffData);
+    // toggle();
   };
 
   var node = useRef();
@@ -397,38 +402,57 @@ const LCOList = (props) => {
     }
   };
 
-  //delete customer
-  const [deleteModal, setDeleteModal] = useState(false);
-
-  const onClickDelete = (lcos) => {
-    setContact(lcos);
-    setDeleteModal(true);
-  };
-
-  const handleDeleteUser = () => {
-    if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
-    }
-    setContact("");
-    onPaginationPageChange(1);
-    setDeleteModal(false);
-  };
-
-  const handleUserClicks = () => {
-    setUserList("");
-    setIsEdit(false);
-    toggle();
-  };
-
   const keyField = "id";
 
+  const getTableActions = () => {
+    return [
+      {
+        name: "Create",
+        action: setShowLco,
+        type: "normal",
+        icon: "create",
+      },
+      {
+        name: "Bulk Add Credit",
+        // action: setShowAddUser,
+        type: "normal",
+        icon: "create",
+      },
+      {
+        name: "Upload",
+        // action: setShowUploadUser,
+        type: "dropdown",
+        dropdownName: "Upload",
+      },
+      {
+        name: "Bulk Update",
+        // action: setShowBulkUpdateUser,
+        type: "dropdown",
+        dropdownName: "Upload",
+      },
+      {
+        name: "Upload Credit",
+        // action: setShowBulkUpdateUser,
+        type: "dropdown",
+        dropdownName: "Upload",
+      },
+      {
+        name: "Settings",
+        // action: setBulkUserSettings,
+        type: "normal",
+        icon: "upload",
+      },
+    ];
+  };
   return (
     <React.Fragment>
-      <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
+      <ViewLcoModal
+        isOpen={viewLco}
+        toggle={handleViewRegionalOffice}
+        lcoData={lcoData}
+        setViewRegionalOffice={setViewLco}
       />
+      <AddLcoModal isOpen={showLco} toggle={handleAddRegionalOffice} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -448,9 +472,10 @@ const LCOList = (props) => {
                       isGlobalFilter={true}
                       isAddUserList={true}
                       isShowingPageLength={true}
-                      iscustomPageSizeOptions={true}
-                      handleUserClick={handleUserClicks}
-                      customPageSize={8}
+                      // iscustomPageSizeOptions={true}
+                      tableActions={getTableActions()}
+                      handleAddRegionalOffice={() => setShowLco(true)}
+                      customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"

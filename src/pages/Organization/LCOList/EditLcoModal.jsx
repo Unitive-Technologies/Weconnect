@@ -23,16 +23,11 @@ import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import { updateRegionalOffice as onUpdateRegionalOffice } from "/src/store/regionaloffice/actions";
 
-const EditRegionalOfficeModal = (props) => {
+const EditLcoModal = (props) => {
   const { isOpen, toggle, regionalOffData, setViewRegionalOffice } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
   const [showEditRegionalOffice, setShowEditRegionalOffice] = useState(false);
-
-  const handleCancel = () => {
-    toggle();
-    setViewRegionalOffice(false);
-  };
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -155,7 +150,7 @@ const EditRegionalOfficeModal = (props) => {
           <i
             className="mdi mdi-close"
             style={{ cursor: "pointer" }}
-            onClick={handleCancel}
+            onClick={toggle}
           ></i>
           {/* </Link> */}
         </div>
@@ -892,7 +887,7 @@ const EditRegionalOfficeModal = (props) => {
             </Col>
           </Row>
 
-          {/* <Row>
+          <Row>
             <Col>
               <div className="text-end">
                 <button type="submit" className="btn btn-success save-user">
@@ -927,7 +922,7 @@ const EditRegionalOfficeModal = (props) => {
                 </button>
               </div>
             </Col>
-          </Row> */}
+          </Row>
         </Form>
       </ModalBody>
       <ModalFooter>
@@ -957,9 +952,9 @@ const EditRegionalOfficeModal = (props) => {
   );
 };
 
-EditRegionalOfficeModal.propTypes = {
+EditLcoModal.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default EditRegionalOfficeModal;
+export default EditLcoModal;
