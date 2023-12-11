@@ -1,0 +1,369 @@
+import React, { useEffect, useState, useRef, useMemo } from "react";
+import PropTypes from "prop-types";
+import {
+  Card,
+  CardBody,
+  Col,
+  Container,
+  Row,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Label,
+  FormFeedback,
+  UncontrolledTooltip,
+  Input,
+  Form,
+} from "reactstrap";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+import { useSelector, useDispatch } from "react-redux";
+import { updateUser as onUpdateUser } from "/src/store/users/actions";
+import EditBroadcasterModal from "./EditBroadcasterModal";
+
+const ViewBroadcasterModal = (props) => {
+  const { isOpen, toggle, user } = props;
+  //   console.log("user in viewuser modal:" + JSON.stringify(user));
+  const dispatch = useDispatch();
+  const [showEditUser, setShowEditUser] = useState(false);
+
+  const validation = useFormik({
+    // enableReinitialize : use this flag when initial values needs to be changed
+    enableReinitialize: true,
+
+    initialValues: {
+      id: (user && user.id) || "",
+      name: (user && user.name) || "",
+      fullname: (user && user.fullnamename) || "",
+      contactperson: (user && user.contactperson) || "",
+      mobile: (user && user.mobile_no) || "",
+      phone: (user && user.phone) || "",
+      email: (user && user.email) || "",
+      address: (user && user.address) || "",
+      description: (user && user.description) || "",
+      status: (user && user.status) || "",
+
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required("Please Enter Your Name"),
+      email: Yup.string()
+        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
+        .required("Please Enter Your Email"),
+      // mobile: Yup.array().required("Please Enter mobile"),
+      mobile: Yup.string().required("Please Enter mobile Number"),
+      usertype: Yup.string().required("Please Enter User Type"),
+      status: Yup.string().required("Please Enter Status"),
+      message: Yup.string().required("Please Enter Message"),
+      role: Yup.string().required("Please Enter Role"),
+      designation: Yup.string().required("Please Enter Designation"),
+      grouppolicy: Yup.string().required("Please Enter Group Policy"),
+      loginid: Yup.string().required("Please Enter Login ID"),
+      password: Yup.string().required("Please Enter Password"),
+      confirmpassword: Yup.string().required("Please Enter Confirm Password"),
+    }),
+    onSubmit: (values) => {
+      const updateUser = {
+        id: user.id,
+        name: values.name,
+        email: values.email,
+        mobile: values.mobile,
+        usertype: values.usertype,
+        status: values.status,
+        message: values.message,
+        role: values.role,
+        designation: values.designation,
+        grouppolicy: values.grouppolicy,
+        loginid: values.loginid,
+        password: values.password,
+        confirmpassword: values.confirmpassword,
+      };
+
+      // update user
+      dispatch(onUpdateUser(updateUser));
+      validation.resetForm();
+      toggle();
+    },
+  });
+  return (
+    <>
+      {/* <EditUserModal
+        isOpen={showEditUser}
+        // onClose={() => setShowEditUser(false)}
+      /> */}
+      <Modal
+        isOpen={isOpen}
+        size="xl"
+        role="dialog"
+        autoFocus={true}
+        centered={true}
+        className="exampleModal"
+        tabIndex="-1"
+        toggle={toggle}
+      >
+        {!showEditUser ? (
+          <ModalHeader toggle={toggle} tag="h4">
+            View BROADCASTER
+            <i
+              className="bx bx bxs-edit"
+              style={{ marginLeft: "20px", cursor: "pointer" }}
+              onClick={() => setShowEditUser(true)}
+            ></i>
+          </ModalHeader>
+        ) : (
+          <ModalHeader toggle={toggle} tag="h4">
+            Edit User
+          </ModalHeader>
+        )}
+        <ModalBody>
+          <Form
+            onSubmit={(e) => {
+              e.preventDefault();
+              validation.handleSubmit();
+              return false;
+            }}
+          >
+            <Row>
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">Name<span style={{ color: 'red' }}>*</span></Label>
+                  <Input
+                    name="name"
+                    type="text"
+                    placeholder="Insert Name"
+                    disabled={!showEditUser}
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.name || ""}
+                    invalid={
+                      validation.touched.name && validation.errors.name
+                        ? true
+                        : false
+                    }
+                  />
+                  {validation.touched.name && validation.errors.name ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.name}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+
+                <div className="mb-3">
+                  <Label className="form-label">Full-Name<span style={{ color: 'red' }}>*</span></Label>
+                  <Input
+                    name="fullname"
+                    label="fullname"
+                    type="fullname"
+                    placeholder="Insert Full Name"
+                    disabled={!showEditUser}
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.fullname || ""}
+                    invalid={
+                      validation.touched.fullname && validation.errors.fullname
+                        ? true
+                        : false
+                    }
+                  />
+                  {validation.touched.email && validation.errors.email ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.email}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+
+                <div className="mb-3">
+                  <Label className="form-label">Contact Person<span style={{ color: 'red' }}>*</span></Label>
+                  <Input
+                    name="email"
+                    label="Email"
+                    type="email"
+                    placeholder="Insert Email"
+                    disabled={!showEditUser}
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.email || ""}
+                    invalid={
+                      validation.touched.email && validation.errors.email
+                        ? true
+                        : false
+                    }
+                  />
+                  {validation.touched.email && validation.errors.email ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.email}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">Mobile No.<span style={{ color: 'red' }}>*</span></Label>
+                  <Input
+                    name="mobile"
+                    label="Mobile No."
+                    placeholder="Insert Mobile Number"
+                    type="text"
+                    disabled={!showEditUser}
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.mobile || ""}
+                    invalid={
+                      validation.touched.mobile && validation.errors.mobile
+                        ? true
+                        : false
+                    }
+                  />
+                  {validation.touched.mobile && validation.errors.mobile ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.mobile}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+
+                <div className="mb-3">
+                  <Label className="form-label">Phone No.</Label>
+                  <Input
+                    name="usertype"
+                    type="select"
+                    placeholder="Select User Type"
+                    disabled={!showEditUser}
+                    className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.usertype || ""}
+                  >
+                    {/* <option value="">Select User Type</option> */}
+                    <option value="1">MSO</option>
+                    <option value="2">RO</option>
+                    <option value="3">Distributor</option>
+                    <option value="4">LCO</option>
+                  </Input>
+                  {validation.touched.usertype && validation.errors.usertype ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.usertype}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+
+                <div className="mb-3">
+                  <Label className="form-label">Email address<span style={{ color: 'red' }}>*</span></Label>
+                  <Input
+                    name="email"
+                    label="Email"
+                    type="email"
+                    placeholder="Insert Email"
+                    disabled={!showEditUser}
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.email || ""}
+                    invalid={
+                      validation.touched.email && validation.errors.email
+                        ? true
+                        : false
+                    }
+                  />
+                  {validation.touched.email && validation.errors.email ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.email}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">Address<span style={{ color: 'red' }}>*</span></Label>
+                  <Input
+                    name="email"
+                    label="Email"
+                    type="email"
+                    placeholder="Insert Email"
+                    disabled={!showEditUser}
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.email || ""}
+                    invalid={
+                      validation.touched.email && validation.errors.email
+                        ? true
+                        : false
+                    }
+                  />
+                  {validation.touched.email && validation.errors.email ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.email}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+                <div className="mb-3">
+                  <Label className="form-label">Description<span style={{ color: 'red' }}>*</span></Label>
+                  <Input
+                    name="email"
+                    label="Email"
+                    type="email"
+                    placeholder="Insert Email"
+                    disabled={!showEditUser}
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.email || ""}
+                    invalid={
+                      validation.touched.email && validation.errors.email
+                        ? true
+                        : false
+                    }
+                  />
+                  {validation.touched.email && validation.errors.email ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.email}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+                <div className="mb-3">
+                  <Label className="form-label">Status<span style={{ color: 'red' }}>*</span></Label>
+                  <Input
+                    name="status"
+                    type="select"
+                    placeholder="Select Status"
+                    className="form-select"
+                    disabled={!showEditUser}
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.status || ""}
+                  >
+                    {/* <option value="">Select Status</option> */}
+                    <option value="11">Active</option>
+                    <option value="12">BLOCKED</option>
+                    <option value="13">In-Active</option>
+                  </Input>
+                  {validation.touched.status && validation.errors.status ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.status}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+            </Row>
+
+            <Row>
+              {showEditUser && (
+                <Col>
+                  <div className="text-end">
+                    <button type="submit" className="btn btn-success save-user">
+                      Save
+                    </button>
+                  </div>
+                </Col>
+              )}
+            </Row>
+          </Form>
+        </ModalBody>
+        {/* </Modal> */}
+      </Modal >
+    </>
+  );
+};
+
+ViewBroadcasterModal.propTypes = {
+  toggle: PropTypes.func,
+  isOpen: PropTypes.bool,
+};
+
+export default ViewBroadcasterModal;
