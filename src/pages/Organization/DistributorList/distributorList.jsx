@@ -379,12 +379,12 @@ const DistributorList = (props) => {
     setShowUploadDistributor(!showUploadDistributor);
   };
 
-  const [viewUser, setViewUser] = useState({});
+  const [viewDistributors, setViewDistributors] = useState({});
   // const toggleViewModal = () => setModal(modal);
   // const handleUserClick = (arg) => {
   const toggleViewModal = (userData) => {
     setViewDistributor(!viewDistributor);
-    setViewUser(userData);
+    setViewDistributors(userData);
     // toggle();
   };
 
@@ -431,7 +431,7 @@ const DistributorList = (props) => {
       <ViewDistributorModal
         isOpen={viewDistributor}
         toggle={toggleViewModal}
-        user={viewUser}
+        distributor={viewDistributors}
         setViewDistributor={setViewDistributor}
       />
       <AddDistributorModal

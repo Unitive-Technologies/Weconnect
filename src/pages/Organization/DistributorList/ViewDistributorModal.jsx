@@ -24,7 +24,7 @@ import TapsOfViewDistributor from "./TapsOfViewDistributor";
 import EditDistributorModal from "./EditDistributorModal";
 
 const ViewDistributorModal = (props) => {
-  const { isOpen, toggle, user, setViewDistributor } = props;
+  const { isOpen, toggle, distributor, setViewDistributor } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
   const [showEditDistributor, setShowEditDistributor] = useState(false);
@@ -35,8 +35,8 @@ const ViewDistributorModal = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      id: (user && user.id) || "",
-      name: (user && user.name) || "",
+      id: (distributor && distributor.id) || "",
+      name: (distributor && distributor.name) || "",
       code: "",
       addr1: "",
       addr2: "",
@@ -163,7 +163,7 @@ const ViewDistributorModal = (props) => {
                 alignItems: "center",
               }}
             >
-              <h4>View - {user.name}</h4>
+              <h4>View - {distributor.name}</h4>
 
               <Link
                 to="#!"
@@ -403,7 +403,7 @@ const ViewDistributorModal = (props) => {
         </>
       ) : (
         <EditDistributorModal
-          user={user}
+          distributor={distributor}
           toggle={() => setViewDistributor(false)}
         />
       )}

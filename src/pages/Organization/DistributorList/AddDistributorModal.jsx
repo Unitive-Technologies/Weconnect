@@ -63,7 +63,7 @@ const AddDistributorModal = (props) => {
       city_lbl: "",
       gstno: "",
       panno: "",
-      // status_lbl: "",
+      status_lbl: "",
       pincode: "",
       por_number: "",
       reg_phase: "",
@@ -258,11 +258,11 @@ const AddDistributorModal = (props) => {
                   value={validation.values.status_lbl || ""}
                 >
                   <option value="">Select Parent Regional Office</option>
-                  {/* {regOff.map((item) => (
+                  {regOff.map((item) => (
                     <optgroup key={item.id} label={`${item.name}`}>
                       <option value={item.code}>{item.code}</option>
                     </optgroup>
-                  ))} */}
+                  ))}
                   {regOff.map((item) => (
                     <option key={item.id} value={item.code}>
                       {item.name}
