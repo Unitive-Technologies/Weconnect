@@ -20,11 +20,11 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import { updateRegionalOffice as onUpdateRegionalOffice } from "/src/store/regionaloffice/actions";
-import TapsOfViewRegionalOffice from "./TapsOfViewRegionalOffice";
-import EditRegionalOfficeModal from "./EditRegionalOfficeModal";
+import TapsOfLco from "./TapsOfLco";
+import EditLcoModal from "./EditLcoModal";
 
-const ViewRegionalOfficeModal = (props) => {
-  const { isOpen, toggle, regionalOffData, setViewRegionalOffice } = props;
+const ViewLcoModal = (props) => {
+  const { isOpen, toggle, lcoData, setViewLco } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
   const [showEditRegionalOffice, setShowEditRegionalOffice] = useState(false);
@@ -34,20 +34,20 @@ const ViewRegionalOfficeModal = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      id: (regionalOffData && regionalOffData.id) || "",
-      name: regionalOffData.name,
-      code: regionalOffData.code,
-      addr1: regionalOffData.addr1,
-      addr2: regionalOffData.addr2,
-      addr3: regionalOffData.addr3,
-      contact_person: regionalOffData.contact_person,
-      mobile_no: regionalOffData.mobile_no,
-      phone_no: regionalOffData.phone_no,
-      fax_no: regionalOffData.fax_no,
-      state_lbl: regionalOffData.state_lbl,
-      district_lbl: regionalOffData.district_lbl,
-      city_lbl: regionalOffData.city_lbl,
-      gstno: regionalOffData.gstno,
+      id: (lcoData && lcoData.id) || "",
+      name: lcoData.name,
+      code: lcoData.code,
+      addr1: lcoData.addr1,
+      addr2: lcoData.addr2,
+      addr3: lcoData.addr3,
+      contact_person: lcoData.contact_person,
+      mobile_no: lcoData.mobile_no,
+      phone_no: lcoData.phone_no,
+      fax_no: lcoData.fax_no,
+      state_lbl: lcoData.state_lbl,
+      district_lbl: lcoData.district_lbl,
+      city_lbl: lcoData.city_lbl,
+      gstno: lcoData.gstno,
       panno: "",
       username: "",
       status_lbl: "",
@@ -161,31 +161,26 @@ const ViewRegionalOfficeModal = (props) => {
       >
         {!showEditRegionalOffice ? (
           <>
-            <ModalHeader toggle={toggle} tag="h4" position="relative">
-              {/* <div
+            <ModalHeader toggle={toggle} tag="h4">
+              <div
                 style={{
                   width: "380%",
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
                 }}
-              > */}
-              <h4>View - {regionalOffData.name}</h4>
+              >
+                <h4>View - {lcoData.name}</h4>
 
-              {/* </div> */}
+                <Link
+                  to="#!"
+                  className="btn btn-light me-1"
+                  onClick={() => setShowEditRegionalOffice(true)}
+                >
+                  <i className="mdi mdi-pencil-outline"></i>
+                </Link>
+              </div>
             </ModalHeader>
-            <Link
-              style={{
-                position: "absolute",
-                marginLeft: "92%",
-                marginTop: "1%",
-              }}
-              to="#!"
-              className="btn btn-light me-1"
-              onClick={() => setShowEditRegionalOffice(true)}
-            >
-              <i className="mdi mdi-pencil-outline"></i>
-            </Link>
 
             <ModalBody>
               <Form
@@ -407,16 +402,16 @@ const ViewRegionalOfficeModal = (props) => {
                 )}
                 <Row>
                   <Col lg={12}>
-                    <TapsOfViewRegionalOffice />
+                    <TapsOfLco />
                   </Col>
                 </Row>
               </Form>
             </ModalBody>
           </>
         ) : (
-          <EditRegionalOfficeModal
-            regionalOffData={regionalOffData}
-            toggle={() => setViewRegionalOffice(false)}
+          <EditLcoModal
+            regionalOffData={lcoData}
+            toggle={() => setViewLco(false)}
           />
         )}
         {/* </Modal> */}
@@ -425,9 +420,9 @@ const ViewRegionalOfficeModal = (props) => {
   );
 };
 
-ViewRegionalOfficeModal.propTypes = {
+ViewLcoModal.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default ViewRegionalOfficeModal;
+export default ViewLcoModal;
