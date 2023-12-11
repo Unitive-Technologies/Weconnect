@@ -23,6 +23,7 @@ import { updateUser as onUpdateUser } from "/src/store/users/actions";
 const ViewDistrict = (props) => {
   const { isOpen, toggle, user, stateNames } = props;
   const dispatch = useDispatch();
+  const [showEditDistrict, setShowEditDistrict] = useState(false);
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -59,9 +60,6 @@ const ViewDistrict = (props) => {
       validation.resetForm();
       toggle();
     },
-    onReset: (values) => {
-      validation.setValues(validation.initialValues);
-    },
   });
 
   return (
@@ -74,10 +72,20 @@ const ViewDistrict = (props) => {
       tabIndex="-1"
       toggle={toggle}
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader toggle={toggle} tag="h4">
-        View {validation.values.name || ""}
-      </ModalHeader>
+      {!showEditDistrict ? (
+        <ModalHeader toggle={toggle} tag="h4">
+          View {validation.values.name}
+          <i
+            className="bx bx bxs-edit"
+            style={{ marginLeft: "300px", cursor: "pointer" }}
+            onClick={() => setShowEditDistrict(true)}
+          ></i>
+        </ModalHeader>
+      ) : (
+        <ModalHeader toggle={toggle} tag="h4">
+          Edit District
+        </ModalHeader>
+      )}
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -97,7 +105,7 @@ const ViewDistrict = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}
-                  disabled
+                  disabled={!showEditDistrict}
                   invalid={
                     validation.touched.name && validation.errors.name
                       ? true
@@ -121,7 +129,7 @@ const ViewDistrict = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.state_lbl || ""}
-                  disabled
+                  disabled={!showEditDistrict}
                 >
                   {stateNames.map((options) => (
                     <option key={options.id} value={options.name}>
@@ -152,7 +160,7 @@ const ViewDistrict = (props) => {
                       ? true
                       : false
                   }
-                  disabled
+                  disabled={!showEditDistrict}
                 />
                 {validation.touched.description &&
                 validation.errors.description ? (
@@ -172,7 +180,7 @@ const ViewDistrict = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
-                  disabled
+                  disabled={!showEditDistrict}
                 >
                   <option value="11">Active</option>
                   <option value="12">BLOCKED</option>
