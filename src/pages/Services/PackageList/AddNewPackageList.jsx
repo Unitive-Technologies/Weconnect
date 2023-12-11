@@ -350,6 +350,7 @@ const AddNewPackageList = (props) => {
                     <div
                         style={{
                             display: "flex",
+                            width: "1000px",
                         }}
                     >
                         <div
@@ -361,6 +362,7 @@ const AddNewPackageList = (props) => {
                                 backgroundColor: "#fff",
                                 width: "fit-content",
                                 marginLeft: "20%",
+
                                 position: "absolute",
                                 padding: "0px 10px",
                             }}
