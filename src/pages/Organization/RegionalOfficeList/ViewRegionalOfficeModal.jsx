@@ -411,7 +411,7 @@ const ViewRegionalOfficeModal = (props) => {
         ) : (
           <EditRegionalOfficeModal
             regionalOffData={regionalOffData}
-            setViewRegionalOffice={setViewRegionalOffice}
+            toggle={() => setViewRegionalOffice(false)}
           />
         )}
         {/* </Modal> */}

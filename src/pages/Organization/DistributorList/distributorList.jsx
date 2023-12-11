@@ -432,6 +432,7 @@ const DistributorList = (props) => {
         isOpen={viewDistributor}
         toggle={toggleViewModal}
         user={viewUser}
+        setViewDistributor={setViewDistributor}
       />
       <AddDistributorModal
         isOpen={showDistributor}

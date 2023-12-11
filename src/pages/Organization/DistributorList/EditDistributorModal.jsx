@@ -9,6 +9,7 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
+  ModalFooter,
   Label,
   FormFeedback,
   UncontrolledTooltip,
@@ -46,7 +47,7 @@ const EditDistributorModal = (props) => {
       gstno: "",
       panno: "",
       username: "",
-      status_lbl: "",
+      status_lbl: user.status_lbl,
       email: "",
       pincode: "",
       por_number: "",
@@ -114,30 +115,32 @@ const EditDistributorModal = (props) => {
     },
   });
   return (
-    <Modal
-      isOpen={isOpen}
-      role="dialog"
-      size="xl"
-      autoFocus={true}
-      centered={true}
-      className="exampleModal"
-      tabIndex="-1"
-      toggle={toggle}
-    >
-      {!showEditRegionalOffice ? (
-        <ModalHeader toggle={toggle} tag="h4">
-          View Distributor
+    <>
+      <ModalHeader tag="h4">
+        <div
+          style={{
+            width: "200%",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <h4>Edit - {user.name}</h4>
+
+          {/* <Link
+          to="#!"
+          className="btn btn-light me-1"
+          onClick={() => setShowEditRegionalOffice(true)}
+        > */}
           <i
-            className="bx bx bxs-edit"
-            style={{ marginLeft: "20px", cursor: "pointer" }}
-            onClick={() => setShowEditRegionalOffice(true)}
+            className="mdi mdi-close"
+            style={{ cursor: "pointer" }}
+            onClick={toggle}
           ></i>
-        </ModalHeader>
-      ) : (
-        <ModalHeader toggle={toggle} tag="h4">
-          Edit Distributor
-        </ModalHeader>
-      )}
+          {/* </Link> */}
+        </div>
+      </ModalHeader>
+
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -250,9 +253,17 @@ const EditDistributorModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.status_lbl || ""}
                 >
-                  <option value="">Select Parent Regional Office</option>
-                  <option value="11">Active</option>
-                  <option value="12">In-Active</option>
+                  <option value="status">{user.status_lbl}</option>
+                  {/* {regOff.map((item) => (
+                    <optgroup key={item.id} label={`${item.name}`}>
+                      <option value={item.code}>{item.code}</option>
+                    </optgroup>
+                  ))} */}
+                  {/* {regOff.map((item) => (
+                    <option key={item.id} value={item.code}>
+                      {item.name}
+                    </option>
+                  ))} */}
                 </Input>
                 {validation.touched.status_lbl &&
                 validation.errors.status_lbl ? (
@@ -842,96 +853,32 @@ const EditDistributorModal = (props) => {
               </div>
             </Col>
           </Row>
-
-          <Row>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">Login ID</Label>
-                <Input
-                  name="loginid"
-                  label="Login ID"
-                  type="text"
-                  placeholder="Login ID"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.loginid || ""}
-                  invalid={
-                    validation.touched.loginid && validation.errors.loginid
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.loginid && validation.errors.loginid ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.loginid}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">Password</Label>
-                <Input
-                  name="password"
-                  label="Password"
-                  type="text"
-                  placeholder="Password"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.password || ""}
-                  invalid={
-                    validation.touched.password && validation.errors.password
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.password && validation.errors.password ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.password}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">Confirm-Password</Label>
-                <Input
-                  name="confirmpassword"
-                  label="Confirm Password"
-                  type="text"
-                  placeholder="Retype Password"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.confirmpassword || ""}
-                  invalid={
-                    validation.touched.confirmpassword &&
-                    validation.errors.confirmpassword
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.confirmpassword &&
-                validation.errors.confirmpassword ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.confirmpassword}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <div className="text-end">
-                <button type="submit" className="btn btn-success save-user">
-                  Create
-                </button>
-              </div>
-            </Col>
-          </Row>
         </Form>
       </ModalBody>
-      {/* </Modal> */}
-    </Modal>
+      <ModalFooter>
+        <button type="submit" className="btn btn-success save-user">
+          Save
+        </button>
+        <button
+          type="reset"
+          className="btn btn-warning"
+          onClick={() => validation.resetForm()}
+        >
+          Reset
+        </button>
+
+        <button
+          type="button"
+          className="btn btn-outline-danger"
+          onClick={() => {
+            validation.resetForm();
+            toggle();
+          }}
+        >
+          Cancel
+        </button>
+      </ModalFooter>
+    </>
   );
 };
 
