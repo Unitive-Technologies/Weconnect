@@ -4,12 +4,14 @@ import { Link } from "react-router-dom";
 import {
   Card,
   CardBody,
+  Button,
   Col,
   Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
+  ModalFooter,
   Label,
   FormFeedback,
   UncontrolledTooltip,
@@ -113,6 +115,9 @@ const EditRegionalOfficeModal = (props) => {
       validation.resetForm();
       toggle();
     },
+    onReset: (values) => {
+      validation.setValues(validation.initialValues);
+    },
   });
   return (
     // <Modal
@@ -129,7 +134,7 @@ const EditRegionalOfficeModal = (props) => {
       <ModalHeader tag="h4">
         <div
           style={{
-            width: "510%",
+            width: "500%",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
@@ -145,7 +150,7 @@ const EditRegionalOfficeModal = (props) => {
           <i
             className="mdi mdi-close"
             style={{ cursor: "pointer" }}
-            onClick={() => setViewRegionalOffice(false)}
+            onClick={toggle}
           ></i>
           {/* </Link> */}
         </div>
@@ -883,82 +888,6 @@ const EditRegionalOfficeModal = (props) => {
           </Row>
 
           <Row>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">Login ID</Label>
-                <Input
-                  name="loginid"
-                  label="Login ID"
-                  type="text"
-                  placeholder="Login ID"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.loginid || ""}
-                  invalid={
-                    validation.touched.loginid && validation.errors.loginid
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.loginid && validation.errors.loginid ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.loginid}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">Password</Label>
-                <Input
-                  name="password"
-                  label="Password"
-                  type="text"
-                  placeholder="Password"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.password || ""}
-                  invalid={
-                    validation.touched.password && validation.errors.password
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.password && validation.errors.password ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.password}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">Confirm-Password</Label>
-                <Input
-                  name="confirmpassword"
-                  label="Confirm Password"
-                  type="text"
-                  placeholder="Retype Password"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.confirmpassword || ""}
-                  invalid={
-                    validation.touched.confirmpassword &&
-                    validation.errors.confirmpassword
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.confirmpassword &&
-                validation.errors.confirmpassword ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.confirmpassword}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-          </Row>
-          <Row>
             <Col>
               <div className="text-end">
                 <button type="submit" className="btn btn-success save-user">
@@ -967,8 +896,58 @@ const EditRegionalOfficeModal = (props) => {
               </div>
             </Col>
           </Row>
+          <Row>
+            <Col sm="12">
+              <div className="d-flex flex-wrap gap-2 flex-end">
+                <button type="submit" className="btn btn-success save-user">
+                  Save
+                </button>
+                <button
+                  type="reset"
+                  className="btn btn-warning"
+                  onClick={() => validation.resetForm()}
+                >
+                  Reset
+                </button>
+
+                <button
+                  type="button"
+                  className="btn btn-outline-danger"
+                  onClick={() => {
+                    validation.resetForm();
+                    toggle();
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </Col>
+          </Row>
         </Form>
       </ModalBody>
+      <ModalFooter>
+        <button type="submit" className="btn btn-success save-user">
+          Save
+        </button>
+        <button
+          type="reset"
+          className="btn btn-warning"
+          onClick={() => validation.resetForm()}
+        >
+          Reset
+        </button>
+
+        <button
+          type="button"
+          className="btn btn-outline-danger"
+          onClick={() => {
+            validation.resetForm();
+            toggle();
+          }}
+        >
+          Cancel
+        </button>
+      </ModalFooter>
     </>
   );
 };
