@@ -1,18 +1,13 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
-  Modal,
   ModalHeader,
   ModalBody,
   ModalFooter,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
@@ -23,9 +18,8 @@ import { updateRegionalOffice as onUpdateRegionalOffice } from "/src/store/regio
 import { createSelector } from "reselect";
 const EditDistributorModal = (props) => {
   const { isOpen, toggle, distributor } = props;
-  console.log("user in viewuser modal:" + JSON.stringify(distributor));
+  // console.log("distributor in view modal:" + JSON.stringify(distributor));
   const dispatch = useDispatch();
-  const [showEditRegionalOffice, setShowEditRegionalOffice] = useState(false);
 
   const handleCancel = () => {
     toggle();
@@ -47,6 +41,7 @@ const EditDistributorModal = (props) => {
       dispatch(onUpdateRegionalOffice());
     }
   }, [dispatch, regOff]);
+
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -254,11 +249,7 @@ const EditDistributorModal = (props) => {
                   value={validation.values.status_lbl || ""}
                 >
                   <option value="">{validation.values.status_lbl}</option>
-                  {/* {regOff.map((item) => (
-                    <optgroup key={item.id} label={`${item.name}`}>
-                      <option value={item.code}>{item.code}</option>
-                    </optgroup>
-                  ))} */}
+
                   {regOff.map((item) => (
                     <option key={item.id} value={item.code}>
                       {item.name}

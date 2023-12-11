@@ -144,7 +144,9 @@ const AddDistributorModal = (props) => {
       tabIndex="-1"
       toggle={toggle}
     >
-      <ModalHeader tag="h4">Add New Distributor</ModalHeader>
+      <ModalHeader tag="h4" toggle={toggle}>
+        Add New Distributor
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {

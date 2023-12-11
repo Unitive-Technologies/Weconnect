@@ -122,7 +122,9 @@ const AddRegionalOfficeModal = (props) => {
       tabIndex="-1"
       toggle={toggle}
     >
-      <ModalHeader tag="h4">Add New Regional Office</ModalHeader>
+      <ModalHeader tag="h4" toggle={toggle}>
+        Add New Regional Office
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {

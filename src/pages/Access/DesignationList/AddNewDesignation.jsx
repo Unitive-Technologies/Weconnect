@@ -81,7 +81,9 @@ const AddNewDesignation = (props) => {
       toggle={toggle}
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4">Add New Designation</ModalHeader>
+      <ModalHeader tag="h4" toggle={toggle}>
+        Add New Designation
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {

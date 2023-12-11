@@ -89,7 +89,9 @@ const AddUserHierarchy = (props) => {
       toggle={toggle}
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4">Add New User Hierarchy</ModalHeader>
+      <ModalHeader tag="h4" toggle={toggle}>
+        Add New User Hierarchy
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {

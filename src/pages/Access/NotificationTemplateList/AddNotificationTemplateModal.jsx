@@ -90,7 +90,9 @@ const AddNotificationTemplateModal = (props) => {
       toggle={toggle}
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4">Create Notification Template</ModalHeader>
+      <ModalHeader tag="h4" toggle={toggle}>
+        Create Notification Template
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {

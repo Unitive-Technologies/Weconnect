@@ -75,7 +75,9 @@ const AddGroupPolicyModal = (props) => {
       tabIndex="-1"
       toggle={toggle}
     >
-      <ModalHeader tag="h4">Create Group Policy</ModalHeader>
+      <ModalHeader tag="h4" toggle={toggle}>
+        Create Group Policy
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {

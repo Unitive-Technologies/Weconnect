@@ -105,7 +105,9 @@ const AddNewScheduleCustomerNotification = (props) => {
       toggle={toggle}
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4">Add New Schedule Customer Notification</ModalHeader>
+      <ModalHeader tag="h4" toggle={toggle}>
+        Add New Schedule Customer Notification
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -197,7 +199,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                   <option value="39">28</option>
                 </Input>
                 {validation.touched.schedule_days &&
-                  validation.errors.schedule_days ? (
+                validation.errors.schedule_days ? (
                   <FormFeedback type="invalid">
                     {validation.errors.schedule_days}
                   </FormFeedback>
@@ -224,7 +226,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                   <option value="55">CAS: NSTV</option>
                 </Input>
                 {validation.touched.osd_configuration_id_lbl &&
-                  validation.errors.osd_configuration_id_lbl ? (
+                validation.errors.osd_configuration_id_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.osd_configuration_id_lbl}
                   </FormFeedback>
@@ -246,7 +248,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                   <option value="63">NXT</option>
                 </Input>
                 {validation.touched.osd_template_id_lbl &&
-                  validation.errors.osd_template_id_lbl ? (
+                validation.errors.osd_template_id_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.osd_template_id_lbl}
                   </FormFeedback>
@@ -266,7 +268,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                   <option value="71">Select bmail template</option>
                 </Input>
                 {validation.touched.bmail_template_id_lbl &&
-                  validation.errors.bmail_template_id_lbl ? (
+                validation.errors.bmail_template_id_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.bmail_template_id_lbl}
                   </FormFeedback>
@@ -289,7 +291,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                   <option value="84">User</option>
                 </Input>
                 {validation.touched.sms_template_id_lbl &&
-                  validation.errors.sms_template_id_lbl ? (
+                validation.errors.sms_template_id_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.sms_template_id_lbl}
                   </FormFeedback>
@@ -307,13 +309,13 @@ const AddNewScheduleCustomerNotification = (props) => {
                   value={validation.values.start_date || ""}
                   invalid={
                     validation.touched.start_date &&
-                      validation.errors.start_date
+                    validation.errors.start_date
                       ? true
                       : false
                   }
                 />
                 {validation.touched.start_date &&
-                  validation.errors.start_date ? (
+                validation.errors.start_date ? (
                   <FormFeedback type="invalid">
                     {validation.errors.start_date}
                   </FormFeedback>
@@ -355,13 +357,13 @@ const AddNewScheduleCustomerNotification = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -383,7 +385,8 @@ const AddNewScheduleCustomerNotification = (props) => {
                   <option value="102">Active</option>
                   <option value="103">In-Active</option>
                 </Input>
-                {validation.touched.status_lbl && validation.errors.status_lbl ? (
+                {validation.touched.status_lbl &&
+                validation.errors.status_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.status_lbl}
                   </FormFeedback>

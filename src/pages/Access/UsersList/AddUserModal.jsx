@@ -95,7 +95,9 @@ const AddUserModal = (props) => {
       toggle={toggle}
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4">Add User</ModalHeader>
+      <ModalHeader tag="h4" toggle={toggle}>
+        Add User
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {

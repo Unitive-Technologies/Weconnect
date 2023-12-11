@@ -122,7 +122,9 @@ const AddLcoModal = (props) => {
       tabIndex="-1"
       toggle={toggle}
     >
-      <ModalHeader tag="h4">Add New Lco</ModalHeader>
+      <ModalHeader tag="h4" toggle={toggle}>
+        Add New Lco
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
