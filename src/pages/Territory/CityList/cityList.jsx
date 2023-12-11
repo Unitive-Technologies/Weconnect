@@ -9,34 +9,16 @@ import {
   Col,
   Container,
   Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
   UncontrolledTooltip,
-  Input,
-  Form,
 } from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-
-import { Email, Tags, Projects } from "./cityListCol";
-
-//Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
-
 import { getCity as onGetCity } from "/src/store/actions";
-
-import { isEmpty } from "lodash";
-
-//redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddNewCity from "./AddNewCity";
 import UploadCity from "./UploadCity";
+import ViewCity from "./ViewCity";
 
 const CityList = (props) => {
   //meta title
@@ -62,6 +44,14 @@ const CityList = (props) => {
   const [showAddCity, setShowAddCity] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [showUploadCity, setShowUploadCity] = useState(false);
+  const [showViewCity, setShowViewCity] = useState(false);
+  const [viewCityData, setViewCityData] = useState({});
+
+  const toggleViewCity = (userData) => {
+    console.log("User Data: ", userData);
+    setShowViewCity(!showViewCity);
+    setViewCityData(userData);
+  };
 
   const columns = useMemo(
     () => [
@@ -92,7 +82,13 @@ const CityList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  toggleViewCity(userData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -335,23 +331,23 @@ const CityList = (props) => {
         name: "Create",
         action: setShowAddCity,
         type: "normal",
-        icon: "create"
+        icon: "create",
       },
       {
         name: "Upload",
         action: setShowUploadCity,
         type: "normal",
-        icon: "upload"
+        icon: "upload",
       },
     ];
   };
 
   return (
     <React.Fragment>
-      <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
+      <ViewCity
+        isOpen={showViewCity}
+        toggle={toggleViewCity}
+        user={viewCityData}
       />
       <AddNewCity isOpen={showAddCity} toggle={toggle} />
       <UploadCity isOpen={showUploadCity} toggle={toggle1} />
