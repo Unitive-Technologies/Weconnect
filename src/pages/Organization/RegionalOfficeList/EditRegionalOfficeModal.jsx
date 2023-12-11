@@ -1,38 +1,35 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import {
-  Card,
-  CardBody,
-  Button,
   Col,
-  Container,
   Row,
-  Modal,
   ModalHeader,
   ModalBody,
   ModalFooter,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateRegionalOffice as onUpdateRegionalOffice } from "/src/store/regionaloffice/actions";
 
 const EditRegionalOfficeModal = (props) => {
-  const { isOpen, toggle, regionalOffData, setViewRegionalOffice, onClose } =
-    props;
+  const {
+    closeViewModal,
+    regionalOffData,
+    setViewRegionalOffice,
+    closeEditModal,
+  } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
   const [showEditRegionalOffice, setShowEditRegionalOffice] = useState(false);
 
   const handleCancel = () => {
-    toggle();
-    onClose();
+    closeViewModal();
+    closeEditModal();
   };
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -119,23 +116,13 @@ const EditRegionalOfficeModal = (props) => {
       // update user
       dispatch(onUpdateUser(updateRegionalOffice));
       validation.resetForm();
-      toggle();
+      closeViewModal();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
     },
   });
   return (
-    // <Modal
-    //   isOpen={isOpen}
-    //   role="dialog"
-    //   size="xl"
-    //   autoFocus={true}
-    //   centered={true}
-    //   className="exampleModal"
-    //   tabIndex="-1"
-    //   toggle={togglelink}
-    // >
     <>
       <ModalHeader tag="h4" toggle={handleCancel}>
         <h4>Edit - {regionalOffData.name}</h4>

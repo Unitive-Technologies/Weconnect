@@ -399,7 +399,8 @@ const ViewDistributorModal = (props) => {
       ) : (
         <EditDistributorModal
           distributor={distributor}
-          toggle={() => setViewDistributor(false)}
+          closeViewModal={() => setViewDistributor(false)}
+          closeEditModal={() => setShowEditDistributor(false)}
         />
       )}
       {/* </Modal> */}

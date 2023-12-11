@@ -406,8 +406,8 @@ const ViewRegionalOfficeModal = (props) => {
         ) : (
           <EditRegionalOfficeModal
             regionalOffData={regionalOffData}
-            toggle={() => setViewRegionalOffice(false)}
-            onClose={() => setShowEditRegionalOffice(false)}
+            closeViewModal={() => setViewRegionalOffice(false)}
+            closeEditModal={() => setShowEditRegionalOffice(false)}
           />
         )}
         {/* </Modal> */}

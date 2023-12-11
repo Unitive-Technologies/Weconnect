@@ -17,13 +17,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateRegionalOffice as onUpdateRegionalOffice } from "/src/store/regionaloffice/actions";
 import { createSelector } from "reselect";
 const EditDistributorModal = (props) => {
-  const { isOpen, toggle, distributor } = props;
+  const { isOpen, closeViewModal, closeEditModal, distributor } = props;
   // console.log("distributor in view modal:" + JSON.stringify(distributor));
   const dispatch = useDispatch();
 
   const handleCancel = () => {
-    toggle();
-    onClose();
+    closeViewModal();
+    closeEditModal();
   };
 
   const selectRegionalOfficeState = (state) => state.regionaloffice;
@@ -127,7 +127,7 @@ const EditDistributorModal = (props) => {
       // update user
       dispatch(onUpdateUser(updateRegionalOffice));
       validation.resetForm();
-      toggle();
+      closeEditModal();
     },
   });
   return (
@@ -891,7 +891,7 @@ const EditDistributorModal = (props) => {
           className="btn btn-outline-danger"
           onClick={() => {
             validation.resetForm();
-            toggle();
+            closeEditModal();
           }}
         >
           Cancel
