@@ -21,7 +21,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const ViewCity = (props) => {
-  const { isOpen, toggle, user } = props;
+  const { isOpen, toggle, city } = props;
   const dispatch = useDispatch();
   const [showEditCity, setShowEditCity] = useState(false);
 
@@ -30,12 +30,12 @@ const ViewCity = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      name: (user && user.name) || "",
-      state_lbl: (user && user.state_lbl) || "",
-      status: (user && user.status) || "",
-      description: (user && user.description) || "",
-      created_at: (user && user.created_at) || "",
-      created_by: (user && user.created_by) || "Admin",
+      name: (city && city.name) || "",
+      state_lbl: (city && city.state_lbl) || "",
+      status: (city && city.status) || "",
+      description: (city && city.description) || "",
+      created_at: (city && city.created_at) || "",
+      created_by: (city && city.created_by) || "Admin",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter district name"),

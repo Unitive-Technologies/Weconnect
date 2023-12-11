@@ -467,7 +467,7 @@ const DistrictList = (props) => {
       <ViewDistrict
         isOpen={showViewDistrict}
         toggle={toggleViewDistrict}
-        user={viewDistrictData}
+        district={viewDistrictData}
         stateNames={stateNames}
       />
       <AddNewDistrict

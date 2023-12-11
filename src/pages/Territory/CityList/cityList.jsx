@@ -347,7 +347,7 @@ const CityList = (props) => {
       <ViewCity
         isOpen={showViewCity}
         toggle={toggleViewCity}
-        user={viewCityData}
+        city={viewCityData}
       />
       <AddNewCity isOpen={showAddCity} toggle={toggle} />
       <UploadCity isOpen={showUploadCity} toggle={toggle1} />
