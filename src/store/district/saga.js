@@ -24,9 +24,9 @@ const convertDistrictListObject = (districtList) => {
       state_code_lbl: district.state_code_lbl,
       description: district.description,
       status:
-        district.status === 1
+        district.status === 11
           ? "ACTIVE"
-          : district.status === 0
+          : district.status === 12
           ? "INACTIVE"
           : "BLOCKED",
       created_at: district.created_at,

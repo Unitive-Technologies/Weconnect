@@ -17,32 +17,29 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addDistrict as onAddDistrict } from "/src/store/district/actions";
 import { useSelector, useDispatch } from "react-redux";
+import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
-const AddNewDistrict = (props) => {
-  const { isOpen, toggle, stateNames } = props;
+const ViewDistrict = (props) => {
+  const { isOpen, toggle, user, stateNames } = props;
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
-
-  console.log("States Name in Add district: ", stateNames);
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
-      name: "",
-      state_lbl: "",
-      status_lbl: "",
-      description: "",
-      created_at: "",
-      created_by: "Admin",
+      name: (user && user.name) || "",
+      state_lbl: (user && user.state_lbl) || "",
+      status: (user && user.status) || "",
+      description: (user && user.description) || "",
+      created_at: (user && user.created_at) || "",
+      created_by: (user && user.created_by) || "Admin",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter district name"),
       state_lbl: Yup.string().required("Select state"),
-      status_lbl: Yup.string().required("Select status"),
+      status: Yup.string().required("Select status"),
       description: Yup.string().required("Enter description"),
     }),
     onSubmit: (values) => {
@@ -51,7 +48,7 @@ const AddNewDistrict = (props) => {
         designation: values["designation"],
         name: values["name"],
         state_lbl: values["state_lbl"],
-        status_lbl: values["status"],
+        status: values["status"],
         description: values["description"],
         created_at: new Date(),
         created_by: values["created_by"],
@@ -78,7 +75,9 @@ const AddNewDistrict = (props) => {
       toggle={toggle}
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4">Add New District</ModalHeader>
+      <ModalHeader toggle={toggle} tag="h4">
+        View {name}
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -122,7 +121,6 @@ const AddNewDistrict = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.state_lbl || ""}
                 >
-                  <option value="">Select state</option>
                   {stateNames.map((options) => (
                     <option key={options.id} value={options.name}>
                       {options.name}
@@ -164,51 +162,31 @@ const AddNewDistrict = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Status</Label>
                 <Input
-                  name="status_lbl"
+                  name="status"
                   type="select"
                   placeholder="Select Status"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.status_lbl || ""}
+                  value={validation.values.status || ""}
                 >
-                  <option value="">Select Status</option>
                   <option value="11">Active</option>
                   <option value="12">BLOCKED</option>
                   <option value="13">In-Active</option>
                 </Input>
-                {validation.touched.status_lbl &&
-                validation.errors.status_lbl ? (
+                {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.status_lbl}
+                    {validation.errors.status}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
           </Row>
           <Row>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
+            <Col>
+              <div className="text-end">
                 <button type="submit" className="btn btn-success save-user">
                   Save
-                </button>
-                <button
-                  type="reset"
-                  className="btn btn-warning"
-                  onClick={() => validation.resetForm()}
-                >
-                  Reset
-                </button>
-
-                <button
-                  type="button"
-                  className="btn btn-outline-danger"
-                  onClick={() => {
-                    validation.resetForm();
-                    toggle();
-                  }}
-                >
-                  Cancel
                 </button>
               </div>
             </Col>
@@ -220,9 +198,9 @@ const AddNewDistrict = (props) => {
   );
 };
 
-AddNewDistrict.propTypes = {
+ViewDistrict.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default AddNewDistrict;
+export default ViewDistrict;
