@@ -32,21 +32,23 @@ const ViewCity = (props) => {
     initialValues: {
       name: (city && city.name) || "",
       state_lbl: (city && city.state_lbl) || "",
+      district_lbl: (city && city.district_lbl) || "",
       status: (city && city.status) || "",
       description: (city && city.description) || "",
       created_at: (city && city.created_at) || "",
-      created_by: (city && city.created_by) || "Admin",
+      created_by: (city && city.created_by) || "my mso(mso)",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter district name"),
       state_lbl: Yup.string().required("Select state"),
+      district_lbl: Yup.string().required("Select district"),
       status: Yup.string().required("Select status"),
       description: Yup.string().required("Enter description"),
     }),
     onSubmit: (values) => {
-      const newDistrict = {
+      const updateCity = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
-        designation: values["designation"],
+        district_lbl: values["district_lbl"],
         name: values["name"],
         state_lbl: values["state_lbl"],
         status: values["status"],
@@ -54,9 +56,8 @@ const ViewCity = (props) => {
         created_at: new Date(),
         created_by: values["created_by"],
       };
-      console.log("new district:" + newDistrict);
-      // save new user
-      dispatch(onAddDistrict(newDistrict));
+      console.log("new district:" + updateCity);
+      dispatch(onAddDistrict(updateCity));
       validation.resetForm();
       toggle();
     },
@@ -147,13 +148,13 @@ const ViewCity = (props) => {
               <div className="mb-3">
                 <Label className="form-label">District</Label>
                 <Input
-                  name="state_lbl"
+                  name="district_lbl"
                   type="select"
                   placeholder="Select state"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.state_lbl || ""}
+                  value={validation.values.district_lbl || ""}
                   disabled={!showEditCity}
                 >
                   {/* {stateNames.map((options) => (
@@ -162,9 +163,10 @@ const ViewCity = (props) => {
                     </option>
                   ))} */}
                 </Input>
-                {validation.touched.state_lbl && validation.errors.state_lbl ? (
+                {validation.touched.district_lbl &&
+                validation.errors.district_lbl ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.state_lbl}
+                    {validation.errors.district_lbl}
                   </FormFeedback>
                 ) : null}
               </div>

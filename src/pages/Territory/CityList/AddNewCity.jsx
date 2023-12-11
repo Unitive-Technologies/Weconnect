@@ -36,7 +36,7 @@ const AddNewCity = (props) => {
       status: "",
       description: "",
       created_at: "",
-      created_by: "Admin",
+      created_by: "my mso(mso)",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter city name"),
