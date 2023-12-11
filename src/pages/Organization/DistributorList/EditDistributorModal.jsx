@@ -20,43 +20,59 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import { updateRegionalOffice as onUpdateRegionalOffice } from "/src/store/regionaloffice/actions";
-
+import { createSelector } from "reselect";
 const EditDistributorModal = (props) => {
-  const { isOpen, toggle, user } = props;
-  //   console.log("user in viewuser modal:" + JSON.stringify(user));
+  const { isOpen, toggle, distributor } = props;
+  console.log("user in viewuser modal:" + JSON.stringify(distributor));
   const dispatch = useDispatch();
   const [showEditRegionalOffice, setShowEditRegionalOffice] = useState(false);
+
+  const selectRegionalOfficeState = (state) => state.regionaloffice;
+  const RegionalOfficeProperties = createSelector(
+    selectRegionalOfficeState,
+    (regionaloffice) => ({
+      regOff: regionaloffice.regionaloffice,
+    })
+  );
+
+  const { regOff } = useSelector(RegionalOfficeProperties);
+
+  useEffect(() => {
+    if (regOff && !regOff.length) {
+      dispatch(onUpdateRegionalOffice());
+    }
+  }, [dispatch, regOff]);
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
-      id: (user && user.id) || "",
-      name: (user && user.name) || "",
-      code: "",
-      addr1: "",
-      addr2: "",
-      addr3: "",
-      contact_person: "",
-      mobile_no: "",
-      phone_no: "",
-      faxno: "",
-      state_lbl: "",
-      district_lbl: "",
-      city_lbl: "",
-      gstno: "",
-      panno: "",
-      username: "",
-      status_lbl: user.status_lbl,
-      email: "",
-      pincode: "",
-      por_number: "",
-      reg_phase: "",
-      reg_startdate: "",
-      reg_enddate: "",
-      gst_date: "",
-      credit_limit: "",
-      area_id: "",
+      id: (distributor && distributor.id) || "",
+      name: (distributor && distributor.name) || "",
+      code: (distributor && distributor.code) || "",
+      addr1: (distributor && distributor.addr1) || "",
+      addr2: (distributor && distributor.addr2) || "",
+      addr3: (distributor && distributor.addr3) || "",
+      contact_person: (distributor && distributor.contact_person) || "",
+      mobile_no: (distributor && distributor.mobile_no) || "",
+      phone_no: (distributor && distributor.phone_no) || "",
+      faxno: (distributor && distributor.faxno) || "",
+      state_lbl: (distributor && distributor.state_lbl) || "",
+      district_lbl: (distributor && distributor.district_lbl) || "",
+      city_lbl: (distributor && distributor.city_lbl) || "",
+      gstno: (distributor && distributor.gstno) || "",
+      panno: (distributor && distributor.panno) || "",
+      username: (distributor && distributor.username) || "",
+      status_lbl: (distributor && distributor.status_lbl) || "",
+      email: (distributor && distributor.email) || "",
+      pincode: (distributor && distributor.pincode) || "",
+      por_number: (distributor && distributor.por_number) || "",
+      reg_phase: (distributor && distributor.reg_phase) || "",
+      reg_startdate: (distributor && distributor.reg_startdate) || "",
+      reg_enddate: (distributor && distributor.reg_enddate) || "",
+      gst_date: (distributor && distributor.gst_date) || "",
+      credit_limit: (distributor && distributor.credit_limit) || "",
+      area_id: (distributor && distributor.area_id) || "",
       agreement_data: [],
     },
     validationSchema: Yup.object({
@@ -125,7 +141,7 @@ const EditDistributorModal = (props) => {
             alignItems: "center",
           }}
         >
-          <h4>Edit - {user.name}</h4>
+          <h4>Edit - {distributor.name}</h4>
 
           {/* <Link
           to="#!"
@@ -253,17 +269,17 @@ const EditDistributorModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.status_lbl || ""}
                 >
-                  <option value="status">{user.status_lbl}</option>
+                  <option value="">{validation.values.status_lbl}</option>
                   {/* {regOff.map((item) => (
                     <optgroup key={item.id} label={`${item.name}`}>
                       <option value={item.code}>{item.code}</option>
                     </optgroup>
                   ))} */}
-                  {/* {regOff.map((item) => (
+                  {regOff.map((item) => (
                     <option key={item.id} value={item.code}>
                       {item.name}
                     </option>
-                  ))} */}
+                  ))}
                 </Input>
                 {validation.touched.status_lbl &&
                 validation.errors.status_lbl ? (
@@ -343,6 +359,32 @@ const EditDistributorModal = (props) => {
                 {validation.touched.email && validation.errors.email ? (
                   <FormFeedback type="invalid">
                     {validation.errors.email}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">Status</Label>
+                <Input
+                  name="status_lbl"
+                  type="select"
+                  placeholder="Select Status"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.status_lbl || ""}
+                >
+                  <option value="">Select Status</option>
+                  <option value="1">Active</option>
+                  <option value="2">In-Active</option>
+                </Input>
+                {validation.touched.status_lbl &&
+                validation.errors.status_lbl ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.status_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -612,21 +654,23 @@ const EditDistributorModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Registration End Date</Label>
                 <Input
-                  name="enddate"
+                  name="reg_enddate"
                   type="date"
                   placeholder="Select End Date"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.enddate || ""}
+                  value={validation.values.reg_enddate || ""}
                   invalid={
-                    validation.touched.enddate && validation.errors.enddate
+                    validation.touched.reg_enddate &&
+                    validation.errors.reg_enddate
                       ? true
                       : false
                   }
                 />
-                {validation.touched.enddate && validation.errors.enddate ? (
+                {validation.touched.reg_enddate &&
+                validation.errors.reg_enddate ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.enddate}
+                    {validation.errors.reg_enddate}
                   </FormFeedback>
                 ) : null}
               </div>
