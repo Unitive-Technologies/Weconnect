@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import {
   Card,
   CardBody,
@@ -21,7 +22,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateRegionalOffice as onUpdateRegionalOffice } from "/src/store/regionaloffice/actions";
 
 const EditRegionalOfficeModal = (props) => {
-  const { isOpen, toggle, regionalOffData } = props;
+  const { isOpen, toggle, regionalOffData, setViewRegionalOffice } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
   const [showEditRegionalOffice, setShowEditRegionalOffice] = useState(false);
@@ -114,30 +115,42 @@ const EditRegionalOfficeModal = (props) => {
     },
   });
   return (
-    <Modal
-      isOpen={isOpen}
-      role="dialog"
-      size="xl"
-      autoFocus={true}
-      centered={true}
-      className="exampleModal"
-      tabIndex="-1"
-      toggle={toggle}
-    >
-      {!showEditRegionalOffice ? (
-        <ModalHeader toggle={toggle} tag="h4">
-          View Regional Office
-          <i
-            className="bx bx bxs-edit"
-            style={{ marginLeft: "20px", cursor: "pointer" }}
+    // <Modal
+    //   isOpen={isOpen}
+    //   role="dialog"
+    //   size="xl"
+    //   autoFocus={true}
+    //   centered={true}
+    //   className="exampleModal"
+    //   tabIndex="-1"
+    //   toggle={togglelink}
+    // >
+    <>
+      <ModalHeader tag="h4">
+        <div
+          style={{
+            width: "510%",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <h4>Edit - {regionalOffData.name}</h4>
+
+          {/* <Link
+            to="#!"
+            className="btn btn-light me-1"
             onClick={() => setShowEditRegionalOffice(true)}
+          > */}
+          <i
+            className="mdi mdi-close"
+            style={{ cursor: "pointer" }}
+            onClick={() => setViewRegionalOffice(false)}
           ></i>
-        </ModalHeader>
-      ) : (
-        <ModalHeader toggle={toggle} tag="h4">
-          Edit Regional Office
-        </ModalHeader>
-      )}
+          {/* </Link> */}
+        </div>
+      </ModalHeader>
+
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -154,6 +167,7 @@ const EditRegionalOfficeModal = (props) => {
                   name="code"
                   type="text"
                   placeholder="Enter Code"
+                  disabled
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.code || ""}
@@ -948,15 +962,14 @@ const EditRegionalOfficeModal = (props) => {
             <Col>
               <div className="text-end">
                 <button type="submit" className="btn btn-success save-user">
-                  Create
+                  Save
                 </button>
               </div>
             </Col>
           </Row>
         </Form>
       </ModalBody>
-      {/* </Modal> */}
-    </Modal>
+    </>
   );
 };
 

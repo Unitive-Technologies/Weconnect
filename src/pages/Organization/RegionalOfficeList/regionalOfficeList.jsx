@@ -337,6 +337,7 @@ const RegionalOfficeList = (props) => {
         isOpen={viewRegionalOffice}
         toggle={handleViewRegionalOffice}
         regionalOffData={regOffData}
+        setViewRegionalOffice={setViewRegionalOffice}
       />
       <AddRegionalOfficeModal
         isOpen={showRegionalOffice}
