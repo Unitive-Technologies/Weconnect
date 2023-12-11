@@ -44,6 +44,7 @@ const NSTVList = (props) => {
             fontcolor: "",
             backgroundcolor: "",
             backgroundarea: "",
+            created_by: "Admin",
         },
         validationSchema: Yup.object({
             name: Yup.string().required("Enter  Code"),
