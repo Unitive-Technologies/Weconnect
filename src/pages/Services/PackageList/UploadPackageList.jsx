@@ -54,6 +54,7 @@ const UploadPackageList = (props) => {
         <Modal
             isOpen={isOpen}
             role="dialog"
+            size="xl"
             autoFocus={true}
             centered={true}
             className="exampleModal"
@@ -67,6 +68,15 @@ const UploadPackageList = (props) => {
             <ModalBody>
                 <Card>
                     <CardBody>
+                        <div className="text-left mb-4 r-0" style={{ marginLeft: "78%" }}>
+                            <button
+                                type="button"
+                                className="btn btn-primary"
+                            // onClick={handleDownloadSampleFile}
+                            >
+                                Download Sample Upload File
+                            </button>
+                        </div>
                         {/* <CardTitle>Dropzone</CardTitle> */}
                         <CardSubtitle className="mb-3"> Select File to Upload</CardSubtitle>
                         <Form>

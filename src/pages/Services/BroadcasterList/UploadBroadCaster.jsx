@@ -53,6 +53,7 @@ const UploadBroadCaster = (props) => {
     return (
         <Modal
             isOpen={isOpen}
+            size="xl"
             role="dialog"
             autoFocus={true}
             centered={true}
@@ -67,7 +68,16 @@ const UploadBroadCaster = (props) => {
             <ModalBody>
                 <Card>
                     <CardBody>
-                        {/* <CardTitle>Dropzone</CardTitle> */}
+                        <div className="text-left mb-4 r-0" style={{ marginLeft: "78%" }}>
+                            <button
+                                type="button"
+                                className="btn btn-primary"
+                            // onClick={handleDownloadSampleFile}
+                            >
+                                Download Sample Upload File
+                            </button>
+                        </div>
+
                         <CardSubtitle className="mb-3"> Select File to Upload</CardSubtitle>
                         <Form>
                             <Dropzone
