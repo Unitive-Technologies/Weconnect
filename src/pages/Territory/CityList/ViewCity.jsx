@@ -56,12 +56,19 @@ const ViewCity = (props) => {
         created_at: new Date(),
         created_by: values["created_by"],
       };
-      console.log("new district:" + updateCity);
+      // console.log("new district:" + updateCity);
       dispatch(onAddDistrict(updateCity));
       validation.resetForm();
       toggle();
     },
   });
+
+  const editToggle = () => {
+    setShowEditCity(false);
+    toggle();
+  };
+
+  console.log("Show Edit city status: ", showEditCity);
 
   return (
     <Modal
@@ -83,8 +90,8 @@ const ViewCity = (props) => {
           ></i>
         </ModalHeader>
       ) : (
-        <ModalHeader toggle={toggle} tag="h4">
-          Edit District
+        <ModalHeader toggle={editToggle} tag="h4">
+          Edit City
         </ModalHeader>
       )}
       <ModalBody>

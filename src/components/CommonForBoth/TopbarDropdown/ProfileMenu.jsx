@@ -24,7 +24,7 @@ const ProfileMenu = (props) => {
   const [menu, setMenu] = useState(false);
   const storedAdminDetails = localStorage.getItem("authUser");
   const admindetails = storedAdminDetails ? JSON.parse(storedAdminDetails) : {};
-  console.log("admin on topbar:" + JSON.stringify(admindetails));
+  // console.log("admin on topbar:" + JSON.stringify(admindetails));
 
   const [username, setusername] = useState("Admin");
 

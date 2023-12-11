@@ -35,7 +35,7 @@ const CityList = (props) => {
   const { cits, loading } = useSelector(cityProperties);
 
   useEffect(() => {
-    console.log("Customer Users data in component:", cits);
+    // console.log("Customer Users data in component:", cits);
   }, [cits]);
 
   const [isLoading, setLoading] = useState(loading);
@@ -362,7 +362,7 @@ const CityList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("users:" + JSON.stringify(cits))}
+                    {/* {console.log("users:" + JSON.stringify(cits))} */}
                     <TableContainer
                       isPagination={true}
                       columns={columns}

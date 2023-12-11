@@ -17,17 +17,15 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addLocation as onAddLocation } from "/src/store/location/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { getLco as onGetLco } from "/src/store/actions";
 import Select from "react-select";
 
-const AddNewLocation = (props) => {
-  const { isOpen, toggle } = props;
+const ViewLocation = (props) => {
+  const { isOpen, toggle, location } = props;
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
-
+  const [showEditLocation, setShowEditLocation] = useState(false);
   const selectLcoState = (state) => state.lco;
   const LcoProperties = createSelector(selectLcoState, (lco) => ({
     lcos: lco.lco,
@@ -67,19 +65,19 @@ const AddNewLocation = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      name: "",
-      lco: "",
-      status: "",
-      created_at: "",
-      created_by: "my mso(mso)",
+      name: (location && location.name) || "",
+      lco: (location && location.lco) || "",
+      status: (location && location.status) || "",
+      created_at: (location && location.created_at) || "",
+      created_by: (location && location.created_by) || "my mso(mso)",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter location name"),
-      lco: Yup.string().required("Select LCO"),
+      name: Yup.string().required("Enter district name"),
+      lco: Yup.string().required("Select lco"),
       status: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
-      const newLocation = {
+      const updateLocation = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         lco: values["lco"],
@@ -87,14 +85,11 @@ const AddNewLocation = (props) => {
         created_at: new Date(),
         created_by: values["created_by"],
       };
-      console.log("new location:" + newLocation);
+      console.log("new district:" + updateLocation);
       // save new user
-      dispatch(onAddLocation(newLocation));
+      dispatch(onAddDistrict(updateLocation));
       validation.resetForm();
       toggle();
-    },
-    onReset: (values) => {
-      validation.setValues(validation.initialValues);
     },
   });
 
@@ -108,8 +103,20 @@ const AddNewLocation = (props) => {
       tabIndex="-1"
       toggle={toggle}
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4">Add New Location</ModalHeader>
+      {!showEditLocation ? (
+        <ModalHeader toggle={toggle} tag="h4">
+          View {validation.values.name}
+          <i
+            className="bx bx bxs-edit"
+            style={{ marginLeft: "300px", cursor: "pointer" }}
+            onClick={() => setShowEditLocation(true)}
+          ></i>
+        </ModalHeader>
+      ) : (
+        <ModalHeader toggle={toggle} tag="h4">
+          Edit District
+        </ModalHeader>
+      )}
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -129,6 +136,7 @@ const AddNewLocation = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}
+                  disabled={!showEditLocation}
                   invalid={
                     validation.touched.name && validation.errors.name
                       ? true
@@ -155,6 +163,7 @@ const AddNewLocation = (props) => {
                     (opt) => opt.value === validation.values.lco
                   )}
                   styles={customStyles}
+                  disabled={!showEditLocation}
                 />
                 {validation.touched.lco && validation.errors.lco ? (
                   <FormFeedback type="invalid">
@@ -173,6 +182,7 @@ const AddNewLocation = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  disabled={!showEditLocation}
                 >
                   <option value="">Select Status</option>
                   <option value="11">Active</option>
@@ -188,28 +198,10 @@ const AddNewLocation = (props) => {
             </Col>
           </Row>
           <Row>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
+            <Col>
+              <div className="text-end">
                 <button type="submit" className="btn btn-success save-user">
                   Save
-                </button>
-                <button
-                  type="reset"
-                  className="btn btn-warning"
-                  onClick={() => validation.resetForm()}
-                >
-                  Reset
-                </button>
-
-                <button
-                  type="button"
-                  className="btn btn-outline-danger"
-                  onClick={() => {
-                    validation.resetForm();
-                    toggle();
-                  }}
-                >
-                  Cancel
                 </button>
               </div>
             </Col>
@@ -221,9 +213,9 @@ const AddNewLocation = (props) => {
   );
 };
 
-AddNewLocation.propTypes = {
+ViewLocation.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default AddNewLocation;
+export default ViewLocation;

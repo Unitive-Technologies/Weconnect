@@ -9,34 +9,16 @@ import {
   Col,
   Container,
   Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
   UncontrolledTooltip,
-  Input,
-  Form,
 } from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-
-import { Email, Tags, Projects } from "./locationListCol";
-
-//Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
-
 import { getLocation as onGetLocation } from "/src/store/actions";
-
-import { isEmpty } from "lodash";
-
-//redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddNewLocation from "./AddNewLocation";
 import UploadLocation from "./UploadLocation";
+import ViewLocation from "./ViewLocation";
 
 const LocationList = (props) => {
   //meta title
@@ -64,6 +46,14 @@ const LocationList = (props) => {
   const [showAddLocation, setShowAddLocation] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [showUploadLocation, setShowUploadLocation] = useState(false);
+  const [showViewCity, setShowViewCity] = useState(false);
+  const [viewCityData, setViewCityData] = useState({});
+
+  const toggleViewCity = (userData) => {
+    console.log("User Data: ", userData);
+    setShowViewCity(!showViewCity);
+    setViewCityData(userData);
+  };
 
   const columns = useMemo(
     () => [
@@ -94,7 +84,13 @@ const LocationList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  toggleViewCity(userData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -300,23 +296,23 @@ const LocationList = (props) => {
         name: "Create",
         action: setShowAddLocation,
         type: "normal",
-        icon: "create"
+        icon: "create",
       },
       {
         name: "Upload",
         action: setShowUploadLocation,
         type: "normal",
-        icon: "upload"
+        icon: "upload",
       },
     ];
   };
 
   return (
     <React.Fragment>
-      <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
+      <ViewLocation
+        isOpen={showViewCity}
+        toggle={toggleViewCity}
+        city={viewCityData}
       />
       <AddNewLocation isOpen={showAddLocation} toggle={toggle} />
       <UploadLocation isOpen={showUploadLocation} toggle={toggle1} />
