@@ -17,27 +17,27 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addNewDesignation as onAddNewDesignation } from "/src/store/designation/actions";
 import { useSelector, useDispatch } from "react-redux";
+import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
-const AddNewDesignation = (props) => {
-  const { isOpen, toggle } = props;
+const ViewDesignation = (props) => {
+  const { isOpen, toggle, designation } = props;
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
+  const [showEditDesignation, setShowEditDesignation] = useState(false);
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
-      designation: "",
-      type: "",
-      code: "",
-      parent: "",
-      status: "",
-      description: "",
-      created_at: "",
-      created_by: "Admin",
+      designation: (designation && designation.designation) || "",
+      type: (designation && designation.type) || "",
+      code: (designation && designation.code) || "",
+      parent: (designation && designation.parent) || "",
+      status: (designation && designation.status) || "",
+      description: (designation && designation.description) || "",
+      created_at: (designation && designation.created_at) || "",
+      created_by: (designation && designation.created_by) || "my mso(mso)",
     },
     validationSchema: Yup.object({
       designation: Yup.string().required("Enter designation Name"),
@@ -48,7 +48,7 @@ const AddNewDesignation = (props) => {
       description: Yup.string().required("Enter Description"),
     }),
     onSubmit: (values) => {
-      const newDesignation = {
+      const updateDesignation = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         designation: values["designation"],
         type: values["type"],
@@ -59,16 +59,19 @@ const AddNewDesignation = (props) => {
         created_at: new Date(),
         created_by: values["created_by"],
       };
-      console.log("newDesignation:" + newDesignation);
-      // save new user
-      dispatch(onAddNewDesignation(newDesignation));
+      // console.log("new district:" + updateCity);
+      dispatch(onAddDistrict(updateDesignation));
       validation.resetForm();
       toggle();
     },
-    onReset: (values) => {
-      validation.setValues(validation.initialValues);
-    },
   });
+
+  const editToggle = () => {
+    setShowEditDesignation(false);
+    toggle();
+  };
+
+  console.log("Show Edit city status: ", showEditDesignation);
 
   return (
     <Modal
@@ -80,10 +83,25 @@ const AddNewDesignation = (props) => {
       tabIndex="-1"
       toggle={toggle}
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4" toggle={toggle}>
-        Add New Designation
-      </ModalHeader>
+      {!showEditDesignation ? (
+        <ModalHeader toggle={toggle} tag="h4">
+          View {validation.values.name}
+          <i
+            className="bx bx bxs-edit"
+            style={{
+              position: "absolute",
+              marginLeft: "55%",
+              cursor: "pointer",
+              marginTop: "1%",
+            }}
+            onClick={() => setShowEditDesignation(true)}
+          ></i>
+        </ModalHeader>
+      ) : (
+        <ModalHeader toggle={editToggle} tag="h4">
+          Edit Designation
+        </ModalHeader>
+      )}
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -109,6 +127,7 @@ const AddNewDesignation = (props) => {
                       ? true
                       : false
                   }
+                  disabled={!showEditDesignation}
                 />
                 {validation.touched.designation &&
                 validation.errors.designation ? (
@@ -128,6 +147,7 @@ const AddNewDesignation = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.type || ""}
+                  disabled={!showEditDesignation}
                 >
                   <option value="">Select Type</option>
                   <option value="Mso">MSO</option>
@@ -157,6 +177,7 @@ const AddNewDesignation = (props) => {
                       ? true
                       : false
                   }
+                  disabled={!showEditDesignation}
                 />
                 {validation.touched.code && validation.errors.code ? (
                   <FormFeedback type="invalid">
@@ -174,6 +195,7 @@ const AddNewDesignation = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.parent || ""}
+                  disabled={!showEditDesignation}
                 >
                   <option value="">Select Parent designation</option>
                   <option value="Administrator">Administrator</option>
@@ -196,6 +218,7 @@ const AddNewDesignation = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  disabled={!showEditDesignation}
                 >
                   <option value="">Select Status</option>
                   <option value="Active">Active</option>
@@ -224,6 +247,7 @@ const AddNewDesignation = (props) => {
                       ? true
                       : false
                   }
+                  disabled={!showEditDesignation}
                 />
                 {validation.touched.description &&
                 validation.errors.description ? (
@@ -235,28 +259,10 @@ const AddNewDesignation = (props) => {
             </Col>
           </Row>
           <Row>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
+            <Col>
+              <div className="text-end">
                 <button type="submit" className="btn btn-success save-user">
                   Save
-                </button>
-                <button
-                  type="reset"
-                  className="btn btn-warning"
-                  onClick={() => validation.resetForm()}
-                >
-                  Reset
-                </button>
-
-                <button
-                  type="button"
-                  className="btn btn-outline-danger"
-                  onClick={() => {
-                    validation.resetForm();
-                    toggle();
-                  }}
-                >
-                  Cancel
                 </button>
               </div>
             </Col>
@@ -268,9 +274,9 @@ const AddNewDesignation = (props) => {
   );
 };
 
-AddNewDesignation.propTypes = {
+ViewDesignation.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default AddNewDesignation;
+export default ViewDesignation;
