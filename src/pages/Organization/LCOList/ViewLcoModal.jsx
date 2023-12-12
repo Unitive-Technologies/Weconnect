@@ -27,7 +27,7 @@ const ViewLcoModal = (props) => {
   const { isOpen, toggle, lcoData, setViewLco } = props;
   console.log("lco in view modal:" + JSON.stringify(lcoData));
   const dispatch = useDispatch();
-  const [showEditRegionalOffice, setShowEditRegionalOffice] = useState(false);
+  const [showEditLco, setShowEditLco] = useState(false);
   const [showOperatorDetails, setShowOperatorDetails] = useState(true);
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -119,7 +119,7 @@ const ViewLcoModal = (props) => {
   });
 
   const handleEditRegionalOffice = () => {
-    setShowEditRegionalOffice(!showEditRegionalOffice);
+    setShowEditLco(!showEditLco);
   };
   // const getTableActions = () => {
   //   return [
@@ -159,7 +159,7 @@ const ViewLcoModal = (props) => {
         tabIndex="-1"
         toggle={toggle}
       >
-        {!showEditRegionalOffice ? (
+        {!showEditLco ? (
           <>
             <ModalHeader toggle={toggle} tag="h4">
               <h4>View - {lcoData.name}</h4>
@@ -172,7 +172,7 @@ const ViewLcoModal = (props) => {
               }}
               to="#!"
               className="btn btn-light me-1"
-              onClick={() => setShowEditRegionalOffice(true)}
+              onClick={() => setShowEditLco(true)}
             >
               <i className="mdi mdi-pencil-outline"></i>
             </Link>
@@ -404,7 +404,11 @@ const ViewLcoModal = (props) => {
             </ModalBody>
           </>
         ) : (
-          <EditLcoModal lcoData={lcoData} toggle={() => setViewLco(false)} />
+          <EditLcoModal
+            lcoData={lcoData}
+            closeViewModal={() => setViewLco(false)}
+            closeEditModal={() => setShowEditLco(false)}
+          />
         )}
         {/* </Modal> */}
       </Modal>

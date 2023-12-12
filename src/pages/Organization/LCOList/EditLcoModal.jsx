@@ -22,14 +22,19 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
-import { updateDistributors as onUpdateDistributor } from "/src/store/distributor/actions";
+import { getDistributors as onGetDistributors } from "/src/store/distributor/actions";
 import { updateLco as onUpdateLco } from "/src/store/lcolist/actions";
 
 const EditLcoModal = (props) => {
-  const { isOpen, toggle, lcoData, setViewRegionalOffice } = props;
+  const { isOpen, toggle, lcoData, closeViewModal, closeEditModal } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
   // const [showEditRegionalOffice, setShowEditRegionalOffice] = useState(false);
+
+  const handleCancel = () => {
+    closeViewModal();
+    closeEditModal();
+  };
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -115,7 +120,7 @@ const EditLcoModal = (props) => {
       // update user
       dispatch(onUpdateLco(updateLco));
       validation.resetForm();
-      toggle();
+      closeEditModal();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -134,9 +139,10 @@ const EditLcoModal = (props) => {
   const { distributor } = useSelector(DistributorsProperties);
   useEffect(() => {
     if (distributor && !distributor.length) {
-      dispatch(onUpdateDistributor());
+      dispatch(onGetDistributors());
     }
   }, [dispatch, distributor]);
+
   console.log("distributor in edit lco: " + JSON.stringify(distributor));
   return (
     // <Modal
@@ -150,7 +156,7 @@ const EditLcoModal = (props) => {
     //   toggle={togglelink}
     // >
     <>
-      <ModalHeader tag="h4" toggle={toggle}>
+      <ModalHeader tag="h4" toggle={handleCancel}>
         <h4>Edit - {lcoData.name}</h4>
       </ModalHeader>
 
@@ -915,7 +921,7 @@ const EditLcoModal = (props) => {
           className="btn btn-outline-danger"
           onClick={() => {
             validation.resetForm();
-            toggle();
+            closeEditModal();
           }}
         >
           Cancel
