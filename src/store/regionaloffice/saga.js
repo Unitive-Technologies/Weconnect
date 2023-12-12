@@ -18,7 +18,7 @@ import {
 //Include Both Helper File with needed methods
 import {
   getRegionalOffice,
-  addNewRegionalOffice,
+  addNewLco,
   updateRegionalOffice,
 } from "../../helpers/fakebackend_helper";
 
@@ -64,7 +64,7 @@ function* fetchRegionalOffice() {
 
 function* onAddNewRegionalOffice({ payload: regionalofficeList }) {
   try {
-    const response = yield call(addNewRegionalOffice, regionalofficeList);
+    const response = yield call(addNewLco, regionalofficeList);
 
     yield put(addRegionalOfficeSuccess(response));
     toast.success("Regional Office Added Successfully", { autoClose: 2000 });

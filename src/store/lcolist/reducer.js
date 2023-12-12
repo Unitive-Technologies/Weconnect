@@ -1,4 +1,11 @@
-import { GET_LCO_SUCCESS, GET_LCO_FAIL } from "./actionTypes";
+import {
+  GET_LCO_SUCCESS,
+  GET_LCO_FAIL,
+  ADD_LCO_SUCCESS,
+  ADD_LCO_FAIL,
+  UPDATE_LCO_SUCCESS,
+  UPDATE_LCO_FAIL,
+} from "./actionTypes";
 
 const INIT_STATE = {
   lco: [],
@@ -22,6 +29,33 @@ const Lco = (state = INIT_STATE, action) => {
         error: action.payload,
       };
 
+    case ADD_LCO_SUCCESS:
+      return {
+        ...state,
+        lco: [...state.lco, action.payload],
+      };
+
+    case ADD_LCO_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case UPDATE_LCO_SUCCESS:
+      return {
+        ...state,
+        lco: state.lco.map((lcodata) =>
+          lcodata.id.toString() === action.payload.id.toString()
+            ? { lcodata, ...action.payload }
+            : lcodata
+        ),
+      };
+
+    case UPDATE_LCO_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
     default:
       return state;
   }

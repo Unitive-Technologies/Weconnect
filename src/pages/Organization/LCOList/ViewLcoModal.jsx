@@ -25,7 +25,7 @@ import EditLcoModal from "./EditLcoModal";
 
 const ViewLcoModal = (props) => {
   const { isOpen, toggle, lcoData, setViewLco } = props;
-  //   console.log("user in viewuser modal:" + JSON.stringify(user));
+  console.log("lco in view modal:" + JSON.stringify(lcoData));
   const dispatch = useDispatch();
   const [showEditRegionalOffice, setShowEditRegionalOffice] = useState(false);
   const [showOperatorDetails, setShowOperatorDetails] = useState(true);
@@ -404,10 +404,7 @@ const ViewLcoModal = (props) => {
             </ModalBody>
           </>
         ) : (
-          <EditLcoModal
-            regionalOffData={lcoData}
-            toggle={() => setViewLco(false)}
-          />
+          <EditLcoModal lcoData={lcoData} toggle={() => setViewLco(false)} />
         )}
         {/* </Modal> */}
       </Modal>

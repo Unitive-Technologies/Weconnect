@@ -45,7 +45,7 @@ const TableActionButtons = ({ tableActions }) => {
       default:
         return "";
     }
-  }
+  };
 
   return (
     <div>
@@ -56,7 +56,7 @@ const TableActionButtons = ({ tableActions }) => {
             type="button"
             color="primary"
             className="btn me-2"
-            mb-2
+            // mb-2
             onClick={action.action}
           >
             <i className={getClassNameForIcon(action.icon)} />

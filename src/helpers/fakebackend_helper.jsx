@@ -310,6 +310,8 @@ export const updateDistributor = (distributors) =>
   put(url.UPDATE_DISTRIBUTOR, distributors);
 
 export const getLco = () => get(url.GET_LCO);
+export const addNewLco = (lco) => post(url.ADD_NEW_LCO, lco);
+export const updateLco = (lco) => put(url.UPDATE_LCO, lco);
 
 export const getAppAdBanner = () => get(url.GET_APPADBANNER);
 export const addAppAdBanner = (appadbanner) =>

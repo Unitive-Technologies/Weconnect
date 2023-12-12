@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { createSelector } from "reselect";
 import {
   Card,
   CardBody,
@@ -21,32 +22,33 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
-import { updateRegionalOffice as onUpdateRegionalOffice } from "/src/store/regionaloffice/actions";
+import { updateDistributors as onUpdateDistributor } from "/src/store/distributor/actions";
+import { updateLco as onUpdateLco } from "/src/store/lcolist/actions";
 
 const EditLcoModal = (props) => {
-  const { isOpen, toggle, regionalOffData, setViewRegionalOffice } = props;
+  const { isOpen, toggle, lcoData, setViewRegionalOffice } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
-  const [showEditRegionalOffice, setShowEditRegionalOffice] = useState(false);
+  // const [showEditRegionalOffice, setShowEditRegionalOffice] = useState(false);
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
-      id: (regionalOffData && regionalOffData.id) || "",
-      name: regionalOffData.name,
-      code: regionalOffData.code,
-      addr1: regionalOffData.addr1,
-      addr2: regionalOffData.addr2,
-      addr3: regionalOffData.addr3,
-      contact_person: regionalOffData.contact_person,
-      mobile_no: regionalOffData.mobile_no,
-      phone_no: regionalOffData.phone_no,
-      fax_no: regionalOffData.fax_no,
-      state_lbl: regionalOffData.state_lbl,
-      district_lbl: regionalOffData.district_lbl,
-      city_lbl: regionalOffData.city_lbl,
-      gstno: regionalOffData.gstno,
+      id: (lcoData && lcoData.id) || "",
+      name: lcoData.name,
+      code: lcoData.code,
+      addr1: lcoData.addr1,
+      addr2: lcoData.addr2,
+      addr3: lcoData.addr3,
+      contact_person: lcoData.contact_person,
+      mobile_no: lcoData.mobile_no,
+      phone_no: lcoData.phone_no,
+      fax_no: lcoData.fax_no,
+      state_lbl: lcoData.state_lbl,
+      district_lbl: lcoData.district_lbl,
+      city_lbl: lcoData.city_lbl,
+      gstno: lcoData.gstno,
       panno: "",
       username: "",
       status_lbl: "",
@@ -79,7 +81,7 @@ const EditLcoModal = (props) => {
       confirmpassword: Yup.string().required("Please Enter Confirm Password"),
     }),
     onSubmit: (values) => {
-      const updateRegionalOffice = {
+      const updateLco = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         code: values["code"],
@@ -111,7 +113,7 @@ const EditLcoModal = (props) => {
       };
 
       // update user
-      dispatch(onUpdateUser(updateRegionalOffice));
+      dispatch(onUpdateLco(updateLco));
       validation.resetForm();
       toggle();
     },
@@ -119,6 +121,23 @@ const EditLcoModal = (props) => {
       validation.setValues(validation.initialValues);
     },
   });
+
+  const selectDistributorsState = (state) => state.distributors;
+  const DistributorsProperties = createSelector(
+    selectDistributorsState,
+    (distributors) => ({
+      distributor: distributors.distributors,
+      // loading: distributors.loading,
+    })
+  );
+
+  const { distributor } = useSelector(DistributorsProperties);
+  useEffect(() => {
+    if (distributor && !distributor.length) {
+      dispatch(onUpdateDistributor());
+    }
+  }, [dispatch, distributor]);
+  console.log("distributor in edit lco: " + JSON.stringify(distributor));
   return (
     // <Modal
     //   isOpen={isOpen}
@@ -131,29 +150,8 @@ const EditLcoModal = (props) => {
     //   toggle={togglelink}
     // >
     <>
-      <ModalHeader tag="h4">
-        <div
-          style={{
-            width: "500%",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <h4>Edit - {regionalOffData.name}</h4>
-
-          {/* <Link
-            to="#!"
-            className="btn btn-light me-1"
-            onClick={() => setShowEditRegionalOffice(true)}
-          > */}
-          <i
-            className="mdi mdi-close"
-            style={{ cursor: "pointer" }}
-            onClick={toggle}
-          ></i>
-          {/* </Link> */}
-        </div>
+      <ModalHeader tag="h4" toggle={toggle}>
+        <h4>Edit - {lcoData.name}</h4>
       </ModalHeader>
 
       <ModalBody>
@@ -167,7 +165,7 @@ const EditLcoModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Regional Office Code</Label>
+                <Label className="form-label">Code</Label>
                 <Input
                   name="code"
                   type="text"
@@ -189,27 +187,11 @@ const EditLcoModal = (props) => {
                 ) : null}
               </div>
             </Col>
-            <Col lg={2}>
-              <div className="form-check form-switch form-switch-lg mb-3">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitchsizelg"
-                  defaultChecked
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="customSwitchsizelg"
-                >
-                  Custom / Auto
-                </label>
-              </div>
-            </Col>
           </Row>
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Regional Office Name</Label>
+                <Label className="form-label">Name</Label>
                 <Input
                   name="name"
                   label="Regional Office Name"
@@ -227,6 +209,34 @@ const EditLcoModal = (props) => {
                 {validation.touched.name && validation.errors.name ? (
                   <FormFeedback type="invalid">
                     {validation.errors.name}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">Parent Distributor</Label>
+                <Input
+                  name="status_lbl"
+                  type="select"
+                  placeholder="Select Status"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.status_lbl || ""}
+                >
+                  <option value="">{validation.values.status_lbl}</option>
+
+                  {distributor.map((item) => (
+                    <option key={item.id} value={item.code}>
+                      {item.name}
+                    </option>
+                  ))}
+                </Input>
+                {validation.touched.status_lbl &&
+                validation.errors.status_lbl ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.status_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -883,43 +893,6 @@ const EditLcoModal = (props) => {
                     {validation.errors.agreeend}
                   </FormFeedback>
                 ) : null}
-              </div>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col>
-              <div className="text-end">
-                <button type="submit" className="btn btn-success save-user">
-                  Save
-                </button>
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col sm="12">
-              <div className="d-flex flex-wrap gap-2 flex-end">
-                <button type="submit" className="btn btn-success save-user">
-                  Save
-                </button>
-                <button
-                  type="reset"
-                  className="btn btn-warning"
-                  onClick={() => validation.resetForm()}
-                >
-                  Reset
-                </button>
-
-                <button
-                  type="button"
-                  className="btn btn-outline-danger"
-                  onClick={() => {
-                    validation.resetForm();
-                    toggle();
-                  }}
-                >
-                  Cancel
-                </button>
               </div>
             </Col>
           </Row>

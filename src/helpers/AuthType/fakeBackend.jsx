@@ -1154,6 +1154,32 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onPost(url.ADD_NEW_LCO).reply((lco) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (lco && lco.data) {
+          // Passing fake JSON data as response
+          resolve([200, lco.data]);
+        } else {
+          reject([400, "Cannot add LCO"]);
+        }
+      });
+    });
+  });
+
+  mock.onPut(url.UPDATE_LCO).reply((lco) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (lco && lco.data) {
+          // Passing fake JSON data as response
+          resolve([200, lco.data]);
+        } else {
+          reject([400, "Cannot update LCO"]);
+        }
+      });
+    });
+  });
+
   mock.onPut(url.UPDATE_USER).reply((regionaloffice) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

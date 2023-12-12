@@ -53,6 +53,8 @@ export const ADD_NEW_DISTRIBUTOR = "/add/distributors";
 export const UPDATE_DISTRIBUTOR = "/update/distributors";
 
 export const GET_LCO = "/lco";
+export const ADD_NEW_LCO = "/add/lco";
+export const UPDATE_LCO = "/update/lco";
 
 export const GET_APPADBANNER = "/appadbanner";
 export const ADD_APPADBANNER = "/add/appadbanner";
@@ -80,7 +82,6 @@ export const ADD_NEW_PACKAGELIST = "/add/packagelist";
 
 export const GET_OSDCONFIGURATIONLIST = "/osdconfigurationlist";
 export const ADD_NEW_OSDCONFIGURATIONLIST = "/add/osdconfigurationlist";
-
 
 export const GET_LOCALCHANNELNUMBER = "/localchannelnumberlist";
 
