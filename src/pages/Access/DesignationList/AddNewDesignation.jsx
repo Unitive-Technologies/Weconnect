@@ -130,10 +130,12 @@ const AddNewDesignation = (props) => {
                   value={validation.values.type || ""}
                 >
                   <option value="">Select Type</option>
-                  <option value="Mso">MSO</option>
-                  <option value="Ro">RO</option>
-                  <option value="Distributor">Distributor</option>
-                  <option value="Lco">LCO</option>
+                  <option value="1">Staff</option>
+                  <option value="2">Management User</option>
+                  <option value="3">Engineer</option>
+                  <option value="4">customer care</option>
+                  <option value="5">Collection</option>
+                  <option value="6">LCO</option>
                 </Input>
                 {validation.touched.type && validation.errors.type ? (
                   <FormFeedback type="invalid">
@@ -176,9 +178,7 @@ const AddNewDesignation = (props) => {
                   value={validation.values.parent || ""}
                 >
                   <option value="">Select Parent designation</option>
-                  <option value="Administrator">Administrator</option>
-                  <option value="Staff">Staff</option>
-                  <option value="User">User</option>
+                  <option value="0">Director</option>
                 </Input>
                 {validation.touched.parent && validation.errors.parent ? (
                   <FormFeedback type="invalid">
@@ -198,9 +198,8 @@ const AddNewDesignation = (props) => {
                   value={validation.values.status || ""}
                 >
                   <option value="">Select Status</option>
-                  <option value="Active">Active</option>
-                  <option value="Blocked">BLOCKED</option>
-                  <option value="In-Active">In-Active</option>
+                  <option value="1">Active</option>
+                  <option value="2">Inactive</option>
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">

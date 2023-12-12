@@ -27,18 +27,18 @@ const convertDesignationListObject = (designationList) => {
       description: designation.description,
       type:
         designation.type === 0
-          ? "MSO"
+          ? "Staff"
           : designation.type === 1
-            ? "RO"
-            : designation.type === 2
-              ? "DISTRIBUTOR"
-              : "LCO",
-      status:
-        designation.status === 1
-          ? "ACTIVE"
-          : designation.status === 0
-            ? "INACTIVE"
-            : "BLOCKED",
+          ? "Management User"
+          : designation.type === 2
+          ? "Engineer"
+          : designation.type === 3
+          ? "customer care"
+          : designation.type === 4
+          ? "Collection"
+          : "LCO",
+      status: designation.status === 1 ? "Active" : "Inactive",
+      type_lbl: designation.type_lbl,
       created_at: designation.created_at,
       created_by: designation.created_by,
     };

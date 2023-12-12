@@ -30,8 +30,8 @@ const ViewDesignation = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      designation: (designation && designation.designation) || "",
-      type: (designation && designation.type) || "",
+      name: (designation && designation.name) || "",
+      type_lbl: (designation && designation.type_lbl) || "",
       code: (designation && designation.code) || "",
       parent: (designation && designation.parent) || "",
       status: (designation && designation.status) || "",
@@ -40,8 +40,8 @@ const ViewDesignation = (props) => {
       created_by: (designation && designation.created_by) || "my mso(mso)",
     },
     validationSchema: Yup.object({
-      designation: Yup.string().required("Enter designation Name"),
-      type: Yup.string().required("Select Type"),
+      name: Yup.string().required("Enter designation name"),
+      type_lbl: Yup.string().required("Select Type"),
       code: Yup.string().required("Enter Code"),
       parent: Yup.string().required("Select Parent Designation"),
       status: Yup.string().required("Select status"),
@@ -50,8 +50,8 @@ const ViewDesignation = (props) => {
     onSubmit: (values) => {
       const updateDesignation = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
-        designation: values["designation"],
-        type: values["type"],
+        name: values["name"],
+        type_lbl: values["type_lbl"],
         code: values["code"],
         parent: values["parent"],
         status: values["status"],
@@ -120,19 +120,17 @@ const ViewDesignation = (props) => {
                   placeholder="Enter designation name"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.designation || ""}
+                  value={validation.values.name || ""}
                   invalid={
-                    validation.touched.designation &&
-                    validation.errors.designation
+                    validation.touched.name && validation.errors.name
                       ? true
                       : false
                   }
                   disabled={!showEditDesignation}
                 />
-                {validation.touched.designation &&
-                validation.errors.designation ? (
+                {validation.touched.name && validation.errors.name ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.designation}
+                    {validation.errors.name}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -146,18 +144,20 @@ const ViewDesignation = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.type || ""}
+                  value={validation.values.type_lbl || ""}
                   disabled={!showEditDesignation}
                 >
                   <option value="">Select Type</option>
-                  <option value="Mso">MSO</option>
-                  <option value="Ro">RO</option>
-                  <option value="Distributor">Distributor</option>
-                  <option value="Lco">LCO</option>
+                  <option value="staff">Staff</option>
+                  <option value="management user">Management User</option>
+                  <option value="engineer">Engineer</option>
+                  <option value="customer care">customer care</option>
+                  <option value="collection">Collection</option>
+                  <option value="lco">LCO</option>
                 </Input>
-                {validation.touched.type && validation.errors.type ? (
+                {validation.touched.type_lbl && validation.errors.type_lbl ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.type}
+                    {validation.errors.type_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -198,9 +198,7 @@ const ViewDesignation = (props) => {
                   disabled={!showEditDesignation}
                 >
                   <option value="">Select Parent designation</option>
-                  <option value="Administrator">Administrator</option>
-                  <option value="Staff">Staff</option>
-                  <option value="User">User</option>
+                  <option value="0">Director</option>
                 </Input>
                 {validation.touched.parent && validation.errors.parent ? (
                   <FormFeedback type="invalid">
@@ -221,9 +219,8 @@ const ViewDesignation = (props) => {
                   disabled={!showEditDesignation}
                 >
                   <option value="">Select Status</option>
-                  <option value="Active">Active</option>
-                  <option value="Blocked">BLOCKED</option>
-                  <option value="In-Active">In-Active</option>
+                  <option value="1">Active</option>
+                  <option value="2">Inactive</option>
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
