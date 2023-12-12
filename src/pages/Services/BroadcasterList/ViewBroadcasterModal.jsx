@@ -34,7 +34,7 @@ const ViewBroadcasterModal = (props) => {
     initialValues: {
       id: (user && user.id) || "",
       name: (user && user.name) || "",
-      fullname: (user && user.fullnamename) || "",
+      fullname: (user && user.fullname) || "",
       contactperson: (user && user.contactperson) || "",
       mobile: (user && user.mobile_no) || "",
       phone: (user && user.phone) || "",
@@ -46,36 +46,30 @@ const ViewBroadcasterModal = (props) => {
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
+      fullname: Yup.string().required("Please Enter Full Name"),
+      contactperson: Yup.string().required("Please Enter Contact Person"),
+      mobile: Yup.string().required("Please Enter mobile Number"),
+      phone: Yup.string().required("Please Enter Phone"),
       email: Yup.string()
         .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
         .required("Please Enter Your Email"),
-      // mobile: Yup.array().required("Please Enter mobile"),
-      mobile: Yup.string().required("Please Enter mobile Number"),
-      usertype: Yup.string().required("Please Enter User Type"),
-      status: Yup.string().required("Please Enter Status"),
-      message: Yup.string().required("Please Enter Message"),
-      role: Yup.string().required("Please Enter Role"),
-      designation: Yup.string().required("Please Enter Designation"),
-      grouppolicy: Yup.string().required("Please Enter Group Policy"),
-      loginid: Yup.string().required("Please Enter Login ID"),
-      password: Yup.string().required("Please Enter Password"),
-      confirmpassword: Yup.string().required("Please Enter Confirm Password"),
+      // mobile: Yup.array().required("Please Enter mobile"),      
+      address: Yup.string().required("Please Enter Address"),
+      description: Yup.string().required("Please Enter description"),
+      status: Yup.string().required("Please Enter status"),
     }),
     onSubmit: (values) => {
       const updateUser = {
         id: user.id,
         name: values.name,
-        email: values.email,
+        fullname: values.fullname,
+        contactperson: values.contactperson,
         mobile: values.mobile,
-        usertype: values.usertype,
+        phone: values.phone,
+        email: values.email,
+        address: values.address,
+        description: values.description,
         status: values.status,
-        message: values.message,
-        role: values.role,
-        designation: values.designation,
-        grouppolicy: values.grouppolicy,
-        loginid: values.loginid,
-        password: values.password,
-        confirmpassword: values.confirmpassword,
       };
 
       // update user
@@ -111,7 +105,7 @@ const ViewBroadcasterModal = (props) => {
           </ModalHeader>
         ) : (
           <ModalHeader toggle={toggle} tag="h4">
-            Edit User
+            Edit BROADCASTER
           </ModalHeader>
         )}
         <ModalBody>
@@ -164,9 +158,9 @@ const ViewBroadcasterModal = (props) => {
                         : false
                     }
                   />
-                  {validation.touched.email && validation.errors.email ? (
+                  {validation.touched.fullname && validation.errors.fullname ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.email}
+                      {validation.errors.fullname}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -174,23 +168,23 @@ const ViewBroadcasterModal = (props) => {
                 <div className="mb-3">
                   <Label className="form-label">Contact Person<span style={{ color: 'red' }}>*</span></Label>
                   <Input
-                    name="email"
-                    label="Email"
-                    type="email"
-                    placeholder="Insert Email"
+                    name="contactperson"
+                    label="contactperson"
+                    type="contactperson"
+                    placeholder="Insert Contact Person"
                     disabled={!showEditUser}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.email || ""}
+                    value={validation.values.contactperson || ""}
                     invalid={
-                      validation.touched.email && validation.errors.email
+                      validation.touched.contactperson && validation.errors.contactperson
                         ? true
                         : false
                     }
                   />
-                  {validation.touched.email && validation.errors.email ? (
+                  {validation.touched.contactperson && validation.errors.contactperson ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.email}
+                      {validation.errors.contactperson}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -223,24 +217,19 @@ const ViewBroadcasterModal = (props) => {
                 <div className="mb-3">
                   <Label className="form-label">Phone No.</Label>
                   <Input
-                    name="usertype"
-                    type="select"
-                    placeholder="Select User Type"
+                    name="phone"
+                    type="phone"
+                    placeholder="Enter Phone No."
                     disabled={!showEditUser}
-                    className="form-select"
+                    // className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.usertype || ""}
+                    value={validation.values.phone || ""}
                   >
-                    {/* <option value="">Select User Type</option> */}
-                    <option value="1">MSO</option>
-                    <option value="2">RO</option>
-                    <option value="3">Distributor</option>
-                    <option value="4">LCO</option>
                   </Input>
-                  {validation.touched.usertype && validation.errors.usertype ? (
+                  {validation.touched.phone && validation.errors.phone ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.usertype}
+                      {validation.errors.phone}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -273,46 +262,41 @@ const ViewBroadcasterModal = (props) => {
                 <div className="mb-3">
                   <Label className="form-label">Address<span style={{ color: 'red' }}>*</span></Label>
                   <Input
-                    name="email"
-                    label="Email"
-                    type="email"
-                    placeholder="Insert Email"
+                    name="address"
+                    label="address"
+                    type="address"
+                    placeholder="Enter Address"
                     disabled={!showEditUser}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.email || ""}
+                    value={validation.values.address || ""}
                     invalid={
-                      validation.touched.email && validation.errors.email
+                      validation.touched.address && validation.errors.address
                         ? true
                         : false
                     }
                   />
-                  {validation.touched.email && validation.errors.email ? (
+                  {validation.touched.address && validation.errors.address ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.email}
+                      {validation.errors.address}
                     </FormFeedback>
                   ) : null}
                 </div>
                 <div className="mb-3">
                   <Label className="form-label">Description<span style={{ color: 'red' }}>*</span></Label>
                   <Input
-                    name="email"
-                    label="Email"
-                    type="email"
-                    placeholder="Insert Email"
+                    name="description"
+                    label="Description"
+                    type="description"
+                    placeholder="Insert Description"
                     disabled={!showEditUser}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.email || ""}
-                    invalid={
-                      validation.touched.email && validation.errors.email
-                        ? true
-                        : false
-                    }
+                    value={validation.values.description || ""}
                   />
-                  {validation.touched.email && validation.errors.email ? (
+                  {validation.touched.description && validation.errors.description ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.email}
+                      {validation.errors.description}
                     </FormFeedback>
                   ) : null}
                 </div>
