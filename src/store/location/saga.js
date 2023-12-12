@@ -29,6 +29,7 @@ const convertLocationListObject = (locationList) => {
           : "BLOCKED",
       operator_code: location.operator_code,
       operator_lbl: location.operator_lbl,
+      status_lbl: location.status_lbl,
       created_at: location.created_at,
       created_by_lbl: location.created_by_lbl,
     };

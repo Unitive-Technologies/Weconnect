@@ -41,7 +41,7 @@ const AddNewLocation = (props) => {
       dispatch(onGetLco());
     }
   }, [dispatch, lcos]);
-  console.log("Lco In add location: ", lcos);
+  // console.log("Lco In add location: ", lcos);
 
   const options = lcos.map((option) => ({
     value: option.code,

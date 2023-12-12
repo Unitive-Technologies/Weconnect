@@ -39,7 +39,7 @@ const ViewLocation = (props) => {
       dispatch(onGetLco());
     }
   }, [dispatch, lcos]);
-  console.log("Lco In add location: ", lcos);
+  // console.log("Lco In add location: ", lcos);
 
   const options = lcos.map((option) => ({
     value: option.code,
@@ -67,21 +67,21 @@ const ViewLocation = (props) => {
     initialValues: {
       name: (location && location.name) || "",
       lco: (location && location.lco) || "",
-      status: (location && location.status) || "",
+      status_lbl: (location && location.status_lbl) || "",
       created_at: (location && location.created_at) || "",
       created_by: (location && location.created_by) || "my mso(mso)",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter district name"),
       lco: Yup.string().required("Select lco"),
-      status: Yup.string().required("Select status"),
+      status_lbl: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
       const updateLocation = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         lco: values["lco"],
-        status: values["status"],
+        status_lbl: values["status_lbl"],
         created_at: new Date(),
         created_by: values["created_by"],
       };
@@ -92,6 +92,11 @@ const ViewLocation = (props) => {
       toggle();
     },
   });
+
+  const editToggle = () => {
+    toggle();
+    setShowEditLocation(false);
+  };
 
   return (
     <Modal
@@ -113,7 +118,7 @@ const ViewLocation = (props) => {
           ></i>
         </ModalHeader>
       ) : (
-        <ModalHeader toggle={toggle} tag="h4">
+        <ModalHeader toggle={editToggle} tag="h4">
           Edit District
         </ModalHeader>
       )}
@@ -175,23 +180,24 @@ const ViewLocation = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Status</Label>
                 <Input
-                  name="status"
+                  name="status_lbl"
                   type="select"
                   placeholder="Select Status"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.status || ""}
+                  value={validation.values.status_lbl || ""}
                   disabled={!showEditLocation}
                 >
                   <option value="">Select Status</option>
-                  <option value="11">Active</option>
-                  <option value="12">BLOCKED</option>
-                  <option value="13">In-Active</option>
+                  <option value="Active">Active</option>
+                  <option value="Blocked">BLOCKED</option>
+                  <option value="In-Active">In-Active</option>
                 </Input>
-                {validation.touched.status && validation.errors.status ? (
+                {validation.touched.status_lbl &&
+                validation.errors.status_lbl ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.status}
+                    {validation.errors.status_lbl}
                   </FormFeedback>
                 ) : null}
               </div>

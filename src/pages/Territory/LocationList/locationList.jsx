@@ -38,7 +38,7 @@ const LocationList = (props) => {
   const { locations, loading } = useSelector(locationProperties);
 
   useEffect(() => {
-    console.log("Customer Users data in component:", locations);
+    // console.log("Customer Users data in component:", locations);
   }, [locations]);
 
   const [isLoading, setLoading] = useState(loading);
@@ -46,13 +46,13 @@ const LocationList = (props) => {
   const [showAddLocation, setShowAddLocation] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [showUploadLocation, setShowUploadLocation] = useState(false);
-  const [showViewCity, setShowViewCity] = useState(false);
-  const [viewCityData, setViewCityData] = useState({});
+  const [showViewLocation, setShowViewLocation] = useState(false);
+  const [viewLocationData, setViewLocationData] = useState({});
 
-  const toggleViewCity = (userData) => {
-    console.log("User Data: ", userData);
-    setShowViewCity(!showViewCity);
-    setViewCityData(userData);
+  const toggleViewLocation = (userData) => {
+    // console.log("User Data: ", userData);
+    setShowViewLocation(!showViewLocation);
+    setViewLocationData(userData);
   };
 
   const columns = useMemo(
@@ -88,7 +88,7 @@ const LocationList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  toggleViewCity(userData);
+                  toggleViewLocation(userData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -138,11 +138,13 @@ const LocationList = (props) => {
       },
       {
         Header: "Status",
-        accessor: "status",
+        accessor: "status_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.status}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.status_lbl}
+            </p>
           );
         },
       },
@@ -310,9 +312,9 @@ const LocationList = (props) => {
   return (
     <React.Fragment>
       <ViewLocation
-        isOpen={showViewCity}
-        toggle={toggleViewCity}
-        city={viewCityData}
+        isOpen={showViewLocation}
+        toggle={toggleViewLocation}
+        location={viewLocationData}
       />
       <AddNewLocation isOpen={showAddLocation} toggle={toggle} />
       <UploadLocation isOpen={showUploadLocation} toggle={toggle1} />
@@ -327,7 +329,7 @@ const LocationList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("Locations:" + JSON.stringify(locations))}
+                    {/* {console.log("Locations:" + JSON.stringify(locations))} */}
                     <TableContainer
                       isPagination={true}
                       columns={columns}

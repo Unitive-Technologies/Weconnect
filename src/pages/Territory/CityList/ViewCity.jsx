@@ -85,7 +85,12 @@ const ViewCity = (props) => {
           View {validation.values.name}
           <i
             className="bx bx bxs-edit"
-            style={{ marginLeft: "300px", cursor: "pointer" }}
+            style={{
+              position: "absolute",
+              marginLeft: "55%",
+              cursor: "pointer",
+              marginTop: "1%",
+            }}
             onClick={() => setShowEditCity(true)}
           ></i>
         </ModalHeader>
