@@ -47,6 +47,7 @@ import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddNewGenreList from './AddNewGenreList'
 import UploadGenreList from './UploadGenreList'
+import ViewGenreList from './ViewGenreList'
 
 const GenreList = (props) => {
   //meta title
@@ -123,6 +124,7 @@ const GenreList = (props) => {
   const [userList, setUserList] = useState([]);
   const [showAddNewGenreList, setShowAddNewGenreList] = useState(false);
   const [showUploadGenreList, setShowUploadGenreList] = useState(false);
+  const [showViewGenreList, setShowGenreList] = useState(false);
 
   const [isEdit, setIsEdit] = useState(false);
 
@@ -153,7 +155,10 @@ const GenreList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <h5 className="font-size-14 mb-1">
+            <h5 className="font-size-14 mb-1" onClick={() => {
+              const userData = cellProps.row.original;
+              handleViewGenreList(userData);
+            }}>
               <Link className="text-dark" to="#">
                 {cellProps.row.original.name}
               </Link>
@@ -267,6 +272,16 @@ const GenreList = (props) => {
     setShowUploadGenreList(!showUploadGenreList);
   };
 
+  const [viewGenreList, setViewGenreList] = useState({});
+  // const toggleViewModal = () => setModal(modal);
+  // const handleUserClick = (arg) => {
+
+  const handleViewGenreList = (userGenreData) => {
+    setShowGenreList(!showViewGenreList);
+    setViewGenreList(userGenreData);
+    // toggle();
+  };
+
 
   // const handleUserClick = (arg) => {
   //   const user = arg;
@@ -343,11 +358,9 @@ const GenreList = (props) => {
 
   return (
     <React.Fragment>
-      {/* <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
-      /> */}
+      <ViewGenreList isOpen={showViewGenreList}
+        toggle={handleViewGenreList}
+        user={viewGenreList} />
       <AddNewGenreList isOpen={showAddNewGenreList} toggle={toggle} />
       <UploadGenreList isOpen={showUploadGenreList} toggle={toggle1} />
 

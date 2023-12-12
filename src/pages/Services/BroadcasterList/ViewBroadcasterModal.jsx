@@ -19,10 +19,9 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
-import EditBroadcasterModal from "./EditBroadcasterModal";
 
 const ViewBroadcasterModal = (props) => {
-  const { isOpen, toggle, user } = props;
+  const { isOpen, toggle, user, viewUser, setViewUser } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
   const [showEditUser, setShowEditUser] = useState(false);
@@ -96,7 +95,7 @@ const ViewBroadcasterModal = (props) => {
       >
         {!showEditUser ? (
           <ModalHeader toggle={toggle} tag="h4">
-            View BROADCASTER
+            View  {user.name}
             <i
               className="bx bx bxs-edit"
               style={{ marginLeft: "20px", cursor: "pointer" }}
@@ -140,7 +139,8 @@ const ViewBroadcasterModal = (props) => {
                     </FormFeedback>
                   ) : null}
                 </div>
-
+              </Col>
+              <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">Full-Name<span style={{ color: 'red' }}>*</span></Label>
                   <Input
@@ -164,7 +164,8 @@ const ViewBroadcasterModal = (props) => {
                     </FormFeedback>
                   ) : null}
                 </div>
-
+              </Col>
+              <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">Contact Person<span style={{ color: 'red' }}>*</span></Label>
                   <Input
@@ -189,6 +190,8 @@ const ViewBroadcasterModal = (props) => {
                   ) : null}
                 </div>
               </Col>
+            </Row>
+            <Row>
               <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">Mobile No.<span style={{ color: 'red' }}>*</span></Label>
@@ -213,7 +216,8 @@ const ViewBroadcasterModal = (props) => {
                     </FormFeedback>
                   ) : null}
                 </div>
-
+              </Col>
+              <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">Phone No.</Label>
                   <Input
@@ -233,7 +237,8 @@ const ViewBroadcasterModal = (props) => {
                     </FormFeedback>
                   ) : null}
                 </div>
-
+              </Col>
+              <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">Email address<span style={{ color: 'red' }}>*</span></Label>
                   <Input
@@ -258,6 +263,8 @@ const ViewBroadcasterModal = (props) => {
                   ) : null}
                 </div>
               </Col>
+            </Row>
+            <Row>
               <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">Address<span style={{ color: 'red' }}>*</span></Label>
@@ -282,6 +289,8 @@ const ViewBroadcasterModal = (props) => {
                     </FormFeedback>
                   ) : null}
                 </div>
+              </Col>
+              <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">Description<span style={{ color: 'red' }}>*</span></Label>
                   <Input
@@ -300,6 +309,8 @@ const ViewBroadcasterModal = (props) => {
                     </FormFeedback>
                   ) : null}
                 </div>
+              </Col>
+              <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">Status<span style={{ color: 'red' }}>*</span></Label>
                   <Input
@@ -325,7 +336,6 @@ const ViewBroadcasterModal = (props) => {
                 </div>
               </Col>
             </Row>
-
             <Row>
               {showEditUser && (
                 <Col>

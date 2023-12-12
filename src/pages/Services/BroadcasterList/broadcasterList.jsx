@@ -56,7 +56,7 @@ import { ToastContainer } from "react-toastify";
 import AddNewBroadCaster from './AddNewBroadCaster'
 import UploadBroadCaster from './UploadBroadCaster'
 import ViewBroadcasterModal from "./ViewBroadcasterModal";
-import EditBroadasterModal from "./EditBroadcasterModal";
+import ViewGenreList from "../GenreList/ViewGenreList";
 
 const BroadcasterList = (props) => {
   //meta title
@@ -327,7 +327,6 @@ const BroadcasterList = (props) => {
   };
 
 
-
   // const handleUserClick = (arg) => {
   //   const user = arg;
 
@@ -400,13 +399,12 @@ const BroadcasterList = (props) => {
     ];
   };
 
-
   return (
     <React.Fragment>
       <ViewBroadcasterModal
         isOpen={showViewBroadcaster}
         toggle={toggleViewBroadcaster}
-        user={viewUser}
+        user={ViewGenreList}
       />
 
       <AddNewBroadCaster isOpen={showAddNewBroadCaster} toggle={toggle} />
