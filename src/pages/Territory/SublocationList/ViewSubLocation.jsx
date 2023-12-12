@@ -22,10 +22,10 @@ import { createSelector } from "reselect";
 import { getLco as onGetLco } from "/src/store/actions";
 import Select from "react-select";
 
-const ViewLocation = (props) => {
-  const { isOpen, toggle, location } = props;
+const ViewSubLocation = (props) => {
+  const { isOpen, toggle, sublocation } = props;
   const dispatch = useDispatch();
-  const [showEditLocation, setShowEditLocation] = useState(false);
+  const [showEditSubLocation, setShowEditSubLocation] = useState(false);
   const selectLcoState = (state) => state.lco;
   const LcoProperties = createSelector(selectLcoState, (lco) => ({
     lcos: lco.lco,
@@ -65,29 +65,29 @@ const ViewLocation = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      name: (location && location.name) || "",
-      lco: (location && location.lco) || "",
-      status_lbl: (location && location.status_lbl) || "",
-      created_at: (location && location.created_at) || "",
-      created_by: (location && location.created_by) || "my mso(mso)",
+      name: (sublocation && sublocation.name) || "",
+      location_id: (sublocation && sublocation.location_id) || "",
+      status: (sublocation && sublocation.status) || "",
+      created_at: (sublocation && sublocation.created_at) || "",
+      created_by: (sublocation && sublocation.created_by) || "my mso(mso)",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter district name"),
-      lco: Yup.string().required("Select lco"),
-      status_lbl: Yup.string().required("Select status"),
+      location_id: Yup.string().required("Select location"),
+      status: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
-      const updateLocation = {
+      const updateSubLocation = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
-        lco: values["lco"],
-        status_lbl: values["status_lbl"],
+        location_id: values["location_id"],
+        status: values["status"],
         created_at: new Date(),
         created_by: values["created_by"],
       };
-      console.log("new district:" + updateLocation);
+      console.log("new district:" + updateSubLocation);
       // save new user
-      dispatch(onAddDistrict(updateLocation));
+      dispatch(onAddDistrict(updateSubLocation));
       validation.resetForm();
       toggle();
     },
@@ -95,7 +95,7 @@ const ViewLocation = (props) => {
 
   const editToggle = () => {
     toggle();
-    setShowEditLocation(false);
+    setShowEditSubLocation(false);
   };
 
   return (
@@ -108,18 +108,18 @@ const ViewLocation = (props) => {
       tabIndex="-1"
       toggle={toggle}
     >
-      {!showEditLocation ? (
+      {!showEditSubLocation ? (
         <ModalHeader toggle={toggle} tag="h4">
           View {validation.values.name}
           <i
             className="bx bx bxs-edit"
             style={{ marginLeft: "300px", cursor: "pointer" }}
-            onClick={() => setShowEditLocation(true)}
+            onClick={() => setShowEditSubLocation(true)}
           ></i>
         </ModalHeader>
       ) : (
         <ModalHeader toggle={editToggle} tag="h4">
-          Edit Location
+          Edit Sublocation
         </ModalHeader>
       )}
       <ModalBody>
@@ -133,20 +133,20 @@ const ViewLocation = (props) => {
           <Row>
             <Col sm="12">
               <div className="mb-3">
-                <Label className="form-label">Location Name</Label>
+                <Label className="form-label">Sub Location Name</Label>
                 <Input
                   name="name"
                   type="text"
-                  placeholder="Enter location name"
+                  placeholder="Enter sublocation name"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}
-                  disabled={!showEditLocation}
                   invalid={
                     validation.touched.name && validation.errors.name
                       ? true
                       : false
                   }
+                  disabled={!showEditSubLocation}
                 />
                 {validation.touched.name && validation.errors.name ? (
                   <FormFeedback type="invalid">
@@ -156,23 +156,47 @@ const ViewLocation = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Select LCO</Label>
-                <Select
-                  name="lco"
-                  options={options}
-                  onChange={(selectedOption) =>
-                    validation.handleChange(selectedOption.value)
-                  }
+                <Label className="form-label">Select Location</Label>
+                <Input
+                  name="location_id"
+                  type="select"
+                  placeholder="Select location"
+                  className="form-select"
+                  onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={options.find(
-                    (opt) => opt.value === validation.values.lco
-                  )}
-                  styles={customStyles}
-                  disabled={!showEditLocation}
-                />
-                {validation.touched.lco && validation.errors.lco ? (
+                  value={validation.values.location_id || ""}
+                  disabled={!showEditSubLocation}
+                >
+                  <option value="">Select location</option>
+                  <option value="1">Delhi</option>
+                  <option value="2">Puducherry</option>
+                  <option value="3">Ladakh</option>
+                  <option value="4">Andaman and Nicobar Islands</option>
+                  <option value="5">Lakshadweep</option>
+                  <option value="6">Daman and Diu</option>
+                  <option value="7">Dadra and Nagar Haveli</option>
+                  <option value="8">Chandigarh</option>
+                  <option value="9">West Bengal</option>
+                  <option value="10">Uttarakhand</option>
+                  <option value="11">Utter Pradesh</option>
+                  <option value="12">Tripura</option>
+                  <option value="13">Telangana</option>
+                  <option value="14">Tamil Nadu</option>
+                  <option value="15">Sikkim</option>
+                  <option value="16">Rajasthan</option>
+                  <option value="17">Punjab</option>
+                  <option value="18">Odisha</option>
+                  <option value="19">Nagaland</option>
+                  <option value="20">Mizoram</option>
+                  <option value="21">Meghalaya</option>
+                  <option value="22">Manipur</option>
+                  <option value="23">Maharashtra</option>
+                  <option value="24">Madhya Pradesh</option>
+                </Input>
+                {validation.touched.location_id &&
+                validation.errors.location_id ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.lco}
+                    {validation.errors.location_id}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -180,24 +204,23 @@ const ViewLocation = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Status</Label>
                 <Input
-                  name="status_lbl"
+                  name="status"
                   type="select"
                   placeholder="Select Status"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.status_lbl || ""}
-                  disabled={!showEditLocation}
+                  value={validation.values.status || ""}
+                  disabled={!showEditSubLocation}
                 >
                   <option value="">Select Status</option>
                   <option value="Active">Active</option>
                   <option value="Blocked">BLOCKED</option>
                   <option value="In-Active">In-Active</option>
                 </Input>
-                {validation.touched.status_lbl &&
-                validation.errors.status_lbl ? (
+                {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.status_lbl}
+                    {validation.errors.status}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -219,9 +242,9 @@ const ViewLocation = (props) => {
   );
 };
 
-ViewLocation.propTypes = {
+ViewSubLocation.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default ViewLocation;
+export default ViewSubLocation;

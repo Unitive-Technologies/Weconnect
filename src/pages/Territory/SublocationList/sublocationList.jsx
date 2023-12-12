@@ -9,34 +9,16 @@ import {
   Col,
   Container,
   Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
   UncontrolledTooltip,
-  Input,
-  Form,
 } from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-
-import { Email, Tags, Projects } from "./sublocationListCol";
-
-//Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
-
 import { getSublocation as onGetSublocation } from "/src/store/actions";
-
-import { isEmpty } from "lodash";
-
-//redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddSubLocation from "./AddSubLocation";
 import UploadSubLocation from "./UploadSubLocation";
+import ViewSubLocation from "./ViewSubLocation";
 
 const SublocationList = (props) => {
   //meta title
@@ -56,7 +38,7 @@ const SublocationList = (props) => {
   const { subloc, loading } = useSelector(sublocationProperties);
 
   useEffect(() => {
-    console.log("Sublocation data in component:", subloc);
+    // console.log("Sublocation data in component:", subloc);
   }, [subloc]);
 
   const [isLoading, setLoading] = useState(loading);
@@ -65,6 +47,14 @@ const SublocationList = (props) => {
   const [showAddSubLocation, setShowAddSubLocation] = useState(false);
   const [showUploadSubLocation, setShowUploadSubLocation] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [showViewSubLocation, setShowViewSubLocation] = useState(false);
+  const [viewSubLocationData, setViewSubLocationData] = useState({});
+
+  const toggleViewSubLocation = (userData) => {
+    console.log("User Data: ", userData);
+    setShowViewSubLocation(!showViewSubLocation);
+    setViewSubLocationData(userData);
+  };
 
   const columns = useMemo(
     () => [
@@ -95,7 +85,13 @@ const SublocationList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  toggleViewSubLocation(userData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -338,16 +334,15 @@ const SublocationList = (props) => {
 
   return (
     <React.Fragment>
-      <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
+      <ViewSubLocation
+        isOpen={showViewSubLocation}
+        toggle={toggleViewSubLocation}
+        sublocation={viewSubLocationData}
       />
       <AddSubLocation isOpen={showAddSubLocation} toggle={toggle} />
       {/* <UploadSubLocation isOpen={showUploadSubLocation} toggle={uploadToggle} /> */}
       <div className="page-content">
         <Container fluid>
-          {/* Render Breadcrumbs */}
           <Breadcrumbs title="Territory" breadcrumbItem="Sublocation List" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
@@ -356,7 +351,6 @@ const SublocationList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("users:" + JSON.stringify(subloc))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}

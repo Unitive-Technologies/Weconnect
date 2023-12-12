@@ -50,7 +50,7 @@ const LocationList = (props) => {
   const [viewLocationData, setViewLocationData] = useState({});
 
   const toggleViewLocation = (userData) => {
-    // console.log("User Data: ", userData);
+    console.log("User Data: ", userData);
     setShowViewLocation(!showViewLocation);
     setViewLocationData(userData);
   };
