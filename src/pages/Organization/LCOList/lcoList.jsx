@@ -37,6 +37,7 @@ import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import ViewLcoModal from "./ViewLcoModal";
 import AddLcoModal from "./AddLcoModal";
+import BulkAddCreditModal from "./BulkAddCreditModal";
 
 const LCOList = (props) => {
   //meta title
@@ -115,6 +116,7 @@ const LCOList = (props) => {
   const [isEdit, setIsEdit] = useState(false);
   const [showLco, setShowLco] = useState(false);
   const [viewLco, setViewLco] = useState(false);
+  const [showBulkCredit, setShowBulkCredit] = useState(false);
   const [showUploadLco, setShowUploadLco] = useState(false);
 
   const columns = useMemo(
@@ -428,7 +430,7 @@ const LCOList = (props) => {
       },
       {
         name: "Bulk Add Credit",
-        // action: setShowAddUser,
+        action: setShowBulkCredit,
         type: "normal",
         icon: "create",
       },
@@ -468,6 +470,11 @@ const LCOList = (props) => {
       />
 
       <AddLcoModal isOpen={showLco} toggle={handleAddLco} />
+      <BulkAddCreditModal
+        isOpen={showBulkCredit}
+        toggle={() => setShowBulkCredit(false)}
+        lco={lcoData}
+      />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
