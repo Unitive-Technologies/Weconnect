@@ -20,31 +20,34 @@ import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
-const ViewGenreList = (props) => {
-    const { isOpen, toggle, genre } = props;
+const ViewLanguageList = (props) => {
+    const { isOpen, toggle, language } = props;
     //   console.log("user in viewuser modal:" + JSON.stringify(user));
     const dispatch = useDispatch();
-    const [showEditUser, setShowEditUser] = useState(false);
+    const [showEditLanguage, setShowEditLanguage] = useState(false);
 
     const validation = useFormik({
         // enableReinitialize : use this flag when initial values needs to be changed
         enableReinitialize: true,
 
         initialValues: {
-            id: (genre && genre.id) || "",
-            title: (genre && genre.name) || "",
-            status: (genre && genre.status) || "",
-            description: (genre && genre.description) || "",
+            id: (language && language.id) || "",
+            language: (language && language.name) || "",
+            code: (language && language.code) || "",
+            status: (language && language.status) || "",
+            description: (language && language.description) || "",
         },
         validationSchema: Yup.object({
-            title: Yup.string().required("Please Enter Title"),
+            language: Yup.string().required("Please Enter Language"),
+            code: Yup.string().required("Please Enter Code"),
             status: Yup.string().required("Please Enter status"),
             description: Yup.string().required("Please Enter description"),
         }),
         onSubmit: (values) => {
             const updateUser = {
-                id: genre.id,
-                title: values.title,
+                id: language.id,
+                language: values.language,
+                code: values.code,
                 status: values.status,
                 description: values.description,
             };
@@ -57,10 +60,6 @@ const ViewGenreList = (props) => {
     });
     return (
         <>
-            {/* <EditUserModal
-        isOpen={showEditUser}
-        // onClose={() => setShowEditUser(false)}
-      /> */}
             <Modal
                 isOpen={isOpen}
                 role="dialog"
@@ -71,18 +70,18 @@ const ViewGenreList = (props) => {
                 tabIndex="-1"
                 toggle={toggle}
             >
-                {!showEditUser ? (
+                {!showEditLanguage ? (
                     <ModalHeader toggle={toggle} tag="h4">
-                        View {genre.name}
+                        View {language.name}
                         <i
                             className="bx bx bxs-edit"
                             style={{ marginLeft: "20px", cursor: "pointer" }}
-                            onClick={() => setShowEditUser(true)}
+                            onClick={() => setShowEditLanguage(true)}
                         ></i>
                     </ModalHeader>
                 ) : (
                     <ModalHeader toggle={toggle} tag="h4">
-                        Edit {genre.name}
+                        Edit {language.name}
                     </ModalHeader>
                 )}
                 <ModalBody>
@@ -97,27 +96,50 @@ const ViewGenreList = (props) => {
                         <Row>
                             <Col sm="12">
                                 <div className="mb-3">
-                                    <Label className="form-label">Title<span style={{ color: 'red' }}>*</span></Label>
+                                    <Label className="form-label">Language<span style={{ color: 'red' }}>*</span></Label>
                                     <Input
-                                        name="title"
+                                        name="language"
                                         type="text"
-                                        placeholder="Enter title"
-                                        disabled={!showEditUser}
+                                        placeholder="Enter Language"
+                                        disabled={!showEditLanguage}
                                         onChange={validation.handleChange}
                                         onBlur={validation.handleBlur}
-                                        value={validation.values.title || ""}
+                                        value={validation.values.language || ""}
                                         invalid={
-                                            validation.touched.title && validation.errors.title
+                                            validation.touched.language && validation.errors.language
                                                 ? true
                                                 : false
                                         }
                                     />
-                                    {validation.touched.title && validation.errors.title ? (
+                                    {validation.touched.language && validation.errors.language ? (
                                         <FormFeedback type="invalid">
-                                            {validation.errors.title}
+                                            {validation.errors.language}
                                         </FormFeedback>
                                     ) : null}
                                 </div>
+                                <div className="mb-3">
+                                    <Label className="form-label">Code<span style={{ color: 'red' }}>*</span></Label>
+                                    <Input
+                                        name="code"
+                                        type="text"
+                                        placeholder="Enter Language Code"
+                                        disabled={!showEditLanguage}
+                                        onChange={validation.handleChange}
+                                        onBlur={validation.handleBlur}
+                                        value={validation.values.code || ""}
+                                        invalid={
+                                            validation.touched.code && validation.errors.code
+                                                ? true
+                                                : false
+                                        }
+                                    />
+                                    {validation.touched.code && validation.errors.code ? (
+                                        <FormFeedback type="invalid">
+                                            {validation.errors.code}
+                                        </FormFeedback>
+                                    ) : null}
+                                </div>
+
                                 <div className="mb-3">
                                     <Label className="form-label">Status<span style={{ color: 'red' }}>*</span></Label>
                                     <Input
@@ -125,7 +147,7 @@ const ViewGenreList = (props) => {
                                         type="select"
                                         placeholder="Select Status"
                                         className="form-select"
-                                        disabled={!showEditUser}
+                                        disabled={!showEditLanguage}
                                         onChange={validation.handleChange}
                                         onBlur={validation.handleBlur}
                                         value={validation.values.status || ""}
@@ -157,7 +179,7 @@ const ViewGenreList = (props) => {
                                                 ? true
                                                 : false
                                         }
-                                        disabled={!showEditUser}
+                                        disabled={!showEditLanguage}
                                     />
                                     {validation.touched.description &&
                                         validation.errors.description ? (
@@ -169,7 +191,6 @@ const ViewGenreList = (props) => {
                             </Col>
                         </Row>
                         <Row>
-
                             <Col>
                                 <div className="text-end">
                                     <button type="submit" className="btn btn-success save-user">
@@ -177,7 +198,6 @@ const ViewGenreList = (props) => {
                                     </button>
                                 </div>
                             </Col>
-
                         </Row>
                     </Form>
                 </ModalBody>
@@ -187,9 +207,9 @@ const ViewGenreList = (props) => {
     );
 };
 
-ViewGenreList.propTypes = {
+ViewLanguageList.propTypes = {
     toggle: PropTypes.func,
     isOpen: PropTypes.bool,
 };
 
-export default ViewGenreList;
+export default ViewLanguageList;

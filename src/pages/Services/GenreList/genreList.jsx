@@ -273,8 +273,6 @@ const GenreList = (props) => {
   };
 
   const [viewGenreList, setViewGenreList] = useState({});
-  // const toggleViewModal = () => setModal(modal);
-  // const handleUserClick = (arg) => {
 
   const handleViewGenreList = (userGenreData) => {
     setShowGenreList(!showViewGenreList);
@@ -360,7 +358,7 @@ const GenreList = (props) => {
     <React.Fragment>
       <ViewGenreList isOpen={showViewGenreList}
         toggle={handleViewGenreList}
-        user={viewGenreList} />
+        genre={viewGenreList} />
       <AddNewGenreList isOpen={showAddNewGenreList} toggle={toggle} />
       <UploadGenreList isOpen={showUploadGenreList} toggle={toggle1} />
 

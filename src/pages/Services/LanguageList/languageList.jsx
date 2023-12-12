@@ -36,7 +36,7 @@ import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddNewLanguageList from './AddNewLanguageList'
 import UploadLanguageList from './UploadLanguageList'
-
+import ViewLanguageList from './ViewLanguageList'
 
 import {
   Description,
@@ -130,6 +130,7 @@ const LanguageList = (props) => {
   const [userList, setUserList] = useState([]);
   const [showAddNewLanguageList, setShowAddNewLanguageList] = useState(false);
   const [showUploadLanguageList, setShowUploadLanguageList] = useState(false);
+  const [showViewLanguageList, setShowLanguageList] = useState(false);
 
 
   const [isEdit, setIsEdit] = useState(false);
@@ -279,6 +280,15 @@ const LanguageList = (props) => {
   const toggle1 = () => {
     setShowUploadLanguageList(!showUploadLanguageList);
   };
+
+  const [viewLanguageList, setViewLanguageList] = useState({});
+
+  const handleViewLanguageList = (userLanguageData) => {
+    setShowLanguageList(!showViewLanguageList);
+    setViewLanguageList(userLanguageData);
+    // toggle();
+  };
+
 
 
   // const handleUserClick = (arg) => {

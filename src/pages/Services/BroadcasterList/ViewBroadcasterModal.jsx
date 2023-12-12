@@ -337,15 +337,13 @@ const ViewBroadcasterModal = (props) => {
               </Col>
             </Row>
             <Row>
-              {showEditUser && (
-                <Col>
-                  <div className="text-end">
-                    <button type="submit" className="btn btn-success save-user">
-                      Save
-                    </button>
-                  </div>
-                </Col>
-              )}
+              <Col>
+                <div className="text-end">
+                  <button type="submit" className="btn btn-success save-user">
+                    Save
+                  </button>
+                </div>
+              </Col>
             </Row>
           </Form>
         </ModalBody>
