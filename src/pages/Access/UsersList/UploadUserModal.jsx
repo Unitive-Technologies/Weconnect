@@ -214,14 +214,25 @@ const UploadUserModal = (props) => {
               </div>
             </Form>
 
-            <div className="text-center mt-4">
-              <button
-                type="button"
-                className="btn btn-primary "
-                onClick={handleUploadFile}
+            <div className="text-center mt-4 ">
+              <div
+                style={{
+                  display: "flex",
+                  gap: 5,
+                  textAlign: "center",
+                  justifyContent: "center",
+                }}
               >
-                Upload File
-              </button>
+                <button type="button" className="btn btn-primary mr-2 ">
+                  Upload File
+                </button>
+                <button type="button" className="btn btn-primary ml-2 ">
+                  Reset
+                </button>
+                <button type="button" className="btn btn-primary ">
+                  Cancel
+                </button>
+              </div>
             </div>
           </CardBody>
         </Card>
