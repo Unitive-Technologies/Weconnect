@@ -1037,6 +1037,22 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onPost(url.ADD_NEW_TAXLIST).reply((taxes) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (taxes && taxes.data) {
+          // Passing fake JSON data as response
+          resolve([200, taxes.data]);
+        } else {
+          reject([400, "Cannot add tax list"]);
+        }
+      });
+    });
+  });
+
+
+
+
   mock.onPost(url.ADD_NEW_PACKAGELIST).reply((packlist) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

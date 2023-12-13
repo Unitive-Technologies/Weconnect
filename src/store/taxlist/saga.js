@@ -1,11 +1,11 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_TAX } from "./actionTypes";
+import { GET_TAX, ADD_NEW_TAXLIST } from "./actionTypes";
 
-import { getTaxSuccess, getTaxFail } from "./actions";
+import { getTaxSuccess, getTaxFail, addTaxListSuccess, addTaxListFail } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getTax } from "../../helpers/fakebackend_helper";
+import { getTax, addNewTaxList } from "../../helpers/fakebackend_helper";
 
 const convertTaxListObject = (taxList) => {
   // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
@@ -37,8 +37,20 @@ function* fetchTax() {
   }
 }
 
+function* onAddNewTaxList({ payload: tax }) {
+  try {
+    const response = yield call(addNewTaxList, tax);
+    yield put(addTaxListSuccess(response));
+    toast.success("Tax List Added Successfully", { autoClose: 2000 });
+  } catch (error) {
+    yield put(addTaxListFail(error));
+    toast.error("Tax List Added Failed", { autoClose: 2000 });
+  }
+}
+
 function* taxSaga() {
   yield takeEvery(GET_TAX, fetchTax);
+  yield takeEvery(ADD_NEW_TAXLIST, onAddNewTaxList);
 }
 
 export default taxSaga;
