@@ -25,7 +25,7 @@ import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 // import { updateUser as onUpdateUser } from "/src/store/users/actions";
 import { getDistributors as onGetDistributors } from "/src/store/distributor/actions";
-const UploadModal = (props) => {
+const UploadCreditModal = (props) => {
   const { isOpen, toggle } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
@@ -80,7 +80,7 @@ const UploadModal = (props) => {
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
       <ModalHeader toggle={toggle} tag="h4">
-        Upload LCO
+        Upload Credit
       </ModalHeader>
       <ModalBody>
         <Card>
@@ -96,51 +96,22 @@ const UploadModal = (props) => {
               </button>
             </div>
             <div className="mb-3">
-              <Label className="form-label">Parent Distributor</Label>
-              <Input
-                name="status_lbl"
-                type="select"
-                placeholder="Select Status"
-                className="form-select"
-                // onChange={validation.handleChange}
-                // onBlur={validation.handleBlur}
-                // value={validation.values.status_lbl || ""}
-              >
-                <option value="">Select Distributor</option>
-
-                {distributor.map((item) => (
-                  <option key={item.id} value={item.code}>
-                    {item.name}
-                  </option>
-                ))}
-              </Input>
-              {/* {validation.touched.status_lbl && validation.errors.status_lbl ? ( */}
-              <FormFeedback type="invalid">
-                {/* {validation.errors.status_lbl} */}
-              </FormFeedback>
-              {/* ) : null} */}
-            </div>
-            <div className="mb-3 ">
-              <Label className="form-label">Status</Label>
-              <Input
-                name="status"
-                type="select"
-                placeholder="Select Group Policy"
-                className="form-select"
-                // onChange={validation.handleChange}
-                // onBlur={validation.handleBlur}
-                // value={validation.values.grouppolicy || ""}
-              >
-                <option value="">Select Status</option>
-                <option value="A">Active</option>
-                <option value="C">In-Active</option>
-              </Input>
-              {/* {validation.touched.grouppolicy &&
-              validation.errors.grouppolicy ? (
-                <FormFeedback type="invalid">
-                  {validation.errors.grouppolicy}
-                </FormFeedback>
-              ) : null} */}
+              <Label className="form-label">Payment Mode Values</Label>
+              <ul>
+                <li>TDS</li>
+                <li>Cash</li>
+                <li>Cheque</li>
+                <li>DD</li>
+                <li>NEFT/RTFS/IMPS</li>
+                <li>Online Transfer</li>
+                <li>Debit Card</li>
+                <li>Credit Card</li>
+                <li>Pay TM</li>
+                <li>Other</li>
+                <li>Recharge Coupon</li>
+                <li>Payment Gateway</li>
+                <li>BANK DEPOSIT</li>
+              </ul>
             </div>
             <CardSubtitle className="mb-3"> Select File to Upload</CardSubtitle>
             <Form>
@@ -229,9 +200,9 @@ const UploadModal = (props) => {
   );
 };
 
-UploadModal.propTypes = {
+UploadCreditModal.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default UploadModal;
+export default UploadCreditModal;
