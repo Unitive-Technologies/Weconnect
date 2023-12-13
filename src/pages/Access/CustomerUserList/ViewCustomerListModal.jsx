@@ -1,30 +1,27 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const ViewCustomerUserModal = (props) => {
   const { isOpen, toggle, user } = props;
   // console.log("Customeruser in view modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
-
+  const [showEditUser, setShowEditUser] = useState(false);
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -82,6 +79,7 @@ const ViewCustomerUserModal = (props) => {
   return (
     <Modal
       isOpen={isOpen}
+      size="xl"
       role="dialog"
       autoFocus={true}
       centered={true}
@@ -91,8 +89,20 @@ const ViewCustomerUserModal = (props) => {
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
       <ModalHeader toggle={toggle} tag="h4">
-        View Customer User
+        {!showEditUser ? "View Customer User" : "Edit Customer User"}
       </ModalHeader>
+      <Link
+        style={{
+          position: "absolute",
+          marginLeft: "92%",
+          marginTop: "1%",
+        }}
+        to="#!"
+        className="btn btn-light me-1"
+        onClick={() => setShowEditUser(true)}
+      >
+        <i className="mdi mdi-pencil-outline"></i>
+      </Link>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -112,6 +122,7 @@ const ViewCustomerUserModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.initialValues.name || ""}
+                  disabled={!showEditUser}
                   invalid={
                     validation.touched.name && validation.errors.name
                       ? true
@@ -135,6 +146,7 @@ const ViewCustomerUserModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.initialValues.login || ""}
+                  disabled={!showEditUser}
                   invalid={
                     validation.touched.login && validation.errors.login
                       ? true
@@ -158,6 +170,7 @@ const ViewCustomerUserModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.initialValues.mobile || ""}
+                  disabled={!showEditUser}
                   invalid={
                     validation.touched.mobile && validation.errors.mobile
                       ? true
@@ -181,6 +194,7 @@ const ViewCustomerUserModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.initialValues.email || ""}
+                  disabled={!showEditUser}
                   invalid={
                     validation.touched.email && validation.errors.email
                       ? true
@@ -204,6 +218,7 @@ const ViewCustomerUserModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.initialValues.status || ""}
+                  disabled={!showEditUser}
                 >
                   {/* <option value="">Select Status</option> */}
                   <option value="11">Active</option>
@@ -227,6 +242,7 @@ const ViewCustomerUserModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.initialValues.lco || ""}
+                  disabled={!showEditUser}
                   invalid={
                     validation.touched.lco && validation.errors.lco
                       ? true
@@ -250,6 +266,7 @@ const ViewCustomerUserModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.initialValues.lcocode || ""}
+                  disabled={!showEditUser}
                   invalid={
                     validation.touched.lcocode && validation.errors.lcocode
                       ? true
@@ -273,6 +290,7 @@ const ViewCustomerUserModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.initialValues.lastlogin || ""}
+                  disabled={!showEditUser}
                   invalid={
                     validation.touched.lastlogin && validation.errors.lastlogin
                       ? true
@@ -296,6 +314,7 @@ const ViewCustomerUserModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.initialValues.createdat || ""}
+                  disabled={!showEditUser}
                   invalid={
                     validation.touched.createdat && validation.errors.createdat
                       ? true
@@ -319,6 +338,7 @@ const ViewCustomerUserModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.initialValues.createdby || ""}
+                  disabled={!showEditUser}
                   invalid={
                     validation.touched.createdby && validation.errors.createdby
                       ? true

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import {
   Card,
   CardBody,
@@ -19,7 +20,6 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
-import EditUserModal from "./EditUserModal";
 
 const ViewUserModal = (props) => {
   const { isOpen, toggle, user } = props;
@@ -86,6 +86,11 @@ const ViewUserModal = (props) => {
       toggle();
     },
   });
+
+  const handleCancel = () => {
+    setShowEditUser(false);
+    toggle();
+  };
   return (
     <>
       {/* <EditUserModal
@@ -100,22 +105,24 @@ const ViewUserModal = (props) => {
         centered={true}
         className="exampleModal"
         tabIndex="-1"
-        toggle={toggle}
+        toggle={handleCancel}
       >
-        {!showEditUser ? (
-          <ModalHeader toggle={toggle} tag="h4">
-            View User
-            <i
-              className="bx bx bxs-edit"
-              style={{ marginLeft: "20px", cursor: "pointer" }}
-              onClick={() => setShowEditUser(true)}
-            ></i>
-          </ModalHeader>
-        ) : (
-          <ModalHeader toggle={toggle} tag="h4">
-            Edit User
-          </ModalHeader>
-        )}
+        <ModalHeader toggle={toggle} tag="h4">
+          {!showEditUser ? "View User" : "Edit User"}
+        </ModalHeader>
+
+        <Link
+          style={{
+            position: "absolute",
+            marginLeft: "92%",
+            marginTop: "1%",
+          }}
+          to="#!"
+          className="btn btn-light me-1"
+          onClick={() => setShowEditUser(true)}
+        >
+          <i className="mdi mdi-pencil-outline"></i>
+        </Link>
         <ModalBody>
           <Form
             onSubmit={(e) => {

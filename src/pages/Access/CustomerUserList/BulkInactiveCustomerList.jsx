@@ -283,6 +283,7 @@ const BulkInactiveCustomerList = (props) => {
   return (
     <Modal
       isOpen={isOpen}
+      size="xl"
       role="dialog"
       autoFocus={true}
       centered={true}
