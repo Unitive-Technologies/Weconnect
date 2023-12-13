@@ -49,7 +49,7 @@ const GroupPolicyList = (props) => {
   document.title = "Group Policy List | VDigital";
 
   const dispatch = useDispatch();
-  const [toast, setToast] = useState(true);
+  const [toast, setToast] = useState(false);
 
   const toggleToast = () => {
     setToast(!toast);

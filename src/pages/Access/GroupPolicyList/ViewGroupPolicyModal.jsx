@@ -71,6 +71,7 @@ const ViewGroupPolicyModal = (props) => {
     <Modal
       isOpen={isOpen}
       role="dialog"
+      size="xl"
       autoFocus={true}
       centered={true}
       className="exampleModal"

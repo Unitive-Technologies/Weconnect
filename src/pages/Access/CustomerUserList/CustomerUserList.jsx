@@ -30,7 +30,7 @@ import BulkInactiveCustomerList from "./BulkInactiveCustomerList";
 
 const CustomerUserList = (props) => {
   //meta title
-  document.title = "Customer User List | VDigital";
+  document.title = "Customer Users | VDigital";
   const [showCustomerUserModal, setShowCustomerUserModal] = useState(false);
   const [showBulkActiveModal, setBulkActiveModal] = useState(false);
   const dispatch = useDispatch();
@@ -278,7 +278,7 @@ const CustomerUserList = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Access" breadcrumbItem="Customer User List" />
+          <Breadcrumbs title="Access" breadcrumbItem="Customer Users" />
           {/* {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : ( */}
