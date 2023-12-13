@@ -39,6 +39,7 @@ import ViewLcoModal from "./ViewLcoModal";
 import AddLcoModal from "./AddLcoModal";
 import BulkAddCreditModal from "./BulkAddCreditModal";
 import UploadModal from "./UploadModal";
+import BulkUpdateModal from "./BulkUpdateModal";
 
 const LCOList = (props) => {
   //meta title
@@ -119,7 +120,8 @@ const LCOList = (props) => {
   const [viewLco, setViewLco] = useState(false);
   const [showBulkCredit, setShowBulkCredit] = useState(false);
   const [showUploadLco, setShowUploadLco] = useState(false);
-
+  const [showBulkUpdateLco, setShowBulkUpdateLco] = useState(false);
+  const [showUploadCredit, setShowUploadCredit] = useState(false);
   const columns = useMemo(
     () => [
       {
@@ -443,13 +445,13 @@ const LCOList = (props) => {
       },
       {
         name: "Bulk Update",
-        // action: setShowBulkUpdateUser,
+        action: setShowBulkUpdateLco,
         type: "dropdown",
         dropdownName: "Upload",
       },
       {
         name: "Upload Credit",
-        // action: setShowBulkUpdateUser,
+        action: setShowUploadLco,
         type: "dropdown",
         dropdownName: "Upload",
       },
@@ -478,6 +480,14 @@ const LCOList = (props) => {
       />
       <UploadModal
         isOpen={showUploadLco}
+        toggle={() => setShowUploadLco(false)}
+      />
+      <BulkUpdateModal
+        isOpen={showBulkUpdateLco}
+        toggle={() => setShowBulkUpdateLco(false)}
+      />
+      <BulkUpdateModal
+        isOpen={showUploadCredit}
         toggle={() => setShowUploadLco(false)}
       />
       <div className="page-content">
