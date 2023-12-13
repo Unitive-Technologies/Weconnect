@@ -33,6 +33,8 @@ import { isEmpty } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import AddNewTaxList from './AddNewTaxList'
+import ViewTaxList from './ViewTaxList'
 
 const TaxList = (props) => {
   //meta title
@@ -54,8 +56,10 @@ const TaxList = (props) => {
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
-  const [modal, setModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+
+  const [showAddNewTaxList, setShowAddNewTaxList] = useState(false);
+  const [showViewTaxList, setShowTaxList] = useState(false);
 
   const columns = useMemo(
     () => [
@@ -85,7 +89,10 @@ const TaxList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5 className="font-size-14 mb-1" onClick={() => {
+                const userData = cellProps.row.original;
+                handleViewTaxList(userData);
+              }}>
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -236,7 +243,15 @@ const TaxList = (props) => {
   // }, [users]);
 
   const toggle = () => {
-    setModal(!modal);
+    setShowAddNewTaxList(!showAddNewTaxList);
+  };
+
+  const [viewTaxList, setViewTaxList] = useState({});
+
+  const handleViewTaxList = (userTaxData) => {
+    setShowTaxList(!showViewTaxList);
+    setViewTaxList(userTaxData);
+    // toggle();
   };
 
   const handleUserClick = (arg) => {
