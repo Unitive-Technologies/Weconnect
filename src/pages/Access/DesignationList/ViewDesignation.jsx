@@ -24,14 +24,14 @@ const ViewDesignation = (props) => {
   const { isOpen, toggle, designation } = props;
   const dispatch = useDispatch();
   const [showEditDesignation, setShowEditDesignation] = useState(false);
-
+  console.log("Designatin in View Designation: ", designation);
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
       name: (designation && designation.name) || "",
-      type_lbl: (designation && designation.type_lbl) || "",
+      type: (designation && designation.type) || "",
       code: (designation && designation.code) || "",
       parent: (designation && designation.parent) || "",
       status: (designation && designation.status) || "",
@@ -41,7 +41,7 @@ const ViewDesignation = (props) => {
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter designation name"),
-      type_lbl: Yup.string().required("Select Type"),
+      type: Yup.string().required("Select Type"),
       code: Yup.string().required("Enter Code"),
       parent: Yup.string().required("Select Parent Designation"),
       status: Yup.string().required("Select status"),
@@ -51,7 +51,7 @@ const ViewDesignation = (props) => {
       const updateDesignation = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
-        type_lbl: values["type_lbl"],
+        type: values["type"],
         code: values["code"],
         parent: values["parent"],
         status: values["status"],
@@ -144,20 +144,20 @@ const ViewDesignation = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.type_lbl || ""}
+                  value={validation.values.type || ""}
                   disabled={!showEditDesignation}
                 >
                   <option value="">Select Type</option>
-                  <option value="staff">Staff</option>
+                  <option value="Staff">Staff</option>
                   <option value="management user">Management User</option>
                   <option value="engineer">Engineer</option>
                   <option value="customer care">customer care</option>
                   <option value="collection">Collection</option>
                   <option value="lco">LCO</option>
                 </Input>
-                {validation.touched.type_lbl && validation.errors.type_lbl ? (
+                {validation.touched.type && validation.errors.type ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.type_lbl}
+                    {validation.errors.type}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -218,9 +218,9 @@ const ViewDesignation = (props) => {
                   value={validation.values.status || ""}
                   disabled={!showEditDesignation}
                 >
-                  <option value="">Select Status</option>
-                  <option value="1">Active</option>
-                  <option value="2">Inactive</option>
+                  <option value="">Select status</option>
+                  <option value="ACTIVE">Active</option>
+                  <option value="INACTIVE">Inactive</option>
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">

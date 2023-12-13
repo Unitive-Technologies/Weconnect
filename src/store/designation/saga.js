@@ -37,7 +37,12 @@ const convertDesignationListObject = (designationList) => {
           : designation.type === 4
           ? "Collection"
           : "LCO",
-      status: designation.status === 1 ? "Active" : "Inactive",
+      status:
+        designation.status === 1
+          ? "ACTIVE"
+          : district.status === 2
+          ? "INACTIVE"
+          : "BLOCKED",
       type_lbl: designation.type_lbl,
       created_at: designation.created_at,
       created_by: designation.created_by,
