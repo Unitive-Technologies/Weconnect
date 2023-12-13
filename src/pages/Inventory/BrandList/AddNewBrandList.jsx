@@ -66,7 +66,7 @@ const AddNewBrandList = (props) => {
         created_at: new Date(),
         created_by: values["created_by"],
       };
-      console.log("New Brand:" + newBrand);
+      console.log("New Brand:" + JSON.stringify(newBrand));
       // save new user
       dispatch(onAddBrandList(newBrand));
       validation.resetForm();
@@ -161,8 +161,8 @@ const AddNewBrandList = (props) => {
                   value={validation.values.box_type_lbl || ""}
                 >
                   <option value="">Select box type</option>
-                  <option value="1">Standard Definition(SD)</option>
-                  <option value="2">High Definition(HD)</option>
+                  <option value="SD">Standard Definition(SD)</option>
+                  <option value="HD">High Definition(HD)</option>
                 </Input>
                 {validation.touched.box_type_lbl &&
                 validation.errors.box_type_lbl ? (
@@ -202,7 +202,7 @@ const AddNewBrandList = (props) => {
                 <Input
                   name="length"
                   type="text"
-                  placeholder="Enter name"
+                  placeholder="Enter character length"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.length || ""}
@@ -226,7 +226,7 @@ const AddNewBrandList = (props) => {
                 <Input
                   name="significant_length"
                   type="text"
-                  placeholder="Enter name"
+                  placeholder="Enter significant length"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.significant_length || ""}
