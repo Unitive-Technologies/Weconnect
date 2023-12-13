@@ -33,7 +33,7 @@ const AddNewBrandList = (props) => {
       name: "",
       //   code: "",
       box_type_lbl: "",
-      brand_lbl: "",
+      brand_type_lbl: "",
       length: "",
       significant_length: "",
       char_allowed_lbl: "",
@@ -45,7 +45,7 @@ const AddNewBrandList = (props) => {
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
       box_type_lbl: Yup.string().required("Select box type"),
-      brand_lbl: Yup.string().required("Select brand type"),
+      brand_type_lbl: Yup.string().required("Select brand type"),
       cas_lbl: Yup.string().required("Select CAS"),
       length: Yup.string().required("Enter character length"),
       significant_length: Yup.string().required("Enter significant length"),
@@ -53,19 +53,22 @@ const AddNewBrandList = (props) => {
       status: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
-      const newCity = {
+      const newBrand = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
-        state_lbl: values["state_lbl"],
-        district_lbl: values["district_lbl"],
+        box_type_lbl: values["box_type_lbl"],
+        brand_type_lbl: values["brand_type_lbl"],
         status: values["status"],
-        description: values["description"],
+        cas_lbl: values["cas_lbl"],
+        length: values["length"],
+        significant_length: values["significant_length"],
+        char_allowed_lbl: values["char_allowed_lbl"],
         created_at: new Date(),
         created_by: values["created_by"],
       };
-      console.log("new city:" + newCity);
+      console.log("New Brand:" + newBrand);
       // save new user
-      dispatch(onAddCity(newCity));
+      dispatch(onAddBrandList(newBrand));
       validation.resetForm();
       toggle();
     },
@@ -84,8 +87,7 @@ const AddNewBrandList = (props) => {
       tabIndex="-1"
       toggle={toggle}
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4">Add New City</ModalHeader>
+      <ModalHeader tag="h4">Add New Brand</ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -97,11 +99,13 @@ const AddNewBrandList = (props) => {
           <Row>
             <Col sm="12">
               <div className="mb-3">
-                <Label className="form-label">City Name</Label>
+                <Label className="form-label">
+                  Name<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="name"
                   type="text"
-                  placeholder="Enter city name"
+                  placeholder="Enter name"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}
@@ -119,113 +123,159 @@ const AddNewBrandList = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">District Name</Label>
+                <Label className="form-label">
+                  Brand Type<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
-                  name="district_lbl"
-                  type="text"
-                  placeholder="Enter district name"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.district_lbl || ""}
-                  invalid={
-                    validation.touched.district_lbl &&
-                    validation.errors.district_lbl
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.district_lbl &&
-                validation.errors.district_lbl ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.district_lbl}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                <Label className="form-label">Select State</Label>
-                <Input
-                  name="state_lbl"
+                  name="brand_type_lbl"
                   type="select"
-                  placeholder="Select state"
+                  placeholder="Select brand type"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.state_lbl || ""}
+                  value={validation.values.brand_type_lbl || ""}
                 >
-                  <option value="">Select state</option>
-                  <option value="1">Delhi</option>
-                  <option value="2">Puducherry</option>
-                  <option value="3">Ladakh</option>
-                  <option value="4">Andaman and Nicobar Islands</option>
-                  <option value="5">Lakshadweep</option>
-                  <option value="6">Daman and Diu</option>
-                  <option value="7">Dadra and Nagar Haveli</option>
-                  <option value="8">Chandigarh</option>
-                  <option value="9">West Bengal</option>
-                  <option value="10">Uttarakhand</option>
-                  <option value="11">Utter Pradesh</option>
-                  <option value="12">Tripura</option>
-                  <option value="13">Telangana</option>
-                  <option value="14">Tamil Nadu</option>
-                  <option value="15">Sikkim</option>
-                  <option value="16">Rajasthan</option>
-                  <option value="17">Punjab</option>
-                  <option value="18">Odisha</option>
-                  <option value="19">Nagaland</option>
-                  <option value="20">Mizoram</option>
-                  <option value="21">Meghalaya</option>
-                  <option value="22">Manipur</option>
-                  <option value="23">Maharashtra</option>
-                  <option value="24">Madhya Pradesh</option>
-                  <option value="25">Kerala</option>
-                  <option value="26">Karnataka</option>
-                  <option value="27">Jharkhand</option>
-                  <option value="28">Jammu and Kashmir</option>
-                  <option value="29">Himachal Pradesh</option>
-                  <option value="30">Haryana</option>
-                  <option value="31">Gujarat</option>
-                  <option value="32">Goa</option>
-                  <option value="33">Chattisgarh</option>
-                  <option value="34">Bihar</option>
-                  <option value="35">Assam</option>
-                  <option value="36">Arunachal Pradesh</option>
-                  <option value="37">Andhra Pradesh</option>
+                  <option value="">Select brand type</option>
+                  <option value="STB">STB</option>
+                  <option value="Smartcard">Smartcard</option>
                 </Input>
-                {validation.touched.state_lbl && validation.errors.state_lbl ? (
+                {validation.touched.brand_type_lbl &&
+                validation.errors.brand_type_lbl ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.state_lbl}
+                    {validation.errors.brand_type_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Description</Label>
+                <Label className="form-label">
+                  Box Type<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
-                  name="description"
-                  type="textarea"
-                  placeholder="Enter description"
-                  rows="3"
+                  name="box_type_lbl"
+                  type="select"
+                  placeholder="Select box type"
+                  className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.description || ""}
+                  value={validation.values.box_type_lbl || ""}
+                >
+                  <option value="">Select box type</option>
+                  <option value="1">Standard Definition(SD)</option>
+                  <option value="2">High Definition(HD)</option>
+                </Input>
+                {validation.touched.box_type_lbl &&
+                validation.errors.box_type_lbl ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.box_type_lbl}
+                  </FormFeedback>
+                ) : null}
+              </div>
+
+              <div className="mb-3">
+                <Label className="form-label">
+                  CAS Type<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="cas_lbl"
+                  type="select"
+                  placeholder="Select CAS"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.cas_lbl || ""}
+                >
+                  <option value="">Select CAS</option>
+                  <option value="NSTV">NSTV</option>
+                </Input>
+                {validation.touched.cas_lbl && validation.errors.cas_lbl ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.cas_lbl}
+                  </FormFeedback>
+                ) : null}
+              </div>
+
+              <div className="mb-3">
+                <Label className="form-label">
+                  Character Length<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="length"
+                  type="text"
+                  placeholder="Enter name"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.length || ""}
                   invalid={
-                    validation.touched.description &&
-                    validation.errors.description
+                    validation.touched.length && validation.errors.length
                       ? true
                       : false
                   }
                 />
-                {validation.touched.description &&
-                validation.errors.description ? (
+                {validation.touched.length && validation.errors.length ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.description}
+                    {validation.errors.length}
                   </FormFeedback>
                 ) : null}
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Status</Label>
+                <Label className="form-label">
+                  Significant Length<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="significant_length"
+                  type="text"
+                  placeholder="Enter name"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.significant_length || ""}
+                  invalid={
+                    validation.touched.significant_length &&
+                    validation.errors.significant_length
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.significant_length &&
+                validation.errors.significant_length ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.significant_length}
+                  </FormFeedback>
+                ) : null}
+              </div>
+
+              <div className="mb-3">
+                <Label className="form-label">
+                  Allowed Characters<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="char_allowed_lbl"
+                  type="select"
+                  placeholder="Select allowed characters"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.char_allowed_lbl || ""}
+                >
+                  <option value="">Select allowed characters</option>
+                  <option value="Numeric">Numeric</option>
+                  <option value="Alphabets">Alphabets</option>
+                  <option value="Hexadecimal">Hexadecimal</option>
+                  <option value="Alphanumeric">Alphanumeric</option>
+                </Input>
+                {validation.touched.char_allowed_lbl &&
+                validation.errors.char_allowed_lbl ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.char_allowed_lbl}
+                  </FormFeedback>
+                ) : null}
+              </div>
+
+              <div className="mb-3">
+                <Label className="form-label">
+                  Status<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="status"
                   type="select"
@@ -235,10 +285,10 @@ const AddNewBrandList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
                 >
-                  <option value="">Select Status</option>
-                  <option value="11">Active</option>
-                  <option value="12">BLOCKED</option>
-                  <option value="13">In-Active</option>
+                  <option value="">Select status</option>
+                  <option value="Active">Active</option>
+                  <option value="blocked">BLOCKED</option>
+                  <option value="Inactive">In-Active</option>
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">

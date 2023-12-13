@@ -29,6 +29,9 @@ import { getBrandList as onGetBrandList } from "/src/store/brandlist/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import ViewBrandList from "./ViewBrandList";
+import AddNewBrandList from "./AddNewBrandList";
+import UploadBrandList from "./UploadBrandList";
 
 const BrandList = (props) => {
   //meta title
@@ -47,12 +50,29 @@ const BrandList = (props) => {
   const { brand, loading } = useSelector(BrandListProperties);
 
   useEffect(() => {
-    console.log("BrandList data in component:", brand);
+    // console.log("BrandList data in component:", brand);
   }, [brand]);
   const [isLoading, setLoading] = useState(loading);
 
-  const [userList, setUserList] = useState([]);
+  const [showAddBrand, setShowAddBrand] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [showUploadBrand, setShowUploadBrand] = useState(false);
+  const [showViewBrand, setShowViewBrand] = useState(false);
+  const [viewBrandData, setViewBrandData] = useState({});
+
+  const toggleViewBrand = (userData) => {
+    console.log("User Data: ", userData);
+    setShowViewBrand(!showViewBrand);
+    setViewBrandData(userData);
+  };
+
+  const toggleAddBrand = () => {
+    setShowAddBrand(!showAddBrand);
+  };
+
+  const toggleUploadBrand = () => {
+    setShowUploadBrand(!showUploadBrand);
+  };
 
   const columns = useMemo(
     () => [
@@ -82,7 +102,13 @@ const BrandList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  toggleViewBrand(userData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -235,8 +261,32 @@ const BrandList = (props) => {
 
   const keyField = "id";
 
+  const getTableActions = () => {
+    return [
+      {
+        name: "Create",
+        action: setShowAddBrand,
+        type: "normal",
+        icon: "create",
+      },
+      {
+        name: "Upload",
+        action: setShowUploadBrand,
+        type: "normal",
+        icon: "upload",
+      },
+    ];
+  };
+
   return (
     <React.Fragment>
+      <ViewBrandList
+        isOpen={showViewBrand}
+        toggle={toggleViewBrand}
+        city={viewBrandData}
+      />
+      <AddNewBrandList isOpen={showAddBrand} toggle={toggleAddBrand} />
+      <UploadBrandList isOpen={showUploadBrand} toggle={toggleUploadBrand} />
       <div className="page-content">
         <Container fluid>
           <Breadcrumbs title="Inventory" breadcrumbItem="Brand List" />
@@ -253,10 +303,11 @@ const BrandList = (props) => {
                       columns={columns}
                       data={brand}
                       isGlobalFilter={true}
-                      // isAddUserList={true}
+                      isAddUserList={true}
                       isShowingPageLength={true}
-                      // iscustomPageSizeOptions={true}
-                      handleUserClick={() => {}}
+                      tableActions={getTableActions()}
+                      handleUserClick={() => setShowAddBrand(true)}
+                      handleUploadUser={() => setShowUploadBrand(true)}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
