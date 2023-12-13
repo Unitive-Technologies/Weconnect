@@ -9,18 +9,8 @@ import {
   Col,
   Container,
   Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
   UncontrolledTooltip,
-  Input,
-  Form,
 } from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-
 import {
   Name,
   Code,
@@ -35,82 +25,25 @@ import {
   CreatedAt,
   CreatedBy,
 } from "./warehouseListCol";
-
-//Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
-
 import {
   getWarehouseList as onGetWarehouseList,
   // addNewUser as onAddNewUser,
   // updateUser as onUpdateUser,
   // deleteUser as onDeleteUser,
 } from "/src/store/warehouse/actions";
-import { isEmpty } from "lodash";
-
-//redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import ViewWareHouse from "./ViewWareHouse";
+import AddNewWareHouse from "./AddNewWareHouse";
+import UploadWareHouse from "./UploadWareHouse";
 
 const WarehouseList = (props) => {
   //meta title
   document.title = "Warehouse List | VDigital";
 
   const dispatch = useDispatch();
-  // const [contact, setContact] = useState();
-  // validation
-  // const validation = useFormik({
-  //   // enableReinitialize : use this flag when initial values needs to be changed
-  //   enableReinitialize: true,
-
-  //   initialValues: {
-  //     name: (contact && contact.name) || "",
-  //     designation: (contact && contact.designation) || "",
-  //     tags: (contact && contact.tags) || "",
-  //     email: (contact && contact.email) || "",
-  //     projects: (contact && contact.projects) || "",
-  //   },
-  //   validationSchema: Yup.object({
-  //     name: Yup.string().required("Please Enter Your Name"),
-  //     designation: Yup.string().required("Please Enter Your Designation"),
-  //     tags: Yup.array().required("Please Enter Tag"),
-  //     email: Yup.string()
-  //       .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-  //       .required("Please Enter Your Email"),
-  //     projects: Yup.string().required("Please Enter Your Project"),
-  //   }),
-  //   onSubmit: (values) => {
-  //     if (isEdit) {
-  //       const updateUser = {
-  //         id: contact.id,
-  //         name: values.name,
-  //         designation: values.designation,
-  //         tags: values.tags,
-  //         email: values.email,
-  //         projects: values.projects,
-  //       };
-
-  //       // update user
-  //       dispatch(onUpdateUser(updateUser));
-  //       validation.resetForm();
-  //       setIsEdit(false);
-  //     } else {
-  //       const newUser = {
-  //         id: Math.floor(Math.random() * (30 - 20)) + 20,
-  //         name: values["name"],
-  //         designation: values["designation"],
-  //         email: values["email"],
-  //         tags: values["tags"],
-  //         projects: values["projects"],
-  //       };
-  //       // save new user
-  //       dispatch(onAddNewUser(newUser));
-  //       validation.resetForm();
-  //     }
-  //     toggle();
-  //   },
-  // });
 
   const selectWarehouseState = (state) => state.warehouselist;
   const WarehouseProperties = createSelector(
@@ -127,10 +60,25 @@ const WarehouseList = (props) => {
     console.log("WarehouseList data in component:", warehouse);
   }, [warehouse]);
   const [isLoading, setLoading] = useState(loading);
-
-  const [userList, setUserList] = useState([]);
-  const [modal, setModal] = useState(false);
+  const [showAddWareHouse, setShowAddWareHouse] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [showUploadWareHouse, setShowUploadWareHouse] = useState(false);
+  const [showViewWareHouse, setShowViewWareHouse] = useState(false);
+  const [viewWareHouseData, setViewWareHouseData] = useState({});
+
+  const toggleViewWareHouse = (userData) => {
+    console.log("User Data: ", userData);
+    setShowViewWareHouse(!showViewWareHouse);
+    setViewWareHouseData(userData);
+  };
+
+  const toggleAddWareHouse = () => {
+    setShowAddWareHouse(!showAddWareHouse);
+  };
+
+  const toggleUploadWareHouse = () => {
+    setShowUploadWareHouse(!showUploadWareHouse);
+  };
 
   const columns = useMemo(
     () => [
@@ -160,7 +108,13 @@ const WarehouseList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  toggleViewWareHouse(userData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -306,38 +260,6 @@ const WarehouseList = (props) => {
     }
   }, [dispatch, warehouse]);
 
-  // useEffect(() => {
-  //   setContact(warehouse);
-  //   setIsEdit(false);
-  // }, [warehouse]);
-
-  // useEffect(() => {
-  //   if (!isEmpty(warehouse) && !!isEdit) {
-  //     setContact(warehouse);
-  //     setIsEdit(false);
-  //   }
-  // }, [warehouse]);
-
-  // const toggle = () => {
-  //   setModal(!modal);
-  // };
-
-  // const handleUserClick = (arg) => {
-  //   const user = arg;
-
-  //   setContact({
-  //     id: user.id,
-  //     name: user.name,
-  //     designation: user.designation,
-  //     email: user.email,
-  //     tags: user.tags,
-  //     projects: user.projects,
-  //   });
-  //   setIsEdit(true);
-
-  //   toggle();
-  // };
-
   var node = useRef();
   const onPaginationPageChange = (page) => {
     if (
@@ -351,41 +273,39 @@ const WarehouseList = (props) => {
     }
   };
 
-  //delete customer
-  // const [deleteModal, setDeleteModal] = useState(false);
-
-  // const onClickDelete = (users) => {
-  //   setContact(users);
-  //   setDeleteModal(true);
-  // };
-
-  // const handleDeleteUser = () => {
-  //   if (contact && contact.id) {
-  //     dispatch(onDeleteUser(contact.id));
-  //   }
-  //   setContact("");
-  //   onPaginationPageChange(1);
-  //   setDeleteModal(false);
-  // };
-
-  // const handleUserClicks = () => {
-  //   setUserList("");
-  //   setIsEdit(false);
-  //   toggle();
-  // };
-
   const keyField = "id";
+
+  const getTableActions = () => {
+    return [
+      {
+        name: "Create",
+        action: setShowAddWareHouse,
+        type: "normal",
+        icon: "create",
+      },
+      {
+        name: "Upload",
+        action: setShowUploadWareHouse,
+        type: "normal",
+        icon: "upload",
+      },
+    ];
+  };
 
   return (
     <React.Fragment>
-      {/* <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
-      /> */}
+      <ViewWareHouse
+        isOpen={showViewWareHouse}
+        toggle={toggleViewWareHouse}
+        warehouse={viewWareHouseData}
+      />
+      <AddNewWareHouse isOpen={showAddWareHouse} toggle={toggleAddWareHouse} />
+      <UploadWareHouse
+        isOpen={showUploadWareHouse}
+        toggle={toggleUploadWareHouse}
+      />
       <div className="page-content">
         <Container fluid>
-          {/* Render Breadcrumbs */}
           <Breadcrumbs title="Inventory" breadcrumbItem="Warhouse List" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
@@ -394,7 +314,6 @@ const WarehouseList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("warehouselist:" + JSON.stringify(warehouse))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
@@ -402,176 +321,15 @@ const WarehouseList = (props) => {
                       isGlobalFilter={true}
                       isAddUserList={true}
                       isShowingPageLength={true}
-                      // iscustomPageSizeOptions={true}
-                      handleUserClick={() => {}}
+                      tableActions={getTableActions()}
+                      handleUserClick={() => setShowAddWareHouse(true)}
+                      handleUploadUser={() => setShowUploadWareHouse(true)}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
                     />
-                    {/* <Modal isOpen={modal} toggle={toggle}>
-                      <ModalHeader toggle={toggle} tag="h4">
-                        {!!isEdit ? "Edit User" : "Add User"}
-                      </ModalHeader>
-                      <ModalBody>
-                        <Form
-                          onSubmit={(e) => {
-                            e.preventDefault();
-                            validation.handleSubmit();
-                            return false;
-                          }}
-                        >
-                          <Row>
-                            <Col xs={12}>
-                              <div className="mb-3">
-                                <Label className="form-label">Name</Label>
-                                <Input
-                                  name="name"
-                                  type="text"
-                                  placeholder="Insert Name"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.name || ""}
-                                  invalid={
-                                    validation.touched.name &&
-                                    validation.errors.name
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.name &&
-                                validation.errors.name ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.name}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">
-                                  Designation
-                                </Label>
-                                <Input
-                                  name="designation"
-                                  label="Designation"
-                                  placeholder="Insert Designation"
-                                  type="text"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.designation || ""}
-                                  invalid={
-                                    validation.touched.designation &&
-                                    validation.errors.designation
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.designation &&
-                                validation.errors.designation ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.designation}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">Email</Label>
-                                <Input
-                                  name="email"
-                                  label="Email"
-                                  type="email"
-                                  placeholder="Insert Email"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.email || ""}
-                                  invalid={
-                                    validation.touched.email &&
-                                    validation.errors.email
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.email &&
-                                validation.errors.email ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.email}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">Option</Label>
-                                <Input
-                                  type="select"
-                                  name="tags"
-                                  className="form-select"
-                                  multiple={true}
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.tags || []}
-                                  invalid={
-                                    validation.touched.tags &&
-                                    validation.errors.tags
-                                      ? true
-                                      : false
-                                  }
-                                >
-                                  <option>Photoshop</option>
-                                  <option>illustrator</option>
-                                  <option>Html</option>
-                                  <option>Php</option>
-                                  <option>Java</option>
-                                  <option>Python</option>
-                                  <option>UI/UX Designer</option>
-                                  <option>Ruby</option>
-                                  <option>Css</option>
-                                </Input>
-                                {validation.touched.tags &&
-                                validation.errors.tags ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.tags}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">Projects</Label>
-                                <Input
-                                  name="projects"
-                                  label="Projects"
-                                  type="text"
-                                  placeholder="Insert Projects"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.projects || ""}
-                                  invalid={
-                                    validation.touched.projects &&
-                                    validation.errors.projects
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.projects &&
-                                validation.errors.projects ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.projects}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                            </Col>
-                          </Row>
-                          <Row>
-                            <Col>
-                              <div className="text-end">
-                                <button
-                                  type="submit"
-                                  className="btn btn-success save-user"
-                                >
-                                  Save
-                                </button>
-                              </div>
-                            </Col>
-                          </Row>
-                        </Form>
-                      </ModalBody>
-                    </Modal> */}
                   </CardBody>
                 </Card>
               </Col>

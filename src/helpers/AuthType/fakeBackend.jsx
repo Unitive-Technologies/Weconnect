@@ -1154,6 +1154,19 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onPost(url.ADD_WAREHOUSELIST).reply((warehouselist) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (warehouselist && warehouselist.data) {
+          // Passing fake JSON data as response
+          resolve([200, warehouselist.data]);
+        } else {
+          reject([400, "Cannot add warehouse list"]);
+        }
+      });
+    });
+  });
+
   mock.onPut(url.UPDATE_DISTRIBUTOR).reply((distributor) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
