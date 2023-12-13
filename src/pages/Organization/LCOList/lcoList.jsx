@@ -38,6 +38,7 @@ import { ToastContainer } from "react-toastify";
 import ViewLcoModal from "./ViewLcoModal";
 import AddLcoModal from "./AddLcoModal";
 import BulkAddCreditModal from "./BulkAddCreditModal";
+import UploadModal from "./UploadModal";
 
 const LCOList = (props) => {
   //meta title
@@ -436,7 +437,7 @@ const LCOList = (props) => {
       },
       {
         name: "Upload",
-        // action: setShowUploadUser,
+        action: setShowUploadLco,
         type: "dropdown",
         dropdownName: "Upload",
       },
@@ -474,6 +475,10 @@ const LCOList = (props) => {
         isOpen={showBulkCredit}
         toggle={() => setShowBulkCredit(false)}
         lco={lcoData}
+      />
+      <UploadModal
+        isOpen={showUploadLco}
+        toggle={() => setShowUploadLco(false)}
       />
       <div className="page-content">
         <Container fluid>
