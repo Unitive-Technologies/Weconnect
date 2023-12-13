@@ -29,6 +29,7 @@ const BulkInactiveUserModal = (props) => {
   const { isOpen, toggle, user } = props;
   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
+  const operator = [];
 
   const columns = useMemo(
     () => [
@@ -178,6 +179,107 @@ const BulkInactiveUserModal = (props) => {
     []
   );
 
+  const selOperColumn = useMemo(
+    () => [
+      {
+        Header: "#",
+        disableFilters: true,
+        filterable: true,
+        Cell: (cellProps) => {
+          const totalRows = cellProps.rows.length;
+          const reverseIndex = totalRows - cellProps.row.index;
+
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {reverseIndex}
+                </Link>
+              </h5>
+            </>
+          );
+        },
+      },
+
+      {
+        Header: "Name",
+        // accessor: "name",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5
+                style={{
+                  maxWidth: 200,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  toggleViewModal(userData);
+                }}
+              >
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.name}
+                </Link>
+              </h5>
+            </>
+          );
+        },
+      },
+      {
+        Header: "Type",
+        // accessor: "login",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.username}
+                </Link>
+              </h5>
+            </>
+          );
+        },
+      },
+      {
+        Header: "Role",
+        // accessor: "status",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.status}
+                </Link>
+              </h5>
+            </>
+          );
+        },
+      },
+      {
+        Header: "Organization",
+        // accessor: "type",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.status}
+                </Link>
+              </h5>
+            </>
+          );
+        },
+      },
+    ],
+    []
+  );
   return (
     <Modal
       isOpen={isOpen}
@@ -208,6 +310,62 @@ const BulkInactiveUserModal = (props) => {
               paginationDiv="col-sm-12 col-md-7"
               pagination="pagination pagination-rounded justify-content-end mt-4"
             />
+            <div
+              style={{
+                // margin: "20px 0px",
+                marginTop: "20px",
+                marginBottom: "-18px",
+                zIndex: 12000,
+                backgroundColor: "#fff",
+                width: "fit-content",
+                marginLeft: "40%",
+                position: "absolute",
+                padding: "0px 10px",
+              }}
+            >
+              {" "}
+              <h5 style={{}}>Selected Operators</h5>
+            </div>
+            <Row
+              style={{
+                position: "relative",
+                border: "1px solid #ced4da",
+                padding: "20px 0px",
+                margin: "30px 0px",
+              }}
+            >
+              <Col lg={12}>
+                <TableContainer
+                  isPagination={true}
+                  columns={selOperColumn}
+                  data={operator}
+                  //   isGlobalFilter={true}
+                  isShowingPageLength={true}
+                  customPageSize={50}
+                  tableClass="table align-middle table-nowrap table-hover"
+                  theadClass="table-light"
+                  paginationDiv="col-sm-12 col-md-7"
+                  pagination="pagination pagination-rounded justify-content-end mt-4"
+                />
+              </Col>
+            </Row>
+            <div className="text-center mt-4 ">
+              <div
+                style={{
+                  display: "flex",
+                  gap: 5,
+                  textAlign: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <button type="button" className="btn btn-primary ml-2 ">
+                  Save
+                </button>
+                <button type="button" className="btn btn-primary ">
+                  Cancel
+                </button>
+              </div>
+            </div>
           </CardBody>
         </Card>
       </ModalBody>
