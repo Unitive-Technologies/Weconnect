@@ -41,6 +41,7 @@ import BulkAddCreditModal from "./BulkAddCreditModal";
 import UploadModal from "./UploadModal";
 import BulkUpdateModal from "./BulkUpdateModal";
 import UploadCreditModal from "./UploadCreditModal";
+import SettingsModal from "./SettingsModal";
 
 const LCOList = (props) => {
   //meta title
@@ -123,6 +124,7 @@ const LCOList = (props) => {
   const [showUploadLco, setShowUploadLco] = useState(false);
   const [showBulkUpdateLco, setShowBulkUpdateLco] = useState(false);
   const [showUploadCredit, setShowUploadCredit] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const columns = useMemo(
     () => [
       {
@@ -458,7 +460,7 @@ const LCOList = (props) => {
       },
       {
         name: "Settings",
-        // action: setBulkUserSettings,
+        action: setShowSettings,
         type: "normal",
         icon: "upload",
       },
@@ -491,6 +493,11 @@ const LCOList = (props) => {
         isOpen={showUploadCredit}
         toggle={() => setShowUploadCredit(false)}
       />
+      <SettingsModal
+        isOpen={showSettings}
+        toggle={() => setShowSettings(false)}
+      />
+
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
