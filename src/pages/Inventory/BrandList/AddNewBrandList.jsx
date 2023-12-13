@@ -288,7 +288,7 @@ const AddNewBrandList = (props) => {
                   <option value="">Select status</option>
                   <option value="Active">Active</option>
                   <option value="blocked">BLOCKED</option>
-                  <option value="Inactive">In-Active</option>
+                  <option value="In_Active">In-Active</option>
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">

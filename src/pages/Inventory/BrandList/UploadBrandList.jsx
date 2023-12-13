@@ -75,7 +75,7 @@ const UploadBrandList = (props) => {
     // Create a download link
     const link = document.createElement("a");
     link.href = window.URL.createObjectURL(blob);
-    link.download = "AdministrativeDivision.csv";
+    link.download = "Brand.csv";
 
     // Trigger a click on the link to start the download
     link.click();
