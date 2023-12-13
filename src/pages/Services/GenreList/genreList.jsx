@@ -280,7 +280,6 @@ const GenreList = (props) => {
     // toggle();
   };
 
-
   // const handleUserClick = (arg) => {
   //   const user = arg;
 

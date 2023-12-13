@@ -163,7 +163,10 @@ const LanguageList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5 className="font-size-14 mb-1" onClick={() => {
+                const userData = cellProps.row.original;
+                handleViewLanguageList(userData);
+              }}>
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -366,12 +369,9 @@ const LanguageList = (props) => {
 
   return (
     <React.Fragment>
-      {/* <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
-      /> */}
-
+      <ViewLanguageList isOpen={showViewLanguageList}
+        toggle={handleViewLanguageList}
+        language={viewLanguageList} />
       <AddNewLanguageList isOpen={showAddNewLanguageList} toggle={toggle} />
       <UploadLanguageList isOpen={showUploadLanguageList} toggle={toggle1} />
 
