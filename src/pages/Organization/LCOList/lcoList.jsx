@@ -40,6 +40,7 @@ import AddLcoModal from "./AddLcoModal";
 import BulkAddCreditModal from "./BulkAddCreditModal";
 import UploadModal from "./UploadModal";
 import BulkUpdateModal from "./BulkUpdateModal";
+import UploadCreditModal from "./UploadCreditModal";
 
 const LCOList = (props) => {
   //meta title
@@ -451,7 +452,7 @@ const LCOList = (props) => {
       },
       {
         name: "Upload Credit",
-        action: setShowUploadLco,
+        action: setShowUploadCredit,
         type: "dropdown",
         dropdownName: "Upload",
       },
@@ -486,9 +487,9 @@ const LCOList = (props) => {
         isOpen={showBulkUpdateLco}
         toggle={() => setShowBulkUpdateLco(false)}
       />
-      <BulkUpdateModal
+      <UploadCreditModal
         isOpen={showUploadCredit}
-        toggle={() => setShowUploadLco(false)}
+        toggle={() => setShowUploadCredit(false)}
       />
       <div className="page-content">
         <Container fluid>
@@ -501,7 +502,7 @@ const LCOList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("lcos:" + JSON.stringify(lcos))}
+                    {/* {console.log("lcos:" + JSON.stringify(lcos))} */}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
