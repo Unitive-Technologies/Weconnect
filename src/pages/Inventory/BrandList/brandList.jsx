@@ -130,7 +130,7 @@ const BrandList = (props) => {
       },
       {
         Header: "Box Type",
-        accessor: "boxtype",
+        accessor: "box_type_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <BoxType {...cellProps} />;
@@ -138,7 +138,7 @@ const BrandList = (props) => {
       },
       {
         Header: "Brand",
-        accessor: "brand",
+        accessor: "brand_type_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Brand {...cellProps} />;
@@ -146,7 +146,7 @@ const BrandList = (props) => {
       },
       {
         Header: "Char length",
-        accessor: "charlength",
+        accessor: "length",
         filterable: true,
         Cell: (cellProps) => {
           return <CharLength {...cellProps} />;
@@ -154,7 +154,7 @@ const BrandList = (props) => {
       },
       {
         Header: "Significant length",
-        accessor: "significant",
+        accessor: "significant_length",
         filterable: true,
         Cell: (cellProps) => {
           return <Significant {...cellProps} />;
@@ -162,7 +162,7 @@ const BrandList = (props) => {
       },
       {
         Header: "Allowed Character",
-        accessor: "allowed",
+        accessor: "char_allowed_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Allowed {...cellProps} />;
@@ -170,7 +170,7 @@ const BrandList = (props) => {
       },
       {
         Header: "CAS",
-        accessor: "cas",
+        accessor: "cas_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Cas {...cellProps} />;
@@ -283,7 +283,7 @@ const BrandList = (props) => {
       <ViewBrandList
         isOpen={showViewBrand}
         toggle={toggleViewBrand}
-        city={viewBrandData}
+        brand={viewBrandData}
       />
       <AddNewBrandList isOpen={showAddBrand} toggle={toggleAddBrand} />
       <UploadBrandList isOpen={showUploadBrand} toggle={toggleUploadBrand} />
@@ -297,7 +297,6 @@ const BrandList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("brandList:" + JSON.stringify(brand))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
