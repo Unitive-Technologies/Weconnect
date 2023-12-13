@@ -1,11 +1,19 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_WAREHOUSELIST } from "./actionTypes";
+import { GET_WAREHOUSELIST, ADD_WAREHOUSELIST } from "./actionTypes";
 
-import { getWarehouseListSuccess, getWarehouseListFail } from "./actions";
+import {
+  getWarehouseListSuccess,
+  getWarehouseListFail,
+  addWareHouseListSuccess,
+  addWareHouseListFail,
+} from "./actions";
 
 //Include Both Helper File with needed methods
-import { getWarehouseList } from "../../helpers/fakebackend_helper";
+import {
+  getWarehouseList,
+  addWareHouseList,
+} from "../../helpers/fakebackend_helper";
 
 const convertWarehouseListObject = (warehouselist) => {
   // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
@@ -40,8 +48,18 @@ function* fetchWarehouseList() {
   }
 }
 
+function* onAddWareHouseList({ payload: warehouselist }) {
+  try {
+    const response = yield call(addWareHouseList, warehouselist);
+    yield put(addWareHouseListSuccess(response));
+  } catch (error) {
+    yield put(addWareHouseListFail(error));
+  }
+}
+
 function* warehouseListSaga() {
   yield takeEvery(GET_WAREHOUSELIST, fetchWarehouseList);
+  yield takeEvery(ADD_WAREHOUSELIST, onAddWareHouseList);
 }
 
 export default warehouseListSaga;
