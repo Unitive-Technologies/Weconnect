@@ -418,7 +418,7 @@ const CompanyList = (props) => {
                       columns={columns}
                       data={company}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      // isAddUserList={true}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
                       handleUserClick={() => {}}

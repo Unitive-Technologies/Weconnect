@@ -329,7 +329,10 @@ export const getComplaintSubCategory = () => get(url.GET_COMPLAINTSUBCATEGORY);
 export const getConfigurationUploadLogs = () =>
   get(url.GET_CONFIGURATIONUPLOADLOGS);
 export const getCompanyList = () => get(url.GET_COMPANYLIST);
+
 export const getBrandList = () => get(url.GET_BRANDLIST);
+export const addBrandList = (brandlist) => post(url.ADD_BRANDLIST, brandlist);
+
 export const getWarehouseList = () => get(url.GET_WAREHOUSELIST);
 export const getInventoryStateList = () => get(url.GET_INVENTORYSTATELIST);
 export const getTax = () => get(url.GET_TAX);

@@ -93,7 +93,10 @@ export const ADD_NEW_OSDTEMPLATE = "/add/osdtemplatelist";
 
 export const GET_NCF = "/ncf";
 export const GET_COMPANYLIST = "/companylist";
+
 export const GET_BRANDLIST = "/brandlist";
+export const ADD_BRANDLIST = "/add/brandlist";
+
 export const GET_WAREHOUSELIST = "/warehouselist";
 export const GET_INVENTORYSTATELIST = "/inventorystatelist";
 

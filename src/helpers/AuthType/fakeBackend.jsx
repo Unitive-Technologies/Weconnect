@@ -1141,6 +1141,19 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onPost(url.ADD_BRANDLIST).reply((brandlist) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (brandlist && brandlist.data) {
+          // Passing fake JSON data as response
+          resolve([200, brandlist.data]);
+        } else {
+          reject([400, "Cannot add Brand list"]);
+        }
+      });
+    });
+  });
+
   mock.onPut(url.UPDATE_DISTRIBUTOR).reply((distributor) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

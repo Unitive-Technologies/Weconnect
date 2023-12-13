@@ -1,4 +1,9 @@
-import { GET_BRANDLIST_SUCCESS, GET_BRANDLIST_FAIL } from "./actionTypes";
+import {
+  GET_BRANDLIST_SUCCESS,
+  GET_BRANDLIST_FAIL,
+  ADD_BRANDLIST_SUCCESS,
+  ADD_BRANDLIST_FAIL,
+} from "./actionTypes";
 
 const INIT_STATE = {
   brandlist: [],
@@ -17,6 +22,18 @@ const BrandList = (state = INIT_STATE, action) => {
       };
 
     case GET_BRANDLIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_BRANDLIST_SUCCESS:
+      return {
+        ...state,
+        brandlist: [...state.brandlist, action.payload],
+      };
+
+    case ADD_BRANDLIST_FAIL:
       return {
         ...state,
         error: action.payload,
