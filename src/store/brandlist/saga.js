@@ -44,10 +44,10 @@ function* onAddBrandList({ payload: brandlist }) {
   try {
     const response = yield call(addBrandList, brandlist);
     yield put(addBrandListSuccess(response));
-    toast.success("Brand list Added Successfully", { autoClose: 2000 });
+    // toast.success("Brand list Added Successfully", { autoClose: 2000 });
   } catch (error) {
     yield put(addBrandListFail(error));
-    toast.error("Brand list Added Failed", { autoClose: 2000 });
+    // toast.error("Brand list Added Failed", { autoClose: 2000 });
   }
 }
 
