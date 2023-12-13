@@ -29,7 +29,7 @@ const BulkInactiveUserModal = (props) => {
   const { isOpen, toggle, user } = props;
   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
-  const operator = [];
+  // const user = [];
 
   const columns = useMemo(
     () => [
@@ -179,7 +179,7 @@ const BulkInactiveUserModal = (props) => {
     []
   );
 
-  const selOperColumn = useMemo(
+  const userColumn = useMemo(
     () => [
       {
         Header: "#",
@@ -324,7 +324,7 @@ const BulkInactiveUserModal = (props) => {
               }}
             >
               {" "}
-              <h5 style={{}}>Selected Operators</h5>
+              <h5 style={{}}>Selected Users</h5>
             </div>
             <Row
               style={{
@@ -337,8 +337,8 @@ const BulkInactiveUserModal = (props) => {
               <Col lg={12}>
                 <TableContainer
                   isPagination={true}
-                  columns={selOperColumn}
-                  data={operator}
+                  columns={userColumn}
+                  data={user}
                   //   isGlobalFilter={true}
                   isShowingPageLength={true}
                   customPageSize={50}
