@@ -26,8 +26,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const BulkInactiveUserModal = (props) => {
-  const { isOpen, toggle, user } = props;
-  console.log("user in viewuser modal:" + JSON.stringify(user));
+  const { isOpen, handleBulkInactiveUser, user } = props;
+  // console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
   // const user = [];
 
@@ -289,15 +289,15 @@ const BulkInactiveUserModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleBulkInactiveUser}
     >
-      <ModalHeader toggle={toggle} tag="h4">
+      <ModalHeader toggle={handleBulkInactiveUser} tag="h4">
         Bulk Active/Inactive User
       </ModalHeader>
       <ModalBody>
         <Card>
           <CardBody>
-            {console.log("user in bulk:" + JSON.stringify(user))}
+            {/* {console.log("user in bulk:" + JSON.stringify(user))} */}
             <TableContainer
               isPagination={true}
               columns={columns}

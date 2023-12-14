@@ -1,32 +1,29 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const ViewUserModal = (props) => {
-  const { isOpen, toggle, user } = props;
-  //   console.log("user in viewuser modal:" + JSON.stringify(user));
+  const { isOpen, handleViewUser, user } = props;
+  console.log("isOpen in viewuser modal:" + isOpen);
+
   const dispatch = useDispatch();
   const [showEditUser, setShowEditUser] = useState(false);
-
+  console.log("edit in viewuser modal:" + showEditUser);
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -83,20 +80,16 @@ const ViewUserModal = (props) => {
       // update user
       dispatch(onUpdateUser(updateUser));
       validation.resetForm();
-      toggle();
+      handleViewUser();
     },
   });
 
   const handleCancel = () => {
     setShowEditUser(false);
-    toggle();
+    handleViewUser();
   };
   return (
     <>
-      {/* <EditUserModal
-        isOpen={showEditUser}
-        // onClose={() => setShowEditUser(false)}
-      /> */}
       <Modal
         isOpen={isOpen}
         size="xl"
@@ -107,22 +100,23 @@ const ViewUserModal = (props) => {
         tabIndex="-1"
         toggle={handleCancel}
       >
-        <ModalHeader toggle={toggle} tag="h4">
+        <ModalHeader toggle={handleCancel} tag="h4">
           {!showEditUser ? "View User" : "Edit User"}
         </ModalHeader>
-
-        <Link
-          style={{
-            position: "absolute",
-            marginLeft: "92%",
-            marginTop: "1%",
-          }}
-          to="#!"
-          className="btn btn-light me-1"
-          onClick={() => setShowEditUser(true)}
-        >
-          <i className="mdi mdi-pencil-outline"></i>
-        </Link>
+        {!showEditUser && (
+          <Link
+            style={{
+              position: "absolute",
+              marginLeft: "92%",
+              marginTop: "1%",
+            }}
+            to="#!"
+            className="btn btn-light me-1"
+            onClick={() => setShowEditUser(true)}
+          >
+            <i className="mdi mdi-pencil-outline"></i>
+          </Link>
+        )}
         <ModalBody>
           <Form
             onSubmit={(e) => {
@@ -385,14 +379,13 @@ const ViewUserModal = (props) => {
             </Row>
           </Form>
         </ModalBody>
-        {/* </Modal> */}
       </Modal>
     </>
   );
 };
 
 ViewUserModal.propTypes = {
-  toggle: PropTypes.func,
+  handleViewUser: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 

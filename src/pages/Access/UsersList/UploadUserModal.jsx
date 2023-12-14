@@ -4,29 +4,22 @@ import {
   Card,
   CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
-  Label,
-  FormFeedback,
-  UncontrolledTooltip,
-  Input,
   Form,
-  CardTitle,
   CardSubtitle,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
+
+import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 import { addNewUser as onAddNewUser } from "/src/store/users/actions";
 
 const UploadUserModal = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleUploadUser } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
 
@@ -124,7 +117,7 @@ const UploadUserModal = (props) => {
 
     // Move dispatch line above the return statement
     dispatch(onAddNewUser(data));
-
+    handleUploadUser();
     return data;
   };
 
@@ -137,9 +130,9 @@ const UploadUserModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleUploadUser}
     >
-      <ModalHeader toggle={toggle} tag="h4">
+      <ModalHeader toggle={handleUploadUser} tag="h4">
         Upload User
       </ModalHeader>
       <ModalBody>
@@ -242,7 +235,7 @@ const UploadUserModal = (props) => {
 };
 
 UploadUserModal.propTypes = {
-  toggle: PropTypes.func,
+  handleUploadUser: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 

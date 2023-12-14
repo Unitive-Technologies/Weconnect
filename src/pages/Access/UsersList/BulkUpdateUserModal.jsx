@@ -4,30 +4,20 @@ import {
   Card,
   CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
-  Label,
-  FormFeedback,
-  UncontrolledTooltip,
-  Input,
   Form,
   CardTitle,
   CardSubtitle,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const BulkUpdateUserModal = (props) => {
-  const { isOpen, toggle } = props;
-  //   console.log("user in viewuser modal:" + JSON.stringify(user));
-  const dispatch = useDispatch();
+  const { isOpen, handleBulkUpdateUser } = props;
 
   const [selectedFiles, setselectedFiles] = useState([]);
 
@@ -59,16 +49,14 @@ const BulkUpdateUserModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleBulkUpdateUser}
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader toggle={toggle} tag="h4">
+      <ModalHeader toggle={handleBulkUpdateUser} tag="h4">
         Bulk Update User
       </ModalHeader>
       <ModalBody>
         <Card>
           <CardBody>
-            {/* <CardTitle>Dropzone</CardTitle> */}
             <CardSubtitle className="mb-3"> Select File to Upload</CardSubtitle>
             <Form>
               <Dropzone
@@ -157,7 +145,7 @@ const BulkUpdateUserModal = (props) => {
 };
 
 BulkUpdateUserModal.propTypes = {
-  toggle: PropTypes.func,
+  handleBulkUpdateUser: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 

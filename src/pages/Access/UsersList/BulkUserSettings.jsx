@@ -5,29 +5,18 @@ import {
   Card,
   CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
-  Label,
-  FormFeedback,
-  UncontrolledTooltip,
-  Input,
-  Form,
-  CardTitle,
-  CardSubtitle,
 } from "reactstrap";
 import { Link } from "react-router-dom";
-import Dropzone from "react-dropzone";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const BulkUserSettings = (props) => {
-  const { isOpen, toggle, user } = props;
-  console.log("user in viewuser modal:" + JSON.stringify(user));
+  const { isOpen, handleUserSettings, user } = props;
+  // console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
 
   const columns = useMemo(
@@ -438,15 +427,15 @@ const BulkUserSettings = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleUserSettings}
     >
-      <ModalHeader toggle={toggle} tag="h4">
+      <ModalHeader toggle={handleUserSettings} tag="h4">
         Bulk User Settings
       </ModalHeader>
       <ModalBody>
         <Card>
           <CardBody>
-            {console.log("user in bulk:" + JSON.stringify(user))}
+            {/* {console.log("user in bulk:" + JSON.stringify(user))} */}
             <TableContainer
               isPagination={true}
               columns={columns}
@@ -549,7 +538,11 @@ const BulkUserSettings = (props) => {
                 <button type="button" className="btn btn-primary ml-2 ">
                   Save
                 </button>
-                <button type="button" className="btn btn-primary ">
+                <button
+                  type="button"
+                  className="btn btn-primary "
+                  onClick={handleUserSettings}
+                >
                   Cancel
                 </button>
               </div>

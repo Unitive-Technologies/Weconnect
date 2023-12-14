@@ -1,29 +1,25 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
+  ModalFooter,
   ModalHeader,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewUser as onAddNewUser } from "/src/store/users/actions";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const AddUserModal = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleAddUser } = props;
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -80,7 +76,7 @@ const AddUserModal = (props) => {
       // save new user
       dispatch(onAddNewUser(newUser));
       validation.resetForm();
-      toggle();
+      handleAddUser();
     },
   });
   return (
@@ -92,10 +88,9 @@ const AddUserModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleAddUser}
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4" toggle={toggle}>
+      <ModalHeader tag="h4" toggle={handleAddUser}>
         Add User
       </ModalHeader>
       <ModalBody>
@@ -382,24 +377,42 @@ const AddUserModal = (props) => {
               </div>
             </Col>
           </Row>
+
           <Row>
             <Col>
-              <div className="text-end">
+              <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
-                  Create
+                  Save
                 </button>
-              </div>
+                <button
+                  type="reset"
+                  className="btn btn-warning"
+                  onClick={() => validation.resetForm()}
+                >
+                  Reset
+                </button>
+
+                <button
+                  type="button"
+                  className="btn btn-outline-danger"
+                  onClick={() => {
+                    validation.resetForm();
+                    handleAddUser();
+                  }}
+                >
+                  Cancel
+                </button>
+              </ModalFooter>
             </Col>
           </Row>
         </Form>
       </ModalBody>
-      {/* </Modal> */}
     </Modal>
   );
 };
 
 AddUserModal.propTypes = {
-  toggle: PropTypes.func,
+  handleAddUser: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
