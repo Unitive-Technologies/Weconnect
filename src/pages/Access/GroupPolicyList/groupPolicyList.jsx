@@ -12,7 +12,6 @@ import {
   Toast,
   ToastHeader,
   ToastBody,
-  UncontrolledAlert,
 } from "reactstrap";
 
 import { Email, Tags, Projects } from "./groupPolicyListCol";

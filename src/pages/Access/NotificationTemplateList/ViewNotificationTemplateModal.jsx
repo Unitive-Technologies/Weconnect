@@ -21,7 +21,7 @@ import { useSelector, useDispatch } from "react-redux";
 // import { updateNotificationTemplate as onUpdateNotificationTemplate } from "/src/store/users/actions";
 
 const ViewNotificationTemplateModal = (props) => {
-  const { isOpen, toggle, user } = props;
+  const { isOpen, handleViewNotificationTemplate, notiTemplate } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
 
@@ -30,14 +30,14 @@ const ViewNotificationTemplateModal = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      name: user.msg_head,
-      type: user.msg_type_lbl,
-      fontsize: user.msg_fontsize,
-      fontcolor: user.msg_fontcolor,
-      fontbgcolor: user.msg_fontbgcolor,
-      fontfamily: user.msg_fontfamily,
-      status: user.status,
-      content: user.msg_content,
+      name: notiTemplate.msg_head,
+      type: notiTemplate.msg_type_lbl,
+      fontsize: notiTemplate.msg_fontsize,
+      fontcolor: notiTemplate.msg_fontcolor,
+      fontbgcolor: notiTemplate.msg_fontbgcolor,
+      fontfamily: notiTemplate.msg_fontfamily,
+      status: notiTemplate.status,
+      content: notiTemplate.msg_content,
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
@@ -51,7 +51,7 @@ const ViewNotificationTemplateModal = (props) => {
     }),
     onSubmit: (values) => {
       const updateNotification = {
-        id: user.id,
+        id: notiTemplate.id,
         name: values.name,
         type: values.type,
         fontsize: values.fontsize,
@@ -65,7 +65,7 @@ const ViewNotificationTemplateModal = (props) => {
       // update user
       dispatch(onUpdateNotificationTemplate(updateNotification));
       validation.resetForm();
-      toggle();
+      handleViewNotificationTemplate();
     },
   });
   return (
@@ -76,10 +76,10 @@ const ViewNotificationTemplateModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleViewNotificationTemplate}
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader toggle={toggle} tag="h4">
+      <ModalHeader toggle={handleViewNotificationTemplate} tag="h4">
         View Notification Template
       </ModalHeader>
       <ModalBody>

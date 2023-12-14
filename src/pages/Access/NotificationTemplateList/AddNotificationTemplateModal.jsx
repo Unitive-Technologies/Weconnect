@@ -23,7 +23,7 @@ import { addNewNotificationTemplate as onAddNewNotificationTemplate } from "/src
 import { useSelector, useDispatch } from "react-redux";
 
 const AddNotificationTemplateModal = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleAddNotificationTemplate } = props;
   const dispatch = useDispatch();
   const [user, setUser] = useState();
   const FontSize = Array.from({ length: 93 }, (_, index) => index + 8);
@@ -76,7 +76,7 @@ const AddNotificationTemplateModal = (props) => {
       // save new user
       dispatch(onAddNewNotificationTemplate(newNotification));
       validation.resetForm();
-      toggle();
+      handleAddNotificationTemplate();
     },
   });
   return (
@@ -87,10 +87,10 @@ const AddNotificationTemplateModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleAddNotificationTemplate}
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4" toggle={toggle}>
+      <ModalHeader tag="h4" toggle={handleAddNotificationTemplate}>
         Create Notification Template
       </ModalHeader>
       <ModalBody>

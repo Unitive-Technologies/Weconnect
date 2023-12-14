@@ -15,6 +15,9 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Toast,
+  ToastHeader,
+  ToastBody,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
@@ -27,7 +30,7 @@ import ViewNotificationTemplateModal from "./ViewNotificationTemplateModal";
 
 const NotificationTemplateList = (props) => {
   //meta title
-  document.title = "Notification Template List | VDigital";
+  document.title = "Notification Templates | VDigital";
 
   const dispatch = useDispatch();
 
@@ -49,10 +52,18 @@ const NotificationTemplateList = (props) => {
   const [isLoading, setLoading] = useState(loading);
 
   const [userList, setUserList] = useState([]);
-  const [modal, setModal] = useState(false);
-  const [modal1, setModal1] = useState(false);
+  const [showAddNotificationTemplate, setShowAddNotificationTemplate] =
+    useState(false);
+  const [viewNotificationTemplate, setViewNotificationTemplate] =
+    useState(false);
   const [modal2, setModal2] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [showActionNotificationModal, setShowActionNotificationModal] =
+    useState(false);
+
+  const handleActionNotification = () => {
+    setShowActionNotificationModal(!showActionNotificationModal);
+  };
 
   const columns = useMemo(
     () => [
@@ -87,7 +98,7 @@ const NotificationTemplateList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  toggleViewModal(userData);
+                  handleViewNotificationTemplate(userData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -250,80 +261,77 @@ const NotificationTemplateList = (props) => {
     }
   }, [dispatch, noTemplate]);
 
-  const toggle = () => {
-    setModal(!modal);
+  const handleAddNotificationTemplate = () => {
+    setShowAddNotificationTemplate(!showAddNotificationTemplate);
   };
 
   const toggle2 = () => {
     setModal2(!modal2);
   };
-  const [viewUser, setViewUser] = useState({});
+  const [viewNotiTemp, setViewUser] = useState({});
   // const toggleViewModal = () => setModal(modal);
   // const handleUserClick = (arg) => {
-  const toggleViewModal = (userData) => {
-    setModal1(!modal1);
+  const handleViewNotificationTemplate = (userData) => {
+    setViewNotificationTemplate(!viewNotificationTemplate);
     setViewUser(userData);
     // toggle();
   };
 
   var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
+  const getTableActions = () => {
+    return [
+      {
+        name: "Create",
+        action: setShowAddNotificationTemplate,
+        type: "normal",
+        icon: "create",
+      },
 
-  //delete customer
+      {
+        name: "Schedule Notification",
+        action: setShowActionNotificationModal,
+        type: "dropdown",
+        dropdownName: "Actions",
+      },
+    ];
+  };
 
   const keyField = "id";
 
   return (
     <React.Fragment>
-      {/* <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
-      /> */}
-      <AddNotificationTemplateModal isOpen={modal} toggle={toggle} />
+      <div
+        className="position-fixed top-0 end-0 p-3"
+        style={{ zIndex: "1005" }}
+      >
+        <Toast isOpen={showActionNotificationModal}>
+          <ToastHeader toggle={handleActionNotification}>
+            <i className="mdi mdi-alert-outline me-2"></i> Warning
+          </ToastHeader>
+          <ToastBody>Please select atleast one Notification Template</ToastBody>
+        </Toast>
+      </div>
+      <AddNotificationTemplateModal
+        isOpen={showAddNotificationTemplate}
+        handleAddNotificationTemplate={handleAddNotificationTemplate}
+      />
       <ViewNotificationTemplateModal
-        isOpen={modal1}
-        toggle={toggleViewModal}
-        user={viewUser}
+        isOpen={viewNotificationTemplate}
+        handleViewNotificationTemplate={handleViewNotificationTemplate}
+        notiTemplate={viewNotiTemp}
       />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs
-            title="Access"
-            breadcrumbItem="Notification Template List"
-          />
+          <Breadcrumbs title="Access" breadcrumbItem="Notification Templates" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
             <Row>
               <Col lg="12">
                 <Card>
-                  <CardBody>
+                  {/* <CardBody>
                     <div className="d-flex align-items-center justify-content-between">
-                      <h5 className="mb-0 card-title flex-grow-1">
-                        {/* Jobs Lists */}
-                      </h5>
-                      {/* <form className="app-search d-none d-lg-block">
-                        <div className="position-relative">
-                          <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Search..."
-                          />
-                          <span className="bx bx-search-alt" />
-                        </div>
-                      </form> */}
                       <div className="flex-shrink-0">
                         <Link
                           to="#!"
@@ -363,7 +371,7 @@ const NotificationTemplateList = (props) => {
                         )}
                       </div>
                     </div>
-                  </CardBody>
+                  </CardBody> */}
                   <CardBody>
                     {console.log("template:" + JSON.stringify(noTemplate))}
                     <TableContainer
@@ -371,178 +379,17 @@ const NotificationTemplateList = (props) => {
                       columns={columns}
                       data={noTemplate}
                       isGlobalFilter={true}
-                      //   isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
+                      tableActions={getTableActions()}
                       // iscustomPageSizeOptions={true}
-                      handleUserClick={() => {}}
+
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
                     />
-                    {/* <Modal isOpen={modal} toggle={toggle}>
-                      <ModalHeader toggle={toggle} tag="h4">
-                        {!!isEdit ? "Edit User" : "Add User"}
-                      </ModalHeader>
-                      <ModalBody>
-                        <Form
-                          onSubmit={(e) => {
-                            e.preventDefault();
-                            validation.handleSubmit();
-                            return false;
-                          }}
-                        >
-                          <Row>
-                            <Col xs={12}>
-                              <div className="mb-3">
-                                <Label className="form-label">Name</Label>
-                                <Input
-                                  name="name"
-                                  type="text"
-                                  placeholder="Insert Name"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.name || ""}
-                                  invalid={
-                                    validation.touched.name &&
-                                      validation.errors.name
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.name &&
-                                  validation.errors.name ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.name}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">
-                                  Designation
-                                </Label>
-                                <Input
-                                  name="designation"
-                                  label="Designation"
-                                  placeholder="Insert Designation"
-                                  type="text"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.designation || ""}
-                                  invalid={
-                                    validation.touched.designation &&
-                                      validation.errors.designation
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.designation &&
-                                  validation.errors.designation ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.designation}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">Email</Label>
-                                <Input
-                                  name="email"
-                                  label="Email"
-                                  type="email"
-                                  placeholder="Insert Email"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.email || ""}
-                                  invalid={
-                                    validation.touched.email &&
-                                      validation.errors.email
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.email &&
-                                  validation.errors.email ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.email}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">Option</Label>
-                                <Input
-                                  type="select"
-                                  name="tags"
-                                  className="form-select"
-                                  multiple={true}
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.tags || []}
-                                  invalid={
-                                    validation.touched.tags &&
-                                      validation.errors.tags
-                                      ? true
-                                      : false
-                                  }
-                                >
-                                  <option>Photoshop</option>
-                                  <option>illustrator</option>
-                                  <option>Html</option>
-                                  <option>Php</option>
-                                  <option>Java</option>
-                                  <option>Python</option>
-                                  <option>UI/UX Designer</option>
-                                  <option>Ruby</option>
-                                  <option>Css</option>
-                                </Input>
-                                {validation.touched.tags &&
-                                  validation.errors.tags ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.tags}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">Projects</Label>
-                                <Input
-                                  name="projects"
-                                  label="Projects"
-                                  type="text"
-                                  placeholder="Insert Projects"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.projects || ""}
-                                  invalid={
-                                    validation.touched.projects &&
-                                      validation.errors.projects
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.projects &&
-                                  validation.errors.projects ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.projects}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                            </Col>
-                          </Row>
-                          <Row>
-                            <Col>
-                              <div className="text-end">
-                                <button
-                                  type="submit"
-                                  className="btn btn-success save-user"
-                                >
-                                  Save
-                                </button>
-                              </div>
-                            </Col>
-                          </Row>
-                        </Form>
-                      </ModalBody>
-                    </Modal> */}
                   </CardBody>
                 </Card>
               </Col>
