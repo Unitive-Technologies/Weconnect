@@ -1,17 +1,13 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
   ModalFooter,
@@ -19,12 +15,11 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewDesignation as onAddNewDesignation } from "/src/store/designation/actions";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const AddNewDesignation = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleAddDesignation } = props;
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -64,7 +59,7 @@ const AddNewDesignation = (props) => {
       // save new user
       dispatch(onAddNewDesignation(newDesignation));
       validation.resetForm();
-      toggle();
+      handleAddDesignation();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -80,9 +75,9 @@ const AddNewDesignation = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleAddDesignation}
     >
-      <ModalHeader tag="h4" toggle={toggle}>
+      <ModalHeader tag="h4" toggle={handleAddDesignation}>
         Add New Designation
       </ModalHeader>
       <ModalBody>
@@ -275,7 +270,7 @@ const AddNewDesignation = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    toggle();
+                    handleAddDesignation();
                   }}
                 >
                   Cancel

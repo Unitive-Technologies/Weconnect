@@ -1,30 +1,28 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
+  ModalFooter,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const ViewDesignation = (props) => {
-  const { isOpen, toggle, designation } = props;
+  const { isOpen, handleViewDesignation, designation } = props;
   const dispatch = useDispatch();
   const [showEditDesignation, setShowEditDesignation] = useState(false);
-  console.log("Designatin in View Designation: ", designation);
+  // console.log("Designatin in View Designation: ", designation);
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -62,45 +60,46 @@ const ViewDesignation = (props) => {
       // console.log("new district:" + updateCity);
       dispatch(onAddDistrict(updateDesignation));
       validation.resetForm();
-      toggle();
+      handleViewDesignation();
     },
   });
 
-  const editToggle = () => {
+  const handleCancel = () => {
     setShowEditDesignation(false);
-    toggle();
+    handleViewDesignation();
   };
 
-  console.log("Show Edit city status: ", showEditDesignation);
+  // console.log("Show Edit city status: ", showEditDesignation);
 
   return (
     <Modal
       isOpen={isOpen}
       role="dialog"
+      size="xl"
       autoFocus={true}
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleCancel}
     >
-      {!showEditDesignation ? (
-        <ModalHeader toggle={toggle} tag="h4">
-          View {validation.values.name}
-          <i
-            className="bx bx bxs-edit"
-            style={{
-              position: "absolute",
-              marginLeft: "55%",
-              cursor: "pointer",
-              marginTop: "1%",
-            }}
-            onClick={() => setShowEditDesignation(true)}
-          ></i>
-        </ModalHeader>
-      ) : (
-        <ModalHeader toggle={editToggle} tag="h4">
-          Edit Designation
-        </ModalHeader>
+      <ModalHeader toggle={handleCancel} tag="h4">
+        {!showEditDesignation
+          ? `View ${validation.values.name}`
+          : `Edit ${validation.values.name}`}
+      </ModalHeader>
+      {!showEditDesignation && (
+        <Link
+          style={{
+            position: "absolute",
+            marginLeft: "92%",
+            marginTop: "1%",
+          }}
+          to="#!"
+          className="btn btn-light me-1"
+          onClick={() => setShowEditDesignation(true)}
+        >
+          <i className="mdi mdi-pencil-outline"></i>
+        </Link>
       )}
       <ModalBody>
         <Form
@@ -111,7 +110,7 @@ const ViewDesignation = (props) => {
           }}
         >
           <Row>
-            <Col sm="12">
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Designation</Label>
                 <Input
@@ -134,7 +133,59 @@ const ViewDesignation = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">Code</Label>
+                <Input
+                  name="code"
+                  label="code"
+                  type="text"
+                  placeholder="Enter Code"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.code || ""}
+                  invalid={
+                    validation.touched.code && validation.errors.code
+                      ? true
+                      : false
+                  }
+                  disabled={!showEditDesignation}
+                />
+                {validation.touched.code && validation.errors.code ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.code}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">Status</Label>
+                <Input
+                  name="status"
+                  type="select"
+                  placeholder="Select Status"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.status || ""}
+                  disabled={!showEditDesignation}
+                >
+                  <option value="">Select status</option>
+                  <option value="ACTIVE">Active</option>
+                  <option value="INACTIVE">Inactive</option>
+                </Input>
+                {validation.touched.status && validation.errors.status ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.status}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Type</Label>
                 <Input
@@ -161,30 +212,8 @@ const ViewDesignation = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
-              <div className="mb-3">
-                <Label className="form-label">Code</Label>
-                <Input
-                  name="code"
-                  label="code"
-                  type="text"
-                  placeholder="Enter Code"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.code || ""}
-                  invalid={
-                    validation.touched.code && validation.errors.code
-                      ? true
-                      : false
-                  }
-                  disabled={!showEditDesignation}
-                />
-                {validation.touched.code && validation.errors.code ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.code}
-                  </FormFeedback>
-                ) : null}
-              </div>
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Parent designation</Label>
                 <Input
@@ -206,28 +235,8 @@ const ViewDesignation = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-              <div className="mb-3">
-                <Label className="form-label">Status</Label>
-                <Input
-                  name="status"
-                  type="select"
-                  placeholder="Select Status"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.status || ""}
-                  disabled={!showEditDesignation}
-                >
-                  <option value="">Select status</option>
-                  <option value="ACTIVE">Active</option>
-                  <option value="INACTIVE">Inactive</option>
-                </Input>
-                {validation.touched.status && validation.errors.status ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.status}
-                  </FormFeedback>
-                ) : null}
-              </div>
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Description</Label>
                 <Input
@@ -255,24 +264,43 @@ const ViewDesignation = (props) => {
               </div>
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <div className="text-end">
-                <button type="submit" className="btn btn-success save-user">
-                  Save
-                </button>
-              </div>
-            </Col>
-          </Row>
+          {showEditDesignation && (
+            <Row>
+              <Col>
+                <ModalFooter>
+                  <button type="submit" className="btn btn-success save-user">
+                    Create
+                  </button>
+                  <button
+                    type="reset"
+                    className="btn btn-warning"
+                    onClick={() => validation.resetForm()}
+                  >
+                    Reset
+                  </button>
+
+                  <button
+                    type="button"
+                    className="btn btn-outline-danger"
+                    onClick={() => {
+                      validation.resetForm();
+                      handleCancel();
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </ModalFooter>
+              </Col>
+            </Row>
+          )}
         </Form>
       </ModalBody>
-      {/* </Modal> */}
     </Modal>
   );
 };
 
 ViewDesignation.propTypes = {
-  toggle: PropTypes.func,
+  handleViewDesignation: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 

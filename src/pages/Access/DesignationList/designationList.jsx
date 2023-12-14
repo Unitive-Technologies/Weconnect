@@ -44,7 +44,7 @@ const DesignationList = (props) => {
   const [showViewDesignation, setShowViewDesignation] = useState(false);
   const [viewDesignationData, setViewDesignationData] = useState({});
 
-  const toggleViewDesignation = (userData) => {
+  const handleViewDesignation = (userData) => {
     console.log("User Data: ", userData);
     setShowViewDesignation(!showViewDesignation);
     setViewDesignationData(userData);
@@ -82,7 +82,7 @@ const DesignationList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  toggleViewDesignation(userData);
+                  handleViewDesignation(userData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -217,7 +217,7 @@ const DesignationList = (props) => {
     }
   }, [dispatch, desigList]);
 
-  const toggle = () => {
+  const handleAddDesignation = () => {
     setShowAddDesignation(!showAddDesignation);
   };
 
@@ -233,7 +233,7 @@ const DesignationList = (props) => {
       projects: user.projects,
     });
 
-    toggle();
+    handleAddDesignation();
   };
 
   var node = useRef();
@@ -255,10 +255,13 @@ const DesignationList = (props) => {
     <React.Fragment>
       <ViewDesignation
         isOpen={showViewDesignation}
-        toggle={toggleViewDesignation}
+        handleViewDesignation={handleViewDesignation}
         designation={viewDesignationData}
       />
-      <AddNewDesignation isOpen={showAddDesignation} toggle={toggle} />
+      <AddNewDesignation
+        isOpen={showAddDesignation}
+        handleAddDesignation={handleAddDesignation}
+      />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -276,7 +279,7 @@ const DesignationList = (props) => {
                       columns={columns}
                       data={desigList}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleDesignationClick={() => setShowAddDesignation(true)}
