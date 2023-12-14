@@ -41,7 +41,6 @@ const DesignationList = (props) => {
   }, [desigList]);
   const [isLoading, setLoading] = useState(loading);
   const [showAddDesignation, setShowAddDesignation] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
   const [showViewDesignation, setShowViewDesignation] = useState(false);
   const [viewDesignationData, setViewDesignationData] = useState({});
 
@@ -215,7 +214,6 @@ const DesignationList = (props) => {
   useEffect(() => {
     if (desigList && !desigList.length) {
       dispatch(onGetDesignation());
-      // setIsEdit(false);
     }
   }, [dispatch, desigList]);
 
@@ -234,31 +232,12 @@ const DesignationList = (props) => {
       tags: user.tags,
       projects: user.projects,
     });
-    setIsEdit(true);
 
     toggle();
   };
 
   var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
 
-  //delete customer
-  const [deleteModal, setDeleteModal] = useState(false);
-
-  const onClickDelete = (users) => {
-    setContact(users);
-    setDeleteModal(true);
-  };
   const keyField = "id";
 
   const getTableActions = () => {

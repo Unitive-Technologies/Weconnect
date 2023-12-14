@@ -1,5 +1,7 @@
 import {
-  GET_REASON_SUCCESS, GET_REASON_FAIL, ADD_REASON_SUCCESS,
+  GET_REASON_SUCCESS,
+  GET_REASON_FAIL,
+  ADD_REASON_SUCCESS,
   ADD_REASON_FAIL,
 } from "./actionTypes";
 
@@ -28,10 +30,7 @@ const Reason = (state = INIT_STATE, action) => {
     case ADD_REASON_SUCCESS:
       return {
         ...state,
-        reason: [
-          ...state.reason,
-          action.payload,
-        ],
+        reason: [...state.reason, action.payload],
       };
 
     case ADD_REASON_FAIL:
@@ -39,7 +38,6 @@ const Reason = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
       };
-
 
     default:
       return state;

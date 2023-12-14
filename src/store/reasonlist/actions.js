@@ -24,14 +24,14 @@ export const getReasonFail = (error) => ({
   payload: error,
 });
 
-export const addNewReason = (Reason) => ({
+export const addNewReason = (reason) => ({
   type: ADD_NEW_REASON,
-  payload: Reason,
+  payload: reason,
 });
 
-export const addReasonSuccess = (Reason) => ({
+export const addReasonSuccess = (reason) => ({
   type: ADD_REASON_SUCCESS,
-  payload: Reason,
+  payload: reason,
 });
 
 export const addReasonFail = (error) => ({
