@@ -9,38 +9,15 @@ import {
   Col,
   Container,
   Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
-  UncontrolledTooltip,
-  Input,
-  Form,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   Toast,
   ToastHeader,
   ToastBody,
-  Button,
 } from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-
-import { Email, Tags, Projects } from "./userHierarchyListCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
 
-import {
-  getUsers as onGetUsers,
-  addNewUser as onAddNewUser,
-  updateUser as onUpdateUser,
-  deleteUser as onDeleteUser,
-} from "/src/store/users/actions";
 import { getUserHierarchy as onGetUserHierarchy } from "/src/store/actions";
 import { isEmpty } from "lodash";
 
@@ -52,7 +29,7 @@ import AddUserHierarchy from "./AddUserHierarchy";
 
 const UserHierarchyList = (props) => {
   //meta title
-  document.title = "User Hierarchy List | VDigital";
+  document.title = "User Hierarchies | VDigital";
 
   const dispatch = useDispatch();
   const [toast, setToast] = useState(false);
@@ -68,14 +45,12 @@ const UserHierarchyList = (props) => {
 
   const { userHier, loading } = useSelector(UserHierarchyProperties);
 
-  useEffect(() => {
-    console.log("Users data in component:", userHier);
-  }, [userHier]);
+  // useEffect(() => {
+  //   console.log("Users data in component:", userHier);
+  // }, [userHier]);
   const [isLoading, setLoading] = useState(loading);
 
-  const [userList, setUserList] = useState([]);
   const [showAddUserHierarchy, setShowAddUserHierarchy] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
 
   const columns = useMemo(
     () => [
@@ -265,7 +240,6 @@ const UserHierarchyList = (props) => {
   useEffect(() => {
     if (userHier && !userHier.length) {
       dispatch(onGetUserHierarchy());
-      // setIsEdit(false);
     }
   }, [dispatch, userHier]);
 
@@ -273,51 +247,7 @@ const UserHierarchyList = (props) => {
     setShowAddUserHierarchy(!showAddUserHierarchy);
   };
 
-  const handleUserClick = (arg) => {
-    const user = arg;
-
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-    setIsEdit(true);
-
-    toggle();
-  };
-
   var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
-
-  //delete customer
-  const [deleteModal, setDeleteModal] = useState(false);
-
-  const onClickDelete = (users) => {
-    setContact(users);
-    setDeleteModal(true);
-  };
-
-  const handleDeleteUser = () => {
-    if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
-    }
-    setContact("");
-    onPaginationPageChange(1);
-    setDeleteModal(false);
-  };
 
   const toggleToast = () => {
     setToast(!toast);
@@ -331,13 +261,14 @@ const UserHierarchyList = (props) => {
         name: "Create",
         action: setShowAddUserHierarchy,
         type: "normal",
+        icon: "create",
       },
       {
         name: "Bulk Assign to Operator",
         action: toggleToast,
         type: "dropdown",
         dropdownName: "Actions",
-        // onClick={toggleToast}
+        // icon: "action",
       },
       {
         name: "Bulk Removel from Operator",
@@ -350,11 +281,6 @@ const UserHierarchyList = (props) => {
 
   return (
     <React.Fragment>
-      <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
-      />
       <AddUserHierarchy isOpen={showAddUserHierarchy} toggle={toggle} />
       <div className="page-content">
         <Container fluid>
@@ -366,7 +292,7 @@ const UserHierarchyList = (props) => {
             <Row>
               <Col lg="12">
                 <Card>
-                  <CardBody>
+                  {/* <CardBody>
                     <div className="d-flex align-items-center justify-content-between">
                       <div
                         className="position-fixed top-0 end-0 p-3"
@@ -382,7 +308,7 @@ const UserHierarchyList = (props) => {
                         </Toast>
                       </div>
                     </div>
-                  </CardBody>
+                  </CardBody> */}
                   <CardBody>
                     {console.log("user hierarchy:" + JSON.stringify(userHier))}
                     <TableContainer
@@ -396,7 +322,7 @@ const UserHierarchyList = (props) => {
                       handleUserHierarchyClick={() =>
                         setShowAddUserHierarchy(true)
                       }
-                      customPageSize={8}
+                      customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"

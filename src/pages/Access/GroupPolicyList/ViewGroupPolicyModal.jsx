@@ -5,6 +5,7 @@ import {
   Row,
   Modal,
   ModalHeader,
+  ModalFooter,
   ModalBody,
   Label,
   FormFeedback,
@@ -251,11 +252,29 @@ const ViewGroupPolicyModal = (props) => {
           </Row>
           <Row>
             <Col>
-              <div className="text-end">
+              <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
                   Create
                 </button>
-              </div>
+                <button
+                  type="reset"
+                  className="btn btn-warning"
+                  onClick={() => validation.resetForm()}
+                >
+                  Reset
+                </button>
+
+                <button
+                  type="button"
+                  className="btn btn-outline-danger"
+                  onClick={() => {
+                    validation.resetForm();
+                    handleAddGroupPolicy();
+                  }}
+                >
+                  Cancel
+                </button>
+              </ModalFooter>
             </Col>
           </Row>
         </Form>
