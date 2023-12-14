@@ -119,7 +119,7 @@ const InventoryStateList = (props) => {
       },
       {
         Header: "State Type",
-        accessor: "statetype",
+        accessor: "state_type_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <StateType {...cellProps} />;

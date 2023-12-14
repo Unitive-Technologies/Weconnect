@@ -31,7 +31,7 @@ const AddNewInventoryState = (props) => {
     initialValues: {
       name: "",
       code: "",
-      state_type: "",
+      state_type_lbl: "",
       status: "",
       description: "",
       created_at: "",
@@ -40,7 +40,7 @@ const AddNewInventoryState = (props) => {
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
       code: Yup.string().required("Enter code"),
-      state_type: Yup.string().required("Select state type"),
+      state_type_lbl: Yup.string().required("Select state type"),
       description: Yup.string().required("Enter description"),
       status: Yup.string().required("Select status"),
     }),
@@ -49,7 +49,7 @@ const AddNewInventoryState = (props) => {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         code: values["code"],
-        statetype: values["state_type"],
+        state_type_lbl: values["state_type_lbl"],
         status: values["status"],
         description: values["description"],
         created_at: new Date(),
@@ -141,23 +141,23 @@ const AddNewInventoryState = (props) => {
                   State Type<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="state_type"
+                  name="state_type_lbl"
                   type="select"
                   placeholder="Select state type"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.state_type || ""}
+                  value={validation.values.state_type_lbl || ""}
                 >
                   <option value="">Select state type</option>
                   <option value="release">Release</option>
                   <option value="mark faulty">Mark Faulty</option>
                   <option value="blacklist">Blacklist</option>
                 </Input>
-                {validation.touched.state_type &&
-                validation.errors.state_type ? (
+                {validation.touched.state_type_lbl &&
+                validation.errors.state_type_lbl ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.state_type}
+                    {validation.errors.state_type_lbl}
                   </FormFeedback>
                 ) : null}
               </div>

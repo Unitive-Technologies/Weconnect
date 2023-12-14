@@ -23,7 +23,7 @@ const convertInventoryStateListObject = (inventorystatelist) => {
       id: inventorystate.id,
       name: inventorystate.name,
       code: inventorystate.code,
-      statetype: inventorystate.state_type_lbl,
+      state_type_lbl: inventorystate.state_type_lbl,
       description: inventorystate.description,
       status: inventorystate.status_lbl,
       created_at: inventorystate.created_at,

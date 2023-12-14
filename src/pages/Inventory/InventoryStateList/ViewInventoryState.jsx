@@ -28,7 +28,7 @@ const ViewInventoryState = (props) => {
     initialValues: {
       name: (inventorystate && inventorystate.name) || "",
       code: (inventorystate && inventorystate.code) || "",
-      state_type: (inventorystate && inventorystate.state_type) || "",
+      state_type_lbl: (inventorystate && inventorystate.state_type_lbl) || "",
       status: (inventorystate && inventorystate.status) || "",
       description: (inventorystate && inventorystate.description) || "",
       created_at: (inventorystate && inventorystate.created_at) || "",
@@ -38,7 +38,7 @@ const ViewInventoryState = (props) => {
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
       code: Yup.string().required("Enter code"),
-      state_type: Yup.string().required("Select state type"),
+      state_type_lbl: Yup.string().required("Select state type"),
       description: Yup.string().required("Enter description"),
       status: Yup.string().required("Select status"),
     }),
@@ -47,7 +47,7 @@ const ViewInventoryState = (props) => {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         code: values["code"],
-        statetype: values["state_type"],
+        statetype: values["state_type_lbl"],
         status: values["status"],
         description: values["description"],
         created_at: new Date(),
@@ -160,23 +160,23 @@ const ViewInventoryState = (props) => {
                   State Type<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="state_type"
+                  name="state_type_lbl"
                   type="select"
                   placeholder="Select state type"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.state_type || ""}
+                  value={validation.values.state_type_lbl || ""}
                 >
                   <option value="">Select state type</option>
-                  <option value="release">Release</option>
-                  <option value="mark faulty">Mark Faulty</option>
-                  <option value="blacklist">Blacklist</option>
+                  <option value="Release">Release</option>
+                  <option value="Mark Faulty">Mark Faulty</option>
+                  <option value="Blacklist">Blacklist</option>
                 </Input>
-                {validation.touched.state_type &&
-                validation.errors.state_type ? (
+                {validation.touched.state_type_lbl &&
+                validation.errors.state_type_lbl ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.state_type}
+                    {validation.errors.state_type_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
