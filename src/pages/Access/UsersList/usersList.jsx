@@ -448,11 +448,8 @@ const ContactsList = (props) => {
                       columns={columns}
                       data={users}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       tableActions={getTableActions()}
-                      // handleUserClick={() => setShowAddUser(true)}
-                      // handleUploadUser={() => setShowUploadUser(true)}
-                      // handleBulkUpdateUser={() => setShowBulkUpdateUser(true)}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
                       customPageSize={50}

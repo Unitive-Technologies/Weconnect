@@ -2,17 +2,7 @@ import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
-import {
-  Card,
-  CardBody,
-  Col,
-  Container,
-  Row,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from "reactstrap";
+import { Card, CardBody, Col, Container, Row } from "reactstrap";
 
 import { Email } from "./customerUserlistCol";
 
@@ -31,8 +21,8 @@ import BulkInactiveCustomerList from "./BulkInactiveCustomerList";
 const CustomerUserList = (props) => {
   //meta title
   document.title = "Customer Users | VDigital";
-  const [showCustomerUserModal, setShowCustomerUserModal] = useState(false);
-  const [showBulkActiveModal, setBulkActiveModal] = useState(false);
+  const [viewCustomerUserModal, setViewCustomerUserModal] = useState(false);
+  const [showBulkActiveModal, setShowBulkActiveModal] = useState(false);
   const dispatch = useDispatch();
 
   const selectCustomerUsersState = (state) => state.customerUsers;
@@ -45,10 +35,6 @@ const CustomerUserList = (props) => {
   );
 
   const { cusUsers, loading } = useSelector(customerUsersProperties);
-
-  useEffect(() => {
-    console.log("Customer Users data in component:", cusUsers);
-  }, [cusUsers]);
 
   const columns = useMemo(
     () => [
@@ -82,7 +68,7 @@ const CustomerUserList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  viewCustomerUser(userData);
+                  handleViewCustomerUser(userData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -217,15 +203,14 @@ const CustomerUserList = (props) => {
     }
   }, [dispatch, cusUsers]);
 
-  const showBulkActiveUser = () => {
-    setBulkActiveModal(!showBulkActiveModal);
+  const handleShowBulkActiveUser = () => {
+    setShowBulkActiveModal(!showBulkActiveModal);
   };
-  const [viewUser, setViewUser] = useState({});
+  const [viewCustomerUser, setViewCustomerUser] = useState({});
 
-  const viewCustomerUser = (userData) => {
-    setShowCustomerUserModal(!showCustomerUserModal);
-    setViewUser(userData);
-    // toggle();
+  const handleViewCustomerUser = (userData) => {
+    setViewCustomerUserModal(!viewCustomerUserModal);
+    setViewCustomerUser(userData);
   };
 
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -239,17 +224,6 @@ const CustomerUserList = (props) => {
   }, [cusUsers]);
 
   var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
 
   const keyField = "id";
 
@@ -257,71 +231,43 @@ const CustomerUserList = (props) => {
     return [
       {
         name: "Bulk Active/Inactive User",
-        action: showBulkActiveUser,
+        action: setShowBulkActiveModal,
         type: "dropdown",
         dropdownName: "Action",
+        icon: "create",
       },
     ];
   };
   return (
     <React.Fragment>
       <ViewCustomerUserModal
-        isOpen={showCustomerUserModal}
-        toggle={viewCustomerUser}
-        user={viewUser}
+        isOpen={viewCustomerUserModal}
+        handleViewCustomerUser={handleViewCustomerUser}
+        customeruser={viewCustomerUser}
       />
       <BulkInactiveCustomerList
         isOpen={showBulkActiveModal}
-        toggle={showBulkActiveUser}
+        handleShowBulkActiveUser={handleShowBulkActiveUser}
         user={filteredUsers}
       />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Access" breadcrumbItem="Customer Users" />
-          {/* {isLoading ? (
-            <Spinners setLoading={setLoading} />
-          ) : ( */}
+
           <Row>
             <Col lg="12">
               <Card>
                 <CardBody>
-                  <div className="d-flex align-items-center justify-content-between">
-                    <h5 className="mb-0 card-title flex-grow-1">
-                      {/* Jobs Lists */}
-                    </h5>
-                    <div className="flex-shrink-0">
-                      <UncontrolledDropdown className="dropdown d-inline-block me-1">
-                        <DropdownToggle
-                          type="menu"
-                          className="btn btn-success"
-                          id="dropdownMenuButton1"
-                        >
-                          Action &nbsp;
-                          <i className="mdi mdi-dots-vertical"></i>
-                        </DropdownToggle>
-                        <DropdownMenu>
-                          <li onClick={() => setBulkActiveModal(true)}>
-                            <DropdownItem href="#">
-                              Bulk Active/Inactive User
-                            </DropdownItem>
-                          </li>
-                        </DropdownMenu>
-                      </UncontrolledDropdown>
-                    </div>
-                  </div>
-                </CardBody>
-                <CardBody>
-                  {console.log("Customer users:" + JSON.stringify(cusUsers))}
                   <TableContainer
                     isPagination={true}
                     columns={columns}
                     data={cusUsers}
                     isGlobalFilter={true}
-                    // isAddUserList={true}
+                    isShowTableActionButtons={true}
                     isShowingPageLength={true}
+                    tableActions={getTableActions()}
                     // iscustomPageSizeOptions={true}
-                    handleUserClick={() => {}}
                     customPageSize={50}
                     tableClass="table align-middle table-nowrap table-hover"
                     theadClass="table-light"
@@ -332,7 +278,6 @@ const CustomerUserList = (props) => {
               </Card>
             </Col>
           </Row>
-          {/* )} */}
         </Container>
       </div>
       <ToastContainer />

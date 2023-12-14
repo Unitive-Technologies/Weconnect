@@ -5,30 +5,16 @@ import {
   Card,
   CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
-  Label,
-  FormFeedback,
-  UncontrolledTooltip,
-  Input,
-  Form,
-  CardTitle,
-  CardSubtitle,
 } from "reactstrap";
 import { Link } from "react-router-dom";
-import Dropzone from "react-dropzone";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const BulkInactiveCustomerList = (props) => {
-  const { isOpen, toggle, user } = props;
-  // console.log("user in viewuser modal:" + JSON.stringify(user));
-  const dispatch = useDispatch();
+  const { isOpen, handleShowBulkActiveUser, user } = props;
 
   const columns = useMemo(
     () => [
@@ -178,7 +164,7 @@ const BulkInactiveCustomerList = (props) => {
     []
   );
 
-  const selOperColumn = useMemo(
+  const selUsersColumn = useMemo(
     () => [
       {
         Header: "#",
@@ -289,9 +275,9 @@ const BulkInactiveCustomerList = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleShowBulkActiveUser}
     >
-      <ModalHeader toggle={toggle} tag="h4">
+      <ModalHeader toggle={handleShowBulkActiveUser} tag="h4">
         Bulk Active/Inactive User
       </ModalHeader>
       <ModalBody>
@@ -324,7 +310,7 @@ const BulkInactiveCustomerList = (props) => {
               }}
             >
               {" "}
-              <h5 style={{}}>Selected Operators</h5>
+              <h5 style={{}}>Selected Users</h5>
             </div>
             <Row
               style={{
@@ -337,7 +323,7 @@ const BulkInactiveCustomerList = (props) => {
               <Col lg={12}>
                 <TableContainer
                   isPagination={true}
-                  columns={selOperColumn}
+                  columns={selUsersColumn}
                   data={user}
                   //   isGlobalFilter={true}
                   isShowingPageLength={true}

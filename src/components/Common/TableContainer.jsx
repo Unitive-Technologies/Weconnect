@@ -167,6 +167,7 @@ const TableContainer = ({
   tableActions,
   isGlobalFilter,
   isTransactionDate,
+  isShowTableActionButtons,
   isAddOptions,
   isAddUserList,
   isAddRegionalOffice,
@@ -302,6 +303,9 @@ const TableContainer = ({
                 </Button>
               </div>
             </Col>
+          )}
+          {isShowTableActionButtons && (
+            <TableActionButtons tableActions={tableActions} />
           )}
           {isAddUserList && <TableActionButtons tableActions={tableActions} />}
           {isAddRegionalOffice && (

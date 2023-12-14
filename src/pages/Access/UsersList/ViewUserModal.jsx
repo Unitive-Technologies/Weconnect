@@ -6,6 +6,7 @@ import {
   Row,
   Modal,
   ModalHeader,
+  ModalFooter,
   ModalBody,
   Label,
   FormFeedback,
@@ -19,11 +20,11 @@ import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const ViewUserModal = (props) => {
   const { isOpen, handleViewUser, user } = props;
-  console.log("isOpen in viewuser modal:" + isOpen);
+  // console.log("isOpen in viewuser modal:" + isOpen);
 
   const dispatch = useDispatch();
   const [showEditUser, setShowEditUser] = useState(false);
-  console.log("edit in viewuser modal:" + showEditUser);
+  // console.log("edit in viewuser modal:" + showEditUser);
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -366,17 +367,35 @@ const ViewUserModal = (props) => {
               </Col>
             </Row>
 
-            <Row>
-              {showEditUser && (
+            {showEditUser && (
+              <Row>
                 <Col>
-                  <div className="text-end">
+                  <ModalFooter>
                     <button type="submit" className="btn btn-success save-user">
                       Save
                     </button>
-                  </div>
+                    <button
+                      type="reset"
+                      className="btn btn-warning"
+                      onClick={() => validation.resetForm()}
+                    >
+                      Reset
+                    </button>
+
+                    <button
+                      type="button"
+                      className="btn btn-outline-danger"
+                      onClick={() => {
+                        validation.resetForm();
+                        handleCancel();
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </ModalFooter>
                 </Col>
-              )}
-            </Row>
+              </Row>
+            )}
           </Form>
         </ModalBody>
       </Modal>

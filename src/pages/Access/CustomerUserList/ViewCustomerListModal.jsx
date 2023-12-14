@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
@@ -6,6 +6,7 @@ import {
   Row,
   Modal,
   ModalHeader,
+  ModalFooter,
   ModalBody,
   Label,
   FormFeedback,
@@ -18,25 +19,28 @@ import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const ViewCustomerUserModal = (props) => {
-  const { isOpen, toggle, user } = props;
-  // console.log("Customeruser in view modal:" + JSON.stringify(user));
+  const { isOpen, handleViewCustomerUser, customeruser } = props;
+  console.log("isOpen in view modal:" + isOpen);
   const dispatch = useDispatch();
   const [showEditUser, setShowEditUser] = useState(false);
+  console.log("edit in view modal:" + showEditUser);
+
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
-      name: user.name,
-      login: user.username,
-      mobile: user.mobile_no,
-      email: user.email,
-      status: user.status,
-      lco: user.lco,
-      lcocode: user.lco_code,
-      lastlogin: user.last_login_at,
-      createdat: user.created_at,
-      createdby: user.created_by,
+      id: (customeruser && customeruser.id) || "",
+      name: (customeruser && customeruser.name) || "",
+      login: (customeruser && customeruser.username) || "",
+      mobile: (customeruser && customeruser.mobile_no) || "",
+      email: (customeruser && customeruser.email) || "",
+      status: (customeruser && customeruser.status) || "",
+      lco: (customeruser && customeruser.lco) || "",
+      lcocode: (customeruser && customeruser.lco_code) || "",
+      lastlogin: (customeruser && customeruser.last_login_at) || "",
+      createdat: (customeruser && customeruser.created_at) || "",
+      createdby: (customeruser && customeruser.created_by) || "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
@@ -57,7 +61,7 @@ const ViewCustomerUserModal = (props) => {
     }),
     onSubmit: (values) => {
       const updateUser = {
-        id: user.id,
+        id: customeruser.id,
         name: values.name,
         login: values.username,
         mobile: values.mobile,
@@ -73,9 +77,14 @@ const ViewCustomerUserModal = (props) => {
       // update user
       dispatch(onUpdateUser(updateUser));
       validation.resetForm();
-      toggle();
+      handleViewCustomerUser();
     },
   });
+
+  const handleCancel = () => {
+    setShowEditUser(false);
+    handleViewCustomerUser();
+  };
   return (
     <Modal
       isOpen={isOpen}
@@ -85,24 +94,25 @@ const ViewCustomerUserModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleCancel}
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader toggle={toggle} tag="h4">
+      <ModalHeader toggle={handleCancel} tag="h4">
         {!showEditUser ? "View Customer User" : "Edit Customer User"}
       </ModalHeader>
-      <Link
-        style={{
-          position: "absolute",
-          marginLeft: "92%",
-          marginTop: "1%",
-        }}
-        to="#!"
-        className="btn btn-light me-1"
-        onClick={() => setShowEditUser(true)}
-      >
-        <i className="mdi mdi-pencil-outline"></i>
-      </Link>
+      {!showEditUser && (
+        <Link
+          style={{
+            position: "absolute",
+            marginLeft: "92%",
+            marginTop: "1%",
+          }}
+          to="#!"
+          className="btn btn-light me-1"
+          onClick={() => setShowEditUser(true)}
+        >
+          <i className="mdi mdi-pencil-outline"></i>
+        </Link>
+      )}
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -353,18 +363,37 @@ const ViewCustomerUserModal = (props) => {
               </div>
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <div className="text-end">
-                <button type="submit" className="btn btn-success save-user">
-                  Save
-                </button>
-              </div>
-            </Col>
-          </Row>
+          {showEditUser && (
+            <Row>
+              <Col>
+                <ModalFooter>
+                  <button type="submit" className="btn btn-success save-user">
+                    Save
+                  </button>
+                  <button
+                    type="reset"
+                    className="btn btn-warning"
+                    onClick={() => validation.resetForm()}
+                  >
+                    Reset
+                  </button>
+
+                  <button
+                    type="button"
+                    className="btn btn-outline-danger"
+                    onClick={() => {
+                      validation.resetForm();
+                      handleCancel();
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </ModalFooter>
+              </Col>
+            </Row>
+          )}
         </Form>
       </ModalBody>
-      {/* </Modal> */}
     </Modal>
   );
 };
