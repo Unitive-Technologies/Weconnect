@@ -1,7 +1,10 @@
 import {
-  GET_REASON, GET_REASON_FAIL, GET_REASON_SUCCESS, ADD_NEW_REASONLIST,
-  ADD_REASONLIST_SUCCESS,
-  ADD_REASONLIST_FAIL,
+  GET_REASON,
+  GET_REASON_FAIL,
+  GET_REASON_SUCCESS,
+  ADD_NEW_REASON,
+  ADD_REASON_SUCCESS,
+  ADD_REASON_FAIL,
 } from "./actionTypes";
 
 export const getReason = () => ({
@@ -21,21 +24,17 @@ export const getReasonFail = (error) => ({
   payload: error,
 });
 
-export const addNewReason = (
-  Reason
-) => ({
+export const addNewReason = (reason) => ({
   type: ADD_NEW_REASON,
-  payload: Reason,
+  payload: reason,
 });
 
-export const addChannelListSuccess = (
-  Reason
-) => ({
+export const addReasonSuccess = (reason) => ({
   type: ADD_REASON_SUCCESS,
-  payload: Reason,
+  payload: reason,
 });
 
-export const addChannelListFail = (error) => ({
+export const addReasonFail = (error) => ({
   type: ADD_REASON_FAIL,
   payload: error,
 });
