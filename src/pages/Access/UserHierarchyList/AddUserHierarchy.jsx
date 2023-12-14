@@ -1,29 +1,25 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
+  ModalFooter,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addUserHierarchy as onAddUserHierarchy } from "/src/store/userhierarchy/actions";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const AddUserHierarchy = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleAddUserHierarchy } = props;
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -71,7 +67,7 @@ const AddUserHierarchy = (props) => {
       // save new user
       dispatch(onAddUserHierarchy(UserHierarchy));
       validation.resetForm();
-      toggle();
+      handleAddUserHierarchy();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -82,14 +78,15 @@ const AddUserHierarchy = (props) => {
     <Modal
       isOpen={isOpen}
       role="dialog"
+      size="xl"
       autoFocus={true}
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleAddUserHierarchy}
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4" toggle={toggle}>
+      <ModalHeader tag="h4" toggle={handleAddUserHierarchy}>
         Add New User Hierarchy
       </ModalHeader>
       <ModalBody>
@@ -101,7 +98,7 @@ const AddUserHierarchy = (props) => {
           }}
         >
           <Row>
-            <Col sm="12">
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">Name</Label>
                 <Input
@@ -123,7 +120,8 @@ const AddUserHierarchy = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">Code</Label>
                 <Input
@@ -146,7 +144,8 @@ const AddUserHierarchy = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">Email</Label>
                 <Input
@@ -169,7 +168,8 @@ const AddUserHierarchy = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">Description</Label>
                 <Input
@@ -194,7 +194,10 @@ const AddUserHierarchy = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">Status</Label>
                 <Input
@@ -217,7 +220,8 @@ const AddUserHierarchy = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">Report Type</Label>
                 <Input
@@ -241,7 +245,8 @@ const AddUserHierarchy = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">Designation</Label>
                 <Input
@@ -266,6 +271,8 @@ const AddUserHierarchy = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">Parent designation</Label>
                 <Input
@@ -291,10 +298,10 @@ const AddUserHierarchy = (props) => {
             </Col>
           </Row>
           <Row>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
+            <Col>
+              <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
-                  Save
+                  Create
                 </button>
                 <button
                   type="reset"
@@ -308,13 +315,13 @@ const AddUserHierarchy = (props) => {
                   type="button"
                   className="btn btn-outline-danger"
                   onClick={() => {
-                    validation.resetForm(); // Optionally reset the form when cancel is clicked
-                    toggle(); // Close the popup
+                    validation.resetForm();
+                    handleAddUserHierarchy();
                   }}
                 >
                   Cancel
                 </button>
-              </div>
+              </ModalFooter>
             </Col>
           </Row>
         </Form>

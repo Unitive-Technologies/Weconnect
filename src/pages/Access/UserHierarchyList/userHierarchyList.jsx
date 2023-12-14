@@ -16,10 +16,8 @@ import {
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
 
 import { getUserHierarchy as onGetUserHierarchy } from "/src/store/actions";
-import { isEmpty } from "lodash";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -32,7 +30,8 @@ const UserHierarchyList = (props) => {
   document.title = "User Hierarchies | VDigital";
 
   const dispatch = useDispatch();
-  const [toast, setToast] = useState(false);
+  const [showAssignOperator, setShowAssignOperator] = useState(false);
+  const [showAddUserHierarchy, setShowAddUserHierarchy] = useState(false);
 
   const selectUserHierarchyState = (state) => state.userHierarchy;
   const UserHierarchyProperties = createSelector(
@@ -45,12 +44,7 @@ const UserHierarchyList = (props) => {
 
   const { userHier, loading } = useSelector(UserHierarchyProperties);
 
-  // useEffect(() => {
-  //   console.log("Users data in component:", userHier);
-  // }, [userHier]);
   const [isLoading, setLoading] = useState(loading);
-
-  const [showAddUserHierarchy, setShowAddUserHierarchy] = useState(false);
 
   const columns = useMemo(
     () => [
@@ -243,14 +237,12 @@ const UserHierarchyList = (props) => {
     }
   }, [dispatch, userHier]);
 
-  const toggle = () => {
+  const handleAddUserHierarchy = () => {
     setShowAddUserHierarchy(!showAddUserHierarchy);
   };
 
-  var node = useRef();
-
-  const toggleToast = () => {
-    setToast(!toast);
+  const handleAssignOperator = () => {
+    setShowAssignOperator(!showAssignOperator);
   };
 
   const keyField = "id";
@@ -265,14 +257,14 @@ const UserHierarchyList = (props) => {
       },
       {
         name: "Bulk Assign to Operator",
-        action: toggleToast,
+        action: handleAssignOperator,
         type: "dropdown",
         dropdownName: "Actions",
         // icon: "action",
       },
       {
         name: "Bulk Removel from Operator",
-        action: toggleToast,
+        action: handleAssignOperator,
         type: "dropdown",
         dropdownName: "Actions",
       },
@@ -281,7 +273,21 @@ const UserHierarchyList = (props) => {
 
   return (
     <React.Fragment>
-      <AddUserHierarchy isOpen={showAddUserHierarchy} toggle={toggle} />
+      <AddUserHierarchy
+        isOpen={showAddUserHierarchy}
+        handleAddUserHierarchy={handleAddUserHierarchy}
+      />
+      <div
+        className="position-fixed top-0 end-0 p-3"
+        style={{ zIndex: "1005" }}
+      >
+        <Toast isOpen={showAssignOperator}>
+          <ToastHeader toggle={handleAssignOperator}>
+            <i className="mdi mdi-alert-outline me-2"></i> Warning
+          </ToastHeader>
+          <ToastBody>Please select atleast one User Hierarchy</ToastBody>
+        </Toast>
+      </div>
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -292,23 +298,6 @@ const UserHierarchyList = (props) => {
             <Row>
               <Col lg="12">
                 <Card>
-                  {/* <CardBody>
-                    <div className="d-flex align-items-center justify-content-between">
-                      <div
-                        className="position-fixed top-0 end-0 p-3"
-                        style={{ zIndex: "1005" }}
-                      >
-                        <Toast isOpen={toast}>
-                          <ToastHeader toggle={toggleToast}>
-                            Warning
-                          </ToastHeader>
-                          <ToastBody>
-                            Please selcet atleast on user hierarchy.
-                          </ToastBody>
-                        </Toast>
-                      </div>
-                    </div>
-                  </CardBody> */}
                   <CardBody>
                     {console.log("user hierarchy:" + JSON.stringify(userHier))}
                     <TableContainer
@@ -316,12 +305,9 @@ const UserHierarchyList = (props) => {
                       columns={columns}
                       data={userHier}
                       isGlobalFilter={true}
-                      isAddUserList={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleUserHierarchyClick={() =>
-                        setShowAddUserHierarchy(true)
-                      }
+                      isShowTableActionButtons={true}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
