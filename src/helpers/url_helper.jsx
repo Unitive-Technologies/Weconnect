@@ -101,6 +101,7 @@ export const GET_WAREHOUSELIST = "/warehouselist";
 export const ADD_WAREHOUSELIST = "/add/warehouselist";
 
 export const GET_INVENTORYSTATELIST = "/inventorystatelist";
+export const ADD_INVENTORYSTATELIST = "/add/inventorystatelist";
 
 export const GET_SMSMESSAGETEMPLIST = "/smsmsgtemplatelist";
 export const GET_BOUQUET = "/bouquet";

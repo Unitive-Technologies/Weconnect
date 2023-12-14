@@ -338,9 +338,11 @@ export const addWareHouseList = (warehouselist) =>
   post(url.ADD_WAREHOUSELIST, warehouselist);
 
 export const getInventoryStateList = () => get(url.GET_INVENTORYSTATELIST);
+export const addInventoryStateList = (inventorystate) =>
+  post(url.ADD_INVENTORYSTATELIST, inventorystate);
+
 export const getTax = () => get(url.GET_TAX);
-export const addNewTaxList = (taxes) =>
-  post(url.ADD_NEW_TAXLIST, taxes);
+export const addNewTaxList = (taxes) => post(url.ADD_NEW_TAXLIST, taxes);
 
 export const getReason = () => get(url.GET_REASON);
 export const getBank = () => get(url.GET_BANK);

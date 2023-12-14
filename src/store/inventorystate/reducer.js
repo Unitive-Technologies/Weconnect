@@ -1,6 +1,8 @@
 import {
   GET_INVENTORYSTATELIST_SUCCESS,
   GET_INVENTORYSTATELIST_FAIL,
+  ADD_INVENTORYSTATELIST_SUCCESS,
+  ADD_INVENTORYSTATELIST_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -20,6 +22,18 @@ const InventoryStateList = (state = INIT_STATE, action) => {
       };
 
     case GET_INVENTORYSTATELIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_INVENTORYSTATELIST_SUCCESS:
+      return {
+        ...state,
+        inventorystatelist: [...state.inventorystatelist, action.payload],
+      };
+
+    case ADD_INVENTORYSTATELIST_FAIL:
       return {
         ...state,
         error: action.payload,

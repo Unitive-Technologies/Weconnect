@@ -1050,9 +1050,6 @@ const fakeBackend = () => {
     });
   });
 
-
-
-
   mock.onPost(url.ADD_NEW_PACKAGELIST).reply((packlist) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -1178,6 +1175,19 @@ const fakeBackend = () => {
           resolve([200, warehouselist.data]);
         } else {
           reject([400, "Cannot add warehouse list"]);
+        }
+      });
+    });
+  });
+
+  mock.onPost(url.ADD_INVENTORYSTATELIST).reply((inventorystatelist) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (inventorystatelist && inventorystatelist.data) {
+          // Passing fake JSON data as response
+          resolve([200, inventorystatelist.data]);
+        } else {
+          reject([400, "Cannot add Inventory state list"]);
         }
       });
     });
