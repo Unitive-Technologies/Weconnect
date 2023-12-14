@@ -83,7 +83,9 @@ const AddNewWareHouse = (props) => {
       tabIndex="-1"
       toggle={toggle}
     >
-      <ModalHeader tag="h4">Add New Warehouse</ModalHeader>
+      <ModalHeader toggle={toggle} tag="h4">
+        Add New Warehouse
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
