@@ -345,6 +345,8 @@ export const getTax = () => get(url.GET_TAX);
 export const addNewTaxList = (taxes) => post(url.ADD_NEW_TAXLIST, taxes);
 
 export const getReason = () => get(url.GET_REASON);
+export const addNewReason = (reasons) => post(url.ADD_NEW_REASON, reasons);
+
 export const getBank = () => get(url.GET_BANK);
 export const getPromoVoucher = () => get(url.GET_PROMOVOUCHER);
 

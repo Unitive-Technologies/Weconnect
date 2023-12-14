@@ -1,11 +1,11 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_REASON } from "./actionTypes";
+import { GET_REASON, ADD_NEW_REASON } from "./actionTypes";
 
-import { getReasonSuccess, getReasonFail } from "./actions";
+import { getReasonSuccess, getReasonFail, addReasonSuccess, addReasonFail } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getReason } from "../../helpers/fakebackend_helper";
+import { getReason, addNewReason } from "../../helpers/fakebackend_helper";
 
 const convertReasonListObject = (reasonList) => {
   // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
@@ -34,8 +34,20 @@ function* fetchReason() {
   }
 }
 
+function* onAddNewReason({ payload: reason }) {
+  try {
+    const response = yield call(addNewReason, reason);
+    yield put(addReasonSuccess(response));
+    toast.success("Reason Added Successfully", { autoClose: 2000 });
+  } catch (error) {
+    yield put(addReasonFail(error));
+    toast.error("Reason List Added Failed", { autoClose: 2000 });
+  }
+}
+
 function* reasonSaga() {
   yield takeEvery(GET_REASON, fetchReason);
+  yield takeEvery(ADD_NEW_REASON, onAddNewReason);
 }
 
 export default reasonSaga;

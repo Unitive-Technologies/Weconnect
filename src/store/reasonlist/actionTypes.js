@@ -1,3 +1,10 @@
 export const GET_REASON = "GET_REASON";
 export const GET_REASON_SUCCESS = "GET_REASON_SUCCESS";
 export const GET_REASON_FAIL = "GET_REASON_FAIL";
+
+export const ADD_NEW_REASON =
+    "ADD_NEW_REASON";
+export const ADD_REASON_SUCCESS =
+    "ADD_REASON_SUCCESS";
+export const ADD_REASON_FAIL =
+    "ADD_REASON_FAIL";

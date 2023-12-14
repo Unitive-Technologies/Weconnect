@@ -113,6 +113,7 @@ export const GET_TAX = "/tax";
 export const ADD_NEW_TAXLIST = "/add/tax";
 
 export const GET_REASON = "/reason";
+export const ADD_NEW_REASON = "/add/reason";
 export const GET_BANK = "/bank";
 export const GET_PROMOVOUCHER = "/promovoucher";
 
