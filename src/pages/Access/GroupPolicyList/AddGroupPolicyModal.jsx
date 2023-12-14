@@ -1,17 +1,13 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
@@ -21,7 +17,7 @@ import { addNewGroupPolicy as onAddNewGroupPolicy } from "/src/store/grouppolicy
 import { useSelector, useDispatch } from "react-redux";
 
 const AddGroupPolicyModal = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleAddGroupPolicy } = props;
   const dispatch = useDispatch();
   const [user, setUser] = useState();
 
@@ -62,7 +58,7 @@ const AddGroupPolicyModal = (props) => {
       // save new user
       dispatch(onAddNewGroupPolicy(newGroupPolicy));
       validation.resetForm();
-      toggle();
+      handleAddGroupPolicy();
     },
   });
   return (
@@ -74,9 +70,9 @@ const AddGroupPolicyModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleAddGroupPolicy}
     >
-      <ModalHeader tag="h4" toggle={toggle}>
+      <ModalHeader tag="h4" toggle={handleAddGroupPolicy}>
         Create Group Policy
       </ModalHeader>
       <ModalBody>
@@ -88,9 +84,11 @@ const AddGroupPolicyModal = (props) => {
           }}
         >
           <Row>
-            <Col sm="6">
+            <Col lg={3}>
               <div className="mb-3">
-                <Label className="form-label">Name</Label>
+                <Label className="form-label">
+                  Name<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="name"
                   type="text"
@@ -110,9 +108,12 @@ const AddGroupPolicyModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={3}>
               <div className="mb-3">
-                <Label className="form-label">Operator Type</Label>
+                <Label className="form-label">
+                  Operator Type<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="type"
                   type="select"
@@ -134,8 +135,12 @@ const AddGroupPolicyModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+            <Col lg={3}>
               <div className="mb-3">
-                <Label className="form-label">Role Type</Label>
+                <Label className="form-label">
+                  Role Type<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="role"
                   type="select"
@@ -156,6 +161,8 @@ const AddGroupPolicyModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">Description</Label>
                 <Input
@@ -181,6 +188,8 @@ const AddGroupPolicyModal = (props) => {
                 ) : null}
               </div>
             </Col>
+          </Row>
+          <Row>
             <Col sm="6">
               <div className="mb-3">
                 <Label className="form-label">Count</Label>

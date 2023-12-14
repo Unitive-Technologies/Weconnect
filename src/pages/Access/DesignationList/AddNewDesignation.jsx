@@ -14,6 +14,7 @@ import {
   UncontrolledTooltip,
   Input,
   Form,
+  ModalFooter,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -74,6 +75,7 @@ const AddNewDesignation = (props) => {
     <Modal
       isOpen={isOpen}
       role="dialog"
+      size="xl"
       autoFocus={true}
       centered={true}
       className="exampleModal"
@@ -92,7 +94,7 @@ const AddNewDesignation = (props) => {
           }}
         >
           <Row>
-            <Col sm="12">
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Designation<span style={{ color: "red" }}>*</span>
@@ -118,7 +120,61 @@ const AddNewDesignation = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Code<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="code"
+                  label="code"
+                  type="text"
+                  placeholder="Enter Code"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.code || ""}
+                  invalid={
+                    validation.touched.code && validation.errors.code
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.code && validation.errors.code ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.code}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Status<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="status"
+                  type="select"
+                  placeholder="Select Status"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.status || ""}
+                >
+                  <option value="">Select Status</option>
+                  <option value="1">Active</option>
+                  <option value="2">Inactive</option>
+                </Input>
+                {validation.touched.status && validation.errors.status ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.status}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Type<span style={{ color: "red" }}>*</span>
@@ -146,31 +202,8 @@ const AddNewDesignation = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
-              <div className="mb-3">
-                <Label className="form-label">
-                  Code<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="code"
-                  label="code"
-                  type="text"
-                  placeholder="Enter Code"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.code || ""}
-                  invalid={
-                    validation.touched.code && validation.errors.code
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.code && validation.errors.code ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.code}
-                  </FormFeedback>
-                ) : null}
-              </div>
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Parent designation<span style={{ color: "red" }}>*</span>
@@ -193,29 +226,8 @@ const AddNewDesignation = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-              <div className="mb-3">
-                <Label className="form-label">
-                  Status<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="status"
-                  type="select"
-                  placeholder="Select Status"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.status || ""}
-                >
-                  <option value="">Select Status</option>
-                  <option value="1">Active</option>
-                  <option value="2">Inactive</option>
-                </Input>
-                {validation.touched.status && validation.errors.status ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.status}
-                  </FormFeedback>
-                ) : null}
-              </div>
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Description<span style={{ color: "red" }}>*</span>
@@ -245,8 +257,8 @@ const AddNewDesignation = (props) => {
             </Col>
           </Row>
           <Row>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
+            <Col>
+              <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
                   Save
                 </button>
@@ -268,7 +280,7 @@ const AddNewDesignation = (props) => {
                 >
                   Cancel
                 </button>
-              </div>
+              </ModalFooter>
             </Col>
           </Row>
         </Form>

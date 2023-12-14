@@ -104,7 +104,9 @@ const AddUserModal = (props) => {
           <Row>
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">Name</Label>
+                <Label className="form-label">
+                  Name<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="name"
                   type="text"
@@ -126,7 +128,9 @@ const AddUserModal = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Email</Label>
+                <Label className="form-label">
+                  Email<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="email"
                   label="Email"
@@ -148,7 +152,9 @@ const AddUserModal = (props) => {
                 ) : null}
               </div>
               <div className="mb-3">
-                <Label className="form-label">Mobile No.</Label>
+                <Label className="form-label">
+                  Mobile No.<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="mobile"
                   label="Mobile No."
@@ -171,7 +177,9 @@ const AddUserModal = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">User Type</Label>
+                <Label className="form-label">
+                  User Type<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="usertype"
                   type="select"
@@ -196,7 +204,9 @@ const AddUserModal = (props) => {
             </Col>
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">Status</Label>
+                <Label className="form-label">
+                  Status<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="status"
                   type="select"
@@ -218,7 +228,9 @@ const AddUserModal = (props) => {
                 ) : null}
               </div>
               <div className="mb-3">
-                <Label className="form-label">InActive/Block Message</Label>
+                <Label className="form-label">
+                  InActive/Block Message<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="message"
                   type="textarea"
@@ -240,7 +252,9 @@ const AddUserModal = (props) => {
                 ) : null}
               </div>
               <div className="mb-3">
-                <Label className="form-label">Role</Label>
+                <Label className="form-label">
+                  Role<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="role"
                   type="select"
@@ -262,7 +276,9 @@ const AddUserModal = (props) => {
                 ) : null}
               </div>
               <div className="mb-3">
-                <Label className="form-label">Designation</Label>
+                <Label className="form-label">
+                  Designation<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="designation"
                   type="select"
@@ -308,7 +324,9 @@ const AddUserModal = (props) => {
                 ) : null}
               </div>
               <div className="mb-3">
-                <Label className="form-label">Login ID</Label>
+                <Label className="form-label">
+                  Login ID<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="loginid"
                   label="Login ID"
@@ -330,7 +348,9 @@ const AddUserModal = (props) => {
                 ) : null}
               </div>
               <div className="mb-3">
-                <Label className="form-label">Password</Label>
+                <Label className="form-label">
+                  Password<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="password"
                   label="Password"
@@ -352,7 +372,9 @@ const AddUserModal = (props) => {
                 ) : null}
               </div>
               <div className="mb-3">
-                <Label className="form-label">Confirm-Password</Label>
+                <Label className="form-label">
+                  Confirm-Password<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="confirmpassword"
                   label="Confirm Password"

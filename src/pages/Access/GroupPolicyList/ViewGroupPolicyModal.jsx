@@ -1,27 +1,23 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const ViewGroupPolicyModal = (props) => {
-  const { isOpen, toggle, user } = props;
+  const { isOpen, handleViewGroupPolicy, groupPolicy } = props;
   // console.log("Customeruser in view modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
 
@@ -30,13 +26,14 @@ const ViewGroupPolicyModal = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      name: user.name,
-      type: user.type,
-      role: user.role,
-      description: user.description,
-      count: user.count,
-      createdat: user.created_at,
-      createdby: user.created_by,
+      id: (groupPolicy && groupPolicy.id) || "",
+      name: (groupPolicy && groupPolicy.name) || "",
+      type: (groupPolicy && groupPolicy.type) || "",
+      role: (groupPolicy && groupPolicy.role) || "",
+      description: (groupPolicy && groupPolicy.description) || "",
+      count: (groupPolicy && groupPolicy.count) || "",
+      createdat: (groupPolicy && groupPolicy.created_at) || "",
+      createdby: (groupPolicy && groupPolicy.created_by) || "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
@@ -51,7 +48,7 @@ const ViewGroupPolicyModal = (props) => {
     }),
     onSubmit: (values) => {
       const updateUser = {
-        id: user.id,
+        id: groupPolicy.id,
         name: values.name,
         type: values.type,
         role: values.role,
@@ -64,7 +61,7 @@ const ViewGroupPolicyModal = (props) => {
       // update user
       dispatch(onUpdateUser(updateUser));
       validation.resetForm();
-      toggle();
+      handleViewGroupPolicy();
     },
   });
   return (
@@ -76,9 +73,9 @@ const ViewGroupPolicyModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleViewGroupPolicy}
     >
-      <ModalHeader toggle={toggle} tag="h4">
+      <ModalHeader toggle={handleViewGroupPolicy} tag="h4">
         View Group Policy
       </ModalHeader>
       <ModalBody>

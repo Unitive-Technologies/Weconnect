@@ -4,28 +4,16 @@ import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
 import Spinners from "../../../components/Common/Spinner";
 import {
-  Toast,
-  ToastHeader,
-  ToastBody,
-  Button,
-  Alert,
-  UncontrolledAlert,
   Card,
   CardBody,
   Col,
   Container,
   Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
-  UncontrolledTooltip,
-  Input,
-  Form,
+  Toast,
+  ToastHeader,
+  ToastBody,
+  UncontrolledAlert,
 } from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
 
 import { Email, Tags, Projects } from "./groupPolicyListCol";
 
@@ -49,11 +37,6 @@ const GroupPolicyList = (props) => {
   document.title = "Group Policy List | VDigital";
 
   const dispatch = useDispatch();
-  const [toast, setToast] = useState(false);
-
-  const toggleToast = () => {
-    setToast(!toast);
-  };
 
   const selectGroupPolicyState = (state) => state.groupPolicy;
   const groupPolicyProperties = createSelector(
@@ -69,9 +52,13 @@ const GroupPolicyList = (props) => {
   }, [gpPolicy]);
   const [isLoading, setLoading] = useState(loading);
 
-  const [modal, setModal] = useState(false);
-  const [modal1, setModal1] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
+  const [showAddGroupPolicy, setShowAddGroupPolicy] = useState(false);
+  const [viewGroupPolicyModal, setViewGroupPolicyModal] = useState(false);
+  const [showAssignGroupPolicy, setShowAssignGroupPolicy] = useState(false);
+
+  const handleAssignGroupPolicy = () => {
+    setShowAssignGroupPolicy(!showAssignGroupPolicy);
+  };
 
   const columns = useMemo(
     () => [
@@ -105,7 +92,7 @@ const GroupPolicyList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  toggleViewModal(userData);
+                  handleViewGroupPolicy(userData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -233,348 +220,91 @@ const GroupPolicyList = (props) => {
   useEffect(() => {
     if (gpPolicy && !gpPolicy.length) {
       dispatch(onGetGroupPolicy());
-      setIsEdit(false);
     }
   }, [dispatch, gpPolicy]);
 
-  // useEffect(() => {
-  //   setContact(cusUsers);
-  //   setIsEdit(false);
-  // }, [cusUsers]);
-
-  // useEffect(() => {
-  //   if (!isEmpty(cusUsers) && !!isEdit) {
-  //     setContact(cusUsers);
-  //     setIsEdit(false);
-  //   }
-  // }, [cusUsers]);
-
-  const toggle = () => {
-    setModal(!modal);
+  const handleAddGroupPolicy = () => {
+    setShowAddGroupPolicy(!showAddGroupPolicy);
   };
-  const [viewUser, setViewUser] = useState({});
-  const [show, setShow] = useState(false);
-  const toggleViewModal = (userData) => {
-    setModal1(!modal1);
-    setViewUser(userData);
-    // toggle();
+  const [viewGroupPolicy, setViewGroupPolicy] = useState({});
+
+  const handleViewGroupPolicy = (groupPolicy) => {
+    setViewGroupPolicyModal(!viewGroupPolicyModal);
+    setViewGroupPolicy(groupPolicy);
   };
-  // const handleUserClick = (arg) => {
-  //   const user = arg;
-
-  //   setContact({
-  //     id: user.id,
-  //     name: user.name,
-  //     designation: user.designation,
-  //     email: user.email,
-  //     tags: user.tags,
-  //     projects: user.projects,
-  //   });
-  //   setIsEdit(true);
-
-  //   toggle();
-  // };
 
   var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
-
-  //delete customer
-  // const [deleteModal, setDeleteModal] = useState(false);
-
-  // const onClickDelete = (users) => {
-  //   setContact(users);
-  //   setDeleteModal(true);
-  // };
-
-  // const handleDeleteUser = () => {
-  //   if (contact && contact.id) {
-  //     dispatch(onDeleteUser(contact.id));
-  //   }
-  //   setContact("");
-  //   onPaginationPageChange(1);
-  //   setDeleteModal(false);
-  // };
-
-  // const handleUserClicks = () => {
-  //   setUserList("");
-  //   setIsEdit(false);
-  //   toggle();
-  // };
 
   const keyField = "id";
 
+  const getTableActions = () => {
+    return [
+      {
+        name: "Create",
+        action: setShowAddGroupPolicy,
+        type: "normal",
+        icon: "create",
+      },
+      {
+        name: "Assign",
+        action: setShowAssignGroupPolicy,
+        type: "normal",
+        icon: "upload",
+      },
+    ];
+  };
   return (
     <React.Fragment>
       <ViewGroupPolicyModal
-        isOpen={modal1}
-        toggle={toggleViewModal}
-        user={viewUser}
+        isOpen={viewGroupPolicyModal}
+        handleViewGroupPolicy={handleViewGroupPolicy}
+        groupPolicy={viewGroupPolicyModal}
       />
-      <AddGroupPolicyModal isOpen={modal} toggle={toggle} />
-
+      <AddGroupPolicyModal
+        isOpen={showAddGroupPolicy}
+        handleAddGroupPolicy={handleAddGroupPolicy}
+      />
+      <div
+        className="position-fixed top-0 end-0 p-3"
+        style={{ zIndex: "1005" }}
+      >
+        <Toast isOpen={showAssignGroupPolicy}>
+          <ToastHeader toggle={handleAssignGroupPolicy}>
+            <i className="mdi mdi-alert-outline me-2"></i> Warning
+          </ToastHeader>
+          <ToastBody>Please select Group Policy to apply</ToastBody>
+        </Toast>
+      </div>
       <div className="page-content">
         <Container fluid>
-          {/* Render Breadcrumbs */}
-          {/* <Breadcrumbs title="Access" breadcrumbItem="Group Policy List" /> */}
-          {/* {isLoading ? (
+          <Breadcrumbs title="Access" breadcrumbItem="Group Policies" />
+          {isLoading ? (
             <Spinners setLoading={setLoading} />
-          ) : ( */}
-          <Row>
-            <Col lg="12">
-              <Card>
-                <CardBody>
-                  <div className="d-flex align-items-center justify-content-between">
-                    <h5 className="mb-0 card-title flex-grow-1">
-                      {/* Jobs Lists */}
-                    </h5>
-                    {/* <form className="app-search d-none d-lg-block">
-                        <div className="position-relative">
-                          <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Search..."
-                          />
-                          <span className="bx bx-search-alt" />
-                        </div>
-                      </form> */}
-                    <div className="flex-shrink-0">
-                      <Link
-                        to="#!"
-                        onClick={() => setModal(true)}
-                        className="btn btn-primary me-1"
-                      >
-                        Create Group Policy
-                      </Link>
-
-                      <Link
-                        id="liveToastBtn"
-                        onClick={toggleToast}
-                        className="btn btn-primary me-1"
-                      >
-                        Assign Group Policy
-                      </Link>
-
-                      <div
-                        className="position-fixed top-0 end-0 p-3"
-                        style={{ zIndex: "1005" }}
-                      >
-                        <Toast isOpen={toast}>
-                          <ToastHeader toggle={toggleToast}>
-                            <i className="mdi mdi-alert-outline me-2"></i>{" "}
-                            Warning
-                          </ToastHeader>
-                          <ToastBody>
-                            Please select Group Policy to apply
-                          </ToastBody>
-                        </Toast>
-                      </div>
-                      {show && (
-                        <UncontrolledAlert
-                          color="danger"
-                          className="alert-dismissible fade show"
-                          role="alert"
-                        >
-                          <i className="mdi mdi-alert-outline me-2"></i>Please
-                          select Group Policy to select
-                        </UncontrolledAlert>
-                      )}
-                    </div>
-                  </div>
-                </CardBody>
-                <CardBody>
-                  {/* {console.log("groupPolicy:" + JSON.stringify(gpPolicy))} */}
-                  <TableContainer
-                    isPagination={true}
-                    columns={columns}
-                    data={gpPolicy}
-                    isGlobalFilter={true}
-                    // isAddGpPolicyList={true}
-                    isShowingPageLength={true}
-                    // iscustomPageSizeOptions={true}
-                    // handleUserClick={() => {}}
-                    customPageSize={50}
-                    tableClass="table align-middle table-nowrap table-hover"
-                    theadClass="table-light"
-                    paginationDiv="col-sm-12 col-md-7"
-                    pagination="pagination pagination-rounded justify-content-end mt-4"
-                  />
-                  {/* <Modal isOpen={modal} toggle={toggle}>
-                      <ModalHeader toggle={toggle} tag="h4">
-                        {!!isEdit ? "Edit User" : "Add User"}
-                      </ModalHeader>
-                      <ModalBody>
-                        <Form
-                          onSubmit={(e) => {
-                            e.preventDefault();
-                            validation.handleSubmit();
-                            return false;
-                          }}
-                        >
-                          <Row>
-                            <Col xs={12}>
-                              <div className="mb-3">
-                                <Label className="form-label">Name</Label>
-                                <Input
-                                  name="name"
-                                  type="text"
-                                  placeholder="Insert Name"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.name || ""}
-                                  invalid={
-                                    validation.touched.name &&
-                                      validation.errors.name
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.name &&
-                                  validation.errors.name ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.name}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">
-                                  Designation
-                                </Label>
-                                <Input
-                                  name="designation"
-                                  label="Designation"
-                                  placeholder="Insert Designation"
-                                  type="text"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.designation || ""}
-                                  invalid={
-                                    validation.touched.designation &&
-                                      validation.errors.designation
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.designation &&
-                                  validation.errors.designation ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.designation}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">Email</Label>
-                                <Input
-                                  name="email"
-                                  label="Email"
-                                  type="email"
-                                  placeholder="Insert Email"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.email || ""}
-                                  invalid={
-                                    validation.touched.email &&
-                                      validation.errors.email
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.email &&
-                                  validation.errors.email ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.email}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">Option</Label>
-                                <Input
-                                  type="select"
-                                  name="tags"
-                                  className="form-select"
-                                  multiple={true}
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.tags || []}
-                                  invalid={
-                                    validation.touched.tags &&
-                                      validation.errors.tags
-                                      ? true
-                                      : false
-                                  }
-                                >
-                                  <option>Photoshop</option>
-                                  <option>illustrator</option>
-                                  <option>Html</option>
-                                  <option>Php</option>
-                                  <option>Java</option>
-                                  <option>Python</option>
-                                  <option>UI/UX Designer</option>
-                                  <option>Ruby</option>
-                                  <option>Css</option>
-                                </Input>
-                                {validation.touched.tags &&
-                                  validation.errors.tags ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.tags}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">Projects</Label>
-                                <Input
-                                  name="projects"
-                                  label="Projects"
-                                  type="text"
-                                  placeholder="Insert Projects"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.projects || ""}
-                                  invalid={
-                                    validation.touched.projects &&
-                                      validation.errors.projects
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.projects &&
-                                  validation.errors.projects ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.projects}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                            </Col>
-                          </Row>
-                          <Row>
-                            <Col>
-                              <div className="text-end">
-                                <button
-                                  type="submit"
-                                  className="btn btn-success save-user"
-                                >
-                                  Save
-                                </button>
-                              </div>
-                            </Col>
-                          </Row>
-                        </Form>
-                      </ModalBody>
-                    </Modal> */}
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-          {/* )} */}
+          ) : (
+            <Row>
+              <Col lg="12">
+                <Card>
+                  <CardBody>
+                    <TableContainer
+                      isPagination={true}
+                      columns={columns}
+                      data={gpPolicy}
+                      isGlobalFilter={true}
+                      isShowTableActionButtons={true}
+                      isShowingPageLength={true}
+                      tableActions={getTableActions()}
+                      // iscustomPageSizeOptions={true}
+                      customPageSize={50}
+                      tableClass="table align-middle table-nowrap table-hover"
+                      theadClass="table-light"
+                      paginationDiv="col-sm-12 col-md-7"
+                      pagination="pagination pagination-rounded justify-content-end mt-4"
+                    />
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+          )}
         </Container>
       </div>
       <ToastContainer />
