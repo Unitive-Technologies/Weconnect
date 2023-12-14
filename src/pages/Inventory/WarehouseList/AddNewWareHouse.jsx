@@ -45,7 +45,7 @@ const AddNewWareHouse = (props) => {
       contact_person: Yup.string().required("Enter contact person"),
       mobile_no: Yup.string().required("Enter contact number"),
       operator: Yup.string().required("Select operator"),
-      description: Yup.string().required("Enter Description"),
+      description: Yup.string().required("Enter description"),
       address: Yup.string().required("Enter address"),
       status: Yup.string().required("Select status"),
     }),
@@ -53,7 +53,7 @@ const AddNewWareHouse = (props) => {
       const newWareHouse = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
-        contact_person: values["contact-person"],
+        contact_person: values["contact_person"],
         mobile_no: values["mobile_no"],
         status: values["status"],
         operator: values["operator"],
@@ -120,150 +120,50 @@ const AddNewWareHouse = (props) => {
 
               <div className="mb-3">
                 <Label className="form-label">
-                  Brand Type<span style={{ color: "red" }}>*</span>
+                  Contact Person<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="brand_type_lbl"
-                  type="select"
-                  placeholder="Select brand type"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.brand_type_lbl || ""}
-                >
-                  <option value="">Select brand type</option>
-                  <option value="STB">STB</option>
-                  <option value="Smartcard">Smartcard</option>
-                </Input>
-                {validation.touched.brand_type_lbl &&
-                validation.errors.brand_type_lbl ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.brand_type_lbl}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                <Label className="form-label">
-                  Box Type<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="box_type_lbl"
-                  type="select"
-                  placeholder="Select box type"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.box_type_lbl || ""}
-                >
-                  <option value="">Select box type</option>
-                  <option value="SD">Standard Definition(SD)</option>
-                  <option value="HD">High Definition(HD)</option>
-                </Input>
-                {validation.touched.box_type_lbl &&
-                validation.errors.box_type_lbl ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.box_type_lbl}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                <Label className="form-label">
-                  CAS Type<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="cas_lbl"
-                  type="select"
-                  placeholder="Select CAS"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.cas_lbl || ""}
-                >
-                  <option value="">Select CAS</option>
-                  <option value="NSTV">NSTV</option>
-                </Input>
-                {validation.touched.cas_lbl && validation.errors.cas_lbl ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.cas_lbl}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                <Label className="form-label">
-                  Character Length<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="length"
+                  name="contact_person"
                   type="text"
-                  placeholder="Enter character length"
+                  placeholder="Enter contact person"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.length || ""}
+                  value={validation.values.contact_person || ""}
                   invalid={
-                    validation.touched.length && validation.errors.length
+                    validation.touched.contact_person &&
+                    validation.errors.contact_person
                       ? true
                       : false
                   }
                 />
-                {validation.touched.length && validation.errors.length ? (
+                {validation.touched.contact_person &&
+                validation.errors.contact_person ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.length}
+                    {validation.errors.contact_person}
                   </FormFeedback>
                 ) : null}
               </div>
 
               <div className="mb-3">
                 <Label className="form-label">
-                  Significant Length<span style={{ color: "red" }}>*</span>
+                  Contact No.<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="significant_length"
+                  name="mobile_no"
                   type="text"
-                  placeholder="Enter significant length"
+                  placeholder="Enter contact number"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.significant_length || ""}
+                  value={validation.values.mobile_no || ""}
                   invalid={
-                    validation.touched.significant_length &&
-                    validation.errors.significant_length
+                    validation.touched.mobile_no && validation.errors.mobile_no
                       ? true
                       : false
                   }
                 />
-                {validation.touched.significant_length &&
-                validation.errors.significant_length ? (
+                {validation.touched.mobile_no && validation.errors.mobile_no ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.significant_length}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                <Label className="form-label">
-                  Allowed Characters<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="char_allowed_lbl"
-                  type="select"
-                  placeholder="Select allowed characters"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.char_allowed_lbl || ""}
-                >
-                  <option value="">Select allowed characters</option>
-                  <option value="Numeric">Numeric</option>
-                  <option value="Alphabets">Alphabets</option>
-                  <option value="Hexadecimal">Hexadecimal</option>
-                  <option value="Alphanumeric">Alphanumeric</option>
-                </Input>
-                {validation.touched.char_allowed_lbl &&
-                validation.errors.char_allowed_lbl ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.char_allowed_lbl}
+                    {validation.errors.mobile_no}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -275,7 +175,7 @@ const AddNewWareHouse = (props) => {
                 <Input
                   name="status"
                   type="select"
-                  placeholder="Select Status"
+                  placeholder="Select status"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
@@ -283,12 +183,85 @@ const AddNewWareHouse = (props) => {
                 >
                   <option value="">Select status</option>
                   <option value="Active">Active</option>
-                  <option value="blocked">BLOCKED</option>
                   <option value="In_Active">In-Active</option>
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
                     {validation.errors.status}
+                  </FormFeedback>
+                ) : null}
+              </div>
+
+              <div className="mb-3">
+                <Label className="form-label">
+                  Operator<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="operator"
+                  type="select"
+                  placeholder="Select brand type"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.operator || ""}
+                >
+                  <option value="">Select brand type</option>
+                  <option value="STB">STB</option>
+                  <option value="Smartcard">Smartcard</option>
+                </Input>
+                {validation.touched.operator && validation.errors.operator ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.operator}
+                  </FormFeedback>
+                ) : null}
+              </div>
+
+              <div className="mb-3">
+                <Label className="form-label">
+                  Description<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="description"
+                  type="textarea"
+                  placeholder="Enter description"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.description || ""}
+                  invalid={
+                    validation.touched.description &&
+                    validation.errors.description
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.description &&
+                validation.errors.description ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.description}
+                  </FormFeedback>
+                ) : null}
+              </div>
+
+              <div className="mb-3">
+                <Label className="form-label">
+                  Address<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="address"
+                  type="text"
+                  placeholder="Enter address"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.address || ""}
+                  invalid={
+                    validation.touched.address && validation.errors.address
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.address && validation.errors.address ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.address}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -323,7 +296,6 @@ const AddNewWareHouse = (props) => {
           </Row>
         </Form>
       </ModalBody>
-      {/* </Modal> */}
     </Modal>
   );
 };

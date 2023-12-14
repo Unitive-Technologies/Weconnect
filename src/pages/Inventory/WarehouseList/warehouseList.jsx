@@ -136,7 +136,7 @@ const WarehouseList = (props) => {
       },
       {
         Header: "Contact Person",
-        accessor: "contactperson",
+        accessor: "contact_person",
         filterable: true,
         Cell: (cellProps) => {
           return <Contact {...cellProps} />;
@@ -144,7 +144,7 @@ const WarehouseList = (props) => {
       },
       {
         Header: "Mobile No.",
-        accessor: "mobileno",
+        accessor: "mobile_no",
         filterable: true,
         Cell: (cellProps) => {
           return <Mobile {...cellProps} />;
