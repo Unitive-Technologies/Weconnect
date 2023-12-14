@@ -91,7 +91,13 @@ const InventoryStateList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  toggleViewInventoryState(userData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>

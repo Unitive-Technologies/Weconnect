@@ -56,7 +56,6 @@ const AddNewInventoryState = (props) => {
         created_by: values["created_by"],
       };
       console.log("New Inventory state:" + JSON.stringify(newInventoryState));
-      // save new user
       dispatch(onAddInventoryStateList(newInventoryState));
       validation.resetForm();
       toggle();
@@ -219,7 +218,7 @@ const AddNewInventoryState = (props) => {
             <Col sm="8">
               <div className="d-flex flex-wrap gap-2">
                 <button type="submit" className="btn btn-success save-user">
-                  Save
+                  Create
                 </button>
                 <button
                   type="reset"
