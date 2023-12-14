@@ -80,7 +80,6 @@ const AddNewDesignation = (props) => {
       tabIndex="-1"
       toggle={toggle}
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
       <ModalHeader tag="h4" toggle={toggle}>
         Add New Designation
       </ModalHeader>
@@ -95,7 +94,9 @@ const AddNewDesignation = (props) => {
           <Row>
             <Col sm="12">
               <div className="mb-3">
-                <Label className="form-label">Designation</Label>
+                <Label className="form-label">
+                  Designation<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="designation"
                   type="text"
@@ -119,7 +120,9 @@ const AddNewDesignation = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Type</Label>
+                <Label className="form-label">
+                  Type<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="type"
                   type="select"
@@ -145,7 +148,9 @@ const AddNewDesignation = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Code</Label>
+                <Label className="form-label">
+                  Code<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="code"
                   label="code"
@@ -167,7 +172,9 @@ const AddNewDesignation = (props) => {
                 ) : null}
               </div>
               <div className="mb-3">
-                <Label className="form-label">Parent designation</Label>
+                <Label className="form-label">
+                  Parent designation<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="parent"
                   type="select"
@@ -187,7 +194,9 @@ const AddNewDesignation = (props) => {
                 ) : null}
               </div>
               <div className="mb-3">
-                <Label className="form-label">Status</Label>
+                <Label className="form-label">
+                  Status<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="status"
                   type="select"
@@ -208,7 +217,9 @@ const AddNewDesignation = (props) => {
                 ) : null}
               </div>
               <div className="mb-3">
-                <Label className="form-label">Description</Label>
+                <Label className="form-label">
+                  Description<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="description"
                   type="textarea"

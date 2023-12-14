@@ -108,8 +108,9 @@ const AddNewLocation = (props) => {
       tabIndex="-1"
       toggle={toggle}
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4">Add New Location</ModalHeader>
+      <ModalHeader tag="h4" toggle={toggle}>
+        Add New Location
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -121,7 +122,9 @@ const AddNewLocation = (props) => {
           <Row>
             <Col sm="12">
               <div className="mb-3">
-                <Label className="form-label">Location Name</Label>
+                <Label className="form-label">
+                  Location Name<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="name"
                   type="text"
@@ -143,7 +146,9 @@ const AddNewLocation = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Select LCO</Label>
+                <Label className="form-label">
+                  Select LCO<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Select
                   name="lco"
                   options={options}
@@ -164,7 +169,9 @@ const AddNewLocation = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Status</Label>
+                <Label className="form-label">
+                  Status<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="status"
                   type="select"

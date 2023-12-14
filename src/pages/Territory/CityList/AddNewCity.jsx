@@ -78,7 +78,9 @@ const AddNewCity = (props) => {
       toggle={toggle}
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4">Add New City</ModalHeader>
+      <ModalHeader tag="h4" toggle={toggle}>
+        Add New City
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -90,7 +92,9 @@ const AddNewCity = (props) => {
           <Row>
             <Col sm="12">
               <div className="mb-3">
-                <Label className="form-label">City Name</Label>
+                <Label className="form-label">
+                  City Name<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="name"
                   type="text"
@@ -112,7 +116,9 @@ const AddNewCity = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">District Name</Label>
+                <Label className="form-label">
+                  District Name<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="district_lbl"
                   type="text"
@@ -136,7 +142,9 @@ const AddNewCity = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Select State</Label>
+                <Label className="form-label">
+                  Select State<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="state_lbl"
                   type="select"
@@ -193,7 +201,9 @@ const AddNewCity = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Description</Label>
+                <Label className="form-label">
+                  Description<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="description"
                   type="textarea"
@@ -218,7 +228,9 @@ const AddNewCity = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Status</Label>
+                <Label className="form-label">
+                  Status<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="status"
                   type="select"

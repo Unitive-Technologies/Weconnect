@@ -72,7 +72,9 @@ const AddSubLocation = (props) => {
       toggle={toggle}
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4">Add New Sub Location</ModalHeader>
+      <ModalHeader tag="h4" toggle={toggle}>
+        Add New Sub Location
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -84,7 +86,9 @@ const AddSubLocation = (props) => {
           <Row>
             <Col sm="12">
               <div className="mb-3">
-                <Label className="form-label">Sub Location Name</Label>
+                <Label className="form-label">
+                  Sub Location Name<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="name"
                   type="text"
@@ -106,7 +110,9 @@ const AddSubLocation = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Select Location</Label>
+                <Label className="form-label">
+                  Select Location<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="location_id"
                   type="select"
@@ -151,7 +157,9 @@ const AddSubLocation = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Status</Label>
+                <Label className="form-label">
+                  Status<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="status"
                   type="select"

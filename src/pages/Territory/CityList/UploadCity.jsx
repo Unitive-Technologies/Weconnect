@@ -208,7 +208,10 @@ const UploadCity = (props) => {
           </CardBody>
           <CardBody>
             {/* <CardTitle>Dropzone</CardTitle> */}
-            <CardSubtitle className="mb-3"> Select File to Upload</CardSubtitle>
+            <CardSubtitle className="mb-3">
+              {" "}
+              Select File to Upload<span style={{ color: "red" }}>*</span>
+            </CardSubtitle>
             <Form>
               <Dropzone
                 onDrop={(acceptedFiles) => {

@@ -77,8 +77,9 @@ const AddNewDistrict = (props) => {
       tabIndex="-1"
       toggle={toggle}
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4">Add New District</ModalHeader>
+      <ModalHeader tag="h4" toggle={toggle}>
+        Add New District
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -90,7 +91,9 @@ const AddNewDistrict = (props) => {
           <Row>
             <Col sm="12">
               <div className="mb-3">
-                <Label className="form-label">District Name</Label>
+                <Label className="form-label">
+                  District Name<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="name"
                   type="text"
@@ -112,7 +115,9 @@ const AddNewDistrict = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Select State</Label>
+                <Label className="form-label">
+                  Select State<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="state_lbl"
                   type="select"
@@ -137,7 +142,9 @@ const AddNewDistrict = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Description</Label>
+                <Label className="form-label">
+                  Description<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="description"
                   type="textarea"
@@ -162,7 +169,9 @@ const AddNewDistrict = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Status</Label>
+                <Label className="form-label">
+                  Status<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="status_lbl"
                   type="select"

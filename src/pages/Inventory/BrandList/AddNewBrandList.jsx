@@ -87,7 +87,9 @@ const AddNewBrandList = (props) => {
       tabIndex="-1"
       toggle={toggle}
     >
-      <ModalHeader tag="h4">Add New Brand</ModalHeader>
+      <ModalHeader tag="h4" toggle={toggle}>
+        Add New Brand
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {

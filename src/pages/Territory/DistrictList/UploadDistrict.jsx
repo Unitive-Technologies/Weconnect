@@ -179,8 +179,11 @@ const UploadDistrict = (props) => {
             </div>
           </CardBody>
           <CardBody>
-            {/* <CardTitle>Dropzone</CardTitle> */}
-            <CardSubtitle className="mb-3"> Select File to Upload</CardSubtitle>
+            {/* <CardTitle>Dropzone</CardTitle>*/}
+            <CardSubtitle className="mb-3">
+              {" "}
+              Select File to Upload<span style={{ color: "red" }}>*</span>
+            </CardSubtitle>
             <Form>
               <Dropzone
                 onDrop={(acceptedFiles) => {
