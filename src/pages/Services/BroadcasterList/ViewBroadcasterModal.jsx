@@ -104,7 +104,7 @@ const ViewBroadcasterModal = (props) => {
           </ModalHeader>
         ) : (
           <ModalHeader toggle={toggle} tag="h4">
-            Edit BROADCASTER
+            Edit {user.name}
           </ModalHeader>
         )}
         <ModalBody>

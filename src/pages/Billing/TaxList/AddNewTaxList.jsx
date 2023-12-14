@@ -17,7 +17,7 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-// import { addNewTaxList as onAddNewTaxList } from "/src/store/taxlist/actions";
+import { addNewTaxList as onAddNewTaxList } from "/src/store/taxlist/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 const AddNewTaxList = (props) => {
@@ -31,36 +31,36 @@ const AddNewTaxList = (props) => {
 
     initialValues: {
       //BroadCaster: "",
-      title: "",
+      name: "",
       code: "",
-      status: "",
+      status_lbl: "",
       taxvalue: "",
-      valuein: "",
-      taxontax: "",
+      valuetype_lbl: "",
+      parent_lbl: "",
       applicable: "",
       description: "",
       created_at: "",
       created_by: "Admin",
     },
     validationSchema: Yup.object({
-      title: Yup.string().required("Enter tax title"),
+      name: Yup.string().required("Enter tax title"),
       code: Yup.string().required("Enter tax code"),
-      status: Yup.string().required("Select status"),
+      status_lbl: Yup.string().required("Select status"),
       taxvalue: Yup.string().required("Exter Tax Value"),
-      valuein: Yup.string().required("Select value-in"),
-      taxontax: Yup.string().required(""),
+      valuetype_lbl: Yup.string().required("Select value-in"),
+      parent_lbl: Yup.string().required(""),
       applicable: Yup.string().required(""),
       description: Yup.string().required("Enter description"),
     }),
     onSubmit: (values) => {
       const newTaxList = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
-        title: values["title"],
+        name: values["name"],
         code: values["code"],
-        status: values["status"],
+        status_lbl: values["status"],
         taxvalue: values["taxvalue"],
-        valuein: values["valuein"],
-        taxontax: values["taxontax"],
+        valuetype_lbl: values["valuetype_lbl"],
+        parent_lbl: values["parent_lbl"],
         applicable: values["applicable"],
         description: values["description"],
         created_at: new Date(),
@@ -80,6 +80,7 @@ const AddNewTaxList = (props) => {
   return (
     <Modal
       isOpen={isOpen}
+      size="xl"
       role="dialog"
       autoFocus={true}
       centered={true}
@@ -98,27 +99,28 @@ const AddNewTaxList = (props) => {
           }}
         >
           <Row>
-            <Col sm="12">
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Title<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="title"
+                  name="name"
                   type="text"
                   placeholder="Enter title"
                   // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.title || ""}
+                  value={validation.values.name || ""}
                 ></Input>
-                {validation.touched.title && validation.errors.title ? (
+                {validation.touched.name && validation.errors.name ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.title}
+                    {validation.errors.name}
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Code<span style={{ color: "red" }}>*</span>
@@ -138,31 +140,35 @@ const AddNewTaxList = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Status<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="status"
+                  name="status_lbl"
                   type="select"
                   placeholder="Select Status"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.status || ""}
+                  value={validation.values.status_lbl || ""}
                 >
                   <option value="101">Select Status</option>
                   <option value="102">Active</option>
                   <option value="103">In-Active</option>
                 </Input>
-                {validation.touched.status && validation.errors.status ? (
+                {validation.touched.status_lbl && validation.errors.status_lbl ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.status}
+                    {validation.errors.status_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+          </Row>
+          <Row>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Tax Value<span style={{ color: "red" }}>*</span>
@@ -182,7 +188,89 @@ const AddNewTaxList = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="4">
+              <div className="mb-3">
+                <Label className="form-label">
+                  Value In<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="valuetype_lbl"
+                  type="select"
+                  placeholder="Select value-in"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.valuetype_lbl || ""}
+                >
+                  <option value="101">No Parent</option>
+                  <option value="102">SGST</option>
+                  <option value="103">CGST</option>
+                </Input>
+                {validation.touched.valuetype_lbl && validation.errors.valuetype_lbl ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.valuetype_lbl}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col sm="4">
+              <div className="mb-3">
+                <Label className="form-label">
+                  TaxOn Tax
+                </Label>
+                <Input
+                  name="parent_lbl"
+                  type="select"
+                  placeholder="Select value-in"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.parent_lbl || ""}
+                >
+                  <option value="201">in Percent</option>
+                  <option value="202">in Amount</option>
+                </Input>
+                {validation.touched.parent_lbl && validation.errors.parent_lbll ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.parent_lbl}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col sm="4">
+              <div className="mb-3">
+                <Label className="form-label">
+                  Applicable On<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="applicable"
+                  type="select"
+                  placeholder="Select Applicable On"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.applicable || ""}
+                >
+                  <option value="101">Subsctiption Charge</option>
+                  <option value="102">Installation Charge</option>
+                  <option value="103">Hardware Charge</option>
+                  <option value="104">Rental Charge</option>
+                  <option value="105">Debit/Credit Notes</option>
+                  <option value="106">TDS</option>
+                  <option value="107">Service Charge</option>
+                  <option value="108">AGR Charge</option>
+                </Input>
+                {validation.touched.applicable && validation.errors.applicable ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.applicable}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col sm="8">
               <div className="mb-3">
                 <Label className="form-label">
                   Description<span style={{ color: "red" }}>*</span>
@@ -197,19 +285,20 @@ const AddNewTaxList = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
+
           </Row>
           <Row>
             <Col sm="8">
@@ -241,7 +330,7 @@ const AddNewTaxList = (props) => {
         </Form>
       </ModalBody>
       {/* </Modal> */}
-    </Modal>
+    </Modal >
   );
 };
 

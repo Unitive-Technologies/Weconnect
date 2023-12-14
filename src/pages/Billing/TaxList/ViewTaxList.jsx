@@ -18,7 +18,7 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
-// import { addNewTaxList as onAddNewTaxList } from "/src/store/taxlist/actions";
+import { addNewTaxList as onAddNewTaxList } from "/src/store/taxlist/actions";
 
 const ViewTaxList = (props) => {
   const { isOpen, toggle, tax } = props;
@@ -32,29 +32,35 @@ const ViewTaxList = (props) => {
 
     initialValues: {
       id: (tax && tax.id) || "",
+      name: (tax && tax.name) || "",
       code: (tax && tax.code) || "",
       status: (tax && tax.status) || "",
       taxvalue: (tax && tax.taxvalue) || "",
-      valuein: (tax && tax.valuein) || "",
-      taxontax: (tax && tax.taxontax) || "",
+      valuetype_lbl: (tax && tax.valuetype_lbl) || "",
+      parent_lbl: (tax && tax.parent_lbl) || "",
       applicable: (tax && tax.applicable) || "",
       description: (tax && tax.description) || "",
     },
     validationSchema: Yup.object({
-      title: Yup.string().required("Enter tax title"),
+      name: Yup.string().required("Enter tax title"),
       code: Yup.string().required("Enter tax code"),
       status: Yup.string().required("Select status"),
       taxvalue: Yup.string().required("Exter Tax Value"),
-      valuein: Yup.string().required("Select value-in"),
-      taxontax: Yup.string().required(""),
+      valuetype_lbl: Yup.string().required("Select value-in"),
+      parent_lbl: Yup.string().required(""),
       applicable: Yup.string().required(""),
       description: Yup.string().required("Enter description"),
     }),
     onSubmit: (values) => {
       const newTaxList = {
         id: tax.id,
-        title: values.title,
+        name: values.name,
+        code: values.code,
         status: values.status,
+        taxvalue: values.taxvalue,
+        valuetype_lbl: values.valuetype_lbl,
+        parent_lbl: values.parent_lbl,
+        applicable: values.applicable,
         description: values.description,
       };
 
@@ -68,6 +74,7 @@ const ViewTaxList = (props) => {
     <>
       <Modal
         isOpen={isOpen}
+        size="xl"
         role="dialog"
         autoFocus={true}
         centered={true}
@@ -75,8 +82,20 @@ const ViewTaxList = (props) => {
         tabIndex="-1"
         toggle={toggle}
       >
-        {/* <Modal isOpen={modal} toggle={toggle}> */}
-        <ModalHeader tag="h4">Add New Tax</ModalHeader>
+        {!showEditUser ? (
+          <ModalHeader toggle={toggle} tag="h4">
+            View  {tax.name}
+            <i
+              className="bx bx bxs-edit"
+              style={{ marginLeft: "20px", cursor: "pointer" }}
+              onClick={() => setShowEditUser(true)}
+            ></i>
+          </ModalHeader>
+        ) : (
+          <ModalHeader toggle={toggle} tag="h4">
+            Edit {tax.name}
+          </ModalHeader>
+        )}
         <ModalBody>
           <Form
             onSubmit={(e) => {
@@ -86,27 +105,28 @@ const ViewTaxList = (props) => {
             }}
           >
             <Row>
-              <Col sm="12">
+              <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">
                     Title<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="title"
+                    name="name"
                     type="text"
                     placeholder="Enter title"
                     // className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.title || ""}
+                    value={validation.values.name || ""}
                   ></Input>
-                  {validation.touched.title && validation.errors.title ? (
+                  {validation.touched.name && validation.errors.name ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.title}
+                      {validation.errors.name}
                     </FormFeedback>
                   ) : null}
                 </div>
-
+              </Col>
+              <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">
                     Code<span style={{ color: "red" }}>*</span>
@@ -126,7 +146,8 @@ const ViewTaxList = (props) => {
                     </FormFeedback>
                   ) : null}
                 </div>
-
+              </Col>
+              <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">
                     Status<span style={{ color: "red" }}>*</span>
@@ -150,7 +171,10 @@ const ViewTaxList = (props) => {
                     </FormFeedback>
                   ) : null}
                 </div>
-
+              </Col>
+            </Row>
+            <Row>
+              <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">
                     Tax Value<span style={{ color: "red" }}>*</span>
@@ -170,7 +194,73 @@ const ViewTaxList = (props) => {
                     </FormFeedback>
                   ) : null}
                 </div>
-
+              </Col>
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Value In<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="valuetype_lbl"
+                    type="select"
+                    placeholder="In Percent"
+                    // className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.valuetype_lbl || ""}
+                  ></Input>
+                  {validation.touched.valuetype_lbl && validation.errors.valuetype_lbl ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.valuetype_lbl}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    TaxOnTax<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="parent_lbl"
+                    type="select"
+                    placeholder=""
+                    className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.parent_lbl || ""}
+                  ></Input>
+                  {validation.touched.parent_lbl && validation.errors.parent_lbl ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.parent_lbl}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Applicable On<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="applicable"
+                    type="select"
+                    placeholder=""
+                    className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.applicable || ""}
+                  ></Input>
+                  {validation.touched.applicable && validation.errors.applicable ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.applicable}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              <Col sm="8">
                 <div className="mb-3">
                   <Label className="form-label">
                     Description<span style={{ color: "red" }}>*</span>
@@ -185,13 +275,13 @@ const ViewTaxList = (props) => {
                     value={validation.values.description || ""}
                     invalid={
                       validation.touched.description &&
-                      validation.errors.description
+                        validation.errors.description
                         ? true
                         : false
                     }
                   />
                   {validation.touched.description &&
-                  validation.errors.description ? (
+                    validation.errors.description ? (
                     <FormFeedback type="invalid">
                       {validation.errors.description}
                     </FormFeedback>
