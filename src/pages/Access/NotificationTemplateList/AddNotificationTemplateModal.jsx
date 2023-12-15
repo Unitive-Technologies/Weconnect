@@ -1,18 +1,15 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { SketchPicker } from "react-color";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
+  ModalFooter,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
@@ -20,12 +17,11 @@ import * as Yup from "yup";
 import { optionsList } from "./optionsList";
 import { useFormik } from "formik";
 import { addNewNotificationTemplate as onAddNewNotificationTemplate } from "/src/store/notificationtemplate/actions";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const AddNotificationTemplateModal = (props) => {
   const { isOpen, handleAddNotificationTemplate } = props;
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
   const FontSize = Array.from({ length: 93 }, (_, index) => index + 8);
 
   const [showColorPicker, setShowColorPicker] = useState(false);
@@ -83,13 +79,13 @@ const AddNotificationTemplateModal = (props) => {
     <Modal
       isOpen={isOpen}
       role="dialog"
+      size="xl"
       autoFocus={true}
       centered={true}
       className="exampleModal"
       tabIndex="-1"
       toggle={handleAddNotificationTemplate}
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
       <ModalHeader tag="h4" toggle={handleAddNotificationTemplate}>
         Create Notification Template
       </ModalHeader>
@@ -102,7 +98,7 @@ const AddNotificationTemplateModal = (props) => {
           }}
         >
           <Row>
-            <Col sm="6">
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">Name</Label>
                 <Input
@@ -124,7 +120,8 @@ const AddNotificationTemplateModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">Type</Label>
                 <Input
@@ -146,7 +143,33 @@ const AddNotificationTemplateModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={3}>
+              <div className="mb-3">
+                <Label className="form-label">Status</Label>
+                <Input
+                  name="status"
+                  type="select"
+                  placeholder="Select Status"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.status || ""}
+                >
+                  <option value="">Select Status</option>
+                  <option value="11">Active</option>
+                  <option value="12">In-Active</option>
+                </Input>
+                {validation.touched.status && validation.errors.status ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.status}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">Font Size</Label>
                 <Input
@@ -171,7 +194,8 @@ const AddNotificationTemplateModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">Font Color</Label>
                 <div>
@@ -213,7 +237,7 @@ const AddNotificationTemplateModal = (props) => {
                 ) : null}
               </div>
             </Col>
-            <Col sm="6">
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">Font Background Color</Label>
                 <div>
@@ -254,7 +278,8 @@ const AddNotificationTemplateModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">Font Family</Label>
                 <Input
@@ -280,28 +305,10 @@ const AddNotificationTemplateModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-              <div className="mb-3">
-                <Label className="form-label">Status</Label>
-                <Input
-                  name="status"
-                  type="select"
-                  placeholder="Select Status"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.status || ""}
-                >
-                  <option value="">Select Status</option>
-                  <option value="11">Active</option>
-                  <option value="12">In-Active</option>
-                </Input>
-                {validation.touched.status && validation.errors.status ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.status}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={6}>
               <div className="mb-3">
                 <Label className="form-label">Content</Label>
                 <Input
@@ -328,11 +335,29 @@ const AddNotificationTemplateModal = (props) => {
           </Row>
           <Row>
             <Col>
-              <div className="text-end">
+              <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
                   Create
                 </button>
-              </div>
+                <button
+                  type="reset"
+                  className="btn btn-warning"
+                  onClick={() => validation.resetForm()}
+                >
+                  Reset
+                </button>
+
+                <button
+                  type="button"
+                  className="btn btn-outline-danger"
+                  onClick={() => {
+                    validation.resetForm();
+                    handleAddGroupPolicy();
+                  }}
+                >
+                  Cancel
+                </button>
+              </ModalFooter>
             </Col>
           </Row>
         </Form>

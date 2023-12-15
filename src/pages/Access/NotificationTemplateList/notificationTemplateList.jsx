@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
 import Spinners from "../../../components/Common/Spinner";
+import ColorPicker from "@vtaits/react-color-picker";
 import {
   Card,
   CardBody,
@@ -151,9 +152,15 @@ const NotificationTemplateList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.msg_fontcolor}
-            </p>
+            <ColorPicker
+              saturationHeight={10}
+              saturationWidth={100}
+              value={cellProps.row.original.msg_fontcolor}
+              // onDrag={onDragRgb}
+            />
+            // <p className="text-muted mb-0">
+            //   {cellProps.row.original.msg_fontcolor}
+            // </p>
           );
         },
       },
@@ -163,9 +170,15 @@ const NotificationTemplateList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.msg_fontbackgroundcolor}
-            </p>
+            <ColorPicker
+              saturationHeight={10}
+              saturationWidth={100}
+              value={cellProps.row.original.msg_fontbackgroundcolor}
+              // onDrag={onDragRgb}
+            />
+            // <p className="text-muted mb-0">
+            //   {cellProps.row.original.msg_fontbackgroundcolor}
+            // </p>
           );
         },
       },

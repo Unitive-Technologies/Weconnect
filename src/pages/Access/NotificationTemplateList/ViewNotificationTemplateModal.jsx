@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import {
   Card,
   CardBody,
@@ -24,7 +25,8 @@ const ViewNotificationTemplateModal = (props) => {
   const { isOpen, handleViewNotificationTemplate, notiTemplate } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
-
+  const [showEditNotificationTemp, setShowEditNotificationTemp] =
+    useState(false);
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -68,20 +70,42 @@ const ViewNotificationTemplateModal = (props) => {
       handleViewNotificationTemplate();
     },
   });
+
+  const handleCancel = () => {
+    setShowEditNotificationTemp(false);
+    handleViewNotificationTemplate();
+  };
+
   return (
     <Modal
       isOpen={isOpen}
       role="dialog"
+      size="xl"
       autoFocus={true}
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleViewNotificationTemplate}
+      toggle={handleCancel}
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader toggle={handleViewNotificationTemplate} tag="h4">
-        View Notification Template
+      <ModalHeader toggle={handleCancel} tag="h4">
+        {!showEditNotificationTemp
+          ? " View Notification Template"
+          : "Edit Notification Template"}
       </ModalHeader>
+      {!showEditNotificationTemp && (
+        <Link
+          style={{
+            position: "absolute",
+            marginLeft: "92%",
+            marginTop: "1%",
+          }}
+          to="#!"
+          className="btn btn-light me-1"
+          onClick={() => setShowEditNotificationTemp(true)}
+        >
+          <i className="mdi mdi-pencil-outline"></i>
+        </Link>
+      )}
       <ModalBody>
         <Form
           onSubmit={(e) => {
