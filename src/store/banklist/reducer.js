@@ -1,4 +1,7 @@
-import { GET_BANK_SUCCESS, GET_BANK_FAIL } from "./actionTypes";
+import {
+  GET_BANK_SUCCESS, GET_BANK_FAIL, ADD_BANK_SUCCESS,
+  ADD_BANK_FAIL,
+} from "./actionTypes";
 
 const INIT_STATE = {
   bank: [],
@@ -17,6 +20,21 @@ const Bank = (state = INIT_STATE, action) => {
       };
 
     case GET_BANK_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_BANK_SUCCESS:
+      return {
+        ...state,
+        bank: [
+          ...state.bank,
+          action.payload,
+        ],
+      };
+
+    case ADD_BANK_FAIL:
       return {
         ...state,
         error: action.payload,

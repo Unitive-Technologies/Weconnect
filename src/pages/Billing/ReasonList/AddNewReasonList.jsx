@@ -33,21 +33,21 @@ const AddNewReason = (props) => {
             //BroadCaster: "",
             name: "",
             type_display_lbl: "",
-            status: "",
+            status_lbl: "",
             created_at: "",
             created_by: "Admin",
         },
         validationSchema: Yup.object({
             name: Yup.string().required("Enter reason"),
             type_display_lbl: Yup.string().required("Enter reason type"),
-            status: Yup.string().required("Select status"),
+            status_lbl: Yup.string().required("Select status"),
         }),
         onSubmit: (values) => {
             const newReason = {
                 id: Math.floor(Math.random() * (30 - 20)) + 20,
                 name: values["name"],
-                type_display_lbl: values["reasontype"],
-                status: values["status"],
+                type_display_lbl: values["type_display_lbl"],
+                status_lbl: values["status_lbl"],
                 created_at: new Date(),
                 created_by: values["created_by"],
             };
@@ -127,21 +127,21 @@ const AddNewReason = (props) => {
                             <div className="mb-3">
                                 <Label className="form-label">Status<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
-                                    name="status"
+                                    name="status_lbl"
                                     type="select"
                                     placeholder="Select Status"
                                     className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.status || ""}
+                                    value={validation.values.status_lbl || ""}
                                 >
                                     <option value="101">Select Status</option>
                                     <option value="102">Active</option>
                                     <option value="103">In-Active</option>
                                 </Input>
-                                {validation.touched.status && validation.errors.status ? (
+                                {validation.touched.status_lbl && validation.errors.status_lbl ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.status}
+                                        {validation.errors.status_lbl}
                                     </FormFeedback>
                                 ) : null}
                             </div>

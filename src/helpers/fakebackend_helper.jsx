@@ -350,6 +350,7 @@ export const getReason = () => get(url.GET_REASON);
 export const addNewReason = (reasons) => post(url.ADD_NEW_REASON, reasons);
 
 export const getBank = () => get(url.GET_BANK);
+export const addNewBank = (banks) => post(url.ADD_NEW_BANK, banks);
 export const getPromoVoucher = () => get(url.GET_PROMOVOUCHER);
 
 export const getSMSMessageTempList = () => get(url.GET_SMSMESSAGETEMPLIST);

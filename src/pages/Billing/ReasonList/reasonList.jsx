@@ -309,7 +309,7 @@ const ReasonList = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Billing" breadcrumbItem="Tax List" />
+          <Breadcrumbs title="Billing" breadcrumbItem="Reason List" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (

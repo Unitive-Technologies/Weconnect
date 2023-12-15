@@ -17,10 +17,10 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addNewTaxList as onAddNewTaxList } from "/src/store/taxlist/actions";
+import { addNewBank as onAddNewBank } from "/src/store/banklist/actions";
 import { useSelector, useDispatch } from "react-redux";
 
-const AddNewTaxList = (props) => {
+const AddNewBankList = (props) => {
   const { isOpen, toggle } = props;
   const dispatch = useDispatch();
   const [user, setUser] = useState();
@@ -32,43 +32,38 @@ const AddNewTaxList = (props) => {
     initialValues: {
       //BroadCaster: "",
       name: "",
-      code: "",
+      ifsc_code: "",
+      branch: "",
+      branch_address: "",
+      formso: "",
       status_lbl: "",
-      taxvalue: "",
-      valuetype_lbl: "",
-      parent_lbl: "",
-      applicable: "",
-      description: "",
       created_at: "",
       created_by: "Admin",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter tax title"),
-      code: Yup.string().required("Enter tax code"),
+      name: Yup.string().required("Enter name"),
+      ifsc_code: Yup.string().required("Enter IFSC code"),
+      branch: Yup.string().required("Enter branch"),
+      branch_address: Yup.string().required("Enter branch address"),
+      formso: Yup.string().required("Select for mso"),
       status_lbl: Yup.string().required("Select status"),
-      taxvalue: Yup.string().required("Exter Tax Value"),
-      valuetype_lbl: Yup.string().required("Select value-in"),
-      parent_lbl: Yup.string().required(""),
-      applicable: Yup.string().required(""),
-      description: Yup.string().required("Enter description"),
+
     }),
     onSubmit: (values) => {
-      const newTaxList = {
+      const newBank = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
-        code: values["code"],
+        ifsc_code: values["ifsc_code"],
         status_lbl: values["status_lbl"],
-        taxvalue: values["taxvalue"],
-        valuetype_lbl: values["valuetype_lbl"],
-        parent_lbl: values["parent_lbl"],
-        applicable: values["applicable"],
-        description: values["description"],
+        branch: values["branch"],
+        branch_address: values["branch_address"],
+        formso: values["formso"],
         created_at: new Date(),
         created_by: values["created_by"],
       };
-      console.log("newTaxList:" + newTaxList);
+      console.log("newBank:" + newBank);
       // save new user
-      dispatch(onAddNewTaxList(newTaxList));
+      dispatch(onAddNewBank(newBank));
       validation.resetForm();
       toggle();
     },
@@ -102,12 +97,12 @@ const AddNewTaxList = (props) => {
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
-                  Title<span style={{ color: "red" }}>*</span>
+                  Name<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
                   name="name"
                   type="text"
-                  placeholder="Enter title"
+                  placeholder="Enter name"
                   // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
@@ -123,20 +118,41 @@ const AddNewTaxList = (props) => {
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
-                  Code<span style={{ color: "red" }}>*</span>
+                  IFSC Code<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="code"
+                  name="ifsc_code"
                   type="text"
-                  placeholder="Enter code"
+                  placeholder="Enter IFSC Code"
                   // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.code || ""}
+                  value={validation.values.ifsc_code || ""}
                 ></Input>
-                {validation.touched.code && validation.errors.code ? (
+                {validation.touched.ifsc_code && validation.errors.ifsc_code ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.code}
+                    {validation.errors.ifsc_code}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col sm="4">
+              <div className="mb-3">
+                <Label className="form-label">
+                  Branch<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="branch"
+                  type="text"
+                  placeholder="Enter branch"
+                  // className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.branch || ""}
+                ></Input>
+                {validation.touched.branch && validation.errors.branch ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.branch}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -171,20 +187,20 @@ const AddNewTaxList = (props) => {
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
-                  Tax Value<span style={{ color: "red" }}>*</span>
+                  Branch Address<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="taxvalue"
+                  name="branch_address"
                   type="text"
-                  placeholder="Enter tax value"
+                  placeholder="Enter branch address"
                   // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.taxvalue || ""}
+                  value={validation.values.branch_address || ""}
                 ></Input>
-                {validation.touched.taxvalue && validation.errors.taxvalue ? (
+                {validation.touched.branch_address && validation.errors.branch_address ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.taxvalue}
+                    {validation.errors.branch_address}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -192,113 +208,28 @@ const AddNewTaxList = (props) => {
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
-                  Value In<span style={{ color: "red" }}>*</span>
+                  For MSO<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="valuetype_lbl"
+                  name="formso"
                   type="select"
-                  placeholder="Select value-in"
+                  placeholder="Select for mso"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.valuetype_lbl || ""}
+                  value={validation.values.formso || ""}
                 >
-                  <option value="101">No Parent</option>
-                  <option value="102">SGST</option>
-                  <option value="103">CGST</option>
+                  <option value="101">Select for mso</option>
+                  <option value="102">Yes</option>
+                  <option value="103">No</option>
                 </Input>
-                {validation.touched.valuetype_lbl && validation.errors.valuetype_lbl ? (
+                {validation.touched.formso && validation.errors.formso ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.valuetype_lbl}
+                    {validation.errors.formso}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
-            <Col sm="4">
-              <div className="mb-3">
-                <Label className="form-label">
-                  TaxOn Tax
-                </Label>
-                <Input
-                  name="parent_lbl"
-                  type="select"
-                  placeholder="Select value-in"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.parent_lbl || ""}
-                >
-                  <option value="201">in Percent</option>
-                  <option value="202">in Amount</option>
-                </Input>
-                {validation.touched.parent_lbl && validation.errors.parent_lbll ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.parent_lbl}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col sm="4">
-              <div className="mb-3">
-                <Label className="form-label">
-                  Applicable On<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="applicable"
-                  type="select"
-                  placeholder="Select Applicable On"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.applicable || ""}
-                >
-                  <option value="101">Subsctiption Charge</option>
-                  <option value="102">Installation Charge</option>
-                  <option value="103">Hardware Charge</option>
-                  <option value="104">Rental Charge</option>
-                  <option value="105">Debit/Credit Notes</option>
-                  <option value="106">TDS</option>
-                  <option value="107">Service Charge</option>
-                  <option value="108">AGR Charge</option>
-                </Input>
-                {validation.touched.applicable && validation.errors.applicable ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.applicable}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col sm="8">
-              <div className="mb-3">
-                <Label className="form-label">
-                  Description<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="description"
-                  type="textarea"
-                  placeholder="Enter Description"
-                  rows="3"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.description || ""}
-                  invalid={
-                    validation.touched.description &&
-                      validation.errors.description
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.description &&
-                  validation.errors.description ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.description}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-
           </Row>
           <Row>
             <Col sm="8">
@@ -334,9 +265,9 @@ const AddNewTaxList = (props) => {
   );
 };
 
-AddNewTaxList.propTypes = {
+AddNewBankList.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default AddNewTaxList;
+export default AddNewBankList;
