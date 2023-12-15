@@ -100,7 +100,9 @@ const AddUserHierarchy = (props) => {
           <Row>
             <Col lg={3}>
               <div className="mb-3">
-                <Label className="form-label">Name</Label>
+                <Label className="form-label">
+                  Name<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="name"
                   type="text"
@@ -123,7 +125,9 @@ const AddUserHierarchy = (props) => {
             </Col>
             <Col lg={3}>
               <div className="mb-3">
-                <Label className="form-label">Code</Label>
+                <Label className="form-label">
+                  Code<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="code"
                   label="code"
@@ -147,7 +151,9 @@ const AddUserHierarchy = (props) => {
             </Col>
             <Col lg={3}>
               <div className="mb-3">
-                <Label className="form-label">Email</Label>
+                <Label className="form-label">
+                  Email<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="email"
                   label="code"
@@ -171,7 +177,9 @@ const AddUserHierarchy = (props) => {
             </Col>
             <Col lg={3}>
               <div className="mb-3">
-                <Label className="form-label">Description</Label>
+                <Label className="form-label">
+                  Description<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="description"
                   type="textarea"
@@ -199,7 +207,9 @@ const AddUserHierarchy = (props) => {
           <Row>
             <Col lg={3}>
               <div className="mb-3">
-                <Label className="form-label">Status</Label>
+                <Label className="form-label">
+                  Status<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="status"
                   type="select"
@@ -223,7 +233,9 @@ const AddUserHierarchy = (props) => {
             </Col>
             <Col lg={3}>
               <div className="mb-3">
-                <Label className="form-label">Report Type</Label>
+                <Label className="form-label">
+                  Report Type<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="reportType"
                   type="select"
@@ -248,7 +260,9 @@ const AddUserHierarchy = (props) => {
             </Col>
             <Col lg={3}>
               <div className="mb-3">
-                <Label className="form-label">Designation</Label>
+                <Label className="form-label">
+                  Designation<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="designation"
                   label="designation"

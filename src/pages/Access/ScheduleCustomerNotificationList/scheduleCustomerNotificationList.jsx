@@ -284,7 +284,16 @@ const ScheduleCustomerNotificationList = (props) => {
   };
 
   const keyField = "id";
-
+  const getTableActions = () => {
+    return [
+      {
+        name: "Create",
+        action: setShowAddNewScheduleCustNoti,
+        type: "normal",
+        icon: "create",
+      },
+    ];
+  };
   return (
     <React.Fragment>
       <AddNewScheduleCustomerNotification
@@ -296,7 +305,7 @@ const ScheduleCustomerNotificationList = (props) => {
           {/* Render Breadcrumbs */}
           <Breadcrumbs
             title="Access"
-            breadcrumbItem="Schedule Customer Notification List"
+            breadcrumbItem="Schedule Customer Notification"
           />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
@@ -310,7 +319,8 @@ const ScheduleCustomerNotificationList = (props) => {
                       columns={columns}
                       data={schCusNotification}
                       isGlobalFilter={true}
-                      // isShowTableActionButtons={true}
+                      isShowTableActionButtons={true}
+                      tableActions={getTableActions()}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
                       customPageSize={50}

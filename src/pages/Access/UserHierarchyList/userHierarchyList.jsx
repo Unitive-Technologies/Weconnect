@@ -305,8 +305,8 @@ const UserHierarchyList = (props) => {
                       columns={columns}
                       data={userHier}
                       isGlobalFilter={true}
-                      isShowingPageLength={true}
-                      tableActions={getTableActions()}
+                    tableActions={getTableActions()}   isShowingPageLength={true}
+                     
                       isShowTableActionButtons={true}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
