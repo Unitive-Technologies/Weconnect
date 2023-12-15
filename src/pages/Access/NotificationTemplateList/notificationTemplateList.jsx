@@ -11,17 +11,11 @@ import {
   Container,
   Row,
   UncontrolledTooltip,
-  UncontrolledDropdown,
-  UncontrolledAlert,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   Toast,
   ToastHeader,
   ToastBody,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
 import { getNotificationTemplate as onGetNotificationTemplate } from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
@@ -52,13 +46,11 @@ const NotificationTemplateList = (props) => {
 
   const [isLoading, setLoading] = useState(loading);
 
-  const [userList, setUserList] = useState([]);
   const [showAddNotificationTemplate, setShowAddNotificationTemplate] =
     useState(false);
   const [viewNotificationTemplate, setViewNotificationTemplate] =
     useState(false);
   const [modal2, setModal2] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
   const [showActionNotificationModal, setShowActionNotificationModal] =
     useState(false);
 
@@ -228,41 +220,6 @@ const NotificationTemplateList = (props) => {
           );
         },
       },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
-          );
-        },
-      },
     ],
     []
   );
@@ -270,7 +227,6 @@ const NotificationTemplateList = (props) => {
   useEffect(() => {
     if (noTemplate && !noTemplate.length) {
       dispatch(onGetNotificationTemplate());
-      setIsEdit(false);
     }
   }, [dispatch, noTemplate]);
 
@@ -282,15 +238,12 @@ const NotificationTemplateList = (props) => {
     setModal2(!modal2);
   };
   const [viewNotiTemp, setViewUser] = useState({});
-  // const toggleViewModal = () => setModal(modal);
-  // const handleUserClick = (arg) => {
+
   const handleViewNotificationTemplate = (userData) => {
     setViewNotificationTemplate(!viewNotificationTemplate);
     setViewUser(userData);
-    // toggle();
   };
 
-  var node = useRef();
   const getTableActions = () => {
     return [
       {
@@ -343,48 +296,6 @@ const NotificationTemplateList = (props) => {
             <Row>
               <Col lg="12">
                 <Card>
-                  {/* <CardBody>
-                    <div className="d-flex align-items-center justify-content-between">
-                      <div className="flex-shrink-0">
-                        <Link
-                          to="#!"
-                          onClick={() => setModal(true)}
-                          className="btn btn-primary me-1"
-                        >
-                          Create Notification Template
-                        </Link>
-
-                        <UncontrolledDropdown className="dropdown d-inline-block me-1">
-                          <DropdownToggle
-                            type="menu"
-                            className="btn btn-success"
-                            id="dropdownMenuButton1"
-                          >
-                            Action &nbsp;
-                            <i className="mdi mdi-dots-vertical"></i>
-                          </DropdownToggle>
-                          <DropdownMenu>
-                            <li onClick={() => setModal2(true)}>
-                              <DropdownItem href="#">
-                                Schedule Notification
-                              </DropdownItem>
-                            </li>
-                          </DropdownMenu>
-                        </UncontrolledDropdown>
-
-                        {modal2 && (
-                          <UncontrolledAlert
-                            color="danger"
-                            className="alert-dismissible fade show"
-                            role="alert"
-                          >
-                            <i className="mdi mdi-alert-outline me-2"></i>Please
-                            select atleast one Notification Template
-                          </UncontrolledAlert>
-                        )}
-                      </div>
-                    </div>
-                  </CardBody> */}
                   <CardBody>
                     {console.log("template:" + JSON.stringify(noTemplate))}
                     <TableContainer
@@ -396,7 +307,6 @@ const NotificationTemplateList = (props) => {
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       // iscustomPageSizeOptions={true}
-
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

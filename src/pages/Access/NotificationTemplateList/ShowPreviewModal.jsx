@@ -1,20 +1,6 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import {
-  Col,
-  Row,
-  Modal,
-  ModalFooter,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
-  Input,
-  Form,
-} from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-import { addNewUser as onAddNewUser } from "/src/store/users/actions";
+import { Modal, ModalFooter, ModalHeader, ModalBody } from "reactstrap";
 import { useDispatch } from "react-redux";
 
 const ShowPreviewModal = (props) => {
