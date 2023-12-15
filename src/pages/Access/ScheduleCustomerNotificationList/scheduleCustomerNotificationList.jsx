@@ -285,17 +285,6 @@ const ScheduleCustomerNotificationList = (props) => {
 
   const keyField = "id";
 
-  const getTableActions = () => {
-    return [
-      {
-        name: "Create",
-        action: setShowAddNewScheduleCustNoti,
-        type: "normal",
-        icon: "create",
-      },
-    ];
-  };
-
   return (
     <React.Fragment>
       <AddNewScheduleCustomerNotification
@@ -321,7 +310,7 @@ const ScheduleCustomerNotificationList = (props) => {
                       columns={columns}
                       data={schCusNotification}
                       isGlobalFilter={true}
-                      isShowTableActionButtons={true}
+                      // isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
                       customPageSize={50}

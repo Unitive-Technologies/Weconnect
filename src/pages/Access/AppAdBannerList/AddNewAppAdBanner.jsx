@@ -1,29 +1,25 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
+  ModalFooter,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addAppAdBanner as onAddAppAdBanner } from "/src/store/appadbannerlist/actions";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const AddNewAppAdBanner = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleAddAppAdBanner } = props;
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -66,7 +62,7 @@ const AddNewAppAdBanner = (props) => {
       // save new user
       dispatch(onAddAppAdBanner(newAppAdBanner));
       validation.resetForm();
-      toggle();
+      handleAddAppAdBanner();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -77,14 +73,14 @@ const AddNewAppAdBanner = (props) => {
     <Modal
       isOpen={isOpen}
       role="dialog"
+      size="xl"
       autoFocus={true}
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleAddAppAdBanner}
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4" toggle={toggle}>
+      <ModalHeader tag="h4" toggle={handleAddAppAdBanner}>
         Add New App Advertisement Banner
       </ModalHeader>
       <ModalBody>
@@ -96,9 +92,11 @@ const AddNewAppAdBanner = (props) => {
           }}
         >
           <Row>
-            <Col sm="12">
+            <Col lg={3}>
               <div className="mb-3">
-                <Label className="form-label">Title</Label>
+                <Label className="form-label">
+                  Title<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="title"
                   type="text"
@@ -118,9 +116,12 @@ const AddNewAppAdBanner = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={3}>
               <div className="mb-3">
-                <Label className="form-label">Select start date</Label>
+                <Label className="form-label">
+                  Select start date<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="start_date"
                   label="start_date"
@@ -143,9 +144,12 @@ const AddNewAppAdBanner = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={3}>
               <div className="mb-3">
-                <Label className="form-label">Select end date</Label>
+                <Label className="form-label">
+                  Select end date<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="end_date"
                   label="end_date"
@@ -166,32 +170,39 @@ const AddNewAppAdBanner = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
-              {/* <div className="mb-3">
-                <Label className="form-label">Select image(MAX 1MB)</Label>
+            </Col>
+            <Col lg={3}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Select Image (Max 1MB)<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
-                  name="img"
-                  type="img"
-                  placeholder="Select file"
-                  rows="3"
+                  name="title"
+                  type="file"
+                  placeholder="Select Image"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.img || ""}
+                  value={validation.values.title || ""}
                   invalid={
-                    validation.touched.img && validation.errors.img
+                    validation.touched.title && validation.errors.title
                       ? true
                       : false
                   }
                 />
-                {validation.touched.img && validation.errors.img ? (
+                {validation.touched.title && validation.errors.title ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.img}
+                    {validation.errors.title}
                   </FormFeedback>
                 ) : null}
-              </div> */}
-
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={6}>
               <div className="mb-3">
-                <Label className="form-label">Caption</Label>
+                <Label className="form-label">
+                  Caption<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="caption"
                   type="textarea"
@@ -212,9 +223,12 @@ const AddNewAppAdBanner = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={6}>
               <div className="mb-3">
-                <Label className="form-label">Description</Label>
+                <Label className="form-label">
+                  Description<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="description"
                   type="textarea"
@@ -237,9 +251,14 @@ const AddNewAppAdBanner = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={3}>
               <div className="mb-3">
-                <Label className="form-label">Status</Label>
+                <Label className="form-label">
+                  Status<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="status"
                   type="select"
@@ -251,8 +270,7 @@ const AddNewAppAdBanner = (props) => {
                 >
                   <option value="">Select Status</option>
                   <option value="11">Active</option>
-                  <option value="12">BLOCKED</option>
-                  <option value="13">In-Active</option>
+                  <option value="12">In-Active</option>
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
@@ -263,8 +281,8 @@ const AddNewAppAdBanner = (props) => {
             </Col>
           </Row>
           <Row>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
+            <Col>
+              <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
                   Save
                 </button>
@@ -281,12 +299,12 @@ const AddNewAppAdBanner = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    toggle();
+                    handleAddAppAdBanner();
                   }}
                 >
                   Cancel
                 </button>
-              </div>
+              </ModalFooter>
             </Col>
           </Row>
         </Form>

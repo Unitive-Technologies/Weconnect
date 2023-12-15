@@ -3,32 +3,12 @@ import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
 import Spinners from "../../../components/Common/Spinner";
-import {
-  Card,
-  CardBody,
-  Col,
-  Container,
-  Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
-  UncontrolledTooltip,
-  Input,
-  Form,
-} from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-
-import { Email, Tags, Projects } from "./appAdBannerListCol";
+import { Card, CardBody, Col, Container, Row } from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
 
 import { getAppAdBanner as onGetAppAdBanner } from "/src/store/actions";
-import { isEmpty } from "lodash";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -38,7 +18,7 @@ import AddNewAppAdBanner from "./AddNewAppAdBanner";
 
 const AppAdBannerList = (props) => {
   //meta title
-  document.title = "App Advertisement Banner List | VDigital";
+  document.title = "App Advertisement Banner | VDigital";
 
   const dispatch = useDispatch();
 
@@ -53,17 +33,9 @@ const AppAdBannerList = (props) => {
 
   const { appAdvertiseBan, loading } = useSelector(AppAdBannerProperties);
 
-  useEffect(() => {
-    console.log(
-      "App advertising banner list data in component:",
-      appAdvertiseBan
-    );
-  }, [appAdvertiseBan]);
   const [isLoading, setLoading] = useState(loading);
 
-  const [userList, setUserList] = useState([]);
   const [showAddAppAdBanner, setShowAddAppAdBanner] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
 
   const columns = useMemo(
     () => [
@@ -174,41 +146,6 @@ const AppAdBannerList = (props) => {
           );
         },
       },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
-          );
-        },
-      },
     ],
     []
   );
@@ -216,64 +153,11 @@ const AppAdBannerList = (props) => {
   useEffect(() => {
     if (appAdvertiseBan && !appAdvertiseBan.length) {
       dispatch(onGetAppAdBanner());
-      setIsEdit(false);
     }
   }, [dispatch, appAdvertiseBan]);
 
-  const toggle = () => {
+  const handleAddAppAdBanner = () => {
     setShowAddAppAdBanner(!showAddAppAdBanner);
-  };
-
-  const handleUserClick = (arg) => {
-    const user = arg;
-
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-    setIsEdit(true);
-
-    toggle();
-  };
-
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
-
-  //delete customer
-  const [deleteModal, setDeleteModal] = useState(false);
-
-  const onClickDelete = (users) => {
-    setContact(users);
-    setDeleteModal(true);
-  };
-
-  const handleDeleteUser = () => {
-    if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
-    }
-    setContact("");
-    onPaginationPageChange(1);
-    setDeleteModal(false);
-  };
-
-  const handleUserClicks = () => {
-    setUserList("");
-    setIsEdit(false);
-    toggle();
   };
 
   const keyField = "id";
@@ -284,18 +168,17 @@ const AppAdBannerList = (props) => {
         name: "Create",
         action: setShowAddAppAdBanner,
         type: "normal",
+        icon: "create",
       },
     ];
   };
 
   return (
     <React.Fragment>
-      <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
+      <AddNewAppAdBanner
+        isOpen={showAddAppAdBanner}
+        handleAddAppAdBanner={handleAddAppAdBanner}
       />
-      <AddNewAppAdBanner isOpen={showAddAppAdBanner} toggle={toggle} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -310,19 +193,14 @@ const AppAdBannerList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log(
-                      "App Advertising banner list:" +
-                        JSON.stringify(appAdvertiseBan)
-                    )}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={appAdvertiseBan}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleAppAdBannerClick={() => setShowAddAppAdBanner(true)}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
