@@ -34,19 +34,19 @@ const ViewReason = (props) => {
             id: (reason && reason.id) || "",
             name: (reason && reason.name) || "",
             status: (reason && reason.status) || "",
-            reasontype: (reason && reason.reasontype) || "",
+            type_display_lbl: (reason && reason.type_display_lbl) || "",
         },
         validationSchema: Yup.object({
             name: Yup.string().required(""),
             status: Yup.string().required(""),
-            reasontype: Yup.string().required(""),
+            type_display_lbl: Yup.string().required(""),
         }),
         onSubmit: (values) => {
             const updateUser = {
                 id: reason.id,
                 name: values.name,
                 status: values.status,
-                reasontype: values.reasontype,
+                type_display_lbl: values.type_display_lbl,
             };
 
             // update user
@@ -74,7 +74,7 @@ const ViewReason = (props) => {
                             <i
                                 className="bx bx bxs-edit"
                                 style={{ marginLeft: "20px", cursor: "pointer" }}
-                                onClick={() => setShowEditUser(true)}
+                                onClick={() => setShowEditReason(true)}
                             ></i>
                         </ModalHeader>
                     ) : (
@@ -141,31 +141,30 @@ const ViewReason = (props) => {
                                 <div className="mb-3">
                                     <Label className="form-label">Reason Type</Label>
                                     <Input
-                                        name="reasontype"
+                                        name="type_display_lbl"
                                         type="text"
                                         placeholder=""
                                         onChange={validation.handleChange}
                                         onBlur={validation.handleBlur}
-                                        value={validation.values.reasontype || ""}
+                                        value={validation.values.type_display_lbl || ""}
                                         invalid={
-                                            validation.touched.reasontype &&
-                                                validation.errors.reasontype
+                                            validation.touched.type_display_lbl &&
+                                                validation.errors.type_display_lbl
                                                 ? true
                                                 : false
                                         }
                                         disabled={!showEditReason}
                                     />
-                                    {validation.touched.reasontype &&
-                                        validation.errors.reasontype ? (
+                                    {validation.touched.type_display_lbl &&
+                                        validation.errors.type_display_lbl ? (
                                         <FormFeedback type="invalid">
-                                            {validation.errors.reasontype}
+                                            {validation.errors.type_display_lbl}
                                         </FormFeedback>
                                     ) : null}
                                 </div>
                             </Col>
                         </Row>
                         <Row>
-
                             <Col>
                                 <div className="text-end">
                                     <button type="submit" className="btn btn-success save-user">

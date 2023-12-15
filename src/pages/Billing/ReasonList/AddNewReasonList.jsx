@@ -31,22 +31,22 @@ const AddNewReason = (props) => {
 
         initialValues: {
             //BroadCaster: "",
-            reason: "",
-            reasontype: "",
+            name: "",
+            type_display_lbl: "",
             status: "",
             created_at: "",
             created_by: "Admin",
         },
         validationSchema: Yup.object({
-            reason: Yup.string().required("Enter reason"),
-            reasontype: Yup.string().required("Enter reason type"),
+            name: Yup.string().required("Enter reason"),
+            type_display_lbl: Yup.string().required("Enter reason type"),
             status: Yup.string().required("Select status"),
         }),
         onSubmit: (values) => {
             const newReason = {
                 id: Math.floor(Math.random() * (30 - 20)) + 20,
-                reason: values["reason"],
-                reasontype: values["reasontype"],
+                name: values["name"],
+                type_display_lbl: values["reasontype"],
                 status: values["status"],
                 created_at: new Date(),
                 created_by: values["created_by"],
@@ -91,17 +91,17 @@ const AddNewReason = (props) => {
                             <div className="mb-3">
                                 <Label className="form-label">Reason<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
-                                    name="reason"
+                                    name="name"
                                     type="text"
                                     placeholder="Enter reason"
                                     // className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.reason || ""}
+                                    value={validation.values.name || ""}
                                 ></Input>
-                                {validation.touched.reason && validation.errors.reason ? (
+                                {validation.touched.name && validation.errors.name ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.reason}
+                                        {validation.errors.name}
                                     </FormFeedback>
                                 ) : null}
                             </div>
@@ -109,17 +109,17 @@ const AddNewReason = (props) => {
                             <div className="mb-3">
                                 <Label className="form-label">Reason Type<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
-                                    name="reasontype"
+                                    name="type_display_lbl"
                                     type="text"
                                     placeholder="Enter reason type"
                                     // className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.reasontype || ""}
+                                    value={validation.values.type_display_lbl || ""}
                                 ></Input>
-                                {validation.touched.reasontype && validation.errors.reasontype ? (
+                                {validation.touched.type_display_lbl && validation.errors.type_display_lbl ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.reasontype}
+                                        {validation.errors.type_display_lbl}
                                     </FormFeedback>
                                 ) : null}
                             </div>
