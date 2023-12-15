@@ -14,6 +14,7 @@ import {
   UncontrolledTooltip,
   Input,
   Form,
+  ModalFooter,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -21,7 +22,7 @@ import { addNewScheduleCustomerNotification as onAddNewScheduleCustomerNotificat
 import { useSelector, useDispatch } from "react-redux";
 
 const AddNewScheduleCustomerNotification = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleAddNewScheduleCustNoti } = props;
   const dispatch = useDispatch();
   const [user, setUser] = useState();
 
@@ -87,7 +88,7 @@ const AddNewScheduleCustomerNotification = (props) => {
         onAddNewScheduleCustomerNotification(newScheduleCustomerNotification)
       );
       validation.resetForm();
-      toggle();
+      handleAddNewScheduleCustNoti();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -103,10 +104,10 @@ const AddNewScheduleCustomerNotification = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleAddNewScheduleCustNoti}
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4" toggle={toggle}>
+      <ModalHeader tag="h4" toggle={handleAddNewScheduleCustNoti}>
         Add New Schedule Customer Notification
       </ModalHeader>
       <ModalBody>
@@ -118,7 +119,7 @@ const AddNewScheduleCustomerNotification = (props) => {
           }}
         >
           <Row>
-            <Col sm="12">
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">Name</Label>
                 <Input
@@ -136,7 +137,8 @@ const AddNewScheduleCustomerNotification = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">Type</Label>
                 <Input
@@ -157,7 +159,8 @@ const AddNewScheduleCustomerNotification = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">Schedule Days</Label>
                 <Input
@@ -206,10 +209,11 @@ const AddNewScheduleCustomerNotification = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">
-                  OSD Config (Select only 1 config per CAS)
+                  OSD Config (Select 1 config per CAS)
                 </Label>
                 <Input
                   name="osd_configuration_id_lbl"
@@ -233,6 +237,10 @@ const AddNewScheduleCustomerNotification = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">OSD Template</Label>
                 <Input
@@ -255,6 +263,8 @@ const AddNewScheduleCustomerNotification = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">Bmail Template</Label>
                 <Input
@@ -275,6 +285,8 @@ const AddNewScheduleCustomerNotification = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+            <Col lg={6}>
               <div className="mb-3">
                 <Label className="form-label">SMS Template</Label>
                 <Input
@@ -298,6 +310,10 @@ const AddNewScheduleCustomerNotification = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">Start Date</Label>
                 <Input
@@ -322,7 +338,8 @@ const AddNewScheduleCustomerNotification = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">End date</Label>
                 <Input
@@ -345,7 +362,8 @@ const AddNewScheduleCustomerNotification = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">Description</Label>
                 <Input
@@ -370,7 +388,8 @@ const AddNewScheduleCustomerNotification = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">Status</Label>
                 <Input
@@ -396,8 +415,8 @@ const AddNewScheduleCustomerNotification = (props) => {
             </Col>
           </Row>
           <Row>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
+            <Col>
+              <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
                   Save
                 </button>
@@ -414,12 +433,12 @@ const AddNewScheduleCustomerNotification = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    toggle();
+                    handleAddNewScheduleCustNoti();
                   }}
                 >
                   Cancel
                 </button>
-              </div>
+              </ModalFooter>
             </Col>
           </Row>
         </Form>

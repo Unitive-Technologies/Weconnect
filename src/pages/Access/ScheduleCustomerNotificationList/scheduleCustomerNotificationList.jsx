@@ -22,12 +22,21 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddNewScheduleCustomerNotification from "./AddNewScheduleCustomerNotification";
+import ViewScheduleCustomerNotification from "./ViewScheduleCustomerNotification";
 
 const ScheduleCustomerNotificationList = (props) => {
   //meta title
   document.title = "Schedule Customer Notification | VDigital";
 
   const dispatch = useDispatch();
+  const [showViewCustomerNotification, setShowViewCustomerNotification] =
+    useState(false);
+  const [viewScheduleNoti, setViewScheduleNoti] = useState({});
+
+  const handleViewCustomerNotification = (scheduleData) => {
+    setShowViewCustomerNotification(!showViewCustomerNotification);
+    setViewScheduleNoti(scheduleData);
+  };
 
   const selectScheduleCustomerNotificationState = (state) =>
     state.scheduleCustomerNotification;
@@ -77,7 +86,13 @@ const ScheduleCustomerNotificationList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  handleViewCustomerNotification(userData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -234,41 +249,6 @@ const ScheduleCustomerNotificationList = (props) => {
           );
         },
       },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
-          );
-        },
-      },
     ],
     []
   );
@@ -284,6 +264,7 @@ const ScheduleCustomerNotificationList = (props) => {
   };
 
   const keyField = "id";
+
   const getTableActions = () => {
     return [
       {
@@ -298,7 +279,12 @@ const ScheduleCustomerNotificationList = (props) => {
     <React.Fragment>
       <AddNewScheduleCustomerNotification
         isOpen={showAddNewScheduleCustNoti}
-        toggle={handleAddNewScheduleCustNoti}
+        handleAddNewScheduleCustNoti={handleAddNewScheduleCustNoti}
+      />
+      <ViewScheduleCustomerNotification
+        isOpen={showViewCustomerNotification}
+        handleViewCustomerNotification={handleViewCustomerNotification}
+        viewScheduleNoti={viewScheduleNoti}
       />
       <div className="page-content">
         <Container fluid>
