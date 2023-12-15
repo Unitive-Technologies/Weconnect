@@ -31,14 +31,15 @@ const ViewNotificationTemplateModal = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      name: notiTemplate.msg_head,
-      type: notiTemplate.msg_type_lbl,
-      fontsize: notiTemplate.msg_fontsize,
-      fontcolor: notiTemplate.msg_fontcolor,
-      fontbgcolor: notiTemplate.msg_fontbgcolor,
-      fontfamily: notiTemplate.msg_fontfamily,
-      status: notiTemplate.status,
-      content: notiTemplate.msg_content,
+      id: (notiTemplate && notiTemplate.id) || "",
+      name: (notiTemplate && notiTemplate.msg_head) || "",
+      type: (notiTemplate && notiTemplate.msg_type_lbl) || "",
+      fontsize: (notiTemplate && notiTemplate.msg_fontsize) || "",
+      fontcolor: (notiTemplate && notiTemplate.msg_fontcolor) || "",
+      fontbgcolor: (notiTemplate && notiTemplate.msg_fontbgcolor) || "",
+      fontfamily: (notiTemplate && notiTemplate.msg_fontfamily) || "",
+      status: (notiTemplate && notiTemplate.status) || "",
+      content: (notiTemplate && notiTemplate.msg_content) || "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
@@ -94,8 +95,8 @@ const ViewNotificationTemplateModal = (props) => {
       >
         <ModalHeader toggle={handleCancel} tag="h4">
           {!showEditNotificationTemp
-            ? " View Notification Template"
-            : "Edit Notification Template"}
+            ? `View ${notiTemplate.msg_head}`
+            : `Edit ${notiTemplate.msg_head}`}
         </ModalHeader>
         {!showEditNotificationTemp && (
           <Link
