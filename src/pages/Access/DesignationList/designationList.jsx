@@ -21,7 +21,7 @@ import ViewDesignation from "./ViewDesignation";
 
 const DesignationList = (props) => {
   //meta title
-  document.title = "Designation List | VDigital";
+  document.title = "Designations | VDigital";
 
   const dispatch = useDispatch();
 
@@ -36,9 +36,6 @@ const DesignationList = (props) => {
 
   const { desigList, loading } = useSelector(designationProperties);
 
-  useEffect(() => {
-    console.log("Designation data in component:", desigList);
-  }, [desigList]);
   const [isLoading, setLoading] = useState(loading);
   const [showAddDesignation, setShowAddDesignation] = useState(false);
   const [showViewDesignation, setShowViewDesignation] = useState(false);

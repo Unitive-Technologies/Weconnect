@@ -190,72 +190,93 @@ const AddGroupPolicyModal = (props) => {
             </Col>
           </Row>
           <Row>
-            <Col sm="6">
+            <Col lg={3}>
               <div className="mb-3">
-                <Label className="form-label">Count</Label>
+                {/* <Label className="form-label">Description</Label> */}
                 <Input
-                  name="count"
-                  label="Count"
+                  name="search"
                   type="text"
-                  placeholder="Count"
+                  placeholder="Search all Permissions"
+                  rows="3"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.count || ""}
+                  value={validation.values.description || ""}
                   invalid={
-                    validation.touched.count && validation.errors.count
+                    validation.touched.description &&
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
-                {validation.touched.count && validation.errors.count ? (
+                {validation.touched.description &&
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.count}
+                    {validation.errors.description}
                   </FormFeedback>
                 ) : null}
               </div>
-              <div className="mb-3">
-                <Label className="form-label">Created At</Label>
-                <Input
-                  name="createdat"
-                  label="Created At"
-                  type="text"
-                  placeholder="Created At"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.createdat || ""}
-                  invalid={
-                    validation.touched.createdat && validation.errors.createdat
-                      ? true
-                      : false
-                  }
+            </Col>
+            <Col lg={3}>
+              <div className="form-check form-switch form-switch-lg mb-3">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="customSwitchsizelg"
+                  // defaultChecked
                 />
-                {validation.touched.createdat && validation.errors.createdat ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.createdat}
-                  </FormFeedback>
-                ) : null}
+                <label
+                  className="form-check-label"
+                  htmlFor="customSwitchsizelg"
+                >
+                  Select All
+                </label>
               </div>
-              <div className="mb-3">
-                <Label className="form-label">Created By</Label>
-                <Input
-                  name="createdby"
-                  label="Created By"
-                  type="text"
-                  placeholder="Created By"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.createdby || ""}
-                  invalid={
-                    validation.touched.createdby && validation.errors.createdby
-                      ? true
-                      : false
-                  }
+            </Col>
+            <Col lg={3}>
+              <div className="form-check form-switch form-switch-lg mb-3">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="customSwitchsizelg"
+                  // defaultChecked
                 />
-                {validation.touched.createdby && validation.errors.createdby ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.createdby}
-                  </FormFeedback>
-                ) : null}
+                <label
+                  className="form-check-label"
+                  htmlFor="customSwitchsizelg"
+                >
+                  View Only
+                </label>
+              </div>
+            </Col>
+            <Col lg={3}>
+              <button type="submit" className="btn btn-primary w-md">
+                Undo All Changes
+              </button>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={3}>
+              <div>
+                <h6>
+                  Total Permission tab count:
+                  <b> 48</b>
+                </h6>
+              </div>
+            </Col>
+            <Col lg={3}>
+              <div>
+                <h6>
+                  Available Permissions:
+                  <b> 159</b>
+                </h6>
+              </div>
+            </Col>
+            <Col lg={3}>
+              <div>
+                <h6>
+                  Selected Permissions:
+                  <b> 155</b>
+                </h6>
               </div>
             </Col>
           </Row>

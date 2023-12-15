@@ -33,7 +33,7 @@ import AddGroupPolicyModal from "./AddGroupPolicyModal";
 
 const GroupPolicyList = (props) => {
   //meta title
-  document.title = "Group Policy List | VDigital";
+  document.title = "Group Policies | VDigital";
 
   const dispatch = useDispatch();
 
@@ -46,9 +46,7 @@ const GroupPolicyList = (props) => {
     })
   );
   const { gpPolicy, loading } = useSelector(groupPolicyProperties);
-  useEffect(() => {
-    console.log("Group Policy data in component:", gpPolicy);
-  }, [gpPolicy]);
+
   const [isLoading, setLoading] = useState(loading);
 
   const [showAddGroupPolicy, setShowAddGroupPolicy] = useState(false);

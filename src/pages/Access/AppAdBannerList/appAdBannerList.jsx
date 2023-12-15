@@ -18,7 +18,7 @@ import AddNewAppAdBanner from "./AddNewAppAdBanner";
 
 const AppAdBannerList = (props) => {
   //meta title
-  document.title = "App Advertisement Banner | VDigital";
+  document.title = "App Advertisement Banners | VDigital";
 
   const dispatch = useDispatch();
 
