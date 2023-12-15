@@ -102,7 +102,7 @@ const AddNewNcf = (props) => {
           }}
         >
           <Row>
-            <Col sm="12">
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Name<span style={{ color: "red" }}>*</span>
@@ -123,79 +123,6 @@ const AddNewNcf = (props) => {
                 {validation.touched.name && validation.errors.name ? (
                   <FormFeedback type="invalid">
                     {validation.errors.name}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                <Label className="form-label">
-                  Code<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="code"
-                  type="text"
-                  placeholder="Enter code"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.code || ""}
-                  invalid={
-                    validation.touched.code && validation.errors.code
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.code && validation.errors.code ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.code}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                <Label className="form-label">
-                  Status<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="status"
-                  type="select"
-                  placeholder="Select status"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.status || ""}
-                >
-                  <option value="">Select status</option>
-                  <option value="Active">Active</option>
-                  <option value="In_Active">In-Active</option>
-                </Input>
-                {validation.touched.status && validation.errors.status ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.status}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                <Label className="form-label">
-                  Calculate per channel<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="calculate_per_channel"
-                  type="select"
-                  placeholder="Select calculate per channel"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.calculate_per_channel || ""}
-                >
-                  <option value="">Select calculate per channel</option>
-                  <option value="0">Yes</option>
-                  <option value="1">No</option>
-                </Input>
-                {validation.touched.calculate_per_channel &&
-                validation.errors.calculate_per_channel ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.calculate_per_channel}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -225,6 +152,31 @@ const AddNewNcf = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+            <Col sm="3">
+              <div className="mb-3">
+                <Label className="form-label">
+                  Code<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="code"
+                  type="text"
+                  placeholder="Enter code"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.code || ""}
+                  invalid={
+                    validation.touched.code && validation.errors.code
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.code && validation.errors.code ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.code}
+                  </FormFeedback>
+                ) : null}
+              </div>
 
               <div className="mb-3">
                 <Label className="form-label">
@@ -248,6 +200,31 @@ const AddNewNcf = (props) => {
                 validation.errors.to_channel_no ? (
                   <FormFeedback type="invalid">
                     {validation.errors.to_channel_no}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col sm="3">
+              <div className="mb-3">
+                <Label className="form-label">
+                  Status<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="status"
+                  type="select"
+                  placeholder="Select status"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.status || ""}
+                >
+                  <option value="">Select status</option>
+                  <option value="Active">Active</option>
+                  <option value="In_Active">In-Active</option>
+                </Input>
+                {validation.touched.status && validation.errors.status ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.status}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -277,7 +254,137 @@ const AddNewNcf = (props) => {
                 ) : null}
               </div>
             </Col>
+            <Col sm="3">
+              <div className="mb-3">
+                <Label className="form-label">
+                  Calculate per channel<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="calculate_per_channel"
+                  type="select"
+                  placeholder="Select calculate per channel"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.calculate_per_channel || ""}
+                >
+                  <option value="">Select calculate per channel</option>
+                  <option value="0">Yes</option>
+                  <option value="1">No</option>
+                </Input>
+                {validation.touched.calculate_per_channel &&
+                validation.errors.calculate_per_channel ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.calculate_per_channel}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
           </Row>
+          <Row>
+            <div
+              style={{
+                // margin: "20px 0px",
+                marginTop: "20px",
+                marginBottom: "18px",
+                zIndex: 12000,
+                backgroundColor: "#fff",
+                width: "fit-content",
+                marginLeft: "40%",
+                position: "absolute",
+                padding: "0px 10px",
+              }}
+            >
+              <h5 style={{}}>Default NCF</h5>
+            </div>
+            <Row
+              style={{
+                position: "relative",
+                border: "1px solid #ced4da",
+                padding: "20px 0px",
+                margin: "30px 0px",
+              }}
+            >
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    MRP (INR)<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="mrp"
+                    type="number"
+                    placeholder="0"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.mrp || ""}
+                    invalid={
+                      validation.touched.mrp && validation.errors.mrp
+                        ? true
+                        : false
+                    }
+                  />
+                  {validation.touched.mrp && validation.errors.mrp ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.mrp}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    LCO Discount (%)<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="lmo_discount"
+                    type="number"
+                    placeholder="0"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.lmo_discount || ""}
+                    invalid={
+                      validation.touched.lmo_discount &&
+                      validation.errors.lmo_discount
+                        ? true
+                        : false
+                    }
+                  />
+                  {validation.touched.lmo_discount &&
+                  validation.errors.lmo_discount ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.lmo_discount}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    LCO Rate<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="lmo_rate"
+                    type="number"
+                    placeholder="0"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.mrp || ""}
+                    invalid={
+                      validation.touched.lmo_rate && validation.errors.lmo_rate
+                        ? true
+                        : false
+                    }
+                  />
+                  {validation.touched.lmo_rate && validation.errors.lmo_rate ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.lmo_rate}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+            </Row>
+          </Row>
+          <Row></Row>
           <Row>
             <Col sm="8">
               <div className="d-flex flex-wrap gap-2">
