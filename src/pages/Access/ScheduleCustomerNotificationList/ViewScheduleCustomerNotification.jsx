@@ -19,16 +19,11 @@ import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const ViewScheduleCustomerNotification = (props) => {
-  const {
-    isOpen,
-    handleViewUser: handleViewCustomerNotification,
-    viewScheduleNoti,
-  } = props;
-  // console.log("isOpen in viewuser modal:" + isOpen);
+  const { isOpen, handleViewCustomerNotification, viewScheduleNoti } = props;
 
   const dispatch = useDispatch();
   const [showEditSchedule, setShowEditSchedule] = useState(false);
-  // console.log("edit in viewuser modal:" + showEditUser);
+
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -36,57 +31,67 @@ const ViewScheduleCustomerNotification = (props) => {
     initialValues: {
       id: (viewScheduleNoti && viewScheduleNoti.id) || "",
       name: (viewScheduleNoti && viewScheduleNoti.name) || "",
-      email: (viewScheduleNoti && viewScheduleNoti.email) || "",
-      mobile: (viewScheduleNoti && viewScheduleNoti.mobile_no) || "",
-      usertype: (viewScheduleNoti && viewScheduleNoti.usertype) || "",
-      status: (viewScheduleNoti && viewScheduleNoti.status) || "",
-      message: (viewScheduleNoti && viewScheduleNoti.message) || "",
-      role: (viewScheduleNoti && viewScheduleNoti.role) || "",
-      designation: (viewScheduleNoti && viewScheduleNoti.designation) || "",
-      grouppolicy: (viewScheduleNoti && viewScheduleNoti.grouppolicy) || "",
-      loginid: (viewScheduleNoti && viewScheduleNoti.username) || "",
-      password: (viewScheduleNoti && viewScheduleNoti.password) || "",
-      confirmpassword:
-        (viewScheduleNoti && viewScheduleNoti.confirmpassword) || "",
+      type_lbl: (viewScheduleNoti && viewScheduleNoti.type_lbl) || "",
+      schedule_days: (viewScheduleNoti && viewScheduleNoti.schedule_days) || "",
+      osd_configuration_id_lbl:
+        (viewScheduleNoti && viewScheduleNoti.osd_configuration_id_lbl) || "",
+      osd_template_id_lbl:
+        (viewScheduleNoti && viewScheduleNoti.osd_template_id_lbl) || "",
+      bmail_template_id_lbl:
+        (viewScheduleNoti && viewScheduleNoti.bmail_template_id_lbl) || "",
+      sms_template_id_lbl:
+        (viewScheduleNoti && viewScheduleNoti.sms_template_id_lbl) || "",
+      start_date: (viewScheduleNoti && viewScheduleNoti.start_date) || "",
+      end_date: (viewScheduleNoti && viewScheduleNoti.end_date) || "",
+      status_lbl: (viewScheduleNoti && viewScheduleNoti.status_lbl) || "",
+      description: (viewScheduleNoti && viewScheduleNoti.description) || "",
+      created_at: "",
+      created_by: "Admin",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
-      email: Yup.string()
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-        .required("Please Enter Your Email"),
-      // mobile: Yup.array().required("Please Enter mobile"),
-      mobile: Yup.string().required("Please Enter mobile Number"),
-      usertype: Yup.string().required("Please Enter User Type"),
-      status: Yup.string().required("Please Enter Status"),
-      message: Yup.string().required("Please Enter Message"),
-      role: Yup.string().required("Please Enter Role"),
-      designation: Yup.string().required("Please Enter Designation"),
-      grouppolicy: Yup.string().required("Please Enter Group Policy"),
-      loginid: Yup.string().required("Please Enter Login ID"),
-      password: Yup.string().required("Please Enter Password"),
-      confirmpassword: Yup.string().required("Please Enter Confirm Password"),
+      // schedulecustomernotification: Yup.string().required("Enter schedulecustomernotification Name"),
+      name: Yup.string().required("Select name"),
+      type_lbl: Yup.string().required("Select type"),
+      schedule_days: Yup.string().required("Select schedule days"),
+      osd_configuration_id_lbl: Yup.string().required(
+        "Select osd configuaration"
+      ),
+      osd_template_id_lbl: Yup.string().required("Select osd template"),
+      // bmail_template_id_lbl: Yup.string().required("Select bmail template"),
+      sms_template_id_lbl: Yup.string().required("Select sms template"),
+      // start_date: Yup.string().required("Select start date"),
+      // end_date: Yup.string().required("Select end date"),
+      description: Yup.string().required("Select description"),
+      status_lbl: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
-      const updateUser = {
-        id: viewScheduleNoti.id,
-        name: values.name,
-        email: values.email,
-        mobile: values.mobile,
-        usertype: values.usertype,
-        status: values.status,
-        message: values.message,
-        role: values.role,
-        designation: values.designation,
-        grouppolicy: values.grouppolicy,
-        loginid: values.loginid,
-        password: values.password,
-        confirmpassword: values.confirmpassword,
+      const newScheduleCustomerNotification = {
+        id: Math.floor(Math.random() * (30 - 20)) + 20,
+        // schedulecustomernotification: values["schedulecustomernotification"],
+        name: values["name"],
+        type_lbl: values["type_lbl"],
+        schedule_days: values["schedule_days"],
+        osd_configuration_id_lbl: values["osd_configuration_id_lbl"],
+        osd_template_id_lbl: values["osd_template_id_lbl"],
+        bmail_template_id_lbl: values["bmail_template_id_lbl"],
+        sms_template_id_lbl: values["sms_template_id_lbl"],
+        start_date: values["start_date"],
+        end_date: values["end_date"],
+        description: values["description"],
+        status_lbl: values["status_lbl"],
+        created_at: new Date(),
+        created_by: values["created_by"],
       };
-
-      // update user
-      dispatch(onUpdateUser(updateUser));
+      //   console.log(
+      //     "newScheduleCustomerNotification:" + newScheduleCustomerNotification
+      //   );
+      // save new user
+      dispatch(onUpdateUser(newScheduleCustomerNotification));
       validation.resetForm();
-      handleViewCustomerNotification();
+      handleAddNewScheduleCustNoti();
+    },
+    onReset: (values) => {
+      validation.setValues(validation.initialValues);
     },
   });
 
@@ -107,7 +112,9 @@ const ViewScheduleCustomerNotification = (props) => {
         toggle={handleCancel}
       >
         <ModalHeader toggle={handleCancel} tag="h4">
-          {!showEditSchedule ? "View User" : "Edit User"}
+          {!showEditSchedule
+            ? `View ${viewScheduleNoti.name}`
+            : `Edit ${viewScheduleNoti.name}`}
         </ModalHeader>
         {!showEditSchedule && (
           <Link
@@ -427,7 +434,27 @@ const ViewScheduleCustomerNotification = (props) => {
                 </div>
               </Col>
             </Row>
-
+            <Row>
+              <Col lg={2}>
+                <div>
+                  <h5>1. OPERATOR_ID: 4</h5>
+                </div>{" "}
+              </Col>
+              <Col lg={5}>
+                <div>
+                  <h5 style={{ textDecoration: "underline" }}>
+                    Selected Criteria
+                  </h5>
+                </div>
+              </Col>
+              <Col lg={5}>
+                <div>
+                  <h5 style={{ textDecoration: "underline" }}>
+                    Selected Not Criteria
+                  </h5>
+                </div>
+              </Col>
+            </Row>
             {showEditSchedule && (
               <Row>
                 <Col>
