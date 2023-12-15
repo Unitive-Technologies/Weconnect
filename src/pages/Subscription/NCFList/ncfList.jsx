@@ -369,9 +369,9 @@ const NCFList = (props) => {
                       columns={columns}
                       data={ncfl}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      // isAddUserList={true}
                       isShowingPageLength={true}
-                      iscustomPageSizeOptions={true}
+                      // iscustomPageSizeOptions={true}
                       handleUserClick={handleUserClicks}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"

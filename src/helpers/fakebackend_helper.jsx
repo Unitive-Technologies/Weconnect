@@ -322,6 +322,8 @@ export const addUserHierarchy = (userHierarchy) =>
   post(url.ADD_USERHIERARCHY, userHierarchy);
 
 export const getNcf = () => get(url.GET_NCF);
+export const addNcf = (ncf) => post(url.ADD_NCF, ncf);
+
 export const getBouquet = () => get(url.GET_BOUQUET);
 export const getConnectionScheme = () => get(url.GET_CONNECTIONSCHEME);
 export const getComplaintCategory = () => get(url.GET_COMPLAINTCATEGORY);

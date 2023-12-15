@@ -86,6 +86,7 @@ const ViewWareHouse = (props) => {
       className="exampleModal"
       tabIndex="-1"
       toggle={toggle}
+      size="xl"
     >
       {!showEditWarehouse ? (
         <ModalHeader toggle={toggle} tag="h4">

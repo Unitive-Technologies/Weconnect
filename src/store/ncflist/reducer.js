@@ -1,4 +1,9 @@
-import { GET_NCF_SUCCESS, GET_NCF_FAIL } from "./actionTypes";
+import {
+  GET_NCF_SUCCESS,
+  GET_NCF_FAIL,
+  ADD_NCF_SUCCESS,
+  ADD_NCF_FAIL,
+} from "./actionTypes";
 
 const INIT_STATE = {
   ncf: [],
@@ -17,6 +22,18 @@ const Ncf = (state = INIT_STATE, action) => {
       };
 
     case GET_NCF_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_NCF_SUCCESS:
+      return {
+        ...state,
+        ncf: [...state.ncf, action.payload],
+      };
+
+    case ADD_NCF_FAIL:
       return {
         ...state,
         error: action.payload,

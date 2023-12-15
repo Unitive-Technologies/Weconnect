@@ -92,6 +92,8 @@ export const GET_OSDTEMPLATE = "/osdtemplatelist";
 export const ADD_NEW_OSDTEMPLATE = "/add/osdtemplatelist";
 
 export const GET_NCF = "/ncf";
+export const ADD_NCF = "/add/ncf";
+
 export const GET_COMPANYLIST = "/companylist";
 
 export const GET_BRANDLIST = "/brandlist";

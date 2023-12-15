@@ -1206,6 +1206,19 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onPost(url.ADD_NCF).reply((ncf) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (ncf && ncf.data) {
+          // Passing fake JSON data as response
+          resolve([200, ncf.data]);
+        } else {
+          reject([400, "Cannot add NCF list"]);
+        }
+      });
+    });
+  });
+
   mock.onPut(url.UPDATE_DISTRIBUTOR).reply((distributor) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

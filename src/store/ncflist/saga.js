@@ -1,11 +1,16 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_NCF } from "./actionTypes";
+import { GET_NCF, ADD_NCF } from "./actionTypes";
 
-import { getNcfSuccess, getNcfFail } from "./actions";
+import {
+  getNcfSuccess,
+  getNcfFail,
+  addNcfSuccess,
+  addNcfFail,
+} from "./actions";
 
 //Include Both Helper File with needed methods
-import { getNcf } from "../../helpers/fakebackend_helper";
+import { getNcf, addNcf } from "../../helpers/fakebackend_helper";
 
 const convertNcfListObject = (ncflist) => {
   // Location list has more data than what we need, we need to convert each of the location object in the list with needed colums of the table
@@ -41,8 +46,18 @@ function* fetchNcf() {
   }
 }
 
+function* onAddNcf({ payload: ncf }) {
+  try {
+    const response = yield call(addNcf, ncf);
+    yield put(addNcfSuccess(response));
+  } catch (error) {
+    yield put(addNcfFail(error));
+  }
+}
+
 function* ncfSaga() {
   yield takeEvery(GET_NCF, fetchNcf);
+  yield takeEvery(ADD_NCF, onAddNcf);
 }
 
 export default ncfSaga;
