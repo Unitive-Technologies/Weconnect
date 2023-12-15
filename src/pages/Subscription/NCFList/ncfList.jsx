@@ -9,37 +9,17 @@ import {
   Col,
   Container,
   Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
   UncontrolledTooltip,
-  Input,
-  Form,
 } from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-
-import { Email, Tags, Projects } from "./ncfListCol";
-
-//Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
-
-import {
-  getUsers as onGetUsers,
-  addNewUser as onAddNewUser,
-  updateUser as onUpdateUser,
-  deleteUser as onDeleteUser,
-} from "/src/store/users/actions";
 import { getNcf as onGetNcf } from "/src/store/actions";
-import { isEmpty } from "lodash";
-
-//redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import ViewNcf from "./ViewNcf";
+import AddNewNcf from "./AddNewNcf";
+import BulkAssigntoOperator from "./BulkAssigntoOperator";
+import BulkRemovalFromOperator from "./BulkRemovalFromOperator";
 
 const NCFList = (props) => {
   //meta title
@@ -56,13 +36,34 @@ const NCFList = (props) => {
   const { ncfl, loading } = useSelector(NcfProperties);
 
   useEffect(() => {
-    console.log("NCF list data in component:", ncfl);
+    // console.log("NCF list data in component:", ncfl);
   }, [ncfl]);
   const [isLoading, setLoading] = useState(loading);
-
-  const [userList, setUserList] = useState([]);
   const [modal, setModal] = useState(false);
+  const [showAddNcf, setShowAddNcf] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [showBulkAssign, setShowBulkAssign] = useState(false);
+  const [showViewNcf, setShowViewNcf] = useState(false);
+  const [viewNcfData, setViewNcfData] = useState({});
+  const [showBulkRemoval, setShowBulkRemoval] = useState(false);
+
+  const toggleViewNcf = (userData) => {
+    console.log("User Data: ", userData);
+    setShowViewNcf(!showViewNcf);
+    setViewNcfData(userData);
+  };
+
+  const toggleAddNcf = () => {
+    setShowAddNcf(!showAddNcf);
+  };
+
+  const toggleBulkAssign = () => {
+    setShowBulkAssign(!showBulkAssign);
+  };
+
+  const toggleBulkRemoval = () => {
+    setShowBulkRemoval(!showBulkRemoval);
+  };
 
   const columns = useMemo(
     () => [
@@ -93,7 +94,13 @@ const NCFList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  toggleViewNcf(userData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -275,18 +282,6 @@ const NCFList = (props) => {
     }
   }, [dispatch, ncfl]);
 
-  // useEffect(() => {
-  //   setContact(users);
-  //   setIsEdit(false);
-  // }, [users]);
-
-  // useEffect(() => {
-  //   if (!isEmpty(users) && !!isEdit) {
-  //     setContact(users);
-  //     setIsEdit(false);
-  //   }
-  // }, [users]);
-
   const toggle = () => {
     setModal(!modal);
   };
@@ -307,54 +302,45 @@ const NCFList = (props) => {
     toggle();
   };
 
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
-
-  //delete customer
-  const [deleteModal, setDeleteModal] = useState(false);
-
-  const onClickDelete = (users) => {
-    setContact(users);
-    setDeleteModal(true);
-  };
-
-  const handleDeleteUser = () => {
-    if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
-    }
-    setContact("");
-    onPaginationPageChange(1);
-    setDeleteModal(false);
-  };
-
-  const handleUserClicks = () => {
-    setUserList("");
-    setIsEdit(false);
-    toggle();
-  };
-
   const keyField = "id";
+  const getTableActions = () => {
+    return [
+      {
+        name: "Create",
+        action: setShowAddNcf,
+        type: "normal",
+        icon: "create",
+      },
+      {
+        name: "Bulk Assign to Operator",
+        action: setShowBulkAssign,
+        type: "dropdown",
+        dropdownName: "Action",
+      },
+      {
+        name: "Bulk Removal from Operator",
+        action: setShowBulkRemoval,
+        type: "dropdown",
+        dropdownName: "Action",
+      },
+    ];
+  };
 
   return (
     <React.Fragment>
-      <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
+      <ViewNcf
+        isOpen={showViewNcf}
+        toggle={toggleViewNcf}
+        brand={viewNcfData}
+      />
+      <AddNewNcf isOpen={showAddNcf} toggle={toggleAddNcf} />
+      <BulkAssigntoOperator isOpen={showBulkAssign} toggle={toggleBulkAssign} />
+      <BulkRemovalFromOperator
+        isOpen={showBulkRemoval}
+        toggle={toggleBulkRemoval}
       />
       <div className="page-content">
         <Container fluid>
-          {/* Render Breadcrumbs */}
           <Breadcrumbs title="NCF" breadcrumbItem="NCF List" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
@@ -363,184 +349,23 @@ const NCFList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("NCF List:" + JSON.stringify(ncfl))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={ncfl}
                       isGlobalFilter={true}
-                      // isAddUserList={true}
+                      isAddUserList={true}
                       isShowingPageLength={true}
-                      // iscustomPageSizeOptions={true}
-                      handleUserClick={handleUserClicks}
+                      tableActions={getTableActions()}
+                      handleUserClick={() => setShowAddNcf(true)}
+                      handleUploadUser={() => setShowBulkAssign(true)}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
                     />
-                    {/* <Modal isOpen={modal} toggle={toggle}>
-                      <ModalHeader toggle={toggle} tag="h4">
-                        {!!isEdit ? "Edit User" : "Add User"}
-                      </ModalHeader>
-                      <ModalBody>
-                        <Form
-                          onSubmit={(e) => {
-                            e.preventDefault();
-                            validation.handleSubmit();
-                            return false;
-                          }}
-                        >
-                          <Row>
-                            <Col xs={12}>
-                              <div className="mb-3">
-                                <Label className="form-label">Name</Label>
-                                <Input
-                                  name="name"
-                                  type="text"
-                                  placeholder="Insert Name"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.name || ""}
-                                  invalid={
-                                    validation.touched.name &&
-                                    validation.errors.name
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.name &&
-                                validation.errors.name ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.name}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">
-                                  Designation
-                                </Label>
-                                <Input
-                                  name="designation"
-                                  label="Designation"
-                                  placeholder="Insert Designation"
-                                  type="text"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.designation || ""}
-                                  invalid={
-                                    validation.touched.designation &&
-                                    validation.errors.designation
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.designation &&
-                                validation.errors.designation ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.designation}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">Email</Label>
-                                <Input
-                                  name="email"
-                                  label="Email"
-                                  type="email"
-                                  placeholder="Insert Email"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.email || ""}
-                                  invalid={
-                                    validation.touched.email &&
-                                    validation.errors.email
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.email &&
-                                validation.errors.email ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.email}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">Option</Label>
-                                <Input
-                                  type="select"
-                                  name="tags"
-                                  className="form-select"
-                                  multiple={true}
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.tags || []}
-                                  invalid={
-                                    validation.touched.tags &&
-                                    validation.errors.tags
-                                      ? true
-                                      : false
-                                  }
-                                >
-                                  <option>Photoshop</option>
-                                  <option>illustrator</option>
-                                  <option>Html</option>
-                                  <option>Php</option>
-                                  <option>Java</option>
-                                  <option>Python</option>
-                                  <option>UI/UX Designer</option>
-                                  <option>Ruby</option>
-                                  <option>Css</option>
-                                </Input>
-                                {validation.touched.tags &&
-                                validation.errors.tags ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.tags}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">Projects</Label>
-                                <Input
-                                  name="projects"
-                                  label="Projects"
-                                  type="text"
-                                  placeholder="Insert Projects"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.projects || ""}
-                                  invalid={
-                                    validation.touched.projects &&
-                                    validation.errors.projects
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.projects &&
-                                validation.errors.projects ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.projects}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                            </Col>
-                          </Row>
-                          <Row>
-                            <Col>
-                              <div className="text-end">
-                                <button
-                                  type="submit"
-                                  className="btn btn-success save-user"
-                                >
-                                  Save
-                                </button>
-                              </div>
-                            </Col>
-                          </Row>
-                        </Form>
-                      </ModalBody>
-                    </Modal> */}
+                    m
                   </CardBody>
                 </Card>
               </Col>
