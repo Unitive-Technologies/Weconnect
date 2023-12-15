@@ -1,29 +1,24 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addBrandList as onAddBrandList } from "/src/store/brandlist/actions";
+import { addNcf as onAddNcf } from "/src/store/ncflist/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 const AddNewNcf = (props) => {
   const { isOpen, toggle } = props;
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -31,44 +26,51 @@ const AddNewNcf = (props) => {
 
     initialValues: {
       name: "",
-      //   code: "",
-      box_type_lbl: "",
-      brand_type_lbl: "",
-      length: "",
-      significant_length: "",
-      char_allowed_lbl: "",
-      cas_lbl: "",
+      code: "",
       status: "",
+      calculate_per_channel: "",
+      from_channel_no: "",
+      to_channel_no: "",
+      is_refundable: "",
+      mrp: "",
+      lmo_discount: "",
+      lmo_rate: "",
       created_at: "",
       created_by: "my mso(mso)",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
-      box_type_lbl: Yup.string().required("Select box type"),
-      brand_type_lbl: Yup.string().required("Select brand type"),
-      cas_lbl: Yup.string().required("Select CAS"),
-      length: Yup.string().required("Enter character length"),
-      significant_length: Yup.string().required("Enter significant length"),
-      char_allowed_lbl: Yup.string().required("Enter allowed characters"),
+      code: Yup.string().required("Enter code"),
       status: Yup.string().required("Select status"),
+      calculate_per_channel: Yup.string().required(
+        "Select calculate per channel"
+      ),
+      from_channel_no: Yup.string().required("Enter from channel"),
+      to_channel_no: Yup.string().required("Enter to channel"),
+      is_refundable: Yup.string().required("Select refundable"),
+      mrp: Yup.string(),
+      lmo_discount: Yup.string(),
+      lmo_rate: Yup.string(),
     }),
     onSubmit: (values) => {
-      const newBrand = {
+      const newNcf = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
-        box_type_lbl: values["box_type_lbl"],
-        brand_type_lbl: values["brand_type_lbl"],
+        code: values["code"],
         status: values["status"],
-        cas_lbl: values["cas_lbl"],
-        length: values["length"],
-        significant_length: values["significant_length"],
-        char_allowed_lbl: values["char_allowed_lbl"],
+        calculate_per_channel: values["calculate_per_channel"],
+        from_channel_no: values["from_channel_no"],
+        to_channel_no: values["to_channel_no"],
+        is_refundable: values["is_refundable"],
+        mrp: values["mrp"],
+        lmo_discount: values["lmo_discount"],
+        lmo_rate: values["lmo_rate"],
         created_at: new Date(),
         created_by: values["created_by"],
       };
-      console.log("New Brand:" + JSON.stringify(newBrand));
+      console.log("New NCF:" + JSON.stringify(newNcf));
       // save new user
-      dispatch(onAddBrandList(newBrand));
+      dispatch(onAddNcf(newNcf));
       validation.resetForm();
       toggle();
     },
@@ -88,7 +90,7 @@ const AddNewNcf = (props) => {
       toggle={toggle}
     >
       <ModalHeader tag="h4" toggle={toggle}>
-        Add New Brand
+        Add New NCF
       </ModalHeader>
       <ModalBody>
         <Form
