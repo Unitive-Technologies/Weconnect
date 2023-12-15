@@ -88,6 +88,7 @@ const AddNewNcf = (props) => {
       className="exampleModal"
       tabIndex="-1"
       toggle={toggle}
+      size="xl"
     >
       <ModalHeader tag="h4" toggle={toggle}>
         Add New NCF
@@ -128,150 +129,24 @@ const AddNewNcf = (props) => {
 
               <div className="mb-3">
                 <Label className="form-label">
-                  Brand Type<span style={{ color: "red" }}>*</span>
+                  Code<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="brand_type_lbl"
-                  type="select"
-                  placeholder="Select brand type"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.brand_type_lbl || ""}
-                >
-                  <option value="">Select brand type</option>
-                  <option value="STB">STB</option>
-                  <option value="Smartcard">Smartcard</option>
-                </Input>
-                {validation.touched.brand_type_lbl &&
-                validation.errors.brand_type_lbl ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.brand_type_lbl}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                <Label className="form-label">
-                  Box Type<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="box_type_lbl"
-                  type="select"
-                  placeholder="Select box type"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.box_type_lbl || ""}
-                >
-                  <option value="">Select box type</option>
-                  <option value="SD">Standard Definition(SD)</option>
-                  <option value="HD">High Definition(HD)</option>
-                </Input>
-                {validation.touched.box_type_lbl &&
-                validation.errors.box_type_lbl ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.box_type_lbl}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                <Label className="form-label">
-                  CAS Type<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="cas_lbl"
-                  type="select"
-                  placeholder="Select CAS"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.cas_lbl || ""}
-                >
-                  <option value="">Select CAS</option>
-                  <option value="NSTV">NSTV</option>
-                </Input>
-                {validation.touched.cas_lbl && validation.errors.cas_lbl ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.cas_lbl}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                <Label className="form-label">
-                  Character Length<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="length"
+                  name="code"
                   type="text"
-                  placeholder="Enter character length"
+                  placeholder="Enter code"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.length || ""}
+                  value={validation.values.code || ""}
                   invalid={
-                    validation.touched.length && validation.errors.length
+                    validation.touched.code && validation.errors.code
                       ? true
                       : false
                   }
                 />
-                {validation.touched.length && validation.errors.length ? (
+                {validation.touched.code && validation.errors.code ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.length}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                <Label className="form-label">
-                  Significant Length<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="significant_length"
-                  type="text"
-                  placeholder="Enter significant length"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.significant_length || ""}
-                  invalid={
-                    validation.touched.significant_length &&
-                    validation.errors.significant_length
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.significant_length &&
-                validation.errors.significant_length ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.significant_length}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                <Label className="form-label">
-                  Allowed Characters<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="char_allowed_lbl"
-                  type="select"
-                  placeholder="Select allowed characters"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.char_allowed_lbl || ""}
-                >
-                  <option value="">Select allowed characters</option>
-                  <option value="Numeric">Numeric</option>
-                  <option value="Alphabets">Alphabets</option>
-                  <option value="Hexadecimal">Hexadecimal</option>
-                  <option value="Alphanumeric">Alphanumeric</option>
-                </Input>
-                {validation.touched.char_allowed_lbl &&
-                validation.errors.char_allowed_lbl ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.char_allowed_lbl}
+                    {validation.errors.code}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -283,7 +158,7 @@ const AddNewNcf = (props) => {
                 <Input
                   name="status"
                   type="select"
-                  placeholder="Select Status"
+                  placeholder="Select status"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
@@ -291,12 +166,113 @@ const AddNewNcf = (props) => {
                 >
                   <option value="">Select status</option>
                   <option value="Active">Active</option>
-                  <option value="blocked">BLOCKED</option>
                   <option value="In_Active">In-Active</option>
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
                     {validation.errors.status}
+                  </FormFeedback>
+                ) : null}
+              </div>
+
+              <div className="mb-3">
+                <Label className="form-label">
+                  Calculate per channel<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="calculate_per_channel"
+                  type="select"
+                  placeholder="Select calculate per channel"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.calculate_per_channel || ""}
+                >
+                  <option value="">Select calculate per channel</option>
+                  <option value="0">Yes</option>
+                  <option value="1">No</option>
+                </Input>
+                {validation.touched.calculate_per_channel &&
+                validation.errors.calculate_per_channel ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.calculate_per_channel}
+                  </FormFeedback>
+                ) : null}
+              </div>
+
+              <div className="mb-3">
+                <Label className="form-label">
+                  From Channel<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="from_channel_no"
+                  type="text"
+                  placeholder="Enter from channel"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.from_channel_no || ""}
+                  invalid={
+                    validation.touched.from_channel_no &&
+                    validation.errors.from_channel_no
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.from_channel_no &&
+                validation.errors.from_channel_no ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.from_channel_no}
+                  </FormFeedback>
+                ) : null}
+              </div>
+
+              <div className="mb-3">
+                <Label className="form-label">
+                  To Channel<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="to_channel_no"
+                  type="text"
+                  placeholder="Enter to channel"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.to_channel_no || ""}
+                  invalid={
+                    validation.touched.to_channel_no &&
+                    validation.errors.to_channel_no
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.to_channel_no &&
+                validation.errors.to_channel_no ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.to_channel_no}
+                  </FormFeedback>
+                ) : null}
+              </div>
+
+              <div className="mb-3">
+                <Label className="form-label">
+                  Is Refundable<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="is_refundable"
+                  type="select"
+                  placeholder="Select refundable"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.is_refundable || ""}
+                >
+                  <option value="">Select refundable</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </Input>
+                {validation.touched.is_refundable &&
+                validation.errors.is_refundable ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.is_refundable}
                   </FormFeedback>
                 ) : null}
               </div>
