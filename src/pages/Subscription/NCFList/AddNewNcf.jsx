@@ -295,7 +295,7 @@ const AddNewNcf = (props) => {
                 padding: "0px 10px",
               }}
             >
-              <h5 style={{}}>Default NCF</h5>
+              <p style={{ fontWeight: "bold" }}>Default NCF</p>
             </div>
             <Row
               style={{
@@ -384,7 +384,186 @@ const AddNewNcf = (props) => {
               </Col>
             </Row>
           </Row>
-          <Row></Row>
+          <Row>
+            <div
+              style={{
+                // margin: "20px 0px",
+                marginTop: "20px",
+                marginBottom: "18px",
+                zIndex: 12000,
+                backgroundColor: "#fff",
+                width: "fit-content",
+                marginLeft: "40%",
+                position: "absolute",
+                padding: "0px 10px",
+              }}
+            >
+              <p style={{ fontWeight: "bold" }}>Add Mutiple NCF Rates</p>
+            </div>
+            <Row
+              style={{
+                position: "relative",
+                border: "1px solid #ced4da",
+                padding: "20px 0px",
+                margin: "30px 0px",
+              }}
+            >
+              <Col sm="2">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Name<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="name"
+                    type="text"
+                    placeholder="Enter name"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.name || ""}
+                    invalid={
+                      validation.touched.name && validation.errors.name
+                        ? true
+                        : false
+                    }
+                  />
+                  {validation.touched.name && validation.errors.name ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.name}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              <Col sm="2">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    MRP (INR)<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="mrp"
+                    type="number"
+                    placeholder="0"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.mrp || ""}
+                    invalid={
+                      validation.touched.mrp && validation.errors.mrp
+                        ? true
+                        : false
+                    }
+                  />
+                  {validation.touched.mrp && validation.errors.mrp ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.mrp}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              <Col sm="2">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    LCO Discount (%)<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="lmo_discount"
+                    type="number"
+                    placeholder="0"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.lmo_discount || ""}
+                    invalid={
+                      validation.touched.lmo_discount &&
+                      validation.errors.lmo_discount
+                        ? true
+                        : false
+                    }
+                  />
+                  {validation.touched.lmo_discount &&
+                  validation.errors.lmo_discount ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.lmo_discount}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              <Col sm="2">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    LCO Rate<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="lmo_rate"
+                    type="number"
+                    placeholder="0"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.mrp || ""}
+                    invalid={
+                      validation.touched.lmo_rate && validation.errors.lmo_rate
+                        ? true
+                        : false
+                    }
+                  />
+                  {validation.touched.lmo_rate && validation.errors.lmo_rate ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.lmo_rate}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              <Col sm="2">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Calculate per channel<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="calculate_per_channel"
+                    type="select"
+                    placeholder="Select calculate per channel"
+                    className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.calculate_per_channel || ""}
+                  >
+                    <option value="">Select calculate per channel</option>
+                    <option value="0">Yes</option>
+                    <option value="1">No</option>
+                  </Input>
+                  {validation.touched.calculate_per_channel &&
+                  validation.errors.calculate_per_channel ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.calculate_per_channel}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              <Col sm="2">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Is Refundable<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="is_refundable"
+                    type="select"
+                    placeholder="Select refundable"
+                    className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.is_refundable || ""}
+                  >
+                    <option value="">Select refundable</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </Input>
+                  {validation.touched.is_refundable &&
+                  validation.errors.is_refundable ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.is_refundable}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+            </Row>
+          </Row>
           <Row>
             <Col sm="8">
               <div className="d-flex flex-wrap gap-2">
@@ -414,7 +593,6 @@ const AddNewNcf = (props) => {
           </Row>
         </Form>
       </ModalBody>
-      {/* </Modal> */}
     </Modal>
   );
 };
