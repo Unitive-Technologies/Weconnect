@@ -26,7 +26,7 @@ const convertNcfListObject = (ncflist) => {
       mrp: ncf.mrp,
       lmo_discount: ncf.lmo_discount,
       lmo_rate: ncf.lmo_rate,
-      calculate_per_channel: ncf.calculate_per_channel === 1 ? "Yes" : "No",
+      calculate_per_channel: ncf.calculate_per_channel === 0 ? "Yes" : "No",
       is_refundable: ncf.is_refundable === 1 ? "Yes" : "No",
       created_at: ncf.created_at,
       created_by: ncf.created_by === -1 ? "console" : "other",
