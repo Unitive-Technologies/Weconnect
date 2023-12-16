@@ -1,4 +1,7 @@
-import { GET_PROMOVOUCHER_SUCCESS, GET_PROMOVOUCHER_FAIL } from "./actionTypes";
+import {
+  GET_PROMOVOUCHER_SUCCESS, GET_PROMOVOUCHER_FAIL, ADD_PROMOVOUCHER_SUCCESS,
+  ADD_PROMOVOUCHER_FAIL,
+} from "./actionTypes";
 
 const INIT_STATE = {
   promovoucher: [],
@@ -17,6 +20,21 @@ const PromoVoucher = (state = INIT_STATE, action) => {
       };
 
     case GET_PROMOVOUCHER_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_PROMOVOUCHER_SUCCESS:
+      return {
+        ...state,
+        promovoucher: [
+          ...state.promovoucher,
+          action.payload,
+        ],
+      };
+
+    case ADD_PROMOVOUCHER_FAIL:
       return {
         ...state,
         error: action.payload,

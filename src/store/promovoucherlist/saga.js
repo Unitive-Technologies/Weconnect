@@ -1,11 +1,11 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_PROMOVOUCHER } from "./actionTypes";
+import { GET_PROMOVOUCHER, ADD_NEW_PROMOVOUCHER } from "./actionTypes";
 
-import { getPromoVoucherSuccess, getPromoVoucherFail } from "./actions";
+import { getPromoVoucherSuccess, getPromoVoucherFail, addPromoVoucherSuccess, addPromoVoucherFail } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getPromoVoucher } from "../../helpers/fakebackend_helper";
+import { getPromoVoucher, addNewPromoVoucher } from "../../helpers/fakebackend_helper";
 
 const convertPromoVoucherListObject = (promoVoucherList) => {
   // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
@@ -42,8 +42,21 @@ function* fetchPromoVoucher() {
   }
 }
 
+function* onAddNewPromoVoucher({ payload: promovoucher }) {
+  try {
+    const response = yield call(addNewPromoVoucher, promovoucher);
+
+    yield put(addPromoVoucherSuccess(response));
+    toast.success("Promo Voucher Added Successfully", { autoClose: 2000 });
+  } catch (error) {
+    yield put(addPromoVoucherFail(error));
+    toast.error("PromoVoucher Added Failed", { autoClose: 2000 });
+  }
+}
+
 function* promoVoucherSaga() {
   yield takeEvery(GET_PROMOVOUCHER, fetchPromoVoucher);
+  yield takeEvery(ADD_NEW_PROMOVOUCHER, onAddNewPromoVoucher);
 }
 
 export default promoVoucherSaga;

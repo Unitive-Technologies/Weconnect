@@ -120,6 +120,7 @@ export const GET_BANK = "/bank";
 export const ADD_NEW_BANK = "/add/bank";
 
 export const GET_PROMOVOUCHER = "/promovoucher";
+export const ADD_NEW_PROMOVOUCHER = "/add/promovoucher";
 
 export const GET_USERS = "/userslist";
 export const GET_USER_PROFILE = "/user";
