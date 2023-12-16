@@ -61,6 +61,25 @@ const NotificationTemplateList = (props) => {
   const columns = useMemo(
     () => [
       {
+        Header: ".",
+        // accessor: "",
+        // disableFilters: true,
+        // filterable: true,
+        Cell: () => {
+          return (
+            <>
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="upcomingtaskCheck01"
+                // defaultChecked
+                // disabled
+              />
+            </>
+          );
+        },
+      },
+      {
         Header: "#",
         // accessor: "name",
         disableFilters: true,

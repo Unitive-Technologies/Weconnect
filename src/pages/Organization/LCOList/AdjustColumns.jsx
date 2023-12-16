@@ -28,6 +28,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 const AdjustColumns = (props) => {
   const { isOpen, handleAdjustColumn } = props;
+  const [selectedColumns, setSelectedColumns] = useState([]);
   const dispatch = useDispatch();
   const lco = [];
   const columns = useMemo(
@@ -426,17 +427,20 @@ const AdjustColumns = (props) => {
             >
               <Col lg={10}>
                 <div className="mb-3">
-                  <Label className="form-label">State</Label>
+                  <Label className="form-label">Select Columns</Label>
                   <Input
                     name="state_lbl"
                     type="select"
                     placeholder="Select State"
                     className="form-select"
+                    value={selectedColumns}
+                    onChange={(e) => setSelectedColumns(e.target.value)}
                     // onChange={validation.handleChange}
                     // onBlur={validation.handleBlur}
                     // value={validation.values.state_lbl || ""}
                   >
                     <option value="">Select Columns</option>
+
                     <option value="1">Tamilnadu</option>
                     <option value="2">Kerala</option>
                     <option value="3">Assam</option>
@@ -467,7 +471,20 @@ const AdjustColumns = (props) => {
                 </div>
               </Col>
             </Row>
-
+            {Array.isArray(selectedColumns) && selectedColumns.length > 0 && (
+              <Row>
+                <Col lg={12}>
+                  <div>
+                    <strong>Selected Columns:</strong>
+                    {selectedColumns.map((column) => (
+                      <span key={column} className="ms-2">
+                        {column}
+                      </span>
+                    ))}
+                  </div>
+                </Col>
+              </Row>
+            )}
             <Row>
               {/* <Col lg={9}></Col> */}
               <Col lg={3}>
