@@ -20,17 +20,17 @@ const convertNcfListObject = (ncflist) => {
       id: ncf.id,
       name: ncf.name,
       code: ncf.code,
-      status:
-        ncf.status === 1 ? "ACTIVE" : ncf.status === 0 ? "INACTIVE" : "BLOCKED",
+      status: ncf.status === 1 ? "Active" : "In_active",
       from_channel_no: ncf.from_channel_no,
       to_channel_no: ncf.to_channel_no,
       mrp: ncf.mrp,
       lmo_discount: ncf.lmo_discount,
       lmo_rate: ncf.lmo_rate,
-      calculate_per_channel: ncf.calculate_per_channel,
+      calculate_per_channel: ncf.calculate_per_channel === 1 ? "Yes" : "No",
       is_refundable: ncf.is_refundable === 1 ? "Yes" : "No",
       created_at: ncf.created_at,
       created_by: ncf.created_by === -1 ? "console" : "other",
+      status_lbl: ncf.status_lbl,
     };
   });
 };
