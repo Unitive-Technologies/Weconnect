@@ -112,10 +112,10 @@ const GroupPolicyList = (props) => {
                   {cellProps.row.original.status === 0
                     ? "MSO"
                     : cellProps.row.original.status === 1
-                    ? "RO"
-                    : cellProps.row.original.status === 2
-                    ? "DISTRIBUTOR"
-                    : "LCO"}
+                      ? "RO"
+                      : cellProps.row.original.status === 2
+                        ? "DISTRIBUTOR"
+                        : "LCO"}
                 </Link>
               </h5>
             </>
@@ -134,8 +134,8 @@ const GroupPolicyList = (props) => {
                   {cellProps.row.original.status === 1
                     ? "Administrator"
                     : cellProps.row.original.status === 2
-                    ? "Staff"
-                    : "User"}
+                      ? "Staff"
+                      : "User"}
                 </Link>
               </h5>
             </>

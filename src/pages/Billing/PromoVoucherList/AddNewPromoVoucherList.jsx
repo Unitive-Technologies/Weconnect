@@ -98,7 +98,7 @@ const AddNewPromoVoucher = (props) => {
           }}
         >
           <Row>
-            <Col sm="4">
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   LCO<span style={{ color: "red" }}>*</span>
@@ -112,9 +112,10 @@ const AddNewPromoVoucher = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.operator || ""}
                 >
-                  <option value="101">Sri Hari Satlinks</option>
-                  <option value="102">Sri Cable Network</option>
-                  <option value="103">Sri Deepa Cable Network</option>
+                  <option value="101">Select Ico</option>
+                  <option value="102">Sri Hari Satlinks</option>
+                  <option value="103">Sri Cable Network</option>
+                  <option value="104">Sri Deepa Cable Network</option>
                 </Input>
                 {validation.touched.operator && validation.errors.operator ? (
                   <FormFeedback type="invalid">
@@ -123,7 +124,7 @@ const AddNewPromoVoucher = (props) => {
                 ) : null}
               </div>
             </Col>
-            <Col sm="4">
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Voucher Count<span style={{ color: "red" }}>*</span>
@@ -144,10 +145,10 @@ const AddNewPromoVoucher = (props) => {
                 ) : null}
               </div>
             </Col>
-            <Col sm="4">
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
-                  Voucher Amount<span style={{ color: "red" }}>*</span>
+                  Voucher Amount
                 </Label>
                 <Input
                   name="amount"
@@ -166,12 +167,10 @@ const AddNewPromoVoucher = (props) => {
                 ) : null}
               </div>
             </Col>
-          </Row>
-          <Row>
-            <Col sm="4">
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
-                  Voucher MRP<span style={{ color: "red" }}>*</span>
+                  Voucher MRP
                 </Label>
                 <Input
                   name="mrp"
@@ -189,14 +188,16 @@ const AddNewPromoVoucher = (props) => {
                 ) : null}
               </div>
             </Col>
-            <Col sm="4">
+          </Row>
+          <Row>
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Expiry Date<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
                   name="expiry_date"
-                  type="text"
+                  type="date"
                   placeholder="Select expiry date"
                   // className="form-select"
                   onChange={validation.handleChange}
@@ -211,91 +212,86 @@ const AddNewPromoVoucher = (props) => {
                 ) : null}
               </div>
             </Col>
-            <Col sm="4">
+            <Col sm="6">
               <div className="mb-3">
                 <Label className="form-label">
-                  Bouquet List
+                  Bouquet List<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="parent_lbl"
+                  name="bouquets"
                   type="text"
                   placeholder="Select bouquet"
+                  // className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.bouquets || ""}
+                >
+                </Input>
+                {validation.touched.bouquets && validation.errors.bouquets ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.bouquets}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col sm="3">
+              <div className="mb-3">
+                <Label className="form-label">
+                  Apply On<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="applied_on"
+                  type="select"
+                  placeholder="Select Apply on"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.parent_lbl || ""}
+                  value={validation.values.applied_on || ""}
                 >
-                  <option value="201">in Percent</option>
-                  <option value="202">in Amount</option>
+                  <option value="201">Select Apply On</option>
+                  <option value="201">Fresh Activation</option>
+                  <option value="202">Renewal</option>
+                  <option value="203">BOTH</option>
                 </Input>
-                {validation.touched.parent_lbl && validation.errors.parent_lbll ? (
+                {validation.touched.applied_on && validation.errors.applied_on ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.parent_lbl}
+                    {validation.errors.applied_on}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
           </Row>
           <Row>
-            <Col sm="4">
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
-                  Applicable On<span style={{ color: "red" }}>*</span>
+                  Recharge Period<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="applicable"
+                  name="recharge_period"
                   type="select"
-                  placeholder="Select Applicable On"
-                  className="form-select"
+                  placeholder="Select recharge period"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.applicable || ""}
+                  value={validation.values.recharge_period || ""}
                 >
-                  <option value="101">Subsctiption Charge</option>
-                  <option value="102">Installation Charge</option>
-                  <option value="103">Hardware Charge</option>
-                  <option value="104">Rental Charge</option>
-                  <option value="105">Debit/Credit Notes</option>
-                  <option value="106">TDS</option>
-                  <option value="107">Service Charge</option>
-                  <option value="108">AGR Charge</option>
-                </Input>
-                {validation.touched.applicable && validation.errors.applicable ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.applicable}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col sm="8">
-              <div className="mb-3">
-                <Label className="form-label">
-                  Description<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="description"
-                  type="textarea"
-                  placeholder="Enter Description"
-                  rows="3"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.description || ""}
-                  invalid={
-                    validation.touched.description &&
-                      validation.errors.description
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.description &&
-                  validation.errors.description ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.description}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
+                  <option value="21">Select recharge period</option>
+                  <option value="22">1day</option>
+                  <option value="23">1month</option>
+                  <option value="23">2month</option>
+                  <option value="23">3month</option>
+                  <option value="23">6month</option>
+                  <option value="23">1Year</option>
 
+                </Input>
+                {validation.touched.recharge_period &&
+                  validation.errors.recharge_period ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.recharge_period}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
           </Row>
           <Row>
             <Col sm="8">
@@ -326,7 +322,6 @@ const AddNewPromoVoucher = (props) => {
           </Row>
         </Form>
       </ModalBody>
-      {/* </Modal> */}
     </Modal >
   );
 };
