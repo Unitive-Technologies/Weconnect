@@ -568,8 +568,8 @@ const ViewNcf = (props) => {
                     disabled={!showEditNcf}
                   >
                     <option value="">Select calculate per channel</option>
-                    <option value="0">Yes</option>
-                    <option value="1">No</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
                   </Input>
                   {validation.touched.calculate_per_channel &&
                   validation.errors.calculate_per_channel ? (
