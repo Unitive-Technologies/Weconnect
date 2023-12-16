@@ -1,30 +1,26 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
-import { updateRegionalOffice as onUpdateRegionalOffice } from "/src/store/regionaloffice/actions";
+import { useDispatch } from "react-redux";
+
 import TapsOfViewDistributor from "./TapsOfViewDistributor";
 import EditDistributorModal from "./EditDistributorModal";
 
 const ViewDistributorModal = (props) => {
-  const { isOpen, toggle, distributor, setViewDistributor } = props;
+  const { isOpen, handleViewModal, distributor, setViewDistributor } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
   const [showEditDistributor, setShowEditDistributor] = useState(false);
@@ -37,30 +33,30 @@ const ViewDistributorModal = (props) => {
     initialValues: {
       id: (distributor && distributor.id) || "",
       name: (distributor && distributor.name) || "",
-      code: "",
-      addr1: "",
-      addr2: "",
-      addr3: "",
-      contact_person: "",
-      mobile_no: "",
-      phone_no: "",
-      faxno: "",
-      state_lbl: "",
-      district_lbl: "",
-      city_lbl: "",
-      gstno: "",
-      panno: "",
-      username: "",
-      status_lbl: "",
-      email: "",
-      pincode: "",
-      por_number: "",
-      reg_phase: "",
-      reg_startdate: "",
-      reg_enddate: "",
-      gst_date: "",
-      credit_limit: "",
-      area_id: "",
+      code: (distributor && distributor.code) || "",
+      addr1: (distributor && distributor.addr1) || "",
+      addr2: (distributor && distributor.addr2) || "",
+      addr3: (distributor && distributor.addr3) || "",
+      contact_person: (distributor && distributor.contact_person) || "",
+      mobile_no: (distributor && distributor.mobile_no) || "",
+      phone_no: (distributor && distributor.phone_no) || "",
+      faxno: (distributor && distributor.faxno) || "",
+      state_lbl: (distributor && distributor.state_lbl) || "",
+      district_lbl: (distributor && distributor.district_lbl) || "",
+      city_lbl: (distributor && distributor.city_lbl) || "",
+      gstno: (distributor && distributor.gstno) || "",
+      panno: (distributor && distributor.panno) || "",
+      username: (distributor && distributor.username) || "",
+      status_lbl: (distributor && distributor.status_lbl) || "",
+      email: (distributor && distributor.email) || "",
+      pincode: (distributor && distributor.pincode) || "",
+      por_number: (distributor && distributor.por_number) || "",
+      reg_phase: (distributor && distributor.reg_phase) || "",
+      reg_startdate: (distributor && distributor.reg_startdate) || "",
+      reg_enddate: (distributor && distributor.reg_enddate) || "",
+      gst_date: (distributor && distributor.gst_date) || "",
+      credit_limit: (distributor && distributor.credit_limit) || "",
+      area_id: (distributor && distributor.area_id) || "",
       agreement_data: [],
     },
     validationSchema: Yup.object({
@@ -115,32 +111,10 @@ const ViewDistributorModal = (props) => {
       // update user
       dispatch(onUpdateUser(updateDistributor));
       validation.resetForm();
-      toggle();
+      handleViewModal();
     },
   });
 
-  const getTableActions = () => {
-    return [
-      {
-        name: "Create",
-        action: setShowDistributor,
-        type: "normal",
-        icon: "create",
-      },
-      {
-        name: "Upload",
-        action: setShowUploadDistributor,
-        type: "normal",
-        icon: "upload",
-      },
-      {
-        name: "Settings",
-        action: setShowUploadDistributor,
-        type: "normal",
-        icon: "upload",
-      },
-    ];
-  };
   return (
     <Modal
       isOpen={isOpen}
@@ -150,11 +124,11 @@ const ViewDistributorModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleViewModal}
     >
       {!showEditDistributor ? (
         <>
-          <ModalHeader toggle={toggle} tag="h4" position="relative">
+          <ModalHeader toggle={handleViewModal} tag="h4" position="relative">
             <h4>View - {distributor.name}</h4>
           </ModalHeader>
           <Link

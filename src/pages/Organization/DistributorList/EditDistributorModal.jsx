@@ -891,7 +891,7 @@ const EditDistributorModal = (props) => {
           className="btn btn-outline-danger"
           onClick={() => {
             validation.resetForm();
-            closeEditModal();
+            handleCancel();
           }}
         >
           Cancel

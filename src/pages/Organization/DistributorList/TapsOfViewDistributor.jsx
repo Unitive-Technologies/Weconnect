@@ -25,7 +25,7 @@ import UploadDocuments from "./TabsComponents/UploadDocuments";
 const TapsOfViewDistributor = () => {
   const [customActiveTab, setcustomActiveTab] = useState("1");
 
-  const toggleCustom = (tab) => {
+  const handleTabs = (tab) => {
     if (customActiveTab !== tab) {
       setcustomActiveTab(tab);
     }
@@ -41,7 +41,7 @@ const TapsOfViewDistributor = () => {
               active: customActiveTab === "1",
             })}
             onClick={() => {
-              toggleCustom("1");
+              handleTabs("1");
             }}
           >
             <span className="d-block d-sm-none">
@@ -57,7 +57,7 @@ const TapsOfViewDistributor = () => {
               active: customActiveTab === "2",
             })}
             onClick={() => {
-              toggleCustom("2");
+              handleTabs("2");
             }}
           >
             <span className="d-block d-sm-none">
@@ -73,7 +73,7 @@ const TapsOfViewDistributor = () => {
               active: customActiveTab === "3",
             })}
             onClick={() => {
-              toggleCustom("3");
+              handleTabs("3");
             }}
           >
             <span className="d-block d-sm-none">
@@ -89,7 +89,7 @@ const TapsOfViewDistributor = () => {
               active: customActiveTab === "4",
             })}
             onClick={() => {
-              toggleCustom("4");
+              handleTabs("4");
             }}
           >
             <span className="d-block d-sm-none">
@@ -105,7 +105,7 @@ const TapsOfViewDistributor = () => {
               active: customActiveTab === "5",
             })}
             onClick={() => {
-              toggleCustom("5");
+              handleTabs("5");
             }}
           >
             <span className="d-block d-sm-none">
@@ -121,7 +121,7 @@ const TapsOfViewDistributor = () => {
               active: customActiveTab === "6",
             })}
             onClick={() => {
-              toggleCustom("6");
+              handleTabs("6");
             }}
           >
             <span className="d-block d-sm-none">
@@ -137,7 +137,7 @@ const TapsOfViewDistributor = () => {
               active: customActiveTab === "7",
             })}
             onClick={() => {
-              toggleCustom("7");
+              handleTabs("7");
             }}
           >
             <span className="d-block d-sm-none">

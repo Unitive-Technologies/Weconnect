@@ -1,18 +1,15 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { createSelector } from "reselect";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
+  ModalFooter,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
@@ -23,9 +20,8 @@ import { addNewDistributor as onAddNewDistributor } from "/src/store/distributor
 import { useSelector, useDispatch } from "react-redux";
 
 const AddDistributorModal = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleAddDistributor } = props;
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
 
   const selectRegionalOfficeState = (state) => state.regionaloffice;
   const RegionalOfficeProperties = createSelector(
@@ -130,7 +126,7 @@ const AddDistributorModal = (props) => {
       // save new user
       dispatch(onAddNewDistributor(newDistributor));
       validation.resetForm();
-      toggle();
+      handleAddDistributor();
     },
   });
   return (
@@ -142,9 +138,9 @@ const AddDistributorModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleAddDistributor}
     >
-      <ModalHeader tag="h4" toggle={toggle}>
+      <ModalHeader tag="h4" toggle={handleAddDistributor}>
         Add New Distributor
       </ModalHeader>
       <ModalBody>
@@ -938,11 +934,29 @@ const AddDistributorModal = (props) => {
           </Row>
           <Row>
             <Col>
-              <div className="text-end">
+              <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
                   Create
                 </button>
-              </div>
+                <button
+                  type="reset"
+                  className="btn btn-warning"
+                  onClick={() => validation.resetForm()}
+                >
+                  Reset
+                </button>
+
+                <button
+                  type="button"
+                  className="btn btn-outline-danger"
+                  onClick={() => {
+                    validation.resetForm();
+                    handleAddDistributor();
+                  }}
+                >
+                  Cancel
+                </button>
+              </ModalFooter>
             </Col>
           </Row>
         </Form>
