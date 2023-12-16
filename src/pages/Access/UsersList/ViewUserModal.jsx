@@ -102,7 +102,9 @@ const ViewUserModal = (props) => {
         toggle={handleCancel}
       >
         <ModalHeader toggle={handleCancel} tag="h4">
-          {!showEditUser ? "View User" : "Edit User"}
+          {!showEditUser
+            ? `View ${(user && user.name) || ""}`
+            : `Edit ${(user && user.name) || ""}`}
         </ModalHeader>
         {!showEditUser && (
           <Link

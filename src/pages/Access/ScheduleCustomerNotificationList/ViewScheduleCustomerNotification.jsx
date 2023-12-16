@@ -113,8 +113,8 @@ const ViewScheduleCustomerNotification = (props) => {
       >
         <ModalHeader toggle={handleCancel} tag="h4">
           {!showEditSchedule
-            ? `View ${viewScheduleNoti.name}`
-            : `Edit ${viewScheduleNoti.name}`}
+            ? `View ${(viewScheduleNoti && viewScheduleNoti.name) || ""}`
+            : `Edit ${(viewScheduleNoti && viewScheduleNoti.name) || ""}`}
         </ModalHeader>
         {!showEditSchedule && (
           <Link

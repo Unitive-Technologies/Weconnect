@@ -81,7 +81,7 @@ const ViewNotificationTemplateModal = (props) => {
       <ShowPreviewModal
         isOpen={showPreview}
         handlePreview={() => setShowPreview(false)}
-        message={notiTemplate.msg_content}
+        message={(notiTemplate && notiTemplate.msg_content) || ""}
       />
       <Modal
         isOpen={isOpen}
@@ -95,8 +95,8 @@ const ViewNotificationTemplateModal = (props) => {
       >
         <ModalHeader toggle={handleCancel} tag="h4">
           {!showEditNotificationTemp
-            ? `View ${notiTemplate.msg_head}`
-            : `Edit ${notiTemplate.msg_head}`}
+            ? `View ${(notiTemplate && notiTemplate.msg_head) || ""}`
+            : `Edit ${(notiTemplate && notiTemplate.msg_head) || ""}`}
         </ModalHeader>
         {!showEditNotificationTemp && (
           <Link
