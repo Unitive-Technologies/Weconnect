@@ -17,6 +17,10 @@ import { getConnectionScheme as onGetConnectionScheme } from "/src/store/actions
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import ViewConnectionScheme from "./ViewConnectionScheme";
+import CreateConnectionScheme from "./CreateConnectionScheme";
+import BulkAssign from "./BulkAssign";
+import BulkRemoval from "./BulkRemoval";
 
 const ConnectionSchemeList = (props) => {
   //meta title
@@ -36,13 +40,36 @@ const ConnectionSchemeList = (props) => {
   const { connectscheme, loading } = useSelector(ConnectionSchemeProperties);
 
   useEffect(() => {
-    console.log("connectionscheme data in component:", connectscheme);
+    // console.log("connectionscheme data in component:", connectscheme);
   }, [connectscheme]);
   const [isLoading, setLoading] = useState(loading);
-
-  const [userList, setUserList] = useState([]);
   const [modal, setModal] = useState(false);
+  const [showCreateConnectionScheme, setShowCreateConnectionScheme] =
+    useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [showBulkAssign, setShowBulkAssign] = useState(false);
+  const [showViewConnectionScheme, setShowViewConnectionScheme] =
+    useState(false);
+  const [viewConnectionSchemeData, setViewConnectionSchemeData] = useState({});
+  const [showBulkRemoval, setShowBulkRemoval] = useState(false);
+
+  const toggleViewConnectionScheme = (userData) => {
+    console.log("User Data: ", userData);
+    setShowViewConnectionScheme(!showViewConnectionScheme);
+    setViewConnectionSchemeData(userData);
+  };
+
+  const toggleCreateConnectionScheme = () => {
+    setShowCreateConnectionScheme(!showCreateConnectionScheme);
+  };
+
+  const toggleBulkAssign = () => {
+    setShowBulkAssign(!showBulkAssign);
+  };
+
+  const toggleBulkRemoval = () => {
+    setShowBulkRemoval(!showBulkRemoval);
+  };
 
   const columns = useMemo(
     () => [
@@ -78,7 +105,13 @@ const ConnectionSchemeList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  toggleViewConnectionScheme(userData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -248,20 +281,6 @@ const ConnectionSchemeList = (props) => {
     toggle();
   };
 
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
-
-  //delete customer
   const [deleteModal, setDeleteModal] = useState(false);
 
   const onClickDelete = (connectionscheme) => {
@@ -269,30 +288,43 @@ const ConnectionSchemeList = (props) => {
     setDeleteModal(true);
   };
 
-  const handleDeleteUser = () => {
-    if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
-    }
-    setContact("");
-    onPaginationPageChange(1);
-    setDeleteModal(false);
-  };
-
-  const handleUserClicks = () => {
-    setUserList("");
-    setIsEdit(false);
-    toggle();
-  };
-
   const keyField = "id";
+  const getTableActions = () => {
+    return [
+      {
+        name: "Create",
+        action: setShowCreateConnectionScheme,
+        type: "normal",
+        icon: "create",
+      },
+      {
+        name: "Bulk Assign to Operator",
+        action: setShowBulkAssign,
+        type: "dropdown",
+        dropdownName: "Action",
+      },
+      {
+        name: "Bulk Removal from Operator",
+        action: setShowBulkRemoval,
+        type: "dropdown",
+        dropdownName: "Action",
+      },
+    ];
+  };
 
   return (
     <React.Fragment>
-      <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
+      <ViewConnectionScheme
+        isOpen={showViewConnectionScheme}
+        toggle={toggleViewConnectionScheme}
+        Connectionscheme={viewConnectionSchemeData}
       />
+      <CreateConnectionScheme
+        isOpen={showCreateConnectionScheme}
+        toggle={toggleCreateConnectionScheme}
+      />
+      <BulkAssign isOpen={showBulkAssign} toggle={toggleBulkAssign} />
+      <BulkRemoval isOpen={showBulkRemoval} toggle={toggleBulkRemoval} />
       <div className="page-content">
         <Container fluid>
           <Breadcrumbs
@@ -306,18 +338,18 @@ const ConnectionSchemeList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log(
-                      "connectionscheme:" + JSON.stringify(connectscheme)
-                    )}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={connectscheme}
                       isGlobalFilter={true}
-                      // isAddUserList={true}
-                      // isShowingPageLength={true}
-                      // iscustomPageSizeOptions={true}
-                      handleUserClick={handleUserClicks}
+                      isAddUserList={true}
+                      isShowingPageLength={true}
+                      tableActions={getTableActions()}
+                      handleUserClick={() =>
+                        setShowCreateConnectionScheme(true)
+                      }
+                      handleUploadUser={() => setShowBulkAssign(true)}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

@@ -340,11 +340,7 @@ const NCFList = (props) => {
 
   return (
     <React.Fragment>
-      <ViewNcf
-        isOpen={showViewNcf}
-        toggle={toggleViewNcf}
-        brand={viewNcfData}
-      />
+      <ViewNcf isOpen={showViewNcf} toggle={toggleViewNcf} ncf={viewNcfData} />
       <AddNewNcf isOpen={showAddNcf} toggle={toggleAddNcf} />
       <BulkAssigntoOperator isOpen={showBulkAssign} toggle={toggleBulkAssign} />
       <BulkRemovalFromOperator
@@ -377,7 +373,6 @@ const NCFList = (props) => {
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
                     />
-                    m
                   </CardBody>
                 </Card>
               </Col>
