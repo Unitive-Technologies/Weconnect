@@ -17,10 +17,10 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addNewTaxList as onAddNewTaxList } from "/src/store/taxlist/actions";
+import { addNewPromoVoucher as onAddNewPromoVoucher } from "/src/store/promovoucherlist/actions";
 import { useSelector, useDispatch } from "react-redux";
 
-const AddNewTaxList = (props) => {
+const AddNewPromoVoucher = (props) => {
   const { isOpen, toggle } = props;
   const dispatch = useDispatch();
   const [user, setUser] = useState();
@@ -31,44 +31,44 @@ const AddNewTaxList = (props) => {
 
     initialValues: {
       //BroadCaster: "",
-      name: "",
-      code: "",
-      status_lbl: "",
-      taxvalue: "",
-      valuetype_lbl: "",
-      parent_lbl: "",
-      applicable: "",
-      description: "",
+      operator: "",
+      operator_code: "",
+      amount: "",
+      mrp: "",
+      expiry_date: "",
+      bouquets: "",
+      applied_on: "",
+      recharge_period: "",
       created_at: "",
       created_by: "Admin",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter tax title"),
-      code: Yup.string().required("Enter tax code"),
-      status_lbl: Yup.string().required("Select status"),
-      taxvalue: Yup.string().required("Exter Tax Value"),
-      valuetype_lbl: Yup.string().required("Select value-in"),
-      parent_lbl: Yup.string().required(""),
-      applicable: Yup.string().required(""),
-      description: Yup.string().required("Enter description"),
+      operator: Yup.string().required("Select Ico"),
+      operator_code: Yup.string().required("Enter voucher count"),
+      amount: Yup.string().required("Enter voucher amount"),
+      mrp: Yup.string().required("Exter voucher mrp"),
+      expiry_date: Yup.string().required("Select expiry date"),
+      bouquets: Yup.string().required("Select bouquet"),
+      applied_on: Yup.string().required("Select apply on"),
+      recharge_period: Yup.string().required("Select recharge periods"),
     }),
     onSubmit: (values) => {
-      const newTaxList = {
+      const newPromoVoucher = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
-        name: values["name"],
-        code: values["code"],
-        status_lbl: values["status_lbl"],
-        taxvalue: values["taxvalue"],
-        valuetype_lbl: values["valuetype_lbl"],
-        parent_lbl: values["parent_lbl"],
-        applicable: values["applicable"],
-        description: values["description"],
+        operator: values["operator"],
+        operator_code: values["operator_code"],
+        amount: values["amount"],
+        mrp: values["mrp"],
+        expiry_date: values["expiry_date"],
+        bouquets: values["bouquets"],
+        applied_on: values["applied_on"],
+        recharge_period: values["recharge_period"],
         created_at: new Date(),
         created_by: values["created_by"],
       };
-      console.log("newTaxList:" + newTaxList);
+      console.log("newPromoVoucher:" + newPromoVoucher);
       // save new user
-      dispatch(onAddNewTaxList(newTaxList));
+      dispatch(onAddNewPromoVoucher(newPromoVoucher));
       validation.resetForm();
       toggle();
     },
@@ -88,8 +88,7 @@ const AddNewTaxList = (props) => {
       tabIndex="-1"
       toggle={toggle}
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4">Add New Tax</ModalHeader>
+      <ModalHeader tag="h4">Generate Promo Voucher</ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -102,66 +101,67 @@ const AddNewTaxList = (props) => {
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
-                  Title<span style={{ color: "red" }}>*</span>
+                  LCO<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="name"
-                  type="text"
-                  placeholder="Enter title"
-                  // className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.name || ""}
-                ></Input>
-                {validation.touched.name && validation.errors.name ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.name}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col sm="4">
-              <div className="mb-3">
-                <Label className="form-label">
-                  Code<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="code"
-                  type="text"
-                  placeholder="Enter code"
-                  // className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.code || ""}
-                ></Input>
-                {validation.touched.code && validation.errors.code ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.code}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col sm="4">
-              <div className="mb-3">
-                <Label className="form-label">
-                  Status<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="status_lbl"
+                  name="operator"
                   type="select"
-                  placeholder="Select Status"
+                  placeholder="Select Ico"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.status_lbl || ""}
+                  value={validation.values.operator || ""}
                 >
-                  <option value="101">Select Status</option>
-                  <option value="102">Active</option>
-                  <option value="103">In-Active</option>
+                  <option value="101">Sri Hari Satlinks</option>
+                  <option value="102">Sri Cable Network</option>
+                  <option value="103">Sri Deepa Cable Network</option>
                 </Input>
-                {validation.touched.status_lbl && validation.errors.status_lbl ? (
+                {validation.touched.operator && validation.errors.operator ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.status_lbl}
+                    {validation.errors.operator}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col sm="4">
+              <div className="mb-3">
+                <Label className="form-label">
+                  Voucher Count<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="operator_code"
+                  type="text"
+                  placeholder="Enter Voucher count"
+                  // className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.operator_code || ""}
+                ></Input>
+                {validation.touched.operator_code && validation.errors.operator_code ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.operator_code}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col sm="4">
+              <div className="mb-3">
+                <Label className="form-label">
+                  Voucher Amount<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="amount"
+                  type="text"
+                  placeholder="Enter voucher amount"
+                  // className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.amount || ""}
+                >
+                </Input>
+                {validation.touched.amount && validation.errors.amount ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.amount}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -171,20 +171,20 @@ const AddNewTaxList = (props) => {
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
-                  Tax Value<span style={{ color: "red" }}>*</span>
+                  Voucher MRP<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="taxvalue"
+                  name="mrp"
                   type="text"
-                  placeholder="Enter tax value"
+                  placeholder="Enter voucher mrp"
                   // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.taxvalue || ""}
+                  value={validation.values.mrp || ""}
                 ></Input>
-                {validation.touched.taxvalue && validation.errors.taxvalue ? (
+                {validation.touched.mrp && validation.errors.mrp ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.taxvalue}
+                    {validation.errors.mrp}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -192,24 +192,21 @@ const AddNewTaxList = (props) => {
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
-                  Value In<span style={{ color: "red" }}>*</span>
+                  Expiry Date<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="valuetype_lbl"
-                  type="select"
-                  placeholder="Select value-in"
-                  className="form-select"
+                  name="expiry_date"
+                  type="text"
+                  placeholder="Select expiry date"
+                  // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.valuetype_lbl || ""}
+                  value={validation.values.expiry_date || ""}
                 >
-                  <option value="101">No Parent</option>
-                  <option value="102">SGST</option>
-                  <option value="103">CGST</option>
                 </Input>
-                {validation.touched.valuetype_lbl && validation.errors.valuetype_lbl ? (
+                {validation.touched.expiry_date && validation.errors.expiry_date ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.valuetype_lbl}
+                    {validation.errors.expiry_date}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -217,12 +214,12 @@ const AddNewTaxList = (props) => {
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
-                  TaxOn Tax
+                  Bouquet List
                 </Label>
                 <Input
                   name="parent_lbl"
-                  type="select"
-                  placeholder="Select value-in"
+                  type="text"
+                  placeholder="Select bouquet"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
@@ -334,9 +331,9 @@ const AddNewTaxList = (props) => {
   );
 };
 
-AddNewTaxList.propTypes = {
+AddNewPromoVoucher.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default AddNewTaxList;
+export default AddNewPromoVoucher;
