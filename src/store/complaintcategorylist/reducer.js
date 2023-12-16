@@ -1,6 +1,8 @@
 import {
   GET_COMPLAINTCATEGORY_SUCCESS,
   GET_COMPLAINTCATEGORY_FAIL,
+  ADD_COMPLAINTCATEGORY_SUCCESS,
+  ADD_COMPLAINTCATEGORY_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -24,6 +26,21 @@ const ComplaintCategory = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
       };
+
+    case ADD_COMPLAINTCATEGORY_SUCCESS:
+      return {
+        ...state,
+        complaintcategory: [
+          ...state.complaintcategory,
+          action.payload,
+        ],
+      };
+
+    case ADD_COMPLAINTCATEGORY_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      }; wawa
 
     default:
       return state;
