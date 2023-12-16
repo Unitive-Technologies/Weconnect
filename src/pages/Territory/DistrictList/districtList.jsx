@@ -493,7 +493,7 @@ const DistrictList = (props) => {
                       columns={columns}
                       data={districts}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleDistrictClick={() => setShowAddDistrict(true)}

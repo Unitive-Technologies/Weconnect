@@ -356,7 +356,7 @@ const SublocationList = (props) => {
                       columns={columns}
                       data={subloc}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleSubLocationClick={() => setShowAddSubLocation(true)}

@@ -368,7 +368,7 @@ const CityList = (props) => {
                       columns={columns}
                       data={cits}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleUserClick={() => setShowAddCity(true)}

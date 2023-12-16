@@ -335,7 +335,7 @@ const LocationList = (props) => {
                       columns={columns}
                       data={locations}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleLocationClick={() => setShowAddLocation(true)}

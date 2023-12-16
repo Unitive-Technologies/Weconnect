@@ -343,7 +343,7 @@ const ConnectionSchemeList = (props) => {
                       columns={columns}
                       data={connectscheme}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleUserClick={() =>

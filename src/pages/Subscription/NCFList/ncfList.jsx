@@ -364,7 +364,7 @@ const NCFList = (props) => {
                       columns={columns}
                       data={ncfl}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleUserClick={() => setShowAddNcf(true)}
