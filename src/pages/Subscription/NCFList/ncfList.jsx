@@ -20,10 +20,11 @@ import ViewNcf from "./ViewNcf";
 import AddNewNcf from "./AddNewNcf";
 import BulkAssigntoOperator from "./BulkAssigntoOperator";
 import BulkRemovalFromOperator from "./BulkRemovalFromOperator";
+import { useTable, useRowSelect } from "react-table";
 
 const NCFList = (props) => {
   //meta title
-  document.title = "NCF List | VDigital";
+  document.title = "NCF  | VDigital";
 
   const dispatch = useDispatch();
 
@@ -46,6 +47,7 @@ const NCFList = (props) => {
   const [showViewNcf, setShowViewNcf] = useState(false);
   const [viewNcfData, setViewNcfData] = useState({});
   const [showBulkRemoval, setShowBulkRemoval] = useState(false);
+  const [selectedRowData, setSelectedRowData] = useState([]);
 
   const toggleViewNcf = (userData) => {
     console.log("User Data: ", userData);
@@ -349,7 +351,7 @@ const NCFList = (props) => {
       />
       <div className="page-content">
         <Container fluid>
-          <Breadcrumbs title="NCF" breadcrumbItem="NCF List" />
+          <Breadcrumbs title="NCF" breadcrumbItem="NCF" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
