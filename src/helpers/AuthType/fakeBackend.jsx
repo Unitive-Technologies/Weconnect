@@ -1088,6 +1088,19 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onPost(url.ADD_NEW_COMPLAINTCATEGORY).reply((complaintcate) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (complaintcate && complaintcate.data) {
+          // Passing fake JSON data as response
+          resolve([200, complaintcate.data]);
+        } else {
+          reject([400, "Cannot add complaint cate list"]);
+        }
+      });
+    });
+  });
+
   mock.onPost(url.ADD_NEW_REASON).reply((taxes) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

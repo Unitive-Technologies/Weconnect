@@ -332,6 +332,9 @@ export const addConnectionScheme = (connectionscheme) =>
   post(url.ADD_CONNECTIONSCHEME, connectionscheme);
 
 export const getComplaintCategory = () => get(url.GET_COMPLAINTCATEGORY);
+export const addComplaintCategory = (complaintcate) =>
+  post(url.ADD_NEW_COMPLAINTCATEGORY, complaintcate);
+
 export const getComplaintSubCategory = () => get(url.GET_COMPLAINTSUBCATEGORY);
 export const addNewComplaintCategory = (complaint) =>
   post(url.ADD_NEW_COMPLAINTCATEGORY, complaint);

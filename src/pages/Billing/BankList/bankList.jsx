@@ -355,7 +355,7 @@ const BankList = (props) => {
                       columns={columns}
                       data={banks}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleAddNewBankList={() => setShowAddNewBankList(true)}
