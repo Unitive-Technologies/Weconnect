@@ -333,6 +333,8 @@ export const addConnectionScheme = (connectionscheme) =>
 
 export const getComplaintCategory = () => get(url.GET_COMPLAINTCATEGORY);
 export const getComplaintSubCategory = () => get(url.GET_COMPLAINTSUBCATEGORY);
+export const addNewComplaintCategory = (complaint) =>
+  post(url.ADD_NEW_COMPLAINTCATEGORY, complaint);
 export const getConfigurationUploadLogs = () =>
   get(url.GET_CONFIGURATIONUPLOADLOGS);
 export const getCompanyList = () => get(url.GET_COMPANYLIST);

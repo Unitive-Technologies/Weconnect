@@ -875,6 +875,18 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onPost(url.ADD_NEW_COMPLAINTCATEGORY).reply((complaint) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (complaint && complaint.data) {
+          // Passing fake JSON data as response
+          resolve([200, complaint.data]);
+        } else {
+          reject([400, "Cannot add Complaint Category"]);
+        }
+      });
+    });
+  });
   mock
     .onPost(url.ADD_NEW_SCHEDULECUSTOMERNOTIFICATION)
     .reply((schCusNotification) => {

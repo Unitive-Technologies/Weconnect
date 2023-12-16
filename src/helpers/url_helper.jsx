@@ -114,6 +114,7 @@ export const ADD_CONNECTIONSCHEME = "/add/connectionscheme";
 
 export const GET_COMPLAINTCATEGORY = "/complaintcategory";
 export const GET_COMPLAINTSUBCATEGORY = "/complaintsubcategory";
+export const ADD_NEW_COMPLAINTCATEGORY = "/post/complaint";
 export const GET_CONFIGURATIONUPLOADLOGS = "/configurationuploadlogs";
 export const GET_TAX = "/tax";
 export const ADD_NEW_TAXLIST = "/add/tax";
