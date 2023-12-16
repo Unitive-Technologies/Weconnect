@@ -357,7 +357,7 @@ const PromoVoucherList = (props) => {
                       columns={columns}
                       data={provoucher}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
                       customPageSize={8}

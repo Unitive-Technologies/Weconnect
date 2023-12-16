@@ -66,6 +66,7 @@ function* onAddNewComplaintCategory({ payload: complaintcategory }) {
 
 function* complaintCategorySaga() {
   yield takeEvery(GET_COMPLAINTCATEGORY, fetchComplaintCategory);
+  yield takeEvery(ADD_NEW_COMPLAINTCATEGORY, onAddNewComplaintCategory);
 }
 
 export default complaintCategorySaga;

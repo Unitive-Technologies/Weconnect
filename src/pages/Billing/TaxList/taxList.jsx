@@ -230,18 +230,6 @@ const TaxList = (props) => {
     }
   }, [dispatch, taxes]);
 
-  // useEffect(() => {
-  //   setContact(users);
-  //   setIsEdit(false);
-  // }, [users]);
-
-  // useEffect(() => {
-  //   if (!isEmpty(users) && !!isEdit) {
-  //     setContact(users);
-  //     setIsEdit(false);
-  //   }
-  // }, [users]);
-
   const toggle = () => {
     setShowAddNewTaxList(!showAddNewTaxList);
   };
@@ -342,7 +330,7 @@ const TaxList = (props) => {
                       columns={columns}
                       data={taxes}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleAddNewTaxList={() => setShowAddNewTaxList(true)}
