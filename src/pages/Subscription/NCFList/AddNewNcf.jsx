@@ -15,6 +15,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNcf as onAddNcf } from "/src/store/ncflist/actions";
 import { useSelector, useDispatch } from "react-redux";
+import AddMultipleNcf from "./AddMultipleNcf";
 
 const AddNewNcf = (props) => {
   const { isOpen, toggle } = props;
@@ -562,6 +563,7 @@ const AddNewNcf = (props) => {
                   ) : null}
                 </div>
               </Col>
+              <AddMultipleNcf />
             </Row>
           </Row>
           <Row>
