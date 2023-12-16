@@ -946,7 +946,7 @@ const AddRegionalOfficeModal = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    handleAddAppAdBanner();
+                    handleAddRegionalOffice();
                   }}
                 >
                   Cancel

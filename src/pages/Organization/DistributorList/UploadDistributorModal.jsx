@@ -4,30 +4,20 @@ import {
   Card,
   CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
   Label,
-  FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
-  CardTitle,
   CardSubtitle,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
-import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const UploadDistributorModal = (props) => {
-  const { isOpen, toggle } = props;
-  //   console.log("user in viewuser modal:" + JSON.stringify(user));
-  const dispatch = useDispatch();
+  const { isOpen, handleUploadDistributor } = props;
 
   const [selectedFiles, setselectedFiles] = useState([]);
 
@@ -59,16 +49,14 @@ const UploadDistributorModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleUploadDistributor}
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader toggle={toggle} tag="h4">
+      <ModalHeader toggle={handleUploadDistributor} tag="h4">
         Upload Regional Office
       </ModalHeader>
       <ModalBody>
         <Card>
           <CardBody>
-            {/* <CardTitle>Dropzone</CardTitle> */}
             <div className="text-left mb-4 r-0" style={{ marginLeft: "78%" }}>
               <button
                 type="button"
@@ -159,10 +147,25 @@ const UploadDistributorModal = (props) => {
               </div>
             </Form>
 
-            <div className="text-center mt-4">
-              <button type="button" className="btn btn-primary ">
-                Upload File
-              </button>
+            <div className="text-center mt-4 ">
+              <div
+                style={{
+                  display: "flex",
+                  gap: 5,
+                  textAlign: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <button type="button" className="btn btn-primary mr-2 ">
+                  Upload File
+                </button>
+                <button type="button" className="btn btn-primary ml-2 ">
+                  Reset
+                </button>
+                <button type="button" className="btn btn-primary ">
+                  Cancel
+                </button>
+              </div>
             </div>
           </CardBody>
         </Card>
