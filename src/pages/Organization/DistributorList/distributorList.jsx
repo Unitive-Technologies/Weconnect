@@ -353,11 +353,7 @@ const DistributorList = (props) => {
                       isGlobalFilter={true}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
-                      isAddDistributor={true}
-                      handleAddDistributor={() => setShowDistributor(true)}
-                      handleUploadDistributor={() =>
-                        setShowUploadDistributor(true)
-                      }
+                      isShowTableActionButtons={true}
                       tableActions={getTableActions()}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"

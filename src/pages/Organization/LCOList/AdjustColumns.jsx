@@ -1,20 +1,34 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
 import {
   Card,
   CardBody,
   Col,
+  Button,
+  Container,
   Row,
   Modal,
   ModalHeader,
+  ModalFooter,
   ModalBody,
+  Label,
+  FormFeedback,
+  UncontrolledTooltip,
+  Input,
+  Form,
+  CardTitle,
+  CardSubtitle,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import Dropzone from "react-dropzone";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+import { useSelector, useDispatch } from "react-redux";
 
-const SettingsModal = (props) => {
-  const { isOpen, handleSettings } = props;
-
+const AdjustColumns = (props) => {
+  const { isOpen, handleAdjustColumn } = props;
+  const dispatch = useDispatch();
   const lco = [];
   const columns = useMemo(
     () => [
@@ -378,28 +392,14 @@ const SettingsModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleSettings}
+      toggle={handleAdjustColumn}
     >
-      <ModalHeader toggle={handleSettings} tag="h4">
-        Bulk Operator Settings
+      <ModalHeader toggle={handleAdjustColumn} tag="h4">
+        Adjust Columns & Generate LCO List
       </ModalHeader>
       <ModalBody>
         <Card>
           <CardBody>
-            {/* {console.log("user in bulk:" + JSON.stringify(lco))} */}
-
-            <TableContainer
-              isPagination={true}
-              columns={columns}
-              data={lco}
-              //   isGlobalFilter={true}
-              isShowingPageLength={true}
-              customPageSize={50}
-              tableClass="table align-middle table-nowrap table-hover"
-              theadClass="table-light"
-              paginationDiv="col-sm-12 col-md-7"
-              pagination="pagination pagination-rounded justify-content-end mt-4"
-            />
             <div
               style={{
                 // margin: "20px 0px",
@@ -414,7 +414,7 @@ const SettingsModal = (props) => {
               }}
             >
               {" "}
-              <h5 style={{}}>Selected Operators</h5>
+              <h5 style={{}}>Adjust Columns</h5>
             </div>
             <Row
               style={{
@@ -424,58 +424,57 @@ const SettingsModal = (props) => {
                 margin: "30px 0px",
               }}
             >
-              <Col lg={12}>
-                <TableContainer
-                  isPagination={true}
-                  columns={selOperColumn}
-                  data={lco}
-                  //   isGlobalFilter={true}
-                  isShowingPageLength={true}
-                  customPageSize={50}
-                  tableClass="table align-middle table-nowrap table-hover"
-                  theadClass="table-light"
-                  paginationDiv="col-sm-12 col-md-7"
-                  pagination="pagination pagination-rounded justify-content-end mt-4"
-                />
+              <Col lg={10}>
+                <div className="mb-3">
+                  <Label className="form-label">State</Label>
+                  <Input
+                    name="state_lbl"
+                    type="select"
+                    placeholder="Select State"
+                    className="form-select"
+                    // onChange={validation.handleChange}
+                    // onBlur={validation.handleBlur}
+                    // value={validation.values.state_lbl || ""}
+                  >
+                    <option value="">Select Columns</option>
+                    <option value="1">Tamilnadu</option>
+                    <option value="2">Kerala</option>
+                    <option value="3">Assam</option>
+                    <option value="4">Karnataka</option>
+                  </Input>
+                  {/* {validation.touched.state_lbl &&
+                  validation.errors.state_lbl ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.state_lbl}
+                    </FormFeedback>
+                  ) : null} */}
+                </div>
+              </Col>
+              <Col lg={2}>
+                <div className="form-check form-switch form-switch-lg mb-3">
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                    id="customSwitchsizelg"
+                    defaultChecked
+                  />
+                  <label
+                    className="form-check-label"
+                    htmlFor="customSwitchsizelg"
+                  >
+                    Select All
+                  </label>
+                </div>
               </Col>
             </Row>
-            <div
-              style={{
-                // margin: "20px 0px",
-                marginTop: "-10px",
-                marginBottom: "-18px",
-                zIndex: 12000,
-                backgroundColor: "#fff",
-                width: "fit-content",
-                marginLeft: "40%",
-                position: "absolute",
-                padding: "0px 10px",
-              }}
-            >
-              {" "}
-              <h5 style={{}}>Operator Settings</h5>
-            </div>
-            <Row
-              style={{
-                position: "relative",
-                border: "1px solid #ced4da",
-                padding: "20px 0px",
-                margin: "30px 0px",
-              }}
-            >
-              <Col lg={12}>
-                <TableContainer
-                  isPagination={true}
-                  columns={operSettingColumn}
-                  data={lco}
-                  //   isGlobalFilter={true}
-                  isShowingPageLength={true}
-                  customPageSize={50}
-                  tableClass="table align-middle table-nowrap table-hover"
-                  theadClass="table-light"
-                  paginationDiv="col-sm-12 col-md-7"
-                  pagination="pagination pagination-rounded justify-content-end mt-4"
-                />
+
+            <Row>
+              {/* <Col lg={9}></Col> */}
+              <Col lg={3}>
+                <Link className="btn mb-2 me-2">
+                  <i className="mdi mdi-download me-1" />
+                  <b>Generate LCO List</b>
+                </Link>
               </Col>
             </Row>
             <div className="text-center mt-4 ">
@@ -487,11 +486,12 @@ const SettingsModal = (props) => {
                   justifyContent: "center",
                 }}
               >
-                <button type="button" className="btn btn-primary ml-2 ">
-                  Save
-                </button>
-                <button type="button" className="btn btn-primary ">
-                  Cancel
+                <button
+                  type="button"
+                  className="btn btn-primary "
+                  onClick={handleAdjustColumn}
+                >
+                  Close
                 </button>
               </div>
             </div>
@@ -502,9 +502,9 @@ const SettingsModal = (props) => {
   );
 };
 
-SettingsModal.propTypes = {
+AdjustColumns.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default SettingsModal;
+export default AdjustColumns;

@@ -42,6 +42,7 @@ import UploadModal from "./UploadModal";
 import BulkUpdateModal from "./BulkUpdateModal";
 import UploadCreditModal from "./UploadCreditModal";
 import SettingsModal from "./SettingsModal";
+import AdjustColumns from "./AdjustColumns";
 
 const LCOList = (props) => {
   //meta title
@@ -125,6 +126,7 @@ const LCOList = (props) => {
   const [showBulkUpdateLco, setShowBulkUpdateLco] = useState(false);
   const [showUploadCredit, setShowUploadCredit] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showAdjustColumn, setShowAdjustColumn] = useState(false);
   const columns = useMemo(
     () => [
       {
@@ -495,9 +497,12 @@ const LCOList = (props) => {
       />
       <SettingsModal
         isOpen={showSettings}
-        toggle={() => setShowSettings(false)}
+        handleSettings={() => setShowSettings(false)}
       />
-
+      <AdjustColumns
+        isOpen={showAdjustColumn}
+        handleAdjustColumn={() => setShowAdjustColumn(false)}
+      />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -515,11 +520,12 @@ const LCOList = (props) => {
                       columns={columns}
                       data={lcos}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
+                      isAdjustColumns={true}
                       // iscustomPageSizeOptions={true}
                       tableActions={getTableActions()}
-                      handleAddRegionalOffice={() => setShowLco(true)}
+                      handleAdjustColumn={() => setShowAdjustColumn(true)}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

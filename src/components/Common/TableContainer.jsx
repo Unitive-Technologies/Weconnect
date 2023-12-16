@@ -168,6 +168,8 @@ const TableContainer = ({
   isGlobalFilter,
   isTransactionDate,
   isShowTableActionButtons,
+  isAdjustColumns,
+  handleAdjustColumn,
   isAddOptions,
   isAddUserList,
   isAddRegionalOffice,
@@ -307,29 +309,7 @@ const TableContainer = ({
           {isShowTableActionButtons && (
             <TableActionButtons tableActions={tableActions} />
           )}
-          {isAddUserList && <TableActionButtons tableActions={tableActions} />}
-          {isAddRegionalOffice && (
-            <TableActionButtons tableActions={tableActions} />
-          )}
-          {isAddDistributor && (
-            <TableActionButtons tableActions={tableActions} />
-          )}
 
-          {isAddGpPolicyList && (
-            <Col sm="12">
-              <div className="text-sm-end">
-                <Button
-                  type="button"
-                  color="primary"
-                  className="btn mb-2 me-2"
-                  onClick={handleGroupPolicyClick}
-                >
-                  <i className="mdi mdi-plus me-1" />
-                  Create Group Policy
-                </Button>
-              </div>
-            </Col>
-          )}
           {isAddBroadCaster && (
             <Col sm="12">
               <div className="text-sm-end">
@@ -437,7 +417,20 @@ const TableContainer = ({
           )}
         </div>
       </Row>
-
+      <Row>
+        {isAdjustColumns && (
+          <div className="text-sm-end">
+            <Link
+              color="primary"
+              className="btn mb-2 me-2"
+              onClick={handleAdjustColumn}
+            >
+              <i className="mdi mdi-download me-1" />
+              Adjust Columns & Generate LCO List
+            </Link>
+          </div>
+        )}
+      </Row>
       <div className="table-responsive react-table">
         <Table {...getTableProps()} className={tableClass}>
           <thead className={theadClass}>

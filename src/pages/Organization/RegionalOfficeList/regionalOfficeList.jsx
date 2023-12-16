@@ -315,15 +315,10 @@ const RegionalOfficeList = (props) => {
                       columns={columns}
                       data={regOff}
                       isGlobalFilter={true}
-                      isAddRegionalOffice={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
-                      handleAddRegionalOffice={() =>
-                        setShowRegionalOffice(true)
-                      }
-                      handleUploadRegionalOffice={() =>
-                        setShowUploadRegionalOffice(true)
-                      }
+
                       tableActions={getTableActions()}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
