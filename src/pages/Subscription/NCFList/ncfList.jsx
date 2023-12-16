@@ -68,6 +68,18 @@ const NCFList = (props) => {
   const columns = useMemo(
     () => [
       {
+        Header: "*",
+        disableFilters: true,
+        filterable: true,
+        Cell: () => {
+          return (
+            <>
+              <input type="checkbox" />
+            </>
+          );
+        },
+      },
+      {
         Header: "#",
         // accessor: "name",
         disableFilters: true,
