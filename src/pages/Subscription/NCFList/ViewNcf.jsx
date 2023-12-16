@@ -1,24 +1,19 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
-import { updateUser as onUpdateUser } from "/src/store/users/actions";
+import { useDispatch } from "react-redux";
 import AddMultipleNcf from "./AddMultipleNcf";
 
 const ViewNcf = (props) => {
@@ -81,7 +76,6 @@ const ViewNcf = (props) => {
         created_by: values["created_by"],
       };
       console.log("Update NCF:" + JSON.stringify(updateNcf));
-      // save new user
       dispatch(onAddNcf(updateNcf));
       validation.resetForm();
       toggle();
