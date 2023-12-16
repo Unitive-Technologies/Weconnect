@@ -328,6 +328,9 @@ export const getBouquet = () => get(url.GET_BOUQUET);
 export const addBouquet = (bouquet) => post(url.ADD_BOUQUET, bouquet);
 
 export const getConnectionScheme = () => get(url.GET_CONNECTIONSCHEME);
+export const addConnectionScheme = (connectionscheme) =>
+  post(url.ADD_CONNECTIONSCHEME, connectionscheme);
+
 export const getComplaintCategory = () => get(url.GET_COMPLAINTCATEGORY);
 export const getComplaintSubCategory = () => get(url.GET_COMPLAINTSUBCATEGORY);
 export const getConfigurationUploadLogs = () =>

@@ -1,11 +1,19 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_CONNECTIONSCHEME } from "./actionTypes";
+import { GET_CONNECTIONSCHEME, ADD_CONNECTIONSCHEME } from "./actionTypes";
 
-import { getConnectionSchemeSuccess, getConnectionSchemeFail } from "./actions";
+import {
+  getConnectionSchemeSuccess,
+  getConnectionSchemeFail,
+  addConnectionSchemeSuccess,
+  addConnectionSchemeFail,
+} from "./actions";
 
 //Include Both Helper File with needed methods
-import { getConnectionScheme } from "../../helpers/fakebackend_helper";
+import {
+  getConnectionScheme,
+  addConnectionScheme,
+} from "../../helpers/fakebackend_helper";
 
 const convertConnectionSchemeListObject = (connectionschemeList) => {
   // Notification Template has more data than what we need, we need to convert each of the Notification Template user object in the list with needed colums of the table
@@ -43,8 +51,18 @@ function* fetchConnectionScheme() {
   }
 }
 
+function* onAddNewConnectionScheme({ payload: connectionscheme }) {
+  try {
+    const response = yield call(addConnectionScheme, connectionscheme);
+    yield put(addConnectionSchemeSuccess(response));
+  } catch (error) {
+    yield put(addConnectionSchemeFail(error));
+  }
+}
+
 function* connectionSchemeSaga() {
   yield takeEvery(GET_CONNECTIONSCHEME, fetchConnectionScheme);
+  yield takeEvery(ADD_CONNECTIONSCHEME, onAddNewConnectionScheme);
 }
 
 export default connectionSchemeSaga;

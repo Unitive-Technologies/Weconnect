@@ -1,6 +1,8 @@
 import {
   GET_CONNECTIONSCHEME_SUCCESS,
   GET_CONNECTIONSCHEME_FAIL,
+  ADD_CONNECTIONSCHEME_SUCCESS,
+  ADD_CONNECTIONSCHEME_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -25,6 +27,17 @@ const ConnectionScheme = (state = INIT_STATE, action) => {
         error: action.payload,
       };
 
+    case ADD_CONNECTIONSCHEME_SUCCESS:
+      return {
+        ...state,
+        connectionscheme: [state.connectionscheme, action.payload],
+      };
+
+    case ADD_CONNECTIONSCHEME_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
     default:
       return state;
   }

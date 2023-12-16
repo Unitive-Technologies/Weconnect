@@ -110,6 +110,8 @@ export const GET_BOUQUET = "/bouquet";
 export const ADD_BOUQUET = "/add/bouquet";
 
 export const GET_CONNECTIONSCHEME = "/connectionscheme";
+export const ADD_CONNECTIONSCHEME = "/add/connectionscheme";
+
 export const GET_COMPLAINTCATEGORY = "/complaintcategory";
 export const GET_COMPLAINTSUBCATEGORY = "/complaintsubcategory";
 export const GET_CONFIGURATIONUPLOADLOGS = "/configurationuploadlogs";

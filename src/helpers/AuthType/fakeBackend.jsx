@@ -1258,6 +1258,19 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onPost(url.ADD_CONNECTIONSCHEME).reply((connectionscheme) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (connectionscheme && connectionscheme.data) {
+          // Passing fake JSON data as response
+          resolve([200, connectionscheme.data]);
+        } else {
+          reject([400, "Cannot add connection scheme list"]);
+        }
+      });
+    });
+  });
+
   mock.onPut(url.UPDATE_DISTRIBUTOR).reply((distributor) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
