@@ -24,7 +24,7 @@ import TapsOfLco from "./TapsOfLco";
 import EditLcoModal from "./EditLcoModal";
 
 const ViewLcoModal = (props) => {
-  const { isOpen, toggle, lcoData, setViewLco } = props;
+  const { isOpen, handleViewLco, lcoData, setViewLco } = props;
   console.log("lco in view modal:" + JSON.stringify(lcoData));
   const dispatch = useDispatch();
   const [showEditLco, setShowEditLco] = useState(false);
@@ -114,7 +114,7 @@ const ViewLcoModal = (props) => {
       // update user
       dispatch(onUpdateUser(updateRegionalOffice));
       validation.resetForm();
-      toggle();
+      handleViewLco();
     },
   });
 
@@ -157,11 +157,11 @@ const ViewLcoModal = (props) => {
         centered={true}
         className="exampleModal"
         tabIndex="-1"
-        toggle={toggle}
+        toggle={handleViewLco}
       >
         {!showEditLco ? (
           <>
-            <ModalHeader toggle={toggle} tag="h4">
+            <ModalHeader toggle={handleViewLco} tag="h4">
               <h4>View - {lcoData.name}</h4>
             </ModalHeader>
             <Link
@@ -410,7 +410,6 @@ const ViewLcoModal = (props) => {
             closeEditModal={() => setShowEditLco(false)}
           />
         )}
-        {/* </Modal> */}
       </Modal>
     </>
   );

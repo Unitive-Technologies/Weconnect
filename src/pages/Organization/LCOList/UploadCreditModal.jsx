@@ -1,32 +1,26 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { createSelector } from "reselect";
 import {
   Card,
   CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
   Label,
-  FormFeedback,
-  UncontrolledTooltip,
-  Input,
   Form,
-  CardTitle,
   CardSubtitle,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
-import * as Yup from "yup";
-import { useFormik } from "formik";
+
 import { useSelector, useDispatch } from "react-redux";
-// import { updateUser as onUpdateUser } from "/src/store/users/actions";
 import { getDistributors as onGetDistributors } from "/src/store/distributor/actions";
+
 const UploadCreditModal = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleUploadCredit } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
 
@@ -76,16 +70,14 @@ const UploadCreditModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleUploadCredit}
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader toggle={toggle} tag="h4">
+      <ModalHeader toggle={handleUploadCredit} tag="h4">
         Upload Credit
       </ModalHeader>
       <ModalBody>
         <Card>
           <CardBody>
-            {/* <CardTitle>Dropzone</CardTitle> */}
             <div className="text-left mb-4 r-0" style={{ marginLeft: "78%" }}>
               <button
                 type="button"
@@ -195,7 +187,6 @@ const UploadCreditModal = (props) => {
           </CardBody>
         </Card>
       </ModalBody>
-      {/* </Modal> */}
     </Modal>
   );
 };

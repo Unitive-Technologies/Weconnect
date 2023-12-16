@@ -26,7 +26,7 @@ import { useSelector, useDispatch } from "react-redux";
 // import { updateUser as onUpdateUser } from "/src/store/users/actions";
 import { getDistributors as onGetDistributors } from "/src/store/distributor/actions";
 const UploadModal = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleUploadLco } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
 
@@ -76,10 +76,10 @@ const UploadModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleUploadLco}
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader toggle={toggle} tag="h4">
+      <ModalHeader toggle={handleUploadLco} tag="h4">
         Upload LCO
       </ModalHeader>
       <ModalBody>

@@ -1,21 +1,13 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
 import Spinners from "../../../components/Common/Spinner";
 import { Card, CardBody, Col, Container, Row } from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 
-import {
-  getUsers as onGetUsers,
-  addNewUser as onAddNewUser,
-  updateUser as onUpdateUser,
-  deleteUser as onDeleteUser,
-} from "/src/store/users/actions";
 import { getDistributors as onGetDistributors } from "/src/store/actions";
 
 //redux
@@ -25,12 +17,14 @@ import { ToastContainer } from "react-toastify";
 import ViewDistributorModal from "./ViewDistributorModal";
 import AddDistributorModal from "./AddDistributorModal";
 import UploadDistributorModal from "./UploadDistributorModal";
+import SettingModal from "./SettingModal";
 
 const DistributorList = (props) => {
   //meta title
   document.title = "Distributors | VDigital";
 
   const dispatch = useDispatch();
+  const [showSetting, setShowSetting] = useState(false);
 
   const selectDistributorsState = (state) => state.distributors;
   const DistributorsProperties = createSelector(
@@ -312,7 +306,7 @@ const DistributorList = (props) => {
       },
       {
         name: "Settings",
-        action: setShowUploadDistributor,
+        action: setShowSetting,
         type: "normal",
         icon: "upload",
       },
@@ -336,6 +330,10 @@ const DistributorList = (props) => {
       <UploadDistributorModal
         isOpen={showUploadDistributor}
         handleUploadDistributor={handleUploadDistributor}
+      />
+      <SettingModal
+        isOpen={showSetting}
+        handleShowSetting={() => setShowSetting(false)}
       />
       <div className="page-content">
         <Container fluid>

@@ -26,7 +26,7 @@ import { useSelector, useDispatch } from "react-redux";
 // import { updateUser as onUpdateUser } from "/src/store/users/actions";
 import { getDistributors as onGetDistributors } from "/src/store/distributor/actions";
 const BulkUpdateModal = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleBulkUpdateLco } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
 
@@ -76,10 +76,10 @@ const BulkUpdateModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleBulkUpdateLco}
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader toggle={toggle} tag="h4">
+      <ModalHeader toggle={handleBulkUpdateLco} tag="h4">
         Bulk Update LCO
       </ModalHeader>
       <ModalBody>

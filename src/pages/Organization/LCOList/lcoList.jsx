@@ -158,7 +158,7 @@ const LCOList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const lcoData = cellProps.row.original;
-                  toggleViewModal(lcoData);
+                  handleViewLco(lcoData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -406,7 +406,7 @@ const LCOList = (props) => {
 
   const [lcoData, setLcoData] = useState({});
 
-  const toggleViewModal = (lco) => {
+  const handleViewLco = (lco) => {
     setViewLco(!viewLco);
     setLcoData(lco);
   };
@@ -470,28 +470,28 @@ const LCOList = (props) => {
     <React.Fragment>
       <ViewLcoModal
         isOpen={viewLco}
-        toggle={toggleViewModal}
+        handleViewLco={handleViewLco}
         lcoData={lcoData}
         setViewLco={setViewLco}
       />
 
-      <AddLcoModal isOpen={showLco} toggle={handleAddLco} />
+      <AddLcoModal isOpen={showLco} handleAddLco={handleAddLco} />
       <BulkAddCreditModal
         isOpen={showBulkCredit}
-        toggle={() => setShowBulkCredit(false)}
+        handleBulkCredit={() => setShowBulkCredit(false)}
         lco={lcoData}
       />
       <UploadModal
         isOpen={showUploadLco}
-        toggle={() => setShowUploadLco(false)}
+        handleUploadLco={() => setShowUploadLco(false)}
       />
       <BulkUpdateModal
         isOpen={showBulkUpdateLco}
-        toggle={() => setShowBulkUpdateLco(false)}
+        handleBulkUpdateLco={() => setShowBulkUpdateLco(false)}
       />
       <UploadCreditModal
         isOpen={showUploadCredit}
-        toggle={() => setShowUploadCredit(false)}
+        handleUploadCredit={() => setShowUploadCredit(false)}
       />
       <SettingsModal
         isOpen={showSettings}

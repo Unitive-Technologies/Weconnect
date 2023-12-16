@@ -1,27 +1,24 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
+  ModalFooter,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewRegionalOffice as onAddNewRegionalOffice } from "/src/store/regionaloffice/actions";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const AddLcoModal = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleAddLco } = props;
   const dispatch = useDispatch();
   const [user, setUser] = useState();
 
@@ -108,7 +105,7 @@ const AddLcoModal = (props) => {
       // save new user
       dispatch(onAddNewRegionalOffice(newRegionalOffice));
       validation.resetForm();
-      toggle();
+      handleAddLco();
     },
   });
   return (
@@ -120,9 +117,9 @@ const AddLcoModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleAddLco}
     >
-      <ModalHeader tag="h4" toggle={toggle}>
+      <ModalHeader tag="h4" toggle={handleAddLco}>
         Add New Lco
       </ModalHeader>
       <ModalBody>
@@ -933,11 +930,29 @@ const AddLcoModal = (props) => {
           </Row>
           <Row>
             <Col>
-              <div className="text-end">
+              <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
                   Create
                 </button>
-              </div>
+                <button
+                  type="reset"
+                  className="btn btn-warning"
+                  onClick={() => validation.resetForm()}
+                >
+                  Reset
+                </button>
+
+                <button
+                  type="button"
+                  className="btn btn-outline-danger"
+                  onClick={() => {
+                    validation.resetForm();
+                    handleAddLco();
+                  }}
+                >
+                  Cancel
+                </button>
+              </ModalFooter>
             </Col>
           </Row>
         </Form>

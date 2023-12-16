@@ -52,7 +52,7 @@ const UploadDistributorModal = (props) => {
       toggle={handleUploadDistributor}
     >
       <ModalHeader toggle={handleUploadDistributor} tag="h4">
-        Upload Regional Office
+        Upload Distributor
       </ModalHeader>
       <ModalBody>
         <Card>
@@ -162,7 +162,11 @@ const UploadDistributorModal = (props) => {
                 <button type="button" className="btn btn-primary ml-2 ">
                   Reset
                 </button>
-                <button type="button" className="btn btn-primary ">
+                <button
+                  type="button"
+                  className="btn btn-primary "
+                  onClick={handleUploadDistributor}
+                >
                   Cancel
                 </button>
               </div>
