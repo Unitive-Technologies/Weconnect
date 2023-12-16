@@ -1245,6 +1245,19 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onPost(url.ADD_BOUQUET).reply((bouquet) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (bouquet && bouquet.data) {
+          // Passing fake JSON data as response
+          resolve([200, bouquet.data]);
+        } else {
+          reject([400, "Cannot add Bouquet list"]);
+        }
+      });
+    });
+  });
+
   mock.onPut(url.UPDATE_DISTRIBUTOR).reply((distributor) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

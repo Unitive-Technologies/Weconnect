@@ -1,11 +1,16 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_BOUQUET } from "./actionTypes";
+import { GET_BOUQUET, ADD_BOUQUET } from "./actionTypes";
 
-import { getBouquetSuccess, getBouquetFail } from "./actions";
+import {
+  getBouquetSuccess,
+  getBouquetFail,
+  addBouquetSuccess,
+  addBouquetFail,
+} from "./actions";
 
 //Include Both Helper File with needed methods
-import { getBouquet } from "../../helpers/fakebackend_helper";
+import { getBouquet, addBouquet } from "../../helpers/fakebackend_helper";
 
 const convertBouquetListObject = (bouquetList) => {
   // Notification Template has more data than what we need, we need to convert each of the Notification Template user object in the list with needed colums of the table
@@ -42,8 +47,18 @@ function* fetchBouquet() {
   }
 }
 
+function* onAddBouquet({ payload: bouquet }) {
+  try {
+    const response = yield call(addBouquet, bouquet);
+    yield put(addBouquetSuccess(response));
+  } catch (error) {
+    yield put(addBouquetFail(error));
+  }
+}
+
 function* bouquetSaga() {
   yield takeEvery(GET_BOUQUET, fetchBouquet);
+  yield takeEvery(ADD_BOUQUET, onAddBouquet);
 }
 
 export default bouquetSaga;

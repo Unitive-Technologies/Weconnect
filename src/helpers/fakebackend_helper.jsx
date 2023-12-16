@@ -325,6 +325,8 @@ export const getNcf = () => get(url.GET_NCF);
 export const addNcf = (ncf) => post(url.ADD_NCF, ncf);
 
 export const getBouquet = () => get(url.GET_BOUQUET);
+export const addBouquet = (bouquet) => post(url.ADD_BOUQUET, bouquet);
+
 export const getConnectionScheme = () => get(url.GET_CONNECTIONSCHEME);
 export const getComplaintCategory = () => get(url.GET_COMPLAINTCATEGORY);
 export const getComplaintSubCategory = () => get(url.GET_COMPLAINTSUBCATEGORY);
@@ -352,7 +354,8 @@ export const addNewReason = (reasons) => post(url.ADD_NEW_REASON, reasons);
 export const getBank = () => get(url.GET_BANK);
 export const addNewBank = (banks) => post(url.ADD_NEW_BANK, banks);
 export const getPromoVoucher = () => get(url.GET_PROMOVOUCHER);
-export const addNewPromoVoucher = (provoucher) => post(url.ADD_NEW_PROMOVOUCHER, provoucher);
+export const addNewPromoVoucher = (provoucher) =>
+  post(url.ADD_NEW_PROMOVOUCHER, provoucher);
 export const getSMSMessageTempList = () => get(url.GET_SMSMESSAGETEMPLIST);
 // add user
 export const addNewUser = (user) => post(url.ADD_NEW_USER, user);

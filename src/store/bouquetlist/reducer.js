@@ -1,4 +1,9 @@
-import { GET_BOUQUET_SUCCESS, GET_BOUQUET_FAIL } from "./actionTypes";
+import {
+  GET_BOUQUET_SUCCESS,
+  GET_BOUQUET_FAIL,
+  ADD_BOUQUET_SUCCESS,
+  ADD_BOUQUET_FAIL,
+} from "./actionTypes";
 
 const INIT_STATE = {
   bouquet: [],
@@ -17,6 +22,18 @@ const Bouquet = (state = INIT_STATE, action) => {
       };
 
     case GET_BOUQUET_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_BOUQUET_SUCCESS:
+      return {
+        ...state,
+        bouquet: [...state.bouquet, action.payload],
+      };
+
+    case ADD_BOUQUET_FAIL:
       return {
         ...state,
         error: action.payload,

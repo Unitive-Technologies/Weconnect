@@ -107,6 +107,8 @@ export const ADD_INVENTORYSTATELIST = "/add/inventorystatelist";
 
 export const GET_SMSMESSAGETEMPLIST = "/smsmsgtemplatelist";
 export const GET_BOUQUET = "/bouquet";
+export const ADD_BOUQUET = "/add/bouquet";
+
 export const GET_CONNECTIONSCHEME = "/connectionscheme";
 export const GET_COMPLAINTCATEGORY = "/complaintcategory";
 export const GET_COMPLAINTSUBCATEGORY = "/complaintsubcategory";
