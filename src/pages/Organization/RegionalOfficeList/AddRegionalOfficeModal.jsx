@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {
   Col,
@@ -18,7 +18,7 @@ import { addNewRegionalOffice as onAddNewRegionalOffice } from "/src/store/regio
 import { useDispatch } from "react-redux";
 
 const AddRegionalOfficeModal = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleAddRegionalOffice } = props;
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -104,7 +104,7 @@ const AddRegionalOfficeModal = (props) => {
       // save new user
       dispatch(onAddNewRegionalOffice(newRegionalOffice));
       validation.resetForm();
-      toggle();
+      handleAddRegionalOffice();
     },
   });
   return (
@@ -116,9 +116,9 @@ const AddRegionalOfficeModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleAddRegionalOffice}
     >
-      <ModalHeader tag="h4" toggle={toggle}>
+      <ModalHeader tag="h4" toggle={handleAddRegionalOffice}>
         Add New Regional Office
       </ModalHeader>
       <ModalBody>

@@ -45,7 +45,7 @@ import SettingsModal from "./SettingsModal";
 
 const LCOList = (props) => {
   //meta title
-  document.title = "LCO List | VDigital";
+  document.title = "LCO | VDigital";
 
   const dispatch = useDispatch();
   const [contact, setContact] = useState();
@@ -501,7 +501,7 @@ const LCOList = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Organization" breadcrumbItem="LCO List" />
+          <Breadcrumbs title="Organization" breadcrumbItem="LCO" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (

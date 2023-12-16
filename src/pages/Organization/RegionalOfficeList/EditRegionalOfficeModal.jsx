@@ -859,18 +859,9 @@ const EditRegionalOfficeModal = (props) => {
             </Col>
           </Row>
 
-          {/* <Row>
-            <Col>
-              <div className="text-end">
-                <button type="submit" className="btn btn-success save-user">
-                  Save
-                </button>
-              </div>
-            </Col>
-          </Row>
           <Row>
-            <Col sm="12">
-              <div className="d-flex flex-wrap gap-2 flex-end">
+            <Col>
+              <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
                   Save
                 </button>
@@ -885,38 +876,15 @@ const EditRegionalOfficeModal = (props) => {
                 <button
                   type="button"
                   className="btn btn-outline-danger"
-                  onClick={() => {
-                    validation.resetForm();
-                    toggle();
-                  }}
+                  onClick={handleCancel}
                 >
                   Cancel
                 </button>
-              </div>
+              </ModalFooter>
             </Col>
-          </Row> */}
+          </Row>
         </Form>
       </ModalBody>
-      <ModalFooter>
-        <button type="submit" className="btn btn-success save-user">
-          Save
-        </button>
-        <button
-          type="reset"
-          className="btn btn-warning"
-          onClick={() => validation.resetForm()}
-        >
-          Reset
-        </button>
-
-        <button
-          type="button"
-          className="btn btn-outline-danger"
-          onClick={handleCancel}
-        >
-          Cancel
-        </button>
-      </ModalFooter>
     </>
   );
 };

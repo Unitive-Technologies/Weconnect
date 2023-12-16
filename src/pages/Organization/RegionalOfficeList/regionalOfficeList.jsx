@@ -286,17 +286,17 @@ const RegionalOfficeList = (props) => {
     <React.Fragment>
       <ViewRegionalOfficeModal
         isOpen={viewRegionalOffice}
-        toggle={handleViewRegionalOffice}
+        handleViewRegionalOffice={handleViewRegionalOffice}
         regionalOffData={regOffData}
         setViewRegionalOffice={setViewRegionalOffice}
       />
       <AddRegionalOfficeModal
         isOpen={showRegionalOffice}
-        toggle={handleAddRegionalOffice}
+        handleAddRegionalOffice={handleAddRegionalOffice}
       />
       <UploadRegionalOfficeModal
         isOpen={showUploadRegionalOffice}
-        toggle={handleUploadRegionalOffice}
+        handleUploadRegionalOffice={handleUploadRegionalOffice}
       />
       <div className="page-content">
         <Container fluid>

@@ -1,30 +1,31 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateRegionalOffice as onUpdateRegionalOffice } from "/src/store/regionaloffice/actions";
 import TapsOfViewRegionalOffice from "./TapsOfViewRegionalOffice";
 import EditRegionalOfficeModal from "./EditRegionalOfficeModal";
 
 const ViewRegionalOfficeModal = (props) => {
-  const { isOpen, toggle, regionalOffData, setViewRegionalOffice } = props;
+  const {
+    isOpen,
+    handleViewRegionalOffice,
+    regionalOffData,
+    setViewRegionalOffice,
+  } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
   const [showEditRegionalOffice, setShowEditRegionalOffice] = useState(false);
@@ -114,7 +115,7 @@ const ViewRegionalOfficeModal = (props) => {
       // update user
       dispatch(onUpdateUser(updateRegionalOffice));
       validation.resetForm();
-      toggle();
+      handleViewRegionalOffice();
     },
   });
 
@@ -157,11 +158,15 @@ const ViewRegionalOfficeModal = (props) => {
         centered={true}
         className="exampleModal"
         tabIndex="-1"
-        toggle={toggle}
+        toggle={handleViewRegionalOffice}
       >
         {!showEditRegionalOffice ? (
           <>
-            <ModalHeader toggle={toggle} tag="h4" position="relative">
+            <ModalHeader
+              toggle={handleViewRegionalOffice}
+              tag="h4"
+              position="relative"
+            >
               <h4>View - {regionalOffData.name}</h4>
             </ModalHeader>
             <Link
@@ -410,7 +415,6 @@ const ViewRegionalOfficeModal = (props) => {
             closeEditModal={() => setShowEditRegionalOffice(false)}
           />
         )}
-        {/* </Modal> */}
       </Modal>
     </>
   );
