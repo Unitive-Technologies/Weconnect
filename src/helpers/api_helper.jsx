@@ -1,15 +1,14 @@
 import axios from "axios";
-import accessToken from "./jwt-token-access/accessToken";
-
-//pass new generated access token here
-const token = accessToken;
 
 //apply base url for axios
-const API_URL = "";
+const API_URL = "https://sms.unitch.in/api/index.php/v1";
 
 const axiosApi = axios.create({
   baseURL: API_URL,
 });
+
+// Get locally stored value of key accesstoken
+const token = "Bearer " + localStorage.getItem("temptoken");
 
 axiosApi.defaults.headers.common["Authorization"] = token;
 
@@ -20,24 +19,31 @@ axiosApi.interceptors.response.use(
 
 export async function get(url, config = {}) {
   console.log("url:" + url);
+  axiosApi.defaults.headers.common["Authkey"] = "";
+
   return await axiosApi
     .get(url, { ...config })
     .then((response) => response.data);
 }
 
 export async function post(url, data, config = {}) {
+  axiosApi.defaults.headers.common["Authkey"] = import.meta.env.VITE_APP_AUTHKEY;
   return axiosApi
     .post(url, { ...data }, { ...config })
     .then((response) => response.data);
 }
 
 export async function put(url, data, config = {}) {
+  axiosApi.defaults.headers.common["Authkey"] = "";
+
   return axiosApi
     .put(url, { ...data }, { ...config })
     .then((response) => response.data);
 }
 
 export async function del(url, config = {}) {
+  axiosApi.defaults.headers.common["Authkey"] = "";
+
   return await axiosApi
     .delete(url, { ...config })
     .then((response) => response.data);

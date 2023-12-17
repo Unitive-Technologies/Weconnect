@@ -13,34 +13,34 @@ import {
 
 const fireBaseBackend = getFirebaseBackend();
 
-function* loginUser({ payload: { user, history } }) {
+function* loginUser({ payload: { logindata, history } }) {
   const currentTime = new Date();
   try {
     let response;
 
-    if (import.meta.env.VITE_APP_DEFAULTAUTH === "firebase") {
-      response = yield call(fireBaseBackend.loginUser, {
-        email: user.email,
-        password: user.password,
-      });
-    } else if (import.meta.env.VITE_APP_DEFAULTAUTH === "jwt") {
+    if (import.meta.env.VITE_APP_DEFAULTAUTH === "jwt") {
+      console.log("jwt login...");
+      console.log(logindata);
       response = yield call(postJwtLogin, {
-        email: user.email,
-        password: user.password,
-      });
-    } else if (import.meta.env.VITE_APP_DEFAULTAUTH === "fake") {
-      response = yield call(postFakeLogin, {
-        email: user.email,
-        password: user.password,
-      });
+        "LoginForm": {
+            "username": logindata.username,
+            "password": logindata.password
+        }
+    });
     }
 
     // Include loginTime in the response before saving to localStorage
-    response.loginTime = currentTime.toISOString();
+    if (response.status == 200)
+    {
+      let responseData = response.data;
+      responseData.loginTime = currentTime.toISOString();
 
-    localStorage.setItem("authUser", JSON.stringify(response));
-    yield put(loginSuccess(response));
-    history("/dashboard");
+      localStorage.setItem("authUser", JSON.stringify(responseData));
+      localStorage.setItem("temptoken", responseData.access_token);
+      yield put(loginSuccess(responseData));
+
+      history("/dashboard");
+    }
   } catch (error) {
     yield put(apiError(error));
   }

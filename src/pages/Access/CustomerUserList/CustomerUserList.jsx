@@ -221,7 +221,8 @@ const CustomerUserList = (props) => {
     );
 
     setFilteredUsers(filteredData);
-  }, [cusUsers]);
+    console.log("Filtered Users - ". filteredData);
+  }, [dispatch, cusUsers]);
 
   var node = useRef();
 
@@ -238,6 +239,7 @@ const CustomerUserList = (props) => {
       },
     ];
   };
+  console.log("Fetched Customer Users - ", cusUsers);
   return (
     <React.Fragment>
       <ViewCustomerUserModal

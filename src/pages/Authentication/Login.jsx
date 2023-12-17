@@ -26,7 +26,7 @@ import {
 } from "reactstrap";
 
 // actions
-import { loginUser, socialLogin } from "../../store/actions";
+import { loginUser } from "../../store/actions";
 import { getAdmindetails } from "../../store/actions";
 // import images
 import profile from "../../assets/images/profile-img.png";
@@ -37,24 +37,31 @@ const Login = (props) => {
   document.title = "Login | VDigital";
   const dispatch = useDispatch();
 
+  const [captchaText, setCaptchaText] = useState("");
+  const [userInput, setUserInput] = useState("");
+  const canvasRef = useRef(null);
+
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
-      email: "admin" || "",
+      username: "mso" || "",
       password: "123456" || "",
     },
     validationSchema: Yup.object({
-      email: Yup.string().required("Please Enter Your Email"),
+      username: Yup.string().required("Please Enter Your Username"),
       password: Yup.string().required("Please Enter Your Password"),
     }),
     onSubmit: (values) => {
       const numericCaptcha = captchaText.replace(/\D/g, ""); // Extract only numeric characters
+      console.log(values)
       console.log("userInput:", userInput);
       console.log("numericCaptcha:", numericCaptcha);
 
       if (userInput === numericCaptcha) {
+        console.log("Captcha matched...")
+        // eslint-disable-next-line react/prop-types
         dispatch(loginUser(values, props.router.navigate));
-        dispatch(getAdmindetails());
+        // dispatch(getAdmindetails());
       } else {
         // Handle incorrect captcha
         alert("Incorrect captcha. Please try again.");
@@ -71,19 +78,6 @@ const Login = (props) => {
   }));
 
   const { error } = useSelector(LoginProperties);
-
-  const signIn = (type) => {
-    dispatch(socialLogin(type, props.router.navigate));
-  };
-
-  //for facebook and google authentication
-  const socialResponse = (type) => {
-    signIn(type);
-  };
-
-  const [captchaText, setCaptchaText] = useState("");
-  const [userInput, setUserInput] = useState("");
-  const canvasRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -180,27 +174,27 @@ const Login = (props) => {
                         return false;
                       }}
                     >
-                      {error ? <Alert color="danger">{error}</Alert> : null}
+                      {error ? <p>{error}</p> : null}
 
                       <div className="mb-3">
                         <Label className="form-label">Username</Label>
                         <Input
-                          name="email"
+                          name="username"
                           className="form-control"
-                          placeholder="Enter email"
+                          placeholder="Enter Username"
                           type="text"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
-                          value={validation.values.email || ""}
+                          value={validation.values.username || ""}
                           invalid={
-                            validation.touched.email && validation.errors.email
+                            validation.touched.username && validation.errors.username
                               ? true
                               : false
                           }
                         />
-                        {validation.touched.email && validation.errors.email ? (
+                        {validation.touched.username && validation.errors.username ? (
                           <FormFeedback type="invalid">
-                            {validation.errors.email}
+                            {validation.errors.username}
                           </FormFeedback>
                         ) : null}
                       </div>

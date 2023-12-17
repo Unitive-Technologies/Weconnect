@@ -2,6 +2,7 @@
   "name": "Skote-Vite-React",
   "private": true,
   "version": "1.0.0",
+  "proxy": "https://sms.unitch.in/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

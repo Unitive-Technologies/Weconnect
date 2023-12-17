@@ -90,7 +90,10 @@ const postJwtRegister = (url, data) => {
 };
 
 // Login Method
-const postJwtLogin = (data) => post(url.POST_FAKE_JWT_LOGIN, data);
+const postJwtLogin = (data) => {
+  console.log("reached login helper -", data);
+  return post(url.POST_JWT_LOGIN, data);
+};
 
 // postForgetPwd
 const postJwtForgetPwd = (data) =>

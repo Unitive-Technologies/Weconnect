@@ -24,17 +24,13 @@ const ProfileMenu = (props) => {
   const [menu, setMenu] = useState(false);
   const storedAdminDetails = localStorage.getItem("authUser");
   const admindetails = storedAdminDetails ? JSON.parse(storedAdminDetails) : {};
-  // console.log("admin on topbar:" + JSON.stringify(admindetails));
+  console.log("admin on topbar:" + admindetails.username);
 
   const [username, setusername] = useState("Admin");
 
   useEffect(() => {
     if (localStorage.getItem("authUser")) {
-      if (import.meta.env.VITE_APP_DEFAULTAUTH === "firebase") {
-        const obj = JSON.parse(localStorage.getItem("authUser"));
-        setusername(obj.email);
-      } else if (
-        import.meta.env.VITE_APP_DEFAULTAUTH === "fake" ||
+      if (
         import.meta.env.VITE_APP_DEFAULTAUTH === "jwt"
       ) {
         const obj = JSON.parse(localStorage.getItem("authUser"));
@@ -95,7 +91,7 @@ const ProfileMenu = (props) => {
                 <li>Login ID: {admindetails.username}</li>
                 <li>User of: {admindetails.name}</li>
                 <li>
-                  Type: &nbsp;<b>{admindetails.type_label}</b>
+                  Type: &nbsp;<b>{admindetails.type}</b>
                 </li>
                 <li>
                   Role: &nbsp;

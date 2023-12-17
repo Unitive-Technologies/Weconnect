@@ -266,18 +266,18 @@ const fakeBackend = () => {
     });
   });
 
-  mock.onGet(url.GET_CUSTOMERUSERS).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (custusers) {
-          // Passing fake JSON data as response
-          resolve([200, custusers]);
-        } else {
-          reject([400, "Cannot get Customer users"]);
-        }
-      });
-    });
-  });
+  // mock.onGet(url.GET_CUSTOMERUSERS).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (custusers) {
+  //         // Passing fake JSON data as response
+  //         // resolve([200, custusers]);
+  //       } else {
+  //         reject([400, "Cannot get Customer users"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onGet(url.GET_GROUPPOLICY).reply(() => {
     return new Promise((resolve, reject) => {

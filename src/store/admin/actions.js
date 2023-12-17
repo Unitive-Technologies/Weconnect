@@ -9,7 +9,7 @@ export const getAdmindetails = () => ({
 });
 
 export const getAdmindetailsSuccess = (admindetails) => {
-  console.log("Received Channel List:", admindetails);
+  console.log("Received Admin Details:", admindetails);
   return {
     type: GET_ADMINDETAILS_SUCCESS,
     payload: admindetails,
