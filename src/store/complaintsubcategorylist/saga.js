@@ -1,14 +1,15 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_COMPLAINTSUBCATEGORY } from "./actionTypes";
+import { GET_COMPLAINTSUBCATEGORY, ADD_NEW_COMPLAINTSUBCATEGORY } from "./actionTypes";
 
 import {
   getComplaintSubCategorySuccess,
   getComplaintSubCategoryFail,
+  addComplaintSubCategorySuccess, addComplaintSubCategoryFail
 } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getComplaintSubCategory } from "../../helpers/fakebackend_helper";
+import { getComplaintSubCategory, addNewComplaintSubCategory } from "../../helpers/fakebackend_helper";
 
 const convertComplaintSubCategoryListObject = (complaintSubCategoryList) => {
   // Notification Template has more data than what we need, we need to convert each of the Notification Template user object in the list with needed colums of the table
@@ -28,14 +29,14 @@ const convertComplaintSubCategoryListObject = (complaintSubCategoryList) => {
         complaintsubcategory.status === 1
           ? "ACTIVE"
           : complaintsubcategory.status === 0
-          ? "INACTIVE"
-          : "BLOCKED",
+            ? "INACTIVE"
+            : "BLOCKED",
       showonweb:
         complaintsubcategory.showonweb === 1
           ? "ACTIVE"
           : complaintsubcategory.showonweb === 0
-          ? "INACTIVE"
-          : "BLOCKED",
+            ? "INACTIVE"
+            : "BLOCKED",
     };
   });
 };
@@ -52,8 +53,21 @@ function* fetchComplaintSubCategory() {
   }
 }
 
+function* onAddNewComplaintSubCategory({ payload: complaintsubcategory }) {
+  try {
+    const response = yield call(addNewComplaintSubCategory, complaintsubcategory);
+
+    yield put(addComplaintSubCategorySuccess(response));
+    toast.success("Complaint SubCategory Added Successfully", { autoClose: 2000 });
+  } catch (error) {
+    yield put(addComplaintSubCategoryFail(error));
+    toast.error("Complaint SubCategory Added Failed", { autoClose: 2000 });
+  }
+}
+
 function* complaintSubCategorySaga() {
   yield takeEvery(GET_COMPLAINTSUBCATEGORY, fetchComplaintSubCategory);
+  yield takeEvery(ADD_NEW_COMPLAINTSUBCATEGORY, onAddNewComplaintSubCategory);
 }
 
 export default complaintSubCategorySaga;

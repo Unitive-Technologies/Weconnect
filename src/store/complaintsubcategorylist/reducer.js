@@ -1,6 +1,8 @@
 import {
   GET_COMPLAINTSUBCATEGORY_SUCCESS,
   GET_COMPLAINTSUBCATEGORY_FAIL,
+  ADD_COMPLAINTSUBCATEGORY_SUCCESS,
+  ADD_COMPLAINTSUBCATEGORY_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -23,6 +25,21 @@ const ComplaintSubCategory = (state = INIT_STATE, action) => {
       };
 
     case GET_COMPLAINTSUBCATEGORY_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_COMPLAINTSUBCATEGORY_SUCCESS:
+      return {
+        ...state,
+        complaintsubcategory: [
+          ...state.complaintsubcategory,
+          action.payload,
+        ],
+      };
+
+    case ADD_COMPLAINTSUBCATEGORY_FAIL:
       return {
         ...state,
         error: action.payload,

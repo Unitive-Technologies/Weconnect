@@ -887,6 +887,20 @@ const fakeBackend = () => {
       });
     });
   });
+
+  mock.onPost(url.ADD_NEW_COMPLAINTSUBCATEGORY).reply((complaintsubcate) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (complaintsubcate && complaintsubcate.data) {
+          // Passing fake JSON data as response
+          resolve([200, complaintsubcate.data]);
+        } else {
+          reject([400, "Cannot add Complaint Sub Category"]);
+        }
+      });
+    });
+  });
+
   mock
     .onPost(url.ADD_NEW_SCHEDULECUSTOMERNOTIFICATION)
     .reply((schCusNotification) => {
