@@ -7,6 +7,7 @@ import {
   Container,
   Row,
   Modal,
+  ModalFooter,
   ModalHeader,
   ModalBody,
   Label,
@@ -74,6 +75,7 @@ const AddNewInventoryState = (props) => {
       className="exampleModal"
       tabIndex="-1"
       toggle={toggle}
+      size="xl"
     >
       <ModalHeader tag="h4" toggle={toggle}>
         Add New Inventory State
@@ -87,7 +89,7 @@ const AddNewInventoryState = (props) => {
           }}
         >
           <Row>
-            <Col sm="12">
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Name<span style={{ color: "red" }}>*</span>
@@ -111,7 +113,8 @@ const AddNewInventoryState = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Code<span style={{ color: "red" }}>*</span>
@@ -135,7 +138,8 @@ const AddNewInventoryState = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   State Type<span style={{ color: "red" }}>*</span>
@@ -155,13 +159,14 @@ const AddNewInventoryState = (props) => {
                   <option value="blacklist">Blacklist</option>
                 </Input>
                 {validation.touched.state_type_lbl &&
-                validation.errors.state_type_lbl ? (
+                  validation.errors.state_type_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.state_type_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Description<span style={{ color: "red" }}>*</span>
@@ -175,19 +180,22 @@ const AddNewInventoryState = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+          </Row>
+          <Row>
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Status<span style={{ color: "red" }}>*</span>
@@ -215,8 +223,8 @@ const AddNewInventoryState = (props) => {
             </Col>
           </Row>
           <Row>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
+            <Col>
+              <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
                   Create
                 </button>
@@ -238,7 +246,7 @@ const AddNewInventoryState = (props) => {
                 >
                   Cancel
                 </button>
-              </div>
+              </ModalFooter>
             </Col>
           </Row>
         </Form>

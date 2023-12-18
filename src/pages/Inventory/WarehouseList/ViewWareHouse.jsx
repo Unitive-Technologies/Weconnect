@@ -7,6 +7,7 @@ import {
   Container,
   Row,
   Modal,
+  ModalFooter,
   ModalHeader,
   ModalBody,
   Label,
@@ -93,18 +94,14 @@ const ViewWareHouse = (props) => {
           View {validation.values.name}
           <i
             className="bx bx bxs-edit"
-            style={{
-              position: "absolute",
-              // marginLeft: "55%",
-              cursor: "pointer",
-              marginTop: "1%",
-            }}
+            style={{ marginLeft: "20px", cursor: "pointer" }}
             onClick={() => setShowEditWarehouse(true)}
           ></i>
+
         </ModalHeader>
       ) : (
         <ModalHeader toggle={editToggle} tag="h4">
-          Edit Warehouse
+          Edit {validation.values.name}
         </ModalHeader>
       )}
       <ModalBody>
@@ -116,7 +113,7 @@ const ViewWareHouse = (props) => {
           }}
         >
           <Row>
-            <Col sm="12">
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Name<span style={{ color: "red" }}>*</span>
@@ -141,7 +138,8 @@ const ViewWareHouse = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Contact Person<span style={{ color: "red" }}>*</span>
@@ -155,20 +153,21 @@ const ViewWareHouse = (props) => {
                   value={validation.values.contact_person || ""}
                   invalid={
                     validation.touched.contact_person &&
-                    validation.errors.contact_person
+                      validation.errors.contact_person
                       ? true
                       : false
                   }
                   disabled={!showEditWarehouse}
                 />
                 {validation.touched.contact_person &&
-                validation.errors.contact_person ? (
+                  validation.errors.contact_person ? (
                   <FormFeedback type="invalid">
                     {validation.errors.contact_person}
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Contact No.<span style={{ color: "red" }}>*</span>
@@ -193,7 +192,8 @@ const ViewWareHouse = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Status<span style={{ color: "red" }}>*</span>
@@ -218,7 +218,10 @@ const ViewWareHouse = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+          </Row>
+          <Row>
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Operator<span style={{ color: "red" }}>*</span>
@@ -243,7 +246,8 @@ const ViewWareHouse = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Description<span style={{ color: "red" }}>*</span>
@@ -257,20 +261,21 @@ const ViewWareHouse = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                   disabled={!showEditWarehouse}
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Address<span style={{ color: "red" }}>*</span>
@@ -299,11 +304,29 @@ const ViewWareHouse = (props) => {
           </Row>
           <Row>
             <Col>
-              <div className="text-end">
+              <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
                   Save
                 </button>
-              </div>
+                <button
+                  type="reset"
+                  className="btn btn-warning"
+                  onClick={() => validation.resetForm()}
+                >
+                  Reset
+                </button>
+
+                <button
+                  type="button"
+                  className="btn btn-outline-danger"
+                  onClick={() => {
+                    validation.resetForm();
+                    toggle();
+                  }}
+                >
+                  Cancel
+                </button>
+              </ModalFooter>
             </Col>
           </Row>
         </Form>
