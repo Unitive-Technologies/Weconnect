@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import {
   Col,
   Row,
   Modal,
   ModalHeader,
+  ModalFooter,
   ModalBody,
   Label,
   FormFeedback,
@@ -88,7 +90,7 @@ const ViewSubLocation = (props) => {
     },
   });
 
-  const editToggle = () => {
+  const handleCancel = () => {
     handleViewSubLocation();
     setShowEditSubLocation(false);
   };
@@ -102,21 +104,26 @@ const ViewSubLocation = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleViewSubLocation}
+      toggle={handleCancel}
     >
-      {!showEditSubLocation ? (
-        <ModalHeader toggle={handleViewSubLocation} tag="h4">
-          View {validation.values.name}
-          <i
-            className="bx bx bxs-edit"
-            style={{ marginLeft: "300px", cursor: "pointer" }}
-            onClick={() => setShowEditSubLocation(true)}
-          ></i>
-        </ModalHeader>
-      ) : (
-        <ModalHeader toggle={editToggle} tag="h4">
-          Edit Sublocation
-        </ModalHeader>
+      <ModalHeader toggle={handleCancel} tag="h4">
+        {!showEditSubLocation
+          ? `View ${(sublocation && sublocation.name) || ""}`
+          : `Edit ${(sublocation && sublocation.name) || ""}`}
+      </ModalHeader>
+      {!showEditSubLocation && (
+        <Link
+          style={{
+            position: "absolute",
+            marginLeft: "92%",
+            marginTop: "1%",
+          }}
+          to="#!"
+          className="btn btn-light me-1"
+          onClick={() => setShowEditSubLocation(true)}
+        >
+          <i className="mdi mdi-pencil-outline"></i>
+        </Link>
       )}
       <ModalBody>
         <Form
@@ -127,7 +134,7 @@ const ViewSubLocation = (props) => {
           }}
         >
           <Row>
-            <Col sm="12">
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Sub Location Name</Label>
                 <Input
@@ -150,7 +157,8 @@ const ViewSubLocation = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Select Location</Label>
                 <Select
@@ -179,7 +187,8 @@ const ViewSubLocation = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Status</Label>
                 <Input
@@ -204,15 +213,35 @@ const ViewSubLocation = (props) => {
               </div>
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <div className="text-end">
-                <button type="submit" className="btn btn-success save-user">
-                  Save
-                </button>
-              </div>
-            </Col>
-          </Row>
+          {showEditSubLocation && (
+            <Row>
+              <Col>
+                <ModalFooter>
+                  <button type="submit" className="btn btn-success save-user">
+                    Save
+                  </button>
+                  <button
+                    type="reset"
+                    className="btn btn-warning"
+                    onClick={() => validation.resetForm()}
+                  >
+                    Reset
+                  </button>
+
+                  <button
+                    type="button"
+                    className="btn btn-outline-danger"
+                    onClick={() => {
+                      validation.resetForm();
+                      handleCancel();
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </ModalFooter>
+              </Col>
+            </Row>
+          )}
         </Form>
       </ModalBody>
       {/* </Modal> */}
