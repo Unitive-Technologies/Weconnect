@@ -16,6 +16,7 @@ import {
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import { createSelector } from "reselect";
+import { getLco as onGetLco } from "/src/store/actions";
 import Select from "react-select";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -23,6 +24,39 @@ const UploadSubLocation = (props) => {
   const { isOpen, toggle } = props;
   const dispatch = useDispatch();
   const [selectedFiles, setselectedFiles] = useState([]);
+  const selectLcoState = (state) => state.lco;
+  const LcoProperties = createSelector(selectLcoState, (lco) => ({
+    lcos: lco.lco,
+    loading: lco.loading,
+  }));
+
+  const { lcos, loading } = useSelector(LcoProperties);
+
+  useEffect(() => {
+    if (lcos && !lcos.length) {
+      dispatch(onGetLco());
+    }
+  }, [dispatch, lcos]);
+  // console.log("Lco In add location: ", lcos);
+
+  const options = lcos.map((option) => ({
+    value: option.code,
+    label: (
+      <div>
+        <h6>{option.name}</h6>
+        <h6>{option.username}</h6>
+        <p>Regional Office: {option.branch_lbl}</p>
+        <p>Distributor: {option.distributor_lbl}</p>
+      </div>
+    ),
+  }));
+
+  const customStyles = {
+    option: (provided) => ({
+      ...provided,
+      backgroundColor: "white",
+    }),
+  };
 
   function handleAcceptedFiles(files) {
     files.map((file) =>

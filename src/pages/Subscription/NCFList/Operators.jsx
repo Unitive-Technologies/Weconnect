@@ -11,6 +11,7 @@ const Operators = (props) => {
       {
         Header: "*",
         disableFilters: true,
+        id: "*",
         filterable: true,
         Cell: (cellProps) => {
           return <input type="checkbox" />;
