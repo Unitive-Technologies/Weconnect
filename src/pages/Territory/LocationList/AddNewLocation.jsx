@@ -55,8 +55,6 @@ const AddNewLocation = (props) => {
     ),
   }));
 
-  // console.log("LCO Options: ", options);
-
   const customStyles = {
     option: (provided) => ({
       ...provided,

@@ -3,8 +3,6 @@ import {
   GET_SUBLOCATION_FAIL,
   ADD_SUBLOCATION_SUCCESS,
   ADD_SUBLOCATION_FAIL,
-  GET_LOCLIST_SUCCESS,
-  GET_LOCLIST_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -37,20 +35,6 @@ const Sublocation = (state = INIT_STATE, action) => {
       };
 
     case ADD_SUBLOCATION_FAIL:
-      return {
-        ...state,
-        error: action.payload,
-      };
-
-    case GET_LOCLIST_SUCCESS:
-      console.log("Sub Location LIST data in reducer:", action.payload);
-      return {
-        ...state,
-        loclist: action.payload,
-        loading: false,
-      };
-
-    case GET_LOCLIST_FAIL:
       return {
         ...state,
         error: action.payload,

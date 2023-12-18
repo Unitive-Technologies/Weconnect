@@ -46,7 +46,6 @@ import {
   reasonlist as reasons,
   banklist as banks,
   promovoucherlist as provoucher,
-  loclist,
 } from "../../common/data";
 
 // let users = [
@@ -520,19 +519,6 @@ const fakeBackend = () => {
           resolve([200, subloc]);
         } else {
           reject([400, "Cannot get Sub Location List"]);
-        }
-      });
-    });
-  });
-
-  mock.onGet(url.GET_LOCLIST).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (loclist) {
-          // Passing fake JSON data as response
-          resolve([200, loclist]);
-        } else {
-          reject([400, "Cannot get Location List"]);
         }
       });
     });

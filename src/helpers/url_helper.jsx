@@ -45,7 +45,6 @@ export const ADD_LOCATION = "/add/location";
 
 export const GET_SUBLOCATION = "/sublocationlist";
 export const ADD_SUBLOCATION = "/add/sublocation";
-export const GET_LOCLIST = "/loclist";
 
 export const GET_DISTRIBUTORS = "/distributorlist";
 export const ADD_NEW_DISTRIBUTOR = "/add/distributors";

@@ -1,23 +1,19 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addSubLocation as onAddSublocation } from "/src/store/sublocation/actions";
+import { addSubLocation as onAddSubLocation } from "/src/store/sublocation/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { getLocation as onGetLocation } from "/src/store/actions";
@@ -74,11 +70,12 @@ const AddSubLocation = (props) => {
       created_by: "Admin",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter sublocation name"),
+      name: Yup.string().required("Enter name"),
       location_id: Yup.string().nullable().required("Select location"),
       status: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
+      console.log("Entered values in Add sublocation : ", values);
       const newSubLocation = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
@@ -88,8 +85,7 @@ const AddSubLocation = (props) => {
         created_by: values["created_by"],
       };
       console.log("new sub location:" + JSON.stringify(newSubLocation));
-      // save new user
-      dispatch(onAddSublocation(newSubLocation));
+      dispatch(onAddSubLocation(newSubLocation));
       validation.resetForm();
       toggle();
     },
@@ -108,7 +104,6 @@ const AddSubLocation = (props) => {
       tabIndex="-1"
       toggle={toggle}
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
       <ModalHeader tag="h4" toggle={toggle}>
         Add New Sub Location
       </ModalHeader>
@@ -129,10 +124,10 @@ const AddSubLocation = (props) => {
                 <Input
                   name="name"
                   type="text"
-                  placeholder="Enter sublocation name"
+                  placeholder="Enter name"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.name || ""}
+                  value={validation.values.name}
                   invalid={
                     validation.touched.name && validation.errors.name
                       ? true
@@ -191,9 +186,8 @@ const AddSubLocation = (props) => {
                   value={validation.values.status || ""}
                 >
                   <option value="">Select Status</option>
-                  <option value="11">Active</option>
-                  <option value="12">BLOCKED</option>
-                  <option value="13">In-Active</option>
+                  <option value="1">Active</option>
+                  <option value="2">In-Active</option>
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
@@ -232,7 +226,6 @@ const AddSubLocation = (props) => {
           </Row>
         </Form>
       </ModalBody>
-      {/* </Modal> */}
     </Modal>
   );
 };

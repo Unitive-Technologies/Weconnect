@@ -96,9 +96,6 @@ const SublocationList = (props) => {
                   {cellProps.row.original.name}
                 </Link>
               </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
             </>
           );
         },
@@ -240,18 +237,6 @@ const SublocationList = (props) => {
       setIsEdit(false);
     }
   }, [dispatch, subloc]);
-
-  // useEffect(() => {
-  //   setContact(users);
-  //   setIsEdit(false);
-  // }, [users]);
-
-  // useEffect(() => {
-  //   if (!isEmpty(users) && !!isEdit) {
-  //     setContact(users);
-  //     setIsEdit(false);
-  //   }
-  // }, [users]);
 
   const toggle = () => {
     setShowAddSubLocation(!showAddSubLocation);

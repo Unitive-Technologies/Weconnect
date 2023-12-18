@@ -1,26 +1,17 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-
-import { GET_SUBLOCATION, ADD_SUBLOCATION, GET_LOCLIST } from "./actionTypes";
-
+import { GET_SUBLOCATION, ADD_SUBLOCATION } from "./actionTypes";
 import {
   getSublocationSuccess,
   getSublocationFail,
   addSubLocationSuccess,
   addSubLocationFail,
-  getLoclistSuccess,
-  getloclistFail,
 } from "./actions";
-
-//Include Both Helper File with needed methods
 import {
   getSublocation,
   addSublocation,
-  getLoclist,
 } from "../../helpers/fakebackend_helper";
-import { toast } from "react-toastify";
 
 const convertSublocationListObject = (sublocationList) => {
-  // Sublocation list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
   return sublocationList.map((sublocation) => {
     return {
       ...sublocation,
@@ -54,30 +45,18 @@ function* fetchSublocation() {
   }
 }
 
-function* fetchLoclist() {
-  try {
-    const response = yield call(getLoclist);
-    yield put(getLoclistSuccess(response));
-  } catch (error) {
-    yield put(getLoclistFail(error));
-  }
-}
-
 function* onAddSubLocation({ payload: sublocation }) {
   try {
     const response = yield call(addSublocation, sublocation);
     yield put(addSubLocationSuccess(response));
-    toast.success("Sub Location list Added Successfully", { autoClose: 2000 });
   } catch (error) {
     yield put(addSubLocationFail(error));
-    toast.error("Sub Location list Added Failed", { autoClose: 2000 });
   }
 }
 
 function* sublocationSaga() {
   yield takeEvery(GET_SUBLOCATION, fetchSublocation);
   yield takeEvery(ADD_SUBLOCATION, onAddSubLocation);
-  yield takeEvery(GET_LOCLIST, fetchLoclist);
 }
 
 export default sublocationSaga;

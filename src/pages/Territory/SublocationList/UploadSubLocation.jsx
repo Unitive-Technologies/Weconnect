@@ -4,23 +4,18 @@ import {
   Card,
   CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
   Label,
-  FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
-  CardTitle,
   CardSubtitle,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import { createSelector } from "reselect";
-import { getLoclist as onGetLoclist } from "/src/store/actions";
 import Select from "react-select";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -28,38 +23,6 @@ const UploadSubLocation = (props) => {
   const { isOpen, toggle } = props;
   const dispatch = useDispatch();
   const [selectedFiles, setselectedFiles] = useState([]);
-
-  const selectLoclistState = (state) => state.loclist;
-  const LoclistProperties = createSelector(selectLoclistState, (loclist) => ({
-    lcos: loclist.loclist,
-    loading: loclist.loading,
-  }));
-
-  const { lcos, loading } = useSelector(LoclistProperties);
-
-  useEffect(() => {
-    if (lcos && !lcos.length) {
-      dispatch(onGetLoclist());
-    }
-  }, [dispatch, lcos]);
-  console.log("Lco In add location: ", lcos);
-
-  const options = lcos.map((option) => ({
-    value: option.code,
-    label: (
-      <div>
-        <h6>{option.name}</h6>
-        <p>{option.operator_lbl}</p>
-      </div>
-    ),
-  }));
-
-  const customStyles = {
-    option: (provided) => ({
-      ...provided,
-      backgroundColor: "white",
-    }),
-  };
 
   function handleAcceptedFiles(files) {
     files.map((file) =>
@@ -111,7 +74,6 @@ const UploadSubLocation = (props) => {
       tabIndex="-1"
       toggle={toggle}
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
       <ModalHeader toggle={toggle} tag="h4">
         Upload Sub Locations
       </ModalHeader>
@@ -160,9 +122,8 @@ const UploadSubLocation = (props) => {
                 // value={validation.values.status || ""}
               >
                 <option value="">Select Status</option>
-                <option value="11">Active</option>
-                <option value="12">BLOCKED</option>
-                <option value="13">In-Active</option>
+                <option value="1">Active</option>
+                <option value="3">In-Active</option>
               </Input>
               {/* {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
@@ -172,7 +133,6 @@ const UploadSubLocation = (props) => {
             </div>
           </CardBody>
           <CardBody>
-            {/* <CardTitle>Dropzone</CardTitle> */}
             <CardSubtitle className="mb-3">
               {" "}
               Select File to Upload<span style={{ color: "red" }}>*</span>
@@ -262,7 +222,6 @@ const UploadSubLocation = (props) => {
           </CardBody>
         </Card>
       </ModalBody>
-      {/* </Modal> */}
     </Modal>
   );
 };

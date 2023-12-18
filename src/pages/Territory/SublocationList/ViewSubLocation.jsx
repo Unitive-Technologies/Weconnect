@@ -1,17 +1,13 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
@@ -19,36 +15,36 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
-import { getLco as onGetLco } from "/src/store/actions";
+import { getLocation as onGetLocation } from "/src/store/actions";
 import Select from "react-select";
 
 const ViewSubLocation = (props) => {
   const { isOpen, toggle, sublocation } = props;
   const dispatch = useDispatch();
   const [showEditSubLocation, setShowEditSubLocation] = useState(false);
-  const selectLcoState = (state) => state.lco;
-  const LcoProperties = createSelector(selectLcoState, (lco) => ({
-    lcos: lco.lco,
-    loading: lco.loading,
-  }));
+  const selectLocationState = (state) => state.location;
+  const locationProperties = createSelector(
+    selectLocationState,
+    (location) => ({
+      locations: location.location,
+      loading: location.loading,
+    })
+  );
 
-  const { lcos, loading } = useSelector(LcoProperties);
+  const { locations, loading } = useSelector(locationProperties);
 
   useEffect(() => {
-    if (lcos && !lcos.length) {
-      dispatch(onGetLco());
+    if (locations && !locations.length) {
+      dispatch(onGetLocation());
     }
-  }, [dispatch, lcos]);
-  // console.log("Lco In add location: ", lcos);
+  }, [dispatch, locations]);
 
-  const options = lcos.map((option) => ({
-    value: option.name,
+  const options = locations.map((option) => ({
+    value: option.id,
     label: (
       <div>
         <h6>{option.name}</h6>
-        <h6>{option.username}</h6>
-        <p>Regional Office: {option.branch_lbl}</p>
-        <p>Distributor: {option.distributor_lbl}</p>
+        <p>LCO {option.operator_lbl}</p>
       </div>
     ),
   }));
@@ -59,7 +55,6 @@ const ViewSubLocation = (props) => {
       backgroundColor: "white",
     }),
   };
-
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -157,42 +152,25 @@ const ViewSubLocation = (props) => {
 
               <div className="mb-3">
                 <Label className="form-label">Select Location</Label>
-                <Input
+                <Select
                   name="location_id"
-                  type="select"
-                  placeholder="Select location"
-                  className="form-select"
-                  onChange={validation.handleChange}
+                  options={options}
+                  onChange={(selectedOption) => {
+                    console.log("SelectedOption: ", selectedOption);
+                    setSelectedLocation(selectedOption);
+                    validation.handleChange({
+                      target: {
+                        name: "location_id",
+                        value: selectedOption.value,
+                      },
+                    });
+                  }}
                   onBlur={validation.handleBlur}
-                  value={validation.values.location_id || ""}
-                  disabled={!showEditSubLocation}
-                >
-                  <option value="">Select location</option>
-                  <option value="1">Delhi</option>
-                  <option value="2">Puducherry</option>
-                  <option value="3">Ladakh</option>
-                  <option value="4">Andaman and Nicobar Islands</option>
-                  <option value="5">Lakshadweep</option>
-                  <option value="6">Daman and Diu</option>
-                  <option value="7">Dadra and Nagar Haveli</option>
-                  <option value="8">Chandigarh</option>
-                  <option value="9">West Bengal</option>
-                  <option value="10">Uttarakhand</option>
-                  <option value="11">Utter Pradesh</option>
-                  <option value="12">Tripura</option>
-                  <option value="13">Telangana</option>
-                  <option value="14">Tamil Nadu</option>
-                  <option value="15">Sikkim</option>
-                  <option value="16">Rajasthan</option>
-                  <option value="17">Punjab</option>
-                  <option value="18">Odisha</option>
-                  <option value="19">Nagaland</option>
-                  <option value="20">Mizoram</option>
-                  <option value="21">Meghalaya</option>
-                  <option value="22">Manipur</option>
-                  <option value="23">Maharashtra</option>
-                  <option value="24">Madhya Pradesh</option>
-                </Input>
+                  value={options.find(
+                    (opt) => opt.value === validation.values.location_id
+                  )}
+                  styles={customStyles}
+                />
                 {validation.touched.location_id &&
                 validation.errors.location_id ? (
                   <FormFeedback type="invalid">
@@ -215,7 +193,6 @@ const ViewSubLocation = (props) => {
                 >
                   <option value="">Select Status</option>
                   <option value="Active">Active</option>
-                  <option value="Blocked">BLOCKED</option>
                   <option value="In-Active">In-Active</option>
                 </Input>
                 {validation.touched.status && validation.errors.status ? (

@@ -5,9 +5,6 @@ import {
   ADD_SUBLOCATION,
   ADD_SUBLOCATION_SUCCESS,
   ADD_SUBLOCATION_FAIL,
-  GET_LOCLIST,
-  GET_LOCLIST_SUCCESS,
-  GET_LOCLIST_FAIL,
 } from "./actionTypes";
 
 export const getSublocation = () => ({
@@ -39,22 +36,5 @@ export const addSubLocationSuccess = (sublocation) => ({
 
 export const addSubLocationFail = (error) => ({
   type: ADD_SUBLOCATION_FAIL,
-  payload: error,
-});
-
-export const getLoclist = () => ({
-  type: GET_LOCLIST,
-});
-
-export const getLoclistSuccess = (loclist) => {
-  console.log("Received location list:", loclist);
-  return {
-    type: GET_LOCLIST_SUCCESS,
-    payload: loclist,
-  };
-};
-
-export const getloclistFail = (error) => ({
-  type: GET_LOCLIST_FAIL,
   payload: error,
 });

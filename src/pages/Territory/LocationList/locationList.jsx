@@ -218,18 +218,6 @@ const LocationList = (props) => {
     }
   }, [dispatch, locations]);
 
-  // useEffect(() => {
-  //   setContact(users);
-  //   setIsEdit(false);
-  // }, [users]);
-
-  // useEffect(() => {
-  //   if (!isEmpty(users) && !!isEdit) {
-  //     setContact(users);
-  //     setIsEdit(false);
-  //   }
-  // }, [users]);
-
   const toggle = () => {
     setShowAddLocation(!showAddLocation);
   };
