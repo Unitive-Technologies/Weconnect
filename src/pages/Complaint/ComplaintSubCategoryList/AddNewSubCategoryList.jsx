@@ -19,6 +19,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewComplaintSubCategory as onAddNewComplaintSubCategory } from "/src/store/complaintsubcategorylist/actions";
 import { useSelector, useDispatch } from "react-redux";
+import AddNewMatrix from "./AddNewMatrix";
 
 const AddNewSubCategoryList = (props) => {
   const { isOpen, toggle } = props;
@@ -76,6 +77,7 @@ const AddNewSubCategoryList = (props) => {
     <Modal
       isOpen={isOpen}
       role="dialog"
+      size="xl"
       autoFocus={true}
       centered={true}
       className="exampleModal"
@@ -93,7 +95,7 @@ const AddNewSubCategoryList = (props) => {
           }}
         >
           <Row>
-            <Col sm="12">
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">Name<span style={{ color: 'red' }}>*</span></Label>
                 <Input
@@ -111,7 +113,8 @@ const AddNewSubCategoryList = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">Category<span style={{ color: 'red' }}>*</span></Label>
                 <Input
@@ -123,7 +126,7 @@ const AddNewSubCategoryList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.category_lbl || ""}
                 >
-                  <option value="101"></option>
+                  <option value="101">Select Category</option>
                   <option value="102">STB Power Issue</option>
                 </Input>
                 {validation.touched.category_lbl && validation.errors.category_lbl ? (
@@ -132,6 +135,8 @@ const AddNewSubCategoryList = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+            <Col sm="4">
 
               <div className="mb-3">
                 <Label className="form-label">Status<span style={{ color: 'red' }}>*</span></Label>
@@ -154,7 +159,10 @@ const AddNewSubCategoryList = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+          </Row>
+          <Row>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">Show on Web<span style={{ color: 'red' }}>*</span></Label>
                 <Input
@@ -176,7 +184,8 @@ const AddNewSubCategoryList = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">Description<span style={{ color: 'red' }}>*</span></Label>
                 <Input
@@ -201,9 +210,10 @@ const AddNewSubCategoryList = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
             </Col>
+            <Col sm="4"></Col>
           </Row>
+          <AddNewMatrix />
           <Row>
             <Col sm="8">
               <div className="d-flex flex-wrap gap-2">

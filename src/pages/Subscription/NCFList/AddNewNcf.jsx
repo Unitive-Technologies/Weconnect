@@ -141,13 +141,13 @@ const AddNewNcf = (props) => {
                   value={validation.values.from_channel_no || ""}
                   invalid={
                     validation.touched.from_channel_no &&
-                    validation.errors.from_channel_no
+                      validation.errors.from_channel_no
                       ? true
                       : false
                   }
                 />
                 {validation.touched.from_channel_no &&
-                validation.errors.from_channel_no ? (
+                  validation.errors.from_channel_no ? (
                   <FormFeedback type="invalid">
                     {validation.errors.from_channel_no}
                   </FormFeedback>
@@ -192,13 +192,13 @@ const AddNewNcf = (props) => {
                   value={validation.values.to_channel_no || ""}
                   invalid={
                     validation.touched.to_channel_no &&
-                    validation.errors.to_channel_no
+                      validation.errors.to_channel_no
                       ? true
                       : false
                   }
                 />
                 {validation.touched.to_channel_no &&
-                validation.errors.to_channel_no ? (
+                  validation.errors.to_channel_no ? (
                   <FormFeedback type="invalid">
                     {validation.errors.to_channel_no}
                   </FormFeedback>
@@ -248,7 +248,7 @@ const AddNewNcf = (props) => {
                   <option value="No">No</option>
                 </Input>
                 {validation.touched.is_refundable &&
-                validation.errors.is_refundable ? (
+                  validation.errors.is_refundable ? (
                   <FormFeedback type="invalid">
                     {validation.errors.is_refundable}
                   </FormFeedback>
@@ -274,7 +274,7 @@ const AddNewNcf = (props) => {
                   <option value="1">No</option>
                 </Input>
                 {validation.touched.calculate_per_channel &&
-                validation.errors.calculate_per_channel ? (
+                  validation.errors.calculate_per_channel ? (
                   <FormFeedback type="invalid">
                     {validation.errors.calculate_per_channel}
                   </FormFeedback>
@@ -345,13 +345,13 @@ const AddNewNcf = (props) => {
                     value={validation.values.lmo_discount || ""}
                     invalid={
                       validation.touched.lmo_discount &&
-                      validation.errors.lmo_discount
+                        validation.errors.lmo_discount
                         ? true
                         : false
                     }
                   />
                   {validation.touched.lmo_discount &&
-                  validation.errors.lmo_discount ? (
+                    validation.errors.lmo_discount ? (
                     <FormFeedback type="invalid">
                       {validation.errors.lmo_discount}
                     </FormFeedback>
@@ -473,13 +473,13 @@ const AddNewNcf = (props) => {
                     value={validation.values.lmo_discount || ""}
                     invalid={
                       validation.touched.lmo_discount &&
-                      validation.errors.lmo_discount
+                        validation.errors.lmo_discount
                         ? true
                         : false
                     }
                   />
                   {validation.touched.lmo_discount &&
-                  validation.errors.lmo_discount ? (
+                    validation.errors.lmo_discount ? (
                     <FormFeedback type="invalid">
                       {validation.errors.lmo_discount}
                     </FormFeedback>
@@ -530,7 +530,7 @@ const AddNewNcf = (props) => {
                     <option value="1">No</option>
                   </Input>
                   {validation.touched.calculate_per_channel &&
-                  validation.errors.calculate_per_channel ? (
+                    validation.errors.calculate_per_channel ? (
                     <FormFeedback type="invalid">
                       {validation.errors.calculate_per_channel}
                     </FormFeedback>
@@ -556,7 +556,7 @@ const AddNewNcf = (props) => {
                     <option value="No">No</option>
                   </Input>
                   {validation.touched.is_refundable &&
-                  validation.errors.is_refundable ? (
+                    validation.errors.is_refundable ? (
                     <FormFeedback type="invalid">
                       {validation.errors.is_refundable}
                     </FormFeedback>

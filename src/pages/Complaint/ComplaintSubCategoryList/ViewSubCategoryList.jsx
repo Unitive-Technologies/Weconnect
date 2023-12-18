@@ -95,7 +95,7 @@ const ViewSubCategoryList = (props) => {
                         }}
                     >
                         <Row>
-                            <Col sm="12">
+                            <Col sm="4">
                                 <div className="mb-3">
                                     <Label className="form-label">Name<span style={{ color: 'red' }}>*</span></Label>
                                     <Input
@@ -113,7 +113,8 @@ const ViewSubCategoryList = (props) => {
                                         </FormFeedback>
                                     ) : null}
                                 </div>
-
+                            </Col>
+                            <Col sm="4">
                                 <div className="mb-3">
                                     <Label className="form-label">Category<span style={{ color: 'red' }}>*</span></Label>
                                     <Input
@@ -134,7 +135,8 @@ const ViewSubCategoryList = (props) => {
                                         </FormFeedback>
                                     ) : null}
                                 </div>
-
+                            </Col>
+                            <Col sm="4">
                                 <div className="mb-3">
                                     <Label className="form-label">Status<span style={{ color: 'red' }}>*</span></Label>
                                     <Input
@@ -156,7 +158,10 @@ const ViewSubCategoryList = (props) => {
                                         </FormFeedback>
                                     ) : null}
                                 </div>
-
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col sm="4">
                                 <div className="mb-3">
                                     <Label className="form-label">Show on Web<span style={{ color: 'red' }}>*</span></Label>
                                     <Input
@@ -178,7 +183,8 @@ const ViewSubCategoryList = (props) => {
                                         </FormFeedback>
                                     ) : null}
                                 </div>
-
+                            </Col>
+                            <Col sm="4">
                                 <div className="mb-3">
                                     <Label className="form-label">Description<span style={{ color: 'red' }}>*</span></Label>
                                     <Input
@@ -203,7 +209,6 @@ const ViewSubCategoryList = (props) => {
                                         </FormFeedback>
                                     ) : null}
                                 </div>
-
                             </Col>
                         </Row>
                         <Row>
