@@ -4,7 +4,7 @@ import TableContainer from "../../../components/Common/TableContainer";
 import { Card, CardBody, Input } from "reactstrap";
 import { Link } from "react-router-dom";
 
-const AddNewMatrix = (props) => {
+const ViewMatrix = (props) => {
     const columns = useMemo(
         () => [
             {
@@ -84,9 +84,9 @@ const AddNewMatrix = (props) => {
     );
 };
 
-AddNewMatrix.propTypes = {
+ViewMatrix.propTypes = {
     toggle: PropTypes.func,
     isOpen: PropTypes.bool,
 };
 
-export default AddNewMatrix;
+export default ViewMatrix;

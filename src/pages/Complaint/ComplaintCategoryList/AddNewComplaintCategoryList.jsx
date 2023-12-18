@@ -10,6 +10,7 @@ import {
   ModalHeader,
   ModalBody,
   Label,
+  ModalFooter,
   FormFeedback,
   UncontrolledTooltip,
   Input,
@@ -77,7 +78,7 @@ const AddNewComplaintCategoryList = (props) => {
       tabIndex="-1"
       toggle={toggle}
     >
-      <ModalHeader tag="h4">Add New Complaint Category</ModalHeader>
+      <ModalHeader tag="h4" toggle={toggle}>Add New Complaint Category</ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -189,8 +190,8 @@ const AddNewComplaintCategoryList = (props) => {
             </div>
           </Col>
           <Row>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
+            <Col>
+              <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
                   Save
                 </button>
@@ -211,7 +212,7 @@ const AddNewComplaintCategoryList = (props) => {
                 >
                   Cancel
                 </button>
-              </div>
+              </ModalFooter>
             </Col>
           </Row>
         </Form>

@@ -14,6 +14,7 @@ import {
   UncontrolledTooltip,
   Input,
   Form,
+  ModalFooter,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -85,7 +86,7 @@ const AddNewSubCategoryList = (props) => {
       toggle={toggle}
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4">Add New Complaint Sub-Category</ModalHeader>
+      <ModalHeader tag="h4" toggle={toggle}>Add New Complaint Sub-Category</ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -213,10 +214,37 @@ const AddNewSubCategoryList = (props) => {
             </Col>
             <Col sm="4"></Col>
           </Row>
-          <AddNewMatrix />
+
+          <div
+            style={{
+              // margin: "20px 0px",
+              marginTop: "20px",
+              marginBottom: "18px",
+              zIndex: 12000,
+              backgroundColor: "#fff",
+              width: "fit-content",
+              marginLeft: "40%",
+              position: "absolute",
+              padding: "0px 10px",
+            }}
+          >
+
+            <h5 style={{}}>Escalation Matrix<span style={{ color: 'red' }}>*</span></h5>
+          </div>
+          <Row style={{
+            position: "relative",
+            border: "1px solid #ced4da",
+            padding: "20px 0px",
+            margin: "30px 0px",
+          }}>
+            <Col sm="12">
+              <AddNewMatrix />
+            </Col>
+          </Row>
+
           <Row>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
+            <Col>
+              <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
                   Save
                 </button>
@@ -238,7 +266,7 @@ const AddNewSubCategoryList = (props) => {
                 >
                   Cancel
                 </button>
-              </div>
+              </ModalFooter>
             </Col>
           </Row>
         </Form>
