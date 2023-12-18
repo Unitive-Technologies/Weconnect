@@ -1,20 +1,16 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Card,
   CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
   Label,
-  FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
-  CardTitle,
   CardSubtitle,
 } from "reactstrap";
 import { Link } from "react-router-dom";
@@ -25,7 +21,7 @@ import Select from "react-select";
 import { useSelector, useDispatch } from "react-redux";
 
 const UploadLocation = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleUploadLocation } = props;
   const dispatch = useDispatch();
   const [selectedFiles, setselectedFiles] = useState([]);
 
@@ -108,20 +104,20 @@ const UploadLocation = (props) => {
     <Modal
       isOpen={isOpen}
       role="dialog"
+      size="xl"
       autoFocus={true}
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleUploadLocation}
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader toggle={toggle} tag="h4">
+      <ModalHeader toggle={handleUploadLocation} tag="h4">
         Upload Locations
       </ModalHeader>
       <ModalBody>
         <Card>
           <CardBody>
-            <div className="text-left  r-0" style={{ marginLeft: "45%" }}>
+            <div className="text-left mb-4 r-0" style={{ marginLeft: "78%" }}>
               <button
                 type="button"
                 className="btn btn-primary"
@@ -130,49 +126,54 @@ const UploadLocation = (props) => {
                 Download Sample Upload File
               </button>
             </div>
-
-            <div className="mb-3">
-              <Label className="form-label"> LCO</Label>
-              <Select
-                name="lco"
-                options={options}
-                // onChange={(selectedOption) =>
-                //   validation.handleChange(selectedOption.value)
-                // }
-                // onBlur={validation.handleBlur}
-                // value={options.find(
-                //   (opt) => opt.value === validation.values.lco
-                // )}
-                styles={customStyles}
-              />
-              {/* {validation.touched.state_lbl && validation.errors.state_lbl ? (
+            <Row>
+              <Col lg={6}>
+                <div className="mb-3">
+                  <Label className="form-label"> LCO</Label>
+                  <Select
+                    name="lco"
+                    options={options}
+                    // onChange={(selectedOption) =>
+                    //   validation.handleChange(selectedOption.value)
+                    // }
+                    // onBlur={validation.handleBlur}
+                    // value={options.find(
+                    //   (opt) => opt.value === validation.values.lco
+                    // )}
+                    styles={customStyles}
+                  />
+                  {/* {validation.touched.state_lbl && validation.errors.state_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.state_lbl}
                   </FormFeedback>
                 ) : null} */}
-            </div>
-            <div className="mb-3">
-              <Label className="form-label">Status</Label>
-              <Input
-                name="status"
-                type="select"
-                placeholder="Select Status"
-                className="form-select"
-                // onChange={validation.handleChange}
-                // onBlur={validation.handleBlur}
-                // value={validation.values.status || ""}
-              >
-                <option value="">Select Status</option>
-                <option value="11">Active</option>
-                <option value="12">BLOCKED</option>
-                <option value="13">In-Active</option>
-              </Input>
-              {/* {validation.touched.status && validation.errors.status ? (
+                </div>
+              </Col>
+              <Col lg={6}>
+                <div className="mb-3">
+                  <Label className="form-label">Status</Label>
+                  <Input
+                    name="status"
+                    type="select"
+                    placeholder="Select Status"
+                    className="form-select"
+                    // onChange={validation.handleChange}
+                    // onBlur={validation.handleBlur}
+                    // value={validation.values.status || ""}
+                  >
+                    <option value="">Select Status</option>
+                    <option value="11">Active</option>
+                    <option value="12">BLOCKED</option>
+                    <option value="13">In-Active</option>
+                  </Input>
+                  {/* {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
                     {validation.errors.status}
                   </FormFeedback>
                 ) : null} */}
-            </div>
+                </div>
+              </Col>
+            </Row>
           </CardBody>
           <CardBody>
             <CardSubtitle className="mb-3">
@@ -236,31 +237,26 @@ const UploadLocation = (props) => {
                 })}
               </div>
             </Form>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
-                <button type="button" className="btn btn-primary ">
+            <div className="text-center mt-4 ">
+              <div
+                style={{
+                  display: "flex",
+                  gap: 5,
+                  textAlign: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <button type="button" className="btn btn-primary mr-2 ">
                   Upload File
                 </button>
-                <button
-                  type="reset"
-                  className="btn btn-warning"
-                  //   onClick={() => validation.resetForm()}
-                >
+                <button type="button" className="btn btn-primary ml-2 ">
                   Reset
                 </button>
-
-                <button
-                  type="button"
-                  className="btn btn-outline-danger"
-                  //   onClick={() => {
-                  //     validation.resetForm();
-                  //     toggle();
-                  //   }}
-                >
+                <button type="button" className="btn btn-primary ">
                   Cancel
                 </button>
               </div>
-            </Col>
+            </div>
           </CardBody>
         </Card>
       </ModalBody>
@@ -270,7 +266,7 @@ const UploadLocation = (props) => {
 };
 
 UploadLocation.propTypes = {
-  toggle: PropTypes.func,
+  handleUploadLocation: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 

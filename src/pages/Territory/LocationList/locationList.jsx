@@ -22,7 +22,7 @@ import ViewLocation from "./ViewLocation";
 
 const LocationList = (props) => {
   //meta title
-  document.title = "Location List | VDigital";
+  document.title = "Locations | VDigital";
 
   const dispatch = useDispatch();
 
@@ -37,19 +37,13 @@ const LocationList = (props) => {
 
   const { locations, loading } = useSelector(locationProperties);
 
-  useEffect(() => {
-    // console.log("Customer Users data in component:", locations);
-  }, [locations]);
-
   const [isLoading, setLoading] = useState(loading);
-  const [userList, setUserList] = useState([]);
   const [showAddLocation, setShowAddLocation] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
   const [showUploadLocation, setShowUploadLocation] = useState(false);
   const [showViewLocation, setShowViewLocation] = useState(false);
   const [viewLocationData, setViewLocationData] = useState({});
 
-  const toggleViewLocation = (userData) => {
+  const handleViewLocation = (userData) => {
     console.log("User Data: ", userData);
     setShowViewLocation(!showViewLocation);
     setViewLocationData(userData);
@@ -88,7 +82,7 @@ const LocationList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  toggleViewLocation(userData);
+                  handleViewLocation(userData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -214,68 +208,15 @@ const LocationList = (props) => {
   useEffect(() => {
     if (locations && !locations.length) {
       dispatch(onGetLocation());
-      setIsEdit(false);
     }
   }, [dispatch, locations]);
 
-  const toggle = () => {
+  const handleAddLocation = () => {
     setShowAddLocation(!showAddLocation);
   };
 
-  const toggle1 = () => {
+  const handleUploadLocation = () => {
     setShowUploadLocation(!showUploadLocation);
-  };
-
-  const handleUserClick = (arg) => {
-    const user = arg;
-
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-    setIsEdit(true);
-
-    toggle();
-  };
-
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
-
-  //delete customer
-  const [deleteModal, setDeleteModal] = useState(false);
-
-  const onClickDelete = (users) => {
-    setContact(users);
-    setDeleteModal(true);
-  };
-
-  const handleDeleteUser = () => {
-    if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
-    }
-    setContact("");
-    onPaginationPageChange(1);
-    setDeleteModal(false);
-  };
-
-  const handleUserClicks = () => {
-    setUserList("");
-    setIsEdit(false);
-    toggle();
   };
 
   const keyField = "id";
@@ -301,15 +242,21 @@ const LocationList = (props) => {
     <React.Fragment>
       <ViewLocation
         isOpen={showViewLocation}
-        toggle={toggleViewLocation}
+        handleViewLocation={handleViewLocation}
         location={viewLocationData}
       />
-      <AddNewLocation isOpen={showAddLocation} toggle={toggle} />
-      <UploadLocation isOpen={showUploadLocation} toggle={toggle1} />
+      <AddNewLocation
+        isOpen={showAddLocation}
+        handleAddLocation={handleAddLocation}
+      />
+      <UploadLocation
+        isOpen={showUploadLocation}
+        handleUploadLocation={handleUploadLocation}
+      />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Territory" breadcrumbItem="Location List" />
+          <Breadcrumbs title="Territory" breadcrumbItem="Locations" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -326,8 +273,6 @@ const LocationList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleLocationClick={() => setShowAddLocation(true)}
-                      handleUploadLocation={() => setShowUploadLocation(true)}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

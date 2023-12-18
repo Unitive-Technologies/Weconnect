@@ -1,17 +1,14 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
+  ModalFooter,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
@@ -21,9 +18,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { getLco as onGetLco } from "/src/store/actions";
 import Select from "react-select";
+import { Link } from "react-router-dom";
 
 const ViewLocation = (props) => {
-  const { isOpen, toggle, location } = props;
+  const { isOpen, handleViewLocation, location } = props;
   const dispatch = useDispatch();
   const [showEditLocation, setShowEditLocation] = useState(false);
   const selectLcoState = (state) => state.lco;
@@ -89,12 +87,12 @@ const ViewLocation = (props) => {
       // save new user
       dispatch(onAddDistrict(updateLocation));
       validation.resetForm();
-      toggle();
+      handleViewLocation();
     },
   });
 
-  const editToggle = () => {
-    toggle();
+  const handleCancel = () => {
+    handleViewLocation();
     setShowEditLocation(false);
   };
 
@@ -106,21 +104,27 @@ const ViewLocation = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleCancel}
+      size="xl"
     >
-      {!showEditLocation ? (
-        <ModalHeader toggle={toggle} tag="h4">
-          View {validation.values.name}
-          <i
-            className="bx bx bxs-edit"
-            style={{ marginLeft: "300px", cursor: "pointer" }}
-            onClick={() => setShowEditLocation(true)}
-          ></i>
-        </ModalHeader>
-      ) : (
-        <ModalHeader toggle={editToggle} tag="h4">
-          Edit Location
-        </ModalHeader>
+      <ModalHeader toggle={handleCancel} tag="h4">
+        {!showEditLocation
+          ? `View ${(location && location.name) || ""}`
+          : `Edit ${(location && location.name) || ""}`}
+      </ModalHeader>
+      {!showEditLocation && (
+        <Link
+          style={{
+            position: "absolute",
+            marginLeft: "92%",
+            marginTop: "1%",
+          }}
+          to="#!"
+          className="btn btn-light me-1"
+          onClick={() => setShowEditLocation(true)}
+        >
+          <i className="mdi mdi-pencil-outline"></i>
+        </Link>
       )}
       <ModalBody>
         <Form
@@ -131,7 +135,7 @@ const ViewLocation = (props) => {
           }}
         >
           <Row>
-            <Col sm="12">
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Location Name</Label>
                 <Input
@@ -154,7 +158,8 @@ const ViewLocation = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Select LCO</Label>
                 <Select
@@ -177,7 +182,8 @@ const ViewLocation = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Status</Label>
                 <Input
@@ -204,15 +210,35 @@ const ViewLocation = (props) => {
               </div>
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <div className="text-end">
-                <button type="submit" className="btn btn-success save-user">
-                  Save
-                </button>
-              </div>
-            </Col>
-          </Row>
+          {showEditLocation && (
+            <Row>
+              <Col>
+                <ModalFooter>
+                  <button type="submit" className="btn btn-success save-user">
+                    Save
+                  </button>
+                  <button
+                    type="reset"
+                    className="btn btn-warning"
+                    onClick={() => validation.resetForm()}
+                  >
+                    Reset
+                  </button>
+
+                  <button
+                    type="button"
+                    className="btn btn-outline-danger"
+                    onClick={() => {
+                      validation.resetForm();
+                      handleCancel();
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </ModalFooter>
+              </Col>
+            </Row>
+          )}
         </Form>
       </ModalBody>
       {/* </Modal> */}
@@ -221,7 +247,7 @@ const ViewLocation = (props) => {
 };
 
 ViewLocation.propTypes = {
-  toggle: PropTypes.func,
+  handleViewLocation: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 

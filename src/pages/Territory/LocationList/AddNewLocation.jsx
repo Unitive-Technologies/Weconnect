@@ -1,19 +1,16 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
+  ModalFooter,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -24,7 +21,7 @@ import { getLco as onGetLco } from "/src/store/actions";
 import Select from "react-select";
 
 const AddNewLocation = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleAddLocation } = props;
   const dispatch = useDispatch();
   const [selectedLco, setSelectedLco] = useState(null);
 
@@ -91,7 +88,7 @@ const AddNewLocation = (props) => {
       console.log("new location:" + newLocation);
       dispatch(onAddLocation(newLocation));
       validation.resetForm();
-      toggle();
+      handleAddLocation();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -102,13 +99,14 @@ const AddNewLocation = (props) => {
     <Modal
       isOpen={isOpen}
       role="dialog"
+      size="xl"
       autoFocus={true}
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleAddLocation}
     >
-      <ModalHeader tag="h4" toggle={toggle}>
+      <ModalHeader tag="h4" toggle={handleAddLocation}>
         Add New Location
       </ModalHeader>
       <ModalBody>
@@ -120,7 +118,7 @@ const AddNewLocation = (props) => {
           }}
         >
           <Row>
-            <Col sm="12">
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Location Name<span style={{ color: "red" }}>*</span>
@@ -144,13 +142,15 @@ const AddNewLocation = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>{" "}
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Select LCO<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Select
                   name="operator_id"
+                  type="select"
                   options={options}
                   onChange={(selectedOption) => {
                     console.log("SelectedOption: ", selectedOption);
@@ -175,7 +175,8 @@ const AddNewLocation = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>{" "}
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Status<span style={{ color: "red" }}>*</span>
@@ -203,8 +204,8 @@ const AddNewLocation = (props) => {
             </Col>
           </Row>
           <Row>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
+            <Col>
+              <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
                   Save
                 </button>
@@ -221,12 +222,12 @@ const AddNewLocation = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    toggle();
+                    handleAddLocation();
                   }}
                 >
                   Cancel
                 </button>
-              </div>
+              </ModalFooter>
             </Col>
           </Row>
         </Form>
@@ -237,7 +238,7 @@ const AddNewLocation = (props) => {
 };
 
 AddNewLocation.propTypes = {
-  toggle: PropTypes.func,
+  handleAddLocation: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
