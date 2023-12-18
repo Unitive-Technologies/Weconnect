@@ -76,7 +76,7 @@ const NCFList = (props) => {
         Cell: () => {
           return (
             <>
-              <input type="checkbox" />
+              <input type="checkbox" name="selected" />
             </>
           );
         },

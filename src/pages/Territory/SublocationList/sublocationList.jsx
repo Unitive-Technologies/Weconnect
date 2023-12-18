@@ -325,7 +325,7 @@ const SublocationList = (props) => {
         sublocation={viewSubLocationData}
       />
       <AddSubLocation isOpen={showAddSubLocation} toggle={toggle} />
-      {/* <UploadSubLocation isOpen={showUploadSubLocation} toggle={uploadToggle} /> */}
+      <UploadSubLocation isOpen={showUploadSubLocation} toggle={uploadToggle} />
       <div className="page-content">
         <Container fluid>
           <Breadcrumbs title="Territory" breadcrumbItem="Sublocation List" />
