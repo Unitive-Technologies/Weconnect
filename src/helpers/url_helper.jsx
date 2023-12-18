@@ -40,7 +40,7 @@ export const ADD_DISTRICT = "/add/district";
 export const GET_CITY = "/citylist";
 export const ADD_CITY = "/add/city";
 
-export const GET_LOCATION = "/locationlist";
+export const GET_LOCATION = "/location?expand=created_by_lbl,operator_lbl,operator_code,status_lbl&page=2&per-page=50&vr=web1.0";
 export const ADD_LOCATION = "/add/location";
 
 export const GET_SUBLOCATION = "/sublocationlist";

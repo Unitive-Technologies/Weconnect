@@ -16,7 +16,7 @@ const INIT_STATE = {
 const Lco = (state = INIT_STATE, action) => {
   switch (action.type) {
     case GET_LCO_SUCCESS:
-      console.log("Lco data in reducer:", action.payload);
+      // console.log("Lco data in reducer:", action.payload);
       return {
         ...state,
         lco: action.payload,

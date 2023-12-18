@@ -15,7 +15,7 @@ export const getLco = () => ({
 });
 
 export const getLcoSuccess = (lco) => {
-  console.log("Received LCO List:", lco);
+  // console.log("Received LCO List:", lco);
   return {
     type: GET_LCO_SUCCESS,
     payload: lco,
