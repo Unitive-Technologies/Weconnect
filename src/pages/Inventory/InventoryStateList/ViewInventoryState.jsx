@@ -76,6 +76,7 @@ const ViewInventoryState = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
+      size="xl"
       toggle={toggle}
     >
       {!showEditInventoryState ? (
@@ -83,18 +84,13 @@ const ViewInventoryState = (props) => {
           View {validation.values.name}
           <i
             className="bx bx bxs-edit"
-            style={{
-              position: "absolute",
-              marginLeft: "55%",
-              cursor: "pointer",
-              marginTop: "1%",
-            }}
+            style={{ marginLeft: "20px", cursor: "pointer" }}
             onClick={() => setShowEditInventaryState(true)}
           ></i>
         </ModalHeader>
       ) : (
         <ModalHeader toggle={editToggle} tag="h4">
-          Edit Brand
+          Edit {validation.values.name}
         </ModalHeader>
       )}
       <ModalBody>
@@ -106,7 +102,7 @@ const ViewInventoryState = (props) => {
           }}
         >
           <Row>
-            <Col sm="12">
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Name<span style={{ color: "red" }}>*</span>
@@ -130,7 +126,8 @@ const ViewInventoryState = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Code<span style={{ color: "red" }}>*</span>
@@ -154,7 +151,8 @@ const ViewInventoryState = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   State Type<span style={{ color: "red" }}>*</span>
@@ -174,13 +172,14 @@ const ViewInventoryState = (props) => {
                   <option value="Blacklist">Blacklist</option>
                 </Input>
                 {validation.touched.state_type_lbl &&
-                validation.errors.state_type_lbl ? (
+                  validation.errors.state_type_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.state_type_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Description<span style={{ color: "red" }}>*</span>
@@ -194,19 +193,22 @@ const ViewInventoryState = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+          </Row>
+          <Row>
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Status<span style={{ color: "red" }}>*</span>

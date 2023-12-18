@@ -98,11 +98,11 @@ const UploadWareHouse = (props) => {
       <ModalBody>
         <Card>
           <CardBody>
-            <div className="text-left mb-4 r-0" style={{ marginLeft: "45%" }}>
+            <div className="text-left mb-4 r-0" style={{ marginLeft: "78%" }}>
               <button
                 type="button"
                 className="btn btn-primary"
-                onClick={handleDownloadSampleFile}
+              // onClick={handleDownloadSampleFile}
               >
                 Download Sample Upload File
               </button>
@@ -192,8 +192,8 @@ const UploadWareHouse = (props) => {
                 })}
               </div>
             </Form>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
+            <Col>
+              <ModalFooter>
                 <button type="button" className="btn btn-primary ">
                   Upload File
                 </button>
@@ -215,7 +215,7 @@ const UploadWareHouse = (props) => {
                 >
                   Cancel
                 </button>
-              </div>
+              </ModalFooter>
             </Col>
           </CardBody>
         </Card>

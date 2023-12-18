@@ -257,7 +257,7 @@ const InventoryStateList = (props) => {
                       columns={columns}
                       data={inventstate}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleUserClick={() => setShowAddInventoryState(true)}

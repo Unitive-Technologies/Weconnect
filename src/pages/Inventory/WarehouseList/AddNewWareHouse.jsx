@@ -7,6 +7,7 @@ import {
   Container,
   Row,
   Modal,
+  ModalFooter,
   ModalHeader,
   ModalBody,
   Label,
@@ -81,6 +82,7 @@ const AddNewWareHouse = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
+      size="xl"
       toggle={toggle}
     >
       <ModalHeader toggle={toggle} tag="h4">
@@ -95,7 +97,7 @@ const AddNewWareHouse = (props) => {
           }}
         >
           <Row>
-            <Col sm="12">
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Name<span style={{ color: "red" }}>*</span>
@@ -119,7 +121,8 @@ const AddNewWareHouse = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Contact Person<span style={{ color: "red" }}>*</span>
@@ -133,19 +136,20 @@ const AddNewWareHouse = (props) => {
                   value={validation.values.contact_person || ""}
                   invalid={
                     validation.touched.contact_person &&
-                    validation.errors.contact_person
+                      validation.errors.contact_person
                       ? true
                       : false
                   }
                 />
                 {validation.touched.contact_person &&
-                validation.errors.contact_person ? (
+                  validation.errors.contact_person ? (
                   <FormFeedback type="invalid">
                     {validation.errors.contact_person}
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Contact No.<span style={{ color: "red" }}>*</span>
@@ -169,7 +173,8 @@ const AddNewWareHouse = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Status<span style={{ color: "red" }}>*</span>
@@ -193,7 +198,10 @@ const AddNewWareHouse = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+          </Row>
+          <Row>
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Operator<span style={{ color: "red" }}>*</span>
@@ -217,7 +225,8 @@ const AddNewWareHouse = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Description<span style={{ color: "red" }}>*</span>
@@ -231,19 +240,20 @@ const AddNewWareHouse = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
                   Address<span style={{ color: "red" }}>*</span>
@@ -270,8 +280,8 @@ const AddNewWareHouse = (props) => {
             </Col>
           </Row>
           <Row>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
+            <Col>
+              <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
                   Save
                 </button>
@@ -293,7 +303,7 @@ const AddNewWareHouse = (props) => {
                 >
                   Cancel
                 </button>
-              </div>
+              </ModalFooter>
             </Col>
           </Row>
         </Form>
