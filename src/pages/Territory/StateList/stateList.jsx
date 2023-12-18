@@ -115,7 +115,6 @@ const StateList = (props) => {
   useEffect(() => {
     if (stateUser && !stateUser.length) {
       dispatch(onGetStateUsers());
-      setIsEdit(false);
     }
   }, [dispatch, stateUser]);
 

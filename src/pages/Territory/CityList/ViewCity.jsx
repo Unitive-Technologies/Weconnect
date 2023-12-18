@@ -1,27 +1,25 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
+  ModalFooter,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const ViewCity = (props) => {
-  const { isOpen, toggle, city } = props;
+  const { isOpen, handleViewCity, city } = props;
   const dispatch = useDispatch();
   const [showEditCity, setShowEditCity] = useState(false);
 
@@ -59,45 +57,46 @@ const ViewCity = (props) => {
       // console.log("new district:" + updateCity);
       dispatch(onAddDistrict(updateCity));
       validation.resetForm();
-      toggle();
+      handleViewCity();
     },
   });
 
-  const editToggle = () => {
+  const handleCancel = () => {
     setShowEditCity(false);
-    toggle();
+    handleViewCity();
   };
 
-  console.log("Show Edit city status: ", showEditCity);
+  // console.log("Show Edit city status: ", showEditCity);
 
   return (
     <Modal
       isOpen={isOpen}
       role="dialog"
+      size="xl"
       autoFocus={true}
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleCancel}
     >
-      {!showEditCity ? (
-        <ModalHeader toggle={toggle} tag="h4">
-          View {validation.values.name}
-          <i
-            className="bx bx bxs-edit"
-            style={{
-              position: "absolute",
-              marginLeft: "55%",
-              cursor: "pointer",
-              marginTop: "1%",
-            }}
-            onClick={() => setShowEditCity(true)}
-          ></i>
-        </ModalHeader>
-      ) : (
-        <ModalHeader toggle={editToggle} tag="h4">
-          Edit City
-        </ModalHeader>
+      <ModalHeader toggle={handleCancel} tag="h4">
+        {!showEditCity
+          ? `View ${(city && city.name) || ""}`
+          : `Edit ${(city && city.name) || ""}`}
+      </ModalHeader>
+      {!showEditCity && (
+        <Link
+          style={{
+            position: "absolute",
+            marginLeft: "92%",
+            marginTop: "1%",
+          }}
+          to="#!"
+          className="btn btn-light me-1"
+          onClick={() => setShowEditCity(true)}
+        >
+          <i className="mdi mdi-pencil-outline"></i>
+        </Link>
       )}
       <ModalBody>
         <Form
@@ -108,7 +107,7 @@ const ViewCity = (props) => {
           }}
         >
           <Row>
-            <Col sm="12">
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   City Name<span style={{ color: "red" }}>*</span>
@@ -133,7 +132,8 @@ const ViewCity = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   State<span style={{ color: "red" }}>*</span>
@@ -160,7 +160,8 @@ const ViewCity = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   District<span style={{ color: "red" }}>*</span>
@@ -188,7 +189,8 @@ const ViewCity = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Description<span style={{ color: "red" }}>*</span>
@@ -216,7 +218,8 @@ const ViewCity = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Status<span style={{ color: "red" }}>*</span>
@@ -243,15 +246,35 @@ const ViewCity = (props) => {
               </div>
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <div className="text-end">
-                <button type="submit" className="btn btn-success save-user">
-                  Save
-                </button>
-              </div>
-            </Col>
-          </Row>
+          {showEditCity && (
+            <Row>
+              <Col>
+                <ModalFooter>
+                  <button type="submit" className="btn btn-success save-user">
+                    Save
+                  </button>
+                  <button
+                    type="reset"
+                    className="btn btn-warning"
+                    onClick={() => validation.resetForm()}
+                  >
+                    Reset
+                  </button>
+
+                  <button
+                    type="button"
+                    className="btn btn-outline-danger"
+                    onClick={() => {
+                      validation.resetForm();
+                      handleCancel();
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </ModalFooter>
+              </Col>
+            </Row>
+          )}
         </Form>
       </ModalBody>
       {/* </Modal> */}
@@ -260,7 +283,7 @@ const ViewCity = (props) => {
 };
 
 ViewCity.propTypes = {
-  toggle: PropTypes.func,
+  handleViewCity: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 

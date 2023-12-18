@@ -22,7 +22,7 @@ import ViewCity from "./ViewCity";
 
 const CityList = (props) => {
   //meta title
-  document.title = "City List | VDigital";
+  document.title = "Cities | VDigital";
 
   const dispatch = useDispatch();
 
@@ -34,20 +34,14 @@ const CityList = (props) => {
 
   const { cits, loading } = useSelector(cityProperties);
 
-  useEffect(() => {
-    // console.log("Customer Users data in component:", cits);
-  }, [cits]);
-
   const [isLoading, setLoading] = useState(loading);
 
-  const [userList, setUserList] = useState([]);
   const [showAddCity, setShowAddCity] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
   const [showUploadCity, setShowUploadCity] = useState(false);
   const [showViewCity, setShowViewCity] = useState(false);
   const [viewCityData, setViewCityData] = useState({});
 
-  const toggleViewCity = (userData) => {
+  const handleViewCity = (userData) => {
     console.log("User Data: ", userData);
     setShowViewCity(!showViewCity);
     setViewCityData(userData);
@@ -86,7 +80,7 @@ const CityList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  toggleViewCity(userData);
+                  handleViewCity(userData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -248,79 +242,15 @@ const CityList = (props) => {
   useEffect(() => {
     if (cits && !cits.length) {
       dispatch(onGetCity());
-      setIsEdit(false);
     }
   }, [dispatch, cits]);
 
-  // useEffect(() => {
-  //   setContact(users);
-  //   setIsEdit(false);
-  // }, [users]);
-
-  // useEffect(() => {
-  //   if (!isEmpty(users) && !!isEdit) {
-  //     setContact(users);
-  //     setIsEdit(false);
-  //   }
-  // }, [users]);
-
-  const toggle = () => {
+  const handleShowCity = () => {
     setShowAddCity(!showAddCity);
   };
 
-  const toggle1 = () => {
+  const handleUploadCity = () => {
     setShowUploadCity(!showUploadCity);
-  };
-  const handleUserClick = (arg) => {
-    const user = arg;
-
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-    setIsEdit(true);
-
-    toggle();
-  };
-
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
-
-  //delete customer
-  const [deleteModal, setDeleteModal] = useState(false);
-
-  const onClickDelete = (users) => {
-    setContact(users);
-    setDeleteModal(true);
-  };
-
-  const handleDeleteUser = () => {
-    if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
-    }
-    setContact("");
-    onPaginationPageChange(1);
-    setDeleteModal(false);
-  };
-
-  const handleUserClicks = () => {
-    setUserList("");
-    setIsEdit(false);
-    toggle();
   };
 
   const keyField = "id";
@@ -346,15 +276,15 @@ const CityList = (props) => {
     <React.Fragment>
       <ViewCity
         isOpen={showViewCity}
-        toggle={toggleViewCity}
+        handleViewCity={handleViewCity}
         city={viewCityData}
       />
-      <AddNewCity isOpen={showAddCity} toggle={toggle} />
-      <UploadCity isOpen={showUploadCity} toggle={toggle1} />
+      <AddNewCity isOpen={showAddCity} handleShowCity={handleShowCity} />
+      <UploadCity isOpen={showUploadCity} handleUploadCity={handleUploadCity} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Territory" breadcrumbItem="City List" />
+          <Breadcrumbs title="Territory" breadcrumbItem="Cities" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -371,8 +301,6 @@ const CityList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleUserClick={() => setShowAddCity(true)}
-                      handleUploadUser={() => setShowUploadCity(true)}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
