@@ -7,6 +7,7 @@ import {
   Container,
   Row,
   Modal,
+  ModalFooter,
   ModalHeader,
   ModalBody,
   Label,
@@ -88,6 +89,7 @@ const UploadWareHouse = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
+      size="xl"
       toggle={toggle}
     >
       <ModalHeader toggle={toggle} tag="h4">
@@ -112,9 +114,9 @@ const UploadWareHouse = (props) => {
                 type="select"
                 placeholder="Select Status"
                 className="form-select"
-                // onChange={validation.handleChange}
-                // onBlur={validation.handleBlur}
-                // value={validation.values.status || ""}
+              // onChange={validation.handleChange}
+              // onBlur={validation.handleBlur}
+              // value={validation.values.status || ""}
               >
                 <option value="">Select Status</option>
                 <option value="Active">Active</option>
@@ -198,7 +200,7 @@ const UploadWareHouse = (props) => {
                 <button
                   type="reset"
                   className="btn btn-warning"
-                  //   onClick={() => validation.resetForm()}
+                //   onClick={() => validation.resetForm()}
                 >
                   Reset
                 </button>
@@ -206,10 +208,10 @@ const UploadWareHouse = (props) => {
                 <button
                   type="button"
                   className="btn btn-outline-danger"
-                  //   onClick={() => {
-                  //     validation.resetForm();
-                  //     toggle();
-                  //   }}
+                //   onClick={() => {
+                //     validation.resetForm();
+                //     toggle();
+                //   }}
                 >
                   Cancel
                 </button>

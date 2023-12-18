@@ -7,6 +7,7 @@ import {
     Container,
     Row,
     Modal,
+    ModalFooter,
     ModalHeader,
     ModalBody,
     Label,
@@ -120,8 +121,7 @@ const NSTVList = (props) => {
             toggle={toggle}
             size="xl"
         >
-            {/* <Modal isOpen={modal} toggle={toggle}> */}
-            <ModalHeader tag="h4">Add New NSTV OSD Configuration</ModalHeader>
+            <ModalHeader tag="h4" toggle={toggle}>Add New NSTV OSD Configuration</ModalHeader>
             <ModalBody>
                 <Form
                     onSubmit={(e) => {
@@ -456,8 +456,8 @@ const NSTVList = (props) => {
                         </Col>
                     </Row>
                     <Row>
-                        <Col sm="8">
-                            <div className="d-flex flex-wrap gap-2">
+                        <Col>
+                            <ModalFooter>
                                 <button type="submit" className="btn btn-success save-user">
                                     Save
                                 </button>
@@ -472,7 +472,7 @@ const NSTVList = (props) => {
                                 >
                                     Cancel
                                 </button>
-                            </div>
+                            </ModalFooter>
                         </Col>
                     </Row>
                 </Form>

@@ -352,7 +352,7 @@ const OSDConfigurationList = (props) => {
                       columns={columns}
                       data={osdConfig}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleNSTV={() => setShowNSTV(true)}

@@ -302,7 +302,7 @@ const BrandList = (props) => {
                       columns={columns}
                       data={brand}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleUserClick={() => setShowAddBrand(true)}

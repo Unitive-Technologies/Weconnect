@@ -418,10 +418,10 @@ const CompanyList = (props) => {
                       columns={columns}
                       data={company}
                       isGlobalFilter={true}
-                      // isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
-                      handleUserClick={() => {}}
+                      handleUserClick={() => { }}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

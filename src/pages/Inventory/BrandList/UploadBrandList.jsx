@@ -16,6 +16,7 @@ import {
   Form,
   CardTitle,
   CardSubtitle,
+  ModalFooter,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
@@ -88,6 +89,7 @@ const UploadBrandList = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
+      size="xl"
       toggle={toggle}
     >
       <ModalHeader toggle={toggle} tag="h4">
@@ -96,11 +98,11 @@ const UploadBrandList = (props) => {
       <ModalBody>
         <Card>
           <CardBody>
-            <div className="text-left mb-4 r-0" style={{ marginLeft: "45%" }}>
+            <div className="text-left mb-4 r-0" style={{ marginLeft: "78%" }}>
               <button
                 type="button"
                 className="btn btn-primary"
-                onClick={handleDownloadSampleFile}
+              // onClick={handleDownloadSampleFile}
               >
                 Download Sample Upload File
               </button>
@@ -112,9 +114,9 @@ const UploadBrandList = (props) => {
                 type="select"
                 placeholder="Select Status"
                 className="form-select"
-                // onChange={validation.handleChange}
-                // onBlur={validation.handleBlur}
-                // value={validation.values.status || ""}
+              // onChange={validation.handleChange}
+              // onBlur={validation.handleBlur}
+              // value={validation.values.status || ""}
               >
                 <option value="">Select Status</option>
                 <option value="Active">Active</option>
@@ -187,15 +189,15 @@ const UploadBrandList = (props) => {
                 })}
               </div>
             </Form>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
+            <Col>
+              <ModalFooter>
                 <button type="button" className="btn btn-primary ">
                   Upload File
                 </button>
                 <button
                   type="reset"
                   className="btn btn-warning"
-                  //   onClick={() => validation.resetForm()}
+                //   onClick={() => validation.resetForm()}
                 >
                   Reset
                 </button>
@@ -203,14 +205,14 @@ const UploadBrandList = (props) => {
                 <button
                   type="button"
                   className="btn btn-outline-danger"
-                  //   onClick={() => {
-                  //     validation.resetForm();
-                  //     toggle();
-                  //   }}
+                //   onClick={() => {
+                //     validation.resetForm();
+                //     toggle();
+                //   }}
                 >
                   Cancel
                 </button>
-              </div>
+              </ModalFooter>
             </Col>
           </CardBody>
         </Card>

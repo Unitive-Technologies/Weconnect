@@ -392,7 +392,7 @@ const LanguageList = (props) => {
                       columns={columns}
                       data={langlist}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleAddNewLanguageList={() => setShowAddNewLanguageList(true)}

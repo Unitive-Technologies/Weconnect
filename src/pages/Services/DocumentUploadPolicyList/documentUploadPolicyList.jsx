@@ -401,7 +401,7 @@ const DocumentUploadPolicyList = (props) => {
                       columns={columns}
                       data={docupload}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleAddNewDocumentUploadPolicyList={() => setShowAddNewDocumentUploadPolicyList(true)}

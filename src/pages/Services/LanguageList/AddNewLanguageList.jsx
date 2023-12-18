@@ -8,6 +8,7 @@ import {
     Row,
     Modal,
     ModalHeader,
+    ModalFooter,
     ModalBody,
     Label,
     FormFeedback,
@@ -80,7 +81,7 @@ const AddNewLanguageList = (props) => {
             toggle={toggle}
         >
             {/* <Modal isOpen={modal} toggle={toggle}> */}
-            <ModalHeader tag="h4">Add New Language</ModalHeader>
+            <ModalHeader tag="h4" toggle={toggle}>Add New Language</ModalHeader>
             <ModalBody>
                 <Form
                     onSubmit={(e) => {
@@ -178,8 +179,8 @@ const AddNewLanguageList = (props) => {
                         </Col>
                     </Row>
                     <Row>
-                        <Col sm="8">
-                            <div className="d-flex flex-wrap gap-2">
+                        <Col>
+                            <ModalFooter>
                                 <button type="submit" className="btn btn-success save-user">
                                     Save
                                 </button>
@@ -201,7 +202,7 @@ const AddNewLanguageList = (props) => {
                                 >
                                     Cancel
                                 </button>
-                            </div>
+                            </ModalFooter>
                         </Col>
                     </Row>
                 </Form>

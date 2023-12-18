@@ -10,6 +10,7 @@ import {
   ModalHeader,
   ModalBody,
   Label,
+  ModalFooter,
   FormFeedback,
   UncontrolledTooltip,
   Input,
@@ -94,8 +95,7 @@ const AddNewDocumentUploadPolicy = (props) => {
       toggle={toggle}
       size="xl"
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4">Add New Document Upload Policy</ModalHeader>
+      <ModalHeader tag="h4" toggle={toggle}>Add New Document Upload Policy</ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -340,8 +340,8 @@ const AddNewDocumentUploadPolicy = (props) => {
             </Col>
           </Row>
           <Row>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
+            <Col>
+              <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
                   Save
                 </button>
@@ -363,7 +363,7 @@ const AddNewDocumentUploadPolicy = (props) => {
                 >
                   Cancel
                 </button>
-              </div>
+              </ModalFooter>
             </Col>
           </Row>
         </Form>

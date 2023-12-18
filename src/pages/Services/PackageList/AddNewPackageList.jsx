@@ -14,6 +14,7 @@ import {
     UncontrolledTooltip,
     Input,
     Form,
+    ModalFooter,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -96,7 +97,7 @@ const AddNewPackageList = (props) => {
             toggle={toggle}
             size="xl"
         >
-            <ModalHeader tag="h4">Add New Package</ModalHeader>
+            <ModalHeader tag="h4" toggle={toggle}>Add New Package</ModalHeader>
             <ModalBody>
                 <Form
                     onSubmit={(e) => {
@@ -407,8 +408,8 @@ const AddNewPackageList = (props) => {
                         </Row>
                     </div>
                     <Row>
-                        <Col sm="8">
-                            <div className="d-flex flex-wrap gap-2">
+                        <Col>
+                            <ModalFooter>
                                 <button type="submit" className="btn btn-success save-user">
                                     Save
                                 </button>
@@ -430,7 +431,7 @@ const AddNewPackageList = (props) => {
                                 >
                                     Cancel
                                 </button>
-                            </div>
+                            </ModalFooter>
                         </Col>
                     </Row>
                 </Form>

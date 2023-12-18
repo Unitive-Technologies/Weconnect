@@ -319,7 +319,7 @@ const WarehouseList = (props) => {
                       columns={columns}
                       data={warehouse}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleUserClick={() => setShowAddWareHouse(true)}

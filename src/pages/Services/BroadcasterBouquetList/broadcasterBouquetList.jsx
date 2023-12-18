@@ -380,7 +380,7 @@ const BroadcasterBouquetList = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Services" breadcrumbItem="Package List" />
+          <Breadcrumbs title="Services" breadcrumbItem="Broadcaster Bouquet List" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -394,7 +394,7 @@ const BroadcasterBouquetList = (props) => {
                       columns={columns}
                       data={brodcastbouquet}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleAddNewBroadcasterBouquetList={() => setShowAddNewBroadcasterBouquetList(true)}

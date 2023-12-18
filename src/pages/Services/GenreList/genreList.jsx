@@ -325,7 +325,7 @@ const GenreList = (props) => {
                       columns={columns}
                       data={genrelist}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleAddNewGenreList={() => setShowAddNewGenreList(true)}

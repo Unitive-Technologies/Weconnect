@@ -474,7 +474,7 @@ const ChannelList = (props) => {
                       columns={columns}
                       data={channel}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleAddNewChannelList={() => setShowAddNewChannelList(true)}

@@ -374,7 +374,7 @@ const OSDTemplateList = (props) => {
                       columns={columns}
                       isGlobalFilter={true}
                       data={osdTemp}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleAddOSDTemplateList={() => setShowAddOSDTemplateList(true)}

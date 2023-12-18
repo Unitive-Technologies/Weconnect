@@ -436,7 +436,7 @@ const PackageList = (props) => {
                       columns={columns}
                       data={packlist}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleAddNewPackageList={() => setShowAddNewPackageList(true)}

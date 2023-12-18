@@ -9,6 +9,7 @@ import {
     Modal,
     ModalHeader,
     ModalBody,
+    ModalFooter,
     Label,
     FormFeedback,
     UncontrolledTooltip,
@@ -76,8 +77,7 @@ const AddNewOSDTemplateList = (props) => {
             tabIndex="-1"
             toggle={toggle}
         >
-            {/* <Modal isOpen={modal} toggle={toggle}> */}
-            <ModalHeader tag="h4">Add New OSD Template</ModalHeader>
+            <ModalHeader tag="h4" toggle={toggle}>Add New OSD Template</ModalHeader>
             <ModalBody>
                 <Form
                     onSubmit={(e) => {
@@ -154,8 +154,8 @@ const AddNewOSDTemplateList = (props) => {
                         </Col>
                     </Row>
                     <Row>
-                        <Col sm="8">
-                            <div className="d-flex flex-wrap gap-2">
+                        <Col>
+                            <ModalFooter>
                                 <button type="submit" className="btn btn-success save-user">
                                     Save
                                 </button>
@@ -177,7 +177,7 @@ const AddNewOSDTemplateList = (props) => {
                                 >
                                     Cancel
                                 </button>
-                            </div>
+                            </ModalFooter>
                         </Col>
                     </Row>
                 </Form>

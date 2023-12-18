@@ -7,6 +7,7 @@ import {
   Container,
   Row,
   Modal,
+  ModalFooter,
   ModalHeader,
   ModalBody,
   Label,
@@ -90,8 +91,7 @@ const AddNewBroadcasterBouquetList = (props) => {
       toggle={toggle}
       size="xl"
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4">Add New Broadcaster Bouquet</ModalHeader>
+      <ModalHeader tag="h4" toggle={toggle}>Add New Broadcaster Bouquet</ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -330,8 +330,8 @@ const AddNewBroadcasterBouquetList = (props) => {
             </Col>
           </Row>
           <Row>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
+            <Col>
+              <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
                   Save
                 </button>
@@ -353,7 +353,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                 >
                   Cancel
                 </button>
-              </div>
+              </ModalFooter>
             </Col>
           </Row>
         </Form>

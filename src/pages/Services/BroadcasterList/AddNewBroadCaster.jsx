@@ -7,6 +7,7 @@ import {
   Container,
   Row,
   Modal,
+  ModalFooter,
   ModalHeader,
   ModalBody,
   Label,
@@ -88,10 +89,11 @@ const AddNewBroadCaster = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
+      size="xl"
       toggle={toggle}
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4">Add New Broadcaster</ModalHeader>
+      <ModalHeader tag="h4" toggle={toggle}>Add New Broadcaster</ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -101,7 +103,7 @@ const AddNewBroadCaster = (props) => {
           }}
         >
           <Row>
-            <Col sm="12">
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">Name<span style={{ color: 'red' }}>*</span></Label>
                 <Input
@@ -119,7 +121,8 @@ const AddNewBroadCaster = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">Full-Name<span style={{ color: 'red' }}>*</span></Label>
                 <Input
@@ -137,7 +140,8 @@ const AddNewBroadCaster = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">Contact Person<span style={{ color: 'red' }}>*</span></Label>
                 <Input
@@ -156,7 +160,10 @@ const AddNewBroadCaster = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+          </Row>
+          <Row>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">Mobile No.<span style={{ color: 'red' }}>*</span></Label>
                 <Input
@@ -174,7 +181,8 @@ const AddNewBroadCaster = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">Phone No.</Label>
                 <Input
@@ -192,7 +200,8 @@ const AddNewBroadCaster = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">Email address<span style={{ color: 'red' }}>*</span></Label>
                 <Input
@@ -211,7 +220,10 @@ const AddNewBroadCaster = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+          </Row>
+          <Row>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">Address<span style={{ color: 'red' }}>*</span></Label>
                 <Input
@@ -228,7 +240,8 @@ const AddNewBroadCaster = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">Description<span style={{ color: 'red' }}>*</span></Label>
                 <Input
@@ -253,7 +266,8 @@ const AddNewBroadCaster = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">Status<span style={{ color: 'red' }}>*</span></Label>
                 <Input
@@ -278,8 +292,8 @@ const AddNewBroadCaster = (props) => {
             </Col>
           </Row>
           <Row>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
+            <Col>
+              <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
                   Save
                 </button>
@@ -301,7 +315,7 @@ const AddNewBroadCaster = (props) => {
                 >
                   Cancel
                 </button>
-              </div>
+              </ModalFooter>
             </Col>
           </Row>
         </Form>

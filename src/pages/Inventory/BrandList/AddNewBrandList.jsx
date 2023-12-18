@@ -7,6 +7,7 @@ import {
   Container,
   Row,
   Modal,
+  ModalFooter,
   ModalHeader,
   ModalBody,
   Label,
@@ -85,6 +86,7 @@ const AddNewBrandList = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
+      size="xl"
       toggle={toggle}
     >
       <ModalHeader tag="h4" toggle={toggle}>
@@ -99,7 +101,7 @@ const AddNewBrandList = (props) => {
           }}
         >
           <Row>
-            <Col sm="12">
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Name<span style={{ color: "red" }}>*</span>
@@ -123,7 +125,8 @@ const AddNewBrandList = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Brand Type<span style={{ color: "red" }}>*</span>
@@ -142,13 +145,14 @@ const AddNewBrandList = (props) => {
                   <option value="Smartcard">Smartcard</option>
                 </Input>
                 {validation.touched.brand_type_lbl &&
-                validation.errors.brand_type_lbl ? (
+                  validation.errors.brand_type_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.brand_type_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Box Type<span style={{ color: "red" }}>*</span>
@@ -167,13 +171,16 @@ const AddNewBrandList = (props) => {
                   <option value="HD">High Definition(HD)</option>
                 </Input>
                 {validation.touched.box_type_lbl &&
-                validation.errors.box_type_lbl ? (
+                  validation.errors.box_type_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.box_type_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+          </Row>
+          <Row>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   CAS Type<span style={{ color: "red" }}>*</span>
@@ -196,7 +203,8 @@ const AddNewBrandList = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Character Length<span style={{ color: "red" }}>*</span>
@@ -220,7 +228,8 @@ const AddNewBrandList = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Significant Length<span style={{ color: "red" }}>*</span>
@@ -234,19 +243,22 @@ const AddNewBrandList = (props) => {
                   value={validation.values.significant_length || ""}
                   invalid={
                     validation.touched.significant_length &&
-                    validation.errors.significant_length
+                      validation.errors.significant_length
                       ? true
                       : false
                   }
                 />
                 {validation.touched.significant_length &&
-                validation.errors.significant_length ? (
+                  validation.errors.significant_length ? (
                   <FormFeedback type="invalid">
                     {validation.errors.significant_length}
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+          </Row>
+          <Row>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Allowed Characters<span style={{ color: "red" }}>*</span>
@@ -267,13 +279,14 @@ const AddNewBrandList = (props) => {
                   <option value="Alphanumeric">Alphanumeric</option>
                 </Input>
                 {validation.touched.char_allowed_lbl &&
-                validation.errors.char_allowed_lbl ? (
+                  validation.errors.char_allowed_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.char_allowed_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Status<span style={{ color: "red" }}>*</span>
@@ -299,10 +312,11 @@ const AddNewBrandList = (props) => {
                 ) : null}
               </div>
             </Col>
+            <Col sm="4"></Col>
           </Row>
           <Row>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
+            <Col>
+              <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
                   Save
                 </button>
@@ -324,13 +338,13 @@ const AddNewBrandList = (props) => {
                 >
                   Cancel
                 </button>
-              </div>
+              </ModalFooter>
             </Col>
           </Row>
         </Form>
       </ModalBody>
       {/* </Modal> */}
-    </Modal>
+    </Modal >
   );
 };
 

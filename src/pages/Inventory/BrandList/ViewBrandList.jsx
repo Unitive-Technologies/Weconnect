@@ -89,6 +89,7 @@ const ViewBrandList = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
+      size="xl"
       toggle={toggle}
     >
       {!showEditBrand ? (
@@ -96,12 +97,7 @@ const ViewBrandList = (props) => {
           View {validation.values.name}
           <i
             className="bx bx bxs-edit"
-            style={{
-              position: "absolute",
-              marginLeft: "55%",
-              cursor: "pointer",
-              marginTop: "1%",
-            }}
+            style={{ marginLeft: "20px", cursor: "pointer" }}
             onClick={() => setShowEditBrand(true)}
           ></i>
         </ModalHeader>
@@ -119,7 +115,7 @@ const ViewBrandList = (props) => {
           }}
         >
           <Row>
-            <Col sm="12">
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Name<span style={{ color: "red" }}>*</span>
@@ -144,7 +140,8 @@ const ViewBrandList = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Brand Type<span style={{ color: "red" }}>*</span>
@@ -164,13 +161,14 @@ const ViewBrandList = (props) => {
                   <option value="Smartcard">Smartcard</option>
                 </Input>
                 {validation.touched.brand_type_lbl &&
-                validation.errors.brand_type_lbl ? (
+                  validation.errors.brand_type_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.brand_type_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Box Type<span style={{ color: "red" }}>*</span>
@@ -190,13 +188,16 @@ const ViewBrandList = (props) => {
                   <option value="HD">High Definition(HD)</option>
                 </Input>
                 {validation.touched.box_type_lbl &&
-                validation.errors.box_type_lbl ? (
+                  validation.errors.box_type_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.box_type_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+          </Row>
+          <Row>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   CAS Type<span style={{ color: "red" }}>*</span>
@@ -220,7 +221,8 @@ const ViewBrandList = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Character Length<span style={{ color: "red" }}>*</span>
@@ -245,7 +247,8 @@ const ViewBrandList = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Significant Length<span style={{ color: "red" }}>*</span>
@@ -259,20 +262,23 @@ const ViewBrandList = (props) => {
                   value={validation.values.significant_length || ""}
                   invalid={
                     validation.touched.significant_length &&
-                    validation.errors.significant_length
+                      validation.errors.significant_length
                       ? true
                       : false
                   }
                   disabled={!showEditBrand}
                 />
                 {validation.touched.significant_length &&
-                validation.errors.significant_length ? (
+                  validation.errors.significant_length ? (
                   <FormFeedback type="invalid">
                     {validation.errors.significant_length}
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+          </Row>
+          <Row>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Allowed Characters<span style={{ color: "red" }}>*</span>
@@ -294,13 +300,14 @@ const ViewBrandList = (props) => {
                   <option value="Alphanumeric">Alphanumeric</option>
                 </Input>
                 {validation.touched.char_allowed_lbl &&
-                validation.errors.char_allowed_lbl ? (
+                  validation.errors.char_allowed_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.char_allowed_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Status<span style={{ color: "red" }}>*</span>
