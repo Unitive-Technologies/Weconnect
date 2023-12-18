@@ -228,7 +228,6 @@ const AddNewSubCategoryList = (props) => {
               padding: "0px 10px",
             }}
           >
-
             <h5 style={{}}>Escalation Matrix<span style={{ color: 'red' }}>*</span></h5>
           </div>
           <Row style={{

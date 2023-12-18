@@ -7,6 +7,7 @@ import {
   Container,
   Row,
   Modal,
+  ModalFooter,
   ModalHeader,
   ModalBody,
   Label,
@@ -88,7 +89,7 @@ const AddNewPromoVoucher = (props) => {
       tabIndex="-1"
       toggle={toggle}
     >
-      <ModalHeader tag="h4">Generate Promo Voucher</ModalHeader>
+      <ModalHeader tag="h4" toggle={toggle}>Generate Promo Voucher</ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -294,8 +295,8 @@ const AddNewPromoVoucher = (props) => {
             </Col>
           </Row>
           <Row>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
+            <Col>
+              <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
                   Save
                 </button>
@@ -317,7 +318,7 @@ const AddNewPromoVoucher = (props) => {
                 >
                   Cancel
                 </button>
-              </div>
+              </ModalFooter>
             </Col>
           </Row>
         </Form>

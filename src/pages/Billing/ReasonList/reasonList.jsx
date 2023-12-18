@@ -323,12 +323,12 @@ const ReasonList = (props) => {
                       columns={columns}
                       data={reasons}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleAddNewReasonList={() => setShowAddNewReasonList(true)}
                       handleUploadReasonList={() => setShowUploadReasonList(true)}
-                      handleUserClick={handleUserClicks}
+                      // handleUserClick={handleUserClicks}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

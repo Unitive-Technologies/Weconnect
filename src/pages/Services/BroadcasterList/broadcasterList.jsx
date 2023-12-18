@@ -426,7 +426,7 @@ const BroadcasterList = (props) => {
                       columns={columns}
                       data={brodcast}
                       isGlobalFilter={true}
-                      isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleAddNewBroadCasterClick={() => setShowAddNewBroadCaster(true)}
