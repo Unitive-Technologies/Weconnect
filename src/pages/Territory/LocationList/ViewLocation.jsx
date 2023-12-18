@@ -66,24 +66,24 @@ const ViewLocation = (props) => {
 
     initialValues: {
       name: (location && location.name) || "",
-      lco: (location && location.lco) || "",
+      operator_id: (location && location.operator_id) || "",
       status_lbl: (location && location.status_lbl) || "",
       created_at: (location && location.created_at) || "",
-      created_by: (location && location.created_by) || "my mso(mso)",
+      created_by_lbl: (location && location.created_by_lbl) || "my mso(mso)",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter district name"),
-      lco: Yup.string().required("Select lco"),
+      operator_id: Yup.string().required("Select lco"),
       status_lbl: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
       const updateLocation = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
-        lco: values["lco"],
+        operator_id: values["operator_id"],
         status_lbl: values["status_lbl"],
         created_at: new Date(),
-        created_by: values["created_by"],
+        created_by_lbl: values["created_by_lbl"],
       };
       console.log("new district:" + updateLocation);
       // save new user
@@ -158,21 +158,22 @@ const ViewLocation = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Select LCO</Label>
                 <Select
-                  name="lco"
+                  name="operator_id"
                   options={options}
                   onChange={(selectedOption) =>
                     validation.handleChange(selectedOption.value)
                   }
                   onBlur={validation.handleBlur}
                   value={options.find(
-                    (opt) => opt.value === validation.values.lco
+                    (opt) => opt.value === validation.values.operator_id
                   )}
                   styles={customStyles}
                   disabled={!showEditLocation}
                 />
-                {validation.touched.lco && validation.errors.lco ? (
+                {validation.touched.operator_id &&
+                validation.errors.operator_id ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.lco}
+                    {validation.errors.operator_id}
                   </FormFeedback>
                 ) : null}
               </div>
