@@ -9,7 +9,9 @@ import { getCustomerUsers } from "../../helpers/fakebackend_helper";
 
 const convertCustomerUsersListObject = (customerUserList) => {
   // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
-  return customerUserList.map((customerUser) => {
+  const customerUserData = customerUserList.data || [];
+  console.log("CustomerData: " + JSON.stringify(customerUserData));
+  return customerUserData.map((customerUser) => {
     return {
       ...customerUser,
       id: customerUser.id,
@@ -21,8 +23,8 @@ const convertCustomerUsersListObject = (customerUserList) => {
         customerUser.status === 1
           ? "ACTIVE"
           : customerUser.status === 0
-            ? "INACTIVE"
-            : "BLOCKED",
+          ? "INACTIVE"
+          : "BLOCKED",
       lco: customerUser.operator_lbl,
       lco_code: customerUser.operator.code,
       last_login_at: customerUser.last_login_ats

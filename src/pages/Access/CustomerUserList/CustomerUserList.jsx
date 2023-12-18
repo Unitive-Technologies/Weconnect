@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
 import { Card, CardBody, Col, Container, Row } from "reactstrap";
-
+import Spinners from "../../../components/Common/Spinner";
 import { Email } from "./customerUserlistCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 
-import { getCustomerUsers as onGetCustomerUsers } from "/src/store/actions";
+import { getCustomerUsers as onGetCustomerUsers } from "/src/store/customerusers/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -35,7 +35,9 @@ const CustomerUserList = (props) => {
   );
 
   const { cusUsers, loading } = useSelector(customerUsersProperties);
+  console.log("customer: " + JSON.stringify(cusUsers));
 
+  const [isLoading, setLoading] = useState(loading);
   const columns = useMemo(
     () => [
       {
@@ -221,7 +223,7 @@ const CustomerUserList = (props) => {
     );
 
     setFilteredUsers(filteredData);
-    console.log("Filtered Users - ". filteredData);
+    console.log("Filtered Users - ".filteredData);
   }, [dispatch, cusUsers]);
 
   var node = useRef();
@@ -256,30 +258,33 @@ const CustomerUserList = (props) => {
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Access" breadcrumbItem="Customer Users" />
-
-          <Row>
-            <Col lg="12">
-              <Card>
-                <CardBody>
-                  <TableContainer
-                    isPagination={true}
-                    columns={columns}
-                    data={cusUsers}
-                    isGlobalFilter={true}
-                    isShowTableActionButtons={true}
-                    isShowingPageLength={true}
-                    tableActions={getTableActions()}
-                    // iscustomPageSizeOptions={true}
-                    customPageSize={50}
-                    tableClass="table align-middle table-nowrap table-hover"
-                    theadClass="table-light"
-                    paginationDiv="col-sm-12 col-md-7"
-                    pagination="pagination pagination-rounded justify-content-end mt-4"
-                  />
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
+          {isLoading ? (
+            <Spinners setLoading={setLoading} />
+          ) : (
+            <Row>
+              <Col lg="12">
+                <Card>
+                  <CardBody>
+                    <TableContainer
+                      isPagination={true}
+                      columns={columns}
+                      data={cusUsers}
+                      isGlobalFilter={true}
+                      isShowTableActionButtons={true}
+                      isShowingPageLength={true}
+                      tableActions={getTableActions()}
+                      // iscustomPageSizeOptions={true}
+                      customPageSize={50}
+                      tableClass="table align-middle table-nowrap table-hover"
+                      theadClass="table-light"
+                      paginationDiv="col-sm-12 col-md-7"
+                      pagination="pagination pagination-rounded justify-content-end mt-4"
+                    />
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+          )}
         </Container>
       </div>
       <ToastContainer />

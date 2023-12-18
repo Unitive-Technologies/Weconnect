@@ -1,31 +1,27 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
+  ModalFooter,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addDistrict as onAddDistrict } from "/src/store/district/actions";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const AddNewDistrict = (props) => {
-  const { isOpen, toggle, stateNames } = props;
+  const { isOpen, handleShowDistrict, stateNames } = props;
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
 
-  console.log("States Name in Add district: ", stateNames);
+  // console.log("States Name in Add district: ", stateNames);
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -60,7 +56,7 @@ const AddNewDistrict = (props) => {
       // save new user
       dispatch(onAddDistrict(newDistrict));
       validation.resetForm();
-      toggle();
+      handleShowDistrict();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -71,13 +67,14 @@ const AddNewDistrict = (props) => {
     <Modal
       isOpen={isOpen}
       role="dialog"
+      size="xl"
       autoFocus={true}
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleShowDistrict}
     >
-      <ModalHeader tag="h4" toggle={toggle}>
+      <ModalHeader tag="h4" toggle={handleShowDistrict}>
         Add New District
       </ModalHeader>
       <ModalBody>
@@ -89,7 +86,7 @@ const AddNewDistrict = (props) => {
           }}
         >
           <Row>
-            <Col sm="12">
+            <Col lg={6}>
               <div className="mb-3">
                 <Label className="form-label">
                   District Name<span style={{ color: "red" }}>*</span>
@@ -113,7 +110,8 @@ const AddNewDistrict = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={6}>
               <div className="mb-3">
                 <Label className="form-label">
                   Select State<span style={{ color: "red" }}>*</span>
@@ -140,7 +138,8 @@ const AddNewDistrict = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={6}>
               <div className="mb-3">
                 <Label className="form-label">
                   Description<span style={{ color: "red" }}>*</span>
@@ -167,7 +166,8 @@ const AddNewDistrict = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={6}>
               <div className="mb-3">
                 <Label className="form-label">
                   Status<span style={{ color: "red" }}>*</span>
@@ -196,8 +196,8 @@ const AddNewDistrict = (props) => {
             </Col>
           </Row>
           <Row>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
+            <Col>
+              <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
                   Save
                 </button>
@@ -208,18 +208,17 @@ const AddNewDistrict = (props) => {
                 >
                   Reset
                 </button>
-
                 <button
                   type="button"
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    toggle();
+                    handleShowDistrict();
                   }}
                 >
                   Cancel
                 </button>
-              </div>
+              </ModalFooter>
             </Col>
           </Row>
         </Form>
@@ -230,7 +229,7 @@ const AddNewDistrict = (props) => {
 };
 
 AddNewDistrict.propTypes = {
-  toggle: PropTypes.func,
+  handleShowDistrict: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 

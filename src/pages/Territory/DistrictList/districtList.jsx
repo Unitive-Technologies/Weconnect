@@ -22,7 +22,7 @@ import ViewDistrict from "./ViewDistrict";
 
 const DistrictList = (props) => {
   //meta title
-  document.title = "District List | VDigital";
+  document.title = "Districts | VDigital";
 
   const dispatch = useDispatch();
   const [showAddDistrict, setShowAddDistrict] = useState(false);
@@ -30,7 +30,6 @@ const DistrictList = (props) => {
   const [showUploadDistrict, setShowUploadDistrict] = useState(false);
   const [showViewDistrict, setShowViewDistrict] = useState(false);
   const [viewDistrictData, setViewDistrictData] = useState({});
-  // const [stateNames, setStateNames] = useState([]);
 
   const selectDistrictState = (state) => state.district;
   const districtProperties = createSelector(
@@ -43,15 +42,6 @@ const DistrictList = (props) => {
 
   const { districts, loading } = useSelector(districtProperties);
   const [isLoading, setLoading] = useState(loading);
-
-  // useEffect(() => {
-  //   const stateInfoArray = districts.map((district) => ({
-  //     state_lbl: district.state_lbl,
-  //     state_code_lbl: district.state_code_lbl,
-  //   }));
-  //   setStateNames(stateInfoArray);
-  //   console.log("stateNames: ", stateNames);
-  // }, []);
 
   const stateNames = [
     {
@@ -204,10 +194,7 @@ const DistrictList = (props) => {
     },
   ];
 
-  console.log("States Name in district list: ", stateNames);
-  useEffect(() => {
-    // console.log("Districts data in component:", districts);
-  }, [districts]);
+  // console.log("States Name in district list: ", stateNames);
 
   const columns = useMemo(
     () => [
@@ -242,7 +229,7 @@ const DistrictList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  toggleViewDistrict(userData);
+                  handleViewDistrict(userData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -384,62 +371,17 @@ const DistrictList = (props) => {
     }
   }, [dispatch, districts]);
 
-  // useEffect(() => {
-  //   setContact(users);
-  //   setIsEdit(false);
-  // }, [users]);
-
-  // useEffect(() => {
-  //   if (!isEmpty(users) && !!isEdit) {
-  //     setContact(users);
-  //     setIsEdit(false);
-  //   }
-  // }, [users]);
-
-  const toggle = () => {
+  const handleShowDistrict = () => {
     setShowAddDistrict(!showAddDistrict);
   };
-  const toggle1 = () => {
+  const handleUploadDistrict = () => {
     setShowUploadDistrict(!showUploadDistrict);
   };
 
-  const toggleViewDistrict = (userData) => {
-    console.log("User Data: ", userData);
+  const handleViewDistrict = (userData) => {
+    // console.log("User Data: ", userData);
     setShowViewDistrict(!showViewDistrict);
     setViewDistrictData(userData);
-  };
-
-  const handleUserClick = (arg) => {
-    const user = arg;
-
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-    setIsEdit(true);
-
-    toggle();
-  };
-
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
-
-  const onClickDelete = (users) => {
-    setContact(users);
   };
 
   const keyField = "id";
@@ -463,19 +405,22 @@ const DistrictList = (props) => {
 
   return (
     <React.Fragment>
-      {console.log(stateNames)}
+      {/* {console.log(stateNames)} */}
       <ViewDistrict
         isOpen={showViewDistrict}
-        toggle={toggleViewDistrict}
+        handleViewDistrict={handleViewDistrict}
         district={viewDistrictData}
         stateNames={stateNames}
       />
       <AddNewDistrict
         isOpen={showAddDistrict}
-        toggle={toggle}
+        handleShowDistrict={handleShowDistrict}
         stateNames={stateNames}
       />
-      <UploadDistrict isOpen={showUploadDistrict} toggle={toggle1} />
+      <UploadDistrict
+        isOpen={showUploadDistrict}
+        handleUploadDistrict={handleUploadDistrict}
+      />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -496,8 +441,6 @@ const DistrictList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleDistrictClick={() => setShowAddDistrict(true)}
-                      handleUploadDistrict={() => setShowUploadDistrict(true)}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

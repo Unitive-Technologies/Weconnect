@@ -4,30 +4,22 @@ import {
   Card,
   CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
   Label,
-  FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
-  CardTitle,
   CardSubtitle,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const UploadDistrict = (props) => {
-  const { isOpen, toggle } = props;
-  //   console.log("user in viewuser modal:" + JSON.stringify(user));
-  const dispatch = useDispatch();
+  const { isOpen, handleUploadDistrict } = props;
 
   const [selectedFiles, setselectedFiles] = useState([]);
 
@@ -76,20 +68,20 @@ const UploadDistrict = (props) => {
     <Modal
       isOpen={isOpen}
       role="dialog"
+      size="xl"
       autoFocus={true}
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleUploadDistrict}
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader toggle={toggle} tag="h4">
+      <ModalHeader toggle={handleUploadDistrict} tag="h4">
         Upload Districts
       </ModalHeader>
       <ModalBody>
         <Card>
           <CardBody>
-            <div className="text-left mb-4 r-0" style={{ marginLeft: "45%" }}>
+            <div className="text-left mb-4 r-0" style={{ marginLeft: "78%" }}>
               <button
                 type="button"
                 className="btn btn-primary"
@@ -241,41 +233,35 @@ const UploadDistrict = (props) => {
                 })}
               </div>
             </Form>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
-                <button type="button" className="btn btn-primary ">
+            <div className="text-center mt-4 ">
+              <div
+                style={{
+                  display: "flex",
+                  gap: 5,
+                  textAlign: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <button type="button" className="btn btn-primary mr-2 ">
                   Upload File
                 </button>
-                <button
-                  type="reset"
-                  className="btn btn-warning"
-                  //   onClick={() => validation.resetForm()}
-                >
+                <button type="button" className="btn btn-primary ml-2 ">
                   Reset
                 </button>
-
-                <button
-                  type="button"
-                  className="btn btn-outline-danger"
-                  //   onClick={() => {
-                  //     validation.resetForm();
-                  //     toggle();
-                  //   }}
-                >
+                <button type="button" className="btn btn-primary ">
                   Cancel
                 </button>
               </div>
-            </Col>
+            </div>
           </CardBody>
         </Card>
       </ModalBody>
-      {/* </Modal> */}
     </Modal>
   );
 };
 
 UploadDistrict.propTypes = {
-  toggle: PropTypes.func,
+  handleUploadDistrict: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
