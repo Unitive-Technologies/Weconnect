@@ -73,7 +73,7 @@ const AddNewLocation = (props) => {
       operator_id: null,
       status_lbl: "",
       created_at: "",
-      created_by: "my mso(mso)",
+      created_by_lbl: "NIKHIL REDDY(nikky)",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter location name"),
@@ -86,9 +86,9 @@ const AddNewLocation = (props) => {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         operator_id: values["operator_id"],
-        status_lbl: values["status"],
+        status_lbl: values["status_lbl"],
         created_at: new Date(),
-        created_by: values["created_by"],
+        created_by_lbl: values["created_by_lbl"],
       };
       console.log("new location:" + newLocation);
       dispatch(onAddLocation(newLocation));
@@ -193,7 +193,6 @@ const AddNewLocation = (props) => {
                 >
                   <option value="">Select Status</option>
                   <option value="Active">Active</option>
-                  <option value="Blocked">BLOCKED</option>
                   <option value="Inactive">In-Active</option>
                 </Input>
                 {validation.touched.status_lbl &&
