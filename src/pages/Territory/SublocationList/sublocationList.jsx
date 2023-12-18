@@ -22,7 +22,7 @@ import ViewSubLocation from "./ViewSubLocation";
 
 const SublocationList = (props) => {
   //meta title
-  document.title = "Sublocation List | VDigital";
+  document.title = "Sublocations | VDigital";
 
   const dispatch = useDispatch();
 
@@ -36,14 +36,7 @@ const SublocationList = (props) => {
   );
 
   const { subloc, loading } = useSelector(sublocationProperties);
-
-  useEffect(() => {
-    // console.log("Sublocation data in component:", subloc);
-  }, [subloc]);
-
   const [isLoading, setLoading] = useState(loading);
-
-  const [userList, setUserList] = useState([]);
   const [showAddSubLocation, setShowAddSubLocation] = useState(false);
   const [showUploadSubLocation, setShowUploadSubLocation] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -292,14 +285,6 @@ const SublocationList = (props) => {
     setDeleteModal(false);
   };
 
-  const handleUserClicks = () => {
-    setUserList("");
-    setIsEdit(false);
-    toggle();
-  };
-
-  const keyField = "id";
-
   const getTableActions = () => {
     return [
       {
@@ -328,7 +313,7 @@ const SublocationList = (props) => {
       <UploadSubLocation isOpen={showUploadSubLocation} toggle={uploadToggle} />
       <div className="page-content">
         <Container fluid>
-          <Breadcrumbs title="Territory" breadcrumbItem="Sublocation List" />
+          <Breadcrumbs title="Territory" breadcrumbItem="Sublocations" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
