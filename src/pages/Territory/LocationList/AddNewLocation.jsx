@@ -26,7 +26,7 @@ import Select from "react-select";
 const AddNewLocation = (props) => {
   const { isOpen, toggle } = props;
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
+  const [selectedLco, setSelectedLco] = useState(null);
 
   const selectLcoState = (state) => state.lco;
   const LcoProperties = createSelector(selectLcoState, (lco) => ({
@@ -44,7 +44,7 @@ const AddNewLocation = (props) => {
   // console.log("Lco In add location: ", lcos);
 
   const options = lcos.map((option) => ({
-    value: option.code,
+    value: option.id,
     label: (
       <div>
         <h6>{option.name}</h6>
@@ -54,6 +54,8 @@ const AddNewLocation = (props) => {
       </div>
     ),
   }));
+
+  // console.log("LCO Options: ", options);
 
   const customStyles = {
     option: (provided) => ({
@@ -68,27 +70,27 @@ const AddNewLocation = (props) => {
 
     initialValues: {
       name: "",
-      lco: "",
-      status: "",
+      operator_id: null,
+      status_lbl: "",
       created_at: "",
       created_by: "my mso(mso)",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter location name"),
-      lco: Yup.string().required("Select LCO"),
-      status: Yup.string().required("Select status"),
+      operator_id: Yup.string().nullable().required("Select LCO"),
+      status_lbl: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
+      console.log("Submittted values: ", values);
       const newLocation = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
-        lco: values["lco"],
-        status: values["status"],
+        operator_id: values["operator_id"],
+        status_lbl: values["status"],
         created_at: new Date(),
         created_by: values["created_by"],
       };
       console.log("new location:" + newLocation);
-      // save new user
       dispatch(onAddLocation(newLocation));
       validation.resetForm();
       toggle();
@@ -150,20 +152,28 @@ const AddNewLocation = (props) => {
                   Select LCO<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Select
-                  name="lco"
+                  name="operator_id"
                   options={options}
-                  onChange={(selectedOption) =>
-                    validation.handleChange(selectedOption.value)
-                  }
+                  onChange={(selectedOption) => {
+                    console.log("SelectedOption: ", selectedOption);
+                    setSelectedLco(selectedOption);
+                    validation.handleChange({
+                      target: {
+                        name: "operator_id",
+                        value: selectedOption.value,
+                      },
+                    });
+                  }}
                   onBlur={validation.handleBlur}
                   value={options.find(
-                    (opt) => opt.value === validation.values.lco
+                    (opt) => opt.value === validation.values.operator_id
                   )}
                   styles={customStyles}
                 />
-                {validation.touched.lco && validation.errors.lco ? (
+                {validation.touched.operator_id &&
+                validation.errors.operator_id ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.lco}
+                    {validation.errors.operator_id}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -173,22 +183,23 @@ const AddNewLocation = (props) => {
                   Status<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="status"
+                  name="status_lbl"
                   type="select"
                   placeholder="Select Status"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.status || ""}
+                  value={validation.values.status_lbl || ""}
                 >
                   <option value="">Select Status</option>
-                  <option value="11">Active</option>
-                  <option value="12">BLOCKED</option>
-                  <option value="13">In-Active</option>
+                  <option value="Active">Active</option>
+                  <option value="Blocked">BLOCKED</option>
+                  <option value="Inactive">In-Active</option>
                 </Input>
-                {validation.touched.status && validation.errors.status ? (
+                {validation.touched.status_lbl &&
+                validation.errors.status_lbl ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.status}
+                    {validation.errors.status_lbl}
                   </FormFeedback>
                 ) : null}
               </div>

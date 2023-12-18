@@ -1,10 +1,11 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
 import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const Operators = (props) => {
+  const [showAddOperator, setShowAddOperator] = useState(false);
   const columns = useMemo(
     () => [
       {
@@ -133,6 +134,16 @@ const Operators = (props) => {
     []
   );
 
+  const getTableActions = () => {
+    return [
+      {
+        name: "Add Operator",
+        action: setShowAddOperator,
+        type: "normal",
+      },
+    ];
+  };
+
   const operators = [];
   return (
     <Card>
@@ -141,9 +152,10 @@ const Operators = (props) => {
           isPagination={true}
           columns={columns}
           data={operators}
-          // isGlobalFilter={true}
+          isShowTableActionButtons={true}
           isShowingPageLength={true}
-          // customPageSize={50}
+          tableActions={getTableActions()}
+          handleUserClick={() => setShowAddOperator(true)}
           tableClass="table align-middle table-nowrap table-hover"
           theadClass="table-light"
           paginationDiv="col-sm-12 col-md-7"

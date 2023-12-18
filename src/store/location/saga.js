@@ -24,7 +24,7 @@ const convertLocationListObject = (locationList) => {
       status:
         location.status === 1
           ? "ACTIVE"
-          : location.status === 0
+          : location.status === 2
           ? "INACTIVE"
           : "BLOCKED",
       operator_code: location.operator_code,
@@ -32,6 +32,7 @@ const convertLocationListObject = (locationList) => {
       status_lbl: location.status_lbl,
       created_at: location.created_at,
       created_by_lbl: location.created_by_lbl,
+      operator_id: location.operator_id,
     };
   });
 };

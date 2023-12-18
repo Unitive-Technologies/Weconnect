@@ -98,7 +98,7 @@ const BulkAssigntoOperator = (props) => {
       size="xl"
     >
       <ModalHeader toggle={toggle} tag="h4">
-        Bulk Assin NCF
+        Bulk Assign NCF
       </ModalHeader>
       <ModalBody>
         <Form
