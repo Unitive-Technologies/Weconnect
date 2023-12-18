@@ -19,11 +19,48 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addSubLocation as onAddSublocation } from "/src/store/sublocation/actions";
 import { useSelector, useDispatch } from "react-redux";
+import { createSelector } from "reselect";
+import { getLocation as onGetLocation } from "/src/store/actions";
+import Select from "react-select";
 
 const AddSubLocation = (props) => {
   const { isOpen, toggle } = props;
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
+  const [selectedLocation, setSelectedLocation] = useState(null);
+
+  const selectLocationState = (state) => state.location;
+  const locationProperties = createSelector(
+    selectLocationState,
+    (location) => ({
+      locations: location.location,
+      loading: location.loading,
+    })
+  );
+
+  const { locations, loading } = useSelector(locationProperties);
+
+  useEffect(() => {
+    if (locations && !locations.length) {
+      dispatch(onGetLocation());
+    }
+  }, [dispatch, locations]);
+
+  const options = locations.map((option) => ({
+    value: option.id,
+    label: (
+      <div>
+        <h6>{option.name}</h6>
+        <p>LCO {option.operator_lbl}</p>
+      </div>
+    ),
+  }));
+
+  const customStyles = {
+    option: (provided) => ({
+      ...provided,
+      backgroundColor: "white",
+    }),
+  };
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -31,14 +68,14 @@ const AddSubLocation = (props) => {
 
     initialValues: {
       name: "",
-      location_id: "",
+      location_id: null,
       status: "",
       created_at: "",
       created_by: "Admin",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter sublocation name"),
-      location_id: Yup.string().required("Select location"),
+      location_id: Yup.string().nullable().required("Select location"),
       status: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
@@ -113,41 +150,25 @@ const AddSubLocation = (props) => {
                 <Label className="form-label">
                   Select Location<span style={{ color: "red" }}>*</span>
                 </Label>
-                <Input
+                <Select
                   name="location_id"
-                  type="select"
-                  placeholder="Select location"
-                  className="form-select"
-                  onChange={validation.handleChange}
+                  options={options}
+                  onChange={(selectedOption) => {
+                    console.log("SelectedOption: ", selectedOption);
+                    setSelectedLocation(selectedOption);
+                    validation.handleChange({
+                      target: {
+                        name: "location_id",
+                        value: selectedOption.value,
+                      },
+                    });
+                  }}
                   onBlur={validation.handleBlur}
-                  value={validation.values.location_id || ""}
-                >
-                  <option value="">Select location</option>
-                  <option value="1">Delhi</option>
-                  <option value="2">Puducherry</option>
-                  <option value="3">Ladakh</option>
-                  <option value="4">Andaman and Nicobar Islands</option>
-                  <option value="5">Lakshadweep</option>
-                  <option value="6">Daman and Diu</option>
-                  <option value="7">Dadra and Nagar Haveli</option>
-                  <option value="8">Chandigarh</option>
-                  <option value="9">West Bengal</option>
-                  <option value="10">Uttarakhand</option>
-                  <option value="11">Utter Pradesh</option>
-                  <option value="12">Tripura</option>
-                  <option value="13">Telangana</option>
-                  <option value="14">Tamil Nadu</option>
-                  <option value="15">Sikkim</option>
-                  <option value="16">Rajasthan</option>
-                  <option value="17">Punjab</option>
-                  <option value="18">Odisha</option>
-                  <option value="19">Nagaland</option>
-                  <option value="20">Mizoram</option>
-                  <option value="21">Meghalaya</option>
-                  <option value="22">Manipur</option>
-                  <option value="23">Maharashtra</option>
-                  <option value="24">Madhya Pradesh</option>
-                </Input>
+                  value={options.find(
+                    (opt) => opt.value === validation.values.location_id
+                  )}
+                  styles={customStyles}
+                />
                 {validation.touched.location_id &&
                 validation.errors.location_id ? (
                   <FormFeedback type="invalid">
