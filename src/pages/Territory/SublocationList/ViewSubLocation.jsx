@@ -19,7 +19,7 @@ import { getLocation as onGetLocation } from "/src/store/actions";
 import Select from "react-select";
 
 const ViewSubLocation = (props) => {
-  const { isOpen, toggle, sublocation } = props;
+  const { isOpen, handleViewSubLocation, sublocation } = props;
   const dispatch = useDispatch();
   const [showEditSubLocation, setShowEditSubLocation] = useState(false);
   const selectLocationState = (state) => state.location;
@@ -84,12 +84,12 @@ const ViewSubLocation = (props) => {
       // save new user
       dispatch(onAddDistrict(updateSubLocation));
       validation.resetForm();
-      toggle();
+      handleViewSubLocation();
     },
   });
 
   const editToggle = () => {
-    toggle();
+    handleViewSubLocation();
     setShowEditSubLocation(false);
   };
 
@@ -98,13 +98,14 @@ const ViewSubLocation = (props) => {
       isOpen={isOpen}
       role="dialog"
       autoFocus={true}
+      size="xl"
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleViewSubLocation}
     >
       {!showEditSubLocation ? (
-        <ModalHeader toggle={toggle} tag="h4">
+        <ModalHeader toggle={handleViewSubLocation} tag="h4">
           View {validation.values.name}
           <i
             className="bx bx bxs-edit"

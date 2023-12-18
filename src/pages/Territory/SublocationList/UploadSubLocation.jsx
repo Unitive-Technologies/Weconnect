@@ -21,7 +21,7 @@ import Select from "react-select";
 import { useSelector, useDispatch } from "react-redux";
 
 const UploadSubLocation = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleUploadSubLocation } = props;
   const dispatch = useDispatch();
   const [selectedFiles, setselectedFiles] = useState([]);
   const selectLcoState = (state) => state.lco;
@@ -102,19 +102,20 @@ const UploadSubLocation = (props) => {
     <Modal
       isOpen={isOpen}
       role="dialog"
+      size="xl"
       autoFocus={true}
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleUploadSubLocation}
     >
-      <ModalHeader toggle={toggle} tag="h4">
+      <ModalHeader toggle={handleUploadSubLocation} tag="h4">
         Upload Sub Locations
       </ModalHeader>
       <ModalBody>
         <Card>
           <CardBody>
-            <div className="text-left  r-0" style={{ marginLeft: "45%" }}>
+            <div className="text-left mb-4 r-0" style={{ marginLeft: "78%" }}>
               <button
                 type="button"
                 className="btn btn-primary"
@@ -123,48 +124,53 @@ const UploadSubLocation = (props) => {
                 Download Sample Upload File
               </button>
             </div>
-
-            <div className="mb-3">
-              <Label className="form-label"> LCO</Label>
-              <Select
-                name="lco"
-                options={options}
-                // onChange={(selectedOption) =>
-                //   validation.handleChange(selectedOption.value)
-                // }
-                // onBlur={validation.handleBlur}
-                // value={options.find(
-                //   (opt) => opt.value === validation.values.lco
-                // )}
-                styles={customStyles}
-              />
-              {/* {validation.touched.state_lbl && validation.errors.state_lbl ? (
+            <Row>
+              <Col lg={6}>
+                <div className="mb-3">
+                  <Label className="form-label"> LCO</Label>
+                  <Select
+                    name="lco"
+                    options={options}
+                    // onChange={(selectedOption) =>
+                    //   validation.handleChange(selectedOption.value)
+                    // }
+                    // onBlur={validation.handleBlur}
+                    // value={options.find(
+                    //   (opt) => opt.value === validation.values.lco
+                    // )}
+                    styles={customStyles}
+                  />
+                  {/* {validation.touched.state_lbl && validation.errors.state_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.state_lbl}
                   </FormFeedback>
                 ) : null} */}
-            </div>
-            <div className="mb-3">
-              <Label className="form-label">Status</Label>
-              <Input
-                name="status"
-                type="select"
-                placeholder="Select Status"
-                className="form-select"
-                // onChange={validation.handleChange}
-                // onBlur={validation.handleBlur}
-                // value={validation.values.status || ""}
-              >
-                <option value="">Select Status</option>
-                <option value="1">Active</option>
-                <option value="3">In-Active</option>
-              </Input>
-              {/* {validation.touched.status && validation.errors.status ? (
+                </div>
+              </Col>
+              <Col lg={6}>
+                <div className="mb-3">
+                  <Label className="form-label">Status</Label>
+                  <Input
+                    name="status"
+                    type="select"
+                    placeholder="Select Status"
+                    className="form-select"
+                    // onChange={validation.handleChange}
+                    // onBlur={validation.handleBlur}
+                    // value={validation.values.status || ""}
+                  >
+                    <option value="">Select Status</option>
+                    <option value="1">Active</option>
+                    <option value="3">In-Active</option>
+                  </Input>
+                  {/* {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
                     {validation.errors.status}
                   </FormFeedback>
                 ) : null} */}
-            </div>
+                </div>
+              </Col>
+            </Row>
           </CardBody>
           <CardBody>
             <CardSubtitle className="mb-3">
@@ -228,8 +234,15 @@ const UploadSubLocation = (props) => {
                 })}
               </div>
             </Form>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
+            <div className="text-center mt-4 ">
+              <div
+                style={{
+                  display: "flex",
+                  gap: 5,
+                  textAlign: "center",
+                  justifyContent: "center",
+                }}
+              >
                 <button type="button" className="btn btn-primary ">
                   Upload File
                 </button>
@@ -246,13 +259,13 @@ const UploadSubLocation = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     //   validation.resetForm();
-                    toggle();
+                    handleUploadSubLocation();
                   }}
                 >
                   Cancel
                 </button>
               </div>
-            </Col>
+            </div>
           </CardBody>
         </Card>
       </ModalBody>

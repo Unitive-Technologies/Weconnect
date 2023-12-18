@@ -5,6 +5,7 @@ import {
   Row,
   Modal,
   ModalHeader,
+  ModalFooter,
   ModalBody,
   Label,
   FormFeedback,
@@ -20,7 +21,7 @@ import { getLocation as onGetLocation } from "/src/store/actions";
 import Select from "react-select";
 
 const AddSubLocation = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleAddSubLocation } = props;
   const dispatch = useDispatch();
   const [selectedLocation, setSelectedLocation] = useState(null);
 
@@ -87,7 +88,7 @@ const AddSubLocation = (props) => {
       console.log("new sub location:" + JSON.stringify(newSubLocation));
       dispatch(onAddSubLocation(newSubLocation));
       validation.resetForm();
-      toggle();
+      handleAddSubLocation();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -98,13 +99,14 @@ const AddSubLocation = (props) => {
     <Modal
       isOpen={isOpen}
       role="dialog"
+      size="xl"
       autoFocus={true}
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleAddSubLocation}
     >
-      <ModalHeader tag="h4" toggle={toggle}>
+      <ModalHeader tag="h4" toggle={handleAddSubLocation}>
         Add New Sub Location
       </ModalHeader>
       <ModalBody>
@@ -116,7 +118,7 @@ const AddSubLocation = (props) => {
           }}
         >
           <Row>
-            <Col sm="12">
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Sub Location Name<span style={{ color: "red" }}>*</span>
@@ -140,7 +142,8 @@ const AddSubLocation = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Select Location<span style={{ color: "red" }}>*</span>
@@ -171,7 +174,8 @@ const AddSubLocation = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Status<span style={{ color: "red" }}>*</span>
@@ -198,8 +202,8 @@ const AddSubLocation = (props) => {
             </Col>
           </Row>
           <Row>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
+            <Col>
+              <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
                   Save
                 </button>
@@ -216,12 +220,12 @@ const AddSubLocation = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    toggle();
+                    handleAddSubLocation();
                   }}
                 >
                   Cancel
                 </button>
-              </div>
+              </ModalFooter>
             </Col>
           </Row>
         </Form>

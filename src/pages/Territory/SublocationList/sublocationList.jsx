@@ -39,12 +39,11 @@ const SublocationList = (props) => {
   const [isLoading, setLoading] = useState(loading);
   const [showAddSubLocation, setShowAddSubLocation] = useState(false);
   const [showUploadSubLocation, setShowUploadSubLocation] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
   const [showViewSubLocation, setShowViewSubLocation] = useState(false);
   const [viewSubLocationData, setViewSubLocationData] = useState({});
 
-  const toggleViewSubLocation = (userData) => {
-    console.log("User Data: ", userData);
+  const handleViewSubLocation = (userData) => {
+    // console.log("User Data: ", userData);
     setShowViewSubLocation(!showViewSubLocation);
     setViewSubLocationData(userData);
   };
@@ -82,7 +81,7 @@ const SublocationList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  toggleViewSubLocation(userData);
+                  handleViewSubLocation(userData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -227,62 +226,15 @@ const SublocationList = (props) => {
   useEffect(() => {
     if (subloc && !subloc.length) {
       dispatch(onGetSublocation());
-      setIsEdit(false);
     }
   }, [dispatch, subloc]);
 
-  const toggle = () => {
+  const handleAddSubLocation = () => {
     setShowAddSubLocation(!showAddSubLocation);
   };
 
-  const uploadToggle = () => {
-    setShowUploadSubLocation(!showAddSubLocation);
-  };
-
-  const handleUserClick = (arg) => {
-    const user = arg;
-
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-    setIsEdit(true);
-
-    toggle();
-  };
-
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
-
-  //delete customer
-  const [deleteModal, setDeleteModal] = useState(false);
-
-  const onClickDelete = (users) => {
-    setContact(users);
-    setDeleteModal(true);
-  };
-
-  const handleDeleteUser = () => {
-    if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
-    }
-    setContact("");
-    onPaginationPageChange(1);
-    setDeleteModal(false);
+  const handleUploadSubLocation = () => {
+    setShowUploadSubLocation(!showUploadSubLocation);
   };
 
   const getTableActions = () => {
@@ -306,11 +258,17 @@ const SublocationList = (props) => {
     <React.Fragment>
       <ViewSubLocation
         isOpen={showViewSubLocation}
-        toggle={toggleViewSubLocation}
+        handleViewSubLocation={handleViewSubLocation}
         sublocation={viewSubLocationData}
       />
-      <AddSubLocation isOpen={showAddSubLocation} toggle={toggle} />
-      <UploadSubLocation isOpen={showUploadSubLocation} toggle={uploadToggle} />
+      <AddSubLocation
+        isOpen={showAddSubLocation}
+        handleAddSubLocation={handleAddSubLocation}
+      />
+      <UploadSubLocation
+        isOpen={showUploadSubLocation}
+        handleUploadSubLocation={handleUploadSubLocation}
+      />
       <div className="page-content">
         <Container fluid>
           <Breadcrumbs title="Territory" breadcrumbItem="Sublocations" />
@@ -329,10 +287,6 @@ const SublocationList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleSubLocationClick={() => setShowAddSubLocation(true)}
-                      handleUploadSubLocation={() =>
-                        setShowUploadSubLocation(true)
-                      }
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
