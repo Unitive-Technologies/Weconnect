@@ -1,20 +1,14 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-
 import { GET_LOCATION, ADD_LOCATION } from "./actionTypes";
-
 import {
   getLocationSuccess,
   getLocationFail,
   addLocationSuccess,
   addLocationFail,
 } from "./actions";
-
-//Include Both Helper File with needed methods
 import { getLocation, addLocation } from "../../helpers/fakebackend_helper";
-import { toast } from "react-toastify";
 
 const convertLocationListObject = (locationList) => {
-  // Location list has more data than what we need, we need to convert each of the location object in the list with needed colums of the table
   return locationList.map((location) => {
     return {
       ...location,
