@@ -9,39 +9,25 @@ import {
   Col,
   Container,
   Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
   UncontrolledTooltip,
-  Input,
-  Form,
   Toast,
   ToastHeader,
   ToastBody,
 } from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-
-import { Email, Tags, Projects } from "./promoVoucherListCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
 import { getPromoVoucher as onGetPromoVoucher } from "/src/store/actions";
-import { isEmpty } from "lodash";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
-import AddNewPromoVoucherList from "./AddNewPromoVoucherList";
 import AddNewPromoVoucher from "./AddNewPromoVoucherList";
 
 const PromoVoucherList = (props) => {
   //meta title
-  document.title = "Promo Voucher List | VDigital";
+  document.title = "Promo Vouchers | VDigital";
 
   const dispatch = useDispatch();
 
@@ -56,13 +42,8 @@ const PromoVoucherList = (props) => {
 
   const { provoucher, loading } = useSelector(PromoVoucherProperties);
 
-  useEffect(() => {
-    console.log("Promo voucher data in component:", provoucher);
-  }, [provoucher]);
   const [isLoading, setLoading] = useState(loading);
 
-  const [userList, setUserList] = useState([]);
-  const [isEdit, setIsEdit] = useState(false);
   const [showAddNewPromoVoucher, setShowAddNewPromoVoucher] = useState(false);
   const [showScrapPromoVoucher, setShowScrapPromoVoucher] = useState(false);
 
@@ -97,7 +78,6 @@ const PromoVoucherList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-
             <p className="text-muted mb-0">{cellProps.row.original.operator}</p>
           );
         },
@@ -250,41 +230,6 @@ const PromoVoucherList = (props) => {
           );
         },
       },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
-          );
-        },
-      },
     ],
     []
   );
@@ -292,7 +237,6 @@ const PromoVoucherList = (props) => {
   useEffect(() => {
     if (provoucher && !provoucher.length) {
       dispatch(onGetPromoVoucher());
-      setIsEdit(false);
     }
   }, [dispatch, provoucher]);
 
@@ -300,12 +244,10 @@ const PromoVoucherList = (props) => {
     setShowAddNewPromoVoucher(!showAddNewPromoVoucher);
   };
 
-  const toggle = () => {
+  const handleAddPromoVoucher = () => {
     setShowAddNewPromoVoucher(!showAddNewPromoVoucher);
   };
 
-
-  var node = useRef();
   const keyField = "id";
 
   const getTableActions = () => {
@@ -327,7 +269,10 @@ const PromoVoucherList = (props) => {
 
   return (
     <React.Fragment>
-      <AddNewPromoVoucher isOpen={showAddNewPromoVoucher} toggle={toggle} />
+      <AddNewPromoVoucher
+        isOpen={showAddNewPromoVoucher}
+        handleAddPromoVoucher={handleAddPromoVoucher}
+      />
       <div
         className="position-fixed top-0 end-0 p-3"
         style={{ zIndex: "1005" }}
@@ -341,7 +286,7 @@ const PromoVoucherList = (props) => {
       </div>
       <div className="page-content">
         <Container fluid>
-          <Breadcrumbs title="Billing" breadcrumbItem="Promo Voucher List" />
+          <Breadcrumbs title="Billing" breadcrumbItem="Promo Vouchers" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -349,9 +294,9 @@ const PromoVoucherList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log(
+                    {/* {console.log(
                       "Promo Voucher List:" + JSON.stringify(provoucher)
-                    )}
+                    )} */}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
@@ -361,7 +306,6 @@ const PromoVoucherList = (props) => {
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
                       customPageSize={8}
-                      handleAddNewPromoVoucher={() => setShowAddNewPromoVoucher(true)}
                       tableActions={getTableActions()}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

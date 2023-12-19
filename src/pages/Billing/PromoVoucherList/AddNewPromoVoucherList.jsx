@@ -1,10 +1,7 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalFooter,
@@ -12,19 +9,17 @@ import {
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewPromoVoucher as onAddNewPromoVoucher } from "/src/store/promovoucherlist/actions";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const AddNewPromoVoucher = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleAddPromoVoucher } = props;
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -71,7 +66,7 @@ const AddNewPromoVoucher = (props) => {
       // save new user
       dispatch(onAddNewPromoVoucher(newPromoVoucher));
       validation.resetForm();
-      toggle();
+      handleAddPromoVoucher();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -87,9 +82,11 @@ const AddNewPromoVoucher = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleAddPromoVoucher}
     >
-      <ModalHeader tag="h4" toggle={toggle}>Generate Promo Voucher</ModalHeader>
+      <ModalHeader tag="h4" toggle={handleAddPromoVoucher}>
+        Generate Promo Voucher
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -139,7 +136,8 @@ const AddNewPromoVoucher = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.operator_code || ""}
                 ></Input>
-                {validation.touched.operator_code && validation.errors.operator_code ? (
+                {validation.touched.operator_code &&
+                validation.errors.operator_code ? (
                   <FormFeedback type="invalid">
                     {validation.errors.operator_code}
                   </FormFeedback>
@@ -148,9 +146,7 @@ const AddNewPromoVoucher = (props) => {
             </Col>
             <Col sm="3">
               <div className="mb-3">
-                <Label className="form-label">
-                  Voucher Amount
-                </Label>
+                <Label className="form-label">Voucher Amount</Label>
                 <Input
                   name="amount"
                   type="text"
@@ -159,8 +155,7 @@ const AddNewPromoVoucher = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.amount || ""}
-                >
-                </Input>
+                ></Input>
                 {validation.touched.amount && validation.errors.amount ? (
                   <FormFeedback type="invalid">
                     {validation.errors.amount}
@@ -170,9 +165,7 @@ const AddNewPromoVoucher = (props) => {
             </Col>
             <Col sm="3">
               <div className="mb-3">
-                <Label className="form-label">
-                  Voucher MRP
-                </Label>
+                <Label className="form-label">Voucher MRP</Label>
                 <Input
                   name="mrp"
                   type="text"
@@ -204,9 +197,9 @@ const AddNewPromoVoucher = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.expiry_date || ""}
-                >
-                </Input>
-                {validation.touched.expiry_date && validation.errors.expiry_date ? (
+                ></Input>
+                {validation.touched.expiry_date &&
+                validation.errors.expiry_date ? (
                   <FormFeedback type="invalid">
                     {validation.errors.expiry_date}
                   </FormFeedback>
@@ -226,8 +219,7 @@ const AddNewPromoVoucher = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.bouquets || ""}
-                >
-                </Input>
+                ></Input>
                 {validation.touched.bouquets && validation.errors.bouquets ? (
                   <FormFeedback type="invalid">
                     {validation.errors.bouquets}
@@ -254,7 +246,8 @@ const AddNewPromoVoucher = (props) => {
                   <option value="202">Renewal</option>
                   <option value="203">BOTH</option>
                 </Input>
-                {validation.touched.applied_on && validation.errors.applied_on ? (
+                {validation.touched.applied_on &&
+                validation.errors.applied_on ? (
                   <FormFeedback type="invalid">
                     {validation.errors.applied_on}
                   </FormFeedback>
@@ -283,10 +276,9 @@ const AddNewPromoVoucher = (props) => {
                   <option value="23">3month</option>
                   <option value="23">6month</option>
                   <option value="23">1Year</option>
-
                 </Input>
                 {validation.touched.recharge_period &&
-                  validation.errors.recharge_period ? (
+                validation.errors.recharge_period ? (
                   <FormFeedback type="invalid">
                     {validation.errors.recharge_period}
                   </FormFeedback>
@@ -313,7 +305,7 @@ const AddNewPromoVoucher = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    toggle();
+                    handleAddPromoVoucher();
                   }}
                 >
                   Cancel
@@ -323,7 +315,7 @@ const AddNewPromoVoucher = (props) => {
           </Row>
         </Form>
       </ModalBody>
-    </Modal >
+    </Modal>
   );
 };
 
