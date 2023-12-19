@@ -9,36 +9,23 @@ import {
   Col,
   Container,
   Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
   UncontrolledTooltip,
-  Input,
-  Form,
 } from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-
-import { Email, Tags, Projects } from "./taxListCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
 import { getTax as onGetTax } from "/src/store/actions";
-import { isEmpty } from "lodash";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
-import AddNewTaxList from './AddNewTaxList'
-import ViewTaxList from './ViewTaxList'
+import AddNewTaxList from "./AddNewTaxList";
+import ViewTaxList from "./ViewTaxList";
 
 const TaxList = (props) => {
   //meta title
-  document.title = "Tax List | VDigital";
+  document.title = "Taxes | VDigital";
 
   const dispatch = useDispatch();
 
@@ -50,13 +37,7 @@ const TaxList = (props) => {
 
   const { taxes, loading } = useSelector(TaxProperties);
 
-  useEffect(() => {
-    console.log("Tax list data in component:", taxes);
-  }, [taxes]);
   const [isLoading, setLoading] = useState(loading);
-
-  const [userList, setUserList] = useState([]);
-  const [isEdit, setIsEdit] = useState(false);
 
   const [showAddNewTaxList, setShowAddNewTaxList] = useState(false);
   const [showViewTaxList, setShowTaxList] = useState(false);
@@ -89,10 +70,13 @@ const TaxList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1" onClick={() => {
-                const userData = cellProps.row.original;
-                handleViewTaxList(userData);
-              }}>
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  handleViewTax(userData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -184,41 +168,6 @@ const TaxList = (props) => {
           );
         },
       },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
-          );
-        },
-      },
     ],
     []
   );
@@ -226,72 +175,19 @@ const TaxList = (props) => {
   useEffect(() => {
     if (taxes && !taxes.length) {
       dispatch(onGetTax());
-      setIsEdit(false);
     }
   }, [dispatch, taxes]);
 
-  const toggle = () => {
+  const handleAddTax = () => {
     setShowAddNewTaxList(!showAddNewTaxList);
   };
 
   const [viewTaxList, setViewTaxList] = useState({});
 
-  const handleViewTaxList = (userTaxData) => {
+  const handleViewTax = (userTaxData) => {
     setShowTaxList(!showViewTaxList);
     setViewTaxList(userTaxData);
     // toggle();
-  };
-
-  const handleUserClick = (arg) => {
-    const user = arg;
-
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-    setIsEdit(true);
-
-    toggle();
-  };
-
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
-
-  //delete customer
-  const [deleteModal, setDeleteModal] = useState(false);
-
-  const onClickDelete = (users) => {
-    setContact(users);
-    setDeleteModal(true);
-  };
-
-  const handleDeleteUser = () => {
-    if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
-    }
-    setContact("");
-    onPaginationPageChange(1);
-    setDeleteModal(false);
-  };
-
-  const handleUserClicks = () => {
-    setUserList("");
-    setIsEdit(false);
-    toggle();
   };
 
   const keyField = "id";
@@ -302,21 +198,23 @@ const TaxList = (props) => {
         name: "Create",
         action: setShowAddNewTaxList,
         type: "normal",
-        icon: "create"
+        icon: "create",
       },
     ];
   };
 
   return (
     <React.Fragment>
-      <ViewTaxList isOpen={showViewTaxList}
-        toggle={handleViewTaxList}
-        tax={viewTaxList} />
-      <AddNewTaxList isOpen={showAddNewTaxList} toggle={toggle} />
+      <ViewTaxList
+        isOpen={showViewTaxList}
+        handleViewTax={handleViewTax}
+        tax={viewTaxList}
+      />
+      <AddNewTaxList isOpen={showAddNewTaxList} handleAddTax={handleAddTax} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Billing" breadcrumbItem="Tax List" />
+          <Breadcrumbs title="Billing" breadcrumbItem="Taxes" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -324,7 +222,7 @@ const TaxList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("Tax list:" + JSON.stringify(taxes))}
+                    {/* {console.log("Tax list:" + JSON.stringify(taxes))} */}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
@@ -333,8 +231,6 @@ const TaxList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleAddNewTaxList={() => setShowAddNewTaxList(true)}
-                      handleUserClick={handleUserClicks}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

@@ -1,30 +1,28 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
+  ModalFooter,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addNewTaxList as onAddNewTaxList } from "/src/store/taxlist/actions";
 
 const ViewTaxList = (props) => {
-  const { isOpen, toggle, tax } = props;
+  const { isOpen, handleViewTax, tax } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
-  const [showEditUser, setShowEditUser] = useState(false);
+  const [showEditTax, setShowEditTax] = useState(false);
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -67,9 +65,15 @@ const ViewTaxList = (props) => {
       // update user
       dispatch(onAddNewTaxList(newTaxList));
       validation.resetForm();
-      toggle();
+      handleViewTax();
     },
   });
+
+  const handleCancel = () => {
+    setShowEditTax(false);
+    handleViewTax();
+  };
+
   return (
     <>
       <Modal
@@ -80,21 +84,26 @@ const ViewTaxList = (props) => {
         centered={true}
         className="exampleModal"
         tabIndex="-1"
-        toggle={toggle}
+        toggle={handleCancel}
       >
-        {!showEditUser ? (
-          <ModalHeader toggle={toggle} tag="h4">
-            View  {tax.name}
-            <i
-              className="bx bx bxs-edit"
-              style={{ marginLeft: "20px", cursor: "pointer" }}
-              onClick={() => setShowEditUser(true)}
-            ></i>
-          </ModalHeader>
-        ) : (
-          <ModalHeader toggle={toggle} tag="h4">
-            Edit {tax.name}
-          </ModalHeader>
+        <ModalHeader toggle={handleCancel} tag="h4">
+          {!showEditTax
+            ? `View ${(tax && tax.name) || ""}`
+            : `Edit ${(tax && tax.name) || ""}`}
+        </ModalHeader>
+        {!showEditTax && (
+          <Link
+            style={{
+              position: "absolute",
+              marginLeft: "92%",
+              marginTop: "1%",
+            }}
+            to="#!"
+            className="btn btn-light me-1"
+            onClick={() => setShowEditTax(true)}
+          >
+            <i className="mdi mdi-pencil-outline"></i>
+          </Link>
         )}
         <ModalBody>
           <Form
@@ -209,7 +218,8 @@ const ViewTaxList = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.valuetype_lbl || ""}
                   ></Input>
-                  {validation.touched.valuetype_lbl && validation.errors.valuetype_lbl ? (
+                  {validation.touched.valuetype_lbl &&
+                  validation.errors.valuetype_lbl ? (
                     <FormFeedback type="invalid">
                       {validation.errors.valuetype_lbl}
                     </FormFeedback>
@@ -230,7 +240,8 @@ const ViewTaxList = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.parent_lbl || ""}
                   ></Input>
-                  {validation.touched.parent_lbl && validation.errors.parent_lbl ? (
+                  {validation.touched.parent_lbl &&
+                  validation.errors.parent_lbl ? (
                     <FormFeedback type="invalid">
                       {validation.errors.parent_lbl}
                     </FormFeedback>
@@ -253,7 +264,8 @@ const ViewTaxList = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.applicable || ""}
                   ></Input>
-                  {validation.touched.applicable && validation.errors.applicable ? (
+                  {validation.touched.applicable &&
+                  validation.errors.applicable ? (
                     <FormFeedback type="invalid">
                       {validation.errors.applicable}
                     </FormFeedback>
@@ -275,13 +287,13 @@ const ViewTaxList = (props) => {
                     value={validation.values.description || ""}
                     invalid={
                       validation.touched.description &&
-                        validation.errors.description
+                      validation.errors.description
                         ? true
                         : false
                     }
                   />
                   {validation.touched.description &&
-                    validation.errors.description ? (
+                  validation.errors.description ? (
                     <FormFeedback type="invalid">
                       {validation.errors.description}
                     </FormFeedback>
@@ -289,9 +301,37 @@ const ViewTaxList = (props) => {
                 </div>
               </Col>
             </Row>
+            {showEditTax && (
+              <Row>
+                <Col>
+                  <ModalFooter>
+                    <button type="submit" className="btn btn-success save-user">
+                      Save
+                    </button>
+                    <button
+                      type="reset"
+                      className="btn btn-warning"
+                      onClick={() => validation.resetForm()}
+                    >
+                      Reset
+                    </button>
+
+                    <button
+                      type="button"
+                      className="btn btn-outline-danger"
+                      onClick={() => {
+                        validation.resetForm();
+                        handleCancel();
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </ModalFooter>
+                </Col>
+              </Row>
+            )}
           </Form>
         </ModalBody>
-        {/* </Modal> */}
       </Modal>
     </>
   );

@@ -1,10 +1,7 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
@@ -12,19 +9,17 @@ import {
   ModalFooter,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewTaxList as onAddNewTaxList } from "/src/store/taxlist/actions";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const AddNewTaxList = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleAddTax } = props;
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -71,7 +66,7 @@ const AddNewTaxList = (props) => {
       // save new user
       dispatch(onAddNewTaxList(newTaxList));
       validation.resetForm();
-      toggle();
+      handleAddTax();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -87,9 +82,11 @@ const AddNewTaxList = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleAddTax}
     >
-      <ModalHeader tag="h4" toggle={toggle}>Add New Tax</ModalHeader>
+      <ModalHeader tag="h4" toggle={handleAddTax}>
+        Add New Tax
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -159,7 +156,8 @@ const AddNewTaxList = (props) => {
                   <option value="102">Active</option>
                   <option value="103">In-Active</option>
                 </Input>
-                {validation.touched.status_lbl && validation.errors.status_lbl ? (
+                {validation.touched.status_lbl &&
+                validation.errors.status_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.status_lbl}
                   </FormFeedback>
@@ -207,7 +205,8 @@ const AddNewTaxList = (props) => {
                   <option value="102">SGST</option>
                   <option value="103">CGST</option>
                 </Input>
-                {validation.touched.valuetype_lbl && validation.errors.valuetype_lbl ? (
+                {validation.touched.valuetype_lbl &&
+                validation.errors.valuetype_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.valuetype_lbl}
                   </FormFeedback>
@@ -216,9 +215,7 @@ const AddNewTaxList = (props) => {
             </Col>
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">
-                  TaxOn Tax
-                </Label>
+                <Label className="form-label">TaxOn Tax</Label>
                 <Input
                   name="parent_lbl"
                   type="select"
@@ -231,7 +228,8 @@ const AddNewTaxList = (props) => {
                   <option value="201">in Percent</option>
                   <option value="202">in Amount</option>
                 </Input>
-                {validation.touched.parent_lbl && validation.errors.parent_lbll ? (
+                {validation.touched.parent_lbl &&
+                validation.errors.parent_lbll ? (
                   <FormFeedback type="invalid">
                     {validation.errors.parent_lbl}
                   </FormFeedback>
@@ -263,7 +261,8 @@ const AddNewTaxList = (props) => {
                   <option value="107">Service Charge</option>
                   <option value="108">AGR Charge</option>
                 </Input>
-                {validation.touched.applicable && validation.errors.applicable ? (
+                {validation.touched.applicable &&
+                validation.errors.applicable ? (
                   <FormFeedback type="invalid">
                     {validation.errors.applicable}
                   </FormFeedback>
@@ -285,20 +284,19 @@ const AddNewTaxList = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
-
           </Row>
           <Row>
             <Col>
@@ -319,7 +317,7 @@ const AddNewTaxList = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    toggle();
+                    handleAddTax();
                   }}
                 >
                   Cancel
@@ -329,8 +327,7 @@ const AddNewTaxList = (props) => {
           </Row>
         </Form>
       </ModalBody>
-      {/* </Modal> */}
-    </Modal >
+    </Modal>
   );
 };
 
