@@ -167,10 +167,20 @@ const BulkAssigntoOperator = (props) => {
             </Row>
           </Row>
           <Row>
-            <Col>
-              <div className="text-end">
+            <Col sm="12">
+              <div className="d-flex flex-wrap gap-2">
                 <button type="submit" className="btn btn-success save-user">
-                  Save
+                  Assign
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-outline-danger"
+                  onClick={() => {
+                    validation.resetForm();
+                    toggle();
+                  }}
+                >
+                  Cancel
                 </button>
               </div>
             </Col>
