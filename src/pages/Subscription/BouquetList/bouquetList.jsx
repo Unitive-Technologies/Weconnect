@@ -45,7 +45,7 @@ const BouquetList = (props) => {
   const [showViewBouquet, setShowViewBouquet] = useState(false);
   const [viewBouquetData, setViewBouquetData] = useState({});
   const [showBulkRemoval, setShowBulkRemoval] = useState(false);
-  const [showBulkSettings, setShowBulkSettings] = usestate(false);
+  const [showBulkSettings, setShowBulkSettings] = useState(false);
 
   const toggleViewBouquet = (userData) => {
     console.log("User Data: ", userData);
