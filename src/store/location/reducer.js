@@ -14,7 +14,7 @@ const INIT_STATE = {
 const Location = (state = INIT_STATE, action) => {
   switch (action.type) {
     case GET_LOCATION_SUCCESS:
-      console.log("Location data in reducer:", action.payload);
+      // console.log("Location data in reducer:", action.payload);
       return {
         ...state,
         location: action.payload,

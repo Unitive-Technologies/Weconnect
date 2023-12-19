@@ -46,7 +46,7 @@ export const ADD_LOCATION = "/location?vr=web1.0";
 
 export const GET_SUBLOCATION =
   "/sublocation?expand=created_by_lbl,operator_lbl,location_lbl,status_lbl,location_code,operator_code&page=1&per-page=50&vr=web1.0";
-export const ADD_SUBLOCATION = "/add/sublocation";
+export const ADD_SUBLOCATION = "/sublocation?vr=web1.0";
 
 export const GET_DISTRIBUTORS = "/distributorlist";
 export const ADD_NEW_DISTRIBUTOR = "/add/distributors";

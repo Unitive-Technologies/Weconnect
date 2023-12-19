@@ -34,7 +34,7 @@ const convertLocationListObject = (locationList) => {
 function* fetchLocation() {
   try {
     const response = yield call(getLocation);
-    console.log("response:" + JSON.stringify(response.data));
+    // console.log("response:" + JSON.stringify(response.data));
     const locationList = convertLocationListObject(response.data);
     yield put(getLocationSuccess(locationList));
   } catch (error) {

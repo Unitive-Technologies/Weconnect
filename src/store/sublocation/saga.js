@@ -48,7 +48,8 @@ function* fetchSublocation() {
 function* onAddSubLocation({ payload: sublocation }) {
   try {
     const response = yield call(addSublocation, sublocation);
-    yield put(addSubLocationSuccess(response));
+    console.log("Response data: ", response.data);
+    yield put(addSubLocationSuccess(response.data));
   } catch (error) {
     yield put(addSubLocationFail(error));
   }
