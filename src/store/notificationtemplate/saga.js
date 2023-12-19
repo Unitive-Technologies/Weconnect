@@ -47,8 +47,8 @@ function* fetchNotificationTemplate() {
   try {
     const response = yield call(getNotificationTemplate);
     const notificationTemplateList =
-      convertNotificationTemplateListObject(response);
-    yield put(getNotificationTemplateSuccess(notificationTemplateList));
+      //   convertNotificationTemplateListObject(response);s
+      yield put(getNotificationTemplateSuccess(response.data));
   } catch (error) {
     console.error("Error fetching notification templates:", error);
     yield put(getNotificationTemplateFail(error));

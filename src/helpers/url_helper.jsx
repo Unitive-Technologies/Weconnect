@@ -22,7 +22,8 @@ export const GET_DESIGNATION =
   "/schedule-announcement?expand=start_time_lbl,end_time_lbl,announcement_templ_lbl&filter[current_activemsg]=1&vr=web1.0";
 export const ADD_NEW_DESIGNATION = "/add/designation";
 
-export const GET_NOTIFICATIONTEMPLATE = "/notificationtemplatelist";
+export const GET_NOTIFICATIONTEMPLATE =
+  "/announcement-template?expand=status_lbl,created_by_lbl,created_at_lbl,msg_type_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_NOTIFICATIONTEMPLATE = "/add/notification";
 
 export const GET_REGIONALOFFICE = "/regionaloffice";
@@ -30,7 +31,7 @@ export const ADD_NEW_REGIONALOFFICE = "/add/regionaloffice";
 export const UPDATE_REGIONALOFFICE = "/update/regionaloffice";
 
 export const GET_SCHEDULECUSTOMERNOTIFICATION =
-  "/schedulecustomernotificationlist";
+  "/schedule-notification?expand=type_lbl,osd_template_id_lbl,bmail_template_id_lbl,sms_template_id_lbl,osd_configuration_id_lbl,status_lbl,created_by_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_SCHEDULECUSTOMERNOTIFICATION =
   "/add/schedulecustomernotification";
 

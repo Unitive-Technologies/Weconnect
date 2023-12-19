@@ -306,32 +306,32 @@ const fakeBackend = () => {
   //   });
   // });
 
-  mock.onGet(url.GET_NOTIFICATIONTEMPLATE).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (notemplate) {
-          // Passing fake JSON data as response
+  // mock.onGet(url.GET_NOTIFICATIONTEMPLATE).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (notemplate) {
+  //         // Passing fake JSON data as response
 
-          resolve([200, notemplate]);
-        } else {
-          reject([400, "Cannot get NotificationTemplate"]);
-        }
-      });
-    });
-  });
+  //         resolve([200, notemplate]);
+  //       } else {
+  //         reject([400, "Cannot get NotificationTemplate"]);
+  //       }
+  //     });
+  //   });
+  // });
 
-  mock.onGet(url.GET_SCHEDULECUSTOMERNOTIFICATION).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (schCusNotification) {
-          // Passing fake JSON data as response
-          resolve([200, schCusNotification]);
-        } else {
-          reject([400, "Cannot get Schedule Customer Notification"]);
-        }
-      });
-    });
-  });
+  // mock.onGet(url.GET_SCHEDULECUSTOMERNOTIFICATION).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (schCusNotification) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, schCusNotification]);
+  //       } else {
+  //         reject([400, "Cannot get Schedule Customer Notification"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   // mock.onGet(url.GET_BROADCASTER).reply(() => {
   //   return new Promise((resolve, reject) => {
