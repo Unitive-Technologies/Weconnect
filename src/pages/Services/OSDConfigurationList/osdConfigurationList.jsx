@@ -324,11 +324,6 @@ const OSDConfigurationList = (props) => {
 
   return (
     <React.Fragment>
-      {/* <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
-      /> */}
       <NSTVList isOpen={showNSTV}
         toggle={toggle}
       />

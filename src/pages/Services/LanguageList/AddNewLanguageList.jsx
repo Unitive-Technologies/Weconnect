@@ -78,6 +78,7 @@ const AddNewLanguageList = (props) => {
             centered={true}
             className="exampleModal"
             tabIndex="-1"
+            size="xl"
             toggle={toggle}
         >
             {/* <Modal isOpen={modal} toggle={toggle}> */}
@@ -91,7 +92,7 @@ const AddNewLanguageList = (props) => {
                     }}
                 >
                     <Row>
-                        <Col sm="12">
+                        <Col sm="6">
                             <div className="mb-3">
                                 <Label className="form-label">Language<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
@@ -109,7 +110,8 @@ const AddNewLanguageList = (props) => {
                                     </FormFeedback>
                                 ) : null}
                             </div>
-
+                        </Col>
+                        <Col sm="6">
                             <div className="mb-3">
                                 <Label className="form-label">Code<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
@@ -128,7 +130,10 @@ const AddNewLanguageList = (props) => {
                                     </FormFeedback>
                                 ) : null}
                             </div>
-
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm="6">
                             <div className="mb-3">
                                 <Label className="form-label">Status<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
@@ -150,7 +155,8 @@ const AddNewLanguageList = (props) => {
                                     </FormFeedback>
                                 ) : null}
                             </div>
-
+                        </Col>
+                        <Col sm="6">
                             <div className="mb-3">
                                 <Label className="form-label">Description</Label>
                                 <Input
@@ -175,7 +181,6 @@ const AddNewLanguageList = (props) => {
                                     </FormFeedback>
                                 ) : null}
                             </div>
-
                         </Col>
                     </Row>
                     <Row>
