@@ -1,10 +1,8 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalFooter,
@@ -12,17 +10,16 @@ import {
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const ViewWareHouse = (props) => {
-  const { isOpen, toggle, warehouse } = props;
+  const { isOpen, handleViewWarehouse, warehouse } = props;
   const dispatch = useDispatch();
   const [showEditWarehouse, setShowEditWarehouse] = useState(false);
 
@@ -67,15 +64,15 @@ const ViewWareHouse = (props) => {
       // save new user
       dispatch(onAddWareHouseList(updateWareHouse));
       validation.resetForm();
-      toggle();
+      handleViewWarehouse();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
     },
   });
-  const editToggle = () => {
+  const handleCancel = () => {
     setShowEditWarehouse(false);
-    toggle();
+    handleViewWarehouse();
   };
 
   return (
@@ -86,23 +83,27 @@ const ViewWareHouse = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleCancel}
       size="xl"
     >
-      {!showEditWarehouse ? (
-        <ModalHeader toggle={toggle} tag="h4">
-          View {validation.values.name}
-          <i
-            className="bx bx bxs-edit"
-            style={{ marginLeft: "20px", cursor: "pointer" }}
-            onClick={() => setShowEditWarehouse(true)}
-          ></i>
-
-        </ModalHeader>
-      ) : (
-        <ModalHeader toggle={editToggle} tag="h4">
-          Edit {validation.values.name}
-        </ModalHeader>
+      <ModalHeader toggle={handleCancel} tag="h4">
+        {!showEditWarehouse
+          ? `View ${(warehouse && warehouse.name) || ""}`
+          : `Edit ${(warehouse && warehouse.name) || ""}`}
+      </ModalHeader>
+      {!showEditWarehouse && (
+        <Link
+          style={{
+            position: "absolute",
+            marginLeft: "92%",
+            marginTop: "1%",
+          }}
+          to="#!"
+          className="btn btn-light me-1"
+          onClick={() => setShowEditWarehouse(true)}
+        >
+          <i className="mdi mdi-pencil-outline"></i>
+        </Link>
       )}
       <ModalBody>
         <Form
@@ -153,14 +154,14 @@ const ViewWareHouse = (props) => {
                   value={validation.values.contact_person || ""}
                   invalid={
                     validation.touched.contact_person &&
-                      validation.errors.contact_person
+                    validation.errors.contact_person
                       ? true
                       : false
                   }
                   disabled={!showEditWarehouse}
                 />
                 {validation.touched.contact_person &&
-                  validation.errors.contact_person ? (
+                validation.errors.contact_person ? (
                   <FormFeedback type="invalid">
                     {validation.errors.contact_person}
                   </FormFeedback>
@@ -261,14 +262,14 @@ const ViewWareHouse = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                   disabled={!showEditWarehouse}
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -302,36 +303,37 @@ const ViewWareHouse = (props) => {
               </div>
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <ModalFooter>
-                <button type="submit" className="btn btn-success save-user">
-                  Save
-                </button>
-                <button
-                  type="reset"
-                  className="btn btn-warning"
-                  onClick={() => validation.resetForm()}
-                >
-                  Reset
-                </button>
+          {showEditWarehouse && (
+            <Row>
+              <Col>
+                <ModalFooter>
+                  <button type="submit" className="btn btn-success save-user">
+                    Save
+                  </button>
+                  <button
+                    type="reset"
+                    className="btn btn-warning"
+                    onClick={() => validation.resetForm()}
+                  >
+                    Reset
+                  </button>
 
-                <button
-                  type="button"
-                  className="btn btn-outline-danger"
-                  onClick={() => {
-                    validation.resetForm();
-                    toggle();
-                  }}
-                >
-                  Cancel
-                </button>
-              </ModalFooter>
-            </Col>
-          </Row>
+                  <button
+                    type="button"
+                    className="btn btn-outline-danger"
+                    onClick={() => {
+                      validation.resetForm();
+                      handleCancel();
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </ModalFooter>
+              </Col>
+            </Row>
+          )}
         </Form>
       </ModalBody>
-      {/* </Modal> */}
     </Modal>
   );
 };

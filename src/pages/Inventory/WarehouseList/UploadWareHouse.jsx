@@ -1,34 +1,25 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
   Card,
   CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalFooter,
   ModalHeader,
   ModalBody,
   Label,
-  FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
-  CardTitle,
   CardSubtitle,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const UploadWareHouse = (props) => {
-  const { isOpen, toggle } = props;
-  //   console.log("user in viewuser modal:" + JSON.stringify(user));
-  const dispatch = useDispatch();
+  const { isOpen, handleUploadWarehouse } = props;
 
   const [selectedFiles, setselectedFiles] = useState([]);
 
@@ -90,9 +81,9 @@ const UploadWareHouse = (props) => {
       className="exampleModal"
       tabIndex="-1"
       size="xl"
-      toggle={toggle}
+      toggle={handleUploadWarehouse}
     >
-      <ModalHeader toggle={toggle} tag="h4">
+      <ModalHeader toggle={handleUploadWarehouse} tag="h4">
         Upload Warehouses
       </ModalHeader>
       <ModalBody>
@@ -102,7 +93,7 @@ const UploadWareHouse = (props) => {
               <button
                 type="button"
                 className="btn btn-primary"
-              // onClick={handleDownloadSampleFile}
+                // onClick={handleDownloadSampleFile}
               >
                 Download Sample Upload File
               </button>
@@ -114,9 +105,9 @@ const UploadWareHouse = (props) => {
                 type="select"
                 placeholder="Select Status"
                 className="form-select"
-              // onChange={validation.handleChange}
-              // onBlur={validation.handleBlur}
-              // value={validation.values.status || ""}
+                // onChange={validation.handleChange}
+                // onBlur={validation.handleBlur}
+                // value={validation.values.status || ""}
               >
                 <option value="">Select Status</option>
                 <option value="Active">Active</option>
@@ -130,7 +121,6 @@ const UploadWareHouse = (props) => {
             </div>
           </CardBody>
           <CardBody>
-            {/* <CardTitle>Dropzone</CardTitle> */}
             <CardSubtitle className="mb-3">
               {" "}
               Select File to Upload<span style={{ color: "red" }}>*</span>
@@ -192,31 +182,26 @@ const UploadWareHouse = (props) => {
                 })}
               </div>
             </Form>
-            <Col>
-              <ModalFooter>
-                <button type="button" className="btn btn-primary ">
+            <div className="text-center mt-4 ">
+              <div
+                style={{
+                  display: "flex",
+                  gap: 5,
+                  textAlign: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <button type="button" className="btn btn-primary mr-2 ">
                   Upload File
                 </button>
-                <button
-                  type="reset"
-                  className="btn btn-warning"
-                //   onClick={() => validation.resetForm()}
-                >
+                <button type="button" className="btn btn-primary ml-2 ">
                   Reset
                 </button>
-
-                <button
-                  type="button"
-                  className="btn btn-outline-danger"
-                //   onClick={() => {
-                //     validation.resetForm();
-                //     toggle();
-                //   }}
-                >
+                <button type="button" className="btn btn-primary ">
                   Cancel
                 </button>
-              </ModalFooter>
-            </Col>
+              </div>
+            </div>
           </CardBody>
         </Card>
       </ModalBody>
