@@ -37,8 +37,8 @@ const convertSublocationListObject = (sublocationList) => {
 function* fetchSublocation() {
   try {
     const response = yield call(getSublocation);
-    console.log("response:" + JSON.stringify(response));
-    const sublocationList = convertSublocationListObject(response);
+    console.log("response:" + JSON.stringify(response.data));
+    const sublocationList = convertSublocationListObject(response.data);
     yield put(getSublocationSuccess(sublocationList));
   } catch (error) {
     yield put(getSublocationFail(error));

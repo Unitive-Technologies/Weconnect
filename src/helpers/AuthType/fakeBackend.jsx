@@ -511,18 +511,18 @@ const fakeBackend = () => {
   //   });
   // });
 
-  mock.onGet(url.GET_SUBLOCATION).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (subloc) {
-          // Passing fake JSON data as response
-          resolve([200, subloc]);
-        } else {
-          reject([400, "Cannot get Sub Location List"]);
-        }
-      });
-    });
-  });
+  // mock.onGet(url.GET_SUBLOCATION).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (subloc) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, subloc]);
+  //       } else {
+  //         reject([400, "Cannot get Sub Location List"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onGet(url.GET_DISTRIBUTORS).reply(() => {
     return new Promise((resolve, reject) => {
