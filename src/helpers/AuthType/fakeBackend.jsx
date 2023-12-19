@@ -692,18 +692,18 @@ const fakeBackend = () => {
     });
   });
 
-  mock.onGet(url.GET_BOUQUET).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (bouquets) {
-          // Passing fake JSON data as response
-          resolve([200, bouquets]);
-        } else {
-          reject([400, "Cannot get Bouquet List"]);
-        }
-      });
-    });
-  });
+  // mock.onGet(url.GET_BOUQUET).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (bouquets) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, bouquets]);
+  //       } else {
+  //         reject([400, "Cannot get Bouquet List"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onGet(url.GET_COMPLAINTCATEGORY).reply(() => {
     return new Promise((resolve, reject) => {

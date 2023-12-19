@@ -1,19 +1,14 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-
 import { GET_BOUQUET, ADD_BOUQUET } from "./actionTypes";
-
 import {
   getBouquetSuccess,
   getBouquetFail,
   addBouquetSuccess,
   addBouquetFail,
 } from "./actions";
-
-//Include Both Helper File with needed methods
 import { getBouquet, addBouquet } from "../../helpers/fakebackend_helper";
 
 const convertBouquetListObject = (bouquetList) => {
-  // Notification Template has more data than what we need, we need to convert each of the Notification Template user object in the list with needed colums of the table
   return bouquetList.map((bouquet) => {
     return {
       ...bouquet,
@@ -39,7 +34,7 @@ const convertBouquetListObject = (bouquetList) => {
 function* fetchBouquet() {
   try {
     const response = yield call(getBouquet);
-    const bouquetList = convertBouquetListObject(response);
+    const bouquetList = convertBouquetListObject(response.data);
     yield put(getBouquetSuccess(bouquetList));
   } catch (error) {
     console.error("Error fetching bouquet list:", error);
