@@ -1459,6 +1459,23 @@ const SidebarContent = (props) => {
                 </li>
               </ul>
             </li>
+            <li>
+              <Link to="/#" className="has-arrow ">
+                <i className="bx bx-task"></i>
+                <span>{props.t("Upload Logs")}</span>
+              </Link>
+              <ul className="sub-menu" aria-expanded="false">
+                <li>
+                  <Link to="#">{props.t("Configuration")}</Link>
+                </li>
+                <li>
+                  <Link to="#">{props.t("Inventory")}</Link>
+                </li>
+                <li>
+                  <Link to="#">{props.t("Subscriber")}</Link>
+                </li>
+              </ul>
+            </li>
           </ul>
         </div>
       </SimpleBar>
