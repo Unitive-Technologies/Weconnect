@@ -9,36 +9,23 @@ import {
   Col,
   Container,
   Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
   UncontrolledTooltip,
-  Input,
-  Form,
 } from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-
-import { Email, Tags, Projects } from "./bankListCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
 import { getBank as onGetBank } from "/src/store/actions";
-import { isEmpty } from "lodash";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
-import AddNewBankList from './AddNewBankList'
-import UploadBankList from './UploadBankList'
+import AddNewBankList from "./AddNewBankList";
+import UploadBankList from "./UploadBankList";
 
 const BankList = (props) => {
   //meta title
-  document.title = "Bank List | VDigital";
+  document.title = "Banks | VDigital";
 
   const dispatch = useDispatch();
 
@@ -50,13 +37,7 @@ const BankList = (props) => {
 
   const { banks, loading } = useSelector(BankProperties);
 
-  useEffect(() => {
-    console.log("Bank list data in component:", banks);
-  }, [banks]);
   const [isLoading, setLoading] = useState(loading);
-
-  const [userList, setUserList] = useState([]);
-  const [isEdit, setIsEdit] = useState(false);
 
   const [showAddNewBankList, setShowAddNewBankList] = useState(false);
   const [showUploadBankList, setShowUploadBankList] = useState(false);
@@ -89,10 +70,13 @@ const BankList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1" onClick={() => {
-                const userData = cellProps.row.original;
-                handleViewBankList(userData);
-              }}>
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  handleViewBankList(userData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -194,41 +178,6 @@ const BankList = (props) => {
           );
         },
       },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
-          );
-        },
-      },
     ],
     []
   );
@@ -236,81 +185,15 @@ const BankList = (props) => {
   useEffect(() => {
     if (banks && !banks.length) {
       dispatch(onGetBank());
-      setIsEdit(false);
     }
   }, [dispatch, banks]);
 
-  // useEffect(() => {
-  //   setContact(users);
-  //   setIsEdit(false);
-  // }, [users]);
-
-  // useEffect(() => {
-  //   if (!isEmpty(users) && !!isEdit) {
-  //     setContact(users);
-  //     setIsEdit(false);
-  //   }
-  // }, [users]);
-
-  const toggle = () => {
+  const handleAddBank = () => {
     setShowAddNewBankList(!showAddNewBankList);
   };
 
-  const toggle1 = () => {
+  const handleUploadBank = () => {
     setShowUploadBankList(!showUploadBankList);
-  };
-
-
-  const handleUserClick = (arg) => {
-    const user = arg;
-
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-    setIsEdit(true);
-
-    toggle();
-  };
-
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
-
-  //delete customer
-  const [deleteModal, setDeleteModal] = useState(false);
-
-  const onClickDelete = (users) => {
-    setContact(users);
-    setDeleteModal(true);
-  };
-
-  const handleDeleteUser = () => {
-    if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
-    }
-    setContact("");
-    onPaginationPageChange(1);
-    setDeleteModal(false);
-  };
-
-  const handleUserClicks = () => {
-    setUserList("");
-    setIsEdit(false);
-    toggle();
   };
 
   const keyField = "id";
@@ -321,7 +204,7 @@ const BankList = (props) => {
         name: "Create",
         action: setShowAddNewBankList,
         type: "normal",
-        icon: "create"
+        icon: "create",
       },
       {
         name: "Upload",
@@ -329,19 +212,24 @@ const BankList = (props) => {
         type: "normal",
         icon: "upload",
       },
-
     ];
   };
 
   return (
     <React.Fragment>
-      <AddNewBankList isOpen={showAddNewBankList} toggle={toggle} />
-      <UploadBankList isOpen={showUploadBankList} toggle={toggle1} />
+      <AddNewBankList
+        isOpen={showAddNewBankList}
+        handleAddBank={handleAddBank}
+      />
+      <UploadBankList
+        isOpen={showUploadBankList}
+        handleUploadBank={handleUploadBank}
+      />
 
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Billing" breadcrumbItem="Bank List" />
+          <Breadcrumbs title="Billing" breadcrumbItem="Banks" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -349,7 +237,7 @@ const BankList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("Tax list:" + JSON.stringify(banks))}
+                    {/* {console.log("Tax list:" + JSON.stringify(banks))} */}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
@@ -358,9 +246,6 @@ const BankList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleAddNewBankList={() => setShowAddNewBankList(true)}
-                      handleUploadBankList={() => setShowUploadBankList(true)}
-                      handleUserClick={handleUserClicks}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

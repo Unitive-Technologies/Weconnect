@@ -1,10 +1,7 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalFooter,
@@ -12,19 +9,17 @@ import {
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewBank as onAddNewBank } from "/src/store/banklist/actions";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const AddNewBankList = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleAddBank } = props;
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -48,7 +43,6 @@ const AddNewBankList = (props) => {
       branch_address: Yup.string().required("Enter branch address"),
       formso: Yup.string().required("Select for mso"),
       status_lbl: Yup.string().required("Select status"),
-
     }),
     onSubmit: (values) => {
       const newBank = {
@@ -66,7 +60,7 @@ const AddNewBankList = (props) => {
       // save new user
       dispatch(onAddNewBank(newBank));
       validation.resetForm();
-      toggle();
+      handleAddBank();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -82,9 +76,11 @@ const AddNewBankList = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleAddBank}
     >
-      <ModalHeader tag="h4" toggle={toggle}>Add New Tax</ModalHeader>
+      <ModalHeader tag="h4" toggle={handleAddBank}>
+        Add New Tax
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -157,6 +153,8 @@ const AddNewBankList = (props) => {
                 ) : null}
               </div>
             </Col>
+          </Row>
+          <Row>
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
@@ -175,15 +173,15 @@ const AddNewBankList = (props) => {
                   <option value="102">Active</option>
                   <option value="103">In-Active</option>
                 </Input>
-                {validation.touched.status_lbl && validation.errors.status_lbl ? (
+                {validation.touched.status_lbl &&
+                validation.errors.status_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.status_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
-          </Row>
-          <Row>
+
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
@@ -198,7 +196,8 @@ const AddNewBankList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.branch_address || ""}
                 ></Input>
-                {validation.touched.branch_address && validation.errors.branch_address ? (
+                {validation.touched.branch_address &&
+                validation.errors.branch_address ? (
                   <FormFeedback type="invalid">
                     {validation.errors.branch_address}
                   </FormFeedback>
@@ -250,7 +249,7 @@ const AddNewBankList = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    toggle();
+                    handleAddBank();
                   }}
                 >
                   Cancel
@@ -261,7 +260,7 @@ const AddNewBankList = (props) => {
         </Form>
       </ModalBody>
       {/* </Modal> */}
-    </Modal >
+    </Modal>
   );
 };
 
