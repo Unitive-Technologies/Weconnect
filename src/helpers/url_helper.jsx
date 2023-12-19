@@ -91,7 +91,8 @@ export const ADD_NEW_DOCUMENTUPLOADPOLICY = "/add/documentuploadpolicylist";
 export const GET_OSDTEMPLATE = "/osdtemplatelist";
 export const ADD_NEW_OSDTEMPLATE = "/add/osdtemplatelist";
 
-export const GET_NCF = "/ncf";
+export const GET_NCF =
+  "/ncf-rates?expand=status_lbl,created_by_lbl,type_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_NCF = "/add/ncf";
 
 export const GET_COMPANYLIST = "/companylist";

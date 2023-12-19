@@ -589,18 +589,18 @@ const fakeBackend = () => {
     });
   });
 
-  mock.onGet(url.GET_NCF).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (ncfl) {
-          // Passing fake JSON data as response
-          resolve([200, ncfl]);
-        } else {
-          reject([400, "Cannot get NCF List"]);
-        }
-      });
-    });
-  });
+  // mock.onGet(url.GET_NCF).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (ncfl) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, ncfl]);
+  //       } else {
+  //         reject([400, "Cannot get NCF List"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onGet(url.GET_SCHEDULEDNOTIFICATION).reply(() => {
     return new Promise((resolve, reject) => {

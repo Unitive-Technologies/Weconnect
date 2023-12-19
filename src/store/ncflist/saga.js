@@ -1,19 +1,14 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-
 import { GET_NCF, ADD_NCF } from "./actionTypes";
-
 import {
   getNcfSuccess,
   getNcfFail,
   addNcfSuccess,
   addNcfFail,
 } from "./actions";
-
-//Include Both Helper File with needed methods
 import { getNcf, addNcf } from "../../helpers/fakebackend_helper";
 
 const convertNcfListObject = (ncflist) => {
-  // Location list has more data than what we need, we need to convert each of the location object in the list with needed colums of the table
   return ncflist.map((ncf) => {
     return {
       ...ncf,
@@ -38,8 +33,8 @@ const convertNcfListObject = (ncflist) => {
 function* fetchNcf() {
   try {
     const response = yield call(getNcf);
-    console.log("response:" + JSON.stringify(response));
-    const ncfList = convertNcfListObject(response);
+    console.log("response:" + JSON.stringify(response.data));
+    const ncfList = convertNcfListObject(response.data);
     yield put(getNcfSuccess(ncfList));
   } catch (error) {
     yield put(getNcfFail(error));
