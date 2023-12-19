@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
@@ -12,7 +12,6 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 import {
-  Name,
   Code,
   Contact,
   Mobile,
@@ -26,12 +25,7 @@ import {
   CreatedBy,
 } from "./warehouseListCol";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import {
-  getWarehouseList as onGetWarehouseList,
-  // addNewUser as onAddNewUser,
-  // updateUser as onUpdateUser,
-  // deleteUser as onDeleteUser,
-} from "/src/store/warehouse/actions";
+import { getWarehouseList as onGetWarehouseList } from "/src/store/warehouse/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
@@ -41,7 +35,7 @@ import UploadWareHouse from "./UploadWareHouse";
 
 const WarehouseList = (props) => {
   //meta title
-  document.title = "Warehouse List | VDigital";
+  document.title = "Warehouses | VDigital";
 
   const dispatch = useDispatch();
 
@@ -56,27 +50,23 @@ const WarehouseList = (props) => {
 
   const { warehouse, loading } = useSelector(WarehouseProperties);
 
-  useEffect(() => {
-    console.log("WarehouseList data in component:", warehouse);
-  }, [warehouse]);
   const [isLoading, setLoading] = useState(loading);
   const [showAddWareHouse, setShowAddWareHouse] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
   const [showUploadWareHouse, setShowUploadWareHouse] = useState(false);
   const [showViewWareHouse, setShowViewWareHouse] = useState(false);
   const [viewWareHouseData, setViewWareHouseData] = useState({});
 
-  const toggleViewWareHouse = (userData) => {
+  const handleViewWarehouse = (userData) => {
     console.log("User Data: ", userData);
     setShowViewWareHouse(!showViewWareHouse);
     setViewWareHouseData(userData);
   };
 
-  const toggleAddWareHouse = () => {
+  const handleAddWarehouse = () => {
     setShowAddWareHouse(!showAddWareHouse);
   };
 
-  const toggleUploadWareHouse = () => {
+  const handleUploadWarehouse = () => {
     setShowUploadWareHouse(!showUploadWareHouse);
   };
 
@@ -112,7 +102,7 @@ const WarehouseList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  toggleViewWareHouse(userData);
+                  handleViewWarehouse(userData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -256,22 +246,8 @@ const WarehouseList = (props) => {
   useEffect(() => {
     if (warehouse && !warehouse.length) {
       dispatch(onGetWarehouseList());
-      setIsEdit(false);
     }
   }, [dispatch, warehouse]);
-
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
 
   const keyField = "id";
 
@@ -296,17 +272,20 @@ const WarehouseList = (props) => {
     <React.Fragment>
       <ViewWareHouse
         isOpen={showViewWareHouse}
-        toggle={toggleViewWareHouse}
+        handleViewWarehouse={handleViewWarehouse}
         warehouse={viewWareHouseData}
       />
-      <AddNewWareHouse isOpen={showAddWareHouse} toggle={toggleAddWareHouse} />
+      <AddNewWareHouse
+        isOpen={showAddWareHouse}
+        handleAddWarehouse={handleAddWarehouse}
+      />
       <UploadWareHouse
         isOpen={showUploadWareHouse}
-        toggle={toggleUploadWareHouse}
+        handleUploadWarehouse={handleUploadWarehouse}
       />
       <div className="page-content">
         <Container fluid>
-          <Breadcrumbs title="Inventory" breadcrumbItem="Warhouse List" />
+          <Breadcrumbs title="Inventory" breadcrumbItem="Warhouses" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -322,8 +301,6 @@ const WarehouseList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleUserClick={() => setShowAddWareHouse(true)}
-                      handleUploadUser={() => setShowUploadWareHouse(true)}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

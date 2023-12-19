@@ -1,10 +1,7 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalFooter,
@@ -12,19 +9,17 @@ import {
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addWareHouseList as onAddWareHouseList } from "/src/store/warehouse/actions";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const AddNewWareHouse = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleAddWarehouse } = props;
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -67,7 +62,7 @@ const AddNewWareHouse = (props) => {
       // save new user
       dispatch(onAddWareHouseList(newWareHouse));
       validation.resetForm();
-      toggle();
+      handleAddWarehouse();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -83,9 +78,9 @@ const AddNewWareHouse = (props) => {
       className="exampleModal"
       tabIndex="-1"
       size="xl"
-      toggle={toggle}
+      toggle={handleAddWarehouse}
     >
-      <ModalHeader toggle={toggle} tag="h4">
+      <ModalHeader toggle={handleAddWarehouse} tag="h4">
         Add New Warehouse
       </ModalHeader>
       <ModalBody>
@@ -136,13 +131,13 @@ const AddNewWareHouse = (props) => {
                   value={validation.values.contact_person || ""}
                   invalid={
                     validation.touched.contact_person &&
-                      validation.errors.contact_person
+                    validation.errors.contact_person
                       ? true
                       : false
                   }
                 />
                 {validation.touched.contact_person &&
-                  validation.errors.contact_person ? (
+                validation.errors.contact_person ? (
                   <FormFeedback type="invalid">
                     {validation.errors.contact_person}
                   </FormFeedback>
@@ -240,13 +235,13 @@ const AddNewWareHouse = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -298,7 +293,7 @@ const AddNewWareHouse = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    toggle();
+                    handleAddWarehouse();
                   }}
                 >
                   Cancel
