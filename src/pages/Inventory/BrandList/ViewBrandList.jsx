@@ -1,27 +1,25 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
+  ModalFooter,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const ViewBrandList = (props) => {
-  const { isOpen, toggle, brand } = props;
+  const { isOpen, handleViewBrand, brand } = props;
   const dispatch = useDispatch();
   const [showEditBrand, setShowEditBrand] = useState(false);
 
@@ -69,16 +67,16 @@ const ViewBrandList = (props) => {
       console.log("Update Brand:" + JSON.stringify(updateBrand));
       dispatch(onAddBrandList(updateBrand));
       validation.resetForm();
-      toggle();
+      handleViewBrand();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
     },
   });
 
-  const editToggle = () => {
+  const handleCancel = () => {
     setShowEditBrand(false);
-    toggle();
+    handleViewBrand();
   };
 
   return (
@@ -90,21 +88,26 @@ const ViewBrandList = (props) => {
       className="exampleModal"
       tabIndex="-1"
       size="xl"
-      toggle={toggle}
+      toggle={handleCancel}
     >
-      {!showEditBrand ? (
-        <ModalHeader toggle={toggle} tag="h4">
-          View {validation.values.name}
-          <i
-            className="bx bx bxs-edit"
-            style={{ marginLeft: "20px", cursor: "pointer" }}
-            onClick={() => setShowEditBrand(true)}
-          ></i>
-        </ModalHeader>
-      ) : (
-        <ModalHeader toggle={editToggle} tag="h4">
-          Edit Brand
-        </ModalHeader>
+      <ModalHeader toggle={handleCancel} tag="h4">
+        {!showEditBrand
+          ? `View ${(brand && brand.name) || ""}`
+          : `Edit ${(brand && brand.name) || ""}`}
+      </ModalHeader>
+      {!showEditBrand && (
+        <Link
+          style={{
+            position: "absolute",
+            marginLeft: "92%",
+            marginTop: "1%",
+          }}
+          to="#!"
+          className="btn btn-light me-1"
+          onClick={() => setShowEditBrand(true)}
+        >
+          <i className="mdi mdi-pencil-outline"></i>
+        </Link>
       )}
       <ModalBody>
         <Form
@@ -161,7 +164,7 @@ const ViewBrandList = (props) => {
                   <option value="Smartcard">Smartcard</option>
                 </Input>
                 {validation.touched.brand_type_lbl &&
-                  validation.errors.brand_type_lbl ? (
+                validation.errors.brand_type_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.brand_type_lbl}
                   </FormFeedback>
@@ -188,7 +191,7 @@ const ViewBrandList = (props) => {
                   <option value="HD">High Definition(HD)</option>
                 </Input>
                 {validation.touched.box_type_lbl &&
-                  validation.errors.box_type_lbl ? (
+                validation.errors.box_type_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.box_type_lbl}
                   </FormFeedback>
@@ -262,14 +265,14 @@ const ViewBrandList = (props) => {
                   value={validation.values.significant_length || ""}
                   invalid={
                     validation.touched.significant_length &&
-                      validation.errors.significant_length
+                    validation.errors.significant_length
                       ? true
                       : false
                   }
                   disabled={!showEditBrand}
                 />
                 {validation.touched.significant_length &&
-                  validation.errors.significant_length ? (
+                validation.errors.significant_length ? (
                   <FormFeedback type="invalid">
                     {validation.errors.significant_length}
                   </FormFeedback>
@@ -300,7 +303,7 @@ const ViewBrandList = (props) => {
                   <option value="Alphanumeric">Alphanumeric</option>
                 </Input>
                 {validation.touched.char_allowed_lbl &&
-                  validation.errors.char_allowed_lbl ? (
+                validation.errors.char_allowed_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.char_allowed_lbl}
                   </FormFeedback>
@@ -335,18 +338,37 @@ const ViewBrandList = (props) => {
               </div>
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <div className="text-end">
-                <button type="submit" className="btn btn-success save-user">
-                  Save
-                </button>
-              </div>
-            </Col>
-          </Row>
+          {showEditBrand && (
+            <Row>
+              <Col>
+                <ModalFooter>
+                  <button type="submit" className="btn btn-success save-user">
+                    Save
+                  </button>
+                  <button
+                    type="reset"
+                    className="btn btn-warning"
+                    onClick={() => validation.resetForm()}
+                  >
+                    Reset
+                  </button>
+
+                  <button
+                    type="button"
+                    className="btn btn-outline-danger"
+                    onClick={() => {
+                      validation.resetForm();
+                      handleCancel();
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </ModalFooter>
+              </Col>
+            </Row>
+          )}
         </Form>
       </ModalBody>
-      {/* </Modal> */}
     </Modal>
   );
 };

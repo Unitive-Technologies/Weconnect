@@ -1,10 +1,7 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalFooter,
@@ -12,19 +9,17 @@ import {
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addBrandList as onAddBrandList } from "/src/store/brandlist/actions";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const AddNewBrandList = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleAddBrand } = props;
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -71,7 +66,7 @@ const AddNewBrandList = (props) => {
       // save new user
       dispatch(onAddBrandList(newBrand));
       validation.resetForm();
-      toggle();
+      handleAddBrand();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -87,9 +82,9 @@ const AddNewBrandList = (props) => {
       className="exampleModal"
       tabIndex="-1"
       size="xl"
-      toggle={toggle}
+      toggle={handleAddBrand}
     >
-      <ModalHeader tag="h4" toggle={toggle}>
+      <ModalHeader tag="h4" toggle={handleAddBrand}>
         Add New Brand
       </ModalHeader>
       <ModalBody>
@@ -145,7 +140,7 @@ const AddNewBrandList = (props) => {
                   <option value="Smartcard">Smartcard</option>
                 </Input>
                 {validation.touched.brand_type_lbl &&
-                  validation.errors.brand_type_lbl ? (
+                validation.errors.brand_type_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.brand_type_lbl}
                   </FormFeedback>
@@ -171,7 +166,7 @@ const AddNewBrandList = (props) => {
                   <option value="HD">High Definition(HD)</option>
                 </Input>
                 {validation.touched.box_type_lbl &&
-                  validation.errors.box_type_lbl ? (
+                validation.errors.box_type_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.box_type_lbl}
                   </FormFeedback>
@@ -243,13 +238,13 @@ const AddNewBrandList = (props) => {
                   value={validation.values.significant_length || ""}
                   invalid={
                     validation.touched.significant_length &&
-                      validation.errors.significant_length
+                    validation.errors.significant_length
                       ? true
                       : false
                   }
                 />
                 {validation.touched.significant_length &&
-                  validation.errors.significant_length ? (
+                validation.errors.significant_length ? (
                   <FormFeedback type="invalid">
                     {validation.errors.significant_length}
                   </FormFeedback>
@@ -279,7 +274,7 @@ const AddNewBrandList = (props) => {
                   <option value="Alphanumeric">Alphanumeric</option>
                 </Input>
                 {validation.touched.char_allowed_lbl &&
-                  validation.errors.char_allowed_lbl ? (
+                validation.errors.char_allowed_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.char_allowed_lbl}
                   </FormFeedback>
@@ -333,7 +328,7 @@ const AddNewBrandList = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    toggle();
+                    handleAddBrand();
                   }}
                 >
                   Cancel
@@ -343,8 +338,7 @@ const AddNewBrandList = (props) => {
           </Row>
         </Form>
       </ModalBody>
-      {/* </Modal> */}
-    </Modal >
+    </Modal>
   );
 };
 

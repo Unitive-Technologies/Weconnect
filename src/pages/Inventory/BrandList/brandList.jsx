@@ -12,7 +12,6 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 import {
-  Name,
   Code,
   BoxType,
   Brand,
@@ -35,7 +34,7 @@ import UploadBrandList from "./UploadBrandList";
 
 const BrandList = (props) => {
   //meta title
-  document.title = "Brand List | VDigital";
+  document.title = "Brands | VDigital";
   const dispatch = useDispatch();
 
   const selectBrandListState = (state) => state.brandlist;
@@ -49,28 +48,24 @@ const BrandList = (props) => {
 
   const { brand, loading } = useSelector(BrandListProperties);
 
-  useEffect(() => {
-    // console.log("BrandList data in component:", brand);
-  }, [brand]);
   const [isLoading, setLoading] = useState(loading);
 
   const [showAddBrand, setShowAddBrand] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
   const [showUploadBrand, setShowUploadBrand] = useState(false);
   const [showViewBrand, setShowViewBrand] = useState(false);
   const [viewBrandData, setViewBrandData] = useState({});
 
-  const toggleViewBrand = (userData) => {
+  const handleViewBrand = (userData) => {
     console.log("User Data: ", userData);
     setShowViewBrand(!showViewBrand);
     setViewBrandData(userData);
   };
 
-  const toggleAddBrand = () => {
+  const handleAddBrand = () => {
     setShowAddBrand(!showAddBrand);
   };
 
-  const toggleUploadBrand = () => {
+  const handleUploadBrand = () => {
     setShowUploadBrand(!showUploadBrand);
   };
 
@@ -106,7 +101,7 @@ const BrandList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  toggleViewBrand(userData);
+                  handleViewBrand(userData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -242,22 +237,8 @@ const BrandList = (props) => {
   useEffect(() => {
     if (brand && !brand.length) {
       dispatch(onGetBrandList());
-      setIsEdit(false);
     }
   }, [dispatch, brand]);
-
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
 
   const keyField = "id";
 
@@ -282,14 +263,17 @@ const BrandList = (props) => {
     <React.Fragment>
       <ViewBrandList
         isOpen={showViewBrand}
-        toggle={toggleViewBrand}
+        handleViewBrand={handleViewBrand}
         brand={viewBrandData}
       />
-      <AddNewBrandList isOpen={showAddBrand} toggle={toggleAddBrand} />
-      <UploadBrandList isOpen={showUploadBrand} toggle={toggleUploadBrand} />
+      <AddNewBrandList isOpen={showAddBrand} handleAddBrand={handleAddBrand} />
+      <UploadBrandList
+        isOpen={showUploadBrand}
+        handleUploadBrand={handleUploadBrand}
+      />
       <div className="page-content">
         <Container fluid>
-          <Breadcrumbs title="Inventory" breadcrumbItem="Brand List" />
+          <Breadcrumbs title="Inventory" breadcrumbItem="Brands" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -305,8 +289,6 @@ const BrandList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleUserClick={() => setShowAddBrand(true)}
-                      handleUploadUser={() => setShowUploadBrand(true)}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
