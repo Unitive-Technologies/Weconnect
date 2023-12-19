@@ -12,11 +12,15 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
 import { getBouquet as onGetBouquet } from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import ViewBouquet from "./ViewBouquet";
+import CreateBouquet from "./CreateBouquet";
+import BulkAssign from "./BulkAssign";
+import BulkRemoval from "./BulkRemoval";
+import BulkSettings from "./BulkSettings";
 
 const BouquetList = (props) => {
   //meta title
@@ -36,16 +40,39 @@ const BouquetList = (props) => {
     console.log("Bouquet list data in component:", bouquets);
   }, [bouquets]);
   const [isLoading, setLoading] = useState(loading);
+  const [showCreateBouquet, setShowCreateBouquet] = useState(false);
+  const [showBulkAssign, setShowBulkAssign] = useState(false);
+  const [showViewBouquet, setShowViewBouquet] = useState(false);
+  const [viewBouquetData, setViewBouquetData] = useState({});
+  const [showBulkRemoval, setShowBulkRemoval] = useState(false);
+  const [showBulkSettings, setShowBulkSettings] = usestate(false);
 
-  const [userList, setUserList] = useState([]);
-  const [modal, setModal] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
+  const toggleViewBouquet = (userData) => {
+    console.log("User Data: ", userData);
+    setShowViewBouquet(!showViewBouquet);
+    setViewBouquetData(userData);
+  };
+
+  const toggleCreateBouquet = () => {
+    setShowCreateBouquet(!showCreateBouquet);
+  };
+
+  const toggleBulkAssign = () => {
+    setShowBulkAssign(!showBulkAssign);
+  };
+
+  const toggleBulkRemoval = () => {
+    setShowBulkRemoval(!showBulkRemoval);
+  };
+
+  const toggleBulkSettings = () => {
+    setShowBulkSettings(!showBulkSettings);
+  };
 
   const columns = useMemo(
     () => [
       {
         Header: "#",
-        // accessor: "name",
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
@@ -70,14 +97,17 @@ const BouquetList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  toggleViewBouquet(userData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
               </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
             </>
           );
         },
@@ -177,27 +207,13 @@ const BouquetList = (props) => {
         Cell: (cellProps) => {
           return (
             <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
+              <Link to="#" className="text-success">
                 <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
                 <UncontrolledTooltip placement="top" target="edittooltip">
                   Edit
                 </UncontrolledTooltip>
               </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
+              <Link to="#" className="text-danger">
                 <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
                 <UncontrolledTooltip placement="top" target="deletetooltip">
                   Delete
@@ -214,75 +230,49 @@ const BouquetList = (props) => {
   useEffect(() => {
     if (bouquets && !bouquets.length) {
       dispatch(onGetBouquet());
-      setIsEdit(false);
     }
   }, [dispatch, bouquets]);
 
-  const toggle = () => {
-    setModal(!modal);
+  const getTableActions = () => {
+    return [
+      {
+        name: "Create",
+        action: setShowCreateBouquet,
+        type: "normal",
+        icon: "create",
+      },
+      {
+        name: "Bulk assign to Operator",
+        action: setShowBulkAssign,
+        type: "dropdown",
+        dropdownName: "Action",
+      },
+      {
+        name: "Bulk removal from Operator",
+        action: setShowBulkRemoval,
+        type: "dropdown",
+        dropdownName: "Action",
+      },
+      {
+        name: "Bulk Bouquet Settings",
+        action: setShowBulkSettings,
+        type: "dropdown",
+        dropdownName: "Action",
+      },
+    ];
   };
-
-  const handleUserClick = (arg) => {
-    const user = arg;
-
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-    setIsEdit(true);
-
-    toggle();
-  };
-
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
-
-  //delete customer
-  const [deleteModal, setDeleteModal] = useState(false);
-
-  const onClickDelete = (users) => {
-    setContact(users);
-    setDeleteModal(true);
-  };
-
-  const handleDeleteUser = () => {
-    if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
-    }
-    setContact("");
-    onPaginationPageChange(1);
-    setDeleteModal(false);
-  };
-
-  const handleUserClicks = () => {
-    setUserList("");
-    setIsEdit(false);
-    toggle();
-  };
-
-  const keyField = "id";
 
   return (
     <React.Fragment>
-      <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
+      <ViewBouquet
+        isOpen={showViewBouquet}
+        toggle={toggleViewBouquet}
+        ncf={viewBouquetData}
       />
+      <CreateBouquet isOpen={showCreateBouquet} toggle={toggleCreateBouquet} />
+      <BulkAssign isOpen={showBulkAssign} toggle={toggleBulkAssign} />
+      <BulkRemoval isOpen={showBulkRemoval} toggle={toggleBulkRemoval} />
+      <BulkSettings isOpen={showBulkSettings} toggle={toggleBulkSettings} />
       <div className="page-content">
         <Container fluid>
           <Breadcrumbs title="Subscription" breadcrumbItem="Bouquet List" />
@@ -298,10 +288,11 @@ const BouquetList = (props) => {
                       columns={columns}
                       data={bouquets}
                       isGlobalFilter={true}
-                      // isAddUserList={true}
+                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
-                      iscustomPageSizeOptions={true}
-                      handleUserClick={handleUserClicks}
+                      tableActions={getTableActions()}
+                      handleUserClick={() => setShowCreateBouquet(true)}
+                      handleUploadUser={() => setShowBulkAssign(true)}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
