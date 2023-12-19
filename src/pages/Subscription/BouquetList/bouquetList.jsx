@@ -267,7 +267,7 @@ const BouquetList = (props) => {
       <ViewBouquet
         isOpen={showViewBouquet}
         toggle={toggleViewBouquet}
-        ncf={viewBouquetData}
+        bouquet={viewBouquetData}
       />
       <CreateBouquet isOpen={showCreateBouquet} toggle={toggleCreateBouquet} />
       <BulkAssign isOpen={showBulkAssign} toggle={toggleBulkAssign} />

@@ -5,8 +5,10 @@ import {
   getLocationFail,
   addLocationSuccess,
   addLocationFail,
+  getLocation as getLocationAction,
 } from "./actions";
 import { getLocation, addLocation } from "../../helpers/fakebackend_helper";
+import { toast } from "react-toastify";
 
 const convertLocationListObject = (locationList) => {
   return locationList.map((location) => {
@@ -47,6 +49,8 @@ function* onAddLocation({ payload: location }) {
     const response = yield call(addLocation, location);
     console.log("Response data: ", response.data);
     yield put(addLocationSuccess(response.data));
+    yield put(getLocationAction());
+    toast.success("Designation Added Successfully", { autoClose: 20000 });
   } catch (error) {
     yield put(addLocationFail(error));
   }
