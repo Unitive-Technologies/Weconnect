@@ -9,36 +9,23 @@ import {
   Col,
   Container,
   Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
   UncontrolledTooltip,
-  Input,
-  Form,
 } from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-
-import { Email, Tags, Projects } from "./complaintCategoryListCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
 import { getComplaintCategory as onGetComplaintCategory } from "/src/store/actions";
-import { isEmpty } from "lodash";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
-import AddNewComplaintCategoryList from './AddNewComplaintCategoryList'
-import ViewComplaintCategoryList from './ViewComplaintCategoryList';
+import AddNewComplaintCategoryList from "./AddNewComplaintCategoryList";
+import ViewComplaintCategoryList from "./ViewComplaintCategoryList";
 
 const ComplaintCategoryList = (props) => {
   //meta title
-  document.title = "Complaint Category List | VDigital";
+  document.title = "Complaint Categories | VDigital";
 
   const dispatch = useDispatch();
 
@@ -53,16 +40,12 @@ const ComplaintCategoryList = (props) => {
 
   const { complaintcate, loading } = useSelector(ComplaintCategoryProperties);
 
-  useEffect(() => {
-    console.log("Complaint category list data in component:", complaintcate);
-  }, [complaintcate]);
   const [isLoading, setLoading] = useState(loading);
 
-  const [userList, setUserList] = useState([]);
-  const [isEdit, setIsEdit] = useState(false);
-
-  const [showAddNewComplaintCategoryList, setShowAddNewComplaintCategoryList] = useState(false);
-  const [showViewComplaintCategoryList, setShowViewComplaintCategoryList] = useState(false);
+  const [showAddNewComplaintCategoryList, setShowAddNewComplaintCategoryList] =
+    useState(false);
+  const [showViewComplaintCategoryList, setShowViewComplaintCategoryList] =
+    useState(false);
 
   const columns = useMemo(
     () => [
@@ -93,10 +76,13 @@ const ComplaintCategoryList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1" onClick={() => {
-                const userData = cellProps.row.original;
-                handleViewComplaintCategoryList(userData);
-              }}>
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  handleViewComplaintCategory(userData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -168,41 +154,6 @@ const ComplaintCategoryList = (props) => {
           );
         },
       },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
-          );
-        },
-      },
     ],
     []
   );
@@ -210,72 +161,20 @@ const ComplaintCategoryList = (props) => {
   useEffect(() => {
     if (complaintcate && !complaintcate.length) {
       dispatch(onGetComplaintCategory());
-      setIsEdit(false);
     }
   }, [dispatch, complaintcate]);
 
-  const toggle = () => {
+  const handleAddComplaintCategory = () => {
     setShowAddNewComplaintCategoryList(!showAddNewComplaintCategoryList);
   };
 
-  const [viewComplaintCategoryList, setViewComplaintCategoryList] = useState({});
+  const [viewComplaintCategoryList, setViewComplaintCategoryList] = useState(
+    {}
+  );
 
-  const handleViewComplaintCategoryList = (userComplaintData) => {
+  const handleViewComplaintCategory = (userComplaintData) => {
     setShowViewComplaintCategoryList(!showViewComplaintCategoryList);
     setViewComplaintCategoryList(userComplaintData);
-    // toggle();
-  };
-
-  const handleUserClick = (arg) => {
-    const user = arg;
-
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-    setIsEdit(true);
-
-    toggle();
-  };
-
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
-
-  //delete customer
-  const [deleteModal, setDeleteModal] = useState(false);
-
-  const onClickDelete = (users) => {
-    setContact(users);
-    setDeleteModal(true);
-  };
-
-  const handleDeleteUser = () => {
-    if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
-    }
-    setContact("");
-    onPaginationPageChange(1);
-    setDeleteModal(false);
-  };
-
-  const handleUserClicks = () => {
-    setUserList("");
-    setIsEdit(false);
-    toggle();
   };
 
   const keyField = "id";
@@ -286,22 +185,27 @@ const ComplaintCategoryList = (props) => {
         name: "Create",
         action: setShowAddNewComplaintCategoryList,
         type: "normal",
-        icon: "create"
+        icon: "create",
       },
     ];
   };
 
   return (
     <React.Fragment>
-      <ViewComplaintCategoryList isOpen={showViewComplaintCategoryList}
-        toggle={handleViewComplaintCategoryList}
-        complaintcategory={viewComplaintCategoryList} />
-      <AddNewComplaintCategoryList isOpen={showAddNewComplaintCategoryList} toggle={toggle} />
+      <ViewComplaintCategoryList
+        isOpen={showViewComplaintCategoryList}
+        handleViewComplaintCategory={handleViewComplaintCategory}
+        complaintcategory={viewComplaintCategoryList}
+      />
+      <AddNewComplaintCategoryList
+        isOpen={showAddNewComplaintCategoryList}
+        handleAddComplaintCategory={handleAddComplaintCategory}
+      />
       <div className="page-content">
         <Container fluid>
           <Breadcrumbs
             title="Complaint"
-            breadcrumbItem="Complaint Category List"
+            breadcrumbItem="Complaint Categories"
           />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
@@ -310,9 +214,6 @@ const ComplaintCategoryList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log(
-                      "Complaint category list:" + JSON.stringify(complaintcate)
-                    )}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
@@ -321,8 +222,6 @@ const ComplaintCategoryList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleAddNewComplaintCategoryList={() => setShowAddNewComplaintCategoryList(true)}
-                      handleUserClick={handleUserClicks}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

@@ -1,17 +1,13 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
   ModalFooter,
@@ -19,13 +15,12 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewComplaintSubCategory as onAddNewComplaintSubCategory } from "/src/store/complaintsubcategorylist/actions";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import AddNewMatrix from "./AddNewMatrix";
 
 const AddNewSubCategoryList = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleAddSubCategory } = props;
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -59,15 +54,11 @@ const AddNewSubCategoryList = (props) => {
         created_at: new Date(),
         created_by: values["created_by"],
       };
-      console.log(
-        "ComplaintSubCategory:" + newComplaintSubCategory
-      );
+      console.log("ComplaintSubCategory:" + newComplaintSubCategory);
       // save new user
-      dispatch(
-        onAddNewComplaintSubCategory(newComplaintSubCategory)
-      );
+      dispatch(onAddNewComplaintSubCategory(newComplaintSubCategory));
       validation.resetForm();
-      toggle();
+      handleAddSubCategory();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -83,10 +74,11 @@ const AddNewSubCategoryList = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleAddSubCategory}
     >
-      {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4" toggle={toggle}>Add New Complaint Sub-Category</ModalHeader>
+      <ModalHeader tag="h4" toggle={handleAddSubCategory}>
+        Add New Complaint Sub-Category
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -98,7 +90,9 @@ const AddNewSubCategoryList = (props) => {
           <Row>
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">Name<span style={{ color: 'red' }}>*</span></Label>
+                <Label className="form-label">
+                  Name<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="name"
                   type="text"
@@ -117,7 +111,9 @@ const AddNewSubCategoryList = (props) => {
             </Col>
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">Category<span style={{ color: 'red' }}>*</span></Label>
+                <Label className="form-label">
+                  Category<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="category_lbl"
                   type="select"
@@ -130,7 +126,8 @@ const AddNewSubCategoryList = (props) => {
                   <option value="101">Select Category</option>
                   <option value="102">STB Power Issue</option>
                 </Input>
-                {validation.touched.category_lbl && validation.errors.category_lbl ? (
+                {validation.touched.category_lbl &&
+                validation.errors.category_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.category_lbl}
                   </FormFeedback>
@@ -138,9 +135,10 @@ const AddNewSubCategoryList = (props) => {
               </div>
             </Col>
             <Col sm="4">
-
               <div className="mb-3">
-                <Label className="form-label">Status<span style={{ color: 'red' }}>*</span></Label>
+                <Label className="form-label">
+                  Status<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="status_lbl"
                   type="select"
@@ -154,7 +152,8 @@ const AddNewSubCategoryList = (props) => {
                   <option value="102">Active</option>
                   <option value="103">In-Active</option>
                 </Input>
-                {validation.touched.status_lbl && validation.errors.status_lbl ? (
+                {validation.touched.status_lbl &&
+                validation.errors.status_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.status_lbl}
                   </FormFeedback>
@@ -165,7 +164,9 @@ const AddNewSubCategoryList = (props) => {
           <Row>
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">Show on Web<span style={{ color: 'red' }}>*</span></Label>
+                <Label className="form-label">
+                  Show on Web<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="showonweb_lbl"
                   type="select"
@@ -179,7 +180,8 @@ const AddNewSubCategoryList = (props) => {
                   <option value="102">Active</option>
                   <option value="103">In-Active</option>
                 </Input>
-                {validation.touched.showonweb_lbl && validation.errors.showonweb_lbl ? (
+                {validation.touched.showonweb_lbl &&
+                validation.errors.showonweb_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.showonweb_lbl}
                   </FormFeedback>
@@ -188,7 +190,9 @@ const AddNewSubCategoryList = (props) => {
             </Col>
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">Description<span style={{ color: 'red' }}>*</span></Label>
+                <Label className="form-label">
+                  Description<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="description"
                   type="textarea"
@@ -199,13 +203,13 @@ const AddNewSubCategoryList = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -228,14 +232,18 @@ const AddNewSubCategoryList = (props) => {
               padding: "0px 10px",
             }}
           >
-            <h5 style={{}}>Escalation Matrix<span style={{ color: 'red' }}>*</span></h5>
+            <h5 style={{}}>
+              Escalation Matrix<span style={{ color: "red" }}>*</span>
+            </h5>
           </div>
-          <Row style={{
-            position: "relative",
-            border: "1px solid #ced4da",
-            padding: "20px 0px",
-            margin: "30px 0px",
-          }}>
+          <Row
+            style={{
+              position: "relative",
+              border: "1px solid #ced4da",
+              padding: "20px 0px",
+              margin: "30px 0px",
+            }}
+          >
             <Col sm="12">
               <AddNewMatrix />
             </Col>
@@ -260,7 +268,7 @@ const AddNewSubCategoryList = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    toggle();
+                    handleAddSubCategory();
                   }}
                 >
                   Cancel
@@ -270,7 +278,6 @@ const AddNewSubCategoryList = (props) => {
           </Row>
         </Form>
       </ModalBody>
-      {/* </Modal> */}
     </Modal>
   );
 };

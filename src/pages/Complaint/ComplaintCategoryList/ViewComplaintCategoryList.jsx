@@ -1,30 +1,29 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
+  ModalFooter,
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { addNewComplaintCategory as onAddNewComplaintCategory } from "/src/store/complaintcategorylist/actions";
 
 const ViewComplaintCategoryList = (props) => {
-  const { isOpen, toggle, complaintcategory } = props;
+  const { isOpen, handleViewComplaintCategory, complaintcategory } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
-  const [showEditUser, setShowEditUser] = useState(false);
+  const [showEditComplaintCategory, setShowEditComplaintCategory] =
+    useState(false);
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -34,7 +33,8 @@ const ViewComplaintCategoryList = (props) => {
       id: (complaintcategory && complaintcategory.id) || "",
       name: (complaintcategory && complaintcategory.name) || "",
       status: (complaintcategory && complaintcategory.status) || "",
-      showonweb_lbl: (complaintcategory && complaintcategory.showonweb_lbl) || "",
+      showonweb_lbl:
+        (complaintcategory && complaintcategory.showonweb_lbl) || "",
       description: (complaintcategory && complaintcategory.description) || "",
     },
     validationSchema: Yup.object({
@@ -55,9 +55,14 @@ const ViewComplaintCategoryList = (props) => {
       // update user
       dispatch(onAddNewComplaintCategory(newComplaintCategory));
       validation.resetForm();
-      toggle();
+      handleViewComplaintCategory();
     },
   });
+
+  const handleCancel = () => {
+    setShowEditComplaintCategory(false);
+    handleViewComplaintCategory();
+  };
   return (
     <>
       <Modal
@@ -68,21 +73,26 @@ const ViewComplaintCategoryList = (props) => {
         centered={true}
         className="exampleModal"
         tabIndex="-1"
-        toggle={toggle}
+        toggle={handleViewComplaintCategory}
       >
-        {!showEditUser ? (
-          <ModalHeader toggle={toggle} tag="h4">
-            View  {complaintcategory.name}
-            <i
-              className="bx bx bxs-edit"
-              style={{ marginLeft: "20px", cursor: "pointer" }}
-              onClick={() => setShowEditUser(true)}
-            ></i>
-          </ModalHeader>
-        ) : (
-          <ModalHeader toggle={toggle} tag="h4">
-            Edit {complaintcategory.name}
-          </ModalHeader>
+        <ModalHeader toggle={handleCancel} tag="h4">
+          {!showEditComplaintCategory
+            ? `View ${(complaintcategory && complaintcategory.name) || ""}`
+            : `Edit ${(complaintcategory && complaintcategory.name) || ""}`}
+        </ModalHeader>
+        {!showEditComplaintCategory && (
+          <Link
+            style={{
+              position: "absolute",
+              marginLeft: "92%",
+              marginTop: "1%",
+            }}
+            to="#!"
+            className="btn btn-light me-1"
+            onClick={() => setShowEditComplaintCategory(true)}
+          >
+            <i className="mdi mdi-pencil-outline"></i>
+          </Link>
         )}
         <ModalBody>
           <Form
@@ -155,7 +165,8 @@ const ViewComplaintCategoryList = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.showonweb_lbl || ""}
                   ></Input>
-                  {validation.touched.showonweb_lbl && validation.errors.showonweb_lbl ? (
+                  {validation.touched.showonweb_lbl &&
+                  validation.errors.showonweb_lbl ? (
                     <FormFeedback type="invalid">
                       {validation.errors.showonweb_lbl}
                     </FormFeedback>
@@ -177,13 +188,13 @@ const ViewComplaintCategoryList = (props) => {
                     value={validation.values.description || ""}
                     invalid={
                       validation.touched.description &&
-                        validation.errors.description
+                      validation.errors.description
                         ? true
                         : false
                     }
                   />
                   {validation.touched.description &&
-                    validation.errors.description ? (
+                  validation.errors.description ? (
                     <FormFeedback type="invalid">
                       {validation.errors.description}
                     </FormFeedback>
@@ -191,6 +202,35 @@ const ViewComplaintCategoryList = (props) => {
                 </div>
               </Col>
             </Row>
+            {showEditComplaintCategory && (
+              <Row>
+                <Col>
+                  <ModalFooter>
+                    <button type="submit" className="btn btn-success save-user">
+                      Save
+                    </button>
+                    <button
+                      type="reset"
+                      className="btn btn-warning"
+                      onClick={() => validation.resetForm()}
+                    >
+                      Reset
+                    </button>
+
+                    <button
+                      type="button"
+                      className="btn btn-outline-danger"
+                      onClick={() => {
+                        validation.resetForm();
+                        handleCancel();
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </ModalFooter>
+                </Col>
+              </Row>
+            )}
           </Form>
         </ModalBody>
         {/* </Modal> */}

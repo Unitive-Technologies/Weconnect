@@ -1,10 +1,7 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
@@ -12,19 +9,17 @@ import {
   Label,
   ModalFooter,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewComplaintCategory as onAddNewComplaintCategory } from "/src/store/complaintcategorylist/actions";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const AddNewComplaintCategoryList = (props) => {
-  const { isOpen, toggle, complaintcategory } = props;
+  const { isOpen, handleAddComplaintCategory, complaintcategory } = props;
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -44,7 +39,6 @@ const AddNewComplaintCategoryList = (props) => {
       status_lbl: Yup.string().required("Select status"),
       showonweb_lbl: Yup.string().required("Select show on portal"),
       description: Yup.string().required("Enter description"),
-
     }),
     onSubmit: (values) => {
       const newComplaintCategory = {
@@ -60,7 +54,7 @@ const AddNewComplaintCategoryList = (props) => {
       // save new user
       dispatch(onAddNewComplaintCategory(newComplaintCategory));
       validation.resetForm();
-      toggle();
+      handleAddComplaintCategory();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -76,9 +70,11 @@ const AddNewComplaintCategoryList = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleAddComplaintCategory}
     >
-      <ModalHeader tag="h4" toggle={toggle}>Add New Complaint Category</ModalHeader>
+      <ModalHeader tag="h4" toggle={handleAddComplaintCategory}>
+        Add New Complaint Category
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -127,7 +123,8 @@ const AddNewComplaintCategoryList = (props) => {
                   <option value="102">Active</option>
                   <option value="103">In-Active</option>
                 </Input>
-                {validation.touched.status_lbl && validation.errors.status_lbl ? (
+                {validation.touched.status_lbl &&
+                validation.errors.status_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.status_lbl}
                   </FormFeedback>
@@ -153,7 +150,8 @@ const AddNewComplaintCategoryList = (props) => {
                   <option value="12">Active</option>
                   <option value="13">In-Active</option>
                 </Input>
-                {validation.touched.showonweb_lbl && validation.errors.showonweb_lbl ? (
+                {validation.touched.showonweb_lbl &&
+                validation.errors.showonweb_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.showonweb_lbl}
                   </FormFeedback>
@@ -176,13 +174,13 @@ const AddNewComplaintCategoryList = (props) => {
                 value={validation.values.description || ""}
                 invalid={
                   validation.touched.description &&
-                    validation.errors.description
+                  validation.errors.description
                     ? true
                     : false
                 }
               />
               {validation.touched.description &&
-                validation.errors.description ? (
+              validation.errors.description ? (
                 <FormFeedback type="invalid">
                   {validation.errors.description}
                 </FormFeedback>
@@ -207,7 +205,7 @@ const AddNewComplaintCategoryList = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    toggle();
+                    handleAddComplaintCategory();
                   }}
                 >
                   Cancel
@@ -217,8 +215,7 @@ const AddNewComplaintCategoryList = (props) => {
           </Row>
         </Form>
       </ModalBody>
-      {/* </Modal> */}
-    </Modal >
+    </Modal>
   );
 };
 
