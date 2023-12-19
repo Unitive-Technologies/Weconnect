@@ -9,20 +9,10 @@ import {
   Col,
   Container,
   Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
   UncontrolledTooltip,
-  Input,
-  Form,
 } from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
 
 import {
-  Name,
   Code,
   Contact,
   Mobile,
@@ -40,15 +30,8 @@ import {
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
 
-import {
-  getCompanyList as onGetCompanyList,
-  // addNewUser as onAddNewUser,
-  // updateUser as onUpdateUser,
-  // deleteUser as onDeleteUser,
-} from "/src/store/companylist/actions";
-import { isEmpty } from "lodash";
+import { getCompanyList as onGetCompanyList } from "/src/store/companylist/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -58,10 +41,9 @@ import AddNewCompanyList from "./AddNewCompanyList";
 
 const CompanyList = (props) => {
   //meta title
-  document.title = "Company List | VDigital";
+  document.title = "Companies | VDigital";
 
   const dispatch = useDispatch();
-
 
   const selectComapanyListState = (state) => state.companylist;
   const CompanyListProperties = createSelector(
@@ -74,16 +56,11 @@ const CompanyList = (props) => {
 
   const { company, loading } = useSelector(CompanyListProperties);
 
-  useEffect(() => {
-    console.log("CompanyList data in component:", company);
-  }, [company]);
   const [isLoading, setLoading] = useState(loading);
 
-  const [userList, setUserList] = useState([]);
-  const [isEdit, setIsEdit] = useState(false);
   const [showAddNewCompanyList, setShowAddNewCompanyList] = useState(false);
 
-  const toggleAddNewCompanyList = () => {
+  const handleAddCompany = () => {
     setShowAddNewCompanyList(!showAddNewCompanyList);
   };
 
@@ -273,77 +250,8 @@ const CompanyList = (props) => {
   useEffect(() => {
     if (company && !company.length) {
       dispatch(onGetCompanyList());
-      setIsEdit(false);
     }
   }, [dispatch, company]);
-
-  // useEffect(() => {
-  //   setContact(company);
-  //   setIsEdit(false);
-  // }, [company]);
-
-  // useEffect(() => {
-  //   if (!isEmpty(company) && !!isEdit) {
-  //     setContact(company);
-  //     setIsEdit(false);
-  //   }
-  // }, [company]);
-
-  // const toggle = () => {
-  //   setModal(!modal);
-  // };
-
-  // const handleUserClick = (arg) => {
-  //   const user = arg;
-
-  //   setContact({
-  //     id: user.id,
-  //     name: user.name,
-  //     designation: user.designation,
-  //     email: user.email,
-  //     tags: user.tags,
-  //     projects: user.projects,
-  //   });
-  //   setIsEdit(true);
-
-  //   toggle();
-  // };
-
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
-
-  //delete customer
-  // const [deleteModal, setDeleteModal] = useState(false);
-
-  // const onClickDelete = (users) => {
-  //   setContact(users);
-  //   setDeleteModal(true);
-  // };
-
-  // const handleDeleteUser = () => {
-  //   if (contact && contact.id) {
-  //     dispatch(onDeleteUser(contact.id));
-  //   }
-  //   setContact("");
-  //   onPaginationPageChange(1);
-  //   setDeleteModal(false);
-  // };
-
-  // const handleUserClicks = () => {
-  //   setUserList("");
-  //   setIsEdit(false);
-  //   toggle();
-  // };
 
   const keyField = "id";
 
@@ -360,11 +268,14 @@ const CompanyList = (props) => {
 
   return (
     <React.Fragment>
-      <AddNewCompanyList isOpen={showAddNewCompanyList} toggle={toggleAddNewCompanyList} />
+      <AddNewCompanyList
+        isOpen={showAddNewCompanyList}
+        handleAddCompany={handleAddCompany}
+      />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Inventory" breadcrumbItem="Company List" />
+          <Breadcrumbs title="Inventory" breadcrumbItem="Companies" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -381,7 +292,6 @@ const CompanyList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleUserClick={() => setShowAddNewCompanyList(true)}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

@@ -1,10 +1,7 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
@@ -12,20 +9,17 @@ import {
   ModalFooter,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewCompanyList as onAddNewCompanyList } from "/src/store/companylist/actions";
-import { useSelector, useDispatch } from "react-redux";
-
+import { useDispatch } from "react-redux";
 
 const AddNewCompanyListt = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleAddCompany } = props;
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -60,7 +54,6 @@ const AddNewCompanyListt = (props) => {
       tan_no: Yup.string().required("Enter TAN no"),
       pan_no: Yup.string().required("Enter PAN no"),
       status: Yup.string().required("Enter status"),
-
     }),
     onSubmit: (values) => {
       const newCompanyList = {
@@ -84,18 +77,12 @@ const AddNewCompanyListt = (props) => {
       // save new user
       dispatch(onAddNewCompanyList(newCompanyList));
       validation.resetForm();
-      toggle();
+      handleAddCompany();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
     },
   });
-
-  const [modal4, setModal4] = useState(false);
-
-  const toggle4 = () => {
-    setModal4(!modal4);
-  };
 
   return (
     <Modal
@@ -105,10 +92,12 @@ const AddNewCompanyListt = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleAddCompany}
       size="xl"
     >
-      <ModalHeader tag="h4" toggle={toggle}>Add New Channel</ModalHeader>
+      <ModalHeader tag="h4" toggle={handleAddCompany}>
+        Add New Channel
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -118,10 +107,11 @@ const AddNewCompanyListt = (props) => {
           }}
         >
           <Row>
-
             <Col sm="3">
               <div className="mb-3">
-                <Label className="form-label">Name<span style={{ color: "red" }}>*</span></Label>
+                <Label className="form-label">
+                  Name<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="name"
                   type="text"
@@ -140,7 +130,9 @@ const AddNewCompanyListt = (props) => {
 
             <Col sm="3">
               <div className="mb-3">
-                <Label className="form-label">Code<span style={{ color: "red" }}>*</span></Label>
+                <Label className="form-label">
+                  Code<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="code"
                   type="text"
@@ -159,7 +151,9 @@ const AddNewCompanyListt = (props) => {
 
             <Col sm="3">
               <div className="mb-3">
-                <Label className="form-label">Contact Person<span style={{ color: "red" }}>*</span></Label>
+                <Label className="form-label">
+                  Contact Person<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="contact"
                   type="text"
@@ -178,7 +172,9 @@ const AddNewCompanyListt = (props) => {
 
             <Col sm="3">
               <div className="mb-3">
-                <Label className="form-label">Mobile No.<span style={{ color: "red" }}>*</span></Label>
+                <Label className="form-label">
+                  Mobile No.<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="mobile"
                   type="text"
@@ -219,7 +215,9 @@ const AddNewCompanyListt = (props) => {
 
             <Col sm="3">
               <div className="mb-3">
-                <Label className="form-label">Email<span style={{ color: "red" }}>*</span></Label>
+                <Label className="form-label">
+                  Email<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="email"
                   type="text"
@@ -238,7 +236,9 @@ const AddNewCompanyListt = (props) => {
 
             <Col sm="3">
               <div className="mb-3">
-                <Label className="form-label">Address<span style={{ color: "red" }}>*</span></Label>
+                <Label className="form-label">
+                  Address<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="address"
                   type="text"
@@ -270,13 +270,13 @@ const AddNewCompanyListt = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -297,10 +297,8 @@ const AddNewCompanyListt = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.gst_no || ""}
-                >
-                </Input>
-                {validation.touched.gst_no &&
-                  validation.errors.gst_no ? (
+                ></Input>
+                {validation.touched.gst_no && validation.errors.gst_no ? (
                   <FormFeedback type="invalid">
                     {validation.errors.gst_no}
                   </FormFeedback>
@@ -319,8 +317,7 @@ const AddNewCompanyListt = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.tan_no || ""}
-                >
-                </Input>
+                ></Input>
                 {validation.touched.tan_no && validation.errors.tan_no ? (
                   <FormFeedback type="invalid">
                     {validation.errors.tan_no}
@@ -340,10 +337,8 @@ const AddNewCompanyListt = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.pan_no || ""}
-                >
-                </Input>
-                {validation.touched.pan_no &&
-                  validation.errors.pan_no ? (
+                ></Input>
+                {validation.touched.pan_no && validation.errors.pan_no ? (
                   <FormFeedback type="invalid">
                     {validation.errors.pan_no}
                   </FormFeedback>
@@ -393,7 +388,7 @@ const AddNewCompanyListt = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    toggle();
+                    handleAddCompany();
                   }}
                 >
                   Cancel
@@ -403,7 +398,7 @@ const AddNewCompanyListt = (props) => {
           </Row>
         </Form>
       </ModalBody>
-    </Modal >
+    </Modal>
   );
 };
 

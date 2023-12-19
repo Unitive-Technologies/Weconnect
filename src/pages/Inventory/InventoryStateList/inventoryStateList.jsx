@@ -12,7 +12,6 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 import {
-  Name,
   Code,
   StateType,
   Description,
@@ -30,7 +29,7 @@ import AddNewInventoryState from "./AddNewInventoryState";
 
 const InventoryStateList = (props) => {
   //meta title
-  document.title = "Inventory State List | VDigital";
+  document.title = "Inventory States | VDigital";
 
   const dispatch = useDispatch();
   const selectInventoryState = (state) => state.inventorystatelist;
@@ -44,22 +43,19 @@ const InventoryStateList = (props) => {
 
   const { inventstate, loading } = useSelector(InventoryStateProperties);
 
-  useEffect(() => {
-    // console.log("Inventory State data in component:", inventstate);
-  }, [inventstate]);
   const [isLoading, setLoading] = useState(loading);
   const [showAddInventoryState, setShowAddInventoryState] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
+
   const [showViewInventoryState, setShowViewInventoryView] = useState(false);
   const [viewInventoryStateData, setViewInventoryStateData] = useState({});
 
-  const toggleViewInventoryState = (userData) => {
+  const handleViewInventoryState = (userData) => {
     console.log("User Data: ", userData);
     setShowViewInventoryView(!showViewInventoryState);
     setViewInventoryStateData(userData);
   };
 
-  const toggleAddInventoryState = () => {
+  const handleAddInventoryState = () => {
     setShowAddInventoryState(!showAddInventoryState);
   };
 
@@ -95,7 +91,7 @@ const InventoryStateList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  toggleViewInventoryState(userData);
+                  handleViewInventoryState(userData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -199,21 +195,8 @@ const InventoryStateList = (props) => {
   useEffect(() => {
     if (inventstate && !inventstate.length) {
       dispatch(onGetInventoryStateList());
-      setIsEdit(false);
     }
   }, [dispatch, inventstate]);
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
 
   const keyField = "id";
 
@@ -232,19 +215,16 @@ const InventoryStateList = (props) => {
     <React.Fragment>
       <ViewInventoryState
         isOpen={showViewInventoryState}
-        toggle={toggleViewInventoryState}
+        handleViewInventoryState={handleViewInventoryState}
         inventorystate={viewInventoryStateData}
       />
       <AddNewInventoryState
         isOpen={showAddInventoryState}
-        toggle={toggleAddInventoryState}
+        handleAddInventroyState={handleAddInventoryState}
       />
       <div className="page-content">
         <Container fluid>
-          <Breadcrumbs
-            title="Inventory"
-            breadcrumbItem="Inventory State List"
-          />
+          <Breadcrumbs title="Inventory" breadcrumbItem="Inventory States" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -260,7 +240,6 @@ const InventoryStateList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleUserClick={() => setShowAddInventoryState(true)}
                       customPageSize={10}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

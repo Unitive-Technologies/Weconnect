@@ -1,10 +1,7 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalFooter,
@@ -12,17 +9,16 @@ import {
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addInventoryStateList as onAddInventoryStateList } from "/src/store/inventorystate/actions";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const AddNewInventoryState = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, handleAddInventroyState } = props;
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -59,7 +55,7 @@ const AddNewInventoryState = (props) => {
       console.log("New Inventory state:" + JSON.stringify(newInventoryState));
       dispatch(onAddInventoryStateList(newInventoryState));
       validation.resetForm();
-      toggle();
+      handleAddInventroyState();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -74,10 +70,10 @@ const AddNewInventoryState = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleAddInventroyState}
       size="xl"
     >
-      <ModalHeader tag="h4" toggle={toggle}>
+      <ModalHeader tag="h4" toggle={handleAddInventroyState}>
         Add New Inventory State
       </ModalHeader>
       <ModalBody>
@@ -89,7 +85,7 @@ const AddNewInventoryState = (props) => {
           }}
         >
           <Row>
-            <Col sm="3">
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Name<span style={{ color: "red" }}>*</span>
@@ -114,7 +110,7 @@ const AddNewInventoryState = (props) => {
                 ) : null}
               </div>
             </Col>
-            <Col sm="3">
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Code<span style={{ color: "red" }}>*</span>
@@ -139,7 +135,7 @@ const AddNewInventoryState = (props) => {
                 ) : null}
               </div>
             </Col>
-            <Col sm="3">
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   State Type<span style={{ color: "red" }}>*</span>
@@ -159,14 +155,16 @@ const AddNewInventoryState = (props) => {
                   <option value="blacklist">Blacklist</option>
                 </Input>
                 {validation.touched.state_type_lbl &&
-                  validation.errors.state_type_lbl ? (
+                validation.errors.state_type_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.state_type_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
-            <Col sm="3">
+          </Row>
+          <Row>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Description<span style={{ color: "red" }}>*</span>
@@ -180,22 +178,21 @@ const AddNewInventoryState = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
-          </Row>
-          <Row>
-            <Col sm="3">
+
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Status<span style={{ color: "red" }}>*</span>
@@ -241,7 +238,7 @@ const AddNewInventoryState = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    toggle();
+                    handleAddInventroyState();
                   }}
                 >
                   Cancel
@@ -251,7 +248,6 @@ const AddNewInventoryState = (props) => {
           </Row>
         </Form>
       </ModalBody>
-      {/* </Modal> */}
     </Modal>
   );
 };

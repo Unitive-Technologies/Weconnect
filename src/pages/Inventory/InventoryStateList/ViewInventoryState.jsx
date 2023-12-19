@@ -1,11 +1,13 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import {
   Col,
   Row,
   Modal,
   ModalHeader,
   ModalBody,
+  ModalFooter,
   Label,
   FormFeedback,
   Input,
@@ -13,11 +15,11 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const ViewInventoryState = (props) => {
-  const { isOpen, toggle, inventorystate } = props;
+  const { isOpen, handleViewInventoryState, inventorystate } = props;
   const dispatch = useDispatch();
   const [showEditInventoryState, setShowEditInventaryState] = useState(false);
 
@@ -56,16 +58,16 @@ const ViewInventoryState = (props) => {
       console.log("New Inventory state:" + JSON.stringify(newInventoryState));
       dispatch(onAddInventoryStateList(newInventoryState));
       validation.resetForm();
-      toggle();
+      handleViewInventoryState();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
     },
   });
 
-  const editToggle = () => {
+  const handleCancel = () => {
     setShowEditInventaryState(false);
-    toggle();
+    handleViewInventoryState();
   };
 
   return (
@@ -77,21 +79,26 @@ const ViewInventoryState = (props) => {
       className="exampleModal"
       tabIndex="-1"
       size="xl"
-      toggle={toggle}
+      toggle={handleCancel}
     >
-      {!showEditInventoryState ? (
-        <ModalHeader toggle={toggle} tag="h4">
-          View {validation.values.name}
-          <i
-            className="bx bx bxs-edit"
-            style={{ marginLeft: "20px", cursor: "pointer" }}
-            onClick={() => setShowEditInventaryState(true)}
-          ></i>
-        </ModalHeader>
-      ) : (
-        <ModalHeader toggle={editToggle} tag="h4">
-          Edit {validation.values.name}
-        </ModalHeader>
+      <ModalHeader toggle={handleCancel} tag="h4">
+        {!showEditInventoryState
+          ? `View ${(inventorystate && inventorystate.name) || ""}`
+          : `Edit ${(inventorystate && inventorystate.name) || ""}`}
+      </ModalHeader>
+      {!showEditInventoryState && (
+        <Link
+          style={{
+            position: "absolute",
+            marginLeft: "92%",
+            marginTop: "1%",
+          }}
+          to="#!"
+          className="btn btn-light me-1"
+          onClick={() => setShowEditInventaryState(true)}
+        >
+          <i className="mdi mdi-pencil-outline"></i>
+        </Link>
       )}
       <ModalBody>
         <Form
@@ -102,7 +109,7 @@ const ViewInventoryState = (props) => {
           }}
         >
           <Row>
-            <Col sm="3">
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Name<span style={{ color: "red" }}>*</span>
@@ -127,7 +134,7 @@ const ViewInventoryState = (props) => {
                 ) : null}
               </div>
             </Col>
-            <Col sm="3">
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Code<span style={{ color: "red" }}>*</span>
@@ -152,7 +159,7 @@ const ViewInventoryState = (props) => {
                 ) : null}
               </div>
             </Col>
-            <Col sm="3">
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   State Type<span style={{ color: "red" }}>*</span>
@@ -172,14 +179,16 @@ const ViewInventoryState = (props) => {
                   <option value="Blacklist">Blacklist</option>
                 </Input>
                 {validation.touched.state_type_lbl &&
-                  validation.errors.state_type_lbl ? (
+                validation.errors.state_type_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.state_type_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
-            <Col sm="3">
+          </Row>
+          <Row>
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Description<span style={{ color: "red" }}>*</span>
@@ -193,22 +202,21 @@ const ViewInventoryState = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
-          </Row>
-          <Row>
-            <Col sm="3">
+
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Status<span style={{ color: "red" }}>*</span>
@@ -235,18 +243,37 @@ const ViewInventoryState = (props) => {
               </div>
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <div className="text-end">
-                <button type="submit" className="btn btn-success save-user">
-                  Save
-                </button>
-              </div>
-            </Col>
-          </Row>
+          {showEditInventoryState && (
+            <Row>
+              <Col>
+                <ModalFooter>
+                  <button type="submit" className="btn btn-success save-user">
+                    Save
+                  </button>
+                  <button
+                    type="reset"
+                    className="btn btn-warning"
+                    onClick={() => validation.resetForm()}
+                  >
+                    Reset
+                  </button>
+
+                  <button
+                    type="button"
+                    className="btn btn-outline-danger"
+                    onClick={() => {
+                      validation.resetForm();
+                      handleCancel();
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </ModalFooter>
+              </Col>
+            </Row>
+          )}
         </Form>
       </ModalBody>
-      {/* </Modal> */}
     </Modal>
   );
 };
