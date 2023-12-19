@@ -3,44 +3,24 @@ import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
 import Spinners from "../../../components/Common/Spinner";
-import {
-  Card,
-  CardBody,
-  Col,
-  Container,
-  Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
-  UncontrolledTooltip,
-  Input,
-  Form,
-} from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-
-import { Email, Tags, Projects } from "./reasonListCol";
+import { Card, CardBody, Col, Container, Row } from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
 
 import { getReason as onGetReason } from "/src/store/actions";
-import { isEmpty } from "lodash";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
-import AddNewReasonList from './AddNewReasonList';
-import ViewReasonList from './ViewReasonList';
-import UploadReasonList from './UploadReasonList';
+import AddNewReasonList from "./AddNewReasonList";
+import ViewReasonList from "./ViewReasonList";
+import UploadReasonList from "./UploadReasonList";
 
 const ReasonList = (props) => {
   //meta title
-  document.title = "Reason List | VDigital";
+  document.title = "Reasons | VDigital";
 
   const dispatch = useDispatch();
 
@@ -52,14 +32,7 @@ const ReasonList = (props) => {
 
   const { reasons, loading } = useSelector(ReasonProperties);
 
-  useEffect(() => {
-    console.log("Reason list data in component:", reasons);
-  }, [reasons]);
   const [isLoading, setLoading] = useState(loading);
-
-  const [userList, setUserList] = useState([]);
-  const [isEdit, setIsEdit] = useState(false);
-
   const [showAddNewReasonList, setShowAddNewReasonList] = useState(false);
   const [showUploadReasonList, setShowUploadReasonList] = useState(false);
   const [showViewReasonList, setShowReasonList] = useState(false);
@@ -92,10 +65,13 @@ const ReasonList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1" onClick={() => {
-                const userData = cellProps.row.original;
-                handleViewReasonList(userData);
-              }}>
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  handleViewReason(userData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -165,41 +141,6 @@ const ReasonList = (props) => {
           );
         },
       },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
-          );
-        },
-      },
     ],
     []
   );
@@ -207,76 +148,21 @@ const ReasonList = (props) => {
   useEffect(() => {
     if (reasons && !reasons.length) {
       dispatch(onGetReason());
-      setIsEdit(false);
     }
   }, [dispatch, reasons]);
 
-  // useEffect(() => {
-  //   setContact(users);
-  //   setIsEdit(false);
-  // }, [users]);
-
-  // useEffect(() => {
-  //   if (!isEmpty(users) && !!isEdit) {
-  //     setContact(users);
-  //     setIsEdit(false);
-  //   }
-  // }, [users]);
-
-  const toggle = () => {
+  const handleAddReason = () => {
     setShowAddNewReasonList(!showAddNewReasonList);
   };
 
-  const toggle1 = () => {
+  const handleUploadReason = () => {
     setShowUploadReasonList(!showUploadReasonList);
   };
-
-  // const toggle3 = () => {
-  //   setShowUploadReasonList(!showUploadReasonList);
-  // };
-
   const [viewReasonList, setViewReasonList] = useState({});
 
-  const handleViewReasonList = (userReasonData) => {
+  const handleViewReason = (userReasonData) => {
     setShowReasonList(!showViewReasonList);
     setViewReasonList(userReasonData);
-    // toggle();
-  };
-
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
-
-  //delete customer
-  const [deleteModal, setDeleteModal] = useState(false);
-
-  const onClickDelete = (users) => {
-    setContact(users);
-    setDeleteModal(true);
-  };
-
-  const handleDeleteUser = () => {
-    if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
-    }
-    setContact("");
-    onPaginationPageChange(1);
-    setDeleteModal(false);
-  };
-
-  const handleUserClicks = () => {
-    setUserList("");
-    setIsEdit(false);
-    toggle();
   };
 
   const keyField = "id";
@@ -287,7 +173,7 @@ const ReasonList = (props) => {
         name: "Create",
         action: setShowAddNewReasonList,
         type: "normal",
-        icon: "create"
+        icon: "create",
       },
       {
         name: "Upload",
@@ -295,21 +181,28 @@ const ReasonList = (props) => {
         type: "normal",
         icon: "upload",
       },
-
     ];
   };
 
   return (
     <React.Fragment>
-      <ViewReasonList isOpen={showViewReasonList}
-        toggle={handleViewReasonList}
-        reason={viewReasonList} />
-      <AddNewReasonList isOpen={showAddNewReasonList} toggle={toggle} />
-      <UploadReasonList isOpen={showUploadReasonList} toggle={toggle1} />
+      <ViewReasonList
+        isOpen={showViewReasonList}
+        handleViewReason={handleViewReason}
+        reason={viewReasonList}
+      />
+      <AddNewReasonList
+        isOpen={showAddNewReasonList}
+        handleAddReason={handleAddReason}
+      />
+      <UploadReasonList
+        isOpen={showUploadReasonList}
+        handleUploadReason={handleUploadReason}
+      />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Billing" breadcrumbItem="Reason List" />
+          <Breadcrumbs title="Billing" breadcrumbItem="Reasons" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -317,7 +210,7 @@ const ReasonList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("Tax list:" + JSON.stringify(reasons))}
+                    {/* {console.log("Tax list:" + JSON.stringify(reasons))} */}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
@@ -326,9 +219,6 @@ const ReasonList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleAddNewReasonList={() => setShowAddNewReasonList(true)}
-                      handleUploadReasonList={() => setShowUploadReasonList(true)}
-                      // handleUserClick={handleUserClicks}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
