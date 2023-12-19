@@ -51,11 +51,10 @@ function* fetchLocation() {
 function* onAddLocation({ payload: location }) {
   try {
     const response = yield call(addLocation, location);
-    yield put(addLocationSuccess(response));
-    toast.success("Location list Added Successfully", { autoClose: 2000 });
+    console.log("Response data: ", response.data);
+    yield put(addLocationSuccess(response.data));
   } catch (error) {
     yield put(addLocationFail(error));
-    toast.error("Location list Added Failed", { autoClose: 2000 });
   }
 }
 

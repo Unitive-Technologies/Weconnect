@@ -953,18 +953,18 @@ const fakeBackend = () => {
     });
   });
 
-  mock.onPost(url.ADD_LOCATION).reply((location) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (location && location.data) {
-          // Passing fake JSON data as response
-          resolve([200, location.data]);
-        } else {
-          reject([400, "Cannot add location list"]);
-        }
-      });
-    });
-  });
+  // mock.onPost(url.ADD_LOCATION).reply((location) => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (location && location.data) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, location.data]);
+  //       } else {
+  //         reject([400, "Cannot add location list"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onPost(url.ADD_SUBLOCATION).reply((sublocation) => {
     return new Promise((resolve, reject) => {

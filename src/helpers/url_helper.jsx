@@ -3,7 +3,7 @@ export const POST_FAKE_REGISTER = "/post-fake-register";
 
 //LOGIN
 export const POST_FAKE_LOGIN = "/post-fake-login";
-export const POST_JWT_LOGIN = "/user/login?vr=web1.0"; 
+export const POST_JWT_LOGIN = "/user/login?vr=web1.0";
 export const POST_FAKE_PASSWORD_FORGET = "/fake-forget-pwd";
 export const POST_FAKE_JWT_PASSWORD_FORGET = "/jwt-forget-pwd";
 
@@ -40,8 +40,9 @@ export const ADD_DISTRICT = "/add/district";
 export const GET_CITY = "/citylist";
 export const ADD_CITY = "/add/city";
 
-export const GET_LOCATION = "/location?expand=created_by_lbl,operator_lbl,operator_code,status_lbl&page=2&per-page=50&vr=web1.0";
-export const ADD_LOCATION = "/add/location";
+export const GET_LOCATION =
+  "/location?expand=created_by_lbl,operator_lbl,operator_code,status_lbl&vr=web1.0";
+export const ADD_LOCATION = "/location?vr=web1.0";
 
 export const GET_SUBLOCATION = "/sublocationlist";
 export const ADD_SUBLOCATION = "/add/sublocation";
