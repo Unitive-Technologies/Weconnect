@@ -2,10 +2,18 @@ import { call, put, takeEvery } from "redux-saga/effects";
 
 import { GET_GENRELIST, ADD_NEW_GENRELIST } from "./actionTypes";
 
-import { getGenreListSuccess, getGenreListFail, addGenreListSuccess, addGenreListFail } from "./actions";
+import {
+  getGenreListSuccess,
+  getGenreListFail,
+  addGenreListSuccess,
+  addGenreListFail,
+} from "./actions";
 
 //Include Both Helper File with needed methods
-import { getGenreList, addNewGenreList } from "../../helpers/fakebackend_helper";
+import {
+  getGenreList,
+  addNewGenreList,
+} from "../../helpers/fakebackend_helper";
 
 const convertGenreListObject = (genreList) => {
   // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
@@ -20,8 +28,8 @@ const convertGenreListObject = (genreList) => {
         genre.status === 1
           ? "ACTIVE"
           : genre.status === 0
-            ? "INACTIVE"
-            : "BLOCKED",
+          ? "INACTIVE"
+          : "BLOCKED",
       created_at: genre.created_at,
       created_by: genre.created_at,
     };
@@ -32,7 +40,7 @@ function* fetchGenreList() {
   try {
     const response = yield call(getGenreList);
     console.log("response:" + JSON.stringify(response));
-    const genreList = convertGenreListObject(response);
+    const genreList = convertGenreListObject(response.data);
     yield put(getGenreListSuccess(genreList));
   } catch (error) {
     yield put(getGenreListFail(error));

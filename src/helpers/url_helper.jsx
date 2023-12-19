@@ -12,11 +12,14 @@ export const GET_ADMINDETAILS = "/admindetails";
 export const POST_EDIT_JWT_PROFILE = "/post-jwt-profile";
 export const POST_EDIT_PROFILE = "/post-fake-profile";
 
-export const GET_CUSTOMERUSERS = "/user?filter[role]=4&vr=web1.0";
+export const GET_CUSTOMERUSERS =
+  "/user?expand=setting,group_lbl,access_level,role_lbl,status_lbl,type_lbl,operator_lbl,operator,created_by_lbl,parent_lbl&filter[role]=4&page=1&per-page=50&vr=web1.0";
 
-export const GET_GROUPPOLICY = "/grouppolicylist";
+export const GET_GROUPPOLICY =
+  "/menu-access-right?filter[type]=2&expand=user_count,user_type_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_GROUPPOLICY = "/add/grouppolicy";
-export const GET_DESIGNATION = "/designationlist";
+export const GET_DESIGNATION =
+  "/schedule-announcement?expand=start_time_lbl,end_time_lbl,announcement_templ_lbl&filter[current_activemsg]=1&vr=web1.0";
 export const ADD_NEW_DESIGNATION = "/add/designation";
 
 export const GET_NOTIFICATIONTEMPLATE = "/notificationtemplatelist";
@@ -62,10 +65,12 @@ export const ADD_APPADBANNER = "/add/appadbanner";
 export const GET_USERHIERARCHY = "/userhierarchy";
 export const ADD_USERHIERARCHY = "/add/userhierarchy";
 
-export const GET_BROADCASTER = "/broadcasterlist";
+export const GET_BROADCASTER =
+  "/broadcaster?expand=created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_BROADCASTER = "/add/broadcasterlist";
 
-export const GET_GENRELIST = "/genrelist";
+export const GET_GENRELIST =
+  "/genre?expand=created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_GENRELIST = "/add/genrelist";
 
 export const GET_LANGUAGELIST = "/languagelist";
@@ -115,7 +120,8 @@ export const ADD_BOUQUET = "/add/bouquet";
 export const GET_CONNECTIONSCHEME = "/connectionscheme";
 export const ADD_CONNECTIONSCHEME = "/add/connectionscheme";
 
-export const GET_COMPLAINTCATEGORY = "/complaintcategory";
+export const GET_COMPLAINTCATEGORY =
+  "/schedule-announcement?expand=start_time_lbl,end_time_lbl,announcement_templ_lbl&filter[current_activemsg]=1&vr=web1.0";
 export const ADD_NEW_COMPLAINTCATEGORY = "/add/complaintcategory";
 
 export const GET_COMPLAINTSUBCATEGORY = "/complaintsubcategory";
@@ -133,7 +139,8 @@ export const ADD_NEW_BANK = "/add/bank";
 export const GET_PROMOVOUCHER = "/promovoucher";
 export const ADD_NEW_PROMOVOUCHER = "/add/promovoucher";
 
-export const GET_USERS = "/userslist";
+export const GET_USERS =
+  "/user?expand=setting,group_lbl,access_level,role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[role]=4&page=1&per-page=50&vr=web1.0";
 export const GET_USER_PROFILE = "/user";
 export const ADD_NEW_USER = "/add/user";
 export const UPDATE_USER = "/update/user";

@@ -9,9 +9,9 @@ import { getCustomerUsers } from "../../helpers/fakebackend_helper";
 
 const convertCustomerUsersListObject = (customerUserList) => {
   // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
-  const customerUserData = customerUserList.data || [];
-  console.log("CustomerData: " + JSON.stringify(customerUserData));
-  return customerUserData.map((customerUser) => {
+  // const customerUserData = customerUserList.data || [];
+  // console.log("CustomerData: " + JSON.stringify(customerUserData));
+  return customerUserList.map((customerUser) => {
     return {
       ...customerUser,
       id: customerUser.id,
@@ -40,8 +40,8 @@ function* fetchCustomerUsers() {
   try {
     const response = yield call(getCustomerUsers);
     console.log("response:" + JSON.stringify(response));
-    const customerUserList = convertCustomerUsersListObject(response);
-    yield put(getCustomerUsersSuccess(customerUserList));
+    // const customerUserList = convertCustomerUsersListObject(response.data);
+    yield put(getCustomerUsersSuccess(response.data));
   } catch (error) {
     yield put(getCustomerUsersFail(error));
   }

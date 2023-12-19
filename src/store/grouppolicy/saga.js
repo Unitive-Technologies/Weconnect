@@ -49,8 +49,9 @@ function* fetchGroupPolicy() {
   try {
     const response = yield call(getGroupPolicy);
     console.log("response:" + JSON.stringify(response));
-    const groupPolicyList = convertGroupPolicyListObject(response);
-    yield put(getGroupPolicySuccess(groupPolicyList));
+    // const groupPolicyList = convertGroupPolicyListObject(response);
+    // yield put(getGroupPolicySuccess(groupPolicyList));
+    yield put(getGroupPolicySuccess(response.data));
   } catch (error) {
     yield put(getGroupPolicyFail(error));
   }

@@ -1,18 +1,26 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_COMPLAINTCATEGORY, ADD_NEW_COMPLAINTCATEGORY } from "./actionTypes";
+import {
+  GET_COMPLAINTCATEGORY,
+  ADD_NEW_COMPLAINTCATEGORY,
+} from "./actionTypes";
 
 import {
   getComplaintCategorySuccess,
   getComplaintCategoryFail,
-  addComplaintCategorySuccess, addComplaintCategoryFail
+  addComplaintCategorySuccess,
+  addComplaintCategoryFail,
 } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getComplaintCategory, addNewComplaintCategory } from "../../helpers/fakebackend_helper";
+import {
+  getComplaintCategory,
+  addNewComplaintCategory,
+} from "../../helpers/fakebackend_helper";
 
 const convertComplaintCategoryListObject = (complaintCategoryList) => {
   // Notification Template has more data than what we need, we need to convert each of the Notification Template user object in the list with needed colums of the table
+  console.log("complaint:" + JSON.stringify(complaintCategoryList));
   return complaintCategoryList.map((complaintcategory) => {
     return {
       ...complaintcategory,
@@ -29,14 +37,14 @@ const convertComplaintCategoryListObject = (complaintCategoryList) => {
         complaintcategory.status === 1
           ? "ACTIVE"
           : complaintcategory.status === 0
-            ? "INACTIVE"
-            : "BLOCKED",
+          ? "INACTIVE"
+          : "BLOCKED",
       showonweb:
         complaintcategory.showonweb === 1
           ? "ACTIVE"
           : complaintcategory.showonweb === 0
-            ? "INACTIVE"
-            : "BLOCKED",
+          ? "INACTIVE"
+          : "BLOCKED",
     };
   });
 };
@@ -44,7 +52,9 @@ const convertComplaintCategoryListObject = (complaintCategoryList) => {
 function* fetchComplaintCategory() {
   try {
     const response = yield call(getComplaintCategory);
-    const complaintcategoryList = convertComplaintCategoryListObject(response);
+    const complaintcategoryList = convertComplaintCategoryListObject(
+      response.data
+    );
     yield put(getComplaintCategorySuccess(complaintcategoryList));
   } catch (error) {
     console.error("Error fetching complaint category list:", error);

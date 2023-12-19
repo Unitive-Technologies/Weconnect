@@ -251,19 +251,19 @@ const fakeBackend = () => {
     });
   });
 
-  mock.onGet(url.GET_USERS).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (members) {
-          // Passing fake JSON data as response
-          console.log("users on mock:" + JSON.stringify(members));
-          resolve([200, members]);
-        } else {
-          reject([400, "Cannot get users"]);
-        }
-      });
-    });
-  });
+  // mock.onGet(url.GET_USERS).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (members) {
+  //         // Passing fake JSON data as response
+  //         console.log("users on mock:" + JSON.stringify(members));
+  //         resolve([200, members]);
+  //       } else {
+  //         reject([400, "Cannot get users"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   // mock.onGet(url.GET_CUSTOMERUSERS).reply(() => {
   //   return new Promise((resolve, reject) => {
@@ -278,33 +278,33 @@ const fakeBackend = () => {
   //   });
   // });
 
-  mock.onGet(url.GET_GROUPPOLICY).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (gppolicy) {
-          // Passing fake JSON data as response
+  // mock.onGet(url.GET_GROUPPOLICY).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (gppolicy) {
+  //         // Passing fake JSON data as response
 
-          resolve([200, gppolicy]);
-        } else {
-          reject([400, "Cannot get Group Policy"]);
-        }
-      });
-    });
-  });
+  //         resolve([200, gppolicy]);
+  //       } else {
+  //         reject([400, "Cannot get Group Policy"]);
+  //       }
+  //     });
+  //   });
+  // });
 
-  mock.onGet(url.GET_DESIGNATION).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (designation) {
-          // Passing fake JSON data as response
+  // mock.onGet(url.GET_DESIGNATION).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (designation) {
+  //         // Passing fake JSON data as response
 
-          resolve([200, designation]);
-        } else {
-          reject([400, "Cannot get Designation List"]);
-        }
-      });
-    });
-  });
+  //         resolve([200, designation]);
+  //       } else {
+  //         reject([400, "Cannot get Designation List"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onGet(url.GET_NOTIFICATIONTEMPLATE).reply(() => {
     return new Promise((resolve, reject) => {
@@ -333,32 +333,32 @@ const fakeBackend = () => {
     });
   });
 
-  mock.onGet(url.GET_BROADCASTER).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (broadcast) {
-          // Passing fake JSON data as response
-          resolve([200, broadcast]);
-        } else {
-          reject([400, "Cannot get BroadCaster List"]);
-        }
-      });
-    });
-  });
+  // mock.onGet(url.GET_BROADCASTER).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (broadcast) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, broadcast]);
+  //       } else {
+  //         reject([400, "Cannot get BroadCaster List"]);
+  //       }
+  //     });
+  //   });
+  // });
 
-  mock.onGet(url.GET_GENRELIST).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (genre) {
-          // Passing fake JSON data as response
+  // mock.onGet(url.GET_GENRELIST).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (genre) {
+  //         // Passing fake JSON data as response
 
-          resolve([200, genre]);
-        } else {
-          reject([400, "Cannot get Genre list"]);
-        }
-      });
-    });
-  });
+  //         resolve([200, genre]);
+  //       } else {
+  //         reject([400, "Cannot get Genre list"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onGet(url.GET_LANGUAGELIST).reply(() => {
     return new Promise((resolve, reject) => {
@@ -705,18 +705,18 @@ const fakeBackend = () => {
   //   });
   // });
 
-  mock.onGet(url.GET_COMPLAINTCATEGORY).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (complaintcate) {
-          // Passing fake JSON data as response
-          resolve([200, complaintcate]);
-        } else {
-          reject([400, "Cannot get complaint category List"]);
-        }
-      });
-    });
-  });
+  // mock.onGet(url.GET_COMPLAINTCATEGORY).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (complaintcate) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, complaintcate]);
+  //       } else {
+  //         reject([400, "Cannot get complaint category List"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onGet(url.GET_COMPLAINTSUBCATEGORY).reply(() => {
     return new Promise((resolve, reject) => {
