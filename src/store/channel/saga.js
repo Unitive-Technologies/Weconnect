@@ -2,10 +2,18 @@ import { call, put, takeEvery } from "redux-saga/effects";
 
 import { GET_CHANNELLIST, ADD_NEW_CHANNELLIST } from "./actionTypes";
 
-import { getChannelListSuccess, getChannelListFail, addChannelListSuccess, addChannelListFail } from "./actions";
+import {
+  getChannelListSuccess,
+  getChannelListFail,
+  addChannelListSuccess,
+  addChannelListFail,
+} from "./actions";
 
 //Include Both Helper File with needed methods
-import { getChannelList, addNewChannelList } from "../../helpers/fakebackend_helper";
+import {
+  getChannelList,
+  addNewChannelList,
+} from "../../helpers/fakebackend_helper";
 
 const convertChannelListObject = (channelList) => {
   // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
@@ -28,8 +36,8 @@ const convertChannelListObject = (channelList) => {
         channel.status === 1
           ? "ACTIVE"
           : channel.status === 0
-            ? "INACTIVE"
-            : "BLOCKED",
+          ? "INACTIVE"
+          : "BLOCKED",
       rate: channel.broadcasterRate,
       created_at: channel.created_at,
       created_by: channel.created_by_lbl,
@@ -41,8 +49,8 @@ function* fetchChannelList() {
   try {
     const response = yield call(getChannelList);
     console.log("response:" + JSON.stringify(response));
-    const channelList = convertChannelListObject(response);
-    yield put(getChannelListSuccess(channelList));
+    // const channelList = convertChannelListObject(response);
+    yield put(getChannelListSuccess(response.data));
   } catch (error) {
     yield put(getChannelListFail(error));
   }

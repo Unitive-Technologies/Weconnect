@@ -20,11 +20,11 @@ export const GET_GROUPPOLICY =
 export const ADD_NEW_GROUPPOLICY = "/add/grouppolicy";
 export const GET_DESIGNATION =
   "/schedule-announcement?expand=start_time_lbl,end_time_lbl,announcement_templ_lbl&filter[current_activemsg]=1&vr=web1.0";
-export const ADD_NEW_DESIGNATION = "/add/designation";
+export const ADD_NEW_DESIGNATION = "/user-designation?vr=web1.0";
 
 export const GET_NOTIFICATIONTEMPLATE =
   "/announcement-template?expand=status_lbl,created_by_lbl,created_at_lbl,msg_type_lbl&page=1&per-page=50&vr=web1.0";
-export const ADD_NEW_NOTIFICATIONTEMPLATE = "/add/notification";
+export const ADD_NEW_NOTIFICATIONTEMPLATE = "/announcement-template?vr=web1.0";
 
 export const GET_REGIONALOFFICE = "/regionaloffice";
 export const ADD_NEW_REGIONALOFFICE = "/add/regionaloffice";
@@ -74,10 +74,12 @@ export const GET_GENRELIST =
   "/genre?expand=created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_GENRELIST = "/add/genrelist";
 
-export const GET_LANGUAGELIST = "/languagelist";
+export const GET_LANGUAGELIST =
+  "/language?expand=created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_LANGUAGELIST = "/add/languagelist";
 
-export const GET_CHANNELLIST = "/channellist";
+export const GET_CHANNELLIST =
+  "/channel?expand=created_by_lbl,broadcaster_lbl,genre_lbl,language_lbl,channel_type_lbl,isAlacarte_lbl,status_lbl,isFta_lbl,isNCF_lbl&sort=name&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_CHANNELLIST = "/add/channellist";
 
 export const GET_BROADCASTERBOUQUETLIST = "/broadcasterbouquet";

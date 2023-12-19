@@ -52,10 +52,10 @@ const convertComplaintCategoryListObject = (complaintCategoryList) => {
 function* fetchComplaintCategory() {
   try {
     const response = yield call(getComplaintCategory);
-    const complaintcategoryList = convertComplaintCategoryListObject(
-      response.data
-    );
-    yield put(getComplaintCategorySuccess(complaintcategoryList));
+    // const complaintcategoryList = convertComplaintCategoryListObject(
+    //   response.data
+    // );
+    yield put(getComplaintCategorySuccess(response.data));
   } catch (error) {
     console.error("Error fetching complaint category list:", error);
     yield put(getComplaintCategoryFail(error));

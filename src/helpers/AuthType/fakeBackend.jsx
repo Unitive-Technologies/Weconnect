@@ -360,31 +360,31 @@ const fakeBackend = () => {
   //   });
   // });
 
-  mock.onGet(url.GET_LANGUAGELIST).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (langlist) {
-          // Passing fake JSON data as response
-          console.log("langlist:" + JSON.stringify(langlist));
-          resolve([200, langlist]);
-        } else {
-          reject([400, "Cannot get Language list"]);
-        }
-      });
-    });
-  });
+  // mock.onGet(url.GET_LANGUAGELIST).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (langlist) {
+  //         // Passing fake JSON data as response
+  //         console.log("langlist:" + JSON.stringify(langlist));
+  //         resolve([200, langlist]);
+  //       } else {
+  //         reject([400, "Cannot get Language list"]);
+  //       }
+  //     });
+  //   });
+  // });
 
-  mock.onGet(url.GET_CHANNELLIST).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (channel) {
-          resolve([200, channel]);
-        } else {
-          reject([400, "Cannot get Channel list"]);
-        }
-      });
-    });
-  });
+  // mock.onGet(url.GET_CHANNELLIST).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (channel) {
+  //         resolve([200, channel]);
+  //       } else {
+  //         reject([400, "Cannot get Channel list"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onGet(url.GET_BROADCASTERBOUQUETLIST).reply(() => {
     return new Promise((resolve, reject) => {
@@ -835,31 +835,31 @@ const fakeBackend = () => {
     });
   });
 
-  mock.onPost(url.ADD_NEW_DESIGNATION).reply((designation) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (designation && designation.data) {
-          // Passing fake JSON data as response
-          resolve([200, designation.data]);
-        } else {
-          reject([400, "Cannot add designation"]);
-        }
-      });
-    });
-  });
+  // mock.onPost(url.ADD_NEW_DESIGNATION).reply((designation) => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (designation && designation.data) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, designation.data]);
+  //       } else {
+  //         reject([400, "Cannot add designation"]);
+  //       }
+  //     });
+  //   });
+  // });
 
-  mock.onPost(url.ADD_NEW_NOTIFICATIONTEMPLATE).reply((notemplate) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (notemplate && notemplate.data) {
-          // Passing fake JSON data as response
-          resolve([200, notemplate.data]);
-        } else {
-          reject([400, "Cannot add Notification Template"]);
-        }
-      });
-    });
-  });
+  // mock.onPost(url.ADD_NEW_NOTIFICATIONTEMPLATE).reply((notemplate) => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (notemplate && notemplate.data) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, notemplate.data]);
+  //       } else {
+  //         reject([400, "Cannot add Notification Template"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onPost(url.ADD_NEW_COMPLAINTCATEGORY).reply((complaint) => {
     return new Promise((resolve, reject) => {
