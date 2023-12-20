@@ -1,21 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import {
-  Col,
-  Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
-  Input,
-  Form,
-} from "reactstrap";
+import { Col, Row, Modal, ModalHeader, ModalBody, Form } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-// import AddMultipleNcf from "./AddMultipleNcf";
-import Operators from "./Operators";
 import OperatorList from "./OperatorList";
 import BulkAssignBouquet from "./BulkAssignBouquets";
 
@@ -106,9 +94,6 @@ const BulkAssign = (props) => {
             return false;
           }}
         >
-          <Row>
-            <Operators />
-          </Row>
           <Row>
             <div
               style={{
