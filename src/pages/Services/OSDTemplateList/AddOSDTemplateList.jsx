@@ -75,6 +75,7 @@ const AddNewOSDTemplateList = (props) => {
             centered={true}
             className="exampleModal"
             tabIndex="-1"
+            size="xl"
             toggle={toggle}
         >
             <ModalHeader tag="h4" toggle={toggle}>Add New OSD Template</ModalHeader>
@@ -87,7 +88,7 @@ const AddNewOSDTemplateList = (props) => {
                     }}
                 >
                     <Row>
-                        <Col sm="12">
+                        <Col sm="4">
                             <div className="mb-3">
                                 <Label className="form-label">Name<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
@@ -105,7 +106,8 @@ const AddNewOSDTemplateList = (props) => {
                                     </FormFeedback>
                                 ) : null}
                             </div>
-
+                        </Col>
+                        <Col sm="4">
                             <div className="mb-3">
                                 <Label className="form-label">Template For<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
@@ -128,7 +130,8 @@ const AddNewOSDTemplateList = (props) => {
                                     </FormFeedback>
                                 ) : null}
                             </div>
-
+                        </Col>
+                        <Col sm="4">
                             <div className="mb-3">
                                 <Label className="form-label">Status<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
@@ -150,7 +153,6 @@ const AddNewOSDTemplateList = (props) => {
                                     </FormFeedback>
                                 ) : null}
                             </div>
-
                         </Col>
                     </Row>
                     <Row>
