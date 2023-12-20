@@ -30,8 +30,8 @@ function* fetchTax() {
   try {
     const response = yield call(getTax);
     console.log("response:" + JSON.stringify(response));
-    const taxList = convertTaxListObject(response);
-    yield put(getTaxSuccess(taxList));
+    // const taxList = convertTaxListObject(response);
+    yield put(getTaxSuccess(response.data));
   } catch (error) {
     yield put(getTaxFail(error));
   }

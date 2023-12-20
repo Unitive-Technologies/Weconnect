@@ -745,18 +745,18 @@ const fakeBackend = () => {
     });
   });
 
-  mock.onGet(url.GET_TAX).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (taxes) {
-          // Passing fake JSON data as response
-          resolve([200, taxes]);
-        } else {
-          reject([400, "Cannot get Tax list"]);
-        }
-      });
-    });
-  });
+  // mock.onGet(url.GET_TAX).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (taxes) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, taxes]);
+  //       } else {
+  //         reject([400, "Cannot get Tax list"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onGet(url.GET_REASON).reply(() => {
     return new Promise((resolve, reject) => {

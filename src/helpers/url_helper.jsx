@@ -132,7 +132,7 @@ export const GET_COMPLAINTSUBCATEGORY = "/complaintsubcategory";
 export const ADD_NEW_COMPLAINTSUBCATEGORY = "/add/complaintsubcategory";
 
 export const GET_CONFIGURATIONUPLOADLOGS = "/configurationuploadlogs";
-export const GET_TAX = "/tax";
+export const GET_TAX = "/tax?expand=valuetype_lbl,parent_lbl,created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_TAXLIST = "/add/tax";
 
 export const GET_REASON = "/reason";
