@@ -410,17 +410,17 @@ const fakeBackend = () => {
   //   });
   // });
 
-  mock.onGet(url.GET_OSDCONFIGURATIONLIST).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (osdconfig) {
-          resolve([200, osdconfig]);
-        } else {
-          reject([400, "Cannot get Osd configuration list"]);
-        }
-      });
-    });
-  });
+  // mock.onGet(url.GET_OSDCONFIGURATIONLIST).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (osdconfig) {
+  //         resolve([200, osdconfig]);
+  //       } else {
+  //         reject([400, "Cannot get Osd configuration list"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onGet(url.GET_LOCALCHANNELNUMBER).reply(() => {
     return new Promise((resolve, reject) => {

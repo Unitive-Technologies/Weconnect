@@ -185,7 +185,7 @@ const PackageList = (props) => {
       },
       {
         Header: "Type",
-        accessor: "type",
+        accessor: "package_type_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Type {...cellProps} />;
@@ -193,7 +193,7 @@ const PackageList = (props) => {
       },
       {
         Header: "Package Type",
-        accessor: "packagetype",
+        accessor: "isFta_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <PackageType {...cellProps} />;
@@ -201,7 +201,7 @@ const PackageList = (props) => {
       },
       {
         Header: "CAS CODES",
-        accessor: "cascodes",
+        accessor: "cas_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <CasCodes {...cellProps} />;
@@ -217,7 +217,7 @@ const PackageList = (props) => {
       },
       {
         Header: "BBQ",
-        accessor: "BBQ",
+        accessor: "brdBouques",
         filterable: true,
         Cell: (cellProps) => {
           return <BBQ {...cellProps} />;
@@ -225,7 +225,7 @@ const PackageList = (props) => {
       },
       {
         Header: "Staus",
-        accessor: "status",
+        accessor: "status_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Status {...cellProps} />;
@@ -241,7 +241,7 @@ const PackageList = (props) => {
       },
       {
         Header: "Created By",
-        accessor: "created_by",
+        accessor: "created_by_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <CreatedBy {...cellProps} />;

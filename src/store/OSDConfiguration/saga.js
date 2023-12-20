@@ -35,8 +35,8 @@ function* fetchOSDConfiguration() {
   try {
     const response = yield call(getOSDConfiguration);
     console.log("response:" + JSON.stringify(response));
-    const osdConfigurationList = convertOSDConfigurationListObject(response);
-    yield put(getOSDConfigurationSuccess(osdConfigurationList));
+    // const osdConfigurationList = convertOSDConfigurationListObject(response);
+    yield put(getOSDConfigurationSuccess(response.data));
   } catch (error) {
     yield put(getOSDConfigurationFail(error));
   }
