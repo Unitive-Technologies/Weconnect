@@ -50,7 +50,9 @@ function* onAddLocation({ payload: location }) {
     console.log("Response data: ", response.data);
     yield put(addLocationSuccess(response.data));
     yield put(getLocationAction());
-    toast.success("Designation Added Successfully", { autoClose: 20000 });
+    toast.success("Location Added Successfully", {
+      autoClose: 2000,
+    });
   } catch (error) {
     yield put(addLocationFail(error));
   }

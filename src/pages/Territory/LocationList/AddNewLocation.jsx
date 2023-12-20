@@ -42,11 +42,23 @@ const AddNewLocation = (props) => {
 
   const options = lcos.map((option) => ({
     value: option.id,
-    label: (
+    label1: (
       <div>
         <h6>{option.name}</h6>
+      </div>
+    ),
+    label2: (
+      <div>
         <h6>{option.username}</h6>
+      </div>
+    ),
+    label3: (
+      <div>
         <p>Regional Office: {option.branch_lbl}</p>
+      </div>
+    ),
+    label4: (
+      <div>
         <p>Distributor: {option.distributor_lbl}</p>
       </div>
     ),
@@ -148,7 +160,7 @@ const AddNewLocation = (props) => {
                 <Label className="form-label">
                   Select LCO<span style={{ color: "red" }}>*</span>
                 </Label>
-                <Select
+                {/* <Select
                   name="operator_id"
                   type="select"
                   options={options}
@@ -167,7 +179,37 @@ const AddNewLocation = (props) => {
                     (opt) => opt.value === validation.values.operator_id
                   )}
                   styles={customStyles}
-                />
+                /> */}
+                <Input
+                  name="operator_id"
+                  type="select"
+                  placeholder="Select LCO"
+                  onChange={(selectedOption) => {
+                    console.log("SelectedOption: ", selectedOption);
+                    setSelectedLco(selectedOption);
+                    validation.handleChange({
+                      target: {
+                        name: "operator_id",
+                        value: selectedOption.value,
+                      },
+                    });
+                  }}
+                  onBlur={validation.handleBlur}
+                  value={options.find(
+                    (opt) => opt.value === validation.values.operator_id
+                  )}
+                  // styles={customStyles}
+                >
+                  <option>Select LCO</option>
+                  {options.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label1}&nbsp;
+                      {opt.label2}&nbsp;
+                      {opt.label3}&nbsp;
+                      {opt.label4}
+                    </option>
+                  ))}
+                </Input>
                 {validation.touched.operator_id &&
                 validation.errors.operator_id ? (
                   <FormFeedback type="invalid">
