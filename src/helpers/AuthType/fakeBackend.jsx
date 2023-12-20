@@ -628,18 +628,18 @@ const fakeBackend = () => {
     });
   });
 
-  mock.onGet(url.GET_BRANDLIST).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (brand) {
-          // Passing fake JSON data as response
-          resolve([200, brand]);
-        } else {
-          reject([400, "Cannot get Brand List"]);
-        }
-      });
-    });
-  });
+  // mock.onGet(url.GET_BRANDLIST).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (brand) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, brand]);
+  //       } else {
+  //         reject([400, "Cannot get Brand List"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onGet(url.GET_WAREHOUSELIST).reply(() => {
     return new Promise((resolve, reject) => {

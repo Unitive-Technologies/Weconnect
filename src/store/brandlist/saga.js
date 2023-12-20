@@ -33,8 +33,8 @@ function* fetchBrandList() {
   try {
     const response = yield call(getBrandList);
     console.log("response:" + JSON.stringify(response));
-    const brandList = convertBrandListObject(response);
-    yield put(getBrandListSuccess(brandList));
+    // const brandList = convertBrandListObject(response);
+    yield put(getBrandListSuccess(response.data));
   } catch (error) {
     yield put(getBrandListFail(error));
   }

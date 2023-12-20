@@ -106,7 +106,7 @@ export const ADD_NCF = "/add/ncf";
 
 export const GET_COMPANYLIST = "/companylist";
 
-export const GET_BRANDLIST = "/brandlist";
+export const GET_BRANDLIST = "/brand?expand=box_type_lbl,brand_type_lbl,char_allowed_lbl,cas_lbl,created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_BRANDLIST = "/add/brandlist";
 
 export const GET_WAREHOUSELIST = "/warehouselist";
