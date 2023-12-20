@@ -74,13 +74,13 @@ const ViewOSDTemplateList = (props) => {
                 tabIndex="-1"
                 toggle={toggle}
             >
-                {!showEditUser ? (
+                {!showEditosdTemplate ? (
                     <ModalHeader toggle={toggle} tag="h4">
                         View {osdTemplate.name}
                         <i
                             className="bx bx bxs-edit"
                             style={{ marginLeft: "20px", cursor: "pointer" }}
-                            onClick={() => setShowEditUser(true)}
+                            onClick={() => setShowEditosdTemplate(true)}
                         ></i>
                     </ModalHeader>
                 ) : (
@@ -97,7 +97,7 @@ const ViewOSDTemplateList = (props) => {
                         }}
                     >
                         <Row>
-                            <Col sm="12">
+                            <Col sm="4">
                                 <div className="mb-3">
                                     <Label className="form-label">Name<span style={{ color: 'red' }}>*</span></Label>
                                     <Input
@@ -115,7 +115,8 @@ const ViewOSDTemplateList = (props) => {
                                         </FormFeedback>
                                     ) : null}
                                 </div>
-
+                            </Col>
+                            <Col sm="4">
                                 <div className="mb-3">
                                     <Label className="form-label">Template For<span style={{ color: 'red' }}>*</span></Label>
                                     <Input
@@ -138,7 +139,8 @@ const ViewOSDTemplateList = (props) => {
                                         </FormFeedback>
                                     ) : null}
                                 </div>
-
+                            </Col>
+                            <Col sm="4">
                                 <div className="mb-3">
                                     <Label className="form-label">Status<span style={{ color: 'red' }}>*</span></Label>
                                     <Input
@@ -160,7 +162,10 @@ const ViewOSDTemplateList = (props) => {
                                         </FormFeedback>
                                     ) : null}
                                 </div>
-
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col sm="4">
                                 <div className="mb-3">
                                     <Label className="form-label">OSD Show Content<span style={{ color: 'red' }}>*</span></Label>
                                     <Input
@@ -180,7 +185,8 @@ const ViewOSDTemplateList = (props) => {
                                         </FormFeedback>
                                     ) : null}
                                 </div>
-
+                            </Col>
+                            <Col sm="4">
                                 <div className="mb-3">
                                     <Label className="form-label">CAS Config (Select only 1 config per CAS)<span style={{ color: 'red' }}>*</span></Label>
                                     <Input
@@ -200,6 +206,7 @@ const ViewOSDTemplateList = (props) => {
                                     ) : null}
                                 </div>
                             </Col>
+                            <Col sm="4"></Col>
                         </Row>
                         <Row>
                             <Col>

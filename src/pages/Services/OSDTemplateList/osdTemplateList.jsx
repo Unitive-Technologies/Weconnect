@@ -44,6 +44,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddNewOSDTemplate from './AddOSDTemplateList';
+import ViewOSDTemplateList from './ViewOSDTemplateList';
 
 
 const OSDTemplateList = (props) => {
@@ -54,10 +55,6 @@ const OSDTemplateList = (props) => {
 
   const [toast, setToast] = useState(false);
 
-  // const selectOSDTemplateState = (state) => {
-  //   console.log("osd:" + state.osdTemplate);
-  //   state.osdTemplate;
-  // };
   const selectOSDTemplateState = (state) => state.osdTemplate;
   const osdTemplateProperties = createSelector(
     selectOSDTemplateState,
@@ -77,6 +74,8 @@ const OSDTemplateList = (props) => {
 
   const [userList, setUserList] = useState([]);
   const [showAddOSDTemplateList, setShowAddOSDTemplateList] = useState(false);
+  const [showViewOSDTemplateList, setShowViewOSDTemplateList] = useState(false);
+
 
   const [isEdit, setIsEdit] = useState(false);
 
@@ -109,7 +108,10 @@ const OSDTemplateList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5 className="font-size-14 mb-1" onClick={() => {
+                const userData = cellProps.row.original;
+                handleViewOSDTemplateList(userData);
+              }}>
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -242,7 +244,13 @@ const OSDTemplateList = (props) => {
     setShowAddOSDTemplateList(!showAddOSDTemplateList);
   };
 
+  const [viewOSDTemplateList, setViewOSDTemplateList] = useState({});
 
+  const handleViewOSDTemplateList = (userOSDTemplateData) => {
+    setShowViewOSDTemplateList(!showViewOSDTemplateList);
+    setViewOSDTemplateList(userOSDTemplateData);
+    // toggle();
+  };
 
   const handleUserClick = (arg) => {
     const user = arg;
@@ -332,11 +340,9 @@ const OSDTemplateList = (props) => {
 
   return (
     <React.Fragment>
-      {/* <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
-      /> */}
+      <ViewOSDTemplateList isOpen={showViewOSDTemplateList}
+        toggle={handleViewOSDTemplateList}
+        osdTemplate={viewOSDTemplateList} />
       <AddNewOSDTemplate isOpen={showAddOSDTemplateList} toggle={toggle} />
 
       <div className="page-content">
