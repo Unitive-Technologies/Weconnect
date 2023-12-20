@@ -19,8 +19,8 @@ const convertStateUsersListObject = (stateUserList) => {
         stateUser.status === 1
           ? "ACTIVE"
           : stateUser.status === 0
-            ? "INACTIVE"
-            : "BLOCKED",
+          ? "INACTIVE"
+          : "BLOCKED",
 
       created_at: stateUser.created_at,
     };
@@ -31,8 +31,8 @@ function* fetchStateUsers() {
   try {
     const response = yield call(getStateUsers);
     console.log("response:" + JSON.stringify(response));
-    const stateUserList = convertStateUsersListObject(response);
-    yield put(getStateUsersSuccess(stateUserList));
+    // const stateUserList = convertStateUsersListObject(response);
+    yield put(getStateUsersSuccess(response.data));
   } catch (error) {
     yield put(getStateUsersFail(error));
   }

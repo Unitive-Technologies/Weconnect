@@ -36,7 +36,8 @@ export const ADD_NEW_SCHEDULECUSTOMERNOTIFICATION =
   "/add/schedulecustomernotification";
 
 export const GET_SCHEDULEDNOTIFICATION = "/schedulednotificationlist";
-export const GET_STATEUSERS = "/stateuserlist";
+export const GET_STATEUSERS =
+  "/administrative-division?filter[type]=1&expand=created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
 
 export const GET_DISTRICT = "/districtlist";
 export const ADD_DISTRICT = "/add/district";

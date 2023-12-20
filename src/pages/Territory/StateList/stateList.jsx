@@ -88,11 +88,13 @@ const StateList = (props) => {
       },
       {
         Header: "Status",
-        accessor: "status",
+        accessor: "status_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.status}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.status_lbl}
+            </p>
           );
         },
       },
