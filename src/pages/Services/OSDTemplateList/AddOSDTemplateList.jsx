@@ -33,7 +33,7 @@ const AddNewOSDTemplateList = (props) => {
         initialValues: {
             //BroadCaster: "",
             name: "",
-            template_for_lbl: "",
+            title: "",
             status_lbl: "",
             created_at: "",
             created_by: "Admin",
