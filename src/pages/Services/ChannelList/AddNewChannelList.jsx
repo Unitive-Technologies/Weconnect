@@ -117,7 +117,9 @@ const AddNewChannelList = (props) => {
       size="xl"
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4" toggle={toggle}>Add New Channel</ModalHeader>
+      <ModalHeader tag="h4" toggle={toggle}>
+        Add New Channel
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -181,10 +183,17 @@ const AddNewChannelList = (props) => {
                 </label>
               </div>
             </Col>
-            <Col sm="4">
+          </Row>
+          <Row>
+            <Col lg={2}>
               <div className="mb-3">
                 <Label className="form-label">Logo</Label>
                 <Input
+                  style={{
+                    width: "170px",
+                    height: "150px",
+                    borderRadius: "10px",
+                  }}
                   name="logo"
                   type="text"
                   // placeholder="Enter channel code"
@@ -198,9 +207,16 @@ const AddNewChannelList = (props) => {
                     {validation.errors.logo}
                   </FormFeedback>
                 ) : null}
+                <button
+                  type="button"
+                  className="btn btn-primary "
+                  style={{ marginTop: "10px" }}
+                >
+                  Upload Logo
+                </button>
               </div>
             </Col>
-            <Col sm="4">
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Name<span style={{ color: "red" }}>*</span>
@@ -220,8 +236,8 @@ const AddNewChannelList = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-            </Col>
-            <Col sm="4">
+              {/* </Col>
+            <Col lg={4}> */}
               <div className="mb-3">
                 <Label className="form-label">
                   Description<span style={{ color: "red" }}>*</span>
@@ -236,20 +252,21 @@ const AddNewChannelList = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
-            <Col sm="4">
+
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Definition<span style={{ color: "red" }}>*</span>
@@ -268,14 +285,14 @@ const AddNewChannelList = (props) => {
                   <option value="103">High Definition(HD)</option>
                 </Input>
                 {validation.touched.definition &&
-                  validation.errors.definition ? (
+                validation.errors.definition ? (
                   <FormFeedback type="invalid">
                     {validation.errors.definition}
                   </FormFeedback>
                 ) : null}
               </div>
-            </Col>
-            <Col sm="4">
+              {/* </Col>
+            <Col sm="4"> */}
               <div className="mb-3">
                 <Label className="form-label">
                   Type<span style={{ color: "red" }}>*</span>
@@ -300,6 +317,8 @@ const AddNewChannelList = (props) => {
                 ) : null}
               </div>
             </Col>
+          </Row>
+          <Row>
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
@@ -319,7 +338,7 @@ const AddNewChannelList = (props) => {
                   <option value="112">Jangama Media Pvt Ltd.</option>
                 </Input>
                 {validation.touched.broadcaster &&
-                  validation.errors.broadcaster ? (
+                validation.errors.broadcaster ? (
                   <FormFeedback type="invalid">
                     {validation.errors.broadcaster}
                   </FormFeedback>
@@ -389,7 +408,7 @@ const AddNewChannelList = (props) => {
                   <option value="202">No</option>
                 </Input>
                 {validation.touched.isalacarte &&
-                  validation.errors.isalacarte ? (
+                validation.errors.isalacarte ? (
                   <FormFeedback type="invalid">
                     {validation.errors.isalacarte}
                   </FormFeedback>
@@ -436,66 +455,6 @@ const AddNewChannelList = (props) => {
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
                     {validation.errors.status}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col sm="4">
-              <div className="mb-3">
-                {/* <Label className="form-label">Status</Label> */}
-                <Input
-                  name="cas"
-                  type="select"
-                  placeholder="Select CAS"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.cas || ""}
-                >
-                  <option value="21">Select CAS</option>
-                  <option value="22">NSTV</option>
-                </Input>
-                {validation.touched.cas && validation.errors.cas ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.cas}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col sm="4">
-              <div className="mb-3">
-                {/* <Label className="form-label">Status</Label> */}
-                <Input
-                  name="cascode"
-                  // type="select"
-                  placeholder="Cascode"
-                  // className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.cascode || ""}
-                ></Input>
-                {validation.touched.cascode && validation.errors.cascode ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.cascode}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col sm="4">
-              <div className="mb-3">
-                {/* <Label className="form-label">Status</Label> */}
-                <Input
-                  name="serviceid"
-                  // type="select"
-                  placeholder="Service id"
-                  // className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.serviceid || ""}
-                ></Input>
-                {validation.touched.serviceid && validation.errors.serviceid ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.serviceid}
                   </FormFeedback>
                 ) : null}
               </div>
