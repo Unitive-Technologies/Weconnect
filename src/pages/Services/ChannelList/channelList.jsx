@@ -3,29 +3,9 @@ import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
 import Spinners from "../../../components/Common/Spinner";
-import {
-  Card,
-  CardBody,
-  Col,
-  Container,
-  Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
-  UncontrolledTooltip,
-  Input,
-  Form,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-
-} from "reactstrap";
+import { Card, CardBody, Col, Container, Row } from "reactstrap";
 
 import {
-  Name,
   Code,
   Broadcaster,
   Genre,
@@ -43,79 +23,24 @@ import {
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
 
 import { getChannelList as onGetChannelList } from "/src/store/channel/actions";
-import { isEmpty } from "lodash";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddNewChannelList from "./AddNewChannelList";
-import BulkUpdateCasCodeChannelList from './BulkUpdateCasCodeChannelList';
-import BulkUpdateChannelList from './BulkUpdateChannelList';
-import UploadChannelList from './UploadChannelList';
-
+import BulkUpdateCasCodeChannelList from "./BulkUpdateCasCodeChannelList";
+import BulkUpdateChannelList from "./BulkUpdateChannelList";
+import UploadChannelList from "./UploadChannelList";
+import ViewChannel from "./ViewChannel";
 
 const ChannelList = (props) => {
   //meta title
-  document.title = "Channel List | VDigital";
+  document.title = "Channels | VDigital";
 
   const dispatch = useDispatch();
-  // const [contact, setContact] = useState();
-  // validation
-  // const validation = useFormik({
-  //   // enableReinitialize : use this flag when initial values needs to be changed
-  //   enableReinitialize: true,
-
-  //   initialValues: {
-  //     name: (contact && contact.name) || "",
-  //     designation: (contact && contact.designation) || "",
-  //     tags: (contact && contact.tags) || "",
-  //     email: (contact && contact.email) || "",
-  //     projects: (contact && contact.projects) || "",
-  //   },
-  //   validationSchema: Yup.object({
-  //     name: Yup.string().required("Please Enter Your Name"),
-  //     designation: Yup.string().required("Please Enter Your Designation"),
-  //     tags: Yup.array().required("Please Enter Tag"),
-  //     email: Yup.string()
-  //       .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-  //       .required("Please Enter Your Email"),
-  //     projects: Yup.string().required("Please Enter Your Project"),
-  //   }),
-  //   onSubmit: (values) => {
-  //     if (isEdit) {
-  //       const updateUser = {
-  //         id: contact.id,
-  //         name: values.name,
-  //         designation: values.designation,
-  //         tags: values.tags,
-  //         email: values.email,
-  //         projects: values.projects,
-  //       };
-
-  //       // update user
-  //       dispatch(onUpdateUser(updateUser));
-  //       validation.resetForm();
-  //       setIsEdit(false);
-  //     } else {
-  //       const newUser = {
-  //         id: Math.floor(Math.random() * (30 - 20)) + 20,
-  //         name: values["name"],
-  //         designation: values["designation"],
-  //         email: values["email"],
-  //         tags: values["tags"],
-  //         projects: values["projects"],
-  //       };
-  //       // save new user
-  //       dispatch(onAddNewUser(newUser));
-  //       validation.resetForm();
-  //     }
-  //     toggle();
-  //   },
-  // });
 
   const selectChannelState = (state) => state.channelList;
   const ChannelProperties = createSelector(
@@ -129,17 +54,18 @@ const ChannelList = (props) => {
   const { channel, loading } = useSelector(ChannelProperties);
 
   useEffect(() => {
-    console.log("Channel List data in component:", channel);
+    // console.log("Channel List data in component:", channel);
   }, [channel]);
   const [isLoading, setLoading] = useState(loading);
-
-  const [userList, setUserList] = useState([]);
+  const [viewChannelList, setViewChannelList] = useState(false);
   const [showAddNewChannelList, setShowAddNewChannelList] = useState(false);
   const [showUploadChannelList, setShowUploadChannelList] = useState(false);
-  const [showBulkUpdateChannelList, setShowBulkUpdateChannelList] = useState(false);
-  const [showBulkUpdateCasCodeChannelList, setShowBulkUpdateCasCodeChannelList] = useState(false);
-
-  const [isEdit, setIsEdit] = useState(false);
+  const [showBulkUpdateChannelList, setShowBulkUpdateChannelList] =
+    useState(false);
+  const [
+    showBulkUpdateCasCodeChannelList,
+    setShowBulkUpdateCasCodeChannelList,
+  ] = useState(false);
 
   const columns = useMemo(
     () => [
@@ -169,7 +95,13 @@ const ChannelList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const channelData = cellProps.row.original;
+                  handleViewChannel(channelData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -191,7 +123,7 @@ const ChannelList = (props) => {
       },
       {
         Header: "Broadcaster",
-        accessor: "broadcaster",
+        accessor: "broadcaster_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Broadcaster {...cellProps} />;
@@ -199,7 +131,7 @@ const ChannelList = (props) => {
       },
       {
         Header: "Genre",
-        accessor: "genre",
+        accessor: "genre_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Genre {...cellProps} />;
@@ -207,7 +139,7 @@ const ChannelList = (props) => {
       },
       {
         Header: "Language",
-        accessor: "language",
+        accessor: "language_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Language {...cellProps} />;
@@ -215,7 +147,7 @@ const ChannelList = (props) => {
       },
       {
         Header: "Type",
-        accessor: "type",
+        accessor: "channel_type_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Type {...cellProps} />;
@@ -223,7 +155,7 @@ const ChannelList = (props) => {
       },
       {
         Header: "Alacarte",
-        accessor: "alacarte",
+        accessor: "isAlacarte_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Alacarte {...cellProps} />;
@@ -231,7 +163,7 @@ const ChannelList = (props) => {
       },
       {
         Header: "FTA",
-        accessor: "FTA",
+        accessor: "isFta_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <FTA {...cellProps} />;
@@ -239,7 +171,7 @@ const ChannelList = (props) => {
       },
       {
         Header: "NCF",
-        accessor: "NCF",
+        accessor: "isNCF_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <NCF {...cellProps} />;
@@ -255,7 +187,7 @@ const ChannelList = (props) => {
       },
       {
         Header: "Status",
-        accessor: "status",
+        accessor: "status_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Status {...cellProps} />;
@@ -263,7 +195,7 @@ const ChannelList = (props) => {
       },
       {
         Header: "Rate",
-        accessor: "rate",
+        accessor: "drp",
         filterable: true,
         Cell: (cellProps) => {
           return <Rate {...cellProps} />;
@@ -285,41 +217,6 @@ const ChannelList = (props) => {
           return <CreatedBy {...cellProps} />;
         },
       },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
-          );
-        },
-      },
     ],
     []
   );
@@ -327,92 +224,29 @@ const ChannelList = (props) => {
   useEffect(() => {
     if (channel && !channel.length) {
       dispatch(onGetChannelList());
-      setIsEdit(false);
     }
   }, [dispatch, channel]);
 
-  // useEffect(() => {
-  //   setContact(channel);
-  //   setIsEdit(false);
-  // }, [channel]);
-
-  // useEffect(() => {
-  //   if (!isEmpty(channel) && !!isEdit) {
-  //     setContact(channel);
-  //     setIsEdit(false);
-  //   }
-  // }, [channel]);
-
-  const toggle = () => {
+  const handleAddChannel = () => {
     setShowAddNewChannelList(!showAddNewChannelList);
   };
 
-  const toggle1 = () => {
+  const handleUploadChannel = () => {
     setShowUploadChannelList(!showUploadChannelList);
   };
 
-  const toggle2 = () => {
+  const handleUpdateChannel = () => {
     setShowBulkUpdateChannelList(!showBulkUpdateChannelList);
   };
 
-  const toggle3 = () => {
+  const handleUpdateCasCode = () => {
     setShowBulkUpdateCasCodeChannelList(!showBulkUpdateCasCodeChannelList);
   };
-
-
-
-  // const handleUserClick = (arg) => {
-  //   const user = arg;
-
-  //   setContact({
-  //     id: user.id,
-  //     name: user.name,
-  //     designation: user.designation,
-  //     email: user.email,
-  //     tags: user.tags,
-  //     projects: user.projects,
-  //   });
-  //   setIsEdit(true);
-
-  //   toggle();
-  // };
-
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
+  const [viewChanel, setViewChanel] = useState({});
+  const handleViewChannel = (channelData) => {
+    setViewChannelList(!viewChannelList);
+    setViewChanel(channelData);
   };
-
-  //delete customer
-  // const [deleteModal, setDeleteModal] = useState(false);
-
-  // const onClickDelete = (users) => {
-  //   setContact(users);
-  //   setDeleteModal(true);
-  // };
-
-  // const handleDeleteUser = () => {
-  //   if (contact && contact.id) {
-  //     dispatch(onDeleteUser(contact.id));
-  //   }
-  //   setContact("");
-  //   onPaginationPageChange(1);
-  //   setDeleteModal(false);
-  // };
-
-  // const handleUserClicks = () => {
-  //   setUserList("");
-  //   setIsEdit(false);
-  //   toggle();
-  // };
-
   const keyField = "id";
 
   const getTableActions = () => {
@@ -421,7 +255,7 @@ const ChannelList = (props) => {
         name: "Create",
         action: setShowAddNewChannelList,
         type: "normal",
-        icon: "create"
+        icon: "create",
       },
       {
         name: "Upload Channel",
@@ -441,26 +275,37 @@ const ChannelList = (props) => {
         type: "dropdown",
         dropdownName: "Upload",
       },
-
     ];
   };
 
   return (
     <React.Fragment>
-      {/* <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
-      /> */}
-      <AddNewChannelList isOpen={showAddNewChannelList} toggle={toggle} />
-      <UploadChannelList isOpen={showUploadChannelList} toggle={toggle1} />
-      <BulkUpdateChannelList isOpen={showBulkUpdateChannelList} toggle={toggle2} />
-      <BulkUpdateCasCodeChannelList isOpen={showBulkUpdateCasCodeChannelList} toggle={toggle3} />
+      <AddNewChannelList
+        isOpen={showAddNewChannelList}
+        handleAddChannel={handleAddChannel}
+      />
+      <UploadChannelList
+        isOpen={showUploadChannelList}
+        handleUploadChannel={handleUploadChannel}
+      />
+      <BulkUpdateChannelList
+        isOpen={showBulkUpdateChannelList}
+        handleUpdateChannel={handleUpdateChannel}
+      />
+      <BulkUpdateCasCodeChannelList
+        isOpen={showBulkUpdateCasCodeChannelList}
+        handleUpdateCasCode={handleUpdateCasCode}
+      />
+      <ViewChannel
+        isOpen={viewChannelList}
+        handleViewChannel={handleViewChannel}
+        channel={viewChanel}
+      />
 
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Services" breadcrumbItem="Channel List" />
+          <Breadcrumbs title="Services" breadcrumbItem="Channels" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -468,7 +313,7 @@ const ChannelList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("Channel List:" + JSON.stringify(channel))}
+                    {/* {console.log("Channel List:" + JSON.stringify(channel))} */}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
@@ -477,10 +322,18 @@ const ChannelList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleAddNewChannelList={() => setShowAddNewChannelList(true)}
-                      handleUploadChannelList={() => setShowUploadChannelList(true)}
-                      handleBulkUpdateCasCodeChannelList={() => setShowBulkUpdateCasCodeChannelList(true)}
-                      handleBulkUpdateChannelList={() => setShowBulkUpdateChannelList(true)}
+                      handleAddNewChannelList={() =>
+                        setShowAddNewChannelList(true)
+                      }
+                      handleUploadChannelList={() =>
+                        setShowUploadChannelList(true)
+                      }
+                      handleBulkUpdateCasCodeChannelList={() =>
+                        setShowBulkUpdateCasCodeChannelList(true)
+                      }
+                      handleBulkUpdateChannelList={() =>
+                        setShowBulkUpdateChannelList(true)
+                      }
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

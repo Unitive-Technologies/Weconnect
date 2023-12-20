@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import {
   Col,
   Row,
@@ -18,10 +19,10 @@ import { addNewChannelList as onAddNewChannelList } from "/src/store/channel/act
 import { useDispatch } from "react-redux";
 import CasList from "./CasList";
 
-const AddNewChannelList = (props) => {
-  const { isOpen, handleAddChannel } = props;
+const ViewChannel = (props) => {
+  const { isOpen, handleViewChannel, channel } = props;
   const dispatch = useDispatch();
-
+  const [showEditChannel, setShowEditChannel] = useState(false);
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -87,19 +88,17 @@ const AddNewChannelList = (props) => {
       // save new user
       dispatch(onAddNewChannelList(newChannelList));
       validation.resetForm();
-      handleAddChannel();
+      handleViewChannel();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
     },
   });
 
-  const [modal4, setModal4] = useState(false);
-
-  const toggle4 = () => {
-    setModal4(!modal4);
+  const handleCancel = () => {
+    setShowEditChannel(false);
+    handleViewChannel();
   };
-
   return (
     <Modal
       isOpen={isOpen}
@@ -108,12 +107,28 @@ const AddNewChannelList = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleAddChannel}
+      toggle={handleCancel}
       size="xl"
     >
-      <ModalHeader tag="h4" toggle={handleAddChannel}>
-        Add New Channel
+      <ModalHeader toggle={handleCancel} tag="h4">
+        {!showEditChannel
+          ? `View ${(channel && channel.name) || ""}`
+          : `Edit ${(channel && channel.name) || ""}`}
       </ModalHeader>
+      {!showEditChannel && (
+        <Link
+          style={{
+            position: "absolute",
+            marginLeft: "92%",
+            marginTop: "1%",
+          }}
+          to="#!"
+          className="btn btn-light me-1"
+          onClick={() => setShowEditChannel(true)}
+        >
+          <i className="mdi mdi-pencil-outline"></i>
+        </Link>
+      )}
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -129,6 +144,7 @@ const AddNewChannelList = (props) => {
                 <Input
                   name="code"
                   type="text"
+                  disabled={!showEditChannel}
                   placeholder="Enter code"
                   // className="form-select"
                   onChange={validation.handleChange}
@@ -190,6 +206,7 @@ const AddNewChannelList = (props) => {
                   }}
                   name="logo"
                   type="text"
+                  disabled={!showEditChannel}
                   // placeholder="Enter channel code"
                   // className="form-select"
                   onChange={validation.handleChange}
@@ -219,6 +236,7 @@ const AddNewChannelList = (props) => {
                   name="name"
                   type="text"
                   placeholder="Enter name"
+                  disabled={!showEditChannel}
                   // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
@@ -240,6 +258,7 @@ const AddNewChannelList = (props) => {
                   name="description"
                   type="textarea"
                   placeholder="Enter Description"
+                  disabled={!showEditChannel}
                   rows="3"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
@@ -269,6 +288,7 @@ const AddNewChannelList = (props) => {
                   name="definition"
                   type="select"
                   placeholder="Select Definition"
+                  disabled={!showEditChannel}
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
@@ -299,6 +319,7 @@ const AddNewChannelList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.type || ""}
+                  disabled={!showEditChannel}
                 >
                   <option value="104">Select channel type</option>
                   <option value="105">Pay Channel</option>
@@ -326,6 +347,7 @@ const AddNewChannelList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.broadcaster || ""}
+                  disabled={!showEditChannel}
                 >
                   <option value="110">Select broadcaster</option>
                   <option value="111">Lex Sportal Vision Pvt Ltd.</option>
@@ -352,6 +374,7 @@ const AddNewChannelList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.genre || ""}
+                  disabled={!showEditChannel}
                 >
                   <option value="101">Select genre</option>
                   <option value="102">TRAVEL</option>
@@ -378,6 +401,7 @@ const AddNewChannelList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.language || ""}
+                  disabled={!showEditChannel}
                 ></Input>
                 {validation.touched.language && validation.errors.language ? (
                   <FormFeedback type="invalid">
@@ -397,6 +421,7 @@ const AddNewChannelList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.isalacarte || ""}
+                  disabled={!showEditChannel}
                 >
                   <option value="201">Yes</option>
                   <option value="202">No</option>
@@ -420,6 +445,7 @@ const AddNewChannelList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.rate || ""}
+                  disabled={!showEditChannel}
                 ></Input>
                 {validation.touched.rate && validation.errors.rate ? (
                   <FormFeedback type="invalid">
@@ -441,6 +467,7 @@ const AddNewChannelList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  disabled={!showEditChannel}
                 >
                   <option value="101">Select Status</option>
                   <option value="102">Active</option>
@@ -478,7 +505,7 @@ const AddNewChannelList = (props) => {
             }}
           >
             <Col sm="12">
-              <CasList />
+              <CasList showEditChannel={showEditChannel} />
             </Col>
           </Row>
           <Row>
@@ -500,7 +527,7 @@ const AddNewChannelList = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    handleAddChannel();
+                    handleViewChannel();
                   }}
                 >
                   Cancel
@@ -514,9 +541,9 @@ const AddNewChannelList = (props) => {
   );
 };
 
-AddNewChannelList.propTypes = {
+ViewChannel.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default AddNewChannelList;
+export default ViewChannel;

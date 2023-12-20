@@ -14,6 +14,7 @@ import {
 import { Link } from "react-router-dom";
 
 const CasList = (props) => {
+  const { showEditChannel } = props;
   const columns = useMemo(
     () => [
       {
@@ -157,6 +158,7 @@ const CasList = (props) => {
                   type="select"
                   placeholder="Select type"
                   className="form-select"
+                  disabled={!showEditChannel}
                   // onChange={validation.handleChange}
                   // onBlur={validation.handleBlur}
                   // value={validation.values.type || ""}
