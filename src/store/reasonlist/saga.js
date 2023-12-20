@@ -27,8 +27,8 @@ function* fetchReason() {
   try {
     const response = yield call(getReason);
     console.log("response:" + JSON.stringify(response));
-    // const reasonList = convertReasonListObject(response);
-    yield put(getReasonSuccess(response.data));
+    const reasonList = convertReasonListObject(response);
+    yield put(getReasonSuccess(reasonList));
   } catch (error) {
     yield put(getReasonFail(error));
   }

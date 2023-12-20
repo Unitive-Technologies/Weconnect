@@ -45,8 +45,8 @@ const convertDistributorsListObject = (distributorsList) => {
         distributors.status === 1
           ? "ACTIVE"
           : distributors.status === 0
-          ? "INACTIVE"
-          : "BLOCKED",
+            ? "INACTIVE"
+            : "BLOCKED",
     };
   });
 };
@@ -54,8 +54,8 @@ const convertDistributorsListObject = (distributorsList) => {
 function* fetchDistributors() {
   try {
     const response = yield call(getDistributors);
-    const distributorsList = convertDistributorsListObject(response);
-    yield put(getDistributorsSuccess(distributorsList));
+    // const distributorsList = convertDistributorsListObject(response);
+    yield put(getDistributorsSuccess(response.data));
   } catch (error) {
     console.error("Error fetching Distributors list:", error);
     yield put(getDistributorsFail(error));
