@@ -27,8 +27,8 @@ const convertDistrictListObject = (districtList) => {
         district.status === 11
           ? "ACTIVE"
           : district.status === 12
-          ? "INACTIVE"
-          : "BLOCKED",
+            ? "INACTIVE"
+            : "BLOCKED",
       created_at: district.created_at,
     };
   });
@@ -38,8 +38,8 @@ function* fetchDistrict() {
   try {
     const response = yield call(getDistrict);
     console.log("response:" + JSON.stringify(response));
-    const districtList = convertDistrictListObject(response);
-    yield put(getDistrictSuccess(districtList));
+    // const districtList = convertDistrictListObject(response);
+    yield put(getDistrictSuccess(response.data));
   } catch (error) {
     yield put(getDistrictFail(error));
   }
