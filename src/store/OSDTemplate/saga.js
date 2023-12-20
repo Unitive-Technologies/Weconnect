@@ -31,8 +31,8 @@ function* fetchOSDTemplate() {
   try {
     const response = yield call(getOSDTemplate);
     console.log("response:" + JSON.stringify(response));
-    const osdTemplateList = convertOSDTemplateListObject(response);
-    yield put(getOSDTemplateSuccess(osdTemplateList));
+    // const osdTemplateList = convertOSDTemplateListObject(response);
+    yield put(getOSDTemplateSuccess(response.data));
   } catch (error) {
     yield put(getOSDTemplateFail(error));
   }

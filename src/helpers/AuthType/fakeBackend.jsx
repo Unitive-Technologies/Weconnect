@@ -434,17 +434,17 @@ const fakeBackend = () => {
     });
   });
 
-  mock.onGet(url.GET_OSDTEMPLATE).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (osdtem) {
-          resolve([200, osdtem]);
-        } else {
-          reject([400, "Cannot get Osd template list"]);
-        }
-      });
-    });
-  });
+  // mock.onGet(url.GET_OSDTEMPLATE).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (osdtem) {
+  //         resolve([200, osdtem]);
+  //       } else {
+  //         reject([400, "Cannot get Osd template list"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onGet(url.GET_DOCUMENTUPLOADPOLICY).reply(() => {
     return new Promise((resolve, reject) => {

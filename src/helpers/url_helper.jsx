@@ -97,7 +97,7 @@ export const GET_LOCALCHANNELNUMBER = "/localchannelnumberlist";
 export const GET_DOCUMENTUPLOADPOLICY = "/documentuploadpolicylist";
 export const ADD_NEW_DOCUMENTUPLOADPOLICY = "/add/documentuploadpolicylist";
 
-export const GET_OSDTEMPLATE = "/osdtemplatelist";
+export const GET_OSDTEMPLATE = "/message-template?expand=created_by_lbl,status_lbl,template_for_lbl,operator_count&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_OSDTEMPLATE = "/add/osdtemplatelist";
 
 export const GET_NCF =
