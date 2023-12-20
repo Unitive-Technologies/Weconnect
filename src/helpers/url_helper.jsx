@@ -125,7 +125,7 @@ export const GET_CONNECTIONSCHEME = "/connectionscheme";
 export const ADD_CONNECTIONSCHEME = "/add/connectionscheme";
 
 export const GET_COMPLAINTCATEGORY =
-  "/schedule-announcement?expand=start_time_lbl,end_time_lbl,announcement_templ_lbl&filter[current_activemsg]=1&vr=web1.0";
+  "/complaint-category?expand=created_by_lbl,status_lbl,showonweb_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_COMPLAINTCATEGORY = "/add/complaintcategory";
 
 export const GET_COMPLAINTSUBCATEGORY = "/complaintsubcategory";
