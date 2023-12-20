@@ -1,14 +1,10 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
-import {
-  Card,
-  CardBody,
-} from "reactstrap";
+import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const AddBroadcasterBouquets = (props) => {
-
   const columns = useMemo(
     () => [
       {

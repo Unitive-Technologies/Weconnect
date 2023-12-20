@@ -9,105 +9,40 @@ import {
   Col,
   Container,
   Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
   UncontrolledTooltip,
-  Input,
-  Form,
 } from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
 
 import {
-  Name,
   Code,
   Type,
   PackageType,
   Status,
   CreatedAt,
   CreatedBy,
-  CasCodes,
-  BBQ,
+  // CasCodes,
+  // BBQ,
   Channels,
 } from "./packageListCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
 
 import { getPackageList as onGetPackageList } from "/src/store/packagelist/actions";
-import { isEmpty } from "lodash";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
-import AddNewPackageList from './AddNewPackageList';
+import AddNewPackageList from "./AddNewPackageList";
 import BulkUpdateCasCodePackageList from "./BulkUpdateCasCodePackageList";
-import BulkUpdatePackageList from './BulkUpdatePackageList';
+import BulkUpdatePackageList from "./BulkUpdatePackageList";
 import UploadPackageList from "../PackageList/UploadPackageList";
 
 const PackageList = (props) => {
   //meta title
-  document.title = "Package List | VDigital";
+  document.title = "Packages | VDigital";
 
   const dispatch = useDispatch();
-  // const [contact, setContact] = useState();
-  // validation
-  // const validation = useFormik({
-  //   // enableReinitialize : use this flag when initial values needs to be changed
-  //   enableReinitialize: true,
-
-  //   initialValues: {
-  //     name: (contact && contact.name) || "",
-  //     designation: (contact && contact.designation) || "",
-  //     tags: (contact && contact.tags) || "",
-  //     email: (contact && contact.email) || "",
-  //     projects: (contact && contact.projects) || "",
-  //   },
-  //   validationSchema: Yup.object({
-  //     name: Yup.string().required("Please Enter Your Name"),
-  //     designation: Yup.string().required("Please Enter Your Designation"),
-  //     tags: Yup.array().required("Please Enter Tag"),
-  //     email: Yup.string()
-  //       .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-  //       .required("Please Enter Your Email"),
-  //     projects: Yup.string().required("Please Enter Your Project"),
-  //   }),
-  //   onSubmit: (values) => {
-  //     if (isEdit) {
-  //       const updateUser = {
-  //         id: contact.id,
-  //         name: values.name,
-  //         designation: values.designation,
-  //         tags: values.tags,
-  //         email: values.email,
-  //         projects: values.projects,
-  //       };
-
-  //       // update user
-  //       dispatch(onUpdateUser(updateUser));
-  //       validation.resetForm();
-  //       setIsEdit(false);
-  //     } else {
-  //       const newUser = {
-  //         id: Math.floor(Math.random() * (30 - 20)) + 20,
-  //         name: values["name"],
-  //         designation: values["designation"],
-  //         email: values["email"],
-  //         tags: values["tags"],
-  //         projects: values["projects"],
-  //       };
-  //       // save new user
-  //       dispatch(onAddNewUser(newUser));
-  //       validation.resetForm();
-  //     }
-  //     toggle();
-  //   },
-  // });
 
   const selectPackageListState = (state) => state.packageList;
   const PackageListProperties = createSelector(
@@ -121,19 +56,18 @@ const PackageList = (props) => {
   const { packlist, loading } = useSelector(PackageListProperties);
 
   useEffect(() => {
-    console.log("Package List data in component:", packlist);
+    // console.log("Package List data in component:", packlist);
   }, [packlist]);
   const [isLoading, setLoading] = useState(loading);
 
-  const [userList, setUserList] = useState([]);
-  const [isEdit, setIsEdit] = useState(false);
-
-
   const [showAddNewPackageList, setShowAddNewPackageList] = useState(false);
   const [showUploadPackageList, setShowUploadPackageList] = useState(false);
-  const [showBulkUpdatePackageList, setShowBulkUpdatePackageList] = useState(false);
-  const [showBulkUpdateCasCodePackageList, setShowBulkUpdateCasCodePackageList] = useState(false);
-
+  const [showBulkUpdatePackageList, setShowBulkUpdatePackageList] =
+    useState(false);
+  const [
+    showBulkUpdateCasCodePackageList,
+    setShowBulkUpdateCasCodePackageList,
+  ] = useState(false);
 
   const columns = useMemo(
     () => [
@@ -196,7 +130,7 @@ const PackageList = (props) => {
         accessor: "isFta_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          return <PackageType {...cellProps} />;
+          // return <PackageType {...cellProps} />;
         },
       },
       {
@@ -204,7 +138,7 @@ const PackageList = (props) => {
         accessor: "cas_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          return <CasCodes {...cellProps} />;
+          // return <CasCodes {...cellProps} />;
         },
       },
       {
@@ -212,7 +146,7 @@ const PackageList = (props) => {
         accessor: "channels",
         filterable: true,
         Cell: (cellProps) => {
-          return <Channels {...cellProps} />;
+          // return <Channels {...cellProps} />;
         },
       },
       {
@@ -220,7 +154,7 @@ const PackageList = (props) => {
         accessor: "brdBouques",
         filterable: true,
         Cell: (cellProps) => {
-          return <BBQ {...cellProps} />;
+          // return <BBQ {...cellProps} />;
         },
       },
       {
@@ -289,21 +223,8 @@ const PackageList = (props) => {
   useEffect(() => {
     if (packlist && !packlist.length) {
       dispatch(onGetPackageList());
-      setIsEdit(false);
     }
   }, [dispatch, packlist]);
-
-  // useEffect(() => {
-  //   setContact(packlist);
-  //   setIsEdit(false);
-  // }, [packlist]);
-
-  // useEffect(() => {
-  //   if (!isEmpty(packlist) && !!isEdit) {
-  //     setContact(packlist);
-  //     setIsEdit(false);
-  //   }
-  // }, [packlist]);
 
   const toggle = () => {
     setShowAddNewPackageList(!showAddNewPackageList);
@@ -321,59 +242,6 @@ const PackageList = (props) => {
     setShowBulkUpdateCasCodePackageList(!showBulkUpdateCasCodePackageList);
   };
 
-
-  // const handleUserClick = (arg) => {
-  //   const user = arg;
-
-  //   setContact({
-  //     id: user.id,
-  //     name: user.name,
-  //     designation: user.designation,
-  //     email: user.email,
-  //     tags: user.tags,
-  //     projects: user.projects,
-  //   });
-  //   setIsEdit(true);
-
-  //   toggle();
-  // };
-
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
-
-  //delete customer
-  // const [deleteModal, setDeleteModal] = useState(false);
-
-  // const onClickDelete = (users) => {
-  //   setContact(users);
-  //   setDeleteModal(true);
-  // };
-
-  // const handleDeleteUser = () => {
-  //   if (contact && contact.id) {
-  //     dispatch(onDeleteUser(contact.id));
-  //   }
-  //   setContact("");
-  //   onPaginationPageChange(1);
-  //   setDeleteModal(false);
-  // };
-
-  // const handleUserClicks = () => {
-  //   setUserList("");
-  //   setIsEdit(false);
-  //   toggle();
-  // };
-
   const keyField = "id";
 
   const getTableActions = () => {
@@ -382,7 +250,7 @@ const PackageList = (props) => {
         name: "Create",
         action: setShowAddNewPackageList,
         type: "normal",
-        icon: "create"
+        icon: "create",
       },
       {
         name: "Upload Package",
@@ -402,22 +270,21 @@ const PackageList = (props) => {
         type: "dropdown",
         dropdownName: "Upload",
       },
-
     ];
   };
 
   return (
     <React.Fragment>
-      {/* <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
-      /> */}
-
       <AddNewPackageList isOpen={showAddNewPackageList} toggle={toggle} />
       <UploadPackageList isOpen={showUploadPackageList} toggle={toggle1} />
-      <BulkUpdatePackageList isOpen={showBulkUpdatePackageList} toggle={toggle2} />
-      <BulkUpdateCasCodePackageList isOpen={showBulkUpdateCasCodePackageList} toggle={toggle3} />
+      <BulkUpdatePackageList
+        isOpen={showBulkUpdatePackageList}
+        toggle={toggle2}
+      />
+      <BulkUpdateCasCodePackageList
+        isOpen={showBulkUpdateCasCodePackageList}
+        toggle={toggle3}
+      />
 
       <div className="page-content">
         <Container fluid>
@@ -430,7 +297,7 @@ const PackageList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("users:" + JSON.stringify(packlist))}
+                    {/* {console.log("users:" + JSON.stringify(packlist))} */}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
@@ -439,10 +306,6 @@ const PackageList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleAddNewPackageList={() => setShowAddNewPackageList(true)}
-                      handleUploadPackageList={() => setShowUploadPackageList(true)}
-                      handleBulkUpdateCasCodePackageList={() => setShowBulkUpdateCasCodePackageList(true)}
-                      handleBulkUpdatePackageList={() => setShowBulkUpdatePackageList(true)}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
