@@ -16,6 +16,8 @@ import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 // import AddMultipleNcf from "./AddMultipleNcf";
 import Operators from "./Operators";
+import OperatorList from "./OperatorList";
+import BulkAssignBouquet from "./BulkAssignBouquets";
 
 const BulkAssign = (props) => {
   const { isOpen, toggle, bouquet } = props;
@@ -94,7 +96,7 @@ const BulkAssign = (props) => {
       size="xl"
     >
       <ModalHeader toggle={toggle} tag="h4">
-        Bulk Assign NCF
+        Bulk Assign Bouquet
       </ModalHeader>
       <ModalBody>
         <Form
@@ -121,7 +123,9 @@ const BulkAssign = (props) => {
                 padding: "0px 10px",
               }}
             >
-              <p style={{ fontWeight: "bold" }}>Default NCF</p>
+              <p style={{ fontWeight: "bold" }}>
+                Operators<span style={{ color: "red" }}>*</span>
+              </p>
             </div>
             <Row
               style={{
@@ -130,7 +134,7 @@ const BulkAssign = (props) => {
                 margin: "20px 0px",
               }}
             >
-              {/* <AddMultipleNcf /> */}
+              <OperatorList />
             </Row>
           </Row>
           <Row>
@@ -148,7 +152,7 @@ const BulkAssign = (props) => {
               }}
             >
               <p style={{ fontWeight: "bold" }}>
-                Mutiple NCF<span style={{ color: "red" }}>*</span>
+                Bouquets<span style={{ color: "red" }}>*</span>
               </p>
             </div>
             <Row
@@ -159,7 +163,7 @@ const BulkAssign = (props) => {
               }}
             >
               <p style={{}}>**To select row, click</p>
-              {/* <AddMultipleNcf /> */}
+              <BulkAssignBouquet />
             </Row>
           </Row>
           <Row>
