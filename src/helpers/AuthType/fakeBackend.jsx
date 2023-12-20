@@ -679,18 +679,19 @@ const fakeBackend = () => {
       });
     });
   });
-  mock.onGet(url.GET_SMSMESSAGETEMPLIST).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (smsmsg) {
-          // Passing fake JSON data as response
-          resolve([200, smsmsg]);
-        } else {
-          reject([400, "Cannot get SMS Msg Temp List"]);
-        }
-      });
-    });
-  });
+
+  // mock.onGet(url.GET_SMSMESSAGETEMPLIST).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (smsmsg) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, smsmsg]);
+  //       } else {
+  //         reject([400, "Cannot get SMS Msg Temp List"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   // mock.onGet(url.GET_BOUQUET).reply(() => {
   //   return new Promise((resolve, reject) => {

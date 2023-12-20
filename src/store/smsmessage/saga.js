@@ -33,8 +33,8 @@ function* fetchSMSMsgTempList() {
   try {
     const response = yield call(getSMSMessageTempList);
     console.log("response:" + JSON.stringify(response));
-    const smsMsgTempList = convertSMSMessageTempListObject(response);
-    yield put(getSMSMessageTempListSuccess(smsMsgTempList));
+    // const smsMsgTempList = convertSMSMessageTempListObject(response);
+    yield put(getSMSMessageTempListSuccess(response.data));
   } catch (error) {
     yield put(getSMSMessageTempListFail(error));
   }

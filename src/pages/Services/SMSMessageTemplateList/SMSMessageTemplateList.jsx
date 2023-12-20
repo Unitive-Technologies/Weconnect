@@ -170,7 +170,7 @@ const SMSMessageTemplateList = (props) => {
       },
       {
         Header: "Template ID",
-        accessor: "templateID",
+        accessor: "template_id",
         filterable: true,
         Cell: (cellProps) => {
           return <Template {...cellProps} />;
@@ -178,7 +178,7 @@ const SMSMessageTemplateList = (props) => {
       },
       {
         Header: "Category",
-        accessor: "category",
+        accessor: "cat_id",
         filterable: true,
         Cell: (cellProps) => {
           return <Category {...cellProps} />;
@@ -186,7 +186,7 @@ const SMSMessageTemplateList = (props) => {
       },
       {
         Header: "Sub-Category",
-        accessor: "subcategory",
+        accessor: "sub_cat_id",
         filterable: true,
         Cell: (cellProps) => {
           return <SubCategory {...cellProps} />;
@@ -194,7 +194,7 @@ const SMSMessageTemplateList = (props) => {
       },
       {
         Header: "Sender",
-        accessor: "sender",
+        accessor: "sender_id",
         filterable: true,
         Cell: (cellProps) => {
           return <Sender {...cellProps} />;
@@ -202,7 +202,7 @@ const SMSMessageTemplateList = (props) => {
       },
       {
         Header: "Status",
-        accessor: "status",
+        accessor: "status_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Status {...cellProps} />;
@@ -218,7 +218,7 @@ const SMSMessageTemplateList = (props) => {
       },
       {
         Header: "Created By",
-        accessor: "created_by",
+        accessor: "created_by_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <CreatedBy {...cellProps} />;
