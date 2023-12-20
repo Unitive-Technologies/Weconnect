@@ -9,17 +9,8 @@ import {
   Col,
   Container,
   Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
   UncontrolledTooltip,
-  Input,
-  Form,
 } from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
 
 import {
   Code,
@@ -35,75 +26,22 @@ import {
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
 
 import { getBroadcasterBouquetList as onGetBroadcasterBouquet } from "/src/store/broadcasterbouquet/actions";
-import { isEmpty } from "lodash";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
-import AddNewBroadcasterBouquetList from './AddNewBroadcasterBouquetList'
+import AddNewBroadcasterBouquetList from "./AddNewBroadcasterBouquetList";
+import ViewBroadCasterBouquet from "./ViewBroadCasterBouquet";
 
 const BroadcasterBouquetList = (props) => {
   //meta title
-  document.title = "Broadcaster Bouquet List | VDigital";
+  document.title = "Broadcaster Bouquets | VDigital";
 
   const dispatch = useDispatch();
-  // const [contact, setContact] = useState();
-  // validation
-  // const validation = useFormik({
-  //   // enableReinitialize : use this flag when initial values needs to be changed
-  //   enableReinitialize: true,
-
-  //   initialValues: {
-  //     name: (contact && contact.name) || "",
-  //     designation: (contact && contact.designation) || "",
-  //     tags: (contact && contact.tags) || "",
-  //     email: (contact && contact.email) || "",
-  //     projects: (contact && contact.projects) || "",
-  //   },
-  //   validationSchema: Yup.object({
-  //     name: Yup.string().required("Please Enter Your Name"),
-  //     designation: Yup.string().required("Please Enter Your Designation"),
-  //     tags: Yup.array().required("Please Enter Tag"),
-  //     email: Yup.string()
-  //       .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-  //       .required("Please Enter Your Email"),
-  //     projects: Yup.string().required("Please Enter Your Project"),
-  //   }),
-  //   onSubmit: (values) => {
-  //     if (isEdit) {
-  //       const updateUser = {
-  //         id: contact.id,
-  //         name: values.name,
-  //         designation: values.designation,
-  //         tags: values.tags,
-  //         email: values.email,
-  //         projects: values.projects,
-  //       };
-
-  //       // update user
-  //       dispatch(onUpdateUser(updateUser));
-  //       validation.resetForm();
-  //       setIsEdit(false);
-  //     } else {
-  //       const newUser = {
-  //         id: Math.floor(Math.random() * (30 - 20)) + 20,
-  //         name: values["name"],
-  //         designation: values["designation"],
-  //         email: values["email"],
-  //         tags: values["tags"],
-  //         projects: values["projects"],
-  //       };
-  //       // save new user
-  //       dispatch(onAddNewUser(newUser));
-  //       validation.resetForm();
-  //     }
-  //     toggle();
-  //   },
-  // });
+  const [viewBroadcastBouq, setViewBroadcastBouq] = useState(false);
 
   const selectBroadcasterBouquetState = (state) => state.broadcasterBouquetList;
   const BroadcasterBouquetProperties = createSelector(
@@ -119,15 +57,14 @@ const BroadcasterBouquetList = (props) => {
   );
 
   useEffect(() => {
-    console.log("Broadcaster Bouquet data in component:", brodcastbouquet);
+    // console.log("Broadcaster Bouquet data in component:", brodcastbouquet);
   }, [brodcastbouquet]);
   const [isLoading, setLoading] = useState(loading);
 
-  const [userList, setUserList] = useState([]);
-  const [isEdit, setIsEdit] = useState(false);
-
-  const [showAddNewBroadcasterBouquetList, setShowAddNewBroadcasterBouquetList] = useState(false);
-
+  const [
+    showAddNewBroadcasterBouquetList,
+    setShowAddNewBroadcasterBouquetList,
+  ] = useState(false);
 
   const columns = useMemo(
     () => [
@@ -157,7 +94,13 @@ const BroadcasterBouquetList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const broadData = cellProps.row.original;
+                  handleViewBroadcast(broadData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -283,77 +226,17 @@ const BroadcasterBouquetList = (props) => {
   useEffect(() => {
     if (brodcastbouquet && !brodcastbouquet.length) {
       dispatch(onGetBroadcasterBouquet());
-      setIsEdit(false);
     }
   }, [dispatch, brodcastbouquet]);
 
-  // useEffect(() => {
-  //   setContact(brodcastbouquet);
-  //   setIsEdit(false);
-  // }, [brodcastbouquet]);
-
-  // useEffect(() => {
-  //   if (!isEmpty(brodcastbouquet) && !!isEdit) {
-  //     setContact(brodcastbouquet);
-  //     setIsEdit(false);
-  //   }
-  // }, [brodcastbouquet]);
-
-  const toggle = () => {
+  const handleAddBroadcaster = () => {
     setShowAddNewBroadcasterBouquetList(!showAddNewBroadcasterBouquetList);
   };
-
-  // const handleUserClick = (arg) => {
-  //   const user = arg;
-
-  //   setContact({
-  //     id: user.id,
-  //     name: user.name,
-  //     designation: user.designation,
-  //     email: user.email,
-  //     tags: user.tags,
-  //     projects: user.projects,
-  //   });
-  //   setIsEdit(true);
-
-  //   toggle();
-  // };
-
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
+  const [viewBrocast, setViewBrocast] = useState({});
+  const handleViewBroadcast = (broadData) => {
+    setViewBroadcastBouq(!viewBroadcastBouq);
+    setViewBrocast(broadData);
   };
-
-  //delete customer
-  // const [deleteModal, setDeleteModal] = useState(false);
-
-  // const onClickDelete = (users) => {
-  //   setContact(users);
-  //   setDeleteModal(true);
-  // };
-
-  // const handleDeleteUser = () => {
-  //   if (contact && contact.id) {
-  //     dispatch(onDeleteUser(contact.id));
-  //   }
-  //   setContact("");
-  //   onPaginationPageChange(1);
-  //   setDeleteModal(false);
-  // };
-
-  // const handleUserClicks = () => {
-  //   setUserList("");
-  //   setIsEdit(false);
-  //   toggle();
-  // };
 
   const keyField = "id";
 
@@ -363,24 +246,26 @@ const BroadcasterBouquetList = (props) => {
         name: "Create",
         action: setShowAddNewBroadcasterBouquetList,
         type: "normal",
-        icon: "create"
+        icon: "create",
       },
     ];
   };
 
   return (
     <React.Fragment>
-      {/* <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
-      /> */}
-      <AddNewBroadcasterBouquetList isOpen={showAddNewBroadcasterBouquetList} toggle={toggle} />
-
+      <AddNewBroadcasterBouquetList
+        isOpen={showAddNewBroadcasterBouquetList}
+        handleAddBroadcaster={handleAddBroadcaster}
+      />
+      <ViewBroadCasterBouquet
+        isOpen={viewBroadcastBouq}
+        handleViewBroadcast={handleViewBroadcast}
+        broadcast={viewBrocast}
+      />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Services" breadcrumbItem="Broadcaster Bouquet List" />
+          <Breadcrumbs title="Services" breadcrumbItem="Broadcaster Bouquets" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
           ) : (
@@ -388,7 +273,9 @@ const BroadcasterBouquetList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("broadcasterBouquet" + JSON.stringify(brodcastbouquet))}
+                    {console.log(
+                      "broadcasterBouquet" + JSON.stringify(brodcastbouquet)
+                    )}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
@@ -397,7 +284,9 @@ const BroadcasterBouquetList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleAddNewBroadcasterBouquetList={() => setShowAddNewBroadcasterBouquetList(true)}
+                      handleAddNewBroadcasterBouquetList={() =>
+                        setShowAddNewBroadcasterBouquetList(true)
+                      }
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

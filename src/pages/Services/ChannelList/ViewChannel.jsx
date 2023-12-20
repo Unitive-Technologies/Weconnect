@@ -508,33 +508,35 @@ const ViewChannel = (props) => {
               <CasList showEditChannel={showEditChannel} />
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <ModalFooter>
-                <button type="submit" className="btn btn-success save-user">
-                  Save
-                </button>
-                <button
-                  type="reset"
-                  className="btn btn-warning"
-                  onClick={() => validation.resetForm()}
-                >
-                  Reset
-                </button>
+          {!showEditChannel && (
+            <Row>
+              <Col>
+                <ModalFooter>
+                  <button type="submit" className="btn btn-success save-user">
+                    Save
+                  </button>
+                  <button
+                    type="reset"
+                    className="btn btn-warning"
+                    onClick={() => validation.resetForm()}
+                  >
+                    Reset
+                  </button>
 
-                <button
-                  type="button"
-                  className="btn btn-outline-danger"
-                  onClick={() => {
-                    validation.resetForm();
-                    handleViewChannel();
-                  }}
-                >
-                  Cancel
-                </button>
-              </ModalFooter>
-            </Col>
-          </Row>
+                  <button
+                    type="button"
+                    className="btn btn-outline-danger"
+                    onClick={() => {
+                      validation.resetForm();
+                      handleCancel();
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </ModalFooter>
+              </Col>
+            </Row>
+          )}
         </Form>
       </ModalBody>
     </Modal>

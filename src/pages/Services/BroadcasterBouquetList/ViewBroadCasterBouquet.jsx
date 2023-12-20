@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import {
+  Card,
+  CardBody,
   Col,
+  Container,
   Row,
   Modal,
   ModalFooter,
@@ -9,19 +12,23 @@ import {
   ModalBody,
   Label,
   FormFeedback,
+  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
+import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewBroadcasterBouquetList as onAddNewBroadcasterBouquetList } from "/src/store/broadcasterbouquet/actions";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import AddChannels from "./AddChannels";
+import RevenueShare from "./RevenueShare";
 
-const AddNewBroadcasterBouquetList = (props) => {
-  const { isOpen, handleAddBroadcaster } = props;
+const ViewBroadCasterBouquet = (props) => {
+  const { isOpen, handleViewBroadcast, broadcast } = props;
   const dispatch = useDispatch();
 
+  const [showEditBroadcast, setShowEditBroadcast] = useState(false);
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -68,13 +75,16 @@ const AddNewBroadcasterBouquetList = (props) => {
       );
       dispatch(onAddNewBroadcasterBouquetList(newBroadcasterBouquetList));
       validation.resetForm();
-      handleAddBroadcaster();
+      handleViewBroadcast();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
     },
   });
-
+  const handleCancel = () => {
+    setShowEditBroadcast(false);
+    handleViewBroadcast();
+  };
   return (
     <Modal
       isOpen={isOpen}
@@ -83,12 +93,28 @@ const AddNewBroadcasterBouquetList = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleAddBroadcaster}
+      toggle={handleCancel}
       size="xl"
     >
-      <ModalHeader tag="h4" toggle={handleAddBroadcaster}>
-        Add New Broadcaster Bouquet
+      <ModalHeader toggle={handleCancel} tag="h4">
+        {!showEditBroadcast
+          ? `View ${(broadcast && broadcast.name) || ""}`
+          : `Edit ${(broadcast && broadcast.name) || ""}`}
       </ModalHeader>
+      {!showEditBroadcast && (
+        <Link
+          style={{
+            position: "absolute",
+            marginLeft: "92%",
+            marginTop: "1%",
+          }}
+          to="#!"
+          className="btn btn-light me-1"
+          onClick={() => setShowEditBroadcast(true)}
+        >
+          <i className="mdi mdi-pencil-outline"></i>
+        </Link>
+      )}
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -109,6 +135,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.code || ""}
+                  disabled={!showEditBroadcast}
                 ></Input>
                 {validation.touched.code && validation.errors.code ? (
                   <FormFeedback type="invalid">
@@ -149,6 +176,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}
+                  disabled={!showEditBroadcast}
                 ></Input>
                 {validation.touched.name && validation.errors.name ? (
                   <FormFeedback type="invalid">
@@ -171,6 +199,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.definition || ""}
+                  disabled={!showEditBroadcast}
                 >
                   <option value="101">Select definition</option>
                   <option value="102">Standard Definition(SD)</option>
@@ -198,6 +227,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.description || ""}
+                  disabled={!showEditBroadcast}
                   invalid={
                     validation.touched.description &&
                     validation.errors.description
@@ -227,6 +257,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.type || ""}
+                  disabled={!showEditBroadcast}
                 >
                   <option value="104">Select channel type</option>
                   <option value="105">Pay Channel</option>
@@ -252,6 +283,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.broadcaster || ""}
+                  disabled={!showEditBroadcast}
                 >
                   <option value="110">Select broadcaster</option>
                   <option value="111">Lex Sportal Vision Pvt Ltd.</option>
@@ -278,6 +310,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  disabled={!showEditBroadcast}
                 >
                   <option value="101">Select Status</option>
                   <option value="102">Active</option>
@@ -304,6 +337,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.rate || ""}
+                  disabled={!showEditBroadcast}
                 ></Input>
                 {validation.touched.rate && validation.errors.rate ? (
                   <FormFeedback type="invalid">
@@ -311,6 +345,33 @@ const AddNewBroadcasterBouquetList = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+          </Row>
+          <div
+            style={{
+              // margin: "20px 0px",
+              marginTop: "20px",
+              marginBottom: "18px",
+              zIndex: 12000,
+              backgroundColor: "#fff",
+              width: "fit-content",
+              marginLeft: "40%",
+              position: "absolute",
+              padding: "0px 10px",
+            }}
+          >
+            <h5 style={{}}>MRP Revenue Share</h5>
+          </div>
+          <Row
+            style={{
+              position: "relative",
+              border: "1px solid #ced4da",
+              padding: "20px 0px",
+              margin: "30px 0px",
+            }}
+          >
+            <Col sm="12">
+              <RevenueShare showEditBroadcast={showEditBroadcast} />
             </Col>
           </Row>
 
@@ -338,7 +399,7 @@ const AddNewBroadcasterBouquetList = (props) => {
             }}
           >
             <Col sm="12">
-              <AddChannels />
+              <AddChannels showEditBroadcast={showEditBroadcast} />
             </Col>
           </Row>
           <Row>
@@ -360,7 +421,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    handleAddBroadcaster();
+                    handleCancel();
                   }}
                 >
                   Cancel
@@ -375,9 +436,9 @@ const AddNewBroadcasterBouquetList = (props) => {
   );
 };
 
-AddNewBroadcasterBouquetList.propTypes = {
+ViewBroadCasterBouquet.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default AddNewBroadcasterBouquetList;
+export default ViewBroadCasterBouquet;
