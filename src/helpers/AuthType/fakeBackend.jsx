@@ -386,29 +386,29 @@ const fakeBackend = () => {
   //   });
   // });
 
-  mock.onGet(url.GET_BROADCASTERBOUQUETLIST).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (broadcastbouquet) {
-          resolve([200, broadcastbouquet]);
-        } else {
-          reject([400, "Cannot get Broadcaster Bouquet list"]);
-        }
-      });
-    });
-  });
+  // mock.onGet(url.GET_BROADCASTERBOUQUETLIST).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (broadcastbouquet) {
+  //         resolve([200, broadcastbouquet]);
+  //       } else {
+  //         reject([400, "Cannot get Broadcaster Bouquet list"]);
+  //       }
+  //     });
+  //   });
+  // });
 
-  mock.onGet(url.GET_PACKAGELIST).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (packlist) {
-          resolve([200, packlist]);
-        } else {
-          reject([400, "Cannot get Package list"]);
-        }
-      });
-    });
-  });
+  // mock.onGet(url.GET_PACKAGELIST).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (packlist) {
+  //         resolve([200, packlist]);
+  //       } else {
+  //         reject([400, "Cannot get Package list"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onGet(url.GET_OSDCONFIGURATIONLIST).reply(() => {
     return new Promise((resolve, reject) => {

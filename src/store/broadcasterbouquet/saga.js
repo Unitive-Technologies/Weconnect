@@ -43,9 +43,9 @@ function* fetchBroadcasterBouquetList() {
   try {
     const response = yield call(getBroadcasterBouquetList);
     console.log("response:" + JSON.stringify(response));
-    const broadcasterBouquetList =
-      convertBroadcasterBouquetListObject(response);
-    yield put(getBroadcasterBouquetListSuccess(broadcasterBouquetList));
+    // const broadcasterBouquetList =
+    //   convertBroadcasterBouquetListObject(response);
+    yield put(getBroadcasterBouquetListSuccess(response.data));
   } catch (error) {
     yield put(getBroadcasterBouquetListFail(error));
   }

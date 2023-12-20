@@ -83,10 +83,10 @@ export const GET_CHANNELLIST =
   "/channel?expand=created_by_lbl,broadcaster_lbl,genre_lbl,language_lbl,channel_type_lbl,isAlacarte_lbl,status_lbl,isFta_lbl,isNCF_lbl&sort=name&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_CHANNELLIST = "/add/channellist";
 
-export const GET_BROADCASTERBOUQUETLIST = "/broadcasterbouquet";
+export const GET_BROADCASTERBOUQUETLIST = "/broadcaster-bouque?expand=created_by_lbl,status_lbl,broadcaster_lbl,channel_type_lbl,isFta_lbl,isNCF_lbl,channels&sort=name&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_BROADCASTERBOUQUETLIST = "/add/broadcasterbouquet";
 
-export const GET_PACKAGELIST = "/packagelist";
+export const GET_PACKAGELIST = "/package?expand=created_by_lbl,package_type_lbl,isFta_lbl,status_lbl,channels,brdBouques&sort=name&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_PACKAGELIST = "/add/packagelist";
 
 export const GET_OSDCONFIGURATIONLIST = "/osdconfigurationlist";

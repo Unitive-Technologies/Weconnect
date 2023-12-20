@@ -34,8 +34,8 @@ function* fetchPackageList() {
   try {
     const response = yield call(getPackageList);
     console.log("response:" + JSON.stringify(response));
-    const packageList = convertPackageListObject(response);
-    yield put(getPackageListSuccess(packageList));
+    // const packageList = convertPackageListObject(response);
+    yield put(getPackageListSuccess(response.data));
   } catch (error) {
     yield put(getPackageListFail(error));
   }

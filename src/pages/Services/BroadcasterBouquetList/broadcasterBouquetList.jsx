@@ -179,7 +179,7 @@ const BroadcasterBouquetList = (props) => {
       },
       {
         Header: "Broadcaster",
-        accessor: "broadcaster",
+        accessor: "broadcaster_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Broadcaster {...cellProps} />;
@@ -187,7 +187,7 @@ const BroadcasterBouquetList = (props) => {
       },
       {
         Header: "Type",
-        accessor: "type",
+        accessor: "channel_type_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Type {...cellProps} />;
@@ -195,7 +195,7 @@ const BroadcasterBouquetList = (props) => {
       },
       {
         Header: "FTA",
-        accessor: "FTA",
+        accessor: "isFta_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <FTA {...cellProps} />;
@@ -203,7 +203,7 @@ const BroadcasterBouquetList = (props) => {
       },
       {
         Header: "CHANNELS",
-        accessor: "channels",
+        accessor: "channels_type_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Channels {...cellProps} />;
@@ -211,7 +211,7 @@ const BroadcasterBouquetList = (props) => {
       },
       {
         Header: "Status",
-        accessor: "status",
+        accessor: "status_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Status {...cellProps} />;
@@ -219,7 +219,7 @@ const BroadcasterBouquetList = (props) => {
       },
       {
         Header: "Rate",
-        accessor: "rate",
+        accessor: "broadcasterRate",
         filterable: true,
         Cell: (cellProps) => {
           return <Rate {...cellProps} />;
@@ -235,7 +235,7 @@ const BroadcasterBouquetList = (props) => {
       },
       {
         Header: "Created By",
-        accessor: "created_by",
+        accessor: "created_by_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <CreatedBy {...cellProps} />;
