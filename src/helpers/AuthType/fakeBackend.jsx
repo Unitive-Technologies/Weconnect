@@ -641,18 +641,18 @@ const fakeBackend = () => {
   //   });
   // });
 
-  mock.onGet(url.GET_WAREHOUSELIST).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (warehouse) {
-          // Passing fake JSON data as response
-          resolve([200, warehouse]);
-        } else {
-          reject([400, "Cannot get Warehouse List"]);
-        }
-      });
-    });
-  });
+  // mock.onGet(url.GET_WAREHOUSELIST).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (warehouse) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, warehouse]);
+  //       } else {
+  //         reject([400, "Cannot get Warehouse List"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onGet(url.GET_INVENTORYSTATELIST).reply(() => {
     return new Promise((resolve, reject) => {

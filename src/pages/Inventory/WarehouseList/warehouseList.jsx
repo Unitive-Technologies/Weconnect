@@ -158,7 +158,7 @@ const WarehouseList = (props) => {
       },
       {
         Header: "Status",
-        accessor: "status",
+        accessor: "status_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Status {...cellProps} />;
@@ -166,7 +166,7 @@ const WarehouseList = (props) => {
       },
       {
         Header: "Regional Office",
-        accessor: "regionaloffice",
+        accessor: "city_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <RegionalOffice {...cellProps} />;
@@ -174,7 +174,7 @@ const WarehouseList = (props) => {
       },
       {
         Header: "LCO",
-        accessor: "lco",
+        accessor: "operator_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <LCO {...cellProps} />;
@@ -182,7 +182,7 @@ const WarehouseList = (props) => {
       },
       {
         Header: "LCO Code",
-        accessor: "lcocode",
+        accessor: "operator_code_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <LcoCode {...cellProps} />;
@@ -198,7 +198,7 @@ const WarehouseList = (props) => {
       },
       {
         Header: "Created By",
-        accessor: "created_by",
+        accessor: "created_by_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <CreatedBy {...cellProps} />;

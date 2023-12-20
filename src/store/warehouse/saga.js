@@ -41,8 +41,8 @@ function* fetchWarehouseList() {
   try {
     const response = yield call(getWarehouseList);
     console.log("response:" + JSON.stringify(response));
-    const warehouseList = convertWarehouseListObject(response);
-    yield put(getWarehouseListSuccess(warehouseList));
+    // const warehouseList = convertWarehouseListObject(response);
+    yield put(getWarehouseListSuccess(response.data));
   } catch (error) {
     yield put(getWarehouseListFail(error));
   }
