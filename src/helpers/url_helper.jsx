@@ -131,7 +131,7 @@ export const ADD_NEW_COMPLAINTCATEGORY = "/add/complaintcategory";
 export const GET_COMPLAINTSUBCATEGORY = "/complaintsubcategory";
 export const ADD_NEW_COMPLAINTSUBCATEGORY = "/add/complaintsubcategory";
 
-export const GET_CONFIGURATIONUPLOADLOGS = "/configurationuploadlogs";
+export const GET_CONFIGURATIONUPLOADLOGS = "/upload-q?expand=uploaded_file,created_by_lbl,status_lbl&notfilter[status]=0&filter[section]=configuration&page=1&per-page=50&vr=web1.0";
 export const GET_TAX = "/tax?expand=valuetype_lbl,parent_lbl,created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_TAXLIST = "/add/tax";
 

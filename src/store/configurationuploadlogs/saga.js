@@ -33,14 +33,14 @@ const convertConfigurationUploadLogsObject = (configurationUploadLogs) => {
         configurationuploadlogs.status === 1
           ? "ACTIVE"
           : configurationuploadlogs.status === 0
-          ? "INACTIVE"
-          : "BLOCKED",
+            ? "INACTIVE"
+            : "BLOCKED",
       showonweb:
         configurationuploadlogs.showonweb === 1
           ? "ACTIVE"
           : configurationuploadlogs.showonweb === 0
-          ? "INACTIVE"
-          : "BLOCKED",
+            ? "INACTIVE"
+            : "BLOCKED",
     };
   });
 };
@@ -48,9 +48,9 @@ const convertConfigurationUploadLogsObject = (configurationUploadLogs) => {
 function* fetchConfigurationUploadLogs() {
   try {
     const response = yield call(getConfigurationUploadLogs);
-    const configurationUploadLogsList =
-      convertConfigurationUploadLogsObject(response);
-    yield put(getConfigurationUploadLogsSuccess(configurationUploadLogsList));
+    // const configurationUploadLogsList =
+    //   convertConfigurationUploadLogsObject(response);
+    yield put(getConfigurationUploadLogsSuccess(response.data));
   } catch (error) {
     console.error("Error fetching configuration upload logs:", error);
     yield put(getConfigurationUploadLogsFail(error));

@@ -732,18 +732,18 @@ const fakeBackend = () => {
     });
   });
 
-  mock.onGet(url.GET_CONFIGURATIONUPLOADLOGS).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (configuplog) {
-          // Passing fake JSON data as response
-          resolve([200, configuplog]);
-        } else {
-          reject([400, "Cannot get configuration upload logs"]);
-        }
-      });
-    });
-  });
+  // mock.onGet(url.GET_CONFIGURATIONUPLOADLOGS).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (configuplog) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, configuplog]);
+  //       } else {
+  //         reject([400, "Cannot get configuration upload logs"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   // mock.onGet(url.GET_TAX).reply(() => {
   //   return new Promise((resolve, reject) => {
