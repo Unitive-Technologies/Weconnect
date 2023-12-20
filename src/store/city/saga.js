@@ -30,8 +30,8 @@ const convertCityListObject = (cityList) => {
         city.status === 1
           ? "ACTIVE"
           : city.status === 0
-          ? "INACTIVE"
-          : "BLOCKED",
+            ? "INACTIVE"
+            : "BLOCKED",
 
       // status_lbl:
       //   city.status_lbl === 1
@@ -49,8 +49,8 @@ function* fetchCity() {
   try {
     const response = yield call(getCity);
     console.log("response:" + JSON.stringify(response));
-    const cityList = convertCityListObject(response);
-    yield put(getCitySuccess(cityList));
+    // const cityList = convertCityListObject(response);
+    yield put(getCitySuccess(response.data));
   } catch (error) {
     yield put(getCityFail(error));
   }

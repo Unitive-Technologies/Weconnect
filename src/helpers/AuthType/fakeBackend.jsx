@@ -485,18 +485,18 @@ const fakeBackend = () => {
   //   });
   // });
 
-  mock.onGet(url.GET_CITY).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (cits) {
-          // Passing fake JSON data as response
-          resolve([200, cits]);
-        } else {
-          reject([400, "Cannot get City User List"]);
-        }
-      });
-    });
-  });
+  // mock.onGet(url.GET_CITY).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (cits) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, cits]);
+  //       } else {
+  //         reject([400, "Cannot get City User List"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   // mock.onGet(url.GET_LOCATION).reply(() => {
   //   return new Promise((resolve, reject) => {
