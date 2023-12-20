@@ -378,7 +378,7 @@ const ViewBroadCasterBouquet = (props) => {
           <div
             style={{
               // margin: "20px 0px",
-              marginTop: "20px",
+              marginTop: "-10px",
               marginBottom: "18px",
               zIndex: 12000,
               backgroundColor: "#fff",
