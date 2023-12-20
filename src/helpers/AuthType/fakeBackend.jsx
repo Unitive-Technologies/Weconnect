@@ -550,18 +550,18 @@ const fakeBackend = () => {
   //   });
   // });
 
-  mock.onGet(url.GET_LCO).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (lcos) {
-          // Passing fake JSON data as response
-          resolve([200, lcos]);
-        } else {
-          reject([400, "Cannot get District List"]);
-        }
-      });
-    });
-  });
+  // mock.onGet(url.GET_LCO).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (lcos) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, lcos]);
+  //       } else {
+  //         reject([400, "Cannot get District List"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onGet(url.GET_APPADBANNER).reply(() => {
     return new Promise((resolve, reject) => {

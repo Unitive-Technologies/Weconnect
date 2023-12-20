@@ -57,7 +57,7 @@ export const GET_DISTRIBUTORS = "/operator?expand=reg_phase_lbl,created_by_lbl,s
 export const ADD_NEW_DISTRIBUTOR = "/add/distributors";
 export const UPDATE_DISTRIBUTOR = "/update/distributors";
 
-export const GET_LCO = "/lco";
+export const GET_LCO = "/operator?expand=credit_limit_lbl,setting,balance,balance_h,reg_phase_lbl,created_by_lbl,distributor_lbl,status_lbl,branch_lbl,branch_code_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=3&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_LCO = "/add/lco";
 export const UPDATE_LCO = "/update/lco";
 

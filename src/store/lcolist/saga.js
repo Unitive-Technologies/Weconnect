@@ -46,8 +46,8 @@ const convertLcoListObject = (LcoList) => {
 function* fetchLco() {
   try {
     const response = yield call(getLco);
-    const lcoList = convertLcoListObject(response);
-    yield put(getLcoSuccess(lcoList));
+    // const lcoList = convertLcoListObject(response);
+    yield put(getLcoSuccess(response.data));
   } catch (error) {
     console.error("Error fetching LCO list:", error);
     yield put(getLcoFail(error));
