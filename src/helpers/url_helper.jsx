@@ -135,7 +135,7 @@ export const GET_CONFIGURATIONUPLOADLOGS = "/configurationuploadlogs";
 export const GET_TAX = "/tax?expand=valuetype_lbl,parent_lbl,created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_TAXLIST = "/add/tax";
 
-export const GET_REASON = "/reason";
+export const GET_REASON = "/reason?expand=created_by_lbl,status_lbl,type_display_lbl,created_at_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_REASON = "/add/reason";
 export const GET_BANK = "/bank";
 export const ADD_NEW_BANK = "/add/bank";

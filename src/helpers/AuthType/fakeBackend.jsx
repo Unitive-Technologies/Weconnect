@@ -758,18 +758,18 @@ const fakeBackend = () => {
   //   });
   // });
 
-  mock.onGet(url.GET_REASON).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (reasons) {
-          // Passing fake JSON data as response
-          resolve([200, reasons]);
-        } else {
-          reject([400, "Cannot get Reason List"]);
-        }
-      });
-    });
-  });
+  // mock.onGet(url.GET_REASON).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (reasons) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, reasons]);
+  //       } else {
+  //         reject([400, "Cannot get Reason List"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onGet(url.GET_BANK).reply(() => {
     return new Promise((resolve, reject) => {
