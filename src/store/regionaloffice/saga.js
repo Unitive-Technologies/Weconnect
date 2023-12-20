@@ -45,8 +45,8 @@ const convertRegionalOfficeListObject = (regionalofficeList) => {
         regionaloffice.status === 1
           ? "ACTIVE"
           : regionaloffice.status === 0
-          ? "INACTIVE"
-          : "BLOCKED",
+            ? "INACTIVE"
+            : "BLOCKED",
     };
   });
 };
@@ -54,8 +54,8 @@ const convertRegionalOfficeListObject = (regionalofficeList) => {
 function* fetchRegionalOffice() {
   try {
     const response = yield call(getRegionalOffice);
-    const regionalofficeList = convertRegionalOfficeListObject(response);
-    yield put(getRegionalOfficeSuccess(regionalofficeList));
+    // const regionalofficeList = convertRegionalOfficeListObject(response);
+    yield put(getRegionalOfficeSuccess(response.data));
   } catch (error) {
     console.error("Error fetching Regional office list:", error);
     yield put(getRegionalOfficeFail(error));

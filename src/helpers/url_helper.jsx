@@ -26,7 +26,7 @@ export const GET_NOTIFICATIONTEMPLATE =
   "/announcement-template?expand=status_lbl,created_by_lbl,created_at_lbl,msg_type_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_NOTIFICATIONTEMPLATE = "/announcement-template?vr=web1.0";
 
-export const GET_REGIONALOFFICE = "/regionaloffice";
+export const GET_REGIONALOFFICE = "/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,mso_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=1&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_REGIONALOFFICE = "/add/regionaloffice";
 export const UPDATE_REGIONALOFFICE = "/update/regionaloffice";
 

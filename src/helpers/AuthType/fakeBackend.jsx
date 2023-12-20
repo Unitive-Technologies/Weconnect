@@ -458,19 +458,19 @@ const fakeBackend = () => {
     });
   });
 
-  mock.onGet(url.GET_REGIONALOFFICE).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (regOff) {
-          // Passing fake JSON data as response
+  // mock.onGet(url.GET_REGIONALOFFICE).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (regOff) {
+  //         // Passing fake JSON data as response
 
-          resolve([200, regOff]);
-        } else {
-          reject([400, "Cannot get Regional office list"]);
-        }
-      });
-    });
-  });
+  //         resolve([200, regOff]);
+  //       } else {
+  //         reject([400, "Cannot get Regional office list"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   // mock.onGet(url.GET_STATEUSERS).reply(() => {
   //   return new Promise((resolve, reject) => {
