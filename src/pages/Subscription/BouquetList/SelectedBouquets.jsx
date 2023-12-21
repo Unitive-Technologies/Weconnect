@@ -120,7 +120,7 @@ const SelectedBouquets = () => {
           isPagination={true}
           columns={columns}
           data={selectedBouquet}
-          // isGlobalFilter={true}
+          isGlobalFilter={true}
           isShowingPageLength={true}
           // customPageSize={50}
           tableClass="table align-middle table-nowrap table-hover"
