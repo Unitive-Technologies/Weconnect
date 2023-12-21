@@ -12,8 +12,9 @@ import {
   getUsers as onGetUsers,
   getUserType as onGetUserType,
   getUserStatus as onGetUserStatus,
+  getUserRole as onGetUserRole,
+  getUserDesignation as onGetUserDesignation,
 } from "/src/store/users/actions";
-import { isEmpty } from "lodash";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -38,9 +39,11 @@ const ContactsList = (props) => {
     loading: Users.loading,
     userType: Users.userType,
     userStatus: Users.userStatus,
+    userRole: Users.userRole,
+    userDesignation: Users.userDesignation,
   }));
 
-  const { users, userType, userStatus, loading } =
+  const { users, userType, userStatus, userRole, userDesignation, loading } =
     useSelector(ContactsProperties);
 
   // useEffect(() => {
@@ -324,6 +327,8 @@ const ContactsList = (props) => {
       dispatch(onGetUsers());
       dispatch(onGetUserType());
       dispatch(onGetUserStatus());
+      dispatch(onGetUserRole());
+      dispatch(onGetUserDesignation());
     }
   }, [dispatch, users]);
 
@@ -415,6 +420,8 @@ const ContactsList = (props) => {
         handleAddUser={handleAddUser}
         userType={userType}
         userStatus={userStatus}
+        userRole={userRole}
+        userDesignation={userDesignation}
       />
       <UploadUserModal
         isOpen={showUploadUser}

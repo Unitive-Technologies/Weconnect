@@ -18,8 +18,15 @@ import { addNewUser as onAddNewUser } from "/src/store/users/actions";
 import { useDispatch } from "react-redux";
 
 const AddUserModal = (props) => {
-  const { isOpen, handleAddUser, userType, userStatus } = props;
-  console.log("userType in add:" + JSON.stringify(userStatus));
+  const {
+    isOpen,
+    handleAddUser,
+    userType,
+    userStatus,
+    userRole,
+    userDesignation,
+  } = props;
+  console.log("userRole in add:" + JSON.stringify(userDesignation));
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -270,9 +277,11 @@ const AddUserModal = (props) => {
                   value={validation.values.role || ""}
                 >
                   <option value="">Select Role</option>
-                  <option value="21">Administrator</option>
-                  <option value="22">Staff</option>
-                  <option value="23">User</option>
+                  {userRole.map((role) => (
+                    <option key={role.id} value={role.id}>
+                      {role.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.role && validation.errors.role ? (
                   <FormFeedback type="invalid">
@@ -294,7 +303,11 @@ const AddUserModal = (props) => {
                   value={validation.values.designation || ""}
                 >
                   <option value="">Select Designation</option>
-                  <option value="dir">Director</option>
+                  {userDesignation.map((desig) => (
+                    <option key={desig.id} value={desig.id}>
+                      {desig.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.designation &&
                 validation.errors.designation ? (

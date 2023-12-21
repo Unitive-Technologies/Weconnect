@@ -13,6 +13,10 @@ import {
   GET_USER_TYPE_FAIL,
   GET_USER_STATUS_SUCCESS,
   GET_USER_STATUS_FAIL,
+  GET_USER_ROLE_SUCCESS,
+  GET_USER_ROLE_FAIL,
+  GET_USER_DESIGNATION_SUCCESS,
+  GET_USER_DESIGNATION_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -20,6 +24,8 @@ const INIT_STATE = {
   userProfile: {},
   userType: [],
   userStatus: [],
+  userRole: [],
+  userDesignation: [],
   error: {},
   loading: true,
 };
@@ -66,6 +72,31 @@ const contacts = (state = INIT_STATE, action) => {
         error: action.payload,
       };
 
+    case GET_USER_ROLE_SUCCESS:
+      return {
+        ...state,
+        userRole: action.payload,
+        loading: false,
+      };
+
+    case GET_USER_ROLE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_USER_DESIGNATION_SUCCESS:
+      return {
+        ...state,
+        userDesignation: action.payload,
+        loading: false,
+      };
+
+    case GET_USER_DESIGNATION_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
     case ADD_USER_SUCCESS:
       return {
         ...state,
