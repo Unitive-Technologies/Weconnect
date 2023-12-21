@@ -14,6 +14,12 @@ import {
   DELETE_USER,
   DELETE_USER_SUCCESS,
   DELETE_USER_FAIL,
+  GET_USER_TYPE,
+  GET_USER_TYPE_FAIL,
+  GET_USER_TYPE_SUCCESS,
+  GET_USER_STATUS,
+  GET_USER_STATUS_FAIL,
+  GET_USER_STATUS_SUCCESS,
 } from "./actionTypes";
 
 export const getUsers = () => ({
@@ -89,5 +95,33 @@ export const deleteUserSuccess = (user) => ({
 
 export const deleteUserFail = (error) => ({
   type: DELETE_USER_FAIL,
+  payload: error,
+});
+
+export const getUserType = () => ({
+  type: GET_USER_TYPE,
+});
+
+export const getUserTypeSuccess = (userType) => ({
+  type: GET_USER_TYPE_SUCCESS,
+  payload: userType,
+});
+
+export const getUserTypeFail = (error) => ({
+  type: GET_USER_TYPE_FAIL,
+  payload: error,
+});
+
+export const getUserStatus = () => ({
+  type: GET_USER_STATUS,
+});
+
+export const getUserStatusSuccess = (userStatus) => ({
+  type: GET_USER_STATUS_SUCCESS,
+  payload: userStatus,
+});
+
+export const getUserStatusFail = (error) => ({
+  type: GET_USER_STATUS_FAIL,
   payload: error,
 });

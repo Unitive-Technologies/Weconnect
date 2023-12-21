@@ -9,11 +9,17 @@ import {
   DELETE_USER_FAIL,
   GET_USER_PROFILE_SUCCESS,
   GET_USER_PROFILE_FAIL,
+  GET_USER_TYPE_SUCCESS,
+  GET_USER_TYPE_FAIL,
+  GET_USER_STATUS_SUCCESS,
+  GET_USER_STATUS_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
   users: [],
   userProfile: {},
+  userType: [],
+  userStatus: [],
   error: {},
   loading: true,
 };
@@ -29,6 +35,32 @@ const contacts = (state = INIT_STATE, action) => {
       };
 
     case GET_USERS_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_USER_TYPE_SUCCESS:
+      return {
+        ...state,
+        userType: action.payload,
+        loading: false,
+      };
+
+    case GET_USER_TYPE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_USER_STATUS_SUCCESS:
+      return {
+        ...state,
+        userStatus: action.payload,
+        loading: false,
+      };
+
+    case GET_USER_STATUS_FAIL:
       return {
         ...state,
         error: action.payload,

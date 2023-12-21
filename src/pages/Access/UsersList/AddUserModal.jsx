@@ -18,7 +18,8 @@ import { addNewUser as onAddNewUser } from "/src/store/users/actions";
 import { useDispatch } from "react-redux";
 
 const AddUserModal = (props) => {
-  const { isOpen, handleAddUser } = props;
+  const { isOpen, handleAddUser, userType, userStatus } = props;
+  console.log("userType in add:" + JSON.stringify(userStatus));
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -72,7 +73,7 @@ const AddUserModal = (props) => {
         password: values["password"],
         confirmpassword: values["confirmpassword"],
       };
-      console.log("newUser:" + newUser);
+      console.log("newUser:" + JSON.stringify(newUser));
       // save new user
       dispatch(onAddNewUser(newUser));
       validation.resetForm();
@@ -190,10 +191,11 @@ const AddUserModal = (props) => {
                   value={validation.values.usertype || ""}
                 >
                   <option value="">Select User Type</option>
-                  <option value="1">MSO</option>
-                  <option value="2">RO</option>
-                  <option value="3">Distributor</option>
-                  <option value="4">LCO</option>
+                  {userType.map((type) => (
+                    <option key={type.id} value={type.id}>
+                      {type.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.usertype && validation.errors.usertype ? (
                   <FormFeedback type="invalid">
@@ -217,9 +219,11 @@ const AddUserModal = (props) => {
                   value={validation.values.status || ""}
                 >
                   <option value="">Select Status</option>
-                  <option value="11">Active</option>
-                  <option value="12">BLOCKED</option>
-                  <option value="13">In-Active</option>
+                  {userStatus.map((status) => (
+                    <option key={status.id} value={status.id}>
+                      {status.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
@@ -227,6 +231,7 @@ const AddUserModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+
               <div className="mb-3">
                 <Label className="form-label">
                   InActive/Block Message<span style={{ color: "red" }}>*</span>

@@ -8,7 +8,11 @@ import { Card, CardBody, Col, Container, Row } from "reactstrap";
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 
-import { getUsers as onGetUsers } from "/src/store/users/actions";
+import {
+  getUsers as onGetUsers,
+  getUserType as onGetUserType,
+  getUserStatus as onGetUserStatus,
+} from "/src/store/users/actions";
 import { isEmpty } from "lodash";
 
 //redux
@@ -32,16 +36,18 @@ const ContactsList = (props) => {
   const ContactsProperties = createSelector(selectContactsState, (Users) => ({
     users: Users.users,
     loading: Users.loading,
+    userType: Users.userType,
+    userStatus: Users.userStatus,
   }));
 
-  const { users, loading } = useSelector(ContactsProperties);
+  const { users, userType, userStatus, loading } =
+    useSelector(ContactsProperties);
 
   // useEffect(() => {
   //   console.log("Users data in component:", users);
   // }, [users]);
   const [isLoading, setLoading] = useState(loading);
 
-  const [userList, setUserList] = useState([]);
   const [showAddUser, setShowAddUser] = useState(false);
   const [showViewUser, setShowViewUser] = useState(false);
   const [showUploadUser, setShowUploadUser] = useState(false);
@@ -316,19 +322,10 @@ const ContactsList = (props) => {
   useEffect(() => {
     if (users && !users.length) {
       dispatch(onGetUsers());
+      dispatch(onGetUserType());
+      dispatch(onGetUserStatus());
     }
   }, [dispatch, users]);
-
-  useEffect(() => {
-    setUserList(users);
-  }, [users]);
-
-  useEffect(() => {
-    if (!isEmpty(users)) {
-      setUserList(users);
-      // setIsView(false);
-    }
-  }, [users]);
 
   const handleAddUser = () => {
     setShowAddUser(!showAddUser);
@@ -413,7 +410,12 @@ const ContactsList = (props) => {
         handleViewUser={handleViewUser}
         user={viewUser}
       />
-      <AddUserModal isOpen={showAddUser} handleAddUser={handleAddUser} />
+      <AddUserModal
+        isOpen={showAddUser}
+        handleAddUser={handleAddUser}
+        userType={userType}
+        userStatus={userStatus}
+      />
       <UploadUserModal
         isOpen={showUploadUser}
         handleUploadUser={handleUploadUser}

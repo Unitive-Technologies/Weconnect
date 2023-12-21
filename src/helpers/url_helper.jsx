@@ -26,7 +26,8 @@ export const GET_NOTIFICATIONTEMPLATE =
   "/announcement-template?expand=status_lbl,created_by_lbl,created_at_lbl,msg_type_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_NOTIFICATIONTEMPLATE = "/announcement-template?vr=web1.0";
 
-export const GET_REGIONALOFFICE = "/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,mso_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=1&page=1&per-page=50&vr=web1.0";
+export const GET_REGIONALOFFICE =
+  "/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,mso_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=1&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_REGIONALOFFICE = "/add/regionaloffice";
 export const UPDATE_REGIONALOFFICE = "/update/regionaloffice";
 
@@ -39,10 +40,12 @@ export const GET_SCHEDULEDNOTIFICATION = "/schedulednotificationlist";
 export const GET_STATEUSERS =
   "/administrative-division?filter[type]=1&expand=created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
 
-export const GET_DISTRICT = "/administrative-division?filter[type]=2&expand=created_by_lbl,operator_lbl,status_lbl,state_lbl,state_code_lbl&page=1&per-page=50&vr=web1.0";
+export const GET_DISTRICT =
+  "/administrative-division?filter[type]=2&expand=created_by_lbl,operator_lbl,status_lbl,state_lbl,state_code_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_DISTRICT = "/add/district";
 
-export const GET_CITY = "/administrative-division?filter[type]=3&expand=created_by_lbl,operator_lbl,status_lbl,state_lbl,state_code_lbl,district_lbl,district_code_lbl&page=1&per-page=50&vr=web1.0";
+export const GET_CITY =
+  "/administrative-division?filter[type]=3&expand=created_by_lbl,operator_lbl,status_lbl,state_lbl,state_code_lbl,district_lbl,district_code_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_CITY = "/add/city";
 
 export const GET_LOCATION =
@@ -53,11 +56,13 @@ export const GET_SUBLOCATION =
   "/sublocation?expand=created_by_lbl,operator_lbl,location_lbl,status_lbl,location_code,operator_code&page=1&per-page=50&vr=web1.0";
 export const ADD_SUBLOCATION = "/sublocation?vr=web1.0";
 
-export const GET_DISTRIBUTORS = "/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,branch_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=2&page=1&per-page=50&vr=web1.0";
+export const GET_DISTRIBUTORS =
+  "/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,branch_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=2&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_DISTRIBUTOR = "/add/distributors";
 export const UPDATE_DISTRIBUTOR = "/update/distributors";
 
-export const GET_LCO = "/operator?expand=credit_limit_lbl,setting,balance,balance_h,reg_phase_lbl,created_by_lbl,distributor_lbl,status_lbl,branch_lbl,branch_code_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=3&page=1&per-page=50&vr=web1.0";
+export const GET_LCO =
+  "/operator?expand=credit_limit_lbl,setting,balance,balance_h,reg_phase_lbl,created_by_lbl,distributor_lbl,status_lbl,branch_lbl,branch_code_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=3&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_LCO = "/add/lco";
 export const UPDATE_LCO = "/update/lco";
 
@@ -83,13 +88,16 @@ export const GET_CHANNELLIST =
   "/channel?expand=created_by_lbl,broadcaster_lbl,genre_lbl,language_lbl,channel_type_lbl,isAlacarte_lbl,status_lbl,isFta_lbl,isNCF_lbl&sort=name&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_CHANNELLIST = "/add/channellist";
 
-export const GET_BROADCASTERBOUQUETLIST = "/broadcaster-bouque?expand=created_by_lbl,status_lbl,broadcaster_lbl,channel_type_lbl,isFta_lbl,isNCF_lbl,channels&sort=name&page=1&per-page=50&vr=web1.0";
+export const GET_BROADCASTERBOUQUETLIST =
+  "/broadcaster-bouque?expand=created_by_lbl,status_lbl,broadcaster_lbl,channel_type_lbl,isFta_lbl,isNCF_lbl,channels&sort=name&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_BROADCASTERBOUQUETLIST = "/add/broadcasterbouquet";
 
-export const GET_PACKAGELIST = "/package?expand=created_by_lbl,package_type_lbl,isFta_lbl,status_lbl,channels,brdBouques&sort=name&page=1&per-page=50&vr=web1.0";
+export const GET_PACKAGELIST =
+  "/package?expand=created_by_lbl,package_type_lbl,isFta_lbl,status_lbl,channels,brdBouques&sort=name&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_PACKAGELIST = "/add/packagelist";
 
-export const GET_OSDCONFIGURATIONLIST = "/mtc?expand=created_by_lbl,status_lbl,is_reserved_lbl,type_lbl&page=1&per-page=50&vr=web1.0";
+export const GET_OSDCONFIGURATIONLIST =
+  "/mtc?expand=created_by_lbl,status_lbl,is_reserved_lbl,type_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_OSDCONFIGURATIONLIST = "/add/osdconfigurationlist";
 
 export const GET_LOCALCHANNELNUMBER = "/localchannelnumberlist";
@@ -97,7 +105,8 @@ export const GET_LOCALCHANNELNUMBER = "/localchannelnumberlist";
 export const GET_DOCUMENTUPLOADPOLICY = "/documentuploadpolicylist";
 export const ADD_NEW_DOCUMENTUPLOADPOLICY = "/add/documentuploadpolicylist";
 
-export const GET_OSDTEMPLATE = "/message-template?expand=created_by_lbl,status_lbl,template_for_lbl,operator_count&page=1&per-page=50&vr=web1.0";
+export const GET_OSDTEMPLATE =
+  "/message-template?expand=created_by_lbl,status_lbl,template_for_lbl,operator_count&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_OSDTEMPLATE = "/add/osdtemplatelist";
 
 export const GET_NCF =
@@ -106,16 +115,19 @@ export const ADD_NCF = "/add/ncf";
 
 export const GET_COMPANYLIST = "/companylist";
 
-export const GET_BRANDLIST = "/brand?expand=box_type_lbl,brand_type_lbl,char_allowed_lbl,cas_lbl,created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
+export const GET_BRANDLIST =
+  "/brand?expand=box_type_lbl,brand_type_lbl,char_allowed_lbl,cas_lbl,created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_BRANDLIST = "/add/brandlist";
 
-export const GET_WAREHOUSELIST = "/warehouse?expand=city_lbl,created_by_lbl,status_lbl,operator_lbl,operator_code_lbl&page=1&per-page=50&vr=web1.0";
+export const GET_WAREHOUSELIST =
+  "/warehouse?expand=city_lbl,created_by_lbl,status_lbl,operator_lbl,operator_code_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_WAREHOUSELIST = "/add/warehouselist";
 
 export const GET_INVENTORYSTATELIST = "/inventorystatelist";
 export const ADD_INVENTORYSTATELIST = "/add/inventorystatelist";
 
-export const GET_SMSMESSAGETEMPLIST = "/sms-message-template?expand=created_by_lbl,status_lbl,sender_id_lbl&page=1&per-page=50&vr=web1.0";
+export const GET_SMSMESSAGETEMPLIST =
+  "/sms-message-template?expand=created_by_lbl,status_lbl,sender_id_lbl&page=1&per-page=50&vr=web1.0";
 
 export const GET_BOUQUET =
   "/bouque?expand=setting,created_by_lbl,lco_rate,type_lbl,status_lbl,boxtype_lbl,rate,category_lbl,is_exclusive_lbl,is_promotional_lbl,additional_rates,is_online_app_lbl&page=1&per-page=50&vr=web1.0";
@@ -131,11 +143,14 @@ export const ADD_NEW_COMPLAINTCATEGORY = "/add/complaintcategory";
 export const GET_COMPLAINTSUBCATEGORY = "/complaintsubcategory";
 export const ADD_NEW_COMPLAINTSUBCATEGORY = "/add/complaintsubcategory";
 
-export const GET_CONFIGURATIONUPLOADLOGS = "/upload-q?expand=uploaded_file,created_by_lbl,status_lbl&notfilter[status]=0&filter[section]=configuration&page=1&per-page=50&vr=web1.0";
-export const GET_TAX = "/tax?expand=valuetype_lbl,parent_lbl,created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
+export const GET_CONFIGURATIONUPLOADLOGS =
+  "/upload-q?expand=uploaded_file,created_by_lbl,status_lbl&notfilter[status]=0&filter[section]=configuration&page=1&per-page=50&vr=web1.0";
+export const GET_TAX =
+  "/tax?expand=valuetype_lbl,parent_lbl,created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_TAXLIST = "/add/tax";
 
-export const GET_REASON = "/reason?expand=created_by_lbl,status_lbl,type_display_lbl,created_at_lbl&page=1&per-page=50&vr=web1.0";
+export const GET_REASON =
+  "/reason?expand=created_by_lbl,status_lbl,type_display_lbl,created_at_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_REASON = "/add/reason";
 export const GET_BANK = "/bank";
 export const ADD_NEW_BANK = "/add/bank";
@@ -149,3 +164,5 @@ export const GET_USER_PROFILE = "/user";
 export const ADD_NEW_USER = "/add/user";
 export const UPDATE_USER = "/update/user";
 export const DELETE_USER = "/delete/user";
+export const GET_USER_TYPE = "/list/usertype?fields=id,name&vr=web1.0";
+export const GET_USER_STATUS = "/list/userstatus?fields=id,name&vr=web1.0";

@@ -273,6 +273,8 @@ export const getBroadCasters = () => get(url.GET_BROADCASTER);
 export const addNewBroadCaster = (broadcast) =>
   post(url.ADD_NEW_BROADCASTER, broadcast);
 
+export const getUserType = () => get(url.GET_USER_TYPE);
+export const getUserStatus = () => get(url.GET_USER_STATUS);
 export const getGenreList = () => get(url.GET_GENRELIST);
 export const addNewGenreList = (genre) => post(url.ADD_NEW_GENRELIST, genre);
 
