@@ -28,6 +28,13 @@ const AddUserModal = (props) => {
   } = props;
   console.log("userRole in add:" + JSON.stringify(userDesignation));
   const dispatch = useDispatch();
+  const [selectedStatus, setSelectedStatus] = useState("");
+
+  const handleStatusChange = (e) => {
+    const status = e.target.value;
+    setSelectedStatus(status);
+    validation.handleChange(e); // Handle the change in formik
+  };
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -221,9 +228,9 @@ const AddUserModal = (props) => {
                   type="select"
                   placeholder="Select Status"
                   className="form-select"
-                  onChange={validation.handleChange}
+                  onChange={handleStatusChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.status || ""}
+                  value={selectedStatus}
                 >
                   <option value="">Select Status</option>
                   {userStatus.map((status) => (
@@ -241,7 +248,7 @@ const AddUserModal = (props) => {
 
               <div className="mb-3">
                 <Label className="form-label">
-                  InActive/Block Message<span style={{ color: "red" }}>*</span>
+                  Inactive/Block Message<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
                   name="message"
@@ -255,6 +262,11 @@ const AddUserModal = (props) => {
                     validation.touched.message && validation.errors.message
                       ? true
                       : false
+                  }
+                  disabled={
+                    selectedStatus === "0" || selectedStatus === "-7"
+                      ? false
+                      : true
                   }
                 />
                 {validation.touched.message && validation.errors.message ? (
