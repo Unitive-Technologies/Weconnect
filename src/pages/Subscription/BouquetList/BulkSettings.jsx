@@ -192,6 +192,47 @@ const BulkSettings = (props) => {
           >
             <SelectedBouquets />
           </Row>
+          <div
+            style={{
+              marginTop: "20px",
+              marginBottom: "18px",
+              zIndex: 12000,
+              backgroundColor: "#fff",
+              width: "fit-content",
+              marginLeft: "40%",
+              position: "absolute",
+              padding: "0px 10px",
+            }}
+          >
+            <p style={{ fontWeight: "bold" }}>Bouquet settings</p>
+          </div>
+          <Row
+            style={{
+              position: "relative",
+              border: "1px solid #ced4da",
+              padding: "20px 0px",
+              margin: "30px 0px",
+            }}
+          ></Row>
+          <Row>
+            <Col sm="12">
+              <div className="d-flex flex-wrap gap-2">
+                <button type="submit" className="btn btn-success save-user">
+                  Save
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-outline-danger"
+                  onClick={() => {
+                    validation.resetForm();
+                    toggle();
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </Col>
+          </Row>
         </ModalBody>
       </Modal>
       <ToastContainer />
