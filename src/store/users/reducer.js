@@ -28,7 +28,7 @@ const INIT_STATE = {
   userStatus: [],
   userRole: [],
   userDesignation: [],
-  msoPolicy: [],
+  userMsoPolicy: [],
   error: {},
   loading: true,
 };
@@ -104,7 +104,7 @@ const contacts = (state = INIT_STATE, action) => {
     case GET_USER_MSO_POLICY_SUCCESS:
       return {
         ...state,
-        msoPolicy: action.payload,
+        userMsoPolicy: action.payload,
         loading: false,
       };
 

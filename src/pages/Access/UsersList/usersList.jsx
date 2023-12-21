@@ -378,7 +378,6 @@ const ContactsList = (props) => {
     // Update the filteredUsers state
     setFilteredUsers(filteredData);
   }, [users]);
-  var node = useRef();
 
   const keyField = "id";
 
@@ -417,7 +416,7 @@ const ContactsList = (props) => {
       },
     ];
   };
-
+  console.log("policy-mso:" + userMsoPolicy);
   return (
     <React.Fragment>
       <ViewUserModal
