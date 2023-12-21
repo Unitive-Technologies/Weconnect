@@ -36,6 +36,9 @@ const CreateBouquet = (props) => {
       description: "",
       is_promotional: "",
       ifFixNCF: "",
+      max_ncf_channels: "",
+      showon_portal: "",
+      category_lbl: "",
       created_by: "Admin",
     },
     validationSchema: Yup.object({
@@ -48,6 +51,9 @@ const CreateBouquet = (props) => {
       description: Yup.string().required("Enter description"),
       is_promotional: Yup.string(),
       ifFixNCF: Yup.string(),
+      max_ncf_channels: Yup.string(),
+      showon_portal: Yup.string(),
+      category_lbl: Yup.string(),
     }),
     onSubmit: (values) => {
       const newbouquet = {
@@ -61,8 +67,11 @@ const CreateBouquet = (props) => {
         description: values["description"],
         is_promotional: values["is_promotional"],
         ifFixNCF: values["ifFixNCF"],
+        max_ncf_channels: values["max_ncf_channels"],
         created_at: new Date(),
         created_by: values["created_by"],
+        showon_portal: values["showon_portal"],
+        category_lbl: values["category_lbl"],
       };
       console.log("New Bouquet List:" + newbouquet);
       // save new user
@@ -354,6 +363,135 @@ const CreateBouquet = (props) => {
                 {validation.touched.ifFixNCF && validation.errors.ifFixNCF ? (
                   <FormFeedback type="invalid">
                     {validation.errors.ifFixNCF}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col sm="3">
+              <div className="mb-3">
+                <Label className="form-label">
+                  Max Channels for NCF Charges (0 means ALL CHANNELS)
+                  <span style={{ color: "red" }}>*</span>{" "}
+                  <i className="mdi mdi-information"></i>
+                </Label>
+                <Input
+                  name="max_ncf_channels"
+                  type="number"
+                  placeholder="0"
+                  // className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.max_ncf_channels || ""}
+                />
+                {validation.touched.max_ncf_channels &&
+                validation.errors.max_ncf_channels ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.max_ncf_channels}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col sm="3">
+              <div className="mb-3">
+                <Label className="form-label">
+                  Show On Portal<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="showon_portal"
+                  type="select"
+                  placeholder="Select Status"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.showon_portal || ""}
+                >
+                  <option value="No">No</option>
+                  <option value="Yes">Yes</option>
+                </Input>
+                {validation.touched.showon_portal &&
+                validation.errors.showon_portal ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.showon_portal}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col sm="3">
+              <div className="mb-3">
+                <Label className="form-label">
+                  Bouquet Category<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="category_lbl"
+                  type="select"
+                  placeholder="Select Status"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.category_lbl || ""}
+                >
+                  <option value="MSO Bouquet">MSO Bouquet</option>
+                  <option value="Broadcaster Bouquet">
+                    Broadcaster Bouquet
+                  </option>
+                </Input>
+                {validation.touched.category_lbl &&
+                validation.errors.category_lbl ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.category_lbl}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col sm="3">
+              <div className="mb-3">
+                <Label className="form-label">
+                  Stop other Bouquet Activation
+                  <span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="showon_portal"
+                  type="select"
+                  placeholder="Select Status"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.showon_portal || ""}
+                >
+                  <option value="No">No</option>
+                  <option value="Yes">Yes</option>
+                </Input>
+                {validation.touched.showon_portal &&
+                validation.errors.showon_portal ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.showon_portal}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col sm="3">
+              <div className="mb-3">
+                <Label className="form-label">
+                  Select EPBX<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="epbx"
+                  type="select"
+                  placeholder="Select Status"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.epbx || ""}
+                >
+                  <option value="">Select EPBX</option>
+                </Input>
+                {validation.touched.epbx && validation.errors.epbx ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.epbx}
                   </FormFeedback>
                 ) : null}
               </div>
