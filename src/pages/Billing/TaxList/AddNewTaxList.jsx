@@ -157,7 +157,7 @@ const AddNewTaxList = (props) => {
                   <option value="103">In-Active</option>
                 </Input>
                 {validation.touched.status_lbl &&
-                validation.errors.status_lbl ? (
+                  validation.errors.status_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.status_lbl}
                   </FormFeedback>
@@ -206,7 +206,7 @@ const AddNewTaxList = (props) => {
                   <option value="103">CGST</option>
                 </Input>
                 {validation.touched.valuetype_lbl &&
-                validation.errors.valuetype_lbl ? (
+                  validation.errors.valuetype_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.valuetype_lbl}
                   </FormFeedback>
@@ -229,7 +229,7 @@ const AddNewTaxList = (props) => {
                   <option value="202">in Amount</option>
                 </Input>
                 {validation.touched.parent_lbl &&
-                validation.errors.parent_lbll ? (
+                  validation.errors.parent_lbll ? (
                   <FormFeedback type="invalid">
                     {validation.errors.parent_lbl}
                   </FormFeedback>
@@ -262,7 +262,7 @@ const AddNewTaxList = (props) => {
                   <option value="108">AGR Charge</option>
                 </Input>
                 {validation.touched.applicable &&
-                validation.errors.applicable ? (
+                  validation.errors.applicable ? (
                   <FormFeedback type="invalid">
                     {validation.errors.applicable}
                   </FormFeedback>
@@ -284,13 +284,13 @@ const AddNewTaxList = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
