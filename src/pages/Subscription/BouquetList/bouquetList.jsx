@@ -22,7 +22,7 @@ import BulkAssign from "./BulkAssign";
 import BulkRemoval from "./BulkRemoval";
 import BulkSettings from "./BulkSettings";
 
-const BouquetList = (props) => {
+const BouquetList = () => {
   //meta title
   document.title = "Bouquet List | VDigital";
 
@@ -303,9 +303,7 @@ const BouquetList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleUserClick={() => setShowCreateBouquet(true)}
-                      handleUploadUser={() => setShowBulkAssign(true)}
-                      customPageSize={8}
+                      customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
