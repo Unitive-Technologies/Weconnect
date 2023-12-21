@@ -27,6 +27,8 @@ const convertBouquetListObject = (bouquetList) => {
           : bouquet.status === 0
           ? "INACTIVE"
           : "BLOCKED",
+      setting: bouquet.setting,
+      is_exclusive_lbl: bouquet.is_exclusive_lbl,
     };
   });
 };
