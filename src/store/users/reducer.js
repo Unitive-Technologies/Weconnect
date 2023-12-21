@@ -17,6 +17,8 @@ import {
   GET_USER_ROLE_FAIL,
   GET_USER_DESIGNATION_SUCCESS,
   GET_USER_DESIGNATION_FAIL,
+  GET_USER_MSO_POLICY_FAIL,
+  GET_USER_MSO_POLICY_SUCCESS,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -26,6 +28,7 @@ const INIT_STATE = {
   userStatus: [],
   userRole: [],
   userDesignation: [],
+  msoPolicy: [],
   error: {},
   loading: true,
 };
@@ -97,6 +100,20 @@ const contacts = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
       };
+
+    case GET_USER_MSO_POLICY_SUCCESS:
+      return {
+        ...state,
+        msoPolicy: action.payload,
+        loading: false,
+      };
+
+    case GET_USER_MSO_POLICY_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
     case ADD_USER_SUCCESS:
       return {
         ...state,

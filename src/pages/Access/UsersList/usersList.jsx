@@ -14,6 +14,7 @@ import {
   getUserStatus as onGetUserStatus,
   getUserRole as onGetUserRole,
   getUserDesignation as onGetUserDesignation,
+  getUserMsoPolicy as onGetUserMsoPolicy,
 } from "/src/store/users/actions";
 
 //redux
@@ -41,10 +42,18 @@ const ContactsList = (props) => {
     userStatus: Users.userStatus,
     userRole: Users.userRole,
     userDesignation: Users.userDesignation,
+    userMsoPolicy: Users.userMsoPolicy,
   }));
 
-  const { users, userType, userStatus, userRole, userDesignation, loading } =
-    useSelector(ContactsProperties);
+  const {
+    users,
+    userType,
+    userStatus,
+    userRole,
+    userDesignation,
+    userMsoPolicy,
+    loading,
+  } = useSelector(ContactsProperties);
 
   // useEffect(() => {
   //   console.log("Users data in component:", users);
@@ -329,6 +338,7 @@ const ContactsList = (props) => {
       dispatch(onGetUserStatus());
       dispatch(onGetUserRole());
       dispatch(onGetUserDesignation());
+      dispatch(onGetUserMsoPolicy());
     }
   }, [dispatch, users]);
 
@@ -422,6 +432,7 @@ const ContactsList = (props) => {
         userStatus={userStatus}
         userRole={userRole}
         userDesignation={userDesignation}
+        userMsoPolicy={userMsoPolicy}
       />
       <UploadUserModal
         isOpen={showUploadUser}

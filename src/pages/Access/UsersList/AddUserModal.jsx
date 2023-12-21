@@ -25,17 +25,24 @@ const AddUserModal = (props) => {
     userStatus,
     userRole,
     userDesignation,
+    userMsoPolicy,
   } = props;
-  console.log("userRole in add:" + JSON.stringify(userDesignation));
+  console.log("userMsoPolicy in add:" + JSON.stringify(userMsoPolicy));
   const dispatch = useDispatch();
   const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedType, setSelectedType] = useState("");
 
   const handleStatusChange = (e) => {
     const status = e.target.value;
     setSelectedStatus(status);
-    validation.handleChange(e); // Handle the change in formik
+    validation.handleChange(e);
   };
 
+  const handleTypeChange = (e) => {
+    const usertype = e.target.value;
+    setSelectedType(usertype);
+    validation.handleChange(e);
+  };
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -200,7 +207,8 @@ const AddUserModal = (props) => {
                   type="select"
                   placeholder="Select User Type"
                   className="form-select"
-                  onChange={validation.handleChange}
+                  onChange={handleTypeChange}
+                  // onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.usertype || ""}
                 >
@@ -286,7 +294,8 @@ const AddUserModal = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.role || ""}
+                  // value={validation.values.role || ""}
+                  value={selectedType}
                 >
                   <option value="">Select Role</option>
                   {userRole.map((role) => (
@@ -340,12 +349,18 @@ const AddUserModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.grouppolicy || ""}
+                  disabled={!selectedType}
                 >
                   <option value="">Select Group Policy</option>
-                  <option value="A">Active</option>
-                  <option value="B">BLOCKED</option>
-                  <option value="C">In-Active</option>
+                  {selectedType === "0" &&
+                    userMsoPolicy &&
+                    userMsoPolicy.map((policy) => (
+                      <option key={policy.id} value={policy.id}>
+                        {policy.name}
+                      </option>
+                    ))}
                 </Input>
+
                 {validation.touched.grouppolicy &&
                 validation.errors.grouppolicy ? (
                   <FormFeedback type="invalid">
@@ -353,6 +368,7 @@ const AddUserModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+
               <div className="mb-3">
                 <Label className="form-label">
                   Login ID<span style={{ color: "red" }}>*</span>

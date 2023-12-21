@@ -11,6 +11,7 @@ import {
   GET_USER_STATUS,
   GET_USER_ROLE,
   GET_USER_DESIGNATION,
+  GET_USER_MSO_POLICY,
 } from "./actionTypes";
 
 import {
@@ -32,6 +33,8 @@ import {
   getUserRoleSuccess,
   getUserDesignationFail,
   getUserDesignationSuccess,
+  getUserMsoPolicyFail,
+  getUserMsoPolicySuccess,
 } from "./actions";
 
 //Include Both Helper File with needed methods
@@ -45,6 +48,7 @@ import {
   getUserStatus,
   getUserRole,
   getUserDesignation,
+  getUserMsoPolicy,
 } from "../../helpers/fakebackend_helper";
 import { toast } from "react-toastify";
 
@@ -98,6 +102,15 @@ function* fetchUserDesignation() {
   }
 }
 
+function* fetchUserMsoPolicy() {
+  try {
+    const response = yield call(getUserMsoPolicy);
+    // console.log("response:" + JSON.stringify(response));
+    yield put(getUserMsoPolicySuccess(response.data));
+  } catch (error) {
+    yield put(getUserMsoPolicyFail(error));
+  }
+}
 function* fetchUserProfile() {
   try {
     const response = yield call(getUserProfile);
@@ -151,6 +164,7 @@ function* usersSaga() {
   yield takeEvery(GET_USER_STATUS, fetchUserStatus);
   yield takeEvery(GET_USER_ROLE, fetchUserRole);
   yield takeEvery(GET_USER_DESIGNATION, fetchUserDesignation);
+  yield takeEvery(GET_USER_MSO_POLICY, fetchUserMsoPolicy);
 }
 
 export default usersSaga;

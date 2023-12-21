@@ -26,6 +26,9 @@ import {
   GET_USER_DESIGNATION,
   GET_USER_DESIGNATION_FAIL,
   GET_USER_DESIGNATION_SUCCESS,
+  GET_USER_MSO_POLICY,
+  GET_USER_MSO_POLICY_FAIL,
+  GET_USER_MSO_POLICY_SUCCESS,
 } from "./actionTypes";
 
 export const getUsers = () => ({
@@ -157,5 +160,19 @@ export const getUserDesignationSuccess = (userDesignation) => ({
 
 export const getUserDesignationFail = (error) => ({
   type: GET_USER_DESIGNATION_FAIL,
+  payload: error,
+});
+
+export const getUserMsoPolicy = () => ({
+  type: GET_USER_MSO_POLICY,
+});
+
+export const getUserMsoPolicySuccess = (msoPolicy) => ({
+  type: GET_USER_MSO_POLICY_SUCCESS,
+  payload: msoPolicy,
+});
+
+export const getUserMsoPolicyFail = (error) => ({
+  type: GET_USER_MSO_POLICY_FAIL,
   payload: error,
 });
