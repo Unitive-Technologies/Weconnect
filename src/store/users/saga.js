@@ -9,6 +9,8 @@ import {
   UPDATE_USER,
   GET_USER_TYPE,
   GET_USER_STATUS,
+  GET_USER_ROLE,
+  GET_USER_DESIGNATION,
 } from "./actionTypes";
 
 import {
@@ -26,6 +28,10 @@ import {
   getUserTypeSuccess,
   getUserStatusFail,
   getUserStatusSuccess,
+  getUserRoleFail,
+  getUserRoleSuccess,
+  getUserDesignationFail,
+  getUserDesignationSuccess,
 } from "./actions";
 
 //Include Both Helper File with needed methods
@@ -37,6 +43,8 @@ import {
   deleteUser,
   getUserType,
   getUserStatus,
+  getUserRole,
+  getUserDesignation,
 } from "../../helpers/fakebackend_helper";
 import { toast } from "react-toastify";
 
@@ -69,6 +77,27 @@ function* fetchUserStatus() {
     yield put(getUserStatusFail(error));
   }
 }
+
+function* fetchUserRole() {
+  try {
+    const response = yield call(getUserRole);
+    // console.log("response:" + JSON.stringify(response));
+    yield put(getUserRoleSuccess(response.data));
+  } catch (error) {
+    yield put(getUserRoleFail(error));
+  }
+}
+
+function* fetchUserDesignation() {
+  try {
+    const response = yield call(getUserDesignation);
+    // console.log("response:" + JSON.stringify(response));
+    yield put(getUserDesignationSuccess(response.data));
+  } catch (error) {
+    yield put(getUserDesignationFail(error));
+  }
+}
+
 function* fetchUserProfile() {
   try {
     const response = yield call(getUserProfile);
@@ -120,6 +149,8 @@ function* usersSaga() {
   yield takeEvery(DELETE_USER, onDeleteUser);
   yield takeEvery(GET_USER_TYPE, fetchUserType);
   yield takeEvery(GET_USER_STATUS, fetchUserStatus);
+  yield takeEvery(GET_USER_ROLE, fetchUserRole);
+  yield takeEvery(GET_USER_DESIGNATION, fetchUserDesignation);
 }
 
 export default usersSaga;

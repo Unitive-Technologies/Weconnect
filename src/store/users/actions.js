@@ -20,6 +20,12 @@ import {
   GET_USER_STATUS,
   GET_USER_STATUS_FAIL,
   GET_USER_STATUS_SUCCESS,
+  GET_USER_ROLE,
+  GET_USER_ROLE_FAIL,
+  GET_USER_ROLE_SUCCESS,
+  GET_USER_DESIGNATION,
+  GET_USER_DESIGNATION_FAIL,
+  GET_USER_DESIGNATION_SUCCESS,
 } from "./actionTypes";
 
 export const getUsers = () => ({
@@ -123,5 +129,33 @@ export const getUserStatusSuccess = (userStatus) => ({
 
 export const getUserStatusFail = (error) => ({
   type: GET_USER_STATUS_FAIL,
+  payload: error,
+});
+
+export const getUserRole = () => ({
+  type: GET_USER_ROLE,
+});
+
+export const getUserRoleSuccess = (userRole) => ({
+  type: GET_USER_ROLE_SUCCESS,
+  payload: userRole,
+});
+
+export const getUserRoleFail = (error) => ({
+  type: GET_USER_ROLE_FAIL,
+  payload: error,
+});
+
+export const getUserDesignation = () => ({
+  type: GET_USER_DESIGNATION,
+});
+
+export const getUserDesignationSuccess = (userDesignation) => ({
+  type: GET_USER_DESIGNATION_SUCCESS,
+  payload: userDesignation,
+});
+
+export const getUserDesignationFail = (error) => ({
+  type: GET_USER_DESIGNATION_FAIL,
   payload: error,
 });

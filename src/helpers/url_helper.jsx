@@ -166,3 +166,6 @@ export const UPDATE_USER = "/update/user";
 export const DELETE_USER = "/delete/user";
 export const GET_USER_TYPE = "/list/usertype?fields=id,name&vr=web1.0";
 export const GET_USER_STATUS = "/list/userstatus?fields=id,name&vr=web1.0";
+export const GET_USER_ROLE = "/list/userrole?fields=id,name&vr=web1.0";
+export const GET_USER_DESIGNATION =
+  "/user-designation/list?field=id,name&vr=web1.0";
