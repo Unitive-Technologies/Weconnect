@@ -1,24 +1,21 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
-import Spinners from "../../../components/Common/Spinner";
 import {
   Card,
   CardBody,
   Col,
-  Container,
   Modal,
   ModalBody,
   ModalHeader,
   Row,
-  UncontrolledTooltip,
 } from "reactstrap";
-import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import { getBouquet as onGetBouquet } from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import SelectedBouquets from "./SelectedBouquets";
 
 const BulkSettings = (props) => {
   const { isOpen, toggle } = props;
@@ -30,21 +27,9 @@ const BulkSettings = (props) => {
   const selectBouquetState = (state) => state.bouquet;
   const BouquetProperties = createSelector(selectBouquetState, (bouquet) => ({
     bouquets: bouquet.bouquet,
-    loading: bouquet.loading,
   }));
 
-  const { bouquets, loading } = useSelector(BouquetProperties);
-
-  useEffect(() => {
-    console.log("Bouquet list data in component:", bouquets);
-  }, [bouquets]);
-  const [isLoading, setLoading] = useState(loading);
-  const [showCreateBouquet, setShowCreateBouquet] = useState(false);
-  const [showBulkAssign, setShowBulkAssign] = useState(false);
-  const [showViewBouquet, setShowViewBouquet] = useState(false);
-  const [viewBouquetData, setViewBouquetData] = useState({});
-  const [showBulkRemoval, setShowBulkRemoval] = useState(false);
-  const [showBulkSettings, setShowBulkSettings] = useState(false);
+  const { bouquets } = useSelector(BouquetProperties);
 
   const columns = useMemo(
     () => [
@@ -55,7 +40,7 @@ const BulkSettings = (props) => {
         Cell: () => {
           return (
             <>
-              <i className="bx bx-bx bx-check"></i>
+              <i className="mdi mdi-check"></i>
             </>
           );
         },
@@ -127,10 +112,14 @@ const BulkSettings = (props) => {
       },
       {
         Header: "Settings",
-        accessor: "settings",
+        accessor: "is_exclusive_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          return <p className="text-muted mb-0">IS EXCLUSIVE:</p>;
+          return (
+            <p className="text-muted mb-0">
+              IS EXCLUSIVE:{cellProps.row.original.is_exclusive_lbl}
+            </p>
+          );
         },
       },
     ],
@@ -178,6 +167,30 @@ const BulkSettings = (props) => {
                 </CardBody>
               </Card>
             </Col>
+          </Row>
+          <div
+            style={{
+              marginTop: "20px",
+              marginBottom: "18px",
+              zIndex: 12000,
+              backgroundColor: "#fff",
+              width: "fit-content",
+              marginLeft: "40%",
+              position: "absolute",
+              padding: "0px 10px",
+            }}
+          >
+            <p style={{ fontWeight: "bold" }}>Selected Bouquets</p>
+          </div>
+          <Row
+            style={{
+              position: "relative",
+              border: "1px solid #ced4da",
+              padding: "20px 0px",
+              margin: "30px 0px",
+            }}
+          >
+            <SelectedBouquets />
           </Row>
         </ModalBody>
       </Modal>
