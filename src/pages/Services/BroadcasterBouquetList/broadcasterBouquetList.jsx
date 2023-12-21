@@ -146,10 +146,12 @@ const BroadcasterBouquetList = (props) => {
       },
       {
         Header: "CHANNELS",
-        accessor: "channels_type_lbl",
+        accessor: "channels",
         filterable: true,
         Cell: (cellProps) => {
-          return <Channels {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.channels}</p>
+          );
         },
       },
       {

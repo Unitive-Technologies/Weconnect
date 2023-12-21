@@ -36,6 +36,7 @@ const convertBroadcasterBouquetListObject = (broadcasterBouquetList) => {
       created_at: brodcastbouquet.created_at,
       created_by: brodcastbouquet.created_by_lbl,
     };
+
   });
 };
 
