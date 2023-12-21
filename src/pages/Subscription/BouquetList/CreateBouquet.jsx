@@ -16,6 +16,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addBouquet as onAddBouquet } from "/src/store/bouquetlist/actions";
 import { useDispatch } from "react-redux";
+import AddAlacarte from "./AddAlacarte";
 
 const CreateBouquet = (props) => {
   const { isOpen, toggle } = props;
@@ -487,7 +488,7 @@ const CreateBouquet = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.epbx || ""}
                 >
-                  <option value="">Select EPBX</option>
+                  <option value="">Select epbx</option>
                 </Input>
                 {validation.touched.epbx && validation.errors.epbx ? (
                   <FormFeedback type="invalid">
@@ -496,90 +497,6 @@ const CreateBouquet = (props) => {
                 ) : null}
               </div>
             </Col>
-          </Row>
-          <div
-            style={{
-              // margin: "20px 0px",
-              marginTop: "20px",
-              marginBottom: "18px",
-              zIndex: 12000,
-              backgroundColor: "#fff",
-              width: "fit-content",
-              marginLeft: "40%",
-              position: "absolute",
-              padding: "0px 10px",
-            }}
-          >
-            <h5 style={{}}>CAS LIST</h5>
-          </div>
-          <Row
-            style={{
-              position: "relative",
-              border: "1px solid #ced4da",
-              padding: "20px 0px",
-              margin: "30px 0px",
-            }}
-          >
-            <Col lg={6}>
-              <div className="mb-3">
-                {/* <Label className="form-label">Status</Label> */}
-                <Input
-                  name="cas"
-                  type="select"
-                  placeholder="Select CAS"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.cas || ""}
-                >
-                  <option value="21">Select CAS</option>
-                  <option value="22">NSTV</option>
-                </Input>
-                {validation.touched.cas && validation.errors.cas ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.cas}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                {/* <Label className="form-label">Status</Label> */}
-                <Input
-                  name="cascode"
-                  // type="select"
-                  placeholder="Cascode"
-                  // className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.cascode || ""}
-                ></Input>
-                {validation.touched.cascode && validation.errors.cascode ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.cascode}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                {/* <Label className="form-label">Status</Label> */}
-                <Input
-                  name="serviceid"
-                  // type="select"
-                  placeholder="Service id"
-                  // className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.serviceid || ""}
-                ></Input>
-                {validation.touched.serviceid && validation.errors.serviceid ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.serviceid}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-
-            <Col sm="6">{/* <CasList /> */}</Col>
           </Row>
           <div
             style={{
@@ -601,7 +518,9 @@ const CreateBouquet = (props) => {
                 padding: "0px 10px",
               }}
             >
-              <h5 style={{}}>Add Channels</h5>
+              <p style={{ fontWeight: "bold" }}>
+                Add Alacarte<span style={{ color: "red" }}>*</span>
+              </p>
             </div>
             <Row
               style={{
@@ -612,12 +531,11 @@ const CreateBouquet = (props) => {
               }}
             >
               <Col sm="12" style={{ width: "500px" }}>
-                {/* <AddChannels /> */}
+                <AddAlacarte />
               </Col>
             </Row>
             <div
               style={{
-                // margin: "20px 0px",
                 marginTop: "20px",
                 marginBottom: "18px",
                 zIndex: 12000,
@@ -628,7 +546,9 @@ const CreateBouquet = (props) => {
                 padding: "0px 10px",
               }}
             >
-              <h5 style={{}}>Add Broadcaster Bouquets</h5>
+              <p style={{ fontWeight: "bold" }}>
+                Add Packages<span style={{ color: "red" }}>*</span>
+              </p>
             </div>
             <Row
               style={{
