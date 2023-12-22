@@ -159,9 +159,9 @@ const CasList = (props) => {
                   placeholder="Select type"
                   className="form-select"
                   disabled={!showEditChannel}
-                  // onChange={validation.handleChange}
-                  // onBlur={validation.handleBlur}
-                  // value={validation.values.type || ""}
+                // onChange={validation.handleChange}
+                // onBlur={validation.handleBlur}
+                // value={validation.values.type || ""}
                 >
                   <option value="104">Select CAS</option>
                   <option value="105">Pay Channel</option>

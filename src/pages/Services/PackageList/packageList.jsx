@@ -135,7 +135,7 @@ const PackageList = (props) => {
       },
       {
         Header: "CAS CODES",
-        accessor: "cas_lbl",
+        // accessor: "cas_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <CasCodes {...cellProps} />;
@@ -143,7 +143,7 @@ const PackageList = (props) => {
       },
       {
         Header: "CHANNELS",
-        accessor: "channels",
+        // accessor: "channels",
         filterable: true,
         Cell: (cellProps) => {
           return <Channels {...cellProps} />;
@@ -151,10 +151,10 @@ const PackageList = (props) => {
       },
       {
         Header: "BBQ",
-        accessor: "channels",
+        // accessor: "channels",
         filterable: true,
         Cell: (cellProps) => {
-          return <BBQ {...cellProps} />;
+          // return <BBQ {...cellProps} />;
         },
       },
       {

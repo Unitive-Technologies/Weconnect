@@ -178,7 +178,7 @@ const AddNewPackageList = (props) => {
                   <option value="103">High Definition(HD)</option>
                 </Input>
                 {validation.touched.definition &&
-                validation.errors.definition ? (
+                  validation.errors.definition ? (
                   <FormFeedback type="invalid">
                     {validation.errors.definition}
                   </FormFeedback>
@@ -200,13 +200,13 @@ const AddNewPackageList = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -266,7 +266,6 @@ const AddNewPackageList = (props) => {
               </div>
             </Col>
           </Row>
-
           <div
             style={{
               // margin: "20px 0px",
@@ -290,74 +289,15 @@ const AddNewPackageList = (props) => {
               margin: "30px 0px",
             }}
           >
-            <Col lg={6}>
-              <div className="mb-3">
-                {/* <Label className="form-label">Status</Label> */}
-                <Input
-                  name="cas"
-                  type="select"
-                  placeholder="Select CAS"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.cas || ""}
-                >
-                  <option value="21">Select CAS</option>
-                  <option value="22">NSTV</option>
-                </Input>
-                {validation.touched.cas && validation.errors.cas ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.cas}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                {/* <Label className="form-label">Status</Label> */}
-                <Input
-                  name="cascode"
-                  // type="select"
-                  placeholder="Cascode"
-                  // className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.cascode || ""}
-                ></Input>
-                {validation.touched.cascode && validation.errors.cascode ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.cascode}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                {/* <Label className="form-label">Status</Label> */}
-                <Input
-                  name="serviceid"
-                  // type="select"
-                  placeholder="Service id"
-                  // className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.serviceid || ""}
-                ></Input>
-                {validation.touched.serviceid && validation.errors.serviceid ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.serviceid}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-
-            <Col sm="6">
+            <Col sm="12">
               <CasList />
             </Col>
           </Row>
-          <div
+          < div
             style={{
               display: "flex",
-              width: "1000px",
-            }}
+            }
+            }
           >
             <div
               style={{
@@ -383,7 +323,7 @@ const AddNewPackageList = (props) => {
                 margin: "30px 0px",
               }}
             >
-              <Col sm="12" style={{ width: "500px" }}>
+              <Col sm="12" style={{ width: "550px" }}>
                 <AddChannels />
               </Col>
             </Row>
@@ -410,11 +350,11 @@ const AddNewPackageList = (props) => {
                 margin: "30px 0px",
               }}
             >
-              <Col sm="12" style={{ width: "500px" }}>
+              <Col sm="12" style={{ width: "550px" }}>
                 <AddBroadcasterBouquets />
               </Col>
             </Row>
-          </div>
+          </div >
           <Row>
             <Col>
               <ModalFooter>
@@ -442,10 +382,10 @@ const AddNewPackageList = (props) => {
               </ModalFooter>
             </Col>
           </Row>
-        </Form>
-      </ModalBody>
+        </Form >
+      </ModalBody >
       {/* </Modal> */}
-    </Modal>
+    </Modal >
   );
 };
 
