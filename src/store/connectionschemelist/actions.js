@@ -24,10 +24,13 @@ export const getConnectionSchemeFail = (error) => ({
   payload: error,
 });
 
-export const addConnectionscheme = (connectionscheme) => ({
-  type: ADD_CONNECTIONSCHEME,
-  payload: connectionscheme,
-});
+export const addConnectionscheme = (connectionscheme) => (
+  {
+    type: ADD_CONNECTIONSCHEME,
+    payload: connectionscheme,
+  },
+  console.log("payload: ", payload)
+);
 
 export const addConnectionSchemeSuccess = (connectionscheme) => ({
   type: ADD_CONNECTIONSCHEME_SUCCESS,

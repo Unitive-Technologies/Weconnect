@@ -5,7 +5,11 @@ import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const AddAlacarte = (props) => {
-  const [AddAlacartBtin, setAddAlacartBtin] = useState(false);
+  const [AddAlacarteBtn, setAddAlacarteBtn] = useState(false);
+
+  const AddAlacarteToggle = () => {
+    setAddAlacarteBtn(!AddAlacarteBtn);
+  };
   const columns = useMemo(
     () => [
       {
@@ -202,7 +206,7 @@ const AddAlacarte = (props) => {
     return [
       {
         name: "",
-        // action: setShowCreateBouquet,
+        action: setAddAlacarteBtn,
         type: "normal",
         icon: "create",
       },

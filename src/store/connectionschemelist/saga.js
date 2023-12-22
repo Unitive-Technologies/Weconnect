@@ -1,22 +1,17 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-
 import { GET_CONNECTIONSCHEME, ADD_CONNECTIONSCHEME } from "./actionTypes";
-
 import {
   getConnectionSchemeSuccess,
   getConnectionSchemeFail,
   addConnectionSchemeSuccess,
   addConnectionSchemeFail,
 } from "./actions";
-
-//Include Both Helper File with needed methods
 import {
   getConnectionScheme,
   addConnectionScheme,
 } from "../../helpers/fakebackend_helper";
 
 const convertConnectionSchemeListObject = (connectionschemeList) => {
-  // Notification Template has more data than what we need, we need to convert each of the Notification Template user object in the list with needed colums of the table
   return connectionschemeList.map((connectionscheme) => {
     return {
       ...connectionscheme,
@@ -50,10 +45,20 @@ function* fetchConnectionScheme() {
     yield put(getConnectionSchemeFail(error));
   }
 }
-
+// function* onAddCity({ payload: city }) {
+//   try {
+//     const response = yield call(addCity, city);
+//     yield put(addCitySuccess(response));
+//     toast.success("City list Added Successfully", { autoClose: 2000 });
+//   } catch (error) {
+//     yield put(addCityFail(error));
+//     toast.error("City list Added Failed", { autoClose: 2000 });
+//   }
+// }
 function* onAddNewConnectionScheme({ payload: connectionscheme }) {
   try {
     const response = yield call(addConnectionScheme, connectionscheme);
+    console.log("Post response in saga: ", response);
     yield put(addConnectionSchemeSuccess(response));
   } catch (error) {
     yield put(addConnectionSchemeFail(error));

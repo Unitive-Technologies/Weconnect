@@ -26,7 +26,6 @@ const CreateConnectionScheme = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      //BroadCaster: "",
       name: "",
       code: "",
       boxtype_lbl: "",
@@ -47,6 +46,7 @@ const CreateConnectionScheme = (props) => {
       status: Yup.string().required("select status"),
     }),
     onSubmit: (values) => {
+      console.log("Post values: ", values);
       const newConnectionScheme = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
@@ -255,7 +255,6 @@ const CreateConnectionScheme = (props) => {
                 >
                   Reset
                 </button>
-
                 <button
                   type="button"
                   className="btn btn-outline-danger"
