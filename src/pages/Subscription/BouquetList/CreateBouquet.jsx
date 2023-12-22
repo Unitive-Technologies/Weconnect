@@ -19,6 +19,7 @@ import { useDispatch } from "react-redux";
 import AddAlacarte from "./AddAlacarte";
 import AddPackages from "./AddPackages";
 import Count from "./Count";
+import TotalCount from "./TotalCount";
 
 const CreateBouquet = (props) => {
   const { isOpen, toggle } = props;
@@ -567,6 +568,52 @@ const CreateBouquet = (props) => {
               </Col>
             </Row>
           </div>
+          <div
+            style={{
+              // margin: "20px 0px",
+              marginTop: "20px",
+              marginBottom: "18px",
+              zIndex: 12000,
+              backgroundColor: "#fff",
+              width: "fit-content",
+              marginLeft: "35%",
+              position: "absolute",
+              padding: "0px 10px",
+            }}
+          >
+            <p style={{ fontWeight: "bold" }}>
+              DEFAULT MRP Pricing / Bouquet Pricing forLCO
+              <span style={{ color: "red" }}>*</span>
+            </p>
+          </div>
+          <Row
+            style={{
+              position: "relative",
+              border: "1px solid #ced4da",
+              padding: "20px 0px",
+              margin: "30px 0px",
+            }}
+          >
+            <TotalCount />
+            <Row>
+              <Col sm="3">
+                <Label>MRP**</Label>
+                <Input disabled defaultValue={0} />
+              </Col>
+              <Col sm="3">
+                <Label>DRP**</Label>
+                <Input type="number" defaultValue={0} />
+              </Col>
+              <Col sm="3">
+                <Label>LCO Discount(%)</Label>
+                <Input type="number" defaultValue="20" />
+              </Col>
+              <Col sm="3">
+                <Label>LCO Rate**</Label>
+                <Input type="number" defaultValue={0} />
+              </Col>
+            </Row>
+          </Row>
           <Row>
             <Col>
               <ModalFooter>
