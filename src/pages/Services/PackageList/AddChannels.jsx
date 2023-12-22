@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
-import { Card, CardBody, Col, Input } from "reactstrap";
+import { Card, CardBody, Col, Input, Row } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const AddChannels = (props) => {
@@ -196,44 +196,124 @@ const AddChannels = (props) => {
       },
     ],
     []
-
   );
+
+  const columns1 = useMemo(
+    () => [
+      {
+        Header: "$",
+        // accessor: "type",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5
+                style={{
+                  maxWidth: 200,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+                className="font-size-14 mb-1"
+              >
+                <Link className="text-dark" to="#">
+                  {"Total Channels:"}
+                </Link>
+              </h5>
+            </>
+          );
+        },
+      },
+      {
+        Header: "$",
+        // accessor: "type",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+
+            <h5
+              style={{
+                maxWidth: 200,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+              className="font-size-14 mb-1"
+            >
+              <Link className="text-dark" to="#">
+                {"Total"}
+              </Link>
+            </h5>
+
+          );
+        },
+      },
+    ],
+    []
+  );
+
+  // const allColumns = useMemo(() => columns.concat(columns1), [columns, columns1]);
 
   const casData = [];
   return (
     <Card>
       <CardBody>
         <TableContainer
-          isPagination={true}
+          // isPagination={true}
           columns={columns}
           data={casData}
-          // isGlobalFilter={true}
-          // isShowingPageLength={true}
-          // customPageSize={50}
           tableClass="table align-middle table-nowrap table-hover"
           theadClass="table-light"
-          paginationDiv="col-sm-12 col-md-7"
-          pagination="pagination pagination-rounded justify-content-end mt-4"
+        // paginationDiv="col-sm-12 col-md-7"
+        // pagination="pagination pagination-rounded justify-content-end mt-4"
         />
+
       </CardBody>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          // justifyContent: "space-between",
-        }}
-      >
-        <Col lg={8} style={{ marginRight: "20px" }}>
-          <div className="mb-3">
-            <Input type="text" placeholder="Total Channels: " />
+
+      <div style={{ display: "flex" }}>
+        <Row
+          style={{
+            border: "1px solid #ced4da",
+            padding: "5px 0px",
+            margin: "1px 0px",
+            width: "450px",
+            height: "50px",
+            display: "flex",
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "#fff",
+              padding: "10px",
+              width: "100%",
+              boxSizing: "border-box",
+            }}
+          >
+            <h6 style={{ textAlign: "left", margin: 0 }}>Total Channels:</h6>
           </div>
-        </Col>
-        <Col lg={3} style={{ marginRight: "20px" }}>
-          <div className="mb-3">
-            <Input type="text" placeholder="Total: " />
+        </Row>
+        <Row
+          style={{
+            border: "1px solid #ced4da",
+            padding: "5px 0px",
+            margin: "1px 0px",
+            width: "250px",
+            display: "flex",
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "#fff",
+              padding: "10px",
+              width: "100%",
+              boxSizing: "border-box",
+            }}
+          >
+            <h6 style={{ textAlign: "center", margin: 0 }}>Total:</h6>
           </div>
-        </Col>
+        </Row>
       </div>
+
     </Card>
   );
 };

@@ -353,8 +353,56 @@ const AddNewPackageList = (props) => {
               <Col sm="12" style={{ width: "550px" }}>
                 <AddBroadcasterBouquets />
               </Col>
+
             </Row>
           </div >
+          <div style={{
+            display: "flex"
+          }}>
+            <Row
+              style={{
+                position: "relative",
+                border: "1px solid #ced4da",
+                padding: "5px 0px",
+                margin: "10px 0px",
+                width: "550px", height: "50px",
+                display: "flex",
+              }}
+            >
+              <div
+                style={{
+                  marginTop: "20px",
+                  marginBottom: "18px",
+                  backgroundColor: "#fff",
+                  padding: "0px 10px",
+                }}
+              >
+                <h6 style={{ textAlign: "center" }}>TOTAL CHANNELS:</h6>
+              </div>
+            </Row>
+            <Row
+              style={{
+                position: "relative",
+                border: "1px solid #ced4da",
+                padding: "5px 0px",
+                margin: "10px 0px",
+                width: "550px",
+                height: "50px",
+                display: "flex",
+              }}
+            >
+              <div
+                style={{
+                  marginTop: "20px",
+                  marginBottom: "18px",
+                  backgroundColor: "#fff",
+                  padding: "0px 10px",
+                }}
+              >
+                <h6 style={{ textAlign: "center" }}>PACKAGE RATE:</h6>
+              </div>
+            </Row>
+          </div>
           <Row>
             <Col>
               <ModalFooter>
