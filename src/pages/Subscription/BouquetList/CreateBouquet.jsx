@@ -20,6 +20,7 @@ import AddAlacarte from "./AddAlacarte";
 import AddPackages from "./AddPackages";
 import Count from "./Count";
 import TotalCount from "./TotalCount";
+import PreviewTable from "./PreviewTable";
 
 const CreateBouquet = (props) => {
   const { isOpen, toggle } = props;
@@ -612,6 +613,9 @@ const CreateBouquet = (props) => {
                 <Label>LCO Rate**</Label>
                 <Input type="number" defaultValue={0} />
               </Col>
+            </Row>
+            <Row>
+              <PreviewTable />
             </Row>
           </Row>
           <Row>
