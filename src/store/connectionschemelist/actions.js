@@ -24,7 +24,7 @@ export const getConnectionSchemeFail = (error) => ({
   payload: error,
 });
 
-export const addConnectionScheme = (connectionscheme) => ({
+export const addConnectionscheme = (connectionscheme) => ({
   type: ADD_CONNECTIONSCHEME,
   payload: connectionscheme,
 });

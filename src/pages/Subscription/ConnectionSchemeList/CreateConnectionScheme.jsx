@@ -1,5 +1,3 @@
-
-
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
@@ -16,7 +14,7 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addConnectionScheme as onAddConnectionScheme } from "/src/store/connectionschemelist/actions";
+import { addConnectionscheme as onAddConnectionscheme } from "/src/store/connectionschemelist/actions";
 import { useDispatch } from "react-redux";
 
 const CreateConnectionScheme = (props) => {
@@ -42,12 +40,11 @@ const CreateConnectionScheme = (props) => {
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
       code: Yup.string().required("Enter code"),
-      boxtype_lbl_lbl: Yup.string().required("Select scheme type"),
+      boxtype_lbl: Yup.string().required("Select scheme type"),
       hardware_charge: Yup.string().required("Enter hardware charge"),
       installation_charge: Yup.string().required("Enter installation charge"),
       description: Yup.string().required("Enter description"),
-      status: Yup.string().required(""),
-
+      status: Yup.string().required("select status"),
     }),
     onSubmit: (values) => {
       const newConnectionScheme = {
@@ -63,8 +60,7 @@ const CreateConnectionScheme = (props) => {
         created_by: values["created_by"],
       };
       console.log("newConnectionScheme:" + newConnectionScheme);
-      // save new user
-      dispatch(onAddConnectionScheme(newConnectionScheme));
+      dispatch(onAddConnectionscheme(newConnectionScheme));
       validation.resetForm();
       toggle();
     },
@@ -85,11 +81,12 @@ const CreateConnectionScheme = (props) => {
       toggle={toggle}
     >
       <ModalHeader tag="h4" toggle={toggle}>
-        Add New Tax
+        Add New Connection Scheme
       </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
+            console.log("Submitted in connection scheme");
             e.preventDefault();
             validation.handleSubmit();
             return false;
@@ -104,7 +101,7 @@ const CreateConnectionScheme = (props) => {
                 <Input
                   name="name"
                   type="text"
-                  placeholder="Enter Name"
+                  placeholder="Enter name"
                   // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
@@ -135,7 +132,8 @@ const CreateConnectionScheme = (props) => {
                   <option value="12">Standard Definition(SD)</option>
                   <option value="13">High Definition(HD)</option>
                 </Input>
-                {validation.touched.boxtype_lbl && validation.errors.boxtype_lbl ? (
+                {validation.touched.boxtype_lbl &&
+                validation.errors.boxtype_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.boxtype_lbl}
                   </FormFeedback>
@@ -150,18 +148,17 @@ const CreateConnectionScheme = (props) => {
                 <Input
                   name="status"
                   type="select"
-                  placeholder="Select Status"
+                  placeholder="Select status"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
                 >
-                  <option value="101">Select Status</option>
-                  <option value="102">Active</option>
-                  <option value="103">In-Active</option>
+                  <option value="">Select Status</option>
+                  <option value="1">Active</option>
+                  <option value="2">In-Active</option>
                 </Input>
-                {validation.touched.status &&
-                  validation.errors.status ? (
+                {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
                     {validation.errors.status}
                   </FormFeedback>
@@ -184,7 +181,8 @@ const CreateConnectionScheme = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.hardware_charge || ""}
                 ></Input>
-                {validation.touched.hardware_charge && validation.errors.hardware_charge ? (
+                {validation.touched.hardware_charge &&
+                validation.errors.hardware_charge ? (
                   <FormFeedback type="invalid">
                     {validation.errors.hardware_charge}
                   </FormFeedback>
@@ -204,10 +202,9 @@ const CreateConnectionScheme = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.installation_charge || ""}
-                >
-                </Input>
+                ></Input>
                 {validation.touched.installation_charge &&
-                  validation.errors.installation_charge ? (
+                validation.errors.installation_charge ? (
                   <FormFeedback type="invalid">
                     {validation.errors.installation_charge}
                   </FormFeedback>
@@ -224,20 +221,20 @@ const CreateConnectionScheme = (props) => {
                 <Input
                   name="description"
                   type="textarea"
-                  placeholder="Enter Description"
+                  placeholder="Enter description"
                   rows="3"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
