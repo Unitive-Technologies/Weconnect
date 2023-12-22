@@ -16,11 +16,11 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addConnectionScheme as onConnectionScheme } from "/src/store/connectionschemelist/actions";
+import { addConnectionScheme as onAddConnectionScheme } from "/src/store/connectionschemelist/actions";
 import { useDispatch } from "react-redux";
 
 const CreateConnectionScheme = (props) => {
-  const { isOpen, toggleCreateConnectionScheme } = props;
+  const { isOpen, toggle } = props;
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -64,9 +64,9 @@ const CreateConnectionScheme = (props) => {
       };
       console.log("newConnectionScheme:" + newConnectionScheme);
       // save new user
-      dispatch(onConnectionScheme(newConnectionScheme));
+      dispatch(onAddConnectionScheme(newConnectionScheme));
       validation.resetForm();
-      toggleCreateConnectionScheme();
+      toggle();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -82,9 +82,9 @@ const CreateConnectionScheme = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggleCreateConnectionScheme}
+      toggle={toggle}
     >
-      <ModalHeader tag="h4" toggle={toggleCreateConnectionScheme}>
+      <ModalHeader tag="h4" toggle={toggle}>
         Add New Tax
       </ModalHeader>
       <ModalBody>
@@ -264,7 +264,7 @@ const CreateConnectionScheme = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    toggleCreateConnectionScheme();
+                    toggle();
                   }}
                 >
                   Cancel

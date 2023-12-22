@@ -315,7 +315,7 @@ const ConnectionSchemeList = (props) => {
       />
       <CreateConnectionScheme
         isOpen={showCreateConnectionScheme}
-        toggleCreateConnectionScheme={toggleCreateConnectionScheme}
+        toggle={toggleCreateConnectionScheme}
       />
       <BulkAssign isOpen={showBulkAssign} toggle={toggleBulkAssign} />
       <BulkRemoval isOpen={showBulkRemoval} toggle={toggleBulkRemoval} />
