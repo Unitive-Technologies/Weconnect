@@ -19,6 +19,10 @@ import {
   GET_USER_DESIGNATION_FAIL,
   GET_USER_MSO_POLICY_FAIL,
   GET_USER_MSO_POLICY_SUCCESS,
+  GET_USER_REGIONALOFFICE_SUCCESS,
+  GET_USER_REGIONALOFFICE_FAIL,
+  GET_USER_MSO_DETAILS_FAIL,
+  GET_USER_MSO_DETAILS_SUCCESS,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -29,6 +33,8 @@ const INIT_STATE = {
   userRole: [],
   userDesignation: [],
   userMsoPolicy: [],
+  userRegional: [],
+  userMsoDetails: [],
   error: {},
   loading: true,
 };
@@ -114,6 +120,30 @@ const contacts = (state = INIT_STATE, action) => {
         error: action.payload,
       };
 
+    case GET_USER_MSO_DETAILS_SUCCESS:
+      return {
+        ...state,
+        userMsoDetails: action.payload,
+        loading: false,
+      };
+
+    case GET_USER_MSO_DETAILS_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case GET_USER_REGIONALOFFICE_SUCCESS:
+      return {
+        ...state,
+        userRegional: action.payload,
+        loading: false,
+      };
+
+    case GET_USER_REGIONALOFFICE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
     case ADD_USER_SUCCESS:
       return {
         ...state,

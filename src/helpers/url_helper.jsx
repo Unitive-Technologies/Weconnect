@@ -171,3 +171,7 @@ export const GET_USER_DESIGNATION =
   "/user-designation/list?field=id,name&vr=web1.0";
 export const GET_USER_MSO_POLICY =
   "/menu-access-right/list?expand=user_type_lbl&fields=_id,user_id,user_type,role&filter[type][]=1&filter[type][]=2&filter[user_type]=0&filter[role_id]=2&vr=web1.0";
+export const GET_USER_REGIONALOFFICE =
+  "/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[mso_id]=1&filter[type]=1&vr=web1.0";
+export const GET_USER_MSO_DETAILS =
+  "/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[type]=0&vr=web1.0";

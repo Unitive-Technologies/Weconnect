@@ -12,6 +12,8 @@ import {
   GET_USER_ROLE,
   GET_USER_DESIGNATION,
   GET_USER_MSO_POLICY,
+  GET_USER_REGIONALOFFICE,
+  GET_USER_MSO_DETAILS,
 } from "./actionTypes";
 
 import {
@@ -35,6 +37,10 @@ import {
   getUserDesignationSuccess,
   getUserMsoPolicyFail,
   getUserMsoPolicySuccess,
+  getUserRegionalOfficeFail,
+  getUserRegionalOfficeSuccess,
+  getUserMsoDetailsFail,
+  getUserMsoDetailsSuccess,
 } from "./actions";
 
 //Include Both Helper File with needed methods
@@ -49,6 +55,8 @@ import {
   getUserRole,
   getUserDesignation,
   getUserMsoPolicy,
+  getUserRegionalOffice,
+  getUserMsoDetails,
 } from "../../helpers/fakebackend_helper";
 import { toast } from "react-toastify";
 
@@ -111,6 +119,27 @@ function* fetchUserMsoPolicy() {
     yield put(getUserMsoPolicyFail(error));
   }
 }
+
+function* fetchUserMsoDetails() {
+  try {
+    const response = yield call(getUserMsoDetails);
+    // console.log("response:" + JSON.stringify(response));
+    yield put(getUserMsoDetailsSuccess(response.data));
+  } catch (error) {
+    yield put(getUserMsoDetailsFail(error));
+  }
+}
+
+function* fetchUserRegionalOffice() {
+  try {
+    const response = yield call(getUserRegionalOffice);
+    // console.log("response:" + JSON.stringify(response));
+    yield put(getUserRegionalOfficeSuccess(response.data));
+  } catch (error) {
+    yield put(getUserRegionalOfficeFail(error));
+  }
+}
+
 function* fetchUserProfile() {
   try {
     const response = yield call(getUserProfile);
@@ -165,6 +194,8 @@ function* usersSaga() {
   yield takeEvery(GET_USER_ROLE, fetchUserRole);
   yield takeEvery(GET_USER_DESIGNATION, fetchUserDesignation);
   yield takeEvery(GET_USER_MSO_POLICY, fetchUserMsoPolicy);
+  yield takeEvery(GET_USER_REGIONALOFFICE, fetchUserRegionalOffice);
+  yield takeEvery(GET_USER_MSO_DETAILS, fetchUserMsoDetails);
 }
 
 export default usersSaga;

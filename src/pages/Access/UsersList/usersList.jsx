@@ -15,6 +15,8 @@ import {
   getUserRole as onGetUserRole,
   getUserDesignation as onGetUserDesignation,
   getUserMsoPolicy as onGetUserMsoPolicy,
+  getUserRegionalOffice as onGetUserRegionalOffice,
+  getUserMsoDetails as onGetUserMsoDetails,
 } from "/src/store/users/actions";
 
 //redux
@@ -43,6 +45,8 @@ const ContactsList = (props) => {
     userRole: Users.userRole,
     userDesignation: Users.userDesignation,
     userMsoPolicy: Users.userMsoPolicy,
+    userRegional: Users.userRegional,
+    userMsoDetails: Users.userMsoDetails,
   }));
 
   const {
@@ -52,6 +56,8 @@ const ContactsList = (props) => {
     userRole,
     userDesignation,
     userMsoPolicy,
+    userRegional,
+    userMsoDetails,
     loading,
   } = useSelector(ContactsProperties);
 
@@ -339,6 +345,8 @@ const ContactsList = (props) => {
       dispatch(onGetUserRole());
       dispatch(onGetUserDesignation());
       dispatch(onGetUserMsoPolicy());
+      dispatch(onGetUserRegionalOffice());
+      dispatch(onGetUserMsoDetails());
     }
   }, [dispatch, users]);
 
@@ -427,6 +435,7 @@ const ContactsList = (props) => {
         userStatus={userStatus}
         userRole={userRole}
         userDesignation={userDesignation}
+        userRegional={userRegional}
       />
       <AddUserModal
         isOpen={showAddUser}
@@ -436,6 +445,8 @@ const ContactsList = (props) => {
         userRole={userRole}
         userDesignation={userDesignation}
         userMsoPolicy={userMsoPolicy}
+        userRegional={userRegional}
+        userMsoDetails={userMsoDetails}
       />
       <UploadUserModal
         isOpen={showUploadUser}

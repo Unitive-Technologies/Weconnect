@@ -29,6 +29,12 @@ import {
   GET_USER_MSO_POLICY,
   GET_USER_MSO_POLICY_FAIL,
   GET_USER_MSO_POLICY_SUCCESS,
+  GET_USER_REGIONALOFFICE,
+  GET_USER_REGIONALOFFICE_SUCCESS,
+  GET_USER_REGIONALOFFICE_FAIL,
+  GET_USER_MSO_DETAILS,
+  GET_USER_MSO_DETAILS_SUCCESS,
+  GET_USER_MSO_DETAILS_FAIL,
 } from "./actionTypes";
 
 export const getUsers = () => ({
@@ -174,5 +180,33 @@ export const getUserMsoPolicySuccess = (msoPolicy) => ({
 
 export const getUserMsoPolicyFail = (error) => ({
   type: GET_USER_MSO_POLICY_FAIL,
+  payload: error,
+});
+
+export const getUserRegionalOffice = () => ({
+  type: GET_USER_REGIONALOFFICE,
+});
+
+export const getUserRegionalOfficeSuccess = (regional) => ({
+  type: GET_USER_REGIONALOFFICE_SUCCESS,
+  payload: regional,
+});
+
+export const getUserRegionalOfficeFail = (error) => ({
+  type: GET_USER_REGIONALOFFICE_FAIL,
+  payload: error,
+});
+
+export const getUserMsoDetails = () => ({
+  type: GET_USER_MSO_DETAILS,
+});
+
+export const getUserMsoDetailsSuccess = (userMsoDetails) => ({
+  type: GET_USER_MSO_DETAILS_SUCCESS,
+  payload: userMsoDetails,
+});
+
+export const getUserMsoDetailsFail = (error) => ({
+  type: GET_USER_MSO_DETAILS_FAIL,
   payload: error,
 });

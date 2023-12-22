@@ -28,12 +28,14 @@ const AddUserModal = (props) => {
     userRole,
     userDesignation,
     userMsoPolicy,
+    userMsoDetails,
+    userRegional,
   } = props;
-  console.log("userType in add:" + JSON.stringify(userType));
+  console.log("userMsoPolicy in add:" + JSON.stringify(userMsoPolicy));
   const dispatch = useDispatch();
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedType, setSelectedType] = useState("");
-  const [mso, setMso] = useState([]);
+  // const [mso, setMso] = useState([]);
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
 
   const handleStatusChange = (e) => {
@@ -42,39 +44,51 @@ const AddUserModal = (props) => {
     validation.handleChange(e);
   };
 
-  const getMsoDetail = () => {
-    axios
-      .get(
-        `${API_URL}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[type]=0&vr=web1.0}`
-      )
-      .then((response) => {
-        // console.log(response);
-
-        console.log("getMso : " + JSON.stringify(response.data));
-        setMso(response.data);
-      });
+  const handleTypeChange = (e) => {
+    const type = e.target.value;
+    setSelectedType(type);
+    validation.handleChange(e);
   };
+  // const getMsoDetail = () => {
+  //   axios
+  //     .get(
+  //       `${API_URL}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[type]=0&vr=web1.0}`
+  //     )
+  //     .then((response) => {
+  //       // console.log(response);
 
-  const handleTypeChange = async (e) => {
-    try {
-      const usertype = e.target.value;
-      setSelectedType(usertype);
+  //       console.log("getMso : " + JSON.stringify(response.data));
+  //       setMso(response.data);
+  //     });
+  // };
 
-      validation.handleChange(e);
+  // const handleTypeChange = async (e) => {
+  //   try {
+  //     const usertype = e.target.value;
+  //     setSelectedType(usertype);
 
-      const response = await axios.get(
-        `${API_URL}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[type]=0&vr=web1.0}`
-      );
+  //     validation.handleChange(e);
 
-      console.log("getMso : " + JSON.stringify(response.data));
-      setMso(response.data);
-    } catch (error) {
-      console.error("Error fetching MSO data:", error);
-      // Handle error if necessary
-    }
-  };
+  //     // Assuming you have a token stored in localStorage
+  //     const token = "Bearer " + localStorage.getItem("temptoken");
 
-  console.log("mso:" + JSON.stringify(mso));
+  //     const response = await axios.get(
+  //       `${API_URL}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[type]=0&vr=web1.0}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`, // Include your token here
+  //         },
+  //       }
+  //     );
+
+  //     console.log("getMso : " + JSON.stringify(response.data));
+  //     setMso(response.data);
+  //   } catch (error) {
+  //     console.error("Error fetching MSO data:", error);
+  //     // Handle error if necessary
+  //   }
+  // };
+
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -82,10 +96,11 @@ const AddUserModal = (props) => {
     initialValues: {
       name: "",
       email: "",
-      mobile: "",
-      usertype: "",
+      mobile_no: "",
+      type: "",
       status: "",
-      message: "",
+      block_message: "",
+      mso: "",
       role: "",
       designation: "",
       grouppolicy: "",
@@ -99,14 +114,15 @@ const AddUserModal = (props) => {
         .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
         .required("Please Enter Your Email"),
       // mobile: Yup.array().required("Please Enter mobile"),
-      mobile: Yup.string().required("Please Enter mobile Number"),
-      usertype: Yup.string().required("Please Enter User Type"),
+      mobile_no: Yup.string().required("Please Enter mobile Number"),
+      type: Yup.string().required("Please Enter User Type"),
       status: Yup.string().required("Please Enter Status"),
-      message: Yup.string().required("Please Enter Message"),
+      mso: Yup.string().required("Please Select MSO"),
+      block_message: Yup.string().required("Please Enter Message"),
       role: Yup.string().required("Please Enter Role"),
       designation: Yup.string().required("Please Enter Designation"),
       grouppolicy: Yup.string().required("Please Enter Group Policy"),
-      loginid: Yup.string().required("Please Enter Login ID"),
+      username: Yup.string().required("Please Enter Login ID"),
       password: Yup.string().required("Please Enter Password"),
       confirmpassword: Yup.string().required("Please Enter Confirm Password"),
     }),
@@ -115,14 +131,15 @@ const AddUserModal = (props) => {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         email: values["email"],
-        mobile: values["mobile"],
-        usertype: values["usertype"],
+        mobile_no: values["mobile_no"],
+        type: values["type"],
         status: values["status"],
-        message: values["message"],
+        block_message: values["block_message"],
+        mso: values["mso"],
         role: values["role"],
         designation: values["designation"],
         grouppolicy: values["grouppolicy"],
-        loginid: values["loginid"],
+        username: values["username"],
         password: values["password"],
         confirmpassword: values["confirmpassword"],
       };
@@ -210,22 +227,22 @@ const AddUserModal = (props) => {
                   Mobile No.<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="mobile"
+                  name="mobile_no"
                   label="Mobile No."
                   placeholder="Insert Mobile Number"
                   type="text"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.mobile || ""}
+                  value={validation.values.mobile_no || ""}
                   invalid={
-                    validation.touched.mobile && validation.errors.mobile
+                    validation.touched.mobile_no && validation.errors.mobile_no
                       ? true
                       : false
                   }
                 />
-                {validation.touched.mobile && validation.errors.mobile ? (
+                {validation.touched.mobile_no && validation.errors.mobile_no ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.mobile}
+                    {validation.errors.mobile_no}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -235,13 +252,13 @@ const AddUserModal = (props) => {
                   User Type<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="usertype"
+                  name="type"
                   type="select"
-                  placeholder="Select User Type"
+                  placeholder="Select Type"
                   className="form-select"
                   onChange={handleTypeChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.usertype || ""}
+                  value={validation.values.type || ""}
                 >
                   <option value="">Select User Type</option>
                   {userType.map((type) => (
@@ -250,13 +267,14 @@ const AddUserModal = (props) => {
                     </option>
                   ))}
                 </Input>
-                {validation.touched.usertype && validation.errors.usertype ? (
+                {validation.touched.type && validation.errors.type ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.usertype}
+                    {validation.errors.type}
                   </FormFeedback>
                 ) : null}
               </div>
-              {validation.values.usertype && (
+
+              {validation.values.type && (
                 <div className="mb-3">
                   <Label className="form-label">
                     Select MSO<span style={{ color: "red" }}>*</span>
@@ -271,9 +289,9 @@ const AddUserModal = (props) => {
                     value={validation.values.mso || ""}
                   >
                     <option value="">Select Role</option>
-                    {mso.map((role) => (
-                      <option key={role.id} value={role.id}>
-                        {role.name}
+                    {userMsoDetails.map((mso) => (
+                      <option key={mso.id} value={mso.id}>
+                        {mso.name}
                       </option>
                     ))}
                   </Input>
@@ -283,6 +301,40 @@ const AddUserModal = (props) => {
                     </FormFeedback>
                   ) : null}
                 </div>
+              )}
+              {console.log("selectedType: " + selectedType)}
+              {console.log("msoValue: " + validation.values.mso)}
+              {selectedType === 1 && validation.values.mso == 1 ? (
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Select Regional Office
+                    <span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="regional"
+                    type="select"
+                    placeholder="Select Regional Office"
+                    className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.regional || ""}
+                  >
+                    <option value="">Select Regional Office</option>
+                    {userRegional &&
+                      userRegional.map((regional) => (
+                        <option key={regional.id} value={regional.id}>
+                          {regional.name}
+                        </option>
+                      ))}
+                  </Input>
+                  {validation.touched.regional && validation.errors.regional ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.regional}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              ) : (
+                <></>
               )}
             </Col>
             <Col sm="4">
@@ -318,15 +370,16 @@ const AddUserModal = (props) => {
                   Inactive/Block Message<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="message"
+                  name="block_message"
                   type="textarea"
                   placeholder="Enter Message"
                   rows="3"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.message || ""}
+                  value={validation.values.block_message || ""}
                   invalid={
-                    validation.touched.message && validation.errors.message
+                    validation.touched.block_message &&
+                    validation.errors.block_message
                       ? true
                       : false
                   }
@@ -336,9 +389,10 @@ const AddUserModal = (props) => {
                       : true
                   }
                 />
-                {validation.touched.message && validation.errors.message ? (
+                {validation.touched.block_message &&
+                validation.errors.block_message ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.message}
+                    {validation.errors.block_message}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -411,11 +465,13 @@ const AddUserModal = (props) => {
                   disabled={!selectedType}
                 >
                   <option value="">Select Group Policy</option>
-                  {selectedType === "0" &&
+
+                  {selectedType === 0 &&
+                    validation.values.mso == 1 &&
                     userMsoPolicy &&
                     userMsoPolicy.map((policy) => (
-                      <option key={policy.id} value={policy.id}>
-                        {policy.name}
+                      <option key={policy._id} value={policy._id}>
+                        {policy.user_id}
                       </option>
                     ))}
                 </Input>
