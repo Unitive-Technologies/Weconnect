@@ -30,13 +30,13 @@ const CreatedBy = (cell) => {
   return cell.value ? cell.value : "";
 };
 
-// const CasCodes = (cell) => {
-//   return cell.value ? cell.value : "";
-// };
+const CasCodes = (cell) => {
+  return cell.value ? cell.value : "";
+};
 
-// const BBQ = (cell) => {
-//   return cell.value ? cell.value : "";
-// };
+const BBQ = (cell) => {
+  return cell.value ? cell.value : "";
+};
 
 const Channels = (cell) => {
   return cell.value ? cell.value : "";
@@ -49,7 +49,7 @@ export {
   Status,
   CreatedAt,
   CreatedBy,
-  // CasCodes,
-  // BBQ,
+  CasCodes,
+  BBQ,
   Channels,
 };

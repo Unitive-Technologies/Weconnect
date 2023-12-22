@@ -19,8 +19,8 @@ import {
   Status,
   CreatedAt,
   CreatedBy,
-  // CasCodes,
-  // BBQ,
+  CasCodes,
+  BBQ,
   Channels,
 } from "./packageListCol";
 
@@ -130,7 +130,7 @@ const PackageList = (props) => {
         accessor: "isFta_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <PackageType {...cellProps} />;
+          return <PackageType {...cellProps} />;
         },
       },
       {
@@ -138,7 +138,7 @@ const PackageList = (props) => {
         accessor: "cas_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <CasCodes {...cellProps} />;
+          return <CasCodes {...cellProps} />;
         },
       },
       {
@@ -146,15 +146,15 @@ const PackageList = (props) => {
         accessor: "channels",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Channels {...cellProps} />;
+          return <Channels {...cellProps} />;
         },
       },
       {
         Header: "BBQ",
-        accessor: "brdBouques",
+        accessor: "channels",
         filterable: true,
         Cell: (cellProps) => {
-          // return <BBQ {...cellProps} />;
+          return <BBQ {...cellProps} />;
         },
       },
       {

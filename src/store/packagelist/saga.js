@@ -15,10 +15,8 @@ const convertPackageListObject = (packageList) => {
       id: packlist.id,
       name: packlist.name,
       code: packlist.code,
-
       type: packlist.package_type_lbl,
       packagetype: packlist.isFta_lbl,
-
       cascodes: packlist.casCodes.map((pack) => pack.cas_lbl).join(", "),
       channels: packlist.channels.map((pack) => pack.name).join(", "),
       BBQ: packlist.name,
