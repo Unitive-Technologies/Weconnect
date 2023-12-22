@@ -17,6 +17,8 @@ import { useFormik } from "formik";
 import { addBouquet as onAddBouquet } from "/src/store/bouquetlist/actions";
 import { useDispatch } from "react-redux";
 import AddAlacarte from "./AddAlacarte";
+import AddPackages from "./AddPackages";
+import Count from "./Count";
 
 const CreateBouquet = (props) => {
   const { isOpen, toggle } = props;
@@ -532,6 +534,7 @@ const CreateBouquet = (props) => {
             >
               <Col sm="12" style={{ width: "500px" }}>
                 <AddAlacarte />
+                <Count />
               </Col>
             </Row>
             <div
@@ -558,8 +561,9 @@ const CreateBouquet = (props) => {
                 margin: "30px 0px",
               }}
             >
-              <Col sm="12" style={{ width: "500px" }}>
-                {/* <AddBroadcasterBouquets /> */}
+              <Col sm="8" style={{ width: "500px" }}>
+                <AddPackages />
+                <Count />
               </Col>
             </Row>
           </div>
