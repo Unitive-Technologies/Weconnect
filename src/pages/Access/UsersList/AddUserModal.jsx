@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
+import axios from "axios";
 import PropTypes from "prop-types";
 import {
   Col,
@@ -16,6 +17,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewUser as onAddNewUser } from "/src/store/users/actions";
 import { useDispatch } from "react-redux";
+import { JsonRequestError } from "@fullcalendar/core";
 
 const AddUserModal = (props) => {
   const {
@@ -27,10 +29,12 @@ const AddUserModal = (props) => {
     userDesignation,
     userMsoPolicy,
   } = props;
-  console.log("userMsoPolicy in add:" + JSON.stringify(userMsoPolicy));
+  console.log("userType in add:" + JSON.stringify(userType));
   const dispatch = useDispatch();
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedType, setSelectedType] = useState("");
+  const [mso, setMso] = useState([]);
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
 
   const handleStatusChange = (e) => {
     const status = e.target.value;
@@ -38,11 +42,39 @@ const AddUserModal = (props) => {
     validation.handleChange(e);
   };
 
-  const handleTypeChange = (e) => {
-    const usertype = e.target.value;
-    setSelectedType(usertype);
-    validation.handleChange(e);
+  const getMsoDetail = () => {
+    axios
+      .get(
+        `${API_URL}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[type]=0&vr=web1.0}`
+      )
+      .then((response) => {
+        // console.log(response);
+
+        console.log("getMso : " + JSON.stringify(response.data));
+        setMso(response.data);
+      });
   };
+
+  const handleTypeChange = async (e) => {
+    try {
+      const usertype = e.target.value;
+      setSelectedType(usertype);
+
+      validation.handleChange(e);
+
+      const response = await axios.get(
+        `${API_URL}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[type]=0&vr=web1.0}`
+      );
+
+      console.log("getMso : " + JSON.stringify(response.data));
+      setMso(response.data);
+    } catch (error) {
+      console.error("Error fetching MSO data:", error);
+      // Handle error if necessary
+    }
+  };
+
+  console.log("mso:" + JSON.stringify(mso));
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -208,7 +240,6 @@ const AddUserModal = (props) => {
                   placeholder="Select User Type"
                   className="form-select"
                   onChange={handleTypeChange}
-                  // onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.usertype || ""}
                 >
@@ -225,6 +256,34 @@ const AddUserModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+              {validation.values.usertype && (
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Select MSO<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="mso"
+                    type="select"
+                    placeholder="Select MSO"
+                    className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.mso || ""}
+                  >
+                    <option value="">Select Role</option>
+                    {mso.map((role) => (
+                      <option key={role.id} value={role.id}>
+                        {role.name}
+                      </option>
+                    ))}
+                  </Input>
+                  {validation.touched.mso && validation.errors.mso ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.mso}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              )}
             </Col>
             <Col sm="4">
               <div className="mb-3">
@@ -292,7 +351,7 @@ const AddUserModal = (props) => {
                   type="select"
                   placeholder="Select Role"
                   className="form-select"
-                  onChange={validation.handleChange}
+                  // onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   // value={validation.values.role || ""}
                   value={selectedType}

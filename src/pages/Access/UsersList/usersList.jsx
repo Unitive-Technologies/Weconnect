@@ -423,6 +423,10 @@ const ContactsList = (props) => {
         isOpen={showViewUser}
         handleViewUser={handleViewUser}
         user={viewUser}
+        userType={userType}
+        userStatus={userStatus}
+        userRole={userRole}
+        userDesignation={userDesignation}
       />
       <AddUserModal
         isOpen={showAddUser}

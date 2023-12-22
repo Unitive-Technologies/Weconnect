@@ -19,11 +19,26 @@ import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const ViewUserModal = (props) => {
-  const { isOpen, handleViewUser, user } = props;
+  const {
+    isOpen,
+    handleViewUser,
+    user,
+    userType,
+    userStatus,
+    userRole,
+    userDesignation,
+  } = props;
   // console.log("isOpen in viewuser modal:" + isOpen);
 
   const dispatch = useDispatch();
   const [showEditUser, setShowEditUser] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState("");
+
+  const handleStatusChange = (e) => {
+    const status = e.target.value;
+    setSelectedStatus(status);
+    validation.handleChange(e);
+  };
   // console.log("edit in viewuser modal:" + showEditUser);
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -33,16 +48,14 @@ const ViewUserModal = (props) => {
       id: (user && user.id) || "",
       name: (user && user.name) || "",
       email: (user && user.email) || "",
-      mobile: (user && user.mobile_no) || "",
-      usertype: (user && user.usertype) || "",
+      mobile_no: (user && user.mobile_no) || "",
+      type: (user && user.type) || "",
       status: (user && user.status) || "",
-      message: (user && user.message) || "",
+      block_message: (user && user.block_message) || "",
       role: (user && user.role) || "",
       designation: (user && user.designation) || "",
-      grouppolicy: (user && user.grouppolicy) || "",
-      loginid: (user && user.username) || "",
-      password: (user && user.password) || "",
-      confirmpassword: (user && user.confirmpassword) || "",
+      // grouppolicy: (user && user.grouppolicy) || "",
+      username: (user && user.username) || "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
@@ -50,32 +63,32 @@ const ViewUserModal = (props) => {
         .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
         .required("Please Enter Your Email"),
       // mobile: Yup.array().required("Please Enter mobile"),
-      mobile: Yup.string().required("Please Enter mobile Number"),
-      usertype: Yup.string().required("Please Enter User Type"),
+      mobile_no: Yup.string().required("Please Enter mobile Number"),
+      type: Yup.string().required("Please Enter User Type"),
       status: Yup.string().required("Please Enter Status"),
-      message: Yup.string().required("Please Enter Message"),
+      block_message: Yup.string().required("Please Enter Message"),
       role: Yup.string().required("Please Enter Role"),
-      designation: Yup.string().required("Please Enter Designation"),
-      grouppolicy: Yup.string().required("Please Enter Group Policy"),
-      loginid: Yup.string().required("Please Enter Login ID"),
-      password: Yup.string().required("Please Enter Password"),
-      confirmpassword: Yup.string().required("Please Enter Confirm Password"),
+      // designation: Yup.string().required("Please Enter Designation"),
+      // grouppolicy: Yup.string().required("Please Enter Group Policy"),
+      username: Yup.string().required("Please Enter Login ID"),
+      // password: Yup.string().required("Please Enter Password"),
+      // confirmpassword: Yup.string().required("Please Enter Confirm Password"),
     }),
     onSubmit: (values) => {
       const updateUser = {
         id: user.id,
         name: values.name,
         email: values.email,
-        mobile: values.mobile,
-        usertype: values.usertype,
+        mobile_no: values.mobile,
+        type: values.type,
         status: values.status,
-        message: values.message,
+        block_message: values.block_message,
         role: values.role,
-        designation: values.designation,
-        grouppolicy: values.grouppolicy,
-        loginid: values.loginid,
-        password: values.password,
-        confirmpassword: values.confirmpassword,
+        // designation: values.designation,
+        // grouppolicy: values.grouppolicy,
+        username: values.username,
+        // password: values.password,
+        // confirmpassword: values.confirmpassword,
       };
 
       // update user
@@ -179,48 +192,51 @@ const ViewUserModal = (props) => {
                 <div className="mb-3">
                   <Label className="form-label">Mobile No.</Label>
                   <Input
-                    name="mobile"
+                    name="mobile_no"
                     label="Mobile No."
                     placeholder="Insert Mobile Number"
                     type="text"
                     disabled={!showEditUser}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.mobile || ""}
+                    value={validation.values.mobile_no || ""}
                     invalid={
-                      validation.touched.mobile && validation.errors.mobile
+                      validation.touched.mobile_no &&
+                      validation.errors.mobile_no
                         ? true
                         : false
                     }
                   />
-                  {validation.touched.mobile && validation.errors.mobile ? (
+                  {validation.touched.mobile_no &&
+                  validation.errors.mobile_no ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.mobile}
+                      {validation.errors.mobile_no}
                     </FormFeedback>
                   ) : null}
                 </div>
 
                 <div className="mb-3">
-                  <Label className="form-label">User Type</Label>
+                  <Label className="form-label">Type</Label>
                   <Input
-                    name="usertype"
+                    name="type"
                     type="select"
-                    placeholder="Select User Type"
+                    placeholder="Select Type"
                     disabled={!showEditUser}
                     className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.usertype || ""}
+                    value={validation.values.type || ""}
                   >
                     {/* <option value="">Select User Type</option> */}
-                    <option value="1">MSO</option>
-                    <option value="2">RO</option>
-                    <option value="3">Distributor</option>
-                    <option value="4">LCO</option>
+                    {userType.map((type) => (
+                      <option key={type.id} value={type.id}>
+                        {type.name}
+                      </option>
+                    ))}
                   </Input>
-                  {validation.touched.usertype && validation.errors.usertype ? (
+                  {validation.touched.type && validation.errors.type ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.usertype}
+                      {validation.errors.type}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -234,14 +250,19 @@ const ViewUserModal = (props) => {
                     placeholder="Select Status"
                     className="form-select"
                     disabled={!showEditUser}
-                    onChange={validation.handleChange}
+                    // onChange={validation.handleChange}
+                    // onBlur={validation.handleBlur}
+                    // value={validation.values.status || ""}
+                    onChange={handleStatusChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.status || ""}
+                    value={selectedStatus}
                   >
                     {/* <option value="">Select Status</option> */}
-                    <option value="11">Active</option>
-                    <option value="12">BLOCKED</option>
-                    <option value="13">In-Active</option>
+                    {userStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                   </Input>
                   {validation.touched.status && validation.errors.status ? (
                     <FormFeedback type="invalid">
@@ -252,23 +273,30 @@ const ViewUserModal = (props) => {
                 <div className="mb-3">
                   <Label className="form-label">InActive/Block Message</Label>
                   <Input
-                    name="message"
+                    name="block_message"
                     type="textarea"
                     placeholder="Enter Message"
                     rows="3"
                     disabled={!showEditUser}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.message || ""}
+                    value={validation.values.block_message || ""}
                     invalid={
-                      validation.touched.message && validation.errors.message
+                      validation.touched.block_message &&
+                      validation.errors.block_message
                         ? true
                         : false
                     }
+                    disabled={
+                      selectedStatus === "0" || selectedStatus === "-7"
+                        ? false
+                        : true
+                    }
                   />
-                  {validation.touched.message && validation.errors.message ? (
+                  {validation.touched.block_message &&
+                  validation.errors.block_message ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.message}
+                      {validation.errors.block_message}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -285,9 +313,11 @@ const ViewUserModal = (props) => {
                     value={validation.values.role || ""}
                   >
                     {/* <option value="">Select Role</option> */}
-                    <option value="21">Administrator</option>
-                    <option value="22">Staff</option>
-                    <option value="23">User</option>
+                    {userRole.map((role) => (
+                      <option key={role.id} value={role.id}>
+                        {role.name}
+                      </option>
+                    ))}
                   </Input>
                   {validation.touched.role && validation.errors.role ? (
                     <FormFeedback type="invalid">
@@ -310,7 +340,11 @@ const ViewUserModal = (props) => {
                     value={validation.values.designation || ""}
                   >
                     {/* <option value="">Select Designation</option> */}
-                    <option value="dir">Director</option>
+                    {userDesignation.map((desig) => (
+                      <option key={desig.id} value={desig.id}>
+                        {desig.name}
+                      </option>
+                    ))}
                   </Input>
                   {validation.touched.designation &&
                   validation.errors.designation ? (
@@ -346,23 +380,24 @@ const ViewUserModal = (props) => {
                 <div className="mb-3">
                   <Label className="form-label">Login ID</Label>
                   <Input
-                    name="loginid"
+                    name="username"
                     label="Login ID"
                     type="text"
                     placeholder="Login ID"
-                    disabled={!showEditUser}
+                    disabled
+                    // disabled={!showEditUser}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.loginid || ""}
+                    value={validation.values.username || ""}
                     invalid={
-                      validation.touched.loginid && validation.errors.loginid
+                      validation.touched.username && validation.errors.username
                         ? true
                         : false
                     }
                   />
-                  {validation.touched.loginid && validation.errors.loginid ? (
+                  {validation.touched.username && validation.errors.username ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.loginid}
+                      {validation.errors.username}
                     </FormFeedback>
                   ) : null}
                 </div>
