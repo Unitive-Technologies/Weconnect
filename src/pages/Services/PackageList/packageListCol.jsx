@@ -41,6 +41,11 @@ const BBQ = (cell) => {
 const Channels = (cell) => {
   return cell.value ? cell.value : "";
 };
+
+const Rate = (cell) => {
+  return cell.value ? cell.value : "";
+};
+
 export {
   Name,
   Code,
@@ -51,5 +56,6 @@ export {
   CreatedBy,
   CasCodes,
   BBQ,
+  Rate,
   Channels,
 };

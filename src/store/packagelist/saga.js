@@ -8,7 +8,7 @@ import { getPackageListSuccess, getPackageListFail, addPackageListSuccess, addPa
 import { getPackageList, addNewPackageList } from "../../helpers/fakebackend_helper";
 
 const convertPackageListObject = (packageList) => {
-  // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
+  // package list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
   return packageList.map((packlist) => {
     return {
       ...packlist,
@@ -17,7 +17,7 @@ const convertPackageListObject = (packageList) => {
       code: packlist.code,
       type: packlist.package_type_lbl,
       packagetype: packlist.isFta_lbl,
-      cascodes: packlist.casCodes.map((pack) => pack.cas_lbl).join(", "),
+      cascodes: packlist.casCodes[0].cas_lbl + "(" + packlist.casCodes[0].cascode + ")",
       channels: packlist.channels.map((pack) => pack.name).join(", "),
       BBQ: packlist.name,
       status: packlist.status_lbl,
@@ -32,8 +32,8 @@ function* fetchPackageList() {
   try {
     const response = yield call(getPackageList);
     console.log("response:" + JSON.stringify(response));
-    // const packageList = convertPackageListObject(response);
-    yield put(getPackageListSuccess(response.data));
+    const packageList = convertPackageListObject(response.data);
+    yield put(getPackageListSuccess(packageList));
   } catch (error) {
     yield put(getPackageListFail(error));
   }

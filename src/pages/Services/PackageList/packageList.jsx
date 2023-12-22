@@ -21,6 +21,7 @@ import {
   CreatedBy,
   CasCodes,
   BBQ,
+  Rate,
   Channels,
 } from "./packageListCol";
 
@@ -119,7 +120,7 @@ const PackageList = (props) => {
       },
       {
         Header: "Type",
-        accessor: "package_type_lbl",
+        accessor: "type",
         filterable: true,
         Cell: (cellProps) => {
           return <Type {...cellProps} />;
@@ -127,7 +128,7 @@ const PackageList = (props) => {
       },
       {
         Header: "Package Type",
-        accessor: "isFta_lbl",
+        accessor: "packagetype",
         filterable: true,
         Cell: (cellProps) => {
           return <PackageType {...cellProps} />;
@@ -135,7 +136,7 @@ const PackageList = (props) => {
       },
       {
         Header: "CAS CODES",
-        // accessor: "cas_lbl",
+        accessor: "cascodes",
         filterable: true,
         Cell: (cellProps) => {
           return <CasCodes {...cellProps} />;
@@ -143,7 +144,7 @@ const PackageList = (props) => {
       },
       {
         Header: "CHANNELS",
-        // accessor: "channels",
+        accessor: "channels",
         filterable: true,
         Cell: (cellProps) => {
           return <Channels {...cellProps} />;
@@ -151,18 +152,26 @@ const PackageList = (props) => {
       },
       {
         Header: "BBQ",
-        // accessor: "channels",
+        accessor: "BBQ",
         filterable: true,
         Cell: (cellProps) => {
-          // return <BBQ {...cellProps} />;
+          return <BBQ {...cellProps} />;
         },
       },
       {
         Header: "Staus",
-        accessor: "status_lbl",
+        accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
           return <Status {...cellProps} />;
+        },
+      },
+      {
+        Header: "Rate",
+        accessor: "rate",
+        filterable: true,
+        Cell: (cellProps) => {
+          return <Rate {...cellProps} />;
         },
       },
       {
