@@ -42,6 +42,7 @@ const AddNewDistrict = (props) => {
       description: Yup.string().required("Enter description"),
     }),
     onSubmit: (values) => {
+      console.log("Post values: ", values);
       const newDistrict = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         designation: values["designation"],

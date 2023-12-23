@@ -133,19 +133,29 @@ const CreateBouquet = (props) => {
             </Col>
 
             <Col lg={2}>
-              <div className="form-check form-switch form-switch-lg mb-3">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitchsizelg"
-                  defaultChecked
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="customSwitchsizelg"
-                >
-                  Custom / Auto
-                </label>
+              <label></label>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-around",
+                  alignItems: "center",
+                }}
+              >
+                <label>Custom</label>
+                <div className="form-check form-switch form-switch-lg mb-2">
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                    id="customSwitchsizelg"
+                    defaultChecked
+                  />
+                  <label
+                    className="form-check-label"
+                    htmlFor="customSwitchsizelg"
+                  >
+                    Auto
+                  </label>
+                </div>
               </div>
             </Col>
           </Row>
@@ -351,19 +361,27 @@ const CreateBouquet = (props) => {
                   NCF<span style={{ color: "red" }}>*</span>{" "}
                   <i className="mdi mdi-information"></i>
                 </Label>
-                <div className="form-check form-switch form-switch-lg mb-3">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="customSwitchsizelg"
-                    defaultChecked
-                  />
-                  <label
-                    className="form-check-label"
-                    htmlFor="customSwitchsizelg"
-                  >
-                    Fix NCF / Dynamic NCF
-                  </label>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <label style={{ marginRight: "10px" }}>Fix NCF</label>
+                  <div className="form-check form-switch form-switch-lg mb-2">
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id="customSwitchsizelg"
+                      defaultChecked
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="customSwitchsizelg"
+                    >
+                      Dynamic NCF
+                    </label>
+                  </div>
                 </div>
                 {validation.touched.ifFixNCF && validation.errors.ifFixNCF ? (
                   <FormFeedback type="invalid">
@@ -617,6 +635,41 @@ const CreateBouquet = (props) => {
             <Row>
               <PreviewTable />
             </Row>
+          </Row>
+          <div
+            style={{
+              // margin: "20px 0px",
+              marginTop: "20px",
+              marginBottom: "18px",
+              zIndex: 12000,
+              backgroundColor: "#fff",
+              width: "fit-content",
+              marginLeft: "35%",
+              position: "absolute",
+              padding: "0px 10px",
+            }}
+          >
+            <p style={{ fontWeight: "bold" }}>
+              ADDITIONAL MRP Pricing / Bouquet Pricing forLCO
+              <span style={{ color: "red" }}>*</span>
+            </p>
+          </div>
+          <Row
+            style={{
+              position: "relative",
+              border: "1px solid #ced4da",
+              padding: "20px 0px",
+              margin: "30px 0px",
+            }}
+          >
+            <div style={{ display: "flex" }}>
+              <Label>Additional Name: </Label>
+              <Input
+                placeholder="Enter additional name"
+                type="text"
+                style={{ width: "210px" }}
+              />
+            </div>
           </Row>
           <Row>
             <Col>

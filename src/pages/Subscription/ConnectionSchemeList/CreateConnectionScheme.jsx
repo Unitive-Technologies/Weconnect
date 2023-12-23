@@ -86,7 +86,7 @@ const CreateConnectionScheme = (props) => {
       <ModalBody>
         <Form
           onSubmit={(e) => {
-            console.log("Submitted in connection scheme");
+            // console.log("Submitted in connection scheme");
             e.preventDefault();
             validation.handleSubmit();
             return false;
