@@ -1,7 +1,11 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
-import { Card, CardBody, Col, Input, Row } from "reactstrap";
+import {
+  Card, CardBody, Col, Input, Row, Toast,
+  ToastHeader,
+  ToastBody,
+} from "reactstrap";
 import { Link } from "react-router-dom";
 
 const AddChannels = (props) => {
@@ -198,6 +202,12 @@ const AddChannels = (props) => {
     []
   );
 
+  const [showAddChannelsPlus, setShowAddChannelsPlus] = useState(false);
+
+  const handleAddChannelsPlus = () => {
+    setShowAddChannelsPlus(!showAddChannelsPlus);
+  };
+
   const columns1 = useMemo(
     () => [
       {
@@ -261,14 +271,28 @@ const AddChannels = (props) => {
     <Card>
       <CardBody>
         <Row>
-          <Col lg={12}>
+          <Col lg={10}>
+          </Col>
+          <Col lg={2}>
             <div className="mb-3">
               <button type="button" className="btn btn-primary d-flex justify-content-end">
-                <i className="mdi mdi-plus ms-1" style={{ fontSize: 20 }}></i>
+                <i className="mdi mdi-plus ms-1" style={{ fontSize: 20 }} onClick={handleAddChannelsPlus}></i>
               </button>
             </div>
           </Col>
         </Row>
+
+        <div
+          className="position-fixed top-0 end-0 p-3"
+          style={{ zIndex: "1005" }}
+        >
+          <Toast isOpen={showAddChannelsPlus}>
+            <ToastHeader toggle={handleAddChannelsPlus}>
+              <i className="mdi mdi-alert-outline me-2"></i> Warning
+            </ToastHeader>
+            <ToastBody>Please select package definition</ToastBody>
+          </Toast>
+        </div>
 
         <TableContainer
           // isPagination={true}

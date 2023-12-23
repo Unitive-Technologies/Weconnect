@@ -74,6 +74,18 @@ const ConnectionSchemeList = (props) => {
   const columns = useMemo(
     () => [
       {
+        Header: "*",
+        disableFilters: true,
+        filterable: true,
+        Cell: () => {
+          return (
+            <>
+              <i className="mdi mdi-check"></i>
+            </>
+          );
+        },
+      },
+      {
         Header: "#",
         // accessor: "name",
         disableFilters: true,
