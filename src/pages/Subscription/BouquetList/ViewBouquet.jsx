@@ -28,6 +28,12 @@ import AddBrands from "./AddBrands";
 const ViewBouquet = (props) => {
   const { isOpen, toggle, bouquet } = props;
   const dispatch = useDispatch();
+  const [showEditBouquet, setShowEditBouquet] = useState(false);
+
+  const editToggle = () => {
+    setShowEditBouquet(false);
+    toggle();
+  };
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -102,9 +108,25 @@ const ViewBouquet = (props) => {
       toggle={toggle}
       size="xl"
     >
-      <ModalHeader tag="h4" toggle={toggle}>
-        Add New Bouquet
-      </ModalHeader>
+      {!showEditBouquet ? (
+        <ModalHeader toggle={toggle} tag="h4">
+          View Bouquet Details
+          <i
+            className="bx bx bxs-edit"
+            style={{
+              position: "absolute",
+              marginLeft: "75%",
+              cursor: "pointer",
+              marginTop: ".5%",
+            }}
+            onClick={() => setShowEditBouquet(true)}
+          ></i>
+        </ModalHeader>
+      ) : (
+        <ModalHeader toggle={editToggle} tag="h4">
+          Edit Bouquet
+        </ModalHeader>
+      )}
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -121,43 +143,16 @@ const ViewBouquet = (props) => {
                   name="code"
                   type="text"
                   placeholder="Enter code"
-                  // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.code || ""}
+                  disabled={!showEditBouquet}
                 ></Input>
                 {validation.touched.code && validation.errors.code ? (
                   <FormFeedback type="invalid">
                     {validation.errors.code}
                   </FormFeedback>
                 ) : null}
-              </div>
-            </Col>
-
-            <Col lg={2}>
-              <label></label>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-around",
-                  alignItems: "center",
-                }}
-              >
-                <label>Custom</label>
-                <div className="form-check form-switch form-switch-lg mb-2">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="customSwitchsizelg"
-                    defaultChecked
-                  />
-                  <label
-                    className="form-check-label"
-                    htmlFor="customSwitchsizelg"
-                  >
-                    Auto
-                  </label>
-                </div>
               </div>
             </Col>
           </Row>
@@ -174,6 +169,7 @@ const ViewBouquet = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}
+                  disabled={!showEditBouquet}
                 ></Input>
                 {validation.touched.name && validation.errors.name ? (
                   <FormFeedback type="invalid">
@@ -195,10 +191,11 @@ const ViewBouquet = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.boxtype_lbl || ""}
+                  disabled={!showEditBouquet}
                 >
                   <option value="">Select box type</option>
-                  <option value="SD">Standard boxtype_lbl(SD)</option>
-                  <option value="HD">High boxtype_lbl(HD)</option>
+                  <option value="SD">Standard Definition(SD)</option>
+                  <option value="HD">High Definition(HD)</option>
                 </Input>
                 {validation.touched.boxtype_lbl &&
                 validation.errors.boxtype_lbl ? (
@@ -227,6 +224,7 @@ const ViewBouquet = (props) => {
                       ? true
                       : false
                   }
+                  disabled={!showEditBouquet}
                 >
                   <option value="">Select bouquet type</option>
                   <option value="Base">Base</option>
@@ -259,10 +257,11 @@ const ViewBouquet = (props) => {
                       ? true
                       : false
                   }
+                  disabled={!showEditBouquet}
                 >
                   <option value="">Select status</option>
-                  <option value="1">Active</option>
-                  <option value="0">In-active</option>
+                  <option value="Active">Active</option>
+                  <option value="In-active">In-active</option>
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
@@ -292,6 +291,7 @@ const ViewBouquet = (props) => {
                       ? true
                       : false
                   }
+                  disabled={!showEditBouquet}
                 />
                 {validation.touched.description &&
                 validation.errors.description ? (
@@ -315,6 +315,7 @@ const ViewBouquet = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.is_exclusive_lbl || ""}
+                  disabled={!showEditBouquet}
                 >
                   <option value="Not Exclusive">Not Exclusive</option>
                   <option value="Only MSO user can Assign and Renew">
@@ -409,6 +410,7 @@ const ViewBouquet = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.max_ncf_channels || ""}
+                  disabled={!showEditBouquet}
                 />
                 {validation.touched.max_ncf_channels &&
                 validation.errors.max_ncf_channels ? (
@@ -431,6 +433,7 @@ const ViewBouquet = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.showon_portal || ""}
+                  disabled={!showEditBouquet}
                 >
                   <option value="No">No</option>
                   <option value="Yes">Yes</option>
@@ -456,6 +459,7 @@ const ViewBouquet = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.category_lbl || ""}
+                  disabled={!showEditBouquet}
                 >
                   <option value="MSO Bouquet">MSO Bouquet</option>
                   <option value="Broadcaster Bouquet">
@@ -484,6 +488,7 @@ const ViewBouquet = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.showon_portal || ""}
+                  disabled={!showEditBouquet}
                 >
                   <option value="No">No</option>
                   <option value="Yes">Yes</option>
@@ -511,6 +516,7 @@ const ViewBouquet = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.epbx || ""}
+                  disabled={!showEditBouquet}
                 >
                   <option value="">Select epbx</option>
                 </Input>
