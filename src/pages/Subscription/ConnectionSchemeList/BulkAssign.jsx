@@ -1,75 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Col, Row, Modal, ModalHeader, ModalBody, Form } from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
 import OperatorList from "../BouquetList/OperatorList";
+import SchemesList from "./SchemesList";
 
 const BulkAssign = (props) => {
-  const { isOpen, toggle, bouquet } = props;
-  const dispatch = useDispatch();
-  const [showEditBouquet, setShowEditBouquet] = useState(false);
-
-  const editToggle = () => {
-    setShowEditBouquet(false);
-    toggle();
-  };
-
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
-
-    initialValues: {
-      name: (bouquet && bouquet.name) || "",
-      code: (bouquet && bouquet.code) || "",
-      status: (bouquet && bouquet.status) || "",
-      type_lbl: (bouquet && bouquet.type_lbl) || "",
-      boxtype_lbl: (bouquet && bouquet.boxtype_lbl) || "",
-      description: (bouquet && bouquet.description) || "",
-      created_at: (bouquet && bouquet.created_at) || "",
-      created_by: (bouquet && bouquet.created_by) || "my mso(mso)",
-      status_lbl: (bouquet && bouquet.status_lbl) || "",
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Enter name"),
-      code: Yup.string().required("Enter code"),
-      status: Yup.string().required("Select status"),
-      calculate_per_channel: Yup.string().required(
-        "Select calculate per channel"
-      ),
-      from_channel_no: Yup.string().required("Enter from channel"),
-      to_channel_no: Yup.string().required("Enter to channel"),
-      is_refundable: Yup.string().required("Select refundable"),
-      mrp: Yup.string(),
-      lmo_discount: Yup.string(),
-      lmo_rate: Yup.string(),
-    }),
-    onSubmit: (values) => {
-      const updateNcf = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
-        name: values["name"],
-        code: values["code"],
-        status: values["status"],
-        calculate_per_channel: values["calculate_per_channel"],
-        from_channel_no: values["from_channel_no"],
-        to_channel_no: values["to_channel_no"],
-        is_refundable: values["is_refundable"],
-        mrp: values["mrp"],
-        lmo_discount: values["lmo_discount"],
-        lmo_rate: values["lmo_rate"],
-        created_at: new Date(),
-        created_by: values["created_by"],
-      };
-      console.log("Update NCF:" + JSON.stringify(updateNcf));
-      dispatch(onAddNcf(updateNcf));
-      validation.resetForm();
-      toggle();
-    },
-    onReset: (values) => {
-      validation.setValues(validation.initialValues);
-    },
-  });
+  const { isOpen, toggle } = props;
 
   return (
     <Modal
@@ -83,7 +19,7 @@ const BulkAssign = (props) => {
       size="xl"
     >
       <ModalHeader toggle={toggle} tag="h4">
-        Bulk Assign Bouquet
+        Bulk Assign Connection Scheme
       </ModalHeader>
       <ModalBody>
         <Form
@@ -120,6 +56,19 @@ const BulkAssign = (props) => {
             >
               <OperatorList />
             </Row>
+          </Row>
+          <Row>
+            <h6
+              style={{
+                fontWeight: "bold",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              Schemes<span style={{ color: "red" }}>*</span>
+            </h6>
+            <SchemesList />
           </Row>
           <Row>
             <Col sm="12">
