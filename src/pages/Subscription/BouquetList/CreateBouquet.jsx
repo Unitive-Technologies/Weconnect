@@ -11,6 +11,7 @@ import {
   Input,
   Form,
   ModalFooter,
+  Button,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -638,8 +639,6 @@ const CreateBouquet = (props) => {
           </Row>
           <div
             style={{
-              // margin: "20px 0px",
-              marginTop: "20px",
               marginBottom: "18px",
               zIndex: 12000,
               backgroundColor: "#fff",
@@ -647,6 +646,7 @@ const CreateBouquet = (props) => {
               marginLeft: "35%",
               position: "absolute",
               padding: "0px 10px",
+              marginTop: "-10px",
             }}
           >
             <p style={{ fontWeight: "bold" }}>
@@ -662,13 +662,18 @@ const CreateBouquet = (props) => {
               margin: "30px 0px",
             }}
           >
-            <div style={{ display: "flex" }}>
-              <Label>Additional Name: </Label>
-              <Input
-                placeholder="Enter additional name"
-                type="text"
-                style={{ width: "210px" }}
-              />
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <Label style={{ marginRight: "10px" }}>Additional Name: </Label>
+                <Input
+                  placeholder="Enter additional name"
+                  type="text"
+                  style={{ width: "210px" }}
+                />
+              </div>
+              <div>
+                <Button>+ Add Pricing</Button>
+              </div>
             </div>
           </Row>
           <Row>
