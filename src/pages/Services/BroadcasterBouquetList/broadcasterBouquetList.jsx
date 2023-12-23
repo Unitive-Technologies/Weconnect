@@ -122,7 +122,7 @@ const BroadcasterBouquetList = (props) => {
       },
       {
         Header: "Broadcaster",
-        accessor: "broadcaster_lbl",
+        accessor: "broadcaster",
         filterable: true,
         Cell: (cellProps) => {
           return <Broadcaster {...cellProps} />;
@@ -130,7 +130,7 @@ const BroadcasterBouquetList = (props) => {
       },
       {
         Header: "Type",
-        accessor: "channel_type_lbl",
+        accessor: "type",
         filterable: true,
         Cell: (cellProps) => {
           return <Type {...cellProps} />;
@@ -138,7 +138,7 @@ const BroadcasterBouquetList = (props) => {
       },
       {
         Header: "FTA",
-        accessor: "isFta_lbl",
+        accessor: "FTA",
         filterable: true,
         Cell: (cellProps) => {
           return <FTA {...cellProps} />;
@@ -149,14 +149,20 @@ const BroadcasterBouquetList = (props) => {
         accessor: "channels",
         filterable: true,
         Cell: (cellProps) => {
+          { console.log("channels Data" + JSON.stringify(cellProps.row.original.channels)) }
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.channels}</p>
+            <>
+              {cellProps.row.original.channels && cellProps.row.original.channels.map((channel) =>
+                <><p className="text-muted mb-0"
+                  style={{ maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{channel.name}({channel.channel_type_lbl}),</p></>)
+              }
+            </>
           );
         },
       },
       {
         Header: "Status",
-        accessor: "status_lbl",
+        accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
           return <Status {...cellProps} />;
@@ -164,7 +170,7 @@ const BroadcasterBouquetList = (props) => {
       },
       {
         Header: "Rate",
-        accessor: "broadcasterRate",
+        accessor: "rate",
         filterable: true,
         Cell: (cellProps) => {
           return <Rate {...cellProps} />;
@@ -180,7 +186,7 @@ const BroadcasterBouquetList = (props) => {
       },
       {
         Header: "Created By",
-        accessor: "created_by_lbl",
+        accessor: "created_by",
         filterable: true,
         Cell: (cellProps) => {
           return <CreatedBy {...cellProps} />;

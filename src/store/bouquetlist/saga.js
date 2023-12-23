@@ -23,9 +23,9 @@ const convertBouquetListObject = (bouquetList) => {
       created_by: bouquet.created_by === -1 ? "console" : "My MSO(mso)",
       status:
         bouquet.status === 1
-          ? "ACTIVE"
+          ? "Active"
           : bouquet.status === 0
-          ? "INACTIVE"
+          ? "In-active"
           : "BLOCKED",
       setting: bouquet.setting,
       is_exclusive_lbl: bouquet.is_exclusive_lbl,

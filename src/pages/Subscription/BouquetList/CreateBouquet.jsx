@@ -11,6 +11,7 @@ import {
   Input,
   Form,
   ModalFooter,
+  Button,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -21,6 +22,8 @@ import AddPackages from "./AddPackages";
 import Count from "./Count";
 import TotalCount from "./TotalCount";
 import PreviewTable from "./PreviewTable";
+import AdditionalMRP from "./AdditionalMRP";
+import AddBrands from "./AddBrands";
 
 const CreateBouquet = (props) => {
   const { isOpen, toggle } = props;
@@ -133,19 +136,29 @@ const CreateBouquet = (props) => {
             </Col>
 
             <Col lg={2}>
-              <div className="form-check form-switch form-switch-lg mb-3">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitchsizelg"
-                  defaultChecked
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="customSwitchsizelg"
-                >
-                  Custom / Auto
-                </label>
+              <label></label>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-around",
+                  alignItems: "center",
+                }}
+              >
+                <label>Custom</label>
+                <div className="form-check form-switch form-switch-lg mb-2">
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                    id="customSwitchsizelg"
+                    defaultChecked
+                  />
+                  <label
+                    className="form-check-label"
+                    htmlFor="customSwitchsizelg"
+                  >
+                    Auto
+                  </label>
+                </div>
               </div>
             </Col>
           </Row>
@@ -351,19 +364,27 @@ const CreateBouquet = (props) => {
                   NCF<span style={{ color: "red" }}>*</span>{" "}
                   <i className="mdi mdi-information"></i>
                 </Label>
-                <div className="form-check form-switch form-switch-lg mb-3">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="customSwitchsizelg"
-                    defaultChecked
-                  />
-                  <label
-                    className="form-check-label"
-                    htmlFor="customSwitchsizelg"
-                  >
-                    Fix NCF / Dynamic NCF
-                  </label>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <label style={{ marginRight: "10px" }}>Fix NCF</label>
+                  <div className="form-check form-switch form-switch-lg mb-2">
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id="customSwitchsizelg"
+                      defaultChecked
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="customSwitchsizelg"
+                    >
+                      Dynamic NCF
+                    </label>
+                  </div>
                 </div>
                 {validation.touched.ifFixNCF && validation.errors.ifFixNCF ? (
                   <FormFeedback type="invalid">
@@ -571,7 +592,6 @@ const CreateBouquet = (props) => {
           </div>
           <div
             style={{
-              // margin: "20px 0px",
               marginTop: "20px",
               marginBottom: "18px",
               zIndex: 12000,
@@ -617,6 +637,105 @@ const CreateBouquet = (props) => {
             <Row>
               <PreviewTable />
             </Row>
+          </Row>
+          <div
+            style={{
+              marginBottom: "18px",
+              zIndex: 12000,
+              backgroundColor: "#fff",
+              width: "fit-content",
+              marginLeft: "35%",
+              position: "absolute",
+              padding: "0px 10px",
+              marginTop: "-10px",
+            }}
+          >
+            <p style={{ fontWeight: "bold" }}>
+              ADDITIONAL MRP Pricing / Bouquet Pricing forLCO
+              <span style={{ color: "red" }}>*</span>
+            </p>
+          </div>
+          <Row
+            style={{
+              position: "relative",
+              border: "1px solid #ced4da",
+              padding: "20px 0px",
+              margin: "30px 0px",
+            }}
+          >
+            <Row>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <Label style={{ marginRight: "10px" }}>
+                    Additional Name:{" "}
+                  </Label>
+                  <Input
+                    placeholder="Enter additional name"
+                    type="text"
+                    style={{ width: "210px" }}
+                  />
+                </div>
+                <div>
+                  <Button>+ Add Pricing</Button>
+                </div>
+              </div>
+            </Row>
+            <Row>
+              <Col sm="3">
+                <Label>MRP**</Label>
+                <Input disabled defaultValue={0} />
+              </Col>
+              <Col sm="3">
+                <Label>DRP**</Label>
+                <Input type="number" defaultValue={0} />
+              </Col>
+              <Col sm="3">
+                <Label>LCO Discount(%)</Label>
+                <Input type="number" defaultValue="20" />
+              </Col>
+              <Col sm="3">
+                <Label>LCO Rate**</Label>
+                <Input type="number" defaultValue={0} />
+              </Col>
+            </Row>
+            <Row>
+              <PreviewTable />
+            </Row>
+            <Row>
+              <AdditionalMRP />
+            </Row>
+          </Row>
+          <div>**Applicable NCF and Taxes Additional</div>
+          <div
+            style={{
+              marginTop: "20px",
+              marginBottom: "18px",
+              zIndex: 12000,
+              backgroundColor: "#fff",
+              width: "fit-content",
+              marginLeft: "40%",
+              position: "absolute",
+              padding: "0px 10px",
+            }}
+          >
+            <p style={{ fontWeight: "bold" }}>
+              Add Brands
+              <span style={{ color: "red" }}>*</span>
+            </p>
+          </div>
+          <Row
+            style={{
+              position: "relative",
+              border: "1px solid #ced4da",
+              padding: "20px 0px",
+              margin: "30px 0px",
+            }}
+          >
+            <AddBrands />
+            <p>
+              *If no brand selected, this bouquet will be available for all STB
+              brands
+            </p>
           </Row>
           <Row>
             <Col>

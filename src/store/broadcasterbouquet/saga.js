@@ -21,10 +21,20 @@ const convertBroadcasterBouquetListObject = (broadcasterBouquetList) => {
       code: brodcastbouquet.code,
       broadcaster: brodcastbouquet.broadcaster_lbl,
       type: brodcastbouquet.channel_type_lbl,
-      FTA: brodcastbouquet.isFta_lbl,
-      channels: brodcastbouquet.channels
-        .map((channel) => channel.broadcaster_lbl)
-        .join(", "),
+      // FTA: brodcastbouquet.isFta_lbl,
+
+      FTA:
+        brodcastbouquet.FTA === 1
+          ? "No"
+          : brodcastbouquet.FTA === 0
+            ? "Yes"
+            : "Payment",
+      channels: brodcastbouquet.channels,
+      // channels: brodcastbouquet.channels[0].name + "(" + brodcastbouquet.channels[0].channel_type_lbl + ")",
+      // channels: brodcastbouquet.channels
+      //   .map((channel) => channel.broadcaster_lbl)
+      //   .join(", "),
+
 
       status:
         brodcastbouquet.status === 1
@@ -44,9 +54,9 @@ function* fetchBroadcasterBouquetList() {
   try {
     const response = yield call(getBroadcasterBouquetList);
     console.log("response:" + JSON.stringify(response));
-    // const broadcasterBouquetList =
-    //   convertBroadcasterBouquetListObject(response);
-    yield put(getBroadcasterBouquetListSuccess(response.data));
+    const broadcasterBouquetList =
+      convertBroadcasterBouquetListObject(response.data);
+    yield put(getBroadcasterBouquetListSuccess(broadcasterBouquetList));
   } catch (error) {
     yield put(getBroadcasterBouquetListFail(error));
   }
