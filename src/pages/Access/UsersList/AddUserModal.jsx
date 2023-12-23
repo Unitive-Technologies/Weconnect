@@ -17,7 +17,6 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewUser as onAddNewUser } from "/src/store/users/actions";
 import { useDispatch } from "react-redux";
-import { JsonRequestError } from "@fullcalendar/core";
 
 const AddUserModal = (props) => {
   const {
@@ -32,8 +31,8 @@ const AddUserModal = (props) => {
     userRegional,
     userDistributor,
   } = props;
-  console.log("userRegional in add:" + JSON.stringify(userRegional));
-  console.log("userDistributor in add:" + JSON.stringify(userDistributor));
+  // console.log("userRegional in add:" + JSON.stringify(userRegional));
+  // console.log("userDistributor in add:" + JSON.stringify(userDistributor));
   const dispatch = useDispatch();
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedType, setSelectedType] = useState("");
@@ -92,7 +91,6 @@ const AddUserModal = (props) => {
   // };
 
   const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
@@ -102,10 +100,8 @@ const AddUserModal = (props) => {
       type: "",
       status: "",
       block_message: "",
-      // mso: "",
       role: "",
       designation_id: "",
-      // grouppolicy: "",
       username: "",
       password: "",
       confirmpassword: "",
@@ -115,15 +111,11 @@ const AddUserModal = (props) => {
       email: Yup.string()
         .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
         .required("Please Enter Your Email"),
-      // mobile: Yup.array().required("Please Enter mobile"),
       mobile_no: Yup.string().required("Please Enter mobile Number"),
       type: Yup.string().required("Please Enter User Type"),
       status: Yup.string().required("Please Enter Status"),
-      // mso: Yup.string().required("Please Select MSO"),
-      block_message: Yup.string().required("Please Enter Message"),
       role: Yup.string().required("Please Enter Role"),
       designation_id: Yup.string().required("Please Enter Designation"),
-      // grouppolicy: Yup.string().required("Please Enter Group Policy"),
       username: Yup.string().required("Please Enter Login ID"),
       password: Yup.string().required("Please Enter Password"),
       confirmpassword: Yup.string().required("Please Enter Confirm Password"),
@@ -137,16 +129,12 @@ const AddUserModal = (props) => {
         type: values["type"],
         status: values["status"],
         block_message: values["block_message"],
-        // mso: values["mso"],
         role: values["role"],
         designation_id: values["designation"],
-        // grouppolicy: values["grouppolicy"],
         username: values["username"],
         password: values["password"],
-        // confirmpassword: values["confirmpassword"],
       };
       console.log("newUser:" + JSON.stringify(newUser));
-      // save new user
       dispatch(onAddNewUser(newUser));
       validation.resetForm();
       handleAddUser();
@@ -510,7 +498,7 @@ const AddUserModal = (props) => {
                 position: "relative",
                 border: "1px solid #ced4da",
                 padding: "20px 0px",
-                margin: "20px 0px",
+                margin: "30px 0px",
               }}
             >
               <Col lg={4}>
@@ -615,7 +603,7 @@ const AddUserModal = (props) => {
                 "regional value:" + typeof parseInt(validation.values.regional)
               )}
               <Col lg={4}>
-                {validation.values.regional && (
+                {validation.values.regional ? (
                   <div className="mb-3">
                     <Label className="form-label">
                       Select Distributor
@@ -652,10 +640,38 @@ const AddUserModal = (props) => {
                           </option>
                         ))}
                     </Input>
-                    {validation.touched.regional &&
-                    validation.errors.regional ? (
+                    {validation.touched.distributor &&
+                    validation.errors.distributor ? (
                       <FormFeedback type="invalid">
-                        {validation.errors.regional}
+                        {validation.errors.distributor}
+                      </FormFeedback>
+                    ) : null}
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </Col>
+              <Col lg={4}>
+                {validation.values.distributor && (
+                  <div className="mb-3">
+                    <Label className="form-label">
+                      Select LCO
+                      <span style={{ color: "red" }}>*</span>
+                    </Label>
+                    <Input
+                      name="lco"
+                      type="select"
+                      placeholder="Select LCO"
+                      className="form-select"
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.distributor || ""}
+                    >
+                      <option value="">Select LCO</option>
+                    </Input>
+                    {validation.touched.lco && validation.errors.lco ? (
+                      <FormFeedback type="invalid">
+                        {validation.errors.lco}
                       </FormFeedback>
                     ) : null}
                   </div>
@@ -668,7 +684,13 @@ const AddUserModal = (props) => {
           <Row>
             <Col>
               <ModalFooter>
-                <button type="submit" className="btn btn-success save-user">
+                <button
+                  type="submit"
+                  className="btn btn-success save-user"
+                  onClick={() => {
+                    validation.handleSubmit();
+                  }}
+                >
                   Create
                 </button>
                 <button
