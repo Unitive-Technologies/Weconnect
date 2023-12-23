@@ -30,8 +30,10 @@ const AddUserModal = (props) => {
     userMsoPolicy,
     userMsoDetails,
     userRegional,
+    userDistributor,
   } = props;
-  console.log("userMsoPolicy in add:" + JSON.stringify(userMsoPolicy));
+  console.log("userRegional in add:" + JSON.stringify(userRegional));
+  console.log("userDistributor in add:" + JSON.stringify(userDistributor));
   const dispatch = useDispatch();
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedType, setSelectedType] = useState("");
@@ -100,11 +102,11 @@ const AddUserModal = (props) => {
       type: "",
       status: "",
       block_message: "",
-      mso: "",
+      // mso: "",
       role: "",
-      designation: "",
-      grouppolicy: "",
-      loginid: "",
+      designation_id: "",
+      // grouppolicy: "",
+      username: "",
       password: "",
       confirmpassword: "",
     },
@@ -117,11 +119,11 @@ const AddUserModal = (props) => {
       mobile_no: Yup.string().required("Please Enter mobile Number"),
       type: Yup.string().required("Please Enter User Type"),
       status: Yup.string().required("Please Enter Status"),
-      mso: Yup.string().required("Please Select MSO"),
+      // mso: Yup.string().required("Please Select MSO"),
       block_message: Yup.string().required("Please Enter Message"),
       role: Yup.string().required("Please Enter Role"),
-      designation: Yup.string().required("Please Enter Designation"),
-      grouppolicy: Yup.string().required("Please Enter Group Policy"),
+      designation_id: Yup.string().required("Please Enter Designation"),
+      // grouppolicy: Yup.string().required("Please Enter Group Policy"),
       username: Yup.string().required("Please Enter Login ID"),
       password: Yup.string().required("Please Enter Password"),
       confirmpassword: Yup.string().required("Please Enter Confirm Password"),
@@ -135,13 +137,13 @@ const AddUserModal = (props) => {
         type: values["type"],
         status: values["status"],
         block_message: values["block_message"],
-        mso: values["mso"],
+        // mso: values["mso"],
         role: values["role"],
-        designation: values["designation"],
-        grouppolicy: values["grouppolicy"],
+        designation_id: values["designation"],
+        // grouppolicy: values["grouppolicy"],
         username: values["username"],
         password: values["password"],
-        confirmpassword: values["confirmpassword"],
+        // confirmpassword: values["confirmpassword"],
       };
       console.log("newUser:" + JSON.stringify(newUser));
       // save new user
@@ -173,7 +175,7 @@ const AddUserModal = (props) => {
           }}
         >
           <Row>
-            <Col sm="4">
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Name<span style={{ color: "red" }}>*</span>
@@ -197,7 +199,8 @@ const AddUserModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Email<span style={{ color: "red" }}>*</span>
@@ -222,6 +225,8 @@ const AddUserModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Mobile No.<span style={{ color: "red" }}>*</span>
@@ -246,99 +251,8 @@ const AddUserModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
-              <div className="mb-3">
-                <Label className="form-label">
-                  User Type<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="type"
-                  type="select"
-                  placeholder="Select Type"
-                  className="form-select"
-                  onChange={handleTypeChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.type || ""}
-                >
-                  <option value="">Select User Type</option>
-                  {userType.map((type) => (
-                    <option key={type.id} value={type.id}>
-                      {type.name}
-                    </option>
-                  ))}
-                </Input>
-                {validation.touched.type && validation.errors.type ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.type}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              {validation.values.type && (
-                <div className="mb-3">
-                  <Label className="form-label">
-                    Select MSO<span style={{ color: "red" }}>*</span>
-                  </Label>
-                  <Input
-                    name="mso"
-                    type="select"
-                    placeholder="Select MSO"
-                    className="form-select"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.mso || ""}
-                  >
-                    <option value="">Select Role</option>
-                    {userMsoDetails.map((mso) => (
-                      <option key={mso.id} value={mso.id}>
-                        {mso.name}
-                      </option>
-                    ))}
-                  </Input>
-                  {validation.touched.mso && validation.errors.mso ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.mso}
-                    </FormFeedback>
-                  ) : null}
-                </div>
-              )}
-              {console.log("selectedType: " + typeof selectedType)}
-              {console.log("msoValue: " + typeof validation.values.mso)}
-              {parseInt(selectedType) === 1 &&
-              parseInt(validation.values.mso) == 1 ? (
-                <div className="mb-3">
-                  <Label className="form-label">
-                    Select Regional Office
-                    <span style={{ color: "red" }}>*</span>
-                  </Label>
-                  <Input
-                    name="regional"
-                    type="select"
-                    placeholder="Select Regional Office"
-                    className="form-select"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.regional || ""}
-                  >
-                    <option value="">Select Regional Office</option>
-                    {userRegional &&
-                      userRegional.map((regional) => (
-                        <option key={regional.id} value={regional.id}>
-                          {regional.name}
-                        </option>
-                      ))}
-                  </Input>
-                  {validation.touched.regional && validation.errors.regional ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.regional}
-                    </FormFeedback>
-                  ) : null}
-                </div>
-              ) : (
-                <></>
-              )}
             </Col>
-            <Col sm="4">
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Status<span style={{ color: "red" }}>*</span>
@@ -365,7 +279,67 @@ const AddUserModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Role<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="role"
+                  type="select"
+                  placeholder="Select Role"
+                  className="form-select"
+                  // onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  // value={validation.values.role || ""}
+                  onChange={handleTypeChange}
+                  value={selectedType}
+                >
+                  <option value="">Select Role</option>
+                  {userRole.map((role) => (
+                    <option key={role.id} value={role.id}>
+                      {role.name}
+                    </option>
+                  ))}
+                </Input>
+                {validation.touched.role && validation.errors.role ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.role}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Designation<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="designation"
+                  type="select"
+                  placeholder="Select Designation"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.designation || ""}
+                >
+                  <option value="">Select Designation</option>
+                  {userDesignation.map((desig) => (
+                    <option key={desig.id} value={desig.id}>
+                      {desig.name}
+                    </option>
+                  ))}
+                </Input>
+                {validation.touched.designation &&
+                validation.errors.designation ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.designation}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Inactive/Block Message<span style={{ color: "red" }}>*</span>
@@ -397,62 +371,8 @@ const AddUserModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-              <div className="mb-3">
-                <Label className="form-label">
-                  Role<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="role"
-                  type="select"
-                  placeholder="Select Role"
-                  className="form-select"
-                  // onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  // value={validation.values.role || ""}
-                  value={selectedType}
-                >
-                  <option value="">Select Role</option>
-                  {userRole.map((role) => (
-                    <option key={role.id} value={role.id}>
-                      {role.name}
-                    </option>
-                  ))}
-                </Input>
-                {validation.touched.role && validation.errors.role ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.role}
-                  </FormFeedback>
-                ) : null}
-              </div>
-              <div className="mb-3">
-                <Label className="form-label">
-                  Designation<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="designation"
-                  type="select"
-                  placeholder="Select Designation"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.designation || ""}
-                >
-                  <option value="">Select Designation</option>
-                  {userDesignation.map((desig) => (
-                    <option key={desig.id} value={desig.id}>
-                      {desig.name}
-                    </option>
-                  ))}
-                </Input>
-                {validation.touched.designation &&
-                validation.errors.designation ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.designation}
-                  </FormFeedback>
-                ) : null}
-              </div>
             </Col>
-            <Col sm="4">
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Group Policy</Label>
                 <Input
@@ -484,31 +404,36 @@ const AddUserModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Login ID<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="loginid"
+                  name="username"
                   label="Login ID"
                   type="text"
                   placeholder="Login ID"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.loginid || ""}
+                  value={validation.values.username || ""}
                   invalid={
-                    validation.touched.loginid && validation.errors.loginid
+                    validation.touched.username && validation.errors.username
                       ? true
                       : false
                   }
                 />
-                {validation.touched.loginid && validation.errors.loginid ? (
+                {validation.touched.username && validation.errors.username ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.loginid}
+                    {validation.errors.username}
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Password<span style={{ color: "red" }}>*</span>
@@ -533,6 +458,8 @@ const AddUserModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Confirm-Password<span style={{ color: "red" }}>*</span>
@@ -561,7 +488,183 @@ const AddUserModal = (props) => {
               </div>
             </Col>
           </Row>
-
+          <Row>
+            <div
+              style={{
+                // margin: "20px 0px",
+                marginTop: "20px",
+                marginBottom: "-18px",
+                zIndex: 12000,
+                backgroundColor: "#fff",
+                width: "fit-content",
+                marginLeft: "40%",
+                position: "absolute",
+                padding: "0px 10px",
+              }}
+            >
+              {" "}
+              <h5 style={{}}>User Details</h5>
+            </div>
+            <Row
+              style={{
+                position: "relative",
+                border: "1px solid #ced4da",
+                padding: "20px 0px",
+                margin: "20px 0px",
+              }}
+            >
+              <Col lg={4}>
+                <div className="mb-3">
+                  <Label className="form-label">
+                    User Type<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="type"
+                    type="select"
+                    placeholder="Select Type"
+                    className="form-select"
+                    onChange={handleTypeChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.type || ""}
+                  >
+                    <option value="">Select User Type</option>
+                    {userType.map((type) => (
+                      <option key={type.id} value={type.id}>
+                        {type.name}
+                      </option>
+                    ))}
+                  </Input>
+                  {validation.touched.type && validation.errors.type ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.type}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              <Col lg={4}>
+                {validation.values.type && (
+                  <div className="mb-3">
+                    <Label className="form-label">
+                      Select MSO<span style={{ color: "red" }}>*</span>
+                    </Label>
+                    <Input
+                      name="mso"
+                      type="select"
+                      placeholder="Select MSO"
+                      className="form-select"
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.mso || ""}
+                    >
+                      <option value="">Select Role</option>
+                      {userMsoDetails.map((mso) => (
+                        <option key={mso.id} value={mso.id}>
+                          {mso.name}
+                        </option>
+                      ))}
+                    </Input>
+                    {validation.touched.mso && validation.errors.mso ? (
+                      <FormFeedback type="invalid">
+                        {validation.errors.mso}
+                      </FormFeedback>
+                    ) : null}
+                  </div>
+                )}
+              </Col>
+              {console.log("selectedType: " + typeof selectedType)}
+              {console.log("msoValue: " + typeof validation.values.mso)}
+              <Col lg={4}>
+                {(parseInt(selectedType) === 1 ||
+                  parseInt(selectedType) === 2 ||
+                  parseInt(selectedType) === 3) &&
+                parseInt(validation.values.mso) == 1 ? (
+                  <div className="mb-3">
+                    <Label className="form-label">
+                      Select Regional Office
+                      <span style={{ color: "red" }}>*</span>
+                    </Label>
+                    <Input
+                      name="regional"
+                      type="select"
+                      placeholder="Select Regional Office"
+                      className="form-select"
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.regional || ""}
+                    >
+                      <option value="">Select Regional Office</option>
+                      {userRegional &&
+                        userRegional.map((regional) => (
+                          <option key={regional.id} value={regional.id}>
+                            {regional.name}
+                          </option>
+                        ))}
+                    </Input>
+                    {validation.touched.regional &&
+                    validation.errors.regional ? (
+                      <FormFeedback type="invalid">
+                        {validation.errors.regional}
+                      </FormFeedback>
+                    ) : null}
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </Col>
+              {console.log(
+                "regional value:" + typeof parseInt(validation.values.regional)
+              )}
+              <Col lg={4}>
+                {validation.values.regional && (
+                  <div className="mb-3">
+                    <Label className="form-label">
+                      Select Distributor
+                      <span style={{ color: "red" }}>*</span>
+                    </Label>
+                    <Input
+                      name="distributor"
+                      type="select"
+                      placeholder="Select Regional Office"
+                      className="form-select"
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.distributor || ""}
+                    >
+                      <option value="">Select Distributor</option>
+                      {userDistributor
+                        .filter((distributor) => {
+                          const selectedRegional = userRegional.find(
+                            (regional) =>
+                              regional.id === validation.values.regional
+                          );
+                          {
+                            selectedRegional &&
+                              parseInt(selectedRegional.branch_id) ===
+                                parseInt(distributor.id);
+                          }
+                        })
+                        .map((filteredDistributor) => (
+                          <option
+                            key={filteredDistributor.id}
+                            value={filteredDistributor.id}
+                          >
+                            {filteredDistributor.name}
+                          </option>
+                        ))}
+                    </Input>
+                    {validation.touched.regional &&
+                    validation.errors.regional ? (
+                      <FormFeedback type="invalid">
+                        {validation.errors.regional}
+                      </FormFeedback>
+                    ) : null}
+                  </div>
+                  // ) : (
+                  //   <></>
+                )}
+              </Col>
+            </Row>
+          </Row>
           <Row>
             <Col>
               <ModalFooter>

@@ -23,6 +23,8 @@ import {
   GET_USER_REGIONALOFFICE_FAIL,
   GET_USER_MSO_DETAILS_FAIL,
   GET_USER_MSO_DETAILS_SUCCESS,
+  GET_USER_DISTRIBUTOR_FAIL,
+  GET_USER_DISTRIBUTOR_SUCCESS,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -35,6 +37,7 @@ const INIT_STATE = {
   userMsoPolicy: [],
   userRegional: [],
   userMsoDetails: [],
+  userDistributor: [],
   error: {},
   loading: true,
 };
@@ -140,6 +143,18 @@ const contacts = (state = INIT_STATE, action) => {
       };
 
     case GET_USER_REGIONALOFFICE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case GET_USER_DISTRIBUTOR_SUCCESS:
+      return {
+        ...state,
+        userDistributor: action.payload,
+        loading: false,
+      };
+
+    case GET_USER_DISTRIBUTOR_FAIL:
       return {
         ...state,
         error: action.payload,

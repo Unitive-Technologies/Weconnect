@@ -35,6 +35,9 @@ import {
   GET_USER_MSO_DETAILS,
   GET_USER_MSO_DETAILS_SUCCESS,
   GET_USER_MSO_DETAILS_FAIL,
+  GET_USER_DISTRIBUTOR,
+  GET_USER_DISTRIBUTOR_FAIL,
+  GET_USER_DISTRIBUTOR_SUCCESS,
 } from "./actionTypes";
 
 export const getUsers = () => ({
@@ -208,5 +211,19 @@ export const getUserMsoDetailsSuccess = (userMsoDetails) => ({
 
 export const getUserMsoDetailsFail = (error) => ({
   type: GET_USER_MSO_DETAILS_FAIL,
+  payload: error,
+});
+
+export const getUserDistributor = () => ({
+  type: GET_USER_DISTRIBUTOR,
+});
+
+export const getUserDistributorSuccess = (userDistributor) => ({
+  type: GET_USER_DISTRIBUTOR_SUCCESS,
+  payload: userDistributor,
+});
+
+export const getUserDistributorFail = (error) => ({
+  type: GET_USER_DISTRIBUTOR_FAIL,
   payload: error,
 });
