@@ -302,9 +302,10 @@ const AddUserModal = (props) => {
                   ) : null}
                 </div>
               )}
-              {console.log("selectedType: " + selectedType)}
-              {console.log("msoValue: " + validation.values.mso)}
-              {selectedType === 1 && validation.values.mso == 1 ? (
+              {console.log("selectedType: " + typeof selectedType)}
+              {console.log("msoValue: " + typeof validation.values.mso)}
+              {parseInt(selectedType) === 1 &&
+              parseInt(validation.values.mso) == 1 ? (
                 <div className="mb-3">
                   <Label className="form-label">
                     Select Regional Office
