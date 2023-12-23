@@ -26,7 +26,7 @@ import AdditionalMRP from "./AdditionalMRP";
 import AddBrands from "./AddBrands";
 
 const ViewBouquet = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, toggle, bouquet } = props;
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -34,20 +34,19 @@ const ViewBouquet = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      //BroadCaster: "",
-      code: "",
-      name: "",
-      type_lbl: "",
-      boxtype_lbl: "",
-      type: "",
-      status: "",
-      description: "",
-      is_promotional: "",
-      ifFixNCF: "",
-      max_ncf_channels: "",
-      showon_portal: "",
-      category_lbl: "",
-      created_by: "Admin",
+      code: (bouquet && bouquet.code) || "",
+      name: (bouquet && bouquet.name) || "",
+      type_lbl: (bouquet && bouquet.type_lbl) || "",
+      boxtype_lbl: (bouquet && bouquet.boxtype_lbl) || "",
+      type: (bouquet && bouquet.type) || "",
+      status: (bouquet && bouquet.status) || "",
+      description: (bouquet && bouquet.description) || "",
+      is_promotional: (bouquet && bouquet.is_promotional) || "",
+      ifFixNCF: (bouquet && bouquet.ifFixNCF) || "",
+      max_ncf_channels: (bouquet && bouquet.max_ncf_channels) || "",
+      showon_portal: (bouquet && bouquet.showon_portal) || "",
+      category_lbl: (bouquet && bouquet.category_lbl) || "",
+      created_by: (bouquet && bouquet.created_by) || "Admin",
     },
     validationSchema: Yup.object({
       code: Yup.string().required("Enter Channel Code"),
