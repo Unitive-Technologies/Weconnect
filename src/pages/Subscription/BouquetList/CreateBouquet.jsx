@@ -23,6 +23,7 @@ import Count from "./Count";
 import TotalCount from "./TotalCount";
 import PreviewTable from "./PreviewTable";
 import AdditionalMRP from "./AdditionalMRP";
+import AddBrands from "./AddBrands";
 
 const CreateBouquet = (props) => {
   const { isOpen, toggle } = props;
@@ -591,7 +592,6 @@ const CreateBouquet = (props) => {
           </div>
           <div
             style={{
-              // margin: "20px 0px",
               marginTop: "20px",
               marginBottom: "18px",
               zIndex: 12000,
@@ -706,6 +706,37 @@ const CreateBouquet = (props) => {
             </Row>
           </Row>
           <div>**Applicable NCF and Taxes Additional</div>
+          <div
+            style={{
+              marginTop: "20px",
+              marginBottom: "18px",
+              zIndex: 12000,
+              backgroundColor: "#fff",
+              width: "fit-content",
+              marginLeft: "40%",
+              position: "absolute",
+              padding: "0px 10px",
+            }}
+          >
+            <p style={{ fontWeight: "bold" }}>
+              Add Brands
+              <span style={{ color: "red" }}>*</span>
+            </p>
+          </div>
+          <Row
+            style={{
+              position: "relative",
+              border: "1px solid #ced4da",
+              padding: "20px 0px",
+              margin: "30px 0px",
+            }}
+          >
+            <AddBrands />
+            <p>
+              *If no brand selected, this bouquet will be available for all STB
+              brands
+            </p>
+          </Row>
           <Row>
             <Col>
               <ModalFooter>
