@@ -20,6 +20,13 @@ import { useDispatch } from "react-redux";
 const ViewConnectionScheme = (props) => {
   const { isOpen, toggle, Connectionscheme } = props;
   const dispatch = useDispatch();
+  const [showEditConnectionScheme, setShowEditConnectionScheme] =
+    useState(false);
+
+  const editToggle = () => {
+    setShowEditConnectionScheme(false);
+    toggle();
+  };
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -82,9 +89,25 @@ const ViewConnectionScheme = (props) => {
       tabIndex="-1"
       toggle={toggle}
     >
-      <ModalHeader tag="h4" toggle={toggle}>
-        Add New Connection Scheme
-      </ModalHeader>
+      {!showEditConnectionScheme ? (
+        <ModalHeader toggle={toggle} tag="h4">
+          View Connection Scheme Details
+          <i
+            className="bx bx bxs-edit"
+            style={{
+              position: "absolute",
+              marginLeft: "65%",
+              cursor: "pointer",
+              marginTop: ".5%",
+            }}
+            onClick={() => setShowEditConnectionScheme(true)}
+          ></i>
+        </ModalHeader>
+      ) : (
+        <ModalHeader toggle={editToggle} tag="h4">
+          Edit Connection Scheme
+        </ModalHeader>
+      )}
       <ModalBody>
         <Form
           onSubmit={(e) => {
