@@ -22,6 +22,7 @@ import AddPackages from "./AddPackages";
 import Count from "./Count";
 import TotalCount from "./TotalCount";
 import PreviewTable from "./PreviewTable";
+import AdditionalMRP from "./AdditionalMRP";
 
 const CreateBouquet = (props) => {
   const { isOpen, toggle } = props;
@@ -662,20 +663,49 @@ const CreateBouquet = (props) => {
               margin: "30px 0px",
             }}
           >
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <Label style={{ marginRight: "10px" }}>Additional Name: </Label>
-                <Input
-                  placeholder="Enter additional name"
-                  type="text"
-                  style={{ width: "210px" }}
-                />
+            <Row>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <Label style={{ marginRight: "10px" }}>
+                    Additional Name:{" "}
+                  </Label>
+                  <Input
+                    placeholder="Enter additional name"
+                    type="text"
+                    style={{ width: "210px" }}
+                  />
+                </div>
+                <div>
+                  <Button>+ Add Pricing</Button>
+                </div>
               </div>
-              <div>
-                <Button>+ Add Pricing</Button>
-              </div>
-            </div>
+            </Row>
+            <Row>
+              <Col sm="3">
+                <Label>MRP**</Label>
+                <Input disabled defaultValue={0} />
+              </Col>
+              <Col sm="3">
+                <Label>DRP**</Label>
+                <Input type="number" defaultValue={0} />
+              </Col>
+              <Col sm="3">
+                <Label>LCO Discount(%)</Label>
+                <Input type="number" defaultValue="20" />
+              </Col>
+              <Col sm="3">
+                <Label>LCO Rate**</Label>
+                <Input type="number" defaultValue={0} />
+              </Col>
+            </Row>
+            <Row>
+              <PreviewTable />
+            </Row>
+            <Row>
+              <AdditionalMRP />
+            </Row>
           </Row>
+          <div>**Applicable NCF and Taxes Additional</div>
           <Row>
             <Col>
               <ModalFooter>
