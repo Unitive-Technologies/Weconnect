@@ -17,6 +17,7 @@ import {
   getUserMsoPolicy as onGetUserMsoPolicy,
   getUserRegionalOffice as onGetUserRegionalOffice,
   getUserMsoDetails as onGetUserMsoDetails,
+  getUserDistributor as onGetUserDistributor,
 } from "/src/store/users/actions";
 
 //redux
@@ -47,6 +48,7 @@ const ContactsList = (props) => {
     userMsoPolicy: Users.userMsoPolicy,
     userRegional: Users.userRegional,
     userMsoDetails: Users.userMsoDetails,
+    userDistributor: Users.userDistributor,
   }));
 
   const {
@@ -58,6 +60,7 @@ const ContactsList = (props) => {
     userMsoPolicy,
     userRegional,
     userMsoDetails,
+    userDistributor,
     loading,
   } = useSelector(ContactsProperties);
 
@@ -347,6 +350,7 @@ const ContactsList = (props) => {
       dispatch(onGetUserMsoPolicy());
       dispatch(onGetUserRegionalOffice());
       dispatch(onGetUserMsoDetails());
+      dispatch(onGetUserDistributor());
     }
   }, [dispatch, users]);
 
@@ -447,6 +451,7 @@ const ContactsList = (props) => {
         userMsoPolicy={userMsoPolicy}
         userRegional={userRegional}
         userMsoDetails={userMsoDetails}
+        userDistributor={userDistributor}
       />
       <UploadUserModal
         isOpen={showUploadUser}

@@ -14,6 +14,7 @@ import {
   GET_USER_MSO_POLICY,
   GET_USER_REGIONALOFFICE,
   GET_USER_MSO_DETAILS,
+  GET_USER_DISTRIBUTOR,
 } from "./actionTypes";
 
 import {
@@ -41,6 +42,8 @@ import {
   getUserRegionalOfficeSuccess,
   getUserMsoDetailsFail,
   getUserMsoDetailsSuccess,
+  getUserDistributorFail,
+  getUserDistributorSuccess,
 } from "./actions";
 
 //Include Both Helper File with needed methods
@@ -57,6 +60,7 @@ import {
   getUserMsoPolicy,
   getUserRegionalOffice,
   getUserMsoDetails,
+  getUserDistributor,
 } from "../../helpers/fakebackend_helper";
 import { toast } from "react-toastify";
 
@@ -140,6 +144,16 @@ function* fetchUserRegionalOffice() {
   }
 }
 
+function* fetchUserDistributor() {
+  try {
+    const response = yield call(getUserDistributor);
+    // console.log("response:" + JSON.stringify(response));
+    yield put(getUserDistributorSuccess(response.data));
+  } catch (error) {
+    yield put(getUserDistributorFail(error));
+  }
+}
+
 function* fetchUserProfile() {
   try {
     const response = yield call(getUserProfile);
@@ -171,9 +185,9 @@ function* onDeleteUser({ payload: user }) {
   }
 }
 
-function* onAddNewUser({ payload: user }) {
+function* onAddNewUser({ payload: users }) {
   try {
-    const response = yield call(addNewUser, user);
+    const response = yield call(addNewUser, users);
 
     yield put(addUserSuccess(response));
     toast.success("Contact Added Successfully", { autoClose: 2000 });
@@ -196,6 +210,7 @@ function* usersSaga() {
   yield takeEvery(GET_USER_MSO_POLICY, fetchUserMsoPolicy);
   yield takeEvery(GET_USER_REGIONALOFFICE, fetchUserRegionalOffice);
   yield takeEvery(GET_USER_MSO_DETAILS, fetchUserMsoDetails);
+  yield takeEvery(GET_USER_DISTRIBUTOR, fetchUserDistributor);
 }
 
 export default usersSaga;

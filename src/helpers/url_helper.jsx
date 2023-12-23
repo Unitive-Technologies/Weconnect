@@ -175,3 +175,5 @@ export const GET_USER_REGIONALOFFICE =
   "/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[mso_id]=1&filter[type]=1&vr=web1.0";
 export const GET_USER_MSO_DETAILS =
   "/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[type]=0&vr=web1.0";
+export const GET_USER_DISTRIBUTOR =
+  "/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[mso_id]=1&filter[branch_id]=9&filter[type]=2&vr=web1.0";
