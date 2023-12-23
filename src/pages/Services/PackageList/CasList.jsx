@@ -11,10 +11,49 @@ import {
   Form,
   FormFeedback,
 } from "reactstrap";
+import * as Yup from "yup";
+
+import { useFormik } from "formik";
+import { addNewPackageList as onAddNewPackageList } from "/src/store/packagelist/actions";
 import { Link } from "react-router-dom";
 
 const CasList = (props) => {
   const { showEditChannel } = props;
+
+  const validation = useFormik({
+    // enableReinitialize : use this flag when initial values needs to be changed
+    enableReinitialize: true,
+
+    initialValues: {
+      //BroadCaster: "",
+      cas: "",
+      cascode: "",
+      created_by: "Admin",
+    },
+    validationSchema: Yup.object({
+      cas: Yup.string().required("Enter Select Cas"),
+      cascode: Yup.string().required("Enter cascode"),
+      // serviceid: Yup.string().required("serviceid"),
+    }),
+    onSubmit: (values) => {
+      const newPackageList = {
+        id: Math.floor(Math.random() * (30 - 20)) + 20,
+        cas: values["cas"],
+        cascode: values["cascode"],
+        created_at: new Date(),
+        created_by: values["created_by"],
+      };
+      console.log("newPackageList:" + newPackageList);
+      // save new user
+      dispatch(onAddNewPackageList(newPackageList));
+      validation.resetForm();
+      toggle();
+    },
+    onReset: (values) => {
+      validation.setValues(validation.initialValues);
+    },
+  });
+
   const columns = useMemo(
     () => [
       {
@@ -39,6 +78,7 @@ const CasList = (props) => {
 
       {
         Header: "CAS",
+        accessor: "cas",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -62,7 +102,7 @@ const CasList = (props) => {
       },
       {
         Header: "CAS CODE",
-        // accessor: "login",
+        accessor: "cascode",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -126,27 +166,24 @@ const CasList = (props) => {
           >
             <Col lg={12}>
               <div className="mb-3">
-                {/* <Label className="form-label">
-                  Type<span style={{ color: "red" }}>*</span>
-                </Label> */}
                 <Input
                   name="type"
                   type="select"
                   placeholder="Select type"
                   className="form-select"
-                // disabled={!showEditChannel}
-                // onChange={validation.handleChange}
-                // onBlur={validation.handleBlur}
-                // value={validation.values.type || ""}
+                  // disabled={!showEditChannel}
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.cas || ""}
                 >
                   <option value="104">Select CAS</option>
                   <option value="105">FTA</option>
                 </Input>
-                {/* {validation.touched.type && validation.errors.type ? (
+                {validation.touched.cas && validation.errors.cas ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.type}
+                    {validation.errors.cas}
                   </FormFeedback>
-                ) : null} */}
+                ) : null}
               </div>
             </Col>
             <div
@@ -158,12 +195,25 @@ const CasList = (props) => {
             >
               <Col lg={12} style={{ marginRight: "20px" }}>
                 <div className="mb-3">
-                  <Input type="text" placeholder="CAS Code" />
+                  <Input
+                    name="cascode"
+                    type="text"
+                    placeholder="Cascode"
+                    // className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.cascode || ""}
+                  ></Input>
+                  {validation.touched.cascode && validation.errors.cascode ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.cascode}
+                    </FormFeedback>
+                  ) : null}
                 </div>
               </Col>
               <Col lg={2}>
                 <div className="mb-3">
-                  <button type="button" className="btn btn-primary ">
+                  <button type="submit" className="btn btn-primary ">
                     <i
                       className="bx bx-right-arrow-alt"
                       style={{ fontSize: 20 }}
