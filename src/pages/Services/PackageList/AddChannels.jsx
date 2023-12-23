@@ -255,9 +255,21 @@ const AddChannels = (props) => {
   // const allColumns = useMemo(() => columns.concat(columns1), [columns, columns1]);
 
   const casData = [];
+
   return (
+
     <Card>
       <CardBody>
+        <Row>
+          <Col lg={12}>
+            <div className="mb-3">
+              <button type="button" className="btn btn-primary d-flex justify-content-end">
+                <i className="mdi mdi-plus ms-1" style={{ fontSize: 20 }}></i>
+              </button>
+            </div>
+          </Col>
+        </Row>
+
         <TableContainer
           // isPagination={true}
           columns={columns}
@@ -314,7 +326,7 @@ const AddChannels = (props) => {
         </Row>
       </div>
 
-    </Card>
+    </Card >
   );
 };
 

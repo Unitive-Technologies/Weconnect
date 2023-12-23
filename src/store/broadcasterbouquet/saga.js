@@ -21,12 +21,20 @@ const convertBroadcasterBouquetListObject = (broadcasterBouquetList) => {
       code: brodcastbouquet.code,
       broadcaster: brodcastbouquet.broadcaster_lbl,
       type: brodcastbouquet.channel_type_lbl,
-      FTA: brodcastbouquet.isFta_lbl,
+      // FTA: brodcastbouquet.isFta_lbl,
+
+      FTA:
+        brodcastbouquet.FTA === 1
+          ? "No"
+          : brodcastbouquet.FTA === 0
+            ? "Yes"
+            : "Payment",
       channels: brodcastbouquet.channels,
       // channels: brodcastbouquet.channels[0].name + "(" + brodcastbouquet.channels[0].channel_type_lbl + ")",
       // channels: brodcastbouquet.channels
       //   .map((channel) => channel.broadcaster_lbl)
       //   .join(", "),
+
 
       status:
         brodcastbouquet.status === 1
