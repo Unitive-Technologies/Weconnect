@@ -68,6 +68,9 @@ const BulkRemoval = (props) => {
             >
               Schemes<span style={{ color: "red" }}>*</span>
             </h6>
+            <p>
+              ** To select row, click <i className="mdi mdi-check"></i>{" "}
+            </p>
             <SchemesList />
           </Row>
           <Row>
