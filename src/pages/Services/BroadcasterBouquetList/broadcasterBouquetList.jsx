@@ -149,8 +149,14 @@ const BroadcasterBouquetList = (props) => {
         accessor: "channels",
         filterable: true,
         Cell: (cellProps) => {
+          { console.log("channels Data" + JSON.stringify(cellProps.row.original.channels)) }
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.channels}</p>
+            <>
+              {cellProps.row.original.channels && cellProps.row.original.channels.map((channel) =>
+                <><p className="text-muted mb-0"
+                  style={{ maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{channel.name}({channel.channel_type_lbl}),</p></>)
+              }
+            </>
           );
         },
       },
