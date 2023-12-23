@@ -134,14 +134,13 @@ const CasList = (props) => {
                   type="select"
                   placeholder="Select type"
                   className="form-select"
-                  disabled={!showEditChannel}
+                // disabled={!showEditChannel}
                 // onChange={validation.handleChange}
                 // onBlur={validation.handleBlur}
                 // value={validation.values.type || ""}
                 >
                   <option value="104">Select CAS</option>
-                  <option value="105">Pay Channel</option>
-                  <option value="106">FTA</option>
+                  <option value="105">FTA</option>
                 </Input>
                 {/* {validation.touched.type && validation.errors.type ? (
                   <FormFeedback type="invalid">
