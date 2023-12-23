@@ -16,6 +16,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addConnectionscheme as onAddConnectionscheme } from "/src/store/connectionschemelist/actions";
 import { useDispatch } from "react-redux";
+import AddBrands from "../BouquetList/AddBrands";
 
 const ViewConnectionScheme = (props) => {
   const { isOpen, toggle, Connectionscheme } = props;
@@ -266,6 +267,34 @@ const ViewConnectionScheme = (props) => {
                 ) : null}
               </div>
             </Col>
+          </Row>
+          <div
+            style={{
+              marginTop: "20px",
+              marginBottom: "18px",
+              zIndex: 12000,
+              backgroundColor: "#fff",
+              width: "fit-content",
+              marginLeft: "40%",
+              position: "absolute",
+              padding: "0px 10px",
+            }}
+          >
+            <p style={{ fontWeight: "bold" }}>Add Brands</p>
+          </div>
+          <Row
+            style={{
+              position: "relative",
+              border: "1px solid #ced4da",
+              padding: "20px 0px",
+              margin: "30px 0px",
+            }}
+          >
+            <AddBrands />
+            <p>
+              *If no brand selected, this bouquet will be available for all STB
+              brands
+            </p>
           </Row>
           <Row>
             <Col>
