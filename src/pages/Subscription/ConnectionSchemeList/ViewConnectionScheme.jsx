@@ -130,9 +130,9 @@ const ViewConnectionScheme = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.boxtype_lbl || ""}
                 >
-                  <option value="11">Select Scheme type</option>
-                  <option value="12">Standard Definition(SD)</option>
-                  <option value="13">High Definition(HD)</option>
+                  <option value="">Select Scheme type</option>
+                  <option value="SD">Standard Definition(SD)</option>
+                  <option value="HD">High Definition(HD)</option>
                 </Input>
                 {validation.touched.boxtype_lbl &&
                 validation.errors.boxtype_lbl ? (
@@ -157,8 +157,8 @@ const ViewConnectionScheme = (props) => {
                   value={validation.values.status || ""}
                 >
                   <option value="">Select Status</option>
-                  <option value="1">Active</option>
-                  <option value="2">In-Active</option>
+                  <option value="ACTIVE">Active</option>
+                  <option value="INACTIVE">In-Active</option>
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
