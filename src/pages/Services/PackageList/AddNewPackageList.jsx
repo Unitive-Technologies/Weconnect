@@ -29,7 +29,6 @@ const AddNewPackageList = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      //BroadCaster: "",
       code: "",
       name: "",
       description: "",
