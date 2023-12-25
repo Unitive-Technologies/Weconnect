@@ -38,6 +38,9 @@ import {
   GET_USER_DISTRIBUTOR,
   GET_USER_DISTRIBUTOR_FAIL,
   GET_USER_DISTRIBUTOR_SUCCESS,
+  GET_USER_LCO,
+  GET_USER_LCO_FAIL,
+  GET_USER_LCO_SUCCESS,
 } from "./actionTypes";
 
 export const getUsers = () => ({
@@ -225,5 +228,19 @@ export const getUserDistributorSuccess = (userDistributor) => ({
 
 export const getUserDistributorFail = (error) => ({
   type: GET_USER_DISTRIBUTOR_FAIL,
+  payload: error,
+});
+
+export const getUserLco = () => ({
+  type: GET_USER_LCO,
+});
+
+export const getUserLcoSuccess = (userLco) => ({
+  type: GET_USER_LCO_SUCCESS,
+  payload: userLco,
+});
+
+export const getUserLcoFail = (error) => ({
+  type: GET_USER_LCO_FAIL,
   payload: error,
 });

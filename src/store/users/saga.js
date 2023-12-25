@@ -15,6 +15,7 @@ import {
   GET_USER_REGIONALOFFICE,
   GET_USER_MSO_DETAILS,
   GET_USER_DISTRIBUTOR,
+  GET_USER_LCO,
 } from "./actionTypes";
 
 import {
@@ -44,6 +45,8 @@ import {
   getUserMsoDetailsSuccess,
   getUserDistributorFail,
   getUserDistributorSuccess,
+  getUserLcoFail,
+  getUserLcoSuccess,
 } from "./actions";
 
 //Include Both Helper File with needed methods
@@ -61,6 +64,7 @@ import {
   getUserRegionalOffice,
   getUserMsoDetails,
   getUserDistributor,
+  getUserLco,
 } from "../../helpers/fakebackend_helper";
 import { toast } from "react-toastify";
 
@@ -154,6 +158,16 @@ function* fetchUserDistributor() {
   }
 }
 
+function* fetchUserLco() {
+  try {
+    const response = yield call(getUserLco);
+    // console.log("response:" + JSON.stringify(response));
+    yield put(getUserLcoSuccess(response.data));
+  } catch (error) {
+    yield put(getUserLcoFail(error));
+  }
+}
+
 function* fetchUserProfile() {
   try {
     const response = yield call(getUserProfile);
@@ -211,6 +225,7 @@ function* usersSaga() {
   yield takeEvery(GET_USER_REGIONALOFFICE, fetchUserRegionalOffice);
   yield takeEvery(GET_USER_MSO_DETAILS, fetchUserMsoDetails);
   yield takeEvery(GET_USER_DISTRIBUTOR, fetchUserDistributor);
+  yield takeEvery(GET_USER_LCO, fetchUserLco);
 }
 
 export default usersSaga;

@@ -177,3 +177,5 @@ export const GET_USER_MSO_DETAILS =
   "/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[type]=0&vr=web1.0";
 export const GET_USER_DISTRIBUTOR =
   "/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[mso_id]=1&filter[branch_id]=9&filter[type]=2&vr=web1.0";
+export const GET_USER_LCO =
+  "/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[mso_id]=1&filter[branch_id]=9&filter[distributor_id]=32&filter[type]=3&vr=web1.0";

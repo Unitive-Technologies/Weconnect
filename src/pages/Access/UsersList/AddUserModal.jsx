@@ -1,6 +1,19 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
+import { useSelector, useDispatch } from "react-redux";
+import { createSelector } from "reselect";
+import {
+  // getUserType as onGetUserType,
+  // getUserStatus as onGetUserStatus,
+  // getUserRole as onGetUserRole,
+  // getUserDesignation as onGetUserDesignation,
+  // getUserMsoPolicy as onGetUserMsoPolicy,
+  getUserRegionalOffice as onGetUserRegionalOffice,
+  getUserMsoDetails as onGetUserMsoDetails,
+  getUserDistributor as onGetUserDistributor,
+  getUserLco as onGetUserLco,
+} from "/src/store/users/actions";
 import {
   Col,
   Row,
@@ -16,7 +29,6 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewUser as onAddNewUser } from "/src/store/users/actions";
-import { useDispatch } from "react-redux";
 
 const AddUserModal = (props) => {
   const {
@@ -27,17 +39,48 @@ const AddUserModal = (props) => {
     userRole,
     userDesignation,
     userMsoPolicy,
-    userMsoDetails,
-    userRegional,
-    userDistributor,
+    // userMsoDetails,
+    // userRegional,
+    // userDistributor,
   } = props;
   // console.log("userRegional in add:" + JSON.stringify(userRegional));
   // console.log("userDistributor in add:" + JSON.stringify(userDistributor));
   const dispatch = useDispatch();
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedType, setSelectedType] = useState("");
-  // const [mso, setMso] = useState([]);
+  const [selectedMso, setSelectedMso] = useState("");
+  const [selectedRegional, setSelectedRegional] = useState("");
+  const [selectedDistributor, setSelectedDistributor] = useState("");
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
+
+  const selectContactsState = (state) => state.users;
+  const ContactsProperties = createSelector(selectContactsState, (Users) => ({
+    // users: Users.users,
+    loading: Users.loading,
+    // userType: Users.userType,
+    // userStatus: Users.userStatus,
+    // userRole: Users.userRole,
+    // userDesignation: Users.userDesignation,
+    // userMsoPolicy: Users.userMsoPolicy,
+    userRegional: Users.userRegional,
+    userMsoDetails: Users.userMsoDetails,
+    userDistributor: Users.userDistributor,
+    userLco: Users.userLco,
+  }));
+
+  const {
+    // users,
+    // userType,
+    // userStatus,
+    // userRole,
+    // userDesignation,
+    // userMsoPolicy,
+    userRegional,
+    userMsoDetails,
+    userDistributor,
+    userLco,
+    loading,
+  } = useSelector(ContactsProperties);
 
   const handleStatusChange = (e) => {
     const status = e.target.value;
@@ -49,6 +92,28 @@ const AddUserModal = (props) => {
     const type = e.target.value;
     setSelectedType(type);
     validation.handleChange(e);
+    dispatch(onGetUserMsoDetails());
+  };
+
+  const handleMsoChange = (e) => {
+    const mso = e.target.value;
+    setSelectedMso(mso);
+    validation.handleChange(e);
+    dispatch(onGetUserRegionalOffice());
+  };
+
+  const handleRegionalChange = (e) => {
+    const regional = e.target.value;
+    setSelectedRegional(regional);
+    validation.handleChange(e);
+    dispatch(onGetUserDistributor());
+  };
+
+  const handleDistributorChange = (e) => {
+    const distributor = e.target.value;
+    setSelectedDistributor(distributor);
+    validation.handleChange(e);
+    dispatch(onGetUserLco());
   };
   // const getMsoDetail = () => {
   //   axios
@@ -540,7 +605,7 @@ const AddUserModal = (props) => {
                       type="select"
                       placeholder="Select MSO"
                       className="form-select"
-                      onChange={validation.handleChange}
+                      onChange={handleMsoChange}
                       onBlur={validation.handleBlur}
                       value={validation.values.mso || ""}
                     >
@@ -576,7 +641,7 @@ const AddUserModal = (props) => {
                       type="select"
                       placeholder="Select Regional Office"
                       className="form-select"
-                      onChange={validation.handleChange}
+                      onChange={handleRegionalChange}
                       onBlur={validation.handleBlur}
                       value={validation.values.regional || ""}
                     >
@@ -612,31 +677,17 @@ const AddUserModal = (props) => {
                     <Input
                       name="distributor"
                       type="select"
-                      placeholder="Select Regional Office"
+                      placeholder="Select Distributor"
                       className="form-select"
-                      onChange={validation.handleChange}
+                      onChange={handleDistributorChange}
                       onBlur={validation.handleBlur}
                       value={validation.values.distributor || ""}
                     >
                       <option value="">Select Distributor</option>
-                      {userDistributor
-                        .filter((distributor) => {
-                          const selectedRegional = userRegional.find(
-                            (regional) =>
-                              regional.id === validation.values.regional
-                          );
-                          {
-                            selectedRegional &&
-                              parseInt(selectedRegional.branch_id) ===
-                                parseInt(distributor.id);
-                          }
-                        })
-                        .map((filteredDistributor) => (
-                          <option
-                            key={filteredDistributor.id}
-                            value={filteredDistributor.id}
-                          >
-                            {filteredDistributor.name}
+                      {userDistributor &&
+                        userDistributor.map((distributor) => (
+                          <option key={distributor.id} value={distributor.id}>
+                            {distributor.name}
                           </option>
                         ))}
                     </Input>
@@ -665,9 +716,15 @@ const AddUserModal = (props) => {
                       className="form-select"
                       onChange={validation.handleChange}
                       onBlur={validation.handleBlur}
-                      value={validation.values.distributor || ""}
+                      value={validation.values.lco || ""}
                     >
                       <option value="">Select LCO</option>
+                      {userLco &&
+                        userLco.map((lco) => (
+                          <option key={lco.id} value={lco.id}>
+                            {lco.name}
+                          </option>
+                        ))}
                     </Input>
                     {validation.touched.lco && validation.errors.lco ? (
                       <FormFeedback type="invalid">
