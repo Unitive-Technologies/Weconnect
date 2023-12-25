@@ -277,7 +277,7 @@ const ViewUserModal = (props) => {
                     type="textarea"
                     placeholder="Enter Message"
                     rows="3"
-                    disabled={!showEditUser}
+                    // disabled={!showEditUser}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.block_message || ""}
