@@ -16,7 +16,7 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addNewChannelList as onAddNewChannelList } from "/src/store/channel/actions";
+import { addNewPackageList as onAddNewPackageList } from "/src/store/packagelistactions";
 import { useDispatch } from "react-redux";
 import CasList from "./CasList";
 
