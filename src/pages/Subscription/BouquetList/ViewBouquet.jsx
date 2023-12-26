@@ -20,7 +20,6 @@ import { useDispatch } from "react-redux";
 import AddAlacarte from "./AddAlacarte";
 import AddPackages from "./AddPackages";
 import Count from "./Count";
-import TotalCount from "./TotalCount";
 import PreviewTable from "./PreviewTable";
 import AdditionalMRP from "./AdditionalMRP";
 import AddBrands from "./AddBrands";
@@ -620,7 +619,6 @@ const ViewBouquet = (props) => {
               margin: "30px 0px",
             }}
           >
-            <TotalCount />
             <Row>
               <Col sm="3">
                 <Label>MRP**</Label>
