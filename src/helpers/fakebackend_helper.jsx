@@ -252,6 +252,8 @@ export const getStateUsers = () => get(url.GET_STATEUSERS);
 
 export const getDistrict = () => get(url.GET_DISTRICT);
 export const addDistrict = (district) => post(url.ADD_DISTRICT, district);
+export const getDistrictStateList = () => get(url.GET_DISTRICT_STATELIST);
+export const getDistrictStatus = () => get(url.GET_DISTRICT_STATUS);
 
 export const getCity = () => get(url.GET_CITY);
 export const addCity = (city) => post(url.ADD_CITY, city);

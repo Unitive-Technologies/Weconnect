@@ -1,14 +1,28 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_DISTRICT, ADD_DISTRICT } from "./actionTypes";
+import {
+  GET_DISTRICT,
+  ADD_DISTRICT,
+  GET_DISTRICT_STATUS,
+  GET_DISTRICT_STATELIST,
+} from "./actionTypes";
 
 import {
   getDistrictSuccess,
   getDistrictFail,
   addDistrictSuccess,
   addDistrictFail,
+  getDistrictStatusSuccess,
+  getDistrictStatusFail,
+  getDistrictStateListSuccess,
+  getDistrictStateListFail,
 } from "./actions";
-import { getDistrict, addDistrict } from "../../helpers/fakebackend_helper";
+import {
+  getDistrict,
+  addDistrict,
+  getDistrictStateList,
+  getDistrictStatus,
+} from "../../helpers/fakebackend_helper";
 import { toast } from "react-toastify";
 
 const convertDistrictListObject = (districtList) => {
@@ -27,8 +41,8 @@ const convertDistrictListObject = (districtList) => {
         district.status === 11
           ? "ACTIVE"
           : district.status === 12
-            ? "INACTIVE"
-            : "BLOCKED",
+          ? "INACTIVE"
+          : "BLOCKED",
       created_at: district.created_at,
     };
   });
@@ -42,6 +56,24 @@ function* fetchDistrict() {
     yield put(getDistrictSuccess(response.data));
   } catch (error) {
     yield put(getDistrictFail(error));
+  }
+}
+
+function* fetchDistrictStatus() {
+  try {
+    const response = yield call(getDistrictStatus);
+    yield put(getDistrictStatusSuccess(response.data));
+  } catch (error) {
+    yield put(getDistrictStatusFail(error));
+  }
+}
+
+function* fetchDistrictStateList() {
+  try {
+    const response = yield call(getDistrictStateList);
+    yield put(getDistrictStateListSuccess(response.data));
+  } catch (error) {
+    yield put(getDistrictStateListFail(error));
   }
 }
 
@@ -59,6 +91,8 @@ function* onAddDistrict({ payload: district }) {
 function* districtSaga() {
   yield takeEvery(GET_DISTRICT, fetchDistrict);
   yield takeEvery(ADD_DISTRICT, onAddDistrict);
+  yield takeEvery(GET_DISTRICT_STATUS, fetchDistrictStatus);
+  yield takeEvery(GET_DISTRICT_STATELIST, fetchDistrictStateList);
 }
 
 export default districtSaga;
