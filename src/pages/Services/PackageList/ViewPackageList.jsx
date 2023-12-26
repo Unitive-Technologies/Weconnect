@@ -16,12 +16,12 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addNewPackageList as onAddNewPackageList } from "/src/store/packagelistactions";
+import { addNewPackageList as onAddNewPackageList } from "/src/store/packagelist/actions";
 import { useDispatch } from "react-redux";
 import CasList from "./CasList";
 
 const ViewPackageList = (props) => {
-  const { isOpen, handleViewChannel, channel } = props;
+  const { isOpen, handleViewPackageList, channel } = props;
   const dispatch = useDispatch();
   const [showEditChannel, setShowEditChannel] = useState(false);
   const validation = useFormik({
@@ -89,7 +89,7 @@ const ViewPackageList = (props) => {
       // save new user
       dispatch(onAddNewChannelList(newChannelList));
       validation.resetForm();
-      handleViewChannel();
+      handleViewPackageList();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -98,7 +98,7 @@ const ViewPackageList = (props) => {
 
   const handleCancel = () => {
     setShowEditChannel(false);
-    handleViewChannel();
+    handleViewPackageList();
   };
   return (
     <Modal
