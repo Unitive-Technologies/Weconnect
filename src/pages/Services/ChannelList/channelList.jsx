@@ -242,6 +242,7 @@ const ChannelList = (props) => {
   const handleUpdateCasCode = () => {
     setShowBulkUpdateCasCodeChannelList(!showBulkUpdateCasCodeChannelList);
   };
+
   const [viewChanel, setViewChanel] = useState({});
   const handleViewChannel = (channelData) => {
     setViewChannelList(!viewChannelList);

@@ -69,7 +69,7 @@ const ViewChannel = (props) => {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         code: values["code"],
         logo: values["logo"],
-        name: values["name"],
+        name: values[" name"],
         description: values["description"],
         definition: values["definition"],
         type: values["type"],
@@ -100,6 +100,7 @@ const ViewChannel = (props) => {
     setShowEditChannel(false);
     handleViewChannel();
   };
+
   return (
     <Modal
       isOpen={isOpen}

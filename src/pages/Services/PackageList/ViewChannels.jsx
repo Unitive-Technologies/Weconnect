@@ -1,10 +1,14 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
-import { Card, CardBody, Col, Input, Row } from "reactstrap";
+import {
+  Card, CardBody, Col, Input, Row, Toast,
+  ToastHeader,
+  ToastBody,
+} from "reactstrap";
 import { Link } from "react-router-dom";
 
-const AddChannels = (props) => {
+const ViewChannels = (props) => {
   const columns = useMemo(
     () => [
       {
@@ -198,6 +202,12 @@ const AddChannels = (props) => {
     []
   );
 
+  const [showViewChannelsPlus, setShowViewChannelsPlus] = useState(false);
+
+  const handleViewChannelsPlus = () => {
+    setShowViewChannelsPlus(!showViewChannelsPlus);
+  };
+
   const columns1 = useMemo(
     () => [
       {
@@ -255,9 +265,35 @@ const AddChannels = (props) => {
   // const allColumns = useMemo(() => columns.concat(columns1), [columns, columns1]);
 
   const casData = [];
+
   return (
+
     <Card>
       <CardBody>
+        <Row>
+          <Col lg={10}>
+          </Col>
+          <Col lg={2}>
+            <div className="mb-3">
+              <button type="button" className="btn btn-primary d-flex justify-content-end">
+                <i className="mdi mdi-plus ms-1" style={{ fontSize: 20 }} onClick={handleViewChannelsPlus}></i>
+              </button>
+            </div>
+          </Col>
+        </Row>
+
+        <div
+          className="position-fixed top-0 end-0 p-3"
+          style={{ zIndex: "1005" }}
+        >
+          <Toast isOpen={showViewChannelsPlus}>
+            <ToastHeader toggle={handleViewChannelsPlus}>
+              <i className="mdi mdi-alert-outline me-2"></i> Warning
+            </ToastHeader>
+            <ToastBody>Please select package definition</ToastBody>
+          </Toast>
+        </div>
+
         <TableContainer
           // isPagination={true}
           columns={columns}
@@ -314,13 +350,13 @@ const AddChannels = (props) => {
         </Row>
       </div>
 
-    </Card>
+    </Card >
   );
 };
 
-AddChannels.propTypes = {
+ViewChannels.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default AddChannels;
+export default ViewChannels;

@@ -38,6 +38,7 @@ import AddNewPackageList from "./AddNewPackageList";
 import BulkUpdateCasCodePackageList from "./BulkUpdateCasCodePackageList";
 import BulkUpdatePackageList from "./BulkUpdatePackageList";
 import UploadPackageList from "../PackageList/UploadPackageList";
+import ViewPackageList from './ViewPackageList'
 
 const PackageList = (props) => {
   //meta title
@@ -60,7 +61,6 @@ const PackageList = (props) => {
     // console.log("Package List data in component:", packlist);
   }, [packlist]);
   const [isLoading, setLoading] = useState(loading);
-
   const [showAddNewPackageList, setShowAddNewPackageList] = useState(false);
   const [showUploadPackageList, setShowUploadPackageList] = useState(false);
   const [showBulkUpdatePackageList, setShowBulkUpdatePackageList] =
@@ -98,7 +98,13 @@ const PackageList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const packageData = cellProps.row.original;
+                  handleViewPackageList(packageData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -258,6 +264,13 @@ const PackageList = (props) => {
     setShowBulkUpdateCasCodePackageList(!showBulkUpdateCasCodePackageList);
   };
 
+  const [viewPackageList, setViewPackageList] = useState({});
+
+  const handleViewPackageList = (packageData) => {
+    setViewPackageList(!viewPackageList);
+    setViewPackageList(packageData);
+  };
+
   const keyField = "id";
 
   const getTableActions = () => {
@@ -301,6 +314,11 @@ const PackageList = (props) => {
         isOpen={showBulkUpdateCasCodePackageList}
         toggle={toggle3}
       />
+      <ViewPackageList
+        isOpen={viewPackageList}
+        handleViewPackageList={handleViewPackageList}
+        packageList={viewPackageList}
+      />
 
       <div className="page-content">
         <Container fluid>
@@ -320,6 +338,18 @@ const PackageList = (props) => {
                       data={packlist}
                       isGlobalFilter={true}
                       isShowTableActionButtons={true}
+                      handleAddNewPackageList={() =>
+                        setShowAddNewPackageList(true)
+                      }
+                      handleUploadPackageList={() =>
+                        setShowUploadPackageList(true)
+                      }
+                      handleBulkUpdateCasCodePackageList={() =>
+                        setShowBulkUpdateCasCodePackageList(true)
+                      }
+                      handleBulkUpdatePackageList={() =>
+                        setShowBulkUpdateCasCodePackageList(true)
+                      }
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       customPageSize={50}
