@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {
   Col,
@@ -20,7 +20,6 @@ import { useDispatch } from "react-redux";
 import AddAlacarte from "./AddAlacarte";
 import AddPackages from "./AddPackages";
 import Count from "./Count";
-import TotalCount from "./TotalCount";
 import PreviewTable from "./PreviewTable";
 import AdditionalMRP from "./AdditionalMRP";
 import AddBrands from "./AddBrands";
@@ -34,7 +33,6 @@ const CreateBouquet = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      //BroadCaster: "",
       code: "",
       name: "",
       type_lbl: "",
@@ -82,7 +80,6 @@ const CreateBouquet = (props) => {
         category_lbl: values["category_lbl"],
       };
       console.log("New Bouquet List:" + newbouquet);
-      // save new user
       dispatch(onAddBouquet(newbouquet));
       validation.resetForm();
       toggle();
@@ -602,7 +599,7 @@ const CreateBouquet = (props) => {
               padding: "0px 10px",
             }}
           >
-            <p style={{ fontWeight: "bold" }}>
+            <p style={{ fontWeight: "bold", display: "contents" }}>
               DEFAULT MRP Pricing / Bouquet Pricing forLCO
               <span style={{ color: "red" }}>*</span>
             </p>
@@ -615,7 +612,27 @@ const CreateBouquet = (props) => {
               margin: "30px 0px",
             }}
           >
-            <TotalCount />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                border: "1px solid grey",
+                width: "50%",
+                alignItems: "center",
+                padding: "10px",
+                marginLeft: "25%",
+              }}
+            >
+              <div
+                style={{ borderRight: "1px solid grey", paddingRight: "20px" }}
+              >
+                <div>Total FTA Count: 0 | Total Pay Channel Count: 0</div>
+                <div>Total NCF Channels: 0 | Total Channels: 0</div>
+              </div>
+              <div>
+                <div style={{ marginLeft: "20px" }}>Overall Total: 0**</div>
+              </div>
+            </div>
             <Row>
               <Col sm="3">
                 <Label>MRP**</Label>

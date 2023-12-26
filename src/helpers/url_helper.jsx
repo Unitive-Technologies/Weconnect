@@ -41,8 +41,11 @@ export const GET_STATEUSERS =
   "/administrative-division?filter[type]=1&expand=created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
 
 export const GET_DISTRICT =
-  "/administrative-division?filter[type]=2&expand=created_by_lbl,operator_lbl,status_lbl,state_lbl,state_code_lbl&page=1&per-page=50&vr=web1.0";
-export const ADD_DISTRICT = "/add/district";
+  "/administrative-division?filter[type]=2&expand=created_by_lbl,operator_lbl,status_lbl,state_lbl,state_code_lbl&vr=web1.0";
+export const ADD_DISTRICT = "/administrative-division?vr=web1.0";
+export const GET_DISTRICT_STATUS = "/list/status?fields=id,name&vr=web1.0";
+export const GET_DISTRICT_STATELIST =
+  "/administrative-division/list?fields=id,name&expand=state_id_lbl&filter[type]=1&per-page=100&vr=web1.0";
 
 export const GET_CITY =
   "/administrative-division?filter[type]=3&expand=created_by_lbl,operator_lbl,status_lbl,state_lbl,state_code_lbl,district_lbl,district_code_lbl&page=1&per-page=50&vr=web1.0";
