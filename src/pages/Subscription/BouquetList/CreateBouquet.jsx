@@ -602,7 +602,7 @@ const CreateBouquet = (props) => {
               padding: "0px 10px",
             }}
           >
-            <p style={{ fontWeight: "bold" }}>
+            <p style={{ fontWeight: "bold", display: "contents" }}>
               DEFAULT MRP Pricing / Bouquet Pricing forLCO
               <span style={{ color: "red" }}>*</span>
             </p>
