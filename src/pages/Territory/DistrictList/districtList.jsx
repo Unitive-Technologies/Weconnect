@@ -12,7 +12,11 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import { getDistrict as onGetDistrict } from "/src/store/actions";
+import {
+  getDistrict as onGetDistrict,
+  getDistrictStateList as onGetDistrictStateList,
+  getDistrictStatus as onGetDistrictStatus,
+} from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
@@ -37,164 +41,14 @@ const DistrictList = (props) => {
     (district) => ({
       districts: district.district,
       loading: district.loading,
+      status: district.status,
+      statelist: district.statelist,
     })
   );
 
-  const { districts, loading } = useSelector(districtProperties);
+  const { districts, loading, status, statelist } =
+    useSelector(districtProperties);
   const [isLoading, setLoading] = useState(loading);
-
-  const stateNames = [
-    {
-      id: 37,
-      name: "Delhi",
-    },
-    {
-      id: 36,
-      name: "Puducherry",
-    },
-    {
-      id: 35,
-      name: "Ladakh",
-    },
-    {
-      id: 34,
-      name: "Andaman and Nicobar Islands",
-    },
-    {
-      id: 33,
-      name: "Lakshadweep",
-    },
-    {
-      id: 32,
-      name: "Daman and Diu",
-    },
-    {
-      id: 31,
-      name: "Dadra and Nagar Haveli",
-    },
-    {
-      id: 30,
-      name: "Chandigarh",
-    },
-    {
-      id: 29,
-      name: "West Bengal",
-    },
-    {
-      id: 28,
-      name: "Uttarakhand",
-    },
-    {
-      id: 27,
-      name: "Uttar Pradesh",
-    },
-    {
-      id: 26,
-      name: "Tripura",
-    },
-    {
-      id: 25,
-      name: "Telangana",
-    },
-    {
-      id: 24,
-      name: "Tamil Nadu",
-    },
-    {
-      id: 23,
-      name: "Sikkim",
-    },
-    {
-      id: 22,
-      name: "Rajasthan",
-    },
-    {
-      id: 21,
-      name: "Punjab",
-    },
-    {
-      id: 20,
-      name: "Odisha",
-    },
-    {
-      id: 19,
-      name: "Nagaland",
-    },
-    {
-      id: 18,
-      name: "Mizoram",
-    },
-    {
-      id: 17,
-      name: "Meghalaya",
-    },
-    {
-      id: 16,
-      name: "Manipur",
-    },
-    {
-      id: 15,
-      name: "Maharashtra",
-    },
-    {
-      id: 14,
-      name: "Madhya Pradesh",
-    },
-    {
-      id: 13,
-      name: "Kerala",
-    },
-    {
-      id: 12,
-      name: "Karnataka",
-    },
-    {
-      id: 11,
-      name: "Jharkhand",
-    },
-    {
-      id: 10,
-      name: "Jammu and Kashmir",
-    },
-    {
-      id: 9,
-      name: "Himachal Pradesh",
-    },
-    {
-      id: 8,
-      name: "Haryana",
-    },
-    {
-      id: 7,
-      name: "Gujarat",
-    },
-    {
-      id: 6,
-      name: "Goa",
-    },
-    {
-      id: 5,
-      name: "Chhattisgarh",
-    },
-    {
-      id: 4,
-      name: "Bihar",
-    },
-    {
-      id: 3,
-      name: "Assam",
-    },
-    {
-      id: 2,
-      name: "Arunachal Pradesh",
-    },
-    {
-      id: 1,
-      name: "Andhra Pradesh",
-    },
-  ];
-
-  // console.log("States Name in district list: ", stateNames);
 
   const columns = useMemo(
     () => [
@@ -367,7 +221,8 @@ const DistrictList = (props) => {
   useEffect(() => {
     if (districts && !districts.length) {
       dispatch(onGetDistrict());
-      setIsEdit(false);
+      dispatch(onGetDistrictStatus());
+      dispatch(onGetDistrictStateList());
     }
   }, [dispatch, districts]);
 
@@ -379,7 +234,6 @@ const DistrictList = (props) => {
   };
 
   const handleViewDistrict = (userData) => {
-    // console.log("User Data: ", userData);
     setShowViewDistrict(!showViewDistrict);
     setViewDistrictData(userData);
   };
@@ -405,21 +259,24 @@ const DistrictList = (props) => {
 
   return (
     <React.Fragment>
-      {/* {console.log(stateNames)} */}
       <ViewDistrict
         isOpen={showViewDistrict}
         handleViewDistrict={handleViewDistrict}
         district={viewDistrictData}
-        stateNames={stateNames}
+        statelist={statelist}
+        status={status}
       />
       <AddNewDistrict
         isOpen={showAddDistrict}
         handleShowDistrict={handleShowDistrict}
-        stateNames={stateNames}
+        statelist={statelist}
+        status={status}
       />
       <UploadDistrict
         isOpen={showUploadDistrict}
         handleUploadDistrict={handleUploadDistrict}
+        status={status}
+        statelist={statelist}
       />
       <div className="page-content">
         <Container fluid>

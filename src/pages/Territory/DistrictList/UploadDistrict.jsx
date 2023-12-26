@@ -19,7 +19,7 @@ import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const UploadDistrict = (props) => {
-  const { isOpen, handleUploadDistrict } = props;
+  const { isOpen, handleUploadDistrict, status, statelist } = props;
 
   const [selectedFiles, setselectedFiles] = useState([]);
 
@@ -102,44 +102,11 @@ const UploadDistrict = (props) => {
                 // onBlur={validation.handleBlur}
                 // value={validation.values.state_lbl || ""}
               >
-                <option value="">Select state</option>
-                <option value="1">Delhi</option>
-                <option value="2">Puducherry</option>
-                <option value="3">Ladakh</option>
-                <option value="4">Andaman and Nicobar Islands</option>
-                <option value="5">Lakshadweep</option>
-                <option value="6">Daman and Diu</option>
-                <option value="7">Dadra and Nagar Haveli</option>
-                <option value="8">Chandigarh</option>
-                <option value="9">West Bengal</option>
-                <option value="10">Uttarakhand</option>
-                <option value="11">Utter Pradesh</option>
-                <option value="12">Tripura</option>
-                <option value="13">Telangana</option>
-                <option value="14">Tamil Nadu</option>
-                <option value="15">Sikkim</option>
-                <option value="16">Rajasthan</option>
-                <option value="17">Punjab</option>
-                <option value="18">Odisha</option>
-                <option value="19">Nagaland</option>
-                <option value="20">Mizoram</option>
-                <option value="21">Meghalaya</option>
-                <option value="22">Manipur</option>
-                <option value="23">Maharashtra</option>
-                <option value="24">Madhya Pradesh</option>
-                <option value="25">Kerala</option>
-                <option value="26">Karnataka</option>
-                <option value="27">Jharkhand</option>
-                <option value="28">Jammu and Kashmir</option>
-                <option value="29">Himachal Pradesh</option>
-                <option value="30">Haryana</option>
-                <option value="31">Gujarat</option>
-                <option value="32">Goa</option>
-                <option value="33">Chattisgarh</option>
-                <option value="34">Bihar</option>
-                <option value="35">Assam</option>
-                <option value="36">Arunachal Pradesh</option>
-                <option value="37">Andhra Pradesh</option>
+                {statelist.map((options) => (
+                  <option key={options.id} value={options.name}>
+                    {options.name}
+                  </option>
+                ))}
               </Input>
               {/* {validation.touched.state_lbl && validation.errors.state_lbl ? (
                   <FormFeedback type="invalid">
@@ -159,9 +126,11 @@ const UploadDistrict = (props) => {
                 // value={validation.values.status || ""}
               >
                 <option value="">Select Status</option>
-                <option value="11">Active</option>
-                <option value="12">BLOCKED</option>
-                <option value="13">In-Active</option>
+                {status.map((options) => (
+                  <option key={options.id} value={options.name}>
+                    {options.name}
+                  </option>
+                ))}
               </Input>
               {/* {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">

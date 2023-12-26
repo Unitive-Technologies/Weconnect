@@ -18,10 +18,8 @@ import { addDistrict as onAddDistrict } from "/src/store/district/actions";
 import { useDispatch } from "react-redux";
 
 const AddNewDistrict = (props) => {
-  const { isOpen, handleShowDistrict, stateNames } = props;
+  const { isOpen, handleShowDistrict, statelist, status } = props;
   const dispatch = useDispatch();
-
-  // console.log("States Name in Add district: ", stateNames);
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -127,7 +125,7 @@ const AddNewDistrict = (props) => {
                   value={validation.values.state_lbl || ""}
                 >
                   <option value="">Select state</option>
-                  {stateNames.map((options) => (
+                  {statelist.map((options) => (
                     <option key={options.id} value={options.name}>
                       {options.name}
                     </option>
@@ -183,9 +181,11 @@ const AddNewDistrict = (props) => {
                   value={validation.values.status_lbl || ""}
                 >
                   <option value="">Select Status</option>
-                  <option value="11">Active</option>
-                  <option value="12">BLOCKED</option>
-                  <option value="13">In-Active</option>
+                  {status.map((options) => (
+                    <option key={options.id} value={options.name}>
+                      {options.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.status_lbl &&
                 validation.errors.status_lbl ? (

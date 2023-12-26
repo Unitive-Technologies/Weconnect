@@ -23,7 +23,6 @@ import {
   getDistrictStateList,
   getDistrictStatus,
 } from "../../helpers/fakebackend_helper";
-import { toast } from "react-toastify";
 
 const convertDistrictListObject = (districtList) => {
   // customer district list has more data than what we need, we need to convert each of the district object in the list with needed colums of the table
@@ -38,9 +37,9 @@ const convertDistrictListObject = (districtList) => {
       state_code_lbl: district.state_code_lbl,
       description: district.description,
       status:
-        district.status === 11
+        district.status === 1
           ? "ACTIVE"
-          : district.status === 12
+          : district.status === 2
           ? "INACTIVE"
           : "BLOCKED",
       created_at: district.created_at,
@@ -51,9 +50,9 @@ const convertDistrictListObject = (districtList) => {
 function* fetchDistrict() {
   try {
     const response = yield call(getDistrict);
-    console.log("response:" + JSON.stringify(response));
-    // const districtList = convertDistrictListObject(response);
-    yield put(getDistrictSuccess(response.data));
+    console.log("response:" + JSON.stringify(response.data));
+    const districtList = convertDistrictListObject(response.data);
+    yield put(getDistrictSuccess(districtList));
   } catch (error) {
     yield put(getDistrictFail(error));
   }
@@ -62,6 +61,10 @@ function* fetchDistrict() {
 function* fetchDistrictStatus() {
   try {
     const response = yield call(getDistrictStatus);
+    console.log(
+      "status list data in District saga: ",
+      JSON.stringify(response.data)
+    );
     yield put(getDistrictStatusSuccess(response.data));
   } catch (error) {
     yield put(getDistrictStatusFail(error));
@@ -71,6 +74,10 @@ function* fetchDistrictStatus() {
 function* fetchDistrictStateList() {
   try {
     const response = yield call(getDistrictStateList);
+    console.log(
+      "state list data in District saga: ",
+      JSON.stringify(response.data)
+    );
     yield put(getDistrictStateListSuccess(response.data));
   } catch (error) {
     yield put(getDistrictStateListFail(error));
@@ -80,11 +87,10 @@ function* fetchDistrictStateList() {
 function* onAddDistrict({ payload: district }) {
   try {
     const response = yield call(addDistrict, district);
-    yield put(addDistrictSuccess(response));
-    toast.success("District list Added Successfully", { autoClose: 2000 });
+    console.log(" New District: ", response.data);
+    yield put(addDistrictSuccess(response.data));
   } catch (error) {
     yield put(addDistrictFail(error));
-    toast.error("District list Added Failed", { autoClose: 2000 });
   }
 }
 

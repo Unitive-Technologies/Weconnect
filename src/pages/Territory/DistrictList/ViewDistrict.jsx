@@ -19,7 +19,7 @@ import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const ViewDistrict = (props) => {
-  const { isOpen, handleViewDistrict, district, stateNames } = props;
+  const { isOpen, handleViewDistrict, district, statelist, status } = props;
   const dispatch = useDispatch();
   const [showEditDistrict, setShowEditDistrict] = useState(false);
 
@@ -139,7 +139,7 @@ const ViewDistrict = (props) => {
                   value={validation.values.state_lbl || ""}
                   disabled={!showEditDistrict}
                 >
-                  {stateNames.map((options) => (
+                  {statelist.map((options) => (
                     <option key={options.id} value={options.name}>
                       {options.name}
                     </option>
@@ -192,9 +192,11 @@ const ViewDistrict = (props) => {
                   value={validation.values.status || ""}
                   disabled={!showEditDistrict}
                 >
-                  <option value="11">Active</option>
-                  <option value="12">BLOCKED</option>
-                  <option value="13">In-Active</option>
+                  {status.map((options) => (
+                    <option key={options.id} value={options.name}>
+                      {options.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">

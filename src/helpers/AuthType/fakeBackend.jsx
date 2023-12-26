@@ -928,18 +928,18 @@ const fakeBackend = () => {
     });
   });
 
-  mock.onPost(url.ADD_DISTRICT).reply((district) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (district && district.data) {
-          // Passing fake JSON data as response
-          resolve([200, district.data]);
-        } else {
-          reject([400, "Cannot add district list"]);
-        }
-      });
-    });
-  });
+  // mock.onPost(url.ADD_DISTRICT).reply((district) => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (district && district.data) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, district.data]);
+  //       } else {
+  //         reject([400, "Cannot add district list"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onPost(url.ADD_CITY).reply((city) => {
     return new Promise((resolve, reject) => {

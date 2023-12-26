@@ -49,12 +49,10 @@ export const getDistrictStatus = () => ({
   type: GET_DISTRICT_STATUS,
 });
 
-export const getDistrictStatusSuccess = (status) => {
-  return {
-    type: GET_DISTRICT_STATUS_SUCCESS,
-    payload: status,
-  };
-};
+export const getDistrictStatusSuccess = (status) => ({
+  type: GET_DISTRICT_STATUS_SUCCESS,
+  payload: status,
+});
 
 export const getDistrictStatusFail = (error) => ({
   type: GET_DISTRICT_STATUS_FAIL,
@@ -65,12 +63,10 @@ export const getDistrictStateList = () => ({
   type: GET_DISTRICT_STATELIST,
 });
 
-export const getDistrictStateListSuccess = (statuslist) => {
-  return {
-    type: GET_DISTRICT_STATELIST_SUCCESS,
-    payload: statuslist,
-  };
-};
+export const getDistrictStateListSuccess = (statelist) => ({
+  type: GET_DISTRICT_STATELIST_SUCCESS,
+  payload: statelist,
+});
 
 export const getDistrictStateListFail = (error) => ({
   type: GET_DISTRICT_STATELIST_FAIL,

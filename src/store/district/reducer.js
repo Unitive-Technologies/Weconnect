@@ -59,7 +59,7 @@ const District = (state = INIT_STATE, action) => {
       };
 
     case GET_DISTRICT_STATELIST_SUCCESS:
-      console.log("District data in reducer:", action.payload);
+      console.log("Statelist data in reducer:", action.payload);
       return {
         ...state,
         statelist: action.payload,
