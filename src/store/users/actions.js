@@ -55,14 +55,14 @@ export const getUsersSuccess = (users) => {
   };
 };
 
-export const addNewUser = (users) => ({
+export const addNewUser = (user) => ({
   type: ADD_NEW_USER,
-  payload: users,
+  payload: user,
 });
 
-export const addUserSuccess = (users) => ({
+export const addUserSuccess = (user) => ({
   type: ADD_USER_SUCCESS,
-  payload: users,
+  payload: user,
 });
 
 export const addUserFail = (error) => ({

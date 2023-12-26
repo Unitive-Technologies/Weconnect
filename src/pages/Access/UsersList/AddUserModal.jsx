@@ -51,6 +51,7 @@ const AddUserModal = (props) => {
   const [selectedMso, setSelectedMso] = useState("");
   const [selectedRegional, setSelectedRegional] = useState("");
   const [selectedDistributor, setSelectedDistributor] = useState("");
+  const [selectedRole, setSelectedRole] = useState("");
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
 
   const selectContactsState = (state) => state.users;
@@ -128,74 +129,82 @@ const AddUserModal = (props) => {
   //     });
   // };
 
-  // const handleTypeChange = async (e) => {
-  //   try {
-  //     const usertype = e.target.value;
-  //     setSelectedType(usertype);
+  const handleRoleChange = async (e) => {
+    try {
+      const role = e.target.value;
+      setSelectedRole(role);
 
-  //     validation.handleChange(e);
+      validation.handleChange(e);
 
-  //     // Assuming you have a token stored in localStorage
-  //     const token = "Bearer " + localStorage.getItem("temptoken");
+      // Assuming you have a token stored in localStorage
+      const token = "Bearer " + localStorage.getItem("temptoken");
 
-  //     const response = await axios.get(
-  //       `${API_URL}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[type]=0&vr=web1.0}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`, // Include your token here
-  //         },
-  //       }
-  //     );
+      const response = await axios.get(
+        `${API_URL}/menu-access-right/list?expand=user_type_lbl&fields=_id,user_id,user_type,role&filter[type][]=1&filter[type][]=2&filter[user_type]=${selectedType}&filter[role_id]=${selectedRole}&vr=web1.0`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include your token here
+          },
+        }
+      );
 
-  //     console.log("getMso : " + JSON.stringify(response.data));
-  //     setMso(response.data);
-  //   } catch (error) {
-  //     console.error("Error fetching MSO data:", error);
-  //     // Handle error if necessary
-  //   }
-  // };
+      console.log("policy after selection : " + JSON.stringify(response.data));
+      // setMso(response.data);
+    } catch (error) {
+      console.error("Error fetching policy data:", error);
+      // Handle error if necessary
+    }
+  };
 
   const validation = useFormik({
     enableReinitialize: true,
-
     initialValues: {
       name: "",
       email: "",
-      mobile_no: "",
+      mobile: "",
       type: "",
+      policy: "",
       status: "",
       block_message: "",
       role: "",
-      designation_id: "",
+      designation: "",
       username: "",
       password: "",
-      confirmpassword: "",
+      // confirmpassword: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
       email: Yup.string()
         .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
         .required("Please Enter Your Email"),
-      mobile_no: Yup.string().required("Please Enter mobile Number"),
+      mobile: Yup.string().required("Please Enter mobile Number"),
       type: Yup.string().required("Please Enter User Type"),
       status: Yup.string().required("Please Enter Status"),
       role: Yup.string().required("Please Enter Role"),
-      designation_id: Yup.string().required("Please Enter Designation"),
+      designation: Yup.string().required("Please Enter Designation"),
       username: Yup.string().required("Please Enter Login ID"),
       password: Yup.string().required("Please Enter Password"),
-      confirmpassword: Yup.string().required("Please Enter Confirm Password"),
+      // confirmpassword: Yup.string().required("Please Enter Confirm Password"),
     }),
     onSubmit: (values) => {
       const newUser = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
+        access_policy_id: values["policy"],
+        block_message: values["block_message"],
+        designation_id: values["designation"],
         name: values["name"],
         email: values["email"],
-        mobile_no: values["mobile_no"],
-        type: values["type"],
+        mobile_no: values["mobile"],
+        operator_type: values["type"],
+        operator_id:
+          values["type"] === 0
+            ? values["mso"]
+            : values["type"] === 1
+            ? values["regional"]
+            : values["type"] === 2
+            ? values["distributor"]
+            : values["lco"],
         status: values["status"],
-        block_message: values["block_message"],
         role: values["role"],
-        designation_id: values["designation"],
         username: values["username"],
         password: values["password"],
       };
@@ -204,7 +213,11 @@ const AddUserModal = (props) => {
       validation.resetForm();
       handleAddUser();
     },
+    onReset: (values) => {
+      validation.setValues(validation.initialValues);
+    },
   });
+
   return (
     <Modal
       isOpen={isOpen}
@@ -285,22 +298,22 @@ const AddUserModal = (props) => {
                   Mobile No.<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="mobile_no"
+                  name="mobile"
                   label="Mobile No."
                   placeholder="Insert Mobile Number"
                   type="text"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.mobile_no || ""}
+                  value={validation.values.mobile || ""}
                   invalid={
-                    validation.touched.mobile_no && validation.errors.mobile_no
+                    validation.touched.mobile && validation.errors.mobile
                       ? true
                       : false
                   }
                 />
-                {validation.touched.mobile_no && validation.errors.mobile_no ? (
+                {validation.touched.mobile && validation.errors.mobile ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.mobile_no}
+                    {validation.errors.mobile}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -346,8 +359,8 @@ const AddUserModal = (props) => {
                   // onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   // value={validation.values.role || ""}
-                  onChange={handleTypeChange}
-                  value={selectedType}
+                  onChange={handleRoleChange}
+                  value={selectedRole}
                 >
                   <option value="">Select Role</option>
                   {userRole.map((role) => (
@@ -429,13 +442,13 @@ const AddUserModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Group Policy</Label>
                 <Input
-                  name="grouppolicy"
+                  name="policy"
                   type="select"
                   placeholder="Select Group Policy"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.grouppolicy || ""}
+                  value={validation.values.policy || ""}
                   disabled={!selectedType}
                 >
                   <option value="">Select Group Policy</option>
@@ -450,10 +463,9 @@ const AddUserModal = (props) => {
                     ))}
                 </Input>
 
-                {validation.touched.grouppolicy &&
-                validation.errors.grouppolicy ? (
+                {validation.touched.policy && validation.errors.policy ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.grouppolicy}
+                    {validation.errors.policy}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -609,7 +621,7 @@ const AddUserModal = (props) => {
                       onBlur={validation.handleBlur}
                       value={validation.values.mso || ""}
                     >
-                      <option value="">Select Role</option>
+                      <option value="">Select MSO</option>
                       {userMsoDetails.map((mso) => (
                         <option key={mso.id} value={mso.id}>
                           {mso.name}
@@ -668,7 +680,11 @@ const AddUserModal = (props) => {
                 "regional value:" + typeof parseInt(validation.values.regional)
               )}
               <Col lg={4}>
-                {validation.values.regional ? (
+                {validation.values.regional &&
+                (parseInt(selectedType) === 1 ||
+                  parseInt(selectedType) === 2 ||
+                  parseInt(selectedType) === 3) &&
+                parseInt(validation.values.mso) == 1 ? (
                   <div className="mb-3">
                     <Label className="form-label">
                       Select Distributor
@@ -703,38 +719,42 @@ const AddUserModal = (props) => {
                 )}
               </Col>
               <Col lg={4}>
-                {validation.values.distributor && (
-                  <div className="mb-3">
-                    <Label className="form-label">
-                      Select LCO
-                      <span style={{ color: "red" }}>*</span>
-                    </Label>
-                    <Input
-                      name="lco"
-                      type="select"
-                      placeholder="Select LCO"
-                      className="form-select"
-                      onChange={validation.handleChange}
-                      onBlur={validation.handleBlur}
-                      value={validation.values.lco || ""}
-                    >
-                      <option value="">Select LCO</option>
-                      {userLco &&
-                        userLco.map((lco) => (
-                          <option key={lco.id} value={lco.id}>
-                            {lco.name}
-                          </option>
-                        ))}
-                    </Input>
-                    {validation.touched.lco && validation.errors.lco ? (
-                      <FormFeedback type="invalid">
-                        {validation.errors.lco}
-                      </FormFeedback>
-                    ) : null}
-                  </div>
-                  // ) : (
-                  //   <></>
-                )}
+                {validation.values.distributor &&
+                  validation.values.regional &&
+                  (parseInt(selectedType) === 1 ||
+                    parseInt(selectedType) === 2 ||
+                    parseInt(selectedType) === 3) && (
+                    <div className="mb-3">
+                      <Label className="form-label">
+                        Select LCO
+                        <span style={{ color: "red" }}>*</span>
+                      </Label>
+                      <Input
+                        name="lco"
+                        type="select"
+                        placeholder="Select LCO"
+                        className="form-select"
+                        onChange={validation.handleChange}
+                        onBlur={validation.handleBlur}
+                        value={validation.values.lco || ""}
+                      >
+                        <option value="">Select LCO</option>
+                        {userLco &&
+                          userLco.map((lco) => (
+                            <option key={lco.id} value={lco.id}>
+                              {lco.name}
+                            </option>
+                          ))}
+                      </Input>
+                      {validation.touched.lco && validation.errors.lco ? (
+                        <FormFeedback type="invalid">
+                          {validation.errors.lco}
+                        </FormFeedback>
+                      ) : null}
+                    </div>
+                    // ) : (
+                    //   <></>
+                  )}
               </Col>
             </Row>
           </Row>

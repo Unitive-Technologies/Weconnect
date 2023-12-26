@@ -161,7 +161,7 @@ export const ADD_NEW_PROMOVOUCHER = "/add/promovoucher";
 export const GET_USERS =
   "/user?expand=setting,group_lbl,access_level,role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[role]=4&page=1&per-page=50&vr=web1.0";
 export const GET_USER_PROFILE = "/user";
-export const ADD_NEW_USER = "/add/user";
+export const ADD_NEW_USER = "/user?vr=web1.0";
 export const UPDATE_USER = "/user/311736?vr=web1.0";
 export const DELETE_USER = "/delete/user";
 export const GET_USER_TYPE = "/list/usertype?fields=id,name&vr=web1.0";
@@ -171,6 +171,7 @@ export const GET_USER_DESIGNATION =
   "/user-designation/list?field=id,name&vr=web1.0";
 export const GET_USER_MSO_POLICY =
   "/menu-access-right/list?expand=user_type_lbl&fields=_id,user_id,user_type,role&filter[type][]=1&filter[type][]=2&filter[user_type]=0&filter[role_id]=2&vr=web1.0";
+
 export const GET_USER_REGIONALOFFICE =
   "/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[mso_id]=1&filter[type]=1&vr=web1.0";
 export const GET_USER_MSO_DETAILS =
@@ -179,3 +180,27 @@ export const GET_USER_DISTRIBUTOR =
   "/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[mso_id]=1&filter[branch_id]=9&filter[type]=2&vr=web1.0";
 export const GET_USER_LCO =
   "/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[mso_id]=1&filter[branch_id]=9&filter[distributor_id]=32&filter[type]=3&vr=web1.0";
+export const GET_MSO_ADMIN_POLICY =
+  "/menu-access-right/list?expand=user_type_lbl&fields=_id,user_id,user_type,role&filter[type][]=1&filter[type][]=2&filter[user_type]=0&filter[role_id]=1&vr=web1.0";
+export const GET_MSO_STAFF_POLICY =
+  "/menu-access-right/list?expand=user_type_lbl&fields=_id,user_id,user_type,role&filter[type][]=1&filter[type][]=2&filter[user_type]=0&filter[role_id]=2&vr=web1.0";
+export const GET_MSO_USER_POLICY =
+  "/menu-access-right/list?expand=user_type_lbl&fields=_id,user_id,user_type,role&filter[type][]=1&filter[type][]=2&filter[user_type]=0&filter[role_id]=3&vr=web1.0";
+export const GET_RO_ADMIN_POLICY =
+  "/menu-access-right/list?expand=user_type_lbl&fields=_id,user_id,user_type,role&filter[type][]=1&filter[type][]=2&filter[user_type]=1&filter[role_id]=1&vr=web1.0";
+export const GET_RO_STAFF_POLICY =
+  "/menu-access-right/list?expand=user_type_lbl&fields=_id,user_id,user_type,role&filter[type][]=1&filter[type][]=2&filter[user_type]=1&filter[role_id]=2&vr=web1.0";
+export const GET_RO_USER_POLICY =
+  "/menu-access-right/list?expand=user_type_lbl&fields=_id,user_id,user_type,role&filter[type][]=1&filter[type][]=2&filter[user_type]=1&filter[role_id]=3&vr=web1.0";
+export const GET_DISTRIBUTOR_ADMIN_POLICY =
+  "/menu-access-right/list?expand=user_type_lbl&fields=_id,user_id,user_type,role&filter[type][]=1&filter[type][]=2&filter[user_type]=2&filter[role_id]=1&vr=web1.0";
+export const GET_DISTRIBUTOR_STAFF_POLICY =
+  "/menu-access-right/list?expand=user_type_lbl&fields=_id,user_id,user_type,role&filter[type][]=1&filter[type][]=2&filter[user_type]=2&filter[role_id]=2&vr=web1.0";
+export const GET_DISTRIBUTOR_USER_POLICY =
+  "/menu-access-right/list?expand=user_type_lbl&fields=_id,user_id,user_type,role&filter[type][]=1&filter[type][]=2&filter[user_type]=2&filter[role_id]=3&vr=web1.0";
+export const GET_LCO_ADMIN_POLICY =
+  "/menu-access-right/list?expand=user_type_lbl&fields=_id,user_id,user_type,role&filter[type][]=1&filter[type][]=2&filter[user_type]=3&filter[role_id]=1&vr=web1.0";
+export const GET_LCO_STAFF_POLICY =
+  "/menu-access-right/list?expand=user_type_lbl&fields=_id,user_id,user_type,role&filter[type][]=1&filter[type][]=2&filter[user_type]=3&filter[role_id]=2&vr=web1.0";
+export const GET_LCO_USER_POLICY =
+  "/menu-access-right/list?expand=user_type_lbl&fields=_id,user_id,user_type,role&filter[type][]=1&filter[type][]=2&filter[user_type]=3&filter[role_id]=3&vr=web1.0";

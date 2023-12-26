@@ -15,9 +15,9 @@ import {
   getUserRole as onGetUserRole,
   getUserDesignation as onGetUserDesignation,
   getUserMsoPolicy as onGetUserMsoPolicy,
-  getUserRegionalOffice as onGetUserRegionalOffice,
-  getUserMsoDetails as onGetUserMsoDetails,
-  getUserDistributor as onGetUserDistributor,
+  // getUserRegionalOffice as onGetUserRegionalOffice,
+  // getUserMsoDetails as onGetUserMsoDetails,
+  // getUserDistributor as onGetUserDistributor,
 } from "/src/store/users/actions";
 
 //redux
@@ -46,9 +46,9 @@ const ContactsList = (props) => {
     userRole: Users.userRole,
     userDesignation: Users.userDesignation,
     userMsoPolicy: Users.userMsoPolicy,
-    userRegional: Users.userRegional,
-    userMsoDetails: Users.userMsoDetails,
-    userDistributor: Users.userDistributor,
+    // userRegional: Users.userRegional,
+    // userMsoDetails: Users.userMsoDetails,
+    // userDistributor: Users.userDistributor,
   }));
 
   const {
@@ -58,9 +58,9 @@ const ContactsList = (props) => {
     userRole,
     userDesignation,
     userMsoPolicy,
-    userRegional,
-    userMsoDetails,
-    userDistributor,
+    // userRegional,
+    // userMsoDetails,
+    // userDistributor,
     loading,
   } = useSelector(ContactsProperties);
 
@@ -348,9 +348,9 @@ const ContactsList = (props) => {
       dispatch(onGetUserRole());
       dispatch(onGetUserDesignation());
       dispatch(onGetUserMsoPolicy());
-      dispatch(onGetUserRegionalOffice());
-      dispatch(onGetUserMsoDetails());
-      dispatch(onGetUserDistributor());
+      // dispatch(onGetUserRegionalOffice());
+      // dispatch(onGetUserMsoDetails());
+      // dispatch(onGetUserDistributor());
     }
   }, [dispatch, users]);
 
@@ -439,7 +439,7 @@ const ContactsList = (props) => {
         userStatus={userStatus}
         userRole={userRole}
         userDesignation={userDesignation}
-        userRegional={userRegional}
+        // userRegional={userRegional}
       />
       <AddUserModal
         isOpen={showAddUser}
@@ -449,9 +449,9 @@ const ContactsList = (props) => {
         userRole={userRole}
         userDesignation={userDesignation}
         userMsoPolicy={userMsoPolicy}
-        userRegional={userRegional}
-        userMsoDetails={userMsoDetails}
-        userDistributor={userDistributor}
+        // userRegional={userRegional}
+        // userMsoDetails={userMsoDetails}
+        // userDistributor={userDistributor}
       />
       <UploadUserModal
         isOpen={showUploadUser}
