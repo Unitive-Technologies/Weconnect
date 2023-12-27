@@ -318,240 +318,6 @@ const AddUserModal = (props) => {
                 ) : null}
               </div>
             </Col>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">
-                  Status<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="status"
-                  type="select"
-                  placeholder="Select Status"
-                  className="form-select"
-                  onChange={handleStatusChange}
-                  onBlur={validation.handleBlur}
-                  value={selectedStatus}
-                >
-                  <option value="">Select Status</option>
-                  {userStatus.map((status) => (
-                    <option key={status.id} value={status.id}>
-                      {status.name}
-                    </option>
-                  ))}
-                </Input>
-                {validation.touched.status && validation.errors.status ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.status}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">
-                  Role<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="role"
-                  type="select"
-                  placeholder="Select Role"
-                  className="form-select"
-                  // onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  // value={validation.values.role || ""}
-                  onChange={handleRoleChange}
-                  value={selectedRole}
-                >
-                  <option value="">Select Role</option>
-                  {userRole.map((role) => (
-                    <option key={role.id} value={role.id}>
-                      {role.name}
-                    </option>
-                  ))}
-                </Input>
-                {validation.touched.role && validation.errors.role ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.role}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">
-                  Designation<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="designation"
-                  type="select"
-                  placeholder="Select Designation"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.designation || ""}
-                >
-                  <option value="">Select Designation</option>
-                  {userDesignation.map((desig) => (
-                    <option key={desig.id} value={desig.id}>
-                      {desig.name}
-                    </option>
-                  ))}
-                </Input>
-                {validation.touched.designation &&
-                validation.errors.designation ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.designation}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">
-                  Inactive/Block Message<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="block_message"
-                  type="textarea"
-                  placeholder="Enter Message"
-                  rows="3"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.block_message || ""}
-                  invalid={
-                    validation.touched.block_message &&
-                    validation.errors.block_message
-                      ? true
-                      : false
-                  }
-                  disabled={
-                    selectedStatus === "0" || selectedStatus === "-7"
-                      ? false
-                      : true
-                  }
-                />
-                {validation.touched.block_message &&
-                validation.errors.block_message ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.block_message}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">Group Policy</Label>
-                <Input
-                  name="policy"
-                  type="select"
-                  placeholder="Select Group Policy"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.policy || ""}
-                  disabled={!selectedType}
-                >
-                  <option value="">Select Group Policy</option>
-
-                  {selectedType === 0 &&
-                    validation.values.mso == 1 &&
-                    userMsoPolicy &&
-                    userMsoPolicy.map((policy) => (
-                      <option key={policy._id} value={policy._id}>
-                        {policy.user_id}
-                      </option>
-                    ))}
-                </Input>
-
-                {validation.touched.policy && validation.errors.policy ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.policy}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">
-                  Login ID<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="username"
-                  label="Login ID"
-                  type="text"
-                  placeholder="Login ID"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.username || ""}
-                  invalid={
-                    validation.touched.username && validation.errors.username
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.username && validation.errors.username ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.username}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">
-                  Password<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="password"
-                  label="Password"
-                  type="text"
-                  placeholder="Password"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.password || ""}
-                  invalid={
-                    validation.touched.password && validation.errors.password
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.password && validation.errors.password ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.password}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">
-                  Confirm-Password<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="confirmpassword"
-                  label="Confirm Password"
-                  type="text"
-                  placeholder="Retype Password"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.confirmpassword || ""}
-                  invalid={
-                    validation.touched.confirmpassword &&
-                    validation.errors.confirmpassword
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.confirmpassword &&
-                validation.errors.confirmpassword ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.confirmpassword}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
           </Row>
           <Row>
             <div
@@ -681,8 +447,8 @@ const AddUserModal = (props) => {
               )}
               <Col lg={4}>
                 {validation.values.regional &&
-                (parseInt(selectedType) === 1 ||
-                  parseInt(selectedType) === 2 ||
+                // (parseInt(selectedType) === 1 ||
+                (parseInt(selectedType) === 2 ||
                   parseInt(selectedType) === 3) &&
                 parseInt(validation.values.mso) == 1 ? (
                   <div className="mb-3">
@@ -721,9 +487,7 @@ const AddUserModal = (props) => {
               <Col lg={4}>
                 {validation.values.distributor &&
                   validation.values.regional &&
-                  (parseInt(selectedType) === 1 ||
-                    parseInt(selectedType) === 2 ||
-                    parseInt(selectedType) === 3) && (
+                  parseInt(selectedType) === 3 && (
                     <div className="mb-3">
                       <Label className="form-label">
                         Select LCO
@@ -758,6 +522,246 @@ const AddUserModal = (props) => {
               </Col>
             </Row>
           </Row>
+          <Row>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Status<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="status"
+                  type="select"
+                  placeholder="Select Status"
+                  className="form-select"
+                  onChange={handleStatusChange}
+                  onBlur={validation.handleBlur}
+                  value={selectedStatus}
+                >
+                  <option value="">Select Status</option>
+                  {userStatus.map((status) => (
+                    <option key={status.id} value={status.id}>
+                      {status.name}
+                    </option>
+                  ))}
+                </Input>
+                {validation.touched.status && validation.errors.status ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.status}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Inactive/Block Message<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="block_message"
+                  type="textarea"
+                  placeholder="Enter Message"
+                  rows="3"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.block_message || ""}
+                  invalid={
+                    validation.touched.block_message &&
+                    validation.errors.block_message
+                      ? true
+                      : false
+                  }
+                  disabled={
+                    selectedStatus === "0" || selectedStatus === "-7"
+                      ? false
+                      : true
+                  }
+                />
+                {validation.touched.block_message &&
+                validation.errors.block_message ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.block_message}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Role<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="role"
+                  type="select"
+                  placeholder="Select Role"
+                  className="form-select"
+                  // onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  // value={validation.values.role || ""}
+                  onChange={handleRoleChange}
+                  value={selectedRole}
+                >
+                  <option value="">Select Role</option>
+                  {userRole.map((role) => (
+                    <option key={role.id} value={role.id}>
+                      {role.name}
+                    </option>
+                  ))}
+                </Input>
+                {validation.touched.role && validation.errors.role ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.role}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">Group Policy</Label>
+                <Input
+                  name="policy"
+                  type="select"
+                  placeholder="Select Group Policy"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.policy || ""}
+                  disabled={!selectedType}
+                >
+                  <option value="">Select Group Policy</option>
+
+                  {selectedType === 0 &&
+                    validation.values.mso == 1 &&
+                    userMsoPolicy &&
+                    userMsoPolicy.map((policy) => (
+                      <option key={policy._id} value={policy._id}>
+                        {policy.user_id}
+                      </option>
+                    ))}
+                </Input>
+
+                {validation.touched.policy && validation.errors.policy ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.policy}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Designation<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="designation"
+                  type="select"
+                  placeholder="Select Designation"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.designation || ""}
+                >
+                  <option value="">Select Designation</option>
+                  {userDesignation.map((desig) => (
+                    <option key={desig.id} value={desig.id}>
+                      {desig.name}
+                    </option>
+                  ))}
+                </Input>
+                {validation.touched.designation &&
+                validation.errors.designation ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.designation}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Login ID<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="username"
+                  label="Login ID"
+                  type="text"
+                  placeholder="Login ID"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.username || ""}
+                  invalid={
+                    validation.touched.username && validation.errors.username
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.username && validation.errors.username ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.username}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Password<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="password"
+                  label="Password"
+                  type="text"
+                  placeholder="Password"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.password || ""}
+                  invalid={
+                    validation.touched.password && validation.errors.password
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.password && validation.errors.password ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.password}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Confirm-Password<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="confirmpassword"
+                  label="Confirm Password"
+                  type="text"
+                  placeholder="Retype Password"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.confirmpassword || ""}
+                  invalid={
+                    validation.touched.confirmpassword &&
+                    validation.errors.confirmpassword
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.confirmpassword &&
+                validation.errors.confirmpassword ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.confirmpassword}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+          </Row>
+
           <Row>
             <Col>
               <ModalFooter>
