@@ -224,7 +224,7 @@ const ViewBroadcasterBouquets = (props) => {
           </Col>
         </Row>
 
-        <div
+        {/* <div
           className="position-fixed top-0 end-0 p-3"
           style={{ zIndex: "1005" }}
         >
@@ -234,20 +234,14 @@ const ViewBroadcasterBouquets = (props) => {
             </ToastHeader>
             <ToastBody>Please select package definition</ToastBody>
           </Toast>
-        </div>
+        </div> */}
 
 
         <TableContainer
-          // isPagination={true}
           columns={columns}
           data={casData}
-          // isGlobalFilter={true}
-          // isShowingPageLength={true}
-          // customPageSize={50}
           tableClass="table align-middle table-nowrap table-hover"
           theadClass="table-light"
-        // paginationDiv="col-sm-12 col-md-7"
-        // pagination="pagination pagination-rounded justify-content-end mt-4"
         />
       </CardBody>
 

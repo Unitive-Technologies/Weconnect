@@ -282,7 +282,7 @@ const ViewChannels = (props) => {
           </Col>
         </Row>
 
-        <div
+        {/* <div
           className="position-fixed top-0 end-0 p-3"
           style={{ zIndex: "1005" }}
         >
@@ -292,7 +292,7 @@ const ViewChannels = (props) => {
             </ToastHeader>
             <ToastBody>Please select package definition</ToastBody>
           </Toast>
-        </div>
+        </div> */}
 
         <TableContainer
           // isPagination={true}
