@@ -11,6 +11,9 @@ import {
   GET_DISTRICT_STATELIST,
   GET_DISTRICT_STATELIST_SUCCESS,
   GET_DISTRICT_STATELIST_FAIL,
+  UPDATE_DISTRICT,
+  UPDATE_DISTRICT_SUCCESS,
+  UPDATE_DISTRICT_FAIL,
 } from "./actionTypes";
 
 export const getDistrict = () => ({
@@ -18,7 +21,6 @@ export const getDistrict = () => ({
 });
 
 export const getDistrictSuccess = (district) => {
-  console.log("Received District:", district);
   return {
     type: GET_DISTRICT_SUCCESS,
     payload: district,
@@ -70,5 +72,20 @@ export const getDistrictStateListSuccess = (statelist) => ({
 
 export const getDistrictStateListFail = (error) => ({
   type: GET_DISTRICT_STATELIST_FAIL,
+  payload: error,
+});
+
+export const updateDistrict = (district) => ({
+  type: UPDATE_DISTRICT,
+  payload: district,
+});
+
+export const updateDistrictSuccess = (district) => ({
+  type: UPDATE_DISTRICT_SUCCESS,
+  payload: district,
+});
+
+export const updateDistrictFail = (error) => ({
+  type: UPDATE_DISTRICT_FAIL,
   payload: error,
 });

@@ -12,6 +12,7 @@ import {
 import { Link } from "react-router-dom";
 
 const AddChannelsTableList = (props) => {
+  const { isOpen } = props
   const columns = useMemo(
     () => [
       {

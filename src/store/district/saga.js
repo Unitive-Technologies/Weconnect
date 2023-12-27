@@ -5,6 +5,7 @@ import {
   ADD_DISTRICT,
   GET_DISTRICT_STATUS,
   GET_DISTRICT_STATELIST,
+  UPDATE_DISTRICT,
 } from "./actionTypes";
 
 import {
@@ -16,12 +17,15 @@ import {
   getDistrictStatusFail,
   getDistrictStateListSuccess,
   getDistrictStateListFail,
+  updateDistrictSuccess,
+  updateDistrictFail,
 } from "./actions";
 import {
   getDistrict,
   addDistrict,
   getDistrictStateList,
   getDistrictStatus,
+  updateDistrict,
 } from "../../helpers/fakebackend_helper";
 
 const convertDistrictListObject = (districtList) => {
@@ -36,12 +40,7 @@ const convertDistrictListObject = (districtList) => {
       created_by_lbl: district.created_by_lbl,
       state_code_lbl: district.state_code_lbl,
       description: district.description,
-      status:
-        district.status === 1
-          ? "ACTIVE"
-          : district.status === 0
-          ? "INACTIVE"
-          : "BLOCKED",
+      status: district.status,
       created_at: district.created_at,
       type: district.type,
       state_id: district.state_id,
@@ -52,7 +51,7 @@ const convertDistrictListObject = (districtList) => {
 function* fetchDistrict() {
   try {
     const response = yield call(getDistrict);
-    console.log("response:" + JSON.stringify(response.data));
+    // console.log("response:" + JSON.stringify(response.data));
     const districtList = convertDistrictListObject(response.data);
     yield put(getDistrictSuccess(districtList));
   } catch (error) {
@@ -63,10 +62,10 @@ function* fetchDistrict() {
 function* fetchDistrictStatus() {
   try {
     const response = yield call(getDistrictStatus);
-    console.log(
-      "status list data in District saga: ",
-      JSON.stringify(response.data)
-    );
+    // console.log(
+    //   "status list data in District saga: ",
+    //   JSON.stringify(response.data)
+    // );
     yield put(getDistrictStatusSuccess(response.data));
   } catch (error) {
     yield put(getDistrictStatusFail(error));
@@ -76,10 +75,10 @@ function* fetchDistrictStatus() {
 function* fetchDistrictStateList() {
   try {
     const response = yield call(getDistrictStateList);
-    console.log(
-      "state list data in District saga: ",
-      JSON.stringify(response.data)
-    );
+    // console.log(
+    //   "state list data in District saga: ",
+    //   JSON.stringify(response.data)
+    // );
     yield put(getDistrictStateListSuccess(response.data));
   } catch (error) {
     yield put(getDistrictStateListFail(error));
@@ -97,11 +96,22 @@ function* onAddDistrict({ payload: district }) {
   }
 }
 
+function* onUpdateDistrict({ payload: district }) {
+  try {
+    const response = yield call(updateDistrict, district);
+    yield put(updateDistrictSuccess(response));
+  } catch (error) {
+    console.log("Error in update district: ", error);
+    yield put(updateDistrictFail(error));
+  }
+}
+
 function* districtSaga() {
   yield takeEvery(GET_DISTRICT, fetchDistrict);
   yield takeEvery(ADD_DISTRICT, onAddDistrict);
   yield takeEvery(GET_DISTRICT_STATUS, fetchDistrictStatus);
   yield takeEvery(GET_DISTRICT_STATELIST, fetchDistrictStateList);
+  yield takeEvery(UPDATE_DISTRICT, onUpdateDistrict);
 }
 
 export default districtSaga;

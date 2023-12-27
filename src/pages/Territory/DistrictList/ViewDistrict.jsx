@@ -16,7 +16,7 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { updateUser as onUpdateUser } from "/src/store/users/actions";
+import { updateDistrict as onUpdateDistrict } from "/src/store/district/actions";
 
 const ViewDistrict = (props) => {
   const { isOpen, handleViewDistrict, district, statelist, status } = props;
@@ -28,8 +28,9 @@ const ViewDistrict = (props) => {
     enableReinitialize: true,
 
     initialValues: {
+      id: (district && district.id) || "",
       name: (district && district.name) || "",
-      state_lbl: (district && district.state_lbl) || "",
+      state_id: (district && district.state_id) || "",
       status: (district && district.status) || "",
       description: (district && district.description) || "",
       created_at: (district && district.created_at) || "",
@@ -37,24 +38,23 @@ const ViewDistrict = (props) => {
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter district name"),
-      state_lbl: Yup.string().required("Select state"),
+      state_id: Yup.string().required("Select state"),
       status: Yup.string().required("Select status"),
       description: Yup.string().required("Enter description"),
     }),
     onSubmit: (values) => {
-      const newDistrict = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
+      const updatedDistrict = {
+        id: values["id"],
         designation: values["designation"],
         name: values["name"],
-        state_lbl: values["state_lbl"],
+        state_id: values["state_id"],
         status: values["status"],
         description: values["description"],
         created_at: new Date(),
         created_by: values["created_by"],
       };
-      // console.log("new district:" + newDistrict);
-      // save new user
-      dispatch(onAddDistrict(newDistrict));
+      console.log("Updated district:" + JSON.stringify(updatedDistrict));
+      dispatch(onUpdateDistrict(updatedDistrict));
       validation.resetForm();
       handleViewDistrict();
     },
@@ -130,24 +130,24 @@ const ViewDistrict = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Select State</Label>
                 <Input
-                  name="state_lbl"
+                  name="state_id"
                   type="select"
                   placeholder="Select state"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.state_lbl || ""}
+                  value={validation.values.state_id || ""}
                   disabled={!showEditDistrict}
                 >
                   {statelist.map((options) => (
-                    <option key={options.id} value={options.name}>
+                    <option key={options.id} value={options.id}>
                       {options.name}
                     </option>
                   ))}
                 </Input>
-                {validation.touched.state_lbl && validation.errors.state_lbl ? (
+                {validation.touched.state_id && validation.errors.state_id ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.state_lbl}
+                    {validation.errors.state_id}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -193,7 +193,7 @@ const ViewDistrict = (props) => {
                   disabled={!showEditDistrict}
                 >
                   {status.map((options) => (
-                    <option key={options.id} value={options.name}>
+                    <option key={options.id} value={options.id}>
                       {options.name}
                     </option>
                   ))}

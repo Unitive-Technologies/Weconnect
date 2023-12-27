@@ -103,7 +103,7 @@ const UploadDistrict = (props) => {
                 // value={validation.values.state_lbl || ""}
               >
                 {statelist.map((options) => (
-                  <option key={options.id} value={options.name}>
+                  <option key={options.id} value={options.id}>
                     {options.name}
                   </option>
                 ))}
@@ -127,7 +127,7 @@ const UploadDistrict = (props) => {
               >
                 <option value="">Select Status</option>
                 {status.map((options) => (
-                  <option key={options.id} value={options.name}>
+                  <option key={options.id} value={options.id}>
                     {options.name}
                   </option>
                 ))}
