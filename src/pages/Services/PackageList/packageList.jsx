@@ -317,7 +317,7 @@ const PackageList = (props) => {
       <ViewPackageList
         isOpen={viewPackageList}
         handleViewPackageList={handleViewPackageList}
-        packageList={viewPackageList}
+        packlist={viewPackageList}
       />
 
       <div className="page-content">

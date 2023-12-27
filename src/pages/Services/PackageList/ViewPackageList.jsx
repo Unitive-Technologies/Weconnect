@@ -23,7 +23,7 @@ import ViewBroadcasterBouquets from "./ViewBroadcasterBouquets";
 import ViewChannels from "./ViewChannels";
 
 const ViewPackageList = (props) => {
-  const { isOpen, handleViewPackageList, packageList } = props;
+  const { isOpen, handleViewPackageList, packlist } = props;
   const dispatch = useDispatch();
   const [showEditChannel, setShowEditChannel] = useState(false);
   const validation = useFormik({
@@ -96,8 +96,8 @@ const ViewPackageList = (props) => {
     >
       <ModalHeader toggle={handleCancel} tag="h4">
         {!showEditChannel
-          ? `View ${(packageList && packageList.name) || ""}`
-          : `Edit ${(packageList && packageList.name) || ""}`}
+          ? `View ${(packlist && packlist.name) || ""}`
+          : `Edit ${(packlist && packlist.name) || ""}`}
       </ModalHeader>
       {!showEditChannel && (
         <Link
