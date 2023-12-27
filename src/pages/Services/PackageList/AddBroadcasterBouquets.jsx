@@ -6,9 +6,13 @@ import {
   ToastHeader,
   ToastBody,
 } from "reactstrap";
+import AddBroadcasterBouquetsTableList from "./AddBroadcasterBouquetsTableList copy";
 import { Link } from "react-router-dom";
 
 const AddBroadcasterBouquets = (props) => {
+  const { type, definition } = props;
+  console.log("type, definition:" + type, definition);
+
   const columns = useMemo(
     () => [
       {
@@ -203,100 +207,109 @@ const AddBroadcasterBouquets = (props) => {
   );
 
   const [showAddChannelsPlus, setShowAddChannelsPlus] = useState(false);
+  const [showChannelTableList, setShowChannelTableList] = useState(false);
 
-  const handleAddChannelsPlus = () => {
+
+  const handleAddChannelsWarning = () => {
     setShowAddChannelsPlus(!showAddChannelsPlus);
   };
 
+  const handleAddChannelsTable = () => {
+    setShowChannelTableList(!showChannelTableList);
+  };
+
   const casData = [];
+
   return (
-    <Card>
-      <CardBody>
-        <Row>
-          <Col lg={10}>
-          </Col>
-          <Col lg={2}>
-            <div className="mb-3">
-              <button type="button" className="btn btn-primary d-flex justify-content-end">
-                <i className="mdi mdi-plus ms-1" style={{ fontSize: 20, textAlign: "right" }} onClick={handleAddChannelsPlus}></i>
-              </button>
-            </div>
-          </Col>
-        </Row>
-
-        <div
-          className="position-fixed top-0 end-0 p-3"
-          style={{ zIndex: "1005" }}
-        >
-          <Toast isOpen={showAddChannelsPlus}>
-            <ToastHeader toggle={handleAddChannelsPlus}>
-              <i className="mdi mdi-alert-outline me-2"></i> Warning
-            </ToastHeader>
-            <ToastBody>Please select package definition</ToastBody>
-          </Toast>
-        </div>
-
-
-        <TableContainer
-          // isPagination={true}
-          columns={columns}
-          data={casData}
-          // isGlobalFilter={true}
-          // isShowingPageLength={true}
-          // customPageSize={50}
-          tableClass="table align-middle table-nowrap table-hover"
-          theadClass="table-light"
-        // paginationDiv="col-sm-12 col-md-7"
-        // pagination="pagination pagination-rounded justify-content-end mt-4"
-        />
-      </CardBody>
-
-      <div style={{ display: "flex" }}>
-        <Row
-          style={{
-            border: "1px solid #ced4da",
-            padding: "5px 0px",
-            margin: "1px 0px",
-            width: "450px",
-            height: "50px",
-            display: "flex",
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: "#fff",
-              padding: "10px",
-              width: "100%",
-              boxSizing: "border-box",
-            }}
-          >
-            <h6 style={{ textAlign: "left", margin: 0 }}>Total Channels:</h6>
-          </div>
-        </Row>
-        <Row
-          style={{
-            border: "1px solid #ced4da",
-            padding: "5px 0px",
-            margin: "1px 0px",
-            width: "250px",
-            display: "flex",
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: "#fff",
-              padding: "10px",
-              width: "100%",
-              boxSizing: "border-box",
-            }}
-          >
-            <h6 style={{ textAlign: "center", margin: 0 }}>Total:</h6>
-          </div>
-        </Row>
+    <>
+      <AddBroadcasterBouquetsTableList
+        isOpen={showChannelTableList}
+        handleAddChannelsTable={handleAddChannelsTable}
+      />
+      <div
+        className="position-fixed top-0 end-0 p-3"
+        style={{ zIndex: "1005" }}
+      >
+        <Toast isOpen={showAddChannelsPlus}>
+          <ToastHeader toggle={handleAddChannelsWarning}>
+            <i className="mdi mdi-alert-outline me-2"></i> Warning
+          </ToastHeader>
+          <ToastBody>Please select package definition</ToastBody>
+        </Toast>
       </div>
+      <Card>
+        <CardBody>
+          <Row>
+            <Col lg={10}></Col>
+            <Col lg={2}>
+              <div className="mb-3">
+                <button
+                  onClick={
+                    type && definition
+                      ? handleAddChannelsTable
+                      : handleAddChannelsWarning
+                  }
+                  type="button"
+                  className="btn btn-primary d-flex justify-content-end"
+                >
+                  <i className="mdi mdi-plus ms-1" style={{ fontSize: 20 }}></i>
+                </button>
+              </div>
+            </Col>
+          </Row>
+          <TableContainer
+            columns={columns}
+            data={casData}
+            tableClass="table align-middle table-nowrap table-hover"
+            theadClass="table-light"
+          />
+        </CardBody>
 
-
-    </Card>
+        <div style={{ display: "flex" }}>
+          <Row
+            style={{
+              border: "1px solid #ced4da",
+              padding: "5px 0px",
+              margin: "1px 0px",
+              width: "450px",
+              height: "50px",
+              display: "flex",
+            }}
+          >
+            <div
+              style={{
+                backgroundColor: "#fff",
+                padding: "10px",
+                width: "100%",
+                boxSizing: "border-box",
+              }}
+            >
+              <h6 style={{ textAlign: "left", margin: 0 }}>Total Channels:</h6>
+            </div>
+          </Row>
+          <Row
+            style={{
+              border: "1px solid #ced4da",
+              padding: "5px 0px",
+              margin: "1px 0px",
+              width: "250px",
+              display: "flex",
+            }}
+          >
+            <div
+              style={{
+                backgroundColor: "#fff",
+                padding: "10px",
+                width: "100%",
+                boxSizing: "border-box",
+              }}
+            >
+              <h6 style={{ textAlign: "center", margin: 0 }}>Total:</h6>
+            </div>
+          </Row>
+        </div>
+      </Card>
+    </>
   );
 };
 

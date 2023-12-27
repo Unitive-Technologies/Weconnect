@@ -316,13 +316,10 @@ const AddChannels = (props) => {
             </Col>
           </Row>
           <TableContainer
-            // isPagination={true}
             columns={columns}
             data={casData}
             tableClass="table align-middle table-nowrap table-hover"
             theadClass="table-light"
-          // paginationDiv="col-sm-12 col-md-7"
-          // pagination="pagination pagination-rounded justify-content-end mt-4"
           />
         </CardBody>
 

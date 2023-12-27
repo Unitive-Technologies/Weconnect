@@ -18,7 +18,7 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 
-const AddChannelsTableList = (props) => {
+const AddBroadcasterBouquetsTableList = (props) => {
   // const { isOpen } = props
   const { isOpen, handleAddChannelsTable } = props;
   const columns = useMemo(
@@ -278,7 +278,7 @@ const AddChannelsTableList = (props) => {
     // toggle={toggle}
     >
       <ModalHeader toggle={handleAddChannelsTable} tag="h4">
-        Add Channels
+        Add Broadcaster Bouquets
       </ModalHeader>
       <ModalHeader tag="h6">**To Select row, Click <i className="bx bx-bx bx-check"></i></ModalHeader>
       <ModalBody>
@@ -354,9 +354,9 @@ const AddChannelsTableList = (props) => {
   );
 };
 
-AddChannelsTableList.propTypes = {
+AddBroadcasterBouquetsTableList.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default AddChannelsTableList;
+export default AddBroadcasterBouquetsTableList;

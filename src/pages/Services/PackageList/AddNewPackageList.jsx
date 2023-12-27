@@ -19,6 +19,7 @@ import { useDispatch } from "react-redux";
 import CasList from "./CasList";
 import AddChannels from "./AddChannels";
 import AddBroadcasterBouquets from "./AddBroadcasterBouquets";
+import AddBroadcasterBouquetsTableList from "./AddBroadcasterBouquetsTableList copy";
 
 const AddNewPackageList = (props) => {
   const { isOpen, toggle } = props;
@@ -356,7 +357,14 @@ const AddNewPackageList = (props) => {
               }}
             >
               <Col sm="12" style={{ width: "550px" }}>
-                <AddBroadcasterBouquets />
+                {console.log(
+                  "type, definition:" + validation.values.type,
+                  validation.values.definition
+                )}
+                <AddBroadcasterBouquets
+                  type={validation.values.type}
+                  definition={validation.values.definition}
+                />
               </Col>
             </Row>
           </div>
