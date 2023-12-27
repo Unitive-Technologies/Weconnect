@@ -33,6 +33,7 @@ const AddNewCity = (props) => {
       description: "",
       created_at: "",
       created_by: "my mso(mso)",
+      type: 3,
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter city name"),
@@ -51,9 +52,9 @@ const AddNewCity = (props) => {
         description: values["description"],
         created_at: new Date(),
         created_by: values["created_by"],
+        type: values["type"],
       };
       console.log("new city:" + newCity);
-      // save new user
       dispatch(onAddCity(newCity));
       validation.resetForm();
       handleShowCity();

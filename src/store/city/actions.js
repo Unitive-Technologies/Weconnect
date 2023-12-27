@@ -5,6 +5,9 @@ import {
   ADD_CITY,
   ADD_CITY_SUCCESS,
   ADD_CITY_FAIL,
+  GET_DISTRICT_BYSTATEID,
+  GET_DISTRICT_BYSTATEID_SUCCESS,
+  GET_DISTRICT_BYSTATEID_FAIL,
 } from "./actionTypes";
 
 export const getCity = () => ({
@@ -12,7 +15,6 @@ export const getCity = () => ({
 });
 
 export const getCitySuccess = (city) => {
-  console.log("Received City:", city);
   return {
     type: GET_CITY_SUCCESS,
     payload: city,
@@ -36,5 +38,19 @@ export const addCitySuccess = (city) => ({
 
 export const addCityFail = (error) => ({
   type: ADD_CITY_FAIL,
+  payload: error,
+});
+
+export const getDistrictByStateid = () => ({
+  type: GET_DISTRICT_BYSTATEID,
+});
+
+export const getDistrictByStateidSuccess = (districtlist) => ({
+  type: GET_DISTRICT_BYSTATEID_SUCCESS,
+  payload: districtlist,
+});
+
+export const getDistrictByStateidFail = (error) => ({
+  type: GET_DISTRICT_BYSTATEID_FAIL,
   payload: error,
 });

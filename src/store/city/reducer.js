@@ -3,10 +3,13 @@ import {
   GET_CITY_FAIL,
   ADD_CITY_SUCCESS,
   ADD_CITY_FAIL,
+  GET_DISTRICT_BYSTATEID_SUCCESS,
+  GET_DISTRICT_BYSTATEID_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
   city: [],
+  districtlist: [],
   error: {},
   loading: true,
 };
@@ -34,6 +37,19 @@ const City = (state = INIT_STATE, action) => {
       };
 
     case ADD_CITY_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_DISTRICT_BYSTATEID_SUCCESS:
+      return {
+        ...state,
+        districtlist: action.payload,
+        loading: false,
+      };
+
+    case GET_DISTRICT_BYSTATEID_FAIL:
       return {
         ...state,
         error: action.payload,

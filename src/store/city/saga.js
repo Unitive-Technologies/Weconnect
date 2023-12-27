@@ -1,16 +1,22 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_CITY, ADD_CITY } from "./actionTypes";
+import { GET_CITY, ADD_CITY, GET_DISTRICT_BYSTATEID } from "./actionTypes";
 
 import {
   getCitySuccess,
   getCityFail,
   addCitySuccess,
   addCityFail,
+  getDistrictByStateidSuccess,
+  getDistrictByStateidFail,
 } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getCity, addCity } from "../../helpers/fakebackend_helper";
+import {
+  getCity,
+  addCity,
+  getDistrictByStateid,
+} from "../../helpers/fakebackend_helper";
 import { toast } from "react-toastify";
 
 const convertCityListObject = (cityList) => {
@@ -26,21 +32,10 @@ const convertCityListObject = (cityList) => {
       district_lbl: city.district_lbl,
       district_code_lbl: city.district_code_lbl,
       description: city.description,
-      status:
-        city.status === 1
-          ? "ACTIVE"
-          : city.status === 0
-            ? "INACTIVE"
-            : "BLOCKED",
-
-      // status_lbl:
-      //   city.status_lbl === 1
-      //     ? "ACTIVE"
-      //     : city.status_lbl === 0
-      //       ? "INACTIVE"
-      //       : "BLOCKED",
+      status: city.status,
       created_at: city.created_at,
       created_by_lbl: city.created_by_lbl,
+      type: city.type,
     };
   });
 };
@@ -53,6 +48,19 @@ function* fetchCity() {
     yield put(getCitySuccess(response.data));
   } catch (error) {
     yield put(getCityFail(error));
+  }
+}
+
+function* fetchDistrictByStateId() {
+  try {
+    const response = yield call(getDistrictByStateid);
+    console.log(
+      "District list data in City saga: ",
+      JSON.stringify(response.data)
+    );
+    yield put(getDistrictByStateidSuccess(response.data));
+  } catch (error) {
+    yield put(getDistrictByStateidFail(error));
   }
 }
 
@@ -70,6 +78,7 @@ function* onAddCity({ payload: city }) {
 function* citySaga() {
   yield takeEvery(GET_CITY, fetchCity);
   yield takeEvery(ADD_CITY, onAddCity);
+  yield takeEvery(GET_DISTRICT_BYSTATEID, fetchDistrictByStateId);
 }
 
 export default citySaga;

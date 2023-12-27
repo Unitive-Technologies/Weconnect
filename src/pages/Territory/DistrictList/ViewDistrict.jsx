@@ -35,6 +35,7 @@ const ViewDistrict = (props) => {
       description: (district && district.description) || "",
       created_at: (district && district.created_at) || "",
       created_by: (district && district.created_by) || "Admin",
+      type: (district && district.type) || "2",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter district name"),
@@ -52,6 +53,7 @@ const ViewDistrict = (props) => {
         description: values["description"],
         created_at: new Date(),
         created_by: values["created_by"],
+        type: values["type"],
       };
       console.log("Updated district:" + JSON.stringify(updatedDistrict));
       dispatch(onUpdateDistrict(updatedDistrict));
