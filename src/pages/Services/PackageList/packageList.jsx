@@ -264,11 +264,13 @@ const PackageList = (props) => {
     setShowBulkUpdateCasCodePackageList(!showBulkUpdateCasCodePackageList);
   };
 
-  const [viewPackageList, setViewPackageList] = useState({});
+  const [showViewPackageList, setShowViewPackageList] = useState(false);
+
+  const [viewData, setViewData] = useState({});
 
   const handleViewPackageList = (packageData) => {
-    setViewPackageList(!viewPackageList);
-    setViewPackageList(packageData);
+    setShowViewPackageList(!showViewPackageList);
+    setViewData(packageData);
   };
 
   const keyField = "id";
@@ -315,9 +317,9 @@ const PackageList = (props) => {
         toggle={toggle3}
       />
       <ViewPackageList
-        isOpen={viewPackageList}
+        isOpen={showViewPackageList}
         handleViewPackageList={handleViewPackageList}
-        packlist={viewPackageList}
+        packlist={viewData}
       />
 
       <div className="page-content">

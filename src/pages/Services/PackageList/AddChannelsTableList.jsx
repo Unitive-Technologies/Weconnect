@@ -13,13 +13,27 @@ import {
   ModalBody,
   ModalHeader,
   ToastBody,
+  Form,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const AddChannelsTableList = (props) => {
+  // const { isOpen } = props
   const { isOpen, handleAddChannelsTable } = props;
   const columns = useMemo(
     () => [
+      {
+        Header: "*",
+        disableFilters: true,
+        filterable: true,
+        Cell: () => {
+          return (
+            <>
+              <i className="bx bx-bx bx-check"></i>
+            </>
+          );
+        },
+      },
       {
         Header: "#",
         disableFilters: true,
@@ -112,7 +126,7 @@ const AddChannelsTableList = (props) => {
         },
       },
       {
-        Header: "Channel Count",
+        Header: "Alacarte",
         // accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
@@ -177,30 +191,6 @@ const AddChannelsTableList = (props) => {
               >
                 <Link className="text-dark" to="#">
                   {"rate"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "$",
-        // accessor: "type",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"$"}
                 </Link>
               </h5>
             </>
@@ -274,24 +264,28 @@ const AddChannelsTableList = (props) => {
   const casData = [];
 
   return (
+
     <Modal
       isOpen={isOpen}
       role="dialog"
-      size="xl"
       autoFocus={true}
       centered={true}
       className="exampleModal"
       tabIndex="-1"
+      size="xl"
       toggle={handleAddChannelsTable}
+    // toggle={toggle}
     >
       <ModalHeader toggle={handleAddChannelsTable} tag="h4">
         Upload Channels
       </ModalHeader>
+      <ModalHeader tag="h6">**To Select row, Click <i className="bx bx-bx bx-check"></i></ModalHeader>
       <ModalBody>
         <Card>
           <CardBody>
             <Row>
-              <Col lg={10}></Col>
+              <Col lg={10}>
+              </Col>
               <Col lg={2}>
                 <div className="mb-3">
                   <button
@@ -326,9 +320,10 @@ const AddChannelsTableList = (props) => {
               data={casData}
               tableClass="table align-middle table-nowrap table-hover"
               theadClass="table-light"
-              // paginationDiv="col-sm-12 col-md-7"
-              // pagination="pagination pagination-rounded justify-content-end mt-4"
+            // paginationDiv="col-sm-12 col-md-7"
+            // pagination="pagination pagination-rounded justify-content-end mt-4"
             />
+
           </CardBody>
 
           <div style={{ display: "flex" }}>
@@ -350,9 +345,7 @@ const AddChannelsTableList = (props) => {
                   boxSizing: "border-box",
                 }}
               >
-                <h6 style={{ textAlign: "left", margin: 0 }}>
-                  Total Channels:
-                </h6>
+                <h6 style={{ textAlign: "left", margin: 0 }}>Total Channels:</h6>
               </div>
             </Row>
             <Row
@@ -376,7 +369,7 @@ const AddChannelsTableList = (props) => {
               </div>
             </Row>
           </div>
-        </Card>
+        </Card >
       </ModalBody>
     </Modal>
   );

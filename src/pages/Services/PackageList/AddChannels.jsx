@@ -38,7 +38,6 @@ const AddChannels = (props) => {
           );
         },
       },
-
       {
         Header: "Name",
         filterable: true,
@@ -220,6 +219,7 @@ const AddChannels = (props) => {
   const handleAddChannelsTable = () => {
     setShowChannelTableList(!showChannelTableList);
   };
+
   const columns1 = useMemo(
     () => [
       {
@@ -295,17 +295,6 @@ const AddChannels = (props) => {
         </Toast>
       </div>
 
-      <div
-        className="position-fixed top-0 end-0 p-3"
-        style={{ zIndex: "1005" }}
-      >
-        <Toast isOpen={showAddChannelsPlus}>
-          <ToastHeader toggle={handleAddChannelsWarning}>
-            <i className="mdi mdi-alert-outline me-2"></i> Warning
-          </ToastHeader>
-          <ToastBody>Please select package definition</ToastBody>
-        </Toast>
-      </div>
       <Card>
         <CardBody>
           <Row>
@@ -326,15 +315,14 @@ const AddChannels = (props) => {
               </div>
             </Col>
           </Row>
-
           <TableContainer
             // isPagination={true}
             columns={columns}
             data={casData}
             tableClass="table align-middle table-nowrap table-hover"
             theadClass="table-light"
-            // paginationDiv="col-sm-12 col-md-7"
-            // pagination="pagination pagination-rounded justify-content-end mt-4"
+          // paginationDiv="col-sm-12 col-md-7"
+          // pagination="pagination pagination-rounded justify-content-end mt-4"
           />
         </CardBody>
 
