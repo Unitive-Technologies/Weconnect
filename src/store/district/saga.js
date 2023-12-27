@@ -5,6 +5,7 @@ import {
   ADD_DISTRICT,
   GET_DISTRICT_STATUS,
   GET_DISTRICT_STATELIST,
+  UPDATE_DISTRICT,
 } from "./actionTypes";
 
 import {
@@ -16,12 +17,15 @@ import {
   getDistrictStatusFail,
   getDistrictStateListSuccess,
   getDistrictStateListFail,
+  updateDistrictSuccess,
+  updateDistrictFail,
 } from "./actions";
 import {
   getDistrict,
   addDistrict,
   getDistrictStateList,
   getDistrictStatus,
+  updateDistrict,
 } from "../../helpers/fakebackend_helper";
 
 const convertDistrictListObject = (districtList) => {
@@ -97,11 +101,21 @@ function* onAddDistrict({ payload: district }) {
   }
 }
 
+function* onUpdateDistrict({ payload: district }) {
+  try {
+    const response = yield call(updateDistrict, district);
+    yield put(updateDistrictSuccess(response));
+  } catch (error) {
+    yield put(updateDistrictFail(error));
+  }
+}
+
 function* districtSaga() {
   yield takeEvery(GET_DISTRICT, fetchDistrict);
   yield takeEvery(ADD_DISTRICT, onAddDistrict);
   yield takeEvery(GET_DISTRICT_STATUS, fetchDistrictStatus);
   yield takeEvery(GET_DISTRICT_STATELIST, fetchDistrictStateList);
+  yield takeEvery(UPDATE_DISTRICT, onUpdateDistrict);
 }
 
 export default districtSaga;

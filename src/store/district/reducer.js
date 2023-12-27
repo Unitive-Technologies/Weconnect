@@ -7,6 +7,8 @@ import {
   GET_DISTRICT_STATUS_FAIL,
   GET_DISTRICT_STATELIST_SUCCESS,
   GET_DISTRICT_STATELIST_FAIL,
+  UPDATE_DISTRICT_SUCCESS,
+  UPDATE_DISTRICT_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -20,7 +22,6 @@ const INIT_STATE = {
 const District = (state = INIT_STATE, action) => {
   switch (action.type) {
     case GET_DISTRICT_SUCCESS:
-      console.log("District data in reducer:", action.payload);
       return {
         ...state,
         district: action.payload,
@@ -59,7 +60,6 @@ const District = (state = INIT_STATE, action) => {
       };
 
     case GET_DISTRICT_STATELIST_SUCCESS:
-      console.log("Statelist data in reducer:", action.payload);
       return {
         ...state,
         statelist: action.payload,
@@ -67,6 +67,22 @@ const District = (state = INIT_STATE, action) => {
       };
 
     case GET_DISTRICT_STATELIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case UPDATE_DISTRICT_SUCCESS:
+      return {
+        ...state,
+        district: state.district.map((district) =>
+          district.id.toString() === action.payload.id.toString()
+            ? { district, ...action.payload }
+            : district
+        ),
+      };
+
+    case UPDATE_DISTRICT_FAIL:
       return {
         ...state,
         error: action.payload,
