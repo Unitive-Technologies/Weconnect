@@ -361,7 +361,11 @@ const BulkInactiveUserModal = (props) => {
                 <button type="button" className="btn btn-primary ml-2 ">
                   Save
                 </button>
-                <button type="button" className="btn btn-primary ">
+                <button
+                  type="button"
+                  className="btn btn-primary "
+                  onClick={handleBulkInactiveUser}
+                >
                   Cancel
                 </button>
               </div>

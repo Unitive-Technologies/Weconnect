@@ -15,10 +15,9 @@ import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const BulkUserSettings = (props) => {
-  const { isOpen, handleUserSettings, user } = props;
-  // console.log("user in viewuser modal:" + JSON.stringify(user));
-  const dispatch = useDispatch();
-
+  const { isOpen, handleUserSettings, users } = props;
+  console.log("users in bulkuser modal:" + JSON.stringify(users));
+  const selectedusers = [];
   const columns = useMemo(
     () => [
       {
@@ -76,7 +75,7 @@ const BulkUserSettings = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5 className="font-size-14 mb-1" style={{ maxWidth: 80 }}>
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.username}
                 </Link>
@@ -150,11 +149,20 @@ const BulkUserSettings = (props) => {
       {
         Header: "Organization",
         // accessor: "organization",
+        // width: 100,
         filterable: true,
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5
+                className="font-size-14 mb-1"
+                style={{
+                  maxWidth: 200,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.operator_lbl}
                 </Link>
@@ -165,17 +173,19 @@ const BulkUserSettings = (props) => {
       },
       {
         Header: "Settings",
-        accessor: "settings",
+        accessor: "settings", // Assuming this is the key in your user object containing the settings
         filterable: true,
         Cell: (cellProps) => {
+          const settingsObject = cellProps.row.original.setting;
+          // Assuming settingsObject is an object with properties like "Bulk Limit", "Allowed Client IPs", etc.
+
           return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.setting}
-                </Link>
-              </h5>
-            </>
+            <div>
+              <p>Bulk Limit: {settingsObject["Bulk Limit"]}</p>
+              <p>Allowed Client IPs: {settingsObject["Allowed Client IPs"]}</p>
+              <p>Pay mode Allowed: {settingsObject["Pay mode Allowed"]}</p>
+              {/* Add more properties as needed */}
+            </div>
           );
         },
       },
@@ -439,7 +449,7 @@ const BulkUserSettings = (props) => {
             <TableContainer
               isPagination={true}
               columns={columns}
-              data={user}
+              data={users}
               isGlobalFilter={true}
               isShowingPageLength={true}
               customPageSize={50}
@@ -476,7 +486,7 @@ const BulkUserSettings = (props) => {
                 <TableContainer
                   isPagination={true}
                   columns={selOperColumn}
-                  data={user}
+                  data={selectedusers}
                   //   isGlobalFilter={true}
                   isShowingPageLength={true}
                   customPageSize={50}
@@ -515,7 +525,7 @@ const BulkUserSettings = (props) => {
                 <TableContainer
                   isPagination={true}
                   columns={userSettingColumn}
-                  data={user}
+                  data={users}
                   //   isGlobalFilter={true}
                   isShowingPageLength={true}
                   customPageSize={50}

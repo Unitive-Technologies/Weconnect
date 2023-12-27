@@ -74,7 +74,7 @@ const ContactsList = (props) => {
   const [showUploadUser, setShowUploadUser] = useState(false);
   const [showBulkUpdateUser, setShowBulkUpdateUser] = useState(false);
   const [showInactivateUser, setShowInactivateUser] = useState(false);
-  const [showBulkUserSettings, setBulkUserSettings] = useState(false);
+  const [showBulkUserSettings, setShowBulkUserSettings] = useState(false);
   const columns = useMemo(
     () => [
       {
@@ -371,7 +371,7 @@ const ContactsList = (props) => {
   };
 
   const handleUserSettings = () => {
-    setBulkUserSettings(!showBulkUserSettings);
+    setShowBulkUserSettings(!showBulkUserSettings);
   };
   const [viewUser, setViewUser] = useState({});
 
@@ -421,7 +421,7 @@ const ContactsList = (props) => {
       },
       {
         name: "Bulk User Settings",
-        action: setBulkUserSettings,
+        action: setShowBulkUserSettings,
         type: "dropdown",
         dropdownName: "Actions",
       },
@@ -468,7 +468,7 @@ const ContactsList = (props) => {
       <BulkUserSettings
         isOpen={showBulkUserSettings}
         handleUserSettings={handleUserSettings}
-        user={filteredUsers}
+        users={users}
       />
       <div className="page-content">
         <Container fluid>
