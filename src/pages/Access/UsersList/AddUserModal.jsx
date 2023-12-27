@@ -522,69 +522,7 @@ const AddUserModal = (props) => {
               </Col>
             </Row>
           </Row>
-          <Row>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">
-                  Status<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="status"
-                  type="select"
-                  placeholder="Select Status"
-                  className="form-select"
-                  onChange={handleStatusChange}
-                  onBlur={validation.handleBlur}
-                  value={selectedStatus}
-                >
-                  <option value="">Select Status</option>
-                  {userStatus.map((status) => (
-                    <option key={status.id} value={status.id}>
-                      {status.name}
-                    </option>
-                  ))}
-                </Input>
-                {validation.touched.status && validation.errors.status ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.status}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">
-                  Inactive/Block Message<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="block_message"
-                  type="textarea"
-                  placeholder="Enter Message"
-                  rows="3"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.block_message || ""}
-                  invalid={
-                    validation.touched.block_message &&
-                    validation.errors.block_message
-                      ? true
-                      : false
-                  }
-                  disabled={
-                    selectedStatus === "0" || selectedStatus === "-7"
-                      ? false
-                      : true
-                  }
-                />
-                {validation.touched.block_message &&
-                validation.errors.block_message ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.block_message}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-          </Row>
+
           <Row>
             <Col lg={4}>
               <div className="mb-3">
@@ -674,6 +612,69 @@ const AddUserModal = (props) => {
                 validation.errors.designation ? (
                   <FormFeedback type="invalid">
                     {validation.errors.designation}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Status<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="status"
+                  type="select"
+                  placeholder="Select Status"
+                  className="form-select"
+                  onChange={handleStatusChange}
+                  onBlur={validation.handleBlur}
+                  value={selectedStatus}
+                >
+                  <option value="">Select Status</option>
+                  {userStatus.map((status) => (
+                    <option key={status.id} value={status.id}>
+                      {status.name}
+                    </option>
+                  ))}
+                </Input>
+                {validation.touched.status && validation.errors.status ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.status}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Inactive/Block Message<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="block_message"
+                  type="textarea"
+                  placeholder="Enter Message"
+                  rows="3"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.block_message || ""}
+                  invalid={
+                    validation.touched.block_message &&
+                    validation.errors.block_message
+                      ? true
+                      : false
+                  }
+                  disabled={
+                    selectedStatus === "0" || selectedStatus === "-7"
+                      ? false
+                      : true
+                  }
+                />
+                {validation.touched.block_message &&
+                validation.errors.block_message ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.block_message}
                   </FormFeedback>
                 ) : null}
               </div>
