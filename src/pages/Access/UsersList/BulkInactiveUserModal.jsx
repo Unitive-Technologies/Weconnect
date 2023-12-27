@@ -27,9 +27,9 @@ import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const BulkInactiveUserModal = (props) => {
   const { isOpen, handleBulkInactiveUser, user } = props;
-  // console.log("user in viewuser modal:" + JSON.stringify(user));
+  console.log("user in bulkInactive modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
-  // const user = [];
+  const selectedusers = [];
 
   const columns = useMemo(
     () => [
@@ -338,7 +338,7 @@ const BulkInactiveUserModal = (props) => {
                 <TableContainer
                   isPagination={true}
                   columns={userColumn}
-                  data={user}
+                  data={selectedusers}
                   //   isGlobalFilter={true}
                   isShowingPageLength={true}
                   customPageSize={50}
