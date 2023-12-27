@@ -27,15 +27,16 @@ const AddNewDistrict = (props) => {
 
     initialValues: {
       name: "",
-      state_lbl: "",
       status_lbl: "",
       description: "",
       created_at: "",
       created_by_lbl: "my mso(mso)",
+      type: "2",
+      state_id: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter district name"),
-      state_lbl: Yup.string().required("Select state"),
+      state_id: Yup.string().required("Select state"),
       status_lbl: Yup.string().required("Select status"),
       description: Yup.string().required("Enter description"),
     }),
@@ -45,14 +46,14 @@ const AddNewDistrict = (props) => {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         designation: values["designation"],
         name: values["name"],
-        state_lbl: values["state_lbl"],
         status_lbl: values["status"],
         description: values["description"],
-        created_at: new Date(),
+        created_at: values[new Date()],
         created_by_lbl: values["created_by_lbl"],
+        type: values["type"],
+        state_id: values["state_id"],
       };
       console.log("new district:" + newDistrict);
-      // save new user
       dispatch(onAddDistrict(newDistrict));
       validation.resetForm();
       handleShowDistrict();
@@ -116,24 +117,24 @@ const AddNewDistrict = (props) => {
                   Select State<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="state_lbl"
+                  name="state_id"
                   type="select"
                   placeholder="Select state"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.state_lbl || ""}
+                  value={validation.values.state_id || ""}
                 >
                   <option value="">Select state</option>
                   {statelist.map((options) => (
-                    <option key={options.id} value={options.name}>
+                    <option key={options.id} value={options.id}>
                       {options.name}
                     </option>
                   ))}
                 </Input>
-                {validation.touched.state_lbl && validation.errors.state_lbl ? (
+                {validation.touched.state_id && validation.errors.state_id ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.state_lbl}
+                    {validation.errors.state_id}
                   </FormFeedback>
                 ) : null}
               </div>

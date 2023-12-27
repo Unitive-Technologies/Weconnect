@@ -39,10 +39,12 @@ const convertDistrictListObject = (districtList) => {
       status:
         district.status === 1
           ? "ACTIVE"
-          : district.status === 2
+          : district.status === 0
           ? "INACTIVE"
           : "BLOCKED",
       created_at: district.created_at,
+      type: district.type,
+      state_id: district.state_id,
     };
   });
 };
@@ -87,9 +89,10 @@ function* fetchDistrictStateList() {
 function* onAddDistrict({ payload: district }) {
   try {
     const response = yield call(addDistrict, district);
-    console.log(" New District: ", response.data);
+    console.log(" New District: ", response);
     yield put(addDistrictSuccess(response.data));
   } catch (error) {
+    console.log("Error in add new district: ", error);
     yield put(addDistrictFail(error));
   }
 }
