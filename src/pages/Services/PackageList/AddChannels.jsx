@@ -6,6 +6,7 @@ import {
   ToastHeader,
   ToastBody,
 } from "reactstrap";
+import AddChannelsTableList from "./AddChannelsTableList";
 import { Link } from "react-router-dom";
 
 const AddChannels = (props) => {
@@ -204,6 +205,7 @@ const AddChannels = (props) => {
 
   const [showAddChannelsPlus, setShowAddChannelsPlus] = useState(false);
 
+
   const handleAddChannelsPlus = () => {
     setShowAddChannelsPlus(!showAddChannelsPlus);
   };
@@ -281,6 +283,18 @@ const AddChannels = (props) => {
             </div>
           </Col>
         </Row>
+        {!showAddChannelsPlus ? (
+          <AddChannelsTableList isOpen={!showAddChannelsPlus} />
+        ) : (
+          <div className="position-fixed top-0 end-0 p-3" style={{ zIndex: "1005" }}>
+            <Toast isOpen={showAddChannelsPlus}>
+              <ToastHeader toggle={handleAddChannelsPlus}>
+                <i className="mdi mdi-alert-outline me-2"></i> Warning
+              </ToastHeader>
+              <ToastBody>Please select package definition</ToastBody>
+            </Toast>
+          </div>
+        )}
 
         <div
           className="position-fixed top-0 end-0 p-3"
