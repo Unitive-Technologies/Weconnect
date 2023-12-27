@@ -21,7 +21,6 @@ export const getDistrict = () => ({
 });
 
 export const getDistrictSuccess = (district) => {
-  console.log("Received District:", district);
   return {
     type: GET_DISTRICT_SUCCESS,
     payload: district,

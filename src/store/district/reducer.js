@@ -75,10 +75,10 @@ const District = (state = INIT_STATE, action) => {
     case UPDATE_DISTRICT_SUCCESS:
       return {
         ...state,
-        district: state.district.map((district) =>
-          district.id.toString() === action.payload.id.toString()
-            ? { district, ...action.payload }
-            : district
+        district: state.district.map((dist) =>
+          dist.id.toString() === action.payload.id.toString()
+            ? { district: dist, ...action.payload }
+            : dist
         ),
       };
 

@@ -16,7 +16,7 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { updateUser as onUpdateUser } from "/src/store/users/actions";
+import { updateDistrict as onUpdateDistrict } from "/src/store/district/actions";
 
 const ViewDistrict = (props) => {
   const { isOpen, handleViewDistrict, district, statelist, status } = props;
@@ -28,6 +28,7 @@ const ViewDistrict = (props) => {
     enableReinitialize: true,
 
     initialValues: {
+      id: (district && district.id) || "",
       name: (district && district.name) || "",
       state_id: (district && district.state_id) || "",
       status: (district && district.status) || "",
@@ -42,8 +43,8 @@ const ViewDistrict = (props) => {
       description: Yup.string().required("Enter description"),
     }),
     onSubmit: (values) => {
-      const newDistrict = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
+      const updatedDistrict = {
+        id: values["id"],
         designation: values["designation"],
         name: values["name"],
         state_id: values["state_id"],
@@ -52,9 +53,8 @@ const ViewDistrict = (props) => {
         created_at: new Date(),
         created_by: values["created_by"],
       };
-      // console.log("new district:" + newDistrict);
-      // save new user
-      dispatch(onAddDistrict(newDistrict));
+      console.log("Updated district:" + JSON.stringify(updatedDistrict));
+      dispatch(onUpdateDistrict(updatedDistrict));
       validation.resetForm();
       handleViewDistrict();
     },
@@ -193,7 +193,7 @@ const ViewDistrict = (props) => {
                   disabled={!showEditDistrict}
                 >
                   {status.map((options) => (
-                    <option key={options.id} value={options.name}>
+                    <option key={options.id} value={options.id}>
                       {options.name}
                     </option>
                   ))}
