@@ -36,6 +36,8 @@ const convertCityListObject = (cityList) => {
       created_at: city.created_at,
       created_by_lbl: city.created_by_lbl,
       type: city.type,
+      state_id: city.state_id,
+      district_id: city.district_id,
     };
   });
 };
@@ -43,9 +45,8 @@ const convertCityListObject = (cityList) => {
 function* fetchCity() {
   try {
     const response = yield call(getCity);
-    console.log("response:" + JSON.stringify(response));
-    // const cityList = convertCityListObject(response);
-    yield put(getCitySuccess(response.data));
+    const cityList = convertCityListObject(response.data);
+    yield put(getCitySuccess(cityList));
   } catch (error) {
     yield put(getCityFail(error));
   }
@@ -54,12 +55,9 @@ function* fetchCity() {
 function* fetchDistrictByStateId() {
   try {
     const response = yield call(getDistrictByStateid);
-    console.log(
-      "District list data in City saga: ",
-      JSON.stringify(response.data)
-    );
     yield put(getDistrictByStateidSuccess(response.data));
   } catch (error) {
+    console.log("Error getting district list by state id: ", error);
     yield put(getDistrictByStateidFail(error));
   }
 }
@@ -67,11 +65,11 @@ function* fetchDistrictByStateId() {
 function* onAddCity({ payload: city }) {
   try {
     const response = yield call(addCity, city);
+    console.log("Response data in add city: ", response);
     yield put(addCitySuccess(response));
-    toast.success("City list Added Successfully", { autoClose: 2000 });
   } catch (error) {
+    console.log("Error in add city saga: ", error);
     yield put(addCityFail(error));
-    toast.error("City list Added Failed", { autoClose: 2000 });
   }
 }
 

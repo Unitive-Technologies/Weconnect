@@ -88,7 +88,7 @@ function* fetchDistrictStateList() {
 function* onAddDistrict({ payload: district }) {
   try {
     const response = yield call(addDistrict, district);
-    console.log(" New District: ", response);
+    console.log(" New District in saga: ", response.data);
     yield put(addDistrictSuccess(response.data));
   } catch (error) {
     console.log("Error in add new district: ", error);

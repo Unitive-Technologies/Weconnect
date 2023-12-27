@@ -12,7 +12,14 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import { getCity as onGetCity } from "/src/store/actions";
+import {
+  getCity as onGetCity,
+  getDistrictByStateid as onGetDistrictByStateid,
+} from "/src/store/actions";
+import {
+  getDistrictStateList as onGetDistrictStateList,
+  getDistrictStatus as onGetDistrictStatus,
+} from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
@@ -30,9 +37,21 @@ const CityList = (props) => {
   const cityProperties = createSelector(selectCityState, (city) => ({
     cits: city.city,
     loading: city.loading,
+    districtlist: city.districtlist,
   }));
 
-  const { cits, loading } = useSelector(cityProperties);
+  const selectDistrictState = (state) => state.district;
+  const districtProperties = createSelector(
+    selectDistrictState,
+    (district) => ({
+      districts: district.district,
+      status: district.status,
+      statelist: district.statelist,
+    })
+  );
+
+  const { districts, status, statelist } = useSelector(districtProperties);
+  const { cits, loading, districtlist } = useSelector(cityProperties);
 
   const [isLoading, setLoading] = useState(loading);
 
@@ -242,8 +261,16 @@ const CityList = (props) => {
   useEffect(() => {
     if (cits && !cits.length) {
       dispatch(onGetCity());
+      dispatch(onGetDistrictByStateid());
     }
   }, [dispatch, cits]);
+
+  useEffect(() => {
+    if (districts && !districts.length) {
+      dispatch(onGetDistrictStatus());
+      dispatch(onGetDistrictStateList());
+    }
+  }, [dispatch, districts]);
 
   const handleShowCity = () => {
     setShowAddCity(!showAddCity);
@@ -278,9 +305,24 @@ const CityList = (props) => {
         isOpen={showViewCity}
         handleViewCity={handleViewCity}
         city={viewCityData}
+        status={status}
+        statelist={statelist}
+        districtlist={districtlist}
       />
-      <AddNewCity isOpen={showAddCity} handleShowCity={handleShowCity} />
-      <UploadCity isOpen={showUploadCity} handleUploadCity={handleUploadCity} />
+      <AddNewCity
+        isOpen={showAddCity}
+        handleShowCity={handleShowCity}
+        status={status}
+        statelist={statelist}
+        districtlist={districtlist}
+      />
+      <UploadCity
+        isOpen={showUploadCity}
+        handleUploadCity={handleUploadCity}
+        status={status}
+        statelist={statelist}
+        districtlist={districtlist}
+      />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -292,7 +334,6 @@ const CityList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {/* {console.log("users:" + JSON.stringify(cits))} */}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
@@ -301,7 +342,7 @@ const CityList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      customPageSize={8}
+                      customPageSize={100}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"

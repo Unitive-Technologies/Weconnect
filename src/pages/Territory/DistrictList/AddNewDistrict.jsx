@@ -183,7 +183,7 @@ const AddNewDistrict = (props) => {
                 >
                   <option value="">Select Status</option>
                   {status.map((options) => (
-                    <option key={options.id} value={options.name}>
+                    <option key={options.id} value={options.id}>
                       {options.name}
                     </option>
                   ))}
