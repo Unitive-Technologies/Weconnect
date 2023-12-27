@@ -171,6 +171,8 @@ const AddUserModal = (props) => {
       username: "",
       password: "",
       // confirmpassword: "",
+      created_at: "",
+      created_by_lbl: "my mso(mso)",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
@@ -207,6 +209,8 @@ const AddUserModal = (props) => {
         role: values["role"],
         username: values["username"],
         password: values["password"],
+        created_at: new Date(),
+        created_by_lbl: values["created_by_lbl"],
       };
       console.log("newUser:" + JSON.stringify(newUser));
       dispatch(onAddNewUser(newUser));

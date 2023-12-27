@@ -28,8 +28,7 @@ const ViewUserModal = (props) => {
     userRole,
     userDesignation,
   } = props;
-  // console.log("isOpen in viewuser modal:" + isOpen);
-
+  // console.log("Userdata in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
   const [showEditUser, setShowEditUser] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState("");

@@ -375,9 +375,10 @@ const ContactsList = (props) => {
   };
   const [viewUser, setViewUser] = useState({});
 
-  const handleViewUser = (userData) => {
+  const handleViewUser = (row) => {
+    // console.log("Row data:", row);
     setShowViewUser(!showViewUser);
-    setViewUser(userData);
+    setViewUser(row);
   };
 
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -428,7 +429,7 @@ const ContactsList = (props) => {
       },
     ];
   };
-  console.log("policy-mso:" + userMsoPolicy);
+  // console.log("policy-mso:" + userMsoPolicy);
   return (
     <React.Fragment>
       <ViewUserModal
@@ -489,6 +490,10 @@ const ContactsList = (props) => {
                       isGlobalFilter={true}
                       isShowTableActionButtons={true}
                       tableActions={getTableActions()}
+                      handleRowClick={(row) => {
+                        // console.log("row:" + JSON.stringify(row));
+                        handleViewUser(row);
+                      }}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
                       customPageSize={50}

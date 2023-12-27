@@ -176,6 +176,7 @@ const TableContainer = ({
   isAddDistributor,
   handleUploadUser,
   handleBulkUpdateUser,
+  handleRowClick,
   isAddBroadCaster,
   isAddGenreList,
   isAddLanguageList,
@@ -455,9 +456,10 @@ const TableContainer = ({
           <tbody {...getTableBodyProps()}>
             {page.map((row) => {
               prepareRow(row);
+              // console.log("Row object:", row);
               return (
                 <Fragment key={row.getRowProps().key}>
-                  <tr>
+                  <tr onClick={() => handleRowClick(row.original)}>
                     {row.cells.map((cell) => {
                       return (
                         <td
