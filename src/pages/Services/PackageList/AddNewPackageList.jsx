@@ -177,7 +177,7 @@ const AddNewPackageList = (props) => {
                   <option value="103">High Definition(HD)</option>
                 </Input>
                 {validation.touched.definition &&
-                  validation.errors.definition ? (
+                validation.errors.definition ? (
                   <FormFeedback type="invalid">
                     {validation.errors.definition}
                   </FormFeedback>
@@ -199,13 +199,13 @@ const AddNewPackageList = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -292,11 +292,10 @@ const AddNewPackageList = (props) => {
               <CasList />
             </Col>
           </Row>
-          < div
+          <div
             style={{
               display: "flex",
-            }
-            }
+            }}
           >
             <div
               style={{
@@ -323,7 +322,14 @@ const AddNewPackageList = (props) => {
               }}
             >
               <Col sm="12" style={{ width: "550px" }}>
-                <AddChannels />
+                {console.log(
+                  "type, definition:" + validation.values.type,
+                  validation.values.definition
+                )}
+                <AddChannels
+                  type={validation.values.type}
+                  definition={validation.values.definition}
+                />
               </Col>
             </Row>
             <div
@@ -352,19 +358,21 @@ const AddNewPackageList = (props) => {
               <Col sm="12" style={{ width: "550px" }}>
                 <AddBroadcasterBouquets />
               </Col>
-
             </Row>
-          </div >
-          <div style={{
-            display: "flex"
-          }}>
+          </div>
+          <div
+            style={{
+              display: "flex",
+            }}
+          >
             <Row
               style={{
                 position: "relative",
                 border: "1px solid #ced4da",
                 padding: "5px 0px",
                 margin: "10px 0px",
-                width: "550px", height: "50px",
+                width: "550px",
+                height: "50px",
                 display: "flex",
               }}
             >
@@ -429,10 +437,10 @@ const AddNewPackageList = (props) => {
               </ModalFooter>
             </Col>
           </Row>
-        </Form >
-      </ModalBody >
+        </Form>
+      </ModalBody>
       {/* </Modal> */}
-    </Modal >
+    </Modal>
   );
 };
 

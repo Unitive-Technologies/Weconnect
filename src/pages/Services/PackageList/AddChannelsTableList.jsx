@@ -2,7 +2,12 @@ import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
 import {
-  Card, CardBody, Col, Input, Row, Toast,
+  Card,
+  CardBody,
+  Col,
+  Input,
+  Row,
+  Toast,
   ToastHeader,
   Modal,
   ModalBody,
@@ -12,7 +17,7 @@ import {
 import { Link } from "react-router-dom";
 
 const AddChannelsTableList = (props) => {
-  const { isOpen } = props
+  const { isOpen, handleAddChannelsTable } = props;
   const columns = useMemo(
     () => [
       {
@@ -244,7 +249,6 @@ const AddChannelsTableList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-
             <h5
               style={{
                 maxWidth: 200,
@@ -258,7 +262,6 @@ const AddChannelsTableList = (props) => {
                 {"Total"}
               </Link>
             </h5>
-
           );
         },
       },
@@ -279,21 +282,27 @@ const AddChannelsTableList = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleAddChannelsTable}
     >
-      <ModalHeader toggle={toggle} tag="h4">
+      <ModalHeader toggle={handleAddChannelsTable} tag="h4">
         Upload Channels
       </ModalHeader>
       <ModalBody>
         <Card>
           <CardBody>
             <Row>
-              <Col lg={10}>
-              </Col>
+              <Col lg={10}></Col>
               <Col lg={2}>
                 <div className="mb-3">
-                  <button type="button" className="btn btn-primary d-flex justify-content-end">
-                    <i className="mdi mdi-plus ms-1" style={{ fontSize: 20 }} onClick={handleAddChannelsPlus}></i>
+                  <button
+                    type="button"
+                    className="btn btn-primary d-flex justify-content-end"
+                  >
+                    <i
+                      className="mdi mdi-plus ms-1"
+                      style={{ fontSize: 20 }}
+                      onClick={handleAddChannelsPlus}
+                    ></i>
                   </button>
                 </div>
               </Col>
@@ -317,10 +326,9 @@ const AddChannelsTableList = (props) => {
               data={casData}
               tableClass="table align-middle table-nowrap table-hover"
               theadClass="table-light"
-            // paginationDiv="col-sm-12 col-md-7"
-            // pagination="pagination pagination-rounded justify-content-end mt-4"
+              // paginationDiv="col-sm-12 col-md-7"
+              // pagination="pagination pagination-rounded justify-content-end mt-4"
             />
-
           </CardBody>
 
           <div style={{ display: "flex" }}>
@@ -342,7 +350,9 @@ const AddChannelsTableList = (props) => {
                   boxSizing: "border-box",
                 }}
               >
-                <h6 style={{ textAlign: "left", margin: 0 }}>Total Channels:</h6>
+                <h6 style={{ textAlign: "left", margin: 0 }}>
+                  Total Channels:
+                </h6>
               </div>
             </Row>
             <Row
@@ -366,7 +376,7 @@ const AddChannelsTableList = (props) => {
               </div>
             </Row>
           </div>
-        </Card >
+        </Card>
       </ModalBody>
     </Modal>
   );
@@ -378,4 +388,3 @@ AddChannelsTableList.propTypes = {
 };
 
 export default AddChannelsTableList;
-
