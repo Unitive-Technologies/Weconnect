@@ -52,6 +52,7 @@ const AddUserModal = (props) => {
   const [selectedRegional, setSelectedRegional] = useState("");
   const [selectedDistributor, setSelectedDistributor] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
+  const [policyList, setPolicyList] = useState([]);
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
 
   const selectContactsState = (state) => state.users;
@@ -116,6 +117,8 @@ const AddUserModal = (props) => {
     validation.handleChange(e);
     dispatch(onGetUserLco());
   };
+
+  const handlePolicyChange = (e) => {};
   // const getMsoDetail = () => {
   //   axios
   //     .get(
@@ -135,7 +138,8 @@ const AddUserModal = (props) => {
       setSelectedRole(role);
 
       validation.handleChange(e);
-
+      // console.log("selectedType: " + parseInt(selectedType));
+      // console.log("selectedRole :" + parseInt(role));
       // Assuming you have a token stored in localStorage
       const token = "Bearer " + localStorage.getItem("temptoken");
 
@@ -148,8 +152,8 @@ const AddUserModal = (props) => {
         }
       );
 
-      console.log("policy after selection : " + JSON.stringify(response.data));
-      // setMso(response.data);
+      // console.log("policy after selection : " + JSON.stringify(response.data));
+      setPolicyList(response.data);
     } catch (error) {
       console.error("Error fetching policy data:", error);
       // Handle error if necessary
@@ -198,7 +202,7 @@ const AddUserModal = (props) => {
         mobile_no: values["mobile"],
         operator_type: values["type"],
         operator_id:
-          values["type"] === 0
+          parseInt(values["type"]) === 0
             ? values["mso"]
             : values["type"] === 1
             ? values["regional"]
@@ -406,8 +410,8 @@ const AddUserModal = (props) => {
                   </div>
                 )}
               </Col>
-              {console.log("selectedType: " + typeof selectedType)}
-              {console.log("msoValue: " + typeof validation.values.mso)}
+              {/* {console.log("selectedType: " + typeof selectedType)}
+              {console.log("msoValue: " + typeof validation.values.mso)} */}
               <Col lg={4}>
                 {(parseInt(selectedType) === 1 ||
                   parseInt(selectedType) === 2 ||
@@ -446,9 +450,9 @@ const AddUserModal = (props) => {
                   <></>
                 )}
               </Col>
-              {console.log(
+              {/* {console.log(
                 "regional value:" + typeof parseInt(validation.values.regional)
-              )}
+              )} */}
               <Col lg={4}>
                 {validation.values.regional &&
                 // (parseInt(selectedType) === 1 ||
@@ -576,8 +580,8 @@ const AddUserModal = (props) => {
 
                   {selectedType === 0 &&
                     validation.values.mso == 1 &&
-                    userMsoPolicy &&
-                    userMsoPolicy.map((policy) => (
+                    policyList &&
+                    policyList.map((policy) => (
                       <option key={policy._id} value={policy._id}>
                         {policy.user_id}
                       </option>

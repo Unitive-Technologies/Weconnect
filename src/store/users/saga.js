@@ -201,6 +201,7 @@ function* onDeleteUser({ payload: user }) {
 
 function* onAddNewUser({ payload: user }) {
   try {
+    console.log("&&&&&&&user in payload:" + JSON.stringify(user));
     const response = yield call(addNewUser, user);
 
     yield put(addUserSuccess(response));

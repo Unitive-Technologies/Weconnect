@@ -16,7 +16,7 @@ import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const BulkUserSettings = (props) => {
   const { isOpen, handleUserSettings, users } = props;
-  console.log("users in bulkuser modal:" + JSON.stringify(users));
+  // console.log("users in bulkuser modal:" + JSON.stringify(users));
   const selectedusers = [];
   const columns = useMemo(
     () => [

@@ -389,7 +389,7 @@ const ContactsList = (props) => {
     // Update the filteredUsers state
     setFilteredUsers(filteredData);
   }, [users]);
-  console.log("FilteredUsers:" + JSON.stringify(filteredUsers));
+  // console.log("FilteredUsers:" + JSON.stringify(filteredUsers));
   const keyField = "id";
 
   const getTableActions = () => {

@@ -27,7 +27,7 @@ import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const BulkInactiveUserModal = (props) => {
   const { isOpen, handleBulkInactiveUser, user } = props;
-  console.log("user in bulkInactive modal:" + JSON.stringify(user));
+  // console.log("user in bulkInactive modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
   const selectedusers = [];
 

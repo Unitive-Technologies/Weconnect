@@ -810,18 +810,18 @@ const fakeBackend = () => {
     });
   });
 
-  mock.onPost(url.ADD_NEW_USER).reply((user) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (user && user.data) {
-          // Passing fake JSON data as response
-          resolve([200, user.data]);
-        } else {
-          reject([400, "Cannot add user"]);
-        }
-      });
-    });
-  });
+  // mock.onPost(url.ADD_NEW_USER).reply((user) => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (user && user.data) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, user.data]);
+  //       } else {
+  //         reject([400, "Cannot add user"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onPost(url.ADD_NEW_GROUPPOLICY).reply((groupPolicy) => {
     return new Promise((resolve, reject) => {
