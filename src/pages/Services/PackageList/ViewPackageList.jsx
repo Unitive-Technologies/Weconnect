@@ -31,22 +31,22 @@ const ViewPackageList = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      code: "",
-      name: "",
-      description: "",
-      definition: "",
-      type: "",
-      status: "",
-      cas: "",
-      cascode: "",
-      created_by: "Admin",
+      code: (packlist && packlist.code) || "",
+      name: (packlist && packlist.name) || "",
+      description: (packlist && packlist.description) || "",
+      definition: (packlist && packlist.definition) || "",
+      packagetypetype: (packlist && packlist.packagetype) || "",
+      status: (packlist && packlist.status) || "",
+      // cas: (packlist && packlist.name) || "",
+      // cascode: (packlist && packlist.name) || "",
+      created_by: (packlist && packlist.name) || "",
     },
     validationSchema: Yup.object({
       code: Yup.string().required("Enter Channel Code"),
       name: Yup.string().required("Enter channel name"),
       description: Yup.string().required("Enter description"),
       definition: Yup.string().required("Enter channel definition"),
-      type: Yup.string().required("Enter channel type"),
+      packagetypetype: Yup.string().required("Enter channel type"),
       status: Yup.string().required("Enter status"),
       cas: Yup.string().required("Enter cas"),
       cascode: Yup.string().required("cascode"),
@@ -59,7 +59,7 @@ const ViewPackageList = (props) => {
         name: values["name"],
         description: values["description"],
         definition: values["definition"],
-        type: values["type"],
+        packagetype: values["packagetype"],
         status: values["status"],
         cas: values["cas"],
         cascode: values["cascode"],
@@ -365,7 +365,7 @@ const ViewPackageList = (props) => {
               }}
             >
               <Col sm="12" style={{ width: "550px" }}>
-                <ViewBroadcasterBouquets />
+                <ViewBroadcasterBouquets showEditChannel={showEditChannel} />
               </Col>
 
             </Row>
