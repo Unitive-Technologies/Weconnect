@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import withRouter from "../../components/Common/withRouter";
 import TableContainer from "../../components/Common/TableContainer";
-// import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import {
   Card,
   CardBody,
@@ -21,7 +21,7 @@ import { ToastContainer } from "react-toastify";
 import classnames from "classnames";
 
 const InventoryStock = (props) => {
-  document.title = "Inventory Stocks | VDigital";
+  document.title = "Inventory | VDigital";
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState("1");
 
@@ -171,6 +171,57 @@ const InventoryStock = (props) => {
           );
         },
       },
+      {
+        Header: "Action",
+        accessor: "action",
+        disableFilters: true,
+        Cell: (cellProps) => {
+          return (
+            <ul className="list-unstyled hstack gap-1 mb-0">
+              <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
+                <Link to="/job-details" className="btn btn-sm btn-soft-primary">
+                  <i className="mdi mdi-eye-outline" id="viewtooltip"></i>
+                </Link>
+              </li>
+              <UncontrolledTooltip placement="top" target="viewtooltip">
+                View
+              </UncontrolledTooltip>
+
+              <li>
+                <Link
+                  to="#"
+                  className="btn btn-sm btn-soft-info"
+                  onClick={() => {
+                    const jobData = cellProps.row.original;
+                    handleJobClick(jobData);
+                  }}
+                >
+                  <i className="mdi mdi-pencil-outline" id="edittooltip" />
+                  <UncontrolledTooltip placement="top" target="edittooltip">
+                    Edit
+                  </UncontrolledTooltip>
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  to="#"
+                  className="btn btn-sm btn-soft-danger"
+                  onClick={() => {
+                    const jobData = cellProps.row.original;
+                    onClickDelete(jobData);
+                  }}
+                >
+                  <i className="mdi mdi-delete-outline" id="deletetooltip" />
+                  <UncontrolledTooltip placement="top" target="deletetooltip">
+                    Delete
+                  </UncontrolledTooltip>
+                </Link>
+              </li>
+            </ul>
+          );
+        },
+      },
     ],
     []
   );
@@ -211,8 +262,9 @@ const InventoryStock = (props) => {
             <Col lg="12">
               <Card>
                 <CardBody>
-                  <div className="clearfix" style={{ marginBottom: "10px" }}>
-                    <div className="float-start">
+                  <div>
+                    {/* <div className="clearfix"> */}
+                    <div className="float-end">
                       <div className="input-group input-group-sm">
                         <select
                           className="form-select form-select-sm"
@@ -226,56 +278,69 @@ const InventoryStock = (props) => {
                           <option value="allowed">Allated</option>
                           <option value="faulty">Faulty</option>
                         </select>
-                        <label className="input-group-text">In-Stock</label>
+                        <label className="input-group-text">Status</label>
                       </div>
                     </div>
+                    {/* </div> */}
+                    <Nav
+                      pills
+                      className="bg-light rounded"
+                      style={{
+                        width: "40%",
+                        display: "flex",
+                        justifyContent: "space-evenly",
+                      }}
+                    >
+                      <NavItem>
+                        <NavLink
+                          className={classnames({
+                            active: activeTab === "1",
+                          })}
+                          onClick={() => {
+                            toggleTab("1");
+                          }}
+                        >
+                          Smartcards
+                        </NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink
+                          className={classnames({
+                            active: activeTab === "2",
+                          })}
+                          onClick={() => {
+                            toggleTab("2");
+                          }}
+                        >
+                          STBs
+                        </NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink
+                          className={classnames({
+                            active: activeTab === "3",
+                          })}
+                          onClick={() => {
+                            toggleTab("3");
+                          }}
+                        >
+                          Pairings
+                        </NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink
+                          className={classnames({
+                            active: activeTab === "4",
+                          })}
+                          onClick={() => {
+                            toggleTab("4");
+                          }}
+                        >
+                          Tricks
+                        </NavLink>
+                      </NavItem>
+                    </Nav>
                   </div>
-                  <Nav
-                    pills
-                    className="bg-light rounded"
-                    style={{
-                      width: "30%",
-                      display: "flex",
-                      justifyContent: "space-evenly",
-                    }}
-                  >
-                    <NavItem>
-                      <NavLink
-                        className={classnames({
-                          active: activeTab === "1",
-                        })}
-                        onClick={() => {
-                          toggleTab("1");
-                        }}
-                      >
-                        Smartcards
-                      </NavLink>
-                    </NavItem>
-                    <NavItem>
-                      <NavLink
-                        className={classnames({
-                          active: activeTab === "2",
-                        })}
-                        onClick={() => {
-                          toggleTab("2");
-                        }}
-                      >
-                        STBs
-                      </NavLink>
-                    </NavItem>
-                    <NavItem>
-                      <NavLink
-                        className={classnames({
-                          active: activeTab === "3",
-                        })}
-                        onClick={() => {
-                          toggleTab("3");
-                        }}
-                      >
-                        Pairings
-                      </NavLink>
-                    </NavItem>
-                  </Nav>
                   <TableContainer
                     isPagination={true}
                     columns={columns}
