@@ -338,7 +338,7 @@ const ViewPackageList = (props) => {
               }}
             >
               <Col sm="12" style={{ width: "550px" }}>
-                <ViewChannels />
+                <ViewChannels showEditChannel={showEditChannel} />
               </Col>
             </Row>
             <div
