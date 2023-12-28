@@ -72,6 +72,8 @@ import ComplaintSubCategoryList from "../pages/Complaint/ComplaintSubCategoryLis
 
 import ConfigurationUploadLogs from "../pages/UploadLogs/ConfigurationUploadLogs/configurationUploadLogs";
 
+import InventoryStock from "../pages/InventoryStock/inventorystock";
+
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
 
@@ -250,6 +252,10 @@ const authProtectedRoutes = [
   {
     path: "/configuration-upload-logs",
     component: <ConfigurationUploadLogs />,
+  },
+  {
+    path: "/inventorystock",
+    component: <InventoryStock />,
   },
 ];
 

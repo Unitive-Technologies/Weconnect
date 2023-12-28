@@ -674,10 +674,10 @@ const SidebarContent = (props) => {
                   <ul className="sub-menu" aria-expanded="false">
                     <li
                       className={
-                        activeMenuItem === "/smartcard" ? "mm-active" : ""
+                        activeMenuItem === "/inventorystock" ? "mm-active" : ""
                       }
                     >
-                      <Link to="/smartcard">
+                      <Link to="/inventorystock">
                         <span key="#">{props.t("Smartcards")}</span>
                       </Link>
                     </li>
