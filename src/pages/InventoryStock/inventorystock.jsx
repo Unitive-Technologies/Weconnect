@@ -242,14 +242,14 @@ const InventoryStock = (props) => {
         // action: setShowAddCity,
         type: "dropdown",
         // icon: "create",
-        dropdownName: "Upload",
+        dropdownName: "Bulk",
       },
       {
         name: "Bulk Update",
         // action: setShowAddCity,
         type: "dropdown",
         // icon: "create",
-        dropdownName: "Upload",
+        dropdownName: "Bulk",
       },
       {
         name: "Mark Faulty",
@@ -279,7 +279,7 @@ const InventoryStock = (props) => {
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
-          <Breadcrumbs title="Inventory" breadcrumbItem={selectedOption} />
+          <Breadcrumbs breadcrumbItem="Inventory" />
           <Row>
             <Col lg="12">
               <Card>
@@ -320,7 +320,7 @@ const InventoryStock = (props) => {
                             toggleTab("1");
                           }}
                         >
-                          Smartcards
+                          Smartcard
                         </NavLink>
                       </NavItem>
                       <NavItem>
@@ -332,7 +332,7 @@ const InventoryStock = (props) => {
                             toggleTab("2");
                           }}
                         >
-                          STBs
+                          STB
                         </NavLink>
                       </NavItem>
                       <NavItem>
@@ -344,7 +344,7 @@ const InventoryStock = (props) => {
                             toggleTab("3");
                           }}
                         >
-                          Pairings
+                          Pairing
                         </NavLink>
                       </NavItem>
                       <NavItem>
@@ -356,7 +356,7 @@ const InventoryStock = (props) => {
                             toggleTab("4");
                           }}
                         >
-                          Tricks
+                          Track
                         </NavLink>
                       </NavItem>
                     </Nav>
