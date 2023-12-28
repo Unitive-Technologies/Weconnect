@@ -1349,18 +1349,18 @@ const fakeBackend = () => {
     });
   });
 
-  mock.onPut(url.UPDATE_USER).reply((regionaloffice) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (regionaloffice && regionaloffice.data) {
-          // Passing fake JSON data as response
-          resolve([200, regionaloffice.data]);
-        } else {
-          reject([400, "Cannot update Regional Office"]);
-        }
-      });
-    });
-  });
+  // mock.onPut(url.UPDATE_USER).reply((regionaloffice) => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (regionaloffice && regionaloffice.data) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, regionaloffice.data]);
+  //       } else {
+  //         reject([400, "Cannot update Regional Office"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onDelete(url.DELETE_USER).reply((config) => {
     return new Promise((resolve, reject) => {

@@ -26,12 +26,23 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const BulkInactiveUserModal = (props) => {
-  const { isOpen, handleBulkInactiveUser, users, setUsers } = props;
-  console.log("user in bulkInactive modal:" + JSON.stringify(users));
+  const {
+    isOpen,
+    handleBulkInactiveUser,
+    users,
+    filteredActiveBlockUsers,
+    filteredInActiveUsers,
+    filteredActiveInactiveUsers,
+    setUsers,
+  } = props;
+  // console.log("user in bulkInactive modal:" + JSON.stringify(users));
   const dispatch = useDispatch();
   // const selectedusers = [];
-  // const [users, setUsers] = useState(filteredUsers);
-
+  const [selectedStatus, setSelectedStatus] = useState("");
+  // const [filteredActiveBlockUsers, setFilteredActiveBlockUsers] = useState([]);
+  // const [filteredInActiveUsers, setFilteredInActiveUsers] = useState([]);
+  // const [filteredActiveInactiveUsers, setFilteredActiveInactiveUsers] =
+  //   useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
 
   const handleActive = (row) => {
@@ -50,6 +61,66 @@ const BulkInactiveUserModal = (props) => {
       setUsers((prevUsers) => prevUsers.filter((user) => user.id !== row.id));
     }
   };
+  const handleStatusChange = (e) => {
+    const status = e.target.value;
+    setSelectedStatus(status);
+    validation.handleChange(e);
+
+    // const filteredActiveBlockData = users.filter(
+    //   (user) => parseInt(user.status) === 0 && parseInt(user.status) === 1
+    // );
+    // setFilteredActiveBlockUsers(filteredActiveBlockData);
+    // const filteredInActiveData = users.filter(
+    //   (user) => parseInt(user.status) === 2
+    // );
+    // setFilteredInActiveUsers(filteredInActiveData);
+    // const filteredActiveInactiveData = users.filter(
+    //   (user) => (parseInt(user.status) === 0) & (parseInt(user.status) === 2)
+    // );
+    // setFilteredActiveInactiveUsers(filteredActiveInactiveData);
+    // console.log("ActiveBlock:" + JSON.stringify(filteredActiveBlockData));
+    // console.log("Inactive:" + JSON.stringify(filteredInActiveData));
+    // console.log("ActiveInactive:" + JSON.stringify(filteredActiveInactiveData));
+  };
+
+  // useEffect(() => {
+  //   const filteredActiveBlockData = users.filter(
+  //     (user) => user.status === 0 && user.status === 1
+  //   );
+  //   setFilteredActiveBlockUsers(filteredActiveBlockData);
+  //   const filteredInActiveData = users.filter((user) => user.status === 2);
+  //   setFilteredInActiveUsers(filteredInActiveData);
+  //   const filteredActiveInactiveData = users.filter(
+  //     (user) => (user.status === 0) & (user.status === 2)
+  //   );
+  //   setFilteredActiveInactiveUsers(filteredActiveInactiveData);
+  //   console.log("ActiveBlock:" + JSON.stringify(filteredActiveBlockData));
+  //   console.log("Inactive:" + JSON.stringify(filteredInActiveData));
+  //   console.log("ActiveInactive:" + JSON.stringify(filteredActiveInactiveData));
+  // }, [users]);
+  const validation = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      status: "",
+      block_message: "",
+    },
+    validationSchema: Yup.object({
+      status: Yup.string().required("Please Enter Status"),
+    }),
+    onSubmit: (values) => {
+      const newStatus = {
+        block_message: values["block_message"],
+        status: parseInt(values["status"]),
+      };
+      console.log("newUser:" + JSON.stringify(newStatus));
+      dispatch(onUpdateUser(newStatus));
+      validation.resetForm();
+      handleAddUser();
+    },
+    onReset: (values) => {
+      validation.setValues(validation.initialValues);
+    },
+  });
 
   const columns = useMemo(
     () => [
@@ -309,9 +380,16 @@ const BulkInactiveUserModal = (props) => {
           );
         },
       },
+      {
+        Header: "..",
+        Cell: (cellProps) => {
+          return <i className="dripicons-tag-delete" />;
+        },
+      },
     ],
     []
   );
+
   return (
     <Modal
       isOpen={isOpen}
@@ -329,79 +407,156 @@ const BulkInactiveUserModal = (props) => {
       <ModalBody>
         <Card>
           <CardBody>
-            {/* {console.log("user in bulk:" + JSON.stringify(user))} */}
-            <TableContainer
-              isPagination={true}
-              columns={columns}
-              data={users}
-              isGlobalFilter={true}
-              isShowingPageLength={true}
-              customPageSize={50}
-              tableClass="table align-middle table-nowrap table-hover"
-              theadClass="table-light"
-              paginationDiv="col-sm-12 col-md-7"
-              pagination="pagination pagination-rounded justify-content-end mt-4"
-            />
-            <div
-              style={{
-                // margin: "20px 0px",
-                marginTop: "20px",
-                marginBottom: "-18px",
-                zIndex: 12000,
-                backgroundColor: "#fff",
-                width: "fit-content",
-                marginLeft: "40%",
-                position: "absolute",
-                padding: "0px 10px",
-              }}
-            >
-              {" "}
-              <h5 style={{}}>Selected Users</h5>
-            </div>
-            <Row
-              style={{
-                position: "relative",
-                border: "1px solid #ced4da",
-                padding: "20px 0px",
-                margin: "30px 0px",
-              }}
-            >
-              <Col lg={12}>
-                <TableContainer
-                  isPagination={true}
-                  columns={userColumn}
-                  data={selectedUsers}
-                  //   isGlobalFilter={true}
-                  isShowingPageLength={true}
-                  customPageSize={50}
-                  tableClass="table align-middle table-nowrap table-hover"
-                  theadClass="table-light"
-                  paginationDiv="col-sm-12 col-md-7"
-                  pagination="pagination pagination-rounded justify-content-end mt-4"
-                />
-              </Col>
-            </Row>
-            <div className="text-center mt-4 ">
+            <Form>
+              <Row>
+                <Col lg={4}>
+                  <div className="mb-3">
+                    <Label className="form-label">
+                      Status<span style={{ color: "red" }}>*</span>
+                    </Label>
+                    <Input
+                      name="status"
+                      type="select"
+                      placeholder="Select Status"
+                      className="form-select"
+                      onChange={handleStatusChange}
+                      onBlur={validation.handleBlur}
+                      value={selectedStatus}
+                    >
+                      {/* <option value="">Select Status</option> */}
+                      <option value="active">ACTIVE</option>
+                      <option value="inactive">In-Active</option>
+                      <option value="block">BLOCK</option>
+                      <option value="unblock">UNBLOCK</option>
+                      {/* {userStatus.map((status) => (
+                        <option key={status.id} value={status.id}>
+                          {status.name}
+                        </option>
+                      ))} */}
+                    </Input>
+                    {/* {validation.touched.status && validation.errors.status ? (
+                      <FormFeedback type="invalid">
+                        {validation.errors.status}
+                      </FormFeedback>
+                    ) : null} */}
+                  </div>
+                </Col>
+                <Col lg={4}>
+                  <div className="mb-3">
+                    <Label className="form-label">
+                      Inactive/Block Message
+                      <span style={{ color: "red" }}>*</span>
+                    </Label>
+                    <Input
+                      name="block_message"
+                      type="textarea"
+                      placeholder="Enter Message"
+                      rows="3"
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.block_message || ""}
+                      invalid={
+                        validation.touched.block_message &&
+                        validation.errors.block_message
+                          ? true
+                          : false
+                      }
+                      disabled={
+                        selectedStatus === "inactive" || "block" ? false : true
+                      }
+                    />
+                    {/* {validation.touched.block_message &&
+                    validation.errors.block_message ? (
+                      <FormFeedback type="invalid">
+                        {validation.errors.block_message}
+                      </FormFeedback>
+                    ) : null} */}
+                  </div>
+                </Col>
+              </Row>
+
+              {/* {console.log("user in bulk:" + JSON.stringify(user))} */}
+              <TableContainer
+                isPagination={true}
+                columns={columns}
+                data={
+                  selectedStatus === "active"
+                    ? filteredInActiveUsers
+                    : selectedStatus === "inactive"
+                    ? filteredActiveBlockUsers
+                    : selectedStatus === "block"
+                    ? filteredActiveInactiveUsers
+                    : []
+                }
+                isGlobalFilter={true}
+                isShowingPageLength={true}
+                customPageSize={50}
+                tableClass="table align-middle table-nowrap table-hover"
+                theadClass="table-light"
+                paginationDiv="col-sm-12 col-md-7"
+                pagination="pagination pagination-rounded justify-content-end mt-4"
+              />
               <div
                 style={{
-                  display: "flex",
-                  gap: 5,
-                  textAlign: "center",
-                  justifyContent: "center",
+                  // margin: "20px 0px",
+                  marginTop: "20px",
+                  marginBottom: "-18px",
+                  zIndex: 12000,
+                  backgroundColor: "#fff",
+                  width: "fit-content",
+                  marginLeft: "40%",
+                  position: "absolute",
+                  padding: "0px 10px",
                 }}
               >
-                <button type="button" className="btn btn-primary ml-2 ">
-                  Save
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-primary "
-                  onClick={handleBulkInactiveUser}
-                >
-                  Cancel
-                </button>
+                {" "}
+                <h5 style={{}}>Selected Users</h5>
               </div>
-            </div>
+              <Row
+                style={{
+                  position: "relative",
+                  border: "1px solid #ced4da",
+                  padding: "20px 0px",
+                  margin: "30px 0px",
+                }}
+              >
+                <Col lg={12}>
+                  <TableContainer
+                    isPagination={true}
+                    columns={userColumn}
+                    data={selectedUsers}
+                    //   isGlobalFilter={true}
+                    isShowingPageLength={true}
+                    customPageSize={50}
+                    tableClass="table align-middle table-nowrap table-hover"
+                    theadClass="table-light"
+                    paginationDiv="col-sm-12 col-md-7"
+                    pagination="pagination pagination-rounded justify-content-end mt-4"
+                  />
+                </Col>
+              </Row>
+              <div className="text-center mt-4 ">
+                <div
+                  style={{
+                    display: "flex",
+                    gap: 5,
+                    textAlign: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <button type="button" className="btn btn-primary ml-2 ">
+                    Save
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary "
+                    onClick={handleBulkInactiveUser}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </Form>
           </CardBody>
         </Card>
       </ModalBody>
