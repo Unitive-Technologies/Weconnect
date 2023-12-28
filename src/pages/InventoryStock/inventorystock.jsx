@@ -266,7 +266,7 @@ const InventoryStock = (props) => {
         dropdownName: "",
       },
       {
-        name: "epdate Brand/Warehouse/Inventory state",
+        name: "update Brand/Warehouse/Inventory state",
         // action: setShowAddCity,
         type: "dot",
         icon: "action",
