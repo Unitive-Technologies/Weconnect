@@ -53,6 +53,8 @@ const AddUserModal = (props) => {
   const [selectedDistributor, setSelectedDistributor] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
   const [policyList, setPolicyList] = useState([]);
+  const [distributorList, setDistributorList] = useState([]);
+  const [lcoList, setLcoList] = useState([]);
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
 
   const selectContactsState = (state) => state.users;
@@ -104,33 +106,93 @@ const AddUserModal = (props) => {
     dispatch(onGetUserRegionalOffice());
   };
 
-  const handleRegionalChange = (e) => {
-    const regional = e.target.value;
-    setSelectedRegional(regional);
-    validation.handleChange(e);
-    dispatch(onGetUserDistributor());
+  const handleRegionalChange = async (e) => {
+    // const regional = e.target.value;
+    // setSelectedRegional(regional);
+    // validation.handleChange(e);
+    // dispatch(onGetUserDistributor());
+
+    try {
+      const regional = e.target.value;
+      setSelectedRegional(regional);
+
+      validation.handleChange(e);
+      {
+        console.log("selectedType:" + typeof selectedType);
+      }
+      {
+        console.log("selectedRole:" + typeof regional);
+      }
+      // Assuming you have a token stored in localStorage
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[mso_id]=1&filter[branch_id]=${parseInt(
+          regional
+        )}&filter[type]=${parseInt(selectedType)}&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token, // Include your token here
+          },
+        }
+      );
+
+      console.log(
+        "distributorList after selection : " +
+          JSON.stringify(response.data.data)
+      );
+      setDistributorList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching policy data:", error);
+      // Handle error if necessary
+    }
+    // };
   };
 
-  const handleDistributorChange = (e) => {
-    const distributor = e.target.value;
-    setSelectedDistributor(distributor);
-    validation.handleChange(e);
-    dispatch(onGetUserLco());
+  const handleDistributorChange = async (e) => {
+    // const distributor = e.target.value;
+    // setSelectedDistributor(distributor);
+    // validation.handleChange(e);
+    // dispatch(onGetUserLco());
+
+    try {
+      const distributor = e.target.value;
+      setSelectedDistributor(distributor);
+
+      validation.handleChange(e);
+      {
+        console.log("selectedType:" + typeof selectedType);
+      }
+      {
+        console.log("selectedDistributor:" + typeof distributor);
+      }
+      // Assuming you have a token stored in localStorage
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[mso_id]=1&filter[branch_id]=${parseInt(
+          selectedRegional
+        )}&filter[distributor_id]=${parseInt(
+          distributor
+        )}&filter[type]=${parseInt(selectedType)}&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token, // Include your token here
+          },
+        }
+      );
+
+      console.log(
+        "distributorList after selection : " +
+          JSON.stringify(response.data.data)
+      );
+      setLcoList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching policy data:", error);
+      // Handle error if necessary
+    }
+    // };
   };
-
-  const handlePolicyChange = (e) => {};
-  // const getMsoDetail = () => {
-  //   axios
-  //     .get(
-  //       `${API_URL}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[type]=0&vr=web1.0}`
-  //     )
-  //     .then((response) => {
-  //       // console.log(response);
-
-  //       console.log("getMso : " + JSON.stringify(response.data));
-  //       setMso(response.data);
-  //     });
-  // };
 
   const handleRoleChange = async (e) => {
     try {
@@ -202,7 +264,7 @@ const AddUserModal = (props) => {
     }),
     onSubmit: (values) => {
       const newUser = {
-        access_policy_id: values["policy"],
+        access_policy_id: parseInt(values["policy"]),
         block_message: values["block_message"],
         designation_id: parseInt(values["designation"]),
         name: values["name"],
@@ -482,8 +544,8 @@ const AddUserModal = (props) => {
                       value={validation.values.distributor || ""}
                     >
                       <option value="">Select Distributor</option>
-                      {userDistributor &&
-                        userDistributor.map((distributor) => (
+                      {distributorList &&
+                        distributorList.map((distributor) => (
                           <option key={distributor.id} value={distributor.id}>
                             {distributor.name}
                           </option>
@@ -519,8 +581,8 @@ const AddUserModal = (props) => {
                         value={validation.values.lco || ""}
                       >
                         <option value="">Select LCO</option>
-                        {userLco &&
-                          userLco.map((lco) => (
+                        {lcoList &&
+                          lcoList.map((lco) => (
                             <option key={lco.id} value={lco.id}>
                               {lco.name}
                             </option>
