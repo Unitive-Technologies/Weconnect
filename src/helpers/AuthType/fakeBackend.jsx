@@ -836,6 +836,19 @@ const fakeBackend = () => {
     });
   });
 
+  mock.onPost(url.ADD_NEW_SMSMESSAGETEMPLIST).reply((smsmsg) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (smsmsg && smsmsg.data) {
+          // Passing fake JSON data as response
+          resolve([200, smsmsg.data]);
+        } else {
+          reject([400, "Cannot add sms msg"]);
+        }
+      });
+    });
+  });
+
   // mock.onPost(url.ADD_NEW_DESIGNATION).reply((designation) => {
   //   return new Promise((resolve, reject) => {
   //     setTimeout(() => {

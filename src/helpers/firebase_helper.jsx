@@ -120,18 +120,18 @@ class FirebaseAuthBackend {
   socialLoginUser = async (type) => {
     let provider;
     if (type === "google") {
-        provider = new firebase.auth.GoogleAuthProvider();
+      provider = new firebase.auth.GoogleAuthProvider();
     } else if (type === "facebook") {
-        provider = new firebase.auth.FacebookAuthProvider();
+      provider = new firebase.auth.FacebookAuthProvider();
     }
     try {
-        const result = await firebase.auth().signInWithPopup(provider);
-        const user = result.user;
-        return user;
+      const result = await firebase.auth().signInWithPopup(provider);
+      const user = result.user;
+      return user;
     } catch (error) {
-        throw this._handleError(error);
+      throw this._handleError(error);
     }
-};
+  };
 
 
   addNewUserToFirestore = (user) => {

@@ -383,7 +383,10 @@ export const getPromoVoucher = () => get(url.GET_PROMOVOUCHER);
 export const addNewPromoVoucher = (provoucher) =>
   post(url.ADD_NEW_PROMOVOUCHER, provoucher);
 export const getSMSMessageTempList = () => get(url.GET_SMSMESSAGETEMPLIST);
+export const addSMSMessageTempList = (smsmsg) =>
+  post(url.ADD_NEW_SMSMESSAGETEMPLIST, smsmsg);
 // add user
+
 export const addNewUser = (user) => post(url.ADD_NEW_USER, user);
 
 // update user

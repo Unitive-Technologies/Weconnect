@@ -48,6 +48,7 @@ import { isEmpty } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import ViewSMSMessageTemplateList from "./ViewSMSMessageTemplateList";
 
 const SMSMessageTemplateList = (props) => {
   //meta title
@@ -156,7 +157,13 @@ const SMSMessageTemplateList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const SMSData = cellProps.row.original;
+                  handleViewSMSMessageTamplateList(SMSData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.template}
                 </Link>
@@ -338,18 +345,26 @@ const SMSMessageTemplateList = (props) => {
   //   toggle();
   // };
 
+  const [showViewSMSMessageTamplateList, setShowViewSMSMessageTamplateList] = useState(false);
+
+  const [viewSMSData, setViewSMSData] = useState({});
+
+  const handleViewSMSMessageTamplateList = (SMSData) => {
+    setShowViewSMSMessageTamplateList(!showViewSMSMessageTamplateList);
+    setViewSMSData(SMSData);
+  };
+
   const keyField = "id";
 
   return (
     <React.Fragment>
-      {/* <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
-      /> */}
+      <ViewSMSMessageTemplateList
+        isOpen={showViewSMSMessageTamplateList}
+        handleViewSMSMessageTamplateList={handleViewSMSMessageTamplateList}
+        SMSMsgTemp={viewSMSData}
+      />
       <div className="page-content">
         <Container fluid>
-          {/* Render Breadcrumbs */}
           <Breadcrumbs
             title="Services"
             breadcrumbItem="SMS Message Template List"

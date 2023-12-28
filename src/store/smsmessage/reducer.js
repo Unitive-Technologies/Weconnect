@@ -1,6 +1,8 @@
 import {
   GET_SMSMESSAGETEMPLIST_SUCCESS,
   GET_SMSMESSAGETEMPLIST_FAIL,
+  ADD_SMSMESSAGETEMPLIST_SUCCESS,
+  ADD_SMSMESSAGETEMPLIST_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -20,6 +22,21 @@ const SMSMessageTemplate = (state = INIT_STATE, action) => {
       };
 
     case GET_SMSMESSAGETEMPLIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_SMSMESSAGETEMPLIST_SUCCESS:
+      return {
+        ...state,
+        smsmessagetemp: [
+          ...state.smsmessagetemp,
+          action.payload,
+        ],
+      };
+
+    case ADD_SMSMESSAGETEMPLIST_FAIL:
       return {
         ...state,
         error: action.payload,
