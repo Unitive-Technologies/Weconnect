@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import withRouter from "../../components/Common/withRouter";
 import TableContainer from "../../components/Common/TableContainer";
-import Spinners from "../../components/Common/Spinner";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import {
   Card,
   CardBody,
@@ -177,6 +177,31 @@ const InventoryStock = (props) => {
 
   const data = [];
 
+  const getTableActions = () => {
+    return [
+      {
+        name: "Create",
+        // action: setShowAddCity,
+        type: "normal",
+        icon: "create",
+      },
+      {
+        name: "Upload",
+        // action: setShowAddCity,
+        type: "dropdown",
+        // icon: "create",
+        dropdownName: "Action",
+      },
+      {
+        name: "Bulk Update",
+        // action: setShowAddCity,
+        type: "dropdown",
+        // icon: "create",
+        dropdownName: "Action",
+      },
+    ];
+  };
+
   return (
     <React.Fragment>
       <div className="page-content">
@@ -186,8 +211,8 @@ const InventoryStock = (props) => {
             <Col lg="12">
               <Card>
                 <CardBody>
-                  <div className="clearfix">
-                    <div className="float-end">
+                  <div className="clearfix" style={{ marginBottom: "10px" }}>
+                    <div className="float-start">
                       <div className="input-group input-group-sm">
                         <select
                           className="form-select form-select-sm"
@@ -255,12 +280,14 @@ const InventoryStock = (props) => {
                     isPagination={true}
                     columns={columns}
                     data={data}
+                    isGlobalFilter={true}
+                    isShowTableActionButtons={true}
                     isShowingPageLength={true}
+                    tableActions={getTableActions()}
                     customPageSize={100}
-                    tableClass="table align-middle table-nowrap table-hover"
-                    theadClass="table-light"
+                    tableClass="table-bordered align-middle nowrap mt-2"
                     paginationDiv="col-sm-12 col-md-7"
-                    pagination="pagination pagination-rounded justify-content-end mt-4"
+                    pagination="pagination justify-content-end pagination-rounded"
                   />
                 </CardBody>
               </Card>
