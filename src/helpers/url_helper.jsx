@@ -58,6 +58,10 @@ export const GET_DISTRICT_BYSTATEID =
 export const GET_LOCATION =
   "/location?expand=created_by_lbl,operator_lbl,operator_code,status_lbl&vr=web1.0";
 export const ADD_LOCATION = "/location?vr=web1.0";
+export const updateLocationById = (location_id) =>
+  `/location/${location_id}?vr=web1.0`;
+export const GET_LCO_ONLOCATION =
+  "/operator/list?fields=id,name,code&expand=branch_lbl,distributor_lbl&filter[type]=3&per-page=100&vr=web1.0";
 
 export const GET_SUBLOCATION =
   "/sublocation?expand=created_by_lbl,operator_lbl,location_lbl,status_lbl,location_code,operator_code&page=1&per-page=50&vr=web1.0";

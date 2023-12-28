@@ -263,6 +263,9 @@ export const getDistrictByStateid = () => get(url.GET_DISTRICT_BYSTATEID);
 
 export const getLocation = () => get(url.GET_LOCATION);
 export const addLocation = (location) => post(url.ADD_LOCATION, location);
+export const updateLocation = ({ location_id, location }) =>
+  put(url.updateLocationById(location_id), location);
+export const getLcoOnLocation = () => get(url.GET_LCO_ONLOCATION);
 
 export const getSublocation = () => get(url.GET_SUBLOCATION);
 export const addSublocation = (sublocation) =>
