@@ -383,13 +383,11 @@ const ContactsList = (props) => {
 
   const [filteredUsers, setFilteredUsers] = useState([]);
   useEffect(() => {
-    // Filter users based on status values "Bulk" and "Inactive"
     const filteredData = users.filter((user) => user.status === 0);
-    // console.log("FilteredData:" + JSON.stringify(filteredData));
-    // Update the filteredUsers state
+
     setFilteredUsers(filteredData);
   }, [users]);
-  // console.log("FilteredUsers:" + JSON.stringify(filteredUsers));
+
   const keyField = "id";
 
   const getTableActions = () => {
@@ -463,7 +461,8 @@ const ContactsList = (props) => {
       <BulkInactiveUserModal
         isOpen={showInactivateUser}
         handleBulkInactiveUser={handleBulkInactiveUser}
-        user={filteredUsers}
+        users={filteredUsers}
+        setUsers={setFilteredUsers}
       />
       <BulkUserSettings
         isOpen={showBulkUserSettings}

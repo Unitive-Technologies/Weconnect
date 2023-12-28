@@ -26,13 +26,45 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const BulkInactiveUserModal = (props) => {
-  const { isOpen, handleBulkInactiveUser, user } = props;
-  // console.log("user in bulkInactive modal:" + JSON.stringify(user));
+  const { isOpen, handleBulkInactiveUser, users, setUsers } = props;
+  console.log("user in bulkInactive modal:" + JSON.stringify(users));
   const dispatch = useDispatch();
-  const selectedusers = [];
+  // const selectedusers = [];
+  // const [users, setUsers] = useState(filteredUsers);
+
+  const [selectedUsers, setSelectedUsers] = useState([]);
+
+  const handleActive = (row) => {
+    // Check if the row is already selected
+    const isRowSelected = selectedUsers.some((user) => user.id === row.id);
+
+    if (isRowSelected) {
+      // If the row is already selected, remove it from selectedUsers
+      const updatedSelectedUsers = selectedUsers.filter(
+        (user) => user.id !== row.id
+      );
+      setSelectedUsers(updatedSelectedUsers);
+    } else {
+      // If the row is not selected, add it to selectedUsers and remove it from users
+      setSelectedUsers((prevSelectedUsers) => [...prevSelectedUsers, row]);
+      setUsers((prevUsers) => prevUsers.filter((user) => user.id !== row.id));
+    }
+  };
 
   const columns = useMemo(
     () => [
+      {
+        Header: ".",
+        disableFilters: true,
+        filterable: true,
+        Cell: (cellProps) => (
+          <input
+            type="checkbox"
+            onChange={() => handleActive(cellProps.row.original)}
+          />
+        ),
+      },
+
       {
         Header: "#",
         disableFilters: true,
@@ -301,7 +333,7 @@ const BulkInactiveUserModal = (props) => {
             <TableContainer
               isPagination={true}
               columns={columns}
-              data={user}
+              data={users}
               isGlobalFilter={true}
               isShowingPageLength={true}
               customPageSize={50}
@@ -338,7 +370,7 @@ const BulkInactiveUserModal = (props) => {
                 <TableContainer
                   isPagination={true}
                   columns={userColumn}
-                  data={selectedusers}
+                  data={selectedUsers}
                   //   isGlobalFilter={true}
                   isShowingPageLength={true}
                   customPageSize={50}
