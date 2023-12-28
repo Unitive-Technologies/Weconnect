@@ -139,7 +139,7 @@ export const ADD_INVENTORYSTATELIST = "/add/inventorystatelist";
 
 export const GET_SMSMESSAGETEMPLIST =
   "/sms-message-template?expand=created_by_lbl,status_lbl,sender_id_lbl&page=1&per-page=50&vr=web1.0";
-export const ADD_NEW_SMSMESSAGETEMPLIST = "/add/SMSMessageTemplateList";
+export const ADD_NEW_SMSMESSAGETEMPLIST = "/add/SMSMessageTemplate";
 
 export const GET_BOUQUET =
   "/bouque?expand=setting,created_by_lbl,lco_rate,type_lbl,status_lbl,boxtype_lbl,rate,category_lbl,is_exclusive_lbl,is_promotional_lbl,additional_rates,is_online_app_lbl&page=1&per-page=50&vr=web1.0";

@@ -21,7 +21,7 @@ import { useDispatch } from "react-redux";
 import ViewMetaData from "./ViewMetaData"
 
 const ViewSMSMessageTemplateList = (props) => {
-  const { isOpen, handleViewSMSMessageTemplateList, SMSMsgTemp } = props;
+  const { isOpen, toggle, SMSMsgTemp } = props;
   const dispatch = useDispatch();
   const [showEditChannel, setShowEditChannel] = useState(false);
   const validation = useFormik({
@@ -29,25 +29,27 @@ const ViewSMSMessageTemplateList = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      code: "",
-      name: "",
-      description: "",
-      definition: "",
-      type: "",
-      status: "",
-      cas: "",
-      cascode: "",
-      created_by: "Admin",
+      code: (SMSMsgTemp && SMSMsgTemp.name) || "",
+      name: (SMSMsgTemp && SMSMsgTemp.name) || "",
+      template: (SMSMsgTemp && SMSMsgTemp.template) || "",
+      template_id: (SMSMsgTemp && SMSMsgTemp.template_id) || "",
+      cat_id: (SMSMsgTemp && SMSMsgTemp.cat_id) || "",
+      sub_cat_id: (SMSMsgTemp && SMSMsgTemp.sub_cat_id) || "",
+      status_lbl: (SMSMsgTemp && SMSMsgTemp.status_lbl) || "",
+      sender_id: (SMSMsgTemp && SMSMsgTemp.sender_id) || "",
+      created_at: (SMSMsgTemp && SMSMsgTemp.created_at) || "",
+      created_by: (SMSMsgTemp && SMSMsgTemp.created_by) || "my mso(mso)",
     },
     validationSchema: Yup.object({
-      code: Yup.string().required("Enter Channel Code"),
-      name: Yup.string().required("Enter channel name"),
-      description: Yup.string().required("Enter description"),
-      definition: Yup.string().required("Enter channel definition"),
-      type: Yup.string().required("Enter channel type"),
-      status: Yup.string().required("Enter status"),
-      cas: Yup.string().required("Enter cas"),
-      cascode: Yup.string().required("cascode"),
+      code: Yup.string().required("Enter template Code"),
+      name: Yup.string().required("Enter template name"),
+      template: Yup.string().required("Enter template"),
+      template_id: Yup.string().required("Enter template id"),
+      cat_id: Yup.string().required("Enter category id"),
+      sub_cat_id: Yup.string().required("Enter subcategory id"),
+      status_lbl: Yup.string().required("Enter status"),
+      sender_id: Yup.string().required("Enter sender"),
+
       // serviceid: Yup.string().required("serviceid"),
     }),
     onSubmit: (values) => {
@@ -55,12 +57,12 @@ const ViewSMSMessageTemplateList = (props) => {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         code: values["code"],
         name: values["name"],
-        description: values["description"],
-        definition: values["definition"],
-        type: values["type"],
-        status: values["status"],
-        cas: values["cas"],
-        cascode: values["cascode"],
+        template: values["template"],
+        template_id: values["template_id"],
+        cat_id: Yup.string().required("cat_id"),
+        sub_cat_id: Yup.string().required("sub_cat_id"),
+        status_lbl: values["status_lbl"],
+        sender_id: Yup.string().required("sender_id"),
         // serviceid: values["serviceid"],
         created_at: new Date(),
         created_by: values["created_by"],
@@ -69,7 +71,7 @@ const ViewSMSMessageTemplateList = (props) => {
       // save new user
       dispatch(onAddNewSMSMessageTempList(newSMSMessageTemplateList));
       validation.resetForm();
-      handleViewSMSMessageTemplateList();
+      toggle();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -78,7 +80,7 @@ const ViewSMSMessageTemplateList = (props) => {
 
   const handleCancel = () => {
     setShowEditChannel(false);
-    handleViewSMSMessageTemplateList();
+    toggle();
   };
 
   return (
@@ -94,8 +96,8 @@ const ViewSMSMessageTemplateList = (props) => {
     >
       <ModalHeader toggle={handleCancel} tag="h4">
         {!showEditChannel
-          ? `View ${(SMSMsgTemp && SMSMsgTemp.name) || ""}`
-          : `Edit ${(SMSMsgTemp && SMSMsgTemp.name) || ""}`}
+          ? `View `
+          : `Edit `}
       </ModalHeader>
       {!showEditChannel && (
         <Link
@@ -122,20 +124,20 @@ const ViewSMSMessageTemplateList = (props) => {
           <Row>
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">Code</Label>
+                <Label className="form-label">Template</Label>
                 <Input
-                  name="code"
+                  name="Template"
                   type="text"
                   disabled={!showEditChannel}
-                  placeholder="Enter code"
+                  placeholder="Enter template"
                   // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.code || ""}
+                  value={validation.values.template || ""}
                 ></Input>
-                {validation.touched.code && validation.errors.code ? (
+                {validation.touched.template && validation.errors.template ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.code}
+                    {validation.errors.template}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -146,21 +148,21 @@ const ViewSMSMessageTemplateList = (props) => {
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
-                  Name<span style={{ color: "red" }}>*</span>
+                  Template ID<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="name"
+                  name="Template ID"
                   type="text"
-                  placeholder="Enter name"
+                  placeholder="Enter template ID"
                   disabled={!showEditChannel}
                   // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.name || ""}
+                  value={validation.values.template_id || ""}
                 ></Input>
-                {validation.touched.name && validation.errors.name ? (
+                {validation.touched.template_id && validation.errors.template_id ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.name}
+                    {validation.errors.template_id}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -168,26 +170,26 @@ const ViewSMSMessageTemplateList = (props) => {
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
-                  Definition<span style={{ color: "red" }}>*</span>
+                  Category<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="definition"
+                  name="Category"
                   type="select"
                   disabled={!showEditChannel}
                   placeholder="Select Definition"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.definition || ""}
+                  value={validation.values.cat_id || ""}
                 >
                   <option value="101">Select channel definition</option>
                   <option value="102">Standard Definition(SD)</option>
                   <option value="103">High Definition(HD)</option>
                 </Input>
-                {validation.touched.definition &&
-                  validation.errors.definition ? (
+                {validation.touched.cat_id &&
+                  validation.errors.cat_id ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.definition}
+                    {validation.errors.cat_id}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -195,28 +197,27 @@ const ViewSMSMessageTemplateList = (props) => {
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
-                  Description<span style={{ color: "red" }}>*</span>
+                  Sub-Category<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="description"
-                  type="textarea"
-                  placeholder="Enter Description"
-                  rows="3"
+                  name="Sub-Category"
+                  type="select"
+                  placeholder="Enter sub category"
                   disabled={!showEditChannel}
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.description || ""}
+                  value={validation.values.sub_cat_id || ""}
                   invalid={
-                    validation.touched.description &&
-                      validation.errors.description
+                    validation.touched.sub_cat_id &&
+                      validation.errors.sub_cat_id
                       ? true
                       : false
                   }
                 />
-                {validation.touched.description &&
-                  validation.errors.description ? (
+                {validation.touched.sub_cat_id &&
+                  validation.errors.sub_cat_id ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.description}
+                    {validation.errors.sub_cat_id}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -226,25 +227,25 @@ const ViewSMSMessageTemplateList = (props) => {
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
-                  Type<span style={{ color: "red" }}>*</span>
+                  Sender ID<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="type"
+                  name="Sender ID"
                   type="select"
-                  placeholder="Select type"
+                  placeholder="Select Sender"
                   className="form-select"
                   disabled={!showEditChannel}
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.type || ""}
+                  value={validation.values.sender_id || ""}
                 >
                   <option value="104">Select channel type</option>
                   <option value="105">Pay Channel</option>
                   <option value="106">FTA</option>
                 </Input>
-                {validation.touched.type && validation.errors.type ? (
+                {validation.touched.sender_id && validation.errors.sender_id ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.type}
+                    {validation.errors.sender_id}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -262,15 +263,15 @@ const ViewSMSMessageTemplateList = (props) => {
                   disabled={!showEditChannel}
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.status || ""}
+                  value={validation.values.status_lbl || ""}
                 >
                   <option value="101">Select Status</option>
                   <option value="102">Active</option>
                   <option value="103">In-Active</option>
                 </Input>
-                {validation.touched.status && validation.errors.status ? (
+                {validation.touched.status_lbl && validation.errors.status_lbl ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.status}
+                    {validation.errors.status_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -291,7 +292,7 @@ const ViewSMSMessageTemplateList = (props) => {
               padding: "0px 10px",
             }}
           >
-            <h5 style={{}}>CAS LIST</h5>
+            <h5 style={{}}>Meta Data</h5>
           </div>
           <Row
             style={{
@@ -305,89 +306,7 @@ const ViewSMSMessageTemplateList = (props) => {
               <ViewMetaData />
             </Col>
           </Row>
-          < div
-            style={{
-              display: "flex",
-            }
-            }
-          >
-            <div
-              style={{
-                // margin: "20px 0px",
-                marginTop: "20px",
-                marginBottom: "18px",
-                zIndex: 12000,
-                backgroundColor: "#fff",
-                width: "fit-content",
-                marginLeft: "20%",
 
-                position: "absolute",
-                padding: "0px 10px",
-              }}
-            >
-              <h5 style={{}}>Add Channels</h5>
-            </div>
-            <Row
-              style={{
-                position: "relative",
-                border: "1px solid #ced4da",
-                padding: "20px 0px",
-                margin: "30px 0px",
-              }}
-            >
-              <Col sm="12" style={{ width: "550px" }}>
-                <ViewMetaData />
-              </Col>
-            </Row>
-
-          </div >
-          <div style={{
-            display: "flex"
-          }}>
-            <Row
-              style={{
-                position: "relative",
-                border: "1px solid #ced4da",
-                padding: "5px 0px",
-                margin: "10px 0px",
-                width: "550px", height: "50px",
-                display: "flex",
-              }}
-            >
-              <div
-                style={{
-                  marginTop: "20px",
-                  marginBottom: "18px",
-                  backgroundColor: "#fff",
-                  padding: "0px 10px",
-                }}
-              >
-                <h6 style={{ textAlign: "center" }}>TOTAL CHANNELS:</h6>
-              </div>
-            </Row>
-            <Row
-              style={{
-                position: "relative",
-                border: "1px solid #ced4da",
-                padding: "5px 0px",
-                margin: "10px 0px",
-                width: "550px",
-                height: "50px",
-                display: "flex",
-              }}
-            >
-              <div
-                style={{
-                  marginTop: "20px",
-                  marginBottom: "18px",
-                  backgroundColor: "#fff",
-                  padding: "0px 10px",
-                }}
-              >
-                <h6 style={{ textAlign: "center" }}>PACKAGE RATE:</h6>
-              </div>
-            </Row>
-          </div>
 
           {/* {!showEditChannel && ( */}
           <Row>

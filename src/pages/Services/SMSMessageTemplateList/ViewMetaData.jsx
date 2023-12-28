@@ -14,7 +14,7 @@ import {
 import * as Yup from "yup";
 
 import { useFormik } from "formik";
-import { addNewPackageList as onAddNewPackageList } from "/src/store/packagelist/actions";
+import { addNewSMSMessageTempList as onAddNewSMSMessageTempList } from "/src/store/smsmessage/actions";
 import { Link } from "react-router-dom";
 
 const ViewMetaData = (props) => {
@@ -26,26 +26,29 @@ const ViewMetaData = (props) => {
 
     initialValues: {
       //BroadCaster: "",
-      cas: "",
-      cascode: "",
+      type: "",
+      field: "",
+      label: "",
       created_by: "Admin",
     },
     validationSchema: Yup.object({
-      cas: Yup.string().required("Enter Select Cas"),
-      cascode: Yup.string().required("Enter cascode"),
+      type: Yup.string().required("Enter Select type"),
+      field: Yup.string().required("Enter Select field"),
+      label: Yup.string().required("Enter Select label"),
       // serviceid: Yup.string().required("serviceid"),
     }),
     onSubmit: (values) => {
-      const newPackageList = {
+      const newSMSMessageTemplateList = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
-        cas: values["cas"],
-        cascode: values["cascode"],
+        type: values["type"],
+        field: values["field"],
+        label: values["label"],
         created_at: new Date(),
         created_by: values["created_by"],
       };
-      console.log("newPackageList:" + newPackageList);
+      console.log("newSMSMessageTempList:" + newSMSMessageTemplateList);
       // save new user
-      dispatch(onAddNewPackageList(newPackageList));
+      dispatch(onAddNewSMSMessageTempList(newSMSMessageTemplateList));
       validation.resetForm();
       toggle();
     },
@@ -77,7 +80,7 @@ const ViewMetaData = (props) => {
       },
 
       {
-        Header: "CAS",
+        Header: "Type",
         accessor: "cas",
         filterable: true,
         Cell: (cellProps) => {
@@ -93,7 +96,7 @@ const ViewMetaData = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"CAS"}
+                  {"Type"}
                 </Link>
               </h5>
             </>
@@ -101,7 +104,31 @@ const ViewMetaData = (props) => {
         },
       },
       {
-        Header: "CAS CODE",
+        Header: "Field",
+        accessor: "field",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5
+                style={{
+                  maxWidth: 200,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+                className="font-size-14 mb-1"
+              >
+                <Link className="text-dark" to="#">
+                  {"Field"}
+                </Link>
+              </h5>
+            </>
+          );
+        },
+      },
+      {
+        Header: "Label",
         accessor: "cascode",
         filterable: true,
         Cell: (cellProps) => {
@@ -117,7 +144,7 @@ const ViewMetaData = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"CAS CODE"}
+                  {"Label"}
                 </Link>
               </h5>
             </>

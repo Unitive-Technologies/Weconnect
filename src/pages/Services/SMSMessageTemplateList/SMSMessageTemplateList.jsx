@@ -345,12 +345,12 @@ const SMSMessageTemplateList = (props) => {
   //   toggle();
   // };
 
-  const [showViewSMSMessageTamplateList, setShowViewSMSMessageTamplateList] = useState(false);
+  const [showViewSMSMessageTamplateList, setShowSMSMessageTamplateList] = useState(false);
 
   const [viewSMSData, setViewSMSData] = useState({});
 
   const handleViewSMSMessageTamplateList = (SMSData) => {
-    setShowViewSMSMessageTamplateList(!showViewSMSMessageTamplateList);
+    setShowSMSMessageTamplateList(!showViewSMSMessageTamplateList);
     setViewSMSData(SMSData);
   };
 
@@ -360,7 +360,7 @@ const SMSMessageTemplateList = (props) => {
     <React.Fragment>
       <ViewSMSMessageTemplateList
         isOpen={showViewSMSMessageTamplateList}
-        handleViewSMSMessageTamplateList={handleViewSMSMessageTamplateList}
+        toggle={handleViewSMSMessageTamplateList}
         SMSMsgTemp={viewSMSData}
       />
       <div className="page-content">
