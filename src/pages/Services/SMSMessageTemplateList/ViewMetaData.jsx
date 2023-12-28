@@ -184,74 +184,81 @@ const ViewMetaData = (props) => {
     <Card>
       <CardBody>
         <Row>
-          <Col
-            lg={6}
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-            }}
-          >
-            <Col lg={12}>
-              <div className="mb-3">
-                <Input
-                  name="type"
-                  type="select"
-                  placeholder="Select type"
-                  className="form-select"
-                  // disabled={!showEditChannel}
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.cas || ""}
-                >
-                  <option value="104">Select CAS</option>
-                  <option value="105">FTA</option>
-                </Input>
-                {validation.touched.cas && validation.errors.cas ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.cas}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <Col lg={12} style={{ marginRight: "20px" }}>
-                <div className="mb-3">
-                  <Input
-                    name="cascode"
-                    type="text"
-                    placeholder="Cascode"
-                    // className="form-select"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.cascode || ""}
-                  ></Input>
-                  {validation.touched.cascode && validation.errors.cascode ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.cascode}
-                    </FormFeedback>
-                  ) : null}
-                </div>
-              </Col>
-              <Col lg={2}>
-                <div className="mb-3">
-                  <button type="submit" className="btn btn-primary ">
-                    <i
-                      className="bx bx-right-arrow-alt"
-                      style={{ fontSize: 20 }}
-                    ></i>
-                  </button>
-                </div>
-              </Col>
+          <Col lg={3}>
+            <div className="mb-3">
+              <Input
+                name="type"
+                type="select"
+                placeholder="Select type"
+                className="form-select"
+                // disabled={!showEditChannel}
+                onChange={validation.handleChange}
+                onBlur={validation.handleBlur}
+                value={validation.values.type || ""}
+              >
+                <option value="104">Select CAS</option>
+                <option value="105">FTA</option>
+              </Input>
+              {validation.touched.type && validation.errors.type ? (
+                <FormFeedback type="invalid">
+                  {validation.errors.type}
+                </FormFeedback>
+              ) : null}
             </div>
           </Col>
-
-          <Col lg={6}>
+          <Col lg={3}>
+            <div className="mb-3">
+              <Input
+                s name="field"
+                type="text"
+                placeholder="Enter field"
+                // className="form-select"
+                disabled={!showEditChannel}
+                onChange={validation.handleChange}
+                onBlur={validation.handleBlur}
+                value={validation.values.field || ""}
+              >
+                <option value="104">Select CAS</option>
+                <option value="105">FTA</option>
+              </Input>
+              {validation.touched.field && validation.errors.field ? (
+                <FormFeedback type="invalid">
+                  {validation.errors.field}
+                </FormFeedback>
+              ) : null}
+            </div>
+          </Col>
+          <Col lg={3}>
+            <div className="mb-3">
+              <Input
+                name="label"
+                type="text"
+                placeholder="Enter label"
+                // className="form-select"
+                onChange={validation.handleChange}
+                onBlur={validation.handleBlur}
+                value={validation.values.label || ""}
+              ></Input>
+              {validation.touched.label && validation.errors.label ? (
+                <FormFeedback type="invalid">
+                  {validation.errors.label}
+                </FormFeedback>
+              ) : null}
+            </div>
+          </Col>
+          <Col lg={3}>
+            <div className="mb-3">
+              <button type="submit" className="btn btn-primary ">
+                <i
+                  className="bx bx-right-arrow-alt"
+                  style={{ fontSize: 20 }}
+                ></i>
+              </button>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col lg={12}>
             <TableContainer
               isPagination={true}
               columns={columns}
