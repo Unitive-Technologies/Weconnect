@@ -138,22 +138,30 @@ const AddUserModal = (props) => {
       setSelectedRole(role);
 
       validation.handleChange(e);
-      // console.log("selectedType: " + parseInt(selectedType));
-      // console.log("selectedRole :" + parseInt(role));
+      {
+        console.log("selectedType:" + typeof selectedType);
+      }
+      {
+        console.log("selectedRole:" + typeof role);
+      }
       // Assuming you have a token stored in localStorage
       const token = "Bearer " + localStorage.getItem("temptoken");
 
       const response = await axios.get(
-        `${API_URL}/menu-access-right/list?expand=user_type_lbl&fields=_id,user_id,user_type,role&filter[type][]=1&filter[type][]=2&filter[user_type]=${selectedType}&filter[role_id]=${selectedRole}&vr=web1.0`,
+        `${API_URL}/menu-access-right/list?expand=user_type_lbl&fields=_id,user_id,user_type,role&filter[type][]=1&filter[type][]=2&filter[user_type]=${parseInt(
+          selectedType
+        )}&filter[role_id]=${parseInt(role)}&vr=web1.0`,
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Include your token here
+            Authorization: token, // Include your token here
           },
         }
       );
 
-      // console.log("policy after selection : " + JSON.stringify(response.data));
-      setPolicyList(response.data);
+      console.log(
+        "policy after selection : " + JSON.stringify(response.data.data)
+      );
+      setPolicyList(response.data.data);
     } catch (error) {
       console.error("Error fetching policy data:", error);
       // Handle error if necessary
@@ -175,8 +183,8 @@ const AddUserModal = (props) => {
       username: "",
       password: "",
       // confirmpassword: "",
-      created_at: "",
-      created_by_lbl: "my mso(mso)",
+      // created_at: "",
+      // created_by_lbl: "my mso(mso)",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
@@ -196,25 +204,25 @@ const AddUserModal = (props) => {
       const newUser = {
         access_policy_id: values["policy"],
         block_message: values["block_message"],
-        designation_id: values["designation"],
+        designation_id: parseInt(values["designation"]),
         name: values["name"],
         email: values["email"],
         mobile_no: values["mobile"],
-        operator_type: values["type"],
+        operator_type: parseInt(values["type"]),
         operator_id:
           parseInt(values["type"]) === 0
-            ? values["mso"]
-            : values["type"] === 1
-            ? values["regional"]
-            : values["type"] === 2
-            ? values["distributor"]
-            : values["lco"],
-        status: values["status"],
-        role: values["role"],
+            ? parseInt(values["mso"])
+            : parseInt(values["type"]) === 1
+            ? parseInt(values["regional"])
+            : parseInt(values["type"]) === 2
+            ? parseInt(values["distributor"])
+            : parseInt(values["lco"]),
+        status: parseInt(values["status"]),
+        role: parseInt(values["role"]),
         username: values["username"],
         password: values["password"],
-        created_at: new Date(),
-        created_by_lbl: values["created_by_lbl"],
+        // created_at: new Date(),
+        // created_by_lbl: values["created_by_lbl"],
       };
       console.log("newUser:" + JSON.stringify(newUser));
       dispatch(onAddNewUser(newUser));
@@ -577,9 +585,10 @@ const AddUserModal = (props) => {
                   disabled={!selectedType}
                 >
                   <option value="">Select Group Policy</option>
-
-                  {selectedType === 0 &&
-                    validation.values.mso == 1 &&
+                  {/* {console.log("selectedType:" + selectedType)}
+                  {console.log("selectedRole:" + selectedRole)} */}
+                  {selectedType &&
+                    selectedRole &&
                     policyList &&
                     policyList.map((policy) => (
                       <option key={policy._id} value={policy._id}>

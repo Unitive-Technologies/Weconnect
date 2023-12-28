@@ -385,7 +385,7 @@ const ContactsList = (props) => {
   useEffect(() => {
     // Filter users based on status values "Bulk" and "Inactive"
     const filteredData = users.filter((user) => user.status === 0);
-    console.log("FilteredData:" + JSON.stringify(filteredData));
+    // console.log("FilteredData:" + JSON.stringify(filteredData));
     // Update the filteredUsers state
     setFilteredUsers(filteredData);
   }, [users]);
