@@ -186,11 +186,30 @@ const InventoryStock = (props) => {
             <Col lg="12">
               <Card>
                 <CardBody>
+                  <div className="clearfix">
+                    <div className="float-end">
+                      <div className="input-group input-group-sm">
+                        <select
+                          className="form-select form-select-sm"
+                          // value={seletedMonth}
+                          // onChange={(e) => {
+                          //   onChangeMonth(e.target.value);
+                          // }}
+                        >
+                          <option value="stock">Stock</option>
+                          <option value="blacklisted">Blacklisted</option>
+                          <option value="allowed">Allated</option>
+                          <option value="faulty">Faulty</option>
+                        </select>
+                        <label className="input-group-text">In-Stock</label>
+                      </div>
+                    </div>
+                  </div>
                   <Nav
                     pills
                     className="bg-light rounded"
                     style={{
-                      width: "40%",
+                      width: "30%",
                       display: "flex",
                       justifyContent: "space-evenly",
                     }}
