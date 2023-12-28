@@ -19,7 +19,7 @@ import { useDispatch } from "react-redux";
 import CasList from "./CasList";
 import AddChannels from "./AddChannels";
 import AddBroadcasterBouquets from "./AddBroadcasterBouquets";
-import AddBroadcasterBouquetsTableList from "./AddBroadcasterBouquetsTableList copy";
+import AddBroadcasterBouquetsTableList from "./AddBroadcasterBouquetsTableList";
 
 const AddNewPackageList = (props) => {
   const { isOpen, toggle } = props;

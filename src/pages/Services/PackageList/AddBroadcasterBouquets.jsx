@@ -6,7 +6,7 @@ import {
   ToastHeader,
   ToastBody,
 } from "reactstrap";
-import AddBroadcasterBouquetsTableList from "./AddBroadcasterBouquetsTableList copy";
+import AddBroadcasterBouquetsTableList from "./AddBroadcasterBouquetsTableList";
 import { Link } from "react-router-dom";
 
 const AddBroadcasterBouquets = (props) => {
