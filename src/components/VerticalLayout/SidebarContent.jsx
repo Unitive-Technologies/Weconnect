@@ -661,130 +661,17 @@ const SidebarContent = (props) => {
               </ul>
             </li>
 
-            <li>
-              <Link to="#" className="has-arrow">
+            <li
+              className={
+                activeMenuItem === "/inventorystock" ? "mm-active" : ""
+              }
+            >
+              <Link to="/inventorystock">
                 <i className="bx bx-chat"></i>
-                <span>{props.t("Inventory")}</span>
+                <span key="#">{props.t("Inventory")}</span>
               </Link>
-              <ul className="sub-menu" aria-expanded="false">
-                <li>
-                  <Link to="/#" className="has-arrow">
-                    <span key="#">{props.t("Stock")}</span>
-                  </Link>
-                  <ul className="sub-menu" aria-expanded="false">
-                    <li
-                      className={
-                        activeMenuItem === "/inventorystock" ? "mm-active" : ""
-                      }
-                    >
-                      <Link to="/inventorystock">
-                        <span key="#">{props.t("Smartcards")}</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/#">
-                        <span key="#">{props.t("STBs")}</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/#">
-                        <span key="#">{props.t("Pairings")}</span>
-                      </Link>
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <Link to="/#" className="has-arrow">
-                    <span key="#">{props.t("Faulty")}</span>
-                  </Link>
-                  <ul className="sub-menu" aria-expanded="false">
-                    <li>
-                      <Link to="/#">
-                        <span key="#">{props.t("Faulty Smartcards")}</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/#">
-                        <span key="#">{props.t("Faulty STBs")}</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/#">
-                        <span key="#">{props.t("Faulty Pairings")}</span>
-                      </Link>
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <Link to="/#" className="has-arrow">
-                    <span key="#">{props.t("Blacklisting")}</span>
-                  </Link>
-                  <ul className="sub-menu" aria-expanded="false">
-                    <li>
-                      <Link to="/#">
-                        <span key="#">{props.t("Blacklisted Smartcards")}</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/#">
-                        <span key="#">{props.t("Blacklisted STBs")}</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/#">
-                        <span key="#">{props.t("Blacklisted Pairings")}</span>
-                      </Link>
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <Link to="/#" className="has-arrow">
-                    <span key="#">{props.t("Allotted")}</span>
-                  </Link>
-                  <ul className="sub-menu" aria-expanded="false">
-                    <li>
-                      <Link to="/#">
-                        <span key="#">{props.t("Allotted Pairings")}</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/#">
-                        <span key="#">{props.t("Allotted STBs")}</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/#">
-                        <span key="#">{props.t("Allotted Pairings")}</span>
-                      </Link>
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <Link to="/#" className="has-arrow">
-                    <span key="#">{props.t("Track")}</span>
-                  </Link>
-                  <ul className="sub-menu" aria-expanded="false">
-                    <li>
-                      <Link to="/#">
-                        <span key="#">{props.t("Track SC/STB")}</span>
-                      </Link>
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <Link to="/#" className="has-arrow">
-                    <span key="#">{props.t("Upload Logs")}</span>
-                  </Link>
-                  <ul className="sub-menu" aria-expanded="false">
-                    <li>
-                      <Link to="/#">
-                        <span key="#">{props.t("Inventory Uploads")}</span>
-                      </Link>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
             </li>
+
             <li>
               <Link to="#" className="has-arrow">
                 <i className="bx bx-file"></i>
