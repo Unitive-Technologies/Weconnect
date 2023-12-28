@@ -44,7 +44,6 @@ const AddNewDistrict = (props) => {
       console.log("Post values: ", values);
       const newDistrict = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
-        designation: values["designation"],
         name: values["name"],
         status_lbl: values["status"],
         description: values["description"],

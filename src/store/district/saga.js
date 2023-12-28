@@ -96,9 +96,14 @@ function* onAddDistrict({ payload: district }) {
   }
 }
 
-function* onUpdateDistrict({ payload: district }) {
+function* onUpdateDistrict({ payload: { district_id, district } }) {
+  console.log("District id: ", district_id);
+  const stringSelectedId =
+    typeof district_id === "object" ? JSON.stringify(district_id) : district_id;
+  console.log("String selected id: ", stringSelectedId);
   try {
-    const response = yield call(updateDistrict, district);
+    const response = yield call(updateDistrict, { stringSelectedId, district });
+    console.log("Response data in saga: ", response);
     yield put(updateDistrictSuccess(response));
   } catch (error) {
     console.log("Error in update district: ", error);

@@ -19,7 +19,14 @@ import { useDispatch } from "react-redux";
 import { updateDistrict as onUpdateDistrict } from "/src/store/district/actions";
 
 const ViewDistrict = (props) => {
-  const { isOpen, handleViewDistrict, district, statelist, status } = props;
+  const {
+    isOpen,
+    handleViewDistrict,
+    district,
+    statelist,
+    status,
+    district_id,
+  } = props;
   const dispatch = useDispatch();
   const [showEditDistrict, setShowEditDistrict] = useState(false);
 
@@ -44,9 +51,9 @@ const ViewDistrict = (props) => {
       description: Yup.string().required("Enter description"),
     }),
     onSubmit: (values) => {
+      console.log("Update District values: ", values);
       const updatedDistrict = {
         id: values["id"],
-        designation: values["designation"],
         name: values["name"],
         state_id: values["state_id"],
         status: values["status"],
@@ -56,7 +63,7 @@ const ViewDistrict = (props) => {
         type: values["type"],
       };
       console.log("Updated district:" + JSON.stringify(updatedDistrict));
-      dispatch(onUpdateDistrict(updatedDistrict));
+      dispatch(onUpdateDistrict({ updatedDistrict, district_id }));
       validation.resetForm();
       handleViewDistrict();
     },

@@ -34,6 +34,7 @@ const DistrictList = (props) => {
   const [showUploadDistrict, setShowUploadDistrict] = useState(false);
   const [showViewDistrict, setShowViewDistrict] = useState(false);
   const [viewDistrictData, setViewDistrictData] = useState({});
+  const [selectedId, setSelectedId] = useState();
 
   const selectDistrictState = (state) => state.district;
   const districtProperties = createSelector(
@@ -236,6 +237,8 @@ const DistrictList = (props) => {
   const handleViewDistrict = (userData) => {
     setShowViewDistrict(!showViewDistrict);
     setViewDistrictData(userData);
+    console.log("Id: ", userData.id);
+    setSelectedId(userData.id);
   };
 
   const keyField = "id";
@@ -265,6 +268,7 @@ const DistrictList = (props) => {
         district={viewDistrictData}
         statelist={statelist}
         status={status}
+        district_id={selectedId}
       />
       <AddNewDistrict
         isOpen={showAddDistrict}

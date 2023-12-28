@@ -254,7 +254,7 @@ export const getDistrict = () => get(url.GET_DISTRICT);
 export const addDistrict = (district) => post(url.ADD_DISTRICT, district);
 export const getDistrictStateList = () => get(url.GET_DISTRICT_STATELIST);
 export const getDistrictStatus = () => get(url.GET_DISTRICT_STATUS);
-export const updateDistrict = (district_id, district) =>
+export const updateDistrict = ({ district_id, district }) =>
   put(url.updateDistrictById(district_id), district);
 
 export const getCity = () => get(url.GET_CITY);
