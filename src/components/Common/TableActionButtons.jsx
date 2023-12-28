@@ -20,9 +20,19 @@ const TableActionButtons = ({ tableActions }) => {
   const dropdownTypeActions = tableActions.filter(
     (action) => action.type === "dropdown"
   );
+  const dotActions = tableActions.filter((action) => action.type === "dot");
 
   // dropdownTypedActions will have another property called dropdownName, group the actions by that dropdownName
   const dropdownTypedActions = dropdownTypeActions.reduce((acc, action) => {
+    if (acc[action.dropdownName]) {
+      acc[action.dropdownName].push(action);
+    } else {
+      acc[action.dropdownName] = [action];
+    }
+    return acc;
+  }, {});
+
+  const dotedActions = dotActions.reduce((acc, action) => {
     if (acc[action.dropdownName]) {
       acc[action.dropdownName].push(action);
     } else {
@@ -81,6 +91,35 @@ const TableActionButtons = ({ tableActions }) => {
                 </DropdownToggle>
                 <DropdownMenu>
                   {dropdownTypedActions[dropdownName].map((action, index) => {
+                    return (
+                      <li key={index} onClick={action.action}>
+                        <DropdownItem href="#">{action.name}</DropdownItem>
+                      </li>
+                    );
+                  })}
+                </DropdownMenu>
+              </UncontrolledDropdown>
+            );
+          })
+        }
+        {
+          // For each of the dropdownNames, create a dropdown with the list of actions in it
+          Object.keys(dotedActions).map((actionName, index) => {
+            return (
+              <UncontrolledDropdown
+                className="dropdown d-inline-block me-1"
+                key={index}
+              >
+                <DropdownToggle
+                  type="menu"
+                  className="btn btn-success"
+                  id="dropdownMenuButton1"
+                >
+                  {actionName} &nbsp;
+                  <i className="mdi mdi-dots-vertical"></i>
+                </DropdownToggle>
+                <DropdownMenu>
+                  {dotedActions[actionName].map((action, index) => {
                     return (
                       <li key={index} onClick={action.action}>
                         <DropdownItem href="#">{action.name}</DropdownItem>

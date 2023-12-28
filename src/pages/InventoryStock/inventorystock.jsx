@@ -24,6 +24,7 @@ const InventoryStock = (props) => {
   document.title = "Inventory | VDigital";
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState("1");
+  const [selectedOption, setSelectedOption] = useState("Stock");
 
   const toggleTab = (tab) => {
     if (activeTab !== tab) {
@@ -241,14 +242,35 @@ const InventoryStock = (props) => {
         // action: setShowAddCity,
         type: "dropdown",
         // icon: "create",
-        dropdownName: "Action",
+        dropdownName: "Upload",
       },
       {
         name: "Bulk Update",
         // action: setShowAddCity,
         type: "dropdown",
         // icon: "create",
-        dropdownName: "Action",
+        dropdownName: "Upload",
+      },
+      {
+        name: "Mark Faulty",
+        // action: setShowAddCity,
+        type: "dot",
+        icon: "action",
+        dropdownName: "",
+      },
+      {
+        name: "Blacklist",
+        // action: setShowAddCity,
+        type: "dot",
+        icon: "action",
+        dropdownName: "",
+      },
+      {
+        name: "epdate Brand/Warehouse/Inventory state",
+        // action: setShowAddCity,
+        type: "dot",
+        icon: "action",
+        dropdownName: "",
       },
     ];
   };
@@ -257,38 +279,36 @@ const InventoryStock = (props) => {
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
-          <Breadcrumbs title="Inventory" breadcrumbItem="Stocks" />
+          <Breadcrumbs title="Inventory" breadcrumbItem={selectedOption} />
           <Row>
             <Col lg="12">
               <Card>
                 <CardBody>
                   <div>
-                    {/* <div className="clearfix"> */}
                     <div className="float-end">
                       <div className="input-group input-group-sm">
                         <select
                           className="form-select form-select-sm"
-                          // value={seletedMonth}
-                          // onChange={(e) => {
-                          //   onChangeMonth(e.target.value);
-                          // }}
+                          value={selectedOption}
+                          onChange={(e) => {
+                            setSelectedOption(e.target.value);
+                          }}
                         >
-                          <option value="stock">Stock</option>
-                          <option value="blacklisted">Blacklisted</option>
-                          <option value="allowed">Allated</option>
-                          <option value="faulty">Faulty</option>
+                          <option value="Stock">Stock</option>
+                          <option value="Blacklisted">Blacklisted</option>
+                          <option value="Allotted">Allotted</option>
+                          <option value="Faulty">Faulty</option>
                         </select>
                         <label className="input-group-text">Status</label>
                       </div>
                     </div>
-                    {/* </div> */}
                     <Nav
                       pills
                       className="bg-light rounded"
                       style={{
                         width: "40%",
                         display: "flex",
-                        justifyContent: "space-evenly",
+                        justifyContent: "space-between",
                       }}
                     >
                       <NavItem>
