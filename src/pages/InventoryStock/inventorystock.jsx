@@ -245,7 +245,7 @@ const InventoryStock = (props) => {
         dropdownName: "Bulk",
       },
       {
-        name: "Bulk Update",
+        name: "Update",
         // action: setShowAddCity,
         type: "dropdown",
         // icon: "create",
@@ -294,7 +294,7 @@ const InventoryStock = (props) => {
                             setSelectedOption(e.target.value);
                           }}
                         >
-                          <option value="Stock">Stock</option>
+                          <option value="Stock">In-stock</option>
                           <option value="Blacklisted">Blacklisted</option>
                           <option value="Allotted">Allotted</option>
                           <option value="Faulty">Faulty</option>
