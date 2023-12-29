@@ -16,12 +16,14 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewDesignation as onAddNewDesignation } from "/src/store/designation/actions";
 import { useDispatch } from "react-redux";
+import {
+  getDesignation as onGetDesignation,
+} from "/src/store/actions";
 
 const AddNewDesignation = (props) => {
   const { isOpen, handleAddDesignation, desigStatus, desigParent, desigType } =
     props;
 
-  const { isOpen, handleAddDesignation, desigStatus } = props;
   console.log("desigStatus:" + JSON.stringify(desigStatus));
 
   const dispatch = useDispatch();
@@ -78,6 +80,7 @@ const AddNewDesignation = (props) => {
       console.log("newDesignation:" + newDesignation);
       // save new user
       dispatch(onAddNewDesignation(newDesignation));
+      dispatch(onGetDesignation());
       validation.resetForm();
       handleAddDesignation();
     },
@@ -123,13 +126,13 @@ const AddNewDesignation = (props) => {
                   value={validation.values.designation || ""}
                   invalid={
                     validation.touched.designation &&
-                    validation.errors.designation
+                      validation.errors.designation
                       ? true
                       : false
                   }
                 />
                 {validation.touched.designation &&
-                validation.errors.designation ? (
+                  validation.errors.designation ? (
                   <FormFeedback type="invalid">
                     {validation.errors.designation}
                   </FormFeedback>
@@ -204,8 +207,8 @@ const AddNewDesignation = (props) => {
                   type="select"
                   placeholder="Select Type"
                   className="form-select"
-                  onChange={handleTypeChange}
-                  // onChange={validation.handleChange}
+                  // onChange={handleTypeChange}
+                  onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.type || ""}
                 >
@@ -234,8 +237,8 @@ const AddNewDesignation = (props) => {
                   type="select"
                   placeholder="Select Parent designation"
                   className="form-select"
-                  onChange={handleParentChange}
-                  // onChange={validation.handleChange}
+                  // onChange={handleParentChange}
+                  onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.parent || ""}
                 >
@@ -269,13 +272,13 @@ const AddNewDesignation = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>

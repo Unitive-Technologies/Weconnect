@@ -189,6 +189,8 @@ const DesignationList = (props) => {
     if (desigList && !desigList.length) {
       dispatch(onGetDesignation());
       dispatch(onGetDesignationStatus());
+      dispatch(onGetDesignationType());
+      dispatch(onGetDesignationParent());
     }
   }, [dispatch, desigList]);
 
