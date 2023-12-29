@@ -21,7 +21,7 @@ import { getLocation as onGetLocation } from "/src/store/actions";
 import Select from "react-select";
 
 const ViewSubLocation = (props) => {
-  const { isOpen, handleViewSubLocation, sublocation } = props;
+  const { isOpen, handleViewSubLocation, sublocation, status } = props;
   const dispatch = useDispatch();
   const [showEditSubLocation, setShowEditSubLocation] = useState(false);
   const selectLocationState = (state) => state.location;
@@ -202,8 +202,11 @@ const ViewSubLocation = (props) => {
                   disabled={!showEditSubLocation}
                 >
                   <option value="">Select Status</option>
-                  <option value="Active">Active</option>
-                  <option value="In-Active">In-Active</option>
+                  {status.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">

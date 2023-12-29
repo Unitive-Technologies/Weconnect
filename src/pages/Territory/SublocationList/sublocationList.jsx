@@ -13,6 +13,7 @@ import {
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import { getSublocation as onGetSublocation } from "/src/store/actions";
+import { getDistrictStatus as onGetDistrictStatus } from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
@@ -35,6 +36,16 @@ const SublocationList = (props) => {
     })
   );
 
+  const selectDistrictState = (state) => state.district;
+  const districtProperties = createSelector(
+    selectDistrictState,
+    (district) => ({
+      districts: district.district,
+      status: district.status,
+    })
+  );
+
+  const { districts, status } = useSelector(districtProperties);
   const { subloc, loading } = useSelector(sublocationProperties);
   const [isLoading, setLoading] = useState(loading);
   const [showAddSubLocation, setShowAddSubLocation] = useState(false);
@@ -229,6 +240,12 @@ const SublocationList = (props) => {
     }
   }, [dispatch, subloc]);
 
+  useEffect(() => {
+    if (districts && !districts.length) {
+      dispatch(onGetDistrictStatus());
+    }
+  }, [dispatch, districts]);
+
   const handleAddSubLocation = () => {
     setShowAddSubLocation(!showAddSubLocation);
   };
@@ -260,14 +277,17 @@ const SublocationList = (props) => {
         isOpen={showViewSubLocation}
         handleViewSubLocation={handleViewSubLocation}
         sublocation={viewSubLocationData}
+        status={status}
       />
       <AddSubLocation
         isOpen={showAddSubLocation}
         handleAddSubLocation={handleAddSubLocation}
+        status={status}
       />
       <UploadSubLocation
         isOpen={showUploadSubLocation}
         handleUploadSubLocation={handleUploadSubLocation}
+        status={status}
       />
       <div className="page-content">
         <Container fluid>

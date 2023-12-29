@@ -21,7 +21,7 @@ import { getLocation as onGetLocation } from "/src/store/actions";
 import Select from "react-select";
 
 const AddSubLocation = (props) => {
-  const { isOpen, handleAddSubLocation } = props;
+  const { isOpen, handleAddSubLocation, status } = props;
   const dispatch = useDispatch();
   const [selectedLocation, setSelectedLocation] = useState(null);
 
@@ -190,8 +190,11 @@ const AddSubLocation = (props) => {
                   value={validation.values.status || ""}
                 >
                   <option value="">Select Status</option>
-                  <option value="1">Active</option>
-                  <option value="2">In-Active</option>
+                  {status.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">

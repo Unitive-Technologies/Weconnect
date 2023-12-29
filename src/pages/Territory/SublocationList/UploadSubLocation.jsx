@@ -21,7 +21,7 @@ import Select from "react-select";
 import { useSelector, useDispatch } from "react-redux";
 
 const UploadSubLocation = (props) => {
-  const { isOpen, handleUploadSubLocation } = props;
+  const { isOpen, handleUploadSubLocation, status } = props;
   const dispatch = useDispatch();
   const [selectedFiles, setselectedFiles] = useState([]);
   const selectLcoState = (state) => state.lco;
@@ -160,8 +160,11 @@ const UploadSubLocation = (props) => {
                     // value={validation.values.status || ""}
                   >
                     <option value="">Select Status</option>
-                    <option value="1">Active</option>
-                    <option value="3">In-Active</option>
+                    {status.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
                   </Input>
                   {/* {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">

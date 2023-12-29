@@ -29,12 +29,7 @@ const convertSublocationListObject = (sublocationList) => {
       location_code: sublocation.location_code,
       operator_lbl: sublocation.operator_lbl,
       operator_code: sublocation.operator_code,
-      status:
-        sublocation.status === 1
-          ? "ACTIVE"
-          : sublocation.status === 0
-          ? "INACTIVE"
-          : "BLOCKED",
+      status: sublocation.status,
       created_at: sublocation.created_at,
       created_by_lbl: sublocation.created_by_lbl,
     };
