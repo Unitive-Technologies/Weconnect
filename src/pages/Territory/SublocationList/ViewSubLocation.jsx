@@ -85,7 +85,7 @@ const ViewSubLocation = (props) => {
         created_by: values["created_by"],
       };
       console.log("Updated Sublocation:" + updateSubLocation);
-      dispatch(onUpdateSublocation(updateSubLocation));
+      dispatch(onUpdateSublocation({ updateSubLocation, id }));
       validation.resetForm();
       handleViewSubLocation();
     },

@@ -16,7 +16,7 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { updateUser as onUpdateUser } from "/src/store/users/actions";
+import { updateCity as onUpdateCity } from "/src/store/city/actions";
 
 const ViewCity = (props) => {
   const { isOpen, handleViewCity, city } = props;
@@ -28,6 +28,7 @@ const ViewCity = (props) => {
     enableReinitialize: true,
 
     initialValues: {
+      id: (city && city.id) || "",
       name: (city && city.name) || "",
       state_lbl: (city && city.state_lbl) || "",
       district_lbl: (city && city.district_lbl) || "",
@@ -45,7 +46,7 @@ const ViewCity = (props) => {
     }),
     onSubmit: (values) => {
       const updateCity = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
+        id: values["id"],
         district_lbl: values["district_lbl"],
         name: values["name"],
         state_lbl: values["state_lbl"],
@@ -54,8 +55,8 @@ const ViewCity = (props) => {
         created_at: new Date(),
         created_by: values["created_by"],
       };
-      // console.log("new district:" + updateCity);
-      dispatch(onAddDistrict(updateCity));
+      console.log("Updated City:" + updateCity);
+      dispatch(onUpdateCity(updateCity));
       validation.resetForm();
       handleViewCity();
     },
@@ -65,8 +66,6 @@ const ViewCity = (props) => {
     setShowEditCity(false);
     handleViewCity();
   };
-
-  // console.log("Show Edit city status: ", showEditCity);
 
   return (
     <Modal
