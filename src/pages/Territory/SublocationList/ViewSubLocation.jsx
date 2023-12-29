@@ -19,6 +19,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { getLocation as onGetLocation } from "/src/store/actions";
 import Select from "react-select";
+import { updateSublocation as onUpdateSublocation } from "/src/store/sublocation/actions";
 
 const ViewSubLocation = (props) => {
   const { isOpen, handleViewSubLocation, sublocation, status } = props;
@@ -62,6 +63,7 @@ const ViewSubLocation = (props) => {
     enableReinitialize: true,
 
     initialValues: {
+      id: (sublocation && sublocation.id) || "",
       name: (sublocation && sublocation.name) || "",
       location_id: (sublocation && sublocation.location_id) || "",
       status: (sublocation && sublocation.status) || "",
@@ -75,16 +77,15 @@ const ViewSubLocation = (props) => {
     }),
     onSubmit: (values) => {
       const updateSubLocation = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
+        id: values["id"],
         name: values["name"],
         location_id: values["location_id"],
         status: values["status"],
         created_at: new Date(),
         created_by: values["created_by"],
       };
-      console.log("new district:" + updateSubLocation);
-      // save new user
-      dispatch(onAddDistrict(updateSubLocation));
+      console.log("Updated Sublocation:" + updateSubLocation);
+      dispatch(onUpdateSublocation(updateSubLocation));
       validation.resetForm();
       handleViewSubLocation();
     },
