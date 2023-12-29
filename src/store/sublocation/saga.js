@@ -47,6 +47,26 @@ function* fetchSublocation() {
   }
 }
 
+function* onUpdateSubLocation({ payload: { sublocation_id, sublocation } }) {
+  console.log("sublocation id: ", sublocation_id);
+  const stringSelectedId =
+    typeof sublocation_id === "object"
+      ? JSON.stringify(sublocation_id)
+      : sublocation_id;
+  console.log("String selected id: ", stringSelectedId);
+  try {
+    const response = yield call(updateSublocation, {
+      stringSelectedId,
+      sublocation,
+    });
+    console.log("Response data in saga: ", response);
+    yield put(updateSublocationSuccess(response));
+  } catch (error) {
+    console.log("Error in update sublocation: ", error);
+    yield put(updateSublocationFail(error));
+  }
+}
+
 function* onAddSubLocation({ payload: sublocation }) {
   try {
     const response = yield call(addSublocation, sublocation);
@@ -60,6 +80,7 @@ function* onAddSubLocation({ payload: sublocation }) {
 function* sublocationSaga() {
   yield takeEvery(GET_SUBLOCATION, fetchSublocation);
   yield takeEvery(ADD_SUBLOCATION, onAddSubLocation);
+  yield takeEvery(UPDATE_SUBLOCATION, onUpdateSubLocation);
 }
 
 export default sublocationSaga;
