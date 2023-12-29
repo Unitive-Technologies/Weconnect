@@ -387,21 +387,29 @@ const ContactsList = (props) => {
   const [filteredActiveInactiveUsers, setFilteredActiveInactiveUsers] =
     useState([]);
   useEffect(() => {
-    const filteredActiveBlockData = users.filter(
-      (user) => parseInt(user.status) === 0 && parseInt(user.status) === 1
-    );
-    setFilteredActiveBlockUsers(filteredActiveBlockData);
-    const filteredInActiveData = users.filter(
-      (user) => parseInt(user.status) === 2
-    );
-    setFilteredInActiveUsers(filteredInActiveData);
-    const filteredActiveInactiveData = users.filter(
-      (user) => (parseInt(user.status) === 0) & (parseInt(user.status) === 2)
-    );
-    setFilteredActiveInactiveUsers(filteredActiveInactiveData);
-    console.log("ActiveBlock:" + JSON.stringify(filteredActiveBlockData));
-    console.log("Inactive:" + JSON.stringify(filteredInActiveData));
-    console.log("ActiveInactive:" + JSON.stringify(filteredActiveInactiveData));
+    // console.log("@@@@users:" + JSON.stringify(users));
+    if (users) {
+      const filteredActiveBlockData = users.filter(
+        (user) => parseInt(user.status) === 1 || -7
+      );
+      // console.log("@@@@@@@@@filter:" + JSON.stringify(filteredActiveBlockData));
+      setFilteredActiveBlockUsers(filteredActiveBlockData);
+      const filteredInActiveData = users.filter(
+        (user) => parseInt(user.status) === 0
+      );
+
+      // console.log("@@@@@@@@@filter:" + JSON.stringify(filteredInActiveData));
+      setFilteredInActiveUsers(filteredInActiveData);
+      const filteredActiveInactiveData = users.filter(
+        (user) => parseInt(user.status) === 0 || 1
+      );
+      setFilteredActiveInactiveUsers(filteredActiveInactiveData);
+    }
+    // console.log("ActiveBlock:" + JSON.stringify(filteredActiveBlockUsers));
+    // console.log("Inactive:" + JSON.stringify(filteredInActiveUsers));
+    // console.log(
+    //   "ActiveInactive:" + JSON.stringify(filteredActiveInactiveUsers)
+    // );
   }, [users]);
 
   const keyField = "id";

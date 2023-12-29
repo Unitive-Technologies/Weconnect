@@ -35,10 +35,11 @@ const BulkInactiveUserModal = (props) => {
     filteredActiveInactiveUsers,
     setUsers,
   } = props;
-  // console.log("user in bulkInactive modal:" + JSON.stringify(users));
+
   const dispatch = useDispatch();
+  const [tableList, setTableList] = useState([]);
   // const selectedusers = [];
-  const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedStatusToSet, setSelectedStatusToSet] = useState("active");
   // const [filteredActiveBlockUsers, setFilteredActiveBlockUsers] = useState([]);
   // const [filteredInActiveUsers, setFilteredInActiveUsers] = useState([]);
   // const [filteredActiveInactiveUsers, setFilteredActiveInactiveUsers] =
@@ -62,10 +63,17 @@ const BulkInactiveUserModal = (props) => {
     }
   };
   const handleStatusChange = (e) => {
-    const status = e.target.value;
-    setSelectedStatus(status);
+    const statustoset = e.target.value;
+    setSelectedStatusToSet(statustoset);
     validation.handleChange(e);
 
+    if (statustoset === "active") {
+      setTableList(filteredInActiveUsers);
+    } else if (statustoset === "inactive") {
+      setTableList(filteredActiveBlockUsers);
+    } else if (statustoset === "block") {
+      setTableList(filteredActiveInactiveUsers);
+    } else setTableList([]);
     // const filteredActiveBlockData = users.filter(
     //   (user) => parseInt(user.status) === 0 && parseInt(user.status) === 1
     // );
@@ -101,16 +109,16 @@ const BulkInactiveUserModal = (props) => {
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
-      status: "",
+      statustoset: "",
       block_message: "",
     },
     validationSchema: Yup.object({
-      status: Yup.string().required("Please Enter Status"),
+      statustoset: Yup.string().required("Please Enter Status"),
     }),
     onSubmit: (values) => {
       const newStatus = {
         block_message: values["block_message"],
-        status: parseInt(values["status"]),
+        status: parseInt(values["statustoset"]),
       };
       console.log("newUser:" + JSON.stringify(newStatus));
       dispatch(onUpdateUser(newStatus));
@@ -412,33 +420,29 @@ const BulkInactiveUserModal = (props) => {
                 <Col lg={4}>
                   <div className="mb-3">
                     <Label className="form-label">
-                      Status<span style={{ color: "red" }}>*</span>
+                      Status To Set<span style={{ color: "red" }}>*</span>
                     </Label>
                     <Input
-                      name="status"
+                      name="statustoset"
                       type="select"
-                      placeholder="Select Status"
+                      placeholder="Select Status to set"
                       className="form-select"
-                      onChange={handleStatusChange}
+                      onChange={validation.handleChange}
                       onBlur={validation.handleBlur}
-                      value={selectedStatus}
+                      value={validation.values.statustoset}
                     >
-                      {/* <option value="">Select Status</option> */}
                       <option value="active">ACTIVE</option>
                       <option value="inactive">In-Active</option>
                       <option value="block">BLOCK</option>
                       <option value="unblock">UNBLOCK</option>
-                      {/* {userStatus.map((status) => (
-                        <option key={status.id} value={status.id}>
-                          {status.name}
-                        </option>
-                      ))} */}
                     </Input>
-                    {/* {validation.touched.status && validation.errors.status ? (
+
+                    {validation.touched.statustoset &&
+                    validation.errors.statustoset ? (
                       <FormFeedback type="invalid">
-                        {validation.errors.status}
+                        {validation.errors.statustoset}
                       </FormFeedback>
-                    ) : null} */}
+                    ) : null}
                   </div>
                 </Col>
                 <Col lg={4}>
@@ -462,31 +466,30 @@ const BulkInactiveUserModal = (props) => {
                           : false
                       }
                       disabled={
-                        selectedStatus === "inactive" || "block" ? false : true
+                        selectedStatusToSet === "inactive" || "block"
+                          ? false
+                          : true
                       }
                     />
-                    {/* {validation.touched.block_message &&
+                    {validation.touched.block_message &&
                     validation.errors.block_message ? (
                       <FormFeedback type="invalid">
                         {validation.errors.block_message}
                       </FormFeedback>
-                    ) : null} */}
+                    ) : null}
                   </div>
                 </Col>
               </Row>
 
-              {/* {console.log("user in bulk:" + JSON.stringify(user))} */}
               <TableContainer
                 isPagination={true}
                 columns={columns}
                 data={
-                  selectedStatus === "active"
+                  validation.values.statustoset === "active"
                     ? filteredInActiveUsers
-                    : selectedStatus === "inactive"
+                    : validation.values.statustoset === "inactive"
                     ? filteredActiveBlockUsers
-                    : selectedStatus === "block"
-                    ? filteredActiveInactiveUsers
-                    : []
+                    : filteredActiveInactiveUsers
                 }
                 isGlobalFilter={true}
                 isShowingPageLength={true}

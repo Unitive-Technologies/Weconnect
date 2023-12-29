@@ -28,7 +28,10 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addNewUser as onAddNewUser } from "/src/store/users/actions";
+import {
+  addNewUser as onAddNewUser,
+  getUsers as onGetUsers,
+} from "/src/store/users/actions";
 
 const AddUserModal = (props) => {
   const {
@@ -288,6 +291,7 @@ const AddUserModal = (props) => {
       };
       console.log("newUser:" + JSON.stringify(newUser));
       dispatch(onAddNewUser(newUser));
+      dispatch(onGetUsers());
       validation.resetForm();
       handleAddUser();
     },

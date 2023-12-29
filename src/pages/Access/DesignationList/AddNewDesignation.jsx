@@ -16,9 +16,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewDesignation as onAddNewDesignation } from "/src/store/designation/actions";
 import { useDispatch } from "react-redux";
-import {
-  getDesignation as onGetDesignation,
-} from "/src/store/actions";
+import { getDesignation as onGetDesignation } from "/src/store/actions";
 
 const AddNewDesignation = (props) => {
   const { isOpen, handleAddDesignation, desigStatus, desigParent, desigType } =
@@ -126,13 +124,13 @@ const AddNewDesignation = (props) => {
                   value={validation.values.designation || ""}
                   invalid={
                     validation.touched.designation &&
-                      validation.errors.designation
+                    validation.errors.designation
                       ? true
                       : false
                   }
                 />
                 {validation.touched.designation &&
-                  validation.errors.designation ? (
+                validation.errors.designation ? (
                   <FormFeedback type="invalid">
                     {validation.errors.designation}
                   </FormFeedback>
@@ -272,13 +270,13 @@ const AddNewDesignation = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
