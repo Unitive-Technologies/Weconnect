@@ -135,7 +135,7 @@ const ViewSubLocation = (props) => {
           }}
         >
           <Row>
-            <Col lg={4}>
+            <Col lg={5}>
               <div className="mb-3">
                 <Label className="form-label">Sub Location Name</Label>
                 <Input
@@ -158,38 +158,6 @@ const ViewSubLocation = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-            </Col>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">Select Location</Label>
-                <Select
-                  name="location_id"
-                  options={options}
-                  onChange={(selectedOption) => {
-                    console.log("SelectedOption: ", selectedOption);
-                    setSelectedLocation(selectedOption);
-                    validation.handleChange({
-                      target: {
-                        name: "location_id",
-                        value: selectedOption.value,
-                      },
-                    });
-                  }}
-                  onBlur={validation.handleBlur}
-                  value={options.find(
-                    (opt) => opt.value === validation.values.location_id
-                  )}
-                  styles={customStyles}
-                />
-                {validation.touched.location_id &&
-                validation.errors.location_id ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.location_id}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Status</Label>
                 <Input
@@ -212,6 +180,29 @@ const ViewSubLocation = (props) => {
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
                     {validation.errors.status}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={5}>
+              <div className="mb-3">
+                <Label className="form-label">Select Location</Label>
+                <Select
+                  name="location_id"
+                  options={options}
+                  onChange={(selectedOption) =>
+                    validation.handleChange(selectedOption.value)
+                  }
+                  onBlur={validation.handleBlur}
+                  value={options.find(
+                    (opt) => opt.value === validation.values.location_id
+                  )}
+                  styles={customStyles}
+                />
+                {validation.touched.location_id &&
+                validation.errors.location_id ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.location_id}
                   </FormFeedback>
                 ) : null}
               </div>

@@ -19,6 +19,7 @@ import { createSelector } from "reselect";
 import { getLco as onGetLco } from "/src/store/actions";
 import Select from "react-select";
 import { Link } from "react-router-dom";
+import { updateLocation as onUpdateLocation } from "/src/store/location/actions";
 
 const ViewLocation = (props) => {
   const { isOpen, handleViewLocation, location, lcoonlocation, status } = props;
@@ -63,6 +64,7 @@ const ViewLocation = (props) => {
     enableReinitialize: true,
 
     initialValues: {
+      id: (location && location.id) || "",
       name: (location && location.name) || "",
       operator_id: (location && location.operator_id) || "",
       status: (location && location.status) || "",
@@ -76,16 +78,15 @@ const ViewLocation = (props) => {
     }),
     onSubmit: (values) => {
       const updateLocation = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
+        id: values["id"],
         name: values["name"],
         operator_id: values["operator_id"],
         status: values["status"],
         created_at: new Date(),
         created_by_lbl: values["created_by_lbl"],
       };
-      console.log("new district:" + updateLocation);
-      // save new user
-      dispatch(onAddDistrict(updateLocation));
+      console.log("Updated Location:" + updateLocation);
+      dispatch(onUpdateLocation({ updateLocation, id }));
       validation.resetForm();
       handleViewLocation();
     },
@@ -135,7 +136,7 @@ const ViewLocation = (props) => {
           }}
         >
           <Row>
-            <Col lg={4}>
+            <Col lg={5}>
               <div className="mb-3">
                 <Label className="form-label">Location Name</Label>
                 <Input
@@ -158,32 +159,6 @@ const ViewLocation = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-            </Col>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">Select LCO</Label>
-                <Select
-                  name="operator_id"
-                  options={options}
-                  onChange={(selectedOption) =>
-                    validation.handleChange(selectedOption.value)
-                  }
-                  onBlur={validation.handleBlur}
-                  value={options.find(
-                    (opt) => opt.value === validation.values.operator_id
-                  )}
-                  styles={customStyles}
-                  disabled={!showEditLocation}
-                />
-                {validation.touched.operator_id &&
-                validation.errors.operator_id ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.operator_id}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Status</Label>
                 <Input
@@ -206,6 +181,30 @@ const ViewLocation = (props) => {
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
                     {validation.errors.status}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={5}>
+              <div className="mb-3">
+                <Label className="form-label">Select LCO</Label>
+                <Select
+                  name="operator_id"
+                  options={options}
+                  onChange={(selectedOption) =>
+                    validation.handleChange(selectedOption.value)
+                  }
+                  onBlur={validation.handleBlur}
+                  value={options.find(
+                    (opt) => opt.value === validation.values.operator_id
+                  )}
+                  styles={customStyles}
+                  disabled={!showEditLocation}
+                />
+                {validation.touched.operator_id &&
+                validation.errors.operator_id ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.operator_id}
                   </FormFeedback>
                 ) : null}
               </div>
