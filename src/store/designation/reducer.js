@@ -5,11 +5,17 @@ import {
   ADD_DESIGNATION_FAIL,
   GET_DESIGNATION_STATUS_FAIL,
   GET_DESIGNATION_STATUS_SUCCESS,
+  GET_DESIGNATION_TYPE_FAIL,
+  GET_DESIGNATION_TYPE_SUCCESS,
+  GET_DESIGNATION_PARENT_FAIL,
+  GET_DESIGNATION_PARENT_SUCCESS,
 } from "./actionTypes";
 
 const INIT_STATE = {
   designation: [],
   designationStatus: [],
+  designationType: [],
+  designationParent: [],
   error: {},
   loading: true,
 };
@@ -43,6 +49,36 @@ const Designation = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
       };
+
+    case GET_DESIGNATION_TYPE_SUCCESS:
+      // console.log("Designation data in reducer:", action.payload);
+      return {
+        ...state,
+        designationType: action.payload,
+        loading: false,
+      };
+
+    case GET_DESIGNATION_TYPE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_DESIGNATION_PARENT_SUCCESS:
+      // console.log("Designation data in reducer:", action.payload);
+      return {
+        ...state,
+        designationParent: action.payload,
+        loading: false,
+      };
+
+    case GET_DESIGNATION_PARENT_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+
     case ADD_DESIGNATION_SUCCESS:
       return {
         ...state,

@@ -15,6 +15,9 @@ import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import {
   getDesignation as onGetDesignation,
   getDesignationStatus as onGetDesignationStatus,
+  getDesignationType as onGetDesignationType,
+  getDesignationParent as onGetDesignationParent,
+
 } from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
@@ -35,10 +38,12 @@ const DesignationList = (props) => {
       desigList: designation.designation,
       loading: designation.loading,
       desigStatus: designation.designationStatus,
+      desigType: designation.designationType,
+      desigParent: designation.designationParent,
     })
   );
 
-  const { desigList, loading, desigStatus } = useSelector(
+  const { desigList, loading, desigStatus, desigType, desigParent } = useSelector(
     designationProperties
   );
 
@@ -231,6 +236,9 @@ const DesignationList = (props) => {
         isOpen={showAddDesignation}
         handleAddDesignation={handleAddDesignation}
         desigStatus={desigStatus}
+        desigType={desigType}
+        desigParent={desigParent}
+
       />
       <div className="page-content">
         <Container fluid>
