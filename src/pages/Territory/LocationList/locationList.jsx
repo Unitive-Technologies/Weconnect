@@ -16,6 +16,7 @@ import {
   getLocation as onGetLocation,
   getLcoOnLocation as onGetLcoOnLocation,
 } from "/src/store/actions";
+import { getDistrictStatus as onGetDistrictStatus } from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
@@ -39,8 +40,17 @@ const LocationList = (props) => {
     })
   );
 
-  const { locations, loading, lcoonlocation } = useSelector(locationProperties);
+  const selectDistrictState = (state) => state.district;
+  const districtProperties = createSelector(
+    selectDistrictState,
+    (district) => ({
+      districts: district.district,
+      status: district.status,
+    })
+  );
 
+  const { districts, status } = useSelector(districtProperties);
+  const { locations, loading, lcoonlocation } = useSelector(locationProperties);
   const [isLoading, setLoading] = useState(loading);
   const [showAddLocation, setShowAddLocation] = useState(false);
   const [showUploadLocation, setShowUploadLocation] = useState(false);
@@ -216,6 +226,12 @@ const LocationList = (props) => {
     }
   }, [dispatch, locations]);
 
+  useEffect(() => {
+    if (districts && !districts.length) {
+      dispatch(onGetDistrictStatus());
+    }
+  }, [dispatch, districts]);
+
   const handleAddLocation = () => {
     setShowAddLocation(!showAddLocation);
   };
@@ -241,8 +257,6 @@ const LocationList = (props) => {
     ];
   };
 
-  console.log("lco on location: ", lcoonlocation);
-
   return (
     <React.Fragment>
       <ViewLocation
@@ -250,16 +264,19 @@ const LocationList = (props) => {
         handleViewLocation={handleViewLocation}
         location={viewLocationData}
         lcoonlocation={lcoonlocation}
+        status={status}
       />
       <AddNewLocation
         isOpen={showAddLocation}
         handleAddLocation={handleAddLocation}
         lcoonlocation={lcoonlocation}
+        status={status}
       />
       <UploadLocation
         isOpen={showUploadLocation}
         handleUploadLocation={handleUploadLocation}
         lcoonlocation={lcoonlocation}
+        status={status}
       />
       <div className="page-content">
         <Container fluid>

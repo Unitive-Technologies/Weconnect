@@ -31,12 +31,7 @@ const convertLocationListObject = (locationList) => {
       id: location.id,
       name: location.name,
       code: location.code,
-      status:
-        location.status === 1
-          ? "ACTIVE"
-          : location.status === 2
-          ? "INACTIVE"
-          : "BLOCKED",
+      status: location.status,
       operator_code: location.operator_code,
       operator_lbl: location.operator_lbl,
       status_lbl: location.status_lbl,

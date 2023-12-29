@@ -21,7 +21,7 @@ import Select from "react-select";
 import { Link } from "react-router-dom";
 
 const ViewLocation = (props) => {
-  const { isOpen, handleViewLocation, location, lcoonlocation } = props;
+  const { isOpen, handleViewLocation, location, lcoonlocation, status } = props;
   const dispatch = useDispatch();
   const [showEditLocation, setShowEditLocation] = useState(false);
   const selectLcoState = (state) => state.lco;
@@ -65,21 +65,21 @@ const ViewLocation = (props) => {
     initialValues: {
       name: (location && location.name) || "",
       operator_id: (location && location.operator_id) || "",
-      status_lbl: (location && location.status_lbl) || "",
+      status: (location && location.status) || "",
       created_at: (location && location.created_at) || "",
       created_by_lbl: (location && location.created_by_lbl) || "my mso(mso)",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter district name"),
       operator_id: Yup.string().required("Select lco"),
-      status_lbl: Yup.string().required("Select status"),
+      status: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
       const updateLocation = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         operator_id: values["operator_id"],
-        status_lbl: values["status_lbl"],
+        status: values["status"],
         created_at: new Date(),
         created_by_lbl: values["created_by_lbl"],
       };
@@ -187,24 +187,25 @@ const ViewLocation = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Status</Label>
                 <Input
-                  name="status_lbl"
+                  name="status"
                   type="select"
                   placeholder="Select Status"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.status_lbl || ""}
+                  value={validation.values.status || ""}
                   disabled={!showEditLocation}
                 >
                   <option value="">Select Status</option>
-                  <option value="Active">Active</option>
-                  <option value="Blocked">BLOCKED</option>
-                  <option value="In-Active">In-Active</option>
+                  {status.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
                 </Input>
-                {validation.touched.status_lbl &&
-                validation.errors.status_lbl ? (
+                {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.status_lbl}
+                    {validation.errors.status}
                   </FormFeedback>
                 ) : null}
               </div>

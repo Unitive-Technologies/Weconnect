@@ -15,32 +15,15 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
-import { createSelector } from "reselect";
-import { getLco as onGetLco } from "/src/store/actions";
 import Select from "react-select";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const UploadLocation = (props) => {
-  const { isOpen, handleUploadLocation } = props;
+  const { isOpen, handleUploadLocation, status, lcoonlocation } = props;
   const dispatch = useDispatch();
   const [selectedFiles, setselectedFiles] = useState([]);
 
-  const selectLcoState = (state) => state.lco;
-  const LcoProperties = createSelector(selectLcoState, (lco) => ({
-    lcos: lco.lco,
-    loading: lco.loading,
-  }));
-
-  const { lcos, loading } = useSelector(LcoProperties);
-
-  useEffect(() => {
-    if (lcos && !lcos.length) {
-      dispatch(onGetLco());
-    }
-  }, [dispatch, lcos]);
-  // console.log("Lco In add location: ", lcos);
-
-  const options = lcos.map((option) => ({
+  const options = lcoonlocation.map((option) => ({
     value: option.code,
     label: (
       <div>
@@ -162,9 +145,11 @@ const UploadLocation = (props) => {
                     // value={validation.values.status || ""}
                   >
                     <option value="">Select Status</option>
-                    <option value="11">Active</option>
-                    <option value="12">BLOCKED</option>
-                    <option value="13">In-Active</option>
+                    {status.map((options) => (
+                      <option key={options.id} value={options.id}>
+                        {options.name}
+                      </option>
+                    ))}
                   </Input>
                   {/* {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">

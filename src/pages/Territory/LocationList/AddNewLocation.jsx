@@ -19,35 +19,8 @@ import { useSelector, useDispatch } from "react-redux";
 import Select from "react-select";
 
 const AddNewLocation = (props) => {
-  const { isOpen, handleAddLocation, lcoonlocation } = props;
+  const { isOpen, handleAddLocation, lcoonlocation, status } = props;
   const dispatch = useDispatch();
-  const [selectedLco, setSelectedLco] = useState(null);
-
-  console.log("Lco In add location: ", lcoonlocation);
-
-  // const options = lcoonlocation.map((option) => ({
-  //   value: option.id,
-  //   label1: (
-  //     <div>
-  //       <h6>{option.name}</h6>
-  //     </div>
-  //   ),
-  //   label2: (
-  //     <div>
-  //       <h6>{option.username}</h6>
-  //     </div>
-  //   ),
-  //   label3: (
-  //     <div>
-  //       <p>Regional Office: {option.branch_lbl}</p>
-  //     </div>
-  //   ),
-  //   label4: (
-  //     <div>
-  //       <p>Distributor: {option.distributor_lbl}</p>
-  //     </div>
-  //   ),
-  // }));
 
   const options = lcoonlocation.map((option) => ({
     value: option.name,
@@ -128,7 +101,7 @@ const AddNewLocation = (props) => {
           }}
         >
           <Row>
-            <Col lg={4}>
+            <Col lg={5}>
               <div className="mb-3">
                 <Label className="form-label">
                   Location Name<span style={{ color: "red" }}>*</span>
@@ -152,8 +125,36 @@ const AddNewLocation = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+
+              <div className="mb-3">
+                <Label className="form-label">
+                  Status<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="status_lbl"
+                  type="select"
+                  placeholder="Select Status"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.status_lbl || ""}
+                >
+                  <option value="">Select Status</option>
+                  {status.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
+                </Input>
+                {validation.touched.status_lbl &&
+                validation.errors.status_lbl ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.status_lbl}
+                  </FormFeedback>
+                ) : null}
+              </div>
             </Col>{" "}
-            <Col lg={4}>
+            <Col lg={5}>
               <div className="mb-3">
                 <Label className="form-label">
                   Select LCO<span style={{ color: "red" }}>*</span>
@@ -174,32 +175,6 @@ const AddNewLocation = (props) => {
                 validation.errors.operator_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.operator_id}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>{" "}
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">
-                  Status<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="status_lbl"
-                  type="select"
-                  placeholder="Select Status"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.status_lbl || ""}
-                >
-                  <option value="">Select Status</option>
-                  <option value="Active">Active</option>
-                  <option value="Inactive">In-Active</option>
-                </Input>
-                {validation.touched.status_lbl &&
-                validation.errors.status_lbl ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.status_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
