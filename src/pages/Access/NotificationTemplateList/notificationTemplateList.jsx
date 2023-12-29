@@ -16,7 +16,12 @@ import {
   ToastBody,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import { getNotificationTemplate as onGetNotificationTemplate } from "/src/store/actions";
+import {
+  getNotificationTemplate as onGetNotificationTemplate,
+  getNotificationTemplateType as onGetNotificationTemplateType,
+  getNotificationTemplateStatus as onGetNotificationTemplateStatus,
+} from "/src/store/actions";
+
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
@@ -35,14 +40,13 @@ const NotificationTemplateList = (props) => {
     (notificationTemplate) => ({
       noTemplate: notificationTemplate.notificationTemplate,
       loading: notificationTemplate.loading,
+      noTemplateType: notificationTemplate.notificationTemplateType,
+      noTemplateStatus: notificationTemplate.notificationTemplateStatus,
     })
   );
 
-  const { noTemplate, loading } = useSelector(notificationTemplateProperties);
+  const { noTemplate, loading, noTemplateStatus, noTemplateType } = useSelector(notificationTemplateProperties);
 
-  useEffect(() => {
-    console.log("Notificaiton Template data in component:", noTemplate);
-  }, [noTemplate]);
 
   const [isLoading, setLoading] = useState(loading);
 
@@ -72,8 +76,8 @@ const NotificationTemplateList = (props) => {
                 className="form-check-input"
                 type="checkbox"
                 id="upcomingtaskCheck01"
-                // defaultChecked
-                // disabled
+              // defaultChecked
+              // disabled
               />
             </>
           );
@@ -167,7 +171,7 @@ const NotificationTemplateList = (props) => {
               saturationHeight={10}
               saturationWidth={100}
               value={cellProps.row.original.msg_fontcolor}
-              // onDrag={onDragRgb}
+            // onDrag={onDragRgb}
             />
             // <p className="text-muted mb-0">
             //   {cellProps.row.original.msg_fontcolor}
@@ -185,7 +189,7 @@ const NotificationTemplateList = (props) => {
               saturationHeight={10}
               saturationWidth={100}
               value={cellProps.row.original.msg_fontbackgroundcolor}
-              // onDrag={onDragRgb}
+            // onDrag={onDragRgb}
             />
             // <p className="text-muted mb-0">
             //   {cellProps.row.original.msg_fontbackgroundcolor}
@@ -246,6 +250,8 @@ const NotificationTemplateList = (props) => {
   useEffect(() => {
     if (noTemplate && !noTemplate.length) {
       dispatch(onGetNotificationTemplate());
+      dispatch(onGetNotificationTemplateStatus());
+      dispatch(onGetNotificationTemplateType());
     }
   }, [dispatch, noTemplate]);
 
@@ -299,6 +305,8 @@ const NotificationTemplateList = (props) => {
       <AddNotificationTemplateModal
         isOpen={showAddNotificationTemplate}
         handleAddNotificationTemplate={handleAddNotificationTemplate}
+        noTemplateStatus={noTemplateStatus}
+        noTemplateType={noTemplateType}
       />
       <ViewNotificationTemplateModal
         isOpen={viewNotificationTemplate}

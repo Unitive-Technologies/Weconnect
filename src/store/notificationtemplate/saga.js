@@ -2,12 +2,18 @@ import { call, put, takeEvery } from "redux-saga/effects";
 
 import {
   GET_NOTIFICATIONTEMPLATE,
+  GET_NOTIFICATIONTEMPLATE_TYPE,
+  GET_NOTIFICATIONTEMPLATE_STATUS,
   ADD_NEW_NOTIFICATIONTEMPLATE,
 } from "./actionTypes";
 
 import {
   getNotificationTemplateSuccess,
   getNotificationTemplateFail,
+  getNotificationTemplateTypeSuccess,
+  getNotificationTemplateTypeFail,
+  getNotificationTemplateStatusSuccess,
+  getNotificationTemplateStatusFail,
   addNotificationTemplateFail,
   addNotificationTemplateSuccess,
 } from "./actions";
@@ -15,7 +21,10 @@ import {
 //Include Both Helper File with needed methods
 import {
   getNotificationTemplate,
+  getNotificationTemplateType,
+  getNotificationTemplateStatus,
   addNewNotificationTemplate,
+
 } from "../../helpers/fakebackend_helper";
 
 const convertNotificationTemplateListObject = (notificationTemplateList) => {
@@ -35,8 +44,8 @@ const convertNotificationTemplateListObject = (notificationTemplateList) => {
         notificationTemplate.status === 1
           ? "ACTIVE"
           : notificationTemplate.status === 0
-          ? "INACTIVE"
-          : "BLOCKED",
+            ? "INACTIVE"
+            : "BLOCKED",
       created_at: notificationTemplate.created_at,
       created_by: notificationTemplate.created_by,
     };
@@ -52,6 +61,30 @@ function* fetchNotificationTemplate() {
   } catch (error) {
     console.error("Error fetching notification templates:", error);
     yield put(getNotificationTemplateFail(error));
+  }
+}
+
+function* fetchNotificationTemplateStatus() {
+  try {
+    const response = yield call(getNotificationTemplateStatus);
+    const notificationTemplateList =
+      //   convertNotificationTemplateListObject(response);s
+      yield put(getNotificationTemplateStatusSuccess(response.data));
+  } catch (error) {
+    console.error("Error fetching notification templates:", error);
+    yield put(getNotificationTemplateStatusFail(error));
+  }
+}
+
+function* fetchNotificationTemplateType() {
+  try {
+    const response = yield call(getNotificationTemplateType);
+    const notificationTemplateList =
+      //   convertNotificationTemplateListObject(response);s
+      yield put(getNotificationTemplateTypeSuccess(response.data));
+  } catch (error) {
+    console.error("Error fetching notification templates:", error);
+    yield put(getNotificationTemplateTypeFail(error));
   }
 }
 
@@ -74,6 +107,8 @@ function* onAddNewNotificationTemplate({ payload: notificationTemplate }) {
 
 function* notificationTemplateSaga() {
   yield takeEvery(GET_NOTIFICATIONTEMPLATE, fetchNotificationTemplate);
+  yield takeEvery(GET_NOTIFICATIONTEMPLATE_TYPE, fetchNotificationTemplateType);
+  yield takeEvery(GET_NOTIFICATIONTEMPLATE_STATUS, fetchNotificationTemplateStatus);
   yield takeEvery(ADD_NEW_NOTIFICATIONTEMPLATE, onAddNewNotificationTemplate);
 }
 

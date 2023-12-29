@@ -28,6 +28,11 @@ export const ADD_NEW_DESIGNATION = "/user-designation?vr=web1.0";
 
 export const GET_NOTIFICATIONTEMPLATE =
   "/announcement-template?expand=status_lbl,created_by_lbl,created_at_lbl,msg_type_lbl&page=1&per-page=50&vr=web1.0";
+export const GET_NOTIFICATIONTEMPLATE_TYPE =
+  "/ist/amsgType?fields=id,name&vr=web1.0";
+export const GET_NOTIFICATIONTEMPLATE_STATUS =
+  "/list/status?fields=id,name&vr=web1.0";
+
 export const ADD_NEW_NOTIFICATIONTEMPLATE = "/announcement-template?vr=web1.0";
 
 export const GET_REGIONALOFFICE =

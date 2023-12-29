@@ -18,9 +18,13 @@ import { optionsList } from "./optionsList";
 import { useFormik } from "formik";
 import { addNewNotificationTemplate as onAddNewNotificationTemplate } from "/src/store/notificationtemplate/actions";
 import { useDispatch } from "react-redux";
+import {
+  getNotificationTemplate as onGetNotificationTemplate,
+} from "/src/store/actions";
+
 
 const AddNotificationTemplateModal = (props) => {
-  const { isOpen, handleAddNotificationTemplate } = props;
+  const { isOpen, handleAddNotificationTemplate, noTemplateType, noTemplateStatus, noTemplateSize, noTemplateFamily } = props;
   const dispatch = useDispatch();
   const FontSize = Array.from({ length: 93 }, (_, index) => index + 8);
 
@@ -61,7 +65,7 @@ const AddNotificationTemplateModal = (props) => {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         msg_head: values["name"],
         msg_content: values["content"],
-        msg_type_lbl: values["type"],
+        msg_type: values["type"],
         msg_fontsize: values["fontsize"],
         msg_fontcolor: values["fontcolor"],
         msg_fontbgcolor: values["fontbgcolor"],
@@ -71,8 +75,12 @@ const AddNotificationTemplateModal = (props) => {
       console.log("newUser:" + newNotification);
       // save new user
       dispatch(onAddNewNotificationTemplate(newNotification));
+      dispatch(onGetNotificationTemplate());
       validation.resetForm();
       handleAddNotificationTemplate();
+    },
+    onReset: (values) => {
+      validation.setValues(validation.initialValues);
     },
   });
   return (
@@ -135,11 +143,15 @@ const AddNotificationTemplateModal = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.type || ""}
+                  value={validation.values.msg_type || ""}
                 >
                   <option value="">Select Type</option>
-                  <option value="1">Alert</option>
-                  <option value="2">Scroll</option>
+                  {noTemplateType &&
+                    noTemplateType.map((msg_type) => (
+                      <option key={msg_type_id} value={msg_type.id}>
+                        {msg_type.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.type && validation.errors.type ? (
                   <FormFeedback type="invalid">
@@ -163,8 +175,12 @@ const AddNotificationTemplateModal = (props) => {
                   value={validation.values.status || ""}
                 >
                   <option value="">Select Status</option>
-                  <option value="11">Active</option>
-                  <option value="12">In-Active</option>
+                  {noTemplateStatus &&
+                    noTemplateStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
@@ -284,7 +300,7 @@ const AddNotificationTemplateModal = (props) => {
                   }}
                 ></div> */}
                 {validation.touched.fontbgcolor &&
-                validation.errors.fontbgcolor ? (
+                  validation.errors.fontbgcolor ? (
                   <FormFeedback type="invalid">
                     {validation.errors.fontbgcolor}
                   </FormFeedback>
@@ -313,7 +329,7 @@ const AddNotificationTemplateModal = (props) => {
                   ))}
                 </Input>
                 {validation.touched.fontfamily &&
-                validation.errors.fontfamily ? (
+                  validation.errors.fontfamily ? (
                   <FormFeedback type="invalid">
                     {validation.errors.fontfamily}
                   </FormFeedback>

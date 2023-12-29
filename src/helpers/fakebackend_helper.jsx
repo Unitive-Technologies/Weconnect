@@ -239,6 +239,9 @@ export const getDesignationType = () => get(url.GET_DESIGNATION_TYPE);
 export const getDesignationParent = () => get(url.GET_DESIGNATION_PARENT);
 
 export const getNotificationTemplate = () => get(url.GET_NOTIFICATIONTEMPLATE);
+export const getNotificationTemplateType = () => get(url.GET_NOTIFICATIONTEMPLATE_TYPE);
+export const getNotificationTemplateStatus = () => get(url.GET_NOTIFICATIONTEMPLATE_STATUS);
+
 export const addNewNotificationTemplate = (notificationTemplate) =>
   post(url.ADD_NEW_NOTIFICATIONTEMPLATE, notificationTemplate);
 
