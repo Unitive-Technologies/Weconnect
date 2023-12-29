@@ -216,7 +216,11 @@ const UploadUserModal = (props) => {
                   justifyContent: "center",
                 }}
               >
-                <button type="button" className="btn btn-primary mr-2 ">
+                <button
+                  type="button"
+                  className="btn btn-primary mr-2 "
+                  onClick={handleUploadFile}
+                >
                   Upload File
                 </button>
                 <button type="button" className="btn btn-primary ml-2 ">
