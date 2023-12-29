@@ -81,7 +81,7 @@ function* fetchDesignation() {
 function* fetchDesignationStatus() {
   try {
     const response = yield call(getDesignationStatus);
-    console.log("response:" + JSON.stringify(response));
+    console.log("designation status response:" + JSON.stringify(response));
     // const designation = convertDesignationListObject(response.data);
     // yield put(getDesignationSuccess(designation));
     yield put(getDesignationStatusSuccess(response.data));

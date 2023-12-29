@@ -37,7 +37,7 @@ const Designation = (state = INIT_STATE, action) => {
       };
 
     case GET_DESIGNATION_STATUS_SUCCESS:
-      // console.log("Designation data in reducer:", action.payload);
+      console.log("Designation data in reducer:", action.payload);
       return {
         ...state,
         designationStatus: action.payload,

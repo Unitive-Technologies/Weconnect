@@ -458,6 +458,7 @@ const ViewUserModal = (props) => {
                       disabled={!showEditUser}
                     >
                       {/* <option value="">Select User Type</option> */}
+
                       {userType.map((type) => (
                         <option key={type.id} value={type.id}>
                           {type.name}
@@ -487,11 +488,20 @@ const ViewUserModal = (props) => {
                         value={validation.values.mso || ""}
                       >
                         {/* <option value="">Select MSO</option> */}
-                        {userMsoDetails.map((mso) => (
+                        {user &&
+                          distributorList.map(
+                            (mso) =>
+                              user.operator_id === mso.id && (
+                                <option key={mso.id} value={mso.id}>
+                                  {mso.name}
+                                </option>
+                              )
+                          )}
+                        {/* {userMsoDetails.map((mso) => (
                           <option key={mso.id} value={mso.id}>
                             {mso.name}
                           </option>
-                        ))}
+                        ))} */}
                       </Input>
                       {validation.touched.mso && validation.errors.mso ? (
                         <FormFeedback type="invalid">
@@ -523,12 +533,21 @@ const ViewUserModal = (props) => {
                         value={validation.values.regional || ""}
                       >
                         {/* <option value="">Select Regional Office</option> */}
-                        {userRegional &&
+                        {user &&
+                          userRegional.map(
+                            (regional) =>
+                              user.operator_id === regional.id && (
+                                <option key={regional.id} value={regional.id}>
+                                  {regional.name}
+                                </option>
+                              )
+                          )}
+                        {/* {userRegional &&
                           userRegional.map((regional) => (
                             <option key={regional.id} value={regional.id}>
                               {regional.name}
                             </option>
-                          ))}
+                          ))} */}
                       </Input>
                       {validation.touched.regional &&
                       validation.errors.regional ? (
@@ -565,12 +584,24 @@ const ViewUserModal = (props) => {
                         value={validation.values.distributor || ""}
                       >
                         {/* <option value="">Select Distributor</option> */}
-                        {distributorList &&
+                        {user &&
+                          distributorList.map(
+                            (distributor) =>
+                              user.operator_id === distributor.id && (
+                                <option
+                                  key={distributor.id}
+                                  value={distributor.id}
+                                >
+                                  {distributor.name}
+                                </option>
+                              )
+                          )}
+                        {/* {distributorList &&
                           distributorList.map((distributor) => (
                             <option key={distributor.id} value={distributor.id}>
                               {distributor.name}
                             </option>
-                          ))}
+                          ))} */}
                       </Input>
                       {validation.touched.distributor &&
                       validation.errors.distributor ? (
@@ -603,12 +634,21 @@ const ViewUserModal = (props) => {
                         >
                           {console.log("lco value:" + validation.values.lco)}
                           {/* <option value="">Select LCO</option> */}
-                          {lcoList &&
+                          {user &&
+                            lcoList.map(
+                              (lco) =>
+                                user.operator_id === lco.id && (
+                                  <option key={lco.id} value={lco.id}>
+                                    {lco.name}
+                                  </option>
+                                )
+                            )}
+                          {/* {lcoList &&
                             lcoList.map((lco) => (
                               <option key={lco.id} value={lco.id}>
                                 {lco.name}
                               </option>
-                            ))}
+                            ))} */}
                         </Input>
                         {validation.touched.lco && validation.errors.lco ? (
                           <FormFeedback type="invalid">

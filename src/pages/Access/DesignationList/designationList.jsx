@@ -32,6 +32,7 @@ const DesignationList = (props) => {
   const dispatch = useDispatch();
 
   const selectDesignationState = (state) => state.designation;
+
   const designationProperties = createSelector(
     selectDesignationState,
     (designation) => ({
@@ -187,7 +188,7 @@ const DesignationList = (props) => {
   useEffect(() => {
     if (desigList && !desigList.length) {
       dispatch(onGetDesignation());
-      // dispatch(onGetDesignationStatus());
+      dispatch(onGetDesignationStatus());
     }
   }, [dispatch, desigList]);
 
@@ -232,6 +233,7 @@ const DesignationList = (props) => {
         handleViewDesignation={handleViewDesignation}
         designation={viewDesignationData}
       />
+      {console.log("desigStatus:" + JSON.stringify(desigStatus))}
       <AddNewDesignation
         isOpen={showAddDesignation}
         handleAddDesignation={handleAddDesignation}
