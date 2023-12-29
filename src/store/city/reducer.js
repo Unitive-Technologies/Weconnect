@@ -5,6 +5,8 @@ import {
   ADD_CITY_FAIL,
   GET_DISTRICT_BYSTATEID_SUCCESS,
   GET_DISTRICT_BYSTATEID_FAIL,
+  UPDATE_CITY_SUCCESS,
+  UPDATE_CITY_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -49,6 +51,22 @@ const City = (state = INIT_STATE, action) => {
       };
 
     case GET_DISTRICT_BYSTATEID_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case UPDATE_CITY_SUCCESS:
+      return {
+        ...state,
+        city: state.city.map((cite) =>
+          cite.id.toString() === action.payload.id.toString()
+            ? { city: cite, ...action.payload }
+            : cite
+        ),
+      };
+
+    case UPDATE_CITY_FAIL:
       return {
         ...state,
         error: action.payload,

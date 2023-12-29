@@ -263,6 +263,8 @@ export const updateDistrict = ({ district_id, district }) =>
 export const getCity = () => get(url.GET_CITY);
 export const addCity = (city) => post(url.ADD_CITY, city);
 export const getDistrictByStateid = () => get(url.GET_DISTRICT_BYSTATEID);
+export const updateCity = ({ city_id, city }) =>
+  put(url.updateCityById(city_id), city);
 
 export const getLocation = () => get(url.GET_LOCATION);
 export const addLocation = (location) => post(url.ADD_LOCATION, location);

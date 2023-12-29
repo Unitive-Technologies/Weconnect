@@ -22,7 +22,8 @@ export const GET_DESIGNATION =
   "/user-designation?expand=created_by_lbl,status_lbl,parent_lbl,type_lbl&page=1&per-page=50&vr=web1.0";
 export const GET_DESIGNATION_STATUS = "/list/status?fields=id,name&vr=web1.0";
 export const GET_DESIGNATION_TYPE = "/user-designation/destype-list?vr=web1.0";
-export const GET_DESIGNATION_PARENT = "/user-designation?field=id,name&vr=web1.0";
+export const GET_DESIGNATION_PARENT =
+  "/user-designation?field=id,name&vr=web1.0";
 export const ADD_NEW_DESIGNATION = "/user-designation?vr=web1.0";
 
 export const GET_NOTIFICATIONTEMPLATE =
@@ -57,6 +58,7 @@ export const GET_CITY =
 export const ADD_CITY = "/administrative-division?vr=web1.0";
 export const GET_DISTRICT_BYSTATEID =
   "/administrative-division?&filter[state_id]=1&filter[type]=2&per-page=100&vr=web1.0";
+export const updateCityById = (city_id) => "";
 
 export const GET_LOCATION =
   "/location?expand=created_by_lbl,operator_lbl,operator_code,status_lbl&vr=web1.0";

@@ -8,6 +8,9 @@ import {
   GET_DISTRICT_BYSTATEID,
   GET_DISTRICT_BYSTATEID_SUCCESS,
   GET_DISTRICT_BYSTATEID_FAIL,
+  UPDATE_CITY,
+  UPDATE_CITY_SUCCESS,
+  UPDATE_CITY_FAIL,
 } from "./actionTypes";
 
 export const getCity = () => ({
@@ -52,5 +55,20 @@ export const getDistrictByStateidSuccess = (districtlist) => ({
 
 export const getDistrictByStateidFail = (error) => ({
   type: GET_DISTRICT_BYSTATEID_FAIL,
+  payload: error,
+});
+
+export const updateCity = (city) => ({
+  type: UPDATE_CITY,
+  payload: city,
+});
+
+export const updateCitySuccess = (city) => ({
+  type: UPDATE_CITY_SUCCESS,
+  payload: city,
+});
+
+export const updateCityFail = (error) => ({
+  type: UPDATE_CITY_FAIL,
   payload: error,
 });
