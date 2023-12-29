@@ -15,10 +15,22 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   updateUser as onUpdateUser,
   getUsers as onGetUsers,
+} from "/src/store/users/actions";
+import { createSelector } from "reselect";
+import {
+  // getUserType as onGetUserType,
+  // getUserStatus as onGetUserStatus,
+  // getUserRole as onGetUserRole,
+  // getUserDesignation as onGetUserDesignation,
+  // getUserMsoPolicy as onGetUserMsoPolicy,
+  getUserRegionalOffice as onGetUserRegionalOffice,
+  getUserMsoDetails as onGetUserMsoDetails,
+  getUserDistributor as onGetUserDistributor,
+  getUserLco as onGetUserLco,
 } from "/src/store/users/actions";
 
 const ViewUserModal = (props) => {
@@ -31,17 +43,192 @@ const ViewUserModal = (props) => {
     userRole,
     userDesignation,
   } = props;
-  // console.log("Userdata in viewuser modal:" + JSON.stringify(user));
+  console.log("Userdata in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
   const [showEditUser, setShowEditUser] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedType, setSelectedType] = useState("");
+  const [selectedMso, setSelectedMso] = useState("");
+  const [selectedRegional, setSelectedRegional] = useState("");
+  const [selectedDistributor, setSelectedDistributor] = useState("");
+  const [selectedRole, setSelectedRole] = useState("");
+  const [policyList, setPolicyList] = useState([]);
+  const [distributorList, setDistributorList] = useState([]);
+  const [lcoList, setLcoList] = useState([]);
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
+
+  const selectContactsState = (state) => state.users;
+  const ContactsProperties = createSelector(selectContactsState, (Users) => ({
+    // users: Users.users,
+    loading: Users.loading,
+    // userType: Users.userType,
+    // userStatus: Users.userStatus,
+    // userRole: Users.userRole,
+    // userDesignation: Users.userDesignation,
+    // userMsoPolicy: Users.userMsoPolicy,
+    userRegional: Users.userRegional,
+    userMsoDetails: Users.userMsoDetails,
+    userDistributor: Users.userDistributor,
+    userLco: Users.userLco,
+  }));
+
+  const {
+    // users,
+    // userType,
+    // userStatus,
+    // userRole,
+    // userDesignation,
+    // userMsoPolicy,
+    userRegional,
+    userMsoDetails,
+    userDistributor,
+    userLco,
+    loading,
+  } = useSelector(ContactsProperties);
 
   const handleStatusChange = (e) => {
     const status = e.target.value;
     setSelectedStatus(status);
     validation.handleChange(e);
   };
-  // console.log("edit in viewuser modal:" + showEditUser);
+
+  const handleTypeChange = (e) => {
+    const type = e.target.value;
+    setSelectedType(type);
+    validation.handleChange(e);
+    dispatch(onGetUserMsoDetails());
+  };
+
+  const handleMsoChange = (e) => {
+    const mso = e.target.value;
+    setSelectedMso(mso);
+    validation.handleChange(e);
+    dispatch(onGetUserRegionalOffice());
+  };
+
+  const handleRegionalChange = async (e) => {
+    // const regional = e.target.value;
+    // setSelectedRegional(regional);
+    // validation.handleChange(e);
+    // dispatch(onGetUserDistributor());
+
+    try {
+      const regional = e.target.value;
+      setSelectedRegional(regional);
+
+      validation.handleChange(e);
+      {
+        console.log("selectedType:" + typeof selectedType);
+      }
+      {
+        console.log("selectedRole:" + typeof regional);
+      }
+      // Assuming you have a token stored in localStorage
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[mso_id]=1&filter[branch_id]=${parseInt(
+          regional
+        )}&filter[type]=${parseInt(selectedType)}&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token, // Include your token here
+          },
+        }
+      );
+
+      console.log(
+        "distributorList after selection : " +
+          JSON.stringify(response.data.data)
+      );
+      setDistributorList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching policy data:", error);
+      // Handle error if necessary
+    }
+    // };
+  };
+
+  const handleDistributorChange = async (e) => {
+    // const distributor = e.target.value;
+    // setSelectedDistributor(distributor);
+    // validation.handleChange(e);
+    // dispatch(onGetUserLco());
+
+    try {
+      const distributor = e.target.value;
+      setSelectedDistributor(distributor);
+
+      validation.handleChange(e);
+      {
+        console.log("selectedType:" + typeof selectedType);
+      }
+      {
+        console.log("selectedDistributor:" + typeof distributor);
+      }
+      // Assuming you have a token stored in localStorage
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[mso_id]=1&filter[branch_id]=${parseInt(
+          selectedRegional
+        )}&filter[distributor_id]=${parseInt(
+          distributor
+        )}&filter[type]=${parseInt(selectedType)}&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token, // Include your token here
+          },
+        }
+      );
+
+      console.log(
+        "distributorList after selection : " +
+          JSON.stringify(response.data.data)
+      );
+      setLcoList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching policy data:", error);
+      // Handle error if necessary
+    }
+    // };
+  };
+
+  const handleRoleChange = async (e) => {
+    try {
+      const role = e.target.value;
+      setSelectedRole(role);
+
+      validation.handleChange(e);
+      {
+        console.log("selectedType:" + typeof selectedType);
+      }
+      {
+        console.log("selectedRole:" + typeof role);
+      }
+      // Assuming you have a token stored in localStorage
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/menu-access-right/list?expand=user_type_lbl&fields=_id,user_id,user_type,role&filter[type][]=1&filter[type][]=2&filter[user_type]=${parseInt(
+          selectedType
+        )}&filter[role_id]=${parseInt(role)}&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token, // Include your token here
+          },
+        }
+      );
+
+      console.log(
+        "policy after selection : " + JSON.stringify(response.data.data)
+      );
+      setPolicyList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching policy data:", error);
+      // Handle error if necessary
+    }
+  };
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -50,13 +237,17 @@ const ViewUserModal = (props) => {
       id: (user && user.id) || "",
       name: (user && user.name) || "",
       email: (user && user.email) || "",
-      mobile_no: (user && user.mobile_no) || "",
+      mobile: (user && user.mobile_no) || "",
       type: (user && user.type) || "",
+      mso: user.type === 0 && user.operator_id,
+      regional: user.type === 1 && user.operator_id,
+      distributor: user.type === 2 && user.operator_id,
+      lco: user.type === 3 && user.operator_id,
       status: (user && user.status) || "",
       block_message: (user && user.block_message) || "",
       role: (user && user.role) || "",
-      designation: (user && user.designation) || "",
-      // grouppolicy: (user && user.grouppolicy) || "",
+      designation: (user && user.designation_id) || "",
+      policy: (user && user.access_policy_id) || "",
       username: (user && user.username) || "",
     },
     validationSchema: Yup.object({
@@ -151,7 +342,7 @@ const ViewUserModal = (props) => {
             }}
           >
             <Row>
-              <Col sm="4">
+              <Col lg={4}>
                 <div className="mb-3">
                   <Label className="form-label">Name</Label>
                   <Input
@@ -174,7 +365,8 @@ const ViewUserModal = (props) => {
                     </FormFeedback>
                   ) : null}
                 </div>
-
+              </Col>
+              <Col lg={4}>
                 <div className="mb-3">
                   <Label className="form-label">Email</Label>
                   <Input
@@ -198,73 +390,351 @@ const ViewUserModal = (props) => {
                     </FormFeedback>
                   ) : null}
                 </div>
+              </Col>
+              <Col lg={4}>
                 <div className="mb-3">
                   <Label className="form-label">Mobile No.</Label>
                   <Input
-                    name="mobile_no"
+                    name="mobile"
                     label="Mobile No."
                     placeholder="Insert Mobile Number"
                     type="text"
                     disabled={!showEditUser}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.mobile_no || ""}
+                    value={validation.values.mobile || ""}
                     invalid={
-                      validation.touched.mobile_no &&
-                      validation.errors.mobile_no
+                      validation.touched.mobile && validation.errors.mobile
                         ? true
                         : false
                     }
                   />
-                  {validation.touched.mobile_no &&
-                  validation.errors.mobile_no ? (
+                  {validation.touched.mobile && validation.errors.mobile ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.mobile_no}
-                    </FormFeedback>
-                  ) : null}
-                </div>
-
-                <div className="mb-3">
-                  <Label className="form-label">Type</Label>
-                  <Input
-                    name="type"
-                    type="select"
-                    placeholder="Select Type"
-                    disabled={!showEditUser}
-                    className="form-select"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.type || ""}
-                  >
-                    {/* <option value="">Select User Type</option> */}
-                    {userType.map((type) => (
-                      <option key={type.id} value={type.id}>
-                        {type.name}
-                      </option>
-                    ))}
-                  </Input>
-                  {validation.touched.type && validation.errors.type ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.type}
+                      {validation.errors.mobile}
                     </FormFeedback>
                   ) : null}
                 </div>
               </Col>
-              <Col sm="4">
+            </Row>
+            <Row>
+              <div
+                style={{
+                  // margin: "20px 0px",
+                  marginTop: "20px",
+                  marginBottom: "-18px",
+                  zIndex: 12000,
+                  backgroundColor: "#fff",
+                  width: "fit-content",
+                  marginLeft: "40%",
+                  position: "absolute",
+                  padding: "0px 10px",
+                }}
+              >
+                {" "}
+                <h5 style={{}}>User Details</h5>
+              </div>
+              <Row
+                style={{
+                  position: "relative",
+                  border: "1px solid #ced4da",
+                  padding: "20px 0px",
+                  margin: "30px 0px",
+                }}
+              >
+                <Col lg={4}>
+                  <div className="mb-3">
+                    <Label className="form-label">
+                      User Type<span style={{ color: "red" }}>*</span>
+                    </Label>
+                    <Input
+                      name="type"
+                      type="select"
+                      placeholder="Select Type"
+                      className="form-select"
+                      onChange={handleTypeChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.type || ""}
+                      disabled={!showEditUser}
+                    >
+                      {/* <option value="">Select User Type</option> */}
+                      {userType.map((type) => (
+                        <option key={type.id} value={type.id}>
+                          {type.name}
+                        </option>
+                      ))}
+                    </Input>
+                    {validation.touched.type && validation.errors.type ? (
+                      <FormFeedback type="invalid">
+                        {validation.errors.type}
+                      </FormFeedback>
+                    ) : null}
+                  </div>
+                </Col>
+                <Col lg={4}>
+                  {validation.values.type && (
+                    <div className="mb-3">
+                      <Label className="form-label">
+                        Select MSO<span style={{ color: "red" }}>*</span>
+                      </Label>
+                      <Input
+                        name="mso"
+                        type="select"
+                        placeholder="Select MSO"
+                        className="form-select"
+                        onChange={handleMsoChange}
+                        onBlur={validation.handleBlur}
+                        value={validation.values.mso || ""}
+                      >
+                        {/* <option value="">Select MSO</option> */}
+                        {userMsoDetails.map((mso) => (
+                          <option key={mso.id} value={mso.id}>
+                            {mso.name}
+                          </option>
+                        ))}
+                      </Input>
+                      {validation.touched.mso && validation.errors.mso ? (
+                        <FormFeedback type="invalid">
+                          {validation.errors.mso}
+                        </FormFeedback>
+                      ) : null}
+                    </div>
+                  )}
+                </Col>
+                {/* {console.log("selectedType: " + typeof selectedType)}
+              {console.log("msoValue: " + typeof validation.values.mso)} */}
+                <Col lg={4}>
+                  {(parseInt(selectedType) === 1 ||
+                    parseInt(selectedType) === 2 ||
+                    parseInt(selectedType) === 3) &&
+                  parseInt(validation.values.mso) == 1 ? (
+                    <div className="mb-3">
+                      <Label className="form-label">
+                        Select Regional Office
+                        <span style={{ color: "red" }}>*</span>
+                      </Label>
+                      <Input
+                        name="regional"
+                        type="select"
+                        placeholder="Select Regional Office"
+                        className="form-select"
+                        onChange={handleRegionalChange}
+                        onBlur={validation.handleBlur}
+                        value={validation.values.regional || ""}
+                      >
+                        {/* <option value="">Select Regional Office</option> */}
+                        {userRegional &&
+                          userRegional.map((regional) => (
+                            <option key={regional.id} value={regional.id}>
+                              {regional.name}
+                            </option>
+                          ))}
+                      </Input>
+                      {validation.touched.regional &&
+                      validation.errors.regional ? (
+                        <FormFeedback type="invalid">
+                          {validation.errors.regional}
+                        </FormFeedback>
+                      ) : null}
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                </Col>
+                {/* {console.log(
+                "regional value:" + typeof parseInt(validation.values.regional)
+              )} */}
+                <Col lg={4}>
+                  {validation.values.regional &&
+                  // (parseInt(selectedType) === 1 ||
+                  (parseInt(selectedType) === 2 ||
+                    parseInt(selectedType) === 3) &&
+                  parseInt(validation.values.mso) == 1 ? (
+                    <div className="mb-3">
+                      <Label className="form-label">
+                        Select Distributor
+                        <span style={{ color: "red" }}>*</span>
+                      </Label>
+                      <Input
+                        name="distributor"
+                        type="select"
+                        placeholder="Select Distributor"
+                        className="form-select"
+                        onChange={handleDistributorChange}
+                        onBlur={validation.handleBlur}
+                        value={validation.values.distributor || ""}
+                      >
+                        {/* <option value="">Select Distributor</option> */}
+                        {distributorList &&
+                          distributorList.map((distributor) => (
+                            <option key={distributor.id} value={distributor.id}>
+                              {distributor.name}
+                            </option>
+                          ))}
+                      </Input>
+                      {validation.touched.distributor &&
+                      validation.errors.distributor ? (
+                        <FormFeedback type="invalid">
+                          {validation.errors.distributor}
+                        </FormFeedback>
+                      ) : null}
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                </Col>
+                <Col lg={4}>
+                  {validation.values.distributor &&
+                    validation.values.regional &&
+                    parseInt(selectedType) === 3 && (
+                      <div className="mb-3">
+                        <Label className="form-label">
+                          Select LCO
+                          <span style={{ color: "red" }}>*</span>
+                        </Label>
+                        <Input
+                          name="lco"
+                          type="select"
+                          placeholder="Select LCO"
+                          className="form-select"
+                          onChange={validation.handleChange}
+                          onBlur={validation.handleBlur}
+                          value={validation.values.lco}
+                        >
+                          {console.log("lco value:" + validation.values.lco)}
+                          {/* <option value="">Select LCO</option> */}
+                          {lcoList &&
+                            lcoList.map((lco) => (
+                              <option key={lco.id} value={lco.id}>
+                                {lco.name}
+                              </option>
+                            ))}
+                        </Input>
+                        {validation.touched.lco && validation.errors.lco ? (
+                          <FormFeedback type="invalid">
+                            {validation.errors.lco}
+                          </FormFeedback>
+                        ) : null}
+                      </div>
+                      // ) : (
+                      //   <></>
+                    )}
+                </Col>
+              </Row>
+            </Row>
+
+            <Row>
+              <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Status</Label>
+                  <Label className="form-label">
+                    Role<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="role"
+                    type="select"
+                    placeholder="Select Role"
+                    className="form-select"
+                    // onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    // value={validation.values.role || ""}
+                    onChange={handleRoleChange}
+                    value={selectedRole}
+                    disabled={!showEditUser}
+                  >
+                    {/* <option value="">Select Role</option> */}
+                    {userRole.map((role) => (
+                      <option key={role.id} value={role.id}>
+                        {role.name}
+                      </option>
+                    ))}
+                  </Input>
+                  {validation.touched.role && validation.errors.role ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.role}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+
+              <Col lg={4}>
+                <div className="mb-3">
+                  <Label className="form-label">Group Policy</Label>
+                  <Input
+                    name="policy"
+                    type="select"
+                    placeholder="Select Group Policy"
+                    className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.policy || ""}
+                    disabled={!selectedType && !selectedRole}
+                  >
+                    {/* <option value="">Select Group Policy</option> */}
+                    {/* {console.log("selectedType:" + selectedType)}
+                  {console.log("selectedRole:" + selectedRole)} */}
+                    {selectedType &&
+                      selectedRole &&
+                      policyList &&
+                      policyList.map((policy) => (
+                        <option key={policy._id} value={policy._id}>
+                          {policy.user_id}
+                        </option>
+                      ))}
+                  </Input>
+
+                  {validation.touched.policy && validation.errors.policy ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.policy}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              <Col lg={4}>
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Designation<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="designation"
+                    type="select"
+                    placeholder="Select Designation"
+                    className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.designation || ""}
+                    disabled={!showEditUser}
+                  >
+                    {/* <option value="">Select Designation</option> */}
+                    {userDesignation.map((desig) => (
+                      <option key={desig.id} value={desig.id}>
+                        {desig.name}
+                      </option>
+                    ))}
+                  </Input>
+                  {validation.touched.designation &&
+                  validation.errors.designation ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.designation}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col lg={4}>
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Status<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="status"
                     type="select"
                     placeholder="Select Status"
                     className="form-select"
-                    disabled={!showEditUser}
-                    // onChange={validation.handleChange}
-                    // onBlur={validation.handleBlur}
-                    // value={validation.values.status || ""}
                     onChange={handleStatusChange}
                     onBlur={validation.handleBlur}
                     value={selectedStatus}
+                    disabled={!showEditUser}
                   >
                     {/* <option value="">Select Status</option> */}
                     {userStatus.map((status) => (
@@ -279,14 +749,18 @@ const ViewUserModal = (props) => {
                     </FormFeedback>
                   ) : null}
                 </div>
+              </Col>
+              <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">InActive/Block Message</Label>
+                  <Label className="form-label">
+                    Inactive/Block Message
+                    <span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="block_message"
                     type="textarea"
                     placeholder="Enter Message"
                     rows="3"
-                    // disabled={!showEditUser}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.block_message || ""}
@@ -309,92 +783,19 @@ const ViewUserModal = (props) => {
                     </FormFeedback>
                   ) : null}
                 </div>
-                <div className="mb-3">
-                  <Label className="form-label">Role</Label>
-                  <Input
-                    name="role"
-                    type="select"
-                    placeholder="Select Role"
-                    className="form-select"
-                    disabled={!showEditUser}
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.role || ""}
-                  >
-                    {/* <option value="">Select Role</option> */}
-                    {userRole.map((role) => (
-                      <option key={role.id} value={role.id}>
-                        {role.name}
-                      </option>
-                    ))}
-                  </Input>
-                  {validation.touched.role && validation.errors.role ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.role}
-                    </FormFeedback>
-                  ) : null}
-                </div>
               </Col>
-              <Col sm="4">
+            </Row>
+            <Row>
+              <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Designation</Label>
-                  <Input
-                    name="designation"
-                    type="select"
-                    placeholder="Select Designation"
-                    className="form-select"
-                    disabled={!showEditUser}
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.designation || ""}
-                  >
-                    {/* <option value="">Select Designation</option> */}
-                    {userDesignation.map((desig) => (
-                      <option key={desig.id} value={desig.id}>
-                        {desig.name}
-                      </option>
-                    ))}
-                  </Input>
-                  {validation.touched.designation &&
-                  validation.errors.designation ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.designation}
-                    </FormFeedback>
-                  ) : null}
-                </div>
-                <div className="mb-3">
-                  <Label className="form-label">Group Policy</Label>
-                  <Input
-                    name="grouppolicy"
-                    type="select"
-                    placeholder="Select Group Policy"
-                    className="form-select"
-                    disabled={!showEditUser}
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.grouppolicy || ""}
-                  >
-                    <option value="">Select Group Policy</option>
-                    <option value="A">Active</option>
-                    <option value="B">BLOCKED</option>
-                    <option value="C">In-Active</option>
-                  </Input>
-                  {validation.touched.grouppolicy &&
-                  validation.errors.grouppolicy ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.grouppolicy}
-                    </FormFeedback>
-                  ) : null}
-                </div>
-                <div className="mb-3">
-                  <Label className="form-label">Login ID</Label>
+                  <Label className="form-label">
+                    Login ID<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="username"
                     label="Login ID"
                     type="text"
                     placeholder="Login ID"
-                    disabled
-                    // disabled={!showEditUser}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.username || ""}
@@ -403,6 +804,7 @@ const ViewUserModal = (props) => {
                         ? true
                         : false
                     }
+                    disabled={!showEditUser}
                   />
                   {validation.touched.username && validation.errors.username ? (
                     <FormFeedback type="invalid">
@@ -411,6 +813,67 @@ const ViewUserModal = (props) => {
                   ) : null}
                 </div>
               </Col>
+              {showEditUser && (
+                <>
+                  {" "}
+                  <Col lg={4}>
+                    <div className="mb-3">
+                      <Label className="form-label">
+                        Password<span style={{ color: "red" }}>*</span>
+                      </Label>
+                      <Input
+                        name="password"
+                        label="Password"
+                        type="text"
+                        placeholder="Password"
+                        onChange={validation.handleChange}
+                        onBlur={validation.handleBlur}
+                        value={validation.values.password || ""}
+                        invalid={
+                          validation.touched.password &&
+                          validation.errors.password
+                            ? true
+                            : false
+                        }
+                      />
+                      {validation.touched.password &&
+                      validation.errors.password ? (
+                        <FormFeedback type="invalid">
+                          {validation.errors.password}
+                        </FormFeedback>
+                      ) : null}
+                    </div>
+                  </Col>
+                  <Col lg={4}>
+                    <div className="mb-3">
+                      <Label className="form-label">
+                        Confirm-Password<span style={{ color: "red" }}>*</span>
+                      </Label>
+                      <Input
+                        name="confirmpassword"
+                        label="Confirm Password"
+                        type="text"
+                        placeholder="Retype Password"
+                        onChange={validation.handleChange}
+                        onBlur={validation.handleBlur}
+                        value={validation.values.confirmpassword || ""}
+                        invalid={
+                          validation.touched.confirmpassword &&
+                          validation.errors.confirmpassword
+                            ? true
+                            : false
+                        }
+                      />
+                      {validation.touched.confirmpassword &&
+                      validation.errors.confirmpassword ? (
+                        <FormFeedback type="invalid">
+                          {validation.errors.confirmpassword}
+                        </FormFeedback>
+                      ) : null}
+                    </div>
+                  </Col>
+                </>
+              )}
             </Row>
 
             {showEditUser && (

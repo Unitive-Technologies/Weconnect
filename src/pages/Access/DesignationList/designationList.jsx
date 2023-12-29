@@ -34,7 +34,7 @@ const DesignationList = (props) => {
     (designation) => ({
       desigList: designation.designation,
       loading: designation.loading,
-      desigStatus: designation.status,
+      desigStatus: designation.designationStatus,
     })
   );
 
@@ -182,7 +182,7 @@ const DesignationList = (props) => {
   useEffect(() => {
     if (desigList && !desigList.length) {
       dispatch(onGetDesignation());
-      dispatch(onGetDesignationStatus());
+      // dispatch(onGetDesignationStatus());
     }
   }, [dispatch, desigList]);
 

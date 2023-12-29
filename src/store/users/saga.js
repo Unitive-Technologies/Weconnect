@@ -71,7 +71,7 @@ import { toast } from "react-toastify";
 function* fetchUsers() {
   try {
     const response = yield call(getUsers);
-    console.log("response:" + JSON.stringify(response));
+    // console.log("response:" + JSON.stringify(response));
     yield put(getUsersSuccess(response.data));
   } catch (error) {
     yield put(getUsersFail(error));

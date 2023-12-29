@@ -644,7 +644,7 @@ const AddUserModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.policy || ""}
-                  disabled={!selectedType}
+                  disabled={!selectedType && !selectedRole}
                 >
                   <option value="">Select Group Policy</option>
                   {/* {console.log("selectedType:" + selectedType)}

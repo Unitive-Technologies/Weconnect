@@ -60,7 +60,7 @@ const convertDesignationListObject = (designationList) => {
 function* fetchDesignation() {
   try {
     const response = yield call(getDesignation);
-    console.log("response:" + JSON.stringify(response));
+    console.log("Designation response:" + JSON.stringify(response));
     // const designation = convertDesignationListObject(response.data);
     // yield put(getDesignationSuccess(designation));
     yield put(getDesignationSuccess(response.data));

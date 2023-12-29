@@ -9,6 +9,7 @@ import {
 
 const INIT_STATE = {
   designation: [],
+  designationStatus: [],
   error: {},
   loading: true,
 };
@@ -23,25 +24,25 @@ const Designation = (state = INIT_STATE, action) => {
         loading: false,
       };
 
-    case GET_DESIGNATION_STATUS_FAIL:
-      return {
-        ...state,
-        error: action.payload,
-      };
-    case GET_DESIGNATION_STATUS_SUCCESS:
-      // console.log("Designation data in reducer:", action.payload);
-      return {
-        ...state,
-        designation: action.payload,
-        loading: false,
-      };
-
     case GET_DESIGNATION_FAIL:
       return {
         ...state,
         error: action.payload,
       };
 
+    case GET_DESIGNATION_STATUS_SUCCESS:
+      // console.log("Designation data in reducer:", action.payload);
+      return {
+        ...state,
+        designationStatus: action.payload,
+        loading: false,
+      };
+
+    case GET_DESIGNATION_STATUS_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
     case ADD_DESIGNATION_SUCCESS:
       return {
         ...state,

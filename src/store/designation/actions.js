@@ -43,18 +43,18 @@ export const addDesignationFail = (error) => ({
 });
 
 export const getDesignationStatus = () => ({
-  type: GET_DESIGNATION,
+  type: GET_DESIGNATION_STATUS,
 });
 
-export const getDesignationStatusSuccess = (designation) => {
+export const getDesignationStatusSuccess = (designationStatus) => {
   // console.log("Received Designation:", designation);
   return {
-    type: GET_DESIGNATION_SUCCESS,
-    payload: designation,
+    type: GET_DESIGNATION_STATUS_SUCCESS,
+    payload: designationStatus,
   };
 };
 
 export const getDesignationStatusFail = (error) => ({
-  type: GET_DESIGNATION_FAIL,
+  type: GET_DESIGNATION_STATUS_FAIL,
   payload: error,
 });
