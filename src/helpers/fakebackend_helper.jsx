@@ -271,6 +271,8 @@ export const getLcoOnLocation = () => get(url.GET_LCO_ONLOCATION);
 export const getSublocation = () => get(url.GET_SUBLOCATION);
 export const addSublocation = (sublocation) =>
   post(url.ADD_SUBLOCATION, sublocation);
+export const updateSublocation = ({ sublocation_id, sublocation }) =>
+  put(url.updateSublocationById(sublocation_id), sublocation);
 
 export const getRegionalOffice = () => get(url.GET_REGIONALOFFICE);
 export const addNewRegionalOffice = (regionaloffice) =>

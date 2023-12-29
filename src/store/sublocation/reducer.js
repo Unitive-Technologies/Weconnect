@@ -3,11 +3,12 @@ import {
   GET_SUBLOCATION_FAIL,
   ADD_SUBLOCATION_SUCCESS,
   ADD_SUBLOCATION_FAIL,
+  UPDATE_SUBLOCATION_SUCCESS,
+  UPDATE_SUBLOCATION_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
   sublocation: [],
-  loclist: [],
   error: {},
   loading: true,
 };
@@ -15,7 +16,6 @@ const INIT_STATE = {
 const Sublocation = (state = INIT_STATE, action) => {
   switch (action.type) {
     case GET_SUBLOCATION_SUCCESS:
-      console.log("SubLocation data in reducer:", action.payload);
       return {
         ...state,
         sublocation: action.payload,
@@ -35,6 +35,22 @@ const Sublocation = (state = INIT_STATE, action) => {
       };
 
     case ADD_SUBLOCATION_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case UPDATE_SUBLOCATION_SUCCESS:
+      return {
+        ...state,
+        sublocation: state.sublocation.map((sublocate) =>
+          locate.id.toString() === action.payload.id.toString()
+            ? { sublocation: sublocate, ...action.payload }
+            : sublocate
+        ),
+      };
+
+    case UPDATE_SUBLOCATION_FAIL:
       return {
         ...state,
         error: action.payload,

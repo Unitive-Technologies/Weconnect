@@ -67,6 +67,8 @@ export const GET_LCO_ONLOCATION =
 export const GET_SUBLOCATION =
   "/sublocation?expand=created_by_lbl,operator_lbl,location_lbl,status_lbl,location_code,operator_code&page=1&per-page=50&vr=web1.0";
 export const ADD_SUBLOCATION = "/sublocation?vr=web1.0";
+export const updateSublocationById = (sublocation_id) =>
+  `/sublocation/${sublocation_id}?vr=web1.0`;
 
 export const GET_DISTRIBUTORS =
   "/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,branch_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=2&page=1&per-page=50&vr=web1.0";

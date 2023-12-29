@@ -1,14 +1,21 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { GET_SUBLOCATION, ADD_SUBLOCATION } from "./actionTypes";
+import {
+  GET_SUBLOCATION,
+  ADD_SUBLOCATION,
+  UPDATE_SUBLOCATION,
+} from "./actionTypes";
 import {
   getSublocationSuccess,
   getSublocationFail,
   addSubLocationSuccess,
   addSubLocationFail,
+  updateSublocationSuccess,
+  updateSublocationFail,
 } from "./actions";
 import {
   getSublocation,
   addSublocation,
+  updateSublocation,
 } from "../../helpers/fakebackend_helper";
 
 const convertSublocationListObject = (sublocationList) => {

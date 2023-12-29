@@ -5,6 +5,9 @@ import {
   ADD_SUBLOCATION,
   ADD_SUBLOCATION_SUCCESS,
   ADD_SUBLOCATION_FAIL,
+  UPDATE_SUBLOCATION,
+  UPDATE_SUBLOCATION_SUCCESS,
+  UPDATE_SUBLOCATION_FAIL,
 } from "./actionTypes";
 
 export const getSublocation = () => ({
@@ -36,5 +39,20 @@ export const addSubLocationSuccess = (sublocation) => ({
 
 export const addSubLocationFail = (error) => ({
   type: ADD_SUBLOCATION_FAIL,
+  payload: error,
+});
+
+export const updateSublocation = (sublocation) => ({
+  type: UPDATE_SUBLOCATION,
+  payload: sublocation,
+});
+
+export const updateSublocationSuccess = (sublocation) => ({
+  type: UPDATE_SUBLOCATION_SUCCESS,
+  payload: sublocation,
+});
+
+export const updateSublocationFail = (error) => ({
+  type: UPDATE_SUBLOCATION_FAIL,
   payload: error,
 });
