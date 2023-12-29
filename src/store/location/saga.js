@@ -1,13 +1,27 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { GET_LOCATION, ADD_LOCATION } from "./actionTypes";
+import {
+  GET_LOCATION,
+  ADD_LOCATION,
+  UPDATE_LOCATION,
+  GET_LCO_ONLOCATION,
+} from "./actionTypes";
 import {
   getLocationSuccess,
   getLocationFail,
   addLocationSuccess,
   addLocationFail,
   getLocation as getLocationAction,
+  getLcoOnLocationSuccess,
+  getLcoOnLocationFail,
+  updateLocationSuccess,
+  updateLocationFail,
 } from "./actions";
-import { getLocation, addLocation } from "../../helpers/fakebackend_helper";
+import {
+  getLocation,
+  addLocation,
+  updateLocation,
+  getLcoOnLocation,
+} from "../../helpers/fakebackend_helper";
 import { toast } from "react-toastify";
 
 const convertLocationListObject = (locationList) => {
@@ -58,9 +72,37 @@ function* onAddLocation({ payload: location }) {
   }
 }
 
+function* onUpdateLocation({ payload: { location_id, location } }) {
+  console.log("location id: ", location_id);
+  const stringSelectedId =
+    typeof location_id === "object" ? JSON.stringify(location_id) : location_id;
+  console.log("String selected id: ", stringSelectedId);
+  try {
+    const response = yield call(updateLocation, { stringSelectedId, location });
+    console.log("Response data in saga: ", response);
+    yield put(updateLocationSuccess(response));
+  } catch (error) {
+    console.log("Error in update location: ", error);
+    yield put(updateLocationFail(error));
+  }
+}
+
+function* fetchLcoOnLocation() {
+  try {
+    const response = yield call(getLcoOnLocation);
+    // console.log("response:" + JSON.stringify(response.data));
+    const lcoList = convertLocationListObject(response.data);
+    yield put(getLcoOnLocationSuccess(lcoList));
+  } catch (error) {
+    yield put(getLcoOnLocationFail(error));
+  }
+}
+
 function* locationSaga() {
   yield takeEvery(GET_LOCATION, fetchLocation);
   yield takeEvery(ADD_LOCATION, onAddLocation);
+  yield takeEvery(UPDATE_LOCATION, onUpdateLocation);
+  yield takeEvery(GET_LCO_ONLOCATION, fetchLcoOnLocation);
 }
 
 export default locationSaga;

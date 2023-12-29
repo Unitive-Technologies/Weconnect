@@ -58,3 +58,17 @@ export const updateLocationFail = (error) => ({
   type: UPDATE_LOCATION_FAIL,
   payload: error,
 });
+
+export const getLcoOnLocation = () => ({
+  type: GET_LCO_ONLOCATION,
+});
+
+export const getLcoOnLocationSuccess = (lcoonlocation) => ({
+  type: GET_LCO_ONLOCATION_SUCCESS,
+  payload: lcoonlocation,
+});
+
+export const getLcoOnLocationFail = (error) => ({
+  type: GET_LCO_ONLOCATION_FAIL,
+  payload: error,
+});
