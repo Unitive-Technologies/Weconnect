@@ -16,49 +16,46 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addLocation as onAddLocation } from "/src/store/location/actions";
 import { useSelector, useDispatch } from "react-redux";
-import { createSelector } from "reselect";
-import { getLco as onGetLco } from "/src/store/actions";
 import Select from "react-select";
 
 const AddNewLocation = (props) => {
-  const { isOpen, handleAddLocation } = props;
+  const { isOpen, handleAddLocation, lcoonlocation } = props;
   const dispatch = useDispatch();
   const [selectedLco, setSelectedLco] = useState(null);
 
-  const selectLcoState = (state) => state.lco;
-  const LcoProperties = createSelector(selectLcoState, (lco) => ({
-    lcos: lco.lco,
-    loading: lco.loading,
-  }));
+  console.log("Lco In add location: ", lcoonlocation);
 
-  const { lcos, loading } = useSelector(LcoProperties);
+  // const options = lcoonlocation.map((option) => ({
+  //   value: option.id,
+  //   label1: (
+  //     <div>
+  //       <h6>{option.name}</h6>
+  //     </div>
+  //   ),
+  //   label2: (
+  //     <div>
+  //       <h6>{option.username}</h6>
+  //     </div>
+  //   ),
+  //   label3: (
+  //     <div>
+  //       <p>Regional Office: {option.branch_lbl}</p>
+  //     </div>
+  //   ),
+  //   label4: (
+  //     <div>
+  //       <p>Distributor: {option.distributor_lbl}</p>
+  //     </div>
+  //   ),
+  // }));
 
-  useEffect(() => {
-    if (lcos && !lcos.length) {
-      dispatch(onGetLco());
-    }
-  }, [dispatch, lcos]);
-  // console.log("Lco In add location: ", lcos);
-
-  const options = lcos.map((option) => ({
-    value: option.id,
-    label1: (
+  const options = lcoonlocation.map((option) => ({
+    value: option.name,
+    label: (
       <div>
         <h6>{option.name}</h6>
-      </div>
-    ),
-    label2: (
-      <div>
         <h6>{option.username}</h6>
-      </div>
-    ),
-    label3: (
-      <div>
         <p>Regional Office: {option.branch_lbl}</p>
-      </div>
-    ),
-    label4: (
-      <div>
         <p>Distributor: {option.distributor_lbl}</p>
       </div>
     ),
@@ -77,14 +74,14 @@ const AddNewLocation = (props) => {
 
     initialValues: {
       name: "",
-      operator_id: null,
+      operator_id: "",
       status_lbl: "",
       created_at: "",
       created_by_lbl: "NIKHIL REDDY(nikky)",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter location name"),
-      operator_id: Yup.string().nullable().required("Select LCO"),
+      operator_id: Yup.string().required("Select LCO"),
       status_lbl: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
@@ -118,6 +115,7 @@ const AddNewLocation = (props) => {
       tabIndex="-1"
       toggle={handleAddLocation}
     >
+      {console.log("LCO Options: ", options)}
       <ModalHeader tag="h4" toggle={handleAddLocation}>
         Add New Location
       </ModalHeader>
@@ -160,56 +158,18 @@ const AddNewLocation = (props) => {
                 <Label className="form-label">
                   Select LCO<span style={{ color: "red" }}>*</span>
                 </Label>
-                {/* <Select
+                <Select
                   name="operator_id"
-                  type="select"
                   options={options}
-                  onChange={(selectedOption) => {
-                    console.log("SelectedOption: ", selectedOption);
-                    setSelectedLco(selectedOption);
-                    validation.handleChange({
-                      target: {
-                        name: "operator_id",
-                        value: selectedOption.value,
-                      },
-                    });
-                  }}
+                  onChange={(selectedOption) =>
+                    validation.handleChange(selectedOption.value)
+                  }
                   onBlur={validation.handleBlur}
                   value={options.find(
                     (opt) => opt.value === validation.values.operator_id
                   )}
                   styles={customStyles}
-                /> */}
-                <Input
-                  name="operator_id"
-                  type="select"
-                  placeholder="Select LCO"
-                  onChange={(selectedOption) => {
-                    console.log("SelectedOption: ", selectedOption);
-                    setSelectedLco(selectedOption);
-                    validation.handleChange({
-                      target: {
-                        name: "operator_id",
-                        value: selectedOption.value,
-                      },
-                    });
-                  }}
-                  onBlur={validation.handleBlur}
-                  value={options.find(
-                    (opt) => opt.value === validation.values.operator_id
-                  )}
-                  // styles={customStyles}
-                >
-                  <option>Select LCO</option>
-                  {options.map((opt) => (
-                    <option key={opt.value} value={opt.value}>
-                      {opt.label1}&nbsp;
-                      {opt.label2}&nbsp;
-                      {opt.label3}&nbsp;
-                      {opt.label4}
-                    </option>
-                  ))}
-                </Input>
+                />
                 {validation.touched.operator_id &&
                 validation.errors.operator_id ? (
                   <FormFeedback type="invalid">

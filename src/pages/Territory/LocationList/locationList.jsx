@@ -12,7 +12,10 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import { getLocation as onGetLocation } from "/src/store/actions";
+import {
+  getLocation as onGetLocation,
+  getLcoOnLocation as onGetLcoOnLocation,
+} from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
@@ -32,10 +35,11 @@ const LocationList = (props) => {
     (location) => ({
       locations: location.location,
       loading: location.loading,
+      lcoonlocation: location.lcoonlocation,
     })
   );
 
-  const { locations, loading } = useSelector(locationProperties);
+  const { locations, loading, lcoonlocation } = useSelector(locationProperties);
 
   const [isLoading, setLoading] = useState(loading);
   const [showAddLocation, setShowAddLocation] = useState(false);
@@ -208,6 +212,7 @@ const LocationList = (props) => {
   useEffect(() => {
     if (locations && !locations.length) {
       dispatch(onGetLocation());
+      dispatch(onGetLcoOnLocation());
     }
   }, [dispatch, locations]);
 
@@ -218,8 +223,6 @@ const LocationList = (props) => {
   const handleUploadLocation = () => {
     setShowUploadLocation(!showUploadLocation);
   };
-
-  const keyField = "id";
 
   const getTableActions = () => {
     return [
@@ -238,24 +241,28 @@ const LocationList = (props) => {
     ];
   };
 
+  console.log("lco on location: ", lcoonlocation);
+
   return (
     <React.Fragment>
       <ViewLocation
         isOpen={showViewLocation}
         handleViewLocation={handleViewLocation}
         location={viewLocationData}
+        lcoonlocation={lcoonlocation}
       />
       <AddNewLocation
         isOpen={showAddLocation}
         handleAddLocation={handleAddLocation}
+        lcoonlocation={lcoonlocation}
       />
       <UploadLocation
         isOpen={showUploadLocation}
         handleUploadLocation={handleUploadLocation}
+        lcoonlocation={lcoonlocation}
       />
       <div className="page-content">
         <Container fluid>
-          {/* Render Breadcrumbs */}
           <Breadcrumbs title="Territory" breadcrumbItem="Locations" />
           {isLoading ? (
             <Spinners setLoading={setLoading} />
@@ -264,7 +271,6 @@ const LocationList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {/* {console.log("Locations:" + JSON.stringify(locations))} */}
                     <TableContainer
                       isPagination={true}
                       columns={columns}

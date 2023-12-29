@@ -21,7 +21,7 @@ import Select from "react-select";
 import { Link } from "react-router-dom";
 
 const ViewLocation = (props) => {
-  const { isOpen, handleViewLocation, location } = props;
+  const { isOpen, handleViewLocation, location, lcoonlocation } = props;
   const dispatch = useDispatch();
   const [showEditLocation, setShowEditLocation] = useState(false);
   const selectLcoState = (state) => state.lco;
@@ -39,7 +39,7 @@ const ViewLocation = (props) => {
   }, [dispatch, lcos]);
   // console.log("Lco In add location: ", lcos);
 
-  const options = lcos.map((option) => ({
+  const options = lcoonlocation.map((option) => ({
     value: option.name,
     label: (
       <div>
