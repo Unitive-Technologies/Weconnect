@@ -178,13 +178,15 @@ function* fetchUserProfile() {
 }
 
 function* onUpdateUser({ payload: user }) {
+  console.log("user in onUpdate:" + JSON.stringify(user));
   try {
-    const response = yield call(updateUser, user);
+    const response = yield call(updateUser, user, user.id);
     yield put(updateUserSuccess(response));
-    toast.success("Contact Updated Successfully", { autoClose: 2000 });
+    console.log("update response:" + JSON.stringify(response));
+    // toast.success("User Updated Successfully", { autoClose: 2000 });
   } catch (error) {
     yield put(updateUserFail(error));
-    toast.error("Contact Updated Failed", { autoClose: 2000 });
+    toast.error("User Updated Failed", { autoClose: 2000 });
   }
 }
 

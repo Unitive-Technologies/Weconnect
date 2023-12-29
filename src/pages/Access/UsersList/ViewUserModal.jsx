@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
@@ -16,7 +16,10 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { updateUser as onUpdateUser } from "/src/store/users/actions";
+import {
+  updateUser as onUpdateUser,
+  getUsers as onGetUsers,
+} from "/src/store/users/actions";
 
 const ViewUserModal = (props) => {
   const {
@@ -92,6 +95,7 @@ const ViewUserModal = (props) => {
 
       // update user
       dispatch(onUpdateUser(updateUser));
+      dispatch(onGetUsers());
       validation.resetForm();
       handleViewUser();
     },
@@ -101,6 +105,12 @@ const ViewUserModal = (props) => {
     setShowEditUser(false);
     handleViewUser();
   };
+  useEffect(() => {
+    if (user) {
+      dispatch(onGetUsers());
+    }
+    setShowEditUser(false);
+  }, [dispatch, user]);
   return (
     <>
       <Modal
