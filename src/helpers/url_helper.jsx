@@ -20,6 +20,7 @@ export const GET_GROUPPOLICY =
 export const ADD_NEW_GROUPPOLICY = "/add/grouppolicy";
 export const GET_DESIGNATION =
   "/schedule-announcement?expand=start_time_lbl,end_time_lbl,announcement_templ_lbl&filter[current_activemsg]=1&vr=web1.0";
+export const GET_DESIGNATION_STATUS = "/list/status?fields=id,name&vr=web1.0";
 export const ADD_NEW_DESIGNATION = "/user-designation?vr=web1.0";
 
 export const GET_NOTIFICATIONTEMPLATE =

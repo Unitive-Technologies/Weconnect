@@ -234,6 +234,7 @@ export const addNewGroupPolicy = (groupPolicy) =>
 export const getDesignation = () => get(url.GET_DESIGNATION);
 export const addNewDesignation = (designation) =>
   post(url.ADD_NEW_DESIGNATION, designation);
+export const getDesignationStatus = () => get(url.GET_DESIGNATION_STATUS);
 
 export const getNotificationTemplate = () => get(url.GET_NOTIFICATIONTEMPLATE);
 export const addNewNotificationTemplate = (notificationTemplate) =>

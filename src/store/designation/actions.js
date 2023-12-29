@@ -2,6 +2,9 @@ import {
   GET_DESIGNATION,
   GET_DESIGNATION_FAIL,
   GET_DESIGNATION_SUCCESS,
+  GET_DESIGNATION_STATUS,
+  GET_DESIGNATION_STATUS_FAIL,
+  GET_DESIGNATION_STATUS_SUCCESS,
   ADD_NEW_DESIGNATION,
   ADD_DESIGNATION_SUCCESS,
   ADD_DESIGNATION_FAIL,
@@ -36,5 +39,22 @@ export const addDesignationSuccess = (designation) => ({
 
 export const addDesignationFail = (error) => ({
   type: ADD_DESIGNATION_FAIL,
+  payload: error,
+});
+
+export const getDesignationStatus = () => ({
+  type: GET_DESIGNATION,
+});
+
+export const getDesignationStatusSuccess = (designation) => {
+  // console.log("Received Designation:", designation);
+  return {
+    type: GET_DESIGNATION_SUCCESS,
+    payload: designation,
+  };
+};
+
+export const getDesignationStatusFail = (error) => ({
+  type: GET_DESIGNATION_FAIL,
   payload: error,
 });

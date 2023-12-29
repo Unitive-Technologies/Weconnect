@@ -12,7 +12,10 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import { getDesignation as onGetDesignation } from "/src/store/actions";
+import {
+  getDesignation as onGetDesignation,
+  getDesignationStatus as onGetDesignationStatus,
+} from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
@@ -31,10 +34,13 @@ const DesignationList = (props) => {
     (designation) => ({
       desigList: designation.designation,
       loading: designation.loading,
+      desigStatus: designation.status,
     })
   );
 
-  const { desigList, loading } = useSelector(designationProperties);
+  const { desigList, loading, desigStatus } = useSelector(
+    designationProperties
+  );
 
   const [isLoading, setLoading] = useState(loading);
   const [showAddDesignation, setShowAddDesignation] = useState(false);
@@ -176,6 +182,7 @@ const DesignationList = (props) => {
   useEffect(() => {
     if (desigList && !desigList.length) {
       dispatch(onGetDesignation());
+      dispatch(onGetDesignationStatus());
     }
   }, [dispatch, desigList]);
 
@@ -223,6 +230,7 @@ const DesignationList = (props) => {
       <AddNewDesignation
         isOpen={showAddDesignation}
         handleAddDesignation={handleAddDesignation}
+        desigStatus={desigStatus}
       />
       <div className="page-content">
         <Container fluid>

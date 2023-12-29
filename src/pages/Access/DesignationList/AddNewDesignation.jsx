@@ -18,8 +18,15 @@ import { addNewDesignation as onAddNewDesignation } from "/src/store/designation
 import { useDispatch } from "react-redux";
 
 const AddNewDesignation = (props) => {
-  const { isOpen, handleAddDesignation } = props;
+  const { isOpen, handleAddDesignation, desigStatus } = props;
   const dispatch = useDispatch();
+  const [selectedStatus, setSelectedStatus] = useState("");
+
+  const handleStatusChange = (e) => {
+    const status = e.target.value;
+    setSelectedStatus(status);
+    validation.handleChange(e);
+  };
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -32,8 +39,6 @@ const AddNewDesignation = (props) => {
       parent: "",
       status: "",
       description: "",
-      created_at: "",
-      created_by: "Admin",
     },
     validationSchema: Yup.object({
       designation: Yup.string().required("Enter designation Name"),
@@ -46,14 +51,12 @@ const AddNewDesignation = (props) => {
     onSubmit: (values) => {
       const newDesignation = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
-        designation: values["designation"],
+        name: values["designation"],
         type: values["type"],
         code: values["code"],
-        parent: values["parent"],
+        parent_id: values["parent"],
         status: values["status"],
         description: values["description"],
-        created_at: new Date(),
-        created_by: values["created_by"],
       };
       console.log("newDesignation:" + newDesignation);
       // save new user
@@ -152,13 +155,18 @@ const AddNewDesignation = (props) => {
                   type="select"
                   placeholder="Select Status"
                   className="form-select"
-                  onChange={validation.handleChange}
+                  onChange={handleStatusChange}
+                  // onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
                 >
                   <option value="">Select Status</option>
-                  <option value="1">Active</option>
-                  <option value="2">Inactive</option>
+                  {desigStatus &&
+                    desigStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
