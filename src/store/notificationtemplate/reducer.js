@@ -11,8 +11,8 @@ import {
 
 const INIT_STATE = {
   notificationTemplate: [],
-  notificationTemplateStatus: [],
-  notificationTemplateType: [],
+  noTemplateStatus: [],
+  noTemplateType: [],
   error: {},
   loading: true,
 };
@@ -37,7 +37,7 @@ const NotificationTemplate = (state = INIT_STATE, action) => {
       console.log("Notification Template data in reducer:", action.payload);
       return {
         ...state,
-        notificationTemplateType: action.payload,
+        noTemplateType: action.payload,
         loading: false,
       };
 
@@ -51,7 +51,7 @@ const NotificationTemplate = (state = INIT_STATE, action) => {
       console.log("Notification Template data in reducer:", action.payload);
       return {
         ...state,
-        notificationTemplate_Status: action.payload,
+        noTemplateStatus: action.payload,
         loading: false,
       };
 

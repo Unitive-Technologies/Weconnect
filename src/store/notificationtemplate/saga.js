@@ -70,6 +70,7 @@ function* fetchNotificationTemplateStatus() {
     const notificationTemplateList =
       //   convertNotificationTemplateListObject(response);s
       yield put(getNotificationTemplateStatusSuccess(response.data));
+    console.log("notifcation template status response data" + response.data)
   } catch (error) {
     console.error("Error fetching notification templates:", error);
     yield put(getNotificationTemplateStatusFail(error));

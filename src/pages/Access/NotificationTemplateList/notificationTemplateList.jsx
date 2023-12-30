@@ -40,8 +40,8 @@ const NotificationTemplateList = (props) => {
     (notificationTemplate) => ({
       noTemplate: notificationTemplate.notificationTemplate,
       loading: notificationTemplate.loading,
-      noTemplateType: notificationTemplate.notificationTemplateType,
-      noTemplateStatus: notificationTemplate.notificationTemplateStatus,
+      noTemplateType: notificationTemplate.noTemplateType,
+      noTemplateStatus: notificationTemplate.noTemplateStatus,
     })
   );
 
@@ -288,6 +288,7 @@ const NotificationTemplateList = (props) => {
   };
 
   const keyField = "id";
+  console.log("noTemplateType" + JSON.stringify(noTemplateType))
 
   return (
     <React.Fragment>

@@ -73,7 +73,6 @@ const AddNotificationTemplateModal = (props) => {
         status: values["status"],
       };
       console.log("newUser:" + newNotification);
-      // save new user
       dispatch(onAddNewNotificationTemplate(newNotification));
       dispatch(onGetNotificationTemplate());
       validation.resetForm();
@@ -83,6 +82,8 @@ const AddNotificationTemplateModal = (props) => {
       validation.setValues(validation.initialValues);
     },
   });
+
+  // console.log("addnoTemplateStatus" + noTemplateStatus)
   return (
     <Modal
       isOpen={isOpen}
@@ -137,7 +138,7 @@ const AddNotificationTemplateModal = (props) => {
                   Type<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="type"
+                  name="msg_type"
                   type="select"
                   placeholder="Select Type"
                   className="form-select"
@@ -146,16 +147,15 @@ const AddNotificationTemplateModal = (props) => {
                   value={validation.values.msg_type || ""}
                 >
                   <option value="">Select Type</option>
-                  {noTemplateType &&
-                    noTemplateType.map((msg_type) => (
-                      <option key={msg_type_id} value={msg_type.id}>
-                        {msg_type.name}
-                      </option>
-                    ))}
+                  {noTemplateType.map((msg_type) => (
+                    <option key={msg_type.id} value={msg_type.id}>
+                      {msg_type.name}
+                    </option>
+                  ))}
                 </Input>
-                {validation.touched.type && validation.errors.type ? (
+                {validation.touched.msg_type && validation.errors.msg_type ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.type}
+                    {validation.errors.msg_type}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -175,7 +175,7 @@ const AddNotificationTemplateModal = (props) => {
                   value={validation.values.status || ""}
                 >
                   <option value="">Select Status</option>
-                  {noTemplateStatus &&
+                  {
                     noTemplateStatus.map((status) => (
                       <option key={status.id} value={status.id}>
                         {status.name}

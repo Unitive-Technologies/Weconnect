@@ -17,6 +17,8 @@ export const getNotificationTemplate = () => ({
   type: GET_NOTIFICATIONTEMPLATE,
 });
 
+
+
 export const getNotificationTemplateSuccess = (notificationTemplate) => {
   console.log("Received Notification Template:", notificationTemplate);
   return {
@@ -34,13 +36,11 @@ export const getNotificationTemplateType = () => ({
   type: GET_NOTIFICATIONTEMPLATE_TYPE,
 });
 
-export const getNotificationTemplateTypeSuccess = (notificationTemplate) => {
-  console.log("Received Notification Template:", notificationTemplate);
-  return {
-    type: GET_NOTIFICATIONTEMPLATE_TYPE_SUCCESS,
-    payload: notificationTemplate,
-  };
-};
+export const getNotificationTemplateTypeSuccess = (noTemplateType) => ({
+  type: GET_NOTIFICATIONTEMPLATE_TYPE_SUCCESS,
+  payload: noTemplateType,
+});
+
 
 export const getNotificationTemplateTypeFail = (error) => ({
   type: GET_NOTIFICATIONTEMPLATE_TYPE_FAIL,
@@ -51,13 +51,19 @@ export const getNotificationTemplateStatus = () => ({
   type: GET_NOTIFICATIONTEMPLATE_STATUS,
 });
 
-export const getNotificationTemplateStatusSuccess = (notificationTemplate) => {
-  console.log("Received Notification Template:", notificationTemplate);
-  return {
-    type: GET_NOTIFICATIONTEMPLATE_STATUS_SUCCESS,
-    payload: notificationTemplate,
-  };
-};
+
+export const getNotificationTemplateStatusSuccess = (noTemplateStatus) => ({
+  type: GET_NOTIFICATIONTEMPLATE_STATUS_SUCCESS,
+  payload: noTemplateStatus,
+});
+
+// export const getNotificationTemplateStatusSuccess = (noTemplateStatus) => {
+//   console.log("Received Notification Template:", noTemplateStatus);
+//   return {
+//     type: GET_NOTIFICATIONTEMPLATE_STATUS_SUCCESS,
+//     payload: noTemplateStatus,
+//   };
+// };
 
 export const getNotificationTemplateStatusFail = (error) => ({
   type: GET_NOTIFICATIONTEMPLATE_STATUS_FAIL,
