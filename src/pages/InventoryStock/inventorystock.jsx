@@ -19,12 +19,30 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import classnames from "classnames";
+import { getInventoryStock as onGetInventoryStock } from "/src/store/actions";
 
 const InventoryStock = (props) => {
   document.title = "Inventory | VDigital";
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState("1");
-  const [selectedOption, setSelectedOption] = useState("Stock");
+  const [selectedOption, setSelectedOption] = useState("In-stock");
+
+  const selectInventoryStockState = (state) => state.inventorystock;
+  const inventorystockProperties = createSelector(
+    selectInventoryStockState,
+    (inventorystock) => ({
+      inventory_stock: inventorystock.inventorystock,
+      loading: inventorystock.loading,
+    })
+  );
+
+  const { inventory_stock, loading } = useSelector(inventorystockProperties);
+
+  useEffect(() => {
+    if (inventory_stock && !inventory_stock.length) {
+      dispatch(onGetInventoryStock());
+    }
+  }, [dispatch, inventory_stock]);
 
   const toggleTab = (tab) => {
     if (activeTab !== tab) {
@@ -68,13 +86,13 @@ const InventoryStock = (props) => {
       },
       {
         Header: "Smartcard No.",
-        accessor: "smartcard_no",
+        accessor: "smartcardno",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <>
               <p className="font-size-14 mb-1">
-                {cellProps.row.original.smartcard_no}
+                {cellProps.row.original.smartcardno}
               </p>
             </>
           );
@@ -82,56 +100,58 @@ const InventoryStock = (props) => {
       },
       {
         Header: "CAS",
-        accessor: "cas",
+        accessor: "cas_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.cas}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.cas_lbl}</p>
           );
         },
       },
       {
         Header: "Brand",
-        accessor: "brand",
+        accessor: "brand_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.brand}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.brand_lbl}
+            </p>
           );
         },
       },
       {
         Header: "Stock Type",
-        accessor: "stock_type",
+        accessor: "state_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.stock_type}
+              {cellProps.row.original.state_lbl}
             </p>
           );
         },
       },
       {
         Header: "Inventory State",
-        accessor: "inventory_state",
+        accessor: "inv_state_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.inventory_state}
+              {cellProps.row.original.inv_state_lbl}
             </p>
           );
         },
       },
       {
         Header: "Warehouse",
-        accessor: "warehouse",
+        accessor: "warehouse_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.warehouse}
+              {cellProps.row.original.warehouse_lbl}
             </p>
           );
         },
@@ -294,7 +314,7 @@ const InventoryStock = (props) => {
                             setSelectedOption(e.target.value);
                           }}
                         >
-                          <option value="Stock">In-stock</option>
+                          <option value="In-stock">In-stock</option>
                           <option value="Blacklisted">Blacklisted</option>
                           <option value="Allotted">Allotted</option>
                           <option value="Faulty">Faulty</option>
@@ -364,7 +384,7 @@ const InventoryStock = (props) => {
                   <TableContainer
                     isPagination={true}
                     columns={columns}
-                    data={data}
+                    data={inventory_stock}
                     isGlobalFilter={true}
                     isShowTableActionButtons={true}
                     isShowingPageLength={true}
