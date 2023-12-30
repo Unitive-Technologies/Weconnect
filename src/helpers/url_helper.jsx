@@ -49,9 +49,9 @@ export const GET_SCHEDULECUSTOMERNOTIFICATION_STATUS =
 export const GET_SCHEDULECUSTOMERNOTIFICATION_SMS =
   "/list/smsTemplate?fields=id,name&vr=web1.0";
 export const GET_SCHEDULECUSTOMERNOTIFICATION_BMAIL =
-  "/list?fields=id,name,cas_code&vr=web1.0";
+  "/mtc/list?fields=id,name,cas_code&vr=web1.0";
 export const GET_SCHEDULECUSTOMERNOTIFICATION_OSD =
-  "/list/message-template/list?fields=id,name&filter[template_for]=2&vr=web1.0";
+  "/message-template/list?fields=id,name&filter[template_for]=2&vr=web1.0";
 
 export const ADD_NEW_SCHEDULECUSTOMERNOTIFICATION =
   "/add/schedulecustomernotification";

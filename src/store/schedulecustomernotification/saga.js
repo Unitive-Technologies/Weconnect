@@ -35,9 +35,7 @@ import {
   getScheduleCustomerNotificationSMS,
   getScheduleCustomerNotificationOSD,
   getScheduleCustomerNotificationBmail,
-
   addNewScheduleCustomerNotification,
-
 } from "../../helpers/fakebackend_helper";
 import { toast } from "react-toastify";
 
@@ -62,7 +60,6 @@ const convertScheduleCustomerNotificationListObject = (
         start_date: scheduleCustomerNotification.start_date,
         end_date: scheduleCustomerNotification.end_date,
         description: scheduleCustomerNotification.description,
-
         status_lbl:
           scheduleCustomerNotification.status_lbl === 1
             ? "ACTIVE"

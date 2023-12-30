@@ -54,11 +54,11 @@ const ScheduleCustomerNotificationList = (props) => {
       schCusNotification:
         scheduleCustomerNotification.scheduleCustomerNotification,
       loading: scheduleCustomerNotification.loading,
-      SchCusNotStatus: scheduleCustomerNotification.scheduleCustomerNotificationStatus,
-      SchCusNotType: scheduleCustomerNotification.scheduleCustomerNotificationType,
-      SchCusNotSMS: scheduleCustomerNotification.scheduleCustomerNotificationSMS,
-      SchCusNotOSD: scheduleCustomerNotification.scheduleCustomerNotificationOSD,
-      SchCusNotBmail: scheduleCustomerNotification.scheduleCustomerNotificationBmail,
+      SchCusNotStatus: scheduleCustomerNotification.SchCusNotStatus,
+      SchCusNotType: scheduleCustomerNotification.SchCusNotType,
+      SchCusNotSMS: scheduleCustomerNotification.SchCusNotSMS,
+      SchCusNotOSD: scheduleCustomerNotification.SchCusNotOSD,
+      SchCusNotBmail: scheduleCustomerNotification.SchCusNotBmail,
 
     })
   );

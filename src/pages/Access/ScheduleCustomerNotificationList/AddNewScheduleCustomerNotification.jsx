@@ -98,6 +98,8 @@ const AddNewScheduleCustomerNotification = (props) => {
     },
   });
 
+
+
   return (
     <Modal
       isOpen={isOpen}
@@ -157,7 +159,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.type_lbl || ""}
                 >
-                  <option value="">Account Expiring</option>
+                  <option value="">Select type</option>
                   {SchCusNotType &&
                     SchCusNotType.map((type_lbl) => (
                       <option key={type_lbl.id} value={type_lbl.id}>
