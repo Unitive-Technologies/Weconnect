@@ -95,14 +95,13 @@ function* onAddNewNotificationTemplate({ payload: notificationTemplate }) {
       addNewNotificationTemplate,
       notificationTemplate
     );
-
     yield put(addNotificationTemplateSuccess(response.data));
-    toast.success("Notification Template Added Successfully", {
-      autoClose: 2000,
-    });
+    // toast.success("Notification Template Added Successfully", {
+    //   autoClose: 2000,
+    // });
   } catch (error) {
     yield put(addNotificationTemplateFail(error));
-    toast.error("Notification Template Added Failed", { autoClose: 2000 });
+    // toast.error("Notification Template Added Failed", { autoClose: 2000 });
   }
 }
 

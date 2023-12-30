@@ -139,12 +139,12 @@ const NotificationTemplateList = (props) => {
       },
       {
         Header: "Type",
-        accessor: "msg_type_lbl",
+        accessor: "msg_type",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.msg_type_lbl}
+              {cellProps.row.original.msg_type}
             </p>
           );
         },

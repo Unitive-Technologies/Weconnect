@@ -41,38 +41,41 @@ const AddNotificationTemplateModal = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      name: "",
-      content: "",
-      type: "",
-      fontsize: "",
-      fontcolor: "#000000",
-      fontbgcolor: "#000000",
-      fontfamily: "",
+      msg_head: "",
+      msg_content: "",
+      msg_type: "",
+      msg_fontsize: "",
+      msg_fontcolor: "#000000",
+      msg_fontbgcolor: "#000000",
+      msg_fontbackgroundcolor: "",
       status: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
-      content: Yup.string().required("Please Enter Content"),
-      type: Yup.string().required("Please Enter Type"),
-      fontsize: Yup.string().required("Please Select Font Size"),
-      fontcolor: Yup.string().required("Please Select Color"),
-      fontbgcolor: Yup.string().required("Please Select Background Color"),
-      fontfamily: Yup.string().required("Please Enter Designation"),
+      msg_head: Yup.string().required("Please Enter Your Name"),
+      msg_content: Yup.string().required("Please Enter Content"),
+      msg_type: Yup.string().required("Please Enter Type"),
+      msg_fontsize: Yup.string().required("Please Select Font Size"),
+      msg_fontcolor: Yup.string().required("Please Select Color"),
+      msg_fontbgcolor: Yup.string().required("Please Select Background Color"),
+      msg_fontbackgroundcolor: Yup.string().required("Please Select Background Color"),
+      msg_fontfamily: Yup.string().required("Please Enter Designation"),
       status: Yup.string().required("Please Enter Group Policy"),
     }),
     onSubmit: (values) => {
+      console.log("post values in notification Template" + values)
       const newNotification = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
-        msg_head: values["name"],
-        msg_content: values["content"],
-        msg_type: values["type"],
-        msg_fontsize: values["fontsize"],
-        msg_fontcolor: values["fontcolor"],
-        msg_fontbgcolor: values["fontbgcolor"],
-        msg_fontfamily: values["fontfamily"],
+        msg_head: values["msg_head"],
+        msg_content: values["msg_content"],
+        msg_type: values["msg_type"],
+        msg_fontsize: values["msg_fontsize"],
+        msg_fontcolor: values["msg_fontcolor"],
+        msg_fontbgcolor: values["msg_fontbgcolor"],
+        msg_fontfamily: values["msg_fontfamily"],
+        msg_fontbackgroundcolor: values["msg_fontbackgroundcolor"],
         status: values["status"],
       };
-      console.log("newUser:" + newNotification);
+      console.log("newNotification:" + newNotification);
       dispatch(onAddNewNotificationTemplate(newNotification));
       dispatch(onGetNotificationTemplate());
       validation.resetForm();
@@ -102,6 +105,7 @@ const AddNotificationTemplateModal = (props) => {
         <Form
           onSubmit={(e) => {
             e.preventDefault();
+            console.log("create button clicked")
             validation.handleSubmit();
             return false;
           }}
@@ -113,21 +117,21 @@ const AddNotificationTemplateModal = (props) => {
                   Name<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="name"
+                  name="msg_head"
                   type="text"
                   placeholder="Insert Name"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.name || ""}
+                  value={validation.values.msg_head || ""}
                   invalid={
-                    validation.touched.name && validation.errors.name
+                    validation.touched.msg_head && validation.errors.msg_head
                       ? true
                       : false
                   }
                 />
-                {validation.touched.name && validation.errors.name ? (
+                {validation.touched.msg_head && validation.errors.msg_head ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.name}
+                    {validation.errors.msg_head}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -197,13 +201,13 @@ const AddNotificationTemplateModal = (props) => {
                   Font Size<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="fontsize"
+                  name="msg_fontsize"
                   type="select"
                   placeholder="Select Font Size"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.fontsize || ""}
+                  value={validation.values.msg_fontsize || ""}
                 >
                   <option value="">Select Font Size</option>
                   {FontSize.map((size, index) => (
@@ -212,9 +216,9 @@ const AddNotificationTemplateModal = (props) => {
                     </option>
                   ))}
                 </Input>
-                {validation.touched.fontsize && validation.errors.fontsize ? (
+                {validation.touched.msg_fontsize && validation.errors.msg_fontsize ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.fontsize}
+                    {validation.errors.msg_fontsize}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -226,12 +230,12 @@ const AddNotificationTemplateModal = (props) => {
                 </Label>
                 <div>
                   <input
-                    name="fontcolor"
+                    name="msg_fontcolor"
                     type="color"
                     // placeholder="Select Font Color"
                     className="form-control"
                     onFocus={toggleColorPicker}
-                    value={validation.values.fontcolor || "#000000"}
+                    value={validation.values.msg_fontcolor || "#000000"}
                     // style={{
                     //   color: validation.values.fontcolor || "#000000", // Set initial color as background
                     // }}
@@ -248,7 +252,7 @@ const AddNotificationTemplateModal = (props) => {
                     />
                   )}
                 </div>
-                <p>Value: {validation.values.fontcolor}</p>
+                <p>Value: {validation.values.msg_fontcolor}</p>
                 {/* <div
                   style={{
                     backgroundColor: validation.values.fontcolor || "#000000",
@@ -256,9 +260,9 @@ const AddNotificationTemplateModal = (props) => {
                     height: "20px",
                   }}
                 ></div> */}
-                {validation.touched.fontcolor && validation.errors.fontcolor ? (
+                {validation.touched.msg_fontcolor && validation.errors.msg_fontcolor ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.fontcolor}
+                    {validation.errors.msg_fontcolor}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -270,13 +274,13 @@ const AddNotificationTemplateModal = (props) => {
                 </Label>
                 <div>
                   <input
-                    name="fontbgcolor"
+                    name="msg_fontbackgroundcolor"
                     type="color"
                     placeholder="Select Font Background Color"
                     className="form-control"
                     onFocus={toggleColorPicker1}
                     onBlur={toggleColorPicker1}
-                    value={validation.values.fontbgcolor || "#121314"}
+                    value={validation.values.msg_fontbackgroundcolor || "#121314"}
                     onChange={(e) =>
                       validation.setFieldValue("fontbgcolor", e.target.value)
                     }
@@ -284,14 +288,14 @@ const AddNotificationTemplateModal = (props) => {
 
                   {showColorPicker1 && (
                     <SketchPicker
-                      color={validation.values.fontbgcolor || "#121314"}
+                      color={validation.values.msg_fontbackgroundcolor || "#121314"}
                       onChange={(color) =>
                         validation.setFieldValue("fontbgcolor", color.hex)
                       }
                     />
                   )}
                 </div>
-                <p>Value: {validation.values.fontbgcolor}</p>
+                <p>Value: {validation.values.msg_fontbackgroundcolor}</p>
                 {/* <div
                   style={{
                     backgroundColor: validation.values.fontbgcolor || "#121314",
@@ -299,10 +303,10 @@ const AddNotificationTemplateModal = (props) => {
                     height: "20px",
                   }}
                 ></div> */}
-                {validation.touched.fontbgcolor &&
-                  validation.errors.fontbgcolor ? (
+                {validation.touched.msg_fontbackgroundcolor &&
+                  validation.errors.msg_fontbackgroundcolor ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.fontbgcolor}
+                    {validation.errors.msg_fontbackgroundcolor}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -313,13 +317,13 @@ const AddNotificationTemplateModal = (props) => {
                   Font Family<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="fontfamily"
+                  name="msg_fontfamily"
                   type="select"
                   placeholder="Select Font Family"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.fontfamily || ""}
+                  value={validation.values.msg_fontfamily || ""}
                 >
                   <option value="">Select Font Family</option>
                   {optionsList.map((option) => (
@@ -328,15 +332,16 @@ const AddNotificationTemplateModal = (props) => {
                     </option>
                   ))}
                 </Input>
-                {validation.touched.fontfamily &&
-                  validation.errors.fontfamily ? (
+                {validation.touched.msg_fontfamily &&
+                  validation.errors.msg_fontfamily ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.fontfamily}
+                    {validation.errors.msg_fontfamily}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
           </Row>
+
           <Row>
             <Col lg={6}>
               <div className="mb-3">
@@ -344,22 +349,22 @@ const AddNotificationTemplateModal = (props) => {
                   Content<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="content"
+                  name="msg_content"
                   type="textarea"
                   placeholder="Enter Content"
                   rows="3"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.content || ""}
+                  value={validation.values.msg_content || ""}
                   invalid={
-                    validation.touched.content && validation.errors.content
+                    validation.touched.msg_content && validation.errors.msg_content
                       ? true
                       : false
                   }
                 />
-                {validation.touched.content && validation.errors.content ? (
+                {validation.touched.msg_content && validation.errors.msg_content ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.content}
+                    {validation.errors.msg_content}
                   </FormFeedback>
                 ) : null}
               </div>
