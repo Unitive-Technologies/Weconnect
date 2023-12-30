@@ -31,6 +31,7 @@ const AddNewDistrict = (props) => {
       description: "",
       created_at: "",
       created_by_lbl: "my mso(mso)",
+      created_by: "1",
       type: "2",
       state_id: "",
     },
@@ -51,6 +52,7 @@ const AddNewDistrict = (props) => {
         created_by_lbl: values["created_by_lbl"],
         type: values["type"],
         state_id: values["state_id"],
+        created_by: values["created_by"],
       };
       console.log("new district:" + newDistrict);
       dispatch(onAddDistrict(newDistrict));

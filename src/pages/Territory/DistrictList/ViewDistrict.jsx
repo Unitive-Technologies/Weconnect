@@ -34,8 +34,9 @@ const ViewDistrict = (props) => {
       status: (district && district.status) || "",
       description: (district && district.description) || "",
       created_at: (district && district.created_at) || "",
-      created_by: (district && district.created_by) || "Admin",
+      created_by: (district && district.created_by) || "1",
       type: (district && district.type) || "2",
+      created_by_lbl: (district && district.created_by_lbl) || "my mso(mso)",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter district name"),
@@ -54,6 +55,7 @@ const ViewDistrict = (props) => {
         created_at: new Date(),
         created_by: values["created_by"],
         type: values["type"],
+        created_by_lbl: values["created_by_lbl"],
       };
       console.log("Updated district:" + JSON.stringify(updatedDistrict));
       dispatch(onUpdateDistrict(updatedDistrict));
