@@ -42,6 +42,17 @@ export const UPDATE_REGIONALOFFICE = "/update/regionaloffice";
 
 export const GET_SCHEDULECUSTOMERNOTIFICATION =
   "/schedule-notification?expand=type_lbl,osd_template_id_lbl,bmail_template_id_lbl,sms_template_id_lbl,osd_configuration_id_lbl,status_lbl,created_by_lbl&page=1&per-page=50&vr=web1.0";
+export const GET_SCHEDULECUSTOMERNOTIFICATION_TYPE =
+  "/list/SchNotType?fields=id,name&vr=web1.0";
+export const GET_SCHEDULECUSTOMERNOTIFICATION_STATUS =
+  "/list/status?fields=id,name&vr=web1.0";
+export const GET_SCHEDULECUSTOMERNOTIFICATION_SMS =
+  "/list/smsTemplate?fields=id,name&vr=web1.0";
+export const GET_SCHEDULECUSTOMERNOTIFICATION_BMAIL =
+  "/list?fields=id,name,cas_code&vr=web1.0";
+export const GET_SCHEDULECUSTOMERNOTIFICATION_OSD =
+  "/list/message-template/list?fields=id,name&filter[template_for]=2&vr=web1.0";
+
 export const ADD_NEW_SCHEDULECUSTOMERNOTIFICATION =
   "/add/schedulecustomernotification";
 

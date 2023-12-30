@@ -15,7 +15,14 @@ import {
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 
-import { getScheduleCustomerNotification as onGetScheduleCustomerNotification } from "/src/store/actions";
+import {
+  getScheduleCustomerNotification as onGetScheduleCustomerNotification,
+  getScheduleCustomerNotificationStatus as onGetScheduleCustomerNotificationStatus,
+  getScheduleCustomerNotificationType as onGetScheduleCustomerNotificationType,
+  getScheduleCustomerNotificationSMS as onGetScheduleCustomerNotificationSMS,
+  getScheduleCustomerNotificationOSD as onGetScheduleCustomerNotificationOSD,
+  getScheduleCustomerNotificationBmail as onGetScheduleCustomerNotificationBmail,
+} from "/src/store/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -40,18 +47,26 @@ const ScheduleCustomerNotificationList = (props) => {
 
   const selectScheduleCustomerNotificationState = (state) =>
     state.scheduleCustomerNotification;
+
   const scheduleCustomerNotificationProperties = createSelector(
     selectScheduleCustomerNotificationState,
     (scheduleCustomerNotification) => ({
       schCusNotification:
         scheduleCustomerNotification.scheduleCustomerNotification,
       loading: scheduleCustomerNotification.loading,
+      SchCusNotStatus: scheduleCustomerNotification.scheduleCustomerNotificationStatus,
+      SchCusNotType: scheduleCustomerNotification.scheduleCustomerNotificationType,
+      SchCusNotSMS: scheduleCustomerNotification.scheduleCustomerNotificationSMS,
+      SchCusNotOSD: scheduleCustomerNotification.scheduleCustomerNotificationOSD,
+      SchCusNotBmail: scheduleCustomerNotification.scheduleCustomerNotificationBmail,
+
     })
   );
 
-  const { schCusNotification, loading } = useSelector(
+  const { schCusNotification, loading, SchCusNotBmail, SchCusNotSMS, SchCusNotOSD, SchCusNotStatus, SchCusNotType } = useSelector(
     scheduleCustomerNotificationProperties
   );
+
   const [isLoading, setLoading] = useState(loading);
 
   const [showAddNewScheduleCustNoti, setShowAddNewScheduleCustNoti] =
@@ -256,6 +271,11 @@ const ScheduleCustomerNotificationList = (props) => {
   useEffect(() => {
     if (schCusNotification && !schCusNotification.length) {
       dispatch(onGetScheduleCustomerNotification());
+      dispatch(onGetScheduleCustomerNotificationStatus());
+      dispatch(onGetScheduleCustomerNotificationType());
+      dispatch(onGetScheduleCustomerNotificationSMS());
+      dispatch(onGetScheduleCustomerNotificationOSD());
+      dispatch(onGetScheduleCustomerNotificationBmail());
     }
   }, [dispatch, schCusNotification]);
 
@@ -280,6 +300,11 @@ const ScheduleCustomerNotificationList = (props) => {
       <AddNewScheduleCustomerNotification
         isOpen={showAddNewScheduleCustNoti}
         handleAddNewScheduleCustNoti={handleAddNewScheduleCustNoti}
+        SchCusNotBmail={SchCusNotBmail}
+        SchCusNotOSD={SchCusNotOSD}
+        SchCusNotSMS={SchCusNotSMS}
+        SchCusNotStatus={SchCusNotStatus}
+        SchCusNotType={SchCusNotType}
       />
       <ViewScheduleCustomerNotification
         isOpen={showViewCustomerNotification}

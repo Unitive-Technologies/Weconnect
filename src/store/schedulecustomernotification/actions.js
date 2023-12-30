@@ -64,7 +64,7 @@ export const getScheduleCustomerNotificationType = () => ({
   type: GET_SCHEDULECUSTOMERNOTIFICATION_TYPE,
 });
 
-export const getScheduleCustomerNotificationTypeSuccess = (designationType) => {
+export const getScheduleCustomerNotificationTypeSuccess = (SchCusNotType) => {
   // console.log("Received Designation:", designation);
   return {
     type: GET_SCHEDULECUSTOMERNOTIFICATION_TYPE_SUCCESS,
@@ -81,7 +81,7 @@ export const getScheduleCustomerNotificationOSD = () => ({
   type: GET_SCHEDULECUSTOMERNOTIFICATION_OSD,
 });
 
-export const getScheduleCustomerNotificationOSDSuccess = (designationType) => {
+export const getScheduleCustomerNotificationOSDSuccess = (SchCusNotOSD) => {
   // console.log("Received Designation:", designation);
   return {
     type: GET_SCHEDULECUSTOMERNOTIFICATION_OSD_SUCCESS,
@@ -99,7 +99,7 @@ export const getScheduleCustomerNotificationBmail = () => ({
   type: GET_SCHEDULECUSTOMERNOTIFICATION_BMAIL,
 });
 
-export const getScheduleCustomerNotificationBmailSuccess = (designationType) => {
+export const getScheduleCustomerNotificationBmailSuccess = (SchCusNotBmail) => {
   // console.log("Received Designation:", designation);
   return {
     type: GET_SCHEDULECUSTOMERNOTIFICATION_BMAIL_SUCCESS,
@@ -116,7 +116,7 @@ export const getScheduleCustomerNotificationSMS = () => ({
   type: GET_SCHEDULECUSTOMERNOTIFICATION_SMS,
 });
 
-export const getScheduleCustomerNotificationSMSSuccess = (designationType) => {
+export const getScheduleCustomerNotificationSMSSuccess = (SchCusNotSMS) => {
   // console.log("Received Designation:", designation);
   return {
     type: GET_SCHEDULECUSTOMERNOTIFICATION_SMS_SUCCESS,
@@ -133,7 +133,7 @@ export const getScheduleCustomerNotificationStatus = () => ({
   type: GET_SCHEDULECUSTOMERNOTIFICATION_STATUS,
 });
 
-export const getScheduleCustomerNotificationStatusSuccess = (designationType) => {
+export const getScheduleCustomerNotificationStatusSuccess = (SchCusNotStatus) => {
   // console.log("Received Designation:", designation);
   return {
     type: GET_SCHEDULECUSTOMERNOTIFICATION_STATUS_SUCCESS,

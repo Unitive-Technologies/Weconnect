@@ -2,12 +2,27 @@ import { call, put, takeEvery } from "redux-saga/effects";
 
 import {
   GET_SCHEDULECUSTOMERNOTIFICATION,
+  GET_SCHEDULECUSTOMERNOTIFICATION_STATUS,
+  GET_SCHEDULECUSTOMERNOTIFICATION_TYPE,
+  GET_SCHEDULECUSTOMERNOTIFICATION_SMS,
+  GET_SCHEDULECUSTOMERNOTIFICATION_OSD,
+  GET_SCHEDULECUSTOMERNOTIFICATION_BMAIL,
   ADD_NEW_SCHEDULECUSTOMERNOTIFICATION,
 } from "./actionTypes";
 
 import {
   getScheduleCustomerNotificationSuccess,
   getScheduleCustomerNotificationFail,
+  getScheduleCustomerNotificationStatusFail,
+  getScheduleCustomerNotificationStatusSuccess,
+  getScheduleCustomerNotificationTypeFail,
+  getScheduleCustomerNotificationTypeSuccess,
+  getScheduleCustomerNotificationSMSFail,
+  getScheduleCustomerNotificationSMSSuccess,
+  getScheduleCustomerNotificationBmailFail,
+  getScheduleCustomerNotificationBmailSuccess,
+  getScheduleCustomerNotificationOSDFail,
+  getScheduleCustomerNotificationOSDSuccess,
   addScheduleCustomerNotificationSuccess,
   addScheduleCustomerNotificationFail,
 } from "./actions";
@@ -15,7 +30,14 @@ import {
 //Include Both Helper File with needed methods
 import {
   getScheduleCustomerNotification,
+  getScheduleCustomerNotificationStatus,
+  getScheduleCustomerNotificationType,
+  getScheduleCustomerNotificationSMS,
+  getScheduleCustomerNotificationOSD,
+  getScheduleCustomerNotificationBmail,
+
   addNewScheduleCustomerNotification,
+
 } from "../../helpers/fakebackend_helper";
 import { toast } from "react-toastify";
 
@@ -45,8 +67,8 @@ const convertScheduleCustomerNotificationListObject = (
           scheduleCustomerNotification.status_lbl === 1
             ? "ACTIVE"
             : scheduleCustomerNotification.status_lbl === 0
-            ? "INACTIVE"
-            : "BLOCKED",
+              ? "INACTIVE"
+              : "BLOCKED",
         created_at: scheduleCustomerNotification.created_at,
         created_by_lbl: scheduleCustomerNotification.created_by_lbl,
       };
@@ -63,6 +85,66 @@ function* fetchScheduleCustomerNotification() {
     yield put(getScheduleCustomerNotificationSuccess(response.data));
   } catch (error) {
     yield put(getScheduleCustomerNotificationFail(error));
+  }
+}
+
+function* fetchScheduleCustomerNotificationType() {
+  try {
+    const response = yield call(getScheduleCustomerNotificationType);
+    console.log("designation status response:" + JSON.stringify(response));
+    // const designation = convertDesignationListObject(response.data);
+    // yield put(getDesignationSuccess(designation));
+    yield put(getScheduleCustomerNotificationTypeSuccess(response.data));
+  } catch (error) {
+    yield put(getScheduleCustomerNotificationTypeFail(error));
+  }
+}
+
+function* fetchScheduleCustomerNotificationStatus() {
+  try {
+    const response = yield call(getScheduleCustomerNotificationStatus);
+    console.log("designation status response:" + JSON.stringify(response));
+    // const designation = convertDesignationListObject(response.data);
+    // yield put(getDesignationSuccess(designation));
+    yield put(getScheduleCustomerNotificationStatusSuccess(response.data));
+  } catch (error) {
+    yield put(getScheduleCustomerNotificationStatusFail(error));
+  }
+}
+
+function* fetchScheduleCustomerNotificationSMS() {
+  try {
+    const response = yield call(getScheduleCustomerNotificationSMS);
+    console.log("designation status response:" + JSON.stringify(response));
+    // const designation = convertDesignationListObject(response.data);
+    // yield put(getDesignationSuccess(designation));
+    yield put(getScheduleCustomerNotificationSMSSuccess(response.data));
+  } catch (error) {
+    yield put(getScheduleCustomerNotificationSMSFail(error));
+  }
+}
+
+function* fetchScheduleCustomerNotificationOSD() {
+  try {
+    const response = yield call(getScheduleCustomerNotificationOSD);
+    console.log("designation status response:" + JSON.stringify(response));
+    // const designation = convertDesignationListObject(response.data);
+    // yield put(getDesignationSuccess(designation));
+    yield put(getScheduleCustomerNotificationOSDSuccess(response.data));
+  } catch (error) {
+    yield put(getScheduleCustomerNotificationOSDFail(error));
+  }
+}
+
+function* fetchScheduleCustomerNotificationBmail() {
+  try {
+    const response = yield call(getScheduleCustomerNotificationBmail);
+    console.log("designation status response:" + JSON.stringify(response));
+    // const designation = convertDesignationListObject(response.data);
+    // yield put(getDesignationSuccess(designation));
+    yield put(getScheduleCustomerNotificationBmailSuccess(response.data));
+  } catch (error) {
+    yield put(getScheduleCustomerNotificationBmailFail(error));
   }
 }
 
@@ -96,6 +178,11 @@ function* scheduleCustomerNotificationSaga() {
     ADD_NEW_SCHEDULECUSTOMERNOTIFICATION,
     onAddNewScheduleCustomerNotification
   );
+  yield takeEvery(GET_SCHEDULECUSTOMERNOTIFICATION_TYPE, fetchScheduleCustomerNotificationType);
+  yield takeEvery(GET_SCHEDULECUSTOMERNOTIFICATION_SMS, fetchScheduleCustomerNotificationSMS);
+  yield takeEvery(GET_SCHEDULECUSTOMERNOTIFICATION_OSD, fetchScheduleCustomerNotificationOSD);
+  yield takeEvery(GET_SCHEDULECUSTOMERNOTIFICATION_STATUS, fetchScheduleCustomerNotificationStatus);
+  yield takeEvery(GET_SCHEDULECUSTOMERNOTIFICATION_BMAIL, fetchScheduleCustomerNotificationBmail);
 }
 
 export default scheduleCustomerNotificationSaga;

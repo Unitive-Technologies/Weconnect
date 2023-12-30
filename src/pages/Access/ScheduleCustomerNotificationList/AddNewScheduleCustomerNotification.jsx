@@ -20,9 +20,11 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewScheduleCustomerNotification as onAddNewScheduleCustomerNotification } from "/src/store/schedulecustomernotification/actions";
 import { useSelector, useDispatch } from "react-redux";
+import { getScheduleCustomerNotification as onGetScheduleCustomerNotification } from "/src/store/actions";
+
 
 const AddNewScheduleCustomerNotification = (props) => {
-  const { isOpen, handleAddNewScheduleCustNoti } = props;
+  const { isOpen, handleAddNewScheduleCustNoti, SchCusNotStatus, SchCusNotType, SchCusNotSMS, SchCusNotOSD, SchCusNotBmail } = props;
   const dispatch = useDispatch();
   const [user, setUser] = useState();
 
@@ -87,6 +89,7 @@ const AddNewScheduleCustomerNotification = (props) => {
       dispatch(
         onAddNewScheduleCustomerNotification(newScheduleCustomerNotification)
       );
+      dispatch(onGetScheduleCustomerNotification());
       validation.resetForm();
       handleAddNewScheduleCustNoti();
     },
@@ -155,7 +158,12 @@ const AddNewScheduleCustomerNotification = (props) => {
                   value={validation.values.type_lbl || ""}
                 >
                   <option value="">Account Expiring</option>
-                  <option value="1">Bill Payment</option>
+                  {SchCusNotType &&
+                    SchCusNotType.map((type_lbl) => (
+                      <option key={type_lbl.id} value={type_lbl.id}>
+                        {type_lbl.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.type_lbl && validation.errors.type_lbl ? (
                   <FormFeedback type="invalid">
@@ -209,7 +217,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                   <option value="39">28</option>
                 </Input>
                 {validation.touched.schedule_days &&
-                validation.errors.schedule_days ? (
+                  validation.errors.schedule_days ? (
                   <FormFeedback type="invalid">
                     {validation.errors.schedule_days}
                   </FormFeedback>
@@ -237,7 +245,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                   <option value="55">CAS: NSTV</option>
                 </Input>
                 {validation.touched.osd_configuration_id_lbl &&
-                validation.errors.osd_configuration_id_lbl ? (
+                  validation.errors.osd_configuration_id_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.osd_configuration_id_lbl}
                   </FormFeedback>
@@ -258,12 +266,15 @@ const AddNewScheduleCustomerNotification = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.osd_template_id_lbl || ""}
                 >
-                  <option value="61">Select osd template</option>
-                  <option value="62">Expiring STB</option>
-                  <option value="63">NXT</option>
-                </Input>
+                  <option value="">Select osd template</option>
+                  {SchCusNotOSD &&
+                    SchCusNotOSD.map((osd_template_id_lbl) => (
+                      <option key={osd_template_id_lbl.id} value={osd_template_id_lbl.id}>
+                        {osd_template_id_lbl.name}
+                      </option>
+                    ))}                </Input>
                 {validation.touched.osd_template_id_lbl &&
-                validation.errors.osd_template_id_lbl ? (
+                  validation.errors.osd_template_id_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.osd_template_id_lbl}
                   </FormFeedback>
@@ -282,10 +293,16 @@ const AddNewScheduleCustomerNotification = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.bmail_template_id_lbl || ""}
                 >
-                  <option value="71">Select bmail template</option>
+                  <option value="">Select bmail template</option>
+                  {SchCusNotBmail &&
+                    SchCusNotBmail.map((bmail_template_id_lbl) => (
+                      <option key={bmail_template_id_lbl.id} value={bmail_template_id_lbl.id}>
+                        {bmail_template_id_lbl.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.bmail_template_id_lbl &&
-                validation.errors.bmail_template_id_lbl ? (
+                  validation.errors.bmail_template_id_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.bmail_template_id_lbl}
                   </FormFeedback>
@@ -304,13 +321,16 @@ const AddNewScheduleCustomerNotification = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.sms_template_id_lbl || ""}
                 >
-                  <option value="81">Select sms template</option>
-                  <option value="82">Administrator</option>
-                  <option value="83">Staff</option>
-                  <option value="84">User</option>
+                  <option value="">Select sms template</option>
+                  {SchCusNotSMS &&
+                    SchCusNotSMS.map((sms_template_id_lbl) => (
+                      <option key={sms_template_id_lbl.id} value={sms_template_id_lbl.id}>
+                        {sms_template_id_lbl.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.sms_template_id_lbl &&
-                validation.errors.sms_template_id_lbl ? (
+                  validation.errors.sms_template_id_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.sms_template_id_lbl}
                   </FormFeedback>
@@ -334,13 +354,13 @@ const AddNewScheduleCustomerNotification = (props) => {
                   value={validation.values.start_date || ""}
                   invalid={
                     validation.touched.start_date &&
-                    validation.errors.start_date
+                      validation.errors.start_date
                       ? true
                       : false
                   }
                 />
                 {validation.touched.start_date &&
-                validation.errors.start_date ? (
+                  validation.errors.start_date ? (
                   <FormFeedback type="invalid">
                     {validation.errors.start_date}
                   </FormFeedback>
@@ -388,13 +408,13 @@ const AddNewScheduleCustomerNotification = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -415,12 +435,16 @@ const AddNewScheduleCustomerNotification = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.status_lbl || ""}
                 >
-                  <option value="101">Select Status</option>
-                  <option value="102">Active</option>
-                  <option value="103">In-Active</option>
+                  <option value="">Select Status</option>
+                  {SchCusNotStatus &&
+                    SchCusNotStatus.map((status_lbl) => (
+                      <option key={status_lbl.id} value={status_lbl.id}>
+                        {status_lbl.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.status_lbl &&
-                validation.errors.status_lbl ? (
+                  validation.errors.status_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.status_lbl}
                   </FormFeedback>

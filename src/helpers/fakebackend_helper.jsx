@@ -249,6 +249,12 @@ export const addNewNotificationTemplate = (notificationTemplate) =>
 
 export const getScheduleCustomerNotification = () =>
   get(url.GET_SCHEDULECUSTOMERNOTIFICATION);
+export const getScheduleCustomerNotificationType = () => get(url.GET_SCHEDULECUSTOMERNOTIFICATION_TYPE);
+export const getScheduleCustomerNotificationStatus = () => get(url.GET_SCHEDULECUSTOMERNOTIFICATION_STATUS);
+export const getScheduleCustomerNotificationSMS = () => get(url.GET_SCHEDULECUSTOMERNOTIFICATION_SMS);
+export const getScheduleCustomerNotificationOSD = () => get(url.GET_SCHEDULECUSTOMERNOTIFICATION_OSD);
+export const getScheduleCustomerNotificationBmail = () => get(url.GET_SCHEDULECUSTOMERNOTIFICATION_BMAIL);
+
 export const addNewScheduleCustomerNotification = (
   schedulecustomernotification
 ) =>
