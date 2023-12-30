@@ -239,8 +239,10 @@ export const getDesignationType = () => get(url.GET_DESIGNATION_TYPE);
 export const getDesignationParent = () => get(url.GET_DESIGNATION_PARENT);
 
 export const getNotificationTemplate = () => get(url.GET_NOTIFICATIONTEMPLATE);
-export const getNotificationTemplateType = () => get(url.GET_NOTIFICATIONTEMPLATE_TYPE);
-export const getNotificationTemplateStatus = () => get(url.GET_NOTIFICATIONTEMPLATE_STATUS);
+export const getNotificationTemplateType = () =>
+  get(url.GET_NOTIFICATIONTEMPLATE_TYPE);
+export const getNotificationTemplateStatus = () =>
+  get(url.GET_NOTIFICATIONTEMPLATE_STATUS);
 
 export const addNewNotificationTemplate = (notificationTemplate) =>
   post(url.ADD_NEW_NOTIFICATIONTEMPLATE, notificationTemplate);
@@ -259,9 +261,10 @@ export const getStateUsers = () => get(url.GET_STATEUSERS);
 export const getDistrict = () => get(url.GET_DISTRICT);
 export const addDistrict = (district) => post(url.ADD_DISTRICT, district);
 export const getDistrictStateList = () => get(url.GET_DISTRICT_STATELIST);
-export const getDistrictStatus = () => get(url.GET_DISTRICT_STATUS);
-export const updateDistrict = ({ district_id, district }) =>
-  put(url.updateDistrictById(district_id), district);
+export const getAdministrativeDivisionStatus = () =>
+  get(url.GET_ADMINISTRATIVEDIVISION_STATUS);
+export const updateDistrict = (id, district) =>
+  put(url.updateDistrictById(id), district);
 
 export const getCity = () => get(url.GET_CITY);
 export const addCity = (city) => post(url.ADD_CITY, city);

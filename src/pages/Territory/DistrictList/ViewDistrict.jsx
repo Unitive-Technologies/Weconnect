@@ -19,14 +19,7 @@ import { useDispatch } from "react-redux";
 import { updateDistrict as onUpdateDistrict } from "/src/store/district/actions";
 
 const ViewDistrict = (props) => {
-  const {
-    isOpen,
-    handleViewDistrict,
-    district,
-    statelist,
-    status,
-    district_id,
-  } = props;
+  const { isOpen, handleViewDistrict, district, statelist, status } = props;
   const dispatch = useDispatch();
   const [showEditDistrict, setShowEditDistrict] = useState(false);
 
@@ -63,7 +56,7 @@ const ViewDistrict = (props) => {
         type: values["type"],
       };
       console.log("Updated district:" + JSON.stringify(updatedDistrict));
-      dispatch(onUpdateDistrict({ updatedDistrict, district_id }));
+      dispatch(onUpdateDistrict(updatedDistrict));
       validation.resetForm();
       handleViewDistrict();
     },

@@ -3,7 +3,7 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import {
   GET_DISTRICT,
   ADD_DISTRICT,
-  GET_DISTRICT_STATUS,
+  GET_ADMINISTRATIVEDIVISION_STATUS,
   GET_DISTRICT_STATELIST,
   UPDATE_DISTRICT,
 } from "./actionTypes";
@@ -13,8 +13,8 @@ import {
   getDistrictFail,
   addDistrictSuccess,
   addDistrictFail,
-  getDistrictStatusSuccess,
-  getDistrictStatusFail,
+  getAdministrativeDivisionStatusSuccess,
+  getAdministrativeDivisionStatusFail,
   getDistrictStateListSuccess,
   getDistrictStateListFail,
   updateDistrictSuccess,
@@ -24,7 +24,7 @@ import {
   getDistrict,
   addDistrict,
   getDistrictStateList,
-  getDistrictStatus,
+  getAdministrativeDivisionStatus,
   updateDistrict,
 } from "../../helpers/fakebackend_helper";
 
@@ -53,22 +53,22 @@ function* fetchDistrict() {
     const response = yield call(getDistrict);
     // console.log("response:" + JSON.stringify(response.data));
     const districtList = convertDistrictListObject(response.data);
-    yield put(getDistrictSuccess(districtList));
+    yield put(getDistrictSuccess(response.data));
   } catch (error) {
     yield put(getDistrictFail(error));
   }
 }
 
-function* fetchDistrictStatus() {
+function* fetchAdministrativeDivisionStatus() {
   try {
-    const response = yield call(getDistrictStatus);
+    const response = yield call(getAdministrativeDivisionStatus);
     // console.log(
     //   "status list data in District saga: ",
     //   JSON.stringify(response.data)
     // );
-    yield put(getDistrictStatusSuccess(response.data));
+    yield put(getAdministrativeDivisionStatusSuccess(response.data));
   } catch (error) {
-    yield put(getDistrictStatusFail(error));
+    yield put(getAdministrativeDivisionStatusFail(error));
   }
 }
 
@@ -96,13 +96,10 @@ function* onAddDistrict({ payload: district }) {
   }
 }
 
-function* onUpdateDistrict({ payload: { district_id, district } }) {
-  console.log("District id: ", district_id);
-  const stringSelectedId =
-    typeof district_id === "object" ? JSON.stringify(district_id) : district_id;
-  console.log("String selected id: ", stringSelectedId);
+function* onUpdateDistrict({ payload: district }) {
+  // console.
   try {
-    const response = yield call(updateDistrict, { stringSelectedId, district });
+    const response = yield call(updateDistrict, district.id, district);
     console.log("Response data in saga: ", response);
     yield put(updateDistrictSuccess(response));
   } catch (error) {
@@ -114,7 +111,10 @@ function* onUpdateDistrict({ payload: { district_id, district } }) {
 function* districtSaga() {
   yield takeEvery(GET_DISTRICT, fetchDistrict);
   yield takeEvery(ADD_DISTRICT, onAddDistrict);
-  yield takeEvery(GET_DISTRICT_STATUS, fetchDistrictStatus);
+  yield takeEvery(
+    GET_ADMINISTRATIVEDIVISION_STATUS,
+    fetchAdministrativeDivisionStatus
+  );
   yield takeEvery(GET_DISTRICT_STATELIST, fetchDistrictStateList);
   yield takeEvery(UPDATE_DISTRICT, onUpdateDistrict);
 }

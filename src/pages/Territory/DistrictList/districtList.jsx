@@ -15,7 +15,7 @@ import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import {
   getDistrict as onGetDistrict,
   getDistrictStateList as onGetDistrictStateList,
-  getDistrictStatus as onGetDistrictStatus,
+  getAdministrativeDivisionStatus as onGetAdministrativeDivisionStatus,
 } from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
@@ -222,7 +222,7 @@ const DistrictList = (props) => {
   useEffect(() => {
     if (districts && !districts.length) {
       dispatch(onGetDistrict());
-      dispatch(onGetDistrictStatus());
+      dispatch(onGetAdministrativeDivisionStatus());
       dispatch(onGetDistrictStateList());
     }
   }, [dispatch, districts]);

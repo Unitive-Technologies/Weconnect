@@ -18,13 +18,17 @@ import { optionsList } from "./optionsList";
 import { useFormik } from "formik";
 import { addNewNotificationTemplate as onAddNewNotificationTemplate } from "/src/store/notificationtemplate/actions";
 import { useDispatch } from "react-redux";
-import {
-  getNotificationTemplate as onGetNotificationTemplate,
-} from "/src/store/actions";
-
+import { getNotificationTemplate as onGetNotificationTemplate } from "/src/store/actions";
 
 const AddNotificationTemplateModal = (props) => {
-  const { isOpen, handleAddNotificationTemplate, noTemplateType, noTemplateStatus, noTemplateSize, noTemplateFamily } = props;
+  const {
+    isOpen,
+    handleAddNotificationTemplate,
+    noTemplateType,
+    noTemplateStatus,
+    noTemplateSize,
+    noTemplateFamily,
+  } = props;
   const dispatch = useDispatch();
   const FontSize = Array.from({ length: 93 }, (_, index) => index + 8);
 
@@ -57,12 +61,14 @@ const AddNotificationTemplateModal = (props) => {
       msg_fontsize: Yup.string().required("Please Select Font Size"),
       msg_fontcolor: Yup.string().required("Please Select Color"),
       msg_fontbgcolor: Yup.string().required("Please Select Background Color"),
-      msg_fontbackgroundcolor: Yup.string().required("Please Select Background Color"),
+      msg_fontbackgroundcolor: Yup.string().required(
+        "Please Select Background Color"
+      ),
       msg_fontfamily: Yup.string().required("Please Enter Designation"),
       status: Yup.string().required("Please Enter Group Policy"),
     }),
     onSubmit: (values) => {
-      console.log("post values in notification Template" + values)
+      console.log("post values in notification Template" + values);
       const newNotification = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         msg_head: values["msg_head"],
@@ -105,7 +111,7 @@ const AddNotificationTemplateModal = (props) => {
         <Form
           onSubmit={(e) => {
             e.preventDefault();
-            console.log("create button clicked")
+            console.log("create button clicked");
             validation.handleSubmit();
             return false;
           }}
@@ -179,12 +185,11 @@ const AddNotificationTemplateModal = (props) => {
                   value={validation.values.status || ""}
                 >
                   <option value="">Select Status</option>
-                  {
-                    noTemplateStatus.map((status) => (
-                      <option key={status.id} value={status.id}>
-                        {status.name}
-                      </option>
-                    ))}
+                  {noTemplateStatus.map((status) => (
+                    <option key={status.id} value={status.id}>
+                      {status.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
@@ -216,7 +221,8 @@ const AddNotificationTemplateModal = (props) => {
                     </option>
                   ))}
                 </Input>
-                {validation.touched.msg_fontsize && validation.errors.msg_fontsize ? (
+                {validation.touched.msg_fontsize &&
+                validation.errors.msg_fontsize ? (
                   <FormFeedback type="invalid">
                     {validation.errors.msg_fontsize}
                   </FormFeedback>
@@ -260,7 +266,8 @@ const AddNotificationTemplateModal = (props) => {
                     height: "20px",
                   }}
                 ></div> */}
-                {validation.touched.msg_fontcolor && validation.errors.msg_fontcolor ? (
+                {validation.touched.msg_fontcolor &&
+                validation.errors.msg_fontcolor ? (
                   <FormFeedback type="invalid">
                     {validation.errors.msg_fontcolor}
                   </FormFeedback>
@@ -280,7 +287,9 @@ const AddNotificationTemplateModal = (props) => {
                     className="form-control"
                     onFocus={toggleColorPicker1}
                     onBlur={toggleColorPicker1}
-                    value={validation.values.msg_fontbackgroundcolor || "#121314"}
+                    value={
+                      validation.values.msg_fontbackgroundcolor || "#121314"
+                    }
                     onChange={(e) =>
                       validation.setFieldValue("fontbgcolor", e.target.value)
                     }
@@ -288,7 +297,9 @@ const AddNotificationTemplateModal = (props) => {
 
                   {showColorPicker1 && (
                     <SketchPicker
-                      color={validation.values.msg_fontbackgroundcolor || "#121314"}
+                      color={
+                        validation.values.msg_fontbackgroundcolor || "#121314"
+                      }
                       onChange={(color) =>
                         validation.setFieldValue("fontbgcolor", color.hex)
                       }
@@ -304,7 +315,7 @@ const AddNotificationTemplateModal = (props) => {
                   }}
                 ></div> */}
                 {validation.touched.msg_fontbackgroundcolor &&
-                  validation.errors.msg_fontbackgroundcolor ? (
+                validation.errors.msg_fontbackgroundcolor ? (
                   <FormFeedback type="invalid">
                     {validation.errors.msg_fontbackgroundcolor}
                   </FormFeedback>
@@ -333,7 +344,7 @@ const AddNotificationTemplateModal = (props) => {
                   ))}
                 </Input>
                 {validation.touched.msg_fontfamily &&
-                  validation.errors.msg_fontfamily ? (
+                validation.errors.msg_fontfamily ? (
                   <FormFeedback type="invalid">
                     {validation.errors.msg_fontfamily}
                   </FormFeedback>
@@ -357,12 +368,14 @@ const AddNotificationTemplateModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.msg_content || ""}
                   invalid={
-                    validation.touched.msg_content && validation.errors.msg_content
+                    validation.touched.msg_content &&
+                    validation.errors.msg_content
                       ? true
                       : false
                   }
                 />
-                {validation.touched.msg_content && validation.errors.msg_content ? (
+                {validation.touched.msg_content &&
+                validation.errors.msg_content ? (
                   <FormFeedback type="invalid">
                     {validation.errors.msg_content}
                   </FormFeedback>

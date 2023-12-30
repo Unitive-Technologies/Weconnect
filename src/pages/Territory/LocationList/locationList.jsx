@@ -16,7 +16,7 @@ import {
   getLocation as onGetLocation,
   getLcoOnLocation as onGetLcoOnLocation,
 } from "/src/store/actions";
-import { getDistrictStatus as onGetDistrictStatus } from "/src/store/actions";
+import { getAdministrativeDivisionStatus as onGetAdministrativeDivisionStatus } from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
@@ -228,7 +228,7 @@ const LocationList = (props) => {
 
   useEffect(() => {
     if (districts && !districts.length) {
-      dispatch(onGetDistrictStatus());
+      dispatch(onGetAdministrativeDivisionStatus());
     }
   }, [dispatch, districts]);
 
