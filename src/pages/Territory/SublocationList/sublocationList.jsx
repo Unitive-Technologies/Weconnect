@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import { getSublocation as onGetSublocation } from "/src/store/actions";
-import { getDistrictStatus as onGetDistrictStatus } from "/src/store/actions";
+import { getAdministrativeDivisionStatus as onGetAdministrativeDivisionStatus } from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
@@ -242,7 +242,7 @@ const SublocationList = (props) => {
 
   useEffect(() => {
     if (districts && !districts.length) {
-      dispatch(onGetDistrictStatus());
+      dispatch(onGetAdministrativeDivisionStatus());
     }
   }, [dispatch, districts]);
 

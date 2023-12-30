@@ -3,8 +3,8 @@ import {
   GET_DISTRICT_FAIL,
   ADD_DISTRICT_SUCCESS,
   ADD_DISTRICT_FAIL,
-  GET_DISTRICT_STATUS_SUCCESS,
-  GET_DISTRICT_STATUS_FAIL,
+  GET_ADMINISTRATIVEDIVISION_STATUS_SUCCESS,
+  GET_ADMINISTRATIVEDIVISION_STATUS_FAIL,
   GET_DISTRICT_STATELIST_SUCCESS,
   GET_DISTRICT_STATELIST_FAIL,
   UPDATE_DISTRICT_SUCCESS,
@@ -46,14 +46,14 @@ const District = (state = INIT_STATE, action) => {
         error: action.payload,
       };
 
-    case GET_DISTRICT_STATUS_SUCCESS:
+    case GET_ADMINISTRATIVEDIVISION_STATUS_SUCCESS:
       return {
         ...state,
         status: action.payload,
         loading: false,
       };
 
-    case GET_DISTRICT_STATUS_FAIL:
+    case GET_ADMINISTRATIVEDIVISION_STATUS_FAIL:
       return {
         ...state,
         error: action.payload,

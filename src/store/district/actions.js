@@ -5,9 +5,9 @@ import {
   ADD_DISTRICT,
   ADD_DISTRICT_SUCCESS,
   ADD_DISTRICT_FAIL,
-  GET_DISTRICT_STATUS,
-  GET_DISTRICT_STATUS_SUCCESS,
-  GET_DISTRICT_STATUS_FAIL,
+  GET_ADMINISTRATIVEDIVISION_STATUS,
+  GET_ADMINISTRATIVEDIVISION_STATUS_SUCCESS,
+  GET_ADMINISTRATIVEDIVISION_STATUS_FAIL,
   GET_DISTRICT_STATELIST,
   GET_DISTRICT_STATELIST_SUCCESS,
   GET_DISTRICT_STATELIST_FAIL,
@@ -47,17 +47,17 @@ export const addDistrictFail = (error) => ({
   payload: error,
 });
 
-export const getDistrictStatus = () => ({
-  type: GET_DISTRICT_STATUS,
+export const getAdministrativeDivisionStatus = () => ({
+  type: GET_ADMINISTRATIVEDIVISION_STATUS,
 });
 
-export const getDistrictStatusSuccess = (status) => ({
-  type: GET_DISTRICT_STATUS_SUCCESS,
+export const getAdministrativeDivisionStatusSuccess = (status) => ({
+  type: GET_ADMINISTRATIVEDIVISION_STATUS_SUCCESS,
   payload: status,
 });
 
-export const getDistrictStatusFail = (error) => ({
-  type: GET_DISTRICT_STATUS_FAIL,
+export const getAdministrativeDivisionStatusFail = (error) => ({
+  type: GET_ADMINISTRATIVEDIVISION_STATUS_FAIL,
   payload: error,
 });
 
