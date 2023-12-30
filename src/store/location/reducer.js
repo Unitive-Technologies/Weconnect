@@ -61,7 +61,6 @@ const Location = (state = INIT_STATE, action) => {
       };
 
     case GET_LCO_ONLOCATION_SUCCESS:
-      console.log("Lco data in location reducer:", action.payload);
       return {
         ...state,
         lcoonlocation: action.payload,

@@ -67,13 +67,9 @@ function* onAddLocation({ payload: location }) {
   }
 }
 
-function* onUpdateLocation({ payload: { location_id, location } }) {
-  console.log("location id: ", location_id);
-  const stringSelectedId =
-    typeof location_id === "object" ? JSON.stringify(location_id) : location_id;
-  console.log("String selected id: ", stringSelectedId);
+function* onUpdateLocation({ payload: location }) {
   try {
-    const response = yield call(updateLocation, { stringSelectedId, location });
+    const response = yield call(updateLocation, location.id, location);
     console.log("Response data in saga: ", response);
     yield put(updateLocationSuccess(response));
   } catch (error) {

@@ -249,11 +249,16 @@ export const addNewNotificationTemplate = (notificationTemplate) =>
 
 export const getScheduleCustomerNotification = () =>
   get(url.GET_SCHEDULECUSTOMERNOTIFICATION);
-export const getScheduleCustomerNotificationType = () => get(url.GET_SCHEDULECUSTOMERNOTIFICATION_TYPE);
-export const getScheduleCustomerNotificationStatus = () => get(url.GET_SCHEDULECUSTOMERNOTIFICATION_STATUS);
-export const getScheduleCustomerNotificationSMS = () => get(url.GET_SCHEDULECUSTOMERNOTIFICATION_SMS);
-export const getScheduleCustomerNotificationOSD = () => get(url.GET_SCHEDULECUSTOMERNOTIFICATION_OSD);
-export const getScheduleCustomerNotificationBmail = () => get(url.GET_SCHEDULECUSTOMERNOTIFICATION_BMAIL);
+export const getScheduleCustomerNotificationType = () =>
+  get(url.GET_SCHEDULECUSTOMERNOTIFICATION_TYPE);
+export const getScheduleCustomerNotificationStatus = () =>
+  get(url.GET_SCHEDULECUSTOMERNOTIFICATION_STATUS);
+export const getScheduleCustomerNotificationSMS = () =>
+  get(url.GET_SCHEDULECUSTOMERNOTIFICATION_SMS);
+export const getScheduleCustomerNotificationOSD = () =>
+  get(url.GET_SCHEDULECUSTOMERNOTIFICATION_OSD);
+export const getScheduleCustomerNotificationBmail = () =>
+  get(url.GET_SCHEDULECUSTOMERNOTIFICATION_BMAIL);
 
 export const addNewScheduleCustomerNotification = (
   schedulecustomernotification
@@ -280,14 +285,14 @@ export const updateCity = ({ city_id, city }) =>
 
 export const getLocation = () => get(url.GET_LOCATION);
 export const addLocation = (location) => post(url.ADD_LOCATION, location);
-export const updateLocation = ({ location_id, location }) =>
-  put(url.updateLocationById(location_id), location);
+export const updateLocation = (id, location) =>
+  put(url.updateLocationById(id), location);
 export const getLcoOnLocation = () => get(url.GET_LCO_ONLOCATION);
 
 export const getSublocation = () => get(url.GET_SUBLOCATION);
 export const addSublocation = (sublocation) =>
   post(url.ADD_SUBLOCATION, sublocation);
-export const updateSublocation = ({ sublocation_id, sublocation }) =>
+export const updateSublocation = (sublocation_id, sublocation) =>
   put(url.updateSublocationById(sublocation_id), sublocation);
 
 export const getRegionalOffice = () => get(url.GET_REGIONALOFFICE);

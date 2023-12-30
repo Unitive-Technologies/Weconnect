@@ -80,8 +80,7 @@ export const updateCityById = (city_id) => "";
 export const GET_LOCATION =
   "/location?expand=created_by_lbl,operator_lbl,operator_code,status_lbl&vr=web1.0";
 export const ADD_LOCATION = "/location?vr=web1.0";
-export const updateLocationById = (location_id) =>
-  `/location/${location_id}?vr=web1.0`;
+export const updateLocationById = (id) => `/location/${id}?vr=web1.0`;
 export const GET_LCO_ONLOCATION =
   "/operator/list?fields=id,name,code&expand=branch_lbl,distributor_lbl&filter[type]=3&per-page=100&vr=web1.0";
 

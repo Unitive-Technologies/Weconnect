@@ -88,7 +88,6 @@ const AddNewLocation = (props) => {
       tabIndex="-1"
       toggle={handleAddLocation}
     >
-      {console.log("LCO Options: ", options)}
       <ModalHeader tag="h4" toggle={handleAddLocation}>
         Add New Location
       </ModalHeader>

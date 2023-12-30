@@ -38,7 +38,6 @@ const ViewLocation = (props) => {
       dispatch(onGetLco());
     }
   }, [dispatch, lcos]);
-  // console.log("Lco In add location: ", lcos);
 
   const options = lcoonlocation.map((option) => ({
     value: option.name,
@@ -86,7 +85,7 @@ const ViewLocation = (props) => {
         created_by_lbl: values["created_by_lbl"],
       };
       console.log("Updated Location:" + updateLocation);
-      dispatch(onUpdateLocation({ updateLocation, id }));
+      dispatch(onUpdateLocation(updateLocation));
       validation.resetForm();
       handleViewLocation();
     },
