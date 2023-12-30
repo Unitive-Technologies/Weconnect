@@ -52,6 +52,7 @@ import reason from "./reasonlist/reducer";
 import bank from "./banklist/reducer";
 import promovoucher from "./promovoucherlist/reducer";
 import admindetails from "./admin/reducer";
+import inventorystock from "./inventorystock/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -103,6 +104,7 @@ const rootReducer = combineReducers({
   bank,
   promovoucher,
   admindetails,
+  inventorystock,
 });
 
 export default rootReducer;

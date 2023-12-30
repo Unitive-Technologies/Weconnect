@@ -401,7 +401,8 @@ export const addNewPromoVoucher = (provoucher) =>
 export const getSMSMessageTempList = () => get(url.GET_SMSMESSAGETEMPLIST);
 export const addNewSMSMessageTempList = (smsmsg) =>
   post(url.ADD_NEW_SMSMESSAGETEMPLIST, smsmsg);
-// add user
+
+export const getInventoryStock = () => get(url.GET_INVENTORYSTOCK);
 
 export const addNewUser = (user) => post(url.ADD_NEW_USER, user);
 

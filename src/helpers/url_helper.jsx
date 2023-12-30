@@ -229,3 +229,6 @@ export const GET_LCO_STAFF_POLICY =
   "/menu-access-right/list?expand=user_type_lbl&fields=_id,user_id,user_type,role&filter[type][]=1&filter[type][]=2&filter[user_type]=3&filter[role_id]=2&vr=web1.0";
 export const GET_LCO_USER_POLICY =
   "/menu-access-right/list?expand=user_type_lbl&fields=_id,user_id,user_type,role&filter[type][]=1&filter[type][]=2&filter[user_type]=3&filter[role_id]=3&vr=web1.0";
+
+export const GET_INVENTORYSTOCK =
+  "/smartcard?expand=po_date,po_number,invoice_no,invoice_date,created_by_lbl,cas_lbl,status_lbl,brand_lbl,warehouse_lbl,state_lbl,inv_state_lbl&filter[status]=1&filter[stb_id]=0&page=1&per-page=50&vr=web1.0";

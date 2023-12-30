@@ -55,3 +55,5 @@ export * from "./reasonlist/actions";
 export * from "./banklist/actions";
 export * from "./promovoucherlist/actions";
 export * from "./admin/actions";
+
+export * from "./inventorystock/actions";
