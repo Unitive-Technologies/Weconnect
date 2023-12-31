@@ -30,6 +30,7 @@ import UploadUserModal from "./UploadUserModal";
 import BulkUpdateUserModal from "./BulkUpdateUserModal";
 import BulkInactiveUserModal from "./BulkInactiveUserModal";
 import BulkUserSettings from "./BulkUserSettings";
+import ViewModal from "./ViewModal";
 
 const ContactsList = (props) => {
   //meta title
@@ -452,7 +453,7 @@ const ContactsList = (props) => {
   // console.log("policy-mso:" + userMsoPolicy);
   return (
     <React.Fragment>
-      <ViewUserModal
+      {/* <ViewUserModal
         isOpen={showViewUser}
         handleViewUser={handleViewUser}
         user={viewUser}
@@ -460,7 +461,15 @@ const ContactsList = (props) => {
         userStatus={userStatus}
         userRole={userRole}
         userDesignation={userDesignation}
-        // userRegional={userRegional}
+      /> */}
+      <ViewModal
+        isOpen={showViewUser}
+        handleViewUser={handleViewUser}
+        user={viewUser}
+        userType={userType}
+        userStatus={userStatus}
+        userRole={userRole}
+        userDesignation={userDesignation}
       />
       <AddUserModal
         isOpen={showAddUser}

@@ -161,7 +161,7 @@ const BulkInactiveUserModal = (props) => {
         Cell: (cellProps) => (
           <input
             type="checkbox"
-            // onChange={() => handleActive(cellProps.row.original)}
+            onChange={() => handleActive(cellProps.row.original)}
           />
         ),
       },
