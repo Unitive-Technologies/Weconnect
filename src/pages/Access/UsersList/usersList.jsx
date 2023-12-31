@@ -382,35 +382,35 @@ const ContactsList = (props) => {
   };
 
   // const [filteredUsers, setFilteredUsers] = useState([]);
-  const [filteredActiveBlockUsers, setFilteredActiveBlockUsers] = useState([]);
-  const [filteredInActiveUsers, setFilteredInActiveUsers] = useState([]);
-  const [filteredActiveInactiveUsers, setFilteredActiveInactiveUsers] =
-    useState([]);
-  useEffect(() => {
-    // console.log("@@@@users:" + JSON.stringify(users));
-    if (users) {
-      const filteredActiveBlockData = users.filter(
-        (user) => parseInt(user.status) === 1 || -7
-      );
-      // console.log("@@@@@@@@@filter:" + JSON.stringify(filteredActiveBlockData));
-      setFilteredActiveBlockUsers(filteredActiveBlockData);
-      const filteredInActiveData = users.filter(
-        (user) => parseInt(user.status) === 0
-      );
+  // const [filteredActiveBlockUsers, setFilteredActiveBlockUsers] = useState([]);
+  // const [filteredInActiveUsers, setFilteredInActiveUsers] = useState([]);
+  // const [filteredActiveInactiveUsers, setFilteredActiveInactiveUsers] =
+  //   useState([]);
+  // useEffect(() => {
+  //   // console.log("@@@@users:" + JSON.stringify(users));
+  //   if (users) {
+  //     const filteredActiveBlockData = users.filter(
+  //       (user) => parseInt(user.status) === 1 && parseInt(user.status) === -7
+  //     );
+  //     // console.log("@@@@@@@@@filter:" + JSON.stringify(filteredActiveBlockData));
+  //     setFilteredActiveBlockUsers(filteredActiveBlockData);
+  //     const filteredInActiveData = users.filter(
+  //       (user) => parseInt(user.status) === 0
+  //     );
 
-      // console.log("@@@@@@@@@filter:" + JSON.stringify(filteredInActiveData));
-      setFilteredInActiveUsers(filteredInActiveData);
-      const filteredActiveInactiveData = users.filter(
-        (user) => parseInt(user.status) === 0 || 1
-      );
-      setFilteredActiveInactiveUsers(filteredActiveInactiveData);
-    }
-    // console.log("ActiveBlock:" + JSON.stringify(filteredActiveBlockUsers));
-    // console.log("Inactive:" + JSON.stringify(filteredInActiveUsers));
-    // console.log(
-    //   "ActiveInactive:" + JSON.stringify(filteredActiveInactiveUsers)
-    // );
-  }, [users]);
+  //     // console.log("@@@@@@@@@filter:" + JSON.stringify(filteredInActiveData));
+  //     setFilteredInActiveUsers(filteredInActiveData);
+  //     const filteredActiveInactiveData = users.filter(
+  //       (user) => parseInt(user.status) === 0 && parseInt(user.status) === 1
+  //     );
+  //     setFilteredActiveInactiveUsers(filteredActiveInactiveData);
+  //   }
+  //   // console.log("ActiveBlock:" + JSON.stringify(filteredActiveBlockUsers));
+  //   // console.log("Inactive:" + JSON.stringify(filteredInActiveUsers));
+  //   // console.log(
+  //   //   "ActiveInactive:" + JSON.stringify(filteredActiveInactiveUsers)
+  //   // );
+  // }, [users]);
 
   const keyField = "id";
 
@@ -485,9 +485,9 @@ const ContactsList = (props) => {
       <BulkInactiveUserModal
         isOpen={showInactivateUser}
         handleBulkInactiveUser={handleBulkInactiveUser}
-        filteredActiveBlockUsers={filteredActiveBlockUsers}
-        filteredInActiveUsers={filteredInActiveUsers}
-        filteredActiveInactiveUsers={filteredActiveInactiveUsers}
+        // filteredActiveBlockUsers={filteredActiveBlockUsers}
+        // filteredInActiveUsers={filteredInActiveUsers}
+        // filteredActiveInactiveUsers={filteredActiveInactiveUsers}
         users={users}
         // setUsers={setUsers}
       />

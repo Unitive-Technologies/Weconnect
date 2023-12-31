@@ -472,44 +472,41 @@ const ViewUserModal = (props) => {
                     ) : null}
                   </div>
                 </Col>
+
                 <Col lg={4}>
-                  {validation.values.type && (
-                    <div className="mb-3">
-                      <Label className="form-label">
-                        Select MSO<span style={{ color: "red" }}>*</span>
-                      </Label>
-                      <Input
-                        name="mso"
-                        type="select"
-                        placeholder="Select MSO"
-                        className="form-select"
-                        onChange={handleMsoChange}
-                        onBlur={validation.handleBlur}
-                        value={validation.values.mso || ""}
-                      >
-                        {/* <option value="">Select MSO</option> */}
-                        {user &&
-                          distributorList.map(
-                            (mso) =>
-                              user.operator_id === mso.id && (
-                                <option key={mso.id} value={mso.id}>
-                                  {mso.name}
-                                </option>
-                              )
-                          )}
-                        {/* {userMsoDetails.map((mso) => (
+                  {/* {validation.values.type && ( */}
+                  <div className="mb-3">
+                    <Label className="form-label">
+                      Select MSO<span style={{ color: "red" }}>*</span>
+                    </Label>
+                    <Input
+                      name="mso"
+                      type="select"
+                      placeholder="Select MSO"
+                      className="form-select"
+                      onChange={handleMsoChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.mso || ""}
+                    >
+                      {/* <option value="">Select MSO</option> */}
+                      {userMsoDetails.map((mso) => (
+                        <option key={mso.id} value={mso.id}>
+                          {mso.name}
+                        </option>
+                      ))}
+                      {/* {userMsoDetails.map((mso) => (
                           <option key={mso.id} value={mso.id}>
                             {mso.name}
                           </option>
                         ))} */}
-                      </Input>
-                      {validation.touched.mso && validation.errors.mso ? (
-                        <FormFeedback type="invalid">
-                          {validation.errors.mso}
-                        </FormFeedback>
-                      ) : null}
-                    </div>
-                  )}
+                    </Input>
+                    {validation.touched.mso && validation.errors.mso ? (
+                      <FormFeedback type="invalid">
+                        {validation.errors.mso}
+                      </FormFeedback>
+                    ) : null}
+                  </div>
+                  {/* )} */}
                 </Col>
                 {/* {console.log("selectedType: " + typeof selectedType)}
               {console.log("msoValue: " + typeof validation.values.mso)} */}

@@ -30,20 +30,22 @@ const BulkInactiveUserModal = (props) => {
     isOpen,
     handleBulkInactiveUser,
     users,
-    filteredActiveBlockUsers,
-    filteredInActiveUsers,
-    filteredActiveInactiveUsers,
+    // filteredActiveBlockUsers,
+    // filteredInActiveUsers,
+    // filteredActiveInactiveUsers,
     setUsers,
   } = props;
-
+  // console.log(
+  //   "Inactive in bulk modal:" + JSON.stringify(filteredInActiveUsers)
+  // );
   const dispatch = useDispatch();
   const [tableList, setTableList] = useState([]);
   // const selectedusers = [];
   const [selectedStatusToSet, setSelectedStatusToSet] = useState("active");
-  // const [filteredActiveBlockUsers, setFilteredActiveBlockUsers] = useState([]);
-  // const [filteredInActiveUsers, setFilteredInActiveUsers] = useState([]);
-  // const [filteredActiveInactiveUsers, setFilteredActiveInactiveUsers] =
-  //   useState([]);
+  const [filteredActiveBlockUsers, setFilteredActiveBlockUsers] = useState([]);
+  const [filteredInActiveUsers, setFilteredInActiveUsers] = useState([]);
+  const [filteredActiveInactiveUsers, setFilteredActiveInactiveUsers] =
+    useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
 
   const handleActive = (row) => {
@@ -62,50 +64,70 @@ const BulkInactiveUserModal = (props) => {
       setUsers((prevUsers) => prevUsers.filter((user) => user.id !== row.id));
     }
   };
+
+  // if (statustoset === "active") {
+  //   setTableList(filteredInActiveUsers);
+  // } else if (statustoset === "inactive") {
+  //   setTableList(filteredActiveBlockUsers);
+  // } else if (statustoset === "block") {
+  //   setTableList(filteredActiveInactiveUsers);
+  // } else setTableList([]);
+  // console.log("tableList:" + JSON.stringify(tableList));
+
   const handleStatusChange = (e) => {
     const statustoset = e.target.value;
     setSelectedStatusToSet(statustoset);
     validation.handleChange(e);
-
-    if (statustoset === "active") {
-      setTableList(filteredInActiveUsers);
-    } else if (statustoset === "inactive") {
-      setTableList(filteredActiveBlockUsers);
-    } else if (statustoset === "block") {
-      setTableList(filteredActiveInactiveUsers);
-    } else setTableList([]);
-    // const filteredActiveBlockData = users.filter(
-    //   (user) => parseInt(user.status) === 0 && parseInt(user.status) === 1
-    // );
-    // setFilteredActiveBlockUsers(filteredActiveBlockData);
-    // const filteredInActiveData = users.filter(
-    //   (user) => parseInt(user.status) === 2
-    // );
-    // setFilteredInActiveUsers(filteredInActiveData);
-    // const filteredActiveInactiveData = users.filter(
-    //   (user) => (parseInt(user.status) === 0) & (parseInt(user.status) === 2)
-    // );
-    // setFilteredActiveInactiveUsers(filteredActiveInactiveData);
-    // console.log("ActiveBlock:" + JSON.stringify(filteredActiveBlockData));
-    // console.log("Inactive:" + JSON.stringify(filteredInActiveData));
-    // console.log("ActiveInactive:" + JSON.stringify(filteredActiveInactiveData));
+    console.log("statustoset:" + statustoset);
   };
+  // const handleStatusChange = (e) => {
+  //   const statustoset = e.target.value;
+  //   setSelectedStatusToSet(statustoset);
+  //   validation.handleChange(e);
+  //   console.log("statustoset:" + statustoset);
 
-  // useEffect(() => {
-  //   const filteredActiveBlockData = users.filter(
-  //     (user) => user.status === 0 && user.status === 1
-  //   );
-  //   setFilteredActiveBlockUsers(filteredActiveBlockData);
-  //   const filteredInActiveData = users.filter((user) => user.status === 2);
-  //   setFilteredInActiveUsers(filteredInActiveData);
-  //   const filteredActiveInactiveData = users.filter(
-  //     (user) => (user.status === 0) & (user.status === 2)
-  //   );
-  //   setFilteredActiveInactiveUsers(filteredActiveInactiveData);
-  //   console.log("ActiveBlock:" + JSON.stringify(filteredActiveBlockData));
-  //   console.log("Inactive:" + JSON.stringify(filteredInActiveData));
-  //   console.log("ActiveInactive:" + JSON.stringify(filteredActiveInactiveData));
-  // }, [users]);
+  //   if (statustoset === "inactive") {
+  //     const filteredActiveBlockData = users.filter(
+  //       (user) => parseInt(user.status) === 1 && parseInt(user.status) === -7
+  //     );
+  //     setTableList(filteredActiveBlockData);
+  //   } else if (statustoset === "active") {
+  //     const filteredInActiveData = users.filter(
+  //       (user) => parseInt(user.status) === 0
+  //     );
+  //     setTableList(filteredInActiveData);
+  //   } else if (statustoset === "block") {
+  //     const filteredActiveInactiveData = users.filter(
+  //       (user) => parseInt(user.status) === 0 && parseInt(user.status) === 1
+  //     );
+  //     setTableList(filteredActiveInactiveData);
+  //   } else return [];
+  //   // console.log("ActiveBlock:" + JSON.stringify(filteredActiveBlockData));
+  //   // console.log("Inactive:" + JSON.stringify(filteredInActiveData));
+  //   // console.log("ActiveInactive:" + JSON.stringify(filteredActiveInactiveData));
+  // };
+
+  useEffect(() => {
+    if (users) {
+      const filteredActiveBlockData = users.filter(
+        (user) => parseInt(user.status) === -7 || parseInt(user.status) === 1
+      );
+      setFilteredActiveBlockUsers(filteredActiveBlockData);
+      const filteredInActiveData = users.filter(
+        (user) => parseInt(user.status) === 0
+      );
+      setFilteredInActiveUsers(filteredInActiveData);
+      const filteredActiveInactiveData = users.filter(
+        (user) => parseInt(user.status) === 1 || parseInt(user.status) === 0
+      );
+      setFilteredActiveInactiveUsers(filteredActiveInactiveData);
+    }
+    // console.log("ActiveBlock:" + JSON.stringify(filteredActiveBlockUsers));
+    // console.log("Inactive:" + JSON.stringify(filteredInActiveUsers));
+    // console.log(
+    //   "ActiveInactive:" + JSON.stringify(filteredActiveInactiveUsers)
+    // );
+  }, [users, selectedStatusToSet]);
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -139,7 +161,7 @@ const BulkInactiveUserModal = (props) => {
         Cell: (cellProps) => (
           <input
             type="checkbox"
-            onChange={() => handleActive(cellProps.row.original)}
+            // onChange={() => handleActive(cellProps.row.original)}
           />
         ),
       },
@@ -166,7 +188,7 @@ const BulkInactiveUserModal = (props) => {
 
       {
         Header: "Name",
-        // accessor: "name",
+        accessor: "name",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -194,7 +216,7 @@ const BulkInactiveUserModal = (props) => {
       },
       {
         Header: "Login ID",
-        // accessor: "login",
+        accessor: "username",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -210,18 +232,19 @@ const BulkInactiveUserModal = (props) => {
       },
       {
         Header: "Status",
-        // accessor: "status",
+        accessor: "status_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.status === 1
+                  {cellProps.row.original.status_lbl}
+                  {/* {cellProps.row.original.status === 1
                     ? "Active"
                     : cellProps.row.original.status === 0
                     ? "In-Active"
-                    : "Blocked"}
+                    : "Blocked"} */}
                 </Link>
               </h5>
             </>
@@ -230,20 +253,21 @@ const BulkInactiveUserModal = (props) => {
       },
       {
         Header: "Type",
-        // accessor: "type",
+        accessor: "type",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.status === 0
+                  {cellProps.row.original.type_lbl}
+                  {/* {cellProps.row.original.status === 0
                     ? "MSO"
                     : cellProps.row.original.status === 1
                     ? "RO"
                     : cellProps.row.original.status === 2
                     ? "DISTRIBUTOR"
-                    : "LCO"}
+                    : "LCO"} */}
                 </Link>
               </h5>
             </>
@@ -252,18 +276,19 @@ const BulkInactiveUserModal = (props) => {
       },
       {
         Header: "Role",
-        // accessor: "role",
+        accessor: "role_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.status === 1
+                  {cellProps.row.original.status.role_lbl}
+                  {/* {cellProps.row.original.status === 1
                     ? "Administrator"
                     : cellProps.row.original.status === 2
                     ? "Staff"
-                    : "User"}
+                    : "User"} */}
                 </Link>
               </h5>
             </>
@@ -272,7 +297,7 @@ const BulkInactiveUserModal = (props) => {
       },
       {
         Header: "Organization",
-        // accessor: "organization",
+        accessor: "operator_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -327,10 +352,10 @@ const BulkInactiveUserModal = (props) => {
                   whiteSpace: "nowrap",
                 }}
                 className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  toggleViewModal(userData);
-                }}
+                // onClick={() => {
+                //   const userData = cellProps.row.original;
+                //   toggleViewModal(userData);
+                // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -427,7 +452,8 @@ const BulkInactiveUserModal = (props) => {
                       type="select"
                       placeholder="Select Status to set"
                       className="form-select"
-                      onChange={validation.handleChange}
+                      // onChange={validation.handleChange}
+                      onChange={handleStatusChange}
                       onBlur={validation.handleBlur}
                       value={validation.values.statustoset}
                     >
@@ -480,16 +506,18 @@ const BulkInactiveUserModal = (props) => {
                   </div>
                 </Col>
               </Row>
-
+              {console.log("tableList: " + JSON.stringify(tableList))}
               <TableContainer
                 isPagination={true}
                 columns={columns}
                 data={
-                  validation.values.statustoset === "active"
+                  selectedStatusToSet === "active"
                     ? filteredInActiveUsers
-                    : validation.values.statustoset === "inactive"
+                    : selectedStatusToSet === "inactive"
                     ? filteredActiveBlockUsers
-                    : filteredActiveInactiveUsers
+                    : selectedStatusToSet === "block"
+                    ? filteredActiveInactiveUsers
+                    : []
                 }
                 isGlobalFilter={true}
                 isShowingPageLength={true}
