@@ -101,7 +101,7 @@ function* onUpdateDistrict({ payload: district }) {
   try {
     const response = yield call(updateDistrict, district.id, district);
     console.log("Response data in saga: ", response);
-    yield put(updateDistrictSuccess(response));
+    yield put(updateDistrictSuccess(response.data));
   } catch (error) {
     console.log("Error in update district: ", error);
     yield put(updateDistrictFail(error));

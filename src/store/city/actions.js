@@ -44,8 +44,9 @@ export const addCityFail = (error) => ({
   payload: error,
 });
 
-export const getDistrictByStateid = () => ({
+export const getDistrictByStateid = (selectedData) => ({
   type: GET_DISTRICT_BYSTATEID,
+  payload: selectedData,
 });
 
 export const getDistrictByStateidSuccess = (districtlist) => ({

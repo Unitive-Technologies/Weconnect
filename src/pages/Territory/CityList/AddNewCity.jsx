@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   Col,
@@ -15,10 +15,22 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addCity as onAddCity } from "/src/store/city/actions";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  getCity as onGetCity,
+  getDistrictByStateid as onGetDistrictByStateid,
+} from "/src/store/actions";
+import { createSelector } from "reselect";
 
 const AddNewCity = (props) => {
-  const { isOpen, handleShowCity, status, statelist, districtlist } = props;
+  const { isOpen, handleShowCity, status, statelist } = props;
+  const selectCityState = (state) => state.city;
+  const cityProperties = createSelector(selectCityState, (city) => ({
+    cits: city.city,
+    loading: city.loading,
+    districtlist: city.districtlist,
+  }));
+  const { cits, loading, districtlist } = useSelector(cityProperties);
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -56,6 +68,7 @@ const AddNewCity = (props) => {
       };
       console.log("new city:" + JSON.stringify(newCity));
       dispatch(onAddCity(newCity));
+      dispatch(onGetCity());
       validation.resetForm();
       handleShowCity();
     },
@@ -63,6 +76,9 @@ const AddNewCity = (props) => {
       validation.setValues(validation.initialValues);
     },
   });
+  useEffect(() => {
+    dispatch(onGetDistrictByStateid(validation.values.state_id));
+  }, [dispatch]);
 
   return (
     <Modal
@@ -125,6 +141,7 @@ const AddNewCity = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.state_id || ""}
+                  onClick={onGetDistrictByStateid(validation.values.state_id)}
                 >
                   <option value="">Select state</option>
                   {statelist.map((options) => (

@@ -73,8 +73,8 @@ export const updateDistrictById = (id) =>
 export const GET_CITY =
   "/administrative-division?filter[type]=3&expand=created_by_lbl,operator_lbl,status_lbl,state_lbl,state_code_lbl,district_lbl,district_code_lbl&vr=web1.0";
 export const ADD_CITY = "/administrative-division?vr=web1.0";
-export const GET_DISTRICT_BYSTATEID =
-  "/administrative-division?&filter[state_id]=1&filter[type]=2&per-page=100&vr=web1.0";
+export const GET_DISTRICT_BYSTATEID = (id) =>
+  `/administrative-division?&filter[state_id]=${id}&filter[type]=2&per-page=100&vr=web1.0`;
 export const updateCityById = (city_id) => "";
 
 export const GET_LOCATION =

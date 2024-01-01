@@ -52,18 +52,17 @@ const CityList = (props) => {
 
   const { districts, status, statelist } = useSelector(districtProperties);
   const { cits, loading, districtlist } = useSelector(cityProperties);
-
   const [isLoading, setLoading] = useState(loading);
-
   const [showAddCity, setShowAddCity] = useState(false);
   const [showUploadCity, setShowUploadCity] = useState(false);
   const [showViewCity, setShowViewCity] = useState(false);
   const [viewCityData, setViewCityData] = useState({});
 
-  const handleViewCity = (userData) => {
-    console.log("User Data: ", userData);
+  const handleViewCity = (selectedData) => {
+    console.log("User Data id: ", selectedData);
     setShowViewCity(!showViewCity);
-    setViewCityData(userData);
+    setViewCityData(selectedData);
+    dispatch(onGetDistrictByStateid(selectedData));
   };
 
   const columns = useMemo(
@@ -228,8 +227,8 @@ const CityList = (props) => {
                 to="#"
                 className="text-success"
                 onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
+                  const selectedData = cellProps.row.original;
+                  handleUserClick(selectedData);
                 }}
               >
                 <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
@@ -261,9 +260,13 @@ const CityList = (props) => {
   useEffect(() => {
     if (cits && !cits.length) {
       dispatch(onGetCity());
-      dispatch(onGetDistrictByStateid());
+      // dispatch(onGetDistrictByStateid(viewCityData.state_id));
     }
   }, [dispatch, cits]);
+
+  useEffect(() => {
+    dispatch(onGetDistrictByStateid(0));
+  }, [dispatch]);
 
   useEffect(() => {
     if (districts && !districts.length) {
@@ -279,8 +282,6 @@ const CityList = (props) => {
   const handleUploadCity = () => {
     setShowUploadCity(!showUploadCity);
   };
-
-  const keyField = "id";
 
   const getTableActions = () => {
     return [

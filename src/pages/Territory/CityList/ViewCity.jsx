@@ -19,7 +19,8 @@ import { useDispatch } from "react-redux";
 import { updateCity as onUpdateCity } from "/src/store/city/actions";
 
 const ViewCity = (props) => {
-  const { isOpen, handleViewCity, city } = props;
+  const { isOpen, handleViewCity, city, status, statelist, districtlist } =
+    props;
   const dispatch = useDispatch();
   const [showEditCity, setShowEditCity] = useState(false);
 
@@ -36,10 +37,12 @@ const ViewCity = (props) => {
       description: (city && city.description) || "",
       created_at: (city && city.created_at) || "",
       created_by: (city && city.created_by) || "my mso(mso)",
+      state_id: (city && city.state_id) || "",
+      type: (city && city.type) || 3,
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter district name"),
-      state_lbl: Yup.string().required("Select state"),
+      state_id: Yup.string().required("Select state"),
       district_lbl: Yup.string().required("Select district"),
       status: Yup.string().required("Select status"),
       description: Yup.string().required("Enter description"),
@@ -54,6 +57,8 @@ const ViewCity = (props) => {
         description: values["description"],
         created_at: new Date(),
         created_by: values["created_by"],
+        state_id: values["state_id"],
+        type: values["type"],
       };
       console.log("Updated City:" + updateCity);
       dispatch(onUpdateCity(updateCity));
@@ -138,24 +143,24 @@ const ViewCity = (props) => {
                   State<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="state_lbl"
+                  name="state_id"
                   type="select"
                   placeholder="Select state"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.state_lbl || ""}
+                  value={validation.values.state_id || ""}
                   disabled={!showEditCity}
                 >
-                  {/* {stateNames.map((options) => (
-                    <option key={options.id} value={options.name}>
+                  {statelist.map((options) => (
+                    <option key={options.id} value={options.id}>
                       {options.name}
                     </option>
-                  ))} */}
+                  ))}
                 </Input>
-                {validation.touched.state_lbl && validation.errors.state_lbl ? (
+                {validation.touched.state_id && validation.errors.state_id ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.state_lbl}
+                    {validation.errors.state_id}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -175,11 +180,11 @@ const ViewCity = (props) => {
                   value={validation.values.district_lbl || ""}
                   disabled={!showEditCity}
                 >
-                  {/* {stateNames.map((options) => (
-                    <option key={options.id} value={options.name}>
+                  {districtlist.map((options) => (
+                    <option key={options.id} value={options.id}>
                       {options.name}
                     </option>
-                  ))} */}
+                  ))}
                 </Input>
                 {validation.touched.district_lbl &&
                 validation.errors.district_lbl ? (
@@ -233,9 +238,11 @@ const ViewCity = (props) => {
                   value={validation.values.status || ""}
                   disabled={!showEditCity}
                 >
-                  <option value="11">Active</option>
-                  <option value="12">BLOCKED</option>
-                  <option value="13">In-Active</option>
+                  {status.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">

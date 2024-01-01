@@ -30,7 +30,6 @@ const DistrictList = (props) => {
 
   const dispatch = useDispatch();
   const [showAddDistrict, setShowAddDistrict] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
   const [showUploadDistrict, setShowUploadDistrict] = useState(false);
   const [showViewDistrict, setShowViewDistrict] = useState(false);
   const [viewDistrictData, setViewDistrictData] = useState({});
