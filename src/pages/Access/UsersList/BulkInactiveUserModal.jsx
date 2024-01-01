@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
+import axios from "axios";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
 import {
@@ -27,6 +28,7 @@ import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const BulkInactiveUserModal = (props) => {
   const { isOpen, handleBulkInactiveUser, users } = props;
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
 
   const dispatch = useDispatch();
   const [tableList, setTableList] = useState([]);
@@ -39,23 +41,20 @@ const BulkInactiveUserModal = (props) => {
   const [selectedUsers, setSelectedUsers] = useState([]);
 
   const handleActive = (row) => {
-    // Check if the row is already selected
     const isRowSelected = selectedUsers.some((user) => user.id === row.id);
 
-    // If the row is selected, remove it from tableList and deselect the checkbox
     if (isRowSelected) {
       setTableList((prevTableList) =>
         prevTableList.filter((user) => user.id !== row.id)
       );
-      // Deselect the checkbox
+
       row.original.isSelected = false;
     } else {
-      // If the row is not selected, add it to selectedUsers, remove it from tableList, and deselect the checkbox
       setSelectedUsers((prevSelectedUsers) => [...prevSelectedUsers, row]);
       setTableList((prevTableList) =>
         prevTableList.filter((user) => user.id !== row.id)
       );
-      // Deselect the checkbox
+
       row.original.isSelected = false;
     }
   };
@@ -87,6 +86,7 @@ const BulkInactiveUserModal = (props) => {
       setTableList([]);
     }
   }, [users, selectedStatusToSet]);
+
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -95,16 +95,48 @@ const BulkInactiveUserModal = (props) => {
     },
     validationSchema: Yup.object({
       statustoset: Yup.string().required("Please Enter Status"),
+      // block_message: Yup.string().when(["statustoset"], {
+      //   is: (statustoset) => statustoset && statustoset !== "active",
+      //   then: Yup.string().required("Please Enter Message"),
+      //   otherwise: Yup.string(),
+      // }),
     }),
-    onSubmit: (values) => {
-      const newStatus = {
-        block_message: values["block_message"],
-        status: parseInt(values["statustoset"]),
-      };
-      console.log("newUser:" + JSON.stringify(newStatus));
-      dispatch(onUpdateUser(newStatus));
-      validation.resetForm();
-      handleAddUser();
+
+    onSubmit: async (values) => {
+      try {
+        const newStatus = {
+          user_id: selectedUsers.map((user) => user.id),
+          block_message: values.block_message,
+          status:
+            values.statustoset === "active"
+              ? 1
+              : values.statustoset === "inactive"
+              ? 0
+              : values.statustoset === "block"
+              ? -7
+              : 2,
+        };
+
+        console.log("newUser:", JSON.stringify(newStatus));
+        const token = "Bearer " + localStorage.getItem("temptoken");
+
+        const response = await axios.post(
+          "https://sms.unitch.in/api/index.php/v1/user/bulk-status/2?vr=web1.0",
+          newStatus,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+
+        console.log("Axios Response:", response);
+
+        validation.resetForm();
+        handleBulkInactiveUser();
+      } catch (error) {
+        console.error("Error in onSubmit:", error);
+      }
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -436,6 +468,7 @@ const BulkInactiveUserModal = (props) => {
                     ) : null}
                   </div>
                 </Col>
+                {console.log("status: " + selectedStatusToSet)}
                 <Col lg={4}>
                   <div className="mb-3">
                     <Label className="form-label">
@@ -457,7 +490,8 @@ const BulkInactiveUserModal = (props) => {
                           : false
                       }
                       disabled={
-                        selectedStatusToSet === "inactive" || "block"
+                        selectedStatusToSet === "inactive" ||
+                        selectedStatusToSet === "block"
                           ? false
                           : true
                       }
@@ -471,7 +505,7 @@ const BulkInactiveUserModal = (props) => {
                   </div>
                 </Col>
               </Row>
-              {console.log("tableList: " + JSON.stringify(tableList))}
+              {/* {console.log("tableList: " + JSON.stringify(tableList))} */}
               <TableContainer
                 isPagination={true}
                 columns={columns}
@@ -532,7 +566,13 @@ const BulkInactiveUserModal = (props) => {
                     justifyContent: "center",
                   }}
                 >
-                  <button type="button" className="btn btn-primary ml-2 ">
+                  <button
+                    type="submit"
+                    className="btn btn-primary ml-2 "
+                    // onClick={() => {
+                    //   validation.handleSubmit();
+                    // }}
+                  >
                     Save
                   </button>
                   <button
