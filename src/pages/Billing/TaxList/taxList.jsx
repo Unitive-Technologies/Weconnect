@@ -88,9 +88,9 @@ const TaxList = (props) => {
                   {cellProps.row.original.name}
                 </Link>
               </h5>
-              <p className="text-muted mb-0">
+              {/* <p className="text-muted mb-0">
                 {cellProps.row.original.designation}
-              </p>
+              </p> */}
             </>
           );
         },
@@ -117,36 +117,36 @@ const TaxList = (props) => {
       },
       {
         Header: "Valuetype",
-        accessor: "valuetype_lbl",
+        accessor: "valuetype",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.valuetype_lbl}
+              {cellProps.row.original.valuetype}
             </p>
           );
         },
       },
       {
         Header: "Tax On Tax",
-        accessor: "parent_lbl",
+        accessor: "parent_id",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.parent_lbl}
+              {cellProps.row.original.parent_id}
             </p>
           );
         },
       },
       {
         Header: "Status",
-        accessor: "status_lbl",
+        accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.status_lbl}
+              {cellProps.row.original.status}
             </p>
           );
         },
@@ -165,12 +165,12 @@ const TaxList = (props) => {
       },
       {
         Header: "Created By",
-        accessor: "created_by_lbl",
+        accessor: "created_by",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.created_by_lbl}
+              {cellProps.row.original.created_by}
             </p>
           );
         },

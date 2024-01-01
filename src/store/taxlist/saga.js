@@ -15,12 +15,13 @@ const convertTaxListObject = (taxList) => {
       name: tax.name,
       code: tax.code,
       taxvalue: tax.taxvalue,
-      valuetype_lbl: tax.valuetype_lbl,
-      parent_lbl: tax.parent_lbl,
-      designation: tax.designation,
+      status: tax.status,
+      valuetype: tax.valuetype,
+      parent_id: tax.parent_id,
+      applicableon: tax.applicableon,
+      description: tax.description,
       created_at: tax.created_at,
-      created_by_lbl: tax.created_by_lbl,
-      status_lbl: tax.status_lbl,
+      created_by: tax.created_by,
     };
   });
 };

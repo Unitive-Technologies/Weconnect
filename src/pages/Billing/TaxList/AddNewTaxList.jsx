@@ -32,11 +32,11 @@ const AddNewTaxList = (props) => {
       // tax: "",
       name: "",
       code: "",
-      status_lbl: "",
+      status: "",
       taxvalue: "",
-      valuetype_lbl: "",
-      parent_lbl: "",
-      applicable: "",
+      valuetype: "",
+      parent_id: "",
+      applicableon: "",
       description: "",
       created_at: "",
       created_by: "Admin",
@@ -45,11 +45,11 @@ const AddNewTaxList = (props) => {
       // tax: Yup.string().required("Enter tax Name"),
       name: Yup.string().required("Enter tax title"),
       code: Yup.string().required("Enter tax code"),
-      status_lbl: Yup.string().required("Select status"),
+      status: Yup.string().required("Select status"),
       taxvalue: Yup.string().required("Exter Tax Value"),
-      valuetype_lbl: Yup.string().required("Select value-in"),
-      parent_lbl: Yup.string().required(""),
-      applicable: Yup.string().required(""),
+      valuetype: Yup.string().required("Select value-in"),
+      parent_id: Yup.string().required(""),
+      applicableon: Yup.string().required(""),
       description: Yup.string().required("Enter description"),
     }),
     onSubmit: (values) => {
@@ -57,11 +57,11 @@ const AddNewTaxList = (props) => {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         code: values["code"],
-        status_lbl: values["status_lbl"],
+        status: values["status"],
         taxvalue: values["taxvalue"],
-        valuetype_lbl: values["valuetype_lbl"],
-        parent_lbl: values["parent_lbl"],
-        applicable: values["applicable"],
+        valuetype: values["valuetype"],
+        parent_id: values["parent_id"],
+        applicableon: values["applicableon"],
         description: values["description"],
         created_at: new Date(),
         created_by: values["created_by"],
@@ -149,26 +149,26 @@ const AddNewTaxList = (props) => {
                   Status<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="status_lbl"
+                  name="status"
                   type="select"
                   placeholder="Select Status"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.status_lbl || ""}
+                  value={validation.values.status || ""}
                 >
                   <option value="">Select Status</option>
                   {taxStatus &&
-                    taxStatus.map((status_lbl) => (
-                      <option key={status_lbl.id} value={status_lbl.id}>
-                        {status_lbl.name}
+                    taxStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
                       </option>
                     ))}
                 </Input>
-                {validation.touched.status_lbl &&
-                  validation.errors.status_lbl ? (
+                {validation.touched.status &&
+                  validation.errors.status ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.status_lbl}
+                    {validation.errors.status}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -202,26 +202,26 @@ const AddNewTaxList = (props) => {
                   Value In<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="valuetype_lbl"
+                  name="valuetype"
                   type="select"
                   placeholder="Select value-in"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.valuetype_lbl || ""}
+                  value={validation.values.valuetype || ""}
                 >
                   <option value="">Select value-in</option>
                   {taxValues &&
-                    taxValues.map((valuetype_lbl) => (
-                      <option key={valuetype_lbl.id} value={valuetype_lbl.id}>
-                        {valuetype_lbl.name}
+                    taxValues.map((valuetype) => (
+                      <option key={valuetype.id} value={valuetype.id}>
+                        {valuetype.name}
                       </option>
                     ))}
                 </Input>
-                {validation.touched.valuetype_lbl &&
-                  validation.errors.valuetype_lbl ? (
+                {validation.touched.valuetype &&
+                  validation.errors.valuetype ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.valuetype_lbl}
+                    {validation.errors.valuetype}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -230,26 +230,26 @@ const AddNewTaxList = (props) => {
               <div className="mb-3">
                 <Label className="form-label">TaxOn Tax</Label>
                 <Input
-                  name="parent_lbl"
+                  name="parent_id"
                   type="select"
                   placeholder="Select value-in"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.parent_lbl || ""}
+                  value={validation.values.parent_id || ""}
                 >
                   <option value="">No Parent</option>
                   {taxTaxOnTax &&
-                    taxTaxOnTax.map((parent_lbl) => (
-                      <option key={parent_lbl.id} value={parent_lbl.id}>
-                        {parent_lbl.name}
+                    taxTaxOnTax.map((parent_id) => (
+                      <option key={parent_id.id} value={parent_id.id}>
+                        {parent_id.name}
                       </option>
                     ))}
                 </Input>
-                {validation.touched.parent_lbl &&
-                  validation.errors.parent_lbl ? (
+                {validation.touched.parent_id &&
+                  validation.errors.parent_id ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.parent_lbl}
+                    {validation.errors.parent_id}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -262,26 +262,26 @@ const AddNewTaxList = (props) => {
                   Applicable On<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="applicable"
+                  name="applicableon"
                   type="select"
                   placeholder="Select Applicable On"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.applicable || ""}
+                  value={validation.values.applicableon || ""}
                 >
                   <option value=""></option>
                   {taxApply &&
-                    taxApply.map((applicable) => (
-                      <option key={applicable.id} value={applicable.id}>
-                        {applicable.name}
+                    taxApply.map((applicableon) => (
+                      <option key={applicableon.id} value={applicableon.id}>
+                        {applicableon.name}
                       </option>
                     ))}
                 </Input>
-                {validation.touched.applicable &&
-                  validation.errors.applicable ? (
+                {validation.touched.applicableon &&
+                  validation.errors.applicableon ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.applicable}
+                    {validation.errors.applicableon}
                   </FormFeedback>
                 ) : null}
               </div>
