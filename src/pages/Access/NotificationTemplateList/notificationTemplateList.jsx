@@ -269,6 +269,22 @@ const NotificationTemplateList = (props) => {
     setViewUser(userData);
   };
 
+
+  const handleUserClick = (arg) => {
+    const user = arg;
+
+    setContact({
+      id: user.id,
+      name: user.name,
+      designation: user.designation,
+      email: user.email,
+      tags: user.tags,
+      projects: user.projects,
+    });
+
+    handleAddNotificationTemplate();
+  };
+
   const getTableActions = () => {
     return [
       {

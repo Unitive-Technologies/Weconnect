@@ -16,9 +16,12 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewTaxList as onAddNewTaxList } from "/src/store/taxlist/actions";
 import { useDispatch } from "react-redux";
+import { getTax as onGetTax } from "/src/store/actions";
+
 
 const AddNewTaxList = (props) => {
-  const { isOpen, handleAddTax } = props;
+  const { isOpen, handleAddTax, taxValues, taxStatus, taxTaxOnTax, taxApply } = props;
+
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -26,7 +29,7 @@ const AddNewTaxList = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      //BroadCaster: "",
+      // tax: "",
       name: "",
       code: "",
       status_lbl: "",
@@ -39,6 +42,7 @@ const AddNewTaxList = (props) => {
       created_by: "Admin",
     },
     validationSchema: Yup.object({
+      // tax: Yup.string().required("Enter tax Name"),
       name: Yup.string().required("Enter tax title"),
       code: Yup.string().required("Enter tax code"),
       status_lbl: Yup.string().required("Select status"),
@@ -65,6 +69,7 @@ const AddNewTaxList = (props) => {
       console.log("newTaxList:" + newTaxList);
       // save new user
       dispatch(onAddNewTaxList(newTaxList));
+      dispatch(onGetTax());
       validation.resetForm();
       handleAddTax();
     },
@@ -152,9 +157,13 @@ const AddNewTaxList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.status_lbl || ""}
                 >
-                  <option value="101">Select Status</option>
-                  <option value="102">Active</option>
-                  <option value="103">In-Active</option>
+                  <option value="">Select Status</option>
+                  {taxStatus &&
+                    taxStatus.map((status_lbl) => (
+                      <option key={status_lbl.id} value={status_lbl.id}>
+                        {status_lbl.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.status_lbl &&
                   validation.errors.status_lbl ? (
@@ -201,9 +210,13 @@ const AddNewTaxList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.valuetype_lbl || ""}
                 >
-                  <option value="101">No Parent</option>
-                  <option value="102">SGST</option>
-                  <option value="103">CGST</option>
+                  <option value="">Select value-in</option>
+                  {taxValues &&
+                    taxValues.map((valuetype_lbl) => (
+                      <option key={valuetype_lbl.id} value={valuetype_lbl.id}>
+                        {valuetype_lbl.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.valuetype_lbl &&
                   validation.errors.valuetype_lbl ? (
@@ -225,11 +238,16 @@ const AddNewTaxList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.parent_lbl || ""}
                 >
-                  <option value="201">in Percent</option>
-                  <option value="202">in Amount</option>
+                  <option value="">No Parent</option>
+                  {taxTaxOnTax &&
+                    taxTaxOnTax.map((parent_lbl) => (
+                      <option key={parent_lbl.id} value={parent_lbl.id}>
+                        {parent_lbl.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.parent_lbl &&
-                  validation.errors.parent_lbll ? (
+                  validation.errors.parent_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.parent_lbl}
                   </FormFeedback>
@@ -252,14 +270,13 @@ const AddNewTaxList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.applicable || ""}
                 >
-                  <option value="101">Subsctiption Charge</option>
-                  <option value="102">Installation Charge</option>
-                  <option value="103">Hardware Charge</option>
-                  <option value="104">Rental Charge</option>
-                  <option value="105">Debit/Credit Notes</option>
-                  <option value="106">TDS</option>
-                  <option value="107">Service Charge</option>
-                  <option value="108">AGR Charge</option>
+                  <option value=""></option>
+                  {taxApply &&
+                    taxApply.map((applicable) => (
+                      <option key={applicable.id} value={applicable.id}>
+                        {applicable.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.applicable &&
                   validation.errors.applicable ? (
@@ -302,7 +319,7 @@ const AddNewTaxList = (props) => {
             <Col>
               <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
-                  Save
+                  Create
                 </button>
                 <button
                   type="reset"

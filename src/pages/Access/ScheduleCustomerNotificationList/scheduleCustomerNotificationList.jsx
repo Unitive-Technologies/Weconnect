@@ -59,7 +59,6 @@ const ScheduleCustomerNotificationList = (props) => {
       SchCusNotSMS: scheduleCustomerNotification.SchCusNotSMS,
       SchCusNotOSD: scheduleCustomerNotification.SchCusNotOSD,
       SchCusNotBmail: scheduleCustomerNotification.SchCusNotBmail,
-
     })
   );
 

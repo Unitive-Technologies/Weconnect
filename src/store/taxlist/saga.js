@@ -1,14 +1,13 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_TAX, ADD_NEW_TAXLIST } from "./actionTypes";
+import { GET_TAX, GET_TAX_STATUS, GET_TAX_APPLY, GET_TAX_VALUES, GET_TAX_TAXONTAX, ADD_NEW_TAXLIST } from "./actionTypes";
 
-import { getTaxSuccess, getTaxFail, addTaxListSuccess, addTaxListFail } from "./actions";
+import { getTaxSuccess, getTaxFail, getTaxStatusSuccess, getTaxStatusFail, getTaxValuesSuccess, getTaxValuesFail, getTaxApplySuccess, getTaxApplyFail, getTaxTaxOnTaxSuccess, getTaxTaxOnTaxFail, addTaxListSuccess, addTaxListFail } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getTax, addNewTaxList } from "../../helpers/fakebackend_helper";
+import { getTax, getTaxStatus, getTaxApply, getTaxTaxOnTax, getTaxValues, addNewTaxList } from "../../helpers/fakebackend_helper";
 
 const convertTaxListObject = (taxList) => {
-  // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
   return taxList.map((tax) => {
     return {
       ...tax,
@@ -37,6 +36,46 @@ function* fetchTax() {
   }
 }
 
+function* fetchTaxStatus() {
+  try {
+    const response = yield call(getTaxStatus);
+    console.log("tax status response:" + JSON.stringify(response));
+    yield put(getTaxStatusSuccess(response.data));
+  } catch (error) {
+    yield put(getTaxStatusFail(error));
+  }
+}
+
+function* fetchTaxValues() {
+  try {
+    const response = yield call(getTaxValues);
+    console.log("tax values response:" + JSON.stringify(response));
+    yield put(getTaxValuesSuccess(response.data));
+  } catch (error) {
+    yield put(getTaxValuesFail(error));
+  }
+}
+
+function* fetchTaxApply() {
+  try {
+    const response = yield call(getTaxApply);
+    console.log("tax apply response:" + JSON.stringify(response));
+    yield put(getTaxApplySuccess(response.data));
+  } catch (error) {
+    yield put(getTaxApplyFail(error));
+  }
+}
+
+function* fetchTaxTaxOnTax() {
+  try {
+    const response = yield call(getTaxTaxOnTax);
+    console.log("tax taxontax response:" + JSON.stringify(response));
+    yield put(getTaxTaxOnTaxSuccess(response.data));
+  } catch (error) {
+    yield put(getTaxTaxOnTaxFail(error));
+  }
+}
+
 function* onAddNewTaxList({ payload: tax }) {
   try {
     const response = yield call(addNewTaxList, tax);
@@ -51,6 +90,10 @@ function* onAddNewTaxList({ payload: tax }) {
 function* taxSaga() {
   yield takeEvery(GET_TAX, fetchTax);
   yield takeEvery(ADD_NEW_TAXLIST, onAddNewTaxList);
+  yield takeEvery(GET_TAX_STATUS, fetchTaxStatus);
+  yield takeEvery(GET_TAX_VALUES, fetchTaxValues);
+  yield takeEvery(GET_TAX_APPLY, fetchTaxApply);
+  yield takeEvery(GET_TAX_TAXONTAX, fetchTaxTaxOnTax);
 }
 
 export default taxSaga;

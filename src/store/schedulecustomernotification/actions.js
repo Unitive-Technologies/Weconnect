@@ -29,7 +29,7 @@ export const getScheduleCustomerNotification = () => ({
 export const getScheduleCustomerNotificationSuccess = (
   scheduleCustomerNotification
 ) => {
-  console.log("Received Customer Users:", scheduleCustomerNotification);
+  console.log("Received Schedule Customer Notification Users:", scheduleCustomerNotification);
   return {
     type: GET_SCHEDULECUSTOMERNOTIFICATION_SUCCESS,
     payload: scheduleCustomerNotification,
@@ -65,7 +65,7 @@ export const getScheduleCustomerNotificationType = () => ({
 });
 
 export const getScheduleCustomerNotificationTypeSuccess = (SchCusNotType) => {
-  // console.log("Received Designation:", designation);
+  // console.log("Received ScheduleCustomerNotification:", designation);
   return {
     type: GET_SCHEDULECUSTOMERNOTIFICATION_TYPE_SUCCESS,
     payload: SchCusNotType,

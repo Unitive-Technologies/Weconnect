@@ -14,7 +14,9 @@ import {
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import { getTax as onGetTax } from "/src/store/actions";
+import {
+  getTax as onGetTax, getTaxStatus as onGetTaxStatus, getTaxValues as onGetTaxValues, getTaxTaxOnTax as onGetTaxTaxOnTax, getTaxApply as onGetTaxApply,
+} from "/src/store/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -30,12 +32,17 @@ const TaxList = (props) => {
   const dispatch = useDispatch();
 
   const selectTaxState = (state) => state.tax;
+
   const TaxProperties = createSelector(selectTaxState, (tax) => ({
     taxes: tax.tax,
     loading: tax.loading,
+    taxStatus: tax.taxStatus,
+    taxApply: tax.taxApply,
+    taxTaxOnTax: tax.taxTaxOnTax,
+    taxValues: tax.taxValues,
   }));
 
-  const { taxes, loading } = useSelector(TaxProperties);
+  const { taxes, loading, taxStatus, taxApply, taxTaxOnTax, taxValues } = useSelector(TaxProperties);
 
   const [isLoading, setLoading] = useState(loading);
 
@@ -175,6 +182,10 @@ const TaxList = (props) => {
   useEffect(() => {
     if (taxes && !taxes.length) {
       dispatch(onGetTax());
+      dispatch(onGetTaxStatus());
+      dispatch(onGetTaxApply());
+      dispatch(onGetTaxTaxOnTax());
+      dispatch(onGetTaxValues());
     }
   }, [dispatch, taxes]);
 
@@ -210,7 +221,7 @@ const TaxList = (props) => {
         handleViewTax={handleViewTax}
         tax={viewTaxList}
       />
-      <AddNewTaxList isOpen={showAddNewTaxList} handleAddTax={handleAddTax} />
+      <AddNewTaxList isOpen={showAddNewTaxList} handleAddTax={handleAddTax} taxApply={taxApply} taxStatus={taxStatus} taxTaxOnTax={taxTaxOnTax} taxValues={taxValues} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -222,7 +233,7 @@ const TaxList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {/* {console.log("Tax list:" + JSON.stringify(taxes))} */}
+                    {console.log("Tax list:" + JSON.stringify(taxes))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}

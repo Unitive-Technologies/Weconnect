@@ -182,7 +182,13 @@ export const GET_CONFIGURATIONUPLOADLOGS =
   "/upload-q?expand=uploaded_file,created_by_lbl,status_lbl&notfilter[status]=0&filter[section]=configuration&page=1&per-page=50&vr=web1.0";
 export const GET_TAX =
   "/tax?expand=valuetype_lbl,parent_lbl,created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
-export const ADD_NEW_TAXLIST = "/add/tax";
+export const GET_TAX_STATUS = "/list/status?fields=id,name&vr=web1.0";
+export const GET_TAX_VALUES = "/list/valuetype?fields=id,name&vr=web1.0";
+export const GET_TAX_APPLY = "/list/chargetype?fields=id,name&vr=web1.0";
+export const GET_TAX_TAXONTAX = "/tax/list?fields=id,name&filter[parent_id]=0&vr=web1.0";
+
+
+export const ADD_NEW_TAXLIST = "/tax?vr=web1.0";
 
 export const GET_REASON =
   "/reason?expand=created_by_lbl,status_lbl,type_display_lbl,created_at_lbl&page=1&per-page=50&vr=web1.0";

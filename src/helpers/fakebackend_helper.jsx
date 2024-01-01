@@ -400,6 +400,11 @@ export const addInventoryStateList = (inventorystate) =>
 
 export const getTax = () => get(url.GET_TAX);
 export const addNewTaxList = (taxes) => post(url.ADD_NEW_TAXLIST, taxes);
+export const getTaxStatus = () => get(url.GET_TAX_STATUS);
+export const getTaxValues = () => get(url.GET_TAX_VALUES);
+export const getTaxApply = () => get(url.GET_TAX_APPLY);
+export const getTaxTaxOnTax = () => get(url.GET_TAX_TAXONTAX);
+
 
 export const getReason = () => get(url.GET_REASON);
 export const addNewReason = (reasons) => post(url.ADD_NEW_REASON, reasons);
