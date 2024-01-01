@@ -47,7 +47,7 @@ const ScheduleCustomerNotification = (state = INIT_STATE, action) => {
 
 
     case GET_SCHEDULECUSTOMERNOTIFICATION_STATUS_SUCCESS:
-      console.log("Designation data in reducer:", action.payload);
+      console.log("Schedule Customer Notification data in reducer:", action.payload);
       return {
         ...state,
         SchCusNotStatus: action.payload,
@@ -62,7 +62,7 @@ const ScheduleCustomerNotification = (state = INIT_STATE, action) => {
 
 
     case GET_SCHEDULECUSTOMERNOTIFICATION_TYPE_SUCCESS:
-      console.log("Designation data in reducer:", action.payload);
+      console.log("Schedule Customer Notification Data in reducer:", action.payload);
       return {
         ...state,
         SchCusNotType: action.payload,
@@ -76,7 +76,7 @@ const ScheduleCustomerNotification = (state = INIT_STATE, action) => {
       };
 
     case GET_SCHEDULECUSTOMERNOTIFICATION_SMS_SUCCESS:
-      console.log("Designation data in reducer:", action.payload);
+      console.log("Schedule Customer Notification Data in reducer:", action.payload);
       return {
         ...state,
         SchCusNotSMS: action.payload,
@@ -90,7 +90,7 @@ const ScheduleCustomerNotification = (state = INIT_STATE, action) => {
       };
 
     case GET_SCHEDULECUSTOMERNOTIFICATION_BMAIL_SUCCESS:
-      console.log("Designation data in reducer:", action.payload);
+      console.log("Schedule Customer Notification Data in reducer:", action.payload);
       return {
         ...state,
         SchCusNotBmail: action.payload,
@@ -104,7 +104,7 @@ const ScheduleCustomerNotification = (state = INIT_STATE, action) => {
       };
 
     case GET_SCHEDULECUSTOMERNOTIFICATION_OSD_SUCCESS:
-      console.log("Designation data in reducer:", action.payload);
+      console.log("Schedule Customer Notification Data in reducer:", action.payload);
       return {
         ...state,
         SchCusNotOSD: action.payload,

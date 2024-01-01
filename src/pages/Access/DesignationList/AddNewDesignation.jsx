@@ -27,24 +27,6 @@ const AddNewDesignation = (props) => {
   const dispatch = useDispatch();
   const [selectedStatus, setSelectedStatus] = useState("");
 
-  const handleStatusChange = (e) => {
-    const status = e.target.value;
-    setSelectedStatus(status);
-    validation.handleChange(e);
-  };
-
-  const handleTypeChange = (e) => {
-    const type = e.target.value;
-    setSelectedType(type);
-    validation.handleChange(e);
-  };
-
-  const handleParentChange = (e) => {
-    const parent = e.target.value;
-    setSelectedParent(parent);
-    validation.handleChange(e);
-  };
-
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -124,13 +106,13 @@ const AddNewDesignation = (props) => {
                   value={validation.values.designation || ""}
                   invalid={
                     validation.touched.designation &&
-                    validation.errors.designation
+                      validation.errors.designation
                       ? true
                       : false
                   }
                 />
                 {validation.touched.designation &&
-                validation.errors.designation ? (
+                  validation.errors.designation ? (
                   <FormFeedback type="invalid">
                     {validation.errors.designation}
                   </FormFeedback>
@@ -270,13 +252,13 @@ const AddNewDesignation = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>

@@ -54,7 +54,7 @@ export const GET_SCHEDULECUSTOMERNOTIFICATION_OSD =
   "/message-template/list?fields=id,name&filter[template_for]=2&vr=web1.0";
 
 export const ADD_NEW_SCHEDULECUSTOMERNOTIFICATION =
-  "/add/schedulecustomernotification";
+  "/schedule-notification?vr=web1.0";
 
 export const GET_SCHEDULEDNOTIFICATION = "/schedulednotificationlist";
 export const GET_STATEUSERS =

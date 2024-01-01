@@ -88,9 +88,7 @@ function* fetchScheduleCustomerNotification() {
 function* fetchScheduleCustomerNotificationType() {
   try {
     const response = yield call(getScheduleCustomerNotificationType);
-    console.log("designation status response:" + JSON.stringify(response));
-    // const designation = convertDesignationListObject(response.data);
-    // yield put(getDesignationSuccess(designation));
+    console.log("Schedule Customer Notification Type response:" + JSON.stringify(response));
     yield put(getScheduleCustomerNotificationTypeSuccess(response.data));
   } catch (error) {
     yield put(getScheduleCustomerNotificationTypeFail(error));
@@ -100,7 +98,7 @@ function* fetchScheduleCustomerNotificationType() {
 function* fetchScheduleCustomerNotificationStatus() {
   try {
     const response = yield call(getScheduleCustomerNotificationStatus);
-    console.log("designation status response:" + JSON.stringify(response));
+    console.log("Schedule Customer Notification status response:" + JSON.stringify(response));
     // const designation = convertDesignationListObject(response.data);
     // yield put(getDesignationSuccess(designation));
     yield put(getScheduleCustomerNotificationStatusSuccess(response.data));
@@ -112,7 +110,7 @@ function* fetchScheduleCustomerNotificationStatus() {
 function* fetchScheduleCustomerNotificationSMS() {
   try {
     const response = yield call(getScheduleCustomerNotificationSMS);
-    console.log("designation status response:" + JSON.stringify(response));
+    console.log("Schedule Customer Notficiation SMS response:" + JSON.stringify(response));
     // const designation = convertDesignationListObject(response.data);
     // yield put(getDesignationSuccess(designation));
     yield put(getScheduleCustomerNotificationSMSSuccess(response.data));
@@ -124,7 +122,7 @@ function* fetchScheduleCustomerNotificationSMS() {
 function* fetchScheduleCustomerNotificationOSD() {
   try {
     const response = yield call(getScheduleCustomerNotificationOSD);
-    console.log("designation status response:" + JSON.stringify(response));
+    console.log("Schedule Customer Notficiation  OSD response:" + JSON.stringify(response));
     // const designation = convertDesignationListObject(response.data);
     // yield put(getDesignationSuccess(designation));
     yield put(getScheduleCustomerNotificationOSDSuccess(response.data));
@@ -136,7 +134,7 @@ function* fetchScheduleCustomerNotificationOSD() {
 function* fetchScheduleCustomerNotificationBmail() {
   try {
     const response = yield call(getScheduleCustomerNotificationBmail);
-    console.log("designation status response:" + JSON.stringify(response));
+    console.log("Schedule Customer Notficiation Bmail response:" + JSON.stringify(response));
     // const designation = convertDesignationListObject(response.data);
     // yield put(getDesignationSuccess(designation));
     yield put(getScheduleCustomerNotificationBmailSuccess(response.data));
@@ -153,16 +151,18 @@ function* onAddNewScheduleCustomerNotification({
       addNewScheduleCustomerNotification,
       schedulecustomernotification
     );
+    console.log("added schedule customer Notification response" + response)
+    yield put(addScheduleCustomerNotificationSuccess(response.data));
 
-    yield put(addScheduleCustomerNotificationSuccess(response));
-    toast.success("ScheduleCustomerNotification Added Successfully", {
-      autoClose: 2000,
-    });
+    // toast.success("ScheduleCustomerNotification Added Successfully", {
+    //    autoClose: 2000,
+    // });
   } catch (error) {
+    console.log("added schedule customer Notification Error" + error)
     yield put(addScheduleCustomerNotificationFail(error));
-    toast.error("ScheduleCustomerNotification Added Failed", {
-      autoClose: 2000,
-    });
+    // toast.error("ScheduleCustomerNotification Added Failed", {
+    //   autoClose: 2000,
+    // });
   }
 }
 

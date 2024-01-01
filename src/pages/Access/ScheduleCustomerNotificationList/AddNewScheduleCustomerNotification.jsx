@@ -33,7 +33,7 @@ const AddNewScheduleCustomerNotification = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      // schedulecustomernotification: "",
+      schedulecustomernotification: "",
       name: "",
       type_lbl: "",
       schedule_days: "",
@@ -49,7 +49,7 @@ const AddNewScheduleCustomerNotification = (props) => {
       created_by: "Admin",
     },
     validationSchema: Yup.object({
-      // schedulecustomernotification: Yup.string().required("Enter schedulecustomernotification Name"),
+      schedulecustomernotification: Yup.string().required("Enter schedulecustomernotification Name"),
       name: Yup.string().required("Select name"),
       type_lbl: Yup.string().required("Select type"),
       schedule_days: Yup.string().required("Select schedule days"),
@@ -97,7 +97,6 @@ const AddNewScheduleCustomerNotification = (props) => {
       validation.setValues(validation.initialValues);
     },
   });
-
 
 
   return (
