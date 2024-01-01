@@ -238,34 +238,24 @@ const AddNotificationTemplateModal = (props) => {
                   <input
                     name="msg_fontcolor"
                     type="color"
-                    // placeholder="Select Font Color"
                     className="form-control"
                     onFocus={toggleColorPicker}
                     value={validation.values.msg_fontcolor || "#000000"}
-                    // style={{
-                    //   color: validation.values.fontcolor || "#000000", // Set initial color as background
-                    // }}
                     onChange={(e) =>
-                      validation.setFieldValue("fontcolor", e.target.value)
+                      validation.setFieldValue("msg_fontcolor", e.target.value)
                     }
                   />
                   {showColorPicker && (
                     <SketchPicker
-                      color={validation.values.fontcolor || "#000000"}
+                      color={validation.values.msg_fontcolor || "#000000"}
                       onChange={(color) =>
-                        validation.setFieldValue("fontcolor", color.hex)
+                        validation.setFieldValue("msg_fontcolor", color.hex)
                       }
                     />
                   )}
                 </div>
                 <p>Value: {validation.values.msg_fontcolor}</p>
-                {/* <div
-                  style={{
-                    backgroundColor: validation.values.fontcolor || "#000000",
-                    width: "50px",
-                    height: "20px",
-                  }}
-                ></div> */}
+
                 {validation.touched.msg_fontcolor &&
                 validation.errors.msg_fontcolor ? (
                   <FormFeedback type="invalid">
@@ -291,7 +281,10 @@ const AddNotificationTemplateModal = (props) => {
                       validation.values.msg_fontbackgroundcolor || "#121314"
                     }
                     onChange={(e) =>
-                      validation.setFieldValue("fontbgcolor", e.target.value)
+                      validation.setFieldValue(
+                        "msg_fontbackgroundcolor",
+                        e.target.value
+                      )
                     }
                   />
 
@@ -301,19 +294,16 @@ const AddNotificationTemplateModal = (props) => {
                         validation.values.msg_fontbackgroundcolor || "#121314"
                       }
                       onChange={(color) =>
-                        validation.setFieldValue("fontbgcolor", color.hex)
+                        validation.setFieldValue(
+                          "msg_fontbackgroundcolor",
+                          color.hex
+                        )
                       }
                     />
                   )}
                 </div>
                 <p>Value: {validation.values.msg_fontbackgroundcolor}</p>
-                {/* <div
-                  style={{
-                    backgroundColor: validation.values.fontbgcolor || "#121314",
-                    width: "50px",
-                    height: "20px",
-                  }}
-                ></div> */}
+
                 {validation.touched.msg_fontbackgroundcolor &&
                 validation.errors.msg_fontbackgroundcolor ? (
                   <FormFeedback type="invalid">
