@@ -472,191 +472,210 @@ const ViewUserModal = (props) => {
                     ) : null}
                   </div>
                 </Col>
-
+                {/* {!showEditUser && !selectedType && ( */}
                 <Col lg={4}>
-                  {/* {validation.values.type && ( */}
                   <div className="mb-3">
-                    <Label className="form-label">
-                      Select MSO<span style={{ color: "red" }}>*</span>
-                    </Label>
+                    <Label className="form-label">Select {user.type_lbl}</Label>
                     <Input
                       name="mso"
                       type="select"
                       placeholder="Select MSO"
                       className="form-select"
-                      onChange={handleMsoChange}
-                      onBlur={validation.handleBlur}
-                      value={validation.values.mso || ""}
+                      value={user.operator_lbl}
+                      disabled={!showEditUser}
                     >
-                      {/* <option value="">Select MSO</option> */}
-                      {userMsoDetails.map((mso) => (
-                        <option key={mso.id} value={mso.id}>
-                          {mso.name}
-                        </option>
-                      ))}
-                      {/* {userMsoDetails.map((mso) => (
-                          <option key={mso.id} value={mso.id}>
-                            {mso.name}
-                          </option>
-                        ))} */}
+                      <option value="">{user.operator_lbl}</option>
                     </Input>
-                    {validation.touched.mso && validation.errors.mso ? (
-                      <FormFeedback type="invalid">
-                        {validation.errors.mso}
-                      </FormFeedback>
-                    ) : null}
                   </div>
-                  {/* )} */}
                 </Col>
-                {/* {console.log("selectedType: " + typeof selectedType)}
-              {console.log("msoValue: " + typeof validation.values.mso)} */}
-                <Col lg={4}>
-                  {(parseInt(selectedType) === 1 ||
-                    parseInt(selectedType) === 2 ||
-                    parseInt(selectedType) === 3) &&
-                  parseInt(validation.values.mso) == 1 ? (
-                    <div className="mb-3">
-                      <Label className="form-label">
-                        Select Regional Office
-                        <span style={{ color: "red" }}>*</span>
-                      </Label>
-                      <Input
-                        name="regional"
-                        type="select"
-                        placeholder="Select Regional Office"
-                        className="form-select"
-                        onChange={handleRegionalChange}
-                        onBlur={validation.handleBlur}
-                        value={validation.values.regional || ""}
-                      >
-                        {/* <option value="">Select Regional Office</option> */}
-                        {user &&
-                          userRegional.map(
-                            (regional) =>
-                              user.operator_id === regional.id && (
-                                <option key={regional.id} value={regional.id}>
-                                  {regional.name}
-                                </option>
-                              )
-                          )}
-                        {/* {userRegional &&
+                {/* )} */}
+                {showEditUser && (
+                  <>
+                    <Col lg={4}>
+                      {parseInt(selectedType) === 0 && (
+                        <div className="mb-3">
+                          <Label className="form-label">
+                            Select MSO<span style={{ color: "red" }}>*</span>
+                          </Label>
+                          <Input
+                            name="mso"
+                            type="select"
+                            placeholder="Select MSO"
+                            className="form-select"
+                            onChange={handleMsoChange}
+                            onBlur={validation.handleBlur}
+                            value={validation.values.mso || ""}
+                          >
+                            {/* <option value="">Select MSO</option> */}
+                            {userMsoDetails.map((mso) => (
+                              <option key={mso.id} value={mso.id}>
+                                {mso.name}
+                              </option>
+                            ))}
+                          </Input>
+                          {validation.touched.mso && validation.errors.mso ? (
+                            <FormFeedback type="invalid">
+                              {validation.errors.mso}
+                            </FormFeedback>
+                          ) : null}
+                        </div>
+                      )}
+                    </Col>
+
+                    <Col lg={4}>
+                      {(parseInt(selectedType) === 1 ||
+                        parseInt(selectedType) === 2 ||
+                        parseInt(selectedType) === 3) &&
+                      parseInt(validation.values.mso) == 1 ? (
+                        <div className="mb-3">
+                          <Label className="form-label">
+                            Select Regional Office
+                            <span style={{ color: "red" }}>*</span>
+                          </Label>
+                          <Input
+                            name="regional"
+                            type="select"
+                            placeholder="Select Regional Office"
+                            className="form-select"
+                            onChange={handleRegionalChange}
+                            onBlur={validation.handleBlur}
+                            value={validation.values.regional || ""}
+                          >
+                            {/* <option value="">Select Regional Office</option> */}
+                            {user &&
+                              userRegional.map(
+                                (regional) =>
+                                  user.operator_id === regional.id && (
+                                    <option
+                                      key={regional.id}
+                                      value={regional.id}
+                                    >
+                                      {regional.name}
+                                    </option>
+                                  )
+                              )}
+                            {/* {userRegional &&
                           userRegional.map((regional) => (
                             <option key={regional.id} value={regional.id}>
                               {regional.name}
                             </option>
                           ))} */}
-                      </Input>
-                      {validation.touched.regional &&
-                      validation.errors.regional ? (
-                        <FormFeedback type="invalid">
-                          {validation.errors.regional}
-                        </FormFeedback>
-                      ) : null}
-                    </div>
-                  ) : (
-                    <></>
-                  )}
-                </Col>
-                {/* {console.log(
+                          </Input>
+                          {validation.touched.regional &&
+                          validation.errors.regional ? (
+                            <FormFeedback type="invalid">
+                              {validation.errors.regional}
+                            </FormFeedback>
+                          ) : null}
+                        </div>
+                      ) : (
+                        <></>
+                      )}
+                    </Col>
+                    {/* {console.log(
                 "regional value:" + typeof parseInt(validation.values.regional)
               )} */}
-                <Col lg={4}>
-                  {validation.values.regional &&
-                  // (parseInt(selectedType) === 1 ||
-                  (parseInt(selectedType) === 2 ||
-                    parseInt(selectedType) === 3) &&
-                  parseInt(validation.values.mso) == 1 ? (
-                    <div className="mb-3">
-                      <Label className="form-label">
-                        Select Distributor
-                        <span style={{ color: "red" }}>*</span>
-                      </Label>
-                      <Input
-                        name="distributor"
-                        type="select"
-                        placeholder="Select Distributor"
-                        className="form-select"
-                        onChange={handleDistributorChange}
-                        onBlur={validation.handleBlur}
-                        value={validation.values.distributor || ""}
-                      >
-                        {/* <option value="">Select Distributor</option> */}
-                        {user &&
-                          distributorList.map(
-                            (distributor) =>
-                              user.operator_id === distributor.id && (
-                                <option
-                                  key={distributor.id}
-                                  value={distributor.id}
-                                >
-                                  {distributor.name}
-                                </option>
-                              )
-                          )}
-                        {/* {distributorList &&
+                    <Col lg={4}>
+                      {validation.values.regional &&
+                      // (parseInt(selectedType) === 1 ||
+                      (parseInt(selectedType) === 2 ||
+                        parseInt(selectedType) === 3) &&
+                      parseInt(validation.values.mso) == 1 ? (
+                        <div className="mb-3">
+                          <Label className="form-label">
+                            Select Distributor
+                            <span style={{ color: "red" }}>*</span>
+                          </Label>
+                          <Input
+                            name="distributor"
+                            type="select"
+                            placeholder="Select Distributor"
+                            className="form-select"
+                            onChange={handleDistributorChange}
+                            onBlur={validation.handleBlur}
+                            value={validation.values.distributor || ""}
+                          >
+                            {/* <option value="">Select Distributor</option> */}
+                            {user &&
+                              distributorList.map(
+                                (distributor) =>
+                                  user.operator_id === distributor.id && (
+                                    <option
+                                      key={distributor.id}
+                                      value={distributor.id}
+                                    >
+                                      {distributor.name}
+                                    </option>
+                                  )
+                              )}
+                            {/* {distributorList &&
                           distributorList.map((distributor) => (
                             <option key={distributor.id} value={distributor.id}>
                               {distributor.name}
                             </option>
                           ))} */}
-                      </Input>
-                      {validation.touched.distributor &&
-                      validation.errors.distributor ? (
-                        <FormFeedback type="invalid">
-                          {validation.errors.distributor}
-                        </FormFeedback>
-                      ) : null}
-                    </div>
-                  ) : (
-                    <></>
-                  )}
-                </Col>
-                <Col lg={4}>
-                  {validation.values.distributor &&
-                    validation.values.regional &&
-                    parseInt(selectedType) === 3 && (
-                      <div className="mb-3">
-                        <Label className="form-label">
-                          Select LCO
-                          <span style={{ color: "red" }}>*</span>
-                        </Label>
-                        <Input
-                          name="lco"
-                          type="select"
-                          placeholder="Select LCO"
-                          className="form-select"
-                          onChange={validation.handleChange}
-                          onBlur={validation.handleBlur}
-                          value={validation.values.lco}
-                        >
-                          {console.log("lco value:" + validation.values.lco)}
-                          {/* <option value="">Select LCO</option> */}
-                          {user &&
-                            lcoList.map(
-                              (lco) =>
-                                user.operator_id === lco.id && (
-                                  <option key={lco.id} value={lco.id}>
-                                    {lco.name}
-                                  </option>
-                                )
-                            )}
-                          {/* {lcoList &&
+                          </Input>
+                          {validation.touched.distributor &&
+                          validation.errors.distributor ? (
+                            <FormFeedback type="invalid">
+                              {validation.errors.distributor}
+                            </FormFeedback>
+                          ) : null}
+                        </div>
+                      ) : (
+                        <></>
+                      )}
+                    </Col>
+                    <Col lg={4}>
+                      {validation.values.distributor &&
+                        validation.values.regional &&
+                        parseInt(selectedType) === 3 && (
+                          <div className="mb-3">
+                            <Label className="form-label">
+                              Select LCO
+                              <span style={{ color: "red" }}>*</span>
+                            </Label>
+                            <Input
+                              name="lco"
+                              type="select"
+                              placeholder="Select LCO"
+                              className="form-select"
+                              onChange={validation.handleChange}
+                              onBlur={validation.handleBlur}
+                              value={validation.values.lco}
+                            >
+                              {console.log(
+                                "lco value:" + validation.values.lco
+                              )}
+                              {/* <option value="">Select LCO</option> */}
+                              {user &&
+                                lcoList.map(
+                                  (lco) =>
+                                    user.operator_id === lco.id && (
+                                      <option key={lco.id} value={lco.id}>
+                                        {lco.name}
+                                      </option>
+                                    )
+                                )}
+                              {/* {lcoList &&
                             lcoList.map((lco) => (
                               <option key={lco.id} value={lco.id}>
                                 {lco.name}
                               </option>
                             ))} */}
-                        </Input>
-                        {validation.touched.lco && validation.errors.lco ? (
-                          <FormFeedback type="invalid">
-                            {validation.errors.lco}
-                          </FormFeedback>
-                        ) : null}
-                      </div>
-                      // ) : (
-                      //   <></>
-                    )}
-                </Col>
+                            </Input>
+                            {validation.touched.lco && validation.errors.lco ? (
+                              <FormFeedback type="invalid">
+                                {validation.errors.lco}
+                              </FormFeedback>
+                            ) : null}
+                          </div>
+                          // ) : (
+                          //   <></>
+                        )}
+                    </Col>
+                  </>
+                )}
               </Row>
             </Row>
 

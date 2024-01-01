@@ -453,16 +453,7 @@ const ContactsList = (props) => {
   // console.log("policy-mso:" + userMsoPolicy);
   return (
     <React.Fragment>
-      {/* <ViewUserModal
-        isOpen={showViewUser}
-        handleViewUser={handleViewUser}
-        user={viewUser}
-        userType={userType}
-        userStatus={userStatus}
-        userRole={userRole}
-        userDesignation={userDesignation}
-      /> */}
-      <ViewModal
+      <ViewUserModal
         isOpen={showViewUser}
         handleViewUser={handleViewUser}
         user={viewUser}
@@ -471,6 +462,15 @@ const ContactsList = (props) => {
         userRole={userRole}
         userDesignation={userDesignation}
       />
+      {/* <ViewModal
+        isOpen={showViewUser}
+        handleViewUser={handleViewUser}
+        user={viewUser}
+        userType={userType}
+        userStatus={userStatus}
+        userRole={userRole}
+        userDesignation={userDesignation}
+      /> */}
       <AddUserModal
         isOpen={showAddUser}
         handleAddUser={handleAddUser}

@@ -26,21 +26,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const BulkInactiveUserModal = (props) => {
-  const {
-    isOpen,
-    handleBulkInactiveUser,
-    users,
-    // filteredActiveBlockUsers,
-    // filteredInActiveUsers,
-    // filteredActiveInactiveUsers,
-    setUsers,
-  } = props;
-  // console.log(
-  //   "Inactive in bulk modal:" + JSON.stringify(filteredInActiveUsers)
-  // );
+  const { isOpen, handleBulkInactiveUser, users } = props;
+
   const dispatch = useDispatch();
   const [tableList, setTableList] = useState([]);
-  // const selectedusers = [];
+
   const [selectedStatusToSet, setSelectedStatusToSet] = useState("active");
   const [filteredActiveBlockUsers, setFilteredActiveBlockUsers] = useState([]);
   const [filteredInActiveUsers, setFilteredInActiveUsers] = useState([]);
@@ -52,27 +42,23 @@ const BulkInactiveUserModal = (props) => {
     // Check if the row is already selected
     const isRowSelected = selectedUsers.some((user) => user.id === row.id);
 
+    // If the row is selected, remove it from tableList and deselect the checkbox
     if (isRowSelected) {
-      // If the row is already selected, remove it from selectedUsers
-      const updatedSelectedUsers = selectedUsers.filter(
-        (user) => user.id !== row.id
+      setTableList((prevTableList) =>
+        prevTableList.filter((user) => user.id !== row.id)
       );
-      setSelectedUsers(updatedSelectedUsers);
+      // Deselect the checkbox
+      row.original.isSelected = false;
     } else {
-      // If the row is not selected, add it to selectedUsers and remove it from users
+      // If the row is not selected, add it to selectedUsers, remove it from tableList, and deselect the checkbox
       setSelectedUsers((prevSelectedUsers) => [...prevSelectedUsers, row]);
-      setUsers((prevUsers) => prevUsers.filter((user) => user.id !== row.id));
+      setTableList((prevTableList) =>
+        prevTableList.filter((user) => user.id !== row.id)
+      );
+      // Deselect the checkbox
+      row.original.isSelected = false;
     }
   };
-
-  // if (statustoset === "active") {
-  //   setTableList(filteredInActiveUsers);
-  // } else if (statustoset === "inactive") {
-  //   setTableList(filteredActiveBlockUsers);
-  // } else if (statustoset === "block") {
-  //   setTableList(filteredActiveInactiveUsers);
-  // } else setTableList([]);
-  // console.log("tableList:" + JSON.stringify(tableList));
 
   const handleStatusChange = (e) => {
     const statustoset = e.target.value;
@@ -80,53 +66,26 @@ const BulkInactiveUserModal = (props) => {
     validation.handleChange(e);
     console.log("statustoset:" + statustoset);
   };
-  // const handleStatusChange = (e) => {
-  //   const statustoset = e.target.value;
-  //   setSelectedStatusToSet(statustoset);
-  //   validation.handleChange(e);
-  //   console.log("statustoset:" + statustoset);
-
-  //   if (statustoset === "inactive") {
-  //     const filteredActiveBlockData = users.filter(
-  //       (user) => parseInt(user.status) === 1 && parseInt(user.status) === -7
-  //     );
-  //     setTableList(filteredActiveBlockData);
-  //   } else if (statustoset === "active") {
-  //     const filteredInActiveData = users.filter(
-  //       (user) => parseInt(user.status) === 0
-  //     );
-  //     setTableList(filteredInActiveData);
-  //   } else if (statustoset === "block") {
-  //     const filteredActiveInactiveData = users.filter(
-  //       (user) => parseInt(user.status) === 0 && parseInt(user.status) === 1
-  //     );
-  //     setTableList(filteredActiveInactiveData);
-  //   } else return [];
-  //   // console.log("ActiveBlock:" + JSON.stringify(filteredActiveBlockData));
-  //   // console.log("Inactive:" + JSON.stringify(filteredInActiveData));
-  //   // console.log("ActiveInactive:" + JSON.stringify(filteredActiveInactiveData));
-  // };
 
   useEffect(() => {
-    if (users) {
+    if (selectedStatusToSet === "inactive") {
       const filteredActiveBlockData = users.filter(
         (user) => parseInt(user.status) === -7 || parseInt(user.status) === 1
       );
-      setFilteredActiveBlockUsers(filteredActiveBlockData);
+      setTableList(filteredActiveBlockData);
+    } else if (selectedStatusToSet === "active") {
       const filteredInActiveData = users.filter(
         (user) => parseInt(user.status) === 0
       );
-      setFilteredInActiveUsers(filteredInActiveData);
+      setTableList(filteredInActiveData);
+    } else if (selectedStatusToSet === "block") {
       const filteredActiveInactiveData = users.filter(
         (user) => parseInt(user.status) === 1 || parseInt(user.status) === 0
       );
-      setFilteredActiveInactiveUsers(filteredActiveInactiveData);
+      setTableList(filteredActiveInactiveData);
+    } else {
+      setTableList([]);
     }
-    // console.log("ActiveBlock:" + JSON.stringify(filteredActiveBlockUsers));
-    // console.log("Inactive:" + JSON.stringify(filteredInActiveUsers));
-    // console.log(
-    //   "ActiveInactive:" + JSON.stringify(filteredActiveInactiveUsers)
-    // );
   }, [users, selectedStatusToSet]);
   const validation = useFormik({
     enableReinitialize: true,
@@ -440,7 +399,13 @@ const BulkInactiveUserModal = (props) => {
       <ModalBody>
         <Card>
           <CardBody>
-            <Form>
+            <Form
+              onSubmit={(e) => {
+                e.preventDefault();
+                validation.handleSubmit();
+                return false;
+              }}
+            >
               <Row>
                 <Col lg={4}>
                   <div className="mb-3">
@@ -510,15 +475,7 @@ const BulkInactiveUserModal = (props) => {
               <TableContainer
                 isPagination={true}
                 columns={columns}
-                data={
-                  selectedStatusToSet === "active"
-                    ? filteredInActiveUsers
-                    : selectedStatusToSet === "inactive"
-                    ? filteredActiveBlockUsers
-                    : selectedStatusToSet === "block"
-                    ? filteredActiveInactiveUsers
-                    : []
-                }
+                data={tableList}
                 isGlobalFilter={true}
                 isShowingPageLength={true}
                 customPageSize={50}
