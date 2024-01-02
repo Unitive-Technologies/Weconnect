@@ -55,6 +55,7 @@ const ViewUserModal = (props) => {
   const [policyList, setPolicyList] = useState([]);
   const [distributorList, setDistributorList] = useState([]);
   const [lcoList, setLcoList] = useState([]);
+  const [showGroupPolicy, setShowGroupPolicy] = useState(false);
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
 
   const selectContactsState = (state) => state.users;
@@ -93,6 +94,7 @@ const ViewUserModal = (props) => {
   };
 
   const handleTypeChange = (e) => {
+    // setShowGroupPolicy(false);
     const type = e.target.value;
     setSelectedType(type);
     validation.handleChange(e);
@@ -191,6 +193,7 @@ const ViewUserModal = (props) => {
   };
 
   const handleRoleChange = async (e) => {
+    // setShowGroupPolicy(false);
     try {
       const role = e.target.value;
       setSelectedRole(role);
@@ -680,53 +683,55 @@ const ViewUserModal = (props) => {
                   ) : null}
                 </div>
               </Col>
-              <Col lg={4}>
-                <div className="mb-3">
-                  <Label className="form-label">Group Policy</Label>
-                  <Input
-                    name="mso"
-                    type="select"
-                    placeholder="Select MSO"
-                    className="form-select"
-                    value={user.group_lbl}
-                    disabled={!showEditUser}
-                  >
-                    <option value="">{user.group_lbl}</option>
-                  </Input>
-                </div>
-              </Col>
-              {/* <Col lg={4}>
-                <div className="mb-3">
-                  <Label className="form-label">Group Policy</Label>
-                  <Input
-                    name="policy"
-                    type="select"
-                    placeholder="Select Group Policy"
-                    className="form-select"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.policy || ""}
-                    disabled={!selectedType && !selectedRole}
-                  >
-                    {/* <option value="">Select Group Policy</option> */}
+              {!selectedType || !selectedRole ? (
+                <Col lg={4}>
+                  <div className="mb-3">
+                    <Label className="form-label">Group Policy</Label>
+                    <Input
+                      name="mso"
+                      type="select"
+                      placeholder="Select MSO"
+                      className="form-select"
+                      value={user.group_lbl}
+                      disabled
+                    >
+                      <option value="">{user.group_lbl}</option>
+                    </Input>
+                  </div>
+                </Col>
+              ) : (
+                <Col lg={4}>
+                  <div className="mb-3">
+                    <Label className="form-label">Group Policy</Label>
+                    <Input
+                      name="policy"
+                      type="select"
+                      placeholder="Select Group Policy"
+                      className="form-select"
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.policy || ""}
+                      disabled={!selectedType && !selectedRole}
+                    >
+                      /* <option value="">Select Group Policy</option> */
+                      {selectedType &&
+                        selectedRole &&
+                        policyList &&
+                        policyList.map((policy) => (
+                          <option key={policy._id} value={policy._id}>
+                            {policy.user_id}
+                          </option>
+                        ))}
+                    </Input>
 
-              {/* {selectedType &&
-                      selectedRole &&
-                      policyList &&
-                      policyList.map((policy) => (
-                        <option key={policy._id} value={policy._id}>
-                          {policy.user_id}
-                        </option>
-                      ))}
-                  </Input>
-
-                  {validation.touched.policy && validation.errors.policy ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.policy}
-                    </FormFeedback>
-                  ) : null}
-                </div>
-              </Col> */}
+                    {validation.touched.policy && validation.errors.policy ? (
+                      <FormFeedback type="invalid">
+                        {validation.errors.policy}
+                      </FormFeedback>
+                    ) : null}
+                  </div>
+                </Col>
+              )}
               <Col lg={4}>
                 <div className="mb-3">
                   <Label className="form-label">
