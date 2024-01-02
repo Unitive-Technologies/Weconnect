@@ -96,7 +96,7 @@ function* fetchLcoOnLocation() {
 function* fetchSingleLocation({ id }) {
   try {
     const response = yield call(getSingleLocation, id);
-    // console.log("response:" + JSON.stringify(response.data));
+    console.log("Fetch single location:" + JSON.stringify(response.data));
     const singleLocation = convertLocationListObject(response.data);
     yield put(getSingleLocationSuccess(singleLocation));
   } catch (error) {
