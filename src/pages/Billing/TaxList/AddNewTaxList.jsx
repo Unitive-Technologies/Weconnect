@@ -18,9 +18,9 @@ import { addNewTaxList as onAddNewTaxList } from "/src/store/taxlist/actions";
 import { useDispatch } from "react-redux";
 import { getTax as onGetTax } from "/src/store/actions";
 
-
 const AddNewTaxList = (props) => {
-  const { isOpen, handleAddTax, taxValues, taxStatus, taxTaxOnTax, taxApply } = props;
+  const { isOpen, handleAddTax, taxValues, taxStatus, taxTaxOnTax, taxApply } =
+    props;
 
   const dispatch = useDispatch();
 
@@ -60,13 +60,16 @@ const AddNewTaxList = (props) => {
         status: values["status"],
         taxvalue: values["taxvalue"],
         valuetype: values["valuetype"],
-        parent_id: values["parent_id"],
+        parent_id: parseInt(values["parent_id"]),
         applicableon: values["applicableon"],
         description: values["description"],
         created_at: new Date(),
         created_by: values["created_by"],
       };
       console.log("newTaxList:" + newTaxList);
+      {
+        console.log("parent type: " + typeof newTaxList.parent_id);
+      }
       // save new user
       dispatch(onAddNewTaxList(newTaxList));
       dispatch(onGetTax());
@@ -165,8 +168,7 @@ const AddNewTaxList = (props) => {
                       </option>
                     ))}
                 </Input>
-                {validation.touched.status &&
-                  validation.errors.status ? (
+                {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
                     {validation.errors.status}
                   </FormFeedback>
@@ -218,8 +220,7 @@ const AddNewTaxList = (props) => {
                       </option>
                     ))}
                 </Input>
-                {validation.touched.valuetype &&
-                  validation.errors.valuetype ? (
+                {validation.touched.valuetype && validation.errors.valuetype ? (
                   <FormFeedback type="invalid">
                     {validation.errors.valuetype}
                   </FormFeedback>
@@ -246,8 +247,7 @@ const AddNewTaxList = (props) => {
                       </option>
                     ))}
                 </Input>
-                {validation.touched.parent_id &&
-                  validation.errors.parent_id ? (
+                {validation.touched.parent_id && validation.errors.parent_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.parent_id}
                   </FormFeedback>
@@ -255,6 +255,7 @@ const AddNewTaxList = (props) => {
               </div>
             </Col>
           </Row>
+
           <Row>
             <Col sm="4">
               <div className="mb-3">
@@ -279,7 +280,7 @@ const AddNewTaxList = (props) => {
                     ))}
                 </Input>
                 {validation.touched.applicableon &&
-                  validation.errors.applicableon ? (
+                validation.errors.applicableon ? (
                   <FormFeedback type="invalid">
                     {validation.errors.applicableon}
                   </FormFeedback>
@@ -301,13 +302,13 @@ const AddNewTaxList = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
