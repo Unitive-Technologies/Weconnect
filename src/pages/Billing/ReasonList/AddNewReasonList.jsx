@@ -119,10 +119,10 @@ const AddNewReason = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.type || ""}
+                  value={validation.values.type || []}
                   multiple
                 >
-                  <option value="" disabled>Select reason type</option>
+                  <option value=""></option>
                   {reasonReasonType &&
                     reasonReasonType.map((type) => (
                       <option key={type.id} value={type.id}>
