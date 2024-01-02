@@ -1077,18 +1077,18 @@ const fakeBackend = () => {
   //   });
   // });
 
-  mock.onPost(url.ADD_NEW_BANK).reply((banks) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (banks && banks.data) {
-          // Passing fake JSON data as response
-          resolve([200, banks.data]);
-        } else {
-          reject([400, "Cannot add bank list"]);
-        }
-      });
-    });
-  });
+  // mock.onPost(url.ADD_NEW_BANK).reply((banks) => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (banks && banks.data) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, banks.data]);
+  //       } else {
+  //         reject([400, "Cannot add bank list"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onPost(url.ADD_NEW_PROMOVOUCHER).reply((provoucher) => {
     return new Promise((resolve, reject) => {

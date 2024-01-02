@@ -412,7 +412,9 @@ export const getReasonReasonType = () => get(url.GET_REASON_REASONTYPE);
 export const addNewReason = (reasons) => post(url.ADD_NEW_REASON, reasons);
 
 export const getBank = () => get(url.GET_BANK);
+export const getBankStatus = () => get(url.GET_BANK_STATUS);
 export const addNewBank = (banks) => post(url.ADD_NEW_BANK, banks);
+
 export const getPromoVoucher = () => get(url.GET_PROMOVOUCHER);
 export const addNewPromoVoucher = (provoucher) =>
   post(url.ADD_NEW_PROMOVOUCHER, provoucher);

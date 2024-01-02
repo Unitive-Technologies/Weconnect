@@ -1,5 +1,9 @@
 import {
-  GET_BANK, GET_BANK_FAIL, GET_BANK_SUCCESS, ADD_NEW_BANK,
+  GET_BANK, GET_BANK_FAIL, GET_BANK_SUCCESS,
+  GET_BANK_STATUS,
+  GET_BANK_STATUS_FAIL,
+  GET_BANK_STATUS_SUCCESS,
+  ADD_NEW_BANK,
   ADD_BANK_SUCCESS,
   ADD_BANK_FAIL,
 } from "./actionTypes";
@@ -37,5 +41,21 @@ export const addBankSuccess = (
 
 export const addBankFail = (error) => ({
   type: ADD_BANK_FAIL,
+  payload: error,
+});
+
+export const getBankStatus = () => ({
+  type: GET_BANK_STATUS,
+});
+
+export const getBankStatusSuccess = (bankStatus) => {
+  return {
+    type: GET_BANK_STATUS_SUCCESS,
+    payload: bankStatus,
+  };
+};
+
+export const getBankStatusFail = (error) => ({
+  type: GET_BANK_STATUS_FAIL,
   payload: error,
 });
