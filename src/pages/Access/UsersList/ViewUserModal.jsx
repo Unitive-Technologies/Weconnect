@@ -239,10 +239,10 @@ const ViewUserModal = (props) => {
       email: (user && user.email) || "",
       mobile: (user && user.mobile_no) || "",
       type: (user && user.type) || "",
-      mso: user.type === 0 && user.operator_id,
-      regional: user.type === 1 && user.operator_id,
-      distributor: user.type === 2 && user.operator_id,
-      lco: user.type === 3 && user.operator_id,
+      // mso: user.type === 0 && user.operator_id,
+      // regional: user.type === 1 && user.operator_id,
+      // distributor: user.type === 2 && user.operator_id,
+      // lco: user.type === 3 && user.operator_id,
       status: (user && user.status) || "",
       block_message: (user && user.block_message) || "",
       role: (user && user.role) || "",
@@ -475,7 +475,9 @@ const ViewUserModal = (props) => {
                 {/* {!showEditUser && !selectedType && ( */}
                 <Col lg={4}>
                   <div className="mb-3">
-                    <Label className="form-label">Select {user.type_lbl}</Label>
+                    <Label className="form-label">
+                      User of {user.type_lbl}
+                    </Label>
                     <Input
                       name="mso"
                       type="select"
@@ -711,8 +713,22 @@ const ViewUserModal = (props) => {
                   ) : null}
                 </div>
               </Col>
-
               <Col lg={4}>
+                <div className="mb-3">
+                  <Label className="form-label">Group Policy</Label>
+                  <Input
+                    name="mso"
+                    type="select"
+                    placeholder="Select MSO"
+                    className="form-select"
+                    value={user.group_lbl}
+                    disabled={!showEditUser}
+                  >
+                    <option value="">{user.group_lbl}</option>
+                  </Input>
+                </div>
+              </Col>
+              {/* <Col lg={4}>
                 <div className="mb-3">
                   <Label className="form-label">Group Policy</Label>
                   <Input
@@ -726,9 +742,8 @@ const ViewUserModal = (props) => {
                     disabled={!selectedType && !selectedRole}
                   >
                     {/* <option value="">Select Group Policy</option> */}
-                    {/* {console.log("selectedType:" + selectedType)}
-                  {console.log("selectedRole:" + selectedRole)} */}
-                    {selectedType &&
+
+              {/* {selectedType &&
                       selectedRole &&
                       policyList &&
                       policyList.map((policy) => (
@@ -744,7 +759,7 @@ const ViewUserModal = (props) => {
                     </FormFeedback>
                   ) : null}
                 </div>
-              </Col>
+              </Col> */}
               <Col lg={4}>
                 <div className="mb-3">
                   <Label className="form-label">
@@ -860,7 +875,7 @@ const ViewUserModal = (props) => {
                         ? true
                         : false
                     }
-                    disabled={!showEditUser}
+                    disabled
                   />
                   {validation.touched.username && validation.errors.username ? (
                     <FormFeedback type="invalid">
