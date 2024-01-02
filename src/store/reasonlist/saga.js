@@ -18,13 +18,6 @@ import {
   addReasonFail,
 } from "./actions";
 
-import {
-  getReasonSuccess,
-  getReasonFail,
-  addReasonSuccess,
-  addReasonFail,
-} from "./actions";
-
 //Include Both Helper File with needed methods
 import {
   getReason,
