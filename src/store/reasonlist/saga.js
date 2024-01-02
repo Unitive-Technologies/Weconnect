@@ -1,11 +1,17 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_REASON, ADD_NEW_REASON } from "./actionTypes";
+import {
+  GET_REASON, GET_REASON_STATUS,
+  GET_REASON_REASONTYPE, ADD_NEW_REASON
+} from "./actionTypes";
 
-import { getReasonSuccess, getReasonFail, addReasonSuccess, addReasonFail } from "./actions";
+import { getReasonSuccess, getReasonFail, getReasonStatusSuccess, getReasonStatusFail, getReasonReasonTypeSuccess, getReasonReasonTypeFail, addReasonSuccess, addReasonFail } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getReason, addNewReason } from "../../helpers/fakebackend_helper";
+import {
+  getReason, getReasonStatus,
+  getReasonReasonType, addNewReason
+} from "../../helpers/fakebackend_helper";
 
 const convertReasonListObject = (reasonList) => {
   // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
@@ -34,6 +40,26 @@ function* fetchReason() {
   }
 }
 
+function* fetchReasonStatus() {
+  try {
+    const response = yield call(getReasonStatus);
+    console.log("Reason status response:" + JSON.stringify(response));
+    yield put(getReasonStatusSuccess(response.data));
+  } catch (error) {
+    yield put(getReasonStatusFail(error));
+  }
+}
+
+function* fetchReasonReasonType() {
+  try {
+    const response = yield call(getReasonReasonType);
+    console.log("response:" + JSON.stringify(response));
+    yield put(getReasonReasonTypeSuccess(response.data));
+  } catch (error) {
+    yield put(getReasonReasonTypeFail(error));
+  }
+}
+
 function* onAddNewReason({ payload: reason }) {
   try {
     const response = yield call(addNewReason, reason);
@@ -47,6 +73,8 @@ function* onAddNewReason({ payload: reason }) {
 
 function* reasonSaga() {
   yield takeEvery(GET_REASON, fetchReason);
+  yield takeEvery(GET_REASON_STATUS, fetchReasonStatus);
+  yield takeEvery(GET_REASON_REASONTYPE, fetchReasonReasonType);
   yield takeEvery(ADD_NEW_REASON, onAddNewReason);
 }
 

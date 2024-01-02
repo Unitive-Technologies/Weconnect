@@ -2,6 +2,12 @@ import {
   GET_REASON,
   GET_REASON_FAIL,
   GET_REASON_SUCCESS,
+  GET_REASON_STATUS,
+  GET_REASON_STATUS_FAIL,
+  GET_REASON_STATUS_SUCCESS,
+  GET_REASON_REASONTYPE,
+  GET_REASON_REASONTYPE_FAIL,
+  GET_REASON_REASONTYPE_SUCCESS,
   ADD_NEW_REASON,
   ADD_REASON_SUCCESS,
   ADD_REASON_FAIL,
@@ -36,5 +42,38 @@ export const addReasonSuccess = (reason) => ({
 
 export const addReasonFail = (error) => ({
   type: ADD_REASON_FAIL,
+  payload: error,
+});
+
+export const getReasonStatus = () => ({
+  type: GET_REASON_STATUS,
+});
+
+export const getReasonStatusSuccess = (reasonStatus) => {
+  return {
+    type: GET_REASON_STATUS_SUCCESS,
+    payload: reasonStatus,
+  };
+};
+
+export const getReasonStatusFail = (error) => ({
+  type: GET_REASON_STATUS_FAIL,
+  payload: error,
+});
+
+export const getReasonReasonType = () => ({
+  type: GET_REASON_REASONTYPE,
+});
+
+export const getReasonReasonTypeSuccess = (reasonReasonType) => {
+  // console.log("Received Designation:", designation);
+  return {
+    type: GET_REASON_REASONTYPE_SUCCESS,
+    payload: reasonReasonType,
+  };
+};
+
+export const getReasonReasonTypeFail = (error) => ({
+  type: GET_REASON_REASONTYPE_FAIL,
   payload: error,
 });

@@ -8,7 +8,7 @@ import { Card, CardBody, Col, Container, Row } from "reactstrap";
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 
-import { getReason as onGetReason } from "/src/store/actions";
+import { getReason as onGetReason, getReasonStatus as onGetReasonStatus, getReasonReasonType as onGetReasonReasonType } from "/src/store/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -27,10 +27,12 @@ const ReasonList = (props) => {
   const selectReasonState = (state) => state.reason;
   const ReasonProperties = createSelector(selectReasonState, (reason) => ({
     reasons: reason.reason,
+    reasonStatus: reason.reasonStatus,
+    reasonReasonType: reason.reasonReasonType,
     loading: reason.loading,
   }));
 
-  const { reasons, loading } = useSelector(ReasonProperties);
+  const { reasons, loading, reasonStatus, reasonReasonType } = useSelector(ReasonProperties);
 
   const [isLoading, setLoading] = useState(loading);
   const [showAddNewReasonList, setShowAddNewReasonList] = useState(false);
@@ -148,6 +150,8 @@ const ReasonList = (props) => {
   useEffect(() => {
     if (reasons && !reasons.length) {
       dispatch(onGetReason());
+      dispatch(onGetReasonStatus());
+      dispatch(onGetReasonReasonType());
     }
   }, [dispatch, reasons]);
 
@@ -194,6 +198,8 @@ const ReasonList = (props) => {
       <AddNewReasonList
         isOpen={showAddNewReasonList}
         handleAddReason={handleAddReason}
+        reasonReasonType={reasonReasonType}
+        reasonStatus={reasonStatus}
       />
       <UploadReasonList
         isOpen={showUploadReasonList}

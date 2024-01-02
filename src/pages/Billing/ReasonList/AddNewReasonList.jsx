@@ -16,9 +16,10 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewReason as onAddNewReason } from "/src/store/reasonlist/actions";
 import { useDispatch } from "react-redux";
+import { getReason as onGetReason } from "/src/store/actions";
 
 const AddNewReason = (props) => {
-  const { isOpen, handleAddReason } = props;
+  const { isOpen, handleAddReason, reasonStatus, reasonReasonType } = props;
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -28,28 +29,32 @@ const AddNewReason = (props) => {
     initialValues: {
       //BroadCaster: "",
       name: "",
-      type_display_lbl: "",
-      status_lbl: "",
+      type: "",
+      status: "",
       created_at: "",
       created_by: "Admin",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter reason"),
-      type_display_lbl: Yup.string().required("Enter reason type"),
-      status_lbl: Yup.string().required("Select status"),
+      type: Yup.array().required("Enter reason type"),
+      status: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
+      const reasonvaluesArray = values["type"] || [];
+      const reasonvaluesIntegers = reasonvaluesArray.map(option => parseInt(option, 10)); // Specify the radix    
+
       const newReason = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
-        type_display_lbl: values["type_display_lbl"],
-        status_lbl: values["status_lbl"],
+        type: reasonvaluesIntegers,
+        status: values["status"],
         created_at: new Date(),
         created_by: values["created_by"],
       };
       console.log("newReason:" + newReason);
       // save new user
       dispatch(onAddNewReason(newReason));
+      dispatch(onGetReason());
       validation.resetForm();
       handleAddReason();
     },
@@ -108,18 +113,27 @@ const AddNewReason = (props) => {
                   Reason Type<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="type_display_lbl"
+                  name="type"
                   type="text"
                   placeholder="Enter reason type"
-                  // className="form-select"
+                  className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.type_display_lbl || ""}
-                ></Input>
-                {validation.touched.type_display_lbl &&
-                validation.errors.type_display_lbl ? (
+                  value={validation.values.type || ""}
+                  multiple
+                >
+                  <option value="" disabled>Select reason type</option>
+                  {reasonReasonType &&
+                    reasonReasonType.map((type) => (
+                      <option key={type.id} value={type.id}>
+                        {type.name}
+                      </option>
+                    ))}
+                </Input>
+                {validation.touched.type &&
+                  validation.errors.type ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.type_display_lbl}
+                    {validation.errors.type}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -130,22 +144,26 @@ const AddNewReason = (props) => {
                   Status<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="status_lbl"
+                  name="status"
                   type="select"
                   placeholder="Select Status"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.status_lbl || ""}
+                  value={validation.values.status || ""}
                 >
-                  <option value="101">Select Status</option>
-                  <option value="102">Active</option>
-                  <option value="103">In-Active</option>
+                  <option value="">Select Status</option>
+                  {reasonStatus &&
+                    reasonStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                 </Input>
-                {validation.touched.status_lbl &&
-                validation.errors.status_lbl ? (
+                {validation.touched.status &&
+                  validation.errors.status ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.status_lbl}
+                    {validation.errors.status}
                   </FormFeedback>
                 ) : null}
               </div>
