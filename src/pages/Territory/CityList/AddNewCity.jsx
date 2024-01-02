@@ -78,7 +78,7 @@ const AddNewCity = (props) => {
   });
   useEffect(() => {
     dispatch(onGetDistrictByStateid(validation.values.state_id));
-  }, [dispatch]);
+  }, [dispatch, validation.values.state_id]);
 
   return (
     <Modal
@@ -141,7 +141,6 @@ const AddNewCity = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.state_id || ""}
-                  onClick={onGetDistrictByStateid(validation.values.state_id)}
                 >
                   <option value="">Select state</option>
                   {statelist.map((options) => (

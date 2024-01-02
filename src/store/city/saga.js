@@ -60,9 +60,10 @@ function* fetchCity() {
   }
 }
 
-function* fetchDistrictByStateId({ payload: selectedData }) {
+function* fetchDistrictByStateId({ payload: state_id }) {
+  console.log("Selected state id: ", state_id);
   try {
-    const response = yield call(getDistrictByStateid, selectedData.state_id);
+    const response = yield call(getDistrictByStateid, state_id);
     console.log("Fetch district by state id in saga: ", response);
     yield put(getDistrictByStateidSuccess(response.data));
   } catch (error) {

@@ -62,7 +62,7 @@ const CityList = (props) => {
     console.log("User Data id: ", selectedData);
     setShowViewCity(!showViewCity);
     setViewCityData(selectedData);
-    dispatch(onGetDistrictByStateid(selectedData));
+    dispatch(onGetDistrictByStateid(selectedData.state_id));
   };
 
   const columns = useMemo(

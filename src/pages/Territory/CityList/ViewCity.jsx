@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
@@ -17,6 +17,10 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { updateCity as onUpdateCity } from "/src/store/city/actions";
+import {
+  getCity as onGetCity,
+  getDistrictByStateid as onGetDistrictByStateid,
+} from "/src/store/actions";
 
 const ViewCity = (props) => {
   const { isOpen, handleViewCity, city, status, statelist, districtlist } =
@@ -68,6 +72,10 @@ const ViewCity = (props) => {
       handleViewCity();
     },
   });
+
+  useEffect(() => {
+    dispatch(onGetDistrictByStateid(validation.values.state_id));
+  }, [dispatch, validation.values.state_id]);
 
   const handleCancel = () => {
     setShowEditCity(false);
