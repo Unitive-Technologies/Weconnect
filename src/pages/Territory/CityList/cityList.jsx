@@ -105,9 +105,6 @@ const CityList = (props) => {
                   {cellProps.row.original.name}
                 </Link>
               </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
             </>
           );
         },
@@ -260,12 +257,11 @@ const CityList = (props) => {
   useEffect(() => {
     if (cits && !cits.length) {
       dispatch(onGetCity());
-      // dispatch(onGetDistrictByStateid(viewCityData.state_id));
     }
   }, [dispatch, cits]);
 
   useEffect(() => {
-    dispatch(onGetDistrictByStateid(0));
+    dispatch(onGetDistrictByStateid());
   }, [dispatch]);
 
   useEffect(() => {
