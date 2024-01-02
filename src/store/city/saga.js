@@ -60,9 +60,9 @@ function* fetchCity() {
   }
 }
 
-function* fetchDistrictByStateId({ payload: state_id }) {
+function* fetchDistrictByStateId({ payload: selectedData }) {
   try {
-    const response = yield call(getDistrictByStateid, state_id);
+    const response = yield call(getDistrictByStateid, selectedData.state_id);
     console.log("Fetch district by state id in saga: ", response);
     yield put(getDistrictByStateidSuccess(response.data));
   } catch (error) {
@@ -71,15 +71,11 @@ function* fetchDistrictByStateId({ payload: state_id }) {
   }
 }
 
-function* onUpdateCity({ payload: { city_id, city } }) {
-  console.log("city id: ", city_id);
-  const stringSelectedId =
-    typeof city_id === "object" ? JSON.stringify(city_id) : city_id;
-  console.log("String selected id: ", stringSelectedId);
+function* onUpdateCity({ payload: city }) {
   try {
-    const response = yield call(updatecity, { stringSelectedId, city });
+    const response = yield call(updateCity, city.id, city);
     console.log("Response data in saga: ", response);
-    yield put(updateCitySuccess(response));
+    yield put(updateCitySuccess(response.data));
   } catch (error) {
     console.log("Error in update city: ", error);
     yield put(updateCityFail(error));

@@ -75,7 +75,8 @@ export const GET_CITY =
 export const ADD_CITY = "/administrative-division?vr=web1.0";
 export const GET_DISTRICT_BYSTATEID = (id) =>
   `/administrative-division?&filter[state_id]=${id}&filter[type]=2&per-page=100&vr=web1.0`;
-export const updateCityById = (city_id) => "";
+export const updateCityById = (id) =>
+  `/administrative-division/${id}?vr=web1.0`;
 
 export const GET_LOCATION =
   "/location?expand=created_by_lbl,operator_lbl,operator_code,status_lbl&vr=web1.0";
@@ -185,8 +186,8 @@ export const GET_TAX =
 export const GET_TAX_STATUS = "/list/status?fields=id,name&vr=web1.0";
 export const GET_TAX_VALUES = "/list/valuetype?fields=id,name&vr=web1.0";
 export const GET_TAX_APPLY = "/list/chargetype?fields=id,name&vr=web1.0";
-export const GET_TAX_TAXONTAX = "/tax/list?fields=id,name&filter[parent_id]=0&vr=web1.0";
-
+export const GET_TAX_TAXONTAX =
+  "/tax/list?fields=id,name&filter[parent_id]=0&vr=web1.0";
 
 export const ADD_NEW_TAXLIST = "/tax?vr=web1.0";
 

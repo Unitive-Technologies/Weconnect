@@ -280,8 +280,7 @@ export const updateDistrict = (id, district) =>
 export const getCity = () => get(url.GET_CITY);
 export const addCity = (city) => post(url.ADD_CITY, city);
 export const getDistrictByStateid = (id) => get(url.GET_DISTRICT_BYSTATEID(id));
-export const updateCity = ({ city_id, city }) =>
-  put(url.updateCityById(city_id), city);
+export const updateCity = (id, city) => put(url.updateCityById(id), city);
 
 export const getLocation = () => get(url.GET_LOCATION);
 export const addLocation = (location) => post(url.ADD_LOCATION, location);
@@ -404,7 +403,6 @@ export const getTaxStatus = () => get(url.GET_TAX_STATUS);
 export const getTaxValues = () => get(url.GET_TAX_VALUES);
 export const getTaxApply = () => get(url.GET_TAX_APPLY);
 export const getTaxTaxOnTax = () => get(url.GET_TAX_TAXONTAX);
-
 
 export const getReason = () => get(url.GET_REASON);
 export const addNewReason = (reasons) => post(url.ADD_NEW_REASON, reasons);
