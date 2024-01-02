@@ -405,6 +405,9 @@ export const getTaxApply = () => get(url.GET_TAX_APPLY);
 export const getTaxTaxOnTax = () => get(url.GET_TAX_TAXONTAX);
 
 export const getReason = () => get(url.GET_REASON);
+export const getReasonStatus = () => get(url.GET_REASON_STATUS);
+export const getReasonReasonType = () => get(url.GET_REASON_REASONTYPE);
+
 export const addNewReason = (reasons) => post(url.ADD_NEW_REASON, reasons);
 
 export const getBank = () => get(url.GET_BANK);
