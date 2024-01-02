@@ -254,10 +254,18 @@ const ContactsList = (props) => {
       },
       {
         Header: "Group Policy",
-        accessor: "grouppolicy",
+        accessor: "group_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          // return <Tags {...cellProps} />;
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.group_lbl}
+                </Link>
+              </h5>
+            </>
+          );
         },
       },
       {
