@@ -32,6 +32,7 @@ import {
   getUserDistributor as onGetUserDistributor,
   getUserLco as onGetUserLco,
 } from "/src/store/users/actions";
+import axios from "axios";
 
 const ViewUserModal = (props) => {
   const {
@@ -116,10 +117,10 @@ const ViewUserModal = (props) => {
 
       validation.handleChange(e);
       {
-        console.log("selectedType:" + typeof selectedType);
+        console.log("selectedType:" + selectedType);
       }
       {
-        console.log("selectedRole:" + typeof regional);
+        console.log("selectedRole:" + regional);
       }
       // Assuming you have a token stored in localStorage
       const token = "Bearer " + localStorage.getItem("temptoken");
@@ -148,11 +149,6 @@ const ViewUserModal = (props) => {
   };
 
   const handleDistributorChange = async (e) => {
-    // const distributor = e.target.value;
-    // setSelectedDistributor(distributor);
-    // validation.handleChange(e);
-    // dispatch(onGetUserLco());
-
     try {
       const distributor = e.target.value;
       setSelectedDistributor(distributor);
@@ -254,33 +250,38 @@ const ViewUserModal = (props) => {
       email: Yup.string()
         .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
         .required("Please Enter Your Email"),
-      // mobile: Yup.array().required("Please Enter mobile"),
-      mobile_no: Yup.string().required("Please Enter mobile Number"),
+      mobile: Yup.string().required("Please Enter mobile Number"),
       type: Yup.string().required("Please Enter User Type"),
       status: Yup.string().required("Please Enter Status"),
-      // block_message: Yup.string().required("Please Enter Message"),
       role: Yup.string().required("Please Enter Role"),
-      // designation: Yup.string().required("Please Enter Designation"),
-      // grouppolicy: Yup.string().required("Please Enter Group Policy"),
-      username: Yup.string().required("Please Enter Login ID"),
-      // password: Yup.string().required("Please Enter Password"),
-      // confirmpassword: Yup.string().required("Please Enter Confirm Password"),
+      designation: Yup.string().required("Please Enter Designation"),
+      confirmpassword: Yup.string().required("Please Enter Confirm Password"),
+      password: Yup.string().required("Please Enter Password"),
     }),
     onSubmit: (values) => {
       const updateUser = {
         id: user.id,
-        name: values.name,
-        email: values.email,
-        mobile_no: values.mobile_no,
-        type: values.type,
-        status: values.status,
-        block_message: values.block_message,
-        role: values.role,
-        // designation: values.designation,
-        // grouppolicy: values.grouppolicy,
-        username: values.username,
-        // password: values.password,
-        // confirmpassword: values.confirmpassword,
+        access_policy_id: parseInt(values["policy"]),
+        block_message: values["block_message"],
+        designation_id: parseInt(values["designation"]),
+        name: values["name"],
+        email: values["email"],
+        mobile_no: values["mobile"],
+        operator_type: parseInt(values["type"]),
+        operator_id:
+          parseInt(values["type"]) === 0
+            ? parseInt(values["mso"])
+            : parseInt(values["type"]) === 1
+            ? parseInt(values["regional"])
+            : parseInt(values["type"]) === 2
+            ? parseInt(values["distributor"])
+            : parseInt(values["lco"]),
+        status: parseInt(values["status"]),
+        role: parseInt(values["role"]),
+        username: values["username"],
+        password: values["password"],
+        // created_at: new Date(),
+        // created_by_lbl: values["created_by_lbl"],
       };
 
       // update user
@@ -688,9 +689,9 @@ const ViewUserModal = (props) => {
                   <div className="mb-3">
                     <Label className="form-label">Group Policy</Label>
                     <Input
-                      name="mso"
+                      name="group_lbl"
                       type="select"
-                      placeholder="Select MSO"
+                      // placeholder="Select MSO"
                       className="form-select"
                       value={user.group_lbl}
                       disabled
@@ -711,9 +712,9 @@ const ViewUserModal = (props) => {
                       onChange={validation.handleChange}
                       onBlur={validation.handleBlur}
                       value={validation.values.policy || ""}
-                      disabled={!selectedType && !selectedRole}
+                      // disabled={!selectedType && !selectedRole}
                     >
-                      /* <option value="">Select Group Policy</option> */
+                      <option value="">Select Group Policy</option>
                       {selectedType &&
                         selectedRole &&
                         policyList &&

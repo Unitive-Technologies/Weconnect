@@ -5,7 +5,16 @@ import {
   GET_REASON_REASONTYPE, ADD_NEW_REASON
 } from "./actionTypes";
 
+<<<<<<< Updated upstream
 import { getReasonSuccess, getReasonFail, getReasonStatusSuccess, getReasonStatusFail, getReasonReasonTypeSuccess, getReasonReasonTypeFail, addReasonSuccess, addReasonFail } from "./actions";
+=======
+import {
+  getReasonSuccess,
+  getReasonFail,
+  addReasonSuccess,
+  addReasonFail,
+} from "./actions";
+>>>>>>> Stashed changes
 
 //Include Both Helper File with needed methods
 import {
@@ -33,7 +42,7 @@ function* fetchReason() {
   try {
     const response = yield call(getReason);
     console.log("response:" + JSON.stringify(response));
-    const reasonList = convertReasonListObject(response);
+    const reasonList = convertReasonListObject(response.data);
     yield put(getReasonSuccess(reasonList));
   } catch (error) {
     yield put(getReasonFail(error));
