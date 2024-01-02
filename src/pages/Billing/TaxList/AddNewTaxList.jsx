@@ -49,10 +49,14 @@ const AddNewTaxList = (props) => {
       taxvalue: Yup.string().required("Exter Tax Value"),
       valuetype: Yup.string().required("Select value-in"),
       parent_id: Yup.string().required(""),
-      applicableon: Yup.string().required(""),
+      // applicableon: Yup.string().required(""),
+      applicableon: Yup.array().required("Select at least one Applicable On option"),
       description: Yup.string().required("Enter description"),
     }),
     onSubmit: (values) => {
+      const applicableonArray = values["applicableon"] || [];
+      const applicableonIntegers = applicableonArray.map(option => parseInt(option));
+
       const newTaxList = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
@@ -61,14 +65,16 @@ const AddNewTaxList = (props) => {
         taxvalue: values["taxvalue"],
         valuetype: values["valuetype"],
         parent_id: parseInt(values["parent_id"]),
-        applicableon: values["applicableon"],
+        applicableon: applicableonIntegers,
+        // applicableon: values["applicableon"],
         description: values["description"],
         created_at: new Date(),
-        created_by: values["created_by"],
+        created_by: parseInt(values["created_by"]),
       };
       console.log("newTaxList:" + newTaxList);
       {
         console.log("parent type: " + typeof newTaxList.parent_id);
+        console.log("value type: " + typeof newTaxList.valuetype);
       }
       // save new user
       dispatch(onAddNewTaxList(newTaxList));
@@ -269,7 +275,8 @@ const AddNewTaxList = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.applicableon || ""}
+                  value={validation.values.applicableon || []}
+                  multiple
                 >
                   <option value=""></option>
                   {taxApply &&
@@ -280,7 +287,7 @@ const AddNewTaxList = (props) => {
                     ))}
                 </Input>
                 {validation.touched.applicableon &&
-                validation.errors.applicableon ? (
+                  validation.errors.applicableon ? (
                   <FormFeedback type="invalid">
                     {validation.errors.applicableon}
                   </FormFeedback>
@@ -302,13 +309,13 @@ const AddNewTaxList = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
