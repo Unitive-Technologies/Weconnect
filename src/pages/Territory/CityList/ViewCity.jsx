@@ -68,6 +68,7 @@ const ViewCity = (props) => {
       };
       console.log("Updated City:" + updateCity);
       dispatch(onUpdateCity(updateCity));
+      dispatch(onGetCity());
       validation.resetForm();
       handleViewCity();
     },
