@@ -39,11 +39,12 @@ const ViewCity = (props) => {
       created_by: (city && city.created_by) || "my mso(mso)",
       state_id: (city && city.state_id) || "",
       type: (city && city.type) || 3,
+      district_id: (city && city.district_id) || "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter district name"),
       state_id: Yup.string().required("Select state"),
-      district_lbl: Yup.string().required("Select district"),
+      district_id: Yup.string().required("Select district"),
       status: Yup.string().required("Select status"),
       description: Yup.string().required("Enter description"),
     }),
@@ -59,6 +60,7 @@ const ViewCity = (props) => {
         created_by: values["created_by"],
         state_id: values["state_id"],
         type: values["type"],
+        district_id: values["district_id"],
       };
       console.log("Updated City:" + updateCity);
       dispatch(onUpdateCity(updateCity));
@@ -171,13 +173,13 @@ const ViewCity = (props) => {
                   District<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="district_lbl"
+                  name="district_id"
                   type="select"
                   placeholder="Select state"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.district_lbl || ""}
+                  value={validation.values.district_id || ""}
                   disabled={!showEditCity}
                 >
                   {districtlist.map((options) => (
@@ -186,10 +188,10 @@ const ViewCity = (props) => {
                     </option>
                   ))}
                 </Input>
-                {validation.touched.district_lbl &&
-                validation.errors.district_lbl ? (
+                {validation.touched.district_id &&
+                validation.errors.district_id ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.district_lbl}
+                    {validation.errors.district_id}
                   </FormFeedback>
                 ) : null}
               </div>
