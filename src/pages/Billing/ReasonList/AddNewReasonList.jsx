@@ -41,7 +41,9 @@ const AddNewReason = (props) => {
     }),
     onSubmit: (values) => {
       const reasonvaluesArray = values["type"] || [];
-      const reasonvaluesIntegers = reasonvaluesArray.map(option => parseInt(option, 10)); // Specify the radix    
+      const reasonvaluesIntegers = reasonvaluesArray.map((option) =>
+        parseInt(option, 10)
+      ); // Specify the radix
 
       const newReason = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
@@ -114,7 +116,7 @@ const AddNewReason = (props) => {
                 </Label>
                 <Input
                   name="type"
-                  type="text"
+                  type="select"
                   placeholder="Enter reason type"
                   className="form-select"
                   onChange={validation.handleChange}
@@ -130,8 +132,7 @@ const AddNewReason = (props) => {
                       </option>
                     ))}
                 </Input>
-                {validation.touched.type &&
-                  validation.errors.type ? (
+                {validation.touched.type && validation.errors.type ? (
                   <FormFeedback type="invalid">
                     {validation.errors.type}
                   </FormFeedback>
@@ -160,8 +161,7 @@ const AddNewReason = (props) => {
                       </option>
                     ))}
                 </Input>
-                {validation.touched.status &&
-                  validation.errors.status ? (
+                {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
                     {validation.errors.status}
                   </FormFeedback>
