@@ -4,6 +4,7 @@ import {
   ADD_LOCATION,
   UPDATE_LOCATION,
   GET_LCO_ONLOCATION,
+  GET_SINGLE_LOCATION,
 } from "./actionTypes";
 import {
   getLocationSuccess,
@@ -15,12 +16,15 @@ import {
   getLcoOnLocationFail,
   updateLocationSuccess,
   updateLocationFail,
+  getSingleLocationSuccess,
+  getSingleLocationFail,
 } from "./actions";
 import {
   getLocation,
   addLocation,
   updateLocation,
   getLcoOnLocation,
+  getSingleLocation,
 } from "../../helpers/fakebackend_helper";
 import { toast } from "react-toastify";
 
@@ -89,11 +93,23 @@ function* fetchLcoOnLocation() {
   }
 }
 
+function* fetchSingleLocation({ id }) {
+  try {
+    const response = yield call(getSingleLocation, id);
+    // console.log("response:" + JSON.stringify(response.data));
+    const singleLocation = convertLocationListObject(response.data);
+    yield put(getSingleLocationSuccess(singleLocation));
+  } catch (error) {
+    yield put(getSingleLocationFail(error));
+  }
+}
+
 function* locationSaga() {
   yield takeEvery(GET_LOCATION, fetchLocation);
   yield takeEvery(ADD_LOCATION, onAddLocation);
   yield takeEvery(UPDATE_LOCATION, onUpdateLocation);
   yield takeEvery(GET_LCO_ONLOCATION, fetchLcoOnLocation);
+  yield takeEvery(GET_SINGLE_LOCATION, fetchSingleLocation);
 }
 
 export default locationSaga;

@@ -11,6 +11,9 @@ import {
   GET_LCO_ONLOCATION,
   GET_LCO_ONLOCATION_SUCCESS,
   GET_LCO_ONLOCATION_FAIL,
+  GET_SINGLE_LOCATION,
+  GET_SINGLE_LOCATION_SUCCESS,
+  GET_SINGLE_LOCATION_FAIL,
 } from "./actionTypes";
 
 export const getLocation = () => ({
@@ -70,5 +73,21 @@ export const getLcoOnLocationSuccess = (lcoonlocation) => ({
 
 export const getLcoOnLocationFail = (error) => ({
   type: GET_LCO_ONLOCATION_FAIL,
+  payload: error,
+});
+
+export const getSingleLocation = () => ({
+  type: GET_SINGLE_LOCATION,
+});
+
+export const getSingleLocationSuccess = (singlelocation) => {
+  return {
+    type: GET_SINGLE_LOCATION_SUCCESS,
+    payload: singlelocation,
+  };
+};
+
+export const getSingleLocationFail = (error) => ({
+  type: GET_SINGLE_LOCATION_FAIL,
   payload: error,
 });
