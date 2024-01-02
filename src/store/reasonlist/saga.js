@@ -1,25 +1,36 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
 import {
-  GET_REASON, GET_REASON_STATUS,
-  GET_REASON_REASONTYPE, ADD_NEW_REASON
+  GET_REASON,
+  GET_REASON_STATUS,
+  GET_REASON_REASONTYPE,
+  ADD_NEW_REASON,
 } from "./actionTypes";
 
-<<<<<<< Updated upstream
-import { getReasonSuccess, getReasonFail, getReasonStatusSuccess, getReasonStatusFail, getReasonReasonTypeSuccess, getReasonReasonTypeFail, addReasonSuccess, addReasonFail } from "./actions";
-=======
+import {
+  getReasonSuccess,
+  getReasonFail,
+  getReasonStatusSuccess,
+  getReasonStatusFail,
+  getReasonReasonTypeSuccess,
+  getReasonReasonTypeFail,
+  addReasonSuccess,
+  addReasonFail,
+} from "./actions";
+
 import {
   getReasonSuccess,
   getReasonFail,
   addReasonSuccess,
   addReasonFail,
 } from "./actions";
->>>>>>> Stashed changes
 
 //Include Both Helper File with needed methods
 import {
-  getReason, getReasonStatus,
-  getReasonReasonType, addNewReason
+  getReason,
+  getReasonStatus,
+  getReasonReasonType,
+  addNewReason,
 } from "../../helpers/fakebackend_helper";
 
 const convertReasonListObject = (reasonList) => {
