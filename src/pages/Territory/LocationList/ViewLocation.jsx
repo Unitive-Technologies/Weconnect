@@ -187,7 +187,7 @@ const ViewLocation = (props) => {
             <Col lg={5}>
               <div className="mb-3">
                 <Label className="form-label">Select LCO</Label>
-                <Select
+                {/* <Select
                   name="operator_id"
                   options={options}
                   onChange={(selectedOption) =>
@@ -199,7 +199,24 @@ const ViewLocation = (props) => {
                   )}
                   styles={customStyles}
                   disabled={!showEditLocation}
-                />
+                /> */}
+                <Input
+                  name="operator_id"
+                  type="select"
+                  placeholder="Select lco"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.operator_id || ""}
+                  disabled={!showEditLocation}
+                >
+                  <option value="">Select lco</option>
+                  {lcoonlocation.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
+                </Input>
                 {validation.touched.operator_id &&
                 validation.errors.operator_id ? (
                   <FormFeedback type="invalid">
