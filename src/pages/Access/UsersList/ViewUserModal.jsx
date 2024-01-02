@@ -684,7 +684,7 @@ const ViewUserModal = (props) => {
                   ) : null}
                 </div>
               </Col>
-              {!selectedType || !selectedRole ? (
+              {!selectedType && !selectedRole ? (
                 <Col lg={4}>
                   <div className="mb-3">
                     <Label className="form-label">Group Policy</Label>
