@@ -33,7 +33,7 @@ const BankList = (props) => {
   const BankProperties = createSelector(selectBankState, (bank) => ({
     banks: bank.bank,
     loading: bank.loading,
-    bankStatus: bank.bankStatus
+    bankStatus: bank.bankStatus,
   }));
 
   const { banks, loading, bankStatus } = useSelector(BankProperties);
@@ -101,12 +101,12 @@ const BankList = (props) => {
       },
       {
         Header: "IFSC Code",
-        accessor: "ifsc_code",
+        accessor: "ifscode",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.ifsc_code}
+              {cellProps.row.original.ifscode}
             </p>
           );
         },
@@ -123,23 +123,23 @@ const BankList = (props) => {
       },
       {
         Header: "Branch Address",
-        accessor: "branch_address",
+        accessor: "address",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.branch_address}
+              {cellProps.row.original.address}
             </p>
           );
         },
       },
       {
         Header: "For MSO",
-        accessor: "formso",
+        accessor: "ismso",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.formso}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.ismso}</p>
           );
         },
       },
@@ -169,12 +169,12 @@ const BankList = (props) => {
       },
       {
         Header: "Created By",
-        accessor: "created_by",
+        accessor: "created_by_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.created_by}
+              {cellProps.row.original.created_by_lbl}
             </p>
           );
         },
@@ -222,11 +222,11 @@ const BankList = (props) => {
       <AddNewBankList
         isOpen={showAddNewBankList}
         handleAddBank={handleAddBank}
+        bankStatus={bankStatus}
       />
       <UploadBankList
         isOpen={showUploadBankList}
         handleUploadBank={handleUploadBank}
-        bankStatus={bankStatus}
       />
 
       <div className="page-content">

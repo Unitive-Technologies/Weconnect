@@ -23,38 +23,44 @@ const AddNewBankList = (props) => {
 
   const dispatch = useDispatch();
 
+  const [showAdditionalField, setShowAdditionalField] = useState(false);
+
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
+
     initialValues: {
       //BroadCaster: "",
       name: "",
-      ifsc_code: "",
+      ifscode: "",
       branch: "",
-      branch_address: "",
-      formso: "",
+      address: "",
+      ismso: "",
       status: "",
+      account_no: "",
       created_at: "",
       created_by: "Admin",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
-      ifsc_code: Yup.string().required("Enter IFSC code"),
+      ifscode: Yup.string().required("Enter IFSC code"),
       branch: Yup.string().required("Enter branch"),
-      branch_address: Yup.string().required("Enter branch address"),
-      formso: Yup.string().required("Select for mso"),
+      account_no: Yup.string().required("Enter account no"),
+      address: Yup.string().required("Enter branch address"),
+      ismso: Yup.string().required("Select for mso"),
       status: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
       const newBank = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
-        ifsc_code: values["ifsc_code"],
+        ifscode: values["ifscode"],
         status: values["status"],
         branch: values["branch"],
-        branch_address: values["branch_address"],
-        formso: values["formso"],
+        address: values["address"],
+        ismso: values["ismso"],
+        account_no: values["account_no"],
         created_at: new Date(),
         created_by: values["created_by"],
       };
@@ -65,6 +71,7 @@ const AddNewBankList = (props) => {
       // save new user
       dispatch(onAddNewBank(newBank));
       dispatch(onGetBank());
+      setShowAdditionalField(false);
       validation.resetForm();
       handleAddBank();
     },
@@ -123,17 +130,17 @@ const AddNewBankList = (props) => {
                   IFSC Code<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="ifsc_code"
+                  name="ifscode"
                   type="text"
                   placeholder="Enter IFSC Code"
                   // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.ifsc_code || ""}
+                  value={validation.values.ifscode || ""}
                 ></Input>
-                {validation.touched.ifsc_code && validation.errors.ifsc_code ? (
+                {validation.touched.ifscode && validation.errors.ifscode ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.ifsc_code}
+                    {validation.errors.ifscode}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -198,18 +205,18 @@ const AddNewBankList = (props) => {
                   Branch Address<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="branch_address"
+                  name="address"
                   type="text"
                   placeholder="Enter branch address"
                   // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.branch_address || ""}
+                  value={validation.values.address || ""}
                 ></Input>
-                {validation.touched.branch_address &&
-                  validation.errors.branch_address ? (
+                {validation.touched.address &&
+                  validation.errors.address ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.branch_address}
+                    {validation.errors.address}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -220,25 +227,53 @@ const AddNewBankList = (props) => {
                   For MSO<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="formso"
+                  name="ismso"
                   type="select"
-                  placeholder="Select for mso"
+                  placeholder="Select for MSO"
                   className="form-select"
-                  onChange={validation.handleChange}
+                  onChange={(e) => {
+                    validation.handleChange(e);
+                    // Toggle visibility based on the selected value
+                    setShowAdditionalField(e.target.value === "102");
+                  }}
                   onBlur={validation.handleBlur}
-                  value={validation.values.formso || ""}
+                  value={validation.values.ismso || ""}
                 >
-                  <option value="101">Select for mso</option>
+                  <option value="101">Select for MSO</option>
                   <option value="102">Yes</option>
                   <option value="103">No</option>
                 </Input>
-                {validation.touched.formso && validation.errors.formso ? (
+                {validation.touched.ismso && validation.errors.ismso && (
                   <FormFeedback type="invalid">
-                    {validation.errors.formso}
+                    {validation.errors.ismso}
                   </FormFeedback>
-                ) : null}
+                )}
               </div>
             </Col>
+
+            {showAdditionalField && (
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Account No<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="account_no"
+                    type="text"
+                    placeholder="Enter account no"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.account_no || ""}
+                  ></Input>
+                  {validation.touched.account_no &&
+                    validation.errors.account_no && (
+                      <FormFeedback type="invalid">
+                        {validation.errors.account_no}
+                      </FormFeedback>
+                    )}
+                </div>
+              </Col>
+            )}
           </Row>
           <Row>
             <Col>
