@@ -139,7 +139,7 @@ const BankList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.ismso}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.ismso === 1 ? "Yes" : "No"}</p>
           );
         },
       },
