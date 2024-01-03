@@ -17,7 +17,7 @@ import {
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import { getPromoVoucher as onGetPromoVoucher } from "/src/store/actions";
+import { getPromoVoucher as onGetPromoVoucher, getPromoVoucherApply as onGetPromoVoucherApply, getPromoVoucherLCO as onGetPromoVoucherLCO, getPromoVoucherBouquet as onGetPromoVoucherBouquet, getPromoVoucherRecharge as onGetPromoVoucherRecharge } from "/src/store/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -36,11 +36,15 @@ const PromoVoucherList = (props) => {
     selectPromoVoucherState,
     (promovoucher) => ({
       provoucher: promovoucher.promovoucher,
+      provoucherApply: promovoucher.promovoucherApply,
+      provoucherLCO: promovoucher.promovoucherLCO,
+      provoucherRecharge: promovoucher.promovoucherRecharge,
+      provoucherBouquet: promovoucher.promovoucherBouquet,
       loading: promovoucher.loading,
     })
   );
 
-  const { provoucher, loading } = useSelector(PromoVoucherProperties);
+  const { provoucher, loading, provoucherApply, provoucherBouquet, provoucherRecharge, provoucherLCO } = useSelector(PromoVoucherProperties);
 
   const [isLoading, setLoading] = useState(loading);
 
@@ -74,34 +78,34 @@ const PromoVoucherList = (props) => {
       },
       {
         Header: "Operator",
-        accessor: "operator",
+        accessor: "operator_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.operator}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.operator_lbl}</p>
           );
         },
       },
       {
         Header: "Operator Code",
-        accessor: "operator_code",
+        accessor: "operator_code_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.operator_code}
+              {cellProps.row.original.operator_code_lbl}
             </p>
           );
         },
       },
       {
         Header: "Voucher Code",
-        accessor: "voucher_code",
+        accessor: "voucher_type",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.voucher_code}
+              {cellProps.row.original.voucher_type}
             </p>
           );
         },
@@ -120,24 +124,24 @@ const PromoVoucherList = (props) => {
       },
       {
         Header: "Applied On",
-        accessor: "applied_on",
+        accessor: "apply_on_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.applied_on}
+              {cellProps.row.original.apply_on_lbl}
             </p>
           );
         },
       },
       {
         Header: "Recharge Period",
-        accessor: "recharge_period",
+        accessor: "rperiod_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.recharge_period}
+              {cellProps.row.original.rperiod_lbl}
             </p>
           );
         },
@@ -164,11 +168,11 @@ const PromoVoucherList = (props) => {
       },
       {
         Header: "Bouquets",
-        accessor: "bouquets",
+        accessor: "bouque_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.bouquets}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.bouque_lbl}</p>
           );
         },
       },
@@ -186,34 +190,34 @@ const PromoVoucherList = (props) => {
       },
       {
         Header: "Smartcard No",
-        accessor: "smartcard_no",
+        accessor: "smartcardno",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.smartcard_no}
+              {cellProps.row.original.smartcardno}
             </p>
           );
         },
       },
       {
         Header: "STB No.",
-        accessor: "stb_no",
+        accessor: "stbno",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.stb_no}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.stbno}</p>
           );
         },
       },
       {
         Header: "Created At",
-        accessor: "created_at_lbl",
+        accessor: "created_at",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.created_at_lbl}
+              {cellProps.row.original.created_at}
             </p>
           );
         },
@@ -237,6 +241,10 @@ const PromoVoucherList = (props) => {
   useEffect(() => {
     if (provoucher && !provoucher.length) {
       dispatch(onGetPromoVoucher());
+      dispatch(onGetPromoVoucherLCO());
+      dispatch(onGetPromoVoucherApply());
+      dispatch(onGetPromoVoucherBouquet());
+      dispatch(onGetPromoVoucherRecharge());
     }
   }, [dispatch, provoucher]);
 
@@ -272,6 +280,10 @@ const PromoVoucherList = (props) => {
       <AddNewPromoVoucher
         isOpen={showAddNewPromoVoucher}
         handleAddPromoVoucher={handleAddPromoVoucher}
+        promovoucherApply={provoucherApply}
+        promovoucherBouquet={provoucherBouquet}
+        promovoucherLCO={provoucherLCO}
+        promovoucherRecharge={provoucherRecharge}
       />
       <div
         className="position-fixed top-0 end-0 p-3"

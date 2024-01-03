@@ -36,6 +36,7 @@ const convertSublocationListObject = (sublocationList) => {
       status: sublocation.status,
       created_at: sublocation.created_at,
       created_by_lbl: sublocation.created_by_lbl,
+      location_id: sublocation.location_id,
     };
   });
 };

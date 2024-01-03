@@ -58,7 +58,7 @@ export const ADD_NEW_SCHEDULECUSTOMERNOTIFICATION =
 
 export const GET_SCHEDULEDNOTIFICATION = "/schedulednotificationlist";
 export const GET_STATEUSERS =
-  "/administrative-division?filter[type]=1&expand=created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
+  "/administrative-division?filter[type]=1&expand=created_by_lbl,status_lbl&vr=web1.0";
 
 export const GET_DISTRICT =
   "/administrative-division?filter[type]=2&expand=created_by_lbl,operator_lbl,status_lbl,state_lbl,state_code_lbl&vr=web1.0";
@@ -208,8 +208,13 @@ export const GET_BANK_STATUS = "/list/status?fields=id,name&vr=web1.0";
 
 export const ADD_NEW_BANK = "/bank?vr=web1.0";
 
-export const GET_PROMOVOUCHER = "/promovoucher";
-export const ADD_NEW_PROMOVOUCHER = "/add/promovoucher";
+export const GET_PROMOVOUCHER = "/promo-voucher?expand=status_lbl,bouque_lbl,expiry_date_lbl,apply_on_lbl,rperiod_lbl,operator_lbl,operator_code_lbl,smartcardno,stbno,created_at_lbl,created_by_lbl&page=1&per-page=50&vr=web1.0";
+export const GET_PROMOVOUCHER_LCO = "/operator/list?fields=id,name,code&filter[type]=3&per-page=100&vr=web1.0";
+export const GET_PROMOVOUCHER_APPLY = "/list/applyOn?fields=id,name&vr=web1.0";
+export const GET_PROMOVOUCHER_RECHARGE = "/list/RechargePeriod?fields=id,name&vr=web1.0";
+export const GET_PROMOVOUCHER_BOUQUET = "/bouque/list?fields=id,name&vr=web1.0";
+
+export const ADD_NEW_PROMOVOUCHER = "/promo-voucher/search?vr=web1.0";
 
 export const GET_USERS =
   "/user?expand=setting,group_lbl,access_level,role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[role]=4&page=1&per-page=50&vr=web1.0";

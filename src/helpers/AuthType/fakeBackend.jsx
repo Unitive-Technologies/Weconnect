@@ -784,18 +784,18 @@ const fakeBackend = () => {
   //   });
   // });
 
-  mock.onGet(url.GET_PROMOVOUCHER).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (provoucher) {
-          // Passing fake JSON data as response
-          resolve([200, provoucher]);
-        } else {
-          reject([400, "Cannot get Promo voucher list"]);
-        }
-      });
-    });
-  });
+  // mock.onGet(url.GET_PROMOVOUCHER).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (provoucher) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, provoucher]);
+  //       } else {
+  //         reject([400, "Cannot get Promo voucher list"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onGet(url.GET_CONNECTIONSCHEME).reply(() => {
     return new Promise((resolve, reject) => {
@@ -955,18 +955,18 @@ const fakeBackend = () => {
   //   });
   // });
 
-  mock.onPost(url.ADD_CITY).reply((city) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (city && city.data) {
-          // Passing fake JSON data as response
-          resolve([200, city.data]);
-        } else {
-          reject([400, "Cannot add city list"]);
-        }
-      });
-    });
-  });
+  // mock.onPost(url.ADD_CITY).reply((city) => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (city && city.data) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, city.data]);
+  //       } else {
+  //         reject([400, "Cannot add city list"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   // mock.onPost(url.ADD_LOCATION).reply((location) => {
   //   return new Promise((resolve, reject) => {
@@ -1090,18 +1090,18 @@ const fakeBackend = () => {
   //   });
   // });
 
-  mock.onPost(url.ADD_NEW_PROMOVOUCHER).reply((provoucher) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (provoucher && provoucher.data) {
-          // Passing fake JSON data as response
-          resolve([200, provoucher.data]);
-        } else {
-          reject([400, "Cannot add provoucher list"]);
-        }
-      });
-    });
-  });
+  // mock.onPost(url.ADD_NEW_PROMOVOUCHER).reply((provoucher) => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (provoucher && provoucher.data) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, provoucher.data]);
+  //       } else {
+  //         reject([400, "Cannot add provoucher list"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onPost(url.ADD_NEW_COMPLAINTCATEGORY).reply((complaintcate) => {
     return new Promise((resolve, reject) => {

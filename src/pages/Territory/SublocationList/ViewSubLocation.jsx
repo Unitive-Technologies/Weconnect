@@ -15,34 +15,23 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
-import { createSelector } from "reselect";
-import { getLocation as onGetLocation } from "/src/store/actions";
+import { useDispatch } from "react-redux";
 import Select from "react-select";
 import { updateSublocation as onUpdateSublocation } from "/src/store/sublocation/actions";
+import { getSublocation as onGetSublocation } from "/src/store/actions";
 
 const ViewSubLocation = (props) => {
-  const { isOpen, handleViewSubLocation, sublocation, status } = props;
+  const {
+    isOpen,
+    handleViewSubLocation,
+    sublocation,
+    status,
+    locateonsublocate,
+  } = props;
   const dispatch = useDispatch();
   const [showEditSubLocation, setShowEditSubLocation] = useState(false);
-  const selectLocationState = (state) => state.location;
-  const locationProperties = createSelector(
-    selectLocationState,
-    (location) => ({
-      locations: location.location,
-      loading: location.loading,
-    })
-  );
 
-  const { locations, loading } = useSelector(locationProperties);
-
-  useEffect(() => {
-    if (locations && !locations.length) {
-      dispatch(onGetLocation());
-    }
-  }, [dispatch, locations]);
-
-  const options = locations.map((option) => ({
+  const options = locateonsublocate.map((option) => ({
     value: option.id,
     label: (
       <div>
@@ -84,8 +73,9 @@ const ViewSubLocation = (props) => {
         created_at: new Date(),
         created_by: values["created_by"],
       };
-      console.log("Updated Sublocation:" + updateSubLocation);
-      dispatch(onUpdateSublocation({ updateSubLocation, id }));
+      console.log("Updated Sublocation:" + JSON.stringify(updateSubLocation));
+      dispatch(onUpdateSublocation(updateSubLocation));
+      dispatch(onGetSublocation());
       validation.resetForm();
       handleViewSubLocation();
     },
@@ -187,18 +177,37 @@ const ViewSubLocation = (props) => {
             <Col lg={5}>
               <div className="mb-3">
                 <Label className="form-label">Select Location</Label>
-                <Select
+                {/* <Select
                   name="location_id"
                   options={options}
                   onChange={(selectedOption) =>
                     validation.handleChange(selectedOption.value)
                   }
+                  // onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={options.find(
                     (opt) => opt.value === validation.values.location_id
                   )}
                   styles={customStyles}
-                />
+                  // value={validation.values.location_id || ""}
+                /> */}
+                <Input
+                  name="location_id"
+                  type="select"
+                  placeholder="Select location"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.location_id || ""}
+                  disabled={!showEditSubLocation}
+                >
+                  {/* <option value="">Select lco</option> */}
+                  {locateonsublocate.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
+                </Input>
                 {validation.touched.location_id &&
                 validation.errors.location_id ? (
                   <FormFeedback type="invalid">
@@ -239,7 +248,6 @@ const ViewSubLocation = (props) => {
           )}
         </Form>
       </ModalBody>
-      {/* </Modal> */}
     </Modal>
   );
 };
