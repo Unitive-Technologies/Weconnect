@@ -81,32 +81,34 @@ const BulkInactiveUserModal = (props) => {
   };
 
   const handleStatusChange = (e) => {
-    const statustoset = e.target.value;
-    setSelectedStatusToSet(statustoset);
+    const selectedStatus = e.target.value;
+    setSelectedStatusToSet(selectedStatus);
+
     validation.handleChange(e);
-    console.log("statustoset:" + statustoset);
+
+    console.log("selectedStatus:" + selectedStatus);
   };
 
-  useEffect(() => {
-    if (selectedStatusToSet === "inactive") {
-      const filteredActiveBlockData = users.filter(
-        (user) => parseInt(user.status) === -7 || parseInt(user.status) === 1
-      );
-      setTableList(filteredActiveBlockData);
-    } else if (selectedStatusToSet === "active") {
-      const filteredInActiveData = users.filter(
-        (user) => parseInt(user.status) === 0
-      );
-      setTableList(filteredInActiveData);
-    } else if (selectedStatusToSet === "block") {
-      const filteredActiveInactiveData = users.filter(
-        (user) => parseInt(user.status) === 1 || parseInt(user.status) === 0
-      );
-      setTableList(filteredActiveInactiveData);
-    } else {
-      setTableList([]);
-    }
-  }, [users, selectedStatusToSet]);
+  // useEffect(() => {
+  //   if (selectedStatusToSet === "inactive") {
+  //     const filteredActiveBlockData = users.filter(
+  //       (user) => parseInt(user.status) === -7 || parseInt(user.status) === 1
+  //     );
+  //     setTableList(filteredActiveBlockData);
+  //   } else if (selectedStatusToSet === "active") {
+  //     const filteredInActiveData = users.filter(
+  //       (user) => parseInt(user.status) === 0
+  //     );
+  //     setTableList(filteredInActiveData);
+  //   } else if (selectedStatusToSet === "block") {
+  //     const filteredActiveInactiveData = users.filter(
+  //       (user) => parseInt(user.status) === 1 || parseInt(user.status) === 0
+  //     );
+  //     setTableList(filteredActiveInactiveData);
+  //   } else {
+  //     setTableList([]);
+  //   }
+  // }, [users, selectedStatusToSet]);
 
   const validation = useFormik({
     enableReinitialize: true,
@@ -141,11 +143,15 @@ const BulkInactiveUserModal = (props) => {
         console.log("newStatus:", JSON.stringify(newStatus));
         const token = "Bearer " + localStorage.getItem("temptoken");
 
-        const response = await axios.post(`${API_URL}/2?vr=web1.0`, newStatus, {
-          headers: {
-            Authorization: token,
-          },
-        });
+        const response = await axios.post(
+          `${API_URL}/user/bulk-status/2?vr=web1.0`,
+          newStatus,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
 
         console.log("Axios Response:", response);
         dispatch(onGetUsers());
@@ -440,6 +446,65 @@ const BulkInactiveUserModal = (props) => {
     []
   );
 
+  useEffect(() => {
+    console.log("status in useEffect: " + selectedStatusToSet);
+
+    const fetchData = async () => {
+      try {
+        const token = "Bearer " + localStorage.getItem("temptoken");
+        if (selectedStatusToSet === "active") {
+          const response = await axios.get(
+            `${API_URL}/user?expand=role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[id]=2&filter[status]=0&notfilter[role]=4&page=1&per-page=500&vr=web1.0`,
+            {
+              headers: {
+                Authorization: token,
+              },
+            }
+          );
+
+          setTableList(response.data.data);
+        } else if (selectedStatusToSet === "inactive") {
+          const response = await axios.get(
+            `${API_URL}/user?expand=role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[id]=2&filter[status]=1,-7&notfilter[role]=4&page=1&per-page=500&vr=web1.0`,
+            {
+              headers: {
+                Authorization: token,
+              },
+            }
+          );
+
+          setTableList(response.data.data);
+        } else if (selectedStatusToSet === "block") {
+          const response = await axios.get(
+            `${API_URL}/user?expand=role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[id]=2&filter[status]=0,1&notfilter[role]=4&page=1&per-page=500&vr=web1.0`,
+            {
+              headers: {
+                Authorization: token,
+              },
+            }
+          );
+
+          setTableList(response.data.data);
+        } else {
+          const response = await axios.get(
+            `${API_URL}/user?expand=role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[id]=2&filter[status]=-7&notfilter[role]=4&page=1&per-page=500&vr=web1.0`,
+            {
+              headers: {
+                Authorization: token,
+              },
+            }
+          );
+
+          setTableList(response.data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [selectedStatusToSet]);
+
   return (
     <Modal
       isOpen={isOpen}
@@ -475,10 +540,9 @@ const BulkInactiveUserModal = (props) => {
                       type="select"
                       placeholder="Select Status to set"
                       className="form-select"
-                      // onChange={validation.handleChange}
                       onChange={handleStatusChange}
                       onBlur={validation.handleBlur}
-                      value={validation.values.statustoset}
+                      value={selectedStatusToSet}
                     >
                       <option value="active">ACTIVE</option>
                       <option value="inactive">In-Active</option>
