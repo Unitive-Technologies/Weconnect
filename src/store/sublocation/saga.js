@@ -47,18 +47,9 @@ function* fetchSublocation() {
   }
 }
 
-function* onUpdateSubLocation({ payload: { sublocation_id, sublocation } }) {
-  console.log("sublocation id: ", sublocation_id);
-  const stringSelectedId =
-    typeof sublocation_id === "object"
-      ? JSON.stringify(sublocation_id)
-      : sublocation_id;
-  console.log("String selected id: ", stringSelectedId);
+function* onUpdateSubLocation({ payload: sublocation }) {
   try {
-    const response = yield call(updateSublocation, {
-      stringSelectedId,
-      sublocation,
-    });
+    const response = yield call(updateSublocation, sublocation.id, sublocation);
     console.log("Response data in saga: ", response);
     yield put(updateSublocationSuccess(response));
   } catch (error) {

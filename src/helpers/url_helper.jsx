@@ -89,8 +89,9 @@ export const GET_SINGLE_LOCATION = (id) => `/location/${id}?vr=web1.0`;
 export const GET_SUBLOCATION =
   "/sublocation?expand=created_by_lbl,operator_lbl,location_lbl,status_lbl,location_code,operator_code&page=1&per-page=50&vr=web1.0";
 export const ADD_SUBLOCATION = "/sublocation?vr=web1.0";
-export const updateSublocationById = (sublocation_id) =>
-  `/sublocation/${sublocation_id}?vr=web1.0`;
+export const updateSublocationById = (id) => `/sublocation/${id}?vr=web1.0`;
+export const GET_LOCATION_ONSUBLOCATION =
+  "/location/list?fields=id,name&expand=operator_lbl&per-page=100&vr=web1.0";
 
 export const GET_DISTRIBUTORS =
   "/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,branch_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=2&page=1&per-page=50&vr=web1.0";
@@ -201,9 +202,9 @@ export const GET_REASON_STATUS = "/list/status?fields=id,name&vr=web1.0";
 
 export const ADD_NEW_REASON = "/reason?vr=web1.0";
 
-export const GET_BANK = "/bank?expand=created_by_lbl,status_lbl,ismso_lbl&page=1&per-page=50&vr=web1.0";
+export const GET_BANK =
+  "/bank?expand=created_by_lbl,status_lbl,ismso_lbl&page=1&per-page=50&vr=web1.0";
 export const GET_BANK_STATUS = "/list/status?fields=id,name&vr=web1.0";
-
 
 export const ADD_NEW_BANK = "/bank?vr=web1.0";
 

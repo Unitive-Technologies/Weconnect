@@ -292,8 +292,10 @@ export const getSingleLocation = (id) => get(url.GET_SINGLE_LOCATION(id));
 export const getSublocation = () => get(url.GET_SUBLOCATION);
 export const addSublocation = (sublocation) =>
   post(url.ADD_SUBLOCATION, sublocation);
-export const updateSublocation = (sublocation_id, sublocation) =>
-  put(url.updateSublocationById(sublocation_id), sublocation);
+export const updateSublocation = (id, sublocation) =>
+  put(url.updateSublocationById(id), sublocation);
+export const getLocationOnSublocation = () =>
+  get(url.GET_LOCATION_ONSUBLOCATION);
 
 export const getRegionalOffice = () => get(url.GET_REGIONALOFFICE);
 export const addNewRegionalOffice = (regionaloffice) =>
