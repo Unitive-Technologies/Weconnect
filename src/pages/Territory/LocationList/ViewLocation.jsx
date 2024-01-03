@@ -14,31 +14,28 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
-import { createSelector } from "reselect";
-import { getLco as onGetLco } from "/src/store/actions";
+import { useDispatch } from "react-redux";
 import Select from "react-select";
 import { Link } from "react-router-dom";
 import { updateLocation as onUpdateLocation } from "/src/store/location/actions";
+import {
+  getLocation as onGetLocation,
+  getSingleLocation as onGetSingleLocation,
+} from "/src/store/actions";
 
 const ViewLocation = (props) => {
-  const { isOpen, handleViewLocation, location, lcoonlocation, status } = props;
+  const {
+    isOpen,
+    handleViewLocation,
+    location,
+    lcoonlocation,
+    status,
+    singlelocation,
+  } = props;
   const dispatch = useDispatch();
   const [showEditLocation, setShowEditLocation] = useState(false);
-  const selectLcoState = (state) => state.lco;
-  const LcoProperties = createSelector(selectLcoState, (lco) => ({
-    lcos: lco.lco,
-    loading: lco.loading,
-  }));
 
-  const { lcos, loading } = useSelector(LcoProperties);
-
-  useEffect(() => {
-    if (lcos && !lcos.length) {
-      dispatch(onGetLco());
-    }
-  }, [dispatch, lcos]);
-
+  // console.log("Single location: ", singlelocation);
   const options = lcoonlocation.map((option) => ({
     value: option.name,
     label: (
@@ -86,6 +83,7 @@ const ViewLocation = (props) => {
       };
       console.log("Updated Location:" + updateLocation);
       dispatch(onUpdateLocation(updateLocation));
+      dispatch(onGetLocation());
       validation.resetForm();
       handleViewLocation();
     },

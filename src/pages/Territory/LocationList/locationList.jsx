@@ -15,8 +15,9 @@ import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import {
   getLocation as onGetLocation,
   getLcoOnLocation as onGetLcoOnLocation,
+  getAdministrativeDivisionStatus as onGetAdministrativeDivisionStatus,
+  getSingleLocation as onGetSingleLocation,
 } from "/src/store/actions";
-import { getAdministrativeDivisionStatus as onGetAdministrativeDivisionStatus } from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
@@ -37,6 +38,7 @@ const LocationList = (props) => {
       locations: location.location,
       loading: location.loading,
       lcoonlocation: location.lcoonlocation,
+      singlelocation: location.singlelocation,
     })
   );
 
@@ -50,7 +52,8 @@ const LocationList = (props) => {
   );
 
   const { districts, status } = useSelector(districtProperties);
-  const { locations, loading, lcoonlocation } = useSelector(locationProperties);
+  const { locations, loading, lcoonlocation, singlelocation } =
+    useSelector(locationProperties);
   const [isLoading, setLoading] = useState(loading);
   const [showAddLocation, setShowAddLocation] = useState(false);
   const [showUploadLocation, setShowUploadLocation] = useState(false);
@@ -61,6 +64,7 @@ const LocationList = (props) => {
     console.log("User Data: ", userData);
     setShowViewLocation(!showViewLocation);
     setViewLocationData(userData);
+    dispatch(onGetSingleLocation(userData.id));
   };
 
   const columns = useMemo(
@@ -103,9 +107,6 @@ const LocationList = (props) => {
                   {cellProps.row.original.name}
                 </Link>
               </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
             </>
           );
         },
@@ -227,6 +228,10 @@ const LocationList = (props) => {
   }, [dispatch, locations]);
 
   useEffect(() => {
+    dispatch(onGetSingleLocation());
+  }, [dispatch]);
+
+  useEffect(() => {
     if (districts && !districts.length) {
       dispatch(onGetAdministrativeDivisionStatus());
     }
@@ -265,6 +270,7 @@ const LocationList = (props) => {
         location={viewLocationData}
         lcoonlocation={lcoonlocation}
         status={status}
+        singlelocation={singlelocation}
       />
       <AddNewLocation
         isOpen={showAddLocation}
@@ -296,7 +302,7 @@ const LocationList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      customPageSize={50}
+                      customPageSize={100}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"

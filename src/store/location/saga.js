@@ -100,6 +100,7 @@ function* fetchSingleLocation({ id }) {
     const singleLocation = convertLocationListObject(response.data);
     yield put(getSingleLocationSuccess(singleLocation));
   } catch (error) {
+    console.log("Error at fetch single location: ", error);
     yield put(getSingleLocationFail(error));
   }
 }
