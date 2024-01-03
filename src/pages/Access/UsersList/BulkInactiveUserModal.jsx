@@ -43,19 +43,21 @@ const BulkInactiveUserModal = (props) => {
   const handleActive = (row) => {
     const isRowSelected = selectedUsers.some((user) => user.id === row.id);
 
-    if (isRowSelected) {
-      setTableList((prevTableList) =>
-        prevTableList.filter((user) => user.id !== row.id)
-      );
+    setTableList((prevTableList) =>
+      prevTableList.filter((user) => user.id !== row.id)
+    );
 
-      row.original.isSelected = false;
+    if (isRowSelected) {
+      setSelectedUsers((prevSelectedUsers) =>
+        prevSelectedUsers.filter((user) => user.id !== row.id)
+      );
     } else {
       setSelectedUsers((prevSelectedUsers) => [...prevSelectedUsers, row]);
-      setTableList((prevTableList) =>
-        prevTableList.filter((user) => user.id !== row.id)
-      );
+    }
 
-      row.original.isSelected = false;
+    // Ensure that row.original exists before accessing its properties
+    if (row.original) {
+      row.original.isSelected = !isRowSelected;
     }
   };
 
@@ -145,17 +147,17 @@ const BulkInactiveUserModal = (props) => {
 
   const columns = useMemo(
     () => [
-      {
-        Header: ".",
-        disableFilters: true,
-        filterable: true,
-        Cell: (cellProps) => (
-          <input
-            type="checkbox"
-            onChange={() => handleActive(cellProps.row.original)}
-          />
-        ),
-      },
+      // {
+      //   Header: ".",
+      //   disableFilters: true,
+      //   filterable: true,
+      //   Cell: (cellProps) => (
+      //     <input
+      //       type="checkbox"
+      //       onChange={() => handleActive(cellProps.row.original)}
+      //     />
+      //   ),
+      // },
 
       {
         Header: "#",
@@ -510,6 +512,10 @@ const BulkInactiveUserModal = (props) => {
                 isPagination={true}
                 columns={columns}
                 data={tableList}
+                handleRowClick={(row) => {
+                  // console.log("row:" + JSON.stringify(row));
+                  handleActive(row);
+                }}
                 isGlobalFilter={true}
                 isShowingPageLength={true}
                 customPageSize={50}

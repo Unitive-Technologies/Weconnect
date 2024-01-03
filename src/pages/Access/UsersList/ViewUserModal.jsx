@@ -154,12 +154,12 @@ const ViewUserModal = (props) => {
       setSelectedDistributor(distributor);
 
       validation.handleChange(e);
-      {
-        console.log("selectedType:" + typeof selectedType);
-      }
-      {
-        console.log("selectedDistributor:" + typeof distributor);
-      }
+      // {
+      //   console.log("selectedType:" + typeof selectedType);
+      // }
+      // {
+      //   console.log("selectedDistributor:" + typeof distributor);
+      // }
       // Assuming you have a token stored in localStorage
       const token = "Bearer " + localStorage.getItem("temptoken");
 
