@@ -37,10 +37,10 @@ const BulkInactiveUserModal = (props) => {
   const [tableList, setTableList] = useState([]);
 
   const [selectedStatusToSet, setSelectedStatusToSet] = useState("active");
-  const [filteredActiveBlockUsers, setFilteredActiveBlockUsers] = useState([]);
-  const [filteredInActiveUsers, setFilteredInActiveUsers] = useState([]);
-  const [filteredActiveInactiveUsers, setFilteredActiveInactiveUsers] =
-    useState([]);
+  // const [filteredActiveBlockUsers, setFilteredActiveBlockUsers] = useState([]);
+  // const [filteredInActiveUsers, setFilteredInActiveUsers] = useState([]);
+  // const [filteredActiveInactiveUsers, setFilteredActiveInactiveUsers] =
+  //   useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
 
   const handleActive = (row) => {
@@ -138,18 +138,14 @@ const BulkInactiveUserModal = (props) => {
               : 2,
         };
 
-        console.log("newUser:", JSON.stringify(newStatus));
+        console.log("newStatus:", JSON.stringify(newStatus));
         const token = "Bearer " + localStorage.getItem("temptoken");
 
-        const response = await axios.post(
-          "https://sms.unitch.in/api/index.php/v1/user/bulk-status/2?vr=web1.0",
-          newStatus,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
+        const response = await axios.post(`${API_URL}/2?vr=web1.0`, newStatus, {
+          headers: {
+            Authorization: token,
+          },
+        });
 
         console.log("Axios Response:", response);
         dispatch(onGetUsers());
@@ -603,9 +599,9 @@ const BulkInactiveUserModal = (props) => {
                   <button
                     type="submit"
                     className="btn btn-primary ml-2 "
-                    onClick={() => {
-                      validation.handleSubmit();
-                    }}
+                    // onClick={() => {
+                    //   validation.handleSubmit();
+                    // }}
                   >
                     Save
                   </button>

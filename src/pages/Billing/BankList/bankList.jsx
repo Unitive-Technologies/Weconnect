@@ -138,13 +138,9 @@ const BankList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-<<<<<<< Updated upstream
-            <p className="text-muted mb-0">{cellProps.row.original.ismso === 1 ? "Yes" : "No"}</p>
-=======
             <p className="text-muted mb-0">
               {cellProps.row.original.ismso === 1 ? "Yes" : "No"}
             </p>
->>>>>>> Stashed changes
           );
         },
       },
