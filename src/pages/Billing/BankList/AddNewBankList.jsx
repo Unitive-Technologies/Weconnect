@@ -59,6 +59,9 @@ const AddNewBankList = (props) => {
         created_by: values["created_by"],
       };
       console.log("newBank:" + newBank);
+      {
+        console.log("status type: " + typeof newBank.status);
+      }
       // save new user
       dispatch(onAddNewBank(newBank));
       dispatch(onGetBank());
@@ -168,6 +171,7 @@ const AddNewBankList = (props) => {
                   type="select"
                   placeholder="Select Status"
                   className="form-select"
+                  // onChange={handleStatusChange}
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
@@ -180,8 +184,7 @@ const AddNewBankList = (props) => {
                       </option>
                     ))}
                 </Input>
-                {validation.touched.status &&
-                  validation.errors.status ? (
+                {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
                     {validation.errors.status}
                   </FormFeedback>

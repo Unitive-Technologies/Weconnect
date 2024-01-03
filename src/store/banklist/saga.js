@@ -43,7 +43,7 @@ function* fetchBank() {
 function* fetchBankStatus() {
   try {
     const response = yield call(getBankStatus);
-    console.log("designation status response:" + JSON.stringify(response));
+    console.log("Bank status response:" + JSON.stringify(response));
     yield put(getBankStatusSuccess(response.data));
   } catch (error) {
     yield put(getBankStatusFail(error));
