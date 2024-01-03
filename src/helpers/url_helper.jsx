@@ -87,7 +87,7 @@ export const GET_LCO_ONLOCATION =
 export const GET_SINGLE_LOCATION = (id) => `/location/${id}?vr=web1.0`;
 
 export const GET_SUBLOCATION =
-  "/sublocation?expand=created_by_lbl,operator_lbl,location_lbl,status_lbl,location_code,operator_code&page=1&per-page=50&vr=web1.0";
+  "/sublocation?expand=created_by_lbl,operator_lbl,location_lbl,status_lbl,location_code,operator_code&vr=web1.0";
 export const ADD_SUBLOCATION = "/sublocation?vr=web1.0";
 export const updateSublocationById = (id) => `/sublocation/${id}?vr=web1.0`;
 export const GET_LOCATION_ONSUBLOCATION =
