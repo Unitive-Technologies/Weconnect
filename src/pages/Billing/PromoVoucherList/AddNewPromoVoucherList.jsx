@@ -52,10 +52,10 @@ const AddNewPromoVoucher = (props) => {
     }),
     onSubmit: (values) => {
 
-      const LCOArray = values["operator"] || [];
-      const LCOIntegers = LCOArray.map((option) =>
-        parseInt(option)
-      );
+      // const LCOArray = values["operator"] || [];
+      // const LCOIntegers = LCOArray.map((option) =>
+      //   parseInt(option)
+      // );
 
       const BouquetArray = values["bouquets"] || [];
       const BouquetIntegers = BouquetArray.map((option) =>
@@ -64,11 +64,11 @@ const AddNewPromoVoucher = (props) => {
 
       const newPromoVoucher = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
-        // operator: values["operator"],
+        operator: values["operator"],
         operator_code: values["operator_code"],
         amount: values["amount"],
         mrp: values["mrp"],
-        operator: LCOIntegers,
+        // operator: LCOIntegers,
         bouquets: BouquetIntegers,
         expiry_date: values["expiry_date"],
         // bouquets: values["bouquets"],
@@ -124,10 +124,10 @@ const AddNewPromoVoucher = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.operator || []}
-                  multiple
+                  value={validation.values.operator || ""}
+
                 >
-                  <option value=""></option>
+                  <option value="">Select LCO</option>
                   {promovoucherLCO &&
                     promovoucherLCO.map((operator) => (
                       <option key={operator.id} value={operator.id}>
@@ -233,7 +233,7 @@ const AddNewPromoVoucher = (props) => {
                 </Label>
                 <Input
                   name="bouquets"
-                  type="text"
+                  type="select"
                   placeholder="Select bouquet"
                   // className="form-select"
                   onChange={validation.handleChange}
