@@ -29,7 +29,6 @@ const AddNewBankList = (props) => {
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
-
     initialValues: {
       //BroadCaster: "",
       name: "",
@@ -39,14 +38,14 @@ const AddNewBankList = (props) => {
       ismso: "",
       status: "",
       account_no: "",
-      created_at: "",
-      created_by: "Admin",
+      // created_at: "",
+      // created_by: "Admin",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
       ifscode: Yup.string().required("Enter IFSC code"),
       branch: Yup.string().required("Enter branch"),
-      account_no: Yup.string().required("Enter account no"),
+      // account_no: Yup.string().required("Enter account no"),
       address: Yup.string().required("Enter branch address"),
       ismso: Yup.string().required("Select for mso"),
       status: Yup.string().required("Select status"),
@@ -61,13 +60,13 @@ const AddNewBankList = (props) => {
         address: values["address"],
         ismso: values["ismso"],
         account_no: values["account_no"],
-        created_at: new Date(),
-        created_by: values["created_by"],
+        // created_at: new Date(),
+        // created_by: values["created_by"],
       };
       console.log("newBank:" + newBank);
-      {
-        console.log("status type: " + typeof newBank.status);
-      }
+      // {
+      //   console.log("status type: " + typeof newBank.status);
+      // }
       // save new user
       dispatch(onAddNewBank(newBank));
       dispatch(onGetBank());
@@ -92,7 +91,7 @@ const AddNewBankList = (props) => {
       toggle={handleAddBank}
     >
       <ModalHeader tag="h4" toggle={handleAddBank}>
-        Add New Tax
+        Add New Bank
       </ModalHeader>
       <ModalBody>
         <Form
@@ -213,8 +212,7 @@ const AddNewBankList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.address || ""}
                 ></Input>
-                {validation.touched.address &&
-                  validation.errors.address ? (
+                {validation.touched.address && validation.errors.address ? (
                   <FormFeedback type="invalid">
                     {validation.errors.address}
                   </FormFeedback>

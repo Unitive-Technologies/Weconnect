@@ -3,12 +3,20 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import { GET_BANK, GET_BANK_STATUS, ADD_NEW_BANK } from "./actionTypes";
 
 import {
-  getBankSuccess, getBankFail, getBankStatusFail,
-  getBankStatusSuccess, addBankSuccess, addBankFail
+  getBankSuccess,
+  getBankFail,
+  getBankStatusFail,
+  getBankStatusSuccess,
+  addBankSuccess,
+  addBankFail,
 } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getBank, getBankStatus, addNewBank } from "../../helpers/fakebackend_helper";
+import {
+  getBank,
+  getBankStatus,
+  addNewBank,
+} from "../../helpers/fakebackend_helper";
 
 const convertBankListObject = (bankList) => {
   // Notification Template has more data than what we need, we need to convert each of the Notification Template user object in the list with needed colums of the table
@@ -39,8 +47,6 @@ function* fetchBank() {
   }
 }
 
-
-
 function* fetchBankStatus() {
   try {
     const response = yield call(getBankStatus);
@@ -56,10 +62,10 @@ function* onAddNewBank({ payload: bank }) {
     const response = yield call(addNewBank, bank);
 
     yield put(addBankSuccess(response));
-    toast.success("Bank Added Successfully", { autoClose: 2000 });
+    // toast.success("Bank Added Successfully", { autoClose: 2000 });
   } catch (error) {
     yield put(addBankFail(error));
-    toast.error("Bank Added Failed", { autoClose: 2000 });
+    // toast.error("Bank Added Failed", { autoClose: 2000 });
   }
 }
 
