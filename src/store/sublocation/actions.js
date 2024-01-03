@@ -8,6 +8,9 @@ import {
   UPDATE_SUBLOCATION,
   UPDATE_SUBLOCATION_SUCCESS,
   UPDATE_SUBLOCATION_FAIL,
+  GET_LOCATION_ONSUBLOCATION,
+  GET_LOCATION_ONSUBLOCATION_SUCCESS,
+  GET_LOCATION_ONSUBLOCATION_FAIL,
 } from "./actionTypes";
 
 export const getSublocation = () => ({
@@ -15,7 +18,7 @@ export const getSublocation = () => ({
 });
 
 export const getSublocationSuccess = (sublocation) => {
-  console.log("Received Sublocation:", sublocation);
+  // console.log("Received Sublocation:", sublocation);
   return {
     type: GET_SUBLOCATION_SUCCESS,
     payload: sublocation,
@@ -54,5 +57,19 @@ export const updateSublocationSuccess = (sublocation) => ({
 
 export const updateSublocationFail = (error) => ({
   type: UPDATE_SUBLOCATION_FAIL,
+  payload: error,
+});
+
+export const getLocationOnSUblocation = () => ({
+  type: GET_LOCATION_ONSUBLOCATION,
+});
+
+export const getLocationOnSUblocationSuccess = (locateonsublocate) => ({
+  type: GET_LOCATION_ONSUBLOCATION_SUCCESS,
+  payload: locateonsublocate,
+});
+
+export const getLocationOnSUblocationFail = (error) => ({
+  type: GET_LOCATION_ONSUBLOCATION_FAIL,
   payload: error,
 });

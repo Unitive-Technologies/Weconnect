@@ -3,6 +3,7 @@ import {
   GET_SUBLOCATION,
   ADD_SUBLOCATION,
   UPDATE_SUBLOCATION,
+  GET_LOCATION_ONSUBLOCATION,
 } from "./actionTypes";
 import {
   getSublocationSuccess,
@@ -11,11 +12,14 @@ import {
   addSubLocationFail,
   updateSublocationSuccess,
   updateSublocationFail,
+  getLocationOnSUblocationSuccess,
+  getLocationOnSUblocationFail,
 } from "./actions";
 import {
   getSublocation,
   addSublocation,
   updateSublocation,
+  getLocationOnSublocation,
 } from "../../helpers/fakebackend_helper";
 
 const convertSublocationListObject = (sublocationList) => {
@@ -39,7 +43,7 @@ const convertSublocationListObject = (sublocationList) => {
 function* fetchSublocation() {
   try {
     const response = yield call(getSublocation);
-    console.log("response:" + JSON.stringify(response.data));
+    // console.log("response:" + JSON.stringify(response.data));
     const sublocationList = convertSublocationListObject(response.data);
     yield put(getSublocationSuccess(sublocationList));
   } catch (error) {
@@ -68,10 +72,23 @@ function* onAddSubLocation({ payload: sublocation }) {
   }
 }
 
+function* fetchLocationOnSublocation() {
+  try {
+    const response = yield call(getLocationOnSublocation);
+    console.log(
+      "fetch Location OnSublocation response:" + JSON.stringify(response.data)
+    );
+    yield put(getLocationOnSublocationSuccess(response.data));
+  } catch (error) {
+    yield put(getLocationOnSublocationFail(error));
+  }
+}
+
 function* sublocationSaga() {
   yield takeEvery(GET_SUBLOCATION, fetchSublocation);
   yield takeEvery(ADD_SUBLOCATION, onAddSubLocation);
   yield takeEvery(UPDATE_SUBLOCATION, onUpdateSubLocation);
+  yield takeEvery(GET_LOCATION_ONSUBLOCATION, fetchLocationOnSublocation);
 }
 
 export default sublocationSaga;

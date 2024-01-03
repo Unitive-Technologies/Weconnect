@@ -5,10 +5,13 @@ import {
   ADD_SUBLOCATION_FAIL,
   UPDATE_SUBLOCATION_SUCCESS,
   UPDATE_SUBLOCATION_FAIL,
+  GET_LOCATION_ONSUBLOCATION_SUCCESS,
+  GET_LOCATION_ONSUBLOCATION_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
   sublocation: [],
+  locateonsublocate: [],
   error: {},
   loading: true,
 };
@@ -51,6 +54,19 @@ const Sublocation = (state = INIT_STATE, action) => {
       };
 
     case UPDATE_SUBLOCATION_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_LOCATION_ONSUBLOCATION_SUCCESS:
+      return {
+        ...state,
+        locateonsublocate: action.payload,
+        loading: false,
+      };
+
+    case GET_LOCATION_ONSUBLOCATION_FAIL:
       return {
         ...state,
         error: action.payload,
