@@ -14,7 +14,7 @@ import {
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import { getBank as onGetBank } from "/src/store/actions";
+import { getBank as onGetBank, getBankStatus as onGetBankStatus, } from "/src/store/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -33,9 +33,10 @@ const BankList = (props) => {
   const BankProperties = createSelector(selectBankState, (bank) => ({
     banks: bank.bank,
     loading: bank.loading,
+    bankStatus: bank.bankStatus
   }));
 
-  const { banks, loading } = useSelector(BankProperties);
+  const { banks, loading, bankStatus } = useSelector(BankProperties);
 
   const [isLoading, setLoading] = useState(loading);
 
@@ -185,6 +186,7 @@ const BankList = (props) => {
   useEffect(() => {
     if (banks && !banks.length) {
       dispatch(onGetBank());
+      dispatch(onGetBankStatus());
     }
   }, [dispatch, banks]);
 
@@ -224,6 +226,7 @@ const BankList = (props) => {
       <UploadBankList
         isOpen={showUploadBankList}
         handleUploadBank={handleUploadBank}
+        bankStatus={bankStatus}
       />
 
       <div className="page-content">

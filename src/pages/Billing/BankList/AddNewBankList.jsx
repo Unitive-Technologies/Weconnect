@@ -16,9 +16,11 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewBank as onAddNewBank } from "/src/store/banklist/actions";
 import { useDispatch } from "react-redux";
+import { getBank as onGetBank } from "/src/store/actions";
 
 const AddNewBankList = (props) => {
-  const { isOpen, handleAddBank } = props;
+  const { isOpen, handleAddBank, bankStatus } = props;
+
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -32,7 +34,7 @@ const AddNewBankList = (props) => {
       branch: "",
       branch_address: "",
       formso: "",
-      status_lbl: "",
+      status: "",
       created_at: "",
       created_by: "Admin",
     },
@@ -42,14 +44,14 @@ const AddNewBankList = (props) => {
       branch: Yup.string().required("Enter branch"),
       branch_address: Yup.string().required("Enter branch address"),
       formso: Yup.string().required("Select for mso"),
-      status_lbl: Yup.string().required("Select status"),
+      status: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
       const newBank = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         ifsc_code: values["ifsc_code"],
-        status_lbl: values["status_lbl"],
+        status: values["status"],
         branch: values["branch"],
         branch_address: values["branch_address"],
         formso: values["formso"],
@@ -59,6 +61,7 @@ const AddNewBankList = (props) => {
       console.log("newBank:" + newBank);
       // save new user
       dispatch(onAddNewBank(newBank));
+      dispatch(onGetBank());
       validation.resetForm();
       handleAddBank();
     },
@@ -161,22 +164,26 @@ const AddNewBankList = (props) => {
                   Status<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="status_lbl"
+                  name="status"
                   type="select"
                   placeholder="Select Status"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.status_lbl || ""}
+                  value={validation.values.status || ""}
                 >
-                  <option value="101">Select Status</option>
-                  <option value="102">Active</option>
-                  <option value="103">In-Active</option>
+                  <option value="">Select Status</option>
+                  {bankStatus &&
+                    bankStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                 </Input>
-                {validation.touched.status_lbl &&
-                validation.errors.status_lbl ? (
+                {validation.touched.status &&
+                  validation.errors.status ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.status_lbl}
+                    {validation.errors.status}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -197,7 +204,7 @@ const AddNewBankList = (props) => {
                   value={validation.values.branch_address || ""}
                 ></Input>
                 {validation.touched.branch_address &&
-                validation.errors.branch_address ? (
+                  validation.errors.branch_address ? (
                   <FormFeedback type="invalid">
                     {validation.errors.branch_address}
                   </FormFeedback>
