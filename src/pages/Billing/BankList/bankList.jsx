@@ -14,7 +14,10 @@ import {
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import { getBank as onGetBank, getBankStatus as onGetBankStatus, } from "/src/store/actions";
+import {
+  getBank as onGetBank,
+  getBankStatus as onGetBankStatus,
+} from "/src/store/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -105,9 +108,7 @@ const BankList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.ifscode}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.ifscode}</p>
           );
         },
       },
@@ -127,9 +128,7 @@ const BankList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.address}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.address}</p>
           );
         },
       },
@@ -139,7 +138,13 @@ const BankList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
+<<<<<<< Updated upstream
             <p className="text-muted mb-0">{cellProps.row.original.ismso === 1 ? "Yes" : "No"}</p>
+=======
+            <p className="text-muted mb-0">
+              {cellProps.row.original.ismso === 1 ? "Yes" : "No"}
+            </p>
+>>>>>>> Stashed changes
           );
         },
       },

@@ -24,7 +24,10 @@ import Dropzone from "react-dropzone";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUser as onUpdateUser } from "/src/store/users/actions";
+import {
+  updateUser as onUpdateUser,
+  getUsers as onGetUsers,
+} from "/src/store/users/actions";
 
 const BulkInactiveUserModal = (props) => {
   const { isOpen, handleBulkInactiveUser, users } = props;
@@ -58,6 +61,22 @@ const BulkInactiveUserModal = (props) => {
     // Ensure that row.original exists before accessing its properties
     if (row.original) {
       row.original.isSelected = !isRowSelected;
+    }
+  };
+
+  const handleRemove = (row) => {
+    if (selectedUsers) {
+      setSelectedUsers((prevSelectedUsers) =>
+        prevSelectedUsers.filter((user) => user.id !== row.id)
+      );
+      setTableList((prevTableList) =>
+        prevTableList.map((user) => {
+          if (user.id === row.id && user.original) {
+            user.original.isSelected = false;
+          }
+          return user;
+        })
+      );
     }
   };
 
@@ -133,6 +152,7 @@ const BulkInactiveUserModal = (props) => {
         );
 
         console.log("Axios Response:", response);
+        dispatch(onGetUsers());
 
         validation.resetForm();
         handleBulkInactiveUser();
@@ -147,17 +167,20 @@ const BulkInactiveUserModal = (props) => {
 
   const columns = useMemo(
     () => [
-      // {
-      //   Header: ".",
-      //   disableFilters: true,
-      //   filterable: true,
-      //   Cell: (cellProps) => (
-      //     <input
-      //       type="checkbox"
-      //       onChange={() => handleActive(cellProps.row.original)}
-      //     />
-      //   ),
-      // },
+      {
+        Header: ".",
+        disableFilters: true,
+        filterable: true,
+
+        Cell: (cellProps) => (
+          <input
+            type="checkbox"
+            disabled
+            checked
+            // onClick={() => handleActive(cellProps.row.original)}
+          />
+        ),
+      },
 
       {
         Header: "#",
@@ -409,7 +432,12 @@ const BulkInactiveUserModal = (props) => {
       {
         Header: "..",
         Cell: (cellProps) => {
-          return <i className="dripicons-tag-delete" />;
+          return (
+            <i
+              className="dripicons-tag-delete"
+              onClick={() => handleRemove(cellProps.row.original)}
+            />
+          );
         },
       },
     ],
@@ -575,9 +603,9 @@ const BulkInactiveUserModal = (props) => {
                   <button
                     type="submit"
                     className="btn btn-primary ml-2 "
-                    // onClick={() => {
-                    //   validation.handleSubmit();
-                    // }}
+                    onClick={() => {
+                      validation.handleSubmit();
+                    }}
                   >
                     Save
                   </button>
