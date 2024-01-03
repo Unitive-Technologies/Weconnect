@@ -60,16 +60,16 @@ export const updateSublocationFail = (error) => ({
   payload: error,
 });
 
-export const getLocationOnSUblocation = () => ({
+export const getLocationOnSublocation = () => ({
   type: GET_LOCATION_ONSUBLOCATION,
 });
 
-export const getLocationOnSUblocationSuccess = (locateonsublocate) => ({
+export const getLocationOnSublocationSuccess = (locateonsublocate) => ({
   type: GET_LOCATION_ONSUBLOCATION_SUCCESS,
   payload: locateonsublocate,
 });
 
-export const getLocationOnSUblocationFail = (error) => ({
+export const getLocationOnSublocationFail = (error) => ({
   type: GET_LOCATION_ONSUBLOCATION_FAIL,
   payload: error,
 });

@@ -15,8 +15,6 @@ import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import {
   getCity as onGetCity,
   getDistrictByStateid as onGetDistrictByStateid,
-} from "/src/store/actions";
-import {
   getDistrictStateList as onGetDistrictStateList,
   getAdministrativeDivisionStatus as onGetAdministrativeDivisionStatus,
 } from "/src/store/actions";

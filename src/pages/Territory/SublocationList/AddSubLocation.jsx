@@ -17,32 +17,14 @@ import { useFormik } from "formik";
 import { addSubLocation as onAddSubLocation } from "/src/store/sublocation/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
-import { getLocation as onGetLocation } from "/src/store/actions";
 import Select from "react-select";
 
 const AddSubLocation = (props) => {
-  const { isOpen, handleAddSubLocation, status } = props;
+  const { isOpen, handleAddSubLocation, status, locateonsublocate } = props;
   const dispatch = useDispatch();
   const [selectedLocation, setSelectedLocation] = useState(null);
 
-  const selectLocationState = (state) => state.location;
-  const locationProperties = createSelector(
-    selectLocationState,
-    (location) => ({
-      locations: location.location,
-      loading: location.loading,
-    })
-  );
-
-  const { locations, loading } = useSelector(locationProperties);
-
-  useEffect(() => {
-    if (locations && !locations.length) {
-      dispatch(onGetLocation());
-    }
-  }, [dispatch, locations]);
-
-  const options = locations.map((option) => ({
+  const options = locateonsublocate.map((option) => ({
     value: option.id,
     label: (
       <div>

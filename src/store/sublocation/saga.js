@@ -12,8 +12,8 @@ import {
   addSubLocationFail,
   updateSublocationSuccess,
   updateSublocationFail,
-  getLocationOnSUblocationSuccess,
-  getLocationOnSUblocationFail,
+  getLocationOnSublocationSuccess,
+  getLocationOnSublocationFail,
 } from "./actions";
 import {
   getSublocation,
@@ -75,9 +75,6 @@ function* onAddSubLocation({ payload: sublocation }) {
 function* fetchLocationOnSublocation() {
   try {
     const response = yield call(getLocationOnSublocation);
-    console.log(
-      "fetch Location OnSublocation response:" + JSON.stringify(response.data)
-    );
     yield put(getLocationOnSublocationSuccess(response.data));
   } catch (error) {
     yield put(getLocationOnSublocationFail(error));

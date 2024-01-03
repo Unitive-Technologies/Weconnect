@@ -12,8 +12,11 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import { getSublocation as onGetSublocation } from "/src/store/actions";
-import { getAdministrativeDivisionStatus as onGetAdministrativeDivisionStatus } from "/src/store/actions";
+import {
+  getSublocation as onGetSublocation,
+  getAdministrativeDivisionStatus as onGetAdministrativeDivisionStatus,
+  getLocationOnSublocation as onGetLocationOnSublocation,
+} from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
@@ -33,6 +36,7 @@ const SublocationList = (props) => {
     (sublocation) => ({
       subloc: sublocation.sublocation,
       loading: sublocation.loading,
+      locateonsublocate: sublocation.locateonsublocate,
     })
   );
 
@@ -46,7 +50,9 @@ const SublocationList = (props) => {
   );
 
   const { districts, status } = useSelector(districtProperties);
-  const { subloc, loading } = useSelector(sublocationProperties);
+  const { subloc, loading, locateonsublocate } = useSelector(
+    sublocationProperties
+  );
   const [isLoading, setLoading] = useState(loading);
   const [showAddSubLocation, setShowAddSubLocation] = useState(false);
   const [showUploadSubLocation, setShowUploadSubLocation] = useState(false);
@@ -237,6 +243,7 @@ const SublocationList = (props) => {
   useEffect(() => {
     if (subloc && !subloc.length) {
       dispatch(onGetSublocation());
+      dispatch(onGetLocationOnSublocation());
     }
   }, [dispatch, subloc]);
 
@@ -278,16 +285,19 @@ const SublocationList = (props) => {
         handleViewSubLocation={handleViewSubLocation}
         sublocation={viewSubLocationData}
         status={status}
+        locateonsublocate={locateonsublocate}
       />
       <AddSubLocation
         isOpen={showAddSubLocation}
         handleAddSubLocation={handleAddSubLocation}
         status={status}
+        locateonsublocate={locateonsublocate}
       />
       <UploadSubLocation
         isOpen={showUploadSubLocation}
         handleUploadSubLocation={handleUploadSubLocation}
         status={status}
+        locateonsublocate={locateonsublocate}
       />
       <div className="page-content">
         <Container fluid>
