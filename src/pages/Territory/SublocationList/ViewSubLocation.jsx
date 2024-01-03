@@ -18,6 +18,7 @@ import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import Select from "react-select";
 import { updateSublocation as onUpdateSublocation } from "/src/store/sublocation/actions";
+import { getSublocation as onGetSublocation } from "/src/store/actions";
 
 const ViewSubLocation = (props) => {
   const {
@@ -74,6 +75,7 @@ const ViewSubLocation = (props) => {
       };
       console.log("Updated Sublocation:" + JSON.stringify(updateSubLocation));
       dispatch(onUpdateSublocation(updateSubLocation));
+      dispatch(onGetSublocation());
       validation.resetForm();
       handleViewSubLocation();
     },
