@@ -44,10 +44,11 @@ const Sublocation = (state = INIT_STATE, action) => {
       };
 
     case UPDATE_SUBLOCATION_SUCCESS:
+      console.log("Sublocation in reducer: ", action.payload);
       return {
         ...state,
         sublocation: state.sublocation.map((sublocate) =>
-          locate.id.toString() === action.payload.id.toString()
+          sublocate.id.toString() === action.payload.id.toString()
             ? { sublocation: sublocate, ...action.payload }
             : sublocate
         ),
