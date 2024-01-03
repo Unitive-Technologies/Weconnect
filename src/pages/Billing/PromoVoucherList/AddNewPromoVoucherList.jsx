@@ -16,9 +16,11 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewPromoVoucher as onAddNewPromoVoucher } from "/src/store/promovoucherlist/actions";
 import { useDispatch } from "react-redux";
+import { getPromoVoucher as onGetPromoVoucher } from "/src/store/actions";
+
 
 const AddNewPromoVoucher = (props) => {
-  const { isOpen, handleAddPromoVoucher } = props;
+  const { isOpen, handleAddPromoVoucher, promovoucherApply, promovoucherBouquet, promovoucherLCO, promovoucherRecharge } = props;
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -49,14 +51,27 @@ const AddNewPromoVoucher = (props) => {
       recharge_period: Yup.string().required("Select recharge periods"),
     }),
     onSubmit: (values) => {
+
+      const LCOArray = values["operator"] || [];
+      const LCOIntegers = LCOArray.map((option) =>
+        parseInt(option)
+      );
+
+      const BouquetArray = values["bouquets"] || [];
+      const BouquetIntegers = BouquetArray.map((option) =>
+        parseInt(option)
+      );
+
       const newPromoVoucher = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
-        operator: values["operator"],
+        // operator: values["operator"],
         operator_code: values["operator_code"],
         amount: values["amount"],
         mrp: values["mrp"],
+        operator: LCOIntegers,
+        bouquets: BouquetIntegers,
         expiry_date: values["expiry_date"],
-        bouquets: values["bouquets"],
+        // bouquets: values["bouquets"],
         applied_on: values["applied_on"],
         recharge_period: values["recharge_period"],
         created_at: new Date(),
@@ -65,6 +80,7 @@ const AddNewPromoVoucher = (props) => {
       console.log("newPromoVoucher:" + newPromoVoucher);
       // save new user
       dispatch(onAddNewPromoVoucher(newPromoVoucher));
+      dispatch(onGetPromoVoucher());
       validation.resetForm();
       handleAddPromoVoucher();
     },
@@ -108,12 +124,16 @@ const AddNewPromoVoucher = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.operator || ""}
+                  value={validation.values.operator || []}
+                  multiple
                 >
-                  <option value="101">Select Ico</option>
-                  <option value="102">Sri Hari Satlinks</option>
-                  <option value="103">Sri Cable Network</option>
-                  <option value="104">Sri Deepa Cable Network</option>
+                  <option value=""></option>
+                  {promovoucherLCO &&
+                    promovoucherLCO.map((operator) => (
+                      <option key={operator.id} value={operator.id}>
+                        {operator.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.operator && validation.errors.operator ? (
                   <FormFeedback type="invalid">
@@ -137,7 +157,7 @@ const AddNewPromoVoucher = (props) => {
                   value={validation.values.operator_code || ""}
                 ></Input>
                 {validation.touched.operator_code &&
-                validation.errors.operator_code ? (
+                  validation.errors.operator_code ? (
                   <FormFeedback type="invalid">
                     {validation.errors.operator_code}
                   </FormFeedback>
@@ -199,7 +219,7 @@ const AddNewPromoVoucher = (props) => {
                   value={validation.values.expiry_date || ""}
                 ></Input>
                 {validation.touched.expiry_date &&
-                validation.errors.expiry_date ? (
+                  validation.errors.expiry_date ? (
                   <FormFeedback type="invalid">
                     {validation.errors.expiry_date}
                   </FormFeedback>
@@ -218,8 +238,17 @@ const AddNewPromoVoucher = (props) => {
                   // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.bouquets || ""}
-                ></Input>
+                  value={validation.values.bouquets || []}
+                  multiple
+                >
+                  <option value=""></option>
+                  {promovoucherBouquet &&
+                    promovoucherBouquet.map((bouquets) => (
+                      <option key={bouquets.id} value={bouquets.id}>
+                        {bouquets.name}
+                      </option>
+                    ))}
+                </Input>
                 {validation.touched.bouquets && validation.errors.bouquets ? (
                   <FormFeedback type="invalid">
                     {validation.errors.bouquets}
@@ -241,13 +270,16 @@ const AddNewPromoVoucher = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.applied_on || ""}
                 >
-                  <option value="201">Select Apply On</option>
-                  <option value="201">Fresh Activation</option>
-                  <option value="202">Renewal</option>
-                  <option value="203">BOTH</option>
+                  <option value="">Select apply on</option>
+                  {promovoucherApply &&
+                    promovoucherApply.map((applied_on) => (
+                      <option key={applied_on.id} value={applied_on.id}>
+                        {applied_on.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.applied_on &&
-                validation.errors.applied_on ? (
+                  validation.errors.applied_on ? (
                   <FormFeedback type="invalid">
                     {validation.errors.applied_on}
                   </FormFeedback>
@@ -269,16 +301,16 @@ const AddNewPromoVoucher = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.recharge_period || ""}
                 >
-                  <option value="21">Select recharge period</option>
-                  <option value="22">1day</option>
-                  <option value="23">1month</option>
-                  <option value="23">2month</option>
-                  <option value="23">3month</option>
-                  <option value="23">6month</option>
-                  <option value="23">1Year</option>
+                  <option value="">Select Recharge</option>
+                  {promovoucherRecharge &&
+                    promovoucherRecharge.map((recharge_period) => (
+                      <option key={recharge_period.id} value={recharge_period.id}>
+                        {recharge_period.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.recharge_period &&
-                validation.errors.recharge_period ? (
+                  validation.errors.recharge_period ? (
                   <FormFeedback type="invalid">
                     {validation.errors.recharge_period}
                   </FormFeedback>

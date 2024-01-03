@@ -418,6 +418,11 @@ export const getBankStatus = () => get(url.GET_BANK_STATUS);
 export const addNewBank = (banks) => post(url.ADD_NEW_BANK, banks);
 
 export const getPromoVoucher = () => get(url.GET_PROMOVOUCHER);
+export const getPromoVoucherLCO = () => get(url.GET_PROMOVOUCHER_LCO);
+export const getPromoVoucherApply = () => get(url.GET_PROMOVOUCHER_APPLY);
+export const getPromoVoucherRecharge = () => get(url.GET_PROMOVOUCHER_RECHARGE);
+export const getPromoVoucherBouquet = () => get(url.GET_PROMOVOUCHER_BOUQUET);
+
 export const addNewPromoVoucher = (provoucher) =>
   post(url.ADD_NEW_PROMOVOUCHER, provoucher);
 export const getSMSMessageTempList = () => get(url.GET_SMSMESSAGETEMPLIST);
