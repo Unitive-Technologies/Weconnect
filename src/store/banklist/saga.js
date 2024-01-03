@@ -18,13 +18,13 @@ const convertBankListObject = (bankList) => {
       id: bank.id,
       name: bank.name,
       code: bank.code,
-      ifsc_code: bank.ifsc_code,
+      ifscode: bank.ifscode,
       branch: bank.branch,
-      branch_address: bank.branch_address,
-      formso: bank.formso,
+      address: bank.address,
+      ismso: bank.ismso,
       created_at: bank.created_at,
       created_by: bank.created_by,
-      status_lbl: bank.status_lbl,
+      status: bank.status,
     };
   });
 };
@@ -32,13 +32,14 @@ const convertBankListObject = (bankList) => {
 function* fetchBank() {
   try {
     const response = yield call(getBank);
-    const bankList = convertBankListObject(response);
-    yield put(getBankSuccess(bankList));
+    console.log("Bank response:" + JSON.stringify(response));
+    yield put(getBankSuccess(response.data));
   } catch (error) {
-    console.error("Error fetching bank list:", error);
     yield put(getBankFail(error));
   }
 }
+
+
 
 function* fetchBankStatus() {
   try {

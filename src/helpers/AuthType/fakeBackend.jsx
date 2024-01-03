@@ -771,18 +771,18 @@ const fakeBackend = () => {
   //   });
   // });
 
-  mock.onGet(url.GET_BANK).reply(() => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (banks) {
-          // Passing fake JSON data as response
-          resolve([200, banks]);
-        } else {
-          reject([400, "Cannot get Bank list"]);
-        }
-      });
-    });
-  });
+  // mock.onGet(url.GET_BANK).reply(() => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (banks) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, banks]);
+  //       } else {
+  //         reject([400, "Cannot get Bank list"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onGet(url.GET_PROMOVOUCHER).reply(() => {
     return new Promise((resolve, reject) => {
