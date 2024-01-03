@@ -15,6 +15,7 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addDistrict as onAddDistrict } from "/src/store/district/actions";
+import { getDistrict as onGetDistrict } from "/src/store/actions";
 import { useDispatch } from "react-redux";
 
 const AddNewDistrict = (props) => {
@@ -54,8 +55,9 @@ const AddNewDistrict = (props) => {
         state_id: values["state_id"],
         created_by: values["created_by"],
       };
-      console.log("new district:" + newDistrict);
+      console.log("new district:" + JSON.stringify(newDistrict));
       dispatch(onAddDistrict(newDistrict));
+      dispatch(onGetDistrict());
       validation.resetForm();
       handleShowDistrict();
     },

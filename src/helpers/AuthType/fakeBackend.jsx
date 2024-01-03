@@ -955,18 +955,18 @@ const fakeBackend = () => {
   //   });
   // });
 
-  mock.onPost(url.ADD_CITY).reply((city) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (city && city.data) {
-          // Passing fake JSON data as response
-          resolve([200, city.data]);
-        } else {
-          reject([400, "Cannot add city list"]);
-        }
-      });
-    });
-  });
+  // mock.onPost(url.ADD_CITY).reply((city) => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (city && city.data) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, city.data]);
+  //       } else {
+  //         reject([400, "Cannot add city list"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   // mock.onPost(url.ADD_LOCATION).reply((location) => {
   //   return new Promise((resolve, reject) => {

@@ -17,6 +17,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { updateDistrict as onUpdateDistrict } from "/src/store/district/actions";
+import { getDistrict as onGetDistrict } from "/src/store/actions";
 
 const ViewDistrict = (props) => {
   const { isOpen, handleViewDistrict, district, statelist, status } = props;
@@ -59,6 +60,7 @@ const ViewDistrict = (props) => {
       };
       console.log("Updated district:" + JSON.stringify(updatedDistrict));
       dispatch(onUpdateDistrict(updatedDistrict));
+      dispatch(onGetDistrict());
       validation.resetForm();
       handleViewDistrict();
     },

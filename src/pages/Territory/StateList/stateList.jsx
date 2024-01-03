@@ -142,7 +142,7 @@ const StateList = (props) => {
                       data={stateUser}
                       isGlobalFilter={true}
                       isShowingPageLength={true}
-                      customPageSize={8}
+                      customPageSize={30}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
