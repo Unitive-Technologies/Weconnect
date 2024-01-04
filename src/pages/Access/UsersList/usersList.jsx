@@ -512,7 +512,7 @@ const ContactsList = (props) => {
         users={users}
         // setUsers={setUsers}
       />
-      {console.log("BulkUserSettings:" + JSON.stringify(userBulkSettings))}
+      {/* {console.log("BulkUserSettings:" + JSON.stringify(userBulkSettings))} */}
       <BulkUserSettings
         isOpen={showBulkUserSettings}
         handleUserSettings={handleUserSettings}

@@ -16,10 +16,59 @@ import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const BulkUserSettings = (props) => {
   const { isOpen, handleUserSettings, users, userBulkSettings } = props;
-  console.log("users in bulkuser modal:" + JSON.stringify(userBulkSettings));
-  const selectedusers = [];
+
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [tableList, setTableList] = useState([]);
+  console.log("tableList in bulkuser modal:" + JSON.stringify(tableList));
+  const handleActive = (row) => {
+    const isRowSelected = selectedUsers.some((user) => user.id === row.id);
+    setTableList((prevTableList) =>
+      prevTableList.filter((user) => user.id !== row.id)
+    );
+    if (isRowSelected) {
+      setSelectedUsers((prevSelectedUsers) =>
+        prevSelectedUsers.filter((user) => user.id !== row.id)
+      );
+    } else {
+      setSelectedUsers((prevSelectedUsers) => [...prevSelectedUsers, row]);
+    }
+    // Ensure that row.original exists before accessing its properties
+    if (row.original) {
+      row.original.isSelected = !isRowSelected;
+    }
+  };
+
+  const handleRemove = (row) => {
+    if (selectedUsers) {
+      setSelectedUsers((prevSelectedUsers) =>
+        prevSelectedUsers.filter((user) => user.id !== row.id)
+      );
+      setTableList((prevTableList) =>
+        prevTableList.map((user) => {
+          if (user.id === row.id && user.original) {
+            user.original.isSelected = false;
+          }
+          return user;
+        })
+      );
+    }
+  };
   const columns = useMemo(
     () => [
+      {
+        Header: ".",
+        disableFilters: true,
+        filterable: true,
+
+        Cell: (cellProps) => (
+          <input
+            type="checkbox"
+            disabled
+            checked
+            // onClick={() => handleActive(cellProps.row.original)}
+          />
+        ),
+      },
       {
         Header: "#",
         disableFilters: true,
@@ -252,7 +301,7 @@ const BulkUserSettings = (props) => {
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.username}
+                  {cellProps.row.original.type_lbl}
                 </Link>
               </h5>
             </>
@@ -268,7 +317,7 @@ const BulkUserSettings = (props) => {
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.status}
+                  {cellProps.row.original.role_lbl}
                 </Link>
               </h5>
             </>
@@ -284,7 +333,7 @@ const BulkUserSettings = (props) => {
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.status}
+                  {cellProps.row.original.operator_lbl}
                 </Link>
               </h5>
             </>
@@ -293,17 +342,28 @@ const BulkUserSettings = (props) => {
       },
       {
         Header: "Settings",
-        // accessor: "type",
+        accessor: "settings",
         filterable: true,
         Cell: (cellProps) => {
+          const settingsObject = cellProps.row.original.setting;
+
           return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.status}
-                </Link>
-              </h5>
-            </>
+            <div>
+              <p>Bulk Limit: {settingsObject["Bulk Limit"]}</p>
+              <p>Allowed Client IPs: {settingsObject["Allowed Client IPs"]}</p>
+              <p>Pay mode Allowed: {settingsObject["Pay mode Allowed"]}</p>
+            </div>
+          );
+        },
+      },
+      {
+        Header: "..",
+        Cell: (cellProps) => {
+          return (
+            <i
+              className="dripicons-tag-delete"
+              onClick={() => handleRemove(cellProps.row.original)}
+            />
           );
         },
       },
@@ -428,6 +488,12 @@ const BulkUserSettings = (props) => {
     ],
     []
   );
+
+  useEffect(() => {
+    if (users) {
+      setTableList(users);
+    }
+  }, []);
   return (
     <Modal
       isOpen={isOpen}
@@ -449,7 +515,11 @@ const BulkUserSettings = (props) => {
             <TableContainer
               isPagination={true}
               columns={columns}
-              data={users}
+              data={tableList}
+              handleRowClick={(row) => {
+                // console.log("row:" + JSON.stringify(row));
+                handleActive(row);
+              }}
               isGlobalFilter={true}
               isShowingPageLength={true}
               customPageSize={5}
@@ -486,8 +556,8 @@ const BulkUserSettings = (props) => {
                 <TableContainer
                   isPagination={true}
                   columns={selOperColumn}
-                  data={selectedusers}
-                  //   isGlobalFilter={true}
+                  data={selectedUsers}
+                  isGlobalFilter={selectedUsers ? true : false}
                   isShowingPageLength={true}
                   customPageSize={50}
                   tableClass="table align-middle table-nowrap table-hover"
@@ -525,7 +595,7 @@ const BulkUserSettings = (props) => {
                 <TableContainer
                   isPagination={true}
                   columns={userSettingColumn}
-                  data={userBulkSettings}
+                  data={users}
                   //   isGlobalFilter={true}
                   isShowingPageLength={true}
                   customPageSize={50}
