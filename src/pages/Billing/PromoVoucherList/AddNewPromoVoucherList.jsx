@@ -34,7 +34,7 @@ const AddNewPromoVoucher = (props) => {
       amount: "",
       mrp: "",
       expiry_date: "",
-      bouquets: "",
+      bouquets_ids: "",
       applied_on: "",
       recharge_period: "",
       created_at: "",
@@ -46,7 +46,7 @@ const AddNewPromoVoucher = (props) => {
       amount: Yup.string().required("Enter voucher amount"),
       mrp: Yup.string().required("Exter voucher mrp"),
       expiry_date: Yup.string().required("Select expiry date"),
-      bouquets: Yup.string().required("Select bouquet"),
+      bouquets_ids: Yup.string().required("Select bouquet"),
       applied_on: Yup.string().required("Select apply on"),
       recharge_period: Yup.string().required("Select recharge periods"),
     }),
@@ -57,7 +57,7 @@ const AddNewPromoVoucher = (props) => {
       //   parseInt(option)
       // );
 
-      const BouquetArray = values["bouquets"] || [];
+      const BouquetArray = values["bouquets_ids"] || [];
       const BouquetIntegers = BouquetArray.map((option) =>
         parseInt(option)
       );
@@ -69,7 +69,7 @@ const AddNewPromoVoucher = (props) => {
         amount: values["amount"],
         mrp: values["mrp"],
         // operator: LCOIntegers,
-        bouquets: BouquetIntegers,
+        bouquets_ids: BouquetIntegers,
         expiry_date: values["expiry_date"],
         // bouquets: values["bouquets"],
         applied_on: values["applied_on"],
@@ -232,26 +232,26 @@ const AddNewPromoVoucher = (props) => {
                   Bouquet List<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="bouquets"
+                  name="bouquets_ids"
                   type="select"
                   placeholder="Select bouquet"
                   // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.bouquets || []}
+                  value={validation.values.bouquets_ids || []}
                   multiple
                 >
                   <option value=""></option>
                   {promovoucherBouquet &&
-                    promovoucherBouquet.map((bouquets) => (
-                      <option key={bouquets.id} value={bouquets.id}>
-                        {bouquets.name}
+                    promovoucherBouquet.map((bouquets_ids) => (
+                      <option key={bouquets_ids.id} value={bouquets_ids.id}>
+                        {bouquets_ids.name}
                       </option>
                     ))}
                 </Input>
-                {validation.touched.bouquets && validation.errors.bouquets ? (
+                {validation.touched.bouquets_ids && validation.errors.bouquets_ids ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.bouquets}
+                    {validation.errors.bouquets_ids}
                   </FormFeedback>
                 ) : null}
               </div>
