@@ -2,74 +2,97 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
 import { Card, CardBody } from "reactstrap";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+import {
+  addNewComplaintSubCategory as onAddNewComplaintSubCategory,
+  getComplaintSubCategory as onGetComplaintSubCategory,
+} from "/src/store/actions";
 
 const AddNewMatrix = (props) => {
-  const complaintsubcateData = [
-    {
-      designation: "Director",
+  const { isOpen, complaintsubcateDesignation, handleAddSubCategory } = props;
+  const dispatch = useDispatch();
+
+  const validation = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      designation: "",
+      tat_time: "",
     },
-  ];
+    validationSchema: Yup.object({
+      designation: Yup.string().required("Enter designation"),
+      tat_time: Yup.string().required("Select tat_time"),
+    }),
+    onSubmit: (values) => {
+      const newComplaintSubCategory = {
+        id: Math.floor(Math.random() * (30 - 20)) + 20,
+        designation: values.designation,
+        tat_time: values.tat_time,
+        created_at: new Date(),
+        created_by: values.created_by,
+      };
+      console.log("ComplaintSubCategory:", newComplaintSubCategory);
+      // save new user
+      dispatch(onAddNewComplaintSubCategory(newComplaintSubCategory));
+      dispatch(onGetComplaintSubCategory());
+      validation.resetForm();
+      handleAddSubCategory();
+    },
+    onReset: () => {
+      validation.setValues(validation.initialValues);
+    },
+  });
 
   const columns = useMemo(
     () => [
       {
         Header: "Enabled",
-        // accessor: "",
-        // disableFilters: true,
-        // filterable: true,
-        Cell: () => {
-          return (
-            <>
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="upcomingtaskCheck01"
-                // defaultChecked
-                // disabled
-              />
-            </>
-          );
-        },
+        Cell: () => (
+          <input
+            className="form-check-input"
+            type="checkbox"
+            id="upcomingtaskCheck01"
+          />
+        ),
       },
-
       {
         Header: "Designation",
         accessor: "designation",
         filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <p className="text-muted mb-0">
-                  {cellProps.row.original.designation}
-                </p>
-              </h5>
-            </>
-          );
-        },
+        Cell: () => (
+          <h5
+            style={{
+              maxWidth: 200,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+            className="font-size-14 mb-1"
+          >
+            <p className="text-muted mb-0">
+              {/* Displaying selected designation */}
+              {complaintsubcateDesignation &&
+                complaintsubcateDesignation.map((designation) => (
+                  <span key={designation.id}>{designation.name}</span>
+                ))}
+            </p>
+          </h5>
+        ),
       },
       {
         Header: "TAT(HH:mm:ss)",
         filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <input type="text"></input>
-            </>
-          );
-        },
+        Cell: () => (
+          <input
+            type="text"
+            value={validation.values.tat_time || ""}
+            readOnly
+          />
+        ),
       },
     ],
-    []
+    [validation.values.tat_time, complaintsubcateDesignation]
   );
 
   return (
@@ -78,9 +101,7 @@ const AddNewMatrix = (props) => {
         <TableContainer
           isPagination={true}
           columns={columns}
-          data={complaintsubcateData}
-          // isGlobalFilter={true}
-          // isShowingPageLength={true}
+          data={handleAddSubCategory}
           customPageSize={50}
           tableClass="table align-middle table-nowrap table-hover"
           theadClass="table-light"
@@ -95,6 +116,8 @@ const AddNewMatrix = (props) => {
 AddNewMatrix.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
+  complaintsubcateDesignation: PropTypes.array,
+  handleAddSubCategory: PropTypes.func,
 };
 
 export default AddNewMatrix;

@@ -206,7 +206,7 @@ const ComplaintSubCategoryList = (props) => {
       <AddNewSubCategoryList
         isOpen={showAddNewSubCategoryList}
         handleAddSubCategory={handleAddSubCategory}
-        complaintsubcateDesignation={complaintsubcateDesignation}
+
         complaintsubcateStatus={complaintsubcateStatus}
         complaintsubcateCategory={complaintsubcateCategory}
       />

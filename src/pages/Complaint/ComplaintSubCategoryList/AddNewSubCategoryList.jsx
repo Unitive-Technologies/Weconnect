@@ -257,7 +257,7 @@ const AddNewSubCategoryList = (props) => {
             }}
           >
             <Col sm="12">
-              <AddNewMatrix />
+              <AddNewMatrix complaintsubcateDesignation={complaintsubcateDesignation} />
             </Col>
           </Row>
 
