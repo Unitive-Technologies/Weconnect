@@ -9,6 +9,7 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
+  Input,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -16,10 +17,11 @@ import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const BulkUserSettings = (props) => {
   const { isOpen, handleUserSettings, users, userBulkSettings } = props;
-
+  console.log("settings in bulkuser modal:" + JSON.stringify(userBulkSettings));
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [tableList, setTableList] = useState([]);
-  console.log("tableList in bulkuser modal:" + JSON.stringify(tableList));
+  const [settingTable, setSettingTable] = useState([]);
+
   const handleActive = (row) => {
     const isRowSelected = selectedUsers.some((user) => user.id === row.id);
     setTableList((prevTableList) =>
@@ -378,14 +380,12 @@ const BulkUserSettings = (props) => {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
-
+          const totalRows = settingTable.length;
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {totalRows - cellProps.row.id}
                 </Link>
               </h5>
             </>
@@ -400,23 +400,7 @@ const BulkUserSettings = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  toggleViewModal(userData);
-                }}
-              >
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.name}
-                </Link>
-              </h5>
+              <input type="checkbox" />
             </>
           );
         },
@@ -430,7 +414,7 @@ const BulkUserSettings = (props) => {
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.username}
+                  {cellProps.row.original.value.label}
                 </Link>
               </h5>
             </>
@@ -446,7 +430,7 @@ const BulkUserSettings = (props) => {
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.status}
+                  {cellProps.row.original.value.description}
                 </Link>
               </h5>
             </>
@@ -462,7 +446,7 @@ const BulkUserSettings = (props) => {
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.status}
+                  {cellProps.row.original.value.comment}
                 </Link>
               </h5>
             </>
@@ -476,11 +460,7 @@ const BulkUserSettings = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.status}
-                </Link>
-              </h5>
+              <Input type="text" placeholder="" />
             </>
           );
         },
@@ -493,6 +473,15 @@ const BulkUserSettings = (props) => {
     if (users) {
       setTableList(users);
     }
+    if (userBulkSettings) {
+      const bulkArray = [
+        { key: "bulkLimit", value: userBulkSettings.bulk_limit },
+        { key: "allowedIps", value: userBulkSettings.allowed_ips },
+        { key: "enabledPayModes", value: userBulkSettings.enabled_pay_modes },
+      ];
+      setSettingTable(bulkArray);
+    }
+    console.log("settingTable:" + JSON.stringify(settingTable));
   }, []);
   return (
     <Modal
@@ -595,10 +584,9 @@ const BulkUserSettings = (props) => {
                 <TableContainer
                   isPagination={true}
                   columns={userSettingColumn}
-                  data={users}
-                  //   isGlobalFilter={true}
+                  data={settingTable}
                   isShowingPageLength={true}
-                  customPageSize={50}
+                  customPageSize={5}
                   tableClass="table align-middle table-nowrap table-hover"
                   theadClass="table-light"
                   paginationDiv="col-sm-12 col-md-7"
