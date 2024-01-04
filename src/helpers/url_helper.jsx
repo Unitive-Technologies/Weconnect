@@ -148,7 +148,7 @@ export const ADD_NEW_OSDTEMPLATE = "/add/osdtemplatelist";
 
 export const GET_NCF =
   "/ncf-rates?expand=status_lbl,created_by_lbl,type_lbl&page=1&per-page=50&vr=web1.0";
-export const ADD_NCF = "/add/ncf";
+export const ADD_NCF = "/ncf-rates?vr=web1.0";
 
 export const GET_COMPANYLIST = "/companylist";
 
@@ -180,10 +180,14 @@ export const GET_COMPLAINTCATEGORY_STATUS =
   "/list/status?fields=id,name&vr=web1.0";
 export const ADD_NEW_COMPLAINTCATEGORY = "/complaint-category?vr=web1.0";
 
-export const GET_COMPLAINTSUBCATEGORY = "/complaint-subcategory?expand=created_by_lbl,status_lbl,showonweb_lbl,category_lbl&page=1&per-page=50&vr=web1.0";
-export const GET_COMPLAINTSUBCATEGORY_STATUS = "/list/status?fields=id,name&vr=web1.0";
-export const GET_COMPLAINTSUBCATEGORY_CATEGORY = "/complaint-category?filter[status]=1&fields=id,name&vr=web1.0";
-export const GET_COMPLAINTSUBCATEGORY_DESIGNATION = "/user-designation?fields=id,name&vr=web1.0";
+export const GET_COMPLAINTSUBCATEGORY =
+  "/complaint-subcategory?expand=created_by_lbl,status_lbl,showonweb_lbl,category_lbl&page=1&per-page=50&vr=web1.0";
+export const GET_COMPLAINTSUBCATEGORY_STATUS =
+  "/list/status?fields=id,name&vr=web1.0";
+export const GET_COMPLAINTSUBCATEGORY_CATEGORY =
+  "/complaint-category?filter[status]=1&fields=id,name&vr=web1.0";
+export const GET_COMPLAINTSUBCATEGORY_DESIGNATION =
+  "/user-designation?fields=id,name&vr=web1.0";
 
 export const ADD_NEW_COMPLAINTSUBCATEGORY = "/complaint-subcategory?vr=web1.0";
 
