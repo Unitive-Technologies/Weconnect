@@ -23,7 +23,7 @@ const AddNewLocation = (props) => {
   const dispatch = useDispatch();
 
   const options = lcoonlocation.map((option) => ({
-    value: option.name,
+    value: option.id,
     label: (
       <div>
         <h6>{option.name}</h6>
@@ -51,11 +51,12 @@ const AddNewLocation = (props) => {
       status_lbl: "",
       created_at: "",
       created_by_lbl: "NIKHIL REDDY(nikky)",
+      status: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter location name"),
       operator_id: Yup.string().required("Select LCO"),
-      status_lbl: Yup.string().required("Select status"),
+      status: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
       console.log("Submittted values: ", values);
@@ -63,11 +64,11 @@ const AddNewLocation = (props) => {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         operator_id: values["operator_id"],
-        status_lbl: values["status_lbl"],
+        status: values["status"],
         created_at: new Date(),
         created_by_lbl: values["created_by_lbl"],
       };
-      console.log("new location:" + newLocation);
+      console.log("new location:" + JSON.stringify(newLocation));
       dispatch(onAddLocation(newLocation));
       validation.resetForm();
       handleAddLocation();
@@ -130,25 +131,24 @@ const AddNewLocation = (props) => {
                   Status<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="status_lbl"
+                  name="status"
                   type="select"
                   placeholder="Select Status"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.status_lbl || ""}
+                  value={validation.values.status || ""}
                 >
-                  <option value="">Select Status</option>
+                  <option value="">Select status</option>
                   {status.map((options) => (
                     <option key={options.id} value={options.id}>
                       {options.name}
                     </option>
                   ))}
                 </Input>
-                {validation.touched.status_lbl &&
-                validation.errors.status_lbl ? (
+                {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.status_lbl}
+                    {validation.errors.status}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -158,18 +158,36 @@ const AddNewLocation = (props) => {
                 <Label className="form-label">
                   Select LCO<span style={{ color: "red" }}>*</span>
                 </Label>
-                <Select
+                {/* <Select
                   name="operator_id"
+                  placeholder="select LCO"
                   options={options}
-                  onChange={(selectedOption) =>
-                    validation.handleChange(selectedOption.value)
-                  }
+                  onChange={(selectedOption) => {
+                    console.log("selected option: ", selectedOption.value);
+                    validation.handleChange(selectedOption.value);
+                  }}
                   onBlur={validation.handleBlur}
                   value={options.find(
                     (opt) => opt.value === validation.values.operator_id
                   )}
                   styles={customStyles}
-                />
+                /> */}
+                <Input
+                  name="operator_id"
+                  type="select"
+                  placeholder="Select LCO"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.operator_id || ""}
+                >
+                  <option value="">Select LCO</option>
+                  {lcoonlocation.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
+                </Input>
                 {validation.touched.operator_id &&
                 validation.errors.operator_id ? (
                   <FormFeedback type="invalid">
@@ -208,7 +226,6 @@ const AddNewLocation = (props) => {
           </Row>
         </Form>
       </ModalBody>
-      {/* </Modal> */}
     </Modal>
   );
 };
