@@ -18,9 +18,15 @@ import { addNewPromoVoucher as onAddNewPromoVoucher } from "/src/store/promovouc
 import { useDispatch } from "react-redux";
 import { getPromoVoucher as onGetPromoVoucher } from "/src/store/actions";
 
-
 const AddNewPromoVoucher = (props) => {
-  const { isOpen, handleAddPromoVoucher, promovoucherApply, promovoucherBouquet, promovoucherLCO, promovoucherRecharge } = props;
+  const {
+    isOpen,
+    handleAddPromoVoucher,
+    promovoucherApply,
+    promovoucherBouquet,
+    promovoucherLCO,
+    promovoucherRecharge,
+  } = props;
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -37,8 +43,8 @@ const AddNewPromoVoucher = (props) => {
       bouquets_ids: "",
       applied_on: "",
       recharge_period: "",
-      created_at: "",
-      created_by: "Admin",
+      // created_at: "",
+      // created_by: "Admin",
     },
     validationSchema: Yup.object({
       operator: Yup.string().required("Select Ico"),
@@ -51,31 +57,26 @@ const AddNewPromoVoucher = (props) => {
       recharge_period: Yup.string().required("Select recharge periods"),
     }),
     onSubmit: (values) => {
-
       // const LCOArray = values["operator"] || [];
       // const LCOIntegers = LCOArray.map((option) =>
       //   parseInt(option)
       // );
 
       const BouquetArray = values["bouquets_ids"] || [];
-      const BouquetIntegers = BouquetArray.map((option) =>
-        parseInt(option)
-      );
-
+      const BouquetIntegers = BouquetArray.map((option) => parseInt(option.id));
+      console.log("bourquet:" + BouquetIntegers);
       const newPromoVoucher = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
-        operator: values["operator"],
-        operator_code: values["operator_code"],
+        operator_id: parseInt(values["operator"]),
+        voucher_count: values["operator_code"],
         amount: values["amount"],
         mrp: values["mrp"],
-        // operator: LCOIntegers,
-        bouquets_ids: BouquetIntegers,
-        expiry_date: values["expiry_date"],
-        // bouquets: values["bouquets"],
-        applied_on: values["applied_on"],
-        recharge_period: values["recharge_period"],
-        created_at: new Date(),
-        created_by: values["created_by"],
+        // bouque_ids: promovoucherBouquet.map((single) => parseInt(single.id)),
+        bouque_ids: BouquetIntegers,
+        apply_on: parseInt(values["applied_on"]),
+        rperiod_id: parseInt(values["recharge_period"]),
+        // created_at: new Date(),
+        // created_by: values["created_by"],
       };
       console.log("newPromoVoucher:" + newPromoVoucher);
       // save new user
@@ -125,7 +126,6 @@ const AddNewPromoVoucher = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.operator || ""}
-
                 >
                   <option value="">Select LCO</option>
                   {promovoucherLCO &&
@@ -142,6 +142,10 @@ const AddNewPromoVoucher = (props) => {
                 ) : null}
               </div>
             </Col>
+            {console.log("operator-lco: " + validation.values.operator)}
+            {console.log(
+              "operator-lco type: " + typeof validation.values.operator
+            )}
             <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">
@@ -157,13 +161,17 @@ const AddNewPromoVoucher = (props) => {
                   value={validation.values.operator_code || ""}
                 ></Input>
                 {validation.touched.operator_code &&
-                  validation.errors.operator_code ? (
+                validation.errors.operator_code ? (
                   <FormFeedback type="invalid">
                     {validation.errors.operator_code}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
+            {console.log("voucher-count: " + validation.values.operator_code)}
+            {console.log(
+              "voucher-count type: " + typeof validation.values.operator_code
+            )}
             <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">Voucher Amount</Label>
@@ -183,6 +191,8 @@ const AddNewPromoVoucher = (props) => {
                 ) : null}
               </div>
             </Col>
+            {console.log("amount: " + validation.values.amount)}
+            {console.log("amount-type: " + typeof validation.values.amount)}
             <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">Voucher MRP</Label>
@@ -202,6 +212,8 @@ const AddNewPromoVoucher = (props) => {
                 ) : null}
               </div>
             </Col>
+            {console.log("mrp: " + validation.values.mrp)}
+            {console.log("mrp-type: " + typeof validation.values.mrp)}
           </Row>
           <Row>
             <Col sm="3">
@@ -219,12 +231,16 @@ const AddNewPromoVoucher = (props) => {
                   value={validation.values.expiry_date || ""}
                 ></Input>
                 {validation.touched.expiry_date &&
-                  validation.errors.expiry_date ? (
+                validation.errors.expiry_date ? (
                   <FormFeedback type="invalid">
                     {validation.errors.expiry_date}
                   </FormFeedback>
                 ) : null}
               </div>
+              {console.log("expiry date: " + validation.values.expiry_date)}
+              {console.log(
+                "expiry date-type: " + typeof validation.values.expiry_date
+              )}
             </Col>
             <Col sm="6">
               <div className="mb-3">
@@ -249,12 +265,17 @@ const AddNewPromoVoucher = (props) => {
                       </option>
                     ))}
                 </Input>
-                {validation.touched.bouquets_ids && validation.errors.bouquets_ids ? (
+                {validation.touched.bouquets_ids &&
+                validation.errors.bouquets_ids ? (
                   <FormFeedback type="invalid">
                     {validation.errors.bouquets_ids}
                   </FormFeedback>
                 ) : null}
               </div>
+              {console.log("bouquet: " + validation.values.bouquets_ids)}
+              {console.log(
+                "bouquet-type: " + typeof validation.values.bouquets_ids
+              )}
             </Col>
             <Col sm="3">
               <div className="mb-3">
@@ -279,13 +300,17 @@ const AddNewPromoVoucher = (props) => {
                     ))}
                 </Input>
                 {validation.touched.applied_on &&
-                  validation.errors.applied_on ? (
+                validation.errors.applied_on ? (
                   <FormFeedback type="invalid">
                     {validation.errors.applied_on}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
+            {console.log("apply_on: " + validation.values.applied_on)}
+            {console.log(
+              "apply_on-type: " + typeof validation.values.applied_on
+            )}
           </Row>
           <Row>
             <Col sm="3">
@@ -304,24 +329,42 @@ const AddNewPromoVoucher = (props) => {
                   <option value="">Select Recharge</option>
                   {promovoucherRecharge &&
                     promovoucherRecharge.map((recharge_period) => (
-                      <option key={recharge_period.id} value={recharge_period.id}>
+                      <option
+                        key={recharge_period.id}
+                        value={recharge_period.id}
+                      >
                         {recharge_period.name}
                       </option>
                     ))}
                 </Input>
                 {validation.touched.recharge_period &&
-                  validation.errors.recharge_period ? (
+                validation.errors.recharge_period ? (
                   <FormFeedback type="invalid">
                     {validation.errors.recharge_period}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
+            {console.log(
+              "recharge period: " + validation.values.recharge_period
+            )}
+            {console.log(
+              "recharge period-type: " +
+                typeof validation.values.recharge_period
+            )}
           </Row>
           <Row>
             <Col>
               <ModalFooter>
-                <button type="submit" className="btn btn-success save-user">
+                <button
+                  type="submit"
+                  className="btn btn-success save-user"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    validation.handleSubmit();
+                    return false;
+                  }}
+                >
                   Save
                 </button>
                 <button

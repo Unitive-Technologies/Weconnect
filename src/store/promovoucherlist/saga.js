@@ -1,20 +1,40 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_PROMOVOUCHER, GET_PROMOVOUCHER_LCO, GET_PROMOVOUCHER_APPLY, GET_PROMOVOUCHER_BOUQUET, GET_PROMOVOUCHER_RECHARGE, ADD_NEW_PROMOVOUCHER } from "./actionTypes";
+import {
+  GET_PROMOVOUCHER,
+  GET_PROMOVOUCHER_LCO,
+  GET_PROMOVOUCHER_APPLY,
+  GET_PROMOVOUCHER_BOUQUET,
+  GET_PROMOVOUCHER_RECHARGE,
+  ADD_NEW_PROMOVOUCHER,
+} from "./actionTypes";
 
 import {
   getPromoVoucherSuccess,
   getPromoVoucherFail,
   getPromoVoucherLCOFail,
-  getPromoVoucherLCOSuccess, getPromoVoucherApplyFail, getPromoVoucherApplySuccess, getPromoVoucherBouquetFail, getPromoVoucherBouquetSuccess, getPromoVoucherRechargeFail, getPromoVoucherRechargeSuccess, addPromoVoucherFail,
+  getPromoVoucherLCOSuccess,
+  getPromoVoucherApplyFail,
+  getPromoVoucherApplySuccess,
+  getPromoVoucherBouquetFail,
+  getPromoVoucherBouquetSuccess,
+  getPromoVoucherRechargeFail,
+  getPromoVoucherRechargeSuccess,
+  addPromoVoucherFail,
   addPromoVoucherSuccess,
 } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getPromoVoucher, getPromoVoucherApply, getPromoVoucherLCO, getPromoVoucherBouquet, getPromoVoucherRecharge, addNewPromoVoucher } from "../../helpers/fakebackend_helper";
+import {
+  getPromoVoucher,
+  getPromoVoucherApply,
+  getPromoVoucherLCO,
+  getPromoVoucherBouquet,
+  getPromoVoucherRecharge,
+  addNewPromoVoucher,
+} from "../../helpers/fakebackend_helper";
 
 const convertPromoVoucherListObject = (promoVoucherList) => {
-
   return promoVoucherList.map((promovoucher) => {
     return {
       ...promovoucher,
@@ -88,16 +108,15 @@ function* fetchPromoVoucherBouquet() {
   }
 }
 
-
 function* onAddNewPromoVoucher({ payload: promovoucher }) {
   try {
     const response = yield call(addNewPromoVoucher, promovoucher);
-
+    console.log("response in saga:" + JSON.stringify(response));
     yield put(addPromoVoucherSuccess(response));
-    toast.success("Promo Voucher Added Successfully", { autoClose: 2000 });
+    // toast.success("Promo Voucher Added Successfully", { autoClose: 2000 });
   } catch (error) {
     yield put(addPromoVoucherFail(error));
-    toast.error("PromoVoucher Added Failed", { autoClose: 2000 });
+    // toast.error("PromoVoucher Added Failed", { autoClose: 2000 });
   }
 }
 
