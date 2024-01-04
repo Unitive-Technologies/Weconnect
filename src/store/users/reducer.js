@@ -27,6 +27,8 @@ import {
   GET_USER_DISTRIBUTOR_SUCCESS,
   GET_USER_LCO_FAIL,
   GET_USER_LCO_SUCCESS,
+  GET_USER_BULKSETTINGS_FAIL,
+  GET_USER_BULKSETTINGS_SUCCESS,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -41,6 +43,7 @@ const INIT_STATE = {
   userMsoDetails: [],
   userDistributor: [],
   userLco: [],
+  userBulkSettings: [],
   error: {},
   loading: true,
 };
@@ -171,6 +174,18 @@ const contacts = (state = INIT_STATE, action) => {
       };
 
     case GET_USER_LCO_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case GET_USER_BULKSETTINGS_SUCCESS:
+      return {
+        ...state,
+        userBulkSettings: action.payload,
+        loading: false,
+      };
+
+    case GET_USER_BULKSETTINGS_FAIL:
       return {
         ...state,
         error: action.payload,

@@ -15,8 +15,8 @@ import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const BulkUserSettings = (props) => {
-  const { isOpen, handleUserSettings, users } = props;
-  // console.log("users in bulkuser modal:" + JSON.stringify(users));
+  const { isOpen, handleUserSettings, users, userBulkSettings } = props;
+  console.log("users in bulkuser modal:" + JSON.stringify(userBulkSettings));
   const selectedusers = [];
   const columns = useMemo(
     () => [
@@ -452,7 +452,7 @@ const BulkUserSettings = (props) => {
               data={users}
               isGlobalFilter={true}
               isShowingPageLength={true}
-              customPageSize={50}
+              customPageSize={5}
               tableClass="table align-middle table-nowrap table-hover"
               theadClass="table-light"
               paginationDiv="col-sm-12 col-md-7"
@@ -525,7 +525,7 @@ const BulkUserSettings = (props) => {
                 <TableContainer
                   isPagination={true}
                   columns={userSettingColumn}
-                  data={users}
+                  data={userBulkSettings}
                   //   isGlobalFilter={true}
                   isShowingPageLength={true}
                   customPageSize={50}

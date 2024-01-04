@@ -15,6 +15,7 @@ import {
   getUserRole as onGetUserRole,
   getUserDesignation as onGetUserDesignation,
   getUserMsoPolicy as onGetUserMsoPolicy,
+  getUserBulkSettings as onGetUserBulkSettings,
   // getUserRegionalOffice as onGetUserRegionalOffice,
   // getUserMsoDetails as onGetUserMsoDetails,
   // getUserDistributor as onGetUserDistributor,
@@ -47,6 +48,7 @@ const ContactsList = (props) => {
     userRole: Users.userRole,
     userDesignation: Users.userDesignation,
     userMsoPolicy: Users.userMsoPolicy,
+    userBulkSettings: Users.userBulkSettings,
     // userRegional: Users.userRegional,
     // userMsoDetails: Users.userMsoDetails,
     // userDistributor: Users.userDistributor,
@@ -59,6 +61,7 @@ const ContactsList = (props) => {
     userRole,
     userDesignation,
     userMsoPolicy,
+    userBulkSettings,
     // userRegional,
     // userMsoDetails,
     // userDistributor,
@@ -357,6 +360,7 @@ const ContactsList = (props) => {
       dispatch(onGetUserRole());
       dispatch(onGetUserDesignation());
       dispatch(onGetUserMsoPolicy());
+      dispatch(onGetUserBulkSettings());
       // dispatch(onGetUserRegionalOffice());
       // dispatch(onGetUserMsoDetails());
       // dispatch(onGetUserDistributor());
@@ -508,10 +512,12 @@ const ContactsList = (props) => {
         users={users}
         // setUsers={setUsers}
       />
+      {console.log("BulkUserSettings:" + JSON.stringify(userBulkSettings))}
       <BulkUserSettings
         isOpen={showBulkUserSettings}
         handleUserSettings={handleUserSettings}
         users={users}
+        userBulkSettings={userBulkSettings}
       />
       <div className="page-content">
         <Container fluid>

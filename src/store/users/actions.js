@@ -41,6 +41,9 @@ import {
   GET_USER_LCO,
   GET_USER_LCO_FAIL,
   GET_USER_LCO_SUCCESS,
+  GET_USER_BULKSETTINGS,
+  GET_USER_BULKSETTINGS_FAIL,
+  GET_USER_BULKSETTINGS_SUCCESS,
 } from "./actionTypes";
 
 export const getUsers = () => ({
@@ -242,5 +245,19 @@ export const getUserLcoSuccess = (userLco) => ({
 
 export const getUserLcoFail = (error) => ({
   type: GET_USER_LCO_FAIL,
+  payload: error,
+});
+
+export const getUserBulkSettings = () => ({
+  type: GET_USER_BULKSETTINGS,
+});
+
+export const getUserBulkSettingsSuccess = (userBulkSettings) => ({
+  type: GET_USER_BULKSETTINGS_SUCCESS,
+  payload: userBulkSettings,
+});
+
+export const getUserBulkSettingsFail = (error) => ({
+  type: GET_USER_BULKSETTINGS_FAIL,
   payload: error,
 });

@@ -316,7 +316,7 @@ export const getUserRegionalOffice = () => get(url.GET_USER_REGIONALOFFICE);
 export const getUserMsoDetails = () => get(url.GET_USER_MSO_DETAILS);
 export const getUserDistributor = () => get(url.GET_USER_DISTRIBUTOR);
 export const getUserLco = () => get(url.GET_USER_LCO);
-
+export const getUserBulkSettings = () => get(url.GET_USER_BULKSETTINGS);
 export const getGenreList = () => get(url.GET_GENRELIST);
 export const addNewGenreList = (genre) => post(url.ADD_NEW_GENRELIST, genre);
 
