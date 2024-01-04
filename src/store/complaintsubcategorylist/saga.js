@@ -29,23 +29,15 @@ const convertComplaintSubCategoryListObject = (complaintSubCategoryList) => {
       name: complaintsubcategory.name,
       status_lbl: complaintsubcategory.status_lbl,
       category_lbl: complaintsubcategory.category_lbl,
-      showonweb_lbl: complaintsubcategory.showonweb_lbl,
+      showonweb: complaintsubcategory.showonweb,
       description: complaintsubcategory.description,
       created_at: complaintsubcategory.created_at,
       created_by:
         complaintsubcategory.created_by === -1 ? "console" : "My MSO(mso)",
       status:
-        complaintsubcategory.status === 1
-          ? "ACTIVE"
-          : complaintsubcategory.status === 0
-            ? "INACTIVE"
-            : "BLOCKED",
-      showonweb:
-        complaintsubcategory.showonweb === 1
-          ? "ACTIVE"
-          : complaintsubcategory.showonweb === 0
-            ? "INACTIVE"
-            : "BLOCKED",
+        complaintsubcategory.status,
+      showonweb_lbl: complaintsubcategory.showonweb_lbl,
+
     };
   });
 };
@@ -96,6 +88,7 @@ function* onAddNewComplaintSubCategory({ payload: complaintsubcategory }) {
     const response = yield call(addNewComplaintSubCategory, complaintsubcategory);
 
     yield put(addComplaintSubCategorySuccess(response.data));
+    console.log("Add New Subcategory Data" + JSON.stringify(response))
     // toast.success("Complaint SubCategory Added Successfully", { autoClose: 2000 });
   } catch (error) {
     yield put(addComplaintSubCategoryFail(error));
