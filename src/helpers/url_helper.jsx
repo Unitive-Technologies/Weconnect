@@ -149,6 +149,8 @@ export const ADD_NEW_OSDTEMPLATE = "/add/osdtemplatelist";
 export const GET_NCF =
   "/ncf-rates?expand=status_lbl,created_by_lbl,type_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_NCF = "/ncf-rates?vr=web1.0";
+export const GET_OPERATOR_FORBULKASSIGN =
+  "/operator/list?fields=id,name,code&expand=type_lbl,status_lbl,branch_lbl,distributor_lbl&notfilter[type]=0&filter[type]=3&notfilter[ncf_id]=3&page=1&per-page=500&vr=web1.0";
 
 export const GET_COMPANYLIST = "/companylist";
 
