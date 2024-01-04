@@ -17,9 +17,11 @@ import { useFormik } from "formik";
 import { addNewComplaintSubCategory as onAddNewComplaintSubCategory } from "/src/store/complaintsubcategorylist/actions";
 import { useDispatch } from "react-redux";
 import AddNewMatrix from "./AddNewMatrix";
+import { getComplaintSubCategory as onGetComplaintSubCategory } from "/src/store/actions";
+
 
 const AddNewSubCategoryList = (props) => {
-  const { isOpen, handleAddSubCategory } = props;
+  const { isOpen, handleAddSubCategory, complaintsubcateDesignation, complaintsubcateCategory, complaintsubcateStatus } = props;
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -30,8 +32,8 @@ const AddNewSubCategoryList = (props) => {
       //BroadCaster: "",
       name: "",
       category_lbl: "",
-      status_lbl: "",
-      showonweb_lbl: "",
+      status: "",
+      showonweb: "",
       description: "",
       created_at: "",
       created_by: "Admin",
@@ -39,8 +41,8 @@ const AddNewSubCategoryList = (props) => {
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
       category_lbl: Yup.string().required("Select Category"),
-      status_lbl: Yup.string().required("Select status"),
-      showonweb_lbl: Yup.string().required("Select showonweb"),
+      status: Yup.string().required("Select status"),
+      showonweb: Yup.string().required("Select showonweb"),
       description: Yup.string().required("Enter description"),
     }),
     onSubmit: (values) => {
@@ -48,8 +50,8 @@ const AddNewSubCategoryList = (props) => {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         category_lbl: values["category_lbl"],
-        status_lbl: values["status_lbl"],
-        showonweb_lbl: values["showonweb_lbl"],
+        status: values["status"],
+        showonweb: values["showonweb"],
         description: values["description"],
         created_at: new Date(),
         created_by: values["created_by"],
@@ -57,6 +59,7 @@ const AddNewSubCategoryList = (props) => {
       console.log("ComplaintSubCategory:" + newComplaintSubCategory);
       // save new user
       dispatch(onAddNewComplaintSubCategory(newComplaintSubCategory));
+      dispatch(onGetComplaintSubCategory());
       validation.resetForm();
       handleAddSubCategory();
     },
@@ -123,11 +126,16 @@ const AddNewSubCategoryList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.category_lbl || ""}
                 >
-                  <option value="101">Select Category</option>
-                  <option value="102">STB Power Issue</option>
+                  <option value="">Select Category</option>
+                  {complaintsubcateCategory &&
+                    complaintsubcateCategory.map((category_lbl) => (
+                      <option key={category_lbl.id} value={category_lbl.id}>
+                        {category_lbl.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.category_lbl &&
-                validation.errors.category_lbl ? (
+                  validation.errors.category_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.category_lbl}
                   </FormFeedback>
@@ -140,22 +148,26 @@ const AddNewSubCategoryList = (props) => {
                   Status<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="status_lbl"
+                  name="status"
                   type="select"
                   placeholder="Select Status"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.status_lbl || ""}
+                  value={validation.values.status || ""}
                 >
-                  <option value="101">Select Status</option>
-                  <option value="102">Active</option>
-                  <option value="103">In-Active</option>
+                  <option value="">Select Status</option>
+                  {complaintsubcateStatus &&
+                    complaintsubcateStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                 </Input>
-                {validation.touched.status_lbl &&
-                validation.errors.status_lbl ? (
+                {validation.touched.status &&
+                  validation.errors.status ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.status_lbl}
+                    {validation.errors.status}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -168,22 +180,22 @@ const AddNewSubCategoryList = (props) => {
                   Show on Web<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="showonweb_lbl"
+                  name="showonweb"
                   type="select"
                   placeholder="Select showonweb"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.showonweb_lbl || ""}
+                  value={validation.values.showonweb || ""}
                 >
                   <option value="101">Select showonweb</option>
                   <option value="102">Active</option>
                   <option value="103">In-Active</option>
                 </Input>
-                {validation.touched.showonweb_lbl &&
-                validation.errors.showonweb_lbl ? (
+                {validation.touched.showonweb &&
+                  validation.errors.showonweb ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.showonweb_lbl}
+                    {validation.errors.showonweb}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -203,13 +215,13 @@ const AddNewSubCategoryList = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>

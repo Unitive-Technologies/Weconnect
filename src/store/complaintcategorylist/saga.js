@@ -2,12 +2,15 @@ import { call, put, takeEvery } from "redux-saga/effects";
 
 import {
   GET_COMPLAINTCATEGORY,
+  GET_COMPLAINTCATEGORY_STATUS,
   ADD_NEW_COMPLAINTCATEGORY,
 } from "./actionTypes";
 
 import {
   getComplaintCategorySuccess,
   getComplaintCategoryFail,
+  getComplaintCategoryStatusSuccess,
+  getComplaintCategoryStatusFail,
   addComplaintCategorySuccess,
   addComplaintCategoryFail,
 } from "./actions";
@@ -15,6 +18,7 @@ import {
 //Include Both Helper File with needed methods
 import {
   getComplaintCategory,
+  getComplaintCategoryStatus,
   addNewComplaintCategory,
 } from "../../helpers/fakebackend_helper";
 
@@ -37,14 +41,14 @@ const convertComplaintCategoryListObject = (complaintCategoryList) => {
         complaintcategory.status === 1
           ? "ACTIVE"
           : complaintcategory.status === 0
-          ? "INACTIVE"
-          : "BLOCKED",
+            ? "INACTIVE"
+            : "BLOCKED",
       showonweb:
         complaintcategory.showonweb === 1
           ? "ACTIVE"
           : complaintcategory.showonweb === 0
-          ? "INACTIVE"
-          : "BLOCKED",
+            ? "INACTIVE"
+            : "BLOCKED",
     };
   });
 };
@@ -62,6 +66,16 @@ function* fetchComplaintCategory() {
   }
 }
 
+function* fetchComplaintCategoryStatus() {
+  try {
+    const response = yield call(getComplaintCategoryStatus);
+    console.log("Complaint Category status response:" + JSON.stringify(response));
+    yield put(getComplaintCategoryStatusSuccess(response.data));
+  } catch (error) {
+    yield put(getComplaintCategoryStatusFail(error));
+  }
+}
+
 function* onAddNewComplaintCategory({ payload: complaintcategory }) {
   try {
     const response = yield call(addNewComplaintCategory, complaintcategory);
@@ -76,6 +90,7 @@ function* onAddNewComplaintCategory({ payload: complaintcategory }) {
 
 function* complaintCategorySaga() {
   yield takeEvery(GET_COMPLAINTCATEGORY, fetchComplaintCategory);
+  yield takeEvery(GET_COMPLAINTCATEGORY_STATUS, fetchComplaintCategoryStatus);
   yield takeEvery(ADD_NEW_COMPLAINTCATEGORY, onAddNewComplaintCategory);
 }
 

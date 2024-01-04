@@ -14,7 +14,7 @@ import {
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import { getComplaintCategory as onGetComplaintCategory } from "/src/store/actions";
+import { getComplaintCategory as onGetComplaintCategory, getComplaintCategoryStatus as onGetComplaintCategoryStatus } from "/src/store/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -34,11 +34,12 @@ const ComplaintCategoryList = (props) => {
     selectComplaintCategoryState,
     (complaintcategory) => ({
       complaintcate: complaintcategory.complaintcategory,
+      complaintcateStatus: complaintcategory.complaintcategoryStatus,
       loading: complaintcategory.loading,
     })
   );
 
-  const { complaintcate, loading } = useSelector(ComplaintCategoryProperties);
+  const { complaintcate, loading, complaintcateStatus } = useSelector(ComplaintCategoryProperties);
 
   const [isLoading, setLoading] = useState(loading);
 
@@ -161,6 +162,7 @@ const ComplaintCategoryList = (props) => {
   useEffect(() => {
     if (complaintcate && !complaintcate.length) {
       dispatch(onGetComplaintCategory());
+      dispatch(onGetComplaintCategoryStatus());
     }
   }, [dispatch, complaintcate]);
 
@@ -200,6 +202,7 @@ const ComplaintCategoryList = (props) => {
       <AddNewComplaintCategoryList
         isOpen={showAddNewComplaintCategoryList}
         handleAddComplaintCategory={handleAddComplaintCategory}
+        complaintcateStatus={complaintcateStatus}
       />
       <div className="page-content">
         <Container fluid>

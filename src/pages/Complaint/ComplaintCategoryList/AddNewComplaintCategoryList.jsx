@@ -16,9 +16,10 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewComplaintCategory as onAddNewComplaintCategory } from "/src/store/complaintcategorylist/actions";
 import { useDispatch } from "react-redux";
+import { getComplaintCategory as onGetComplaintCategory } from "/src/store/actions";
 
 const AddNewComplaintCategoryList = (props) => {
-  const { isOpen, handleAddComplaintCategory, complaintcategory } = props;
+  const { isOpen, handleAddComplaintCategory, complaintcategory, complaintcateStatus } = props;
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -28,7 +29,7 @@ const AddNewComplaintCategoryList = (props) => {
     initialValues: {
       //BroadCaster: "",
       name: "",
-      status_lbl: "",
+      status: "",
       showonweb_lbl: "",
       description: "",
       created_at: "",
@@ -36,7 +37,7 @@ const AddNewComplaintCategoryList = (props) => {
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter category name"),
-      status_lbl: Yup.string().required("Select status"),
+      status: Yup.string().required("Select status"),
       showonweb_lbl: Yup.string().required("Select show on portal"),
       description: Yup.string().required("Enter description"),
     }),
@@ -44,7 +45,7 @@ const AddNewComplaintCategoryList = (props) => {
       const newComplaintCategory = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
-        status_lbl: values["status_lbl"],
+        status: values["status"],
         showonweb_lbl: values["showonweb_lbl"],
         description: values["description"],
         created_at: new Date(),
@@ -53,6 +54,7 @@ const AddNewComplaintCategoryList = (props) => {
       console.log("newComplaintCategory:" + newComplaintCategory);
       // save new user
       dispatch(onAddNewComplaintCategory(newComplaintCategory));
+      dispatch(onGetComplaintCategory());
       validation.resetForm();
       handleAddComplaintCategory();
     },
@@ -111,22 +113,27 @@ const AddNewComplaintCategoryList = (props) => {
                   Status<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="status_lbl"
+                  name="status"
                   type="select"
                   placeholder="Select Status"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.status_lbl || ""}
+                  value={validation.values.status || ""}
                 >
-                  <option value="101">Select Status</option>
-                  <option value="102">Active</option>
-                  <option value="103">In-Active</option>
+                  <option value="">Select Status</option>
+                  {complaintcateStatus &&
+                    complaintcateStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                 </Input>
-                {validation.touched.status_lbl &&
-                validation.errors.status_lbl ? (
+
+                {validation.touched.status &&
+                  validation.errors.status ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.status_lbl}
+                    {validation.errors.status}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -151,7 +158,7 @@ const AddNewComplaintCategoryList = (props) => {
                   <option value="13">In-Active</option>
                 </Input>
                 {validation.touched.showonweb_lbl &&
-                validation.errors.showonweb_lbl ? (
+                  validation.errors.showonweb_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.showonweb_lbl}
                   </FormFeedback>
@@ -174,13 +181,13 @@ const AddNewComplaintCategoryList = (props) => {
                 value={validation.values.description || ""}
                 invalid={
                   validation.touched.description &&
-                  validation.errors.description
+                    validation.errors.description
                     ? true
                     : false
                 }
               />
               {validation.touched.description &&
-              validation.errors.description ? (
+                validation.errors.description ? (
                 <FormFeedback type="invalid">
                   {validation.errors.description}
                 </FormFeedback>

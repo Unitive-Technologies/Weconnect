@@ -1,12 +1,15 @@
 import {
   GET_COMPLAINTCATEGORY_SUCCESS,
   GET_COMPLAINTCATEGORY_FAIL,
+  GET_COMPLAINTCATEGORY_STATUS_FAIL,
+  GET_COMPLAINTCATEGORY_STATUS_SUCCESS,
   ADD_COMPLAINTCATEGORY_SUCCESS,
   ADD_COMPLAINTCATEGORY_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
   complaintcategory: [],
+  complaintcategoryStatus: [],
   error: {},
   loading: true,
 };
@@ -26,6 +29,21 @@ const ComplaintCategory = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
       };
+
+    case GET_COMPLAINTCATEGORY_STATUS_SUCCESS:
+      console.log("Complaint Category data in reducer:", action.payload);
+      return {
+        ...state,
+        complaintcategoryStatus: action.payload,
+        loading: false,
+      };
+
+    case GET_COMPLAINTCATEGORY_STATUS_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
 
     case ADD_COMPLAINTCATEGORY_SUCCESS:
       return {

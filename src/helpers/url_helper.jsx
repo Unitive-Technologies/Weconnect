@@ -176,10 +176,16 @@ export const ADD_CONNECTIONSCHEME = "/add/connectionscheme";
 
 export const GET_COMPLAINTCATEGORY =
   "/complaint-category?expand=created_by_lbl,status_lbl,showonweb_lbl&page=1&per-page=50&vr=web1.0";
-export const ADD_NEW_COMPLAINTCATEGORY = "/add/complaintcategory";
+export const GET_COMPLAINTCATEGORY_STATUS =
+  "/list/status?fields=id,name&vr=web1.0";
+export const ADD_NEW_COMPLAINTCATEGORY = "/complaint-category?vr=web1.0";
 
-export const GET_COMPLAINTSUBCATEGORY = "/complaintsubcategory";
-export const ADD_NEW_COMPLAINTSUBCATEGORY = "/add/complaintsubcategory";
+export const GET_COMPLAINTSUBCATEGORY = "/complaint-subcategory?expand=created_by_lbl,status_lbl,showonweb_lbl,category_lbl&page=1&per-page=50&vr=web1.0";
+export const GET_COMPLAINTSUBCATEGORY_STATUS = "/list/status?fields=id,name&vr=web1.0";
+export const GET_COMPLAINTSUBCATEGORY_CATEGORY = "/complaint-category?filter[status]=1&fields=id,name&vr=web1.0";
+export const GET_COMPLAINTSUBCATEGORY_DESIGNATION = "/user-designation?fields=id,name&vr=web1.0";
+
+export const ADD_NEW_COMPLAINTSUBCATEGORY = "/complaint-subcategory?vr=web1.0";
 
 export const GET_CONFIGURATIONUPLOADLOGS =
   "/upload-q?expand=uploaded_file,created_by_lbl,status_lbl&notfilter[status]=0&filter[section]=configuration&page=1&per-page=50&vr=web1.0";

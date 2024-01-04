@@ -14,7 +14,7 @@ import {
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import { getComplaintSubCategory as onGetComplaintSubCategory } from "/src/store/actions";
+import { getComplaintSubCategory as onGetComplaintSubCategory, getComplaintSubCategoryStatus as onGetComplaintSubCategoryStatus, getComplaintSubCategoryCategory as onGetComplaintSubCategoryCategory, getComplaintSubCategoryDesignation as onGetComplaintSubCategoryDesignation } from "/src/store/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -34,13 +34,17 @@ const ComplaintSubCategoryList = (props) => {
     selectComplaintSubCategoryState,
     (complaintsubcategory) => ({
       complaintsubcate: complaintsubcategory.complaintsubcategory,
+      complaintsubcateStatus: complaintsubcategory.complaintsubcategoryStatus,
+      complaintsubcateCategory: complaintsubcategory.complaintsubcategoryCategory,
+      complaintsubcateDesignation: complaintsubcategory.complaintsubcategoryDesignation,
       loading: complaintsubcategory.loading,
     })
   );
 
-  const { complaintsubcate, loading } = useSelector(
-    ComplaintSubCategoryProperties
-  );
+  const { complaintsubcate, complaintsubcateStatus, complaintsubcateCategory, complaintsubcateDesignation, loading } =
+    useSelector(
+      ComplaintSubCategoryProperties
+    );
 
   const [isLoading, setLoading] = useState(loading);
 
@@ -145,12 +149,12 @@ const ComplaintSubCategoryList = (props) => {
       },
       {
         Header: "Created By",
-        accessor: "created_by",
+        accessor: "created_by_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.created_by}
+              {cellProps.row.original.created_by_lbl}
             </p>
           );
         },
@@ -162,6 +166,9 @@ const ComplaintSubCategoryList = (props) => {
   useEffect(() => {
     if (complaintsubcate && !complaintsubcate.length) {
       dispatch(onGetComplaintSubCategory());
+      dispatch(onGetComplaintSubCategoryStatus());
+      dispatch(onGetComplaintSubCategoryCategory());
+      dispatch(onGetComplaintSubCategoryDesignation());
     }
   }, [dispatch, complaintsubcate]);
 
@@ -199,6 +206,9 @@ const ComplaintSubCategoryList = (props) => {
       <AddNewSubCategoryList
         isOpen={showAddNewSubCategoryList}
         handleAddSubCategory={handleAddSubCategory}
+        complaintsubcateDesignation={complaintsubcateDesignation}
+        complaintsubcateStatus={complaintsubcateStatus}
+        complaintsubcateCategory={complaintsubcateCategory}
       />
       <div className="page-content">
         <Container fluid>

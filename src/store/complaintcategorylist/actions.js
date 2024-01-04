@@ -2,6 +2,9 @@ import {
   GET_COMPLAINTCATEGORY,
   GET_COMPLAINTCATEGORY_FAIL,
   GET_COMPLAINTCATEGORY_SUCCESS,
+  GET_COMPLAINTCATEGORY_STATUS,
+  GET_COMPLAINTCATEGORY_STATUS_FAIL,
+  GET_COMPLAINTCATEGORY_STATUS_SUCCESS,
   ADD_NEW_COMPLAINTCATEGORY,
   ADD_COMPLAINTCATEGORY_SUCCESS,
   ADD_COMPLAINTCATEGORY_FAIL,
@@ -23,6 +26,23 @@ export const getComplaintCategoryFail = (error) => ({
   type: GET_COMPLAINTCATEGORY_FAIL,
   payload: error,
 });
+
+export const getComplaintCategoryStatus = () => ({
+  type: GET_COMPLAINTCATEGORY_STATUS,
+});
+
+export const getComplaintCategoryStatusSuccess = (complaintcategoryStatus) => {
+  return {
+    type: GET_COMPLAINTCATEGORY_STATUS_SUCCESS,
+    payload: complaintcategoryStatus,
+  };
+};
+
+export const getComplaintCategoryStatusFail = (error) => ({
+  type: GET_COMPLAINTCATEGORY_STATUS_FAIL,
+  payload: error,
+});
+
 
 export const addNewComplaintCategory = (
   complaintcategory
