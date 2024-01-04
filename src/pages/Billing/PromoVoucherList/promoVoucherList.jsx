@@ -17,7 +17,13 @@ import {
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import { getPromoVoucher as onGetPromoVoucher, getPromoVoucherApply as onGetPromoVoucherApply, getPromoVoucherLCO as onGetPromoVoucherLCO, getPromoVoucherBouquet as onGetPromoVoucherBouquet, getPromoVoucherRecharge as onGetPromoVoucherRecharge } from "/src/store/actions";
+import {
+  getPromoVoucher as onGetPromoVoucher,
+  getPromoVoucherApply as onGetPromoVoucherApply,
+  getPromoVoucherLCO as onGetPromoVoucherLCO,
+  getPromoVoucherBouquet as onGetPromoVoucherBouquet,
+  getPromoVoucherRecharge as onGetPromoVoucherRecharge,
+} from "/src/store/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -44,7 +50,14 @@ const PromoVoucherList = (props) => {
     })
   );
 
-  const { provoucher, loading, provoucherApply, provoucherBouquet, provoucherRecharge, provoucherLCO } = useSelector(PromoVoucherProperties);
+  const {
+    provoucher,
+    loading,
+    provoucherApply,
+    provoucherBouquet,
+    provoucherRecharge,
+    provoucherLCO,
+  } = useSelector(PromoVoucherProperties);
 
   const [isLoading, setLoading] = useState(loading);
 
@@ -82,7 +95,9 @@ const PromoVoucherList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.operator_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.operator_lbl}
+            </p>
           );
         },
       },
@@ -104,9 +119,7 @@ const PromoVoucherList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.voucher_type}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.code}</p>
           );
         },
       },
@@ -172,7 +185,9 @@ const PromoVoucherList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.bouque_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.bouque_lbl}
+            </p>
           );
         },
       },
