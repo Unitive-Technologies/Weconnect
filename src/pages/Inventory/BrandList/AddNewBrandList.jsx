@@ -16,9 +16,10 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addBrandList as onAddBrandList } from "/src/store/brandlist/actions";
 import { useDispatch } from "react-redux";
+import { getBrandList as onGetBrandList } from "/src/store/actions";
 
 const AddNewBrandList = (props) => {
-  const { isOpen, handleAddBrand } = props;
+  const { isOpen, handleAddBrand, brandBoxType, brandBrandType, brandCasType, brandCharacters, brandStatus } = props;
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -29,11 +30,11 @@ const AddNewBrandList = (props) => {
       name: "",
       //   code: "",
       box_type_lbl: "",
-      brand_type_lbl: "",
+      type: "",
       length: "",
       significant_length: "",
-      char_allowed_lbl: "",
-      cas_lbl: "",
+      char_allowed: "",
+      cas_id: "",
       status: "",
       created_at: "",
       created_by: "my mso(mso)",
@@ -41,11 +42,11 @@ const AddNewBrandList = (props) => {
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
       box_type_lbl: Yup.string().required("Select box type"),
-      brand_type_lbl: Yup.string().required("Select brand type"),
-      cas_lbl: Yup.string().required("Select CAS"),
+      type: Yup.string().required("Select brand type"),
+      cas_id: Yup.string().required("Select CAS"),
       length: Yup.string().required("Enter character length"),
       significant_length: Yup.string().required("Enter significant length"),
-      char_allowed_lbl: Yup.string().required("Enter allowed characters"),
+      char_allowed: Yup.string().required("Enter allowed characters"),
       status: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
@@ -53,18 +54,19 @@ const AddNewBrandList = (props) => {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         box_type_lbl: values["box_type_lbl"],
-        brand_type_lbl: values["brand_type_lbl"],
+        type: parseInt(values["type"]),
         status: values["status"],
-        cas_lbl: values["cas_lbl"],
+        cas_id: values["cas_id"],
         length: values["length"],
-        significant_length: values["significant_length"],
-        char_allowed_lbl: values["char_allowed_lbl"],
+        significant_length: parseInt(values["significant_length"]),
+        char_allowed: values["char_allowed"],
         created_at: new Date(),
         created_by: values["created_by"],
       };
       console.log("New Brand:" + JSON.stringify(newBrand));
       // save new user
       dispatch(onAddBrandList(newBrand));
+      dispatch(onGetBrandList());
       validation.resetForm();
       handleAddBrand();
     },
@@ -127,26 +129,34 @@ const AddNewBrandList = (props) => {
                   Brand Type<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="brand_type_lbl"
+                  name="type"
                   type="select"
                   placeholder="Select brand type"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.brand_type_lbl || ""}
+                  value={validation.values.type || ""}
                 >
                   <option value="">Select brand type</option>
-                  <option value="STB">STB</option>
-                  <option value="Smartcard">Smartcard</option>
+                  {brandBrandType &&
+                    brandBrandType.map((type) => (
+                      <option key={type.id} value={type.id}>
+                        {type.name}
+                      </option>
+                    ))}
                 </Input>
-                {validation.touched.brand_type_lbl &&
-                validation.errors.brand_type_lbl ? (
+                {validation.touched.type &&
+                  validation.errors.type ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.brand_type_lbl}
+                    {validation.errors.type}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
+            {console.log("Brand Type: " + validation.values.type)}
+            {console.log(
+              "Brand type: " + typeof validation.values.type
+            )}
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
@@ -162,11 +172,15 @@ const AddNewBrandList = (props) => {
                   value={validation.values.box_type_lbl || ""}
                 >
                   <option value="">Select box type</option>
-                  <option value="SD">Standard Definition(SD)</option>
-                  <option value="HD">High Definition(HD)</option>
+                  {brandBoxType &&
+                    brandBoxType.map((box_type_lbl) => (
+                      <option key={box_type_lbl.id} value={box_type_lbl.id}>
+                        {box_type_lbl.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.box_type_lbl &&
-                validation.errors.box_type_lbl ? (
+                  validation.errors.box_type_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.box_type_lbl}
                   </FormFeedback>
@@ -181,20 +195,25 @@ const AddNewBrandList = (props) => {
                   CAS Type<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="cas_lbl"
+                  name="cas_id"
                   type="select"
                   placeholder="Select CAS"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.cas_lbl || ""}
+                  value={validation.values.cas_id || ""}
                 >
-                  <option value="">Select CAS</option>
-                  <option value="NSTV">NSTV</option>
+                  <option value="">Select Cas</option>
+                  {brandCasType &&
+                    brandCasType.map((cas_id) => (
+                      <option key={cas_id.id} value={cas_id.id}>
+                        {cas_id.name}
+                      </option>
+                    ))}
                 </Input>
-                {validation.touched.cas_lbl && validation.errors.cas_lbl ? (
+                {validation.touched.cas_id && validation.errors.cas_id ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.cas_lbl}
+                    {validation.errors.cas_id}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -238,13 +257,13 @@ const AddNewBrandList = (props) => {
                   value={validation.values.significant_length || ""}
                   invalid={
                     validation.touched.significant_length &&
-                    validation.errors.significant_length
+                      validation.errors.significant_length
                       ? true
                       : false
                   }
                 />
                 {validation.touched.significant_length &&
-                validation.errors.significant_length ? (
+                  validation.errors.significant_length ? (
                   <FormFeedback type="invalid">
                     {validation.errors.significant_length}
                   </FormFeedback>
@@ -259,24 +278,26 @@ const AddNewBrandList = (props) => {
                   Allowed Characters<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="char_allowed_lbl"
+                  name="char_allowed"
                   type="select"
                   placeholder="Select allowed characters"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.char_allowed_lbl || ""}
+                  value={validation.values.char_allowed || ""}
                 >
                   <option value="">Select allowed characters</option>
-                  <option value="Numeric">Numeric</option>
-                  <option value="Alphabets">Alphabets</option>
-                  <option value="Hexadecimal">Hexadecimal</option>
-                  <option value="Alphanumeric">Alphanumeric</option>
+                  {brandCharacters &&
+                    brandCharacters.map((char_allowed) => (
+                      <option key={char_allowed.id} value={char_allowed.id}>
+                        {char_allowed.name}
+                      </option>
+                    ))}
                 </Input>
-                {validation.touched.char_allowed_lbl &&
-                validation.errors.char_allowed_lbl ? (
+                {validation.touched.char_allowed &&
+                  validation.errors.char_allowed ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.char_allowed_lbl}
+                    {validation.errors.char_allowed}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -295,10 +316,13 @@ const AddNewBrandList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
                 >
-                  <option value="">Select status</option>
-                  <option value="Active">Active</option>
-                  <option value="blocked">BLOCKED</option>
-                  <option value="In_Active">In-Active</option>
+                  <option value="">Select Status</option>
+                  {brandStatus &&
+                    brandStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
@@ -338,7 +362,7 @@ const AddNewBrandList = (props) => {
           </Row>
         </Form>
       </ModalBody>
-    </Modal>
+    </Modal >
   );
 };
 

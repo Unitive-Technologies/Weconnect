@@ -1,12 +1,22 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { GET_BRANDLIST, ADD_BRANDLIST } from "./actionTypes";
+import { GET_BRANDLIST, GET_BRANDLIST_BOXTYPE, GET_BRANDLIST_BRANDTYPE, GET_BRANDLIST_CASTYPE, GET_BRANDLIST_CHARACTERS, GET_BRANDLIST_STATUS, ADD_BRANDLIST } from "./actionTypes";
 import {
   getBrandListSuccess,
   getBrandListFail,
+  getBrandListBoxTypeSuccess,
+  getBrandListBoxTypeFail,
+  getBrandListBrandTypeSuccess,
+  getBrandListBrandTypeFail,
+  getBrandListCasTypeSuccess,
+  getBrandListCasTypeFail,
+  getBrandListCharactersSuccess,
+  getBrandListCharactersFail,
+  getBrandListStatusSuccess,
+  getBrandListStatusFail,
   addBrandListSuccess,
   addBrandListFail,
 } from "./actions";
-import { getBrandList, addBrandList } from "../../helpers/fakebackend_helper";
+import { getBrandList, getBrandListBoxType, getBrandListCasType, getBrandListBrandType, getBrandListCharacters, getBrandListStatus, addBrandList } from "../../helpers/fakebackend_helper";
 import { toast } from "react-toastify";
 
 const convertBrandListObject = (brandlist) => {
@@ -40,6 +50,56 @@ function* fetchBrandList() {
   }
 }
 
+function* fetchBrandListBrandType() {
+  try {
+    const response = yield call(getBrandListBrandType);
+    console.log("Brand List Brand Type  response:" + JSON.stringify(response));
+    yield put(getBrandListBrandTypeSuccess(response.data));
+  } catch (error) {
+    yield put(getBrandListBrandTypeFail(error));
+  }
+}
+
+function* fetchBrandListBoxType() {
+  try {
+    const response = yield call(getBrandListBoxType);
+    console.log("Brand List Box Type  response:" + JSON.stringify(response));
+    yield put(getBrandListBoxTypeSuccess(response.data));
+  } catch (error) {
+    yield put(getBrandListBoxTypeFail(error));
+  }
+}
+
+function* fetchBrandListCasType() {
+  try {
+    const response = yield call(getBrandListCasType);
+    console.log("Brand List Cas Type  response:" + JSON.stringify(response));
+    yield put(getBrandListCasTypeSuccess(response.data));
+  } catch (error) {
+    yield put(getBrandListCasTypeFail(error));
+  }
+}
+
+function* fetchBrandListStatus() {
+  try {
+    const response = yield call(getBrandListStatus);
+    console.log("Brand List Status  response:" + JSON.stringify(response));
+    yield put(getBrandListStatusSuccess(response.data));
+  } catch (error) {
+    yield put(getBrandListStatusFail(error));
+  }
+}
+
+function* fetchBrandListCharacters() {
+  try {
+    const response = yield call(getBrandListCharacters);
+    console.log("Brand List Characters  response:" + JSON.stringify(response));
+    yield put(getBrandListCharactersSuccess(response.data));
+  } catch (error) {
+    yield put(getBrandListCharactersFail(error));
+  }
+}
+
 function* onAddBrandList({ payload: brandlist }) {
   try {
     const response = yield call(addBrandList, brandlist);
@@ -53,6 +113,11 @@ function* onAddBrandList({ payload: brandlist }) {
 
 function* brandListSaga() {
   yield takeEvery(GET_BRANDLIST, fetchBrandList);
+  yield takeEvery(GET_BRANDLIST_BOXTYPE, fetchBrandListBoxType);
+  yield takeEvery(GET_BRANDLIST_BRANDTYPE, fetchBrandListBrandType);
+  yield takeEvery(GET_BRANDLIST_CASTYPE, fetchBrandListCasType);
+  yield takeEvery(GET_BRANDLIST_CHARACTERS, fetchBrandListCharacters);
+  yield takeEvery(GET_BRANDLIST_STATUS, fetchBrandListStatus);
   yield takeEvery(ADD_BRANDLIST, onAddBrandList);
 }
 
