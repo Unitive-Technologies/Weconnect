@@ -2,6 +2,12 @@ import {
   GET_WAREHOUSELIST,
   GET_WAREHOUSELIST_FAIL,
   GET_WAREHOUSELIST_SUCCESS,
+  GET_WAREHOUSELIST_STATUS,
+  GET_WAREHOUSELIST_STATUS_FAIL,
+  GET_WAREHOUSELIST_STATUS_SUCCESS,
+  GET_WAREHOUSELIST_OPERATOR,
+  GET_WAREHOUSELIST_OPERATOR_FAIL,
+  GET_WAREHOUSELIST_OPERATOR_SUCCESS,
   ADD_WAREHOUSELIST,
   ADD_WAREHOUSELIST_SUCCESS,
   ADD_WAREHOUSELIST_FAIL,
@@ -36,5 +42,37 @@ export const addWareHouseListSuccess = (warehouselist) => ({
 
 export const addWareHouseListFail = (error) => ({
   type: ADD_WAREHOUSELIST_FAIL,
+  payload: error,
+});
+
+export const getWarehouseListStatus = () => ({
+  type: GET_WAREHOUSELIST_STATUS,
+});
+
+export const getWarehouseListStatusSuccess = (warehouselistStatus) => {
+  return {
+    type: GET_WAREHOUSELIST_STATUS_SUCCESS,
+    payload: warehouselistStatus,
+  };
+};
+
+export const getWarehouseListStatusFail = (error) => ({
+  type: GET_WAREHOUSELIST_STATUS_FAIL,
+  payload: error,
+});
+
+export const getWarehouseListOperator = () => ({
+  type: GET_WAREHOUSELIST_OPERATOR,
+});
+
+export const getWarehouseListOperatorSuccess = (warehouselistOperator) => {
+  return {
+    type: GET_WAREHOUSELIST_OPERATOR_SUCCESS,
+    payload: warehouselistOperator,
+  };
+};
+
+export const getWarehouseListOperatorFail = (error) => ({
+  type: GET_WAREHOUSELIST_OPERATOR_FAIL,
   payload: error,
 });

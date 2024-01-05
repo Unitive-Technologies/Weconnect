@@ -16,9 +16,10 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addWareHouseList as onAddWareHouseList } from "/src/store/warehouse/actions";
 import { useDispatch } from "react-redux";
+import { getWarehouseList as onGetWarehouseList } from "/src/store/actions";
 
 const AddNewWareHouse = (props) => {
-  const { isOpen, handleAddWarehouse } = props;
+  const { isOpen, handleAddWarehouse, warehouseOperator, warehouseStatus } = props;
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -61,6 +62,7 @@ const AddNewWareHouse = (props) => {
       console.log("New Warehouse:" + JSON.stringify(newWareHouse));
       // save new user
       dispatch(onAddWareHouseList(newWareHouse));
+      dispatch(onGetWarehouseList());
       validation.resetForm();
       handleAddWarehouse();
     },
@@ -131,13 +133,13 @@ const AddNewWareHouse = (props) => {
                   value={validation.values.contact_person || ""}
                   invalid={
                     validation.touched.contact_person &&
-                    validation.errors.contact_person
+                      validation.errors.contact_person
                       ? true
                       : false
                   }
                 />
                 {validation.touched.contact_person &&
-                validation.errors.contact_person ? (
+                  validation.errors.contact_person ? (
                   <FormFeedback type="invalid">
                     {validation.errors.contact_person}
                   </FormFeedback>
@@ -183,9 +185,13 @@ const AddNewWareHouse = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
                 >
-                  <option value="">Select status</option>
-                  <option value="Active">Active</option>
-                  <option value="In_Active">In-Active</option>
+                  <option value="">Select Status</option>
+                  {warehouseStatus &&
+                    warehouseStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
@@ -210,9 +216,13 @@ const AddNewWareHouse = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.operator || ""}
                 >
-                  <option value="">Select brand type</option>
-                  <option value="STB">STB</option>
-                  <option value="Smartcard">Smartcard</option>
+                  <option value="">Select Status</option>
+                  {warehouseOperator &&
+                    warehouseOperator.map((operator) => (
+                      <option key={operator.id} value={operator.id}>
+                        {operator.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.operator && validation.errors.operator ? (
                   <FormFeedback type="invalid">
@@ -235,13 +245,13 @@ const AddNewWareHouse = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>

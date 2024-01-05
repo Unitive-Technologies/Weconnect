@@ -403,6 +403,8 @@ export const getBrandListCasType = () => get(url.GET_BRANDLIST_CASTYPE);
 export const addBrandList = (brandlist) => post(url.ADD_BRANDLIST, brandlist);
 
 export const getWarehouseList = () => get(url.GET_WAREHOUSELIST);
+export const getWarehouseListStatus = () => get(url.GET_WAREHOUSELIST_STATUS);
+export const getWarehouseListOperator = () => get(url.GET_WAREHOUSELIST_OPERATOR);
 export const addWareHouseList = (warehouselist) =>
   post(url.ADD_WAREHOUSELIST, warehouselist);
 

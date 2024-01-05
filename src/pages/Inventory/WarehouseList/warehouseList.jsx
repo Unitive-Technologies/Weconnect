@@ -25,7 +25,8 @@ import {
   CreatedBy,
 } from "./warehouseListCol";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import { getWarehouseList as onGetWarehouseList } from "/src/store/warehouse/actions";
+import { getWarehouseList as onGetWarehouseList, getWarehouseListOperator as onGetWarehouseListOperator, getWarehouseListStatus as onGetWarehouseListStatus } from "/src/store/warehouse/actions";
+
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
@@ -44,11 +45,13 @@ const WarehouseList = (props) => {
     selectWarehouseState,
     (warehouselist) => ({
       warehouse: warehouselist.warehouselist,
+      warehouseStatus: warehouselist.warehouselistStatus,
+      warehouseOperator: warehouselist.warehouselistOperator,
       loading: warehouselist.loading,
     })
   );
 
-  const { warehouse, loading } = useSelector(WarehouseProperties);
+  const { warehouse, warehouseOperator, warehouseStatus, loading } = useSelector(WarehouseProperties);
 
   const [isLoading, setLoading] = useState(loading);
   const [showAddWareHouse, setShowAddWareHouse] = useState(false);
@@ -211,6 +214,8 @@ const WarehouseList = (props) => {
   useEffect(() => {
     if (warehouse && !warehouse.length) {
       dispatch(onGetWarehouseList());
+      dispatch(onGetWarehouseListStatus());
+      dispatch(onGetWarehouseListOperator());
     }
   }, [dispatch, warehouse]);
 
@@ -243,6 +248,8 @@ const WarehouseList = (props) => {
       <AddNewWareHouse
         isOpen={showAddWareHouse}
         handleAddWarehouse={handleAddWarehouse}
+        warehouseOperator={warehouseOperator}
+        warehouseStatus={warehouseStatus}
       />
       <UploadWareHouse
         isOpen={showUploadWareHouse}

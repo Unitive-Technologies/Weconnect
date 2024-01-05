@@ -1,12 +1,18 @@
 import {
   GET_WAREHOUSELIST_SUCCESS,
   GET_WAREHOUSELIST_FAIL,
+  GET_WAREHOUSELIST_STATUS_SUCCESS,
+  GET_WAREHOUSELIST_STATUS_FAIL,
+  GET_WAREHOUSELIST_OPERATOR_SUCCESS,
+  GET_WAREHOUSELIST_OPERATOR_FAIL,
   ADD_WAREHOUSELIST_SUCCESS,
   ADD_WAREHOUSELIST_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
   warehouselist: [],
+  warehouselistStatus: [],
+  warehouselistOperator: [],
   error: {},
   loading: true,
 };
@@ -22,6 +28,34 @@ const WarehouseList = (state = INIT_STATE, action) => {
       };
 
     case GET_WAREHOUSELIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_WAREHOUSELIST_STATUS_SUCCESS:
+      console.log("Warehouselist status data in reducer:", action.payload);
+      return {
+        ...state,
+        warehouselistStatus: action.payload,
+        loading: false,
+      };
+
+    case GET_WAREHOUSELIST_STATUS_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_WAREHOUSELIST_OPERATOR_SUCCESS:
+      console.log("Warehouselist operator data in reducer:", action.payload);
+      return {
+        ...state,
+        warehouselistOperator: action.payload,
+        loading: false,
+      };
+
+    case GET_WAREHOUSELIST_OPERATOR_FAIL:
       return {
         ...state,
         error: action.payload,

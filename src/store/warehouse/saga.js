@@ -1,10 +1,14 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_WAREHOUSELIST, ADD_WAREHOUSELIST } from "./actionTypes";
+import { GET_WAREHOUSELIST, GET_WAREHOUSELIST_STATUS, GET_WAREHOUSELIST_OPERATOR, ADD_WAREHOUSELIST } from "./actionTypes";
 
 import {
   getWarehouseListSuccess,
   getWarehouseListFail,
+  getWarehouseListStatusSuccess,
+  getWarehouseListStatusFail,
+  getWarehouseListOperatorSuccess,
+  getWarehouseListOperatorFail,
   addWareHouseListSuccess,
   addWareHouseListFail,
 } from "./actions";
@@ -12,6 +16,8 @@ import {
 //Include Both Helper File with needed methods
 import {
   getWarehouseList,
+  getWarehouseListStatus,
+  getWarehouseListOperator,
   addWareHouseList,
 } from "../../helpers/fakebackend_helper";
 
@@ -48,6 +54,26 @@ function* fetchWarehouseList() {
   }
 }
 
+function* fetchWarehouseListStatus() {
+  try {
+    const response = yield call(getWarehouseListStatus);
+    console.log("WarehouseList status response:" + JSON.stringify(response));
+    yield put(getWarehouseListStatusSuccess(response.data));
+  } catch (error) {
+    yield put(getWarehouseListStatusFail(error));
+  }
+}
+
+function* fetchWarehouseListOperator() {
+  try {
+    const response = yield call(getWarehouseListOperator);
+    console.log("WarehouseList Operator response:" + JSON.stringify(response));
+    yield put(getWarehouseListOperatorSuccess(response.data));
+  } catch (error) {
+    yield put(getWarehouseListOperatorFail(error));
+  }
+}
+
 function* onAddWareHouseList({ payload: warehouselist }) {
   try {
     const response = yield call(addWareHouseList, warehouselist);
@@ -59,6 +85,8 @@ function* onAddWareHouseList({ payload: warehouselist }) {
 
 function* warehouseListSaga() {
   yield takeEvery(GET_WAREHOUSELIST, fetchWarehouseList);
+  yield takeEvery(GET_WAREHOUSELIST_STATUS, fetchWarehouseListStatus);
+  yield takeEvery(GET_WAREHOUSELIST_OPERATOR, fetchWarehouseListOperator);
   yield takeEvery(ADD_WAREHOUSELIST, onAddWareHouseList);
 }
 
