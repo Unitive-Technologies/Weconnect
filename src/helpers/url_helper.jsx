@@ -13,7 +13,8 @@ export const POST_EDIT_JWT_PROFILE = "/post-jwt-profile";
 export const POST_EDIT_PROFILE = "/post-fake-profile";
 
 export const GET_CUSTOMERUSERS =
-  "/user?expand=setting,group_lbl,access_level,role_lbl,status_lbl,type_lbl,operator_lbl,operator,created_by_lbl,parent_lbl&filter[role]=4&page=1&per-page=50&vr=web1.0";
+  "/user?expand=setting,group_lbl,access_level,role_lbl,status_lbl,type_lbl,operator_lbl,operator,created_by_lbl,parent_lbl&filter[role]=4&page=1&per-page=500&vr=web1.0";
+export const UPDATE_CUSTOMERUSER = (id) => `/user/${id}?vr=web1.0`;
 
 export const GET_GROUPPOLICY =
   "/menu-access-right?filter[type]=2&expand=user_count,user_type_lbl&page=1&per-page=50&vr=web1.0";
@@ -159,21 +160,23 @@ export const GET_BRANDLIST =
   "/brand?expand=box_type_lbl,brand_type_lbl,char_allowed_lbl,cas_lbl,created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
 export const GET_BRANDLIST_BRANDTYPE =
   "/list/brandtype?fields=id,name&vr=web1.0";
-export const GET_BRANDLIST_BOXTYPE =
-  "/list/boxtype?fields=id,name&vr=web1.0";
+export const GET_BRANDLIST_BOXTYPE = "/list/boxtype?fields=id,name&vr=web1.0";
 export const GET_BRANDLIST_CHARACTERS =
   "/list/charallowed?fields=id,name&vr=web1.0";
-export const GET_BRANDLIST_STATUS =
-  "/list/status?fields=id,name&vr=web1.0";
-export const GET_BRANDLIST_CASTYPE =
-  "/casvendor/list?fields=id,name&vr=web1.0";
+export const GET_BRANDLIST_STATUS = "/list/status?fields=id,name&vr=web1.0";
+export const GET_BRANDLIST_CASTYPE = "/casvendor/list?fields=id,name&vr=web1.0";
 export const ADD_BRANDLIST = "/brand?vr=web1.0";
 
 export const GET_WAREHOUSELIST =
   "/warehouse?expand=city_lbl,created_by_lbl,status_lbl,operator_lbl,operator_code_lbl&page=1&per-page=50&vr=web1.0";
+<<<<<<< Updated upstream
 export const GET_WAREHOUSELIST_STATUS =
   "/list/status?fields=id,name&vr=web1.0";
 export const GET_WAREHOUSELIST_OPERATOR =
+=======
+export const GET_WAREHOUSESTATUS = "/list/status?fields=id,name&vr=web1.0";
+export const GET_WAREHOUSEOPERATOR =
+>>>>>>> Stashed changes
   "/operator/list?fields=id,name,code&expand=branch_lbl,distributor_lbl,city_lbl,state_lbl&per-page=100&vr=web1.0";
 export const ADD_WAREHOUSELIST = "/warehouse?vr=web1.0";
 

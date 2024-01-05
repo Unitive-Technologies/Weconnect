@@ -17,7 +17,7 @@ import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import ViewCustomerUserModal from "./ViewCustomerListModal";
 import BulkInactiveCustomerList from "./BulkInactiveCustomerList";
-
+import { getUserStatus as onGetUserStatus } from "/src/store/users/actions";
 const CustomerUserList = (props) => {
   //meta title
   document.title = "Customer Users | VDigital";
@@ -33,8 +33,15 @@ const CustomerUserList = (props) => {
       loading: customerUsers.loading,
     })
   );
-
+  const selectUsersState = (state) => state.users;
+  const UsersProperties = createSelector(selectUsersState, (Users) => ({
+    userStatus: Users.userStatus,
+    // userRegional: Users.userRegional,
+    // userMsoDetails: Users.userMsoDetails,
+    // userDistributor: Users.userDistributor,
+  }));
   const { cusUsers, loading } = useSelector(customerUsersProperties);
+  const { userStatus } = useSelector(UsersProperties);
   console.log("customer: " + JSON.stringify(cusUsers));
 
   const [isLoading, setLoading] = useState(loading);
@@ -202,6 +209,7 @@ const CustomerUserList = (props) => {
   useEffect(() => {
     if (cusUsers && !cusUsers.length) {
       dispatch(onGetCustomerUsers());
+      dispatch(onGetUserStatus());
     }
   }, [dispatch, cusUsers]);
 
@@ -248,6 +256,7 @@ const CustomerUserList = (props) => {
         isOpen={viewCustomerUserModal}
         handleViewCustomerUser={handleViewCustomerUser}
         customeruser={viewCustomerUser}
+        userStatus={userStatus}
       />
       <BulkInactiveCustomerList
         isOpen={showBulkActiveModal}

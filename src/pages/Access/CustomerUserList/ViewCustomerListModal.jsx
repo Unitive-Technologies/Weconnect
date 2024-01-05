@@ -16,14 +16,20 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { updateUser as onUpdateUser } from "/src/store/users/actions";
+import { updateCustomerUser as onUpdateCustomerUser } from "/src/store/customerusers/actions";
 
 const ViewCustomerUserModal = (props) => {
-  const { isOpen, handleViewCustomerUser, customeruser } = props;
-  console.log("isOpen in view modal:" + isOpen);
+  const { isOpen, handleViewCustomerUser, customeruser, userStatus } = props;
+  console.log("customerUser in view modal:" + JSON.stringify(customeruser));
   const dispatch = useDispatch();
-  const [showEditUser, setShowEditUser] = useState(false);
-  console.log("edit in view modal:" + showEditUser);
+  const [showEditCustomerUser, setShowEditCustomerUser] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState("");
+
+  const handleStatusChange = (e) => {
+    const status = e.target.value;
+    setSelectedStatus(status);
+    validation.handleChange(e);
+  };
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -36,53 +42,31 @@ const ViewCustomerUserModal = (props) => {
       mobile: (customeruser && customeruser.mobile_no) || "",
       email: (customeruser && customeruser.email) || "",
       status: (customeruser && customeruser.status) || "",
-      lco: (customeruser && customeruser.lco) || "",
-      lcocode: (customeruser && customeruser.lco_code) || "",
-      lastlogin: (customeruser && customeruser.last_login_at) || "",
-      createdat: (customeruser && customeruser.created_at) || "",
-      createdby: (customeruser && customeruser.created_by) || "",
+      lco: (customeruser && customeruser.operator.name) || "",
+      lcocode: (customeruser && customeruser.operator.code) || "",
+      block_message: (customeruser && customeruser.block_message) || "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
-      login: Yup.string().required("Please Enter Login ID"),
-      mobile: Yup.string().required("Please Enter mobile Number"),
-      email: Yup.string()
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-        .required("Please Enter Your Email"),
-      // mobile: Yup.array().required("Please Enter mobile"),
-
       status: Yup.string().required("Please Enter Status"),
-      lco: Yup.string().required("Please Enter LCO"),
-      lcocode: Yup.string().required("Please Enter LCO Code"),
-      lastlogin: Yup.string().required("Please Enter Last Login Time"),
-      createdat: Yup.string().required("Please Enter Created At"),
-
-      createdby: Yup.string().required("Please Enter Created By"),
     }),
     onSubmit: (values) => {
-      const updateUser = {
+      const updateCustomerUser = {
         id: customeruser.id,
-        name: values.name,
-        login: values.username,
-        mobile: values.mobile,
-        email: values.email,
-        status: values.status,
-        lco: values.lco,
-        lcocode: values.lcocode,
-        lastlogin: values.lastlogin,
-        createdat: values.createdat,
-        createdby: values.createdby,
+
+        status: parseInt(values.status),
+        block_message: values.block_message,
+        password: values.password,
       };
 
       // update user
-      dispatch(onUpdateUser(updateUser));
+      dispatch(onUpdateCustomerUser(updateCustomerUser));
       validation.resetForm();
       handleViewCustomerUser();
     },
   });
 
   const handleCancel = () => {
-    setShowEditUser(false);
+    setShowEditCustomerUser(false);
     handleViewCustomerUser();
   };
   return (
@@ -97,11 +81,11 @@ const ViewCustomerUserModal = (props) => {
       toggle={handleCancel}
     >
       <ModalHeader toggle={handleCancel} tag="h4">
-        {!showEditUser
+        {!showEditCustomerUser
           ? `View ${(customeruser && customeruser.name) || ""}`
           : `Edit ${(customeruser && customeruser.name) || ""}`}
       </ModalHeader>
-      {!showEditUser && (
+      {!showEditCustomerUser && (
         <Link
           style={{
             position: "absolute",
@@ -110,7 +94,7 @@ const ViewCustomerUserModal = (props) => {
           }}
           to="#!"
           className="btn btn-light me-1"
-          onClick={() => setShowEditUser(true)}
+          onClick={() => setShowEditCustomerUser(true)}
         >
           <i className="mdi mdi-pencil-outline"></i>
         </Link>
@@ -124,7 +108,7 @@ const ViewCustomerUserModal = (props) => {
           }}
         >
           <Row>
-            <Col sm="6">
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Name</Label>
                 <Input
@@ -134,7 +118,7 @@ const ViewCustomerUserModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.initialValues.name || ""}
-                  disabled={!showEditUser}
+                  disabled
                   invalid={
                     validation.touched.name && validation.errors.name
                       ? true
@@ -147,55 +131,8 @@ const ViewCustomerUserModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
-              <div className="mb-3">
-                <Label className="form-label">Login ID</Label>
-                <Input
-                  name="login"
-                  label="Login ID"
-                  type="text"
-                  placeholder="Login ID"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.initialValues.login || ""}
-                  disabled={!showEditUser}
-                  invalid={
-                    validation.touched.login && validation.errors.login
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.login && validation.errors.login ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.login}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                <Label className="form-label">Mobile No.</Label>
-                <Input
-                  name="mobile"
-                  label="Mobile No."
-                  placeholder="Insert Mobile Number"
-                  type="text"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.initialValues.mobile || ""}
-                  disabled={!showEditUser}
-                  invalid={
-                    validation.touched.mobile && validation.errors.mobile
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.mobile && validation.errors.mobile ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.mobile}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Email</Label>
                 <Input
@@ -206,7 +143,7 @@ const ViewCustomerUserModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.initialValues.email || ""}
-                  disabled={!showEditUser}
+                  disabled
                   invalid={
                     validation.touched.email && validation.errors.email
                       ? true
@@ -219,32 +156,33 @@ const ViewCustomerUserModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Status</Label>
+                <Label className="form-label">Mobile No.</Label>
                 <Input
-                  name="status"
-                  type="select"
-                  placeholder="Select Status"
-                  className="form-select"
+                  name="mobile"
+                  label="Mobile No."
+                  placeholder="Insert Mobile Number"
+                  type="text"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.initialValues.status || ""}
-                  disabled={!showEditUser}
-                >
-                  {/* <option value="">Select Status</option> */}
-                  <option value="11">Active</option>
-                  <option value="12">BLOCKED</option>
-                  <option value="13">In-Active</option>
-                </Input>
-                {validation.touched.status && validation.errors.status ? (
+                  value={validation.initialValues.mobile || ""}
+                  disabled
+                  invalid={
+                    validation.touched.mobile && validation.errors.mobile
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.mobile && validation.errors.mobile ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.status}
+                    {validation.errors.mobile}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
-            <Col sm="6">
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">LCO</Label>
                 <Input
@@ -254,7 +192,7 @@ const ViewCustomerUserModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.initialValues.lco || ""}
-                  disabled={!showEditUser}
+                  disabled
                   invalid={
                     validation.touched.lco && validation.errors.lco
                       ? true
@@ -267,7 +205,8 @@ const ViewCustomerUserModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">LCO Code</Label>
                 <Input
@@ -278,7 +217,7 @@ const ViewCustomerUserModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.initialValues.lcocode || ""}
-                  disabled={!showEditUser}
+                  disabled
                   invalid={
                     validation.touched.lcocode && validation.errors.lcocode
                       ? true
@@ -291,81 +230,157 @@ const ViewCustomerUserModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Last Login Time</Label>
+                <Label className="form-label">Status</Label>
                 <Input
-                  name="lastlogin"
-                  label="Last Login Time"
-                  placeholder="Last Login Time"
-                  type="text"
-                  onChange={validation.handleChange}
+                  name="status"
+                  type="select"
+                  placeholder="Select Status"
+                  className="form-select"
+                  onChange={handleStatusChange}
                   onBlur={validation.handleBlur}
-                  value={validation.initialValues.lastlogin || ""}
-                  disabled={!showEditUser}
-                  invalid={
-                    validation.touched.lastlogin && validation.errors.lastlogin
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.lastlogin && validation.errors.lastlogin ? (
+                  value={selectedStatus}
+                  disabled={!showEditCustomerUser}
+                >
+                  {userStatus.map((status) => (
+                    <option key={status.id} value={status.id}>
+                      {status.name}
+                    </option>
+                  ))}
+                </Input>
+                {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.lastlogin}
+                    {validation.errors.status}
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Created At</Label>
+                <Label className="form-label">
+                  Inactive/Block Message
+                  <span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
-                  name="createdat"
-                  label="Created At"
-                  type="text"
-                  placeholder="Created At"
+                  name="block_message"
+                  type="textarea"
+                  placeholder="Enter Message"
+                  rows="3"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.initialValues.createdat || ""}
-                  disabled={!showEditUser}
+                  value={validation.values.block_message || ""}
                   invalid={
-                    validation.touched.createdat && validation.errors.createdat
+                    validation.touched.block_message &&
+                    validation.errors.block_message
                       ? true
                       : false
                   }
-                />
-                {validation.touched.createdat && validation.errors.createdat ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.createdat}
-                  </FormFeedback>
-                ) : null}
-              </div>
-
-              <div className="mb-3">
-                <Label className="form-label">Created By</Label>
-                <Input
-                  name="createdby"
-                  label="Created By"
-                  type="text"
-                  placeholder="Created By"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.initialValues.createdby || ""}
-                  disabled={!showEditUser}
-                  invalid={
-                    validation.touched.createdby && validation.errors.createdby
-                      ? true
-                      : false
+                  disabled={
+                    selectedStatus === "0" || selectedStatus === "-7"
+                      ? false
+                      : true
                   }
                 />
-                {validation.touched.createdby && validation.errors.createdby ? (
+                {validation.touched.block_message &&
+                validation.errors.block_message ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.createdby}
+                    {validation.errors.block_message}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
           </Row>
-          {showEditUser && (
+          <Row>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">Login ID</Label>
+                <Input
+                  name="login"
+                  label="Login ID"
+                  type="text"
+                  placeholder="Login ID"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.initialValues.login || ""}
+                  disabled={!showEditCustomerUser}
+                  invalid={
+                    validation.touched.login && validation.errors.login
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.login && validation.errors.login ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.login}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            {showEditCustomerUser && (
+              <>
+                {" "}
+                <Col lg={4}>
+                  <div className="mb-3">
+                    <Label className="form-label">
+                      Password<span style={{ color: "red" }}>*</span>
+                    </Label>
+                    <Input
+                      name="password"
+                      label="Password"
+                      type="text"
+                      placeholder="Password"
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.password || ""}
+                      invalid={
+                        validation.touched.password &&
+                        validation.errors.password
+                          ? true
+                          : false
+                      }
+                    />
+                    {validation.touched.password &&
+                    validation.errors.password ? (
+                      <FormFeedback type="invalid">
+                        {validation.errors.password}
+                      </FormFeedback>
+                    ) : null}
+                  </div>
+                </Col>
+                <Col lg={4}>
+                  <div className="mb-3">
+                    <Label className="form-label">
+                      Confirm-Password<span style={{ color: "red" }}>*</span>
+                    </Label>
+                    <Input
+                      name="confirmpassword"
+                      label="Confirm Password"
+                      type="text"
+                      placeholder="Retype Password"
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.confirmpassword || ""}
+                      invalid={
+                        validation.touched.confirmpassword &&
+                        validation.errors.confirmpassword
+                          ? true
+                          : false
+                      }
+                    />
+                    {validation.touched.confirmpassword &&
+                    validation.errors.confirmpassword ? (
+                      <FormFeedback type="invalid">
+                        {validation.errors.confirmpassword}
+                      </FormFeedback>
+                    ) : null}
+                  </div>
+                </Col>
+              </>
+            )}
+          </Row>
+          {showEditCustomerUser && (
             <Row>
               <Col>
                 <ModalFooter>
