@@ -30,7 +30,7 @@ const AddNewWareHouse = (props) => {
       name: "",
       contact_person: "",
       mobile_no: "",
-      operator: "",
+      operator_id: "",
       description: "",
       address: "",
       status: "",
@@ -41,7 +41,7 @@ const AddNewWareHouse = (props) => {
       name: Yup.string().required("Enter name"),
       contact_person: Yup.string().required("Enter contact person"),
       mobile_no: Yup.string().required("Enter contact number"),
-      operator: Yup.string().required("Select operator"),
+      operator_id: Yup.string().required("Select operator_id"),
       description: Yup.string().required("Enter description"),
       address: Yup.string().required("Enter address"),
       status: Yup.string().required("Select status"),
@@ -53,7 +53,7 @@ const AddNewWareHouse = (props) => {
         contact_person: values["contact_person"],
         mobile_no: values["mobile_no"],
         status: values["status"],
-        operator: values["operator"],
+        operator_id: values["operator_id"],
         description: values["description"],
         address: values["address"],
         created_at: new Date(),
@@ -208,25 +208,25 @@ const AddNewWareHouse = (props) => {
                   Operator<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="operator"
+                  name="operator_id"
                   type="select"
                   placeholder="Select brand type"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.operator || ""}
+                  value={validation.values.operator_id || ""}
                 >
                   <option value="">Select Status</option>
                   {warehouseOperator &&
-                    warehouseOperator.map((operator) => (
-                      <option key={operator.id} value={operator.id}>
-                        {operator.name}
+                    warehouseOperator.map((operator_id) => (
+                      <option key={operator_id.id} value={operator_id.id}>
+                        {operator_id.name}
                       </option>
                     ))}
                 </Input>
-                {validation.touched.operator && validation.errors.operator ? (
+                {validation.touched.operator_id && validation.errors.operator_id ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.operator}
+                    {validation.errors.operator_id}
                   </FormFeedback>
                 ) : null}
               </div>
