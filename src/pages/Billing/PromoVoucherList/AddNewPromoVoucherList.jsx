@@ -65,6 +65,7 @@ const AddNewPromoVoucher = (props) => {
       const BouquetArray = values["bouquets_ids"] || [];
       const BouquetIntegers = BouquetArray.map((option) => parseInt(option));
       console.log("bourquet:" + BouquetIntegers);
+
       const newPromoVoucher = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         operator_id: parseInt(values["operator"]),
