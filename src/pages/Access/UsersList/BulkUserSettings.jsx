@@ -10,8 +10,11 @@ import {
   ModalHeader,
   ModalBody,
   Input,
+  Form,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import * as Yup from "yup";
+import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
@@ -55,6 +58,63 @@ const BulkUserSettings = (props) => {
       );
     }
   };
+
+  const handleSetting = (row) => {
+    console.log("setting row : " + JSON.stringify(row));
+  };
+  const validation = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      setting: {
+        bulk_limit: "",
+        allowed_ips: "",
+        enabled_pay_modes: [],
+      },
+    },
+    validationSchema: Yup.object({
+      // setting: Yup.object({
+      //   bulk_limit: Yup.string().required("Please Enter Bulk Limit"),
+      //   allowed_ips: Yup.string().required("Please Enter allowed client ips"),
+      //   enabled_pay_modes: Yup.array()
+      //     .of(Yup.number().required("Please Select Pay Modes"))
+      //     .min(1, "Please Select at least one Pay Mode"),
+      // }),
+    }),
+
+    onSubmit: async (values) => {
+      try {
+        const newSetting = {
+          ids: selectedUsers.map((user) => user.id),
+          setting: values.setting,
+        };
+
+        console.log("newStatus:", JSON.stringify(newSetting));
+        const token = "Bearer " + localStorage.getItem("temptoken");
+
+        const response = await axios.post(
+          `${API_URL}/user/setting?vr=web1.0`,
+          newSetting,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+
+        console.log("Axios Response:", response);
+        dispatch(onGetUsers());
+
+        validation.resetForm();
+        handleBulkInactiveUser();
+      } catch (error) {
+        console.error("Error in onSubmit:", error);
+      }
+    },
+    onReset: () => {
+      validation.setValues(validation.initialValues);
+    },
+  });
+
   const columns = useMemo(
     () => [
       {
@@ -106,10 +166,10 @@ const BulkUserSettings = (props) => {
                   whiteSpace: "nowrap",
                 }}
                 className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  toggleViewModal(userData);
-                }}
+                // onClick={() => {
+                //   const userData = cellProps.row.original;
+                //   toggleViewModal(userData);
+                // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -461,16 +521,73 @@ const BulkUserSettings = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <Input
-                type="text"
-                placeholder={cellProps.row.original.placeholder}
-              />
+              {cellProps.row.original.key === "bulkLimit" ? (
+                <>
+                  <Input
+                    type="text"
+                    name="bulklimit"
+                    placeholder={cellProps.row.original.placeholder}
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.bulk_limit || ""}
+                  />{" "}
+                  {validation.touched.bulk_limit &&
+                  validation.errors.bulk_limit ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.bulk_limit}
+                    </FormFeedback>
+                  ) : null}
+                </>
+              ) : cellProps.row.original.key === "allowedIps" ? (
+                <>
+                  {" "}
+                  <Input
+                    type="text"
+                    name="allowed_ips"
+                    placeholder={cellProps.row.original.placeholder}
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.allowed_ips || ""}
+                  />
+                  {validation.touched.allowed_ips &&
+                  validation.errors.allowed_ips ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.allowed_ips}
+                    </FormFeedback>
+                  ) : null}
+                </>
+              ) : (
+                <>
+                  <Input
+                    name="enabled_pay_modes"
+                    type="select"
+                    placeholder={cellProps.row.original.placeholder}
+                    className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.enabled_pay_modes || ""}
+                  >
+                    <option value="">Select Pay Mode Allowed</option>
+                    {cellProps.row.original.value.data.map((paymode) => (
+                      <option key={paymode.id} value={paymode.id}>
+                        {paymode.name}
+                      </option>
+                    ))}
+                  </Input>
+                  {validation.touched.enabled_pay_modes &&
+                  validation.errors.enabled_pay_modes ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.enabled_pay_modes}
+                    </FormFeedback>
+                  ) : null}
+                </>
+              )}
             </>
           );
         },
       },
     ],
-    [settingTable]
+    [settingTable, validation]
   );
 
   useEffect(() => {
@@ -493,6 +610,7 @@ const BulkUserSettings = (props) => {
           key: "enabledPayModes",
           value: userBulkSettings.enabled_pay_modes,
           placeholder: "Select Pay Mode Allowed",
+          // dropdown: userBulkSettings.enabled_pay_modes.data,
         },
       ];
       setSettingTable(bulkArray);
@@ -516,121 +634,131 @@ const BulkUserSettings = (props) => {
       <ModalBody>
         <Card>
           <CardBody>
-            {/* {console.log("user in bulk:" + JSON.stringify(user))} */}
-            <TableContainer
-              isPagination={true}
-              columns={columns}
-              data={tableList}
-              handleRowClick={(row) => {
-                // console.log("row:" + JSON.stringify(row));
-                handleActive(row);
-              }}
-              isGlobalFilter={true}
-              isShowingPageLength={true}
-              customPageSize={5}
-              tableClass="table align-middle table-nowrap table-hover"
-              theadClass="table-light"
-              paginationDiv="col-sm-12 col-md-7"
-              pagination="pagination pagination-rounded justify-content-end mt-4"
-            />
-            <div
-              style={{
-                // margin: "20px 0px",
-                marginTop: "20px",
-                marginBottom: "-18px",
-                zIndex: 12000,
-                backgroundColor: "#fff",
-                width: "fit-content",
-                marginLeft: "40%",
-                position: "absolute",
-                padding: "0px 10px",
+            <Form
+              onSubmit={(e) => {
+                e.preventDefault();
+                validation.handleSubmit();
+                return false;
               }}
             >
-              {" "}
-              <h5 style={{}}>Selected Users</h5>
-            </div>
-            <Row
-              style={{
-                position: "relative",
-                border: "1px solid #ced4da",
-                padding: "20px 0px",
-                margin: "30px 0px",
-              }}
-            >
-              <Col lg={12}>
-                <TableContainer
-                  isPagination={true}
-                  columns={selOperColumn}
-                  data={selectedUsers}
-                  isGlobalFilter={selectedUsers ? true : false}
-                  isShowingPageLength={true}
-                  customPageSize={50}
-                  tableClass="table align-middle table-nowrap table-hover"
-                  theadClass="table-light"
-                  paginationDiv="col-sm-12 col-md-7"
-                  pagination="pagination pagination-rounded justify-content-end mt-4"
-                />
-              </Col>
-            </Row>
-            <div
-              style={{
-                // margin: "20px 0px",
-                marginTop: "-10px",
-                marginBottom: "-18px",
-                zIndex: 12000,
-                backgroundColor: "#fff",
-                width: "fit-content",
-                marginLeft: "40%",
-                position: "absolute",
-                padding: "0px 10px",
-              }}
-            >
-              {" "}
-              <h5 style={{}}>User Settings</h5>
-            </div>
-            <Row
-              style={{
-                position: "relative",
-                border: "1px solid #ced4da",
-                padding: "20px 0px",
-                margin: "30px 0px",
-              }}
-            >
-              <Col lg={12}>
-                <TableContainer
-                  isPagination={true}
-                  columns={userSettingColumn}
-                  data={settingTable && settingTable}
-                  isShowingPageLength={true}
-                  customPageSize={5}
-                  tableClass="table align-middle table-nowrap table-hover"
-                  theadClass="table-light"
-                  paginationDiv="col-sm-12 col-md-7"
-                  pagination="pagination pagination-rounded justify-content-end mt-4"
-                />
-              </Col>
-            </Row>
-            <div className="text-center mt-4 ">
+              {/* {console.log("user in bulk:" + JSON.stringify(user))} */}
+              <TableContainer
+                isPagination={true}
+                columns={columns}
+                data={tableList}
+                handleRowClick={(row) => {
+                  handleActive(row);
+                }}
+                isGlobalFilter={true}
+                isShowingPageLength={true}
+                customPageSize={5}
+                tableClass="table align-middle table-nowrap table-hover"
+                theadClass="table-light"
+                paginationDiv="col-sm-12 col-md-7"
+                pagination="pagination pagination-rounded justify-content-end mt-4"
+              />
               <div
                 style={{
-                  display: "flex",
-                  gap: 5,
-                  textAlign: "center",
-                  justifyContent: "center",
+                  // margin: "20px 0px",
+                  marginTop: "20px",
+                  marginBottom: "-18px",
+                  zIndex: 12000,
+                  backgroundColor: "#fff",
+                  width: "fit-content",
+                  marginLeft: "40%",
+                  position: "absolute",
+                  padding: "0px 10px",
                 }}
               >
-                <button type="button" className="btn btn-primary ml-2 ">
-                  Save
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-primary "
-                  onClick={handleUserSettings}
-                >
-                  Cancel
-                </button>
+                {" "}
+                <h5 style={{}}>Selected Users</h5>
               </div>
-            </div>
+              <Row
+                style={{
+                  position: "relative",
+                  border: "1px solid #ced4da",
+                  padding: "20px 0px",
+                  margin: "30px 0px",
+                }}
+              >
+                <Col lg={12}>
+                  <TableContainer
+                    isPagination={true}
+                    columns={selOperColumn}
+                    data={selectedUsers}
+                    isGlobalFilter={selectedUsers ? true : false}
+                    isShowingPageLength={true}
+                    customPageSize={50}
+                    tableClass="table align-middle table-nowrap table-hover"
+                    theadClass="table-light"
+                    paginationDiv="col-sm-12 col-md-7"
+                    pagination="pagination pagination-rounded justify-content-end mt-4"
+                  />
+                </Col>
+              </Row>
+              <div
+                style={{
+                  // margin: "20px 0px",
+                  marginTop: "-10px",
+                  marginBottom: "-18px",
+                  zIndex: 12000,
+                  backgroundColor: "#fff",
+                  width: "fit-content",
+                  marginLeft: "40%",
+                  position: "absolute",
+                  padding: "0px 10px",
+                }}
+              >
+                {" "}
+                <h5 style={{}}>User Settings</h5>
+              </div>
+              <Row
+                style={{
+                  position: "relative",
+                  border: "1px solid #ced4da",
+                  padding: "20px 0px",
+                  margin: "30px 0px",
+                }}
+              >
+                <Col lg={12}>
+                  <TableContainer
+                    isPagination={true}
+                    columns={userSettingColumn}
+                    data={settingTable && settingTable}
+                    isShowingPageLength={true}
+                    customPageSize={5}
+                    handleRowClick={(row) => {
+                      handleSetting(row);
+                    }}
+                    tableClass="table align-middle table-nowrap table-hover"
+                    theadClass="table-light"
+                    paginationDiv="col-sm-12 col-md-7"
+                    pagination="pagination pagination-rounded justify-content-end mt-4"
+                  />
+                </Col>
+              </Row>
+              <div className="text-center mt-4 ">
+                <div
+                  style={{
+                    display: "flex",
+                    gap: 5,
+                    textAlign: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <button type="submit" className="btn btn-primary ml-2 ">
+                    Save
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary "
+                    onClick={handleUserSettings}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </Form>
           </CardBody>
         </Card>
       </ModalBody>
