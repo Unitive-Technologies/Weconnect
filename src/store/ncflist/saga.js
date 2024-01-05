@@ -1,12 +1,26 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { GET_NCF, ADD_NCF } from "./actionTypes";
+import {
+  GET_NCF,
+  ADD_NCF,
+  GET_OPERATOR_FORBULKASSIGN,
+  ADD_BULKASSIGN_NCF,
+} from "./actionTypes";
 import {
   getNcfSuccess,
   getNcfFail,
   addNcfSuccess,
   addNcfFail,
+  getOperatorForBulkAssignSuccess,
+  getOperatorForBulkAssignFail,
+  addBulkAssignNcfSuccess,
+  addBulkAssignNcfFail,
 } from "./actions";
-import { getNcf, addNcf } from "../../helpers/fakebackend_helper";
+import {
+  getNcf,
+  addNcf,
+  getOperatorForBulkAssign,
+  addBulkAssignNcf,
+} from "../../helpers/fakebackend_helper";
 
 const convertNcfListObject = (ncflist) => {
   return ncflist.map((ncf) => {
@@ -33,7 +47,6 @@ const convertNcfListObject = (ncflist) => {
 function* fetchNcf() {
   try {
     const response = yield call(getNcf);
-    console.log("response:" + JSON.stringify(response.data));
     const ncfList = convertNcfListObject(response.data);
     yield put(getNcfSuccess(ncfList));
   } catch (error) {
@@ -50,9 +63,31 @@ function* onAddNcf({ payload: ncf }) {
   }
 }
 
+function* fetchOperatorForBulkAssign() {
+  try {
+    const response = yield call(getOperatorForBulkAssign);
+    console.log("fetch Operator For BulkAssign in ncf", response.data);
+    yield put(getOperatorForBulkAssignSuccess(response.data));
+  } catch (error) {
+    console.log("error in fetch Operator For BulkAssign at ncf", error);
+    yield put(getOperatorForBulkAssignFail(error));
+  }
+}
+
+function* onAddBulkAssignNcf({ payload: bulkassign }) {
+  try {
+    const response = yield call(addBulkAssignNcf, bulkassign);
+    yield put(addBulkAssignNcfSuccess(response));
+  } catch (error) {
+    yield put(addBulkAssignNcfFail(error));
+  }
+}
+
 function* ncfSaga() {
   yield takeEvery(GET_NCF, fetchNcf);
   yield takeEvery(ADD_NCF, onAddNcf);
+  yield takeEvery(GET_OPERATOR_FORBULKASSIGN, fetchOperatorForBulkAssign);
+  yield takeEvery(ADD_BULKASSIGN_NCF, onAddBulkAssignNcf);
 }
 
 export default ncfSaga;
