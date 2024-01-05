@@ -370,6 +370,10 @@ export const addUserHierarchy = (userHierarchy) =>
 
 export const getNcf = () => get(url.GET_NCF);
 export const addNcf = (ncf) => post(url.ADD_NCF, ncf);
+export const getOperatorForBulkAssign = () =>
+  get(url.GET_OPERATOR_FORBULKASSIGN);
+export const addBulkAssignNcf = (assignncf) =>
+  post(url.ADD_BULKASSIGN_NCF, assignncf);
 
 export const getBouquet = () => get(url.GET_BOUQUET);
 export const addBouquet = (bouquet) => post(url.ADD_BOUQUET, bouquet);
@@ -379,14 +383,18 @@ export const addConnectionScheme = (connectionscheme) =>
   post(url.ADD_CONNECTIONSCHEME, connectionscheme);
 
 export const getComplaintCategory = () => get(url.GET_COMPLAINTCATEGORY);
-export const getComplaintCategoryStatus = () => get(url.GET_COMPLAINTCATEGORY_STATUS);
+export const getComplaintCategoryStatus = () =>
+  get(url.GET_COMPLAINTCATEGORY_STATUS);
 export const addNewComplaintCategory = (complaint) =>
   post(url.ADD_NEW_COMPLAINTCATEGORY, complaint);
 
 export const getComplaintSubCategory = () => get(url.GET_COMPLAINTSUBCATEGORY);
-export const getComplaintSubCategoryStatus = () => get(url.GET_COMPLAINTSUBCATEGORY_STATUS);
-export const getComplaintSubCategoryCategory = () => get(url.GET_COMPLAINTSUBCATEGORY_CATEGORY);
-export const getComplaintSubCategoryDesignation = () => get(url.GET_COMPLAINTSUBCATEGORY_DESIGNATION);
+export const getComplaintSubCategoryStatus = () =>
+  get(url.GET_COMPLAINTSUBCATEGORY_STATUS);
+export const getComplaintSubCategoryCategory = () =>
+  get(url.GET_COMPLAINTSUBCATEGORY_CATEGORY);
+export const getComplaintSubCategoryDesignation = () =>
+  get(url.GET_COMPLAINTSUBCATEGORY_DESIGNATION);
 export const addNewComplaintSubCategory = (complaintsubcate) =>
   post(url.ADD_NEW_COMPLAINTCATEGORY, complaintsubcate);
 
