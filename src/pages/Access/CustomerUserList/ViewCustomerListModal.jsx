@@ -42,8 +42,8 @@ const ViewCustomerUserModal = (props) => {
       mobile: (customeruser && customeruser.mobile_no) || "",
       email: (customeruser && customeruser.email) || "",
       status: (customeruser && customeruser.status) || "",
-      lco: (customeruser && customeruser.operator.name) || "",
-      lcocode: (customeruser && customeruser.operator.code) || "",
+      lco: (customeruser && customeruser.lco) || "",
+      lcocode: (customeruser && customeruser.lcocode) || "",
       block_message: (customeruser && customeruser.block_message) || "",
     },
     validationSchema: Yup.object({

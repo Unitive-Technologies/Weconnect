@@ -25,9 +25,29 @@ export async function get(url, config = {}) {
     .get(url, { ...config })
     .then((response) => response.data);
 }
+// export async function get(url, config = {}) {
+//   console.log("url:" + url);
+//   axiosApi.defaults.headers.common["Authkey"] = "";
+
+//   return await axiosApi.get(url, { ...config }).then((response) => {
+//     const totalCount = response.headers["x-pagination-total-count"];
+//     console.log("X-Pagination-Total-Count:", totalCount);
+
+//     if (totalCount) {
+//       return axiosApi.get(url, {
+//         ...config,
+//         params: { "per-page": parseInt(totalCount) },
+//       });
+//     }
+//     console.log("apiHelper response:" + JSON.stringify(response.data));
+
+//     return response.data;
+//   });
+// }
 
 export async function post(url, data, config = {}) {
-  axiosApi.defaults.headers.common["Authkey"] = import.meta.env.VITE_APP_AUTHKEY;
+  axiosApi.defaults.headers.common["Authkey"] =
+    import.meta.env.VITE_APP_AUTHKEY;
   return axiosApi
     .post(url, { ...data }, { ...config })
     .then((response) => response.data);

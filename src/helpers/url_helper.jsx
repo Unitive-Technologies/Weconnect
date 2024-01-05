@@ -112,8 +112,7 @@ export const ADD_USERHIERARCHY = "/add/userhierarchy";
 
 export const GET_BROADCASTER =
   "/broadcaster?expand=created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
-export const GET_BROADCASTER_STATUS =
-  "/list/status?fields=id,name&vr=web1.0";
+export const GET_BROADCASTER_STATUS = "/list/status?fields=id,name&vr=web1.0";
 export const ADD_NEW_BROADCASTER = "/add/broadcasterlist";
 
 export const GET_GENRELIST =
@@ -250,7 +249,7 @@ export const GET_PROMOVOUCHER_BOUQUET = "/bouque/list?fields=id,name&vr=web1.0";
 export const ADD_NEW_PROMOVOUCHER = "/promo-voucher?vr=web1.0";
 
 export const GET_USERS =
-  "/user?expand=setting,group_lbl,access_level,role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[role]=4&page=1&per-page=5000&vr=web1.0";
+  "/user?expand=setting,group_lbl,access_level,role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[role]=4&page=1&per-page=500&vr=web1.0";
 export const GET_USER_PROFILE = "/user";
 export const ADD_NEW_USER = "/user?vr=web1.0";
 export const UPDATE_USER = (id) => `/user/${id}?vr=web1.0`;

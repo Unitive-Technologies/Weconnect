@@ -749,11 +749,12 @@ const ViewUserModal = (props) => {
                     disabled={!showEditUser}
                   >
                     {/* <option value="">Select Designation</option> */}
-                    {userDesignation.map((desig) => (
-                      <option key={desig.id} value={desig.id}>
-                        {desig.name}
-                      </option>
-                    ))}
+                    {userDesignation &&
+                      userDesignation.map((desig) => (
+                        <option key={desig.id} value={desig.id}>
+                          {desig.name}
+                        </option>
+                      ))}
                   </Input>
                   {validation.touched.designation &&
                   validation.errors.designation ? (
