@@ -17,23 +17,33 @@ const AddNewMatrix = (props) => {
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
-      designation: "",
-      tat_time: "",
+      escalations: [{
+        designation: "",
+        tat_time: "",
+      }],
     },
     validationSchema: Yup.object({
-      designation: Yup.string().required("Enter designation"),
-      tat_time: Yup.string().required("Select tat_time"),
+      escalations: Yup.array().of(
+        Yup.object().shape({
+          designation: Yup.string().required("Enter designation"),
+          tat_time: Yup.string().required("Select tat_time"),
+        })
+      ),
     }),
     onSubmit: (values) => {
       const newComplaintSubCategory = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
-        designation: values.designation,
-        tat_time: values.tat_time,
+        escalations: values.escalations.map((escalation) => ({
+          designation: escalation.designation,
+          tat_time: escalation.tat_time,
+        })),
         created_at: new Date(),
+        // Make sure you have created_by available in your form or remove it
         created_by: values.created_by,
       };
+
       console.log("ComplaintSubCategory:", newComplaintSubCategory);
-      // save new user
+      // Save new user
       dispatch(onAddNewComplaintSubCategory(newComplaintSubCategory));
       dispatch(onGetComplaintSubCategory());
       validation.resetForm();
@@ -114,7 +124,6 @@ const AddNewMatrix = (props) => {
 };
 
 AddNewMatrix.propTypes = {
-  toggle: PropTypes.func,
   isOpen: PropTypes.bool,
   complaintsubcateDesignation: PropTypes.array,
   handleAddSubCategory: PropTypes.func,
