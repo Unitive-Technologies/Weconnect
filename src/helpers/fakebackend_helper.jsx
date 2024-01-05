@@ -395,6 +395,11 @@ export const getConfigurationUploadLogs = () =>
 export const getCompanyList = () => get(url.GET_COMPANYLIST);
 
 export const getBrandList = () => get(url.GET_BRANDLIST);
+export const getBrandListBrandType = () => get(url.GET_BRANDLIST_BRANDTYPE);
+export const getBrandListBoxType = () => get(url.GET_BRANDLIST_BOXTYPE);
+export const getBrandListCharacters = () => get(url.GET_BRANDLIST_CHARACTERS);
+export const getBrandListStatus = () => get(url.GET_BRANDLIST_STATUS);
+export const getBrandListCasType = () => get(url.GET_BRANDLIST_CASTYPE);
 export const addBrandList = (brandlist) => post(url.ADD_BRANDLIST, brandlist);
 
 export const getWarehouseList = () => get(url.GET_WAREHOUSELIST);

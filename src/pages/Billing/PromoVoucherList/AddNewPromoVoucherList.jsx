@@ -162,7 +162,7 @@ const AddNewPromoVoucher = (props) => {
                   value={validation.values.operator_code || ""}
                 ></Input>
                 {validation.touched.operator_code &&
-                validation.errors.operator_code ? (
+                  validation.errors.operator_code ? (
                   <FormFeedback type="invalid">
                     {validation.errors.operator_code}
                   </FormFeedback>
@@ -232,7 +232,7 @@ const AddNewPromoVoucher = (props) => {
                   value={validation.values.expiry_date || ""}
                 ></Input>
                 {validation.touched.expiry_date &&
-                validation.errors.expiry_date ? (
+                  validation.errors.expiry_date ? (
                   <FormFeedback type="invalid">
                     {validation.errors.expiry_date}
                   </FormFeedback>
@@ -267,7 +267,7 @@ const AddNewPromoVoucher = (props) => {
                     ))}
                 </Input>
                 {validation.touched.bouquets_ids &&
-                validation.errors.bouquets_ids ? (
+                  validation.errors.bouquets_ids ? (
                   <FormFeedback type="invalid">
                     {validation.errors.bouquets_ids}
                   </FormFeedback>
@@ -301,7 +301,7 @@ const AddNewPromoVoucher = (props) => {
                     ))}
                 </Input>
                 {validation.touched.applied_on &&
-                validation.errors.applied_on ? (
+                  validation.errors.applied_on ? (
                   <FormFeedback type="invalid">
                     {validation.errors.applied_on}
                   </FormFeedback>
@@ -339,7 +339,7 @@ const AddNewPromoVoucher = (props) => {
                     ))}
                 </Input>
                 {validation.touched.recharge_period &&
-                validation.errors.recharge_period ? (
+                  validation.errors.recharge_period ? (
                   <FormFeedback type="invalid">
                     {validation.errors.recharge_period}
                   </FormFeedback>
@@ -351,7 +351,7 @@ const AddNewPromoVoucher = (props) => {
             )}
             {console.log(
               "recharge period-type: " +
-                typeof validation.values.recharge_period
+              typeof validation.values.recharge_period
             )}
           </Row>
           <Row>

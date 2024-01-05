@@ -156,11 +156,25 @@ export const GET_COMPANYLIST = "/companylist";
 
 export const GET_BRANDLIST =
   "/brand?expand=box_type_lbl,brand_type_lbl,char_allowed_lbl,cas_lbl,created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
-export const ADD_BRANDLIST = "/add/brandlist";
+export const GET_BRANDLIST_BRANDTYPE =
+  "/list/brandtype?fields=id,name&vr=web1.0";
+export const GET_BRANDLIST_BOXTYPE =
+  "/list/boxtype?fields=id,name&vr=web1.0";
+export const GET_BRANDLIST_CHARACTERS =
+  "/list/charallowed?fields=id,name&vr=web1.0";
+export const GET_BRANDLIST_STATUS =
+  "/list/status?fields=id,name&vr=web1.0";
+export const GET_BRANDLIST_CASTYPE =
+  "/casvendor/list?fields=id,name&vr=web1.0";
+export const ADD_BRANDLIST = "/brand?vr=web1.0";
 
 export const GET_WAREHOUSELIST =
   "/warehouse?expand=city_lbl,created_by_lbl,status_lbl,operator_lbl,operator_code_lbl&page=1&per-page=50&vr=web1.0";
-export const ADD_WAREHOUSELIST = "/add/warehouselist";
+export const GET_WAREHOUSESTATUS =
+  "/list/status?fields=id,name&vr=web1.0";
+export const GET_WAREHOUSEOPERATOR =
+  "/operator/list?fields=id,name,code&expand=branch_lbl,distributor_lbl,city_lbl,state_lbl&per-page=100&vr=web1.0";
+export const ADD_WAREHOUSELIST = "/warehouse?vr=web1.0";
 
 export const GET_INVENTORYSTATELIST = "/inventorystatelist";
 export const ADD_INVENTORYSTATELIST = "/add/inventorystatelist";

@@ -24,7 +24,14 @@ import {
   CreatedBy,
 } from "./brandListCol";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import { getBrandList as onGetBrandList } from "/src/store/brandlist/actions";
+import {
+  getBrandList as onGetBrandList,
+  getBrandListBoxType as onGetBrandListBoxType,
+  getBrandListBrandType as onGetBrandListBrandType,
+  getBrandListCasType as onGetBrandListCasType,
+  getBrandListStatus as onGetBrandListStatus,
+  getBrandListCharacters as onGetBrandListCharacters,
+} from "/src/store/brandlist/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
@@ -42,11 +49,16 @@ const BrandList = (props) => {
     selectBrandListState,
     (brandlist) => ({
       brand: brandlist.brandlist,
+      brandBoxType: brandlist.brandlistBoxType,
+      brandBrandType: brandlist.brandlistBrandType,
+      brandCasType: brandlist.brandlistCasType,
+      brandCharacters: brandlist.brandlistCharacters,
+      brandStatus: brandlist.brandlistStatus,
       loading: brandlist.loading,
     })
   );
 
-  const { brand, loading } = useSelector(BrandListProperties);
+  const { brand, brandBoxType, brandCasType, brandCharacters, brandStatus, brandBrandType, loading } = useSelector(BrandListProperties);
 
   const [isLoading, setLoading] = useState(loading);
 
@@ -202,6 +214,11 @@ const BrandList = (props) => {
   useEffect(() => {
     if (brand && !brand.length) {
       dispatch(onGetBrandList());
+      dispatch(onGetBrandListBoxType());
+      dispatch(onGetBrandListBrandType());
+      dispatch(onGetBrandListCasType());
+      dispatch(onGetBrandListStatus());
+      dispatch(onGetBrandListCharacters());
     }
   }, [dispatch, brand]);
 
@@ -231,7 +248,14 @@ const BrandList = (props) => {
         handleViewBrand={handleViewBrand}
         brand={viewBrandData}
       />
-      <AddNewBrandList isOpen={showAddBrand} handleAddBrand={handleAddBrand} />
+      <AddNewBrandList isOpen={showAddBrand}
+        handleAddBrand={handleAddBrand}
+        brandBoxType={brandBoxType}
+        brandBrandType={brandBrandType}
+        brandCasType={brandCasType}
+        brandCharacters={brandCharacters}
+        brandStatus={brandStatus}
+      />
       <UploadBrandList
         isOpen={showUploadBrand}
         handleUploadBrand={handleUploadBrand}
