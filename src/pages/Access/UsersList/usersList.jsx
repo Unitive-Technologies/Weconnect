@@ -543,7 +543,7 @@ const ContactsList = (props) => {
                       }}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
-                      customPageSize={50}
+                      customPageSize={10}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"

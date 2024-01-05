@@ -274,7 +274,7 @@ const CustomerUserList = (props) => {
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       // iscustomPageSizeOptions={true}
-                      customPageSize={50}
+                      customPageSize={5}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"

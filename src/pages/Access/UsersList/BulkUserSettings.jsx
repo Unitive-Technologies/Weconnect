@@ -17,7 +17,7 @@ import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const BulkUserSettings = (props) => {
   const { isOpen, handleUserSettings, users, userBulkSettings } = props;
-  console.log("settings in bulkuser modal:" + JSON.stringify(userBulkSettings));
+  // console.log("settings in bulkuser modal:" + JSON.stringify(userBulkSettings));
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [tableList, setTableList] = useState([]);
   const [settingTable, setSettingTable] = useState([]);
@@ -379,6 +379,7 @@ const BulkUserSettings = (props) => {
         Header: "#",
         disableFilters: true,
         filterable: true,
+        disableSortBy: true, // Disable sorting for this column
         Cell: (cellProps) => {
           const totalRows = settingTable.length;
           return (
@@ -460,13 +461,16 @@ const BulkUserSettings = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <Input type="text" placeholder="" />
+              <Input
+                type="text"
+                placeholder={cellProps.row.original.placeholder}
+              />
             </>
           );
         },
       },
     ],
-    []
+    [settingTable]
   );
 
   useEffect(() => {
@@ -475,14 +479,26 @@ const BulkUserSettings = (props) => {
     }
     if (userBulkSettings) {
       const bulkArray = [
-        { key: "bulkLimit", value: userBulkSettings.bulk_limit },
-        { key: "allowedIps", value: userBulkSettings.allowed_ips },
-        { key: "enabledPayModes", value: userBulkSettings.enabled_pay_modes },
+        {
+          key: "bulkLimit",
+          value: userBulkSettings.bulk_limit,
+          placeholder: "Enter Bulk Operation Limit",
+        },
+        {
+          key: "allowedIps",
+          value: userBulkSettings.allowed_ips,
+          placeholder: "Enter allowed client ips",
+        },
+        {
+          key: "enabledPayModes",
+          value: userBulkSettings.enabled_pay_modes,
+          placeholder: "Select Pay Mode Allowed",
+        },
       ];
       setSettingTable(bulkArray);
     }
     console.log("settingTable:" + JSON.stringify(settingTable));
-  }, []);
+  }, [userBulkSettings, users]);
   return (
     <Modal
       isOpen={isOpen}
@@ -584,7 +600,7 @@ const BulkUserSettings = (props) => {
                 <TableContainer
                   isPagination={true}
                   columns={userSettingColumn}
-                  data={settingTable}
+                  data={settingTable && settingTable}
                   isShowingPageLength={true}
                   customPageSize={5}
                   tableClass="table align-middle table-nowrap table-hover"

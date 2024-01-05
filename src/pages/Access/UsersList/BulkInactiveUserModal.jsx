@@ -449,7 +449,7 @@ const BulkInactiveUserModal = (props) => {
   useEffect(() => {
     console.log("status in useEffect: " + selectedStatusToSet);
 
-    const fetchData = async () => {
+    const getFilteredData = async () => {
       try {
         const token = "Bearer " + localStorage.getItem("temptoken");
         if (selectedStatusToSet === "active") {
@@ -502,7 +502,7 @@ const BulkInactiveUserModal = (props) => {
       }
     };
 
-    fetchData();
+    getFilteredData();
   }, [selectedStatusToSet]);
 
   return (
@@ -544,7 +544,7 @@ const BulkInactiveUserModal = (props) => {
                       onBlur={validation.handleBlur}
                       value={selectedStatusToSet}
                     >
-                      <option value="active">ACTIVE</option>
+                      <option defaultValue="active">ACTIVE</option>
                       <option value="inactive">In-Active</option>
                       <option value="block">BLOCK</option>
                       <option value="unblock">UNBLOCK</option>

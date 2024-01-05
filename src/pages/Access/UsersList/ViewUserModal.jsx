@@ -44,7 +44,7 @@ const ViewUserModal = (props) => {
     userRole,
     userDesignation,
   } = props;
-  console.log("Userdata in viewuser modal:" + JSON.stringify(user));
+  // console.log("Userdata in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
   const [showEditUser, setShowEditUser] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState("");
@@ -473,7 +473,7 @@ const ViewUserModal = (props) => {
                   </div>
                 </Col>
                 {/* {!showEditUser && !selectedType && ( */}
-                {console.log("selected type: " + selectedType)}
+                {/* {console.log("selected type: " + selectedType)} */}
                 {!selectedType && (
                   <Col lg={4}>
                     <div className="mb-3">

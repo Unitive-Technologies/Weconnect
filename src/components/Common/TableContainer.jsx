@@ -490,26 +490,32 @@ const TableContainer = ({
               </li>
               {pageOptions.map((item, key) => (
                 <React.Fragment key={key}>
-                  <li
-                    className={
-                      pageIndex === item ? "page-item active" : "page-item"
-                    }
-                  >
-                    <Link
-                      to="#"
-                      className="page-link"
-                      onClick={() => gotoPage(item)}
+                  {item >= pageIndex && item < pageIndex + 5 && (
+                    <li
+                      className={`page-item ${
+                        pageIndex === item ? "active" : ""
+                      } ${
+                        pageIndex === item ? "page-item active" : "page-item"
+                      }`}
                     >
-                      {item + 1}
-                    </Link>
-                  </li>
+                      <Link
+                        to="#"
+                        className="page-link"
+                        onClick={() => gotoPage(item)}
+                      >
+                        {item + 1}
+                      </Link>
+                    </li>
+                  )}
                 </React.Fragment>
               ))}
-              <li className={`page-item ${!canNextPage ? "disabled" : ""}`}>
-                <Link to="#" className="page-link" onClick={nextPage}>
-                  <i className="mdi mdi-chevron-right"></i>
-                </Link>
-              </li>
+              {pageOptions.length > pageIndex + 5 && (
+                <li className={`page-item ${!canNextPage ? "disabled" : ""}`}>
+                  <Link to="#" className="page-link" onClick={nextPage}>
+                    <i className="mdi mdi-chevron-right"></i>
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
         </Row>
