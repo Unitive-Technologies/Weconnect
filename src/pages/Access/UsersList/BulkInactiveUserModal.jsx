@@ -113,7 +113,7 @@ const BulkInactiveUserModal = (props) => {
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
-      statustoset: "",
+      statustoset: "active",
       block_message: "",
     },
     validationSchema: Yup.object({
