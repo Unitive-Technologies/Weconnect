@@ -30,6 +30,20 @@ const BroadCaster = (state = INIT_STATE, action) => {
         error: action.payload,
       };
 
+    case GET_BROADCASTER_STATUS_SUCCESS:
+      console.log("Broadcaster status data in reducer:", action.payload);
+      return {
+        ...state,
+        broadCastersStatus: action.payload,
+        loading: false,
+      };
+
+    case GET_BROADCASTER_STATUS_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
     case ADD_BROADCASTER_SUCCESS:
       return {
         ...state,

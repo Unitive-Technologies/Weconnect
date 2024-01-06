@@ -45,7 +45,7 @@ import {
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
 
-import { getBroadCaster as onGetBroadCasters } from "/src/store/broadcaster/actions";
+import { getBroadCaster as onGetBroadCasters, getBroadCasterStatus as onGetBroadCastersStatus } from "/src/store/broadcaster/actions";
 import { isEmpty } from "lodash";
 
 
@@ -63,70 +63,19 @@ const BroadcasterList = (props) => {
   document.title = "Broadcaster List | VDigital";
 
   const dispatch = useDispatch();
-  // const [contact, setContact] = useState();
-  // validation
-  // const validation = useFormik({
-  //   // enableReinitialize : use this flag when initial values needs to be changed
-  //   enableReinitialize: true,
-
-  //   initialValues: {
-  //     name: (contact && contact.name) || "",
-  //     designation: (contact && contact.designation) || "",
-  //     tags: (contact && contact.tags) || "",
-  //     email: (contact && contact.email) || "",
-  //     projects: (contact && contact.projects) || "",
-  //   },
-  //   validationSchema: Yup.object({
-  //     name: Yup.string().required("Please Enter Your Name"),
-  //     designation: Yup.string().required("Please Enter Your Designation"),
-  //     tags: Yup.array().required("Please Enter Tag"),
-  //     email: Yup.string()
-  //       .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-  //       .required("Please Enter Your Email"),
-  //     projects: Yup.string().required("Please Enter Your Project"),
-  //   }),
-  //   onSubmit: (values) => {
-  //     if (isEdit) {
-  //       const updateUser = {
-  //         id: contact.id,
-  //         name: values.name,
-  //         designation: values.designation,
-  //         tags: values.tags,
-  //         email: values.email,
-  //         projects: values.projects,
-  //       };
-
-  //       // update user
-  //       dispatch(onUpdateUser(updateUser));
-  //       validation.resetForm();
-  //       setIsEdit(false);
-  //     } else {
-  //       const newUser = {
-  //         id: Math.floor(Math.random() * (30 - 20)) + 20,
-  //         name: values["name"],
-  //         designation: values["designation"],
-  //         email: values["email"],
-  //         tags: values["tags"],
-  //         projects: values["projects"],
-  //       };
-  //       // save new user
-  //       dispatch(onAddNewUser(newUser));
-  //       validation.resetForm();
-  //     }
-  //     toggle();
-  //   },
-  // });
 
   const selectBroadCasterState = (state) => state.broadCasters;
+
   const BroadCasterProperties = createSelector(
     selectBroadCasterState,
     (broadCasters) => ({
       brodcast: broadCasters.broadCasters,
+      brodcastStatus: broadCasters.broadCastersStatus,
       loading: broadCasters.loading,
     })
   );
 
-  const { brodcast, loading } = useSelector(BroadCasterProperties);
+  const { brodcast, brodcastStatus, loading } = useSelector(BroadCasterProperties);
 
   useEffect(() => {
     console.log("BroadCaster data in component:", brodcast);
@@ -196,7 +145,7 @@ const BroadcasterList = (props) => {
       },
       {
         Header: "Address",
-        accessor: "address",
+        accessor: "addr",
         filterable: true,
         Cell: (cellProps) => {
           return <Address {...cellProps} />;
@@ -244,7 +193,7 @@ const BroadcasterList = (props) => {
       },
       {
         Header: "Created By",
-        accessor: "created_by",
+        accessor: "created_by_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <CreatedBy {...cellProps} />;
@@ -292,21 +241,10 @@ const BroadcasterList = (props) => {
   useEffect(() => {
     if (brodcast && !brodcast.length) {
       dispatch(onGetBroadCasters());
+      dispatch(onGetBroadCastersStatus());
       setIsEdit(false);
     }
   }, [dispatch, brodcast]);
-
-  // useEffect(() => {
-  //   setContact(brodcast);
-  //   setIsEdit(false);
-  // }, [broadcast]);
-
-  // useEffect(() => {
-  //   if (!isEmpty(brodcast) && !!isEdit) {
-  //     setContact(brodcast);
-  //     setIsEdit(false);
-  //   }
-  // }, [brodcast]);
 
   const toggle = () => {
     setShowAddNewBroadCaster(!showAddNewBroadCaster);
@@ -327,22 +265,6 @@ const BroadcasterList = (props) => {
   };
 
 
-  // const handleUserClick = (arg) => {
-  //   const user = arg;
-
-  //   setContact({
-  //     id: user.id,
-  //     name: user.name,
-  //     designation: user.designation,
-  //     email: user.email,
-  //     tags: user.tags,
-  //     projects: user.projects,
-  //   });
-  //   setIsEdit(true);
-
-  //   toggle();
-  // };
-
   var node = useRef();
   const onPaginationPageChange = (page) => {
     if (
@@ -355,29 +277,6 @@ const BroadcasterList = (props) => {
       node.current.props.pagination.options.onPageChange(page);
     }
   };
-
-  //delete customer
-  // const [deleteModal, setDeleteModal] = useState(false);
-
-  // const onClickDelete = (users) => {
-  //   setContact(users);
-  //   setDeleteModal(true);
-  // };
-
-  // const handleDeleteUser = () => {
-  //   if (contact && contact.id) {
-  //     dispatch(onDeleteUser(contact.id));
-  //   }
-  //   setContact("");
-  //   onPaginationPageChange(1);
-  //   setDeleteModal(false);
-  // };
-
-  // const handleUserClicks = () => {
-  //   setUserList("");
-  //   setIsEdit(false);
-  //   toggle();
-  // };
 
   const keyField = "id";
 
@@ -407,7 +306,7 @@ const BroadcasterList = (props) => {
         user={ViewGenreList}
       />
 
-      <AddNewBroadCaster isOpen={showAddNewBroadCaster} toggle={toggle} />
+      <AddNewBroadCaster isOpen={showAddNewBroadCaster} toggle={toggle} brodcastStatus={brodcastStatus} />
       <UploadBroadCaster isOpen={showUploadBroadCaster} toggle={toggle1} />
 
       <div className="page-content">
