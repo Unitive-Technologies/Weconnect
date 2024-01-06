@@ -7,6 +7,8 @@ import {
   GET_NOTIFICATIONTEMPLATE_TYPE_FAIL,
   ADD_NOTIFICATIONTEMPLATE_SUCCESS,
   ADD_NOTIFICATIONTEMPLATE_FAIL,
+  UPDATE_NOTIFICATIONTEMPLATE_FAIL,
+  UPDATE_NOTIFICATIONTEMPLATE_SUCCESS,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -68,6 +70,22 @@ const NotificationTemplate = (state = INIT_STATE, action) => {
       };
 
     case ADD_NOTIFICATIONTEMPLATE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case UPDATE_NOTIFICATIONTEMPLATE_SUCCESS:
+      return {
+        ...state,
+        notificationTemplate: state.notificationTemplate.map((notiTemp) =>
+          notiTemp.id.toString() === action.payload.id.toString()
+            ? { notiTemp, ...action.payload }
+            : notiTemp
+        ),
+      };
+
+    case UPDATE_NOTIFICATIONTEMPLATE_FAIL:
       return {
         ...state,
         error: action.payload,

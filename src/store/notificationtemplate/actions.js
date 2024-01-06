@@ -11,13 +11,14 @@ import {
   ADD_NEW_NOTIFICATIONTEMPLATE,
   ADD_NOTIFICATIONTEMPLATE_SUCCESS,
   ADD_NOTIFICATIONTEMPLATE_FAIL,
+  UPDATE_NOTIFICATIONTEMPLATE,
+  UPDATE_NOTIFICATIONTEMPLATE_FAIL,
+  UPDATE_NOTIFICATIONTEMPLATE_SUCCESS,
 } from "./actionTypes";
 
 export const getNotificationTemplate = () => ({
   type: GET_NOTIFICATIONTEMPLATE,
 });
-
-
 
 export const getNotificationTemplateSuccess = (notificationTemplate) => {
   console.log("Received Notification Template:", notificationTemplate);
@@ -41,7 +42,6 @@ export const getNotificationTemplateTypeSuccess = (noTemplateType) => ({
   payload: noTemplateType,
 });
 
-
 export const getNotificationTemplateTypeFail = (error) => ({
   type: GET_NOTIFICATIONTEMPLATE_TYPE_FAIL,
   payload: error,
@@ -50,7 +50,6 @@ export const getNotificationTemplateTypeFail = (error) => ({
 export const getNotificationTemplateStatus = () => ({
   type: GET_NOTIFICATIONTEMPLATE_STATUS,
 });
-
 
 export const getNotificationTemplateStatusSuccess = (noTemplateStatus) => ({
   type: GET_NOTIFICATIONTEMPLATE_STATUS_SUCCESS,
@@ -70,7 +69,6 @@ export const getNotificationTemplateStatusFail = (error) => ({
   payload: error,
 });
 
-
 export const addNewNotificationTemplate = (notificationTemplate) => ({
   type: ADD_NEW_NOTIFICATIONTEMPLATE,
   payload: notificationTemplate,
@@ -86,3 +84,17 @@ export const addNotificationTemplateFail = (error) => ({
   payload: error,
 });
 
+export const updateNotificationTemplate = (notiTemp) => ({
+  type: UPDATE_NOTIFICATIONTEMPLATE,
+  payload: notiTemp,
+});
+
+export const updateNotificationTemplateSuccess = (notiTemp) => ({
+  type: UPDATE_NOTIFICATIONTEMPLATE_SUCCESS,
+  payload: notiTemp,
+});
+
+export const updateNotificationTemplateFail = (error) => ({
+  type: UPDATE_NOTIFICATIONTEMPLATE_FAIL,
+  payload: error,
+});

@@ -5,6 +5,7 @@ import {
   GET_NOTIFICATIONTEMPLATE_TYPE,
   GET_NOTIFICATIONTEMPLATE_STATUS,
   ADD_NEW_NOTIFICATIONTEMPLATE,
+  UPDATE_NOTIFICATIONTEMPLATE,
 } from "./actionTypes";
 
 import {
@@ -16,6 +17,8 @@ import {
   getNotificationTemplateStatusFail,
   addNotificationTemplateFail,
   addNotificationTemplateSuccess,
+  updateNotificationTemplateFail,
+  updateNotificationTemplateSuccess,
 } from "./actions";
 
 //Include Both Helper File with needed methods
@@ -24,7 +27,7 @@ import {
   getNotificationTemplateType,
   getNotificationTemplateStatus,
   addNewNotificationTemplate,
-
+  updateNotificationTemplate,
 } from "../../helpers/fakebackend_helper";
 
 const convertNotificationTemplateListObject = (notificationTemplateList) => {
@@ -44,8 +47,8 @@ const convertNotificationTemplateListObject = (notificationTemplateList) => {
         notificationTemplate.status === 1
           ? "ACTIVE"
           : notificationTemplate.status === 0
-            ? "INACTIVE"
-            : "BLOCKED",
+          ? "INACTIVE"
+          : "BLOCKED",
       created_at: notificationTemplate.created_at,
       created_by: notificationTemplate.created_by,
     };
@@ -70,7 +73,7 @@ function* fetchNotificationTemplateStatus() {
     const notificationTemplateList =
       //   convertNotificationTemplateListObject(response);s
       yield put(getNotificationTemplateStatusSuccess(response.data));
-    console.log("notifcation template status response data" + response.data)
+    console.log("notifcation template status response data" + response.data);
   } catch (error) {
     console.error("Error fetching notification templates:", error);
     yield put(getNotificationTemplateStatusFail(error));
@@ -105,11 +108,34 @@ function* onAddNewNotificationTemplate({ payload: notificationTemplate }) {
   }
 }
 
+function* onUpdateNotificationTemplate({ payload: notificationTemplate }) {
+  console.log(
+    "notificationTemplate in onUpdate:" + JSON.stringify(notificationTemplate)
+  );
+  try {
+    const response = yield call(
+      updateNotificationTemplate,
+      notificationTemplate,
+      notificationTemplate.id
+    );
+    yield put(updateNotificationTemplateSuccess(response));
+    console.log("update response:" + JSON.stringify(response));
+    // toast.success("Designation Updated Successfully", { autoClose: 2000 });
+  } catch (error) {
+    yield put(updateNotificationTemplateFail(error));
+    // toast.error("Designation Updated Failed", { autoClose: 2000 });
+  }
+}
+
 function* notificationTemplateSaga() {
   yield takeEvery(GET_NOTIFICATIONTEMPLATE, fetchNotificationTemplate);
   yield takeEvery(GET_NOTIFICATIONTEMPLATE_TYPE, fetchNotificationTemplateType);
-  yield takeEvery(GET_NOTIFICATIONTEMPLATE_STATUS, fetchNotificationTemplateStatus);
+  yield takeEvery(
+    GET_NOTIFICATIONTEMPLATE_STATUS,
+    fetchNotificationTemplateStatus
+  );
   yield takeEvery(ADD_NEW_NOTIFICATIONTEMPLATE, onAddNewNotificationTemplate);
+  yield takeEvery(UPDATE_NOTIFICATIONTEMPLATE, onUpdateNotificationTemplate);
 }
 
 export default notificationTemplateSaga;

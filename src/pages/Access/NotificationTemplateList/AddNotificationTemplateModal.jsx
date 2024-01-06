@@ -222,7 +222,7 @@ const AddNotificationTemplateModal = (props) => {
                   ))}
                 </Input>
                 {validation.touched.msg_fontsize &&
-                  validation.errors.msg_fontsize ? (
+                validation.errors.msg_fontsize ? (
                   <FormFeedback type="invalid">
                     {validation.errors.msg_fontsize}
                   </FormFeedback>
@@ -257,7 +257,7 @@ const AddNotificationTemplateModal = (props) => {
                 <p>Value: {validation.values.msg_fontcolor}</p>
 
                 {validation.touched.msg_fontcolor &&
-                  validation.errors.msg_fontcolor ? (
+                validation.errors.msg_fontcolor ? (
                   <FormFeedback type="invalid">
                     {validation.errors.msg_fontcolor}
                   </FormFeedback>
@@ -305,7 +305,7 @@ const AddNotificationTemplateModal = (props) => {
                 <p>Value: {validation.values.msg_fontbackgroundcolor}</p>
 
                 {validation.touched.msg_fontbackgroundcolor &&
-                  validation.errors.msg_fontbackgroundcolor ? (
+                validation.errors.msg_fontbackgroundcolor ? (
                   <FormFeedback type="invalid">
                     {validation.errors.msg_fontbackgroundcolor}
                   </FormFeedback>
@@ -334,7 +334,7 @@ const AddNotificationTemplateModal = (props) => {
                   ))}
                 </Input>
                 {validation.touched.msg_fontfamily &&
-                  validation.errors.msg_fontfamily ? (
+                validation.errors.msg_fontfamily ? (
                   <FormFeedback type="invalid">
                     {validation.errors.msg_fontfamily}
                   </FormFeedback>
@@ -359,13 +359,13 @@ const AddNotificationTemplateModal = (props) => {
                   value={validation.values.msg_content || ""}
                   invalid={
                     validation.touched.msg_content &&
-                      validation.errors.msg_content
+                    validation.errors.msg_content
                       ? true
                       : false
                   }
                 />
                 {validation.touched.msg_content &&
-                  validation.errors.msg_content ? (
+                validation.errors.msg_content ? (
                   <FormFeedback type="invalid">
                     {validation.errors.msg_content}
                   </FormFeedback>

@@ -27,13 +27,25 @@ import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddNotificationTemplateModal from "./AddNotificationTemplateModal";
 import ViewNotificationTemplateModal from "./ViewNotificationTemplateModal";
+import BulkScheduleNotification from "./BulkScheduleNotification";
+import ShowPreviewModal from "./ShowPreviewModal";
 
 const NotificationTemplateList = (props) => {
   //meta title
   document.title = "Notification Templates | VDigital";
 
   const dispatch = useDispatch();
-
+  const [isChecked, setIsChecked] = useState(true);
+  const [selectedRow, setSelectedRow] = useState({});
+  const [showBulkModal, setShowBulkModal] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
+  const handleCheckboxClick = (row) => {
+    console.log("button clicked");
+    setViewNotificationTemplate(false);
+    setIsChecked(!isChecked);
+    setSelectedRow(row);
+  };
+  console.log("selectedRow:" + JSON.stringify(selectedRow));
   const selectNotificationTemplateState = (state) => state.notificationTemplate;
   const notificationTemplateProperties = createSelector(
     selectNotificationTemplateState,
@@ -66,23 +78,19 @@ const NotificationTemplateList = (props) => {
   const columns = useMemo(
     () => [
       {
-        Header: ".",
-        // accessor: "",
-        // disableFilters: true,
-        // filterable: true,
-        Cell: () => {
-          return (
-            <>
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="upcomingtaskCheck01"
-                // defaultChecked
-                // disabled
-              />
-            </>
-          );
-        },
+        Header: "*",
+        disableFilters: true,
+        filterable: true,
+        disabled: true,
+        Cell: (cellProps) => (
+          <input
+            type="checkbox"
+            // checked={isChecked}
+            // onClick={() => handleCheckboxClick(cellProps.row.original)}
+            // disabled={!isChecked}
+            onChange={() => handleCheckboxClick(cellProps.row.original)}
+          />
+        ),
       },
       {
         Header: "#",
@@ -285,24 +293,9 @@ const NotificationTemplateList = (props) => {
   };
   const [viewNotiTemp, setViewUser] = useState({});
 
-  const handleViewNotificationTemplate = (userData) => {
+  const handleViewNotificationTemplate = (row) => {
     setViewNotificationTemplate(!viewNotificationTemplate);
-    setViewUser(userData);
-  };
-
-  const handleUserClick = (arg) => {
-    const user = arg;
-
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-
-    handleAddNotificationTemplate();
+    setViewUser(row);
   };
 
   const getTableActions = () => {
@@ -316,7 +309,9 @@ const NotificationTemplateList = (props) => {
 
       {
         name: "Schedule Notification",
-        action: setShowActionNotificationModal,
+        action: selectedRow.msg_head
+          ? setShowBulkModal
+          : setShowActionNotificationModal,
         type: "dropdown",
         dropdownName: "Actions",
       },
@@ -339,6 +334,13 @@ const NotificationTemplateList = (props) => {
           <ToastBody>Please select atleast one Notification Template</ToastBody>
         </Toast>
       </div>
+
+      <BulkScheduleNotification
+        isOpen={showBulkModal}
+        onClose={() => setShowBulkModal(false)}
+        selectedRow={selectedRow}
+      />
+
       <AddNotificationTemplateModal
         isOpen={showAddNotificationTemplate}
         handleAddNotificationTemplate={handleAddNotificationTemplate}
@@ -349,6 +351,8 @@ const NotificationTemplateList = (props) => {
         isOpen={viewNotificationTemplate}
         handleViewNotificationTemplate={handleViewNotificationTemplate}
         notiTemplate={viewNotiTemp}
+        noTemplateStatus={noTemplateStatus}
+        noTemplateType={noTemplateType}
       />
       <div className="page-content">
         <Container fluid>
@@ -370,6 +374,9 @@ const NotificationTemplateList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
+                      // handleRowClick={(row) => {
+                      //   handleViewNotificationTemplate(row);
+                      // }}
                       // iscustomPageSizeOptions={true}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"

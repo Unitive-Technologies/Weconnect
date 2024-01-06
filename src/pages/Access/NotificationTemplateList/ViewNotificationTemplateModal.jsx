@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { SketchPicker } from "react-color";
 import {
   Col,
   Row,
@@ -17,12 +18,32 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import ShowPreviewModal from "./ShowPreviewModal";
-// import { updateNotificationTemplate as onUpdateNotificationTemplate } from "/src/store/users/actions";
+import { optionsList } from "./optionsList";
+import {
+  getNotificationTemplate as onGetNotificationTemplate,
+  updateNotificationTemplate as onUpdateNotificationTemplate,
+} from "/src/store/actions";
 
 const ViewNotificationTemplateModal = (props) => {
-  const { isOpen, handleViewNotificationTemplate, notiTemplate } = props;
+  const {
+    isOpen,
+    handleViewNotificationTemplate,
+    notiTemplate,
+    noTemplateType,
+    noTemplateStatus,
+  } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
+  const FontSize = Array.from({ length: 93 }, (_, index) => index + 8);
+  const [showColorPicker, setShowColorPicker] = useState(false);
+  const [showColorPicker1, setShowColorPicker1] = useState(false);
+  const toggleColorPicker = () => {
+    setShowColorPicker(!showColorPicker);
+  };
+  const toggleColorPicker1 = () => {
+    setShowColorPicker1(!showColorPicker1);
+  };
+
   const [showEditNotificationTemp, setShowEditNotificationTemp] =
     useState(false);
   const [showPreview, setShowPreview] = useState(false);
@@ -33,10 +54,10 @@ const ViewNotificationTemplateModal = (props) => {
     initialValues: {
       id: (notiTemplate && notiTemplate.id) || "",
       name: (notiTemplate && notiTemplate.msg_head) || "",
-      type: (notiTemplate && notiTemplate.msg_type_lbl) || "",
+      type: (notiTemplate && notiTemplate.msg_type) || "",
       fontsize: (notiTemplate && notiTemplate.msg_fontsize) || "",
       fontcolor: (notiTemplate && notiTemplate.msg_fontcolor) || "",
-      fontbgcolor: (notiTemplate && notiTemplate.msg_fontbgcolor) || "",
+      fontbgcolor: (notiTemplate && notiTemplate.msg_fontbackgroundcolor) || "",
       fontfamily: (notiTemplate && notiTemplate.msg_fontfamily) || "",
       status: (notiTemplate && notiTemplate.status) || "",
       content: (notiTemplate && notiTemplate.msg_content) || "",
@@ -54,18 +75,19 @@ const ViewNotificationTemplateModal = (props) => {
     onSubmit: (values) => {
       const updateNotification = {
         id: notiTemplate.id,
-        name: values.name,
-        type: values.type,
-        fontsize: values.fontsize,
-        fontcolor: values.fontcolor,
-        fontbgcolor: values.fontbgcolor,
-        fontfamily: values.fontfamily,
+        msg_head: values.name,
+        msg_type: values.type,
+        msg_fontsize: values.fontsize,
+        msg_fontcolor: values.fontcolor,
+        msg_fontbackgroundcolor: values.fontbgcolor,
+        msg_fontfamily: values.fontfamily,
         status: values.status,
-        content: values.content,
+        msg_content: values.content,
       };
 
       // update user
       dispatch(onUpdateNotificationTemplate(updateNotification));
+      dispatch(onGetNotificationTemplate());
       validation.resetForm();
       handleViewNotificationTemplate();
     },
@@ -74,6 +96,7 @@ const ViewNotificationTemplateModal = (props) => {
   const handleCancel = () => {
     setShowEditNotificationTemp(false);
     handleViewNotificationTemplate();
+    onGetNotificationTemplate();
   };
 
   return (
@@ -130,7 +153,8 @@ const ViewNotificationTemplateModal = (props) => {
                     placeholder="Insert Name"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.initialValues.name || ""}
+                    value={validation.values.name || ""}
+                    disabled={!showEditNotificationTemp}
                     invalid={
                       validation.touched.name && validation.errors.name
                         ? true
@@ -154,11 +178,14 @@ const ViewNotificationTemplateModal = (props) => {
                     className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.initialValues.type || ""}
+                    value={validation.values.type || ""}
+                    disabled={!showEditNotificationTemp}
                   >
-                    {/* <option value="">Select Type</option> */}
-                    <option value="1">Alert</option>
-                    <option value="2">Scroll</option>
+                    {noTemplateType.map((msg_type) => (
+                      <option key={msg_type.id} value={msg_type.id}>
+                        {msg_type.name}
+                      </option>
+                    ))}
                   </Input>
                   {validation.touched.type && validation.errors.type ? (
                     <FormFeedback type="invalid">
@@ -178,11 +205,14 @@ const ViewNotificationTemplateModal = (props) => {
                     className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.initialValues.status || ""}
+                    value={validation.values.status || ""}
+                    disabled={!showEditNotificationTemp}
                   >
-                    {/* <option value="">Select Status</option> */}
-                    <option value="11">Active</option>
-                    <option value="12">In-Active</option>
+                    {noTemplateStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                   </Input>
                   {validation.touched.status && validation.errors.status ? (
                     <FormFeedback type="invalid">
@@ -203,20 +233,14 @@ const ViewNotificationTemplateModal = (props) => {
                     className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.initialValues.fontsize || ""}
+                    value={validation.values.fontsize || ""}
+                    disabled={!showEditNotificationTemp}
                   >
-                    {/* <option value="">Select Font Size</option> */}
-                    <option value="1">8</option>
-                    <option value="2">9</option>
-                    <option value="3">10</option>
-                    <option value="4">11</option>
-                    <option value="5">12</option>
-                    <option value="6">13</option>
-                    <option value="7">14</option>
-                    <option value="8">15</option>
-                    <option value="9">16</option>
-                    <option value="10">17</option>
-                    <option value="11">18</option>
+                    {FontSize.map((size, index) => (
+                      <option key={index} value={size}>
+                        {size}
+                      </option>
+                    ))}
                   </Input>
                   {validation.touched.fontsize && validation.errors.fontsize ? (
                     <FormFeedback type="invalid">
@@ -228,28 +252,32 @@ const ViewNotificationTemplateModal = (props) => {
               <Col lg={3}>
                 <div className="mb-3">
                   <Label className="form-label">Font Color</Label>
-                  <Input
-                    name="fontcolor"
-                    type="select"
-                    placeholder="Select Font Color"
-                    className="form-select"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.initialValues.fontcolor || ""}
-                  >
-                    {/* <option value="">Select Font Color</option> */}
-                    <option value="1">8</option>
-                    <option value="2">9</option>
-                    <option value="3">10</option>
-                    <option value="4">11</option>
-                    <option value="5">12</option>
-                    <option value="6">13</option>
-                    <option value="7">14</option>
-                    <option value="8">15</option>
-                    <option value="9">16</option>
-                    <option value="10">17</option>
-                    <option value="11">18</option>
-                  </Input>
+                  <div>
+                    <Input
+                      name="fontcolor"
+                      type="color"
+                      placeholder="Select Font Color"
+                      className="form-select"
+                      onFocus={toggleColorPicker}
+                      // onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.fontcolor || ""}
+                      disabled={!showEditNotificationTemp}
+                      onChange={(e) =>
+                        validation.setFieldValue("fontcolor", e.target.value)
+                      }
+                    />
+                    {showColorPicker && (
+                      <SketchPicker
+                        color={validation.values.fontcolor || "#000000"}
+                        onChange={(color) =>
+                          validation.setFieldValue("fontcolor", color.hex)
+                        }
+                      />
+                    )}
+                  </div>
+                  <p>Value: {validation.values.fontcolor}</p>
+
                   {validation.touched.fontcolor &&
                   validation.errors.fontcolor ? (
                     <FormFeedback type="invalid">
@@ -262,28 +290,32 @@ const ViewNotificationTemplateModal = (props) => {
               <Col lg={3}>
                 <div className="mb-3">
                   <Label className="form-label">Font Background Color</Label>
-                  <Input
-                    name="fontbgcolor"
-                    type="select"
-                    placeholder="Select Font Background Color"
-                    className="form-select"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.initialValues.fontcolor || ""}
-                  >
-                    {/* <option value="">Select Font Background Color</option> */}
-                    <option value="1">8</option>
-                    <option value="2">9</option>
-                    <option value="3">10</option>
-                    <option value="4">11</option>
-                    <option value="5">12</option>
-                    <option value="6">13</option>
-                    <option value="7">14</option>
-                    <option value="8">15</option>
-                    <option value="9">16</option>
-                    <option value="10">17</option>
-                    <option value="11">18</option>
-                  </Input>
+                  <div>
+                    <Input
+                      name="fontbgcolor"
+                      type="color"
+                      placeholder="Select Font Background Color"
+                      className="form-select"
+                      onFocus={toggleColorPicker1}
+                      // onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.fontbgcolor || ""}
+                      disabled={!showEditNotificationTemp}
+                      onChange={(e) =>
+                        validation.setFieldValue("fontbgcolor", e.target.value)
+                      }
+                    />
+
+                    {showColorPicker1 && (
+                      <SketchPicker
+                        color={validation.values.fontbgcolor || "#121314"}
+                        onChange={(color) =>
+                          validation.setFieldValue("fontbgcolor", color.hex)
+                        }
+                      />
+                    )}
+                  </div>
+                  <p>Value: {validation.values.fontbgcolor}</p>
                   {validation.touched.fontbgcolor &&
                   validation.errors.fontbgcolor ? (
                     <FormFeedback type="invalid">
@@ -302,16 +334,14 @@ const ViewNotificationTemplateModal = (props) => {
                     className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.initialValues.fontfamily || ""}
+                    value={validation.values.fontfamily || ""}
+                    disabled={!showEditNotificationTemp}
                   >
-                    {/* <option value="">Select Font Family</option> */}
-                    <option value="1">Times New Roman</option>
-                    <option value="2">Georgia</option>
-                    <option value="3">Arial</option>
-                    <option value="4">Verdana</option>
-                    <option value="5">Courier New</option>
-                    <option value="6">Arial</option>
-                    <option value="7">Tahoma</option>
+                    {optionsList.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
                   </Input>
                   {validation.touched.fontfamily &&
                   validation.errors.fontfamily ? (
@@ -333,12 +363,13 @@ const ViewNotificationTemplateModal = (props) => {
                     rows="3"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.initialValues.content || ""}
+                    value={validation.values.content || ""}
                     invalid={
                       validation.touched.content && validation.errors.content
                         ? true
                         : false
                     }
+                    disabled={!showEditNotificationTemp}
                   />
                   {validation.touched.content && validation.errors.content ? (
                     <FormFeedback type="invalid">
