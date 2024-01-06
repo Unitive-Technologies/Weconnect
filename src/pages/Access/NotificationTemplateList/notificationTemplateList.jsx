@@ -20,6 +20,7 @@ import {
   getNotificationTemplate as onGetNotificationTemplate,
   getNotificationTemplateType as onGetNotificationTemplateType,
   getNotificationTemplateStatus as onGetNotificationTemplateStatus,
+  getNotificationTemplateAddUser as onGetNotificationTemplateAddUser,
 } from "/src/store/actions";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -54,12 +55,12 @@ const NotificationTemplateList = (props) => {
       loading: notificationTemplate.loading,
       noTemplateType: notificationTemplate.noTemplateType,
       noTemplateStatus: notificationTemplate.noTemplateStatus,
+      addUser: notificationTemplate.addUser,
     })
   );
 
-  const { noTemplate, loading, noTemplateStatus, noTemplateType } = useSelector(
-    notificationTemplateProperties
-  );
+  const { noTemplate, loading, noTemplateStatus, noTemplateType, addUser } =
+    useSelector(notificationTemplateProperties);
 
   const [isLoading, setLoading] = useState(loading);
 
@@ -283,6 +284,7 @@ const NotificationTemplateList = (props) => {
       dispatch(onGetNotificationTemplate());
       dispatch(onGetNotificationTemplateStatus());
       dispatch(onGetNotificationTemplateType());
+      dispatch(onGetNotificationTemplateAddUser());
     }
   }, [dispatch, noTemplate]);
 

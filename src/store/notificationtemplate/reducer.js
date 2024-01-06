@@ -9,10 +9,13 @@ import {
   ADD_NOTIFICATIONTEMPLATE_FAIL,
   UPDATE_NOTIFICATIONTEMPLATE_FAIL,
   UPDATE_NOTIFICATIONTEMPLATE_SUCCESS,
+  GET_NOTIFICATIONTEMPLATE_ADDUSER_SUCCESS,
+  GET_NOTIFICATIONTEMPLATE_ADDUSER_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
   notificationTemplate: [],
+  addUser: [],
   noTemplateStatus: [],
   noTemplateType: [],
   error: {},
@@ -86,6 +89,20 @@ const NotificationTemplate = (state = INIT_STATE, action) => {
       };
 
     case UPDATE_NOTIFICATIONTEMPLATE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_NOTIFICATIONTEMPLATE_ADDUSER_SUCCESS:
+      console.log("Notification adduser data in reducer:", action.payload);
+      return {
+        ...state,
+        addUser: action.payload,
+        loading: false,
+      };
+
+    case GET_NOTIFICATIONTEMPLATE_ADDUSER_FAIL:
       return {
         ...state,
         error: action.payload,

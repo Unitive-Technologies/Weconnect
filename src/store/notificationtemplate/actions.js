@@ -14,6 +14,9 @@ import {
   UPDATE_NOTIFICATIONTEMPLATE,
   UPDATE_NOTIFICATIONTEMPLATE_FAIL,
   UPDATE_NOTIFICATIONTEMPLATE_SUCCESS,
+  GET_NOTIFICATIONTEMPLATE_ADDUSER,
+  GET_NOTIFICATIONTEMPLATE_ADDUSER_SUCCESS,
+  GET_NOTIFICATIONTEMPLATE_ADDUSER_FAIL,
 } from "./actionTypes";
 
 export const getNotificationTemplate = () => ({
@@ -96,5 +99,22 @@ export const updateNotificationTemplateSuccess = (notiTemp) => ({
 
 export const updateNotificationTemplateFail = (error) => ({
   type: UPDATE_NOTIFICATIONTEMPLATE_FAIL,
+  payload: error,
+});
+
+export const getNotificationTemplateAddUser = () => ({
+  type: GET_NOTIFICATIONTEMPLATE_ADDUSER,
+});
+
+export const getNotificationTemplateAddUserSuccess = (addUser) => {
+  console.log("Received Notification Template:", addUser);
+  return {
+    type: GET_NOTIFICATIONTEMPLATE_ADDUSER_SUCCESS,
+    payload: addUser,
+  };
+};
+
+export const getNotificationTemplateAddUserFail = (error) => ({
+  type: GET_NOTIFICATIONTEMPLATE_ADDUSER_FAIL,
   payload: error,
 });

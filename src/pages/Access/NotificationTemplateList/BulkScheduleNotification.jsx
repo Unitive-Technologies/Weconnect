@@ -28,13 +28,16 @@ import {
   updateUser as onUpdateUser,
   getUsers as onGetUsers,
 } from "/src/store/users/actions";
+import AddUserModal from "./AddUserModal";
 
 const BulkScheduleNotification = (props) => {
   const { isOpen, onClose, users, selectedRow } = props;
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
 
   const dispatch = useDispatch();
+  const [showAddUser, setShowAddUser] = useState(false);
   const [tableList, setTableList] = useState([]);
+
   const addusers = [];
   const [selectedStatusToSet, setSelectedStatusToSet] = useState("active");
   // const [filteredActiveBlockUsers, setFilteredActiveBlockUsers] = useState([]);
@@ -356,7 +359,7 @@ const BulkScheduleNotification = (props) => {
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.username}
+                  {cellProps.row.original.content}
                 </Link>
               </h5>
             </>
@@ -459,182 +462,200 @@ const BulkScheduleNotification = (props) => {
   }, [selectedStatusToSet]);
 
   return (
-    <Modal
-      isOpen={isOpen}
-      size="xl"
-      role="dialog"
-      autoFocus={true}
-      centered={true}
-      className="exampleModal"
-      tabIndex="-1"
-      toggle={onClose}
-    >
-      <ModalHeader toggle={onClose} tag="h4">
-        Bulk Schedule Notification Template
-      </ModalHeader>
-      <ModalBody>
-        <Card>
-          <CardBody>
-            <Form
-              onSubmit={(e) => {
-                e.preventDefault();
-                validation.handleSubmit();
-                return false;
-              }}
-            >
-              <Row>
-                <Col lg={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">
-                      START Time
-                      <span style={{ color: "red" }}>*</span>
-                    </Label>
-                    <Input
-                      name="starttime"
-                      type="date"
-                      placeholder="Select Start Time"
-                      onChange={handleStatusChange}
-                      onBlur={validation.handleBlur}
-                      value={selectedStatusToSet}
-                    />
-
-                    {validation.touched.statustoset &&
-                    validation.errors.statustoset ? (
-                      <FormFeedback type="invalid">
-                        {validation.errors.statustoset}
-                      </FormFeedback>
-                    ) : null}
-                  </div>
-                </Col>
-                <Col lg={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">
-                      END Time
-                      <span style={{ color: "red" }}>*</span>
-                    </Label>
-                    <Input
-                      name="endtime"
-                      type="date"
-                      placeholder="Select End Time"
-                      onChange={handleStatusChange}
-                      onBlur={validation.handleBlur}
-                      value={selectedStatusToSet}
-                    />
-
-                    {validation.touched.statustoset &&
-                    validation.errors.statustoset ? (
-                      <FormFeedback type="invalid">
-                        {validation.errors.statustoset}
-                      </FormFeedback>
-                    ) : null}
-                  </div>
-                </Col>
-                <Col lg={4}>
-                  <div className="form-check form-switch form-switch-lg mb-3">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      id="customSwitchsizelg"
-                      defaultChecked
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="customSwitchsizelg"
+    <>
+      <AddUserModal
+        isOpen={showAddUser}
+        onClose={() => setShowAddUser(false)}
+      />
+      <Modal
+        isOpen={isOpen}
+        size="xl"
+        role="dialog"
+        autoFocus={true}
+        centered={true}
+        className="exampleModal"
+        tabIndex="-1"
+        toggle={onClose}
+      >
+        <ModalHeader toggle={onClose} tag="h4">
+          Bulk Schedule Notification Template
+        </ModalHeader>
+        <ModalBody>
+          <Card>
+            <CardBody>
+              <Form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  validation.handleSubmit();
+                  return false;
+                }}
+              >
+                <Row>
+                  <Col lg={10}></Col>
+                  <Col lg={2}>
+                    <button
+                      onClick={() => setShowAddUser(true)}
+                      type="button"
+                      className="btn btn-success save-user mb-3"
                     >
-                      Select One-by-One / Select All
-                    </label>
-                  </div>
-                </Col>
-              </Row>
+                      Add User
+                    </button>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={4}>
+                    <div className="mb-3">
+                      <Label className="form-label">
+                        START Time
+                        <span style={{ color: "red" }}>*</span>
+                      </Label>
+                      <Input
+                        name="starttime"
+                        type="date"
+                        placeholder="Select Start Time"
+                        onChange={handleStatusChange}
+                        onBlur={validation.handleBlur}
+                        value={selectedStatusToSet}
+                      />
 
-              <TableContainer
-                isPagination={true}
-                columns={columns}
-                data={addusers}
-                // data={tableList}
-                handleRowClick={(row) => {
-                  // console.log("row:" + JSON.stringify(row));
-                  handleActive(row);
-                }}
-                // isGlobalFilter={true}
-                isShowingPageLength={true}
-                customPageSize={50}
-                tableClass="table align-middle table-nowrap table-hover"
-                theadClass="table-light"
-                paginationDiv="col-sm-12 col-md-7"
-                pagination="pagination pagination-rounded justify-content-end mt-4"
-              />
-              <div
-                style={{
-                  // margin: "20px 0px",
-                  marginTop: "20px",
-                  marginBottom: "-18px",
-                  zIndex: 12000,
-                  backgroundColor: "#fff",
-                  width: "fit-content",
-                  marginLeft: "40%",
-                  position: "absolute",
-                  padding: "0px 10px",
-                }}
-              >
-                {" "}
-                <h5 style={{}}>Notification Template</h5>
-              </div>
-              <Row
-                style={{
-                  position: "relative",
-                  border: "1px solid #ced4da",
-                  padding: "20px 0px",
-                  margin: "30px 0px",
-                }}
-              >
-                <Col lg={12}>
-                  <TableContainer
-                    isPagination={true}
-                    columns={userColumn}
-                    data={selectedUsers}
-                    //   isGlobalFilter={true}
-                    isShowingPageLength={true}
-                    customPageSize={50}
-                    tableClass="table align-middle table-nowrap table-hover"
-                    theadClass="table-light"
-                    paginationDiv="col-sm-12 col-md-7"
-                    pagination="pagination pagination-rounded justify-content-end mt-4"
-                  />
-                </Col>
-              </Row>
-              <div className="text-center mt-4 ">
+                      {validation.touched.statustoset &&
+                      validation.errors.statustoset ? (
+                        <FormFeedback type="invalid">
+                          {validation.errors.statustoset}
+                        </FormFeedback>
+                      ) : null}
+                    </div>
+                  </Col>
+                  <Col lg={4}>
+                    <div className="mb-3">
+                      <Label className="form-label">
+                        END Time
+                        <span style={{ color: "red" }}>*</span>
+                      </Label>
+                      <Input
+                        name="endtime"
+                        type="date"
+                        placeholder="Select End Time"
+                        onChange={handleStatusChange}
+                        onBlur={validation.handleBlur}
+                        value={selectedStatusToSet}
+                      />
+
+                      {validation.touched.statustoset &&
+                      validation.errors.statustoset ? (
+                        <FormFeedback type="invalid">
+                          {validation.errors.statustoset}
+                        </FormFeedback>
+                      ) : null}
+                    </div>
+                  </Col>
+                  <Col lg={4}>
+                    <div className="form-check form-switch form-switch-lg mb-3">
+                      <input
+                        type="checkbox"
+                        className="form-check-input"
+                        id="customSwitchsizelg"
+                        defaultChecked
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="customSwitchsizelg"
+                      >
+                        Select One-by-One / Select All
+                      </label>
+                    </div>
+                  </Col>
+                </Row>
+
+                <TableContainer
+                  isPagination={true}
+                  columns={columns}
+                  data={addusers}
+                  // data={tableList}
+                  handleRowClick={(row) => {
+                    // console.log("row:" + JSON.stringify(row));
+                    handleActive(row);
+                  }}
+                  // isGlobalFilter={true}
+                  isShowingPageLength={true}
+                  customPageSize={50}
+                  tableClass="table align-middle table-nowrap table-hover"
+                  theadClass="table-light"
+                  paginationDiv="col-sm-12 col-md-7"
+                  pagination="pagination pagination-rounded justify-content-end mt-4"
+                />
                 <div
                   style={{
-                    display: "flex",
-                    gap: 5,
-                    textAlign: "center",
-                    justifyContent: "center",
+                    // margin: "20px 0px",
+                    marginTop: "20px",
+                    marginBottom: "-18px",
+                    zIndex: 12000,
+                    backgroundColor: "#fff",
+                    width: "fit-content",
+                    marginLeft: "40%",
+                    position: "absolute",
+                    padding: "0px 10px",
                   }}
                 >
-                  <button
-                    type="submit"
-                    className="btn btn-primary ml-2 "
-                    // onClick={() => {
-                    //   validation.handleSubmit();
-                    // }}
-                  >
-                    Save
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-primary "
-                    onClick={onClose}
-                  >
-                    Cancel
-                  </button>
+                  {" "}
+                  <h5 style={{}}>Notification Template</h5>
                 </div>
-              </div>
-            </Form>
-          </CardBody>
-        </Card>
-      </ModalBody>
-    </Modal>
+                <Row
+                  style={{
+                    position: "relative",
+                    border: "1px solid #ced4da",
+                    padding: "20px 0px",
+                    margin: "30px 0px",
+                  }}
+                >
+                  <Col lg={12}>
+                    <TableContainer
+                      isPagination={true}
+                      columns={userColumn}
+                      data={selectedUsers}
+                      //   isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      customPageSize={50}
+                      tableClass="table align-middle table-nowrap table-hover"
+                      theadClass="table-light"
+                      paginationDiv="col-sm-12 col-md-7"
+                      pagination="pagination pagination-rounded justify-content-end mt-4"
+                    />
+                  </Col>
+                </Row>
+                <div className="text-center mt-4 ">
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: 5,
+                      textAlign: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <button
+                      type="submit"
+                      className="btn btn-primary ml-2 "
+                      // onClick={() => {
+                      //   validation.handleSubmit();
+                      // }}
+                    >
+                      Save
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-primary "
+                      onClick={onClose}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </Form>
+            </CardBody>
+          </Card>
+        </ModalBody>
+      </Modal>
+    </>
   );
 };
 

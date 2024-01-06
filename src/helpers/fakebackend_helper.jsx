@@ -251,7 +251,8 @@ export const getNotificationTemplateStatus = () =>
   get(url.GET_NOTIFICATIONTEMPLATE_STATUS);
 export const updateNotificationTemplate = (notificationTemplate, id) =>
   put(url.UPDATE_NOTIFICATIONTEMPLATE(id), notificationTemplate);
-
+export const getNotificationTemplateAddUser = () =>
+  get(url.GET_NOTIFICATIONTEMPLATE_ADDUSER);
 export const addNewNotificationTemplate = (notificationTemplate) =>
   post(url.ADD_NEW_NOTIFICATIONTEMPLATE, notificationTemplate);
 

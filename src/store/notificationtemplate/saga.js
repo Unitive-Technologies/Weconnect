@@ -6,6 +6,7 @@ import {
   GET_NOTIFICATIONTEMPLATE_STATUS,
   ADD_NEW_NOTIFICATIONTEMPLATE,
   UPDATE_NOTIFICATIONTEMPLATE,
+  GET_NOTIFICATIONTEMPLATE_ADDUSER,
 } from "./actionTypes";
 
 import {
@@ -19,6 +20,8 @@ import {
   addNotificationTemplateSuccess,
   updateNotificationTemplateFail,
   updateNotificationTemplateSuccess,
+  getNotificationTemplateAddUserFail,
+  getNotificationTemplateAddUserSuccess,
 } from "./actions";
 
 //Include Both Helper File with needed methods
@@ -28,6 +31,7 @@ import {
   getNotificationTemplateStatus,
   addNewNotificationTemplate,
   updateNotificationTemplate,
+  getNotificationTemplateAddUser,
 } from "../../helpers/fakebackend_helper";
 
 const convertNotificationTemplateListObject = (notificationTemplateList) => {
@@ -127,6 +131,17 @@ function* onUpdateNotificationTemplate({ payload: notificationTemplate }) {
   }
 }
 
+function* fetchNotificationTemplateAddUser() {
+  try {
+    const response = yield call(getNotificationTemplateAddUser);
+    const notificationTemplateAddUser =
+      //   convertNotificationTemplateListObject(response);s
+      yield put(getNotificationTemplateAddUserSuccess(response.data));
+  } catch (error) {
+    console.error("Error fetching notification adduser:", error);
+    yield put(getNotificationTemplateAddUserFail(error));
+  }
+}
 function* notificationTemplateSaga() {
   yield takeEvery(GET_NOTIFICATIONTEMPLATE, fetchNotificationTemplate);
   yield takeEvery(GET_NOTIFICATIONTEMPLATE_TYPE, fetchNotificationTemplateType);
@@ -136,6 +151,10 @@ function* notificationTemplateSaga() {
   );
   yield takeEvery(ADD_NEW_NOTIFICATIONTEMPLATE, onAddNewNotificationTemplate);
   yield takeEvery(UPDATE_NOTIFICATIONTEMPLATE, onUpdateNotificationTemplate);
+  yield takeEvery(
+    GET_NOTIFICATIONTEMPLATE_ADDUSER,
+    fetchNotificationTemplateAddUser
+  );
 }
 
 export default notificationTemplateSaga;

@@ -38,7 +38,8 @@ export const GET_NOTIFICATIONTEMPLATE_STATUS =
   "/list/status?fields=id,name&vr=web1.0";
 export const UPDATE_NOTIFICATIONTEMPLATE = (id) =>
   `announcement-template/${id}?vr=web1.0`;
-
+export const GET_NOTIFICATIONTEMPLATE_ADDUSER =
+  "/user/list?fields=id,name,username&expand=type_lbl,role_lbl&notfilter[role]=4&page=1&per-page=500&vr=web1.0";
 export const ADD_NEW_NOTIFICATIONTEMPLATE = "/announcement-template?vr=web1.0";
 
 export const GET_REGIONALOFFICE =
