@@ -45,8 +45,9 @@ const NotificationTemplateList = (props) => {
     })
   );
 
-  const { noTemplate, loading, noTemplateStatus, noTemplateType } = useSelector(notificationTemplateProperties);
-
+  const { noTemplate, loading, noTemplateStatus, noTemplateType } = useSelector(
+    notificationTemplateProperties
+  );
 
   const [isLoading, setLoading] = useState(loading);
 
@@ -76,8 +77,8 @@ const NotificationTemplateList = (props) => {
                 className="form-check-input"
                 type="checkbox"
                 id="upcomingtaskCheck01"
-              // defaultChecked
-              // disabled
+                // defaultChecked
+                // disabled
               />
             </>
           );
@@ -131,7 +132,15 @@ const NotificationTemplateList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 200,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.msg_content}
             </p>
           );
@@ -144,7 +153,7 @@ const NotificationTemplateList = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.msg_type}
+              {cellProps.row.original.msg_type_lbl}
             </p>
           );
         },
@@ -167,15 +176,20 @@ const NotificationTemplateList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <ColorPicker
-              saturationHeight={10}
-              saturationWidth={100}
-              value={cellProps.row.original.msg_fontcolor}
-            // onDrag={onDragRgb}
-            />
-            // <p className="text-muted mb-0">
-            //   {cellProps.row.original.msg_fontcolor}
-            // </p>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <ColorPicker
+                saturationHeight={20}
+                saturationWidth={50}
+                value={cellProps.row.original.msg_fontcolor}
+                // onDrag={onDragRgb}
+              />
+            </div>
           );
         },
       },
@@ -185,15 +199,20 @@ const NotificationTemplateList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <ColorPicker
-              saturationHeight={10}
-              saturationWidth={100}
-              value={cellProps.row.original.msg_fontbackgroundcolor}
-            // onDrag={onDragRgb}
-            />
-            // <p className="text-muted mb-0">
-            //   {cellProps.row.original.msg_fontbackgroundcolor}
-            // </p>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <ColorPicker
+                saturationHeight={20}
+                saturationWidth={50}
+                value={cellProps.row.original.msg_fontbackgroundcolor}
+                // onDrag={onDragRgb}
+              />
+            </div>
           );
         },
       },
@@ -215,7 +234,9 @@ const NotificationTemplateList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.status}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.status_lbl}
+            </p>
           );
         },
       },
@@ -269,7 +290,6 @@ const NotificationTemplateList = (props) => {
     setViewUser(userData);
   };
 
-
   const handleUserClick = (arg) => {
     const user = arg;
 
@@ -304,7 +324,7 @@ const NotificationTemplateList = (props) => {
   };
 
   const keyField = "id";
-  console.log("noTemplateType" + JSON.stringify(noTemplateType))
+  console.log("noTemplateType" + JSON.stringify(noTemplateType));
 
   return (
     <React.Fragment>

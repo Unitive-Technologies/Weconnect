@@ -77,8 +77,6 @@ const ViewDesignation = (props) => {
     dispatch(onGetDesignation());
   };
 
-  // console.log("Show Edit city status: ", showEditDesignation);
-
   return (
     <Modal
       isOpen={isOpen}
