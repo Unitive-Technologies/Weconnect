@@ -1025,18 +1025,18 @@ const fakeBackend = () => {
   //   });
   // });
 
-  mock.onPost(url.ADD_NEW_GENRELIST).reply((genre) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (genre && genre.data) {
-          // Passing fake JSON data as response
-          resolve([200, genre.data]);
-        } else {
-          reject([400, "Cannot add genrelist"]);
-        }
-      });
-    });
-  });
+  // mock.onPost(url.ADD_NEW_GENRELIST).reply((genre) => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (genre && genre.data) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, genre.data]);
+  //       } else {
+  //         reject([400, "Cannot add genrelist"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onPost(url.ADD_NEW_BROADCASTERBOUQUETLIST).reply((broadcastbouquet) => {
     return new Promise((resolve, reject) => {
@@ -1168,18 +1168,18 @@ const fakeBackend = () => {
     });
   });
 
-  mock.onPost(url.ADD_NEW_LANGUAGELIST).reply((langlist) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (langlist && langlist.data) {
-          // Passing fake JSON data as response
-          resolve([200, langlist.data]);
-        } else {
-          reject([400, "Cannot add languagelist"]);
-        }
-      });
-    });
-  });
+  // mock.onPost(url.ADD_NEW_LANGUAGELIST).reply((langlist) => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (langlist && langlist.data) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, langlist.data]);
+  //       } else {
+  //         reject([400, "Cannot add languagelist"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onPost(url.ADD_NEW_OSDTEMPLATE).reply((osdtem) => {
     return new Promise((resolve, reject) => {

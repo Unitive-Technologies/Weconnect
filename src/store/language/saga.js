@@ -1,10 +1,12 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_LANGUAGELIST, ADD_NEW_LANGUAGELIST } from "./actionTypes";
+import { GET_LANGUAGELIST, GET_LANGUAGELIST_STATUS, ADD_NEW_LANGUAGELIST } from "./actionTypes";
 
 import {
   getLanguageListSuccess,
   getLanguageListFail,
+  getLanguageListStatusSuccess,
+  getLanguageListStatusFail,
   addLanguageListSuccess,
   addLanguageListFail,
 } from "./actions";
@@ -12,6 +14,7 @@ import {
 //Include Both Helper File with needed methods
 import {
   getLanguageList,
+  getLanguageListStatus,
   addNewLanguageList,
 } from "../../helpers/fakebackend_helper";
 
@@ -28,8 +31,8 @@ const convertLanguageListObject = (languageList) => {
         langlist.status === 1
           ? "ACTIVE"
           : langlist.status === 0
-          ? "INACTIVE"
-          : "BLOCKED",
+            ? "INACTIVE"
+            : "BLOCKED",
       created_at: langlist.created_at,
       created_by: langlist.created_by_lbl,
     };
@@ -47,21 +50,30 @@ function* fetchLanguageList() {
   }
 }
 
+function* fetchLanguageListStatus() {
+  try {
+    const response = yield call(getLanguageListStatus);
+    console.log("designation status response:" + JSON.stringify(response));
+    yield put(getLanguageListStatusSuccess(response.data));
+  } catch (error) {
+    yield put(getLanguageListStatusFail(error));
+  }
+}
+
 function* onAddNewLanguageList({ payload: LanguageList }) {
   try {
     const response = yield call(addNewLanguageList, LanguageList);
 
     yield put(addLanguageListSuccess(response));
-    toast.success("LanguageList Added Successfully", { autoClose: 2000 });
   } catch (error) {
     yield put(addLanguageListFail(error));
-    toast.error("LanguageList Added Failed", { autoClose: 2000 });
   }
 }
 
 function* languageListSaga() {
   yield takeEvery(GET_LANGUAGELIST, fetchLanguageList);
   yield takeEvery(ADD_NEW_LANGUAGELIST, onAddNewLanguageList);
+  yield takeEvery(GET_LANGUAGELIST_STATUS, fetchLanguageListStatus);
 }
 
 export default languageListSaga;

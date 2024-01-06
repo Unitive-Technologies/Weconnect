@@ -2,6 +2,9 @@ import {
   GET_GENRELIST,
   GET_GENRELIST_FAIL,
   GET_GENRELIST_SUCCESS,
+  GET_GENRELIST_STATUS,
+  GET_GENRELIST_STATUS_FAIL,
+  GET_GENRELIST_STATUS_SUCCESS,
   ADD_NEW_GENRELIST,
   ADD_GENRELIST_SUCCESS,
   ADD_GENRELIST_FAIL,
@@ -40,5 +43,22 @@ export const addGenreListSuccess = (
 
 export const addGenreListFail = (error) => ({
   type: ADD_GENRELIST_FAIL,
+  payload: error,
+});
+
+export const getGenreListStatus = () => ({
+  type: GET_GENRELIST_STATUS,
+});
+
+export const getGenreListStatusSuccess = (genrelistStatus) => {
+
+  return {
+    type: GET_GENRELIST_STATUS_SUCCESS,
+    payload: genrelistStatus,
+  };
+};
+
+export const getGenreListStatusFail = (error) => ({
+  type: GET_GENRELIST_STATUS_FAIL,
   payload: error,
 });

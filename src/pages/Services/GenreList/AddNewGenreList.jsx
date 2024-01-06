@@ -20,9 +20,10 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewGenreList as onAddNewGenreList } from "/src/store/genre/actions";
 import { useSelector, useDispatch } from "react-redux";
+import { getGenreList as onGetGenreList } from "/src/store/actions";
 
 const AddNewGenreList = (props) => {
-    const { isOpen, toggle } = props;
+    const { isOpen, handleAddGenreList, genreListStatus } = props;
     const dispatch = useDispatch();
     const [user, setUser] = useState();
 
@@ -59,8 +60,11 @@ const AddNewGenreList = (props) => {
             dispatch(
                 onAddNewGenreList(newGenreList)
             );
+            dispatch(
+                onGetGenreList()
+            );
             validation.resetForm();
-            toggle();
+            handleAddGenreList();
         },
         onReset: (values) => {
             validation.setValues(validation.initialValues);
@@ -75,9 +79,9 @@ const AddNewGenreList = (props) => {
             centered={true}
             className="exampleModal"
             tabIndex="-1"
-            toggle={toggle}
+            toggle={handleAddGenreList}
         >
-            <ModalHeader tag="h4" toggle={toggle}>Add New Genre</ModalHeader>
+            <ModalHeader tag="h4" toggle={handleAddGenreList}>Add New Genre</ModalHeader>
             <ModalBody>
                 <Form
                     onSubmit={(e) => {
@@ -117,9 +121,13 @@ const AddNewGenreList = (props) => {
                                     onBlur={validation.handleBlur}
                                     value={validation.values.status || ""}
                                 >
-                                    <option value="101">Select Status</option>
-                                    <option value="102">Active</option>
-                                    <option value="103">In-Active</option>
+                                    <option value="">Select Status</option>
+                                    {genreListStatus &&
+                                        genreListStatus.map((status) => (
+                                            <option key={status.id} value={status.id}>
+                                                {status.name}
+                                            </option>
+                                        ))}
                                 </Input>
                                 {validation.touched.status && validation.errors.status ? (
                                     <FormFeedback type="invalid">
@@ -174,7 +182,7 @@ const AddNewGenreList = (props) => {
                                     className="btn btn-outline-danger"
                                     onClick={() => {
                                         validation.resetForm();
-                                        toggle();
+                                        handleAddGenreList();
                                     }}
                                 >
                                     Cancel

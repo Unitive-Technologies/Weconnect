@@ -324,10 +324,13 @@ export const getUserMsoDetails = () => get(url.GET_USER_MSO_DETAILS);
 export const getUserDistributor = () => get(url.GET_USER_DISTRIBUTOR);
 export const getUserLco = () => get(url.GET_USER_LCO);
 export const getUserBulkSettings = () => get(url.GET_USER_BULKSETTINGS);
+
 export const getGenreList = () => get(url.GET_GENRELIST);
+export const getGenreListStatus = () => get(url.GET_GENRELIST_STATUS);
 export const addNewGenreList = (genre) => post(url.ADD_NEW_GENRELIST, genre);
 
 export const getLanguageList = () => get(url.GET_LANGUAGELIST);
+export const getLanguageListStatus = () => get(url.GET_LANGUAGELIST_STATUS);
 export const addNewLanguageList = (langlist) =>
   post(url.ADD_NEW_LANGUAGELIST, langlist);
 

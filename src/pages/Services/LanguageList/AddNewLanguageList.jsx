@@ -20,9 +20,10 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewLanguageList as onAddNewLanguageList } from "/src/store/language/actions";
 import { useSelector, useDispatch } from "react-redux";
+import { getlanguageList as onGetlanguageList } from "/src/store/actions";
 
 const AddNewLanguageList = (props) => {
-    const { isOpen, toggle } = props;
+    const { isOpen, handleAddNewLanguage, langlistStatus } = props;
     const dispatch = useDispatch();
     const [user, setUser] = useState();
 
@@ -32,24 +33,24 @@ const AddNewLanguageList = (props) => {
 
         initialValues: {
             //BroadCaster: "",
-            language: "",
-            languagecode: "",
+            name: "",
+            code: "",
             description: "",
             status: "",
             created_at: "",
             created_by: "Admin",
         },
         validationSchema: Yup.object({
-            language: Yup.string().required("Enter language"),
-            languagecode: Yup.string().required("Enter language code"),
+            name: Yup.string().required("Enter language"),
+            code: Yup.string().required("Enter language code"),
             status: Yup.string().required("Select status"),
             description: Yup.string().required("Enter description"),
         }),
         onSubmit: (values) => {
             const newLanguageList = {
                 id: Math.floor(Math.random() * (30 - 20)) + 20,
-                language: values["language"],
-                languagecode: values["languagecode"],
+                name: values["name"],
+                code: values["code"],
                 status: values["status"],
                 description: values["description"],
                 created_at: new Date(),
@@ -62,8 +63,9 @@ const AddNewLanguageList = (props) => {
             dispatch(
                 onAddNewLanguageList(newLanguageList)
             );
+            dispatch(onGetlanguageList());
             validation.resetForm();
-            toggle();
+            handleAddNewLanguage();
         },
         onReset: (values) => {
             validation.setValues(validation.initialValues);
@@ -79,10 +81,10 @@ const AddNewLanguageList = (props) => {
             className="exampleModal"
             tabIndex="-1"
             size="xl"
-            toggle={toggle}
+            toggle={handleAddNewLanguage}
         >
             {/* <Modal isOpen={modal} toggle={toggle}> */}
-            <ModalHeader tag="h4" toggle={toggle}>Add New Language</ModalHeader>
+            <ModalHeader tag="h4" toggle={handleAddNewLanguage}>Add New Language</ModalHeader>
             <ModalBody>
                 <Form
                     onSubmit={(e) => {
@@ -96,17 +98,17 @@ const AddNewLanguageList = (props) => {
                             <div className="mb-3">
                                 <Label className="form-label">Language<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
-                                    name="language"
+                                    name="name"
                                     type="text"
                                     placeholder="Enter language"
                                     // className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.language || ""}
+                                    value={validation.values.name || ""}
                                 ></Input>
-                                {validation.touched.language && validation.errors.language ? (
+                                {validation.touched.name && validation.errors.name ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.language}
+                                        {validation.errors.name}
                                     </FormFeedback>
                                 ) : null}
                             </div>
@@ -115,18 +117,18 @@ const AddNewLanguageList = (props) => {
                             <div className="mb-3">
                                 <Label className="form-label">Code<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
-                                    name="languagecode"
+                                    name="code"
                                     type="text"
                                     placeholder="Enter code"
                                     // className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.languagecode || ""}
+                                    value={validation.values.code || ""}
                                 >
                                 </Input>
-                                {validation.touched.languagecode && validation.errors.languagecode ? (
+                                {validation.touched.code && validation.errors.code ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.languagecode}
+                                        {validation.errors.code}
                                     </FormFeedback>
                                 ) : null}
                             </div>
@@ -145,9 +147,13 @@ const AddNewLanguageList = (props) => {
                                     onBlur={validation.handleBlur}
                                     value={validation.values.status || ""}
                                 >
-                                    <option value="101">Select Status</option>
-                                    <option value="102">Active</option>
-                                    <option value="103">In-Active</option>
+                                    <option value="">Select Status</option>
+                                    {langlistStatus &&
+                                        langlistStatus.map((status) => (
+                                            <option key={status.id} value={status.id}>
+                                                {status.name}
+                                            </option>
+                                        ))}
                                 </Input>
                                 {validation.touched.status && validation.errors.status ? (
                                     <FormFeedback type="invalid">
@@ -202,7 +208,7 @@ const AddNewLanguageList = (props) => {
                                     className="btn btn-outline-danger"
                                     onClick={() => {
                                         validation.resetForm();
-                                        toggle();
+                                        handleAddNewLanguage();
                                     }}
                                 >
                                     Cancel

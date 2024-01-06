@@ -2,6 +2,9 @@ import {
   GET_LANGUAGELIST,
   GET_LANGUAGELIST_FAIL,
   GET_LANGUAGELIST_SUCCESS,
+  GET_LANGUAGELIST_STATUS,
+  GET_LANGUAGELIST_STATUS_FAIL,
+  GET_LANGUAGELIST_STATUS_SUCCESS,
   ADD_NEW_LANGUAGELIST,
   ADD_LANGUAGELIST_SUCCESS,
   ADD_LANGUAGELIST_FAIL,
@@ -21,6 +24,22 @@ export const getLanguageListSuccess = (languagelist) => {
 
 export const getLanguageListFail = (error) => ({
   type: GET_LANGUAGELIST_FAIL,
+  payload: error,
+});
+
+export const getLanguageListStatus = () => ({
+  type: GET_LANGUAGELIST_STATUS,
+});
+
+export const getLanguageListStatusSuccess = (languagelistStatus) => {
+  return {
+    type: GET_LANGUAGELIST_STATUS_SUCCESS,
+    payload: languagelistStatus,
+  };
+};
+
+export const getLanguageListStatusFail = (error) => ({
+  type: GET_LANGUAGELIST_STATUS_FAIL,
   payload: error,
 });
 

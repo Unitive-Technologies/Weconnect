@@ -121,11 +121,15 @@ export const ADD_NEW_BROADCASTER = "/broadcaster?vr=web1.0";
 
 export const GET_GENRELIST =
   "/genre?expand=created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
-export const ADD_NEW_GENRELIST = "/add/genrelist";
+export const GET_GENRELIST_STATUS =
+  "/list/status?fields=id,name&vr=web1.0";
+export const ADD_NEW_GENRELIST = "/genre?vr=web1.0";
 
 export const GET_LANGUAGELIST =
   "/language?expand=created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
-export const ADD_NEW_LANGUAGELIST = "/add/languagelist";
+export const GET_LANGUAGELIST_STATUS =
+  "/list/status?fields=id,name&vr=web1.0";
+export const ADD_NEW_LANGUAGELIST = "/language?vr=web1.0";
 
 export const GET_CHANNELLIST =
   "/channel?expand=created_by_lbl,broadcaster_lbl,genre_lbl,language_lbl,channel_type_lbl,isAlacarte_lbl,status_lbl,isFta_lbl,isNCF_lbl&sort=name&page=1&per-page=50&vr=web1.0";
