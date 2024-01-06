@@ -18,7 +18,7 @@ import { useSelector, useDispatch } from "react-redux";
 import AddMultipleNcf from "./AddMultipleNcf";
 
 const AddNewNcf = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, toggle, status } = props;
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -220,8 +220,11 @@ const AddNewNcf = (props) => {
                   value={validation.values.status || ""}
                 >
                   <option value="">Select status</option>
-                  <option value="1">Active</option>
-                  <option value="0">In-Active</option>
+                  {status.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">

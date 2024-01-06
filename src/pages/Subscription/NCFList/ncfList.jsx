@@ -12,8 +12,11 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import { getNcf as onGetNcf } from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
+import {
+  getNcf as onGetNcf,
+  getAdministrativeDivisionStatus as onGetAdministrativeDivisionStatus,
+} from "/src/store/actions";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import ViewNcf from "./ViewNcf";
@@ -34,6 +37,15 @@ const NCFList = (props) => {
     loading: ncf.loading,
   }));
 
+  const selectDistrictState = (state) => state.district;
+  const districtProperties = createSelector(
+    selectDistrictState,
+    (district) => ({
+      status: district.status,
+    })
+  );
+
+  const { status } = useSelector(districtProperties);
   const { ncfl, loading } = useSelector(NcfProperties);
 
   useEffect(() => {
@@ -292,9 +304,12 @@ const NCFList = (props) => {
   useEffect(() => {
     if (ncfl && !ncfl.length) {
       dispatch(onGetNcf());
-      setIsEdit(false);
     }
   }, [dispatch, ncfl]);
+
+  useEffect(() => {
+    dispatch(onGetAdministrativeDivisionStatus());
+  }, [dispatch, status]);
 
   const toggle = () => {
     setModal(!modal);
@@ -343,7 +358,7 @@ const NCFList = (props) => {
   return (
     <React.Fragment>
       <ViewNcf isOpen={showViewNcf} toggle={toggleViewNcf} ncf={viewNcfData} />
-      <AddNewNcf isOpen={showAddNcf} toggle={toggleAddNcf} />
+      <AddNewNcf isOpen={showAddNcf} toggle={toggleAddNcf} status={status} />
       <BulkAssigntoOperator isOpen={showBulkAssign} toggle={toggleBulkAssign} />
       <BulkRemovalFromOperator
         isOpen={showBulkRemoval}
