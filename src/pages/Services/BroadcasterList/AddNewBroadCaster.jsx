@@ -20,9 +20,10 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewBroadCaster as onAddNewBroadCaster } from "/src/store/broadcaster/actions";
 import { useSelector, useDispatch } from "react-redux";
+import { getBroadCaster as onGetBroadCasters } from "/src/store/actions";
 
 const AddNewBroadCaster = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, toggle, brodcastStatus } = props;
   const dispatch = useDispatch();
   const [user, setUser] = useState();
 
@@ -49,7 +50,7 @@ const AddNewBroadCaster = (props) => {
       fullname: Yup.string().required("Select broadcaster full name"),
       address: Yup.string().required("Select address"),
       contactperson: Yup.string().required("Select contact person"),
-      mobile: Yup.string().required("Select mobile"),
+      mobile: Yup.string().required("Select mobile no"),
       phone: Yup.string().required("Select phone number"),
       emailaddress: Yup.string().required("Select email"),
       status: Yup.string().required("Select status"),
@@ -61,7 +62,7 @@ const AddNewBroadCaster = (props) => {
         name: values["name"],
         fullname: values["fullname"],
         address: values["address"],
-        contactperson: values["contactperson"],
+        contactperson: values["contact"],
         mobile: values["mobile"],
         phone: values["phone"],
         emailaddress: values["emailaddress"],
@@ -73,6 +74,7 @@ const AddNewBroadCaster = (props) => {
       console.log("newBroadCaster:" + newBroadCaster);
       // save new user
       dispatch(onAddNewBroadCaster(newBroadCaster));
+      dispatch(onGetBroadCasters());
       validation.resetForm();
       toggle();
     },
@@ -169,7 +171,7 @@ const AddNewBroadCaster = (props) => {
                 <Input
                   name="mobile"
                   type="text"
-                  placeholder="Enter mobile number"
+                  placeholder="Enter mobile  number"
                   // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
@@ -279,9 +281,13 @@ const AddNewBroadCaster = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
                 >
-                  <option value="101">Select Status</option>
-                  <option value="102">Active</option>
-                  <option value="103">In-Active</option>
+                  <option value="">Select Status</option>
+                  {brodcastStatus &&
+                    brodcastStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">

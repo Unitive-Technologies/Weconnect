@@ -1,10 +1,12 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_BROADCASTER, ADD_NEW_BROADCASTER } from "./actionTypes";
+import { GET_BROADCASTER, GET_BROADCASTER_STATUS, ADD_NEW_BROADCASTER } from "./actionTypes";
 
 import {
   getBroadCasterSuccess,
   getBroadCasterFail,
+  getBroadCasterStatusSuccess,
+  getBroadCasterStatusFail,
   addBroadCasterSuccess,
   addBroadCasterFail,
 } from "./actions";
@@ -12,6 +14,7 @@ import {
 //Include Both Helper File with needed methods
 import {
   getBroadCasters,
+  getBroadCastersStatus,
   addNewBroadCaster,
 } from "../../helpers/fakebackend_helper";
 import { toast } from "react-toastify";
@@ -31,8 +34,8 @@ const convertBroadCasterListObject = (broadCasterList) => {
         broadCaster.status === 1
           ? "ACTIVE"
           : broadCaster.status === 0
-          ? "INACTIVE"
-          : "BLOCKED",
+            ? "INACTIVE"
+            : "BLOCKED",
       description: broadCaster.description,
       created_at: broadCaster.created_at,
       created_by: broadCaster.created_by,
@@ -51,20 +54,28 @@ function* fetchBroadCasters() {
   }
 }
 
+function* fetchBroadCastersStatus() {
+  try {
+    const response = yield call(getBroadCastersStatus);
+    console.log("BroadCasters status response:" + JSON.stringify(response));
+    yield put(getBroadCasterStatusSuccess(response.data));
+  } catch (error) {
+    yield put(getBroadCasterStatusFail(error));
+  }
+}
+
 function* onAddNewBroadCaster({ payload: broadCaster }) {
   try {
     const response = yield call(addNewBroadCaster, broadCaster);
-
     yield put(addBroadCasterSuccess(response));
-    toast.success("BroadCaster Added Successfully", { autoClose: 2000 });
   } catch (error) {
     yield put(addBroadCasterFail(error));
-    toast.error("BroadCaster Added Failed", { autoClose: 2000 });
   }
 }
 
 function* broadCasterSaga() {
   yield takeEvery(GET_BROADCASTER, fetchBroadCasters);
+  yield takeEvery(GET_BROADCASTER_STATUS, fetchBroadCastersStatus);
   yield takeEvery(ADD_NEW_BROADCASTER, onAddNewBroadCaster);
 }
 
