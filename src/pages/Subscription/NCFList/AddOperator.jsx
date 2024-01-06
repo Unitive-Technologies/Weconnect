@@ -1,16 +1,33 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
-import { Card, CardBody } from "reactstrap";
+import { Card, CardBody, Modal } from "reactstrap";
 import { Link } from "react-router-dom";
-import AddOperators from "./AddOperator";
+import { getOperatorForBulkAssign as onGetOperatorForBulkAssign } from "/src/store/actions";
+import { useSelector, useDispatch } from "react-redux";
+import { createSelector } from "reselect";
 
-const Operators = (props) => {
-  const [showAddOperator, setShowAddOperator] = useState(false);
+const AddOperators = (props) => {
+  const { isOpen, toggle } = props;
 
-  const toggleAddOperator = () => {
-    setShowAddOperator(!showAddOperator);
-  };
+  const dispatch = useDispatch();
+
+  const selectOperatorState = (state) => state.operatorforassign;
+  const OperatorProperties = createSelector(
+    selectOperatorState,
+    (operatorforassign) => ({
+      operatorforbulkassign: operatorforassign.operatorforassign,
+      loading: operatorforassign.loading,
+    })
+  );
+
+  const { operatorforbulkassign, loading } = useSelector(OperatorProperties);
+
+  useEffect(() => {
+    // if (operatorforbulkassign && !operatorforbulkassign.length) {
+    dispatch(onGetOperatorForBulkAssign());
+    // }
+  }, [dispatch, operatorforbulkassign]);
 
   const columns = useMemo(
     () => [
@@ -114,7 +131,7 @@ const Operators = (props) => {
         },
       },
       {
-        Header: "Expiry Date",
+        Header: "Reginal Officer",
         // accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
@@ -130,7 +147,31 @@ const Operators = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"Expiry Date"}
+                  {"Reginal Officer"}
+                </Link>
+              </h5>
+            </>
+          );
+        },
+      },
+      {
+        Header: "Distributor",
+        // accessor: "status",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5
+                style={{
+                  maxWidth: 200,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+                className="font-size-14 mb-1"
+              >
+                <Link className="text-dark" to="#">
+                  {"distributor"}
                 </Link>
               </h5>
             </>
@@ -141,30 +182,16 @@ const Operators = (props) => {
     []
   );
 
-  const getTableActions = () => {
-    return [
-      {
-        name: "Add Operator",
-        action: setShowAddOperator,
-        type: "normal",
-      },
-    ];
-  };
-
-  const operators = [];
   return (
-    <React.Fragment>
-      <AddOperators isOpen={showAddOperator} toggle={toggleAddOperator} />
-      <Card>
+    <Modal isOpen={isOpen} toggle={toggle}>
+      <Card toggle={toggle}>
         <CardBody>
+          {console.log("Operators for Bulk Asign: ", operatorforbulkassign)}
           <TableContainer
             isPagination={true}
             columns={columns}
-            data={operators}
-            isShowTableActionButtons={true}
+            data={operatorforbulkassign}
             isShowingPageLength={true}
-            tableActions={getTableActions()}
-            handleUserClick={() => setShowAddOperator(true)}
             tableClass="table align-middle table-nowrap table-hover"
             theadClass="table-light"
             paginationDiv="col-sm-12 col-md-7"
@@ -172,13 +199,13 @@ const Operators = (props) => {
           />
         </CardBody>
       </Card>
-    </React.Fragment>
+    </Modal>
   );
 };
 
-Operators.propTypes = {
+AddOperators.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default Operators;
+export default AddOperators;
