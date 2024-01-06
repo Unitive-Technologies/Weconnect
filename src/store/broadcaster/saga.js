@@ -27,9 +27,11 @@ const convertBroadCasterListObject = (broadCasterList) => {
       id: broadCaster.id,
       name: broadCaster.name,
       fullname: broadCaster.fullname,
-      address: broadCaster.address,
-      contactperson: broadCaster.contact_person,
-      mobile: broadCaster.mobile_no,
+      addr: broadCaster.addr,
+      contact_person: broadCaster.contact_person,
+      phone_no: broadCaster.phone_no,
+      mobile_no: broadCaster.mobile_no,
+      email: broadCaster.email,
       status:
         broadCaster.status === 1
           ? "ACTIVE"

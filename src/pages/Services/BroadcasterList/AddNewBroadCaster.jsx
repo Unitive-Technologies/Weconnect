@@ -35,12 +35,12 @@ const AddNewBroadCaster = (props) => {
       //BroadCaster: "",
       name: "",
       fullname: "",
-      address: "",
-      contactperson: "",
-      mobile: "",
+      addr: "",
+      contact_person: "",
+      mobile_no: "",
       status: "",
-      phone: "",
-      emailaddress: "",
+      phone_no: "",
+      email: "",
       description: "",
       created_at: "",
       created_by: "Admin",
@@ -48,11 +48,11 @@ const AddNewBroadCaster = (props) => {
     validationSchema: Yup.object({
       name: Yup.string().required("Select broadcaster name"),
       fullname: Yup.string().required("Select broadcaster full name"),
-      address: Yup.string().required("Select address"),
-      contactperson: Yup.string().required("Select contact person"),
-      mobile: Yup.string().required("Select mobile no"),
-      phone: Yup.string().required("Select phone number"),
-      emailaddress: Yup.string().required("Select email"),
+      addr: Yup.string().required("Select address"),
+      contact_person: Yup.string().required("Select contact person"),
+      mobile_no: Yup.string().required("Select mobile no"),
+      phone_no: Yup.string().required("Select phone number"),
+      email: Yup.string().required("Select email"),
       status: Yup.string().required("Select status"),
       description: Yup.string().required("Select description"),
     }),
@@ -61,11 +61,11 @@ const AddNewBroadCaster = (props) => {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         fullname: values["fullname"],
-        address: values["address"],
-        contactperson: values["contact"],
-        mobile: values["mobile"],
-        phone: values["phone"],
-        emailaddress: values["emailaddress"],
+        addr: values["addr"],
+        contact_person: values["contact_person"],
+        mobile_no: values["mobile_no"],
+        phone_no: values["phone_no"],
+        email: values["email"],
         description: values["description"],
         status: values["status"],
         created_at: new Date(),
@@ -124,6 +124,9 @@ const AddNewBroadCaster = (props) => {
                 ) : null}
               </div>
             </Col>
+            {console.log(
+              "Add New BroadCaster name type: " + typeof validation.values.name
+            )}
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">Full-Name<span style={{ color: 'red' }}>*</span></Label>
@@ -147,39 +150,55 @@ const AddNewBroadCaster = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Contact Person<span style={{ color: 'red' }}>*</span></Label>
                 <Input
-                  name="contactperson"
-                  label="contactperson"
+                  name="contact_person"
+                  // label="contactperson"
                   type="text"
                   placeholder="Select contact person name"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.contactperson || ""}
+                  value={validation.values.contact_person || ""}
+                  invalid={
+                    validation.touched.contact_person &&
+                      validation.errors.contact_person
+                      ? true
+                      : false
+                  }
                 ></Input>
-                {validation.touched.contactperson &&
-                  validation.errors.contactperson ? (
+                {validation.touched.contact_person &&
+                  validation.errors.contact_person ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.contactperson}
+                    {validation.errors.contact_person}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
+            {console.log("Add New BroadCaster Contact_person: " + validation.values.contact_person)}
+            {console.log(
+              "Add New BroadCaster Contact_person type: " + typeof validation.values.contact_person
+            )}
           </Row>
           <Row>
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">Mobile No.<span style={{ color: 'red' }}>*</span></Label>
                 <Input
-                  name="mobile"
+                  name="mobile_no"
                   type="text"
                   placeholder="Enter mobile  number"
                   // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.mobile || ""}
+                  value={validation.values.mobile_no || ""}
+                  invalid={
+                    validation.touched.mobile_no &&
+                      validation.errors.mobile_no
+                      ? true
+                      : false
+                  }
                 ></Input>
-                {validation.touched.mobile && validation.errors.mobile ? (
+                {validation.touched.mobile_no && validation.errors.mobile_no ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.mobile}
+                    {validation.errors.mobile_no}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -188,17 +207,17 @@ const AddNewBroadCaster = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Phone No.</Label>
                 <Input
-                  name="phone"
+                  name="phone_no"
                   type="text"
                   placeholder="Enter phone number"
                   // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.phone || ""}
+                  value={validation.values.phone_no || ""}
                 ></Input>
-                {validation.touched.phone && validation.errors.phone ? (
+                {validation.touched.phone_no && validation.errors.phone_no ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.phone}
+                    {validation.errors.phone_no}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -207,18 +226,18 @@ const AddNewBroadCaster = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Email address<span style={{ color: 'red' }}>*</span></Label>
                 <Input
-                  name="emailaddress"
+                  name="email"
                   type="text"
                   placeholder="Enter email"
                   // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.emailaddress || ""}
+                  value={validation.values.email || ""}
                 ></Input>
-                {validation.touched.emailaddress &&
-                  validation.errors.emailaddress ? (
+                {validation.touched.email &&
+                  validation.errors.email ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.emailaddress}
+                    {validation.errors.email}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -229,16 +248,22 @@ const AddNewBroadCaster = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Address<span style={{ color: 'red' }}>*</span></Label>
                 <Input
-                  name="address"
+                  name="addr"
                   placeholder="Enter address"
                   // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.address || ""}
+                  value={validation.values.addr || ""}
+                  invalid={
+                    validation.touched.addr &&
+                      validation.errors.addr
+                      ? true
+                      : false
+                  }
                 ></Input>
-                {validation.touched.address && validation.errors.address ? (
+                {validation.touched.addr && validation.errors.add ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.address}
+                    {validation.errors.addr}
                   </FormFeedback>
                 ) : null}
               </div>

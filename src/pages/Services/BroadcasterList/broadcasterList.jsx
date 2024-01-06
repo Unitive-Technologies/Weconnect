@@ -153,7 +153,7 @@ const BroadcasterList = (props) => {
       },
       {
         Header: "Contact Person",
-        accessor: "contactperson",
+        accessor: "contact_person",
         filterable: true,
         Cell: (cellProps) => {
           return <ContactPerson {...cellProps} />;
@@ -161,7 +161,7 @@ const BroadcasterList = (props) => {
       },
       {
         Header: "Mobile",
-        accessor: "mobile",
+        accessor: "mobile_no",
         filterable: true,
         Cell: (cellProps) => {
           return <Mobile {...cellProps} />;
