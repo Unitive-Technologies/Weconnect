@@ -5,6 +5,9 @@ import {
   UPDATE_CUSTOMERUSER,
   UPDATE_CUSTOMERUSER_SUCCESS,
   UPDATE_CUSTOMERUSER_FAIL,
+  GET_CUSTOMERUSERS_SETTINGS,
+  GET_CUSTOMERUSERS_SETTINGS_FAIL,
+  GET_CUSTOMERUSERS_SETTINGS_SUCCESS,
 } from "./actionTypes";
 
 export const getCustomerUsers = () => ({
@@ -36,5 +39,22 @@ export const updateCustomerUserSuccess = (customerUser) => ({
 
 export const updateCustomerUserFail = (error) => ({
   type: UPDATE_CUSTOMERUSER_FAIL,
+  payload: error,
+});
+
+export const getCustomerUsersSettings = () => ({
+  type: GET_CUSTOMERUSERS_SETTINGS,
+});
+
+export const getCustomerUsersSettingsSuccess = (customerUsersSettings) => {
+  console.log("Received Customer Users Settings:", customerUsersSettings);
+  return {
+    type: GET_CUSTOMERUSERS_SETTINGS_SUCCESS,
+    payload: customerUsersSettings,
+  };
+};
+
+export const getCustomerUsersSettingsFail = (error) => ({
+  type: GET_CUSTOMERUSERS_SETTINGS_FAIL,
   payload: error,
 });

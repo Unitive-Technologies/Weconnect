@@ -1,18 +1,25 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_CUSTOMERUSERS, UPDATE_CUSTOMERUSER } from "./actionTypes";
+import {
+  GET_CUSTOMERUSERS,
+  UPDATE_CUSTOMERUSER,
+  GET_CUSTOMERUSERS_SETTINGS,
+} from "./actionTypes";
 
 import {
   getCustomerUsersSuccess,
   getCustomerUsersFail,
   updateCustomerUserFail,
   updateCustomerUserSuccess,
+  getCustomerUsersSettingsSuccess,
+  getCustomerUsersSettingsFail,
 } from "./actions";
 
 //Include Both Helper File with needed methods
 import {
   getCustomerUsers,
   updateCustomerUser,
+  getCustomerUsersSettings,
 } from "../../helpers/fakebackend_helper";
 
 const convertCustomerUsersListObject = (customerUserList) => {
@@ -72,9 +79,21 @@ function* onUpdateCustomerUser({ payload: customerUser }) {
   }
 }
 
+function* fetchCustomerUsersSettings() {
+  try {
+    const response = yield call(getCustomerUsersSettings);
+    console.log("CusUser Setting response:" + JSON.stringify(response));
+    // const customerUserList = convertCustomerUsersListObject(response.data);
+    yield put(getCustomerUsersSettingsSuccess(response.data));
+  } catch (error) {
+    yield put(getCustomerUsersSettingsFail(error));
+  }
+}
+
 function* customerUsersSaga() {
   yield takeEvery(GET_CUSTOMERUSERS, fetchCustomerUsers);
   yield takeEvery(UPDATE_CUSTOMERUSER, onUpdateCustomerUser);
+  yield takeEvery(GET_CUSTOMERUSERS_SETTINGS, fetchCustomerUsersSettings);
 }
 
 export default customerUsersSaga;

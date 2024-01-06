@@ -42,12 +42,13 @@ const ViewCustomerUserModal = (props) => {
       mobile: (customeruser && customeruser.mobile_no) || "",
       email: (customeruser && customeruser.email) || "",
       status: (customeruser && customeruser.status) || "",
-      lco: (customeruser && customeruser.lco) || "",
-      lcocode: (customeruser && customeruser.lcocode) || "",
+      // lco: (customeruser && customeruser.operator.name) || "",
+      // lcocode: (customeruser && customeruser.operator.code) || "",
       block_message: (customeruser && customeruser.block_message) || "",
     },
     validationSchema: Yup.object({
       status: Yup.string().required("Please Enter Status"),
+      // block_message: Yup.string().required("Please Enter Block Message"),
     }),
     onSubmit: (values) => {
       const updateCustomerUser = {

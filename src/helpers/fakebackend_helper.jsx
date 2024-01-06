@@ -228,6 +228,8 @@ export const getUsers = () => get(url.GET_USERS);
 export const getCustomerUsers = () => get(url.GET_CUSTOMERUSERS);
 export const updateCustomerUser = (customerUser, id) =>
   put(url.UPDATE_CUSTOMERUSER(id), customerUser);
+export const getCustomerUsersSettings = () =>
+  get(url.GET_CUSTOMERUSERS_SETTINGS);
 
 export const getGroupPolicy = () => get(url.GET_GROUPPOLICY);
 export const addNewGroupPolicy = (groupPolicy) =>

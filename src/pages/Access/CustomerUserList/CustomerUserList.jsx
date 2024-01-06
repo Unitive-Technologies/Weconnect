@@ -9,7 +9,10 @@ import { Email } from "./customerUserlistCol";
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 
-import { getCustomerUsers as onGetCustomerUsers } from "/src/store/customerusers/actions";
+import {
+  getCustomerUsers as onGetCustomerUsers,
+  getCustomerUsersSettings as onGetCustomerUsersSettings,
+} from "/src/store/customerusers/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -31,6 +34,7 @@ const CustomerUserList = (props) => {
     (customerUsers) => ({
       cusUsers: customerUsers.customerUsers,
       loading: customerUsers.loading,
+      cusUsersSettings: customerUsers.customerUsersSettings,
     })
   );
   const selectUsersState = (state) => state.users;
@@ -40,7 +44,9 @@ const CustomerUserList = (props) => {
     // userMsoDetails: Users.userMsoDetails,
     // userDistributor: Users.userDistributor,
   }));
-  const { cusUsers, loading } = useSelector(customerUsersProperties);
+  const { cusUsers, loading, cusUsersSettings } = useSelector(
+    customerUsersProperties
+  );
   const { userStatus } = useSelector(UsersProperties);
   console.log("customer: " + JSON.stringify(cusUsers));
 
@@ -210,6 +216,7 @@ const CustomerUserList = (props) => {
     if (cusUsers && !cusUsers.length) {
       dispatch(onGetCustomerUsers());
       dispatch(onGetUserStatus());
+      dispatch(onGetCustomerUsersSettings());
     }
   }, [dispatch, cusUsers]);
 
@@ -261,7 +268,8 @@ const CustomerUserList = (props) => {
       <BulkInactiveCustomerList
         isOpen={showBulkActiveModal}
         handleShowBulkActiveUser={handleShowBulkActiveUser}
-        user={filteredUsers}
+        users={filteredUsers}
+        cusUsersSettings={cusUsersSettings}
       />
       <div className="page-content">
         <Container fluid>
