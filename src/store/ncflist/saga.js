@@ -40,6 +40,10 @@ const convertNcfListObject = (ncflist) => {
       created_at: ncf.created_at,
       created_by: ncf.created_by === -1 ? "console" : "other",
       status_lbl: ncf.status_lbl,
+      additional_rates: ncf.additional_rates,
+      _id: ncf.additional_rates._id,
+      ncf_id: ncf.additional_rates.ncf_id,
+      operator_id: ncf.additional_rates.operator_id,
     };
   });
 };
