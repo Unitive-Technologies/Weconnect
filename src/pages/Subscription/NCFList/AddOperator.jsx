@@ -66,26 +66,13 @@ const AddOperators = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.name}
-                </Link>
-              </h5>
-            </>
+            <p className="text-muted mb-0">{cellProps.row.original.name}</p>
           );
         },
       },
       {
         Header: "Code",
+        accessor: "code",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -95,7 +82,7 @@ const AddOperators = (props) => {
       },
       {
         Header: "Type",
-        // accessor: "status",
+        accessor: "type_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -105,7 +92,7 @@ const AddOperators = (props) => {
       },
       {
         Header: "Reginal Officer",
-        // accessor: "status",
+        accessor: "branch_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -117,7 +104,7 @@ const AddOperators = (props) => {
       },
       {
         Header: "Distributor",
-        // accessor: "status",
+        accessor: "distributor_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -144,16 +131,21 @@ const AddOperators = (props) => {
     >
       <Card toggle={toggle}>
         <CardBody>
-          <TableContainer
-            isPagination={true}
-            columns={columns}
-            data={operatorforbulkassign}
-            isShowingPageLength={true}
-            tableClass="table align-middle table-nowrap table-hover"
-            theadClass="table-light"
-            paginationDiv="col-sm-12 col-md-7"
-            pagination="pagination pagination-rounded justify-content-end mt-4"
-          />
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <TableContainer
+              isPagination={true}
+              columns={columns}
+              data={operatorforbulkassign}
+              isGlobalFilter={true}
+              isShowingPageLength={true}
+              tableClass="table align-middle table-nowrap table-hover"
+              theadClass="table-light"
+              paginationDiv="col-sm-12 col-md-7"
+              pagination="pagination pagination-rounded justify-content-end mt-4"
+            />
+          )}
         </CardBody>
       </Card>
     </Modal>
