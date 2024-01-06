@@ -112,14 +112,9 @@ export const ADD_USERHIERARCHY = "/add/userhierarchy";
 
 export const GET_BROADCASTER =
   "/broadcaster?expand=created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
-<<<<<<< Updated upstream
 export const GET_BROADCASTER_STATUS = "/list/status?fields=id,name&vr=web1.0";
-export const ADD_NEW_BROADCASTER = "/add/broadcasterlist";
-=======
-export const GET_BROADCASTER_STATUS =
-  "/list/status?fields=id,name&vr=web1.0";
+"/list/status?fields=id,name&vr=web1.0";
 export const ADD_NEW_BROADCASTER = "/broadcaster?vr=web1.0";
->>>>>>> Stashed changes
 
 export const GET_GENRELIST =
   "/genre?expand=created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
