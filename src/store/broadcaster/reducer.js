@@ -1,11 +1,15 @@
 import {
-  GET_BROADCASTER_SUCCESS, GET_BROADCASTER_FAIL,
+  GET_BROADCASTER_SUCCESS,
+  GET_BROADCASTER_FAIL,
+  GET_BROADCASTER_STATUS_SUCCESS,
+  GET_BROADCASTER_STATUS_FAIL,
   ADD_BROADCASTER_SUCCESS,
   ADD_BROADCASTER_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
   broadCasters: [],
+  broadCastersStatus: [],
   error: {},
   loading: true,
 };

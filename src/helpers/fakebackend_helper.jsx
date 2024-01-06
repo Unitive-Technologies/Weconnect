@@ -306,6 +306,7 @@ export const updateRegionalOffice = (regionaloffice) =>
   put(url.UPDATE_REGIONALOFFICE, regionaloffice);
 
 export const getBroadCasters = () => get(url.GET_BROADCASTER);
+export const getBroadCastersStatus = () => get(url.GET_BROADCASTER_STATUS);
 export const addNewBroadCaster = (broadcast) =>
   post(url.ADD_NEW_BROADCASTER, broadcast);
 
