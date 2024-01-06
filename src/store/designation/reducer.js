@@ -9,6 +9,8 @@ import {
   GET_DESIGNATION_TYPE_SUCCESS,
   GET_DESIGNATION_PARENT_FAIL,
   GET_DESIGNATION_PARENT_SUCCESS,
+  UPDATE_DESIGNATION_SUCCESS,
+  UPDATE_DESIGNATION_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -78,7 +80,6 @@ const Designation = (state = INIT_STATE, action) => {
         error: action.payload,
       };
 
-
     case ADD_DESIGNATION_SUCCESS:
       return {
         ...state,
@@ -86,6 +87,22 @@ const Designation = (state = INIT_STATE, action) => {
       };
 
     case ADD_DESIGNATION_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case UPDATE_DESIGNATION_SUCCESS:
+      return {
+        ...state,
+        designation: state.designation.map((desig) =>
+          desig.id.toString() === action.payload.id.toString()
+            ? { desig, ...action.payload }
+            : desig
+        ),
+      };
+
+    case UPDATE_DESIGNATION_FAIL:
       return {
         ...state,
         error: action.payload,

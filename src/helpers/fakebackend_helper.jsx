@@ -241,6 +241,8 @@ export const addNewDesignation = (designation) =>
 export const getDesignationStatus = () => get(url.GET_DESIGNATION_STATUS);
 export const getDesignationType = () => get(url.GET_DESIGNATION_TYPE);
 export const getDesignationParent = () => get(url.GET_DESIGNATION_PARENT);
+export const updateDesignation = (designation, id) =>
+  put(url.UPDATE_DESIGNATION(id), designation);
 
 export const getNotificationTemplate = () => get(url.GET_NOTIFICATIONTEMPLATE);
 export const getNotificationTemplateType = () =>

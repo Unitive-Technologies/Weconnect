@@ -6,6 +6,7 @@ import {
   GET_DESIGNATION_STATUS,
   GET_DESIGNATION_TYPE,
   GET_DESIGNATION_PARENT,
+  UPDATE_DESIGNATION,
 } from "./actionTypes";
 
 import {
@@ -19,6 +20,8 @@ import {
   getDesignationTypeSuccess,
   getDesignationParentFail,
   getDesignationParentSuccess,
+  updateDesignationFail,
+  updateDesignationSuccess,
 } from "./actions";
 
 //Include Both Helper File with needed methods
@@ -28,7 +31,7 @@ import {
   getDesignationStatus,
   getDesignationType,
   getDesignationParent,
-
+  updateDesignation,
 } from "../../helpers/fakebackend_helper";
 import { toast } from "react-toastify";
 
@@ -45,20 +48,20 @@ const convertDesignationListObject = (designationList) => {
         designation.type === 0
           ? "Staff"
           : designation.type === 1
-            ? "Management User"
-            : designation.type === 2
-              ? "Engineer"
-              : designation.type === 3
-                ? "customer care"
-                : designation.type === 4
-                  ? "Collection"
-                  : "LCO",
+          ? "Management User"
+          : designation.type === 2
+          ? "Engineer"
+          : designation.type === 3
+          ? "customer care"
+          : designation.type === 4
+          ? "Collection"
+          : "LCO",
       status:
         designation.status === 1
           ? "ACTIVE"
           : district.status === 2
-            ? "INACTIVE"
-            : "BLOCKED",
+          ? "INACTIVE"
+          : "BLOCKED",
       type_lbl: designation.type_lbl,
       created_at: designation.created_at,
       created_by: designation.created_by,
@@ -126,12 +129,26 @@ function* onAddNewDesignation({ payload: designation }) {
   }
 }
 
+function* onUpdateDesignation({ payload: designation }) {
+  console.log("designation in onUpdate:" + JSON.stringify(designation));
+  try {
+    const response = yield call(updateDesignation, designation, designation.id);
+    yield put(updateDesignationSuccess(response));
+    console.log("update response:" + JSON.stringify(response));
+    // toast.success("Designation Updated Successfully", { autoClose: 2000 });
+  } catch (error) {
+    yield put(updateDesignationFail(error));
+    // toast.error("Designation Updated Failed", { autoClose: 2000 });
+  }
+}
+
 function* designationSaga() {
   yield takeEvery(GET_DESIGNATION, fetchDesignation);
   yield takeEvery(ADD_NEW_DESIGNATION, onAddNewDesignation);
   yield takeEvery(GET_DESIGNATION_STATUS, fetchDesignationStatus);
   yield takeEvery(GET_DESIGNATION_TYPE, fetchDesignationType);
   yield takeEvery(GET_DESIGNATION_PARENT, fetchDesignationParent);
+  yield takeEvery(UPDATE_DESIGNATION, onUpdateDesignation);
 }
 
 export default designationSaga;

@@ -16,10 +16,20 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { updateUser as onUpdateUser } from "/src/store/users/actions";
+import {
+  updateDesignation as onUpdateDesignation,
+  getDesignation as onGetDesignation,
+} from "/src/store/designation/actions";
 
 const ViewDesignation = (props) => {
-  const { isOpen, handleViewDesignation, designation } = props;
+  const {
+    isOpen,
+    handleViewDesignation,
+    designation,
+    desigStatus,
+    desigType,
+    desigParent,
+  } = props;
   const dispatch = useDispatch();
   const [showEditDesignation, setShowEditDesignation] = useState(false);
   // console.log("Designatin in View Designation: ", designation);
@@ -34,8 +44,6 @@ const ViewDesignation = (props) => {
       parent: (designation && designation.parent) || "",
       status: (designation && designation.status) || "",
       description: (designation && designation.description) || "",
-      created_at: (designation && designation.created_at) || "",
-      created_by: (designation && designation.created_by) || "my mso(mso)",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter designation name"),
@@ -49,16 +57,15 @@ const ViewDesignation = (props) => {
       const updateDesignation = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
-        type: values["type"],
+        type: parseInt(values["type"]),
         code: values["code"],
-        parent: values["parent"],
-        status: values["status"],
+        parent_id: parseInt(values["parent"]),
+        status: parseInt(values["status"]),
         description: values["description"],
-        created_at: new Date(),
-        created_by: values["created_by"],
       };
-      // console.log("new district:" + updateCity);
-      dispatch(onAddDistrict(updateDesignation));
+
+      dispatch(onUpdateDesignation(updateDesignation));
+      dispatch(onGetDesignation());
       validation.resetForm();
       handleViewDesignation();
     },
@@ -114,7 +121,7 @@ const ViewDesignation = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Designation</Label>
                 <Input
-                  name="designation"
+                  name="name"
                   type="text"
                   placeholder="Enter designation name"
                   onChange={validation.handleChange}
@@ -172,9 +179,12 @@ const ViewDesignation = (props) => {
                   value={validation.values.status || ""}
                   disabled={!showEditDesignation}
                 >
-                  <option value="">Select status</option>
-                  <option value="ACTIVE">Active</option>
-                  <option value="INACTIVE">Inactive</option>
+                  {desigStatus &&
+                    desigStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
@@ -198,13 +208,12 @@ const ViewDesignation = (props) => {
                   value={validation.values.type || ""}
                   disabled={!showEditDesignation}
                 >
-                  <option value="">Select Type</option>
-                  <option value="Staff">Staff</option>
-                  <option value="management user">Management User</option>
-                  <option value="engineer">Engineer</option>
-                  <option value="customer care">customer care</option>
-                  <option value="collection">Collection</option>
-                  <option value="lco">LCO</option>
+                  {desigType &&
+                    desigType.map((type) => (
+                      <option key={type.id} value={type.id}>
+                        {type.value}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.type && validation.errors.type ? (
                   <FormFeedback type="invalid">
@@ -226,8 +235,12 @@ const ViewDesignation = (props) => {
                   value={validation.values.parent || ""}
                   disabled={!showEditDesignation}
                 >
-                  <option value="">Select Parent designation</option>
-                  <option value="0">Director</option>
+                  {desigParent &&
+                    desigParent.map((parent) => (
+                      <option key={parent.id} value={parent.id}>
+                        {parent.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.parent && validation.errors.parent ? (
                   <FormFeedback type="invalid">

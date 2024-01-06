@@ -17,7 +17,6 @@ import {
   getDesignationStatus as onGetDesignationStatus,
   getDesignationType as onGetDesignationType,
   getDesignationParent as onGetDesignationParent,
-
 } from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
@@ -44,19 +43,18 @@ const DesignationList = (props) => {
     })
   );
 
-  const { desigList, loading, desigStatus, desigType, desigParent } = useSelector(
-    designationProperties
-  );
+  const { desigList, loading, desigStatus, desigType, desigParent } =
+    useSelector(designationProperties);
 
   const [isLoading, setLoading] = useState(loading);
   const [showAddDesignation, setShowAddDesignation] = useState(false);
   const [showViewDesignation, setShowViewDesignation] = useState(false);
   const [viewDesignationData, setViewDesignationData] = useState({});
 
-  const handleViewDesignation = (userData) => {
-    console.log("User Data: ", userData);
+  const handleViewDesignation = (row) => {
+    console.log("row: ", row);
     setShowViewDesignation(!showViewDesignation);
-    setViewDesignationData(userData);
+    setViewDesignationData(row);
   };
 
   const columns = useMemo(
@@ -89,10 +87,10 @@ const DesignationList = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleViewDesignation(userData);
-                }}
+                // onClick={() => {
+                //   const userData = cellProps.row.original;
+                //   handleViewDesignation(userData);
+                // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -234,6 +232,9 @@ const DesignationList = (props) => {
         isOpen={showViewDesignation}
         handleViewDesignation={handleViewDesignation}
         designation={viewDesignationData}
+        desigStatus={desigStatus}
+        desigType={desigType}
+        desigParent={desigParent}
       />
       {console.log("desigStatus:" + JSON.stringify(desigStatus))}
       <AddNewDesignation
@@ -242,7 +243,6 @@ const DesignationList = (props) => {
         desigStatus={desigStatus}
         desigType={desigType}
         desigParent={desigParent}
-
       />
       <div className="page-content">
         <Container fluid>
@@ -264,6 +264,10 @@ const DesignationList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
+                      handleRowClick={(row) => {
+                        // console.log("row:" + JSON.stringify(row));
+                        handleViewDesignation(row);
+                      }}
                       handleDesignationClick={() => setShowAddDesignation(true)}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"

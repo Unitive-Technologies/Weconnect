@@ -81,10 +81,10 @@ const CustomerUserList = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleViewCustomerUser(userData);
-                }}
+                // onClick={() => {
+                //   const userData = cellProps.row.original;
+                //   handleViewCustomerUser(userData);
+                // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -225,9 +225,9 @@ const CustomerUserList = (props) => {
   };
   const [viewCustomerUser, setViewCustomerUser] = useState({});
 
-  const handleViewCustomerUser = (userData) => {
+  const handleViewCustomerUser = (row) => {
     setViewCustomerUserModal(!viewCustomerUserModal);
-    setViewCustomerUser(userData);
+    setViewCustomerUser(row);
   };
 
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -290,6 +290,10 @@ const CustomerUserList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
+                      handleRowClick={(row) => {
+                        // console.log("row:" + JSON.stringify(row));
+                        handleViewCustomerUser(row);
+                      }}
                       // iscustomPageSizeOptions={true}
                       customPageSize={5}
                       tableClass="table align-middle table-nowrap table-hover"

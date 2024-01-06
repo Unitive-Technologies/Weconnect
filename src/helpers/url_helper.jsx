@@ -15,6 +15,7 @@ export const POST_EDIT_PROFILE = "/post-fake-profile";
 export const GET_CUSTOMERUSERS =
   "/user?expand=setting,group_lbl,access_level,role_lbl,status_lbl,type_lbl,operator_lbl,operator,created_by_lbl,parent_lbl&filter[role]=4&page=1&per-page=500&vr=web1.0";
 export const UPDATE_CUSTOMERUSER = (id) => `/user/${id}?vr=web1.0`;
+
 export const GET_CUSTOMERUSERS_SETTINGS =
   "/user?expand=role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[id]=2&filter[status]=0&filter[role]=4&page=1&per-page=500&vr=web1.0";
 export const GET_GROUPPOLICY =
@@ -27,6 +28,7 @@ export const GET_DESIGNATION_TYPE = "/user-designation/destype-list?vr=web1.0";
 export const GET_DESIGNATION_PARENT =
   "/user-designation?field=id,name&vr=web1.0";
 export const ADD_NEW_DESIGNATION = "/user-designation?vr=web1.0";
+export const UPDATE_DESIGNATION = (id) => `user-designation/${id}?vr=web1.0`;
 
 export const GET_NOTIFICATIONTEMPLATE =
   "/announcement-template?expand=status_lbl,created_by_lbl,created_at_lbl,msg_type_lbl&page=1&per-page=50&vr=web1.0";
