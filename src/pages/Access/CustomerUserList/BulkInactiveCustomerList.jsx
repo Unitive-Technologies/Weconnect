@@ -409,7 +409,7 @@ const BulkInactiveCustomerList = (props) => {
           setTableList(response.data.data);
         } else if (selectedStatusToSet === "inactive") {
           const response = await axios.get(
-            `${API_URL}/user?expand=role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[id]=2&filter[status]=1,-7&notfilter[role]=4&page=1&per-page=500&vr=web1.0`,
+            `${API_URL}/user?expand=role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[id]=2&filter[status]=1,-7&filter[role]=4&page=1&per-page=500&vr=web1.0`,
             {
               headers: {
                 Authorization: token,
@@ -420,7 +420,7 @@ const BulkInactiveCustomerList = (props) => {
           setTableList(response.data.data);
         } else if (selectedStatusToSet === "block") {
           const response = await axios.get(
-            `${API_URL}/user?expand=role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[id]=2&filter[status]=0,1&notfilter[role]=4&page=1&per-page=500&vr=web1.0`,
+            `${API_URL}/user?expand=role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[id]=2&filter[status]=0,1&filter[role]=4&page=1&per-page=500&vr=web1.0`,
             {
               headers: {
                 Authorization: token,
@@ -431,7 +431,7 @@ const BulkInactiveCustomerList = (props) => {
           setTableList(response.data.data);
         } else {
           const response = await axios.get(
-            `${API_URL}/user?expand=role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[id]=2&filter[status]=-7&notfilter[role]=4&page=1&per-page=500&vr=web1.0`,
+            `${API_URL}/user?expand=role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[id]=2&filter[status]=-7&filter[role]=4&page=1&per-page=500&vr=web1.0`,
             {
               headers: {
                 Authorization: token,
