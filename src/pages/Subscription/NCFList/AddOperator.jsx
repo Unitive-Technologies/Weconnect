@@ -24,9 +24,9 @@ const AddOperators = (props) => {
   const { operatorforbulkassign, loading } = useSelector(OperatorProperties);
 
   useEffect(() => {
-    // if (operatorforbulkassign && !operatorforbulkassign.length) {
-    dispatch(onGetOperatorForBulkAssign());
-    // }
+    if (operatorforbulkassign && !operatorforbulkassign.length) {
+      dispatch(onGetOperatorForBulkAssign());
+    }
   }, [dispatch, operatorforbulkassign]);
 
   const columns = useMemo(
@@ -62,6 +62,7 @@ const AddOperators = (props) => {
 
       {
         Header: "Name",
+        accessor: "name",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -76,7 +77,7 @@ const AddOperators = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"Name"}
+                  {cellProps.row.original.name}
                 </Link>
               </h5>
             </>
@@ -88,21 +89,7 @@ const AddOperators = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"Code"}
-                </Link>
-              </h5>
-            </>
+            <p className="text-muted mb-0">{cellProps.row.original.code}</p>
           );
         },
       },
@@ -112,21 +99,7 @@ const AddOperators = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"Type"}
-                </Link>
-              </h5>
-            </>
+            <p className="text-muted mb-0">{cellProps.row.original.type_lbl}</p>
           );
         },
       },
@@ -136,21 +109,9 @@ const AddOperators = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"Reginal Officer"}
-                </Link>
-              </h5>
-            </>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.branch_lbl}
+            </p>
           );
         },
       },
@@ -160,21 +121,9 @@ const AddOperators = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"distributor"}
-                </Link>
-              </h5>
-            </>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.distributor_lbl}
+            </p>
           );
         },
       },
@@ -183,10 +132,18 @@ const AddOperators = (props) => {
   );
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle}>
+    <Modal
+      isOpen={isOpen}
+      role="dialog"
+      autoFocus={true}
+      centered={true}
+      className="exampleModal"
+      tabIndex="-1"
+      toggle={toggle}
+      size="xl"
+    >
       <Card toggle={toggle}>
         <CardBody>
-          {console.log("Operators for Bulk Asign: ", operatorforbulkassign)}
           <TableContainer
             isPagination={true}
             columns={columns}

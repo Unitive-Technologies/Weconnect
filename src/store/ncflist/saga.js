@@ -44,6 +44,21 @@ const convertNcfListObject = (ncflist) => {
   });
 };
 
+const convertOperatorForAssignListObject = (operatorforassign) => {
+  return operatorforassign.map((operator) => {
+    return {
+      ...operator,
+      id: operator.id,
+      name: operator.name,
+      code: operator.code,
+      status_lbl: operator.status_lbl,
+      branch_lbl: operator.branch_lbl,
+      type_lbl: operator.type_lbl,
+      distributor_lbl: operator.distributor_lbl,
+    };
+  });
+};
+
 function* fetchNcf() {
   try {
     const response = yield call(getNcf);
@@ -66,8 +81,8 @@ function* onAddNcf({ payload: ncf }) {
 function* fetchOperatorForBulkAssign() {
   try {
     const response = yield call(getOperatorForBulkAssign);
-    console.log("fetch Operator For BulkAssign in ncf", response.data);
-    yield put(getOperatorForBulkAssignSuccess(response.data));
+    const operatorforassign = convertOperatorForAssignListObject(response.data);
+    yield put(getOperatorForBulkAssignSuccess(operatorforassign));
   } catch (error) {
     console.log("error in fetch Operator For BulkAssign at ncf", error);
     yield put(getOperatorForBulkAssignFail(error));
