@@ -13,6 +13,7 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import { getNcf as onGetNcf } from "/src/store/actions";
 import { addNcf as onAddNcf } from "/src/store/ncflist/actions";
 import { useSelector, useDispatch } from "react-redux";
 import AddMultipleNcf from "./AddMultipleNcf";
@@ -38,6 +39,9 @@ const AddNewNcf = (props) => {
       lmo_rate: "",
       created_at: "",
       created_by: "my mso(mso)",
+      _id: "",
+      ncf_id: "",
+      operator_id: [],
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
@@ -68,10 +72,12 @@ const AddNewNcf = (props) => {
         lmo_rate: values["lmo_rate"],
         created_at: new Date(),
         created_by: values["created_by"],
+        ncf_id: values["id"],
+        operator_id: values["operator_id"],
       };
       console.log("New NCF:" + JSON.stringify(newNcf));
-      // save new user
       dispatch(onAddNcf(newNcf));
+      dispatch(onGetNcf());
       validation.resetForm();
       toggle();
     },
@@ -178,7 +184,6 @@ const AddNewNcf = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
               <div className="mb-3">
                 <Label className="form-label">
                   To Channel<span style={{ color: "red" }}>*</span>
