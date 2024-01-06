@@ -1,11 +1,13 @@
 import {
   GET_GENRELIST_SUCCESS, GET_GENRELIST_FAIL,
+  GET_GENRELIST_STATUS_SUCCESS, GET_GENRELIST_STATUS_FAIL,
   ADD_GENRELIST_SUCCESS,
   ADD_GENRELIST_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
   genreList: [],
+  genreListStatus: [],
   error: {},
   loading: true,
 };
@@ -21,6 +23,20 @@ const GenreList = (state = INIT_STATE, action) => {
       };
 
     case GET_GENRELIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_GENRELIST_STATUS_SUCCESS:
+      console.log("Genre List data in reducer:", action.payload);
+      return {
+        ...state,
+        genreListStatus: action.payload,
+        loading: false,
+      };
+
+    case GET_GENRELIST_STATUS_FAIL:
       return {
         ...state,
         error: action.payload,

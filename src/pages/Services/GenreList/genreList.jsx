@@ -38,7 +38,7 @@ import {
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
 
-import { getGenreList as onGetGenreList } from "/src/store/genre/actions";
+import { getGenreList as onGetGenreList, getGenreListStatus as onGetGenreListStatus } from "/src/store/genre/actions";
 import { isEmpty } from "lodash";
 
 //redux
@@ -58,10 +58,11 @@ const GenreList = (props) => {
   const selectGenreState = (state) => state.genreList;
   const GenreProperties = createSelector(selectGenreState, (Genre) => ({
     genrelist: Genre.genreList,
+    genrelistStatus: Genre.genreListStatus,
     loading: Genre.loading,
   }));
 
-  const { genrelist, loading } = useSelector(GenreProperties);
+  const { genrelist, genrelistStatus, loading } = useSelector(GenreProperties);
 
   useEffect(() => {
     console.log("GenreList data in component:", genrelist);
@@ -195,23 +196,12 @@ const GenreList = (props) => {
   useEffect(() => {
     if (genrelist && !genrelist.length) {
       dispatch(onGetGenreList());
+      dispatch(onGetGenreListStatus());
       setIsEdit(false);
     }
   }, [dispatch, genrelist]);
 
-  // useEffect(() => {
-  //   setContact(users);
-  //   setIsEdit(false);
-  // }, [users]);
-
-  // useEffect(() => {
-  //   if (!isEmpty(users) && !!isEdit) {
-  //     setContact(users);
-  //     setIsEdit(false);
-  //   }
-  // }, [users]);
-
-  const toggle = () => {
+  const handleAddGenreList = () => {
     setShowAddNewGenreList(!showAddNewGenreList);
   };
 
@@ -227,22 +217,6 @@ const GenreList = (props) => {
     // toggle();
   };
 
-  // const handleUserClick = (arg) => {
-  //   const user = arg;
-
-  //   setContact({
-  //     id: user.id,
-  //     name: user.name,
-  //     designation: user.designation,
-  //     email: user.email,
-  //     tags: user.tags,
-  //     projects: user.projects,
-  //   });
-  //   setIsEdit(true);
-
-  //   toggle();
-  // };
-
   var node = useRef();
   const onPaginationPageChange = (page) => {
     if (
@@ -255,29 +229,6 @@ const GenreList = (props) => {
       node.current.props.pagination.options.onPageChange(page);
     }
   };
-
-  //delete customer
-  // const [deleteModal, setDeleteModal] = useState(false);
-
-  // const onClickDelete = (users) => {
-  //   setContact(users);
-  //   setDeleteModal(true);
-  // };
-
-  // const handleDeleteUser = () => {
-  //   if (contact && contact.id) {
-  //     dispatch(onDeleteUser(contact.id));
-  //   }
-  //   setContact("");
-  //   onPaginationPageChange(1);
-  //   setDeleteModal(false);
-  // };
-
-  // const handleUserClicks = () => {
-  //   setUserList("");
-  //   setIsEdit(false);
-  //   toggle();
-  // };
 
   const keyField = "id";
 
@@ -299,13 +250,12 @@ const GenreList = (props) => {
     ];
   };
 
-
   return (
     <React.Fragment>
       <ViewGenreList isOpen={showViewGenreList}
         toggle={handleViewGenreList}
         genre={viewGenreList} />
-      <AddNewGenreList isOpen={showAddNewGenreList} toggle={toggle} />
+      <AddNewGenreList isOpen={showAddNewGenreList} handleAddGenreList={handleAddGenreList} genreListStatus={genrelistStatus} />
       <UploadGenreList isOpen={showUploadGenreList} toggle={toggle1} />
 
       <div className="page-content">
