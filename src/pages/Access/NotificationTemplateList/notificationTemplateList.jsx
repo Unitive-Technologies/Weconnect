@@ -38,7 +38,7 @@ const NotificationTemplateList = (props) => {
   const [isChecked, setIsChecked] = useState(true);
   const [selectedRow, setSelectedRow] = useState({});
   const [showBulkModal, setShowBulkModal] = useState(false);
-  const [showPreview, setShowPreview] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
   const handleCheckboxClick = (row) => {
     console.log("button clicked");
     setViewNotificationTemplate(false);
@@ -74,7 +74,9 @@ const NotificationTemplateList = (props) => {
   const handleActionNotification = () => {
     setShowActionNotificationModal(!showActionNotificationModal);
   };
-
+  const handleWarning = () => {
+    setShowWarning(!showWarning);
+  };
   const columns = useMemo(
     () => [
       {
@@ -309,9 +311,12 @@ const NotificationTemplateList = (props) => {
 
       {
         name: "Schedule Notification",
-        action: selectedRow.msg_head
-          ? setShowBulkModal
-          : setShowActionNotificationModal,
+        action:
+          selectedRow.status === 0
+            ? setShowWarning
+            : selectedRow.status === 1
+            ? setShowBulkModal
+            : setShowActionNotificationModal,
         type: "dropdown",
         dropdownName: "Actions",
       },
@@ -334,7 +339,17 @@ const NotificationTemplateList = (props) => {
           <ToastBody>Please select atleast one Notification Template</ToastBody>
         </Toast>
       </div>
-
+      <div
+        className="position-fixed top-0 end-0 p-3"
+        style={{ zIndex: "1005" }}
+      >
+        <Toast isOpen={showWarning}>
+          <ToastHeader toggle={handleWarning}>
+            <i className="mdi mdi-alert-outline me-2"></i> Warning
+          </ToastHeader>
+          <ToastBody>Cannot select InActive Notification Template</ToastBody>
+        </Toast>
+      </div>
       <BulkScheduleNotification
         isOpen={showBulkModal}
         onClose={() => setShowBulkModal(false)}
