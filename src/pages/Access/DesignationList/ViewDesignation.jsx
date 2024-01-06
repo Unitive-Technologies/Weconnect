@@ -55,7 +55,7 @@ const ViewDesignation = (props) => {
     }),
     onSubmit: (values) => {
       const updateDesignation = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
+        id: designation.id,
         name: values["name"],
         type: parseInt(values["type"]),
         code: values["code"],
@@ -74,6 +74,7 @@ const ViewDesignation = (props) => {
   const handleCancel = () => {
     setShowEditDesignation(false);
     handleViewDesignation();
+    dispatch(onGetDesignation());
   };
 
   // console.log("Show Edit city status: ", showEditDesignation);
@@ -282,7 +283,7 @@ const ViewDesignation = (props) => {
               <Col>
                 <ModalFooter>
                   <button type="submit" className="btn btn-success save-user">
-                    Create
+                    Save
                   </button>
                   <button
                     type="reset"

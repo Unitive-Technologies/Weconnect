@@ -119,7 +119,9 @@ const DesignationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.parent}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.parent_lbl}
+            </p>
           );
         },
       },
@@ -137,11 +139,11 @@ const DesignationList = (props) => {
       },
       {
         Header: "Type",
-        accessor: "type",
+        // accessor: "type",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.type}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.type_lbl}</p>
           );
         },
       },
@@ -151,7 +153,9 @@ const DesignationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.status}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.status_lbl}
+            </p>
           );
         },
       },
@@ -169,12 +173,12 @@ const DesignationList = (props) => {
       },
       {
         Header: "Created By",
-        accessor: "created_by",
+        // accessor: "created_by",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.created_by}
+              {cellProps.row.original.created_by_lbl}
             </p>
           );
         },
