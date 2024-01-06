@@ -533,7 +533,8 @@ const BulkInactiveUserModal = (props) => {
                 <Col lg={4}>
                   <div className="mb-3">
                     <Label className="form-label">
-                      Status To Set<span style={{ color: "red" }}>*</span>
+                      Select Status To Set
+                      <span style={{ color: "red" }}>*</span>
                     </Label>
                     <Input
                       name="statustoset"

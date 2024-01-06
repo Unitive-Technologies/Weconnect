@@ -132,6 +132,20 @@ const BulkInactiveCustomerList = (props) => {
   const columns = useMemo(
     () => [
       {
+        Header: ".",
+        disableFilters: true,
+        filterable: true,
+
+        Cell: (cellProps) => (
+          <input
+            type="checkbox"
+            disabled
+            checked
+            // onClick={() => handleActive(cellProps.row.original)}
+          />
+        ),
+      },
+      {
         Header: "#",
         disableFilters: true,
         filterable: true,
@@ -477,7 +491,8 @@ const BulkInactiveCustomerList = (props) => {
                 <Col lg={4}>
                   <div className="mb-3">
                     <Label className="form-label">
-                      Status To Set<span style={{ color: "red" }}>*</span>
+                      Select Status To Set
+                      <span style={{ color: "red" }}>*</span>
                     </Label>
                     <Input
                       name="statustoset"
