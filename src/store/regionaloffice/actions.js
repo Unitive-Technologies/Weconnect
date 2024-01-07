@@ -8,14 +8,28 @@ import {
   UPDATE_REGIONALOFFICE,
   UPDATE_REGIONALOFFICE_SUCCESS,
   UPDATE_REGIONALOFFICE_FAIL,
+  SET_PER_PAGE,
+  SET_CURRENT_PAGE,
 } from "./actionTypes";
 
-export const getRegionalOffice = () => ({
-  type: GET_REGIONALOFFICE,
+export const setCurrentPageAction = (currentPage) => ({
+  type: SET_CURRENT_PAGE,
+  payload: currentPage,
 });
 
+export const setPerPageAction = (perPage) => ({
+  type: SET_PER_PAGE,
+  payload: perPage,
+});
+
+export const getRegionalOffice = () => {
+  return {
+    type: GET_REGIONALOFFICE,
+  };
+};
+
 export const getRegionalOfficeSuccess = (regionalOffice) => {
-  console.log("Received Notification Template:", regionalOffice);
+  console.log("Received Regional Offices:", regionalOffice);
   return {
     type: GET_REGIONALOFFICE_SUCCESS,
     payload: regionalOffice,

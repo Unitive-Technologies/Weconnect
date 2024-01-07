@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 
 import {
   GET_REGIONALOFFICE,
@@ -21,6 +21,7 @@ import {
   addNewLco,
   updateRegionalOffice,
 } from "../../helpers/fakebackend_helper";
+import { useSelector } from "react-redux";
 
 const convertRegionalOfficeListObject = (regionalofficeList) => {
   // Notification Template has more data than what we need, we need to convert each of the Notification Template user object in the list with needed colums of the table
@@ -53,9 +54,12 @@ const convertRegionalOfficeListObject = (regionalofficeList) => {
 
 function* fetchRegionalOffice() {
   try {
-    const response = yield call(getRegionalOffice);
+    const { perPage, currentPage } = yield select(state => state);
+
+    console.log("In saga - ", currentPage, perPage);
+    const response = yield call(getRegionalOffice, 2, 10);
     // const regionalofficeList = convertRegionalOfficeListObject(response);
-    yield put(getRegionalOfficeSuccess(response.data));
+    yield put(getRegionalOfficeSuccess(response));
   } catch (error) {
     console.error("Error fetching Regional office list:", error);
     yield put(getRegionalOfficeFail(error));

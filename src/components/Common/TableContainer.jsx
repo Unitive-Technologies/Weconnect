@@ -173,6 +173,11 @@ const TableContainer = ({
   iscustomPageSizeOptions,
   theadClass,
   isJobListGlobalFilter,
+  setCustomPageSize,
+  currentPage,
+  totalCount,
+  totalPageCount,
+  setCurrentPage,
 }) => {
   const {
     getTableProps,
@@ -198,7 +203,7 @@ const TableContainer = ({
       data,
       defaultColumn: { Filter: DefaultColumnFilter },
       initialState: {
-        pageIndex: 0,
+        pageIndex: currentPage - 1,
         pageSize: customPageSize,
         sortBy: [
           {
@@ -243,7 +248,7 @@ const TableContainer = ({
                 value={pageSize}
                 onChange={onChangeInSelect}
               >
-                {[10, 20, 30, 40, 50].map((pageSize) => (
+                {[10, 20, 30, 50, 100, 200, 500].map((pageSize) => (
                   <option key={pageSize} value={pageSize}>
                     Show {pageSize}
                   </option>
@@ -318,14 +323,14 @@ const TableContainer = ({
             <div className="col-sm">
               <div className="text-muted">
                 Showing <span className="fw-semibold">{page.length}</span> of{" "}
-                <span className="fw-semibold">{data.length}</span> entries
+                <span className="fw-semibold">{totalCount}</span> entries {" (" + totalPageCount + " pages)"} 
               </div>
             </div>
           )}
           <div className={paginationDiv}>
             <ul className={pagination}>
               <li className={`page-item ${!canPreviousPage ? "disabled" : ""}`}>
-                <Link to="#" className="page-link" onClick={previousPage}>
+                <Link to="#" className="page-link" onClick={() => setCurrentPage(currentPage-1)}>
                   <i className="mdi mdi-chevron-left"></i>
                 </Link>
               </li>
@@ -342,7 +347,7 @@ const TableContainer = ({
                       <Link
                         to="#"
                         className="page-link"
-                        onClick={() => gotoPage(item)}
+                        onClick={() => setCurrentPage(item+1)}
                       >
                         {item + 1}
                       </Link>
@@ -352,7 +357,7 @@ const TableContainer = ({
               ))}
               {pageOptions.length > pageIndex + 5 && (
                 <li className={`page-item ${!canNextPage ? "disabled" : ""}`}>
-                  <Link to="#" className="page-link" onClick={nextPage}>
+                  <Link to="#" className="page-link" onClick={() => setCurrentPage(currentPage+1)}>
                     <i className="mdi mdi-chevron-right"></i>
                   </Link>
                 </li>

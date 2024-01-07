@@ -8,7 +8,7 @@ import { Card, CardBody, Col, Container, Row } from "reactstrap";
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 
-import { getRegionalOffice as onGetRegionalOffice } from "/src/store/actions";
+import { getRegionalOffice as onGetRegionalOffice } from "/src/store/regionaloffice/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -17,6 +17,7 @@ import { ToastContainer } from "react-toastify";
 import ViewRegionalOfficeModal from "./ViewRegionalOfficeModal";
 import AddRegionalOfficeModal from "./AddRegionalOfficeModal";
 import UploadRegionalOfficeModal from "./UploadRegionalOfficeModal";
+import { setCurrentPageAction } from "../../../store/regionaloffice/actions";
 
 const RegionalOfficeList = (props) => {
   //meta title
@@ -24,23 +25,34 @@ const RegionalOfficeList = (props) => {
 
   const dispatch = useDispatch();
 
-  const selectRegionalOfficeState = (state) => state.regionaloffice;
+  const selectRegionalOfficeState = (state) => state;
+
   const RegionalOfficeProperties = createSelector(
     selectRegionalOfficeState,
-    (regionaloffice) => ({
-      regOff: regionaloffice.regionaloffice,
-      loading: regionaloffice.loading,
+
+    (regionalOfficesState) => ({
+      regOffices: regionalOfficesState.regionaloffice.regionaloffice,
+      loading: regionalOfficesState.loading,
+      perPage: regionalOfficesState.perPage,
+      totalCount: regionalOfficesState.totalCount,
+      currentPage: regionalOfficesState.currentPage,
+      pageCount: regionalOfficesState.pageCount,
     })
   );
 
-  const { regOff, loading } = useSelector(RegionalOfficeProperties);
+  const { regOffices, loading, perPage, totalCount, currentPage, pageCount } = useSelector(RegionalOfficeProperties);
+
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(onGetRegionalOffice(currentPage, perPage));
+  //   }
+  // }, [])
 
   useEffect(() => {
-    console.log("Regional Office data in component:", regOff);
-  }, [regOff]);
+    console.log("Regional Office data in component:", regOffices);
+  }, [regOffices]);
   const [isLoading, setLoading] = useState(loading);
 
-  const [userList, setUserList] = useState([]);
   const [showRegionalOffice, setShowRegionalOffice] = useState(false);
   const [viewRegionalOffice, setViewRegionalOffice] = useState(false);
   const [showUploadRegionalOffice, setShowUploadRegionalOffice] =
@@ -240,12 +252,14 @@ const RegionalOfficeList = (props) => {
     []
   );
 
+
   useEffect(() => {
-    if (regOff && !regOff.length) {
+    console.log("In UseEffect..",regOffices);
+    if (regOffices && !regOffices.length) {
       dispatch(onGetRegionalOffice());
       setIsEdit(false);
     }
-  }, [dispatch, regOff]);
+  }, [dispatch, regOffices]);
 
   const handleAddRegionalOffice = () => {
     setShowRegionalOffice(!showRegionalOffice);
@@ -254,16 +268,22 @@ const RegionalOfficeList = (props) => {
     setShowUploadRegionalOffice(!showUploadRegionalOffice);
   };
 
+  const handlePerPageChange = (perPage) => {
+    dispatch(setPerPageAction(perPage));
+    // Optionally, you can also dispatch fetchDataAction here to trigger data fetching
+  };
+
+  const handleCurrentPageChange = (currentPage) => {
+    dispatch(setCurrentPageAction(currentPage));
+    dispatch(onGetRegionalOffice({perPage, currentPage}));
+  };
+
   const [regOffData, setRegOffData] = useState({});
 
   const handleViewRegionalOffice = (regOffData) => {
     setViewRegionalOffice(!viewRegionalOffice);
     setRegOffData(regOffData);
   };
-
-  var node = useRef();
-
-  const keyField = "id";
 
   const getTableActions = () => {
     return [
@@ -309,18 +329,22 @@ const RegionalOfficeList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("regoff:" + JSON.stringify(regOff))}
+                    {console.log("regoff:" + JSON.stringify(regOffices))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
-                      data={regOff}
+                      data={regOffices}
                       isGlobalFilter={true}
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
-                      // iscustomPageSizeOptions={true}
-
+                      iscustomPageSizeOptions={true}
                       tableActions={getTableActions()}
-                      customPageSize={50}
+                      customPageSize={perPage}
+                      setCustomPageSize={handlePerPageChange}
+                      currentPage={currentPage}
+                      totalCount={totalCount}
+                      totalPageCount={pageCount}
+                      setCurrentPage={handleCurrentPageChange}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"

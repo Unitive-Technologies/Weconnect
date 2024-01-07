@@ -17,6 +17,15 @@ axiosApi.interceptors.response.use(
   (error) => Promise.reject(error)
 );
 
+export async function getCompleteResponse(url, config = {}) {
+  console.log("url:" + url);
+  axiosApi.defaults.headers.common["Authkey"] = import.meta.env.VITE_APP_AUTHKEY;
+
+  return await axiosApi
+    .get(url, { ...config })
+    .then((response) => response);
+}
+
 export async function get(url, config = {}) {
   console.log("url:" + url);
   axiosApi.defaults.headers.common["Authkey"] = import.meta.env.VITE_APP_AUTHKEY;
@@ -25,6 +34,7 @@ export async function get(url, config = {}) {
     .get(url, { ...config })
     .then((response) => response.data);
 }
+// .json().then(json=>{headers: response.headers, status: response.status, json})
 // export async function get(url, config = {}) {
 //   console.log("url:" + url);
 //   axiosApi.defaults.headers.common["Authkey"] = "";

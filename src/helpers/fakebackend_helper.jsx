@@ -1,5 +1,5 @@
 import axios from "axios";
-import { del, get, post, put } from "./api_helper";
+import { del, get, getCompleteResponse, post, put } from "./api_helper";
 import * as url from "./url_helper";
 
 // Gets the logged in user data from local session
@@ -306,7 +306,12 @@ export const updateSublocation = (id, sublocation) =>
 export const getLocationOnSublocation = () =>
   get(url.GET_LOCATION_ONSUBLOCATION);
 
-export const getRegionalOffice = () => get(url.GET_REGIONALOFFICE);
+export const getRegionalOffice = async (currentPage, perPage) => {
+  console.log("Current Page: ", currentPage);
+  console.log("Per Page: ", perPage);
+
+  return getCompleteResponse(url.getRegionalOfficeUrl(currentPage, perPage));
+} 
 export const addNewRegionalOffice = (regionaloffice) =>
   post(url.ADD_NEW_REGIONALOFFICE, regionaloffice);
 export const updateRegionalOffice = (regionaloffice) =>
