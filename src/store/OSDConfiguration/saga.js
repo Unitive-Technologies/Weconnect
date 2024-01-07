@@ -38,6 +38,8 @@ const convertOSDConfigurationListObject = (osdConfigurationList) => {
       ...osdConfiguration,
       id: osdConfiguration.id,
       name: osdConfiguration.name,
+      forceddisplay: osdConfiguration.forceddisplay,
+      fontSize: osdConfiguration.fontSize,
       cas_code: osdConfiguration.cas_code,
       status_lbl:
         osdConfiguration.status === 1
@@ -151,10 +153,8 @@ function* onAddNewOSDConfiguration({ payload: osdConfiguration }) {
   try {
     const response = yield call(addNewOSDConfiguration, osdConfiguration);
     yield put(addOSDConfigurationSuccess(response));
-    toast.success("OSDConfiguration Added Successfully", { autoClose: 2000 });
   } catch (error) {
     yield put(addOSDConfigurationFail(error));
-    toast.error("OSDConfiguration Added Failed", { autoClose: 2000 });
   }
 }
 

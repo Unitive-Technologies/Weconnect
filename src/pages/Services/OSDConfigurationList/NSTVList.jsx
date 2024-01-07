@@ -44,7 +44,7 @@ const NSTVList = (props) => {
             repetition: "",
             fontSize: "",
             fontcolor: "",
-            backgroundcolor: "",
+            backgroundColor: "",
             backgroundarea: "",
             created_by: "Admin",
         },
@@ -61,7 +61,7 @@ const NSTVList = (props) => {
             repetition: Yup.string().required("repetition"),
             fontSize: Yup.string().required("Select font size"),
             fontcolor: Yup.string().required("Select font color"),
-            backgroundcolor: Yup.string().required("Select back color"),
+            backgroundColor: Yup.string().required("Select back color"),
             backgroundarea: Yup.string().required("Select background area"),
         }),
         onSubmit: (values) => {
@@ -79,7 +79,7 @@ const NSTVList = (props) => {
                 repetition: values["repetition"],
                 fontSize: values["fontSize"],
                 fontcolor: values["fontcolor"],
-                backgroundcolor: values["backgroundcolor"],
+                backgroundColor: values["backgroundColor"],
                 backgroundarea: values["backgroundarea"],
                 created_at: new Date(),
                 created_by: values["created_by"],
@@ -324,7 +324,7 @@ const NSTVList = (props) => {
                             <div className="mb-3">
                                 <Label className="form-label">Interval (in seconds) (should be greater than duration)</Label>
                                 <Input
-                                    name="" interval
+                                    name="interval"
                                     type="number"
                                     placeholder="1"
                                     // className="form-select"
@@ -423,25 +423,25 @@ const NSTVList = (props) => {
                             <div className="mb-3">
                                 <Label className="form-label">Background Color<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
-                                    name="backgroundcolor"
+                                    name="backgroundColor"
                                     type="select"
                                     placeholder="Select background color"
                                     className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.backgroundcolor || ""}
+                                    value={validation.values.backgroundColor || ""}
                                 >
                                     <option value="">Select back color</option>
                                     {osdConfigBackgroundColor &&
-                                        osdConfigBackgroundColor.map((backgroundcolor) => (
-                                            <option key={backgroundcolor.id} value={backgroundcolor.id}>
-                                                {backgroundcolor.name}
+                                        osdConfigBackgroundColor.map((backgroundColor) => (
+                                            <option key={backgroundColor.id} value={backgroundColor.id}>
+                                                {backgroundColor.name}
                                             </option>
                                         ))}
                                 </Input>
-                                {validation.touched.backgroundcolor && validation.errors.backgroundcolor ? (
+                                {validation.touched.backgroundColor && validation.errors.backgroundColor ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.backgroundcolor}
+                                        {validation.errors.backgroundColor}
                                     </FormFeedback>
                                 ) : null}
                             </div>
