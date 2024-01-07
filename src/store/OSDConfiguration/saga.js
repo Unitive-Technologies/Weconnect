@@ -1,11 +1,35 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_OSDCONFIGURATION, ADD_NEW_OSDCONFIGURATION } from "./actionTypes";
+import {
+  GET_OSDCONFIGURATION,
+  GET_OSDCONFIGURATION_ENABLE,
+  GET_OSDCONFIGURATION_FORCESDDISPLAY,
+  GET_OSDCONFIGURATION_DISPLAY,
+  GET_OSDCONFIGURATION_FONTCOLOR,
+  GET_OSDCONFIGURATION_BACKGROUNDCOLOR,
+  GET_OSDCONFIGURATION_FONTSIZE,
+  GET_OSDCONFIGURATION_BACKGROUNDAREA,
+  GET_OSDCONFIGURATION_STATUS, ADD_NEW_OSDCONFIGURATION
+} from "./actionTypes";
 
-import { getOSDConfigurationSuccess, getOSDConfigurationFail, addOSDConfigurationSuccess, addOSDConfigurationFail } from "./actions";
+import {
+  getOSDConfigurationSuccess, getOSDConfigurationFail,
+  getOSDConfigurationEnableSuccess, getOSDConfigurationEnableFail,
+  getOSDConfigurationForcedDisplaySuccess, getOSDConfigurationForcedDisplayFail,
+  getOSDConfigurationDisplaySuccess, getOSDConfigurationDisplayFail,
+  getOSDConfigurationFontColorSuccess, getOSDConfigurationFontColorFail,
+  getOSDConfigurationBackgroundColorSuccess, getOSDConfigurationBackgroundColorFail,
+  getOSDConfigurationFontSizeSuccess, getOSDConfigurationFontSizeFail,
+  getOSDConfigurationBackgroundAreaSuccess, getOSDConfigurationBackgroundAreaFail,
+  getOSDConfigurationStatusSuccess, getOSDConfigurationStatusFail,
+  addOSDConfigurationSuccess, addOSDConfigurationFail
+} from "./actions";
 
 //Include Both Helper File with needed methods
-import { getOSDConfiguration, addNewOSDConfiguration } from "../../helpers/fakebackend_helper";
+import {
+  getOSDConfiguration, getOSDConfigurationEnable, getOSDConfigurationDisplay, getOSDConfigurationForcedDisplay, getOSDConfigurationFontSize, getOSDConfigurationFontColor, getOSDConfigurationBackgroundArea, getOSDConfigurationBackgroundColor, getOSDConfigurationStatus,
+  addNewOSDConfiguration
+} from "../../helpers/fakebackend_helper";
 
 const convertOSDConfigurationListObject = (osdConfigurationList) => {
   // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
@@ -42,6 +66,87 @@ function* fetchOSDConfiguration() {
   }
 }
 
+function* fetchOSDConfigurationEnable() {
+  try {
+    const response = yield call(getOSDConfigurationEnable);
+    console.log("OSD Configuration Enable  response:" + JSON.stringify(response));
+    yield put(getOSDConfigurationEnableSuccess(response.data));
+  } catch (error) {
+    yield put(getOSDConfigurationEnableFail(error));
+  }
+}
+
+function* fetchOSDConfigurationForcedDisplay() {
+  try {
+    const response = yield call(getOSDConfigurationForcedDisplay);
+    console.log("OSD Configuration Forced Display  response:" + JSON.stringify(response));
+    yield put(getOSDConfigurationForcedDisplaySuccess(response.data));
+  } catch (error) {
+    yield put(getOSDConfigurationForcedDisplayFail(error));
+  }
+}
+
+function* fetchOSDConfigurationDisplay() {
+  try {
+    const response = yield call(getOSDConfigurationDisplay);
+    console.log("OSD Configuration  Display  response:" + JSON.stringify(response));
+    yield put(getOSDConfigurationDisplaySuccess(response.data));
+  } catch (error) {
+    yield put(getOSDConfigurationDisplayFail(error));
+  }
+}
+
+
+function* fetchOSDConfigurationFontColor() {
+  try {
+    const response = yield call(getOSDConfigurationFontColorDisplay);
+    console.log("OSD Configuration Font Colorr  response:" + JSON.stringify(response));
+    yield put(getOSDConfigurationFontColorSuccess(response.data));
+  } catch (error) {
+    yield put(getOSDConfigurationFontColorFail(error));
+  }
+}
+
+function* fetchOSDConfigurationBackgroundColor() {
+  try {
+    const response = yield call(getOSDConfigurationBackgroundColor);
+    console.log("OSD Configuration Background Color response:" + JSON.stringify(response));
+    yield put(getOSDConfigurationBackgroundColorSuccess(response.data));
+  } catch (error) {
+    yield put(getOSDConfigurationBackgroundColorFail(error));
+  }
+}
+
+function* fetchOSDConfigurationBackgroundArea() {
+  try {
+    const response = yield call(getOSDConfigurationBackgroundArea);
+    console.log("OSD Configuration Background Area response:" + JSON.stringify(response));
+    yield put(getOSDConfigurationBackgroundAreaSuccess(response.data));
+  } catch (error) {
+    yield put(getOSDConfigurationBackgroundAreaFail(error));
+  }
+}
+
+function* fetchOSDConfigurationFontSize() {
+  try {
+    const response = yield call(getOSDConfigurationFontSize);
+    console.log("OSD Configuration Font Size response:" + JSON.stringify(response));
+    yield put(getOSDConfigurationFontSizeSuccess(response.data));
+  } catch (error) {
+    yield put(getOSDConfigurationFontSizeFail(error));
+  }
+}
+
+function* fetchOSDConfigurationStatus() {
+  try {
+    const response = yield call(getOSDConfigurationStatus);
+    console.log("OSD Configuration Status response:" + JSON.stringify(response));
+    yield put(getOSDConfigurationStatusSuccess(response.data));
+  } catch (error) {
+    yield put(getOSDConfigurationStatusFail(error));
+  }
+}
+
 function* onAddNewOSDConfiguration({ payload: osdConfiguration }) {
   try {
     const response = yield call(addNewOSDConfiguration, osdConfiguration);
@@ -55,6 +160,14 @@ function* onAddNewOSDConfiguration({ payload: osdConfiguration }) {
 
 function* osdConfigurationSaga() {
   yield takeEvery(GET_OSDCONFIGURATION, fetchOSDConfiguration);
+  yield takeEvery(GET_OSDCONFIGURATION_ENABLE, fetchOSDConfigurationEnable);
+  yield takeEvery(GET_OSDCONFIGURATION_FORCESDDISPLAY, fetchOSDConfigurationFontColor);
+  yield takeEvery(GET_OSDCONFIGURATION_DISPLAY, fetchOSDConfigurationDisplay);
+  yield takeEvery(GET_OSDCONFIGURATION_FONTCOLOR, fetchOSDConfigurationFontColor);
+  yield takeEvery(GET_OSDCONFIGURATION_BACKGROUNDCOLOR, fetchOSDConfigurationBackgroundArea);
+  yield takeEvery(GET_OSDCONFIGURATION_FONTSIZE, fetchOSDConfigurationFontColor);
+  yield takeEvery(GET_OSDCONFIGURATION_BACKGROUNDAREA, fetchOSDConfigurationBackgroundArea);
+  yield takeEvery(GET_OSDCONFIGURATION_STATUS, fetchOSDConfigurationStatus);
   yield takeEvery(ADD_NEW_OSDCONFIGURATION, onAddNewOSDConfiguration);
 }
 

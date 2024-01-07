@@ -351,6 +351,16 @@ export const addNewPackageList = (packlist) =>
   post(url.ADD_NEW_PACKAGELIST, packlist);
 
 export const getOSDConfiguration = () => get(url.GET_OSDCONFIGURATIONLIST);
+export const getOSDConfigurationEnable = () => get(url.GET_OSDCONFIGURATIONLIST_ENABLE);
+export const getOSDConfigurationForcedDisplay = () => get(url.GET_OSDCONFIGURATIONLIST_FORCESDDISPLAY);
+export const getOSDConfigurationDisplay = () => get(url.GET_OSDCONFIGURATIONLIST_DISPLAY);
+export const getOSDConfigurationFontColor = () => get(url.GET_OSDCONFIGURATIONLIST_FONTCOLOR);
+export const getOSDConfigurationBackgroundColor = () => get(url.GET_OSDCONFIGURATIONLIST_BACKGROUNDCOLOR);
+export const getOSDConfigurationFontSize = () => get(url.GET_OSDCONFIGURATIONLIST_FONTSIZE);
+export const getOSDConfigurationBackgroundArea = () => get(url.GET_OSDCONFIGURATIONLIST_BACKGROUNDAREA);
+export const getOSDConfigurationStatus = () => get(url.GET_OSDCONFIGURATIONLIST_STATUS);
+
+
 export const addNewOSDConfiguration = (osdconfig) =>
   post(url.ADD_NEW_OSDCONFIGURATIONLIST, osdconfig);
 
