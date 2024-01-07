@@ -186,7 +186,6 @@ const UploadDocuments = () => {
                   isPagination={true}
                   columns={columns}
                   data={uploaddocs}
-                  // isTransactionDate={true}
                   // isGlobalFilter={true}
                   // isAddRegionalOffice={true}
                   isShowingPageLength={true}

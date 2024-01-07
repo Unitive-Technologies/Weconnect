@@ -174,7 +174,6 @@ const AllottedBouquet = (props) => {
                 isPagination={true}
                 columns={columns}
                 data={operatorAccount}
-                // isTransactionDate={true}
                 isGlobalFilter={true}
                 isAddRegionalOffice={true}
                 isShowingPageLength={true}

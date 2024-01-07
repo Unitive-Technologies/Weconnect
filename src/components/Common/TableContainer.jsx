@@ -162,24 +162,7 @@ const TableContainer = ({
   isGlobalFilter,
   isTransactionDate,
   isShowTableActionButtons,
-  isAdjustColumns,
-  isAddOptions,
   handleRowClick,
-  isAddBroadCaster,
-  isAddGenreList,
-  isAddLanguageList,
-  isAddChannelList,
-  isAddBroadcasterBouquetList,
-  isAddPackageList,
-  handleBroadCasterClick,
-  handleGenreClick,
-  handleOrderClicks,
-  handleLanguageClick,
-  handleChannelClick,
-  handleBroadcasterBouquetClick,
-  handlePackageClick,
-  isUploadUser,
-  handleUploadUserClick,
   customPageSize,
   tableClass,
   customPageSizeOptions,
@@ -277,129 +260,8 @@ const TableContainer = ({
             />
           )}
           {isTransactionDate && <TransactionDate />}
-          {isAddOptions && (
-            <Col sm="7">
-              <div className="text-sm-end">
-                <Button
-                  type="button"
-                  color="primary"
-                  className="btn mb-2 me-2"
-                  onClick={handleOrderClicks}
-                >
-                  <i className="mdi mdi-plus me-1" />
-                  Add New Order
-                </Button>
-              </div>
-            </Col>
-          )}
           {isShowTableActionButtons && (
             <TableActionButtons tableActions={tableActions} />
-          )}
-
-          {isAddBroadCaster && (
-            <Col sm="12">
-              <div className="text-sm-end">
-                <Button
-                  type="button"
-                  color="primary"
-                  className="btn mb-2 me-2"
-                  onClick={handleBroadCasterClick}
-                >
-                  <i className="mdi mdi-plus me-1" />
-                  Create Broad Caster
-                </Button>
-              </div>
-            </Col>
-          )}
-          {isAddGenreList && (
-            <Col sm="12">
-              <div className="text-sm-end">
-                <Button
-                  type="button"
-                  color="primary"
-                  className="btn mb-2 me-2"
-                  onClick={handleGenreClick}
-                >
-                  <i className="mdi mdi-plus me-1" />
-                  Create Genre
-                </Button>
-              </div>
-            </Col>
-          )}
-          {isAddLanguageList && (
-            <Col sm="12">
-              <div className="text-sm-end">
-                <Button
-                  type="button"
-                  color="primary"
-                  className="btn mb-2 me-2"
-                  onClick={handleLanguageClick}
-                >
-                  <i className="mdi mdi-plus me-1" />
-                  Create Language
-                </Button>
-              </div>
-            </Col>
-          )}
-          {isAddChannelList && (
-            <Col sm="12">
-              <div className="text-sm-end">
-                <Button
-                  type="button"
-                  color="primary"
-                  className="btn mb-2 me-2"
-                  onClick={handleChannelClick}
-                >
-                  <i className="mdi mdi-plus me-1" />
-                  Create Channel
-                </Button>
-              </div>
-            </Col>
-          )}
-          {isUploadUser && (
-            <Col sm="12">
-              <div className="text-sm-end">
-                <Button
-                  type="button"
-                  color="primary"
-                  className="btn mb-2 me-2"
-                  onClick={handleUploadUserClick}
-                >
-                  <i className="mdi mdi-plus me-1" />
-                  Upload User
-                </Button>
-              </div>
-            </Col>
-          )}
-          {isAddPackageList && (
-            <Col sm="12">
-              <div className="text-sm-end">
-                <Button
-                  type="button"
-                  color="primary"
-                  className="btn mb-2 me-2"
-                  onClick={handlePackageClick}
-                >
-                  <i className="mdi mdi-plus me-1" />
-                  Create Package
-                </Button>
-              </div>
-            </Col>
-          )}
-          {isAddBroadcasterBouquetList && (
-            <Col sm="12">
-              <div className="text-sm-end">
-                <Button
-                  type="button"
-                  color="primary"
-                  className="btn mb-2 me-2"
-                  onClick={handleBroadcasterBouquetClick}
-                >
-                  <i className="mdi mdi-plus me-1" />
-                  Create Broadcaster Bouquet
-                </Button>
-              </div>
-            </Col>
           )}
         </div>
       </Row>
