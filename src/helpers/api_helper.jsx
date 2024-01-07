@@ -19,7 +19,7 @@ axiosApi.interceptors.response.use(
 
 export async function get(url, config = {}) {
   console.log("url:" + url);
-  axiosApi.defaults.headers.common["Authkey"] = "";
+  axiosApi.defaults.headers.common["Authkey"] = import.meta.env.VITE_APP_AUTHKEY;
 
   return await axiosApi
     .get(url, { ...config })
