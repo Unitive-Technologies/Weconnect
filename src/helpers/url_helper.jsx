@@ -146,8 +146,7 @@ export const ADD_NEW_PACKAGELIST = "/add/packagelist";
 
 export const GET_OSDCONFIGURATIONLIST =
   "/mtc?expand=created_by_lbl,status_lbl,is_reserved_lbl,type_lbl&page=1&per-page=50&vr=web1.0";
-export const GET_OSDCONFIGURATIONLIST_ENABLE =
-  "/nstv/list/osdenable?vr=web1.0";
+export const GET_OSDCONFIGURATIONLIST_ENABLE = "/nstv/list/osdenable?vr=web1.0";
 export const GET_OSDCONFIGURATIONLIST_FORCESDDISPLAY =
   "/nstv/list/fpforceddisplay?vr=web1.0";
 export const GET_OSDCONFIGURATIONLIST_DISPLAY =
@@ -163,7 +162,6 @@ export const GET_OSDCONFIGURATIONLIST_BACKGROUNDAREA =
 export const GET_OSDCONFIGURATIONLIST_STATUS =
   "/list/status?fields=id,name&vr=web1.0";
 export const ADD_NEW_OSDCONFIGURATIONLIST = "/mtc?vr=web1.0";
-
 
 export const GET_LOCALCHANNELNUMBER = "/localchannelnumberlist";
 

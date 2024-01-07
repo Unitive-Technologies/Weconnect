@@ -29,17 +29,16 @@ export async function get(url, config = {}) {
 //   console.log("url:" + url);
 //   axiosApi.defaults.headers.common["Authkey"] = "";
 
-//   return await axiosApi.get(url, { ...config }).then((response) => {
+//   return axiosApi.get(url, { ...config }).then(async (response) => {
 //     const totalCount = response.headers["x-pagination-total-count"];
 //     console.log("X-Pagination-Total-Count:", totalCount);
 
 //     if (totalCount) {
-//       return axiosApi.get(url, {
+//       return await axiosApi.get(url, {
 //         ...config,
 //         params: { "per-page": parseInt(totalCount) },
 //       });
-//     }
-//     console.log("apiHelper response:" + JSON.stringify(response.data));
+//     } else console.log("apiHelper response:" + JSON.stringify(response.data));
 
 //     return response.data;
 //   });
