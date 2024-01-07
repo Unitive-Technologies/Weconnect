@@ -27,8 +27,10 @@ import { Email, Tags, Projects } from "./osdConfigurationListCol";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
 
-import { getOSDConfiguration as onGetOSDConfiguration } from "/src/store/actions";
-
+import {
+  getOSDConfiguration as onGetOSDConfiguration,
+  getOSDConfigurationEnable as onGetOSDConfigurationEnable, getOSDConfigurationForcedDisplay as onGetOSDConfigurationForcedDisplay, getOSDConfigurationDisplay as onGetOSDConfigurationDisplay, getOSDConfigurationFontColor as onGetOSDConfigurationFontColor, getOSDConfigurationBackgroundColor as onGetOSDConfigurationBackgroundColor, getOSDConfigurationFontSize as onGetOSDConfigurationFontSize, getOSDConfigurationBackgroundArea as onGetOSDConfigurationBackgroundArea, getOSDConfigurationStatus as onGetOSDConfigurationStatus
+} from "/src/store/actions";
 
 import { isEmpty } from "lodash";
 
@@ -50,11 +52,19 @@ const OSDConfigurationList = (props) => {
     selectOSDConfigurationState,
     (osdConfiguration) => ({
       osdConfig: osdConfiguration.osdConfiguration,
+      osdConfigEnable: osdConfiguration.osdConfigurationEnable,
+      osdConfigForcedDisplay: osdConfiguration.osdConfigurationForcedDisplay,
+      osdConfigDisplay: osdConfiguration.osdConfigurationDisplay,
+      osdConfigFontColor: osdConfiguration.osdConfigurationFontColor,
+      osdConfigBackgroundColor: osdConfiguration.osdConfigurationBackgroundColor,
+      osdConfigFontSize: osdConfiguration.osdConfigurationFontSize,
+      osdConfigBackgroundArea: osdConfiguration.osdConfigurationBackgroundArea,
+      osdConfigStatus: osdConfiguration.osdConfigurationStatus,
       loading: osdConfiguration.loading,
     })
   );
 
-  const { osdConfig, loading } = useSelector(osdConfigurationProperties);
+  const { osdConfig, osdConfigStatus, osdConfigBackgroundArea, osdConfigBackgroundColor, osdConfigDisplay, osdConfigEnable, osdConfigFontColor, osdConfigFontSize, osdConfigForcedDisplay, loading } = useSelector(osdConfigurationProperties);
 
   useEffect(() => {
     console.log("OSD Configuration data in component:", osdConfig);
@@ -234,21 +244,17 @@ const OSDConfigurationList = (props) => {
   useEffect(() => {
     if (osdConfig && !osdConfig.osdConfig) {
       dispatch(onGetOSDConfiguration());
+      dispatch(onGetOSDConfigurationBackgroundArea());
+      dispatch(onGetOSDConfigurationBackgroundColor());
+      dispatch(onGetOSDConfigurationDisplay());
+      dispatch(onGetOSDConfigurationEnable());
+      dispatch(onGetOSDConfigurationFontColor());
+      dispatch(onGetOSDConfigurationFontSize());
+      dispatch(onGetOSDConfigurationForcedDisplay());
+      dispatch(onGetOSDConfigurationStatus());
       setIsEdit(false);
     }
   }, [dispatch, osdConfig]);
-
-  // useEffect(() => {
-  //   setContact(users);
-  //   setIsEdit(false);
-  // }, [users]);
-
-  // useEffect(() => {
-  //   if (!isEmpty(users) && !!isEdit) {
-  //     setContact(users);
-  //     setIsEdit(false);
-  //   }
-  // }, [users]);
 
   const toggle = () => {
     setShowNSTV(!showNSTV);
@@ -342,6 +348,14 @@ const OSDConfigurationList = (props) => {
         osdConfiguration={viewNSTVList} />
       <NSTVList isOpen={showNSTV}
         toggle={toggle}
+        osdConfigBackgroundArea={osdConfigBackgroundArea}
+        osdConfigBackgroundColor={osdConfigBackgroundColor}
+        osdConfigDisplay={osdConfigDisplay}
+        osdConfigEnable={osdConfigEnable}
+        osdConfigFontColor={osdConfigFontColor}
+        osdConfigFontSize={osdConfigFontSize}
+        osdConfigForcedDisplay={osdConfigForcedDisplay}
+        osdConfigStatus={osdConfigStatus}
       />
       <div className="page-content">
         <Container fluid>

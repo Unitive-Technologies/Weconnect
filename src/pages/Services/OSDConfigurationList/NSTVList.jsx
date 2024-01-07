@@ -20,9 +20,10 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewOSDConfiguration as onAddNewOSDConfiguration } from "/src/store/OSDConfiguration/actions";
 import { useSelector, useDispatch } from "react-redux";
+import { getOSDConfiguration as onGetOSDConfiguration } from "/src/store/actions";
 
 const NSTVList = (props) => {
-    const { isOpen, toggle } = props;
+    const { isOpen, toggle, osdConfigBackgroundArea, osdConfigBackgroundColor, osdConfigDisplay, osdConfigEnable, osdConfigFontColor, osdConfigFontSize, osdConfigForcedDisplay, osdConfigStatus } = props;
     const dispatch = useDispatch();
     const [user, setUser] = useState();
 
@@ -36,12 +37,12 @@ const NSTVList = (props) => {
             starttime: "10:40",
             endtime: "11:00",
             enable: "",
-            forced: "",
-            type: "",
+            forceddisplay: "",
+            displaytype: "",
             duration: "",
             interval: "",
             repetition: "",
-            fontsize: "",
+            fontSize: "",
             fontcolor: "",
             backgroundcolor: "",
             backgroundarea: "",
@@ -53,12 +54,12 @@ const NSTVList = (props) => {
             starttime: Yup.string().required("10:40"),
             endtime: Yup.string().required("11:00"),
             enable: Yup.string().required("Send OSD"),
-            forced: Yup.string().required("Select forced display"),
-            type: Yup.string().required("Select display type"),
+            forceddisplay: Yup.string().required("Select forced display"),
+            displaytype: Yup.string().required("Select display type"),
             duration: Yup.string().required("duration"),
             interval: Yup.string().required("interval"),
             repetition: Yup.string().required("repetition"),
-            fontsize: Yup.string().required("Select font size"),
+            fontSize: Yup.string().required("Select font size"),
             fontcolor: Yup.string().required("Select font color"),
             backgroundcolor: Yup.string().required("Select back color"),
             backgroundarea: Yup.string().required("Select background area"),
@@ -71,12 +72,12 @@ const NSTVList = (props) => {
                 starttime: values["10:40"],
                 endtime: values["11:00"],
                 enable: values["enable"],
-                forced: values["forced"],
-                type: values["type"],
+                forceddisplay: values["forceddisplay"],
+                displaytype: values["displaytype"],
                 duration: values["duration"],
                 interval: values["interval"],
                 repetition: values["repetition"],
-                fontsize: values["fontsize"],
+                fontSize: values["fontSize"],
                 fontcolor: values["fontcolor"],
                 backgroundcolor: values["backgroundcolor"],
                 backgroundarea: values["backgroundarea"],
@@ -88,8 +89,8 @@ const NSTVList = (props) => {
             );
             // save new user
             dispatch(
-                onAddNewOSDConfiguration(newOSDConfiguration)
-            );
+                onAddNewOSDConfiguration(newOSDConfiguration));
+            dispatch(onGetOSDConfiguration());
             validation.resetForm();
             toggle();
         },
@@ -163,9 +164,13 @@ const NSTVList = (props) => {
                                     onBlur={validation.handleBlur}
                                     value={validation.values.status || ""}
                                 >
-                                    <option value="101">Select Status</option>
-                                    <option value="102">Active</option>
-                                    <option value="103">In-Active</option>
+                                    <option value="">Select Status</option>
+                                    {osdConfigStatus &&
+                                        osdConfigStatus.map((status) => (
+                                            <option key={status.id} value={status.id}>
+                                                {status.name}
+                                            </option>
+                                        ))}
                                 </Input>
                                 {validation.touched.status && validation.errors.status ? (
                                     <FormFeedback type="invalid">
@@ -224,9 +229,13 @@ const NSTVList = (props) => {
                                     onBlur={validation.handleBlur}
                                     value={validation.values.enable || ""}
                                 >
-                                    <option value="101">Send OSD</option>
-                                    <option value="102">Send OSD</option>
-                                    <option value="103">Cancel OSD</option>
+                                    <option value="">Select Enable</option>
+                                    {osdConfigEnable &&
+                                        osdConfigEnable.map((enable) => (
+                                            <option key={enable.id} value={enable.id}>
+                                                {enable.name}
+                                            </option>
+                                        ))}
                                 </Input>
                                 {validation.touched.enable &&
                                     validation.errors.enable ? (
@@ -241,21 +250,25 @@ const NSTVList = (props) => {
                             <div className="mb-3">
                                 <Label className="form-label">Forced Display<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
-                                    name="forced"
+                                    name="forceddisplay"
                                     type="select"
                                     placeholder="Select forced display"
                                     className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.forced || ""}
+                                    value={validation.values.forceddisplay || ""}
                                 >
-                                    <option value="101">Select forced display</option>
-                                    <option value="102">Not Forced</option>
-                                    <option value="103">Forced</option>
+                                    <option value="">Select forced display</option>
+                                    {osdConfigForcedDisplay &&
+                                        osdConfigForcedDisplay.map((forceddisplay) => (
+                                            <option key={forceddisplay.id} value={forceddisplay.id}>
+                                                {forceddisplay.name}
+                                            </option>
+                                        ))}
                                 </Input>
-                                {validation.touched.forced && validation.errors.forced ? (
+                                {validation.touched.forceddisplay && validation.errors.forceddisplay ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.forced}
+                                        {validation.errors.forceddisplay}
                                     </FormFeedback>
                                 ) : null}
                             </div>
@@ -264,23 +277,25 @@ const NSTVList = (props) => {
                             <div className="mb-3">
                                 <Label className="form-label">Display Type<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
-                                    name="type"
+                                    name="displaytype"
                                     type="select"
-                                    placeholder="Select type"
+                                    placeholder="Select display type"
                                     className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.type || ""}
+                                    value={validation.values.displaytype || ""}
                                 >
-                                    <option value="104">Select display type</option>
-                                    <option value="105">Central Display</option>
-                                    <option value="106">Top Scroll</option>
-                                    <option value="106">Bottom Scroll</option>
-                                    <option value="106">Central Display With FP</option>
+                                    <option value="">Select Display Type</option>
+                                    {osdConfigDisplay &&
+                                        osdConfigDisplay.map((displaytype) => (
+                                            <option key={displaytype.id} value={displaytype.id}>
+                                                {displaytype.name}
+                                            </option>
+                                        ))}
                                 </Input>
-                                {validation.touched.type && validation.errors.type ? (
+                                {validation.touched.displaytype && validation.errors.displaytype ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.type}
+                                        {validation.errors.displaytype}
                                     </FormFeedback>
                                 ) : null}
                             </div>
@@ -353,21 +368,25 @@ const NSTVList = (props) => {
                             <div className="mb-3">
                                 <Label className="form-label">Font Size<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
-                                    name="fontsize"
+                                    name="fontSize"
                                     type="select"
                                     placeholder="Select font size"
                                     className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.fontsize || ""}
+                                    value={validation.values.fontSize || ""}
                                 >
-                                    <option value="201">Default</option>
-                                    <option value="202">Large</option>
-                                    <option value="202">Small</option>
+                                    <option value="">Select Font Size</option>
+                                    {osdConfigFontSize &&
+                                        osdConfigFontSize.map((fontSize) => (
+                                            <option key={fontSize.id} value={fontSize.id}>
+                                                {fontSize.name}
+                                            </option>
+                                        ))}
                                 </Input>
-                                {validation.touched.fontsize && validation.errors.fontsize ? (
+                                {validation.touched.fontSize && validation.errors.fontSize ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.fontsize}
+                                        {validation.errors.fontSize}
                                     </FormFeedback>
                                 ) : null}
                             </div>
@@ -384,12 +403,13 @@ const NSTVList = (props) => {
                                     onBlur={validation.handleBlur}
                                     value={validation.values.fontcolor || ""}
                                 >
-                                    <option value="301">Black</option>
-                                    <option value="302">Navy Blue</option>
-                                    <option value="303">Blue</option>
-                                    <option value="304">Green</option>
-                                    <option value="305">Teal Green</option>
-                                    <option value="306">Lime</option>
+                                    <option value="">Select Font Color</option>
+                                    {osdConfigFontColor &&
+                                        osdConfigFontColor.map((fontcolor) => (
+                                            <option key={fontcolor.id} value={fontcolor.id}>
+                                                {fontcolor.name}
+                                            </option>
+                                        ))}
                                 </Input>
                                 {validation.touched.fontcolor && validation.errors.fontcolor ? (
                                     <FormFeedback type="invalid">
@@ -411,12 +431,13 @@ const NSTVList = (props) => {
                                     onBlur={validation.handleBlur}
                                     value={validation.values.backgroundcolor || ""}
                                 >
-                                    <option value="11">Black</option>
-                                    <option value="12">Navy Blue</option>
-                                    <option value="13">Blue</option>
-                                    <option value="14">Green</option>
-                                    <option value="15">Teal Green</option>
-                                    <option value="16">Lime</option>
+                                    <option value="">Select back color</option>
+                                    {osdConfigBackgroundColor &&
+                                        osdConfigBackgroundColor.map((backgroundcolor) => (
+                                            <option key={backgroundcolor.id} value={backgroundcolor.id}>
+                                                {backgroundcolor.name}
+                                            </option>
+                                        ))}
                                 </Input>
                                 {validation.touched.backgroundcolor && validation.errors.backgroundcolor ? (
                                     <FormFeedback type="invalid">
@@ -437,19 +458,17 @@ const NSTVList = (props) => {
                                     onBlur={validation.handleBlur}
                                     value={validation.values.backgroundarea || ""}
                                 >
-                                    <option value="21">20</option>
-                                    <option value="22">30</option>
-                                    <option value="23">40</option>
-                                    <option value="24">50</option>
-                                    <option value="25">60</option>
-                                    <option value="26">70</option>
-                                    <option value="27">80</option>
-                                    <option value="28">90</option>
-                                    <option value="29">100</option>
+                                    <option value="">Select background area</option>
+                                    {osdConfigBackgroundArea &&
+                                        osdConfigBackgroundArea.map((backgroundarea) => (
+                                            <option key={backgroundarea.id} value={backgroundarea.id}>
+                                                {backgroundarea.name}
+                                            </option>
+                                        ))}
                                 </Input>
-                                {validation.touched.backgroundcolor && validation.errors.backgroundcolor ? (
+                                {validation.touched.backgroundarea && validation.errors.backgroundarea ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.backgroundcolor}
+                                        {validation.errors.backgroundarea}
                                     </FormFeedback>
                                 ) : null}
                             </div>
