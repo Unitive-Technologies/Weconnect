@@ -38,9 +38,8 @@ const convertOSDConfigurationListObject = (osdConfigurationList) => {
       ...osdConfiguration,
       id: osdConfiguration.id,
       name: osdConfiguration.name,
-      forceddisplay: osdConfiguration.forceddisplay,
-      fontSize: osdConfiguration.fontSize,
       cas_code: osdConfiguration.cas_code,
+
       status_lbl:
         osdConfiguration.status === 1
           ? "ACTIVE"
@@ -101,7 +100,7 @@ function* fetchOSDConfigurationDisplay() {
 
 function* fetchOSDConfigurationFontColor() {
   try {
-    const response = yield call(getOSDConfigurationFontColorDisplay);
+    const response = yield call(getOSDConfigurationFontColor);
     console.log("OSD Configuration Font Colorr  response:" + JSON.stringify(response));
     yield put(getOSDConfigurationFontColorSuccess(response.data));
   } catch (error) {
@@ -161,11 +160,11 @@ function* onAddNewOSDConfiguration({ payload: osdConfiguration }) {
 function* osdConfigurationSaga() {
   yield takeEvery(GET_OSDCONFIGURATION, fetchOSDConfiguration);
   yield takeEvery(GET_OSDCONFIGURATION_ENABLE, fetchOSDConfigurationEnable);
-  yield takeEvery(GET_OSDCONFIGURATION_FORCESDDISPLAY, fetchOSDConfigurationFontColor);
+  yield takeEvery(GET_OSDCONFIGURATION_FORCESDDISPLAY, fetchOSDConfigurationForcedDisplay);
   yield takeEvery(GET_OSDCONFIGURATION_DISPLAY, fetchOSDConfigurationDisplay);
   yield takeEvery(GET_OSDCONFIGURATION_FONTCOLOR, fetchOSDConfigurationFontColor);
-  yield takeEvery(GET_OSDCONFIGURATION_BACKGROUNDCOLOR, fetchOSDConfigurationBackgroundArea);
-  yield takeEvery(GET_OSDCONFIGURATION_FONTSIZE, fetchOSDConfigurationFontColor);
+  yield takeEvery(GET_OSDCONFIGURATION_BACKGROUNDCOLOR, fetchOSDConfigurationBackgroundColor);
+  yield takeEvery(GET_OSDCONFIGURATION_FONTSIZE, fetchOSDConfigurationFontSize);
   yield takeEvery(GET_OSDCONFIGURATION_BACKGROUNDAREA, fetchOSDConfigurationBackgroundArea);
   yield takeEvery(GET_OSDCONFIGURATION_STATUS, fetchOSDConfigurationStatus);
   yield takeEvery(ADD_NEW_OSDCONFIGURATION, onAddNewOSDConfiguration);

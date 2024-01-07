@@ -34,8 +34,8 @@ const NSTVList = (props) => {
         initialValues: {
             name: "",
             status: "",
-            starttime: "10:40",
-            endtime: "11:00",
+            start_time: "10:40",
+            end_time: "11:00",
             enable: "",
             forceddisplay: "",
             displaytype: "",
@@ -51,8 +51,8 @@ const NSTVList = (props) => {
         validationSchema: Yup.object({
             name: Yup.string().required("Enter  Code"),
             status: Yup.string().required("Select status"),
-            starttime: Yup.string().required("10:40"),
-            endtime: Yup.string().required("11:00"),
+            start_time: Yup.string().required("10:40"),
+            end_time: Yup.string().required("11:00"),
             enable: Yup.string().required("Send OSD"),
             forceddisplay: Yup.string().required("Select forced display"),
             displaytype: Yup.string().required("Select display type"),
@@ -69,16 +69,16 @@ const NSTVList = (props) => {
                 id: Math.floor(Math.random() * (30 - 20)) + 20,
                 name: values["name"],
                 status: values["status"],
-                starttime: values["10:40"],
-                endtime: values["11:00"],
+                start_time: values["10:40"],
+                end_time: values["11:00"],
                 enable: values["enable"],
                 forceddisplay: values["forceddisplay"],
-                displaytype: values["displaytype"],
-                duration: values["duration"],
-                interval: values["interval"],
-                repetition: values["repetition"],
-                fontSize: values["fontSize"],
-                fontcolor: values["fontcolor"],
+                displaytype: parseInt(values["displaytype"]),
+                duration: parseInt(values["duration"]),
+                interval: parseInt(values["interval"]),
+                repetition: parseInt(values["repetition"]),
+                fontSize: parseInt(values["fontSize"]),
+                fontcolor: parseInt(values["fontcolor"]),
                 backgroundColor: values["backgroundColor"],
                 backgroundarea: values["backgroundarea"],
                 created_at: new Date(),
@@ -106,8 +106,8 @@ const NSTVList = (props) => {
     };
 
     const handleRangeClick = () => {
-        // Increment the range value by 1 when clicked
-        setRangeValue((prevValue) => prevValue + 1);
+        // Increment the range value by 1, but limit it to 10
+        setRangeValue((prevValue) => Math.min(prevValue + 1, 10));
     };
 
 
@@ -151,7 +151,7 @@ const NSTVList = (props) => {
                                 ) : null}
                             </div>
                         </Col>
-
+                        {console.log("Name:", validation.values.name)}
                         <Col sm="4">
                             <div className="mb-3">
                                 <Label className="form-label">Status<span style={{ color: 'red' }}>*</span></Label>
@@ -167,7 +167,7 @@ const NSTVList = (props) => {
                                     <option value="">Select Status</option>
                                     {osdConfigStatus &&
                                         osdConfigStatus.map((status) => (
-                                            <option key={status.id} value={status.id}>
+                                            <option key={status.id} value={status.name}>
                                                 {status.name}
                                             </option>
                                         ))}
@@ -179,45 +179,47 @@ const NSTVList = (props) => {
                                 ) : null}
                             </div>
                         </Col>
-
+                        {console.log("Status:", validation.values.status)}
                         <Col sm="4">
                             <div className="mb-3">
                                 <Label className="form-label">Start Time<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
-                                    name="starttime"
+                                    name="start_time"
                                     type="time"
                                     // placeholder="Enter channel code"
                                     // className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.starttime || ""}
+                                    value={validation.values.start_time || ""}
                                 ></Input>
-                                {validation.touched.starttime && validation.errors.starttime ? (
+                                {validation.touched.start_time && validation.errors.start_time ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.starttime}
+                                        {validation.errors.start_time}
                                     </FormFeedback>
                                 ) : null}
                             </div>
                         </Col>
+                        {console.log("Start time:", validation.values.start_time)}
                         <Col sm="4">
                             <div className="mb-3">
                                 <Label className="form-label">End Time<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
-                                    name="endtime"
+                                    name="end_time"
                                     type="time"
                                     // placeholder="Enter name"
                                     // className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.endtime || ""}
+                                    value={validation.values.end_time || ""}
                                 ></Input>
-                                {validation.touched.endtime && validation.errors.endtime ? (
+                                {validation.touched.end_time && validation.errors.end_time ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.endtime}
+                                        {validation.errors.end_time}
                                     </FormFeedback>
                                 ) : null}
                             </div>
                         </Col>
+                        {console.log("end time", validation.values.end_time)}
                         <Col sm="4">
                             <div className="mb-3">
                                 <Label className="form-label">Enable<span style={{ color: 'red' }}>*</span></Label>
@@ -229,10 +231,10 @@ const NSTVList = (props) => {
                                     onBlur={validation.handleBlur}
                                     value={validation.values.enable || ""}
                                 >
-                                    <option value="">Select Enable</option>
+                                    <option value="">Select Enable</option>s
                                     {osdConfigEnable &&
                                         osdConfigEnable.map((enable) => (
-                                            <option key={enable.id} value={enable.id}>
+                                            <option key={enable.id} value={enable.name}>
                                                 {enable.name}
                                             </option>
                                         ))}
@@ -245,8 +247,8 @@ const NSTVList = (props) => {
                                 ) : null}
                             </div>
                         </Col>
+                        {console.log("Enable:", validation.values.enable)}
                         <Col sm="4">
-
                             <div className="mb-3">
                                 <Label className="form-label">Forced Display<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
@@ -261,7 +263,7 @@ const NSTVList = (props) => {
                                     <option value="">Select forced display</option>
                                     {osdConfigForcedDisplay &&
                                         osdConfigForcedDisplay.map((forceddisplay) => (
-                                            <option key={forceddisplay.id} value={forceddisplay.id}>
+                                            <option key={forceddisplay.id} value={forceddisplay.name}>
                                                 {forceddisplay.name}
                                             </option>
                                         ))}
@@ -273,6 +275,10 @@ const NSTVList = (props) => {
                                 ) : null}
                             </div>
                         </Col>
+                        {console.log("ForcedDisplay:", validation.values.forceddisplay)}
+                        {console.log("forced display: " + validation.values.forceddisplay)}
+                        {console.log(
+                            "forced display: " + typeof validation.values.forceddisplay)}
                         <Col sm="4">
                             <div className="mb-3">
                                 <Label className="form-label">Display Type<span style={{ color: 'red' }}>*</span></Label>
@@ -288,7 +294,7 @@ const NSTVList = (props) => {
                                     <option value="">Select Display Type</option>
                                     {osdConfigDisplay &&
                                         osdConfigDisplay.map((displaytype) => (
-                                            <option key={displaytype.id} value={displaytype.id}>
+                                            <option key={displaytype.id} value={displaytype.name}>
                                                 {displaytype.name}
                                             </option>
                                         ))}
@@ -300,6 +306,7 @@ const NSTVList = (props) => {
                                 ) : null}
                             </div>
                         </Col>
+                        {console.log("Display Type:", validation.values.displaytype)}
                         <Col sm="4">
                             <div className="mb-3">
                                 <Label className="form-label">Duration</Label>
@@ -320,6 +327,7 @@ const NSTVList = (props) => {
                                 ) : null}
                             </div>
                         </Col>
+                        {console.log("Duration:", validation.values.duration)}
                         <Col sm="4">
                             <div className="mb-3">
                                 <Label className="form-label">Interval (in seconds) (should be greater than duration)</Label>
@@ -340,6 +348,7 @@ const NSTVList = (props) => {
                                 ) : null}
                             </div>
                         </Col>
+                        {console.log("Interval:", validation.values.interval)}
                         <Col sm="4">
                             <div>
                                 <Label htmlFor="customRange1" className="form-label">
@@ -352,17 +361,27 @@ const NSTVList = (props) => {
                                     value={rangeValue}
                                     onChange={handleRangeChange}
                                     onClick={handleRangeClick}
+                                    min={1}
+                                    max={10}
                                     style={{
                                         width: '100%',
                                         height: '100%',
-                                        border: 'solid 3px blue',
+                                        border: `solid 3px ${rangeValue === validation.values.repetition ? 'green' : 'blue'}`,
                                         cursor: 'pointer',
                                         borderRadius: '5px',
                                     }}
                                 />
-                                <div style={{ marginTop: '10px' }}>Value: {rangeValue}</div>
+                                <div style={{ marginTop: '10px' }}>Value: {validation.values.repetition}</div>
+                                <div>
+                                    {validation.touched.repetition && validation.errors.repetition ? (
+                                        <FormFeedback type="invalid">
+                                            {validation.errors.repetition}
+                                        </FormFeedback>
+                                    ) : null}
+                                </div>
                             </div>
                         </Col>
+                        {console.log("Repetition:", validation.values.repetition)}
 
                         <Col sm="4">
                             <div className="mb-3">
@@ -379,7 +398,7 @@ const NSTVList = (props) => {
                                     <option value="">Select Font Size</option>
                                     {osdConfigFontSize &&
                                         osdConfigFontSize.map((fontSize) => (
-                                            <option key={fontSize.id} value={fontSize.id}>
+                                            <option key={fontSize.id} value={fontSize.name}>
                                                 {fontSize.name}
                                             </option>
                                         ))}
@@ -391,6 +410,11 @@ const NSTVList = (props) => {
                                 ) : null}
                             </div>
                         </Col>
+                        {console.log("Font Size:", validation.values.fontSize)}
+                        {console.log("font size: " + validation.values.fontSize)}
+                        {console.log(
+                            "font size: " + typeof validation.values.fontSize
+                        )}
                         <Col sm="4">
                             <div className="mb-3">
                                 <Label className="form-label">Font Color<span style={{ color: 'red' }}>*</span></Label>
@@ -406,7 +430,7 @@ const NSTVList = (props) => {
                                     <option value="">Select Font Color</option>
                                     {osdConfigFontColor &&
                                         osdConfigFontColor.map((fontcolor) => (
-                                            <option key={fontcolor.id} value={fontcolor.id}>
+                                            <option key={fontcolor.id} value={fontcolor.name}>
                                                 {fontcolor.name}
                                             </option>
                                         ))}
@@ -418,6 +442,11 @@ const NSTVList = (props) => {
                                 ) : null}
                             </div>
                         </Col>
+                        {console.log("Font Color:", validation.values.fontcolor)}
+                        {console.log("font color: " + validation.values.fontcolor)}
+                        {console.log(
+                            "font color: " + typeof validation.values.fontcolor
+                        )}
 
                         <Col sm="4">
                             <div className="mb-3">
@@ -434,7 +463,7 @@ const NSTVList = (props) => {
                                     <option value="">Select back color</option>
                                     {osdConfigBackgroundColor &&
                                         osdConfigBackgroundColor.map((backgroundColor) => (
-                                            <option key={backgroundColor.id} value={backgroundColor.id}>
+                                            <option key={backgroundColor.id} value={backgroundColor.name}>
                                                 {backgroundColor.name}
                                             </option>
                                         ))}
@@ -446,6 +475,11 @@ const NSTVList = (props) => {
                                 ) : null}
                             </div>
                         </Col>
+                        {console.log("Background Color:", validation.values.backgroundColor)}
+                        {console.log("back color: " + validation.values.backgroundColor)}
+                        {console.log(
+                            "back color type: " + typeof validation.values.backgroundColor
+                        )}
                         <Col sm="4">
                             <div className="mb-3">
                                 <Label className="form-label">Background Area<span style={{ color: 'red' }}>*</span></Label>
@@ -473,6 +507,11 @@ const NSTVList = (props) => {
                                 ) : null}
                             </div>
                         </Col>
+                        {console.log("Background Area:", validation.values.backgroundarea)}
+                        {console.log("background area: " + validation.values.backgroundarea)}
+                        {console.log(
+                            "background area: " + typeof validation.values.backgroundarea
+                        )}
                     </Row>
                     <Row>
                         <Col>
