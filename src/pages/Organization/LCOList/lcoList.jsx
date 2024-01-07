@@ -126,7 +126,7 @@ const LCOList = (props) => {
   const [showBulkUpdateLco, setShowBulkUpdateLco] = useState(false);
   const [showUploadCredit, setShowUploadCredit] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [showAdjustColumn, setShowAdjustColumn] = useState(false);
+  const [showAdjustColumnDownload, setShowAdjustColumnDownload] = useState(false);
   const columns = useMemo(
     () => [
       {
@@ -426,8 +426,6 @@ const LCOList = (props) => {
     }
   };
 
-  const keyField = "id";
-
   const getTableActions = () => {
     return [
       {
@@ -466,6 +464,12 @@ const LCOList = (props) => {
         type: "normal",
         icon: "upload",
       },
+      {
+        name: "Download",
+        action: setShowAdjustColumnDownload,
+        type: "normal",
+        icon: "download"
+      }
     ];
   };
   return (
@@ -500,8 +504,8 @@ const LCOList = (props) => {
         handleSettings={() => setShowSettings(false)}
       />
       <AdjustColumns
-        isOpen={showAdjustColumn}
-        handleAdjustColumn={() => setShowAdjustColumn(false)}
+        isOpen={showAdjustColumnDownload}
+        handleAdjustColumn={() => setShowAdjustColumnDownload(false)}
       />
       <div className="page-content">
         <Container fluid>
@@ -522,10 +526,8 @@ const LCOList = (props) => {
                       isGlobalFilter={true}
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
-                      isAdjustColumns={true}
                       // iscustomPageSizeOptions={true}
                       tableActions={getTableActions()}
-                      handleAdjustColumn={() => setShowAdjustColumn(true)}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

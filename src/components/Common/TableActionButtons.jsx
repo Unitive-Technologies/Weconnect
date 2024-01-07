@@ -52,6 +52,8 @@ const TableActionButtons = ({ tableActions }) => {
         return "bx bx-upload me-1";
       case "action":
         return "mdi mdi-dots-vertical";
+      case "download":
+        return "bx bx-download me-1";
       default:
         return "";
     }

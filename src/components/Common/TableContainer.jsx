@@ -15,15 +15,9 @@ import { useFormik } from "formik";
 import moment from "moment";
 import {
   Button,
-  Card,
-  CardBody,
-  CardTitle,
   Col,
-  Container,
-  Form,
   FormFeedback,
   FormGroup,
-  Input,
   Label,
   Row,
   Table,
@@ -169,7 +163,6 @@ const TableContainer = ({
   isTransactionDate,
   isShowTableActionButtons,
   isAdjustColumns,
-  handleAdjustColumn,
   isAddOptions,
   handleRowClick,
   isAddBroadCaster,
@@ -409,20 +402,6 @@ const TableContainer = ({
             </Col>
           )}
         </div>
-      </Row>
-      <Row>
-        {isAdjustColumns && (
-          <div className="text-sm-end">
-            <Link
-              color="primary"
-              className="btn mb-2 me-2"
-              onClick={handleAdjustColumn}
-            >
-              <i className="mdi mdi-download me-1" />
-              Adjust Columns & Generate LCO List
-            </Link>
-          </div>
-        )}
       </Row>
       <div className="table-responsive react-table">
         <Table {...getTableProps()} className={tableClass}>

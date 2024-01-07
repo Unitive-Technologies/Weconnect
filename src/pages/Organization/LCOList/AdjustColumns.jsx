@@ -28,6 +28,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 const AdjustColumns = (props) => {
   const { isOpen, handleAdjustColumn } = props;
+
   const [selectedColumns, setSelectedColumns] = useState([]);
   const dispatch = useDispatch();
   const lco = [];
@@ -520,8 +521,9 @@ const AdjustColumns = (props) => {
 };
 
 AdjustColumns.propTypes = {
-  toggle: PropTypes.func,
-  isOpen: PropTypes.bool,
+  isOpen: PropTypes.bool.isRequired,
+  handleAdjustColumn: PropTypes.func.isRequired,
 };
+
 
 export default AdjustColumns;
