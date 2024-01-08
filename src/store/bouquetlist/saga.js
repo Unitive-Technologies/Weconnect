@@ -1,12 +1,46 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { GET_BOUQUET, ADD_BOUQUET } from "./actionTypes";
+import {
+  GET_BOUQUET,
+  ADD_BOUQUET,
+  GET_BOUQUETTYPE,
+  GET_BOUQUET_BOXTYPE,
+  GET_BOUQUEX,
+  GET_ALACARTECHANNALS,
+  GET_BOUQUET_PACKAGES,
+  GET_BOUQUET_TAXLIST,
+  GET_RECHARGEPERIOD,
+} from "./actionTypes";
 import {
   getBouquetSuccess,
   getBouquetFail,
   addBouquetSuccess,
   addBouquetFail,
+  getAlacarteChannalsSuccess,
+  getAlacarteChannalsFail,
+  getBouquetBoxtypeSuccess,
+  getBouquetBoxtypeFail,
+  getBouquetPackagesSuccess,
+  getBouquetPackagesFail,
+  getBouquetTaxlistSuccess,
+  getBouquetTaxlistFail,
+  getBouquetTypeSuccess,
+  getBouquetTypeFail,
+  getRechargePeriodSuccess,
+  getRechargePeriodFail,
+  getBouquexSuccess,
+  getBouquexFail,
 } from "./actions";
-import { getBouquet, addBouquet } from "../../helpers/fakebackend_helper";
+import {
+  getBouquet,
+  addBouquet,
+  getAlacarteChannals,
+  getBouquetBoxtype,
+  getBouquetPackages,
+  getBouquetTaxlist,
+  getBouquetType,
+  getBouquex,
+  getRechargePeriod,
+} from "../../helpers/fakebackend_helper";
 
 const convertBouquetListObject = (bouquetList) => {
   return bouquetList.map((bouquet) => {
@@ -53,9 +87,86 @@ function* onAddBouquet({ payload: bouquet }) {
   }
 }
 
+function* fetchBouquetType() {
+  try {
+    const response = yield call(getBouquetType);
+    yield put(getBouquetTypeSuccess(response.data));
+  } catch (error) {
+    console.error("Error fetching bouquet type list: ", error);
+    yield put(getBouquetTypeFail(error));
+  }
+}
+
+function* fetchBouquetBoxtype() {
+  try {
+    const response = yield call(getBouquetBoxtype);
+    yield put(getBouquetBoxtypeSuccess(response.data));
+  } catch (error) {
+    console.error("Error fetching bouquet boxtype list: ", error);
+    yield put(getBouquetBoxtypeFail(error));
+  }
+}
+
+function* fetchBouquetTaxlist() {
+  try {
+    const response = yield call(getBouquetTaxlist);
+    yield put(getBouquetTaxlistSuccess(response.data));
+  } catch (error) {
+    console.error("Error fetching bouquet tax list: ", error);
+    yield put(getBouquetTaxlistFail(error));
+  }
+}
+
+function* fetchBouquetPackages() {
+  try {
+    const response = yield call(getBouquetPackages);
+    yield put(getBouquetPackagesSuccess(response.data));
+  } catch (error) {
+    console.error("Error fetching bouquet Packages list: ", error);
+    yield put(getBouquetPackagesFail(error));
+  }
+}
+
+function* fetchRechargePeriod() {
+  try {
+    const response = yield call(getRechargePeriod);
+    yield put(getRechargePeriodSuccess(response.data));
+  } catch (error) {
+    console.error("Error fetching Recharge period: ", error);
+    yield put(getRechargePeriodFail(error));
+  }
+}
+
+function* fetchBouquex() {
+  try {
+    const response = yield call(getBouquex);
+    yield put(getBouquexSuccess(response.data));
+  } catch (error) {
+    console.error("Error fetching bouquex : ", error);
+    yield put(getBouquexFail(error));
+  }
+}
+
+function* fetchAlacarteChannels() {
+  try {
+    const response = yield call(getAlacarteChannals);
+    yield put(getAlacarteChannalsSuccess(response.data));
+  } catch (error) {
+    console.error("Error fetching bouquet Packages list:", error);
+    yield put(getAlacarteChannalsFail(error));
+  }
+}
+
 function* bouquetSaga() {
   yield takeEvery(GET_BOUQUET, fetchBouquet);
   yield takeEvery(ADD_BOUQUET, onAddBouquet);
+  yield takeEvery(GET_BOUQUETTYPE, fetchBouquetType);
+  yield takeEvery(GET_BOUQUET_BOXTYPE, fetchBouquetBoxtype);
+  yield takeEvery(GET_BOUQUET_TAXLIST, fetchBouquetTaxlist);
+  yield takeEvery(GET_BOUQUET_PACKAGES, fetchBouquetPackages);
+  yield takeEvery(GET_RECHARGEPERIOD, fetchRechargePeriod);
+  yield takeEvery(GET_BOUQUEX, fetchBouquex);
+  yield takeEvery(GET_ALACARTECHANNALS, fetchAlacarteChannels);
 }
 
 export default bouquetSaga;
