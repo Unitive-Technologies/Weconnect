@@ -25,7 +25,17 @@ import AdditionalMRP from "./AdditionalMRP";
 import AddBrands from "./AddBrands";
 
 const CreateBouquet = (props) => {
-  const { isOpen, toggle } = props;
+  const {
+    isOpen,
+    toggle,
+    alacartechannals,
+    bouquetboxtype,
+    bouquetpackages,
+    bouquettaxlist,
+    bouquettype,
+    bouquex,
+    rechargeperiod,
+  } = props;
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -195,8 +205,11 @@ const CreateBouquet = (props) => {
                   value={validation.values.boxtype_lbl || ""}
                 >
                   <option value="">Select box type</option>
-                  <option value="SD">Standard boxtype_lbl(SD)</option>
-                  <option value="HD">High boxtype_lbl(HD)</option>
+                  {bouquetboxtype.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.boxtype_lbl &&
                 validation.errors.boxtype_lbl ? (
@@ -227,9 +240,11 @@ const CreateBouquet = (props) => {
                   }
                 >
                   <option value="">Select bouquet type</option>
-                  <option value="Base">Base</option>
-                  <option value="Addon">Addon</option>
-                  <option value="Alacarte">Alacarte</option>
+                  {bouquettype.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.type_lbl && validation.errors.type_lbl ? (
                   <FormFeedback type="invalid">
@@ -314,11 +329,11 @@ const CreateBouquet = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.is_exclusive_lbl || ""}
                 >
-                  <option value="Not Exclusive">Not Exclusive</option>
-                  <option value="Only MSO user can Assign and Renew">
-                    Only MSO user can Assign and Renew
-                  </option>
-                  <option value="LCO can Renew">LCO can Renew </option>
+                  {bouquex.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.is_exclusive_lbl &&
                 validation.errors.is_exclusive_lbl ? (
@@ -498,9 +513,7 @@ const CreateBouquet = (props) => {
           <Row>
             <Col sm="3">
               <div className="mb-3">
-                <Label className="form-label">
-                  Select EPBX<span style={{ color: "red" }}>*</span>
-                </Label>
+                <Label className="form-label">Select EPBX</Label>
                 <Input
                   name="epbx"
                   type="select"
