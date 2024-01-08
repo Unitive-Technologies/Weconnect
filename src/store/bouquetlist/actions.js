@@ -73,3 +73,87 @@ export const getBouquetTypeFail = (error) => ({
   type: GET_BOUQUETTYPE_FAIL,
   payload: error,
 });
+
+export const getBouquetBoxtype = () => ({
+  type: GET_BOUQUET_BOXTYPE,
+});
+
+export const getBouquetBoxtypeSuccess = (boxtype) => ({
+  type: GET_BOUQUET_BOXTYPE_SUCCESS,
+  payload: boxtype,
+});
+
+export const getBouquetBoxtypeFail = (error) => ({
+  type: GET_BOUQUET_BOXTYPE_FAIL,
+  payload: error,
+});
+
+export const getBouquex = () => ({
+  type: GET_BOUQUEX,
+});
+
+export const getBouquexSuccess = (bouquex) => ({
+  type: GET_BOUQUEX_SUCCESS,
+  payload: bouquex,
+});
+
+export const getBouquexFail = (error) => ({
+  type: GET_BOUQUEX_FAIL,
+  payload: error,
+});
+
+export const getRechargePeriod = () => ({
+  type: GET_RECHARGEPERIOD,
+});
+
+export const getRechargePeriodSuccess = (rechargeperiod) => ({
+  type: GET_RECHARGEPERIOD_SUCCESS,
+  payload: rechargeperiod,
+});
+
+export const getRechargePeriodFail = (error) => ({
+  type: GET_RECHARGEPERIOD_FAIL,
+  payload: error,
+});
+
+export const getBouquetTaxlist = () => ({
+  type: GET_BOUQUET_TAXLIST,
+});
+
+export const getBouquetTaxlistSuccess = (bouquettaxlist) => ({
+  type: GET_BOUQUET_TAXLIST_SUCCESS,
+  payload: bouquettaxlist,
+});
+
+export const getBouquetTaxlistFail = (error) => ({
+  type: GET_BOUQUET_TAXLIST_FAIL,
+  payload: error,
+});
+
+export const getAlacarteChannals = () => ({
+  type: GET_ALACARTECHANNALS,
+});
+
+export const getAlacarteChannalsSuccess = (alacartechannals) => ({
+  type: GET_ALACARTECHANNALS_SUCCESS,
+  payload: alacartechannals,
+});
+
+export const getAlacarteChannalsFail = (error) => ({
+  type: GET_ALACARTECHANNALS_FAIL,
+  payload: error,
+});
+
+export const getBouquetPackages = () => ({
+  type: GET_BOUQUET_PACKAGES,
+});
+
+export const getBouquetPackagesSuccess = (bouquetpackages) => ({
+  type: GET_BOUQUET_PACKAGES_SUCCESS,
+  payload: bouquetpackages,
+});
+
+export const getBouquetPackagesFail = (error) => ({
+  type: GET_BOUQUET_PACKAGES_FAIL,
+  payload: error,
+});
