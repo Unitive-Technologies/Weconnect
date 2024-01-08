@@ -370,7 +370,7 @@ const OSDConfigurationList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("OSD Configuration:" + JSON.stringify(osdConfig))}
+                    {/* {console.log("OSD Configuration:" + JSON.stringify(osdConfig))} */}
                     <TableContainer
                       isPagination={true}
                       columns={columns}

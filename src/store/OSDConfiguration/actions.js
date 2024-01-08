@@ -36,7 +36,7 @@ export const getOSDConfiguration = () => ({
 });
 
 export const getOSDConfigurationSuccess = (osdConfiguration) => {
-  console.log("Received OSD Configuration:", osdConfiguration);
+  // console.log("Received OSD Configuration:", osdConfiguration);
   return {
     type: GET_OSDCONFIGURATION_SUCCESS,
     payload: osdConfiguration,

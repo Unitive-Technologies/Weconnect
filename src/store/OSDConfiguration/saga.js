@@ -39,7 +39,6 @@ const convertOSDConfigurationListObject = (osdConfigurationList) => {
       id: osdConfiguration.id,
       name: osdConfiguration.name,
       cas_code: osdConfiguration.cas_code,
-
       status_lbl:
         osdConfiguration.status === 1
           ? "ACTIVE"
@@ -52,6 +51,8 @@ const convertOSDConfigurationListObject = (osdConfigurationList) => {
       end_time: osdConfiguration.end_time,
       created_at: osdConfiguration.created_at,
       created_by_lbl: osdConfiguration.created_by_lbl,
+      config: osdConfiguration.config,
+      enable: config.enable,
     };
   });
 };
@@ -59,7 +60,7 @@ const convertOSDConfigurationListObject = (osdConfigurationList) => {
 function* fetchOSDConfiguration() {
   try {
     const response = yield call(getOSDConfiguration);
-    console.log("response:" + JSON.stringify(response));
+    // console.log("response:" + JSON.stringify(response));
     // const osdConfigurationList = convertOSDConfigurationListObject(response);
     yield put(getOSDConfigurationSuccess(response.data));
   } catch (error) {
@@ -70,7 +71,7 @@ function* fetchOSDConfiguration() {
 function* fetchOSDConfigurationEnable() {
   try {
     const response = yield call(getOSDConfigurationEnable);
-    console.log("OSD Configuration Enable  response:" + JSON.stringify(response));
+    // console.log("OSD Configuration Enable  response:" + JSON.stringify(response));
     yield put(getOSDConfigurationEnableSuccess(response.data));
   } catch (error) {
     yield put(getOSDConfigurationEnableFail(error));
@@ -80,7 +81,7 @@ function* fetchOSDConfigurationEnable() {
 function* fetchOSDConfigurationForcedDisplay() {
   try {
     const response = yield call(getOSDConfigurationForcedDisplay);
-    console.log("OSD Configuration Forced Display  response:" + JSON.stringify(response));
+    // console.log("OSD Configuration Forced Display  response:" + JSON.stringify(response));
     yield put(getOSDConfigurationForcedDisplaySuccess(response.data));
   } catch (error) {
     yield put(getOSDConfigurationForcedDisplayFail(error));
@@ -90,7 +91,7 @@ function* fetchOSDConfigurationForcedDisplay() {
 function* fetchOSDConfigurationDisplay() {
   try {
     const response = yield call(getOSDConfigurationDisplay);
-    console.log("OSD Configuration  Display  response:" + JSON.stringify(response));
+    // console.log("OSD Configuration  Display  response:" + JSON.stringify(response));
     yield put(getOSDConfigurationDisplaySuccess(response.data));
   } catch (error) {
     yield put(getOSDConfigurationDisplayFail(error));
@@ -101,7 +102,7 @@ function* fetchOSDConfigurationDisplay() {
 function* fetchOSDConfigurationFontColor() {
   try {
     const response = yield call(getOSDConfigurationFontColor);
-    console.log("OSD Configuration Font Colorr  response:" + JSON.stringify(response));
+    // console.log("OSD Configuration Font Colorr  response:" + JSON.stringify(response));
     yield put(getOSDConfigurationFontColorSuccess(response.data));
   } catch (error) {
     yield put(getOSDConfigurationFontColorFail(error));
@@ -111,7 +112,7 @@ function* fetchOSDConfigurationFontColor() {
 function* fetchOSDConfigurationBackgroundColor() {
   try {
     const response = yield call(getOSDConfigurationBackgroundColor);
-    console.log("OSD Configuration Background Color response:" + JSON.stringify(response));
+    // console.log("OSD Configuration Background Color response:" + JSON.stringify(response));
     yield put(getOSDConfigurationBackgroundColorSuccess(response.data));
   } catch (error) {
     yield put(getOSDConfigurationBackgroundColorFail(error));
@@ -121,7 +122,7 @@ function* fetchOSDConfigurationBackgroundColor() {
 function* fetchOSDConfigurationBackgroundArea() {
   try {
     const response = yield call(getOSDConfigurationBackgroundArea);
-    console.log("OSD Configuration Background Area response:" + JSON.stringify(response));
+    // console.log("OSD Configuration Background Area response:" + JSON.stringify(response));
     yield put(getOSDConfigurationBackgroundAreaSuccess(response.data));
   } catch (error) {
     yield put(getOSDConfigurationBackgroundAreaFail(error));
@@ -131,7 +132,7 @@ function* fetchOSDConfigurationBackgroundArea() {
 function* fetchOSDConfigurationFontSize() {
   try {
     const response = yield call(getOSDConfigurationFontSize);
-    console.log("OSD Configuration Font Size response:" + JSON.stringify(response));
+    // console.log("OSD Configuration Font Size response:" + JSON.stringify(response));
     yield put(getOSDConfigurationFontSizeSuccess(response.data));
   } catch (error) {
     yield put(getOSDConfigurationFontSizeFail(error));
@@ -141,7 +142,7 @@ function* fetchOSDConfigurationFontSize() {
 function* fetchOSDConfigurationStatus() {
   try {
     const response = yield call(getOSDConfigurationStatus);
-    console.log("OSD Configuration Status response:" + JSON.stringify(response));
+    // console.log("OSD Configuration Status response:" + JSON.stringify(response));
     yield put(getOSDConfigurationStatusSuccess(response.data));
   } catch (error) {
     yield put(getOSDConfigurationStatusFail(error));
