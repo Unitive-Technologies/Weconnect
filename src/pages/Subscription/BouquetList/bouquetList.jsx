@@ -12,7 +12,16 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import { getBouquet as onGetBouquet } from "/src/store/actions";
+import {
+  getBouquet as onGetBouquet,
+  getAlacarteChannals as onGetAlacarteChannels,
+  getBouquetBoxtype as onGetBouquetBoxtype,
+  getBouquetPackages as onGetBouquetPackages,
+  getBouquetTaxlist as onGetBouquetTaxlist,
+  getBouquetType as onGetBouquetType,
+  getBouquex as onGetBouquex,
+  getRechargePeriod as onGetRechargePeriod,
+} from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
@@ -32,12 +41,29 @@ const BouquetList = () => {
   const BouquetProperties = createSelector(selectBouquetState, (bouquet) => ({
     bouquets: bouquet.bouquet,
     loading: bouquet.loading,
+    alacartechannals: bouquet.alacartechannals,
+    bouquetboxtype: bouquet.bouquetboxtype,
+    bouquetpackages: bouquet.bouquetpackages,
+    bouquettaxlist: bouquet.bouquettaxlist,
+    bouquettype: bouquet.bouquettype,
+    bouquex: bouquet.bouquex,
+    rechargeperiod: bouquet.rechargeperiod,
   }));
 
-  const { bouquets, loading } = useSelector(BouquetProperties);
+  const {
+    bouquets,
+    loading,
+    alacartechannals,
+    bouquetboxtype,
+    bouquetpackages,
+    bouquettaxlist,
+    bouquettype,
+    bouquex,
+    rechargeperiod,
+  } = useSelector(BouquetProperties);
 
   useEffect(() => {
-    console.log("Bouquet list data in component:", bouquets);
+    // console.log("Bouquet list data in component:", bouquets)
   }, [bouquets]);
   const [isLoading, setLoading] = useState(loading);
   const [showCreateBouquet, setShowCreateBouquet] = useState(false);
@@ -46,6 +72,14 @@ const BouquetList = () => {
   const [viewBouquetData, setViewBouquetData] = useState({});
   const [showBulkRemoval, setShowBulkRemoval] = useState(false);
   const [showBulkSettings, setShowBulkSettings] = useState(false);
+
+  // console.log("Alacarte channals: ", alacartechannals);
+  // console.log("bouquet box type: ", bouquetboxtype);
+  // console.log("bouquet packages: ", bouquetpackages);
+  // console.log("bouquet tax list: ", bouquettaxlist);
+  // console.log("bouquet type: ", bouquettype);
+  // console.log("bouquex: ", bouquex);
+  // console.log("Recharge period: ", rechargeperiod);
 
   const toggleViewBouquet = (userData) => {
     console.log("User Data: ", userData);
@@ -242,6 +276,13 @@ const BouquetList = () => {
   useEffect(() => {
     if (bouquets && !bouquets.length) {
       dispatch(onGetBouquet());
+      dispatch(onGetAlacarteChannels());
+      dispatch(onGetBouquetBoxtype());
+      dispatch(onGetBouquetPackages());
+      dispatch(onGetBouquetTaxlist());
+      dispatch(onGetBouquex());
+      dispatch(onGetBouquetType());
+      dispatch(onGetRechargePeriod());
     }
   }, [dispatch, bouquets]);
 
@@ -281,7 +322,17 @@ const BouquetList = () => {
         toggle={toggleViewBouquet}
         bouquet={viewBouquetData}
       />
-      <CreateBouquet isOpen={showCreateBouquet} toggle={toggleCreateBouquet} />
+      <CreateBouquet
+        isOpen={showCreateBouquet}
+        toggle={toggleCreateBouquet}
+        alacartechannals={alacartechannals}
+        bouquetboxtype={bouquetboxtype}
+        bouquetpackages={bouquetpackages}
+        bouquettaxlist={bouquettaxlist}
+        bouquettype={bouquettype}
+        bouquex={bouquex}
+        rechargeperiod={rechargeperiod}
+      />
       <BulkAssign isOpen={showBulkAssign} toggle={toggleBulkAssign} />
       <BulkRemoval isOpen={showBulkRemoval} toggle={toggleBulkRemoval} />
       <BulkSettings isOpen={showBulkSettings} toggle={toggleBulkSettings} />
