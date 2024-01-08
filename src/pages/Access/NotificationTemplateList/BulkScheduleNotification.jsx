@@ -16,6 +16,7 @@ import {
   UncontrolledTooltip,
   Input,
   Form,
+  Table,
   CardTitle,
   CardSubtitle,
 } from "reactstrap";
@@ -24,10 +25,7 @@ import Dropzone from "react-dropzone";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  updateUser as onUpdateUser,
-  getUsers as onGetUsers,
-} from "/src/store/users/actions";
+import { getNotificationTemplate as onGetNotificationTemplate } from "/src/store/actions";
 import AddUserModal from "./AddUserModal";
 
 const BulkScheduleNotification = (props) => {
@@ -37,7 +35,7 @@ const BulkScheduleNotification = (props) => {
   const dispatch = useDispatch();
   const [showAddUser, setShowAddUser] = useState(false);
   const [tableList, setTableList] = useState([]);
-
+  const [toggleSwitch, settoggleSwitch] = useState(true);
   const addusers = [];
   const [selectedStatusToSet, setSelectedStatusToSet] = useState("active");
   // const [filteredActiveBlockUsers, setFilteredActiveBlockUsers] = useState([]);
@@ -45,7 +43,8 @@ const BulkScheduleNotification = (props) => {
   // const [filteredActiveInactiveUsers, setFilteredActiveInactiveUsers] =
   //   useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
-
+  const [targetUsers, setTargetUsers] = useState([]);
+  console.log("target recd:" + JSON.stringify(targetUsers));
   const handleActive = (row) => {
     const isRowSelected = selectedUsers.some((user) => user.id === row.id);
 
@@ -83,72 +82,33 @@ const BulkScheduleNotification = (props) => {
     }
   };
 
-  const handleStatusChange = (e) => {
-    const selectedStatus = e.target.value;
-    setSelectedStatusToSet(selectedStatus);
-
-    validation.handleChange(e);
-
-    console.log("selectedStatus:" + selectedStatus);
-  };
-
-  // useEffect(() => {
-  //   if (selectedStatusToSet === "inactive") {
-  //     const filteredActiveBlockData = users.filter(
-  //       (user) => parseInt(user.status) === -7 || parseInt(user.status) === 1
-  //     );
-  //     setTableList(filteredActiveBlockData);
-  //   } else if (selectedStatusToSet === "active") {
-  //     const filteredInActiveData = users.filter(
-  //       (user) => parseInt(user.status) === 0
-  //     );
-  //     setTableList(filteredInActiveData);
-  //   } else if (selectedStatusToSet === "block") {
-  //     const filteredActiveInactiveData = users.filter(
-  //       (user) => parseInt(user.status) === 1 || parseInt(user.status) === 0
-  //     );
-  //     setTableList(filteredActiveInactiveData);
-  //   } else {
-  //     setTableList([]);
-  //   }
-  // }, [users, selectedStatusToSet]);
-
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
-      statustoset: "active",
-      block_message: "",
+      starttime: "",
+      endtime: "",
     },
     validationSchema: Yup.object({
-      statustoset: Yup.string().required("Please Enter Status"),
-      // block_message: Yup.string().when(["statustoset"], {
-      //   is: (statustoset) => statustoset && statustoset !== "active",
-      //   then: Yup.string().required("Please Enter Message"),
-      //   otherwise: Yup.string(),
-      // }),
+      starttime: Yup.string().required("Please Select Start Time"),
+      endtime: Yup.string().required("Please Select End Time"),
     }),
 
     onSubmit: async (values) => {
       try {
-        const newStatus = {
-          user_id: selectedUsers.map((user) => user.id),
-          block_message: values.block_message,
-          status:
-            values.statustoset === "active"
-              ? 1
-              : values.statustoset === "inactive"
-              ? 0
-              : values.statustoset === "block"
-              ? -7
-              : 2,
+        const newSchedule = {
+          target_users_id: targetUsers.map((user) => user.id),
+          start_time: starttime || "",
+          end_time: endtime || "",
+          announcement_template_id: selectedRow.id,
+          status: selectedRow.status,
         };
 
-        console.log("newStatus:", JSON.stringify(newStatus));
+        console.log("newSchedule:", JSON.stringify(newSchedule));
         const token = "Bearer " + localStorage.getItem("temptoken");
 
         const response = await axios.post(
-          `${API_URL}/user/bulk-status/2?vr=web1.0`,
-          newStatus,
+          `${API_URL}/schedule-announcement?vr=web1.0`,
+          newSchedule,
           {
             headers: {
               Authorization: token,
@@ -157,7 +117,7 @@ const BulkScheduleNotification = (props) => {
         );
 
         console.log("Axios Response:", response);
-        dispatch(onGetUsers());
+        dispatch(onGetNotificationTemplate());
 
         validation.resetForm();
         onClose();
@@ -170,6 +130,13 @@ const BulkScheduleNotification = (props) => {
     },
   });
 
+  const handleCheckboxClick = (row) => {
+    console.log("button clicked");
+    // setViewNotificationTemplate(false);
+    setIsChecked(!isChecked);
+    // setSelectedRow(row);
+  };
+
   const columns = useMemo(
     () => [
       {
@@ -180,9 +147,7 @@ const BulkScheduleNotification = (props) => {
         Cell: (cellProps) => (
           <input
             type="checkbox"
-            disabled
-            checked
-            // onClick={() => handleActive(cellProps.row.original)}
+            onChange={() => handleCheckboxClick(cellProps.row.original)}
           />
         ),
       },
@@ -283,7 +248,7 @@ const BulkScheduleNotification = (props) => {
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.status.role_lbl}
+                  {cellProps.row.original.role_lbl}
                   {/* {cellProps.row.original.status === 1
                     ? "Administrator"
                     : cellProps.row.original.status === 2
@@ -466,6 +431,7 @@ const BulkScheduleNotification = (props) => {
       <AddUserModal
         isOpen={showAddUser}
         onClose={() => setShowAddUser(false)}
+        setTargetUsers={setTargetUsers}
       />
       <Modal
         isOpen={isOpen}
@@ -491,71 +457,75 @@ const BulkScheduleNotification = (props) => {
                 }}
               >
                 <Row>
-                  <Col lg={10}></Col>
-                  <Col lg={2}>
-                    <button
-                      onClick={() => setShowAddUser(true)}
-                      type="button"
-                      className="btn btn-success save-user mb-3"
-                    >
-                      Add User
-                    </button>
-                  </Col>
-                </Row>
-                <Row>
                   <Col lg={4}>
                     <div className="mb-3">
-                      <Label className="form-label">
+                      <label
+                        htmlFor="example-datetime-local-input"
+                        className="col-md-4 col-form-label"
+                      >
                         START Time
-                        <span style={{ color: "red" }}>*</span>
-                      </Label>
-                      <Input
-                        name="starttime"
-                        type="date"
-                        placeholder="Select Start Time"
-                        onChange={handleStatusChange}
-                        onBlur={validation.handleBlur}
-                        value={selectedStatusToSet}
-                      />
+                      </label>
+                      <div className="col-md-10">
+                        <input
+                          name="startime"
+                          className="form-control"
+                          type="datetime-local"
+                          defaultValue="2019-08-19T13:45:00"
+                          id="example-datetime-local-input"
+                          onChange={validation.handleChange}
+                          value={validation.values.starttime}
+                        />
+                      </div>
 
-                      {validation.touched.statustoset &&
-                      validation.errors.statustoset ? (
+                      {validation.touched.starttime &&
+                      validation.errors.starttime ? (
                         <FormFeedback type="invalid">
-                          {validation.errors.statustoset}
+                          {validation.errors.starttime}
                         </FormFeedback>
                       ) : null}
                     </div>
                   </Col>
+                  {console.log("startime: " + validation.values.startime)}
                   <Col lg={4}>
                     <div className="mb-3">
-                      <Label className="form-label">
+                      <label
+                        htmlFor="example-datetime-local-input"
+                        className="col-md-4 col-form-label"
+                      >
                         END Time
-                        <span style={{ color: "red" }}>*</span>
-                      </Label>
-                      <Input
-                        name="endtime"
-                        type="date"
-                        placeholder="Select End Time"
-                        onChange={handleStatusChange}
-                        onBlur={validation.handleBlur}
-                        value={selectedStatusToSet}
-                      />
+                      </label>
+                      <div className="col-md-10">
+                        <input
+                          name="endtime"
+                          className="form-control"
+                          type="datetime-local"
+                          defaultValue="2019-08-19T13:45:00"
+                          id="example-datetime-local-input"
+                          onChange={validation.handleChange}
+                          value={validation.values.endtime}
+                        />
+                      </div>
 
-                      {validation.touched.statustoset &&
-                      validation.errors.statustoset ? (
+                      {validation.touched.endtime &&
+                      validation.errors.endtime ? (
                         <FormFeedback type="invalid">
-                          {validation.errors.statustoset}
+                          {validation.errors.endtime}
                         </FormFeedback>
                       ) : null}
                     </div>
                   </Col>
+                  {console.log("endtime: " + validation.values.endtime)}
                   <Col lg={4}>
-                    <div className="form-check form-switch form-switch-lg mb-3">
+                    <div className="form-check form-switch form-switch-lg mt-4">
                       <input
                         type="checkbox"
                         className="form-check-input"
                         id="customSwitchsizelg"
                         defaultChecked
+                        onClick={(e) => {
+                          settoggleSwitch(!toggleSwitch);
+                        }}
+                        S
                       />
                       <label
                         className="form-check-label"
@@ -566,11 +536,23 @@ const BulkScheduleNotification = (props) => {
                     </div>
                   </Col>
                 </Row>
-
+                <Row>
+                  <Col lg={10}></Col>
+                  <Col lg={2}>
+                    <button
+                      onClick={() => setShowAddUser(true)}
+                      type="button"
+                      className="btn btn-success save-user mb-3"
+                      disabled={!toggleSwitch}
+                    >
+                      Add User
+                    </button>
+                  </Col>
+                </Row>
                 <TableContainer
                   isPagination={true}
                   columns={columns}
-                  data={addusers}
+                  data={targetUsers}
                   // data={tableList}
                   handleRowClick={(row) => {
                     // console.log("row:" + JSON.stringify(row));
@@ -609,18 +591,49 @@ const BulkScheduleNotification = (props) => {
                   }}
                 >
                   <Col lg={12}>
-                    <TableContainer
-                      isPagination={true}
-                      columns={userColumn}
-                      data={selectedUsers}
-                      //   isGlobalFilter={true}
-                      isShowingPageLength={true}
-                      customPageSize={50}
-                      tableClass="table align-middle table-nowrap table-hover"
-                      theadClass="table-light"
-                      paginationDiv="col-sm-12 col-md-7"
-                      pagination="pagination pagination-rounded justify-content-end mt-4"
-                    />
+                    <Card>
+                      <CardBody>
+                        {/* <CardTitle className="h4">Hoverable </CardTitle>
+                        <CardSubtitle className="card-title-desc">
+                          Add <code>.table-hover</code> to enable a hover state
+                          on table rows within a <code>&lt;tbody&gt;</code>.
+                        </CardSubtitle> */}
+
+                        <div className="table-responsive">
+                          <Table className="table mb-0">
+                            <thead className="table-light">
+                              <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Content</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row">1</th>
+                                <td style={{ maxWidth: 100 }}>
+                                  {selectedRow.msg_head}
+                                </td>
+                                <td
+                                  style={{
+                                    maxWidth: 200,
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    whiteSpace: "nowrap",
+                                  }}
+                                >
+                                  {selectedRow.msg_content}
+                                </td>
+                                <td>{selectedRow.msg_type_lbl}</td>
+                                <td>{selectedRow.status_lbl}</td>
+                              </tr>
+                            </tbody>
+                          </Table>
+                        </div>
+                      </CardBody>
+                    </Card>
                   </Col>
                 </Row>
                 <div className="text-center mt-4 ">

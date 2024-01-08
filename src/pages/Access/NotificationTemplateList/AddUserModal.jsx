@@ -30,7 +30,7 @@ import {
 } from "/src/store/users/actions";
 
 const AddUserModal = (props) => {
-  const { isOpen, onClose, users } = props;
+  const { isOpen, onClose, users, setTargetUsers } = props;
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
 
   const dispatch = useDispatch();
@@ -317,6 +317,16 @@ const AddUserModal = (props) => {
     []
   );
 
+  const handleSubmit = () => {
+    const newTargetUsers = {
+      target_rows: selectedUsers.map((user) => user),
+    };
+
+    console.log("newTargetUsers:", JSON.stringify(newTargetUsers.target_rows));
+    setTargetUsers(newTargetUsers.target_rows);
+    onClose();
+  };
+
   useEffect(() => {
     const getFilteredData = async () => {
       try {
@@ -330,7 +340,9 @@ const AddUserModal = (props) => {
             },
           }
         );
-
+        // console.log(
+        //   "tableList in useEffect: " + JSON.stringify(response.data.data)
+        // );
         setTableList(response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -360,11 +372,11 @@ const AddUserModal = (props) => {
             <Form
               onSubmit={(e) => {
                 e.preventDefault();
-                validation.handleSubmit();
+                handleSubmit();
                 return false;
               }}
             >
-              {console.log("tableList: " + JSON.stringify(tableList))}
+              {/* {console.log("tableList: " + JSON.stringify(tableList))} */}
               <TableContainer
                 isPagination={true}
                 columns={columns}
