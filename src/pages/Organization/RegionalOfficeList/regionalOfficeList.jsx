@@ -25,13 +25,13 @@ const RegionalOfficeList = (props) => {
 
   const dispatch = useDispatch();
 
-  const selectRegionalOfficeState = (state) => state;
+  const selectRegionalOfficeState = (state) => state.regionaloffice;
 
   const RegionalOfficeProperties = createSelector(
     selectRegionalOfficeState,
 
     (regionalOfficesState) => ({
-      regOffices: regionalOfficesState.regionaloffice.regionaloffice,
+      regOffices: regionalOfficesState.regionaloffice,
       loading: regionalOfficesState.loading,
       perPage: regionalOfficesState.perPage,
       totalCount: regionalOfficesState.totalCount,
@@ -254,9 +254,9 @@ const RegionalOfficeList = (props) => {
 
 
   useEffect(() => {
-    console.log("In UseEffect..",regOffices);
+    console.log("In UseEffect.. currentPage",currentPage);
     if (regOffices && !regOffices.length) {
-      dispatch(onGetRegionalOffice());
+      dispatch(onGetRegionalOffice(currentPage, perPage));
       setIsEdit(false);
     }
   }, [dispatch, regOffices]);

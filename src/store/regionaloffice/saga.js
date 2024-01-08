@@ -52,12 +52,12 @@ const convertRegionalOfficeListObject = (regionalofficeList) => {
   });
 };
 
-function* fetchRegionalOffice() {
+function* fetchRegionalOffice(action) {
   try {
-    const { perPage, currentPage } = yield select(state => state);
+    const { perPage, currentPage } = yield select(state => state.regionaloffice);
 
-    console.log("In saga - ", currentPage, perPage);
-    const response = yield call(getRegionalOffice, 2, 10);
+    console.log("In saga from selector - ", currentPage, perPage);
+    const response = yield call(getRegionalOffice, currentPage, perPage);
     // const regionalofficeList = convertRegionalOfficeListObject(response);
     yield put(getRegionalOfficeSuccess(response));
   } catch (error) {

@@ -22,9 +22,13 @@ export const setPerPageAction = (perPage) => ({
   payload: perPage,
 });
 
-export const getRegionalOffice = () => {
+export const getRegionalOffice = (currentPage, perPage) => {
   return {
     type: GET_REGIONALOFFICE,
+    payload: {
+      currentPage,
+      perPage,
+    }
   };
 };
 
