@@ -5,6 +5,27 @@ import {
   ADD_BOUQUET,
   ADD_BOUQUET_SUCCESS,
   ADD_BOUQUET_FAIL,
+  GET_BOUQUETTYPE,
+  GET_BOUQUETTYPE_SUCCESS,
+  GET_BOUQUETTYPE_FAIL,
+  GET_BOUQUET_BOXTYPE,
+  GET_BOUQUET_BOXTYPE_SUCCESS,
+  GET_BOUQUET_BOXTYPE_FAIL,
+  GET_BOUQUEX,
+  GET_BOUQUEX_SUCCESS,
+  GET_BOUQUEX_FAIL,
+  GET_RECHARGEPERIOD,
+  GET_RECHARGEPERIOD_SUCCESS,
+  GET_RECHARGEPERIOD_FAIL,
+  GET_BOUQUET_TAXLIST,
+  GET_BOUQUET_TAXLIST_SUCCESS,
+  GET_BOUQUET_TAXLIST_FAIL,
+  GET_ALACARTECHANNALS,
+  GET_ALACARTECHANNALS_SUCCESS,
+  GET_ALACARTECHANNALS_FAIL,
+  GET_BOUQUET_PACKAGES,
+  GET_BOUQUET_PACKAGES_SUCCESS,
+  GET_BOUQUET_PACKAGES_FAIL,
 } from "./actionTypes";
 
 export const getBouquet = () => ({
@@ -36,5 +57,19 @@ export const addBouquetSuccess = (bouquet) => ({
 
 export const addBouquetFail = (error) => ({
   type: ADD_BOUQUET_FAIL,
+  payload: error,
+});
+
+export const getBouquetType = () => ({
+  type: GET_BOUQUETTYPE,
+});
+
+export const getBouquetTypeSuccess = (bouquettype) => ({
+  type: GET_BOUQUETTYPE_SUCCESS,
+  payload: bouquettype,
+});
+
+export const getBouquetTypeFail = (error) => ({
+  type: GET_BOUQUETTYPE_FAIL,
   payload: error,
 });
