@@ -45,16 +45,18 @@ import {
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
 
-import { getBroadCaster as onGetBroadCasters, getBroadCasterStatus as onGetBroadCastersStatus } from "/src/store/broadcaster/actions";
+import {
+  getBroadCaster as onGetBroadCasters,
+  getBroadCasterStatus as onGetBroadCastersStatus,
+} from "/src/store/broadcaster/actions";
 import { isEmpty } from "lodash";
-
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
-import AddNewBroadCaster from './AddNewBroadCaster'
-import UploadBroadCaster from './UploadBroadCaster'
+import AddNewBroadCaster from "./AddNewBroadCaster";
+import UploadBroadCaster from "./UploadBroadCaster";
 import ViewBroadcasterModal from "./ViewBroadcasterModal";
 import ViewGenreList from "../GenreList/ViewGenreList";
 
@@ -75,7 +77,9 @@ const BroadcasterList = (props) => {
     })
   );
 
-  const { brodcast, brodcastStatus, loading } = useSelector(BroadCasterProperties);
+  const { brodcast, brodcastStatus, loading } = useSelector(
+    BroadCasterProperties
+  );
 
   useEffect(() => {
     console.log("BroadCaster data in component:", brodcast);
@@ -85,7 +89,7 @@ const BroadcasterList = (props) => {
   const [userList, setUserList] = useState([]);
   const [showAddNewBroadCaster, setShowAddNewBroadCaster] = useState(false);
   const [showUploadBroadCaster, setShowUploadBroadCaster] = useState(false);
-  const [showViewBroadcaster, setShowBroadcaster] = useState(false);
+  const [showViewBroadcaster, setShowViewBroadcaster] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
   const columns = useMemo(
@@ -123,10 +127,10 @@ const BroadcasterList = (props) => {
                 whiteSpace: "nowrap",
               }}
               className="font-size-14 mb-1"
-              onClick={() => {
-                const userData = cellProps.row.original;
-                toggleViewBroadcaster(userData);
-              }}
+              // onClick={() => {
+              //   const userData = cellProps.row.original;
+              //   toggleViewBroadcaster(userData);
+              // }}
             >
               <Link className="text-dark" to="#">
                 {cellProps.row.original.name}
@@ -254,16 +258,15 @@ const BroadcasterList = (props) => {
     setShowUploadBroadCaster(!showUploadBroadCaster);
   };
 
-  const [viewUser, setViewUser] = useState({});
+  const [viewBroadcaster, setViewBroadcaster] = useState({});
   // const toggleViewModal = () => setModal(modal);
   // const handleUserClick = (arg) => {
 
-  const toggleViewBroadcaster = (userData) => {
-    setShowBroadcaster(!showViewBroadcaster);
-    setViewUser(userData);
+  const toggleViewBroadcaster = (row) => {
+    setShowViewBroadcaster(!showViewBroadcaster);
+    setViewBroadcaster(row);
     // toggle();
   };
-
 
   var node = useRef();
   const onPaginationPageChange = (page) => {
@@ -286,7 +289,7 @@ const BroadcasterList = (props) => {
         name: "Create",
         action: setShowAddNewBroadCaster,
         type: "normal",
-        icon: "create"
+        icon: "create",
       },
       {
         name: "Upload",
@@ -294,7 +297,6 @@ const BroadcasterList = (props) => {
         type: "normal",
         icon: "upload",
       },
-
     ];
   };
 
@@ -303,10 +305,14 @@ const BroadcasterList = (props) => {
       <ViewBroadcasterModal
         isOpen={showViewBroadcaster}
         toggle={toggleViewBroadcaster}
-        user={ViewGenreList}
+        user={viewBroadcaster}
       />
 
-      <AddNewBroadCaster isOpen={showAddNewBroadCaster} toggle={toggle} brodcastStatus={brodcastStatus} />
+      <AddNewBroadCaster
+        isOpen={showAddNewBroadCaster}
+        toggle={toggle}
+        brodcastStatus={brodcastStatus}
+      />
       <UploadBroadCaster isOpen={showUploadBroadCaster} toggle={toggle1} />
 
       <div className="page-content">
@@ -324,11 +330,16 @@ const BroadcasterList = (props) => {
                       isPagination={true}
                       columns={columns}
                       data={brodcast}
+                      handleRowClick={(row) => {
+                        toggleViewBroadcaster(row);
+                      }}
                       isGlobalFilter={true}
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleAddNewBroadCasterClick={() => setShowAddNewBroadCaster(true)}
+                      handleAddNewBroadCasterClick={() =>
+                        setShowAddNewBroadCaster(true)
+                      }
                       handleUploadUser={() => setShowUploadBroadCaster(true)}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
@@ -344,7 +355,7 @@ const BroadcasterList = (props) => {
         </Container>
       </div>
       <ToastContainer />
-    </React.Fragment >
+    </React.Fragment>
   );
 };
 

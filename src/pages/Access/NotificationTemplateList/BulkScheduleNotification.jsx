@@ -87,6 +87,8 @@ const BulkScheduleNotification = (props) => {
     initialValues: {
       starttime: "",
       endtime: "",
+      // starttime: new Date().toISOString().slice(0, 16),
+      // endtime: new Date().toISOString().slice(0, 16),
     },
     validationSchema: Yup.object({
       starttime: Yup.string().required("Please Select Start Time"),

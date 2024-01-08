@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import {
   Card,
   CardBody,
@@ -11,6 +12,7 @@ import {
   ModalBody,
   Label,
   FormFeedback,
+  ModalFooter,
   UncontrolledTooltip,
   Input,
   Form,
@@ -22,7 +24,7 @@ import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const ViewBroadcasterModal = (props) => {
   const { isOpen, toggle, user, viewUser, setViewUser } = props;
-  //   console.log("user in viewuser modal:" + JSON.stringify(user));
+  console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
   const [showEditUser, setShowEditUser] = useState(false);
 
@@ -34,14 +36,13 @@ const ViewBroadcasterModal = (props) => {
       id: (user && user.id) || "",
       name: (user && user.name) || "",
       fullname: (user && user.fullname) || "",
-      contactperson: (user && user.contactperson) || "",
+      contactperson: (user && user.contact_person) || "",
       mobile: (user && user.mobile_no) || "",
-      phone: (user && user.phone) || "",
+      phone: (user && user.phone_no) || "",
       email: (user && user.email) || "",
       address: (user && user.address) || "",
       description: (user && user.description) || "",
       status: (user && user.status) || "",
-
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
@@ -52,7 +53,7 @@ const ViewBroadcasterModal = (props) => {
       email: Yup.string()
         .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
         .required("Please Enter Your Email"),
-      // mobile: Yup.array().required("Please Enter mobile"),      
+      // mobile: Yup.array().required("Please Enter mobile"),
       address: Yup.string().required("Please Enter Address"),
       description: Yup.string().required("Please Enter description"),
       status: Yup.string().required("Please Enter status"),
@@ -77,6 +78,12 @@ const ViewBroadcasterModal = (props) => {
       toggle();
     },
   });
+
+  const handleCancel = () => {
+    setShowEditUser(false);
+    toggle();
+  };
+
   return (
     <>
       {/* <EditUserModal
@@ -91,21 +98,26 @@ const ViewBroadcasterModal = (props) => {
         centered={true}
         className="exampleModal"
         tabIndex="-1"
-        toggle={toggle}
+        toggle={handleCancel}
       >
-        {!showEditUser ? (
-          <ModalHeader toggle={toggle} tag="h4">
-            View  {user.name}
-            <i
-              className="bx bx bxs-edit"
-              style={{ marginLeft: "20px", cursor: "pointer" }}
-              onClick={() => setShowEditUser(true)}
-            ></i>
-          </ModalHeader>
-        ) : (
-          <ModalHeader toggle={toggle} tag="h4">
-            Edit {user.name}
-          </ModalHeader>
+        <ModalHeader toggle={handleCancel} tag="h4">
+          {!showEditUser
+            ? `View ${(user && user.name) || ""}`
+            : `Edit ${(user && user.name) || ""}`}
+        </ModalHeader>
+        {!showEditUser && (
+          <Link
+            style={{
+              position: "absolute",
+              marginLeft: "92%",
+              marginTop: "1%",
+            }}
+            to="#!"
+            className="btn btn-light me-1"
+            onClick={() => setShowEditUser(true)}
+          >
+            <i className="mdi mdi-pencil-outline"></i>
+          </Link>
         )}
         <ModalBody>
           <Form
@@ -118,7 +130,9 @@ const ViewBroadcasterModal = (props) => {
             <Row>
               <Col sm="4">
                 <div className="mb-3">
-                  <Label className="form-label">Name<span style={{ color: 'red' }}>*</span></Label>
+                  <Label className="form-label">
+                    Name<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="name"
                     type="text"
@@ -142,7 +156,9 @@ const ViewBroadcasterModal = (props) => {
               </Col>
               <Col sm="4">
                 <div className="mb-3">
-                  <Label className="form-label">Full-Name<span style={{ color: 'red' }}>*</span></Label>
+                  <Label className="form-label">
+                    Full-Name<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="fullname"
                     label="fullname"
@@ -167,7 +183,9 @@ const ViewBroadcasterModal = (props) => {
               </Col>
               <Col sm="4">
                 <div className="mb-3">
-                  <Label className="form-label">Contact Person<span style={{ color: 'red' }}>*</span></Label>
+                  <Label className="form-label">
+                    Contact Person<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="contactperson"
                     label="contactperson"
@@ -178,12 +196,14 @@ const ViewBroadcasterModal = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.contactperson || ""}
                     invalid={
-                      validation.touched.contactperson && validation.errors.contactperson
+                      validation.touched.contactperson &&
+                      validation.errors.contactperson
                         ? true
                         : false
                     }
                   />
-                  {validation.touched.contactperson && validation.errors.contactperson ? (
+                  {validation.touched.contactperson &&
+                  validation.errors.contactperson ? (
                     <FormFeedback type="invalid">
                       {validation.errors.contactperson}
                     </FormFeedback>
@@ -194,7 +214,9 @@ const ViewBroadcasterModal = (props) => {
             <Row>
               <Col sm="4">
                 <div className="mb-3">
-                  <Label className="form-label">Mobile No.<span style={{ color: 'red' }}>*</span></Label>
+                  <Label className="form-label">
+                    Mobile No.<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="mobile"
                     label="Mobile No."
@@ -229,8 +251,7 @@ const ViewBroadcasterModal = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.phone || ""}
-                  >
-                  </Input>
+                  ></Input>
                   {validation.touched.phone && validation.errors.phone ? (
                     <FormFeedback type="invalid">
                       {validation.errors.phone}
@@ -240,7 +261,9 @@ const ViewBroadcasterModal = (props) => {
               </Col>
               <Col sm="4">
                 <div className="mb-3">
-                  <Label className="form-label">Email address<span style={{ color: 'red' }}>*</span></Label>
+                  <Label className="form-label">
+                    Email address<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="email"
                     label="Email"
@@ -267,7 +290,9 @@ const ViewBroadcasterModal = (props) => {
             <Row>
               <Col sm="4">
                 <div className="mb-3">
-                  <Label className="form-label">Address<span style={{ color: 'red' }}>*</span></Label>
+                  <Label className="form-label">
+                    Address<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="address"
                     label="address"
@@ -292,7 +317,9 @@ const ViewBroadcasterModal = (props) => {
               </Col>
               <Col sm="4">
                 <div className="mb-3">
-                  <Label className="form-label">Description<span style={{ color: 'red' }}>*</span></Label>
+                  <Label className="form-label">
+                    Description<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="description"
                     label="Description"
@@ -303,7 +330,8 @@ const ViewBroadcasterModal = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.description || ""}
                   />
-                  {validation.touched.description && validation.errors.description ? (
+                  {validation.touched.description &&
+                  validation.errors.description ? (
                     <FormFeedback type="invalid">
                       {validation.errors.description}
                     </FormFeedback>
@@ -312,7 +340,9 @@ const ViewBroadcasterModal = (props) => {
               </Col>
               <Col sm="4">
                 <div className="mb-3">
-                  <Label className="form-label">Status<span style={{ color: 'red' }}>*</span></Label>
+                  <Label className="form-label">
+                    Status<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="status"
                     type="select"
@@ -336,19 +366,39 @@ const ViewBroadcasterModal = (props) => {
                 </div>
               </Col>
             </Row>
-            <Row>
-              <Col>
-                <div className="text-end">
-                  <button type="submit" className="btn btn-success save-user">
-                    Save
-                  </button>
-                </div>
-              </Col>
-            </Row>
+            {showEditUser && (
+              <Row>
+                <Col>
+                  <ModalFooter>
+                    <button type="submit" className="btn btn-success save-user">
+                      Save
+                    </button>
+                    <button
+                      type="reset"
+                      className="btn btn-warning"
+                      onClick={() => validation.resetForm()}
+                    >
+                      Reset
+                    </button>
+
+                    <button
+                      type="button"
+                      className="btn btn-outline-danger"
+                      onClick={() => {
+                        validation.resetForm();
+                        handleCancel();
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </ModalFooter>
+                </Col>
+              </Row>
+            )}
           </Form>
         </ModalBody>
         {/* </Modal> */}
-      </Modal >
+      </Modal>
     </>
   );
 };

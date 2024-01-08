@@ -291,7 +291,6 @@ const CustomerUserList = (props) => {
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleRowClick={(row) => {
-                        // console.log("row:" + JSON.stringify(row));
                         handleViewCustomerUser(row);
                       }}
                       // iscustomPageSizeOptions={true}

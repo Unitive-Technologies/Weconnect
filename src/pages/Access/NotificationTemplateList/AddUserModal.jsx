@@ -448,7 +448,7 @@ const AddUserModal = (props) => {
                     //   validation.handleSubmit();
                     // }}
                   >
-                    Save
+                    Add
                   </button>
                   <button
                     type="button"
