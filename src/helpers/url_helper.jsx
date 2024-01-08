@@ -42,9 +42,10 @@ export const GET_NOTIFICATIONTEMPLATE_ADDUSER =
   "/user/list?fields=id,name,username&expand=type_lbl,role_lbl&notfilter[role]=4&page=1&per-page=500&vr=web1.0";
 export const ADD_NEW_NOTIFICATIONTEMPLATE = "/announcement-template?vr=web1.0";
 
-export const getRegionalOfficeUrl = (pageNo, perPage) =>{
+export const getRegionalOfficeUrl = (pageNo, perPage) => {
   console.log("In url - ", pageNo);
-  return  `/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,mso_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=1&page=${pageNo}&per-page=${perPage}&vr=web1.0`;}
+  return `/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,mso_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=1&page=${pageNo}&per-page=${perPage}&vr=web1.0`;
+};
 
 export const GET_REGIONALOFFICE =
   "/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,mso_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=1&page=1&per-page=50&vr=web1.0";
@@ -216,7 +217,17 @@ export const ADD_NEW_SMSMESSAGETEMPLIST = "/add/SMSMessageTemplate";
 
 export const GET_BOUQUET =
   "/bouque?expand=setting,created_by_lbl,lco_rate,type_lbl,status_lbl,boxtype_lbl,rate,category_lbl,is_exclusive_lbl,is_promotional_lbl,additional_rates,is_online_app_lbl&page=1&per-page=50&vr=web1.0";
-export const ADD_BOUQUET = "/add/bouquet";
+export const ADD_BOUQUET = "/bouque?vr=web1.0";
+export const GET_BOUQUET_BOXTYPE = "/list/boxtype?fields=id,name&vr=web1.0";
+export const GET_BOUQUETTYPE = "/list/bouquetype?fields=id,name&vr=web1.0";
+export const GET_BOUQUEX = "/list/bouquex?fields=id,name&vr=web1.0";
+export const GET_RECHARGEPERIOD = "/recharge-period/list?vr=web1.0";
+export const GET_BOUQUET_TAXLIST =
+  "/tax/list?fields=id,name,taxvalue&filter[applicableon]=1&expand=formula&vr=web1.0";
+export const GET_ALACARTECHANNALS =
+  "/channel/list?fields=id,name,code,broadcasterRate&expand=broadcaster_lbl,channel_type_lbl,isFta_lbl,isNCF_lbl&filter[isAlacarte]=1&sort=name&vr=web1.0";
+export const GET_BOUQUET_PACKAGES =
+  "/package/list?fields=id,name,code,broadcasterRate&expand=package_type_lbl,isFta_lbl,channelIds,brdBouqueIds,ftaChannelCount,payChannelCount,ncfChannelCount,totalChannelCount&sort=name&vr=web1.0";
 
 export const GET_CONNECTIONSCHEME = "/connectionscheme";
 export const ADD_CONNECTIONSCHEME = "/add/connectionscheme";

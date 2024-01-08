@@ -311,7 +311,7 @@ export const getRegionalOffice = async (currentPage, perPage) => {
   console.log("Per Page: ", perPage);
 
   return getCompleteResponse(url.getRegionalOfficeUrl(currentPage, perPage));
-} 
+};
 export const addNewRegionalOffice = (regionaloffice) =>
   post(url.ADD_NEW_REGIONALOFFICE, regionaloffice);
 export const updateRegionalOffice = (regionaloffice) =>
@@ -356,15 +356,22 @@ export const addNewPackageList = (packlist) =>
   post(url.ADD_NEW_PACKAGELIST, packlist);
 
 export const getOSDConfiguration = () => get(url.GET_OSDCONFIGURATIONLIST);
-export const getOSDConfigurationEnable = () => get(url.GET_OSDCONFIGURATIONLIST_ENABLE);
-export const getOSDConfigurationForcedDisplay = () => get(url.GET_OSDCONFIGURATIONLIST_FORCESDDISPLAY);
-export const getOSDConfigurationDisplay = () => get(url.GET_OSDCONFIGURATIONLIST_DISPLAY);
-export const getOSDConfigurationFontColor = () => get(url.GET_OSDCONFIGURATIONLIST_FONTCOLOR);
-export const getOSDConfigurationBackgroundColor = () => get(url.GET_OSDCONFIGURATIONLIST_BACKGROUNDCOLOR);
-export const getOSDConfigurationFontSize = () => get(url.GET_OSDCONFIGURATIONLIST_FONTSIZE);
-export const getOSDConfigurationBackgroundArea = () => get(url.GET_OSDCONFIGURATIONLIST_BACKGROUNDAREA);
-export const getOSDConfigurationStatus = () => get(url.GET_OSDCONFIGURATIONLIST_STATUS);
-
+export const getOSDConfigurationEnable = () =>
+  get(url.GET_OSDCONFIGURATIONLIST_ENABLE);
+export const getOSDConfigurationForcedDisplay = () =>
+  get(url.GET_OSDCONFIGURATIONLIST_FORCESDDISPLAY);
+export const getOSDConfigurationDisplay = () =>
+  get(url.GET_OSDCONFIGURATIONLIST_DISPLAY);
+export const getOSDConfigurationFontColor = () =>
+  get(url.GET_OSDCONFIGURATIONLIST_FONTCOLOR);
+export const getOSDConfigurationBackgroundColor = () =>
+  get(url.GET_OSDCONFIGURATIONLIST_BACKGROUNDCOLOR);
+export const getOSDConfigurationFontSize = () =>
+  get(url.GET_OSDCONFIGURATIONLIST_FONTSIZE);
+export const getOSDConfigurationBackgroundArea = () =>
+  get(url.GET_OSDCONFIGURATIONLIST_BACKGROUNDAREA);
+export const getOSDConfigurationStatus = () =>
+  get(url.GET_OSDCONFIGURATIONLIST_STATUS);
 
 export const addNewOSDConfiguration = (osdconfig) =>
   post(url.ADD_NEW_OSDCONFIGURATIONLIST, osdconfig);
@@ -405,6 +412,13 @@ export const addBulkAssignNcf = (assignncf) =>
 
 export const getBouquet = () => get(url.GET_BOUQUET);
 export const addBouquet = (bouquet) => post(url.ADD_BOUQUET, bouquet);
+export const getBouquetBoxtype = () => get(url.GET_BOUQUET_BOXTYPE);
+export const getBouquetType = () => get(url.GET_BOUQUETTYPE);
+export const getBouquex = () => get(url.GET_BOUQUEX);
+export const getBouquetTaxlist = () => get(url.GET_BOUQUET_TAXLIST);
+export const getRechargePeriod = () => get(url.GET_RECHARGEPERIOD);
+export const getAlacarteChannals = () => get(url.GET_ALACARTECHANNALS);
+export const getBouquetPackages = () => get(url.GET_BOUQUET_PACKAGES);
 
 export const getConnectionScheme = () => get(url.GET_CONNECTIONSCHEME);
 export const addConnectionScheme = (connectionscheme) =>
