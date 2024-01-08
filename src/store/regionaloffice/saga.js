@@ -1,9 +1,10 @@
-import { call, put, select, takeEvery } from "redux-saga/effects";
+import { call, put, select, take, takeEvery, takeLatest, takeLeading } from "redux-saga/effects";
 
 import {
   GET_REGIONALOFFICE,
   ADD_NEW_REGIONALOFFICE,
   UPDATE_REGIONALOFFICE,
+  SET_CURRENT_PAGE,
 } from "./actionTypes";
 
 import {
@@ -13,6 +14,7 @@ import {
   addRegionalOfficeSuccess,
   updateRegionalOfficeSuccess,
   updateRegionalOfficeFail,
+  setCurrentPageAction
 } from "./actions";
 
 //Include Both Helper File with needed methods
@@ -21,7 +23,6 @@ import {
   addNewLco,
   updateRegionalOffice,
 } from "../../helpers/fakebackend_helper";
-import { useSelector } from "react-redux";
 
 const convertRegionalOfficeListObject = (regionalofficeList) => {
   // Notification Template has more data than what we need, we need to convert each of the Notification Template user object in the list with needed colums of the table
@@ -54,7 +55,9 @@ const convertRegionalOfficeListObject = (regionalofficeList) => {
 
 function* fetchRegionalOffice(action) {
   try {
-    const { perPage, currentPage } = yield select(state => state.regionaloffice);
+    // const { perPage, currentPage } = yield select(state => state.regionaloffice);
+
+    const { currentPage, perPage } = action.payload;
 
     console.log("In saga from selector - ", currentPage, perPage);
     const response = yield call(getRegionalOffice, currentPage, perPage);
@@ -89,10 +92,30 @@ function* onUpdateRegionalOffice({ payload: regionaloffice }) {
   }
 }
 
+function* onSetCurrentPage({payload: currentPage}) {
+  yield put(setCurrentPageAction(currentPage));
+  try {
+    const { perPage, pageCount } = yield select(state => state.regionaloffice);
+
+    if (!pageCount || pageCount < currentPage || currentPage < 1 ) {
+      toast.error("Could not navigate further", {autoClose: 2000});
+      return;
+    }
+    console.log("In current page update saga - ", currentPage, perPage);
+    const response = yield call(getRegionalOffice, currentPage, perPage);
+    // const regionalofficeList = convertRegionalOfficeListObject(response);
+    yield put(getRegionalOfficeSuccess(response));
+  } catch (error) {
+    console.error("Error fetching Regional office list:", error);
+    yield put(getRegionalOfficeFail(error));
+  }
+}
+
 function* regionalOfficeSaga() {
-  yield takeEvery(GET_REGIONALOFFICE, fetchRegionalOffice);
+  yield takeLeading(GET_REGIONALOFFICE, fetchRegionalOffice);
   yield takeEvery(ADD_NEW_REGIONALOFFICE, onAddNewRegionalOffice);
   yield takeEvery(UPDATE_REGIONALOFFICE, onUpdateRegionalOffice);
+  yield takeEvery(SET_CURRENT_PAGE, onSetCurrentPage);
 }
 
 export default regionalOfficeSaga;

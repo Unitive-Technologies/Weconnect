@@ -18,6 +18,7 @@ import ViewRegionalOfficeModal from "./ViewRegionalOfficeModal";
 import AddRegionalOfficeModal from "./AddRegionalOfficeModal";
 import UploadRegionalOfficeModal from "./UploadRegionalOfficeModal";
 import { setCurrentPageAction } from "../../../store/regionaloffice/actions";
+import NewTableContainer from "../../../components/Common/NewTableContainer";
 
 const RegionalOfficeList = (props) => {
   //meta title
@@ -48,10 +49,23 @@ const RegionalOfficeList = (props) => {
   //   }
   // }, [])
 
-  useEffect(() => {
-    console.log("Regional Office data in component:", regOffices);
-  }, [regOffices]);
   const [isLoading, setLoading] = useState(loading);
+  const [currPage, setCurrPage] = useState(currentPage);
+
+  useEffect(() => {
+    console.log("In UseEffect.. currentPage",currentPage);
+    console.log("Regional Office data in component:", regOffices);
+
+    if (regOffices && !regOffices.length) {
+      dispatch(onGetRegionalOffice(currPage, perPage));
+      setIsEdit(false);
+    }
+  }, [dispatch, regOffices]);
+
+  useEffect(() => {
+    setLoading(true);
+    dispatch(onGetRegionalOffice(currPage, perPage));
+  }, [dispatch, currPage]);
 
   const [showRegionalOffice, setShowRegionalOffice] = useState(false);
   const [viewRegionalOffice, setViewRegionalOffice] = useState(false);
@@ -252,15 +266,6 @@ const RegionalOfficeList = (props) => {
     []
   );
 
-
-  useEffect(() => {
-    console.log("In UseEffect.. currentPage",currentPage);
-    if (regOffices && !regOffices.length) {
-      dispatch(onGetRegionalOffice(currentPage, perPage));
-      setIsEdit(false);
-    }
-  }, [dispatch, regOffices]);
-
   const handleAddRegionalOffice = () => {
     setShowRegionalOffice(!showRegionalOffice);
   };
@@ -274,8 +279,9 @@ const RegionalOfficeList = (props) => {
   };
 
   const handleCurrentPageChange = (currentPage) => {
-    dispatch(setCurrentPageAction(currentPage));
-    dispatch(onGetRegionalOffice({perPage, currentPage}));
+    setCurrPage(currentPage);
+    // dispatch(setCurrentPageAction(currentPage));
+    // dispatch(onGetRegionalOffice({perPage, currentPage}));
   };
 
   const [regOffData, setRegOffData] = useState({});
@@ -330,8 +336,9 @@ const RegionalOfficeList = (props) => {
                 <Card>
                   <CardBody>
                     {console.log("regoff:" + JSON.stringify(regOffices))}
-                    <TableContainer
+                    <NewTableContainer
                       isPagination={true}
+                      isLoading={isLoading}
                       columns={columns}
                       data={regOffices}
                       isGlobalFilter={true}
@@ -342,8 +349,10 @@ const RegionalOfficeList = (props) => {
                       customPageSize={perPage}
                       setCustomPageSize={handlePerPageChange}
                       currentPage={currentPage}
-                      totalCount={totalCount}
+                      totalRows={totalCount}
                       totalPageCount={pageCount}
+                      rowsPerPage={perPage}
+                      pageChangeHandler={setCurrPage}
                       setCurrentPage={handleCurrentPageChange}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

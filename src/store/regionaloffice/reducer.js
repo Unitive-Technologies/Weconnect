@@ -19,9 +19,9 @@ const INIT_STATE = {
   regionaloffice: [],
   error: {},
   loading: true,
-  currentPage: 1,
+  currentPage: 5,
   pageCount: 0,
-  perPage: 50,
+  perPage: 10,
   totalCount: 0
 };
 
