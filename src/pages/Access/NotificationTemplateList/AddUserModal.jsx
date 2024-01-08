@@ -340,9 +340,9 @@ const AddUserModal = (props) => {
             },
           }
         );
-        // console.log(
-        //   "tableList in useEffect: " + JSON.stringify(response.data.data)
-        // );
+        console.log(
+          "tableList in useEffect: " + JSON.stringify(response.data.data)
+        );
         setTableList(response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);

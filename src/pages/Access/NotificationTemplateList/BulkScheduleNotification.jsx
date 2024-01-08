@@ -85,11 +85,34 @@ const BulkScheduleNotification = (props) => {
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
-      starttime: "",
-      endtime: "",
-      // starttime: new Date().toISOString().slice(0, 16),
-      // endtime: new Date().toISOString().slice(0, 16),
+      starttime: new Date()
+        .toLocaleString("en-US", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
+        .replace(
+          /(\d+)\/(\d+)\/(\d+),? (\d+):(\d+):(\d+) (AM|PM)/,
+          "$3-$1-$2 $4:$5:$6"
+        ),
+      endtime: new Date()
+        .toLocaleString("en-US", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
+        .replace(
+          /(\d+)\/(\d+)\/(\d+),? (\d+):(\d+):(\d+) (AM|PM)/,
+          "$3-$1-$2 $4:$5:$6"
+        ),
     },
+
     validationSchema: Yup.object({
       starttime: Yup.string().required("Please Select Start Time"),
       endtime: Yup.string().required("Please Select End Time"),
@@ -99,9 +122,9 @@ const BulkScheduleNotification = (props) => {
       try {
         const newSchedule = {
           target_users_id: targetUsers.map((user) => user.id),
-          start_time: starttime || "",
-          end_time: endtime || "",
-          announcement_template_id: selectedRow.id,
+          start_time: values["starttime"] || "",
+          end_time: values["endtime"] || "",
+          annoucement_template_id: selectedRow.id,
           status: selectedRow.status,
         };
 
@@ -469,7 +492,7 @@ const BulkScheduleNotification = (props) => {
                       </label>
                       <div className="col-md-10">
                         <input
-                          name="startime"
+                          name="starttime"
                           className="form-control"
                           type="datetime-local"
                           defaultValue="2019-08-19T13:45:00"
@@ -487,7 +510,7 @@ const BulkScheduleNotification = (props) => {
                       ) : null}
                     </div>
                   </Col>
-                  {console.log("startime: " + validation.values.startime)}
+                  {console.log("startime: " + validation.values.starttime)}
                   <Col lg={4}>
                     <div className="mb-3">
                       <label
