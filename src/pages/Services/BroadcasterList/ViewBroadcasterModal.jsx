@@ -19,8 +19,10 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import {
+  getBroadCaster as onGetBroadCasters, updateBroadCaster as onUpdateBroadCaster
+} from "/src/store/broadcaster/actions";
 import { useSelector, useDispatch } from "react-redux";
-import { updateBroadCaster as onUpdateBroadCaster } from "/src/store/broadcaster/actions";
 
 const ViewBroadcasterModal = (props) => {
   const { isOpen, toggleViewBroadcaster, brodcastStatus, viewBroadcaster, } = props;
@@ -83,6 +85,7 @@ const ViewBroadcasterModal = (props) => {
 
       // update viewBroadcaster
       dispatch(onUpdateBroadCaster(updateBroadCaster));
+      dispatch(onGetBroadCasters());
       validation.resetForm();
       toggleViewBroadcaster();
     },
