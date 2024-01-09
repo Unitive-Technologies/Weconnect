@@ -4,8 +4,8 @@ import TableContainer from "../../../components/Common/TableContainer";
 import { Card, CardBody, Modal, ModalHeader } from "reactstrap";
 import { Link } from "react-router-dom";
 
-const AddAlacarteChannels = (props) => {
-  const { alacartechannels, isOpen, toggle } = props;
+const AddbouquetPackages = (props) => {
+  const { bouquetpackages, isOpen, toggle } = props;
 
   const columns = useMemo(
     () => [
@@ -131,13 +131,13 @@ const AddAlacarteChannels = (props) => {
       toggle={toggle}
       size="xl"
     >
-      <ModalHeader>Add Alacarte Channels</ModalHeader>
+      <ModalHeader>Add Bouquet packages</ModalHeader>
       <Card toggle={toggle}>
         <CardBody>
           <TableContainer
             isPagination={true}
             columns={columns}
-            data={alacartechannels}
+            data={bouquetpackages}
             isGlobalFilter={true}
             isShowingPageLength={true}
             tableClass="table align-middle table-nowrap table-hover"
@@ -151,9 +151,9 @@ const AddAlacarteChannels = (props) => {
   );
 };
 
-AddAlacarteChannels.propTypes = {
+AddbouquetPackages.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default AddAlacarteChannels;
+export default AddbouquetPackages;

@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
 import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
+import AddbouquetPackages from "./BouquetPackages";
 
 const AddPackages = (props) => {
+  const { bouquetpackages } = props;
   const [AddPackagesBtn, setAddPackagesBtn] = useState(false);
 
   const AddPackagesToggle = () => {
@@ -262,23 +264,32 @@ const AddPackages = (props) => {
   };
 
   const AlacarteData = [];
+
   return (
-    <Card>
-      <CardBody>
-        <TableContainer
-          isPagination={true}
-          columns={columns}
-          data={AlacarteData}
-          isShowTableActionButtons={true}
-          isShowingPageLength={true}
-          tableActions={getTableActions()}
-          tableClass="table align-middle table-nowrap table-hover"
-          theadClass="table-light"
-          paginationDiv="col-sm-12 col-md-7"
-          pagination="pagination pagination-rounded justify-content-end mt-4"
-        />
-      </CardBody>
-    </Card>
+    <React.Fragment>
+      <AddbouquetPackages
+        bouquetpackages={bouquetpackages}
+        isOpen={AddPackagesBtn}
+        toggle={AddPackagesToggle}
+      />
+      <Card>
+        <CardBody>
+          <TableContainer
+            isPagination={true}
+            columns={columns}
+            data={AlacarteData}
+            isShowTableActionButtons={true}
+            isShowingPageLength={true}
+            tableActions={getTableActions()}
+            handleUserClick={() => setAddPackagesBtn(true)}
+            tableClass="table align-middle table-nowrap table-hover"
+            theadClass="table-light"
+            paginationDiv="col-sm-12 col-md-7"
+            pagination="pagination pagination-rounded justify-content-end mt-4"
+          />
+        </CardBody>
+      </Card>
+    </React.Fragment>
   );
 };
 

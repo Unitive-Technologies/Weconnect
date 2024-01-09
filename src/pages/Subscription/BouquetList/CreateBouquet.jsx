@@ -604,7 +604,7 @@ const CreateBouquet = (props) => {
               }}
             >
               <Col sm="8" style={{ width: "500px" }}>
-                <AddPackages />
+                <AddPackages bouquetpackages={bouquetpackages} />
                 <Count />
               </Col>
             </Row>
