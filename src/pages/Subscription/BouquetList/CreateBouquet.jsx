@@ -28,7 +28,7 @@ const CreateBouquet = (props) => {
   const {
     isOpen,
     toggle,
-    alacartechannals,
+    alacartechannels,
     bouquetboxtype,
     bouquetpackages,
     bouquettaxlist,
@@ -575,7 +575,7 @@ const CreateBouquet = (props) => {
               }}
             >
               <Col sm="12" style={{ width: "500px" }}>
-                <AddAlacarte />
+                <AddAlacarte alacartechannels={alacartechannels} />
                 <Count />
               </Col>
             </Row>

@@ -4,7 +4,7 @@ import TableContainer from "../../../components/Common/TableContainer";
 import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 
-const AddAlacarte = ({ alacartechannals }) => {
+const AddAlacarteChannels = ({ alacartechannals }) => {
   const [AddAlacarteBtn, setAddAlacarteBtn] = useState(false);
 
   const AddAlacarteToggle = () => {
@@ -235,9 +235,9 @@ const AddAlacarte = ({ alacartechannals }) => {
   );
 };
 
-AddAlacarte.propTypes = {
+AddAlacarteChannels.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default AddAlacarte;
+export default AddAlacarteChannels;

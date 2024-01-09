@@ -5,7 +5,7 @@ import {
   GET_BOUQUETTYPE,
   GET_BOUQUET_BOXTYPE,
   GET_BOUQUEX,
-  GET_ALACARTECHANNALS,
+  GET_ALACARTECHANNELS,
   GET_BOUQUET_PACKAGES,
   GET_BOUQUET_TAXLIST,
   GET_RECHARGEPERIOD,
@@ -15,8 +15,8 @@ import {
   getBouquetFail,
   addBouquetSuccess,
   addBouquetFail,
-  getAlacarteChannalsSuccess,
-  getAlacarteChannalsFail,
+  getAlacarteChannelsSuccess,
+  getAlacarteChannelsFail,
   getBouquetBoxtypeSuccess,
   getBouquetBoxtypeFail,
   getBouquetPackagesSuccess,
@@ -33,7 +33,7 @@ import {
 import {
   getBouquet,
   addBouquet,
-  getAlacarteChannals,
+  getAlacarteChannels,
   getBouquetBoxtype,
   getBouquetPackages,
   getBouquetTaxlist,
@@ -149,11 +149,11 @@ function* fetchBouquex() {
 
 function* fetchAlacarteChannels() {
   try {
-    const response = yield call(getAlacarteChannals);
-    yield put(getAlacarteChannalsSuccess(response.data));
+    const response = yield call(getAlacarteChannels);
+    yield put(getAlacarteChannelsSuccess(response.data));
   } catch (error) {
-    console.error("Error fetching bouquet Packages list:", error);
-    yield put(getAlacarteChannalsFail(error));
+    console.error("Error fetching alacarte channels:", error);
+    yield put(getAlacarteChannelsFail(error));
   }
 }
 

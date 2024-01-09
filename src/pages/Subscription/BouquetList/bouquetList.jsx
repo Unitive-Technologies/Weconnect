@@ -14,7 +14,7 @@ import {
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import {
   getBouquet as onGetBouquet,
-  getAlacarteChannals as onGetAlacarteChannels,
+  getAlacarteChannels as onGetAlacarteChannels,
   getBouquetBoxtype as onGetBouquetBoxtype,
   getBouquetPackages as onGetBouquetPackages,
   getBouquetTaxlist as onGetBouquetTaxlist,
@@ -41,7 +41,7 @@ const BouquetList = () => {
   const BouquetProperties = createSelector(selectBouquetState, (bouquet) => ({
     bouquets: bouquet.bouquet,
     loading: bouquet.loading,
-    alacartechannals: bouquet.alacartechannals,
+    alacartechannels: bouquet.alacartechannels,
     bouquetboxtype: bouquet.bouquetboxtype,
     bouquetpackages: bouquet.bouquetpackages,
     bouquettaxlist: bouquet.bouquettaxlist,
@@ -53,7 +53,7 @@ const BouquetList = () => {
   const {
     bouquets,
     loading,
-    alacartechannals,
+    alacartechannels,
     bouquetboxtype,
     bouquetpackages,
     bouquettaxlist,
@@ -73,7 +73,7 @@ const BouquetList = () => {
   const [showBulkRemoval, setShowBulkRemoval] = useState(false);
   const [showBulkSettings, setShowBulkSettings] = useState(false);
 
-  // console.log("Alacarte channals: ", alacartechannals);
+  // console.log("Alacarte channels: ", alacartechannels);
   // console.log("bouquet box type: ", bouquetboxtype);
   // console.log("bouquet packages: ", bouquetpackages);
   // console.log("bouquet tax list: ", bouquettaxlist);
@@ -325,7 +325,7 @@ const BouquetList = () => {
       <CreateBouquet
         isOpen={showCreateBouquet}
         toggle={toggleCreateBouquet}
-        alacartechannals={alacartechannals}
+        alacartechannels={alacartechannels}
         bouquetboxtype={bouquetboxtype}
         bouquetpackages={bouquetpackages}
         bouquettaxlist={bouquettaxlist}

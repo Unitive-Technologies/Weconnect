@@ -13,8 +13,8 @@ import {
   GET_BOUQUET_TAXLIST_FAIL,
   GET_RECHARGEPERIOD_SUCCESS,
   GET_RECHARGEPERIOD_FAIL,
-  GET_ALACARTECHANNALS_SUCCESS,
-  GET_ALACARTECHANNALS_FAIL,
+  GET_ALACARTECHANNELS_SUCCESS,
+  GET_ALACARTECHANNELS_FAIL,
   GET_BOUQUET_PACKAGES_SUCCESS,
   GET_BOUQUET_PACKAGES_FAIL,
 } from "./actionTypes";
@@ -26,7 +26,7 @@ const INIT_STATE = {
   bouquex: [],
   bouquettaxlist: [],
   rechargeperiod: [],
-  alacartechannals: [],
+  alacartechannels: [],
   bouquetpackages: [],
   error: {},
   loading: true,
@@ -125,14 +125,14 @@ const Bouquet = (state = INIT_STATE, action) => {
         error: action.payload,
       };
 
-    case GET_ALACARTECHANNALS_SUCCESS:
+    case GET_ALACARTECHANNELS_SUCCESS:
       return {
         ...state,
-        alacartechannals: action.payload,
+        alacartechannels: action.payload,
         loading: false,
       };
 
-    case GET_ALACARTECHANNALS_FAIL:
+    case GET_ALACARTECHANNELS_FAIL:
       return {
         ...state,
         error: action.payload,

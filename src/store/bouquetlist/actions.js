@@ -20,9 +20,9 @@ import {
   GET_BOUQUET_TAXLIST,
   GET_BOUQUET_TAXLIST_SUCCESS,
   GET_BOUQUET_TAXLIST_FAIL,
-  GET_ALACARTECHANNALS,
-  GET_ALACARTECHANNALS_SUCCESS,
-  GET_ALACARTECHANNALS_FAIL,
+  GET_ALACARTECHANNELS,
+  GET_ALACARTECHANNELS_SUCCESS,
+  GET_ALACARTECHANNELS_FAIL,
   GET_BOUQUET_PACKAGES,
   GET_BOUQUET_PACKAGES_SUCCESS,
   GET_BOUQUET_PACKAGES_FAIL,
@@ -130,17 +130,17 @@ export const getBouquetTaxlistFail = (error) => ({
   payload: error,
 });
 
-export const getAlacarteChannals = () => ({
-  type: GET_ALACARTECHANNALS,
+export const getAlacarteChannels = () => ({
+  type: GET_ALACARTECHANNELS,
 });
 
-export const getAlacarteChannalsSuccess = (alacartechannals) => ({
-  type: GET_ALACARTECHANNALS_SUCCESS,
-  payload: alacartechannals,
+export const getAlacarteChannelsSuccess = (alacartechannels) => ({
+  type: GET_ALACARTECHANNELS_SUCCESS,
+  payload: alacartechannels,
 });
 
-export const getAlacarteChannalsFail = (error) => ({
-  type: GET_ALACARTECHANNALS_FAIL,
+export const getAlacarteChannelsFail = (error) => ({
+  type: GET_ALACARTECHANNELS_FAIL,
   payload: error,
 });
 
