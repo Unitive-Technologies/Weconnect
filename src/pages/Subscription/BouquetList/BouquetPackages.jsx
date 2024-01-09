@@ -1,7 +1,14 @@
 import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
-import { Card, CardBody, Modal, ModalHeader } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+} from "reactstrap";
 import { Link } from "react-router-dom";
 
 const AddbouquetPackages = (props) => {
@@ -40,6 +47,7 @@ const AddbouquetPackages = (props) => {
 
       {
         Header: "Name",
+        accessor: "name",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -49,6 +57,7 @@ const AddbouquetPackages = (props) => {
       },
       {
         Header: "Code",
+        accessor: "code",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -57,32 +66,20 @@ const AddbouquetPackages = (props) => {
         },
       },
       {
-        Header: "Broadcaster",
-        // accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.broadcaster_lbl}
-            </p>
-          );
-        },
-      },
-      {
         Header: "Type",
-        // accessor: "status",
+        accessor: "package_type_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.channel_type_lbl}
+              {cellProps.row.original.package_type_lbl}
             </p>
           );
         },
       },
       {
-        Header: "FTA",
-        // accessor: "status",
+        Header: "Package Type",
+        accessor: "isFta_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -93,20 +90,56 @@ const AddbouquetPackages = (props) => {
         },
       },
       {
-        Header: "NCF",
-        // accessor: "status",
+        Header: "Channel Count",
+        accessor: "ftaChannelCount",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.isNcf_lbl}
+              {cellProps.row.original.ftaChannelCount}
+            </p>
+          );
+        },
+      },
+      //   {
+      //     Header: "BBQ Count",
+      //     accessor: "status",
+      //     filterable: true,
+      //     Cell: (cellProps) => {
+      //       return (
+      //         <p className="text-muted mb-0">
+      //           {cellProps.row.original.isNcf_lbl}
+      //         </p>
+      //       );
+      //     },
+      //   },
+      {
+        Header: "NCF Count",
+        accessor: "ncfChannelCount",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.ncfChannelCount}
             </p>
           );
         },
       },
       {
-        Header: "Rate**",
-        // accessor: "type",
+        Header: "Total Channel Count",
+        accessor: "totalChannelCount",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.totalChannelCount}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Rate",
+        accessor: "broadcasterRate",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -131,22 +164,29 @@ const AddbouquetPackages = (props) => {
       toggle={toggle}
       size="xl"
     >
-      <ModalHeader>Add Bouquet packages</ModalHeader>
-      <Card toggle={toggle}>
-        <CardBody>
-          <TableContainer
-            isPagination={true}
-            columns={columns}
-            data={bouquetpackages}
-            isGlobalFilter={true}
-            isShowingPageLength={true}
-            tableClass="table align-middle table-nowrap table-hover"
-            theadClass="table-light"
-            paginationDiv="col-sm-12 col-md-7"
-            pagination="pagination pagination-rounded justify-content-end mt-4"
-          />
-        </CardBody>
-      </Card>
+      <ModalHeader toggle={toggle}>Add Bouquet packages</ModalHeader>
+      <ModalBody>
+        <Card>
+          <CardBody>
+            <TableContainer
+              isPagination={true}
+              columns={columns}
+              data={bouquetpackages}
+              isGlobalFilter={true}
+              isShowingPageLength={true}
+              tableClass="table align-middle table-nowrap table-hover"
+              theadClass="table-light"
+              paginationDiv="col-sm-12 col-md-7"
+              pagination="pagination pagination-rounded justify-content-end mt-4"
+            />
+          </CardBody>
+        </Card>
+      </ModalBody>
+      <ModalFooter>
+        <button type="submit" className="btn btn-success save-user">
+          Add
+        </button>
+      </ModalFooter>
     </Modal>
   );
 };

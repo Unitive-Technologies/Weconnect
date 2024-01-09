@@ -40,6 +40,7 @@ const AddAlacarteChannels = (props) => {
 
       {
         Header: "Name",
+        accessor: "name",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -49,6 +50,7 @@ const AddAlacarteChannels = (props) => {
       },
       {
         Header: "Code",
+        accessor: "code",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -58,7 +60,7 @@ const AddAlacarteChannels = (props) => {
       },
       {
         Header: "Broadcaster",
-        // accessor: "status",
+        accessor: "broadcaster_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -70,7 +72,7 @@ const AddAlacarteChannels = (props) => {
       },
       {
         Header: "Type",
-        // accessor: "status",
+        accessor: "channel_type_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -82,7 +84,7 @@ const AddAlacarteChannels = (props) => {
       },
       {
         Header: "FTA",
-        // accessor: "status",
+        accessor: "isFta_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -94,7 +96,7 @@ const AddAlacarteChannels = (props) => {
       },
       {
         Header: "NCF",
-        // accessor: "status",
+        accessor: "isNcf_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -106,7 +108,7 @@ const AddAlacarteChannels = (props) => {
       },
       {
         Header: "Rate**",
-        // accessor: "type",
+        accessor: "broadcasterRate",
         filterable: true,
         Cell: (cellProps) => {
           return (
