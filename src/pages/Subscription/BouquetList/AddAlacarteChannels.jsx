@@ -1,17 +1,23 @@
 import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
-import { Card, CardBody } from "reactstrap";
+import { Card, CardBody, Modal } from "reactstrap";
 import { Link } from "react-router-dom";
 
-const AddAlacarteChannels = ({ alacartechannals }) => {
-  const [AddAlacarteBtn, setAddAlacarteBtn] = useState(false);
+const AddAlacarteChannels = (props) => {
+  const { alacartechannels, isOpen, toggle } = props;
 
-  const AddAlacarteToggle = () => {
-    setAddAlacarteBtn(!AddAlacarteBtn);
-  };
   const columns = useMemo(
     () => [
+      {
+        Header: "*",
+        disableFilters: true,
+        id: "*",
+        filterable: true,
+        Cell: (cellProps) => {
+          return <input type="checkbox" />;
+        },
+      },
       {
         Header: "#",
         disableFilters: true,
@@ -37,21 +43,7 @@ const AddAlacarteChannels = ({ alacartechannals }) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"Name"}
-                </Link>
-              </h5>
-            </>
+            <p className="text-muted mb-0">{cellProps.row.original.name}</p>
           );
         },
       },
@@ -60,21 +52,7 @@ const AddAlacarteChannels = ({ alacartechannals }) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"code"}
-                </Link>
-              </h5>
-            </>
+            <p className="text-muted mb-0">{cellProps.row.original.code}</p>
           );
         },
       },
@@ -84,21 +62,9 @@ const AddAlacarteChannels = ({ alacartechannals }) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"braodcaster"}
-                </Link>
-              </h5>
-            </>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.broadcaster_lbl}
+            </p>
           );
         },
       },
@@ -108,21 +74,9 @@ const AddAlacarteChannels = ({ alacartechannals }) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"type"}
-                </Link>
-              </h5>
-            </>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.channel_type_lbl}
+            </p>
           );
         },
       },
@@ -132,21 +86,9 @@ const AddAlacarteChannels = ({ alacartechannals }) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"FTA"}
-                </Link>
-              </h5>
-            </>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.isFta_lbl}
+            </p>
           );
         },
       },
@@ -156,21 +98,9 @@ const AddAlacarteChannels = ({ alacartechannals }) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"NCF"}
-                </Link>
-              </h5>
-            </>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.isNcf_lbl}
+            </p>
           );
         },
       },
@@ -180,21 +110,9 @@ const AddAlacarteChannels = ({ alacartechannals }) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"rate"}
-                </Link>
-              </h5>
-            </>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.broadcasterRate}
+            </p>
           );
         },
       },
@@ -202,36 +120,37 @@ const AddAlacarteChannels = ({ alacartechannals }) => {
     []
   );
 
-  const getTableActions = () => {
-    return [
-      {
-        name: "",
-        action: setAddAlacarteBtn,
-        type: "normal",
-        icon: "create",
-      },
-    ];
-  };
-
-  const AlacarteData = [];
   return (
-    <Card>
-      <CardBody>
-        <TableContainer
-          isPagination={true}
-          columns={columns}
-          data={AlacarteData}
-          isShowTableActionButtons={true}
-          isShowingPageLength={true}
-          tableActions={getTableActions()}
-          handleUserClick={() => setAddAlacarteBtn(true)}
-          tableClass="table align-middle table-nowrap table-hover"
-          theadClass="table-light"
-          paginationDiv="col-sm-12 col-md-7"
-          pagination="pagination pagination-rounded justify-content-end mt-4"
-        />
-      </CardBody>
-    </Card>
+    <Modal
+      isOpen={isOpen}
+      role="dialog"
+      autoFocus={true}
+      centered={true}
+      className="exampleModal"
+      tabIndex="-1"
+      toggle={toggle}
+      size="xl"
+    >
+      <Card toggle={toggle}>
+        <CardBody>
+          {/* {loading ? (
+            <p>Loading...</p>
+          ) : ( */}
+          <TableContainer
+            isPagination={true}
+            columns={columns}
+            data={alacartechannels}
+            isGlobalFilter={true}
+            isShowingPageLength={true}
+            tableClass="table align-middle table-nowrap table-hover"
+            theadClass="table-light"
+            paginationDiv="col-sm-12 col-md-7"
+            pagination="pagination pagination-rounded justify-content-end mt-4"
+          />
+          {/* )} */}
+        </CardBody>
+      </Card>
+    </Modal>
   );
 };
 

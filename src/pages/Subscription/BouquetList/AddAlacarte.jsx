@@ -3,9 +3,12 @@ import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
 import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
+import AddAlacarteChannels from "./AddAlacarteChannels";
 
-const AddAlacarte = ({ alacartechannals }) => {
+const AddAlacarte = ({ alacartechannels }) => {
   const [AddAlacarteBtn, setAddAlacarteBtn] = useState(false);
+
+  console.log("Alacarte channels in add alacarte:", alacartechannels);
 
   const AddAlacarteToggle = () => {
     setAddAlacarteBtn(!AddAlacarteBtn);
@@ -215,23 +218,30 @@ const AddAlacarte = ({ alacartechannals }) => {
 
   const AlacarteData = [];
   return (
-    <Card>
-      <CardBody>
-        <TableContainer
-          isPagination={true}
-          columns={columns}
-          data={AlacarteData}
-          isShowTableActionButtons={true}
-          isShowingPageLength={true}
-          tableActions={getTableActions()}
-          handleUserClick={() => setAddAlacarteBtn(true)}
-          tableClass="table align-middle table-nowrap table-hover"
-          theadClass="table-light"
-          paginationDiv="col-sm-12 col-md-7"
-          pagination="pagination pagination-rounded justify-content-end mt-4"
-        />
-      </CardBody>
-    </Card>
+    <React.Fragment>
+      <AddAlacarteChannels
+        isOpen={AddAlacarteBtn}
+        toggle={AddAlacarteToggle}
+        alacartechannels={alacartechannels}
+      />
+      <Card>
+        <CardBody>
+          <TableContainer
+            isPagination={true}
+            columns={columns}
+            data={AlacarteData}
+            isShowTableActionButtons={true}
+            isShowingPageLength={true}
+            tableActions={getTableActions()}
+            handleUserClick={() => setAddAlacarteBtn(true)}
+            tableClass="table align-middle table-nowrap table-hover"
+            theadClass="table-light"
+            paginationDiv="col-sm-12 col-md-7"
+            pagination="pagination pagination-rounded justify-content-end mt-4"
+          />
+        </CardBody>
+      </Card>
+    </React.Fragment>
   );
 };
 
