@@ -71,7 +71,7 @@ const ViewLanguageList = (props) => {
     });
 
     const handleCancel = () => {
-        setShowEdi(false);
+        setShowEditLanguageList(false);
         handleViewLanguageList();
     };
 
@@ -92,7 +92,7 @@ const ViewLanguageList = (props) => {
                     : `Edit ${(language && language.name) || ""}`}
             </ModalHeader>
 
-            {!setShowEditLanguageList && (
+            {!showEditLanguageList && (
                 <Link
                     style={{
                         position: "absolute",
