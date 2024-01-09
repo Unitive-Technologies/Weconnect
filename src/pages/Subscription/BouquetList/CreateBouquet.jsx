@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
   Col,
@@ -37,6 +37,8 @@ const CreateBouquet = (props) => {
     rechargeperiod,
   } = props;
   const dispatch = useDispatch();
+  const [toggleSwitch, settoggleSwitch] = useState(true);
+  const [toggleNcfSwitch, setToggleNcfSwitch] = useState(true);
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -129,10 +131,10 @@ const CreateBouquet = (props) => {
                   name="code"
                   type="text"
                   placeholder="Enter code"
-                  // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.code || ""}
+                  disabled={toggleSwitch}
                 ></Input>
                 {validation.touched.code && validation.errors.code ? (
                   <FormFeedback type="invalid">
@@ -158,6 +160,9 @@ const CreateBouquet = (props) => {
                     className="form-check-input"
                     id="customSwitchsizelg"
                     defaultChecked
+                    onClick={(e) => {
+                      settoggleSwitch(!toggleSwitch);
+                    }}
                   />
                   <label
                     className="form-check-label"
@@ -389,6 +394,9 @@ const CreateBouquet = (props) => {
                       className="form-check-input"
                       id="customSwitchsizelg"
                       defaultChecked
+                      onClick={(e) => {
+                        setToggleNcfSwitch(!toggleNcfSwitch);
+                      }}
                     />
                     <label
                       className="form-check-label"
@@ -422,6 +430,7 @@ const CreateBouquet = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.max_ncf_channels || ""}
+                  disabled={!toggleNcfSwitch}
                 />
                 {validation.touched.max_ncf_channels &&
                 validation.errors.max_ncf_channels ? (
