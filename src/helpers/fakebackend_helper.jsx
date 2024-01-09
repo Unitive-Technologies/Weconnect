@@ -346,6 +346,9 @@ export const getLanguageList = () => get(url.GET_LANGUAGELIST);
 export const getLanguageListStatus = () => get(url.GET_LANGUAGELIST_STATUS);
 export const addNewLanguageList = (langlist) =>
   post(url.ADD_NEW_LANGUAGELIST, langlist);
+export const updateLanguageList = (langlist, id) =>
+  put(url.UPDATE_LANGUAGELIST(id), langlist);
+
 
 export const getChannelList = () => get(url.GET_CHANNELLIST);
 export const addNewChannelList = (channel) =>

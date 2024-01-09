@@ -1,5 +1,6 @@
 import {
   GET_LANGUAGELIST_SUCCESS, GET_LANGUAGELIST_FAIL,
+  UPDATE_LANGUAGELIST_SUCCESS, UPDATE_LANGUAGELIST_FAIL,
   GET_LANGUAGELIST_STATUS_SUCCESS, GET_LANGUAGELIST_STATUS_FAIL, ADD_LANGUAGELIST_SUCCESS,
   ADD_LANGUAGELIST_FAIL,
 } from "./actionTypes";
@@ -22,6 +23,22 @@ const LanguageList = (state = INIT_STATE, action) => {
       };
 
     case GET_LANGUAGELIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case UPDATE_LANGUAGELIST_SUCCESS:
+      return {
+        ...state,
+        languageList: state.languageList.map((languageList) =>
+          languageList.id.toString() === action.payload.id.toString()
+            ? { languageList, ...action.payload }
+            : languageList
+        ),
+      };
+
+    case UPDATE_LANGUAGELIST_FAIL:
       return {
         ...state,
         error: action.payload,

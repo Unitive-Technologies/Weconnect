@@ -8,6 +8,9 @@ import {
   ADD_NEW_LANGUAGELIST,
   ADD_LANGUAGELIST_SUCCESS,
   ADD_LANGUAGELIST_FAIL,
+  UPDATE_LANGUAGELIST,
+  UPDATE_LANGUAGELIST_FAIL,
+  UPDATE_LANGUAGELIST_SUCCESS,
 } from "./actionTypes";
 
 export const getlanguageList = () => ({
@@ -24,6 +27,21 @@ export const getLanguageListSuccess = (languagelist) => {
 
 export const getLanguageListFail = (error) => ({
   type: GET_LANGUAGELIST_FAIL,
+  payload: error,
+});
+
+export const updateLanguageList = (languagelist) => ({
+  type: UPDATE_LANGUAGELIST,
+  payload: languagelist,
+});
+
+export const updateLanguageListSuccess = (languagelist) => ({
+  type: UPDATE_LANGUAGELIST_SUCCESS,
+  payload: languagelist,
+});
+
+export const updateLanguageListFail = (error) => ({
+  type: UPDATE_LANGUAGELIST_FAIL,
   payload: error,
 });
 

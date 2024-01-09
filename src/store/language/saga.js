@@ -1,10 +1,12 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_LANGUAGELIST, GET_LANGUAGELIST_STATUS, ADD_NEW_LANGUAGELIST } from "./actionTypes";
+import { GET_LANGUAGELIST, UPDATE_LANGUAGELIST, GET_LANGUAGELIST_STATUS, ADD_NEW_LANGUAGELIST } from "./actionTypes";
 
 import {
   getLanguageListSuccess,
   getLanguageListFail,
+  updateLanguageListSuccess,
+  updateLanguageListFail,
   getLanguageListStatusSuccess,
   getLanguageListStatusFail,
   addLanguageListSuccess,
@@ -14,12 +16,12 @@ import {
 //Include Both Helper File with needed methods
 import {
   getLanguageList,
+  updateLanguageList,
   getLanguageListStatus,
   addNewLanguageList,
 } from "../../helpers/fakebackend_helper";
 
 const convertLanguageListObject = (languageList) => {
-  // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
   return languageList.map((langlist) => {
     return {
       ...langlist,
@@ -50,6 +52,23 @@ function* fetchLanguageList() {
   }
 }
 
+function* onUpdateLanguageList({ payload: languageList }) {
+  console.log("Language List in onUpdate:" + JSON.stringify(languageList));
+  try {
+    const response = yield call(
+      updateLanguageList,
+      languageList,
+      languageList.id
+    );
+    yield put(updateLanguageListSuccess(response));
+    console.log("update response:" + JSON.stringify(response));
+    // toast.success("CustomerUser Updated Successfully", { autoClose: 2000 });
+  } catch (error) {
+    yield put(updateLanguageListFail(error));
+    // toast.error("LanguageList Updated Failed", { autoClose: 2000 });
+  }
+}
+
 function* fetchLanguageListStatus() {
   try {
     const response = yield call(getLanguageListStatus);
@@ -74,6 +93,7 @@ function* languageListSaga() {
   yield takeEvery(GET_LANGUAGELIST, fetchLanguageList);
   yield takeEvery(ADD_NEW_LANGUAGELIST, onAddNewLanguageList);
   yield takeEvery(GET_LANGUAGELIST_STATUS, fetchLanguageListStatus);
+  yield takeEvery(UPDATE_LANGUAGELIST, onUpdateLanguageList);
 }
 
 export default languageListSaga;

@@ -302,8 +302,8 @@ const LanguageList = (props) => {
   return (
     <React.Fragment>
       <ViewLanguageList isOpen={showViewLanguageList}
-        toggle={handleViewLanguageList}
-        language={viewLanguageList} />
+        handleViewLanguageList={handleViewLanguageList}
+        language={viewLanguageList} langlistStatus={langlistStatus} />
       <AddNewLanguageList isOpen={showAddNewLanguageList} handleAddNewLanguage={handleAddNewLanguage} langlistStatus={langlistStatus} />
       <UploadLanguageList isOpen={showUploadLanguageList} toggle={toggle1} />
 
@@ -330,6 +330,9 @@ const LanguageList = (props) => {
                       handleAddNewLanguageList={() => setShowAddNewLanguageList(true)}
                       handleUploadLanguageList={() => setShowUploadLanguageList(true)}
                       customPageSize={50}
+                      handleRowClick={(userLanguageData) => {
+                        handleViewLanguageList(userLanguageData);
+                      }}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
