@@ -166,7 +166,7 @@ function* bouquetSaga() {
   yield takeEvery(GET_BOUQUET_PACKAGES, fetchBouquetPackages);
   yield takeEvery(GET_RECHARGEPERIOD, fetchRechargePeriod);
   yield takeEvery(GET_BOUQUEX, fetchBouquex);
-  yield takeEvery(GET_ALACARTECHANNALS, fetchAlacarteChannels);
+  yield takeEvery(GET_ALACARTECHANNELS, fetchAlacarteChannels);
 }
 
 export default bouquetSaga;
