@@ -1,11 +1,26 @@
 import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
-import { Card, CardBody, Modal, ModalHeader } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+} from "reactstrap";
 import { Link } from "react-router-dom";
 
 const AddAlacarteChannels = (props) => {
   const { alacartechannels, isOpen, toggle } = props;
+  const [isChecked, setIsChecked] = useState(true);
+  const [selectedRow, setSelectedRow] = useState({});
+
+  const handleCheckboxClick = (row) => {
+    console.log("button clicked");
+    setIsChecked(!isChecked);
+    setSelectedRow(row);
+  };
 
   const columns = useMemo(
     () => [
@@ -133,22 +148,29 @@ const AddAlacarteChannels = (props) => {
       toggle={toggle}
       size="xl"
     >
-      <ModalHeader>Add Alacarte Channels</ModalHeader>
-      <Card toggle={toggle}>
-        <CardBody>
-          <TableContainer
-            isPagination={true}
-            columns={columns}
-            data={alacartechannels}
-            isGlobalFilter={true}
-            isShowingPageLength={true}
-            tableClass="table align-middle table-nowrap table-hover"
-            theadClass="table-light"
-            paginationDiv="col-sm-12 col-md-7"
-            pagination="pagination pagination-rounded justify-content-end mt-4"
-          />
-        </CardBody>
-      </Card>
+      <ModalHeader toggle={toggle}>Add Alacarte Channels</ModalHeader>
+      <ModalBody>
+        <Card>
+          <CardBody>
+            <TableContainer
+              isPagination={true}
+              columns={columns}
+              data={alacartechannels}
+              isGlobalFilter={true}
+              isShowingPageLength={true}
+              tableClass="table align-middle table-nowrap table-hover"
+              theadClass="table-light"
+              paginationDiv="col-sm-12 col-md-7"
+              pagination="pagination pagination-rounded justify-content-end mt-4"
+            />
+          </CardBody>
+        </Card>
+      </ModalBody>
+      <ModalFooter>
+        <button type="submit" className="btn btn-success save-user">
+          Add
+        </button>
+      </ModalFooter>
     </Modal>
   );
 };
