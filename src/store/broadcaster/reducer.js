@@ -61,6 +61,22 @@ const BroadCaster = (state = INIT_STATE, action) => {
         error: action.payload,
       };
 
+    case UPDATE_BROADCASTER_SUCCESS:
+      return {
+        ...state,
+        broadCasters: state.broadCasters.map((broadCasters) =>
+          broadCasters.id.toString() === action.payload.id.toString()
+            ? { broadCasters, ...action.payload }
+            : broadCasters
+        ),
+      };
+
+    case UPDATE_BROADCASTER_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
     default:
       return state;
   }

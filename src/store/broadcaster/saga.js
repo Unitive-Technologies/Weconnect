@@ -1,19 +1,23 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_BROADCASTER, GET_BROADCASTER_STATUS, ADD_NEW_BROADCASTER } from "./actionTypes";
+import { GET_BROADCASTER, UPDATE_BROADCASTER, GET_BROADCASTER_STATUS, ADD_NEW_BROADCASTER } from "./actionTypes";
 
 import {
   getBroadCasterSuccess,
   getBroadCasterFail,
+  updateBroadCasterSuccess,
+  updateBroadCasterFail,
   getBroadCasterStatusSuccess,
   getBroadCasterStatusFail,
   addBroadCasterSuccess,
   addBroadCasterFail,
+  updateBroadCaster,
 } from "./actions";
 
 //Include Both Helper File with needed methods
 import {
   getBroadCasters,
+  updateBroadCasters,
   getBroadCastersStatus,
   addNewBroadCaster,
 } from "../../helpers/fakebackend_helper";
@@ -56,6 +60,23 @@ function* fetchBroadCasters() {
   }
 }
 
+function* onUpdateBroadCasters({ payload: broadCasters }) {
+  console.log("broad Casters in onUpdate:" + JSON.stringify(broadCasters));
+  try {
+    const response = yield call(
+      updateBroadCasters,
+      broadCasters,
+      broadCasters.id
+    );
+    yield put(updateBroadCasterSuccess(response));
+    console.log("update response:" + JSON.stringify(response));
+    // toast.success("CustomerUser Updated Successfully", { autoClose: 2000 });
+  } catch (error) {
+    yield put(updateBroadCasterFail(error));
+    toast.error("Broad Caster Updated Failed", { autoClose: 2000 });
+  }
+}
+
 function* fetchBroadCastersStatus() {
   try {
     const response = yield call(getBroadCastersStatus);
@@ -79,6 +100,7 @@ function* broadCasterSaga() {
   yield takeEvery(GET_BROADCASTER, fetchBroadCasters);
   yield takeEvery(GET_BROADCASTER_STATUS, fetchBroadCastersStatus);
   yield takeEvery(ADD_NEW_BROADCASTER, onAddNewBroadCaster);
+  yield takeEvery(UPDATE_BROADCASTER, onUpdateBroadCasters);
 }
 
 export default broadCasterSaga;

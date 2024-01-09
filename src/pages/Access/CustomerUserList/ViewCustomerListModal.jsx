@@ -274,7 +274,7 @@ const ViewCustomerUserModal = (props) => {
                   value={validation.values.block_message || ""}
                   invalid={
                     validation.touched.block_message &&
-                    validation.errors.block_message
+                      validation.errors.block_message
                       ? true
                       : false
                   }
@@ -285,7 +285,7 @@ const ViewCustomerUserModal = (props) => {
                   }
                 />
                 {validation.touched.block_message &&
-                validation.errors.block_message ? (
+                  validation.errors.block_message ? (
                   <FormFeedback type="invalid">
                     {validation.errors.block_message}
                   </FormFeedback>
@@ -337,13 +337,13 @@ const ViewCustomerUserModal = (props) => {
                       value={validation.values.password || ""}
                       invalid={
                         validation.touched.password &&
-                        validation.errors.password
+                          validation.errors.password
                           ? true
                           : false
                       }
                     />
                     {validation.touched.password &&
-                    validation.errors.password ? (
+                      validation.errors.password ? (
                       <FormFeedback type="invalid">
                         {validation.errors.password}
                       </FormFeedback>
@@ -365,13 +365,13 @@ const ViewCustomerUserModal = (props) => {
                       value={validation.values.confirmpassword || ""}
                       invalid={
                         validation.touched.confirmpassword &&
-                        validation.errors.confirmpassword
+                          validation.errors.confirmpassword
                           ? true
                           : false
                       }
                     />
                     {validation.touched.confirmpassword &&
-                    validation.errors.confirmpassword ? (
+                      validation.errors.confirmpassword ? (
                       <FormFeedback type="invalid">
                         {validation.errors.confirmpassword}
                       </FormFeedback>

@@ -321,6 +321,8 @@ export const getBroadCasters = () => get(url.GET_BROADCASTER);
 export const getBroadCastersStatus = () => get(url.GET_BROADCASTER_STATUS);
 export const addNewBroadCaster = (broadcast) =>
   post(url.ADD_NEW_BROADCASTER, broadcast);
+export const updateBroadCasters = (broadCasters, id) =>
+  put(url.UPDATE_BROADCASTER(id), broadCasters);
 
 export const getUserType = () => get(url.GET_USER_TYPE);
 export const getUserStatus = () => get(url.GET_USER_STATUS);

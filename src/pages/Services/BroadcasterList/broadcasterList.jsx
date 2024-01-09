@@ -127,10 +127,10 @@ const BroadcasterList = (props) => {
                 whiteSpace: "nowrap",
               }}
               className="font-size-14 mb-1"
-              // onClick={() => {
-              //   const userData = cellProps.row.original;
-              //   toggleViewBroadcaster(userData);
-              // }}
+            // onClick={() => {
+            //   const userData = cellProps.row.original;
+            //   toggleViewBroadcaster(userData);
+            // }}
             >
               <Link className="text-dark" to="#">
                 {cellProps.row.original.name}
@@ -304,8 +304,9 @@ const BroadcasterList = (props) => {
     <React.Fragment>
       <ViewBroadcasterModal
         isOpen={showViewBroadcaster}
-        toggle={toggleViewBroadcaster}
-        user={viewBroadcaster}
+        toggleViewBroadcaster={toggleViewBroadcaster}
+        viewBroadcaster={viewBroadcaster}
+        brodcastStatus={brodcastStatus}
       />
 
       <AddNewBroadCaster

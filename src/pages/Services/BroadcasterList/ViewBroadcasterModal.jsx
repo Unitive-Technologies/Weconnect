@@ -20,68 +20,77 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUser as onUpdateUser } from "/src/store/users/actions";
+import { updateBroadCaster as onUpdateBroadCaster } from "/src/store/broadcaster/actions";
 
 const ViewBroadcasterModal = (props) => {
-  const { isOpen, toggle, user, viewUser, setViewUser } = props;
-  console.log("user in viewuser modal:" + JSON.stringify(user));
+  const { isOpen, toggleViewBroadcaster, brodcastStatus, viewBroadcaster, } = props;
+  console.log("Broad Caster modal:" + JSON.stringify(viewBroadcaster));
   const dispatch = useDispatch();
-  const [showEditUser, setShowEditUser] = useState(false);
+  const [showEditViewBroadCaster, setShowEditViewBroadCaster] = useState(false);
+
+  const [selectedStatus, setSelectedStatus] = useState("");
+
+  const handleStatusChange = (e) => {
+    const status = e.target.value;
+    setSelectedStatus(status);
+    validation.handleChange(e);
+  };
+
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
-      id: (user && user.id) || "",
-      name: (user && user.name) || "",
-      fullname: (user && user.fullname) || "",
-      contactperson: (user && user.contact_person) || "",
-      mobile: (user && user.mobile_no) || "",
-      phone: (user && user.phone_no) || "",
-      email: (user && user.email) || "",
-      address: (user && user.addr) || "",
-      description: (user && user.description) || "",
-      status: (user && user.status) || "",
+      id: (viewBroadcaster && viewBroadcaster.id) || "",
+      name: (viewBroadcaster && viewBroadcaster.name) || "",
+      fullname: (viewBroadcaster && viewBroadcaster.fullname) || "",
+      contact_person: (viewBroadcaster && viewBroadcaster.contact_person) || "",
+      mobile_no: (viewBroadcaster && viewBroadcaster.mobile_no) || "",
+      phone_no: (viewBroadcaster && viewBroadcaster.phone_no) || "",
+      email: (viewBroadcaster && viewBroadcaster.email) || "",
+      addr: (viewBroadcaster && viewBroadcaster.addr) || "",
+      description: (viewBroadcaster && viewBroadcaster.description) || "",
+      status: (viewBroadcaster && viewBroadcaster.status) || "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
       fullname: Yup.string().required("Please Enter Full Name"),
-      contactperson: Yup.string().required("Please Enter Contact Person"),
-      mobile: Yup.string().required("Please Enter mobile Number"),
-      phone: Yup.string().required("Please Enter Phone"),
+      contact_person: Yup.string().required("Please Enter Contact Person"),
+      mobile_no: Yup.string().required("Please Enter mobile Number"),
+      phone_no: Yup.string().required("Please Enter Phone"),
       email: Yup.string()
         .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
         .required("Please Enter Your Email"),
       // mobile: Yup.array().required("Please Enter mobile"),
-      address: Yup.string().required("Please Enter Address"),
+      addr: Yup.string().required("Please Enter Address"),
       description: Yup.string().required("Please Enter description"),
       status: Yup.string().required("Please Enter status"),
     }),
     onSubmit: (values) => {
-      const updateUser = {
-        id: user.id,
+      const updateBroadCaster = {
+        id: viewBroadcaster.id,
         name: values.name,
         fullname: values.fullname,
-        contactperson: values.contactperson,
-        mobile: values.mobile,
-        phone: values.phone,
+        contact_person: values.contact_person,
+        mobile_no: values.mobile_no,
+        phone_no: values.phone_no,
         email: values.email,
-        address: values.address,
+        addr: values.addr,
         description: values.description,
-        status: values.status,
+        status: parseInt(values.status),
       };
 
-      // update user
-      dispatch(onUpdateUser(updateUser));
+      // update viewBroadcaster
+      dispatch(onUpdateBroadCaster(updateBroadCaster));
       validation.resetForm();
-      toggle();
+      toggleViewBroadcaster();
     },
   });
 
   const handleCancel = () => {
-    setShowEditUser(false);
-    toggle();
+    setShowEditViewBroadCaster(false);
+    toggleViewBroadcaster();
   };
 
   return (
@@ -101,11 +110,11 @@ const ViewBroadcasterModal = (props) => {
         toggle={handleCancel}
       >
         <ModalHeader toggle={handleCancel} tag="h4">
-          {!showEditUser
-            ? `View ${(user && user.name) || ""}`
-            : `Edit ${(user && user.name) || ""}`}
+          {!showEditViewBroadCaster
+            ? `View ${(viewBroadcaster && viewBroadcaster.name) || ""}`
+            : `Edit ${(viewBroadcaster && viewBroadcaster.name) || ""}`}
         </ModalHeader>
-        {!showEditUser && (
+        {!showEditViewBroadCaster && (
           <Link
             style={{
               position: "absolute",
@@ -114,7 +123,7 @@ const ViewBroadcasterModal = (props) => {
             }}
             to="#!"
             className="btn btn-light me-1"
-            onClick={() => setShowEditUser(true)}
+            onClick={() => setShowEditViewBroadCaster(true)}
           >
             <i className="mdi mdi-pencil-outline"></i>
           </Link>
@@ -137,7 +146,7 @@ const ViewBroadcasterModal = (props) => {
                     name="name"
                     type="text"
                     placeholder="Insert Name"
-                    disabled={!showEditUser}
+                    disabled={!showEditViewBroadCaster}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.name || ""}
@@ -164,7 +173,7 @@ const ViewBroadcasterModal = (props) => {
                     label="fullname"
                     type="fullname"
                     placeholder="Insert Full Name"
-                    disabled={!showEditUser}
+                    disabled={!showEditViewBroadCaster}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.fullname || ""}
@@ -187,25 +196,25 @@ const ViewBroadcasterModal = (props) => {
                     Contact Person<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="contactperson"
+                    name="contact_person"
                     label="contactperson"
                     type="contactperson"
                     placeholder="Insert Contact Person"
-                    disabled={!showEditUser}
+                    disabled={!showEditViewBroadCaster}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.contactperson || ""}
+                    value={validation.values.contact_person || ""}
                     invalid={
-                      validation.touched.contactperson &&
-                        validation.errors.contactperson
+                      validation.touched.contact_person &&
+                        validation.errors.contact_person
                         ? true
                         : false
                     }
                   />
-                  {validation.touched.contactperson &&
-                    validation.errors.contactperson ? (
+                  {validation.touched.contact_person &&
+                    validation.errors.contact_person ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.contactperson}
+                      {validation.errors.contact_person}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -218,23 +227,23 @@ const ViewBroadcasterModal = (props) => {
                     Mobile No.<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="mobile"
+                    name="mobile_no"
                     label="Mobile No."
                     placeholder="Insert Mobile Number"
                     type="text"
-                    disabled={!showEditUser}
+                    disabled={!showEditViewBroadCaster}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.mobile || ""}
+                    value={validation.values.mobile_no || ""}
                     invalid={
-                      validation.touched.mobile && validation.errors.mobile
+                      validation.touched.mobile_no && validation.errors.mobile_no
                         ? true
                         : false
                     }
                   />
-                  {validation.touched.mobile && validation.errors.mobile ? (
+                  {validation.touched.mobile_no && validation.errors.mobile_no ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.mobile}
+                      {validation.errors.mobile_no}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -243,18 +252,18 @@ const ViewBroadcasterModal = (props) => {
                 <div className="mb-3">
                   <Label className="form-label">Phone No.</Label>
                   <Input
-                    name="phone"
+                    name="phone_no"
                     type="phone"
                     placeholder="Enter Phone No."
-                    disabled={!showEditUser}
+                    disabled={!showEditViewBroadCaster}
                     // className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.phone || ""}
+                    value={validation.values.phone_no || ""}
                   ></Input>
-                  {validation.touched.phone && validation.errors.phone ? (
+                  {validation.touched.phone_no && validation.errors.phone_no ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.phone}
+                      {validation.errors.phone_no}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -269,7 +278,7 @@ const ViewBroadcasterModal = (props) => {
                     label="Email"
                     type="email"
                     placeholder="Insert Email"
-                    disabled={!showEditUser}
+                    disabled={!showEditViewBroadCaster}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.email || ""}
@@ -294,23 +303,23 @@ const ViewBroadcasterModal = (props) => {
                     Address<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="address"
+                    name="addr"
                     label="address"
                     type="address"
                     placeholder="Enter Address"
-                    disabled={!showEditUser}
+                    disabled={!showEditViewBroadCaster}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.address || ""}
+                    value={validation.values.addr || ""}
                     invalid={
-                      validation.touched.address && validation.errors.address
+                      validation.touched.addr && validation.errors.addr
                         ? true
                         : false
                     }
                   />
-                  {validation.touched.address && validation.errors.address ? (
+                  {validation.touched.addr && validation.errors.addr ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.address}
+                      {validation.errors.addr}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -325,7 +334,7 @@ const ViewBroadcasterModal = (props) => {
                     label="Description"
                     type="description"
                     placeholder="Insert Description"
-                    disabled={!showEditUser}
+                    disabled={!showEditViewBroadCaster}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.description || ""}
@@ -348,15 +357,16 @@ const ViewBroadcasterModal = (props) => {
                     type="select"
                     placeholder="Select Status"
                     className="form-select"
-                    disabled={!showEditUser}
-                    onChange={validation.handleChange}
+                    disabled={!showEditViewBroadCaster}
+                    onChange={handleStatusChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.status || ""}
+                    value={selectedStatus}
                   >
-                    {/* <option value="">Select Status</option> */}
-                    <option value="11">Active</option>
-                    <option value="12">BLOCKED</option>
-                    <option value="13">In-Active</option>
+                    {brodcastStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                   </Input>
                   {validation.touched.status && validation.errors.status ? (
                     <FormFeedback type="invalid">
@@ -366,7 +376,7 @@ const ViewBroadcasterModal = (props) => {
                 </div>
               </Col>
             </Row>
-            {showEditUser && (
+            {showEditViewBroadCaster && (
               <Row>
                 <Col>
                   <ModalFooter>
