@@ -28,12 +28,12 @@ export const getRegionalOffice = (currentPage, perPage) => {
     payload: {
       currentPage,
       perPage,
-    }
+    },
   };
 };
 
 export const getRegionalOfficeSuccess = (regionalOffice) => {
-  console.log("Received Regional Offices:", regionalOffice);
+  console.log("#############Received Regional Offices:", regionalOffice);
   return {
     type: GET_REGIONALOFFICE_SUCCESS,
     payload: regionalOffice,

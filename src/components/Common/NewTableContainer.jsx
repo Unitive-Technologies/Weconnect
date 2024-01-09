@@ -13,11 +13,7 @@ import FlatPickr from "react-flatpickr";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import moment from "moment";
-import {
-  Col,
-  Row,
-  Table,
-} from "reactstrap";
+import { Col, Row, Table } from "reactstrap";
 import { Filter, DefaultColumnFilter } from "./filters";
 import { Link } from "react-router-dom";
 import JobListGlobalFilter from "./GlobalSearchFilter";
@@ -49,7 +45,7 @@ const NewTableContainer = ({
   setCurrentPage,
   isLoading,
   pageChangeHandler,
-  manualPagination = false
+  manualPagination = false,
 }) => {
   // convert currentPage to integer
   const columnData = useMemo(() => columns, [columns]);
@@ -140,57 +136,63 @@ const NewTableContainer = ({
       {isLoading ? (
         <Loader />
       ) : (
-      <div className="table-responsive react-table">
-        <Table {...getTableProps()} className={tableClass}>
-          <thead className={theadClass}>
-            {headerGroups.map((headerGroup) => (
-              <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th
-                    {...column.getHeaderProps()}
-                    key={column.id}
-                    className={column.isSort ? "sorting" : ""}
-                  >
-                    <div {...column.getSortByToggleProps()}>
-                      {column.render("Header")}
-                      {generateSortingIndicator(column)}
-                    </div>
-                    {/* <Filter column={column} /> */}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
+        <div className="table-responsive react-table">
+          <Table {...getTableProps()} className={tableClass}>
+            <thead className={theadClass}>
+              {headerGroups.map((headerGroup) => (
+                <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column) => (
+                    <th
+                      {...column.getHeaderProps()}
+                      key={column.id}
+                      className={column.isSort ? "sorting" : ""}
+                    >
+                      <div {...column.getSortByToggleProps()}>
+                        {column.render("Header")}
+                        {generateSortingIndicator(column)}
+                      </div>
+                      {/* <Filter column={column} /> */}
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </thead>
 
-          <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
-              prepareRow(row);
-              // console.log("Row object:", row);
-              return (
-                <Fragment key={row.getRowProps().key}>
-                  <tr onClick={() => handleRowClick(row.original)}>
-                    {row.cells.map((cell) => {
-                      return (
-                        <td
-                          key={cell.id}
-                          {...cell.getCellProps()}
-                          // style={{ width: `${getColumnWidth(cell.column)}px` }}
-                        >
-                          {cell.render("Cell")}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                </Fragment>
-              );
-            })}
-          </tbody>
-        </Table>
-      </div>
-      )
-      }
+            <tbody {...getTableBodyProps()}>
+              {page.map((row) => {
+                prepareRow(row);
+                // console.log("Row object:", row);
+                return (
+                  <Fragment key={row.getRowProps().key}>
+                    <tr onClick={() => handleRowClick(row.original)}>
+                      {row.cells.map((cell) => {
+                        return (
+                          <td
+                            key={cell.id}
+                            {...cell.getCellProps()}
+                            // style={{ width: `${getColumnWidth(cell.column)}px` }}
+                          >
+                            {cell.render("Cell")}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  </Fragment>
+                );
+              })}
+            </tbody>
+          </Table>
+        </div>
+      )}
 
-      <NewPagination pageChangeHandler={pageChangeHandler} rowsPerPage={rowsPerPage} totalRows={totalRows} currentPage={parseInt(currentPage)} paginationDiv={paginationDiv} pagination={pagination} />
+      <NewPagination
+        pageChangeHandler={pageChangeHandler}
+        rowsPerPage={rowsPerPage}
+        totalRows={totalRows}
+        currentPage={parseInt(currentPage)}
+        paginationDiv={paginationDiv}
+        pagination={pagination}
+      />
     </Fragment>
   );
 };

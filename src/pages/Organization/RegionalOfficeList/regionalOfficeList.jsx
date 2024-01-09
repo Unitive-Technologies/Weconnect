@@ -41,7 +41,8 @@ const RegionalOfficeList = (props) => {
     })
   );
 
-  const { regOffices, loading, perPage, totalCount, currentPage, pageCount } = useSelector(RegionalOfficeProperties);
+  const { regOffices, loading, perPage, totalCount, currentPage, pageCount } =
+    useSelector(RegionalOfficeProperties);
 
   // useEffect(() => {
   //   return () => {
@@ -53,7 +54,7 @@ const RegionalOfficeList = (props) => {
   const [currPage, setCurrPage] = useState(currentPage);
 
   useEffect(() => {
-    console.log("In UseEffect.. currentPage",currentPage);
+    console.log("In UseEffect.. currentPage", currentPage);
     console.log("Regional Office data in component:", regOffices);
 
     if (regOffices && !regOffices.length) {
@@ -335,7 +336,7 @@ const RegionalOfficeList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("regoff:" + JSON.stringify(regOffices))}
+                    {console.log("currpage:" + currPage, currentPage)}
                     <NewTableContainer
                       isPagination={true}
                       isLoading={isLoading}

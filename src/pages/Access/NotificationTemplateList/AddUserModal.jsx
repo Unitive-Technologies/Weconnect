@@ -350,7 +350,7 @@ const AddUserModal = (props) => {
     };
 
     getFilteredData();
-  }, []);
+  }, [tableList, isOpen]);
 
   return (
     <Modal

@@ -1,4 +1,12 @@
-import { call, put, select, take, takeEvery, takeLatest, takeLeading } from "redux-saga/effects";
+import {
+  call,
+  put,
+  select,
+  take,
+  takeEvery,
+  takeLatest,
+  takeLeading,
+} from "redux-saga/effects";
 
 import {
   GET_REGIONALOFFICE,
@@ -14,7 +22,7 @@ import {
   addRegionalOfficeSuccess,
   updateRegionalOfficeSuccess,
   updateRegionalOfficeFail,
-  setCurrentPageAction
+  setCurrentPageAction,
 } from "./actions";
 
 //Include Both Helper File with needed methods
@@ -47,8 +55,8 @@ const convertRegionalOfficeListObject = (regionalofficeList) => {
         regionaloffice.status === 1
           ? "ACTIVE"
           : regionaloffice.status === 0
-            ? "INACTIVE"
-            : "BLOCKED",
+          ? "INACTIVE"
+          : "BLOCKED",
     };
   });
 };
@@ -92,13 +100,15 @@ function* onUpdateRegionalOffice({ payload: regionaloffice }) {
   }
 }
 
-function* onSetCurrentPage({payload: currentPage}) {
+function* onSetCurrentPage({ payload: currentPage }) {
   yield put(setCurrentPageAction(currentPage));
   try {
-    const { perPage, pageCount } = yield select(state => state.regionaloffice);
+    const { perPage, pageCount } = yield select(
+      (state) => state.regionaloffice
+    );
 
-    if (!pageCount || pageCount < currentPage || currentPage < 1 ) {
-      toast.error("Could not navigate further", {autoClose: 2000});
+    if (!pageCount || pageCount < currentPage || currentPage < 1) {
+      toast.error("Could not navigate further", { autoClose: 2000 });
       return;
     }
     console.log("In current page update saga - ", currentPage, perPage);

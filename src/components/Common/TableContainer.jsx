@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import {
   useTable,
@@ -8,24 +8,10 @@ import {
   useExpanded,
   usePagination,
 } from "react-table";
-import "flatpickr/dist/themes/material_blue.css";
-import FlatPickr from "react-flatpickr";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-import moment from "moment";
-import {
-  Button,
-  Col,
-  FormFeedback,
-  FormGroup,
-  Label,
-  Row,
-  Table,
-} from "reactstrap";
+import { Table, Row, Col, Button, Input } from "reactstrap";
 import { Filter, DefaultColumnFilter } from "./filters";
 import { Link } from "react-router-dom";
 import JobListGlobalFilter from "./GlobalSearchFilter";
-import TableActionButtons from "./TableActionButtons";
 
 // Define a default UI for filtering
 function GlobalFilter({
@@ -42,29 +28,18 @@ function GlobalFilter({
 
   return (
     <React.Fragment>
-      <Col md={4}>
-        <div className="search-box me-xxl-2 my-3 my-xxl-0 d-inline-block">
-          <div className="position-relative">
-            <label htmlFor="search-bar-0" className="search-label">
-              <span id="search-bar-0-label" className="sr-only">
-                Search this table
-              </span>
-              <input
-                onChange={(e) => {
-                  setValue(e.target.value);
-                  onChange(e.target.value);
-                }}
-                id="search-bar-0"
-                type="text"
-                className="form-control"
-                // placeholder={`${count} records...`}
-                placeholder="Search..."
-                value={value || ""}
-              />
-            </label>
-            <i className="bx bx-search-alt search-icon"></i>
-          </div>
-        </div>
+      <Col xxl={3} lg={6}>
+        <input
+          type="search"
+          className="form-control"
+          id="search-bar-0"
+          value={value || ""}
+          placeholder={`${count} records...`}
+          onChange={(e) => {
+            setValue(e.target.value);
+            onChange(e.target.value);
+          }}
+        />
       </Col>
       {isJobListGlobalFilter && (
         <JobListGlobalFilter setGlobalFilter={setGlobalFilter} />
@@ -73,96 +48,16 @@ function GlobalFilter({
   );
 }
 
-const TransactionDate = () => {
-  const [selectedFiles, setselectedFiles] = useState([]);
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
-
-    initialValues: {
-      projectname: "",
-      projectdesc: "",
-      startDate: "",
-      endDate: "",
-      projectbudget: "",
-    },
-    validationSchema: Yup.object({
-      projectname: Yup.string().required("Please Enter Your Project Name"),
-      projectdesc: Yup.string().required("Please Enter Your Project desc"),
-      startDate: Yup.string().required("Please Enter Your Start Date"),
-      endDate: Yup.string().required("Please Enter Your End Date"),
-      projectbudget: Yup.string().required("Please Enter Your Rating"),
-    }),
-    onSubmit: (values) => {
-      validation.resetForm();
-      toggle();
-      setselectedFiles("");
-    },
-  });
-  return (
-    <div>
-      <FormGroup className="mb-4" row>
-        <Label className="col-form-label col-lg-3">Project Date</Label>
-        <Col lg="9">
-          <Row>
-            <Col md={6} className="pr-0">
-              <FlatPickr
-                className="form-control d-block"
-                name="startDate"
-                placeholder="Select time"
-                options={{
-                  dateFormat: "d M, Y",
-                }}
-                onChange={(date) =>
-                  validation.setFieldValue(
-                    "startDate",
-                    moment(date[0]).format("DD MMMM, YYYY")
-                  )
-                }
-                value={validation.values.startDate}
-              />
-              {validation.touched.startDate && validation.errors.startDate ? (
-                <FormFeedback type="invalid" className="d-block">
-                  {validation.errors.startDate}
-                </FormFeedback>
-              ) : null}
-            </Col>
-            <Col md={6} className="pl-0">
-              <FlatPickr
-                className="form-control d-block"
-                name="endDate"
-                placeholder="Select time"
-                options={{
-                  dateFormat: "d M, Y",
-                }}
-                onChange={(date) =>
-                  validation.setFieldValue(
-                    "endDate",
-                    moment(date[0]).format("DD MMMM, YYYY")
-                  )
-                }
-                value={validation.values.endDate}
-              />
-              {validation.touched.endDate && validation.errors.endDate ? (
-                <FormFeedback type="invalid" className="d-block">
-                  {validation.errors.endDate}
-                </FormFeedback>
-              ) : null}
-            </Col>
-          </Row>
-        </Col>
-      </FormGroup>
-    </div>
-  );
-};
 const TableContainer = ({
   columns,
   data,
-  tableActions,
   isGlobalFilter,
-  isTransactionDate,
-  isShowTableActionButtons,
-  handleRowClick,
+  isAddOptions,
+  isAddUserList,
+  handleOrderClicks,
+  handleUserClick,
+  handleCustomerClick,
+  isAddCustList,
   customPageSize,
   tableClass,
   customPageSizeOptions,
@@ -173,11 +68,6 @@ const TableContainer = ({
   iscustomPageSizeOptions,
   theadClass,
   isJobListGlobalFilter,
-  setCustomPageSize,
-  currentPage,
-  totalCount,
-  totalPageCount,
-  setCurrentPage,
 }) => {
   const {
     getTableProps,
@@ -203,7 +93,7 @@ const TableContainer = ({
       data,
       defaultColumn: { Filter: DefaultColumnFilter },
       initialState: {
-        pageIndex: currentPage - 1,
+        pageIndex: 0,
         pageSize: customPageSize,
         sortBy: [
           {
@@ -227,49 +117,79 @@ const TableContainer = ({
     setPageSize(Number(event.target.value));
   };
 
-  // const getColumnWidth = (column) => {
-  //   const defaultWidth = 100;
-  //   return column.width || defaultWidth;
-  // };
   return (
     <Fragment>
-      <Row className="mb-2  ">
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          {iscustomPageSizeOptions && (
-            <Col md={customPageSizeOptions ? 2 : 1}>
-              <select
-                className="form-select"
-                value={pageSize}
-                onChange={onChangeInSelect}
+      <Row className="mb-2">
+        {iscustomPageSizeOptions && (
+          <Col md={customPageSizeOptions ? 2 : 1}>
+            <select
+              className="form-select"
+              value={pageSize}
+              onChange={onChangeInSelect}
+            >
+              {[10, 20, 30, 40, 50].map((pageSize) => (
+                <option key={pageSize} value={pageSize}>
+                  Show {pageSize}
+                </option>
+              ))}
+            </select>
+          </Col>
+        )}
+        {isGlobalFilter && (
+          <GlobalFilter
+            preGlobalFilteredRows={preGlobalFilteredRows}
+            globalFilter={state.globalFilter}
+            setGlobalFilter={setGlobalFilter}
+            isJobListGlobalFilter={isJobListGlobalFilter}
+          />
+        )}
+        {isAddOptions && (
+          <Col sm="7" xxl="8">
+            <div className="text-sm-end">
+              <Button
+                type="button"
+                color="success"
+                className="btn-rounded  mb-2 me-2"
+                onClick={handleOrderClicks}
               >
-                {[10, 20, 30, 50, 100, 200, 500].map((pageSize) => (
-                  <option key={pageSize} value={pageSize}>
-                    Show {pageSize}
-                  </option>
-                ))}
-              </select>
-            </Col>
-          )}
-          {isGlobalFilter && (
-            <GlobalFilter
-              preGlobalFilteredRows={preGlobalFilteredRows}
-              globalFilter={state.globalFilter}
-              setGlobalFilter={setGlobalFilter}
-              isJobListGlobalFilter={isJobListGlobalFilter}
-            />
-          )}
-          {isTransactionDate && <TransactionDate />}
-          {isShowTableActionButtons && (
-            <TableActionButtons tableActions={tableActions} />
-          )}
-        </div>
+                <i className="mdi mdi-plus me-1" />
+                Add New Order
+              </Button>
+            </div>
+          </Col>
+        )}
+        {isAddUserList && (
+          <Col sm="7" xxl="8">
+            <div className="text-sm-end">
+              <Button
+                type="button"
+                color="primary"
+                className="btn mb-2 me-2"
+                onClick={handleUserClick}
+              >
+                <i className="mdi mdi-plus-circle-outline me-1" />
+                Create New User
+              </Button>
+            </div>
+          </Col>
+        )}
+        {isAddCustList && (
+          <Col sm="7" xxl="8">
+            <div className="text-sm-end">
+              <Button
+                type="button"
+                color="success"
+                className="btn-rounded mb-2 me-2"
+                onClick={handleCustomerClick}
+              >
+                <i className="mdi mdi-plus me-1" />
+                New Customers
+              </Button>
+            </div>
+          </Col>
+        )}
       </Row>
+
       <div className="table-responsive react-table">
         <Table {...getTableProps()} className={tableClass}>
           <thead className={theadClass}>
@@ -282,7 +202,7 @@ const TableContainer = ({
                   >
                     <div {...column.getSortByToggleProps()}>
                       {column.render("Header")}
-                      {generateSortingIndicator(column)}
+                      {/* {generateSortingIndicator(column)} */}
                     </div>
                     {/* <Filter column={column} /> */}
                   </th>
@@ -294,17 +214,12 @@ const TableContainer = ({
           <tbody {...getTableBodyProps()}>
             {page.map((row) => {
               prepareRow(row);
-              // console.log("Row object:", row);
               return (
                 <Fragment key={row.getRowProps().key}>
-                  <tr onClick={() => handleRowClick(row.original)}>
+                  <tr>
                     {row.cells.map((cell) => {
                       return (
-                        <td
-                          key={cell.id}
-                          {...cell.getCellProps()}
-                          // style={{ width: `${getColumnWidth(cell.column)}px` }}
-                        >
+                        <td key={cell.id} {...cell.getCellProps()}>
                           {cell.render("Cell")}
                         </td>
                       );
@@ -323,14 +238,14 @@ const TableContainer = ({
             <div className="col-sm">
               <div className="text-muted">
                 Showing <span className="fw-semibold">{page.length}</span> of{" "}
-                <span className="fw-semibold">{totalCount}</span> entries {" (" + totalPageCount + " pages)"} 
+                <span className="fw-semibold">{data.length}</span> entries
               </div>
             </div>
           )}
           <div className={paginationDiv}>
             <ul className={pagination}>
               <li className={`page-item ${!canPreviousPage ? "disabled" : ""}`}>
-                <Link to="#" className="page-link" onClick={() => setCurrentPage(currentPage-1)}>
+                <Link to="#" className="page-link" onClick={previousPage}>
                   <i className="mdi mdi-chevron-left"></i>
                 </Link>
               </li>
@@ -347,7 +262,7 @@ const TableContainer = ({
                       <Link
                         to="#"
                         className="page-link"
-                        onClick={() => setCurrentPage(item+1)}
+                        onClick={() => gotoPage(item)}
                       >
                         {item + 1}
                       </Link>
@@ -357,7 +272,7 @@ const TableContainer = ({
               ))}
               {pageOptions.length > pageIndex + 5 && (
                 <li className={`page-item ${!canNextPage ? "disabled" : ""}`}>
-                  <Link to="#" className="page-link" onClick={() => setCurrentPage(currentPage+1)}>
+                  <Link to="#" className="page-link" onClick={nextPage}>
                     <i className="mdi mdi-chevron-right"></i>
                   </Link>
                 </li>

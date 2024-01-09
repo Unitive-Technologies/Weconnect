@@ -6,23 +6,24 @@ import {
   UPDATE_REGIONALOFFICE_SUCCESS,
   UPDATE_REGIONALOFFICE_FAIL,
   SET_PER_PAGE,
-  SET_CURRENT_PAGE
+  SET_CURRENT_PAGE,
 } from "./actionTypes";
 
-import { RESPONSE_HEADER_CURRENT_PAGE,
+import {
+  RESPONSE_HEADER_CURRENT_PAGE,
   RESPONSE_HEADER_PAGE_COUNT,
   RESPONSE_HEADER_PER_PAGE,
-  RESPONSE_HEADER_TOTAL_COUNT }
-   from "../../constants/strings";
+  RESPONSE_HEADER_TOTAL_COUNT,
+} from "../../constants/strings";
 
 const INIT_STATE = {
   regionaloffice: [],
   error: {},
   loading: true,
-  currentPage: 5,
+  currentPage: 1,
   pageCount: 0,
   perPage: 10,
-  totalCount: 0
+  totalCount: 0,
 };
 
 const RegionalOffice = (state = INIT_STATE, action) => {
@@ -33,6 +34,7 @@ const RegionalOffice = (state = INIT_STATE, action) => {
       const pageCount = action.payload.headers[RESPONSE_HEADER_PAGE_COUNT];
       const perPage = action.payload.headers[RESPONSE_HEADER_PER_PAGE];
       const totalCount = action.payload.headers[RESPONSE_HEADER_TOTAL_COUNT];
+      console.log("@@@@@@@@@@@@currentPage in reducer:" + currentPage);
       return {
         ...state,
         regionaloffice: action.payload.data.data,
@@ -40,7 +42,7 @@ const RegionalOffice = (state = INIT_STATE, action) => {
         currentPage: currentPage,
         pageCount: pageCount,
         perPage: perPage,
-        totalCount: totalCount
+        totalCount: totalCount,
       };
 
     case GET_REGIONALOFFICE_FAIL:
