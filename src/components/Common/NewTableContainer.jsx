@@ -37,19 +37,20 @@ const NewTableContainer = ({
   pagination,
   iscustomPageSizeOptions,
   theadClass,
-  setCustomPageSize,
   currentPage,
   totalRows,
   totalPageCount,
   rowsPerPage,
-  setCurrentPage,
   isLoading,
   pageChangeHandler,
-  manualPagination = false,
+  // manualPagination = false,
 }) => {
   // convert currentPage to integer
   const columnData = useMemo(() => columns, [columns]);
   const rowData = data;
+  // console the current time
+  console.log("Current time - ", moment().format("hh:mm:ss"));
+  console.log("Value used in the table -[", JSON.stringify(rowData));
   const {
     getTableProps,
     getTableBodyProps,
@@ -72,7 +73,7 @@ const NewTableContainer = ({
     {
       columns: columnData,
       data: rowData,
-      manualPagination,
+      // manualPagination,
       defaultColumn: { Filter: DefaultColumnFilter },
       initialState: {
         pageIndex: currentPage - 1,
@@ -96,7 +97,7 @@ const NewTableContainer = ({
   };
 
   const onChangeInSelect = (event) => {
-    setPageSize(Number(event.target.value));
+    setPageSize(parseInt(event.target.value));
   };
 
   // const getColumnWidth = (column) => {
@@ -134,7 +135,7 @@ const NewTableContainer = ({
         </div>
       </Row>
       {isLoading ? (
-        <Loader />
+        <h2>Loading...</h2>
       ) : (
         <div className="table-responsive react-table">
           <Table {...getTableProps()} className={tableClass}>
@@ -159,6 +160,7 @@ const NewTableContainer = ({
             </thead>
 
             <tbody {...getTableBodyProps()}>
+              {console.log("Number of rows - ", page)}
               {page.map((row) => {
                 prepareRow(row);
                 // console.log("Row object:", row);

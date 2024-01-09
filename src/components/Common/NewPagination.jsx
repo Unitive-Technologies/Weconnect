@@ -19,36 +19,31 @@ const NewPagination = ({
 
   // State variable to hold the current page. This value is
   // passed to the callback provided by the parent
-  const [currPage, setCurrPage] = useState(parseInt(currentPage));
+  // const [currPage, setCurrPage] = useState(parseInt(currentPage));
 
   // Navigation arrows enable/disable state
   const [canGoBack, setCanGoBack] = useState(false);
   const [canGoNext, setCanGoNext] = useState(true);
 
   // Onclick handlers for the butons
-  const onNextPage = () => setCurrPage(currPage + 1);
-  const onPrevPage = () => setCurrPage(currPage - 1);
+  const onNextPage = () => pageChangeHandler(currentPage + 1);
+  const onPrevPage = () => pageChangeHandler(currentPage - 1);
   const onPageSelect = (pageNo) => pageChangeHandler(pageNo);
 
   // Disable previous and next buttons in the first and last page
   // respectively
   useEffect(() => {
-    if (noOfPages === currPage) {
+    if (noOfPages === currentPage) {
       setCanGoNext(false);
     } else {
       setCanGoNext(true);
     }
-    if (currPage === 1) {
+    if (currentPage === 1) {
       setCanGoBack(false);
     } else {
       setCanGoBack(true);
     }
-  }, [noOfPages, currPage]);
-
-  // To set the starting index of the page
-  useEffect(() => {
-    pageChangeHandler(currPage);
-  }, [currPage]);
+  }, []);
 
   return (
     <Row className="justify-content-between align-items-center">
@@ -76,7 +71,7 @@ const NewPagination = ({
                 <li
                   key={index}
                   className={`page-item ${
-                    index + 1 === currentPage ? "active" : ""
+                    (index + 1) === currentPage ? "active" : ""
                   }`}
                 >
                   <Link
