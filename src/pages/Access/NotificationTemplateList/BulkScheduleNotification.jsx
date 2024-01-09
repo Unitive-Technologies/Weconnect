@@ -541,23 +541,40 @@ const BulkScheduleNotification = (props) => {
                   </Col>
                   {console.log("endtime: " + validation.values.endtime)}
                   <Col lg={4}>
-                    <div className="form-check form-switch form-switch-lg mt-4">
-                      <input
-                        type="checkbox"
-                        className="form-check-input"
-                        id="customSwitchsizelg"
-                        defaultChecked
-                        onClick={(e) => {
-                          settoggleSwitch(!toggleSwitch);
+                    <div className="mt-3">
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
                         }}
-                        S
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="customSwitchsizelg"
                       >
-                        Select One-by-One / Select All
-                      </label>
+                        <label style={{ marginRight: "10px" }}>
+                          Select One-by-one
+                        </label>
+                        <div className="form-check form-switch form-switch-lg mb-2">
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            id="customSwitchsizelg"
+                            defaultChecked
+                            onClick={(e) => {
+                              settoggleSwitch(!toggleSwitch);
+                            }}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="customSwitchsizelg"
+                          >
+                            Select All
+                          </label>
+                        </div>
+                      </div>
+                      {validation.touched.ifFixNCF &&
+                      validation.errors.ifFixNCF ? (
+                        <FormFeedback type="invalid">
+                          {validation.errors.ifFixNCF}
+                        </FormFeedback>
+                      ) : null}
                     </div>
                   </Col>
                 </Row>

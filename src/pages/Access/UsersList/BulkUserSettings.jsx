@@ -127,7 +127,7 @@ const BulkUserSettings = (props) => {
             type="checkbox"
             disabled
             checked
-          // onClick={() => handleActive(cellProps.row.original)}
+            // onClick={() => handleActive(cellProps.row.original)}
           />
         ),
       },
@@ -166,10 +166,10 @@ const BulkUserSettings = (props) => {
                   whiteSpace: "nowrap",
                 }}
                 className="font-size-14 mb-1"
-              // onClick={() => {
-              //   const userData = cellProps.row.original;
-              //   toggleViewModal(userData);
-              // }}
+                // onClick={() => {
+                //   const userData = cellProps.row.original;
+                //   toggleViewModal(userData);
+                // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -207,8 +207,8 @@ const BulkUserSettings = (props) => {
                   {cellProps.row.original.status === 1
                     ? "Active"
                     : cellProps.row.original.status === 0
-                      ? "In-Active"
-                      : "Blocked"}
+                    ? "In-Active"
+                    : "Blocked"}
                 </Link>
               </h5>
             </>
@@ -227,10 +227,10 @@ const BulkUserSettings = (props) => {
                   {cellProps.row.original.status === 0
                     ? "MSO"
                     : cellProps.row.original.status === 1
-                      ? "RO"
-                      : cellProps.row.original.status === 2
-                        ? "DISTRIBUTOR"
-                        : "LCO"}
+                    ? "RO"
+                    : cellProps.row.original.status === 2
+                    ? "DISTRIBUTOR"
+                    : "LCO"}
                 </Link>
               </h5>
             </>
@@ -249,8 +249,8 @@ const BulkUserSettings = (props) => {
                   {cellProps.row.original.status === 1
                     ? "Administrator"
                     : cellProps.row.original.status === 2
-                      ? "Staff"
-                      : "User"}
+                    ? "Staff"
+                    : "User"}
                 </Link>
               </h5>
             </>
@@ -461,7 +461,11 @@ const BulkUserSettings = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                onChange={() => handleCheckboxChange(cellProps.row.id)}
+                checked={isRowChecked(cellProps.row.id)}
+              />
             </>
           );
         },
@@ -531,12 +535,6 @@ const BulkUserSettings = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.bulk_limit || ""}
                   />{" "}
-                  {validation.touched.bulk_limit &&
-                    validation.errors.bulk_limit ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.bulk_limit}
-                    </FormFeedback>
-                  ) : null}
                 </>
               ) : cellProps.row.original.key === "allowedIps" ? (
                 <>
@@ -549,12 +547,6 @@ const BulkUserSettings = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.allowed_ips || ""}
                   />
-                  {validation.touched.allowed_ips &&
-                    validation.errors.allowed_ips ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.allowed_ips}
-                    </FormFeedback>
-                  ) : null}
                 </>
               ) : (
                 <>
@@ -574,12 +566,6 @@ const BulkUserSettings = (props) => {
                       </option>
                     ))}
                   </Input>
-                  {validation.touched.enabled_pay_modes &&
-                    validation.errors.enabled_pay_modes ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.enabled_pay_modes}
-                    </FormFeedback>
-                  ) : null}
                 </>
               )}
             </>
