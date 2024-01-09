@@ -419,7 +419,7 @@ export const getBouquetType = () => get(url.GET_BOUQUETTYPE);
 export const getBouquex = () => get(url.GET_BOUQUEX);
 export const getBouquetTaxlist = () => get(url.GET_BOUQUET_TAXLIST);
 export const getRechargePeriod = () => get(url.GET_RECHARGEPERIOD);
-export const getAlacarteChannals = () => get(url.GET_ALACARTECHANNALS);
+export const getAlacarteChannels = () => get(url.GET_ALACARTECHANNALS);
 export const getBouquetPackages = () => get(url.GET_BOUQUET_PACKAGES);
 
 export const getConnectionScheme = () => get(url.GET_CONNECTIONSCHEME);
