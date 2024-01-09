@@ -8,6 +8,9 @@ import {
   ADD_NEW_BROADCASTER,
   ADD_BROADCASTER_SUCCESS,
   ADD_BROADCASTER_FAIL,
+  UPDATE_BROADCASTER,
+  UPDATE_BROADCASTER_SUCCESS,
+  UPDATE_BROADCASTER_FAIL,
 } from "./actionTypes";
 
 export const getBroadCaster = () => ({
@@ -55,5 +58,20 @@ export const addBroadCasterSuccess = (broadcasters) => ({
 
 export const addBroadCasterFail = (error) => ({
   type: ADD_BROADCASTER_FAIL,
+  payload: error,
+});
+
+export const updateBroadCaster = (broadcasters) => ({
+  type: UPDATE_BROADCASTER,
+  payload: broadcasters,
+});
+
+export const updateBroadCasterSuccess = (broadcasters) => ({
+  type: UPDATE_BROADCASTER_SUCCESS,
+  payload: broadcasters,
+});
+
+export const updateBroadCasterFail = (error) => ({
+  type: UPDATE_BROADCASTER_FAIL,
   payload: error,
 });

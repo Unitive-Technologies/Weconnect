@@ -40,7 +40,7 @@ const ViewBroadcasterModal = (props) => {
       mobile: (user && user.mobile_no) || "",
       phone: (user && user.phone_no) || "",
       email: (user && user.email) || "",
-      address: (user && user.address) || "",
+      address: (user && user.addr) || "",
       description: (user && user.description) || "",
       status: (user && user.status) || "",
     },
@@ -197,13 +197,13 @@ const ViewBroadcasterModal = (props) => {
                     value={validation.values.contactperson || ""}
                     invalid={
                       validation.touched.contactperson &&
-                      validation.errors.contactperson
+                        validation.errors.contactperson
                         ? true
                         : false
                     }
                   />
                   {validation.touched.contactperson &&
-                  validation.errors.contactperson ? (
+                    validation.errors.contactperson ? (
                     <FormFeedback type="invalid">
                       {validation.errors.contactperson}
                     </FormFeedback>
@@ -331,7 +331,7 @@ const ViewBroadcasterModal = (props) => {
                     value={validation.values.description || ""}
                   />
                   {validation.touched.description &&
-                  validation.errors.description ? (
+                    validation.errors.description ? (
                     <FormFeedback type="invalid">
                       {validation.errors.description}
                     </FormFeedback>
