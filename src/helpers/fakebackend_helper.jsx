@@ -338,6 +338,9 @@ export const getUserBulkSettings = () => get(url.GET_USER_BULKSETTINGS);
 export const getGenreList = () => get(url.GET_GENRELIST);
 export const getGenreListStatus = () => get(url.GET_GENRELIST_STATUS);
 export const addNewGenreList = (genre) => post(url.ADD_NEW_GENRELIST, genre);
+export const updateGenreList = (genreList, id) =>
+  put(url.UPDATE_GENRELIST(id), genreList);
+
 
 export const getLanguageList = () => get(url.GET_LANGUAGELIST);
 export const getLanguageListStatus = () => get(url.GET_LANGUAGELIST_STATUS);

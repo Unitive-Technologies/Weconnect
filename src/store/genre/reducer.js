@@ -1,5 +1,6 @@
 import {
   GET_GENRELIST_SUCCESS, GET_GENRELIST_FAIL,
+  UPDATE_GENRELIST_SUCCESS, UPDATE_GENRELIST_FAIL,
   GET_GENRELIST_STATUS_SUCCESS, GET_GENRELIST_STATUS_FAIL,
   ADD_GENRELIST_SUCCESS,
   ADD_GENRELIST_FAIL,
@@ -27,6 +28,23 @@ const GenreList = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
       };
+
+    case UPDATE_GENRELIST_SUCCESS:
+      return {
+        ...state,
+        genreList: state.genreList.map((genreList) =>
+          genreList.id.toString() === action.payload.id.toString()
+            ? { genreList, ...action.payload }
+            : genreList
+        ),
+      };
+
+    case UPDATE_GENRELIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
 
     case GET_GENRELIST_STATUS_SUCCESS:
       console.log("Genre List data in reducer:", action.payload);

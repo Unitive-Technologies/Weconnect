@@ -37,6 +37,7 @@ const CustomerUserList = (props) => {
       cusUsersSettings: customerUsers.customerUsersSettings,
     })
   );
+
   const selectUsersState = (state) => state.users;
   const UsersProperties = createSelector(selectUsersState, (Users) => ({
     userStatus: Users.userStatus,

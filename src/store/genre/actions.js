@@ -8,6 +8,9 @@ import {
   ADD_NEW_GENRELIST,
   ADD_GENRELIST_SUCCESS,
   ADD_GENRELIST_FAIL,
+  UPDATE_GENRELIST,
+  UPDATE_GENRELIST_SUCCESS,
+  UPDATE_GENRELIST_FAIL,
 } from "./actionTypes";
 
 export const getGenreList = () => ({
@@ -24,6 +27,21 @@ export const getGenreListSuccess = (genrelist) => {
 
 export const getGenreListFail = (error) => ({
   type: GET_GENRELIST_FAIL,
+  payload: error,
+});
+
+export const updateGenreList = (genrelist) => ({
+  type: UPDATE_GENRELIST,
+  payload: genrelist,
+});
+
+export const updateGenreListSuccess = (genrelist) => ({
+  type: UPDATE_GENRELIST_SUCCESS,
+  payload: genrelist,
+});
+
+export const updateGenreListFail = (error) => ({
+  type: UPDATE_GENRELIST_FAIL,
   payload: error,
 });
 

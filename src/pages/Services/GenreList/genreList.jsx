@@ -252,9 +252,11 @@ const GenreList = (props) => {
 
   return (
     <React.Fragment>
-      <ViewGenreList isOpen={showViewGenreList}
-        toggle={handleViewGenreList}
-        genre={viewGenreList} />
+      <ViewGenreList
+        isOpen={showViewGenreList}
+        handleViewGenreList={handleViewGenreList}
+        genre={viewGenreList}
+        genrelist={genrelist} />
       <AddNewGenreList isOpen={showAddNewGenreList} handleAddGenreList={handleAddGenreList} genreListStatus={genrelistStatus} />
       <UploadGenreList isOpen={showUploadGenreList} toggle={toggle1} />
 
@@ -280,6 +282,9 @@ const GenreList = (props) => {
                       tableActions={getTableActions()}
                       handleAddNewGenreList={() => setShowAddNewGenreList(true)}
                       handleUploadGenreList={() => setShowUploadGenreList(true)}
+                      handleRowClick={(row) => {
+                        handleViewGenreList(row);
+                      }}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

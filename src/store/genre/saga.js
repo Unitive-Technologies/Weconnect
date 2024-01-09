@@ -1,10 +1,12 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_GENRELIST, GET_GENRELIST_STATUS, ADD_NEW_GENRELIST } from "./actionTypes";
+import { GET_GENRELIST, UPDATE_GENRELIST, GET_GENRELIST_STATUS, ADD_NEW_GENRELIST } from "./actionTypes";
 
 import {
   getGenreListSuccess,
   getGenreListFail,
+  updateGenreListSuccess,
+  updateGenreListFail,
   getGenreListStatusSuccess,
   getGenreListStatusFail,
   addGenreListSuccess,
@@ -14,6 +16,7 @@ import {
 //Include Both Helper File with needed methods
 import {
   getGenreList,
+  updateGenreList,
   getGenreListStatus,
   addNewGenreList,
 } from "../../helpers/fakebackend_helper";
@@ -50,6 +53,21 @@ function* fetchGenreList() {
   }
 }
 
+function* onUpdateGenreList({ payload: genreList }) {
+  console.log("Genre List in onUpdate:" + JSON.stringify(genreList));
+  try {
+    const response = yield call(
+      updateGenreList,
+      genreList,
+      genreList.id
+    );
+    yield put(updateGenreListSuccess(response));
+    console.log("update response:" + JSON.stringify(response));
+  } catch (error) {
+    yield put(updateGenreListFail(error));
+  }
+}
+
 function* fetchGenreListStatus() {
   try {
     const response = yield call(getGenreListStatus);
@@ -76,6 +94,7 @@ function* genreListSaga() {
   yield takeEvery(GET_GENRELIST, fetchGenreList);
   yield takeEvery(GET_GENRELIST_STATUS, fetchGenreListStatus);
   yield takeEvery(ADD_NEW_GENRELIST, onAddNewGenreList);
+  yield takeEvery(UPDATE_GENRELIST, onUpdateGenreList);
 }
 
 export default genreListSaga;

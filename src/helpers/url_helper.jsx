@@ -132,6 +132,7 @@ export const GET_GENRELIST =
   "/genre?expand=created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
 export const GET_GENRELIST_STATUS = "/list/status?fields=id,name&vr=web1.0";
 export const ADD_NEW_GENRELIST = "/genre?vr=web1.0";
+export const UPDATE_GENRELIST = (id) => `/genre/${id}?vr=web1.0`;
 
 export const GET_LANGUAGELIST =
   "/language?expand=created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
