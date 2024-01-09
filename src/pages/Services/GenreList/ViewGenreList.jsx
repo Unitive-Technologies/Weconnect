@@ -23,7 +23,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateGenreList as onUpdateGenreList } from "/src/store/genre/actions";
 
 const ViewGenreList = (props) => {
-    const { isOpen, handleViewGenreList, genre, genrelist } = props;
+    const { isOpen, handleViewGenreList, genre, genrelistStatus } = props;
     console.log("user in view Genre List modal:" + JSON.stringify(genre));
     const dispatch = useDispatch();
     const [showEditGenreList, setShowEditGenreList] = useState(false);
@@ -54,7 +54,7 @@ const ViewGenreList = (props) => {
         onSubmit: (values) => {
             const updateGenreList = {
                 id: genre.id,
-                status: values.status,
+                status: parseInt(values.status),
                 title: values.title,
                 description: values.description,
             };
@@ -146,7 +146,7 @@ const ViewGenreList = (props) => {
                                     value={selectedStatus}
                                     disabled={!showEditGenreList}
                                 >
-                                    {genrelist.map((status) => (
+                                    {genrelistStatus.map((status) => (
                                         <option key={status.id} value={status.id}>
                                             {status.name}
                                         </option>

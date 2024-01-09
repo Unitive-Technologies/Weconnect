@@ -256,7 +256,7 @@ const GenreList = (props) => {
         isOpen={showViewGenreList}
         handleViewGenreList={handleViewGenreList}
         genre={viewGenreList}
-        genrelist={genrelist} />
+        genrelistStatus={genrelistStatus} />
       <AddNewGenreList isOpen={showAddNewGenreList} handleAddGenreList={handleAddGenreList} genreListStatus={genrelistStatus} />
       <UploadGenreList isOpen={showUploadGenreList} toggle={toggle1} />
 
