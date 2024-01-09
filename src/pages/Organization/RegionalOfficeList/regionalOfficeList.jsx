@@ -44,14 +44,13 @@ const RegionalOfficeList = (props) => {
   const { regOffices, loading, perPage, totalCount, currentPage, pageCount } =
     useSelector(RegionalOfficeProperties);
 
-  // useEffect(() => {
-  //   return () => {
-  //     dispatch(onGetRegionalOffice(currentPage, perPage));
-  //   }
-  // }, [])
+  useEffect(() => {
+    console.log("DataList updated:", JSON.stringify(dataList));
+  }, [dataList]);
 
   const [isLoading, setLoading] = useState(loading);
   const [currPage, setCurrPage] = useState(currentPage);
+  const [dataList, setDataList] = useState(regOffices);
 
   useEffect(() => {
     console.log("In UseEffect.. currentPage", currentPage);
@@ -59,13 +58,16 @@ const RegionalOfficeList = (props) => {
 
     if (regOffices && !regOffices.length) {
       dispatch(onGetRegionalOffice(currPage, perPage));
+
       setIsEdit(false);
     }
+    setDataList(regOffices);
   }, [dispatch, regOffices]);
 
   useEffect(() => {
     setLoading(true);
     dispatch(onGetRegionalOffice(currPage, perPage));
+    setDataList(regOffices);
   }, [dispatch, currPage]);
 
   const [showRegionalOffice, setShowRegionalOffice] = useState(false);
@@ -337,11 +339,15 @@ const RegionalOfficeList = (props) => {
                 <Card>
                   <CardBody>
                     {console.log("currpage:" + currPage, currentPage)}
+                    {console.log(
+                      "DDDDDDDDDDDDDDDDDDDDDDDDdataList:" +
+                        JSON.stringify(dataList)
+                    )}
                     <NewTableContainer
                       isPagination={true}
                       isLoading={isLoading}
                       columns={columns}
-                      data={regOffices}
+                      data={dataList}
                       isGlobalFilter={true}
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}

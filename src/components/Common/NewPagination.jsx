@@ -1,9 +1,16 @@
-
 import React, { useState, useEffect } from "react";
 import { Row } from "reactstrap";
 import { Link } from "react-router-dom";
 
-const NewPagination = ({ pageChangeHandler, currentPage, totalRows, rowsPerPage, pagination, paginationDiv, showPageLength = true }) => {
+const NewPagination = ({
+  pageChangeHandler,
+  currentPage,
+  totalRows,
+  rowsPerPage,
+  pagination,
+  paginationDiv,
+  showPageLength = true,
+}) => {
   // Calculating max number of pages
   const noOfPages = Math.ceil(totalRows / rowsPerPage);
 
@@ -45,42 +52,52 @@ const NewPagination = ({ pageChangeHandler, currentPage, totalRows, rowsPerPage,
 
   return (
     <Row className="justify-content-between align-items-center">
-       { noOfPages > 1 && (<>
-        {showPageLength && (
+      {noOfPages > 1 && (
+        <>
+          {showPageLength && (
             <>
-                <div className="col-sm">
+              <div className="col-sm">
                 <div className="text-muted">
-                    Showing <span className="fw-semibold">{rowsPerPage}</span> of{" "}
-                    <span className="fw-semibold">{totalRows}</span> entries
+                  Showing <span className="fw-semibold">{rowsPerPage}</span> of{" "}
+                  <span className="fw-semibold">{totalRows}</span> entries
                 </div>
-                </div>
+              </div>
             </>
-        )
-        }
+          )}
 
-        <div className={paginationDiv}>
+          <div className={paginationDiv}>
             <ul className={pagination}>
-               <li className={`page-item ${!canGoBack ? "disabled" : ""}`}>
-                    <Link to="#" className="page-link" onClick={onPrevPage}>
-                        <i className="mdi mdi-chevron-left"></i>
-                    </Link>
-               </li>
-               {pagesArr.map((num, index) => (
-                <li key={index} className={`page-item ${index+1 === currentPage ? "active" : ""}`}>
-                    <Link to="#" className="page-link" onClick={() => onPageSelect(index + 1)}>
-                        {index + 1}
-                    </Link>
+              <li className={`page-item ${!canGoBack ? "disabled" : ""}`}>
+                <Link to="#" className="page-link" onClick={onPrevPage}>
+                  <i className="mdi mdi-chevron-left"></i>
+                </Link>
+              </li>
+              {pagesArr.map((num, index) => (
+                <li
+                  key={index}
+                  className={`page-item ${
+                    index + 1 === currentPage ? "active" : ""
+                  }`}
+                >
+                  <Link
+                    to="#"
+                    className="page-link"
+                    onClick={() => onPageSelect(index + 1)}
+                  >
+                    {index + 1}
+                  </Link>
                 </li>
-                ))}
-                <li className={`page-item ${!canGoNext ? "disabled" : ""}`}>
-                    <Link to="#" className="page-link" onClick={onNextPage}>
-                       <i className="mdi mdi-chevron-right"></i>
-                    </Link>
-                </li>
+              ))}
+              <li className={`page-item ${!canGoNext ? "disabled" : ""}`}>
+                <Link to="#" className="page-link" onClick={onNextPage}>
+                  <i className="mdi mdi-chevron-right"></i>
+                </Link>
+              </li>
             </ul>
-        </div></>
+          </div>
+        </>
       )}
     </Row>
   );
-               }
+};
 export default NewPagination;
