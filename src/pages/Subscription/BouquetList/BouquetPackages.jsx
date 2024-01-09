@@ -131,13 +131,13 @@ const AddbouquetPackages = (props) => {
       toggle={toggle}
       size="xl"
     >
-      <ModalHeader>Add Alacarte Channels</ModalHeader>
+      <ModalHeader>Add Bouquet packages</ModalHeader>
       <Card toggle={toggle}>
         <CardBody>
           <TableContainer
             isPagination={true}
             columns={columns}
-            data={alacartechannels}
+            data={bouquetpackages}
             isGlobalFilter={true}
             isShowingPageLength={true}
             tableClass="table align-middle table-nowrap table-hover"
