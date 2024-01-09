@@ -81,10 +81,10 @@ const CustomerUserList = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-                // onClick={() => {
-                //   const userData = cellProps.row.original;
-                //   handleViewCustomerUser(userData);
-                // }}
+              // onClick={() => {
+              //   const userData = cellProps.row.original;
+              //   handleViewCustomerUser(userData);
+              // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -135,8 +135,8 @@ const CustomerUserList = (props) => {
                 {cellProps.row.original.status === 1
                   ? "Active"
                   : cellProps.row.original.status === 0
-                  ? "In-Active"
-                  : "Blocked"}
+                    ? "In-Active"
+                    : "Blocked"}
               </Link>
             </h5>
           );
