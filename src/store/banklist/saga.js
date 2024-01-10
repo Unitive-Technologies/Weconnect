@@ -1,10 +1,12 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_BANK, GET_BANK_STATUS, ADD_NEW_BANK } from "./actionTypes";
+import { GET_BANK, UPDATE_BANK, GET_BANK_STATUS, ADD_NEW_BANK } from "./actionTypes";
 
 import {
   getBankSuccess,
   getBankFail,
+  updateBankSuccess,
+  updateBankFail,
   getBankStatusFail,
   getBankStatusSuccess,
   addBankSuccess,
@@ -14,12 +16,12 @@ import {
 //Include Both Helper File with needed methods
 import {
   getBank,
+  updateBank,
   getBankStatus,
   addNewBank,
 } from "../../helpers/fakebackend_helper";
 
 const convertBankListObject = (bankList) => {
-  // Notification Template has more data than what we need, we need to convert each of the Notification Template user object in the list with needed colums of the table
   return bankList.map((bank) => {
     return {
       ...bank,
@@ -47,6 +49,21 @@ function* fetchBank() {
   }
 }
 
+function* onUpdateBank({ payload: bank }) {
+  console.log("Bank in onUpdate:" + JSON.stringify(bank));
+  try {
+    const response = yield call(
+      updateBank,
+      bank.id,
+      bank
+    );
+    yield put(updateBankSuccess(response));
+    console.log("update response:" + JSON.stringify(response));
+  } catch (error) {
+    yield put(updateBankFail(error));
+  }
+}
+
 function* fetchBankStatus() {
   try {
     const response = yield call(getBankStatus);
@@ -71,6 +88,7 @@ function* onAddNewBank({ payload: bank }) {
 
 function* bankSaga() {
   yield takeEvery(GET_BANK, fetchBank);
+  yield takeEvery(UPDATE_BANK, onUpdateBank);
   yield takeEvery(ADD_NEW_BANK, onAddNewBank);
   yield takeEvery(GET_BANK_STATUS, fetchBankStatus);
 }

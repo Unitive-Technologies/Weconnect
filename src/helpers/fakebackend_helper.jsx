@@ -492,6 +492,9 @@ export const updateReason = (id, reasons) =>
 export const getBank = () => get(url.GET_BANK);
 export const getBankStatus = () => get(url.GET_BANK_STATUS);
 export const addNewBank = (banks) => post(url.ADD_NEW_BANK, banks);
+export const updateBank = (id, banks) =>
+  put(url.UPDATE_BANK(id), banks);
+
 
 export const getPromoVoucher = () => get(url.GET_PROMOVOUCHER);
 export const getPromoVoucherLCO = () => get(url.GET_PROMOVOUCHER_LCO);

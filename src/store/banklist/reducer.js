@@ -1,6 +1,8 @@
 import {
   GET_BANK_SUCCESS,
   GET_BANK_FAIL,
+  UPDATE_BANK_SUCCESS,
+  UPDATE_BANK_FAIL,
   ADD_BANK_SUCCESS,
   ADD_BANK_FAIL,
   GET_BANK_STATUS_FAIL,
@@ -25,6 +27,22 @@ const Bank = (state = INIT_STATE, action) => {
       };
 
     case GET_BANK_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case UPDATE_BANK_SUCCESS:
+      return {
+        ...state,
+        bank: state.bank.map((bank) =>
+          bank.id.toString() === action.payload.id.toString()
+            ? { bank, ...action.payload }
+            : bank
+        ),
+      };
+
+    case UPDATE_BANK_FAIL:
       return {
         ...state,
         error: action.payload,

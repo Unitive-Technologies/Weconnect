@@ -6,6 +6,7 @@ import {
   ADD_NEW_BANK,
   ADD_BANK_SUCCESS,
   ADD_BANK_FAIL,
+  UPDATE_BANK, UPDATE_BANK_FAIL, UPDATE_BANK_SUCCESS,
 } from "./actionTypes";
 
 export const getBank = () => ({
@@ -22,6 +23,21 @@ export const getBankSuccess = (bank) => {
 
 export const getBankFail = (error) => ({
   type: GET_BANK_FAIL,
+  payload: error,
+});
+
+export const updateBank = (bank) => ({
+  type: UPDATE_BANK,
+  payload: bank,
+});
+
+export const updateBankSuccess = (bank) => ({
+  type: UPDATE_BANK_SUCCESS,
+  payload: bank,
+});
+
+export const updateBankFail = (error) => ({
+  type: UPDATE_BANK_FAIL,
   payload: error,
 });
 
