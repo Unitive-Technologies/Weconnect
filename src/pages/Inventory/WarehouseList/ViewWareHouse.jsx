@@ -16,10 +16,13 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { updateUser as onUpdateUser } from "/src/store/users/actions";
+import { updateWarehouseList as onUpdateWarehouseList } from "/src/store/warehouse/actions";
 
 const ViewWareHouse = (props) => {
-  const { isOpen, handleViewWarehouse, warehouse } = props;
+
+  const { isOpen, handleViewWarehouse, warehouse, warehouseOperator, warehouseStatus } = props;
+  console.log("View Ware House in view modal:" + JSON.stringify(warehouse));
+
   const dispatch = useDispatch();
   const [showEditWarehouse, setShowEditWarehouse] = useState(false);
 
@@ -28,10 +31,11 @@ const ViewWareHouse = (props) => {
     enableReinitialize: true,
 
     initialValues: {
+      id: (warehouse && warehouse.id) || "",
       name: (warehouse && warehouse.name) || "",
       contact_person: (warehouse && warehouse.contact_person) || "",
       mobile_no: (warehouse && warehouse.mobile_no) || "",
-      operator: (warehouse && warehouse.operator) || "",
+      operator_id: (warehouse && warehouse.operator) || "",
       description: (warehouse && warehouse.description) || "",
       address: (warehouse && warehouse.address) || "",
       status: (warehouse && warehouse.status) || "",
@@ -48,21 +52,20 @@ const ViewWareHouse = (props) => {
       status: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
-      const updateWareHouse = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
+      const updateWareHouseList = {
+        id: values["id"],
         name: values["name"],
         contact_person: values["contact_person"],
         mobile_no: values["mobile_no"],
         status: values["status"],
-        operator: values["operator"],
+        operator_id: values["operator_id"],
         description: values["description"],
         address: values["address"],
         created_at: new Date(),
         created_by: values["created_by"],
       };
-      console.log("New Warehouse:" + JSON.stringify(updateWareHouse));
-      // save new user
-      dispatch(onAddWareHouseList(updateWareHouse));
+      console.log("New Warehouse:" + JSON.stringify(updateWareHouseList));
+      dispatch(onUpdateWarehouseList(updateWareHouseList));
       validation.resetForm();
       handleViewWarehouse();
     },
@@ -70,6 +73,7 @@ const ViewWareHouse = (props) => {
       validation.setValues(validation.initialValues);
     },
   });
+
   const handleCancel = () => {
     setShowEditWarehouse(false);
     handleViewWarehouse();
@@ -154,14 +158,14 @@ const ViewWareHouse = (props) => {
                   value={validation.values.contact_person || ""}
                   invalid={
                     validation.touched.contact_person &&
-                    validation.errors.contact_person
+                      validation.errors.contact_person
                       ? true
                       : false
                   }
                   disabled={!showEditWarehouse}
                 />
                 {validation.touched.contact_person &&
-                validation.errors.contact_person ? (
+                  validation.errors.contact_person ? (
                   <FormFeedback type="invalid">
                     {validation.errors.contact_person}
                   </FormFeedback>
@@ -209,9 +213,12 @@ const ViewWareHouse = (props) => {
                   value={validation.values.status || ""}
                   disabled={!showEditWarehouse}
                 >
-                  <option value="">Select status</option>
-                  <option value="Active">Active</option>
-                  <option value="In_Active">In-Active</option>
+                  <option value=""></option>
+                  {warehouseStatus.map((status) => (
+                    <option key={status.id} value={status.id}>
+                      {status.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
@@ -228,22 +235,24 @@ const ViewWareHouse = (props) => {
                   Operator<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="operator"
+                  name="operator_id"
                   type="select"
-                  placeholder="Select brand type"
+                  placeholder="Select operator"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.operator || ""}
+                  value={validation.values.operator_id || ""}
                   disabled={!showEditWarehouse}
                 >
-                  <option value="">Select brand type</option>
-                  <option value="STB">STB</option>
-                  <option value="Smartcard">Smartcard</option>
+                  {warehouseOperator.map((operator_id) => (
+                    <option key={operator_id.id} value={operator_id.id}>
+                      {operator_id.name}
+                    </option>
+                  ))}
                 </Input>
-                {validation.touched.operator && validation.errors.operator ? (
+                {validation.touched.operator_id && validation.errors.operator_id ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.operator}
+                    {validation.errors.operator_id}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -262,14 +271,14 @@ const ViewWareHouse = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                   disabled={!showEditWarehouse}
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>

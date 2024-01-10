@@ -21,6 +21,7 @@ import { ToastContainer } from "react-toastify";
 import ViewCustomerUserModal from "./ViewCustomerListModal";
 import BulkInactiveCustomerList from "./BulkInactiveCustomerList";
 import { getUserStatus as onGetUserStatus } from "/src/store/users/actions";
+
 const CustomerUserList = (props) => {
   //meta title
   document.title = "Customer Users | VDigital";

@@ -469,6 +469,9 @@ export const getWarehouseListOperator = () =>
   get(url.GET_WAREHOUSELIST_OPERATOR);
 export const addWareHouseList = (warehouselist) =>
   post(url.ADD_WAREHOUSELIST, warehouselist);
+export const updateWarehouseList = (id, warehouselist) =>
+  put(url.UPDATE_WAREHOUSELIST(id), warehouselist);
+
 
 export const getInventoryStateList = () => get(url.GET_INVENTORYSTATELIST);
 export const addInventoryStateList = (inventorystate) =>

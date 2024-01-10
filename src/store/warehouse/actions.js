@@ -11,6 +11,10 @@ import {
   ADD_WAREHOUSELIST,
   ADD_WAREHOUSELIST_SUCCESS,
   ADD_WAREHOUSELIST_FAIL,
+  UPDATE_WAREHOUSELIST,
+  UPDATE_WAREHOUSELIST_FAIL,
+  UPDATE_WAREHOUSELIST_SUCCESS,
+
 } from "./actionTypes";
 
 export const getWarehouseList = () => ({
@@ -27,6 +31,21 @@ export const getWarehouseListSuccess = (warehouselist) => {
 
 export const getWarehouseListFail = (error) => ({
   type: GET_WAREHOUSELIST_FAIL,
+  payload: error,
+});
+
+export const updateWarehouseList = (warehouselist) => ({
+  type: UPDATE_WAREHOUSELIST,
+  payload: warehouselist,
+});
+
+export const updateWarehouseListSuccess = (warehouselist) => ({
+  type: UPDATE_WAREHOUSELIST_SUCCESS,
+  payload: warehouselist,
+});
+
+export const updateWarehouseListFail = (error) => ({
+  type: UPDATE_WAREHOUSELIST_FAIL,
   payload: error,
 });
 

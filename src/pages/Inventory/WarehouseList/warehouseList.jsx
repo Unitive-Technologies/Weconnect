@@ -33,6 +33,7 @@ import { ToastContainer } from "react-toastify";
 import ViewWareHouse from "./ViewWareHouse";
 import AddNewWareHouse from "./AddNewWareHouse";
 import UploadWareHouse from "./UploadWareHouse";
+// import { getWarehouseList as onGetWarehouseList } from "/src/store/warehouse/actions";
 
 const WarehouseList = (props) => {
   //meta title
@@ -59,10 +60,10 @@ const WarehouseList = (props) => {
   const [showViewWareHouse, setShowViewWareHouse] = useState(false);
   const [viewWareHouseData, setViewWareHouseData] = useState({});
 
-  const handleViewWarehouse = (userData) => {
-    console.log("User Data: ", userData);
+  const handleViewWarehouse = (warehouseData) => {
+    console.log("User Data: ", warehouseData);
     setShowViewWareHouse(!showViewWareHouse);
-    setViewWareHouseData(userData);
+    setViewWareHouseData(warehouseData);
   };
 
   const handleAddWarehouse = () => {
@@ -103,10 +104,10 @@ const WarehouseList = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleViewWarehouse(userData);
-                }}
+              // onClick={() => {
+              //   const userData = cellProps.row.original;
+              //   handleViewWarehouse(userData);
+              // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -244,6 +245,8 @@ const WarehouseList = (props) => {
         isOpen={showViewWareHouse}
         handleViewWarehouse={handleViewWarehouse}
         warehouse={viewWareHouseData}
+        warehouseOperator={warehouseOperator}
+        warehouseStatus={warehouseStatus}
       />
       <AddNewWareHouse
         isOpen={showAddWareHouse}
@@ -274,6 +277,9 @@ const WarehouseList = (props) => {
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       customPageSize={50}
+                      handleRowClick={(warehouseData) => {
+                        handleViewWarehouse(warehouseData);
+                      }}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"

@@ -1,10 +1,12 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_WAREHOUSELIST, GET_WAREHOUSELIST_STATUS, GET_WAREHOUSELIST_OPERATOR, ADD_WAREHOUSELIST } from "./actionTypes";
+import { GET_WAREHOUSELIST, UPDATE_WAREHOUSELIST, GET_WAREHOUSELIST_STATUS, GET_WAREHOUSELIST_OPERATOR, ADD_WAREHOUSELIST } from "./actionTypes";
 
 import {
   getWarehouseListSuccess,
   getWarehouseListFail,
+  updateWarehouseListSuccess,
+  updateWarehouseListFail,
   getWarehouseListStatusSuccess,
   getWarehouseListStatusFail,
   getWarehouseListOperatorSuccess,
@@ -19,6 +21,7 @@ import {
   getWarehouseListStatus,
   getWarehouseListOperator,
   addWareHouseList,
+  updateWarehouseList,
 } from "../../helpers/fakebackend_helper";
 
 const convertWarehouseListObject = (warehouselist) => {
@@ -30,6 +33,7 @@ const convertWarehouseListObject = (warehouselist) => {
       name: warehouse.name,
       code: warehouse.code,
       contact_person: warehouse.contact_person,
+
       mobile_no: warehouse.mobile_no,
       address: warehouse.address,
       description: warehouse.description,
@@ -51,6 +55,23 @@ function* fetchWarehouseList() {
     yield put(getWarehouseListSuccess(response.data));
   } catch (error) {
     yield put(getWarehouseListFail(error));
+  }
+}
+
+function* onUpdateWarehouseList({ payload: warehouselist }) {
+  console.log("WarehouseList in onUpdate:" + JSON.stringify(warehouselist));
+  console.log("Updated Id" + warehouselist.id)
+  try {
+    const response = yield call(
+      updateWarehouseList,
+      warehouselist.id,
+      warehouselist,
+
+    );
+    yield put(updateWarehouseListSuccess(response));
+    console.log("update response:" + JSON.stringify(response));
+  } catch (error) {
+    yield put(updateWarehouseListFail(error));
   }
 }
 
@@ -88,6 +109,7 @@ function* warehouseListSaga() {
   yield takeEvery(GET_WAREHOUSELIST_STATUS, fetchWarehouseListStatus);
   yield takeEvery(GET_WAREHOUSELIST_OPERATOR, fetchWarehouseListOperator);
   yield takeEvery(ADD_WAREHOUSELIST, onAddWareHouseList);
+  yield takeEvery(UPDATE_WAREHOUSELIST, onUpdateWarehouseList);
 }
 
 export default warehouseListSaga;

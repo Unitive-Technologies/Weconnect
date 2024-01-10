@@ -7,6 +7,8 @@ import {
   GET_WAREHOUSELIST_OPERATOR_FAIL,
   ADD_WAREHOUSELIST_SUCCESS,
   ADD_WAREHOUSELIST_FAIL,
+  UPDATE_WAREHOUSELIST_SUCCESS,
+  UPDATE_WAREHOUSELIST_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -28,6 +30,22 @@ const WarehouseList = (state = INIT_STATE, action) => {
       };
 
     case GET_WAREHOUSELIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case UPDATE_WAREHOUSELIST_SUCCESS:
+      return {
+        ...state,
+        warehouselist: state.warehouselist.map((warehouselist) =>
+          warehouselist.id.toString() === action.payload.id.toString()
+            ? { warehouselist, ...action.payload }
+            : warehouselist
+        ),
+      };
+
+    case UPDATE_WAREHOUSELIST_FAIL:
       return {
         ...state,
         error: action.payload,
