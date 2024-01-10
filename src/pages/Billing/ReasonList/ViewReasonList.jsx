@@ -37,14 +37,21 @@ const ViewReason = (props) => {
     validationSchema: Yup.object({
       name: Yup.string().required(""),
       status: Yup.string().required(""),
-      type_display_lbl: Yup.string().required(""),
+      // type_display_lbl: Yup.string().required(""),
+      type_display_lbl: Yup.array().required(""),
     }),
     onSubmit: (values) => {
+      const type_display_lblArray = values["type_display_lbl"] || [];
+      const type_display_lblIntegers = type_display_lblArray.map((option) =>
+        parseInt(option)
+      );
+
       const updateReason = {
         id: reason.id,
         name: values.name,
         status: values.status,
-        type_display_lbl: values.type_display_lbl,
+        type_display_lbl: type_display_lblIntegers,
+        // type_display_lbl: values.type_display_lbl,
       };
 
       // update user
@@ -162,13 +169,8 @@ const ViewReason = (props) => {
                     placeholder=""
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.type_display_lbl || ""}
-                    invalid={
-                      validation.touched.type_display_lbl &&
-                        validation.errors.type_display_lbl
-                        ? true
-                        : false
-                    }
+                    value={validation.values.type_display_lbl || []}
+                    multiple
                     disabled={!showEditReason}
                   >
                     {reasonReasonType.map((type_display_lbl) => (

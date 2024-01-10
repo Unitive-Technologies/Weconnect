@@ -47,7 +47,7 @@ const ViewTaxList = (props) => {
       valuetype_lbl: Yup.string().required("Select value-in"),
       parent_lbl: Yup.string().required(""),
       applicableon: Yup.array().required(
-        "Select at least one Applicable On option"
+        ""
       ),
       description: Yup.string().required("Enter description"),
     }),
