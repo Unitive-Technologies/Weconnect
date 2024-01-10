@@ -35,7 +35,7 @@ const ViewWareHouse = (props) => {
       name: (warehouse && warehouse.name) || "",
       contact_person: (warehouse && warehouse.contact_person) || "",
       mobile_no: (warehouse && warehouse.mobile_no) || "",
-      operator_id: (warehouse && warehouse.operator) || "",
+      operator_id: (warehouse && warehouse.operator_id) || "",
       description: (warehouse && warehouse.description) || "",
       address: (warehouse && warehouse.address) || "",
       status: (warehouse && warehouse.status) || "",
@@ -46,32 +46,30 @@ const ViewWareHouse = (props) => {
       name: Yup.string().required("Enter name"),
       contact_person: Yup.string().required("Enter contact person"),
       mobile_no: Yup.string().required("Enter contact number"),
-      operator: Yup.string().required("Select operator"),
+      operator_id: Yup.string().required("Select operator"),
       description: Yup.string().required("Enter description"),
       address: Yup.string().required("Enter address"),
       status: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
-      const updateWareHouseList = {
-        id: values["id"],
-        name: values["name"],
-        contact_person: values["contact_person"],
-        mobile_no: values["mobile_no"],
-        status: values["status"],
-        operator_id: values["operator_id"],
-        description: values["description"],
-        address: values["address"],
-        created_at: new Date(),
-        created_by: values["created_by"],
+      const updateWarehouseList = {
+        id: warehouse.id,
+        name: values.name,
+        contact_person: values.contact_person,
+        mobile_no: values.mobile_no,
+        status: values.status,
+        operator_id: values.operator_id,
+        description: values.description,
+        address: values.address,
       };
-      console.log("New Warehouse:" + JSON.stringify(updateWareHouseList));
-      dispatch(onUpdateWarehouseList(updateWareHouseList));
+      // console.log("New Warehouse:" + JSON.stringify(updateWarehouseList));
+      dispatch(onUpdateWarehouseList(updateWarehouseList));
       validation.resetForm();
       handleViewWarehouse();
     },
-    onReset: (values) => {
-      validation.setValues(validation.initialValues);
-    },
+    // onReset: (values) => {
+    //   validation.setValues(validation.initialValues);
+    // },
   });
 
   const handleCancel = () => {

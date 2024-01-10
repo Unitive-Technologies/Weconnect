@@ -208,9 +208,9 @@ export const GET_WAREHOUSELIST_STATUS = "/list/status?fields=id,name&vr=web1.0";
 export const GET_WAREHOUSELIST_OPERATOR =
   "/operator/list?fields=id,name,code&expand=branch_lbl,distributor_lbl,city_lbl,state_lbl&per-page=100&vr=web1.0";
 
-// export const GET_WAREHOUSESTATUS = "/list/status?fields=id,name&vr=web1.0";
-// export const GET_WAREHOUSEOPERATOR =
-//   "/operator/list?fields=id,name,code&expand=branch_lbl,distributor_lbl,city_lbl,state_lbl&per-page=100&vr=web1.0";
+export const GET_WAREHOUSESTATUS = "/list/status?fields=id,name&vr=web1.0";
+export const GET_WAREHOUSEOPERATOR =
+  "/operator/list?fields=id,name,code&expand=branch_lbl,distributor_lbl,city_lbl,state_lbl&per-page=100&vr=web1.0";
 export const ADD_WAREHOUSELIST = "/warehouse?vr=web1.0";
 export const UPDATE_WAREHOUSELIST = (id) => `/warehouse/${id}?vr=web1.0`;
 

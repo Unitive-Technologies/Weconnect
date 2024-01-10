@@ -60,10 +60,9 @@ const WarehouseList = (props) => {
   const [showViewWareHouse, setShowViewWareHouse] = useState(false);
   const [viewWareHouseData, setViewWareHouseData] = useState({});
 
-  const handleViewWarehouse = (warehouseData) => {
-    console.log("User Data: ", warehouseData);
+  const handleViewWarehouse = (row) => {
     setShowViewWareHouse(!showViewWareHouse);
-    setViewWareHouseData(warehouseData);
+    setViewWareHouseData(row);
   };
 
   const handleAddWarehouse = () => {

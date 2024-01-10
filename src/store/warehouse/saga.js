@@ -33,7 +33,7 @@ const convertWarehouseListObject = (warehouselist) => {
       name: warehouse.name,
       code: warehouse.code,
       contact_person: warehouse.contact_person,
-
+      operator_id: warehouse.operator_id,
       mobile_no: warehouse.mobile_no,
       address: warehouse.address,
       description: warehouse.description,
