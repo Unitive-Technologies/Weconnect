@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
+import axios from "axios";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
 import {
@@ -13,6 +14,33 @@ import { Link } from "react-router-dom";
 
 const AddbouquetPackages = (props) => {
   const { bouquetpackages, isOpen, toggle } = props;
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
+  const [tableList, setTableList] = useState([]);
+
+  useEffect(() => {
+    const getFilteredData = async () => {
+      try {
+        const token = "Bearer " + localStorage.getItem("temptoken");
+
+        const response = await axios.get(
+          `${API_URL}/package/list?fields=id,name,code,broadcasterRate&expand=package_type_lbl,isFta_lbl,channelIds,brdBouqueIds,ftaChannelCount,payChannelCount,ncfChannelCount,totalChannelCount&sort=name&vr=web1.0`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        console.log(
+          "Bouquet packages in useeffect: " + JSON.stringify(response.data.data)
+        );
+        setTableList(response.data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    getFilteredData();
+  }, [tableList, isOpen]);
 
   const columns = useMemo(
     () => [
@@ -51,7 +79,21 @@ const AddbouquetPackages = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.name}</p>
+            <>
+              <h5
+                style={{
+                  maxWidth: 200,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+                className="font-size-14 mb-1"
+              >
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.name}
+                </Link>
+              </h5>
+            </>
           );
         },
       },
@@ -61,7 +103,13 @@ const AddbouquetPackages = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.code}</p>
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.code}
+                </Link>
+              </h5>
+            </>
           );
         },
       },
@@ -71,9 +119,13 @@ const AddbouquetPackages = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.package_type_lbl}
-            </p>
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.package_type_lbl}
+                </Link>
+              </h5>
+            </>
           );
         },
       },
@@ -83,9 +135,13 @@ const AddbouquetPackages = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.isFta_lbl}
-            </p>
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.isFta_lbl}
+                </Link>
+              </h5>
+            </>
           );
         },
       },
@@ -95,9 +151,13 @@ const AddbouquetPackages = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.ftaChannelCount}
-            </p>
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.ftaChannelCount}
+                </Link>
+              </h5>
+            </>
           );
         },
       },
@@ -119,9 +179,13 @@ const AddbouquetPackages = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.ncfChannelCount}
-            </p>
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.ncfChannelCount}
+                </Link>
+              </h5>
+            </>
           );
         },
       },
@@ -131,9 +195,13 @@ const AddbouquetPackages = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.totalChannelCount}
-            </p>
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.totalChannelCount}
+                </Link>
+              </h5>
+            </>
           );
         },
       },
@@ -143,9 +211,13 @@ const AddbouquetPackages = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.broadcasterRate}
-            </p>
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.broadcasterRate}
+                </Link>
+              </h5>
+            </>
           );
         },
       },
@@ -171,7 +243,7 @@ const AddbouquetPackages = (props) => {
             <TableContainer
               isPagination={true}
               columns={columns}
-              data={bouquetpackages}
+              data={tableList}
               isGlobalFilter={true}
               isShowingPageLength={true}
               tableClass="table align-middle table-nowrap table-hover"
