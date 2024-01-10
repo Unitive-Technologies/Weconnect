@@ -9,6 +9,9 @@ import {
   Col,
   Container,
   Row,
+  Toast,
+  ToastBody,
+  ToastHeader,
   UncontrolledTooltip,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -59,7 +62,16 @@ const NCFList = (props) => {
   const [showViewNcf, setShowViewNcf] = useState(false);
   const [viewNcfData, setViewNcfData] = useState({});
   const [showBulkRemoval, setShowBulkRemoval] = useState(false);
-  const [selectedRowData, setSelectedRowData] = useState([]);
+  const [isChecked, setIsChecked] = useState(true);
+  const [selectedRow, setSelectedRow] = useState({});
+  const [showWarning, setShowWarning] = useState(false);
+
+  const handleCheckboxClick = (row) => {
+    console.log("Clicked row: ", row);
+    setShowViewNcf(false);
+    setIsChecked(!isChecked);
+    setSelectedRow(row);
+  };
 
   const toggleViewNcf = (userData) => {
     console.log("User Data: ", userData);
@@ -79,19 +91,31 @@ const NCFList = (props) => {
     setShowBulkRemoval(!showBulkRemoval);
   };
 
+  const handleWarning = () => {
+    setShowWarning(!showWarning);
+  };
+
   const columns = useMemo(
     () => [
       {
         Header: "*",
         disableFilters: true,
         filterable: true,
-        Cell: () => {
-          return (
-            <>
-              <i className="bx bx-bx bx-check"></i>
-            </>
-          );
-        },
+        // Cell: () => {
+        //   return (
+        //     <>
+        //       <i className="bx bx-bx bx-check"></i>
+        //     </>
+        //   );
+        // },
+        Cell: (cellProps) => (
+          <input
+            type="checkbox"
+            // disabled
+            // checked
+            onChange={() => handleCheckboxClick(cellProps.row.original)}
+          />
+        ),
       },
       {
         Header: "#",
@@ -342,7 +366,7 @@ const NCFList = (props) => {
       },
       {
         name: "Bulk Assign to Operator",
-        action: setShowBulkAssign,
+        action: selectedRow.length === 0 ? setShowWarning : setShowBulkAssign,
         type: "dropdown",
         dropdownName: "Action",
       },
@@ -359,11 +383,21 @@ const NCFList = (props) => {
     <React.Fragment>
       <ViewNcf isOpen={showViewNcf} toggle={toggleViewNcf} ncf={viewNcfData} />
       <AddNewNcf isOpen={showAddNcf} toggle={toggleAddNcf} status={status} />
-      <BulkAssigntoOperator isOpen={showBulkAssign} toggle={toggleBulkAssign} />
+      <BulkAssigntoOperator
+        isOpen={showBulkAssign}
+        toggle={toggleBulkAssign}
+        selectedRow={selectedRow}
+      />
       <BulkRemovalFromOperator
         isOpen={showBulkRemoval}
         toggle={toggleBulkRemoval}
       />
+      <Toast isOpen={showWarning}>
+        <ToastHeader toggle={handleWarning}>
+          <i className="mdi mdi-alert-outline me-2"></i> Warning
+        </ToastHeader>
+        <ToastBody>Cannot select InActive Notification Template</ToastBody>
+      </Toast>
       <div className="page-content">
         <Container fluid>
           <Breadcrumbs title="NCF" breadcrumbItem="NCF" />

@@ -18,7 +18,7 @@ import AddMultipleNcf from "./AddMultipleNcf";
 import Operators from "./Operators";
 
 const BulkAssigntoOperator = (props) => {
-  const { isOpen, toggle, ncf } = props;
+  const { isOpen, toggle, ncf, selectedRow } = props;
   const dispatch = useDispatch();
   const [showEditNcf, setShowEditNcf] = useState(false);
 
@@ -134,7 +134,7 @@ const BulkAssigntoOperator = (props) => {
                 margin: "20px 0px",
               }}
             >
-              <AddMultipleNcf />
+              <AddMultipleNcf props={selectedRow} />
             </Row>
           </Row>
           <Row>

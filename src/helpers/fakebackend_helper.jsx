@@ -411,8 +411,8 @@ export const addUserHierarchy = (userHierarchy) =>
 
 export const getNcf = () => get(url.GET_NCF);
 export const addNcf = (ncf) => post(url.ADD_NCF, ncf);
-export const getOperatorForBulkAssign = () =>
-  get(url.GET_OPERATOR_FORBULKASSIGN);
+export const getOperatorForBulkAssign = (id) =>
+  get(url.GET_OPERATOR_FORBULKASSIGN(id));
 export const addBulkAssignNcf = (assignncf) =>
   post(url.ADD_BULKASSIGN_NCF, assignncf);
 
@@ -475,8 +475,7 @@ export const addInventoryStateList = (inventorystate) =>
 
 export const getTax = () => get(url.GET_TAX);
 export const addNewTaxList = (taxes) => post(url.ADD_NEW_TAXLIST, taxes);
-export const updateTax = (id, taxes) =>
-  put(url.UPDATE_TAX(id), taxes);
+export const updateTax = (id, taxes) => put(url.UPDATE_TAX(id), taxes);
 
 export const getTaxStatus = () => get(url.GET_TAX_STATUS);
 export const getTaxValues = () => get(url.GET_TAX_VALUES);

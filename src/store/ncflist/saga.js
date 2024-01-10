@@ -82,9 +82,9 @@ function* onAddNcf({ payload: ncf }) {
   }
 }
 
-function* fetchOperatorForBulkAssign() {
+function* fetchOperatorForBulkAssign({ payload: id }) {
   try {
-    const response = yield call(getOperatorForBulkAssign);
+    const response = yield call(getOperatorForBulkAssign, id);
     const operatorforassign = convertOperatorForAssignListObject(response.data);
     yield put(getOperatorForBulkAssignSuccess(operatorforassign));
   } catch (error) {
