@@ -34,12 +34,12 @@ const PreviewTable = (props) => {
       },
       {
         Header: "Period",
-        accessor: "year",
+        accessor: "name",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <>
-              <p className="text-muted mb-0">{cellProps.row.original.year}</p>
+              <p className="text-muted mb-0">{cellProps.row.original.name}</p>
             </>
           );
         },
