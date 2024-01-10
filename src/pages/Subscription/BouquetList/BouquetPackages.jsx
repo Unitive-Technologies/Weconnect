@@ -30,9 +30,9 @@ const AddbouquetPackages = (props) => {
             },
           }
         );
-        console.log(
-          "Bouquet packages in useeffect: " + JSON.stringify(response.data.data)
-        );
+        // console.log(
+        //   "Bouquet packages in useeffect: " + JSON.stringify(response.data.data)
+        // );
         setTableList(response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);

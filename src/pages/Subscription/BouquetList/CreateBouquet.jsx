@@ -674,7 +674,7 @@ const CreateBouquet = (props) => {
               </Col>
             </Row>
             <Row>
-              <PreviewTable />
+              <PreviewTable rechargeperiod={rechargeperiod} />
             </Row>
           </Row>
           <div

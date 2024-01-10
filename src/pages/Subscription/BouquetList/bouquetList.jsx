@@ -79,7 +79,7 @@ const BouquetList = () => {
   // console.log("bouquet tax list: ", bouquettaxlist);
   // console.log("bouquet type: ", bouquettype);
   // console.log("bouquex: ", bouquex);
-  // console.log("Recharge period: ", rechargeperiod);
+  console.log("Recharge period: ", rechargeperiod);
 
   const toggleViewBouquet = (userData) => {
     console.log("User Data: ", userData);

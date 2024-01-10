@@ -1,36 +1,27 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
 import { Card, CardBody, Input } from "reactstrap";
 import { Link } from "react-router-dom";
+import { getRechargePeriod as onGetRechargePeriod } from "/src/store/actions";
+import { useSelector, useDispatch } from "react-redux";
+import { createSelector } from "reselect";
 
 const PreviewTable = (props) => {
-  const TableData = [
-    {
-      id: 1,
-      period: "1Year",
-    },
-    {
-      id: 2,
-      period: "6Months",
-    },
-    {
-      id: 3,
-      period: "3Months",
-    },
-    {
-      id: 4,
-      period: "2Months",
-    },
-    {
-      id: 5,
-      period: "1Month",
-    },
-    {
-      id: 6,
-      period: "1day",
-    },
-  ];
+  // const { rechargeperiod } = props;
+  const dispatch = useDispatch();
+  const selectBouquetState = (state) => state.bouquet;
+  const BouquetProperties = createSelector(selectBouquetState, (bouquet) => ({
+    rechargeperiod: bouquet.rechargeperiod,
+  }));
+
+  const { rechargeperiod } = useSelector(BouquetProperties);
+  useEffect(() => {
+    if (rechargeperiod && !rechargeperiod.length) {
+      dispatch(onGetRechargePeriod());
+    }
+  }, [dispatch, rechargeperiod]);
+
   const columns = useMemo(
     () => [
       {
@@ -43,12 +34,12 @@ const PreviewTable = (props) => {
       },
       {
         Header: "Period",
-        accessor: "period",
+        accessor: "year",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <>
-              <p className="text-muted mb-0">{cellProps.row.original.period}</p>
+              <p className="text-muted mb-0">{cellProps.row.original.year}</p>
             </>
           );
         },
@@ -110,12 +101,12 @@ const PreviewTable = (props) => {
   return (
     <Card>
       <CardBody>
-        {console.log("TableData: ", TableData)}
+        {console.log("recharge period: ", rechargeperiod)}
         <TableContainer
           isPagination={true}
           columns={columns}
-          data={TableData}
-          //   isShowTableActionButtons={true}
+          data={rechargeperiod}
+          // isShowTableActionButtons={true}
           isShowingPageLength={true}
           theadClass="table-light"
           tableClass="table-bordered align-middle nowrap mt-2"
