@@ -67,10 +67,10 @@ const BrandList = (props) => {
   const [showViewBrand, setShowViewBrand] = useState(false);
   const [viewBrandData, setViewBrandData] = useState({});
 
-  const handleViewBrand = (userData) => {
-    console.log("User Data: ", userData);
+  const handleViewBrand = (brandData) => {
+    console.log("User Data: ", brandData);
     setShowViewBrand(!showViewBrand);
-    setViewBrandData(userData);
+    setViewBrandData(brandData);
   };
 
   const handleAddBrand = () => {
@@ -111,10 +111,10 @@ const BrandList = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleViewBrand(userData);
-                }}
+              // onClick={() => {
+              //   const userData = cellProps.row.original;
+              //   handleViewBrand(userData);
+              // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -247,6 +247,11 @@ const BrandList = (props) => {
         isOpen={showViewBrand}
         handleViewBrand={handleViewBrand}
         brand={viewBrandData}
+        brandBoxType={brandBoxType}
+        brandBrandType={brandBrandType}
+        brandCasType={brandCasType}
+        brandCharacters={brandCharacters}
+        brandStatus={brandStatus}
       />
       <AddNewBrandList isOpen={showAddBrand}
         handleAddBrand={handleAddBrand}
@@ -277,6 +282,9 @@ const BrandList = (props) => {
                       isGlobalFilter={true}
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
+                      handleRowClick={(brandData) => {
+                        handleViewBrand(brandData);
+                      }}
                       tableActions={getTableActions()}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"

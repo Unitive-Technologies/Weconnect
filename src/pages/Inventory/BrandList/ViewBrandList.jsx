@@ -16,18 +16,23 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { updateUser as onUpdateUser } from "/src/store/users/actions";
+import { updateBrandList as onUpdateBrandList } from "/src/store/brandlist/actions";
+import brandList from "./brandList";
 
 const ViewBrandList = (props) => {
-  const { isOpen, handleViewBrand, brand } = props;
+  const { isOpen, handleViewBrand, brand, brandBoxType, brandBrandType, brandCasType, brandCharacters, brandStatus } = props;
+  console.log("view Brnad in view modal:" + JSON.stringify(brand));
+
   const dispatch = useDispatch();
   const [showEditBrand, setShowEditBrand] = useState(false);
+
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
+      id: (brand && brand.id) || "",
       name: (brand && brand.name) || "",
       //   code: "",
       box_type_lbl: (brand && brand.box_type_lbl) || "",
@@ -51,21 +56,21 @@ const ViewBrandList = (props) => {
       status: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
-      const updateBrand = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
+      const updateBrandList = {
+        id: values["id"],
         name: values["name"],
         box_type_lbl: values["box_type_lbl"],
         brand_type_lbl: values["brand_type_lbl"],
-        status: values["status"],
+        status: parseInt(values["status"]),
         cas_lbl: values["cas_lbl"],
         length: values["length"],
-        significant_length: values["significant_length"],
+        significant_length: parseInt(values["significant_length"]),
         char_allowed_lbl: values["char_allowed_lbl"],
         created_at: new Date(),
         created_by: values["created_by"],
       };
-      console.log("Update Brand:" + JSON.stringify(updateBrand));
-      dispatch(onAddBrandList(updateBrand));
+      // console.log("Update Brand:" + JSON.stringify(updateBrandList));
+      dispatch(onUpdateBrandList(updateBrandList));
       validation.resetForm();
       handleViewBrand();
     },
@@ -159,12 +164,14 @@ const ViewBrandList = (props) => {
                   value={validation.values.brand_type_lbl || ""}
                   disabled={!showEditBrand}
                 >
-                  <option value="">Select brand type</option>
-                  <option value="STB">STB</option>
-                  <option value="Smartcard">Smartcard</option>
+                  {brandBrandType.map((brand_type_lbl) => (
+                    <option key={brand_type_lbl.id} value={brand_type_lbl.id}>
+                      {brand_type_lbl.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.brand_type_lbl &&
-                validation.errors.brand_type_lbl ? (
+                  validation.errors.brand_type_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.brand_type_lbl}
                   </FormFeedback>
@@ -186,12 +193,14 @@ const ViewBrandList = (props) => {
                   value={validation.values.box_type_lbl || ""}
                   disabled={!showEditBrand}
                 >
-                  <option value="">Select box type</option>
-                  <option value="SD">Standard Definition(SD)</option>
-                  <option value="HD">High Definition(HD)</option>
+                  {brandBoxType.map((box_type_lbl) => (
+                    <option key={box_type_lbl.id} value={box_type_lbl.id}>
+                      {box_type_lbl.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.box_type_lbl &&
-                validation.errors.box_type_lbl ? (
+                  validation.errors.box_type_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.box_type_lbl}
                   </FormFeedback>
@@ -215,8 +224,11 @@ const ViewBrandList = (props) => {
                   value={validation.values.cas_lbl || ""}
                   disabled={!showEditBrand}
                 >
-                  <option value="">Select CAS</option>
-                  <option value="NSTV">NSTV</option>
+                  {brandCasType.map((cas_lbl) => (
+                    <option key={cas_lbl.id} value={cas_lbl.id}>
+                      {cas_lbl.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.cas_lbl && validation.errors.cas_lbl ? (
                   <FormFeedback type="invalid">
@@ -265,14 +277,14 @@ const ViewBrandList = (props) => {
                   value={validation.values.significant_length || ""}
                   invalid={
                     validation.touched.significant_length &&
-                    validation.errors.significant_length
+                      validation.errors.significant_length
                       ? true
                       : false
                   }
                   disabled={!showEditBrand}
                 />
                 {validation.touched.significant_length &&
-                validation.errors.significant_length ? (
+                  validation.errors.significant_length ? (
                   <FormFeedback type="invalid">
                     {validation.errors.significant_length}
                   </FormFeedback>
@@ -296,14 +308,14 @@ const ViewBrandList = (props) => {
                   value={validation.values.char_allowed_lbl || ""}
                   disabled={!showEditBrand}
                 >
-                  <option value="">Select allowed characters</option>
-                  <option value="Numeric">Numeric</option>
-                  <option value="Alphabets">Alphabets</option>
-                  <option value="Hexadecimal">Hexadecimal</option>
-                  <option value="Alphanumeric">Alphanumeric</option>
+                  {brandCharacters.map((char_allowed_lbl) => (
+                    <option key={char_allowed_lbl.id} value={char_allowed_lbl.id}>
+                      {char_allowed_lbl.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.char_allowed_lbl &&
-                validation.errors.char_allowed_lbl ? (
+                  validation.errors.char_allowed_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.char_allowed_lbl}
                   </FormFeedback>
@@ -325,10 +337,11 @@ const ViewBrandList = (props) => {
                   value={validation.values.status || ""}
                   disabled={!showEditBrand}
                 >
-                  <option value="">Select status</option>
-                  <option value="Active">Active</option>
-                  <option value="blocked">BLOCKED</option>
-                  <option value="In-Active">In-Active</option>
+                  {brandStatus.map((status) => (
+                    <option key={status.id} value={status.id}>
+                      {status.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">

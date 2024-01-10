@@ -20,6 +20,9 @@ import {
   ADD_BRANDLIST,
   ADD_BRANDLIST_SUCCESS,
   ADD_BRANDLIST_FAIL,
+  UPDATE_BRANDLIST,
+  UPDATE_BRANDLIST_FAIL,
+  UPDATE_BRANDLIST_SUCCESS,
 } from "./actionTypes";
 
 export const getBrandList = () => ({
@@ -36,6 +39,21 @@ export const getBrandListSuccess = (brandlist) => {
 
 export const getBrandListFail = (error) => ({
   type: GET_BRANDLIST_FAIL,
+  payload: error,
+});
+
+export const updateBrandList = (brandlist) => ({
+  type: UPDATE_BRANDLIST,
+  payload: brandlist,
+});
+
+export const updateBrandListSuccess = (brandlist) => ({
+  type: UPDATE_BRANDLIST_SUCCESS,
+  payload: brandlist,
+});
+
+export const updateBrandListFail = (error) => ({
+  type: UPDATE_BRANDLIST_FAIL,
   payload: error,
 });
 

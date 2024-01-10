@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { GET_BRANDLIST, GET_BRANDLIST_BOXTYPE, GET_BRANDLIST_BRANDTYPE, GET_BRANDLIST_CASTYPE, GET_BRANDLIST_CHARACTERS, GET_BRANDLIST_STATUS, ADD_BRANDLIST } from "./actionTypes";
+import { GET_BRANDLIST, UPDATE_BRANDLIST, GET_BRANDLIST_BOXTYPE, GET_BRANDLIST_BRANDTYPE, GET_BRANDLIST_CASTYPE, GET_BRANDLIST_CHARACTERS, GET_BRANDLIST_STATUS, ADD_BRANDLIST } from "./actionTypes";
 import {
   getBrandListSuccess,
   getBrandListFail,
@@ -15,8 +15,10 @@ import {
   getBrandListStatusFail,
   addBrandListSuccess,
   addBrandListFail,
+  updateBrandListSuccess,
+  updateBrandListFail,
 } from "./actions";
-import { getBrandList, getBrandListBoxType, getBrandListCasType, getBrandListBrandType, getBrandListCharacters, getBrandListStatus, addBrandList } from "../../helpers/fakebackend_helper";
+import { getBrandList, updateBrandList, getBrandListBoxType, getBrandListCasType, getBrandListBrandType, getBrandListCharacters, getBrandListStatus, addBrandList } from "../../helpers/fakebackend_helper";
 import { toast } from "react-toastify";
 
 const convertBrandListObject = (brandlist) => {
@@ -43,10 +45,25 @@ function* fetchBrandList() {
   try {
     const response = yield call(getBrandList);
     console.log("response:" + JSON.stringify(response));
-    // const brandList = convertBrandListObject(response);
     yield put(getBrandListSuccess(response.data));
   } catch (error) {
     yield put(getBrandListFail(error));
+  }
+}
+
+function* onUpdateBrandList({ payload: brandlist }) {
+  console.log("Brand List in onUpdate:" + JSON.stringify(brandlist));
+  console.log("Updated Id" + brandlist.id)
+  try {
+    const response = yield call(
+      updateBrandList,
+      brandlist.id,
+      brandlist
+    );
+    yield put(updateBrandListSuccess(response));
+    console.log("update response:" + JSON.stringify(response));
+  } catch (error) {
+    yield put(updateBrandListFail(error));
   }
 }
 
@@ -119,6 +136,7 @@ function* brandListSaga() {
   yield takeEvery(GET_BRANDLIST_CHARACTERS, fetchBrandListCharacters);
   yield takeEvery(GET_BRANDLIST_STATUS, fetchBrandListStatus);
   yield takeEvery(ADD_BRANDLIST, onAddBrandList);
+  yield takeEvery(UPDATE_BRANDLIST, onUpdateBrandList);
 }
 
 export default brandListSaga;

@@ -200,6 +200,8 @@ export const GET_BRANDLIST_CHARACTERS =
 export const GET_BRANDLIST_STATUS = "/list/status?fields=id,name&vr=web1.0";
 export const GET_BRANDLIST_CASTYPE = "/casvendor/list?fields=id,name&vr=web1.0";
 export const ADD_BRANDLIST = "/brand?vr=web1.0";
+export const UPDATE_BRANDLIST = (id) => `/brand/${id}?vr=web1.0`;
+
 
 export const GET_WAREHOUSELIST =
   "/warehouse?expand=city_lbl,created_by_lbl,status_lbl,operator_lbl,operator_code_lbl&page=1&per-page=50&vr=web1.0";

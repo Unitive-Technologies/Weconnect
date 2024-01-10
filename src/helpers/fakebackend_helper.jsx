@@ -459,6 +459,9 @@ export const getBrandListCharacters = () => get(url.GET_BRANDLIST_CHARACTERS);
 export const getBrandListStatus = () => get(url.GET_BRANDLIST_STATUS);
 export const getBrandListCasType = () => get(url.GET_BRANDLIST_CASTYPE);
 export const addBrandList = (brandlist) => post(url.ADD_BRANDLIST, brandlist);
+export const updateBrandList = (id, brandlist) =>
+  put(url.UPDATE_BRANDLIST(id), brandlist);
+
 
 export const getWarehouseList = () => get(url.GET_WAREHOUSELIST);
 export const getWarehouseListStatus = () => get(url.GET_WAREHOUSELIST_STATUS);

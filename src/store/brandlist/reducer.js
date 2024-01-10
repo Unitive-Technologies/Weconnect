@@ -13,6 +13,9 @@ import {
   GET_BRANDLIST_CASTYPE_FAIL,
   ADD_BRANDLIST_SUCCESS,
   ADD_BRANDLIST_FAIL,
+  UPDATE_BRANDLIST_SUCCESS,
+  UPDATE_BRANDLIST_FAIL,
+
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -42,6 +45,21 @@ const BrandList = (state = INIT_STATE, action) => {
         error: action.payload,
       };
 
+    case UPDATE_BRANDLIST_SUCCESS:
+      return {
+        ...state,
+        brandlist: state.brandlist.map((brandlist) =>
+          brandlist.id.toString() === action.payload.id.toString()
+            ? { brandlist, ...action.payload }
+            : brandlist
+        ),
+      };
+
+    case UPDATE_BRANDLIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
 
     case GET_BRANDLIST_BRANDTYPE_SUCCESS:
       console.log("BrandType data in reducer:", action.payload);
