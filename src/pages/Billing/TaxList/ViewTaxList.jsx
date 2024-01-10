@@ -36,7 +36,7 @@ const ViewTaxList = (props) => {
       taxvalue: (tax && tax.taxvalue) || "",
       valuetype_lbl: (tax && tax.valuetype_lbl) || "",
       parent_lbl: (tax && tax.parent_lbl) || "",
-      applicable: (tax && tax.applicable) || "",
+      applicableon: (tax && tax.applicableon) || "",
       description: (tax && tax.description) || "",
     },
     validationSchema: Yup.object({
@@ -46,10 +46,17 @@ const ViewTaxList = (props) => {
       taxvalue: Yup.string().required("Exter Tax Value"),
       valuetype_lbl: Yup.string().required("Select value-in"),
       parent_lbl: Yup.string().required(""),
-      applicable: Yup.string().required(""),
+      applicableon: Yup.array().required(
+        "Select at least one Applicable On option"
+      ),
       description: Yup.string().required("Enter description"),
     }),
     onSubmit: (values) => {
+      const applicableonArray = values["applicableon"] || [];
+      const applicableonIntegers = applicableonArray.map((option) =>
+        parseInt(option)
+      );
+
       const updateTax = {
         id: tax.id,
         name: values.name,
@@ -58,7 +65,7 @@ const ViewTaxList = (props) => {
         taxvalue: values.taxvalue,
         valuetype_lbl: values.valuetype_lbl,
         parent_lbl: values.parent_lbl,
-        applicable: values.applicable,
+        applicableon: applicableonIntegers,
         description: values.description,
       };
 
@@ -276,25 +283,26 @@ const ViewTaxList = (props) => {
                     Applicable On<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="applicable"
+                    name="applicableon"
                     type="select"
                     placeholder=""
                     className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.applicable || ""}
+                    value={validation.values.applicableon || []}
                     disabled={!showEditTax}
+                    multiple
                   >
-                    {taxApply.map((applicable) => (
-                      <option key={applicable.id} value={applicable.id}>
-                        {applicable.name}
+                    {taxApply.map((applicableon) => (
+                      <option key={applicableon.id} value={applicableon.id}>
+                        {applicableon.name}
                       </option>
                     ))}
                   </Input>
-                  {validation.touched.applicable &&
-                    validation.errors.applicable ? (
+                  {validation.touched.applicableon &&
+                    validation.errors.applicableon ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.applicable}
+                      {validation.errors.applicableon}
                     </FormFeedback>
                   ) : null}
                 </div>

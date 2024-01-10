@@ -7,6 +7,9 @@ import {
   GET_REASON_REASONTYPE_FAIL,
   ADD_REASON_SUCCESS,
   ADD_REASON_FAIL,
+  UPDATE_REASON_SUCCESS,
+  UPDATE_REASON_FAIL,
+
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -28,6 +31,22 @@ const Reason = (state = INIT_STATE, action) => {
       };
 
     case GET_REASON_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case UPDATE_REASON_SUCCESS:
+      return {
+        ...state,
+        reason: state.reason.map((reason) =>
+          reason.id.toString() === action.payload.id.toString()
+            ? { reason, ...action.payload }
+            : reason
+        ),
+      };
+
+    case UPDATE_REASON_FAIL:
       return {
         ...state,
         error: action.payload,

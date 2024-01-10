@@ -269,12 +269,11 @@ export const UPDATE_TAX = (id) => `/tax/${id}?vr=web1.0`;
 
 export const GET_REASON =
   "/reason?expand=created_by_lbl,status_lbl,type_display_lbl,created_at_lbl&page=1&per-page=50&vr=web1.0";
-
 export const GET_REASON_REASONTYPE =
   "/list/reasonType?fields=id,name&vr=web1.0";
 export const GET_REASON_STATUS = "/list/status?fields=id,name&vr=web1.0";
-
 export const ADD_NEW_REASON = "/reason?vr=web1.0";
+export const UPDATE_REASON = (id) => `/reason/${id}?vr=web1.0`;
 
 export const GET_BANK =
   "/bank?expand=created_by_lbl,status_lbl,ismso_lbl&page=1&per-page=50&vr=web1.0";

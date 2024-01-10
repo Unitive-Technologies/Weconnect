@@ -16,11 +16,11 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { updateUser as onUpdateUser } from "/src/store/users/actions";
+import { updateReason as onUpdateReason } from "/src/store/reasonlist/actions";
 
 const ViewReason = (props) => {
-  const { isOpen, handleViewReason, reason } = props;
-  //   console.log("user in viewuser modal:" + JSON.stringify(user));
+  const { isOpen, handleViewReason, reason, reasonStatus, reasonReasonType } = props;
+  console.log("View Reasonlist modal:" + JSON.stringify(reason));
   const dispatch = useDispatch();
   const [showEditReason, setShowEditReason] = useState(false);
 
@@ -40,7 +40,7 @@ const ViewReason = (props) => {
       type_display_lbl: Yup.string().required(""),
     }),
     onSubmit: (values) => {
-      const updateUser = {
+      const updateReason = {
         id: reason.id,
         name: values.name,
         status: values.status,
@@ -48,7 +48,7 @@ const ViewReason = (props) => {
       };
 
       // update user
-      dispatch(onUpdateUser(updateUser));
+      dispatch(onUpdateReason(updateReason));
       validation.resetForm();
       handleViewReason();
     },
@@ -140,10 +140,11 @@ const ViewReason = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.status || ""}
                   >
-                    {/* <option value="">Select Status</option> */}
-                    <option value="11">Active</option>
-                    <option value="12">BLOCKED</option>
-                    <option value="13">In-Active</option>
+                    {reasonStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                   </Input>
                   {validation.touched.status && validation.errors.status ? (
                     <FormFeedback type="invalid">
@@ -157,21 +158,27 @@ const ViewReason = (props) => {
                   <Label className="form-label">Reason Type</Label>
                   <Input
                     name="type_display_lbl"
-                    type="text"
+                    type="select"
                     placeholder=""
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.type_display_lbl || ""}
                     invalid={
                       validation.touched.type_display_lbl &&
-                      validation.errors.type_display_lbl
+                        validation.errors.type_display_lbl
                         ? true
                         : false
                     }
                     disabled={!showEditReason}
-                  />
+                  >
+                    {reasonReasonType.map((type_display_lbl) => (
+                      <option key={type_display_lbl.id} value={type_display_lbl.id}>
+                        {type_display_lbl.name}
+                      </option>
+                    ))}
+                  </Input>
                   {validation.touched.type_display_lbl &&
-                  validation.errors.type_display_lbl ? (
+                    validation.errors.type_display_lbl ? (
                     <FormFeedback type="invalid">
                       {validation.errors.type_display_lbl}
                     </FormFeedback>
