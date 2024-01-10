@@ -1,5 +1,6 @@
-import React, { Fragment, useMemo } from "react";
+import React, { Fragment, useMemo, useEffect } from "react";
 import PropTypes from "prop-types";
+
 import {
   useTable,
   useGlobalFilter,
@@ -46,8 +47,8 @@ const NewTableContainer = ({
   // manualPagination = false,
 }) => {
   // convert currentPage to integer
-  const columnData = useMemo(() => columns, [columns]);
-  const rowData = data;
+  // const columnData = useMemo(() => columns, [columns]);
+  // const rowData = data;
   // console the current time
   // console.log("Current time - ", moment().format("hh:mm:ss"));
   // console.log("Value used in the table -[", JSON.stringify(rowData));
@@ -60,7 +61,7 @@ const NewTableContainer = ({
     canPreviousPage,
     canNextPage,
     pageOptions,
-    pageCount,
+    // pageCount,
     gotoPage,
     nextPage,
     previousPage,
@@ -71,8 +72,8 @@ const NewTableContainer = ({
     state: { pageIndex, pageSize },
   } = useTable(
     {
-      columns: columnData,
-      data: rowData,
+      columns,
+      data,
       // manualPagination,
       defaultColumn: { Filter: DefaultColumnFilter },
       initialState: {
@@ -91,6 +92,8 @@ const NewTableContainer = ({
     useExpanded,
     usePagination
   );
+  console.log("data in NewTableContainer:" + JSON.stringify(data));
+  const pageCount = Math.ceil(totalRows / rowsPerPage);
 
   const generateSortingIndicator = (column) => {
     return column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : "";
@@ -104,6 +107,7 @@ const NewTableContainer = ({
   //   const defaultWidth = 100;
   //   return column.width || defaultWidth;
   // };
+
   return (
     <Fragment>
       <Row className="mb-2  ">
@@ -160,7 +164,7 @@ const NewTableContainer = ({
             </thead>
 
             <tbody {...getTableBodyProps()}>
-              {/* {console.log("Number of rows - ", page)} */}
+              {console.log("page in NewTableContainer - ", page)}
               {page.map((row) => {
                 prepareRow(row);
                 // console.log("Row object:", row);
@@ -194,6 +198,8 @@ const NewTableContainer = ({
         currentPage={parseInt(currentPage)}
         paginationDiv={paginationDiv}
         pagination={pagination}
+        pageCount={pageCount}
+        pageIndex={state.pageIndex}
       />
     </Fragment>
   );

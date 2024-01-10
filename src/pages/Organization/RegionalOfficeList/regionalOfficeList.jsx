@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import Spinners from "../../../components/Common/Spinner";
-import { Card, CardBody, Col, Container, Row } from "reactstrap";
+import { Card, CardBody, Col, Container, Row, Table } from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -23,6 +23,7 @@ import {
   RESPONSE_HEADER_PER_PAGE,
   RESPONSE_HEADER_TOTAL_COUNT,
 } from "../../../constants/strings";
+import NewPagination from "../../../components/Common/NewPagination";
 
 const RegionalOfficeList = (props) => {
   //meta title
@@ -66,26 +67,22 @@ const RegionalOfficeList = (props) => {
     // if (!regionaloffices.length) {
     //   setLoading(true);
 
-    getRegionalOffice(currPage, perPage)
-      .then((response) => {
-        // console.log("response in useEffect:" + JSON.stringify(response));
-        const pageCount = response.headers[RESPONSE_HEADER_PAGE_COUNT];
-        const perPage = response.headers[RESPONSE_HEADER_PER_PAGE];
-        const totalCount = response.headers[RESPONSE_HEADER_TOTAL_COUNT];
-        const regOffices = response.data.data;
+    getRegionalOffice(currPage, perPage).then((response) => {
+      const pageCount = response.headers[RESPONSE_HEADER_PAGE_COUNT];
+      const perPage = response.headers[RESPONSE_HEADER_PER_PAGE];
+      const totalCount = response.headers[RESPONSE_HEADER_TOTAL_COUNT];
+      const regOffices = response.data.data;
 
-        setPageCount(parseInt(pageCount));
-        setPerPage(parseInt(perPage));
-        setTotalCount(parseInt(totalCount));
-        setRegionalOffices(regOffices);
-        // console.log("regiOff inside:" + JSON.stringify(response.data.data));
-      })
-      .then(() => {
-        // console.log("Final:" + currPage, pageCount, perPage, totalCount);
-        // console.log("regiOff Final:" + JSON.stringify(regionaloffices));
-      });
-    // }
-  }, [currPage]);
+      // console.log("API Response Data:", JSON.stringify(regOffices));
+
+      setPageCount(parseInt(pageCount));
+      setPerPage(parseInt(perPage));
+      setTotalCount(parseInt(totalCount));
+      setRegionalOffices(regOffices);
+
+      // console.log("Updated Regional Offices:", JSON.stringify(regOffices));
+    });
+  }, [currPage, perPage]);
 
   // useEffect(() => {
   //   setLoading(true);
@@ -362,7 +359,7 @@ const RegionalOfficeList = (props) => {
                   <CardBody>
                     {/* {console.log("currpage:" + currPage, perPage)} */}
                     {console.log(
-                      "DDDDDDDDDDDDDDDDDDDDDDDDdataList:" +
+                      "RRRRRRRRRRRRRRRRRRRRRRRRegionalOffices:" +
                         JSON.stringify(regionaloffices)
                     )}
                     <NewTableContainer
@@ -386,6 +383,38 @@ const RegionalOfficeList = (props) => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
+                    />
+                    <div className="table-responsive">
+                      <Table className="table mb-0">
+                        <thead className="table-light">
+                          <tr>
+                            <th>#</th>
+                            <th> Name</th>
+                            <th>Code</th>
+                            <th>Address</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {regionaloffices.map((row) => (
+                            <tr key={row.id}>
+                              <th scope="row">{row.id}</th>
+                              <td>{row.name}</td>
+                              <td>{row.code}</td>
+                              <td>{row.addr}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </Table>
+                    </div>
+                    <NewPagination
+                      pageChangeHandler={(num) => setCurrPage(num)}
+                      rowsPerPage={perPage}
+                      totalRows={totalCount}
+                      currentPage={parseInt(currPage)}
+                      paginationDiv="col-sm-12 col-md-7"
+                      pagination="pagination pagination-rounded justify-content-end mt-4"
+                      pageCount={pageCount}
+                      // pageIndex={state.pageIndex}
                     />
                   </CardBody>
                 </Card>
