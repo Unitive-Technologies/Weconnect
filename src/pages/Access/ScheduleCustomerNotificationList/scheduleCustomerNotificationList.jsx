@@ -40,9 +40,9 @@ const ScheduleCustomerNotificationList = (props) => {
     useState(false);
   const [viewScheduleNoti, setViewScheduleNoti] = useState({});
 
-  const handleViewCustomerNotification = (scheduleData) => {
+  const handleViewCustomerNotification = (row) => {
     setShowViewCustomerNotification(!showViewCustomerNotification);
-    setViewScheduleNoti(scheduleData);
+    setViewScheduleNoti(row);
   };
 
   const selectScheduleCustomerNotificationState = (state) =>
@@ -62,9 +62,15 @@ const ScheduleCustomerNotificationList = (props) => {
     })
   );
 
-  const { schCusNotification, loading, SchCusNotBmail, SchCusNotSMS, SchCusNotOSD, SchCusNotStatus, SchCusNotType } = useSelector(
-    scheduleCustomerNotificationProperties
-  );
+  const {
+    schCusNotification,
+    loading,
+    SchCusNotBmail,
+    SchCusNotSMS,
+    SchCusNotOSD,
+    SchCusNotStatus,
+    SchCusNotType,
+  } = useSelector(scheduleCustomerNotificationProperties);
 
   const [isLoading, setLoading] = useState(loading);
 
@@ -309,6 +315,11 @@ const ScheduleCustomerNotificationList = (props) => {
         isOpen={showViewCustomerNotification}
         handleViewCustomerNotification={handleViewCustomerNotification}
         viewScheduleNoti={viewScheduleNoti}
+        SchCusNotBmail={SchCusNotBmail}
+        SchCusNotOSD={SchCusNotOSD}
+        SchCusNotSMS={SchCusNotSMS}
+        SchCusNotStatus={SchCusNotStatus}
+        SchCusNotType={SchCusNotType}
       />
       <div className="page-content">
         <Container fluid>
@@ -332,6 +343,9 @@ const ScheduleCustomerNotificationList = (props) => {
                       isShowTableActionButtons={true}
                       tableActions={getTableActions()}
                       isShowingPageLength={true}
+                      handleRowClick={(row) => {
+                        handleViewCustomerNotification(row);
+                      }}
                       // iscustomPageSizeOptions={true}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"

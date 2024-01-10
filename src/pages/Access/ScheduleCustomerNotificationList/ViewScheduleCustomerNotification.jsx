@@ -19,7 +19,16 @@ import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const ViewScheduleCustomerNotification = (props) => {
-  const { isOpen, handleViewCustomerNotification, viewScheduleNoti } = props;
+  const {
+    isOpen,
+    handleViewCustomerNotification,
+    viewScheduleNoti,
+    SchCusNotStatus,
+    SchCusNotType,
+    SchCusNotSMS,
+    SchCusNotOSD,
+    SchCusNotBmail,
+  } = props;
 
   const dispatch = useDispatch();
   const [showEditSchedule, setShowEditSchedule] = useState(false);
@@ -150,6 +159,7 @@ const ViewScheduleCustomerNotification = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.name || ""}
+                    disabled={!showEditSchedule}
                   ></Input>
                   {validation.touched.name && validation.errors.name ? (
                     <FormFeedback type="invalid">
@@ -169,9 +179,14 @@ const ViewScheduleCustomerNotification = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.type_lbl || ""}
+                    disabled={!showEditSchedule}
                   >
-                    <option value="">Account Expiring</option>
-                    <option value="1">Bill Payment</option>
+                    {SchCusNotType &&
+                      SchCusNotType.map((type_lbl) => (
+                        <option key={type_lbl.id} value={type_lbl.id}>
+                          {type_lbl.name}
+                        </option>
+                      ))}
                   </Input>
                   {validation.touched.type_lbl && validation.errors.type_lbl ? (
                     <FormFeedback type="invalid">
@@ -191,6 +206,7 @@ const ViewScheduleCustomerNotification = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.schedule_days || ""}
+                    disabled={!showEditSchedule}
                   >
                     <option value="11">Select schedule days</option>
                     <option value="12">1</option>
@@ -243,6 +259,7 @@ const ViewScheduleCustomerNotification = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.osd_configuration_id_lbl || ""}
+                    disabled={!showEditSchedule}
                   >
                     <option value="51">Select osd configuration</option>
                     <option value="52">TEST OSD</option>
@@ -271,10 +288,18 @@ const ViewScheduleCustomerNotification = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.osd_template_id_lbl || ""}
+                    disabled={!showEditSchedule}
                   >
-                    <option value="61">Select osd template</option>
-                    <option value="62">Expiring STB</option>
-                    <option value="63">NXT</option>
+                    {/* <option value="">Select osd template</option> */}
+                    {SchCusNotOSD &&
+                      SchCusNotOSD.map((osd_template_id_lbl) => (
+                        <option
+                          key={osd_template_id_lbl.id}
+                          value={osd_template_id_lbl.id}
+                        >
+                          {osd_template_id_lbl.name}
+                        </option>
+                      ))}
                   </Input>
                   {validation.touched.osd_template_id_lbl &&
                   validation.errors.osd_template_id_lbl ? (
@@ -295,8 +320,18 @@ const ViewScheduleCustomerNotification = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.bmail_template_id_lbl || ""}
+                    disabled={!showEditSchedule}
                   >
-                    <option value="71">Select bmail template</option>
+                    {/* <option value="">Select bmail template</option> */}
+                    {SchCusNotBmail &&
+                      SchCusNotBmail.map((bmail_template_id_lbl) => (
+                        <option
+                          key={bmail_template_id_lbl.id}
+                          value={bmail_template_id_lbl.id}
+                        >
+                          {bmail_template_id_lbl.name}
+                        </option>
+                      ))}
                   </Input>
                   {validation.touched.bmail_template_id_lbl &&
                   validation.errors.bmail_template_id_lbl ? (
@@ -317,11 +352,18 @@ const ViewScheduleCustomerNotification = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.sms_template_id_lbl || ""}
+                    disabled={!showEditSchedule}
                   >
-                    <option value="81">Select sms template</option>
-                    <option value="82">Administrator</option>
-                    <option value="83">Staff</option>
-                    <option value="84">User</option>
+                    {/* <option value="">Select sms template</option> */}
+                    {SchCusNotSMS &&
+                      SchCusNotSMS.map((sms_template_id_lbl) => (
+                        <option
+                          key={sms_template_id_lbl.id}
+                          value={sms_template_id_lbl.id}
+                        >
+                          {sms_template_id_lbl.name}
+                        </option>
+                      ))}
                   </Input>
                   {validation.touched.sms_template_id_lbl &&
                   validation.errors.sms_template_id_lbl ? (
@@ -350,6 +392,7 @@ const ViewScheduleCustomerNotification = (props) => {
                         ? true
                         : false
                     }
+                    disabled={!showEditSchedule}
                   />
                   {validation.touched.start_date &&
                   validation.errors.start_date ? (
@@ -375,6 +418,7 @@ const ViewScheduleCustomerNotification = (props) => {
                         ? true
                         : false
                     }
+                    disabled={!showEditSchedule}
                   />
                   {validation.touched.end_date && validation.errors.end_date ? (
                     <FormFeedback type="invalid">
@@ -400,6 +444,7 @@ const ViewScheduleCustomerNotification = (props) => {
                         ? true
                         : false
                     }
+                    disabled={!showEditSchedule}
                   />
                   {validation.touched.description &&
                   validation.errors.description ? (
@@ -420,10 +465,15 @@ const ViewScheduleCustomerNotification = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.status_lbl || ""}
+                    disabled={!showEditSchedule}
                   >
-                    <option value="101">Select Status</option>
-                    <option value="102">Active</option>
-                    <option value="103">In-Active</option>
+                    {/* <option value="">Select Status</option> */}
+                    {SchCusNotStatus &&
+                      SchCusNotStatus.map((status_lbl) => (
+                        <option key={status_lbl.id} value={status_lbl.id}>
+                          {status_lbl.name}
+                        </option>
+                      ))}
                   </Input>
                   {validation.touched.status_lbl &&
                   validation.errors.status_lbl ? (

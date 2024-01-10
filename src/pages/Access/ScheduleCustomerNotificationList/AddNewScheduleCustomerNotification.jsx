@@ -22,11 +22,27 @@ import { addNewScheduleCustomerNotification as onAddNewScheduleCustomerNotificat
 import { useSelector, useDispatch } from "react-redux";
 import { getScheduleCustomerNotification as onGetScheduleCustomerNotification } from "/src/store/actions";
 
-
 const AddNewScheduleCustomerNotification = (props) => {
-  const { isOpen, handleAddNewScheduleCustNoti, SchCusNotStatus, SchCusNotType, SchCusNotSMS, SchCusNotOSD, SchCusNotBmail } = props;
+  const {
+    isOpen,
+    handleAddNewScheduleCustNoti,
+    SchCusNotStatus,
+    SchCusNotType,
+    SchCusNotSMS,
+    SchCusNotOSD,
+    SchCusNotBmail,
+  } = props;
   const dispatch = useDispatch();
   const [user, setUser] = useState();
+  const [selectedOSDValues, setSelectedOSDValues] = useState([]);
+
+  const handleChangeOSD = (e) => {
+    const selectedOptions = Array.from(
+      e.target.selectedOptions,
+      (option) => option.value
+    );
+    setSelectedOSDValues(selectedOptions);
+  };
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -49,7 +65,9 @@ const AddNewScheduleCustomerNotification = (props) => {
       created_by: "Admin",
     },
     validationSchema: Yup.object({
-      schedulecustomernotification: Yup.string().required("Enter schedulecustomernotification Name"),
+      schedulecustomernotification: Yup.string().required(
+        "Enter schedulecustomernotification Name"
+      ),
       name: Yup.string().required("Select name"),
       type_lbl: Yup.string().required("Select type"),
       schedule_days: Yup.string().required("Select schedule days"),
@@ -72,7 +90,7 @@ const AddNewScheduleCustomerNotification = (props) => {
         type_lbl: values["type_lbl"],
         schedule_days: values["schedule_days"],
         osd_configuration_id_lbl: values["osd_configuration_id_lbl"],
-        osd_template_id_lbl: values["osd_template_id_lbl"],
+        osd_template_id_lbl: selectedOSDValues,
         bmail_template_id_lbl: values["bmail_template_id_lbl"],
         sms_template_id_lbl: values["sms_template_id_lbl"],
         start_date: values["start_date"],
@@ -97,7 +115,6 @@ const AddNewScheduleCustomerNotification = (props) => {
       validation.setValues(validation.initialValues);
     },
   });
-
 
   return (
     <Modal
@@ -218,7 +235,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                   <option value="39">28</option>
                 </Input>
                 {validation.touched.schedule_days &&
-                  validation.errors.schedule_days ? (
+                validation.errors.schedule_days ? (
                   <FormFeedback type="invalid">
                     {validation.errors.schedule_days}
                   </FormFeedback>
@@ -235,18 +252,18 @@ const AddNewScheduleCustomerNotification = (props) => {
                   type="select"
                   placeholder="Select osd configuration"
                   className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.osd_configuration_id_lbl || ""}
+                  onChange={handleChangeOSD}
+                  value={selectedOSDValues}
+                  multiple
                 >
-                  <option value="51">Select osd configuration</option>
+                  {/* <option value="51">Select osd configuration</option> */}
                   <option value="52">TEST OSD</option>
                   <option value="53">CAS: NSTV</option>
                   <option value="54">OSD</option>
                   <option value="55">CAS: NSTV</option>
                 </Input>
                 {validation.touched.osd_configuration_id_lbl &&
-                  validation.errors.osd_configuration_id_lbl ? (
+                validation.errors.osd_configuration_id_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.osd_configuration_id_lbl}
                   </FormFeedback>
@@ -270,12 +287,16 @@ const AddNewScheduleCustomerNotification = (props) => {
                   <option value="">Select osd template</option>
                   {SchCusNotOSD &&
                     SchCusNotOSD.map((osd_template_id_lbl) => (
-                      <option key={osd_template_id_lbl.id} value={osd_template_id_lbl.id}>
+                      <option
+                        key={osd_template_id_lbl.id}
+                        value={osd_template_id_lbl.id}
+                      >
                         {osd_template_id_lbl.name}
                       </option>
-                    ))}                </Input>
+                    ))}{" "}
+                </Input>
                 {validation.touched.osd_template_id_lbl &&
-                  validation.errors.osd_template_id_lbl ? (
+                validation.errors.osd_template_id_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.osd_template_id_lbl}
                   </FormFeedback>
@@ -297,13 +318,16 @@ const AddNewScheduleCustomerNotification = (props) => {
                   <option value="">Select bmail template</option>
                   {SchCusNotBmail &&
                     SchCusNotBmail.map((bmail_template_id_lbl) => (
-                      <option key={bmail_template_id_lbl.id} value={bmail_template_id_lbl.id}>
+                      <option
+                        key={bmail_template_id_lbl.id}
+                        value={bmail_template_id_lbl.id}
+                      >
                         {bmail_template_id_lbl.name}
                       </option>
                     ))}
                 </Input>
                 {validation.touched.bmail_template_id_lbl &&
-                  validation.errors.bmail_template_id_lbl ? (
+                validation.errors.bmail_template_id_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.bmail_template_id_lbl}
                   </FormFeedback>
@@ -325,13 +349,16 @@ const AddNewScheduleCustomerNotification = (props) => {
                   <option value="">Select sms template</option>
                   {SchCusNotSMS &&
                     SchCusNotSMS.map((sms_template_id_lbl) => (
-                      <option key={sms_template_id_lbl.id} value={sms_template_id_lbl.id}>
+                      <option
+                        key={sms_template_id_lbl.id}
+                        value={sms_template_id_lbl.id}
+                      >
                         {sms_template_id_lbl.name}
                       </option>
                     ))}
                 </Input>
                 {validation.touched.sms_template_id_lbl &&
-                  validation.errors.sms_template_id_lbl ? (
+                validation.errors.sms_template_id_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.sms_template_id_lbl}
                   </FormFeedback>
@@ -355,13 +382,13 @@ const AddNewScheduleCustomerNotification = (props) => {
                   value={validation.values.start_date || ""}
                   invalid={
                     validation.touched.start_date &&
-                      validation.errors.start_date
+                    validation.errors.start_date
                       ? true
                       : false
                   }
                 />
                 {validation.touched.start_date &&
-                  validation.errors.start_date ? (
+                validation.errors.start_date ? (
                   <FormFeedback type="invalid">
                     {validation.errors.start_date}
                   </FormFeedback>
@@ -409,13 +436,13 @@ const AddNewScheduleCustomerNotification = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -445,7 +472,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                     ))}
                 </Input>
                 {validation.touched.status_lbl &&
-                  validation.errors.status_lbl ? (
+                validation.errors.status_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.status_lbl}
                   </FormFeedback>
