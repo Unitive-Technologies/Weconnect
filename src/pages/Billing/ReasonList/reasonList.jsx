@@ -69,10 +69,10 @@ const ReasonList = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleViewReason(userData);
-                }}
+              // onClick={() => {
+              //   const userData = cellProps.row.original;
+              //   handleViewReason(userData);
+              // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -164,9 +164,9 @@ const ReasonList = (props) => {
   };
   const [viewReasonList, setViewReasonList] = useState({});
 
-  const handleViewReason = (userReasonData) => {
+  const handleViewReason = (row) => {
     setShowReasonList(!showViewReasonList);
-    setViewReasonList(userReasonData);
+    setViewReasonList(row);
   };
 
   const keyField = "id";
@@ -194,6 +194,8 @@ const ReasonList = (props) => {
         isOpen={showViewReasonList}
         handleViewReason={handleViewReason}
         reason={viewReasonList}
+        reasonReasonType={reasonReasonType}
+        reasonStatus={reasonStatus}
       />
       <AddNewReasonList
         isOpen={showAddNewReasonList}
@@ -225,6 +227,9 @@ const ReasonList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
+                      handleRowClick={(row) => {
+                        handleViewReason(row);
+                      }}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

@@ -2,6 +2,9 @@ import {
   GET_REASON,
   GET_REASON_FAIL,
   GET_REASON_SUCCESS,
+  UPDATE_REASON,
+  UPDATE_REASON_FAIL,
+  UPDATE_REASON_SUCCESS,
   GET_REASON_STATUS,
   GET_REASON_STATUS_FAIL,
   GET_REASON_STATUS_SUCCESS,
@@ -27,6 +30,21 @@ export const getReasonSuccess = (reason) => {
 
 export const getReasonFail = (error) => ({
   type: GET_REASON_FAIL,
+  payload: error,
+});
+
+export const updateReason = (reason) => ({
+  type: UPDATE_REASON,
+  payload: reason,
+});
+
+export const updateReasonSuccess = (reason) => ({
+  type: UPDATE_REASON_SUCCESS,
+  payload: reason,
+});
+
+export const updateReasonFail = (error) => ({
+  type: UPDATE_REASON_FAIL,
   payload: error,
 });
 

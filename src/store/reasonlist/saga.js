@@ -2,6 +2,7 @@ import { call, put, takeEvery } from "redux-saga/effects";
 
 import {
   GET_REASON,
+  UPDATE_REASON,
   GET_REASON_STATUS,
   GET_REASON_REASONTYPE,
   ADD_NEW_REASON,
@@ -10,6 +11,8 @@ import {
 import {
   getReasonSuccess,
   getReasonFail,
+  updateReasonSuccess,
+  updateReasonFail,
   getReasonStatusSuccess,
   getReasonStatusFail,
   getReasonReasonTypeSuccess,
@@ -21,6 +24,7 @@ import {
 //Include Both Helper File with needed methods
 import {
   getReason,
+  updateReason,
   getReasonStatus,
   getReasonReasonType,
   addNewReason,
@@ -50,6 +54,21 @@ function* fetchReason() {
     yield put(getReasonSuccess(reasonList));
   } catch (error) {
     yield put(getReasonFail(error));
+  }
+}
+
+function* onUpdateReason({ payload: reason }) {
+  console.log("customerUser in onUpdate:" + JSON.stringify(reason));
+  try {
+    const response = yield call(
+      updateReason,
+      reason.id,
+      reason
+    );
+    yield put(updateReasonSuccess(response));
+    console.log("update response:" + JSON.stringify(response));
+  } catch (error) {
+    yield put(updateReasonFail(error));
   }
 }
 
@@ -86,6 +105,7 @@ function* onAddNewReason({ payload: reason }) {
 
 function* reasonSaga() {
   yield takeEvery(GET_REASON, fetchReason);
+  yield takeEvery(UPDATE_REASON, onUpdateReason);
   yield takeEvery(GET_REASON_STATUS, fetchReasonStatus);
   yield takeEvery(GET_REASON_REASONTYPE, fetchReasonReasonType);
   yield takeEvery(ADD_NEW_REASON, onAddNewReason);
