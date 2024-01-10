@@ -1,11 +1,11 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_TAX, GET_TAX_STATUS, GET_TAX_APPLY, GET_TAX_VALUES, GET_TAX_TAXONTAX, ADD_NEW_TAXLIST } from "./actionTypes";
+import { GET_TAX, UPDATE_TAX, GET_TAX_STATUS, GET_TAX_APPLY, GET_TAX_VALUES, GET_TAX_TAXONTAX, ADD_NEW_TAXLIST } from "./actionTypes";
 
-import { getTaxSuccess, getTaxFail, getTaxStatusSuccess, getTaxStatusFail, getTaxValuesSuccess, getTaxValuesFail, getTaxApplySuccess, getTaxApplyFail, getTaxTaxOnTaxSuccess, getTaxTaxOnTaxFail, addTaxListSuccess, addTaxListFail } from "./actions";
+import { getTaxSuccess, getTaxFail, updateTaxSuccess, updateTaxFail, getTaxStatusSuccess, getTaxStatusFail, getTaxValuesSuccess, getTaxValuesFail, getTaxApplySuccess, getTaxApplyFail, getTaxTaxOnTaxSuccess, getTaxTaxOnTaxFail, addTaxListSuccess, addTaxListFail } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getTax, getTaxStatus, getTaxApply, getTaxTaxOnTax, getTaxValues, addNewTaxList } from "../../helpers/fakebackend_helper";
+import { getTax, updateTax, getTaxStatus, getTaxApply, getTaxTaxOnTax, getTaxValues, addNewTaxList } from "../../helpers/fakebackend_helper";
 
 const convertTaxListObject = (taxList) => {
   return taxList.map((tax) => {
@@ -34,6 +34,22 @@ function* fetchTax() {
     yield put(getTaxSuccess(response.data));
   } catch (error) {
     yield put(getTaxFail(error));
+  }
+}
+
+
+function* onUpdateTax({ payload: tax }) {
+  console.log("Tax in onUpdate:" + JSON.stringify(tax));
+  try {
+    const response = yield call(
+      updateTax,
+      tax.id,
+      tax,
+    );
+    yield put(updateTaxSuccess(response));
+    console.log("update response:" + JSON.stringify(response));
+  } catch (error) {
+    yield put(updateTaxFail(error));
   }
 }
 
@@ -95,6 +111,7 @@ function* taxSaga() {
   yield takeEvery(GET_TAX_VALUES, fetchTaxValues);
   yield takeEvery(GET_TAX_APPLY, fetchTaxApply);
   yield takeEvery(GET_TAX_TAXONTAX, fetchTaxTaxOnTax);
+  yield takeEvery(UPDATE_TAX, onUpdateTax);
 }
 
 export default taxSaga;

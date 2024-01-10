@@ -1,5 +1,6 @@
 import {
-  GET_TAX_SUCCESS, GET_TAX_FAIL, ADD_TAXLIST_SUCCESS,
+  GET_TAX_SUCCESS, GET_TAX_FAIL,
+  UPDATE_TAX_SUCCESS, UPDATE_TAX_FAIL, ADD_TAXLIST_SUCCESS,
   ADD_TAXLIST_FAIL,
   GET_TAX_STATUS_FAIL,
   GET_TAX_STATUS_SUCCESS,
@@ -33,6 +34,22 @@ const Tax = (state = INIT_STATE, action) => {
       };
 
     case GET_TAX_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case UPDATE_TAX_SUCCESS:
+      return {
+        ...state,
+        tax: state.tax.map((tax) =>
+          tax.id.toString() === action.payload.id.toString()
+            ? { tax, ...action.payload }
+            : tax
+        ),
+      };
+
+    case UPDATE_TAX_FAIL:
       return {
         ...state,
         error: action.payload,

@@ -16,11 +16,11 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { addNewTaxList as onAddNewTaxList } from "/src/store/taxlist/actions";
+import { updateTax as onUpdateTax } from "/src/store/taxlist/actions";
 
 const ViewTaxList = (props) => {
-  const { isOpen, handleViewTax, tax } = props;
-  //   console.log("user in viewuser modal:" + JSON.stringify(user));
+  const { isOpen, handleViewTax, tax, taxValues, taxStatus, taxTaxOnTax, taxApply } = props;
+  console.log("View in  Tax List :" + JSON.stringify(tax));
   const dispatch = useDispatch();
   const [showEditTax, setShowEditTax] = useState(false);
 
@@ -50,7 +50,7 @@ const ViewTaxList = (props) => {
       description: Yup.string().required("Enter description"),
     }),
     onSubmit: (values) => {
-      const newTaxList = {
+      const updateTax = {
         id: tax.id,
         name: values.name,
         code: values.code,
@@ -63,7 +63,7 @@ const ViewTaxList = (props) => {
       };
 
       // update user
-      dispatch(onAddNewTaxList(newTaxList));
+      dispatch(onUpdateTax(updateTax));
       validation.resetForm();
       handleViewTax();
     },
@@ -127,6 +127,7 @@ const ViewTaxList = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.name || ""}
+                    disabled={!showEditTax}
                   ></Input>
                   {validation.touched.name && validation.errors.name ? (
                     <FormFeedback type="invalid">
@@ -148,6 +149,7 @@ const ViewTaxList = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.code || ""}
+                    disabled={!showEditTax}
                   ></Input>
                   {validation.touched.code && validation.errors.code ? (
                     <FormFeedback type="invalid">
@@ -169,10 +171,13 @@ const ViewTaxList = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.status || ""}
+                    disabled={!showEditTax}
                   >
-                    <option value="101">Select Status</option>
-                    <option value="102">Active</option>
-                    <option value="103">In-Active</option>
+                    {taxStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                   </Input>
                   {validation.touched.status && validation.errors.status ? (
                     <FormFeedback type="invalid">
@@ -196,6 +201,7 @@ const ViewTaxList = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.taxvalue || ""}
+                    disabled={!showEditTax}
                   ></Input>
                   {validation.touched.taxvalue && validation.errors.taxvalue ? (
                     <FormFeedback type="invalid">
@@ -217,9 +223,16 @@ const ViewTaxList = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.valuetype_lbl || ""}
-                  ></Input>
+                    disabled={!showEditTax}
+                  >
+                    {taxValues.map((valuetype_lbl) => (
+                      <option key={valuetype_lbl.id} value={valuetype_lbl.id}>
+                        {valuetype_lbl.name}
+                      </option>
+                    ))}
+                  </Input>
                   {validation.touched.valuetype_lbl &&
-                  validation.errors.valuetype_lbl ? (
+                    validation.errors.valuetype_lbl ? (
                     <FormFeedback type="invalid">
                       {validation.errors.valuetype_lbl}
                     </FormFeedback>
@@ -239,9 +252,16 @@ const ViewTaxList = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.parent_lbl || ""}
-                  ></Input>
+                    disabled={!showEditTax}
+                  >
+                    {taxTaxOnTax.map((parent_lbl) => (
+                      <option key={parent_lbl.id} value={parent_lbl.id}>
+                        {parent_lbl.name}
+                      </option>
+                    ))}
+                  </Input>
                   {validation.touched.parent_lbl &&
-                  validation.errors.parent_lbl ? (
+                    validation.errors.parent_lbl ? (
                     <FormFeedback type="invalid">
                       {validation.errors.parent_lbl}
                     </FormFeedback>
@@ -263,9 +283,16 @@ const ViewTaxList = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.applicable || ""}
-                  ></Input>
+                    disabled={!showEditTax}
+                  >
+                    {taxApply.map((applicable) => (
+                      <option key={applicable.id} value={applicable.id}>
+                        {applicable.name}
+                      </option>
+                    ))}
+                  </Input>
                   {validation.touched.applicable &&
-                  validation.errors.applicable ? (
+                    validation.errors.applicable ? (
                     <FormFeedback type="invalid">
                       {validation.errors.applicable}
                     </FormFeedback>
@@ -287,13 +314,14 @@ const ViewTaxList = (props) => {
                     value={validation.values.description || ""}
                     invalid={
                       validation.touched.description &&
-                      validation.errors.description
+                        validation.errors.description
                         ? true
                         : false
                     }
+                    disabled={!showEditTax}
                   />
                   {validation.touched.description &&
-                  validation.errors.description ? (
+                    validation.errors.description ? (
                     <FormFeedback type="invalid">
                       {validation.errors.description}
                     </FormFeedback>

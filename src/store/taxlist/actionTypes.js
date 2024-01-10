@@ -2,6 +2,10 @@ export const GET_TAX = "GET_TAX";
 export const GET_TAX_SUCCESS = "GET_TAX_SUCCESS";
 export const GET_TAX_FAIL = "GET_TAX_FAIL";
 
+export const UPDATE_TAX = "UPDATE_TAX";
+export const UPDATE_TAX_SUCCESS = "UPDATE_TAX_SUCCESS";
+export const UPDATE_TAX_FAIL = "UPDATE_TAX_FAIL";
+
 export const GET_TAX_STATUS = "GET_TAX_STATUS";
 export const GET_TAX_STATUS_SUCCESS = "GET_TAX_STATUS_SUCCESS";
 export const GET_TAX_STATUS_FAIL = "GET_TAX_STATUS_FAIL";

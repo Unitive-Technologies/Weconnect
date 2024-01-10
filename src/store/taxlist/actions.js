@@ -14,6 +14,7 @@ import {
   GET_TAX_TAXONTAX,
   GET_TAX_TAXONTAX_FAIL,
   GET_TAX_TAXONTAX_SUCCESS,
+  UPDATE_TAX, UPDATE_TAX_FAIL, UPDATE_TAX_SUCCESS,
 
 } from "./actionTypes";
 
@@ -31,6 +32,21 @@ export const getTaxSuccess = (tax) => {
 
 export const getTaxFail = (error) => ({
   type: GET_TAX_FAIL,
+  payload: error,
+});
+
+export const updateTax = (tax) => ({
+  type: UPDATE_TAX,
+  payload: tax,
+});
+
+export const updateTaxSuccess = (tax) => ({
+  type: UPDATE_TAX_SUCCESS,
+  payload: tax,
+});
+
+export const updateTaxFail = (error) => ({
+  type: UPDATE_TAX_FAIL,
   payload: error,
 });
 

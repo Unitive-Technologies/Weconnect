@@ -79,10 +79,10 @@ const TaxList = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleViewTax(userData);
-                }}
+              // onClick={() => {
+              //   const userData = cellProps.row.original;
+              //   handleViewTax(userData);
+              // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -220,6 +220,10 @@ const TaxList = (props) => {
         isOpen={showViewTaxList}
         handleViewTax={handleViewTax}
         tax={viewTaxList}
+        taxApply={taxApply}
+        taxStatus={taxStatus}
+        taxTaxOnTax={taxTaxOnTax}
+        taxValues={taxValues}
       />
       <AddNewTaxList isOpen={showAddNewTaxList} handleAddTax={handleAddTax} taxApply={taxApply} taxStatus={taxStatus} taxTaxOnTax={taxTaxOnTax} taxValues={taxValues} />
       <div className="page-content">
@@ -243,6 +247,9 @@ const TaxList = (props) => {
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       customPageSize={8}
+                      handleRowClick={(row) => {
+                        handleViewTax(row);
+                      }}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"

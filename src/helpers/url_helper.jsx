@@ -268,6 +268,7 @@ export const GET_TAX_TAXONTAX =
   "/tax/list?fields=id,name&filter[parent_id]=0&vr=web1.0";
 
 export const ADD_NEW_TAXLIST = "/tax?vr=web1.0";
+export const UPDATE_TAX = (id) => `/tax/${id}?vr=web1.0`;
 
 export const GET_REASON =
   "/reason?expand=created_by_lbl,status_lbl,type_display_lbl,created_at_lbl&page=1&per-page=50&vr=web1.0";
