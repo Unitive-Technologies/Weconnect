@@ -306,11 +306,11 @@ export const updateSublocation = (id, sublocation) =>
 export const getLocationOnSublocation = () =>
   get(url.GET_LOCATION_ONSUBLOCATION);
 
-export const getRegionalOffice = async (currentPage, perPage) => {
-  console.log("Current Page: ", currentPage);
-  console.log("Per Page: ", perPage);
+export const getRegionalOffice = async (currPage, perPage) => {
+  console.log("Current Page in fakebackend: ", currPage);
+  // console.log("Per Page: ", perPage);
 
-  return getCompleteResponse(url.getRegionalOfficeUrl(currentPage, perPage));
+  return getCompleteResponse(url.getRegionalOfficeUrl(currPage, perPage));
 };
 export const addNewRegionalOffice = (regionaloffice) =>
   post(url.ADD_NEW_REGIONALOFFICE, regionaloffice);
@@ -341,14 +341,12 @@ export const addNewGenreList = (genre) => post(url.ADD_NEW_GENRELIST, genre);
 export const updateGenreList = (genreList, id) =>
   put(url.UPDATE_GENRELIST(id), genreList);
 
-
 export const getLanguageList = () => get(url.GET_LANGUAGELIST);
 export const getLanguageListStatus = () => get(url.GET_LANGUAGELIST_STATUS);
 export const addNewLanguageList = (langlist) =>
   post(url.ADD_NEW_LANGUAGELIST, langlist);
 export const updateLanguageList = (langlist, id) =>
   put(url.UPDATE_LANGUAGELIST(id), langlist);
-
 
 export const getChannelList = () => get(url.GET_CHANNELLIST);
 export const addNewChannelList = (channel) =>
@@ -462,7 +460,6 @@ export const addBrandList = (brandlist) => post(url.ADD_BRANDLIST, brandlist);
 export const updateBrandList = (id, brandlist) =>
   put(url.UPDATE_BRANDLIST(id), brandlist);
 
-
 export const getWarehouseList = () => get(url.GET_WAREHOUSELIST);
 export const getWarehouseListStatus = () => get(url.GET_WAREHOUSELIST_STATUS);
 export const getWarehouseListOperator = () =>
@@ -471,7 +468,6 @@ export const addWareHouseList = (warehouselist) =>
   post(url.ADD_WAREHOUSELIST, warehouselist);
 export const updateWarehouseList = (id, warehouselist) =>
   put(url.UPDATE_WAREHOUSELIST(id), warehouselist);
-
 
 export const getInventoryStateList = () => get(url.GET_INVENTORYSTATELIST);
 export const addInventoryStateList = (inventorystate) =>

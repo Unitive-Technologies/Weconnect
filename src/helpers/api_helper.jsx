@@ -19,16 +19,15 @@ axiosApi.interceptors.response.use(
 
 export async function getCompleteResponse(url, config = {}) {
   console.log("url:" + url);
-  axiosApi.defaults.headers.common["Authkey"] = import.meta.env.VITE_APP_AUTHKEY;
-
-  return await axiosApi
-    .get(url, { ...config })
-    .then((response) => response);
+  axiosApi.defaults.headers.common["Authkey"] =
+    import.meta.env.VITE_APP_AUTHKEY;
+  return await axiosApi.get(url, { ...config }).then((response) => response);
 }
 
 export async function get(url, config = {}) {
   console.log("url:" + url);
-  axiosApi.defaults.headers.common["Authkey"] = import.meta.env.VITE_APP_AUTHKEY;
+  axiosApi.defaults.headers.common["Authkey"] =
+    import.meta.env.VITE_APP_AUTHKEY;
 
   return await axiosApi
     .get(url, { ...config })

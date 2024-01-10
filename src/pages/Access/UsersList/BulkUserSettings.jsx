@@ -59,6 +59,17 @@ const BulkUserSettings = (props) => {
     }
   };
 
+  const [checkedRows, setCheckedRows] = useState({});
+
+  const handleCheckboxChange = (rowId) => {
+    setCheckedRows((prevCheckedRows) => ({
+      ...prevCheckedRows,
+      [rowId]: !prevCheckedRows[rowId],
+    }));
+  };
+
+  const isRowChecked = (rowId) => checkedRows[rowId];
+  console.log("checkedRows:" + JSON.stringify(checkedRows));
   const handleSetting = (row) => {
     console.log("setting row : " + JSON.stringify(row));
   };

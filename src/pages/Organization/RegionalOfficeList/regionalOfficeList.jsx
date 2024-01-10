@@ -17,7 +17,12 @@ import AddRegionalOfficeModal from "./AddRegionalOfficeModal";
 import UploadRegionalOfficeModal from "./UploadRegionalOfficeModal";
 import NewTableContainer from "../../../components/Common/NewTableContainer";
 import { getRegionalOffice } from "../../../helpers/fakebackend_helper";
-import { RESPONSE_HEADER_CURRENT_PAGE, RESPONSE_HEADER_PAGE_COUNT, RESPONSE_HEADER_PER_PAGE, RESPONSE_HEADER_TOTAL_COUNT } from "../../../constants/strings";
+import {
+  RESPONSE_HEADER_CURRENT_PAGE,
+  RESPONSE_HEADER_PAGE_COUNT,
+  RESPONSE_HEADER_PER_PAGE,
+  RESPONSE_HEADER_TOTAL_COUNT,
+} from "../../../constants/strings";
 
 const RegionalOfficeList = (props) => {
   //meta title
@@ -56,27 +61,30 @@ const RegionalOfficeList = (props) => {
 
   useEffect(() => {
     console.log("In UseEffect.. currentPage", currPage);
-    console.log("Regional Office data in component:", regionaloffices);
+    // console.log("Regional Office data in component:", regionaloffices);
 
-    if (regionaloffices && !regionaloffices.length) {
-      setLoading(true);
-      debugger
-      getRegionalOffice(currPage, perPage).then(response=>{
-        // const currentPage = response.headers[RESPONSE_HEADER_CURRENT_PAGE];
+    // if (!regionaloffices.length) {
+    //   setLoading(true);
+
+    getRegionalOffice(currPage, perPage)
+      .then((response) => {
+        // console.log("response in useEffect:" + JSON.stringify(response));
         const pageCount = response.headers[RESPONSE_HEADER_PAGE_COUNT];
         const perPage = response.headers[RESPONSE_HEADER_PER_PAGE];
         const totalCount = response.headers[RESPONSE_HEADER_TOTAL_COUNT];
         const regOffices = response.data.data;
-        // setCurrPage(parseInt(currentPage));
+
         setPageCount(parseInt(pageCount));
         setPerPage(parseInt(perPage));
         setTotalCount(parseInt(totalCount));
         setRegionalOffices(regOffices);
-      }).then(res => setLoading(false));
-
-      setIsEdit(false);
-    }
-    // setDataList(regOffices);
+        // console.log("regiOff inside:" + JSON.stringify(response.data.data));
+      })
+      .then(() => {
+        // console.log("Final:" + currPage, pageCount, perPage, totalCount);
+        // console.log("regiOff Final:" + JSON.stringify(regionaloffices));
+      });
+    // }
   }, [currPage]);
 
   // useEffect(() => {
@@ -89,7 +97,6 @@ const RegionalOfficeList = (props) => {
   const [viewRegionalOffice, setViewRegionalOffice] = useState(false);
   const [showUploadRegionalOffice, setShowUploadRegionalOffice] =
     useState(false);
-  const [isEdit, setIsEdit] = useState(false);
 
   const columns = useMemo(
     () => [
@@ -353,7 +360,7 @@ const RegionalOfficeList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("currpage:" + currPage, perPage)}
+                    {/* {console.log("currpage:" + currPage, perPage)} */}
                     {console.log(
                       "DDDDDDDDDDDDDDDDDDDDDDDDdataList:" +
                         JSON.stringify(regionaloffices)
@@ -374,7 +381,7 @@ const RegionalOfficeList = (props) => {
                       totalRows={totalCount}
                       totalPageCount={pageCount}
                       rowsPerPage={perPage}
-                      pageChangeHandler={(num)=>setCurrPage(num)}
+                      pageChangeHandler={(num) => setCurrPage(num)}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"

@@ -49,8 +49,8 @@ const NewTableContainer = ({
   const columnData = useMemo(() => columns, [columns]);
   const rowData = data;
   // console the current time
-  console.log("Current time - ", moment().format("hh:mm:ss"));
-  console.log("Value used in the table -[", JSON.stringify(rowData));
+  // console.log("Current time - ", moment().format("hh:mm:ss"));
+  // console.log("Value used in the table -[", JSON.stringify(rowData));
   const {
     getTableProps,
     getTableBodyProps,
@@ -160,7 +160,7 @@ const NewTableContainer = ({
             </thead>
 
             <tbody {...getTableBodyProps()}>
-              {console.log("Number of rows - ", page)}
+              {/* {console.log("Number of rows - ", page)} */}
               {page.map((row) => {
                 prepareRow(row);
                 // console.log("Row object:", row);

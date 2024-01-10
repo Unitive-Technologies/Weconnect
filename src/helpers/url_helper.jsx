@@ -42,9 +42,9 @@ export const GET_NOTIFICATIONTEMPLATE_ADDUSER =
   "/user/list?fields=id,name,username&expand=type_lbl,role_lbl&notfilter[role]=4&page=1&per-page=500&vr=web1.0";
 export const ADD_NEW_NOTIFICATIONTEMPLATE = "/announcement-template?vr=web1.0";
 
-export const getRegionalOfficeUrl = (pageNo, perPage) => {
-  console.log("In url - ", pageNo);
-  return `/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,mso_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=1&page=${pageNo}&per-page=${perPage}&vr=web1.0`;
+export const getRegionalOfficeUrl = (currPage, perPage) => {
+  console.log("current page in url - ", currPage);
+  return `/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,mso_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=1&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
 
 export const GET_REGIONALOFFICE =
@@ -140,7 +140,6 @@ export const GET_LANGUAGELIST_STATUS = "/list/status?fields=id,name&vr=web1.0";
 export const ADD_NEW_LANGUAGELIST = "/language?vr=web1.0";
 export const UPDATE_LANGUAGELIST = (id) => `/language/${id}?vr=web1.0`;
 
-
 export const GET_CHANNELLIST =
   "/channel?expand=created_by_lbl,broadcaster_lbl,genre_lbl,language_lbl,channel_type_lbl,isAlacarte_lbl,status_lbl,isFta_lbl,isNCF_lbl&sort=name&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_CHANNELLIST = "/add/channellist";
@@ -213,8 +212,6 @@ export const GET_WAREHOUSEOPERATOR =
   "/operator/list?fields=id,name,code&expand=branch_lbl,distributor_lbl,city_lbl,state_lbl&per-page=100&vr=web1.0";
 export const ADD_WAREHOUSELIST = "/warehouse?vr=web1.0";
 export const UPDATE_WAREHOUSELIST = (id) => `/warehouse/${id}?vr=web1.0`;
-
-
 
 export const GET_INVENTORYSTATELIST = "/inventorystatelist";
 export const ADD_INVENTORYSTATELIST = "/add/inventorystatelist";

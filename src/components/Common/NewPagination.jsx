@@ -26,8 +26,9 @@ const NewPagination = ({
   const [canGoNext, setCanGoNext] = useState(true);
 
   // Onclick handlers for the butons
-  const onNextPage = () => pageChangeHandler(currentPage + 1);
-  const onPrevPage = () => pageChangeHandler(currentPage - 1);
+  const onNextPage = () => pageChangeHandler((prevPage) => prevPage + 1);
+  const onPrevPage = () => pageChangeHandler((prevPage) => prevPage - 1);
+
   const onPageSelect = (pageNo) => pageChangeHandler(pageNo);
 
   // Disable previous and next buttons in the first and last page
@@ -71,7 +72,7 @@ const NewPagination = ({
                 <li
                   key={index}
                   className={`page-item ${
-                    (index + 1) === currentPage ? "active" : ""
+                    index + 1 === currentPage ? "active" : ""
                   }`}
                 >
                   <Link
