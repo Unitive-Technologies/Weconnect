@@ -25,6 +25,7 @@ import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddNewBankList from "./AddNewBankList";
 import UploadBankList from "./UploadBankList";
+import ViewBankList from "./ViewBankList";
 
 const BankList = (props) => {
   //meta title
@@ -45,6 +46,15 @@ const BankList = (props) => {
 
   const [showAddNewBankList, setShowAddNewBankList] = useState(false);
   const [showUploadBankList, setShowUploadBankList] = useState(false);
+  const [showViewBankList, setShowViewBankList] = useState(false);
+  const [viewBankListData, setViewBankListData] = useState({});
+
+
+  const handleViewBank = (bankData) => {
+    console.log("User Data: ", bankData);
+    setShowViewBankList(!showViewBankList);
+    setViewBankListData(bankData);
+  };
 
   const columns = useMemo(
     () => [
@@ -76,10 +86,10 @@ const BankList = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleViewBankList(userData);
-                }}
+              // onClick={() => {
+              //   const userData = cellProps.row.original;
+              //   handleViewBankList(userData);
+              // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -220,6 +230,12 @@ const BankList = (props) => {
 
   return (
     <React.Fragment>
+      <ViewBankList
+        isOpen={showViewBankList}
+        handleViewBank={handleViewBank}
+        banks={viewBankListData}
+        bankStatus={bankStatus}
+      />
       <AddNewBankList
         isOpen={showAddNewBankList}
         handleAddBank={handleAddBank}
@@ -251,6 +267,9 @@ const BankList = (props) => {
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       customPageSize={8}
+                      handleRowClick={(row) => {
+                        handleViewBank(row);
+                      }}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
