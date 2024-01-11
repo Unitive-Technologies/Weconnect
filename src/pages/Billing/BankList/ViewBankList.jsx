@@ -56,7 +56,7 @@ const ViewBankList = (props) => {
         name: values["name"],
         ifscode: values["ifscode"],
         branch: values["branch"],
-        status: parseInt(values["status"]),
+        status_lbl: parseInt(values["status_lbl"]),
         address: values["address"],
         ismso: values["ismso"],
         created_at: new Date(),
