@@ -58,7 +58,8 @@ function* fetchReason() {
 }
 
 function* onUpdateReason({ payload: reason }) {
-  console.log("customerUser in onUpdate:" + JSON.stringify(reason));
+  console.log("Reason onUpdate:" + JSON.stringify(reason));
+  console.log("reason id:" + reason.id);
   try {
     const response = yield call(
       updateReason,

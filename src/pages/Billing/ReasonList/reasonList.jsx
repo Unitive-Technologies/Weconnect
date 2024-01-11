@@ -32,7 +32,8 @@ const ReasonList = (props) => {
     loading: reason.loading,
   }));
 
-  const { reasons, loading, reasonStatus, reasonReasonType } = useSelector(ReasonProperties);
+  const { reasons, loading, reasonStatus,
+    reasonReasonType } = useSelector(ReasonProperties);
 
   const [isLoading, setLoading] = useState(loading);
   const [showAddNewReasonList, setShowAddNewReasonList] = useState(false);
