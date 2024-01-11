@@ -18,7 +18,6 @@ export const getNcf = () => ({
 });
 
 export const getNcfSuccess = (ncf) => {
-  console.log("Received ncf:", ncf);
   return {
     type: GET_NCF_SUCCESS,
     payload: ncf,
@@ -45,8 +44,9 @@ export const addNcfFail = (error) => ({
   payload: error,
 });
 
-export const getOperatorForBulkAssign = () => ({
+export const getOperatorForBulkAssign = (id) => ({
   type: GET_OPERATOR_FORBULKASSIGN,
+  payload: id,
 });
 
 export const getOperatorForBulkAssignSuccess = (operatorforassign) => ({

@@ -6,23 +6,17 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  Label,
-  FormFeedback,
-  Input,
   Form,
   Card,
   CardBody,
   Table,
 } from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import AddMultipleNcf from "./AddMultipleNcf";
 import Operators from "./Operators";
 
 const BulkAssigntoOperator = (props) => {
   const { isOpen, toggle, ncf, selectedRow } = props;
-  const dispatch = useDispatch();
 
   return (
     <Modal

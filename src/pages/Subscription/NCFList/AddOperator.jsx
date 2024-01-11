@@ -28,7 +28,7 @@ const AddOperators = (props) => {
     if (operatorforbulkassign && !operatorforbulkassign.length) {
       dispatch(onGetOperatorForBulkAssign(id));
     }
-  }, [dispatch, operatorforbulkassign]);
+  }, [dispatch, operatorforbulkassign, id]);
 
   const columns = useMemo(
     () => [

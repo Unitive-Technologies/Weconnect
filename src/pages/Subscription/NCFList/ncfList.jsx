@@ -391,6 +391,7 @@ const NCFList = (props) => {
       <BulkRemovalFromOperator
         isOpen={showBulkRemoval}
         toggle={toggleBulkRemoval}
+        selectedRow={selectedRow}
       />
       <Toast isOpen={showWarning}>
         <ToastHeader toggle={handleWarning}>

@@ -20,7 +20,6 @@ const INIT_STATE = {
 const Ncf = (state = INIT_STATE, action) => {
   switch (action.type) {
     case GET_NCF_SUCCESS:
-      console.log("Ncf data in reducer:", action.payload);
       return {
         ...state,
         ncf: action.payload,

@@ -86,6 +86,7 @@ function* fetchOperatorForBulkAssign({ payload: id }) {
   console.log("Selected row id in saga: ", id);
   try {
     const response = yield call(getOperatorForBulkAssign, id);
+    console.log("Operator data in saga: ", response.data);
     const operatorforassign = convertOperatorForAssignListObject(response.data);
     yield put(getOperatorForBulkAssignSuccess(operatorforassign));
   } catch (error) {
