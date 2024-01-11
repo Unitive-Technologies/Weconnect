@@ -10,6 +10,9 @@ import {
   FormFeedback,
   Input,
   Form,
+  Card,
+  CardBody,
+  Table,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -129,12 +132,55 @@ const BulkAssigntoOperator = (props) => {
             </div>
             <Row
               style={{
-                // border: "1px solid #ced4da",
+                position: "relative",
+                border: "1px solid #ced4da",
                 padding: "20px 0px",
-                margin: "20px 0px",
+                margin: "30px 0px",
               }}
             >
-              <AddMultipleNcf props={selectedRow} />
+              <Col lg={12}>
+                <Card>
+                  <CardBody>
+                    <div className="table-responsive">
+                      <Table className="table mb-0">
+                        <thead className="table-light">
+                          <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>MRP</th>
+                            <th>LCO Discount(%)</th>
+                            <th>LCO Rate</th>
+                            <th>Per Channel</th>
+                            <th>Is Refundable</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">1</th>
+                            <td style={{ maxWidth: 100 }}>
+                              {selectedRow.name}
+                            </td>
+                            <td
+                              style={{
+                                maxWidth: 200,
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                              }}
+                            >
+                              {selectedRow.mrp}
+                            </td>
+                            <td>{selectedRow.lmo_discount}</td>
+                            <td>{selectedRow.lmo_rate}</td>
+                            <td>{selectedRow.calculate_per_channel}</td>
+                            <td>{selectedRow.is_refundable}</td>
+                          </tr>
+                        </tbody>
+                      </Table>
+                    </div>
+                  </CardBody>
+                </Card>
+              </Col>
             </Row>
           </Row>
           <Row>

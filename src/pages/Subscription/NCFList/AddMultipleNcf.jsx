@@ -4,7 +4,7 @@ import TableContainer from "../../../components/Common/TableContainer";
 import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 
-const AddMultipleNcf = (props) => {
+const AddMultipleNcf = ({ props }) => {
   const columns = useMemo(
     () => [
       {

@@ -396,7 +396,7 @@ const NCFList = (props) => {
         <ToastHeader toggle={handleWarning}>
           <i className="mdi mdi-alert-outline me-2"></i> Warning
         </ToastHeader>
-        <ToastBody>Cannot select InActive Notification Template</ToastBody>
+        <ToastBody>Please select NCF</ToastBody>
       </Toast>
       <div className="page-content">
         <Container fluid>
