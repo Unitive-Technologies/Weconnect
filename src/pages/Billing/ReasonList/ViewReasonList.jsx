@@ -38,7 +38,7 @@ const ViewReason = (props) => {
       name: Yup.string().required(""),
       status: Yup.string().required(""),
       // type_display_lbl: Yup.string().required(""),
-      type_display_lbl: Yup.array().required(""),
+      type_display_lbl: Yup.array().required([]),
     }),
     onSubmit: (values) => {
       const type_display_lblArray = values["type_display_lbl"] || [];
