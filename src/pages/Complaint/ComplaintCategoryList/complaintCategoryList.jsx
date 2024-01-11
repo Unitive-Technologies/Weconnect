@@ -79,10 +79,10 @@ const ComplaintCategoryList = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleViewComplaintCategory(userData);
-                }}
+              // onClick={() => {
+              //   const userData = cellProps.row.original;
+              //   handleViewComplaintCategory(userData);
+              // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -198,6 +198,7 @@ const ComplaintCategoryList = (props) => {
         isOpen={showViewComplaintCategoryList}
         handleViewComplaintCategory={handleViewComplaintCategory}
         complaintcategory={viewComplaintCategoryList}
+        complaintcateStatus={complaintcateStatus}
       />
       <AddNewComplaintCategoryList
         isOpen={showAddNewComplaintCategoryList}
@@ -226,6 +227,9 @@ const ComplaintCategoryList = (props) => {
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       customPageSize={8}
+                      handleRowClick={(userComplaintData) => {
+                        handleViewComplaintCategory(userComplaintData);
+                      }}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"

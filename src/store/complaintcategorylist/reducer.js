@@ -1,6 +1,8 @@
 import {
   GET_COMPLAINTCATEGORY_SUCCESS,
   GET_COMPLAINTCATEGORY_FAIL,
+  UPDATE_COMPLAINTCATEGORY_SUCCESS,
+  UPDATE_COMPLAINTCATEGORY_FAIL,
   GET_COMPLAINTCATEGORY_STATUS_FAIL,
   GET_COMPLAINTCATEGORY_STATUS_SUCCESS,
   ADD_COMPLAINTCATEGORY_SUCCESS,
@@ -29,6 +31,23 @@ const ComplaintCategory = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
       };
+
+    case UPDATE_COMPLAINTCATEGORY_SUCCESS:
+      return {
+        ...state,
+        complaintcategory: state.complaintcategory.map((complaintcategory) =>
+          complaintcategory.id.toString() === action.payload.id.toString()
+            ? { complaintcategory, ...action.payload }
+            : complaintcategory
+        ),
+      };
+
+    case UPDATE_COMPLAINTCATEGORY_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
 
     case GET_COMPLAINTCATEGORY_STATUS_SUCCESS:
       console.log("Complaint Category data in reducer:", action.payload);

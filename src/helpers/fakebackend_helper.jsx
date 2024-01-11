@@ -435,6 +435,9 @@ export const getComplaintCategoryStatus = () =>
   get(url.GET_COMPLAINTCATEGORY_STATUS);
 export const addNewComplaintCategory = (complaint) =>
   post(url.ADD_NEW_COMPLAINTCATEGORY, complaint);
+export const updateComplaintCategory = (id, complaint) =>
+  put(url.UPDATE_COMPLAINTCATEGORY(id), complaint);
+
 
 export const getComplaintSubCategory = () => get(url.GET_COMPLAINTSUBCATEGORY);
 export const getComplaintSubCategoryStatus = () =>

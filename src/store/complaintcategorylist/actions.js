@@ -8,6 +8,9 @@ import {
   ADD_NEW_COMPLAINTCATEGORY,
   ADD_COMPLAINTCATEGORY_SUCCESS,
   ADD_COMPLAINTCATEGORY_FAIL,
+  UPDATE_COMPLAINTCATEGORY,
+  UPDATE_COMPLAINTCATEGORY_FAIL,
+  UPDATE_COMPLAINTCATEGORY_SUCCESS,
 } from "./actionTypes";
 
 export const getComplaintCategory = () => ({
@@ -26,6 +29,22 @@ export const getComplaintCategoryFail = (error) => ({
   type: GET_COMPLAINTCATEGORY_FAIL,
   payload: error,
 });
+
+export const updateComplaintCategory = (complaintcategory) => ({
+  type: UPDATE_COMPLAINTCATEGORY,
+  payload: complaintcategory,
+});
+
+export const updateComplaintCategorySuccess = (complaintcategory) => ({
+  type: UPDATE_COMPLAINTCATEGORY_SUCCESS,
+  payload: complaintcategory,
+});
+
+export const updateComplaintCategoryFail = (error) => ({
+  type: UPDATE_COMPLAINTCATEGORY_FAIL,
+  payload: error,
+});
+
 
 export const getComplaintCategoryStatus = () => ({
   type: GET_COMPLAINTCATEGORY_STATUS,

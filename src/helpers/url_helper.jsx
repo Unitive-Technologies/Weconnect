@@ -244,6 +244,9 @@ export const GET_COMPLAINTCATEGORY =
 export const GET_COMPLAINTCATEGORY_STATUS =
   "/list/status?fields=id,name&vr=web1.0";
 export const ADD_NEW_COMPLAINTCATEGORY = "/complaint-category?vr=web1.0";
+export const UPDATE_COMPLAINTCATEGORY = (id) => `/complaint-category/${id}?vr=web1.0`;
+
+
 
 export const GET_COMPLAINTSUBCATEGORY =
   "/complaint-subcategory?expand=created_by_lbl,status_lbl,showonweb_lbl,category_lbl&page=1&per-page=50&vr=web1.0";

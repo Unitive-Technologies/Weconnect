@@ -16,11 +16,12 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { addNewComplaintCategory as onAddNewComplaintCategory } from "/src/store/complaintcategorylist/actions";
+import { updateComplaintCategory as onUpdateComplaintCategory } from "/src/store/complaintcategorylist/actions";
 
 const ViewComplaintCategoryList = (props) => {
-  const { isOpen, handleViewComplaintCategory, complaintcategory } = props;
-  //   console.log("user in viewuser modal:" + JSON.stringify(user));
+  const { isOpen, handleViewComplaintCategory, complaintcategory, complaintcateStatus } = props;
+  console.log("View Complaint Category modal:" + JSON.stringify(complaintcategory));
+
   const dispatch = useDispatch();
   const [showEditComplaintCategory, setShowEditComplaintCategory] =
     useState(false);
@@ -44,7 +45,7 @@ const ViewComplaintCategoryList = (props) => {
       description: Yup.string().required("Enter description"),
     }),
     onSubmit: (values) => {
-      const newComplaintCategory = {
+      const updateComplaintCategory = {
         id: complaintcategory.id,
         name: values.name,
         status: values.status,
@@ -53,7 +54,7 @@ const ViewComplaintCategoryList = (props) => {
       };
 
       // update user
-      dispatch(onAddNewComplaintCategory(newComplaintCategory));
+      dispatch(onUpdateComplaintCategory(updateComplaintCategory));
       validation.resetForm();
       handleViewComplaintCategory();
     },
@@ -115,6 +116,7 @@ const ViewComplaintCategoryList = (props) => {
                     // className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
+                    disabled={!showEditComplaintCategory}
                     value={validation.values.name || ""}
                   ></Input>
                   {validation.touched.name && validation.errors.name ? (
@@ -136,11 +138,14 @@ const ViewComplaintCategoryList = (props) => {
                     className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
+                    disabled={!showEditComplaintCategory}
                     value={validation.values.status || ""}
                   >
-                    <option value="101">Select Status</option>
-                    <option value="102">Active</option>
-                    <option value="103">In-Active</option>
+                    {complaintcateStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                   </Input>
                   {validation.touched.status && validation.errors.status ? (
                     <FormFeedback type="invalid">
@@ -163,10 +168,15 @@ const ViewComplaintCategoryList = (props) => {
                     className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
+                    disabled={!showEditComplaintCategory}
                     value={validation.values.showonweb_lbl || ""}
-                  ></Input>
+                  >
+                    {/* <option value="0"></option> */}
+                    <option value="1">Active</option>
+                    <option value="2">In-Active</option>
+                  </Input>
                   {validation.touched.showonweb_lbl &&
-                  validation.errors.showonweb_lbl ? (
+                    validation.errors.showonweb_lbl ? (
                     <FormFeedback type="invalid">
                       {validation.errors.showonweb_lbl}
                     </FormFeedback>
@@ -185,16 +195,17 @@ const ViewComplaintCategoryList = (props) => {
                     rows="3"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
+                    disabled={!showEditComplaintCategory}
                     value={validation.values.description || ""}
                     invalid={
                       validation.touched.description &&
-                      validation.errors.description
+                        validation.errors.description
                         ? true
                         : false
                     }
                   />
                   {validation.touched.description &&
-                  validation.errors.description ? (
+                    validation.errors.description ? (
                     <FormFeedback type="invalid">
                       {validation.errors.description}
                     </FormFeedback>

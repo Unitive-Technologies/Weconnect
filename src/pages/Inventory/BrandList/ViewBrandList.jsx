@@ -26,7 +26,6 @@ const ViewBrandList = (props) => {
   const dispatch = useDispatch();
   const [showEditBrand, setShowEditBrand] = useState(false);
 
-
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
