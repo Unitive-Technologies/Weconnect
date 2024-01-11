@@ -425,6 +425,8 @@ export const getBouquetTaxlist = () => get(url.GET_BOUQUET_TAXLIST);
 export const getRechargePeriod = () => get(url.GET_RECHARGEPERIOD);
 export const getAlacarteChannels = () => get(url.GET_ALACARTECHANNALS);
 export const getBouquetPackages = () => get(url.GET_BOUQUET_PACKAGES);
+export const getOperatorForBouquet = (id) =>
+  get(url.GET_OPERATOR_FORBOUQUET(id));
 
 export const getConnectionScheme = () => get(url.GET_CONNECTIONSCHEME);
 export const addConnectionScheme = (connectionscheme) =>
@@ -437,7 +439,6 @@ export const addNewComplaintCategory = (complaint) =>
   post(url.ADD_NEW_COMPLAINTCATEGORY, complaint);
 export const updateComplaintCategory = (id, complaint) =>
   put(url.UPDATE_COMPLAINTCATEGORY(id), complaint);
-
 
 export const getComplaintSubCategory = () => get(url.GET_COMPLAINTSUBCATEGORY);
 export const getComplaintSubCategoryStatus = () =>
@@ -495,9 +496,7 @@ export const updateReason = (id, reasons) =>
 export const getBank = () => get(url.GET_BANK);
 export const getBankStatus = () => get(url.GET_BANK_STATUS);
 export const addNewBank = (banks) => post(url.ADD_NEW_BANK, banks);
-export const updateBank = (id, banks) =>
-  put(url.UPDATE_BANK(id), banks);
-
+export const updateBank = (id, banks) => put(url.UPDATE_BANK(id), banks);
 
 export const getPromoVoucher = () => get(url.GET_PROMOVOUCHER);
 export const getPromoVoucherLCO = () => get(url.GET_PROMOVOUCHER_LCO);

@@ -26,6 +26,9 @@ import {
   GET_BOUQUET_PACKAGES,
   GET_BOUQUET_PACKAGES_SUCCESS,
   GET_BOUQUET_PACKAGES_FAIL,
+  GET_OPERATOR_FORBOUQUET,
+  GET_OPERATOR_FORBOUQUET_SUCCESS,
+  GET_OPERATOR_FORBOUQUET_FAIL,
 } from "./actionTypes";
 
 export const getBouquet = () => ({
@@ -33,7 +36,6 @@ export const getBouquet = () => ({
 });
 
 export const getBouquetSuccess = (bouquet) => {
-  console.log("Received Bouquet list:", bouquet);
   return {
     type: GET_BOUQUET_SUCCESS,
     payload: bouquet,
@@ -157,3 +159,5 @@ export const getBouquetPackagesFail = (error) => ({
   type: GET_BOUQUET_PACKAGES_FAIL,
   payload: error,
 });
+
+// export const getOperatorForBouquet
