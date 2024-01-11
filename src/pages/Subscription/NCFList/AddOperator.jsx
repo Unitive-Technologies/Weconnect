@@ -1,7 +1,15 @@
 import React, { useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
-import { Card, CardBody, Modal } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  Col,
+  Modal,
+  ModalBody,
+  ModalHeader,
+  Row,
+} from "reactstrap";
 import { Link } from "react-router-dom";
 import { getOperatorForBulkAssign as onGetOperatorForBulkAssign } from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
@@ -130,25 +138,42 @@ const AddOperators = (props) => {
       toggle={toggle}
       size="xl"
     >
-      <Card toggle={toggle}>
-        <CardBody>
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
-            <TableContainer
-              isPagination={true}
-              columns={columns}
-              data={operatorforbulkassign}
-              isGlobalFilter={true}
-              isShowingPageLength={true}
-              tableClass="table align-middle table-nowrap table-hover"
-              theadClass="table-light"
-              paginationDiv="col-sm-12 col-md-7"
-              pagination="pagination pagination-rounded justify-content-end mt-4"
-            />
-          )}
-        </CardBody>
-      </Card>
+      <ModalHeader toggle={toggle}>Add Operator</ModalHeader>
+      <ModalBody>
+        <Card>
+          <CardBody>
+            {loading ? (
+              <p>Loading...</p>
+            ) : (
+              <TableContainer
+                isPagination={true}
+                columns={columns}
+                data={operatorforbulkassign}
+                isGlobalFilter={true}
+                isShowingPageLength={true}
+                tableClass="table align-middle table-nowrap table-hover"
+                theadClass="table-light"
+                paginationDiv="col-sm-12 col-md-7"
+                pagination="pagination pagination-rounded justify-content-end mt-4"
+              />
+            )}
+          </CardBody>
+        </Card>
+        <div className="text-center mt-4 ">
+          <div
+            style={{
+              display: "flex",
+              gap: 5,
+              textAlign: "center",
+              justifyContent: "center",
+            }}
+          >
+            <button type="submit" className="btn btn-success ml-2 ">
+              Add
+            </button>
+          </div>
+        </div>
+      </ModalBody>
     </Modal>
   );
 };
