@@ -32,6 +32,15 @@ const ViewScheduleCustomerNotification = (props) => {
 
   const dispatch = useDispatch();
   const [showEditSchedule, setShowEditSchedule] = useState(false);
+  const [selectedOSDValues, setSelectedOSDValues] = useState([]);
+
+  const handleChangeOSD = (e) => {
+    const selectedOptions = Array.from(
+      e.target.selectedOptions,
+      (option) => option.value
+    );
+    setSelectedOSDValues(selectedOptions);
+  };
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -80,7 +89,7 @@ const ViewScheduleCustomerNotification = (props) => {
         name: values["name"],
         type_lbl: values["type_lbl"],
         schedule_days: values["schedule_days"],
-        osd_configuration_id_lbl: values["osd_configuration_id_lbl"],
+        osd_configuration_id_lbl: selectedOSDValues,
         osd_template_id_lbl: values["osd_template_id_lbl"],
         bmail_template_id_lbl: values["bmail_template_id_lbl"],
         sms_template_id_lbl: values["sms_template_id_lbl"],
@@ -208,7 +217,7 @@ const ViewScheduleCustomerNotification = (props) => {
                     value={validation.values.schedule_days || ""}
                     disabled={!showEditSchedule}
                   >
-                    <option value="11">Select schedule days</option>
+                    {/* <option value="11">Select schedule days</option> */}
                     <option value="12">1</option>
                     <option value="13">2</option>
                     <option value="14">3</option>
@@ -256,16 +265,28 @@ const ViewScheduleCustomerNotification = (props) => {
                     type="select"
                     placeholder="Select osd configuration"
                     className="form-select"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.osd_configuration_id_lbl || ""}
-                    disabled={!showEditSchedule}
+                    onChange={handleChangeOSD}
+                    value={selectedOSDValues}
+                    // multiple
                   >
-                    <option value="51">Select osd configuration</option>
-                    <option value="52">TEST OSD</option>
-                    <option value="53">CAS: NSTV</option>
-                    <option value="54">OSD</option>
-                    <option value="55">CAS: NSTV</option>
+                    {SchCusNotBmail &&
+                      SchCusNotBmail.map((osd_configuration_id_lbl) => (
+                        <option
+                          key={osd_configuration_id_lbl.id}
+                          value={osd_configuration_id_lbl.id}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              width: "20px",
+                            }}
+                          >
+                            {osd_configuration_id_lbl.name} &nbsp; <br /> &nbsp;
+                            <p style={{ fontSize: 5 }}>CAS: NSTV</p>
+                          </div>
+                        </option>
+                      ))}
                   </Input>
                   {validation.touched.osd_configuration_id_lbl &&
                   validation.errors.osd_configuration_id_lbl ? (
@@ -322,16 +343,7 @@ const ViewScheduleCustomerNotification = (props) => {
                     value={validation.values.bmail_template_id_lbl || ""}
                     disabled={!showEditSchedule}
                   >
-                    {/* <option value="">Select bmail template</option> */}
-                    {SchCusNotBmail &&
-                      SchCusNotBmail.map((bmail_template_id_lbl) => (
-                        <option
-                          key={bmail_template_id_lbl.id}
-                          value={bmail_template_id_lbl.id}
-                        >
-                          {bmail_template_id_lbl.name}
-                        </option>
-                      ))}
+                    <option value="">Select bmail template</option>
                   </Input>
                   {validation.touched.bmail_template_id_lbl &&
                   validation.errors.bmail_template_id_lbl ? (
@@ -354,7 +366,6 @@ const ViewScheduleCustomerNotification = (props) => {
                     value={validation.values.sms_template_id_lbl || ""}
                     disabled={!showEditSchedule}
                   >
-                    {/* <option value="">Select sms template</option> */}
                     {SchCusNotSMS &&
                       SchCusNotSMS.map((sms_template_id_lbl) => (
                         <option

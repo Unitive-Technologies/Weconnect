@@ -32,6 +32,11 @@ const AddNewScheduleCustomerNotification = (props) => {
     SchCusNotOSD,
     SchCusNotBmail,
   } = props;
+  console.log("SchCusNotStatus:" + JSON.stringify(SchCusNotStatus));
+  console.log("SchCusNotType:" + JSON.stringify(SchCusNotType));
+  console.log("SchCusNotSMS:" + JSON.stringify(SchCusNotSMS));
+  console.log("SchCusNotOSD:" + JSON.stringify(SchCusNotOSD));
+  console.log("SchCusNotBmail:" + JSON.stringify(SchCusNotBmail));
   const dispatch = useDispatch();
   const [user, setUser] = useState();
   const [selectedOSDValues, setSelectedOSDValues] = useState([]);
@@ -203,6 +208,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.schedule_days || ""}
+                  // multiple
                 >
                   <option value="11">Select schedule days</option>
                   <option value="12">1</option>
@@ -252,16 +258,29 @@ const AddNewScheduleCustomerNotification = (props) => {
                   type="select"
                   placeholder="Select osd configuration"
                   className="form-select"
-                  onChange={handleChangeOSD}
-                  value={selectedOSDValues}
-                  multiple
+                  onChange={validation.handleChange}
+                  value={validation.values.osd_configuration_id_lbl}
                 >
-                  {/* <option value="51">Select osd configuration</option> */}
-                  <option value="52">TEST OSD</option>
-                  <option value="53">CAS: NSTV</option>
-                  <option value="54">OSD</option>
-                  <option value="55">CAS: NSTV</option>
+                  {SchCusNotBmail &&
+                    SchCusNotBmail.map((osd_configuration_id_lbl) => (
+                      <option
+                        key={osd_configuration_id_lbl.id}
+                        value={osd_configuration_id_lbl.id}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            width: "20px",
+                          }}
+                        >
+                          {osd_configuration_id_lbl.name} &nbsp; <br /> &nbsp;
+                          <p style={{ fontSize: 5 }}>CAS: NSTV</p>
+                        </div>
+                      </option>
+                    ))}
                 </Input>
+
                 {validation.touched.osd_configuration_id_lbl &&
                 validation.errors.osd_configuration_id_lbl ? (
                   <FormFeedback type="invalid">
@@ -293,7 +312,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                       >
                         {osd_template_id_lbl.name}
                       </option>
-                    ))}{" "}
+                    ))}
                 </Input>
                 {validation.touched.osd_template_id_lbl &&
                 validation.errors.osd_template_id_lbl ? (
@@ -316,7 +335,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                   value={validation.values.bmail_template_id_lbl || ""}
                 >
                   <option value="">Select bmail template</option>
-                  {SchCusNotBmail &&
+                  {/* {SchCusNotBmail &&
                     SchCusNotBmail.map((bmail_template_id_lbl) => (
                       <option
                         key={bmail_template_id_lbl.id}
@@ -324,7 +343,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                       >
                         {bmail_template_id_lbl.name}
                       </option>
-                    ))}
+                    ))} */}
                 </Input>
                 {validation.touched.bmail_template_id_lbl &&
                 validation.errors.bmail_template_id_lbl ? (
