@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import AddOperators from "./AddOperator";
 
 const Operators = (props) => {
+  const { id } = props;
   const [showAddOperator, setShowAddOperator] = useState(false);
 
   const toggleAddOperator = () => {
@@ -154,7 +155,11 @@ const Operators = (props) => {
   const operators = [];
   return (
     <React.Fragment>
-      <AddOperators isOpen={showAddOperator} toggle={toggleAddOperator} />
+      <AddOperators
+        isOpen={showAddOperator}
+        toggle={toggleAddOperator}
+        id={id}
+      />
       <Card>
         <CardBody>
           <TableContainer

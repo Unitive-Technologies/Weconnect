@@ -23,12 +23,8 @@ import Operators from "./Operators";
 const BulkAssigntoOperator = (props) => {
   const { isOpen, toggle, ncf, selectedRow } = props;
   const dispatch = useDispatch();
-  const [showEditNcf, setShowEditNcf] = useState(false);
 
-  const editToggle = () => {
-    setShowEditNcf(false);
-    toggle();
-  };
+  // console.log("Selected row: ", selectedRow);
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -112,7 +108,7 @@ const BulkAssigntoOperator = (props) => {
           }}
         >
           <Row>
-            <Operators />
+            <Operators id={selectedRow.id} />
           </Row>
           <Row>
             <div

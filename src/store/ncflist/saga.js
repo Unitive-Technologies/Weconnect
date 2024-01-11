@@ -83,6 +83,7 @@ function* onAddNcf({ payload: ncf }) {
 }
 
 function* fetchOperatorForBulkAssign({ payload: id }) {
+  console.log("Selected row id in saga: ", id);
   try {
     const response = yield call(getOperatorForBulkAssign, id);
     const operatorforassign = convertOperatorForAssignListObject(response.data);

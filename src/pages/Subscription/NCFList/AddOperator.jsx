@@ -8,7 +8,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 
 const AddOperators = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, toggle, id } = props;
+  // console.log("Selected row id: ", id);
 
   const dispatch = useDispatch();
 
@@ -25,7 +26,7 @@ const AddOperators = (props) => {
 
   useEffect(() => {
     if (operatorforbulkassign && !operatorforbulkassign.length) {
-      dispatch(onGetOperatorForBulkAssign());
+      dispatch(onGetOperatorForBulkAssign(id));
     }
   }, [dispatch, operatorforbulkassign]);
 
