@@ -383,8 +383,16 @@ export const addNewOSDConfiguration = (osdconfig) =>
   post(url.ADD_NEW_OSDCONFIGURATIONLIST, osdconfig);
 
 export const getOSDTemplate = () => get(url.GET_OSDTEMPLATE);
+export const getOSDTemplateTemplateFor = () =>
+  get(url.GET_OSDTEMPLATE_TEMPLATEFOR);
+export const getOSDTemplateOSD = () =>
+  get(url.GET_OSDTEMPLATE_OSD);
+export const getOSDTemplateStatus = () =>
+  get(url.GET_OSDTEMPLATE_STATUS);
+
 export const addNewOSDTemplate = (osdtem) =>
   post(url.ADD_NEW_OSDTEMPLATE, osdtem);
+
 
 export const getLocalChannelNumber = () => get(url.GET_LOCALCHANNELNUMBER);
 export const getDocumentUploadPolicy = () => get(url.GET_DOCUMENTUPLOADPOLICY);

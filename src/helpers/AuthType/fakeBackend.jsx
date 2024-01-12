@@ -1181,18 +1181,18 @@ const fakeBackend = () => {
   //   });
   // });
 
-  mock.onPost(url.ADD_NEW_OSDTEMPLATE).reply((osdtem) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (osdtem && osdtem.data) {
-          // Passing fake JSON data as response
-          resolve([200, osdtem.data]);
-        } else {
-          reject([400, "Cannot add osdtemplate"]);
-        }
-      });
-    });
-  });
+  // mock.onPost(url.ADD_NEW_OSDTEMPLATE).reply((osdtem) => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (osdtem && osdtem.data) {
+  //         // Passing fake JSON data as response
+  //         resolve([200, osdtem.data]);
+  //       } else {
+  //         reject([400, "Cannot add osdtemplate"]);
+  //       }
+  //     });
+  //   });
+  // });
 
   mock.onPost(url.ADD_NEW_REGIONALOFFICE).reply((regionaloffice) => {
     return new Promise((resolve, reject) => {

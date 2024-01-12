@@ -169,7 +169,7 @@ export const GET_OSDCONFIGURATIONLIST_BACKGROUNDAREA =
   "/nstv/list/osdbackgroundarea?vr=web1.0";
 export const GET_OSDCONFIGURATIONLIST_STATUS =
   "/list/status?fields=id,name&vr=web1.0";
-export const ADD_NEW_OSDCONFIGURATIONLIST = "/mtc?vr=web1.0";
+export const ADD_NEW_OSDCONFIGURATIONLIST = "/message-template/template-for?vr=web1.0";
 
 export const GET_LOCALCHANNELNUMBER = "/localchannelnumberlist";
 
@@ -178,7 +178,14 @@ export const ADD_NEW_DOCUMENTUPLOADPOLICY = "/add/documentuploadpolicylist";
 
 export const GET_OSDTEMPLATE =
   "/message-template?expand=created_by_lbl,status_lbl,template_for_lbl,operator_count&page=1&per-page=50&vr=web1.0";
-export const ADD_NEW_OSDTEMPLATE = "/add/osdtemplatelist";
+export const GET_OSDTEMPLATE_TEMPLATEFOR =
+  "/message-template/template-for?fields=id,name&vr=web1.0";
+export const GET_OSDTEMPLATE_STATUS =
+  "/list/status?fields=id,name&vr=web1.0";
+export const GET_OSDTEMPLATE_OSD =
+  "/list?fields=id,name,cas_code&vr=web1.0";
+export const ADD_NEW_OSDTEMPLATE = "/message-template?vr=web1.0";
+
 
 export const GET_NCF =
   "/ncf-rates?expand=status_lbl,created_by_lbl,type_lbl&page=1&per-page=50&vr=web1.0";
