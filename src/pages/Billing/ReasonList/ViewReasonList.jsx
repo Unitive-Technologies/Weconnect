@@ -32,13 +32,13 @@ const ViewReason = (props) => {
       id: (reason && reason.id) || "",
       name: (reason && reason.name) || "",
       status: (reason && reason.status) || "",
-      type_display_lbl: (reason && reason.type_display_lbl) || [],
+      type_display_lbl: (reason && reason.type_display_lbl) || "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required(""),
       status: Yup.string().required(""),
-      // type_display_lbl: Yup.string().required(""),
-      type_display_lbl: Yup.array().min(1, "Select at least one Reason Type"),
+      type_display_lbl: Yup.string().required(""),
+      // type_display_lbl: Yup.array().min(1, "Select at least one Reason Type"),
     }),
     onSubmit: (values) => {
       // const type_display_lblArray = values["type_display_lbl"] || [];
