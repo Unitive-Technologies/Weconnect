@@ -42,6 +42,7 @@ const convertReasonListObject = (reasonList) => {
       type_display_lbl: reason.type_display_lbl,
       created_at_lbl: reason.created_at_lbl,
       created_by_lbl: reason.created_by_lbl,
+      status: reason.status,
       status_lbl: reason.status_lbl,
     };
   });
