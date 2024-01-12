@@ -28,14 +28,13 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-
 import { Email, Tags, Projects } from "./osdTemplateListCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
 
-import { getOSDTemplate as onGetOSDTemplate } from "/src/store/OSDTemplate/actions";
+import { getOSDTemplate as onGetOSDTemplate, getOSDTemplateOSD as onGetOSDTemplateOSD, getOSDTemplateStatus as onGetOSDTemplateStatus, getOSDTemplateTemplateFor as onGetOSDTemplateTemplateFor } from "/src/store/OSDTemplate/actions";
 
 import { isEmpty } from "lodash";
 
@@ -60,11 +59,14 @@ const OSDTemplateList = (props) => {
     selectOSDTemplateState,
     (osdTemplate) => ({
       osdTemp: osdTemplate.osdTemplate,
+      osdTempTemplateFor: osdTemplate.osdTemplateTemplateFor,
+      osdTempOSD: osdTemplate.osdTemplateOSD,
+      osdTempStatus: osdTemplate.osdTemplateStatus,
       loading: osdTemplate.loading,
     })
   );
 
-  const { osdTemp, loading } = useSelector(osdTemplateProperties);
+  const { osdTemp, osdTempOSD, osdTempTemplateFor, osdTempStatus, loading } = useSelector(osdTemplateProperties);
 
   useEffect(() => {
     console.log("OSD Temp data in component:", osdTemp);
@@ -224,23 +226,14 @@ const OSDTemplateList = (props) => {
   useEffect(() => {
     if (osdTemp && !osdTemp.length) {
       dispatch(onGetOSDTemplate());
-      setIsEdit(false);
+      dispatch(onGetOSDTemplateStatus());
+      dispatch(onGetOSDTemplateOSD());
+      dispatch(onGetOSDTemplateTemplateFor());
+      // setIsEdit(false);
     }
   }, [dispatch, osdTemp]);
 
-  // useEffect(() => {
-  //   setContact(users);
-  //   setIsEdit(false);
-  // }, [users]);
-
-  // useEffect(() => {
-  //   if (!isEmpty(users) && !!isEdit) {
-  //     setContact(users);
-  //     setIsEdit(false);
-  //   }
-  // }, [users]);
-
-  const toggle = () => {
+  const handleAddOSDTemplateList = () => {
     setShowAddOSDTemplateList(!showAddOSDTemplateList);
   };
 
@@ -343,7 +336,11 @@ const OSDTemplateList = (props) => {
       <ViewOSDTemplateList isOpen={showViewOSDTemplateList}
         toggle={handleViewOSDTemplateList}
         osdTemplate={viewOSDTemplateList} />
-      <AddNewOSDTemplate isOpen={showAddOSDTemplateList} toggle={toggle} />
+      <AddNewOSDTemplate isOpen={showAddOSDTemplateList} handleAddOSDTemplateList={handleAddOSDTemplateList}
+        osdTempOSD={osdTempOSD}
+        osdTempStatus={osdTempStatus}
+        osdTempTemplateFor={osdTempTemplateFor}
+      />
 
       <div className="page-content">
         <Container fluid>

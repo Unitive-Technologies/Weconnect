@@ -20,9 +20,11 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewOSDTemplate as onAddNewOSDTemplate } from "/src/store/OSDTemplate/actions";
 import { useSelector, useDispatch } from "react-redux";
+import { getOSDTemplate as onGetOSDTemplate } from "/src/store/actions";
 
 const AddNewOSDTemplateList = (props) => {
-    const { isOpen, toggle } = props;
+    const { isOpen, toggle, handleAddOSDTemplateList, osdTempOSD, osdTempStatus, osdTempTemplateFor } = props;
+
     const dispatch = useDispatch();
     const [user, setUser] = useState();
 
@@ -59,8 +61,9 @@ const AddNewOSDTemplateList = (props) => {
             dispatch(
                 onAddNewOSDTemplate(newOSDTemplate)
             );
+            dispatch(onGetOSDTemplate());
             validation.resetForm();
-            toggle();
+            handleAddOSDTemplateList();
         },
         onReset: (values) => {
             validation.setValues(validation.initialValues);
@@ -76,9 +79,9 @@ const AddNewOSDTemplateList = (props) => {
             className="exampleModal"
             tabIndex="-1"
             size="xl"
-            toggle={toggle}
+            toggle={handleAddOSDTemplateList}
         >
-            <ModalHeader tag="h4" toggle={toggle}>Add New OSD Template</ModalHeader>
+            <ModalHeader tag="h4" toggle={handleAddOSDTemplateList}>Add New OSD Template</ModalHeader>
             <ModalBody>
                 <Form
                     onSubmit={(e) => {
@@ -119,10 +122,13 @@ const AddNewOSDTemplateList = (props) => {
                                     onBlur={validation.handleBlur}
                                     value={validation.values.template_for_lbl || ""}
                                 >
-                                    <option value="101">Select template for</option>
-                                    <option value="102">SMS</option>
-                                    <option value="103">OSD</option>
-                                    <option value="104">Bmail</option>
+                                    <option value="">Select Template For</option>
+                                    {osdTempTemplateFor &&
+                                        osdTempTemplateFor.map((template_for_lbl) => (
+                                            <option key={template_for_lbl.id} value={template_for_lbl.id}>
+                                                {template_for_lbl.name}
+                                            </option>
+                                        ))}
                                 </Input>
                                 {validation.touched.template_for_lbl && validation.errors.template_for_lbl ? (
                                     <FormFeedback type="invalid">
@@ -143,9 +149,13 @@ const AddNewOSDTemplateList = (props) => {
                                     onBlur={validation.handleBlur}
                                     value={validation.values.status_lbl || ""}
                                 >
-                                    <option value="101">Select Status</option>
-                                    <option value="102">Active</option>
-                                    <option value="103">In-Active</option>
+                                    <option value="">Select Status</option>
+                                    {osdTempStatus &&
+                                        osdTempStatus.map((status_lbl) => (
+                                            <option key={status_lbl.id} value={status_lbl.id}>
+                                                {status_lbl.name}
+                                            </option>
+                                        ))}
                                 </Input>
                                 {validation.touched.status_lbl && validation.errors.status_lbl ? (
                                     <FormFeedback type="invalid">
