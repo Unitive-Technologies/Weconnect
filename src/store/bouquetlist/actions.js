@@ -160,4 +160,17 @@ export const getBouquetPackagesFail = (error) => ({
   payload: error,
 });
 
-// export const getOperatorForBouquet
+export const getOperatorForBouquet = (id) => ({
+  type: GET_OPERATOR_FORBOUQUET,
+  payload: id,
+});
+
+export const getOperatorForBouquetSuccess = (operatorforbouquet) => ({
+  type: GET_OPERATOR_FORBOUQUET_SUCCESS,
+  payload: operatorforbouquet,
+});
+
+export const getOperatorForBouquetFail = (error) => ({
+  type: GET_OPERATOR_FORBOUQUET_FAIL,
+  payload: error,
+});

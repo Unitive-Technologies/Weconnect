@@ -17,6 +17,8 @@ import {
   GET_ALACARTECHANNELS_FAIL,
   GET_BOUQUET_PACKAGES_SUCCESS,
   GET_BOUQUET_PACKAGES_FAIL,
+  GET_OPERATOR_FORBOUQUET_SUCCESS,
+  GET_OPERATOR_FORBOUQUET_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -28,6 +30,7 @@ const INIT_STATE = {
   rechargeperiod: [],
   alacartechannels: [],
   bouquetpackages: [],
+  operatorforbouquet: [],
   error: {},
   loading: true,
 };
@@ -35,7 +38,6 @@ const INIT_STATE = {
 const Bouquet = (state = INIT_STATE, action) => {
   switch (action.type) {
     case GET_BOUQUET_SUCCESS:
-      console.log("Bouquet list data in reducer:", action.payload);
       return {
         ...state,
         bouquet: action.payload,
@@ -146,6 +148,19 @@ const Bouquet = (state = INIT_STATE, action) => {
       };
 
     case GET_BOUQUET_PACKAGES_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_OPERATOR_FORBOUQUET_SUCCESS:
+      return {
+        ...state,
+        operatorforbouquet: action.payload,
+        loading: false,
+      };
+
+    case GET_OPERATOR_FORBOUQUET_FAIL:
       return {
         ...state,
         error: action.payload,

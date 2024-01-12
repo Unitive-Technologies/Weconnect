@@ -9,6 +9,7 @@ import {
   GET_BOUQUET_PACKAGES,
   GET_BOUQUET_TAXLIST,
   GET_RECHARGEPERIOD,
+  GET_OPERATOR_FORBOUQUET,
 } from "./actionTypes";
 import {
   getBouquetSuccess,
@@ -29,6 +30,8 @@ import {
   getRechargePeriodFail,
   getBouquexSuccess,
   getBouquexFail,
+  getOperatorForBouquetSuccess,
+  getOperatorForBouquetFail,
 } from "./actions";
 import {
   getBouquet,
@@ -40,6 +43,7 @@ import {
   getBouquetType,
   getBouquex,
   getRechargePeriod,
+  getOperatorForBouquet,
 } from "../../helpers/fakebackend_helper";
 
 const convertBouquetListObject = (bouquetList) => {
@@ -157,6 +161,16 @@ function* fetchAlacarteChannels() {
   }
 }
 
+function* fetchOperatorForBouquet({ payload: id }) {
+  try {
+    const response = yield call(getOperatorForBouquet(id));
+    yield put(getOperatorForBouquetSuccess(response.data));
+  } catch (error) {
+    console.error("Error fetching Operator in bouquet: ", error);
+    yield put(getOperatorForBouquetFail(error));
+  }
+}
+
 function* bouquetSaga() {
   yield takeEvery(GET_BOUQUET, fetchBouquet);
   yield takeEvery(ADD_BOUQUET, onAddBouquet);
@@ -167,6 +181,7 @@ function* bouquetSaga() {
   yield takeEvery(GET_RECHARGEPERIOD, fetchRechargePeriod);
   yield takeEvery(GET_BOUQUEX, fetchBouquex);
   yield takeEvery(GET_ALACARTECHANNELS, fetchAlacarteChannels);
+  yield takeEvery(GET_OPERATOR_FORBOUQUET, fetchOperatorForBouquet);
 }
 
 export default bouquetSaga;
