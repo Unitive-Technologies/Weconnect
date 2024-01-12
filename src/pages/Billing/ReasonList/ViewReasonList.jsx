@@ -40,7 +40,7 @@ const ViewReason = (props) => {
       status: Yup.string().required(""),
       // type_display_lbl: Yup.string().required(""),
       type_display_lbl: Yup.array().min(1, "Select at least one Reason Type"),
-      type: Yup.array().min(1, "Select at least one Reason Type"),
+      type: Yup.string().required(""),
     }),
     onSubmit: (values) => {
       // const type_display_lblArray = values["type_display_lbl"] || [];
