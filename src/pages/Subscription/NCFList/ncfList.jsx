@@ -101,25 +101,15 @@ const NCFList = (props) => {
         Header: "*",
         disableFilters: true,
         filterable: true,
-        // Cell: () => {
-        //   return (
-        //     <>
-        //       <i className="bx bx-bx bx-check"></i>
-        //     </>
-        //   );
-        // },
         Cell: (cellProps) => (
           <input
             type="checkbox"
-            // disabled
-            // checked
             onChange={() => handleCheckboxClick(cellProps.row.original)}
           />
         ),
       },
       {
         Header: "#",
-        // accessor: "name",
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
@@ -372,7 +362,7 @@ const NCFList = (props) => {
       },
       {
         name: "Bulk Removal from Operator",
-        action: setShowBulkRemoval,
+        action: selectedRow.length === 0 ? setShowWarning : setShowBulkRemoval,
         type: "dropdown",
         dropdownName: "Action",
       },

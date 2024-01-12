@@ -72,14 +72,16 @@ const BouquetList = () => {
   const [viewBouquetData, setViewBouquetData] = useState({});
   const [showBulkRemoval, setShowBulkRemoval] = useState(false);
   const [showBulkSettings, setShowBulkSettings] = useState(false);
+  const [isChecked, setIsChecked] = useState(true);
+  const [selectedRow, setSelectedRow] = useState({});
+  const [showWarning, setShowWarning] = useState(false);
 
-  // console.log("Alacarte channels: ", alacartechannels);
-  // console.log("bouquet box type: ", bouquetboxtype);
-  // console.log("bouquet packages: ", bouquetpackages);
-  // console.log("bouquet tax list: ", bouquettaxlist);
-  // console.log("bouquet type: ", bouquettype);
-  // console.log("bouquex: ", bouquex);
-  console.log("Recharge period: ", rechargeperiod);
+  const handleCheckboxClick = (row) => {
+    console.log("Clicked row: ", row);
+    setShowViewBouquet(false);
+    setIsChecked(!isChecked);
+    setSelectedRow(row);
+  };
 
   const toggleViewBouquet = (userData) => {
     console.log("User Data: ", userData);
@@ -109,13 +111,12 @@ const BouquetList = () => {
         Header: "*",
         disableFilters: true,
         filterable: true,
-        Cell: () => {
-          return (
-            <>
-              <i className="mdi mdi-check"></i>
-            </>
-          );
-        },
+        Cell: (cellProps) => (
+          <input
+            type="checkbox"
+            onChange={() => handleCheckboxClick(cellProps.row.original)}
+          />
+        ),
       },
       {
         Header: "#",
@@ -296,13 +297,13 @@ const BouquetList = () => {
       },
       {
         name: "Bulk assign to Operator",
-        action: setShowBulkAssign,
+        action: selectedRow.length === 0 ? setShowWarning : setShowBulkAssign,
         type: "dropdown",
         dropdownName: "Action",
       },
       {
         name: "Bulk removal from Operator",
-        action: setShowBulkRemoval,
+        action: selectedRow.length === 0 ? setShowWarning : setShowBulkRemoval,
         type: "dropdown",
         dropdownName: "Action",
       },
@@ -333,8 +334,16 @@ const BouquetList = () => {
         bouquex={bouquex}
         rechargeperiod={rechargeperiod}
       />
-      <BulkAssign isOpen={showBulkAssign} toggle={toggleBulkAssign} />
-      <BulkRemoval isOpen={showBulkRemoval} toggle={toggleBulkRemoval} />
+      <BulkAssign
+        isOpen={showBulkAssign}
+        toggle={toggleBulkAssign}
+        selectedRow={selectedRow}
+      />
+      <BulkRemoval
+        isOpen={showBulkRemoval}
+        toggle={toggleBulkRemoval}
+        selectedRow={selectedRow}
+      />
       <BulkSettings isOpen={showBulkSettings} toggle={toggleBulkSettings} />
       <div className="page-content">
         <Container fluid>

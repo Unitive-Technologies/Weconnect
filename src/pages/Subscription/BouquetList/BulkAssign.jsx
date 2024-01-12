@@ -5,7 +5,7 @@ import OperatorList from "./OperatorList";
 import BulkAssignBouquet from "./BulkAssignBouquets";
 
 const BulkAssign = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, toggle, selectedRow } = props;
 
   return (
     <Modal
@@ -54,7 +54,7 @@ const BulkAssign = (props) => {
                 margin: "20px 0px",
               }}
             >
-              <OperatorList />
+              <OperatorList id={selectedRow.id} />
             </Row>
           </Row>
           <Row>

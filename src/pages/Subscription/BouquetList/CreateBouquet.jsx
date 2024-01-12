@@ -35,6 +35,7 @@ const CreateBouquet = (props) => {
     bouquettype,
     bouquex,
     rechargeperiod,
+    selectedRow,
   } = props;
   const dispatch = useDispatch();
   const [toggleSwitch, settoggleSwitch] = useState(true);

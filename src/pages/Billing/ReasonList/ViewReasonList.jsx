@@ -19,8 +19,9 @@ import { useDispatch } from "react-redux";
 import { updateReason as onUpdateReason } from "/src/store/reasonlist/actions";
 
 const ViewReason = (props) => {
-  const { isOpen, handleViewReason, reason, reasonStatus, reasonReasonType } = props;
-  console.log("View Reasonlist modal:" + JSON.stringify(reason));
+  const { isOpen, handleViewReason, reason, reasonStatus, reasonReasonType } =
+    props;
+  // console.log("View Reasonlist modal:" + JSON.stringify(reason));
   const dispatch = useDispatch();
   const [showEditReason, setShowEditReason] = useState(false);
 
@@ -37,17 +38,17 @@ const ViewReason = (props) => {
     },
     validationSchema: Yup.object({
       name: Yup.string().required(""),
-      status: Yup.string().required(""),
+      status: Yup.string().required("Select Status"),
       // type_display_lbl: Yup.string().required(""),
-      type_display_lbl: Yup.array().min(1, "Select at least one Reason Type"),
-      type: Yup.string().required(""),
+      // type_display_lbl: Yup.array().min(1, "Select at least one Reason Type"),
+      type: Yup.array().min(1, "Select at least one Reason Type"),
     }),
     onSubmit: (values) => {
       // const type_display_lblArray = values["type_display_lbl"] || [];
       // const type_display_lblIntegers = type_display_lblArray.map((option) =>
       //   parseInt(option)
       // );
-      console.log("Updated values" + JSON.stringify(values))
+      console.log("Updated values" + JSON.stringify(values));
 
       const updateReason = {
         id: reason.id,
@@ -171,7 +172,7 @@ const ViewReason = (props) => {
                   <Input
                     name="type"
                     type="select"
-                    placeholder=""
+                    placeholder="Select at least one Reason Type"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.type || ""}
@@ -184,8 +185,7 @@ const ViewReason = (props) => {
                       </option>
                     ))}
                   </Input>
-                  {validation.touched.type &&
-                    validation.errors.type ? (
+                  {validation.touched.type && validation.errors.type ? (
                     <FormFeedback type="invalid">
                       {validation.errors.type}
                     </FormFeedback>

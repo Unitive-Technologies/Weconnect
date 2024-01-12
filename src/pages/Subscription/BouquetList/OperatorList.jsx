@@ -5,6 +5,7 @@ import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const OperatorList = (props) => {
+  const { id } = props;
   const [showAddOperator, setShowAddOperator] = useState(false);
   const columns = useMemo(
     () => [
