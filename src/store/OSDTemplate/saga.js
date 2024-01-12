@@ -2,7 +2,12 @@ import { call, put, takeEvery } from "redux-saga/effects";
 
 import { GET_OSDTEMPLATE, GET_OSDTEMPLATE_STATUS, GET_OSDTEMPLATE_OSD, GET_OSDTEMPLATE_TEMPLATEFOR, ADD_NEW_OSDTEMPLATE } from "./actionTypes";
 
-import { getOSDTemplateSuccess, getOSDTemplateFail, getOSDTemplateStatusSuccess, getOSDTemplateStatusFail, getOSDTemplateOSDSuccess, getOSDTemplateOSDFail, getOSDTemplateTemplateForSuccess, getOSDTemplateTemplateForFail } from "./actions";
+import {
+  getOSDTemplateSuccess, getOSDTemplateFail,
+  addOSDTemplateSuccess,
+  addOSDTemplateFail,
+  getOSDTemplateStatusSuccess, getOSDTemplateStatusFail, getOSDTemplateOSDSuccess, getOSDTemplateOSDFail, getOSDTemplateTemplateForSuccess, getOSDTemplateTemplateForFail
+} from "./actions";
 
 //Include Both Helper File with needed methods
 import { getOSDTemplate, getOSDTemplateStatus, getOSDTemplateOSD, getOSDTemplateTemplateFor, addNewOSDTemplate } from "../../helpers/fakebackend_helper";
@@ -71,11 +76,11 @@ function* onAddNewOSDTemplate({ payload: OSDTemplate }) {
   try {
     const response = yield call(addNewOSDTemplate, OSDTemplate);
 
-    yield put(addOSDTemplateSuccess(response));
-    toast.success("OSDTemplate Added Successfully", { autoClose: 2000 });
+    yield put(addOSDTemplateSuccess(response.data));
+    // toast.success("OSDTemplate Added Successfully", { autoClose: 2000 });
   } catch (error) {
     yield put(addOSDTemplateFail(error));
-    toast.error("OSDTemplate Added Failed", { autoClose: 2000 });
+    // toast.error("OSDTemplate Added Failed", { autoClose: 2000 });
   }
 }
 

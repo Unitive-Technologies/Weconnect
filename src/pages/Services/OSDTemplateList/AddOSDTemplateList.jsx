@@ -164,6 +164,115 @@ const AddNewOSDTemplateList = (props) => {
                                 ) : null}
                             </div>
                         </Col>
+                        <Col sm="4">
+                            <div className="mb-3">
+                                <Label className="form-label">SMS Template (max 140 characters)<span style={{ color: 'red' }}>*</span></Label>
+                                <Input
+                                    name="smstemplate"
+                                    type="textarea"
+                                    placeholder="Enter SMS template"
+                                    // className="form-select"
+                                    onChange={validation.handleChange}
+                                    onBlur={validation.handleBlur}
+                                    value={validation.values.status_lbl || ""}
+                                    row="3"
+                                >
+                                </Input>
+                                {validation.touched.smstemplate && validation.errors.smstemplate ? (
+                                    <FormFeedback type="invalid">
+                                        {validation.errors.smstemplate}
+                                    </FormFeedback>
+                                ) : null}
+                            </div>
+                        </Col>
+                        <Col sm="4">
+                            <div className="mb-3">
+                                <Label className="form-label">OSD Show Content<span style={{ color: 'red' }}>*</span></Label>
+                                <Input
+                                    name="showcontent"
+                                    type="textarea"
+                                    placeholder="Enter SMS template"
+                                    // className="form-select"
+                                    onChange={validation.handleChange}
+                                    onBlur={validation.handleBlur}
+                                    value={validation.values.showcontent || ""}
+                                    row="3"
+                                >
+                                </Input>
+                                {validation.touched.showcontent && validation.errors.showcontent ? (
+                                    <FormFeedback type="invalid">
+                                        {validation.errors.showcontent}
+                                    </FormFeedback>
+                                ) : null}
+                            </div>
+                        </Col>
+                        <Col sm="4">
+                            <div className="mb-3">
+                                <Label className="form-label">CAS Config (Select only 1 config per CAS)<span style={{ color: 'red' }}>*</span></Label>
+                                <Input
+                                    name="cas_code"
+                                    type="select"
+                                    placeholder="Select Status"
+                                    className="form-select"
+                                    onChange={validation.handleChange}
+                                    onBlur={validation.handleBlur}
+                                    value={validation.values.cas_code || ""}
+                                >
+                                    <option value="">Select cas config</option>
+                                    {osdTempOSD &&
+                                        osdTempOSD.map((cas_code) => (
+                                            <option key={cas_code.id} value={cas_code.id}>
+                                                {cas_code.name}
+                                            </option>
+                                        ))}
+                                </Input>
+                                {validation.touched.cas_code && validation.errors.cas_code ? (
+                                    <FormFeedback type="invalid">
+                                        {validation.errors.cas_code}
+                                    </FormFeedback>
+                                ) : null}
+                            </div>
+                        </Col>
+                        <Col sm="4">
+                            <div className="mb-3">
+                                <Label className="form-label">Title<span style={{ color: 'red' }}>*</span></Label>
+                                <Input
+                                    name="title"
+                                    type="text"
+                                    placeholder="Enter title"
+                                    // className="form-select"
+                                    onChange={validation.handleChange}
+                                    onBlur={validation.handleBlur}
+                                    value={validation.values.title || ""}
+                                >
+                                </Input>
+                                {validation.touched.title && validation.errors.title ? (
+                                    <FormFeedback type="invalid">
+                                        {validation.errors.title}
+                                    </FormFeedback>
+                                ) : null}
+                            </div>
+                        </Col>
+                        <Col sm="4">
+                            <div className="mb-3">
+                                <Label className="form-label">Content<span style={{ color: 'red' }}>*</span></Label>
+                                <Input
+                                    name="content"
+                                    type="text"
+                                    placeholder="Enter content"
+                                    // className="form-select"
+                                    onChange={validation.handleChange}
+                                    onBlur={validation.handleBlur}
+                                    value={validation.values.content || ""}
+                                >
+                                </Input>
+                                {validation.touched.content && validation.errors.content ? (
+                                    <FormFeedback type="invalid">
+                                        {validation.errors.content}
+                                    </FormFeedback>
+                                ) : null}
+                            </div>
+                        </Col>
                     </Row>
                     <Row>
                         <Col>
