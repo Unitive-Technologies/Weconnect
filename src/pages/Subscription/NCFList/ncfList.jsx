@@ -347,6 +347,7 @@ const NCFList = (props) => {
 
   const keyField = "id";
   const getTableActions = () => {
+    // console.log("Selected row : ", selectedRow);
     return [
       {
         name: "Create",
@@ -356,7 +357,10 @@ const NCFList = (props) => {
       },
       {
         name: "Bulk Assign to Operator",
-        action: selectedRow.length === 0 ? setShowWarning : setShowBulkAssign,
+        action:
+          Object.keys(selectedRow).length === 0
+            ? () => setShowWarning(true)
+            : () => setShowBulkAssign(true),
         type: "dropdown",
         dropdownName: "Action",
       },

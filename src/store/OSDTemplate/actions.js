@@ -81,16 +81,12 @@ export const getOSDTemplateTemplateForFail = (error) => ({
   payload: error,
 });
 
-export const addNewOSDTemplate = (
-  osdTemplate
-) => ({
+export const addNewOSDTemplate = (osdTemplate) => ({
   type: ADD_NEW_OSDTEMPLATE,
   payload: osdTemplate,
 });
 
-export const addOSDTemplateSuccess = (
-  osdTemplate
-) => ({
+export const addOSDTemplateSuccess = (osdTemplate) => ({
   type: ADD_OSDTEMPLATE_SUCCESS,
   payload: osdTemplate,
 });
