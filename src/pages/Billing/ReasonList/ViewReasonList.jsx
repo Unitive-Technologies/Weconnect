@@ -33,24 +33,28 @@ const ViewReason = (props) => {
       name: (reason && reason.name) || "",
       status: (reason && reason.status) || "",
       type_display_lbl: (reason && reason.type_display_lbl) || "",
+      type: (reason && reason.type) || "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required(""),
       status: Yup.string().required(""),
-      type_display_lbl: Yup.string().required(""),
-      // type_display_lbl: Yup.array().min(1, "Select at least one Reason Type"),
+      // type_display_lbl: Yup.string().required(""),
+      type_display_lbl: Yup.array().min(1, "Select at least one Reason Type"),
+      type: Yup.array().min(1, "Select at least one Reason Type"),
     }),
     onSubmit: (values) => {
       // const type_display_lblArray = values["type_display_lbl"] || [];
       // const type_display_lblIntegers = type_display_lblArray.map((option) =>
       //   parseInt(option)
       // );
+      console.log("Updated values" + JSON.stringify(values))
 
       const updateReason = {
         id: reason.id,
         name: values.name,
         status: values.status,
         type_display_lbl: values.type_display_lbl,
+        type: values.type,
         // type_display_lbl: type_display_lblIntegers,
         // type_display_lbl: values.type_display_lbl,
       };
@@ -165,25 +169,25 @@ const ViewReason = (props) => {
                 <div className="mb-3">
                   <Label className="form-label">Reason Type</Label>
                   <Input
-                    name="type_display_lbl"
+                    name="type"
                     type="select"
                     placeholder=""
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.type_display_lbl || ""}
+                    value={validation.values.type || ""}
                     multiple
                     disabled={!showEditReason}
                   >
-                    {reasonReasonType.map((type_display_lbl) => (
-                      <option key={type_display_lbl.id} value={type_display_lbl.id}>
-                        {type_display_lbl.name}
+                    {reasonReasonType.map((type) => (
+                      <option key={type.id} value={type.id}>
+                        {type.name}
                       </option>
                     ))}
                   </Input>
-                  {validation.touched.type_display_lbl &&
-                    validation.errors.type_display_lbl ? (
+                  {validation.touched.type &&
+                    validation.errors.type ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.type_display_lbl}
+                      {validation.errors.type}
                     </FormFeedback>
                   ) : null}
                 </div>

@@ -38,6 +38,7 @@ const convertReasonListObject = (reasonList) => {
       id: reason.id,
       name: reason.name,
       code: reason.code,
+      type: reason.type,
       type_display_lbl: reason.type_display_lbl,
       created_at_lbl: reason.created_at_lbl,
       created_by_lbl: reason.created_by_lbl,
