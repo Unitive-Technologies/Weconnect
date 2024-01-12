@@ -3,10 +3,16 @@ import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
 import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
+import AddOperators from "./AddOperator";
 
 const OperatorList = (props) => {
   const { id } = props;
   const [showAddOperator, setShowAddOperator] = useState(false);
+
+  const toggleAddOperator = () => {
+    setShowAddOperator(!showAddOperator);
+  };
+
   const columns = useMemo(
     () => [
       {
@@ -127,24 +133,30 @@ const OperatorList = (props) => {
 
   const OperatorListData = [];
   return (
-    <Card>
-      <CardBody>
-        <TableContainer
-          isPagination={true}
-          columns={columns}
-          data={OperatorListData}
-          isShowTableActionButtons={true}
-          isShowingPageLength={true}
-          tableActions={getTableActions()}
-          handleUserClick={() => setShowAddOperator(true)}
-          // customPageSize={50}
-          tableClass="table align-middle table-nowrap table-hover"
-          theadClass="table-light"
-          paginationDiv="col-sm-12 col-md-7"
-          pagination="pagination pagination-rounded justify-content-end mt-4"
-        />
-      </CardBody>
-    </Card>
+    <React.Fragment>
+      <AddOperators
+        isOpen={showAddOperator}
+        toggle={toggleAddOperator}
+        id={id}
+      />
+      <Card>
+        <CardBody>
+          <TableContainer
+            isPagination={true}
+            columns={columns}
+            data={OperatorListData}
+            isShowTableActionButtons={true}
+            isShowingPageLength={true}
+            tableActions={getTableActions()}
+            handleUserClick={() => setShowAddOperator(true)}
+            tableClass="table align-middle table-nowrap table-hover"
+            theadClass="table-light"
+            paginationDiv="col-sm-12 col-md-7"
+            pagination="pagination pagination-rounded justify-content-end mt-4"
+          />
+        </CardBody>
+      </Card>
+    </React.Fragment>
   );
 };
 

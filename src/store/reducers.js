@@ -54,6 +54,7 @@ import promovoucher from "./promovoucherlist/reducer";
 import admindetails from "./admin/reducer";
 import inventorystock from "./inventorystock/reducer";
 import operatorforassign from "./ncflist/reducer";
+import operatorforbouquet from "./bouquetlist/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -107,6 +108,7 @@ const rootReducer = combineReducers({
   admindetails,
   inventorystock,
   operatorforassign,
+  operatorforbouquet,
 });
 
 export default rootReducer;

@@ -244,9 +244,8 @@ export const GET_COMPLAINTCATEGORY =
 export const GET_COMPLAINTCATEGORY_STATUS =
   "/list/status?fields=id,name&vr=web1.0";
 export const ADD_NEW_COMPLAINTCATEGORY = "/complaint-category?vr=web1.0";
-export const UPDATE_COMPLAINTCATEGORY = (id) => `/complaint-category/${id}?vr=web1.0`;
-
-
+export const UPDATE_COMPLAINTCATEGORY = (id) =>
+  `/complaint-category/${id}?vr=web1.0`;
 
 export const GET_COMPLAINTSUBCATEGORY =
   "/complaint-subcategory?expand=created_by_lbl,status_lbl,showonweb_lbl,category_lbl&page=1&per-page=50&vr=web1.0";
@@ -285,7 +284,6 @@ export const GET_BANK =
 export const GET_BANK_STATUS = "/list/status?fields=id,name&vr=web1.0";
 export const ADD_NEW_BANK = "/bank?vr=web1.0";
 export const UPDATE_BANK = (id) => `/bank/${id}?vr=web1.0`;
-
 
 export const GET_PROMOVOUCHER =
   "/promo-voucher?expand=status_lbl,bouque_lbl,expiry_date_lbl,apply_on_lbl,rperiod_lbl,operator_lbl,operator_code_lbl,smartcardno,stbno,created_at_lbl,created_by_lbl&page=1&per-page=50&vr=web1.0";
