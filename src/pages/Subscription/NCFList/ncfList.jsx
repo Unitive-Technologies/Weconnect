@@ -366,7 +366,10 @@ const NCFList = (props) => {
       },
       {
         name: "Bulk Removal from Operator",
-        action: selectedRow.length === 0 ? setShowWarning : setShowBulkRemoval,
+        action:
+          Object.keys(selectedRow).length === 0
+            ? () => setShowWarning(true)
+            : () => setShowBulkRemoval(true),
         type: "dropdown",
         dropdownName: "Action",
       },
@@ -387,12 +390,17 @@ const NCFList = (props) => {
         toggle={toggleBulkRemoval}
         selectedRow={selectedRow}
       />
-      <Toast isOpen={showWarning}>
-        <ToastHeader toggle={handleWarning}>
-          <i className="mdi mdi-alert-outline me-2"></i> Warning
-        </ToastHeader>
-        <ToastBody>Please select NCF</ToastBody>
-      </Toast>
+      <div
+        className="position-fixed top-0 end-0 p-3"
+        style={{ zIndex: "1005" }}
+      >
+        <Toast isOpen={showWarning}>
+          <ToastHeader toggle={handleWarning}>
+            <i className="mdi mdi-alert-outline me-2"></i> Warning
+          </ToastHeader>
+          <ToastBody>Please select NCF</ToastBody>
+        </Toast>
+      </div>
       <div className="page-content">
         <Container fluid>
           <Breadcrumbs title="NCF" breadcrumbItem="NCF" />
