@@ -318,7 +318,6 @@ const OSDTemplateList = (props) => {
         action: toggleToast,
         type: "dropdown",
         dropdownName: "Actions",
-        // onClick={toggleToast}
       },
       {
         name: "Bulk Removel from Operator",

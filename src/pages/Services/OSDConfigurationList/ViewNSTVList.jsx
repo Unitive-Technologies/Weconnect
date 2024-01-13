@@ -244,7 +244,6 @@ const ViewNSTVList = (props) => {
                                 </div>
                             </Col>
                             <Col sm="4">
-
                                 <div className="mb-3">
                                     <Label className="form-label">Forced Display<span style={{ color: 'red' }}>*</span></Label>
                                     <Input
