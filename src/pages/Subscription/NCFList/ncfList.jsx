@@ -62,15 +62,21 @@ const NCFList = (props) => {
   const [showViewNcf, setShowViewNcf] = useState(false);
   const [viewNcfData, setViewNcfData] = useState({});
   const [showBulkRemoval, setShowBulkRemoval] = useState(false);
-  const [isChecked, setIsChecked] = useState(true);
+  const [isChecked, setIsChecked] = useState(false);
   const [selectedRow, setSelectedRow] = useState({});
   const [showWarning, setShowWarning] = useState(false);
 
   const handleCheckboxClick = (row) => {
     console.log("Clicked row: ", row);
     setShowViewNcf(false);
-    setIsChecked(!isChecked);
+    setIsChecked(true);
     setSelectedRow(row);
+  };
+
+  const handleCheckboxDeselect = (row) => {
+    setIsChecked(false);
+    setSelectedRow({});
+    console.log("Deselect function worked");
   };
 
   const toggleViewNcf = (userData) => {
@@ -104,7 +110,11 @@ const NCFList = (props) => {
         Cell: (cellProps) => (
           <input
             type="checkbox"
-            onChange={() => handleCheckboxClick(cellProps.row.original)}
+            onChange={
+              isChecked
+                ? () => handleCheckboxDeselect(cellProps.row.original)
+                : () => handleCheckboxClick(cellProps.row.original)
+            }
           />
         ),
       },
@@ -347,7 +357,6 @@ const NCFList = (props) => {
 
   const keyField = "id";
   const getTableActions = () => {
-    // console.log("Selected row : ", selectedRow);
     return [
       {
         name: "Create",
@@ -419,8 +428,11 @@ const NCFList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleUserClick={() => setShowAddNcf(true)}
-                      handleUploadUser={() => setShowBulkAssign(true)}
+                      // handleUserClick={() => setShowAddNcf(true)}
+                      // handleUploadUser={() => setShowBulkAssign(true)}
+                      handleRowClick={(row) => {
+                        toggleViewNcf(row);
+                      }}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
