@@ -18,6 +18,14 @@ const convertOSDTemplateListObject = (osdTemplate) => {
       ...osdTemp,
       id: osdTemp.id,
       name: osdTemp.name,
+      title: osdTemp.title,
+      template_for: osdTemp.template_for,
+      smstemplate: osdTemp.smstemplate,
+      showcontent: osdTemp.showcontent,
+      casconfig: osdTemp.casconfig,
+      bmailtitle: osdTemp.bmailtitle,
+      content: osdTemp.content,
+      status: osdTemp.status,
       template_for_lbl: osdTemp.template_for_lbl,
       status_lbl:
         osdTemp.status_lbl === 1
