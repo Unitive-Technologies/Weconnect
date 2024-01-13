@@ -67,16 +67,24 @@ const NCFList = (props) => {
   const [showWarning, setShowWarning] = useState(false);
 
   const handleCheckboxClick = (row) => {
-    console.log("Clicked row: ", row);
     setShowViewNcf(false);
     setIsChecked(true);
     setSelectedRow(row);
   };
 
+  // const handleCheckboxDeselect = (row) => {
+  //   setIsChecked(false);
+  //   setSelectedRow({});
+  //   console.log("Deselect function worked");
+  // };
+
   const handleCheckboxDeselect = (row) => {
+    setShowViewNcf(false);
     setIsChecked(false);
-    setSelectedRow({});
-    console.log("Deselect function worked");
+    setSelectedRow((prevSelectedRow) => {
+      return prevSelectedRow === row ? {} : prevSelectedRow;
+    });
+    console.log("selected row: ", selectedRow);
   };
 
   const toggleViewNcf = (userData) => {
@@ -110,11 +118,12 @@ const NCFList = (props) => {
         Cell: (cellProps) => (
           <input
             type="checkbox"
-            onChange={
-              isChecked
-                ? () => handleCheckboxDeselect(cellProps.row.original)
-                : () => handleCheckboxClick(cellProps.row.original)
-            }
+            // onChange={
+            //   // isChecked
+            //   //   ? () => handleCheckboxClick(cellProps.row.original):
+            //   () => handleCheckboxDeselect(cellProps.row.original)
+            // }
+            onChange={() => handleCheckboxClick(cellProps.row.original)}
           />
         ),
       },
@@ -428,8 +437,6 @@ const NCFList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      // handleUserClick={() => setShowAddNcf(true)}
-                      // handleUploadUser={() => setShowBulkAssign(true)}
                       handleRowClick={(row) => {
                         toggleViewNcf(row);
                       }}
