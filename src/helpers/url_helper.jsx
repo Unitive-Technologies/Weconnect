@@ -183,7 +183,7 @@ export const GET_OSDTEMPLATE_TEMPLATEFOR =
 export const GET_OSDTEMPLATE_STATUS =
   "/list/status?fields=id,name&vr=web1.0";
 export const GET_OSDTEMPLATE_OSD =
-  "/list?fields=id,name,cas_code&vr=web1.0";
+  "/mtc/list?fields=id,name,cas_code&vr=web1.0";
 export const ADD_NEW_OSDTEMPLATE = "/message-template?vr=web1.0";
 
 

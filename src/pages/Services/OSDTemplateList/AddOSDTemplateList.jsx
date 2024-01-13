@@ -37,9 +37,12 @@ const AddNewOSDTemplateList = (props) => {
             name: "",
             title: "",
             template_for: "",
-            smstemplate: "",
+            template_message: "",
             showcontent: "",
+            template_config_id: "",
+            // template_config_id: [{ "id": "", "name": "", "cas_code": "" }],
             casconfig: "",
+            // template_config_id: "",
             bmailtitle: "",
             content: "",
             status_lbl: "",
@@ -49,21 +52,28 @@ const AddNewOSDTemplateList = (props) => {
         validationSchema: Yup.object({
             name: Yup.string().required("Enter name"),
             template_for: Yup.string().required("Select template for"),
-            smstemplate: Yup.string().required("Select template for"),
+            template_message: Yup.string().required("Select template for"),
             showcontent: Yup.string().required("Select template for"),
-            casconfig: Yup.string().required("Select template for"),
+            // casconfig: Yup.string().required("Select template for"),
             bmailtitle: Yup.string().required("Select template for"),
             content: Yup.string().required("Select template for"),
             status_lbl: Yup.string().required("Select status"),
         }),
         onSubmit: (values) => {
+            const OSDvaluesArray = values["template_config_id"] || [];
+            const OSDvaluesIntegers = OSDvaluesArray.map((option) =>
+                parseInt(option, 10)
+            ); // Specify the radix
+
             const newOSDTemplate = {
                 id: Math.floor(Math.random() * (30 - 20)) + 20,
                 name: values["name"],
                 template_for: values["template_for"],
-                smstemplate: values["smstemplate"],
+                template_message: values["template_message"],
+                template_config_id: OSDvaluesIntegers,
+                // template_config_id: values["template_config_id"],
                 showcontent: values["showcontent"],
-                casconfig: values["casconfig"],
+                // casconfig: values["casconfig"],
                 bmailtitle: values["bmailtitle"],
                 content: values["content"],
                 status_lbl: values["status_lbl"],
@@ -187,19 +197,19 @@ const AddNewOSDTemplateList = (props) => {
                                     <div className="mb-3">
                                         <Label className="form-label">SMS Template (max 140 characters)<span style={{ color: 'red' }}>*</span></Label>
                                         <Input
-                                            name="smstemplate"
+                                            name="template_message"
                                             type="textarea"
                                             placeholder="Enter SMS template"
                                             // className="form-select"
                                             onChange={validation.handleChange}
                                             onBlur={validation.handleBlur}
-                                            value={validation.values.smstemplate || ""}
+                                            value={validation.values.template_message || ""}
                                             row="3"
                                         >
                                         </Input>
-                                        {validation.touched.smstemplate && validation.errors.smstemplate ? (
+                                        {validation.touched.template_message && validation.errors.template_message ? (
                                             <FormFeedback type="invalid">
-                                                {validation.errors.smstemplate}
+                                                {validation.errors.template_message}
                                             </FormFeedback>
                                         ) : null}
                                     </div>
@@ -234,25 +244,26 @@ const AddNewOSDTemplateList = (props) => {
                                         <div className="mb-3">
                                             <Label className="form-label">CAS Config (Select only 1 config per CAS)<span style={{ color: 'red' }}>*</span></Label>
                                             <Input
-                                                name="casconfig"
+                                                name="template_config_id"
                                                 type="select"
                                                 placeholder="Select Status"
                                                 className="form-select"
                                                 onChange={validation.handleChange}
                                                 onBlur={validation.handleBlur}
-                                                value={validation.values.casconfig || ""}
+                                                value={validation.values.template_config_id || []}
+                                                multiple
                                             >
                                                 <option value="">Select cas config</option>
                                                 {osdTempOSD &&
-                                                    osdTempOSD.map((casconfig) => (
-                                                        <option key={casconfig.id} value={casconfig.id}>
-                                                            {casconfig.name}
+                                                    osdTempOSD.map((template_config_id) => (
+                                                        <option key={template_config_id.id} value={template_config_id.id}>
+                                                            {template_config_id.name},{template_config_id.cas_code}
                                                         </option>
                                                     ))}
                                             </Input>
-                                            {validation.touched.casconfig && validation.errors.casconfig ? (
+                                            {validation.touched.template_config_id && validation.errors.template_config_id ? (
                                                 <FormFeedback type="invalid">
-                                                    {validation.errors.casconfig}
+                                                    {validation.errors.template_config_id}
                                                 </FormFeedback>
                                             ) : null}
                                         </div>
@@ -328,7 +339,7 @@ const AddNewOSDTemplateList = (props) => {
                                     className="btn btn-outline-danger"
                                     onClick={() => {
                                         validation.resetForm();
-                                        toggle();
+                                        handleAddOSDTemplateList();
                                     }}
                                 >
                                     Cancel

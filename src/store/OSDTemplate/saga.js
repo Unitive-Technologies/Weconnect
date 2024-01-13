@@ -20,12 +20,13 @@ const convertOSDTemplateListObject = (osdTemplate) => {
       name: osdTemp.name,
       title: osdTemp.title,
       template_for: osdTemp.template_for,
-      smstemplate: osdTemp.smstemplate,
+      template_message: osdTemp.template_message,
       showcontent: osdTemp.showcontent,
       casconfig: osdTemp.casconfig,
       bmailtitle: osdTemp.bmailtitle,
       content: osdTemp.content,
       status: osdTemp.status,
+      template_config_id: osdTemp.template_config_id,
       template_for_lbl: osdTemp.template_for_lbl,
       status_lbl:
         osdTemp.status_lbl === 1
