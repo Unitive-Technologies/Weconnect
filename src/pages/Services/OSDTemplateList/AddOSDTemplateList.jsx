@@ -37,7 +37,7 @@ const AddNewOSDTemplateList = (props) => {
             name: "",
             title: "",
             template_for: "",
-            template_message: "",
+            template: { template_message: "" },
             showcontent: "",
             template_config_id: "",
             // template_config_id: [{ "id": "", "name": "", "cas_code": "" }],
@@ -45,7 +45,7 @@ const AddNewOSDTemplateList = (props) => {
             // template_config_id: "",
             bmailtitle: "",
             content: "",
-            status_lbl: "",
+            status: "",
             created_at: "",
             created_by: "Admin",
         },
@@ -57,7 +57,7 @@ const AddNewOSDTemplateList = (props) => {
             // casconfig: Yup.string().required("Select template for"),
             bmailtitle: Yup.string().required("Select template for"),
             content: Yup.string().required("Select template for"),
-            status_lbl: Yup.string().required("Select status"),
+            status: Yup.string().required("Select status"),
         }),
         onSubmit: (values) => {
             const OSDvaluesArray = values["template_config_id"] || [];
@@ -69,14 +69,15 @@ const AddNewOSDTemplateList = (props) => {
                 id: Math.floor(Math.random() * (30 - 20)) + 20,
                 name: values["name"],
                 template_for: values["template_for"],
-                template_message: values["template_message"],
+                template: values["template_message"],
+                // template_config_id: values["template_config_id"] || [],
                 template_config_id: OSDvaluesIntegers,
                 // template_config_id: values["template_config_id"],
                 showcontent: values["showcontent"],
                 // casconfig: values["casconfig"],
                 bmailtitle: values["bmailtitle"],
                 content: values["content"],
-                status_lbl: values["status_lbl"],
+                status: values["status"],
                 created_at: new Date(),
                 created_by: values["created_by"],
             };
@@ -167,25 +168,25 @@ const AddNewOSDTemplateList = (props) => {
                             <div className="mb-3">
                                 <Label className="form-label">Status<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
-                                    name="status_lbl"
+                                    name="status"
                                     type="select"
                                     placeholder="Select Status"
                                     className="form-select"
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.status_lbl || ""}
+                                    value={validation.values.status || ""}
                                 >
                                     <option value="">Select Status</option>
                                     {osdTempStatus &&
-                                        osdTempStatus.map((status_lbl) => (
-                                            <option key={status_lbl.id} value={status_lbl.id}>
-                                                {status_lbl.name}
+                                        osdTempStatus.map((status) => (
+                                            <option key={status.id} value={status.id}>
+                                                {status.name}
                                             </option>
                                         ))}
                                 </Input>
-                                {validation.touched.status_lbl && validation.errors.status_lbl ? (
+                                {validation.touched.status && validation.errors.status ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.status_lbl}
+                                        {validation.errors.status}
                                     </FormFeedback>
                                 ) : null}
                             </div>
