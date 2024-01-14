@@ -298,18 +298,43 @@ const NewRegionalOfficeList = (props) => {
                     </table>
 
                     {/* Render pagination controls */}
-                    <div>
-                      <button
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "20px",
+                      }}
+                    >
+                      <Link
+                        to="#"
+                        className="page-link"
+                        onClick={() =>
+                          setPageIndex((prev) => Math.max(prev - 1, 0))
+                        }
+                      >
+                        <i className="mdi mdi-chevron-left"></i>
+                      </Link>
+                      {/* <button
                         onClick={() =>
                           setPageIndex((prev) => Math.max(prev - 1, 0))
                         }
                       >
                         Previous
-                      </button>
+                      </button> */}
                       <span>
                         Page {pageIndex + 1} of {totalPages}
                       </span>
-                      <button
+                      <Link
+                        to="#"
+                        className="page-link"
+                        onClick={() =>
+                          setPageIndex((prev) =>
+                            Math.min(prev + 1, totalPages - 1)
+                          )
+                        }
+                      >
+                        <i className="mdi mdi-chevron-right"></i>
+                      </Link>
+                      {/* <button
                         onClick={() =>
                           setPageIndex((prev) =>
                             Math.min(prev + 1, totalPages - 1)
@@ -317,7 +342,7 @@ const NewRegionalOfficeList = (props) => {
                         }
                       >
                         Next
-                      </button>
+                      </button> */}
                     </div>
 
                     {/* <RegionalTable /> */}
