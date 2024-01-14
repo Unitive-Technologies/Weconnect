@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { createSelector } from "reselect";
 import {
@@ -22,7 +22,7 @@ import { useSelector, useDispatch } from "react-redux";
 const AddDistributorModal = (props) => {
   const { isOpen, handleAddDistributor } = props;
   const dispatch = useDispatch();
-
+  const [toggleSwitch, settoggleSwitch] = useState(true);
   const selectRegionalOfficeState = (state) => state.regionaloffice;
   const RegionalOfficeProperties = createSelector(
     selectRegionalOfficeState,
@@ -167,6 +167,7 @@ const AddDistributorModal = (props) => {
                       ? true
                       : false
                   }
+                  disabled
                 />
                 {validation.touched.code && validation.errors.code ? (
                   <FormFeedback type="invalid">
@@ -176,19 +177,37 @@ const AddDistributorModal = (props) => {
               </div>
             </Col>
             <Col lg={2}>
-              <div className="form-check form-switch form-switch-lg mb-3">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitchsizelg"
-                  defaultChecked
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="customSwitchsizelg"
+              <div className="mt-3">
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
                 >
-                  Custom / Auto
-                </label>
+                  <label style={{ marginRight: "10px" }}>Custom</label>
+                  <div className="form-check form-switch form-switch-lg mb-2">
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id="customSwitchsizelg"
+                      defaultChecked
+                      onClick={(e) => {
+                        settoggleSwitch(!toggleSwitch);
+                      }}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="customSwitchsizelg"
+                    >
+                      Auto
+                    </label>
+                  </div>
+                </div>
+                {validation.touched.ifFixNCF && validation.errors.ifFixNCF ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.ifFixNCF}
+                  </FormFeedback>
+                ) : null}
               </div>
             </Col>
           </Row>
