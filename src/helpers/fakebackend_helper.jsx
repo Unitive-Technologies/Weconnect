@@ -306,7 +306,7 @@ export const updateSublocation = (id, sublocation) =>
 export const getLocationOnSublocation = () =>
   get(url.GET_LOCATION_ONSUBLOCATION);
 
-export const getRegionalOffice = async (currPage, perPage=20) => {
+export const getRegionalOffice = async (currPage, perPage = 20) => {
   console.log("Current Page in fakebackend: ", currPage);
   // console.log("Per Page: ", perPage);
 
@@ -385,21 +385,18 @@ export const addNewOSDConfiguration = (osdconfig) =>
 export const getOSDTemplate = () => get(url.GET_OSDTEMPLATE);
 export const getOSDTemplateTemplateFor = () =>
   get(url.GET_OSDTEMPLATE_TEMPLATEFOR);
-export const getOSDTemplateOSD = () =>
-  get(url.GET_OSDTEMPLATE_OSD);
-export const getOSDTemplateStatus = () =>
-  get(url.GET_OSDTEMPLATE_STATUS);
+export const getOSDTemplateOSD = () => get(url.GET_OSDTEMPLATE_OSD);
+export const getOSDTemplateStatus = () => get(url.GET_OSDTEMPLATE_STATUS);
 
 export const addNewOSDTemplate = (osdtem) =>
   post(url.ADD_NEW_OSDTEMPLATE, osdtem);
-
 
 export const getLocalChannelNumber = () => get(url.GET_LOCALCHANNELNUMBER);
 export const getDocumentUploadPolicy = () => get(url.GET_DOCUMENTUPLOADPOLICY);
 export const addNewDocumentUploadPolicy = (documentupload) =>
   post(url.ADD_NEW_DOCUMENTUPLOADPOLICY, documentupload);
 
-export const getDistributors = () => get(url.GET_DISTRIBUTORS);
+export const getDistributors = () => getCompleteResponse(url.GET_DISTRIBUTORS);
 export const addNewDistributor = (distributors) =>
   post(url.ADD_NEW_DISTRIBUTOR, distributors);
 export const updateDistributor = (distributors) =>

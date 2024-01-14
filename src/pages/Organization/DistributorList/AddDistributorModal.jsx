@@ -38,7 +38,7 @@ const AddDistributorModal = (props) => {
       dispatch(onGetRegionalOffice());
     }
   }, [dispatch, regOff]);
-  console.log("regOfficelist:" + JSON.stringify(regOff));
+  // console.log("regOfficelist:" + JSON.stringify(regOff));
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,

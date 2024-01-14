@@ -24,15 +24,12 @@ const ProfileMenu = (props) => {
   const [menu, setMenu] = useState(false);
   const storedAdminDetails = localStorage.getItem("authUser");
   const admindetails = storedAdminDetails ? JSON.parse(storedAdminDetails) : {};
-  console.log("admin on topbar:" + admindetails.username);
 
   const [username, setusername] = useState("Admin");
 
   useEffect(() => {
     if (localStorage.getItem("authUser")) {
-      if (
-        import.meta.env.VITE_APP_DEFAULTAUTH === "jwt"
-      ) {
+      if (import.meta.env.VITE_APP_DEFAULTAUTH === "jwt") {
         const obj = JSON.parse(localStorage.getItem("authUser"));
         setusername(obj.username);
       }

@@ -9,6 +9,7 @@ import { Card, CardBody, Col, Container, Row } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 
 import { getDistributors as onGetDistributors } from "/src/store/actions";
+import { goToPage as onGoToPage } from "../../../store/distributor/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -18,8 +19,10 @@ import ViewDistributorModal from "./ViewDistributorModal";
 import AddDistributorModal from "./AddDistributorModal";
 import UploadDistributorModal from "./UploadDistributorModal";
 import SettingModal from "./SettingModal";
+import TableContainerX from "../../../components/Common/TableContainerX";
 
 const DistributorList = (props) => {
+  const DEFAULT_PAGE_SIZE = 10;
   //meta title
   document.title = "Distributors | VDigital";
 
@@ -32,12 +35,22 @@ const DistributorList = (props) => {
     (distributors) => ({
       distributor: distributors.distributors,
       loading: distributors.loading,
+      totalPage: distributors.totalPages,
+      totalCount: distributors.totalCount,
+      pageSize: distributors.perPage,
+      currentPage: distributors.currentPage,
     })
   );
 
-  const { distributor, loading } = useSelector(DistributorsProperties);
+  const { distributor, loading, totalCount, pageSize, currentPage, totalPage } =
+    useSelector(DistributorsProperties);
 
-  const [isLoading, setLoading] = useState(loading);
+  console.log("Distributor Value - From UseSelector..", distributor);
+  console.log(`TotalCount - ${totalCount}`);
+  console.log(`PageSize - ${pageSize}`);
+  console.log(`CurrentPage - ${currentPage}`);
+  console.log(`TotalPage - ${totalPage}`);
+  // const [isLoading, setLoading] = useState(loading);
   const [showDistributor, setShowDistributor] = useState(false);
   const [viewDistributor, setViewDistributor] = useState(false);
   const [showUploadDistributor, setShowUploadDistributor] = useState(false);
@@ -203,7 +216,9 @@ const DistributorList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.status_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.status_lbl}
+            </p>
           );
         },
       },
@@ -274,8 +289,12 @@ const DistributorList = (props) => {
     if (distributor && !distributor.length) {
       dispatch(onGetDistributors());
     }
-  }, [dispatch, distributor]);
+  }, [distributor]);
 
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+  };
   const handleAddDistributor = () => {
     setShowDistributor(!showDistributor);
   };
@@ -339,33 +358,33 @@ const DistributorList = (props) => {
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Organization" breadcrumbItem="Distributors" />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
-          ) : (
+          {
+            // isLoading ? (
+            //   <Spinners setLoading={setLoading} />
+            // ) :
             <Row>
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    <TableContainer
-                      isPagination={true}
+                    <TableContainerX
                       columns={columns}
                       data={distributor}
+                      isLoading={loading}
+                      isPagination={true}
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      totalPage={Number(totalPage)}
                       isGlobalFilter={true}
                       isShowingPageLength={true}
-                      // iscustomPageSizeOptions={true}
-                      isShowTableActionButtons={true}
                       tableActions={getTableActions()}
-                      customPageSize={8}
-                      tableClass="table align-middle table-nowrap table-hover"
-                      theadClass="table-light"
-                      paginationDiv="col-sm-12 col-md-7"
-                      pagination="pagination pagination-rounded justify-content-end mt-4"
+                      goToPage={goToPage}
                     />
                   </CardBody>
                 </Card>
               </Col>
             </Row>
-          )}
+          }
         </Container>
       </div>
       <ToastContainer />

@@ -8,14 +8,20 @@ import {
   UPDATE_DISTRIBUTOR,
   UPDATE_DISTRIBUTORS_SUCCESS,
   UPDATE_DISTRIBUTORS_FAIL,
+  UPDATE_DISTRIBUTOR_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_DISTRIBUTOR_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getDistributors = () => ({
   type: GET_DISTRIBUTORS,
 });
 
 export const getDistributorsSuccess = (distributors) => {
-  console.log("Received Notification Template:", distributors);
+  console.log("Received Distributors.. :", distributors);
   return {
     type: GET_DISTRIBUTORS_SUCCESS,
     payload: distributors,

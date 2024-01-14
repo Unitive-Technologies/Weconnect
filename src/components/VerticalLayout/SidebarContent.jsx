@@ -53,7 +53,6 @@ const SidebarContent = (props) => {
       return false;
     }
     setActiveMenuItem(item);
-    console.log("Active Menu: ", item);
     scrollElement(item);
     return false;
   }, []);
@@ -103,7 +102,6 @@ const SidebarContent = (props) => {
 
   const activeMenu = useCallback(() => {
     const pathName = path.pathname;
-    console.log("Path Name: ", pathName);
     setActiveMenuItem(pathName);
     let matchingMenuItem = null;
     const ul = document.getElementById("side-menu");

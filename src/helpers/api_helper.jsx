@@ -41,7 +41,6 @@ export async function get(url, config = {}) {
 }
 // .json().then(json=>{headers: response.headers, status: response.status, json})
 // export async function get(url, config = {}) {
-//   console.log("url:" + url);
 //   axiosApi.defaults.headers.common["Authkey"] = "";
 
 //   return axiosApi.get(url, { ...config }).then(async (response) => {

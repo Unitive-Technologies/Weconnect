@@ -50,8 +50,6 @@ const NewTableContainer = ({
   // const columnData = useMemo(() => columns, [columns]);
   // const rowData = data;
   // console the current time
-  // console.log("Current time - ", moment().format("hh:mm:ss"));
-  // console.log("Value used in the table -[", JSON.stringify(rowData));
   const {
     getTableProps,
     getTableBodyProps,
@@ -92,7 +90,6 @@ const NewTableContainer = ({
     useExpanded,
     usePagination
   );
-  console.log("data in NewTableContainer:" + JSON.stringify(data));
   const pageCount = Math.ceil(totalRows / rowsPerPage);
 
   const generateSortingIndicator = (column) => {
@@ -164,10 +161,8 @@ const NewTableContainer = ({
             </thead>
 
             <tbody {...getTableBodyProps()}>
-              {console.log("page in NewTableContainer - ", page)}
               {page.map((row) => {
                 prepareRow(row);
-                // console.log("Row object:", row);
                 return (
                   <Fragment key={row.getRowProps().key}>
                     <tr onClick={() => handleRowClick(row.original)}>
