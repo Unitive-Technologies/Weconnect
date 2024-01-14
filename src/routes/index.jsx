@@ -26,6 +26,7 @@ import AppAdBannerList from "../pages/Access/AppAdBannerList/appAdBannerList";
 
 // path from organization
 import RegionalOfficeList from "../pages/Organization/RegionalOfficeList/regionalOfficeList";
+import NewRegionalOfficeList from "../pages/Organization/RegionalOfficeList/NewRegionalOfficeList";
 import LcoList from "../pages/Organization/LCOList/lcoList";
 import DistributorList from "../pages/Organization/DistributorList/distributorList";
 
@@ -108,7 +109,7 @@ const authProtectedRoutes = [
 
   {
     path: "/regional-office-list",
-    component: <RegionalOfficeList />,
+    component: <NewRegionalOfficeList />,
   },
   {
     path: "/lco-list",

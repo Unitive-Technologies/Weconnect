@@ -306,7 +306,7 @@ export const updateSublocation = (id, sublocation) =>
 export const getLocationOnSublocation = () =>
   get(url.GET_LOCATION_ONSUBLOCATION);
 
-export const getRegionalOffice = async (currPage, perPage) => {
+export const getRegionalOffice = async (currPage, perPage=20) => {
   console.log("Current Page in fakebackend: ", currPage);
   // console.log("Per Page: ", perPage);
 
