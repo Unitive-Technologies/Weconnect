@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-
+import { QueryClientProvider, QueryClient } from "react-query";
 import { Routes, Route } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -27,6 +27,7 @@ fakeBackend();
 
 const App = (props) => {
   const selectLayoutState = (state) => state.Layout;
+  const queryClient = new QueryClient();
   const LayoutProperties = createSelector(selectLayoutState, (layout) => ({
     layoutType: layout.layoutType,
   }));
@@ -45,34 +46,36 @@ const App = (props) => {
 
   const Layout = getLayout(layoutType);
 
-  // App has two sections, 
+  // App has two sections,
   // AuthProtectedRouts - Only logged In users can see
   // PublicRoutes - All Users can access
   return (
     <React.Fragment>
-      <Routes>
-        {publicRoutes.map((route, idx) => (
-          <Route
-            path={route.path}
-            element={<NonAuthLayout>{route.component}</NonAuthLayout>}
-            key={idx}
-            exact={true}
-          />
-        ))}
+      <QueryClientProvider client={queryClient}>
+        <Routes>
+          {publicRoutes.map((route, idx) => (
+            <Route
+              path={route.path}
+              element={<NonAuthLayout>{route.component}</NonAuthLayout>}
+              key={idx}
+              exact={true}
+            />
+          ))}
 
-        {authProtectedRoutes.map((route, idx) => (
-          <Route
-            path={route.path}
-            element={
-              <Authmiddleware>
-                <Layout>{route.component}</Layout>
-              </Authmiddleware>
-            }
-            key={idx}
-            exact={true}
-          />
-        ))}
-      </Routes>
+          {authProtectedRoutes.map((route, idx) => (
+            <Route
+              path={route.path}
+              element={
+                <Authmiddleware>
+                  <Layout>{route.component}</Layout>
+                </Authmiddleware>
+              }
+              key={idx}
+              exact={true}
+            />
+          ))}
+        </Routes>
+      </QueryClientProvider>
     </React.Fragment>
   );
 };

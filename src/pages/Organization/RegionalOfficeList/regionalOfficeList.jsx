@@ -24,6 +24,7 @@ import {
   RESPONSE_HEADER_TOTAL_COUNT,
 } from "../../../constants/strings";
 import NewPagination from "../../../components/Common/NewPagination";
+import RegionalTable from "./RegionalTable";
 
 const RegionalOfficeList = (props) => {
   //meta title
@@ -362,7 +363,8 @@ const RegionalOfficeList = (props) => {
                       "RRRRRRRRRRRRRRRRRRRRRRRRegionalOffices:" +
                         JSON.stringify(regionaloffices)
                     )}
-                    <NewTableContainer
+                    <RegionalTable />
+                    {/* <NewTableContainer
                       isPagination={true}
                       isLoading={isLoading}
                       columns={columns}
@@ -383,7 +385,7 @@ const RegionalOfficeList = (props) => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
-                    />
+                    /> */}
                     <div className="table-responsive">
                       <Table className="table mb-0">
                         <thead className="table-light">
