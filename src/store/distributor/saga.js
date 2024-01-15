@@ -88,7 +88,7 @@ function* fetchDistributors() {
     // // const { pageSize, currentPage } = yield useSelector(distributorProperties);
 
     const pageSize = distributorsStore.pageSize;
-    const currentPage = distributorsSaga.currentPage;
+    const currentPage = distributorsStore.currentPage;
     // const { pageSize, currentPage } = yield useSelector(distributorProperties);
 
     const response = yield call(getDistributors, currentPage, pageSize);

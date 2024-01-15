@@ -43,8 +43,12 @@ export const GET_NOTIFICATIONTEMPLATE_ADDUSER =
 export const ADD_NEW_NOTIFICATIONTEMPLATE = "/announcement-template?vr=web1.0";
 
 export const getRegionalOfficeUrl = (currPage, perPage) => {
-  console.log("current page in url - ", currPage);
+  console.log("current page in regional url - ", currPage, perPage);
   return `/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,mso_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=1&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+};
+export const getDistributorUrl = (currPage, perPage) => {
+  console.log("current page in distributor url - ", currPage, perPage);
+  return `/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,branch_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=2&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
 
 export const GET_REGIONALOFFICE =
@@ -169,7 +173,8 @@ export const GET_OSDCONFIGURATIONLIST_BACKGROUNDAREA =
   "/nstv/list/osdbackgroundarea?vr=web1.0";
 export const GET_OSDCONFIGURATIONLIST_STATUS =
   "/list/status?fields=id,name&vr=web1.0";
-export const ADD_NEW_OSDCONFIGURATIONLIST = "/message-template/template-for?vr=web1.0";
+export const ADD_NEW_OSDCONFIGURATIONLIST =
+  "/message-template/template-for?vr=web1.0";
 
 export const GET_LOCALCHANNELNUMBER = "/localchannelnumberlist";
 
@@ -180,12 +185,10 @@ export const GET_OSDTEMPLATE =
   "/message-template?expand=created_by_lbl,status_lbl,template_for_lbl,operator_count&page=1&per-page=50&vr=web1.0";
 export const GET_OSDTEMPLATE_TEMPLATEFOR =
   "/message-template/template-for?fields=id,name&vr=web1.0";
-export const GET_OSDTEMPLATE_STATUS =
-  "/list/status?fields=id,name&vr=web1.0";
+export const GET_OSDTEMPLATE_STATUS = "/list/status?fields=id,name&vr=web1.0";
 export const GET_OSDTEMPLATE_OSD =
   "/mtc/list?fields=id,name,cas_code&vr=web1.0";
 export const ADD_NEW_OSDTEMPLATE = "/message-template?vr=web1.0";
-
 
 export const GET_NCF =
   "/ncf-rates?expand=status_lbl,created_by_lbl,type_lbl&page=1&per-page=50&vr=web1.0";

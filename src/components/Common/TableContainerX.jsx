@@ -13,7 +13,6 @@ import { Filter, DefaultColumnFilter } from "./filters";
 import { Link } from "react-router-dom";
 import JobListGlobalFilter from "./GlobalSearchFilter";
 import TableActionButtons from "./TableActionButtons";
-import Loader from "./Loader";
 
 // Define a default UI for filtering
 function GlobalFilter({
@@ -68,7 +67,6 @@ const TableContainerX = ({
   tableActions,
   isLoading,
   handleRowClick,
-  customPageSize,
   customPageSizeOptions,
   totalCount,
   currentPage,
@@ -83,6 +81,7 @@ const TableContainerX = ({
   tableClass,
   goToPage,
 }) => {
+  console.log("[Table ContainerX] Page Size: ", pageSize);
   const {
     getTableProps,
     getTableBodyProps,
@@ -92,12 +91,13 @@ const TableContainerX = ({
     state,
     preGlobalFilteredRows,
     setGlobalFilter,
-    state: { pageIndex, pageSizeFromTable },
   } = useTable(
     {
       columns,
       data,
       defaultColumn: { Filter: DefaultColumnFilter },
+      initialState: { pageIndex: 0, pageSize: pageSize },
+      manualPagination: true,
     },
     useGlobalFilter,
     useFilters,
@@ -107,6 +107,7 @@ const TableContainerX = ({
   );
 
   const startIndex = (currentPage - 1) * pageSize + 1;
+  console.log("current data size - ", data.length);
   console.log(startIndex, "S.I - PageSize ", pageSize);
   debugger;
   const generateSortingIndicator = (column) => {
@@ -166,112 +167,122 @@ const TableContainerX = ({
           />
         </React.Fragment>
       ) : (
-        <div className="table-responsive react-table">
-          <Table {...getTableProps()} className={tableClass}>
-            <thead className={theadClass}>
-              {headerGroups.map((headerGroup) => (
-                <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map((column) => (
-                    <th
-                      key={column.id}
-                      className={column.isSort ? "sorting" : ""}
-                    >
-                      <div {...column.getSortByToggleProps()}>
-                        {column.render("Header")}
-                        {/* {generateSortingIndicator(column)} */}
-                      </div>
-                      {/* <Filter column={column} /> */}
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-
-            <tbody {...getTableBodyProps()}>
-              {page.map((row) => {
-                prepareRow(row);
-                return (
-                  <Fragment key={row.getRowProps().key}>
-                    <tr
-                      onClick={() => handleRowClick(row.original)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      {row.cells.map((cell) => {
-                        return (
-                          <td
-                            key={cell.id}
-                            {...cell.getCellProps()}
-                            // style={{ width: `${getColumnWidth(cell.column)}px` }}
-                          >
-                            {" "}
-                            {cell.render("Cell")}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  </Fragment>
-                );
-              })}
-            </tbody>
-          </Table>
-        </div>
-      )}
-      {isPagination && (
-        <Row className="justify-content-between align-items-center">
-          {isShowingPageLength && startIndex > 0 && (
-            <div className="col-sm">
-              <div className="text-muted">
-                Showing{" "}
-                <span className="fw-semibold">
-                  {startIndex} to {startIndex + pageSize - 1} -{" "}
-                </span>{" "}
-                of <span className="fw-semibold">{totalCount}</span> entries
-              </div>
-            </div>
-          )}
-          <div className={paginationDiv}>
-            <ul className={paginationClass}>
-              <li className={`page-item ${currentPage <= 1 ? "disabled" : ""}`}>
-                <Link
-                  to="#"
-                  className="page-link"
-                  onClick={() => goToPage(currentPage - 1)}
-                >
-                  <i className="mdi mdi-chevron-left"></i>
-                </Link>
-              </li>
-              {[...Array(totalPage)].map((_, index) => (
-                <li
-                  key={index}
-                  className={`page-item ${
-                    currentPage === index + 1 ? "active" : ""
-                  }`}
-                >
-                  <Link
-                    to="#"
-                    className="page-link"
-                    onClick={() => goToPage(index + 1)}
+        <>
+          <div className="table-responsive react-table">
+            <Table {...getTableProps()} className={tableClass}>
+              <thead className={theadClass}>
+                {headerGroups.map((headerGroup) => (
+                  <tr
+                    key={headerGroup.id}
+                    {...headerGroup.getHeaderGroupProps()}
                   >
-                    {index + 1}
-                  </Link>
-                </li>
-              ))}
-              <li
-                className={`page-item ${
-                  currentPage >= totalPage ? "disabled" : ""
-                }`}
-              >
-                <Link
-                  to="#"
-                  className="page-link"
-                  onClick={() => goToPage(currentPage + 1)}
-                >
-                  <i className="mdi mdi-chevron-right"></i>
-                </Link>
-              </li>
-            </ul>
+                    {headerGroup.headers.map((column) => (
+                      <th
+                        key={column.id}
+                        className={column.isSort ? "sorting" : ""}
+                      >
+                        <div {...column.getSortByToggleProps()}>
+                          {column.render("Header")}
+                          {/* {generateSortingIndicator(column)} */}
+                        </div>
+                        {/* <Filter column={column} /> */}
+                      </th>
+                    ))}
+                  </tr>
+                ))}
+              </thead>
+
+              <tbody {...getTableBodyProps()}>
+                {page.map((row) => {
+                  prepareRow(row);
+                  return (
+                    <Fragment key={row.getRowProps().key}>
+                      <tr
+                        onClick={() => handleRowClick(row.original)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {row.cells.map((cell) => {
+                          return (
+                            <td
+                              key={cell.id}
+                              {...cell.getCellProps()}
+                              // style={{ width: `${getColumnWidth(cell.column)}px` }}
+                            >
+                              {" "}
+                              {cell.render("Cell")}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    </Fragment>
+                  );
+                })}
+              </tbody>
+            </Table>
           </div>
-        </Row>
+
+          {isPagination && (
+            <Row className="justify-content-between align-items-center">
+              {isShowingPageLength && startIndex > 0 && (
+                <div className="col-sm">
+                  <div className="text-muted">
+                    Showing{" "}
+                    <span className="fw-semibold">
+                      {startIndex} to {startIndex + data.length - 1} -{" "}
+                    </span>{" "}
+                    of <span className="fw-semibold">{totalCount}</span> entries
+                  </div>
+                </div>
+              )}
+              <div className={paginationDiv}>
+                <ul className={paginationClass}>
+                  <li
+                    className={`page-item ${
+                      currentPage <= 1 ? "disabled" : ""
+                    }`}
+                  >
+                    <Link
+                      to="#"
+                      className="page-link"
+                      onClick={() => goToPage(currentPage - 1)}
+                    >
+                      <i className="mdi mdi-chevron-left"></i>
+                    </Link>
+                  </li>
+                  {[...Array(totalPage)].map((_, index) => (
+                    <li
+                      key={index}
+                      className={`page-item ${
+                        currentPage === index + 1 ? "active" : ""
+                      }`}
+                    >
+                      <Link
+                        to="#"
+                        className="page-link"
+                        onClick={() => goToPage(index + 1)}
+                      >
+                        {index + 1}
+                      </Link>
+                    </li>
+                  ))}
+                  <li
+                    className={`page-item ${
+                      currentPage >= totalPage ? "disabled" : ""
+                    }`}
+                  >
+                    <Link
+                      to="#"
+                      className="page-link"
+                      onClick={() => goToPage(currentPage + 1)}
+                    >
+                      <i className="mdi mdi-chevron-right"></i>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </Row>
+          )}
+        </>
       )}
     </Fragment>
   );
@@ -289,8 +300,9 @@ TableContainerX.defaultProps = {
   customPageSizeOptions: [10, 20, 30, 40, 50],
   isLoading: false,
   currentPage: 1,
-  pageSize: 20,
+  pageSize: 30,
   totalPage: 0,
+  handleRowClick: () => {},
 };
 
 TableContainerX.propTypes = {

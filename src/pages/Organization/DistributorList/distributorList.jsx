@@ -1,15 +1,15 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
-import TableContainer from "../../../components/Common/TableContainer";
-import Spinners from "../../../components/Common/Spinner";
 import { Card, CardBody, Col, Container, Row } from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 
-import { getDistributors as onGetDistributors } from "/src/store/actions";
-import { goToPage as onGoToPage } from "../../../store/distributor/actions";
+import {
+  goToPage as onGoToPage,
+  getDistributors as onGetDistributors,
+} from "../../../store/distributor/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -20,9 +20,9 @@ import AddDistributorModal from "./AddDistributorModal";
 import UploadDistributorModal from "./UploadDistributorModal";
 import SettingModal from "./SettingModal";
 import TableContainerX from "../../../components/Common/TableContainerX";
+import { current } from "@reduxjs/toolkit";
 
 const DistributorList = (props) => {
-  const DEFAULT_PAGE_SIZE = 10;
   //meta title
   document.title = "Distributors | VDigital";
 
@@ -63,14 +63,15 @@ const DistributorList = (props) => {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          // const totalRows = cellProps.rows.length;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
 
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -282,7 +283,7 @@ const DistributorList = (props) => {
       //   },
       // },
     ],
-    []
+    [pageSize, currentPage]
   );
 
   useEffect(() => {
@@ -291,9 +292,14 @@ const DistributorList = (props) => {
     }
   }, [distributor]);
 
+  // useEffect(() => {
+  //   dispatch(onGetDistributors());
+  // }, [pageSize]);
+
   const goToPage = (toPage) => {
     console.log("[GOTO PAGE] Trigger to page - ", toPage);
     dispatch(onGoToPage(toPage));
+    dispatch(onGetDistributors());
   };
   const handleAddDistributor = () => {
     setShowDistributor(!showDistributor);
