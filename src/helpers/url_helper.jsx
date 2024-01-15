@@ -51,6 +51,10 @@ export const getDistributorUrl = (currPage, perPage) => {
   return `/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,branch_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=2&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
 
+export const getUsersUrl = (currPage, perPage) => {
+  console.log("current page in users url - ", currPage, perPage);
+  return `/user?expand=setting,group_lbl,access_level,role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[role]=4&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+};
 export const GET_REGIONALOFFICE =
   "/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,mso_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=1&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_REGIONALOFFICE = "/add/regionaloffice";

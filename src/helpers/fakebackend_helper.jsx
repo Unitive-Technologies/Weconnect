@@ -223,8 +223,12 @@ export const deleteKanban = (kanban) =>
 
 export const getAdmindetails = () => get(url.GET_ADMINDETAILS);
 // get Users
-export const getUsers = () => get(url.GET_USERS);
-
+// export const getUsers = () => get(url.GET_USERS);
+export const getUsers = async (currentPage, perPage = 20) => {
+  console.log("Users - Current Page in fakebackend: ", currentPage);
+  console.log("Users - Per Page: ", perPage);
+  return await getCompleteResponse(url.getUsersUrl(currentPage, perPage));
+};
 export const getCustomerUsers = () => get(url.GET_CUSTOMERUSERS);
 export const updateCustomerUser = (customerUser, id) =>
   put(url.UPDATE_CUSTOMERUSER(id), customerUser);

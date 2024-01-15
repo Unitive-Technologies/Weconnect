@@ -41,6 +41,7 @@ const ContactsList = (props) => {
   const dispatch = useDispatch();
 
   const selectContactsState = (state) => state.users;
+  // console.log("state:" + JSON.stringify(state.users));
   const ContactsProperties = createSelector(selectContactsState, (Users) => ({
     users: Users.users,
     loading: Users.loading,
@@ -77,7 +78,7 @@ const ContactsList = (props) => {
     loading,
   } = useSelector(ContactsProperties);
 
-  console.log("Users Value - From UseSelector..", users);
+  console.log("Users Value - From UseSelector..", JSON.stringify(users));
   console.log(`TotalCount - ${totalCount}`);
   console.log(`PageSize - ${pageSize}`);
   console.log(`CurrentPage - ${currentPage}`);

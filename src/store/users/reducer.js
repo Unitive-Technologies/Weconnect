@@ -52,9 +52,9 @@ const INIT_STATE = {
   userDistributor: [],
   userLco: [],
   userBulkSettings: [],
-  error: {},
-  loading: true,
   pagination: {},
+  error: {},
+  loading: false,
   currentPage: 1,
   perPage: 10,
   totalCount: 0,
@@ -79,7 +79,11 @@ const contacts = (state = INIT_STATE, action) => {
       console.log("Users data in reducer:", action.payload);
       return {
         ...state,
-        users: action.payload,
+        users: action.payload.data.data,
+        currentPage: action.payload.headers[RESPONSE_HEADER_CURRENT_PAGE],
+        perPage: action.payload.headers[RESPONSE_HEADER_PER_PAGE],
+        totalCount: action.payload.headers[RESPONSE_HEADER_TOTAL_COUNT],
+        totalPages: action.payload.headers[RESPONSE_HEADER_PAGE_COUNT],
         loading: false,
       };
 
@@ -87,6 +91,8 @@ const contacts = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+        pagination: {},
+        loading: false,
       };
 
     case GET_USER_TYPE_SUCCESS:

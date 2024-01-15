@@ -117,9 +117,9 @@ const TableContainerX = ({
   );
 
   const startIndex = (currentPage - 1) * pageSize + 1;
-  console.log("current data size - ", data.length);
-  console.log(startIndex, "S.I - PageSize ", pageSize);
-  debugger;
+  // console.log("current data size - ", data.length);
+  // console.log(startIndex, "S.I - PageSize ", pageSize);
+  // debugger;
   const generateSortingIndicator = (column) => {
     return column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : "";
   };
