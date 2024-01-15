@@ -60,6 +60,15 @@ function GlobalFilter({
   );
 }
 
+const createLimitedArray = (startPage, totalPage, limit) => {
+  const endPage = Math.min(startPage + limit, totalPage);
+  const updatedArray = Array.from(
+    { length: endPage - (startPage - 1) },
+    (_, index) => startPage + index
+  );
+  console.log(updatedArray);
+  return updatedArray;
+};
 const TableContainerX = ({
   columns,
   data,
@@ -81,6 +90,7 @@ const TableContainerX = ({
   tableClass,
   goToPage,
 }) => {
+  const [navigationPage, setNavigationPage] = React.useState(currentPage);
   console.log("[Table ContainerX] Page Size: ", pageSize);
   const {
     getTableProps,
@@ -235,6 +245,22 @@ const TableContainerX = ({
                 </div>
               )}
               <div className={paginationDiv}>
+                <span>
+                  <Input
+                    type="number"
+                    id="inputToPage"
+                    autoComplete="off"
+                    min={1}
+                    max={totalPage}
+                    value={navigationPage}
+                    onChange={(e) => setNavigationPage(e.target.value)}
+                    onBlur={(e) => {
+                      setNavigationPage(e.target.value);
+                      goToPage(Number(e.target.value));
+                    }}
+                  />
+                  / {totalPage}
+                </span>
                 <ul className={paginationClass}>
                   <li
                     className={`page-item ${
@@ -249,22 +275,48 @@ const TableContainerX = ({
                       <i className="mdi mdi-chevron-left"></i>
                     </Link>
                   </li>
-                  {[...Array(totalPage)].map((_, index) => (
-                    <li
-                      key={index}
-                      className={`page-item ${
-                        currentPage === index + 1 ? "active" : ""
-                      }`}
-                    >
-                      <Link
-                        to="#"
-                        className="page-link"
-                        onClick={() => goToPage(index + 1)}
-                      >
-                        {index + 1}
-                      </Link>
-                    </li>
-                  ))}
+                  {
+                    // create the array of maximum 5 elements starts from current page and maximum ends with totalPage
+                    totalPage < 8
+                      ? [...Array(totalPage)].map((_, index) => (
+                          <li
+                            key={index}
+                            className={`page-item ${
+                              currentPage === index + 1 ? "active" : ""
+                            }`}
+                          >
+                            <Link
+                              to="#"
+                              className="page-link"
+                              onClick={() => goToPage(index + 1)}
+                            >
+                              {index + 1}
+                            </Link>
+                          </li>
+                        ))
+                      : createLimitedArray(currentPage, totalPage, 5).map(
+                          (_, index) => (
+                            <li
+                              key={index}
+                              className={`page-item ${
+                                currentPage === currentPage + index + 1
+                                  ? "active"
+                                  : ""
+                              }`}
+                            >
+                              <Link
+                                to="#"
+                                className="page-link"
+                                onClick={() =>
+                                  goToPage(currentPage + index + 1)
+                                }
+                              >
+                                {currentPage + index + 1}
+                              </Link>
+                            </li>
+                          )
+                        )
+                  }
                   <li
                     className={`page-item ${
                       currentPage >= totalPage ? "disabled" : ""
