@@ -61,6 +61,8 @@ export async function get(url, config = {}) {
 export async function post(url, data, config = {}) {
   axiosApi.defaults.headers.common["Authkey"] =
     import.meta.env.VITE_APP_AUTHKEY;
+  axiosApi.defaults.headers.common["Authorization"] =
+    "Bearer " + localStorage.getItem("temptoken");
   return axiosApi
     .post(url, { ...data }, { ...config })
     .then((response) => response.data);
@@ -68,7 +70,8 @@ export async function post(url, data, config = {}) {
 
 export async function put(url, data, config = {}) {
   axiosApi.defaults.headers.common["Authkey"] = "";
-
+  axiosApi.defaults.headers.common["Authorization"] =
+    "Bearer " + localStorage.getItem("temptoken");
   return axiosApi
     .put(url, { ...data }, { ...config })
     .then((response) => response.data);
@@ -76,6 +79,8 @@ export async function put(url, data, config = {}) {
 
 export async function del(url, config = {}) {
   axiosApi.defaults.headers.common["Authkey"] = "";
+  axiosApi.defaults.headers.common["Authorization"] =
+    "Bearer " + localStorage.getItem("temptoken");
 
   return await axiosApi
     .delete(url, { ...config })

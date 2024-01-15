@@ -20,7 +20,8 @@ import { updateDistrict as onUpdateDistrict } from "/src/store/district/actions"
 import { getDistrict as onGetDistrict } from "/src/store/actions";
 
 const ViewDistrict = (props) => {
-  const { isOpen, handleViewDistrict, district, statelist, status } = props;
+  const { isOpen, resetSelection, toggleModal, district, statelist, status } =
+    props;
   const dispatch = useDispatch();
   const [showEditDistrict, setShowEditDistrict] = useState(false);
 
@@ -29,15 +30,13 @@ const ViewDistrict = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      id: (district && district.id) || "",
+      id: (district && Number(district.id)) || -1,
+      code: (district && district.code) || "",
       name: (district && district.name) || "",
-      state_id: (district && district.state_id) || "",
-      status: (district && district.status) || "",
+      state_id: (district && Number(district.state_id)) || 1,
+      status: (district && Number(district.status)) || -1,
       description: (district && district.description) || "",
-      created_at: (district && district.created_at) || "",
-      created_by: (district && district.created_by) || "1",
       type: (district && district.type) || "2",
-      created_by_lbl: (district && district.created_by_lbl) || "my mso(mso)",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter district name"),
@@ -49,25 +48,26 @@ const ViewDistrict = (props) => {
       console.log("Update District values: ", values);
       const updatedDistrict = {
         id: values["id"],
+        code: values["code"],
         name: values["name"],
         state_id: values["state_id"],
         status: values["status"],
         description: values["description"],
-        created_at: new Date(),
-        created_by: values["created_by"],
         type: values["type"],
-        created_by_lbl: values["created_by_lbl"],
       };
       console.log("Updated district:" + JSON.stringify(updatedDistrict));
       dispatch(onUpdateDistrict(updatedDistrict));
       dispatch(onGetDistrict());
       validation.resetForm();
-      handleViewDistrict();
+      setShowEditDistrict(false);
+      resetSelection();
+      toggleModal();
     },
   });
   const handleCancel = () => {
     setShowEditDistrict(false);
-    handleViewDistrict();
+    resetSelection();
+    toggleModal();
   };
   return (
     <Modal
@@ -248,7 +248,11 @@ const ViewDistrict = (props) => {
 };
 
 ViewDistrict.propTypes = {
-  toggle: PropTypes.func,
+  resetSelection: PropTypes.func,
+  toggleModal: PropTypes.func,
+  district: PropTypes.object,
+  statelist: PropTypes.array,
+  status: PropTypes.array,
   isOpen: PropTypes.bool,
 };
 

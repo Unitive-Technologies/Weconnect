@@ -9,6 +9,7 @@ import {
   Col,
   Container,
   Row,
+  Spinner,
   UncontrolledTooltip,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -48,7 +49,6 @@ const DistrictList = (props) => {
 
   const { districts, loading, status, statelist } =
     useSelector(districtProperties);
-  const [isLoading, setLoading] = useState(loading);
 
   const columns = useMemo(
     () => [
@@ -233,11 +233,22 @@ const DistrictList = (props) => {
     setShowUploadDistrict(!showUploadDistrict);
   };
 
+  const resetSelection = () => {
+    setViewDistrictData({});
+  };
+  const toggleModal = () => {
+    setShowViewDistrict(!showViewDistrict);
+  };
+
   const handleViewDistrict = (userData) => {
+    debugger;
+
     setShowViewDistrict(!showViewDistrict);
     setViewDistrictData(userData);
-    console.log("Id: ", userData.id);
-    setSelectedId(userData.id);
+    if (userData.length) {
+      console.log("Id: ", userData.id);
+      setSelectedId(userData.id);
+    }
   };
 
   const keyField = "id";
@@ -263,11 +274,12 @@ const DistrictList = (props) => {
     <React.Fragment>
       <ViewDistrict
         isOpen={showViewDistrict}
-        handleViewDistrict={handleViewDistrict}
+        resetSelection={resetSelection}
+        // handleViewDistrict={handleViewDistrict}
+        toggleModal={toggleModal}
         district={viewDistrictData}
         statelist={statelist}
         status={status}
-        district_id={selectedId}
       />
       <AddNewDistrict
         isOpen={showAddDistrict}
@@ -285,8 +297,13 @@ const DistrictList = (props) => {
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Territory" breadcrumbItem="Districts" />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">

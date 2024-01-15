@@ -8,7 +8,7 @@ import {
   useExpanded,
   usePagination,
 } from "react-table";
-import { Table, Row, Col, Button, Input } from "reactstrap";
+import { Table, Row, Col, Button, Input, Spinner } from "reactstrap";
 import { Filter, DefaultColumnFilter } from "./filters";
 import { Link } from "react-router-dom";
 import JobListGlobalFilter from "./GlobalSearchFilter";
@@ -167,7 +167,12 @@ const TableContainer = ({
         </div>
       </Row>
       {isLoading ? (
-        <Loader />
+        <React.Fragment>
+          <Spinner
+            color="primary"
+            className="position-absolute top-50 start-50"
+          />
+        </React.Fragment>
       ) : (
         <div className="table-responsive react-table">
           <Table {...getTableProps()} className={tableClass}>
@@ -272,8 +277,15 @@ const TableContainer = ({
   );
 };
 
+TableContainer.defaultProps = {
+  data: [],
+  handleRowClick: () => {},
+};
+
 TableContainer.propTypes = {
   preGlobalFilteredRows: PropTypes.any,
+  data: PropTypes.array,
+  handleRowClick: PropTypes.func,
 };
 
 export default TableContainer;
