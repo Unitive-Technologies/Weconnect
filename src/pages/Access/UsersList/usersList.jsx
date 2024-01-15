@@ -9,6 +9,7 @@ import { Card, CardBody, Col, Container, Row } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 
 import {
+  goToPage as onGoToPage,
   getUsers as onGetUsers,
   getUserType as onGetUserType,
   getUserStatus as onGetUserStatus,
@@ -31,6 +32,7 @@ import UploadUserModal from "./UploadUserModal";
 import BulkUpdateUserModal from "./BulkUpdateUserModal";
 import BulkInactiveUserModal from "./BulkInactiveUserModal";
 import BulkUserSettings from "./BulkUserSettings";
+import TableContainerX from "../../../components/Common/TableContainerX";
 
 const ContactsList = (props) => {
   //meta title
@@ -51,6 +53,10 @@ const ContactsList = (props) => {
     // userRegional: Users.userRegional,
     // userMsoDetails: Users.userMsoDetails,
     // userDistributor: Users.userDistributor,
+    totalPage: Users.totalPages,
+    totalCount: Users.totalCount,
+    pageSize: Users.perPage,
+    currentPage: Users.currentPage,
   }));
 
   const {
@@ -61,11 +67,21 @@ const ContactsList = (props) => {
     userDesignation,
     userMsoPolicy,
     userBulkSettings,
+    totalPage,
+    totalCount,
+    pageSize,
+    currentPage,
     // userRegional,
     // userMsoDetails,
     // userDistributor,
     loading,
   } = useSelector(ContactsProperties);
+
+  console.log("Users Value - From UseSelector..", users);
+  console.log(`TotalCount - ${totalCount}`);
+  console.log(`PageSize - ${pageSize}`);
+  console.log(`CurrentPage - ${currentPage}`);
+  console.log(`TotalPage - ${totalPage}`);
 
   // useEffect(() => {
   //   console.log("Users data in component:", users);
@@ -366,6 +382,12 @@ const ContactsList = (props) => {
     }
   }, [dispatch, users]);
 
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetUsers());
+  };
+
   const handleAddUser = () => {
     setShowAddUser(!showAddUser);
   };
@@ -520,7 +542,7 @@ const ContactsList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    <TableContainer
+                    {/* <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={users}
@@ -538,6 +560,23 @@ const ContactsList = (props) => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
+                    /> */}
+                    <TableContainerX
+                      columns={columns}
+                      data={users}
+                      isLoading={loading}
+                      isPagination={true}
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      totalPage={Number(totalPage)}
+                      isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      tableActions={getTableActions()}
+                      handleRowClick={(row) => {
+                        handleViewUser(row);
+                      }}
+                      goToPage={goToPage}
                     />
                   </CardBody>
                 </Card>

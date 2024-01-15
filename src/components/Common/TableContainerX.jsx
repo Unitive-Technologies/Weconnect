@@ -244,11 +244,28 @@ const TableContainerX = ({
                   </div>
                 </div>
               )}
-              <div className={paginationDiv}>
-                <span>
+              <div
+                className={paginationDiv}
+                style={{
+                  display: "flex",
+                  gap: "20px",
+                  alignItems: "center",
+                  justifyContent: "right",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "10px",
+                    height: "30px",
+                    width: "100px",
+                  }}
+                >
                   <Input
+                    style={{ width: "50%" }}
                     type="number"
-                    id="inputToPage"
+                    // id="inputToPage"
                     autoComplete="off"
                     min={1}
                     max={totalPage}
@@ -259,8 +276,15 @@ const TableContainerX = ({
                       goToPage(Number(e.target.value));
                     }}
                   />
-                  / {totalPage}
-                </span>
+                  <span
+                    style={{
+                      display: "flex",
+                    }}
+                  >
+                    {" "}
+                    / {totalPage}
+                  </span>
+                </div>
                 <ul className={paginationClass}>
                   <li
                     className={`page-item ${

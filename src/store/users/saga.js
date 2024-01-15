@@ -72,16 +72,32 @@ import {
 } from "../../helpers/fakebackend_helper";
 import { toast } from "react-toastify";
 
+export const getUsersStore = (state) => state.users;
+
+// function* fetchUsers() {
+//   try {
+//     const response = yield call(getUsers);
+//     console.log("response:" + JSON.stringify(response));
+//     yield put(getUsersSuccess(response.data));
+//   } catch (error) {
+//     yield put(getUsersFail(error));
+//   }
+// }
+
 function* fetchUsers() {
   try {
-    const response = yield call(getUsers);
-    console.log("response:" + JSON.stringify(response));
-    yield put(getUsersSuccess(response.data));
+    let usersStore = yield select(getUsersStore);
+
+    const pageSize = usersStore.pageSize;
+    const currentPage = usersStore.currentPage;
+
+    const response = yield call(getUsers, currentPage, pageSize);
+    yield put(getUsersSuccess(response));
   } catch (error) {
+    console.error("Error fetching Users list:", error);
     yield put(getUsersFail(error));
   }
 }
-
 function* fetchUserType() {
   try {
     const response = yield call(getUserType);

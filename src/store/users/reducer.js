@@ -1,4 +1,11 @@
 import {
+  RESPONSE_HEADER_CURRENT_PAGE,
+  RESPONSE_HEADER_PAGE_COUNT,
+  RESPONSE_HEADER_TOTAL_COUNT,
+  RESPONSE_HEADER_PER_PAGE,
+} from "../../constants/strings";
+import {
+  GET_USERS,
   GET_USERS_SUCCESS,
   GET_USERS_FAIL,
   ADD_USER_SUCCESS,
@@ -29,6 +36,7 @@ import {
   GET_USER_LCO_SUCCESS,
   GET_USER_BULKSETTINGS_FAIL,
   GET_USER_BULKSETTINGS_SUCCESS,
+  UPDATE_USERS_CURRENT_PAGE,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -46,10 +54,27 @@ const INIT_STATE = {
   userBulkSettings: [],
   error: {},
   loading: true,
+  pagination: {},
+  currentPage: 1,
+  perPage: 10,
+  totalCount: 0,
+  totalPages: 0,
 };
 
 const contacts = (state = INIT_STATE, action) => {
   switch (action.type) {
+    case UPDATE_USERS_CURRENT_PAGE:
+      return Number(action.payload) <= state.totalPages
+        ? {
+            ...state,
+            currentPage: action.payload,
+          }
+        : state;
+    case GET_USERS:
+      return {
+        ...state,
+        loading: true,
+      };
     case GET_USERS_SUCCESS:
       console.log("Users data in reducer:", action.payload);
       return {

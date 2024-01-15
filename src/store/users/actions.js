@@ -44,7 +44,13 @@ import {
   GET_USER_BULKSETTINGS,
   GET_USER_BULKSETTINGS_FAIL,
   GET_USER_BULKSETTINGS_SUCCESS,
+  UPDATE_USERS_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_USERS_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getUsers = () => ({
   type: GET_USERS,
