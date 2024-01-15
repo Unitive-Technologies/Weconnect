@@ -94,9 +94,7 @@ const District = (state = INIT_STATE, action) => {
         ...state,
         loading: false,
         district: state.district.map((dist) =>
-          dist.id.toString() === action.payload.id.toString()
-            ? { district: dist, ...action.payload }
-            : dist
+          dist.id === action.payload.id ? { ...dist, ...action.payload } : dist
         ),
       };
     case UPDATE_DISTRICT_FAIL:

@@ -19,7 +19,7 @@ import { getDistrict as onGetDistrict } from "/src/store/actions";
 import { useDispatch } from "react-redux";
 
 const AddNewDistrict = (props) => {
-  const { isOpen, handleShowDistrict, statelist, status } = props;
+  const { isOpen, toggleAddModal, statelist, status } = props;
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -28,38 +28,31 @@ const AddNewDistrict = (props) => {
 
     initialValues: {
       name: "",
-      status_lbl: "",
+      status: "",
       description: "",
-      created_at: "",
-      created_by_lbl: "my mso(mso)",
-      created_by: "1",
       type: "2",
       state_id: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter district name"),
       state_id: Yup.string().required("Select state"),
-      status_lbl: Yup.string().required("Select status"),
+      status: Yup.string().required("Select status"),
       description: Yup.string().required("Enter description"),
     }),
     onSubmit: (values) => {
       console.log("Post values: ", values);
       const newDistrict = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
-        status_lbl: values["status"],
+        status: Number(values["status"]),
         description: values["description"],
-        created_at: values[new Date()],
-        created_by_lbl: values["created_by_lbl"],
         type: values["type"],
-        state_id: values["state_id"],
-        created_by: values["created_by"],
+        state_id: Number(values["state_id"]),
       };
       console.log("new district:" + JSON.stringify(newDistrict));
       dispatch(onAddDistrict(newDistrict));
       dispatch(onGetDistrict());
       validation.resetForm();
-      handleShowDistrict();
+      toggleAddModal();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -75,9 +68,9 @@ const AddNewDistrict = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleShowDistrict}
+      toggle={toggleAddModal}
     >
-      <ModalHeader tag="h4" toggle={handleShowDistrict}>
+      <ModalHeader tag="h4" toggle={toggleAddModal}>
         Add New District
       </ModalHeader>
       <ModalBody>
@@ -176,13 +169,13 @@ const AddNewDistrict = (props) => {
                   Status<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="status_lbl"
+                  name="status"
                   type="select"
                   placeholder="Select Status"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.status_lbl || ""}
+                  value={validation.values.status || ""}
                 >
                   <option value="">Select Status</option>
                   {status.map((options) => (
@@ -218,7 +211,7 @@ const AddNewDistrict = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    handleShowDistrict();
+                    toggleAddModal();
                   }}
                 >
                   Cancel
@@ -234,8 +227,10 @@ const AddNewDistrict = (props) => {
 };
 
 AddNewDistrict.propTypes = {
-  handleShowDistrict: PropTypes.func,
+  toggleAddModal: PropTypes.func,
   isOpen: PropTypes.bool,
+  statelist: PropTypes.array,
+  status: PropTypes.array,
 };
 
 export default AddNewDistrict;

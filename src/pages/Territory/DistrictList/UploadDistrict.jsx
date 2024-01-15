@@ -19,7 +19,7 @@ import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const UploadDistrict = (props) => {
-  const { isOpen, handleUploadDistrict, status, statelist } = props;
+  const { isOpen, toggleUploadModal, status, statelist } = props;
 
   const [selectedFiles, setselectedFiles] = useState([]);
 
@@ -73,9 +73,9 @@ const UploadDistrict = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleUploadDistrict}
+      toggle={toggleUploadModal}
     >
-      <ModalHeader toggle={handleUploadDistrict} tag="h4">
+      <ModalHeader toggle={toggleUploadModal} tag="h4">
         Upload Districts
       </ModalHeader>
       <ModalBody>
@@ -230,8 +230,10 @@ const UploadDistrict = (props) => {
 };
 
 UploadDistrict.propTypes = {
-  handleUploadDistrict: PropTypes.func,
+  toggleUploadModal: PropTypes.func,
   isOpen: PropTypes.bool,
+  statelist: PropTypes.array,
+  status: PropTypes.array,
 };
 
 export default UploadDistrict;

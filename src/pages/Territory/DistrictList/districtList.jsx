@@ -50,6 +50,7 @@ const DistrictList = (props) => {
   const { districts, loading, status, statelist } =
     useSelector(districtProperties);
 
+  console.log("Current District Data ---- ", districts);
   const columns = useMemo(
     () => [
       {
@@ -226,17 +227,17 @@ const DistrictList = (props) => {
     }
   }, [dispatch, districts]);
 
-  const handleShowDistrict = () => {
+  const toggleAddModal = () => {
     setShowAddDistrict(!showAddDistrict);
   };
-  const handleUploadDistrict = () => {
+  const toggleUploadModal = () => {
     setShowUploadDistrict(!showUploadDistrict);
   };
 
   const resetSelection = () => {
     setViewDistrictData({});
   };
-  const toggleModal = () => {
+  const toggleViewModal = () => {
     setShowViewDistrict(!showViewDistrict);
   };
 
@@ -276,20 +277,20 @@ const DistrictList = (props) => {
         isOpen={showViewDistrict}
         resetSelection={resetSelection}
         // handleViewDistrict={handleViewDistrict}
-        toggleModal={toggleModal}
+        toggleModal={toggleViewModal}
         district={viewDistrictData}
         statelist={statelist}
         status={status}
       />
       <AddNewDistrict
         isOpen={showAddDistrict}
-        handleShowDistrict={handleShowDistrict}
+        toggleAddModal={toggleAddModal}
         statelist={statelist}
         status={status}
       />
       <UploadDistrict
         isOpen={showUploadDistrict}
-        handleUploadDistrict={handleUploadDistrict}
+        handleUploadDistrict={toggleUploadModal}
         status={status}
         statelist={statelist}
       />

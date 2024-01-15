@@ -11,6 +11,7 @@ import {
 import {
   getDistrictSuccess,
   getDistrictFail,
+  getDistrict as fetchDistricts,
   addDistrictSuccess,
   addDistrictFail,
   getAdministrativeDivisionStatusSuccess,
@@ -90,6 +91,8 @@ function* onAddDistrict({ payload: district }) {
     const response = yield call(addDistrict, district);
     console.log(" New District in saga: ", response);
     yield put(addDistrictSuccess(response));
+
+    yield put(fetchDistricts());
   } catch (error) {
     console.log("Error in add new district: ", error);
     yield put(addDistrictFail(error));
@@ -102,6 +105,8 @@ function* onUpdateDistrict({ payload: district }) {
     const response = yield call(updateDistrict, district.id, district);
     console.log("Response data in saga: ", response);
     yield put(updateDistrictSuccess(response.data));
+
+    yield put(fetchDistricts());
   } catch (error) {
     console.log("Error in update district: ", error);
     yield put(updateDistrictFail(error));
