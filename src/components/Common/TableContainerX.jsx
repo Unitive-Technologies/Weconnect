@@ -67,6 +67,7 @@ const createLimitedArray = (startPage, totalPage, limit) => {
     (_, index) => startPage + index
   );
   console.log(updatedArray);
+  debugger;
   return updatedArray;
 };
 const TableContainerX = ({
@@ -123,7 +124,6 @@ const TableContainerX = ({
   const startIndex = (currentPage - 1) * pageSize + 1;
   // console.log("current data size - ", data.length);
   // console.log(startIndex, "S.I - PageSize ", pageSize);
-  // debugger;
   const generateSortingIndicator = (column) => {
     return column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : "";
   };
@@ -327,7 +327,7 @@ const TableContainerX = ({
                             <li
                               key={index}
                               className={`page-item ${
-                                currentPage === currentPage + index + 1
+                                currentPage === currentPage + index
                                   ? "active"
                                   : ""
                               }`}
@@ -335,11 +335,9 @@ const TableContainerX = ({
                               <Link
                                 to="#"
                                 className="page-link"
-                                onClick={() =>
-                                  goToPage(currentPage + index + 1)
-                                }
+                                onClick={() => goToPage(currentPage + index)}
                               >
-                                {currentPage + index + 1}
+                                {currentPage + index}
                               </Link>
                             </li>
                           )

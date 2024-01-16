@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 
 // Crypto Redux States
 import {
@@ -92,6 +92,8 @@ function* fetchUsers() {
     const currentPage = usersStore.currentPage;
 
     const response = yield call(getUsers, currentPage, pageSize);
+    console.log("Response from API -", response);
+    debugger;
     yield put(getUsersSuccess(response));
   } catch (error) {
     console.error("Error fetching Users list:", error);

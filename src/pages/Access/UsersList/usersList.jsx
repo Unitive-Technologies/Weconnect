@@ -102,14 +102,16 @@ const ContactsList = (props) => {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          // const totalRows = cellProps.rows.length;
+          // const reverseIndex = totalRows - cellProps.row.index;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
 
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -377,9 +379,6 @@ const ContactsList = (props) => {
       dispatch(onGetUserDesignation());
       dispatch(onGetUserMsoPolicy());
       dispatch(onGetUserBulkSettings());
-      // dispatch(onGetUserRegionalOffice());
-      // dispatch(onGetUserMsoDetails());
-      // dispatch(onGetUserDistributor());
     }
   }, [dispatch, users]);
 

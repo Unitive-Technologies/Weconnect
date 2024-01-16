@@ -242,8 +242,6 @@ const DistrictList = (props) => {
   };
 
   const handleViewDistrict = (userData) => {
-    debugger;
-
     setShowViewDistrict(!showViewDistrict);
     setViewDistrictData(userData);
     if (userData.length) {
