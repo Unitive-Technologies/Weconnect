@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   useTable,
@@ -115,6 +115,10 @@ const TableContainerX = ({
     useExpanded,
     usePagination
   );
+
+  useEffect(() => {
+    setNavigationPage(currentPage);
+  }, [currentPage]);
 
   const startIndex = (currentPage - 1) * pageSize + 1;
   // console.log("current data size - ", data.length);
