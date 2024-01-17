@@ -3,6 +3,9 @@ import {
   GET_INVENTORYSTOCK,
   GET_INVENTORYSTOCK_STB,
   GET_INVENTORYSTOCK_PAIRING,
+  GET_INVENTORYFAULTY_SMARTCARD,
+  GET_INVENTORYFAULTY_STB,
+  GET_INVENTORYFAULTY_PAIRING,
 } from "./actionTypes";
 import {
   getInventoryStockSuccess,
@@ -11,11 +14,20 @@ import {
   getInventoryStockStbFail,
   getInventoryStockPairingSuccess,
   getInventoryStockPairingFail,
+  getInventoryFaultySmartcardSuccess,
+  getInventoryFaultySmartcardFail,
+  getInventoryFaultyStbSuccess,
+  getInventoryFaultyStbFail,
+  getInventoryFaultyPairingSuccess,
+  getInventoryFaultyPairingFail,
 } from "./actions";
 import {
   getInventoryStock,
   getInventoryStockStb,
   getInventoryStockPairing,
+  getInventoryFaultySmartcard,
+  getInventoryFaultyStb,
+  getInventoryFaultyPairing,
 } from "../../helpers/fakebackend_helper";
 
 const convertInventoryStockListObject = (inventorystocklist) => {
@@ -72,10 +84,43 @@ function* fetchInventoryStockPairing() {
   }
 }
 
+function* fetchInventoryFaultySmartcard() {
+  try {
+    const response = yield call(getInventoryFaultySmartcard);
+    console.log("response:" + JSON.stringify(response.data));
+    yield put(getInventoryFaultySmartcardSuccess(response.data));
+  } catch (error) {
+    yield put(getInventoryFaultySmartcardFail(error));
+  }
+}
+
+function* fetchInventoryFaultyStb() {
+  try {
+    const response = yield call(getInventoryFaultyStb);
+    console.log("response:" + JSON.stringify(response.data));
+    yield put(getInventoryFaultyStbSuccess(response.data));
+  } catch (error) {
+    yield put(getInventoryFaultyStbFail(error));
+  }
+}
+
+function* fetchInventoryFaultyPairing() {
+  try {
+    const response = yield call(getInventoryFaultyPairing);
+    console.log("response:" + JSON.stringify(response.data));
+    yield put(getInventoryFaultyPairingSuccess(response.data));
+  } catch (error) {
+    yield put(getInventoryFaultyPairingFail(error));
+  }
+}
+
 function* inventorystockSaga() {
   yield takeEvery(GET_INVENTORYSTOCK, fetchInventoryStock);
   yield takeEvery(GET_INVENTORYSTOCK_STB, fetchInventoryStockStb);
   yield takeEvery(GET_INVENTORYSTOCK_PAIRING, fetchInventoryStockPairing);
+  yield takeEvery(GET_INVENTORYFAULTY_SMARTCARD, fetchInventoryFaultySmartcard);
+  yield takeEvery(GET_INVENTORYFAULTY_STB, fetchInventoryFaultyStb);
+  yield takeEvery(GET_INVENTORYFAULTY_PAIRING, fetchInventoryFaultyPairing);
 }
 
 export default inventorystockSaga;

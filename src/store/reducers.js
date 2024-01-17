@@ -57,6 +57,9 @@ import operatorforassign from "./ncflist/reducer";
 import operatorforbouquet from "./bouquetlist/reducer";
 import stockstb from "./inventorystock/reducer";
 import stockpairing from "./inventorystock/reducer";
+import faultysmartcard from "./inventorystock/reducer";
+import faultystb from "./inventorystock/reducer";
+import faultypairing from "./inventorystock/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -113,6 +116,9 @@ const rootReducer = combineReducers({
   operatorforbouquet,
   stockstb,
   stockpairing,
+  faultysmartcard,
+  faultystb,
+  faultypairing,
 });
 
 export default rootReducer;

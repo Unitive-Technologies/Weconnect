@@ -537,6 +537,12 @@ export const getInventoryStockStb = () => get(url.GET_INVENTORYSTOCK_STB);
 export const getInventoryStockPairing = () =>
   get(url.GET_INVENTORYSTOCK_PAIRING);
 
+export const getInventoryFaultySmartcard = () =>
+  get(url.GET_INVENTORYFAULTY_SMARTCARD);
+export const getInventoryFaultyStb = () => get(url.GET_INVENTORYFAULTY_STB);
+export const getInventoryFaultyPairing = () =>
+  get(url.GET_INVENTORYFAULTY_PAIRING);
+
 export const addNewUser = (user) => post(url.ADD_NEW_USER, user);
 
 // update user
