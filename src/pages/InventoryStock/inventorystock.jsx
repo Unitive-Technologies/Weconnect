@@ -12,6 +12,8 @@ import {
   NavItem,
   NavLink,
   Row,
+  TabContent,
+  TabPane,
   UncontrolledTooltip,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -24,6 +26,8 @@ import {
   getInventoryStockStb as onGetInventoryStockStb,
   getInventoryStockPairing as onGetInventoryStockPairing,
 } from "/src/store/actions";
+import StockStb from "./StockStb";
+import StockPairing from "./StockPairing";
 
 const InventoryStock = (props) => {
   document.title = "Inventory | VDigital";
@@ -388,20 +392,45 @@ const InventoryStock = (props) => {
                         </NavLink>
                       </NavItem>
                     </Nav>
+                    <TabContent
+                      activeTab={activeTab}
+                      className="p-3 text-muted"
+                    >
+                      <TabPane tabId="1">
+                        <Row>
+                          <Col sm="12">
+                            <TableContainer
+                              isPagination={true}
+                              columns={columns}
+                              data={inventory_stock}
+                              isGlobalFilter={true}
+                              isShowTableActionButtons={true}
+                              isShowingPageLength={true}
+                              tableActions={getTableActions()}
+                              customPageSize={100}
+                              tableClass="table-bordered align-middle nowrap mt-2"
+                              paginationDiv="col-sm-12 col-md-7"
+                              pagination="pagination justify-content-end pagination-rounded"
+                            />
+                          </Col>
+                        </Row>
+                      </TabPane>
+                      <TabPane tabId="2">
+                        <Row>
+                          <Col sm="12">
+                            <StockStb stockstb={stockstb} />
+                          </Col>
+                        </Row>
+                      </TabPane>
+                      <TabPane tabId="3">
+                        <Row>
+                          <Col sm="12">
+                            <StockPairing stockpairing={stockpairing} />
+                          </Col>
+                        </Row>
+                      </TabPane>
+                    </TabContent>
                   </div>
-                  <TableContainer
-                    isPagination={true}
-                    columns={columns}
-                    data={inventory_stock}
-                    isGlobalFilter={true}
-                    isShowTableActionButtons={true}
-                    isShowingPageLength={true}
-                    tableActions={getTableActions()}
-                    customPageSize={100}
-                    tableClass="table-bordered align-middle nowrap mt-2"
-                    paginationDiv="col-sm-12 col-md-7"
-                    pagination="pagination justify-content-end pagination-rounded"
-                  />
                 </CardBody>
               </Card>
             </Col>
