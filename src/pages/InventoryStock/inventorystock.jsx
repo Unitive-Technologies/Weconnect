@@ -28,6 +28,9 @@ import {
   getInventoryFaultySmartcard as onGetInventoryFaultySmartcard,
   getInventoryFaultyStb as onGetInventoryFaultyStb,
   getInventoryFaultyPairing as onGetInventoryFaultyPairing,
+  getInventoryBlacklistedSmartcard as onGetInventoryBlacklistedSmartcard,
+  getInventoryBlacklistedStb as onGetInventoryBlacklistedStb,
+  getInventoryBlacklistedPairing as onGetInventoryBlacklistedPairing,
 } from "/src/store/actions";
 import StockStb from "./StockStb";
 import StockPairing from "./StockPairing";
@@ -49,6 +52,9 @@ const InventoryStock = (props) => {
       faultysmartcard: inventorystock.faultysmartcard,
       faultystb: inventorystock.faultystb,
       faultypairing: inventorystock.faultypairing,
+      blacklistedsmartcard: inventorystock.blacklistedsmartcard,
+      blacklistedstb: inventorystock.blacklistedstb,
+      blacklistedpairing: inventorystock.blacklistedpairing,
     })
   );
 
@@ -60,6 +66,9 @@ const InventoryStock = (props) => {
     faultysmartcard,
     faultystb,
     faultypairing,
+    blacklistedsmartcard,
+    blacklistedstb,
+    blacklistedpairing,
   } = useSelector(inventorystockProperties);
 
   useEffect(() => {
@@ -70,12 +79,11 @@ const InventoryStock = (props) => {
       dispatch(onGetInventoryFaultySmartcard());
       dispatch(onGetInventoryFaultyStb());
       dispatch(onGetInventoryFaultyPairing());
+      dispatch(onGetInventoryBlacklistedSmartcard());
+      dispatch(onGetInventoryBlacklistedStb());
+      dispatch(onGetInventoryBlacklistedPairing());
     }
   }, [dispatch, inventory_stock]);
-
-  console.log("Faulty smartcard: ", faultysmartcard);
-  console.log("Faulty Stb: ", faultystb);
-  console.log("Faulty pairing: ", faultypairing);
 
   const toggleTab = (tab) => {
     if (activeTab !== tab) {
@@ -99,6 +107,14 @@ const InventoryStock = (props) => {
         return faultystb;
       } else if (activeTab === "3") {
         return faultypairing;
+      }
+    } else if (selectedOption === "Blacklisted") {
+      if (activeTab === "1") {
+        return blacklistedsmartcard;
+      } else if (activeTab === "2") {
+        return blacklistedstb;
+      } else if (activeTab === "3") {
+        return blacklistedpairing;
       }
     }
     return [];
