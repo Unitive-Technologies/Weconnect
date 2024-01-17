@@ -55,6 +55,8 @@ import admindetails from "./admin/reducer";
 import inventorystock from "./inventorystock/reducer";
 import operatorforassign from "./ncflist/reducer";
 import operatorforbouquet from "./bouquetlist/reducer";
+import stockstb from "./inventorystock/reducer";
+import stockpairing from "./inventorystock/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -109,6 +111,8 @@ const rootReducer = combineReducers({
   inventorystock,
   operatorforassign,
   operatorforbouquet,
+  stockstb,
+  stockpairing,
 });
 
 export default rootReducer;
