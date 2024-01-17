@@ -19,7 +19,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import classnames from "classnames";
-import { getInventoryStock as onGetInventoryStock } from "/src/store/actions";
+import {
+  getInventoryStock as onGetInventoryStock,
+  getInventoryStockStb as onGetInventoryStockStb,
+  getInventoryStockPairing as onGetInventoryStockPairing,
+} from "/src/store/actions";
 
 const InventoryStock = (props) => {
   document.title = "Inventory | VDigital";
@@ -33,14 +37,20 @@ const InventoryStock = (props) => {
     (inventorystock) => ({
       inventory_stock: inventorystock.inventorystock,
       loading: inventorystock.loading,
+      stockstb: inventorystock.stockstb,
+      stockpairing: inventorystock.stockpairing,
     })
   );
 
-  const { inventory_stock, loading } = useSelector(inventorystockProperties);
+  const { inventory_stock, loading, stockstb, stockpairing } = useSelector(
+    inventorystockProperties
+  );
 
   useEffect(() => {
     if (inventory_stock && !inventory_stock.length) {
       dispatch(onGetInventoryStock());
+      dispatch(onGetInventoryStockStb());
+      dispatch(onGetInventoryStockPairing());
     }
   }, [dispatch, inventory_stock]);
 
@@ -246,8 +256,6 @@ const InventoryStock = (props) => {
     ],
     []
   );
-
-  const data = [];
 
   const getTableActions = () => {
     return [
