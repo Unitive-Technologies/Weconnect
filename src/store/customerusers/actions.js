@@ -8,7 +8,13 @@ import {
   GET_CUSTOMERUSERS_SETTINGS,
   GET_CUSTOMERUSERS_SETTINGS_FAIL,
   GET_CUSTOMERUSERS_SETTINGS_SUCCESS,
+  UPDATE_CUSTOMERUSERS_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_CUSTOMERUSERS_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getCustomerUsers = () => ({
   type: GET_CUSTOMERUSERS,

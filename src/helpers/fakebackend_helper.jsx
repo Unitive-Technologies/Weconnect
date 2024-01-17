@@ -229,7 +229,14 @@ export const getUsers = async (currentPage, perPage = 20) => {
   console.log("Users - Per Page: ", perPage);
   return await getCompleteResponse(url.getUsersUrl(currentPage, perPage));
 };
-export const getCustomerUsers = () => get(url.GET_CUSTOMERUSERS);
+// export const getCustomerUsers = () => get(url.GET_CUSTOMERUSERS);
+export const getCustomerUsers = async (currentPage, perPage = 20) => {
+  console.log("CustomerUsers - Current Page in fakebackend: ", currentPage);
+  console.log("CustomerUsers - Per Page: ", perPage);
+  return await getCompleteResponse(
+    url.getCustomerUsersUrl(currentPage, perPage)
+  );
+};
 export const updateCustomerUser = (customerUser, id) =>
   put(url.UPDATE_CUSTOMERUSER(id), customerUser);
 export const getCustomerUsersSettings = () =>

@@ -236,7 +236,16 @@ const TableContainerX = ({
           </div>
 
           {isPagination && (
-            <Row className="justify-content-between align-items-center">
+            <Row
+              // className="justify-content-between align-items-center"
+              style={{
+                // border: "1px solid red",
+                display: "flex",
+                // gap: "20px",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
               {isShowingPageLength && startIndex > 0 && (
                 <div className="col-sm">
                   <div className="text-muted">
@@ -251,23 +260,27 @@ const TableContainerX = ({
               <div
                 className={paginationDiv}
                 style={{
+                  // border: "1px solid green",
                   display: "flex",
-                  gap: "20px",
+                  gap: "5%",
                   alignItems: "center",
-                  justifyContent: "right",
+                  justifyContent: "center",
+                  paddingLeft: "10%",
                 }}
               >
                 <div
                   style={{
+                    // border: "1px solid blue",
                     display: "flex",
                     alignItems: "center",
+                    justifyContent: "space-between",
                     gap: "10px",
                     height: "30px",
-                    width: "100px",
+                    width: "30%",
                   }}
                 >
                   <Input
-                    style={{ width: "50%" }}
+                    // style={{ width: "100%" }}
                     type="number"
                     // id="inputToPage"
                     autoComplete="off"
@@ -283,13 +296,17 @@ const TableContainerX = ({
                   <span
                     style={{
                       display: "flex",
+                      width: "400px",
                     }}
                   >
                     {" "}
                     / {totalPage}
                   </span>
                 </div>
-                <ul className={paginationClass}>
+                <ul
+                  className={paginationClass}
+                  // style={{ border: "1px solid black" }}
+                >
                   <li
                     className={`page-item ${
                       currentPage <= 1 ? "disabled" : ""

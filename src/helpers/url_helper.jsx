@@ -12,8 +12,8 @@ export const GET_ADMINDETAILS = "/admindetails";
 export const POST_EDIT_JWT_PROFILE = "/post-jwt-profile";
 export const POST_EDIT_PROFILE = "/post-fake-profile";
 
-export const GET_CUSTOMERUSERS =
-  "/user?expand=setting,group_lbl,access_level,role_lbl,status_lbl,type_lbl,operator_lbl,operator,created_by_lbl,parent_lbl&filter[role]=4&page=1&per-page=500&vr=web1.0";
+// export const GET_CUSTOMERUSERS =
+//   "/user?expand=setting,group_lbl,access_level,role_lbl,status_lbl,type_lbl,operator_lbl,operator,created_by_lbl,parent_lbl&filter[role]=4&page=1&per-page=500&vr=web1.0";
 export const UPDATE_CUSTOMERUSER = (id) => `/user/${id}?vr=web1.0`;
 
 export const GET_CUSTOMERUSERS_SETTINGS =
@@ -54,6 +54,11 @@ export const getDistributorUrl = (currPage, perPage) => {
 export const getUsersUrl = (currPage, perPage) => {
   console.log("current page in users url - ", currPage, perPage);
   return `/user?expand=setting,group_lbl,access_level,role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[role]=4&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+};
+
+export const getCustomerUsersUrl = (currPage, perPage) => {
+  console.log("current page in Customerusers url - ", currPage, perPage);
+  return `/user?expand=setting,group_lbl,access_level,role_lbl,status_lbl,type_lbl,operator_lbl,operator,created_by_lbl,parent_lbl&filter[role]=4&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
 export const GET_REGIONALOFFICE =
   "/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,mso_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=1&page=1&per-page=50&vr=web1.0";

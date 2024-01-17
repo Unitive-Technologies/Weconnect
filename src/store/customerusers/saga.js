@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, takeEvery, select } from "redux-saga/effects";
 
 import {
   GET_CUSTOMERUSERS,
@@ -51,16 +51,35 @@ const convertCustomerUsersListObject = (customerUserList) => {
   });
 };
 
+export const getCustomerUsersStore = (state) => state.customerUsers;
+
 function* fetchCustomerUsers() {
   try {
-    const response = yield call(getCustomerUsers);
-    console.log("response:" + JSON.stringify(response));
-    // const customerUserList = convertCustomerUsersListObject(response.data);
-    yield put(getCustomerUsersSuccess(response.data));
+    let customerUsersStore = yield select(getCustomerUsersStore);
+
+    const pageSize = customerUsersStore.pageSize;
+    const currentPage = customerUsersStore.currentPage;
+
+    const response = yield call(getCustomerUsers, currentPage, pageSize);
+    console.log("Response from API -", response);
+    debugger;
+    yield put(getCustomerUsersSuccess(response));
   } catch (error) {
+    console.error("Error fetching CustomerUsers list:", error);
     yield put(getCustomerUsersFail(error));
   }
 }
+
+// function* fetchCustomerUsers() {
+//   try {
+//     const response = yield call(getCustomerUsers);
+//     console.log("response:" + JSON.stringify(response));
+//     // const customerUserList = convertCustomerUsersListObject(response.data);
+//     yield put(getCustomerUsersSuccess(response.data));
+//   } catch (error) {
+//     yield put(getCustomerUsersFail(error));
+//   }
+// }
 
 function* onUpdateCustomerUser({ payload: customerUser }) {
   console.log("customerUser in onUpdate:" + JSON.stringify(customerUser));

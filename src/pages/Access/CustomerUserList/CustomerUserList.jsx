@@ -10,6 +10,7 @@ import { Email } from "./customerUserlistCol";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 
 import {
+  goToPage as onGoToPage,
   getCustomerUsers as onGetCustomerUsers,
   getCustomerUsersSettings as onGetCustomerUsersSettings,
 } from "/src/store/customerusers/actions";
@@ -21,6 +22,7 @@ import { ToastContainer } from "react-toastify";
 import ViewCustomerUserModal from "./ViewCustomerListModal";
 import BulkInactiveCustomerList from "./BulkInactiveCustomerList";
 import { getUserStatus as onGetUserStatus } from "/src/store/users/actions";
+import TableContainerX from "../../../components/Common/TableContainerX";
 
 const CustomerUserList = (props) => {
   //meta title
@@ -36,6 +38,10 @@ const CustomerUserList = (props) => {
       cusUsers: customerUsers.customerUsers,
       loading: customerUsers.loading,
       cusUsersSettings: customerUsers.customerUsersSettings,
+      totalPage: customerUsers.totalPages,
+      totalCount: customerUsers.totalCount,
+      pageSize: customerUsers.perPage,
+      currentPage: customerUsers.currentPage,
     })
   );
 
@@ -46,9 +52,15 @@ const CustomerUserList = (props) => {
     // userMsoDetails: Users.userMsoDetails,
     // userDistributor: Users.userDistributor,
   }));
-  const { cusUsers, loading, cusUsersSettings } = useSelector(
-    customerUsersProperties
-  );
+  const {
+    cusUsers,
+    loading,
+    cusUsersSettings,
+    totalPage,
+    totalCount,
+    pageSize,
+    currentPage,
+  } = useSelector(customerUsersProperties);
   const { userStatus } = useSelector(UsersProperties);
   console.log("customer: " + JSON.stringify(cusUsers));
 
@@ -60,14 +72,16 @@ const CustomerUserList = (props) => {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          // const totalRows = cellProps.rows.length;
+          // const reverseIndex = totalRows - cellProps.row.index;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
 
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -83,10 +97,10 @@ const CustomerUserList = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-              // onClick={() => {
-              //   const userData = cellProps.row.original;
-              //   handleViewCustomerUser(userData);
-              // }}
+                // onClick={() => {
+                //   const userData = cellProps.row.original;
+                //   handleViewCustomerUser(userData);
+                // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -137,8 +151,8 @@ const CustomerUserList = (props) => {
                 {cellProps.row.original.status === 1
                   ? "Active"
                   : cellProps.row.original.status === 0
-                    ? "In-Active"
-                    : "Blocked"}
+                  ? "In-Active"
+                  : "Blocked"}
               </Link>
             </h5>
           );
@@ -222,6 +236,12 @@ const CustomerUserList = (props) => {
     }
   }, [dispatch, cusUsers]);
 
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetCustomerUsers());
+  };
+
   const handleShowBulkActiveUser = () => {
     setShowBulkActiveModal(!showBulkActiveModal);
   };
@@ -284,7 +304,7 @@ const CustomerUserList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    <TableContainer
+                    {/* <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={cusUsers}
@@ -301,6 +321,23 @@ const CustomerUserList = (props) => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
+                    /> */}
+                    <TableContainerX
+                      columns={columns}
+                      data={cusUsers}
+                      isLoading={loading}
+                      isPagination={true}
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      totalPage={Number(totalPage)}
+                      isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      tableActions={getTableActions()}
+                      handleRowClick={(row) => {
+                        handleViewUser(row);
+                      }}
+                      goToPage={goToPage}
                     />
                   </CardBody>
                 </Card>
