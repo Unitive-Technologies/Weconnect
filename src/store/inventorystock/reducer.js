@@ -11,6 +11,12 @@ import {
   GET_INVENTORYFAULTY_STB_FAIL,
   GET_INVENTORYFAULTY_PAIRING_SUCCESS,
   GET_INVENTORYFAULTY_PAIRING_FAIL,
+  GET_INVENTORYBLACKLISTED_SMARTCARD_SUCCESS,
+  GET_INVENTORYBLACKLISTED_SMARTCARD_FAIL,
+  GET_INVENTORYBLACKLISTED_STB_SUCCESS,
+  GET_INVENTORYBLACKLISTED_STB_FAIL,
+  GET_INVENTORYBLACKLISTED_PAIRING_SUCCESS,
+  GET_INVENTORYBLACKLISTED_PAIRING_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -20,6 +26,9 @@ const INIT_STATE = {
   faultysmartcard: [],
   faultystb: [],
   faultypairing: [],
+  blacklistedsmartcard: [],
+  blacklistedstb: [],
+  blacklistedpairing: [],
   error: {},
   loading: true,
 };
@@ -99,6 +108,45 @@ const InventoryStock = (state = INIT_STATE, action) => {
       };
 
     case GET_INVENTORYFAULTY_PAIRING_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_INVENTORYBLACKLISTED_SMARTCARD_SUCCESS:
+      return {
+        ...state,
+        blacklistedsmartcard: action.payload,
+        loading: false,
+      };
+
+    case GET_INVENTORYBLACKLISTED_SMARTCARD_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_INVENTORYBLACKLISTED_STB_SUCCESS:
+      return {
+        ...state,
+        blacklistedstb: action.payload,
+        loading: false,
+      };
+
+    case GET_INVENTORYBLACKLISTED_STB_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_INVENTORYBLACKLISTED_PAIRING_SUCCESS:
+      return {
+        ...state,
+        blacklistedpairing: action.payload,
+        loading: false,
+      };
+
+    case GET_INVENTORYBLACKLISTED_PAIRING_FAIL:
       return {
         ...state,
         error: action.payload,

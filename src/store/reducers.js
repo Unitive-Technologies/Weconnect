@@ -60,6 +60,9 @@ import stockpairing from "./inventorystock/reducer";
 import faultysmartcard from "./inventorystock/reducer";
 import faultystb from "./inventorystock/reducer";
 import faultypairing from "./inventorystock/reducer";
+import blacklistedsmartcard from "./inventorystock/reducer";
+import blacklistedstb from "./inventorystock/reducer";
+import blacklistedpairing from "./inventorystock/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -119,6 +122,9 @@ const rootReducer = combineReducers({
   faultysmartcard,
   faultystb,
   faultypairing,
+  blacklistedsmartcard,
+  blacklistedstb,
+  blacklistedpairing,
 });
 
 export default rootReducer;

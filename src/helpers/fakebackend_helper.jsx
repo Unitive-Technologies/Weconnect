@@ -543,6 +543,13 @@ export const getInventoryFaultyStb = () => get(url.GET_INVENTORYFAULTY_STB);
 export const getInventoryFaultyPairing = () =>
   get(url.GET_INVENTORYFAULTY_PAIRING);
 
+export const getInventoryBlacklistedSmartcard = () =>
+  get(url.GET_INVENTORYBLACKLISTED_SMARTCARD);
+export const getInventoryBlacklistedStb = () =>
+  get(url.GET_INVENTORYBLACKLISTED_STB);
+export const getInventoryBlacklistedPairing = () =>
+  get(url.GET_INVENTORYBLACKLISTED_PAIRING);
+
 export const addNewUser = (user) => post(url.ADD_NEW_USER, user);
 
 // update user
