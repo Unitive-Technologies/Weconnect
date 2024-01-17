@@ -1,18 +1,9 @@
-import {
-  call,
-  put,
-  select,
-  take,
-  takeEvery,
-  takeLatest,
-  takeLeading,
-} from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 
 import {
   GET_REGIONALOFFICE,
   ADD_NEW_REGIONALOFFICE,
   UPDATE_REGIONALOFFICE,
-  SET_CURRENT_PAGE,
 } from "./actionTypes";
 
 import {
@@ -22,12 +13,11 @@ import {
   addRegionalOfficeSuccess,
   updateRegionalOfficeSuccess,
   updateRegionalOfficeFail,
-  setCurrentPageAction,
 } from "./actions";
 
 //Include Both Helper File with needed methods
 import {
-  getRegionalOffice,
+  getRegionalOffices,
   addNewLco,
   updateRegionalOffice,
 } from "../../helpers/fakebackend_helper";
@@ -61,18 +51,21 @@ const convertRegionalOfficeListObject = (regionalofficeList) => {
   });
 };
 
-function* fetchRegionalOffice(action) {
+export const getRegionalOfficeStore = (state) => state.regionaloffice;
+
+function* fetchRegionalOffice() {
   try {
-    // const { perPage, currentPage } = yield select(state => state.regionaloffice);
+    let regionalOfficeStore = yield select(getRegionalOfficeStore);
 
-    const { currentPage, perPage } = action.payload;
+    const pageSize = regionalOfficeStore.pageSize;
+    const currentPage = regionalOfficeStore.currentPage;
 
-    console.log("In saga from selector - ", currentPage, perPage);
-    const response = yield call(getRegionalOffice, currentPage, perPage);
-    // const regionalofficeList = convertRegionalOfficeListObject(response);
+    const response = yield call(getRegionalOffices, currentPage, pageSize);
+    console.log("Response from API -", response);
+    debugger;
     yield put(getRegionalOfficeSuccess(response));
   } catch (error) {
-    console.error("Error fetching Regional office list:", error);
+    console.error("Error fetching Users list:", error);
     yield put(getRegionalOfficeFail(error));
   }
 }
@@ -100,32 +93,10 @@ function* onUpdateRegionalOffice({ payload: regionaloffice }) {
   }
 }
 
-function* onSetCurrentPage({ payload: currentPage }) {
-  yield put(setCurrentPageAction(currentPage));
-  try {
-    const { perPage, pageCount } = yield select(
-      (state) => state.regionaloffice
-    );
-
-    if (!pageCount || pageCount < currentPage || currentPage < 1) {
-      toast.error("Could not navigate further", { autoClose: 2000 });
-      return;
-    }
-    console.log("In current page update saga - ", currentPage, perPage);
-    const response = yield call(getRegionalOffice, currentPage, perPage);
-    // const regionalofficeList = convertRegionalOfficeListObject(response);
-    yield put(getRegionalOfficeSuccess(response));
-  } catch (error) {
-    console.error("Error fetching Regional office list:", error);
-    yield put(getRegionalOfficeFail(error));
-  }
-}
-
 function* regionalOfficeSaga() {
-  yield takeLeading(GET_REGIONALOFFICE, fetchRegionalOffice);
+  yield takeEvery(GET_REGIONALOFFICE, fetchRegionalOffice);
   yield takeEvery(ADD_NEW_REGIONALOFFICE, onAddNewRegionalOffice);
   yield takeEvery(UPDATE_REGIONALOFFICE, onUpdateRegionalOffice);
-  yield takeEvery(SET_CURRENT_PAGE, onSetCurrentPage);
 }
 
 export default regionalOfficeSaga;

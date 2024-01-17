@@ -317,11 +317,12 @@ export const updateSublocation = (id, sublocation) =>
 export const getLocationOnSublocation = () =>
   get(url.GET_LOCATION_ONSUBLOCATION);
 
-export const getRegionalOffice = async (currPage, perPage = 20) => {
-  console.log("Regional Office - Current Page in fakebackend: ", currPage);
-  console.log("Regional Office - Per Page: ", perPage);
-
-  return getCompleteResponse(url.getRegionalOfficeUrl(currPage, perPage));
+export const getRegionalOffices = async (currentPage, perPage = 20) => {
+  console.log("RegionalOffice - Current Page in fakebackend: ", currentPage);
+  console.log("RegionalOffice - Per Page: ", perPage);
+  return await getCompleteResponse(
+    url.getRegionalOfficesUrl(currentPage, perPage)
+  );
 };
 export const addNewRegionalOffice = (regionaloffice) =>
   post(url.ADD_NEW_REGIONALOFFICE, regionaloffice);

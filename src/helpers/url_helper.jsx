@@ -42,10 +42,11 @@ export const GET_NOTIFICATIONTEMPLATE_ADDUSER =
   "/user/list?fields=id,name,username&expand=type_lbl,role_lbl&notfilter[role]=4&page=1&per-page=500&vr=web1.0";
 export const ADD_NEW_NOTIFICATIONTEMPLATE = "/announcement-template?vr=web1.0";
 
-export const getRegionalOfficeUrl = (currPage, perPage) => {
+export const getRegionalOfficesUrl = (currPage, perPage) => {
   console.log("current page in regional url - ", currPage, perPage);
   return `/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,mso_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=1&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
+
 export const getDistributorUrl = (currPage, perPage) => {
   console.log("current page in distributor url - ", currPage, perPage);
   return `/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,branch_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=2&page=${currPage}&per-page=${perPage}&vr=web1.0`;

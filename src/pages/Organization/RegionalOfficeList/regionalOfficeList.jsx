@@ -7,90 +7,44 @@ import { Card, CardBody, Col, Container, Row, Table } from "reactstrap";
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 
-// import { getRegionalOffice as onGetRegionalOffice } from "/src/store/regionaloffice/actions";
+import {
+  getRegionalOffice as onGetRegionalOffice,
+  goToPage as onGoToPage,
+} from "/src/store/regionaloffice/actions";
 
 //redux
 import { createSelector } from "reselect";
+import { useSelector, useDispatch } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import ViewRegionalOfficeModal from "./ViewRegionalOfficeModal";
 import AddRegionalOfficeModal from "./AddRegionalOfficeModal";
 import UploadRegionalOfficeModal from "./UploadRegionalOfficeModal";
-import NewTableContainer from "../../../components/Common/NewTableContainer";
-import { getRegionalOffice } from "../../../helpers/fakebackend_helper";
-import {
-  RESPONSE_HEADER_CURRENT_PAGE,
-  RESPONSE_HEADER_PAGE_COUNT,
-  RESPONSE_HEADER_PER_PAGE,
-  RESPONSE_HEADER_TOTAL_COUNT,
-} from "../../../constants/strings";
-import NewPagination from "../../../components/Common/NewPagination";
-import RegionalTable from "./RegionalTable";
+import TableContainerX from "../../../components/Common/TableContainerX";
 
 const RegionalOfficeList = (props) => {
   //meta title
   document.title = "Regional Offices | VDigital";
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // const selectRegionalOfficeState = (state) => state.regionaloffice;
+  const selectRegionalOfficeState = (state) => state.regionaloffice;
 
-  // const RegionalOfficeProperties = createSelector(
-  //   selectRegionalOfficeState,
+  const RegionalOfficeProperties = createSelector(
+    selectRegionalOfficeState,
 
-  //   (regionalOfficesState) => ({
-  //     regOffices: regionalOfficesState.regionaloffice,
-  //     loading: regionalOfficesState.loading,
-  //     perPage: regionalOfficesState.perPage,
-  //     totalCount: regionalOfficesState.totalCount,
-  //     currentPage: regionalOfficesState.currentPage,
-  //     pageCount: regionalOfficesState.pageCount,
-  //   })
-  // );
+    (regionalOfficesState) => ({
+      regOffices: regionalOfficesState.regionaloffice,
+      loading: regionalOfficesState.loading,
+      totalPage: regionalOfficesState.totalPages,
+      totalCount: regionalOfficesState.totalCount,
+      pageSize: regionalOfficesState.perPage,
+      currentPage: regionalOfficesState.currentPage,
+    })
+  );
 
-  // const { regOffices, loading, perPage, totalCount, currentPage, pageCount } =
-  //   useSelector(RegionalOfficeProperties);
-
-  const [isLoading, setLoading] = useState(false);
-  const [currPage, setCurrPage] = useState(1);
-  const [pageCount, setPageCount] = useState(0);
-  const [perPage, setPerPage] = useState(10);
-  const [totalCount, setTotalCount] = useState(0);
-  const [regionaloffices, setRegionalOffices] = useState([]);
-
-  // useEffect(() => {
-  //   console.log("DataList updated:", JSON.stringify(dataList));
-  // }, [dataList]);
-
-  useEffect(() => {
-    console.log("In UseEffect.. currentPage", currPage);
-    // console.log("Regional Office data in component:", regionaloffices);
-
-    // if (!regionaloffices.length) {
-    //   setLoading(true);
-
-    getRegionalOffice(currPage, perPage).then((response) => {
-      const pageCount = response.headers[RESPONSE_HEADER_PAGE_COUNT];
-      const perPage = response.headers[RESPONSE_HEADER_PER_PAGE];
-      const totalCount = response.headers[RESPONSE_HEADER_TOTAL_COUNT];
-      const regOffices = response.data.data;
-
-      // console.log("API Response Data:", JSON.stringify(regOffices));
-
-      setPageCount(parseInt(pageCount));
-      setPerPage(parseInt(perPage));
-      setTotalCount(parseInt(totalCount));
-      setRegionalOffices(regOffices);
-
-      // console.log("Updated Regional Offices:", JSON.stringify(regOffices));
-    });
-  }, [currPage, perPage]);
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   dispatch(onGetRegionalOffice(currPage, perPage));
-  //   setDataList(regOffices);
-  // }, [dispatch, currPage]);
-
+  const { regOffices, loading, totalPage, totalCount, currentPage, pageSize } =
+    useSelector(RegionalOfficeProperties);
+  const [isLoading, setLoading] = useState(loading);
   const [showRegionalOffice, setShowRegionalOffice] = useState(false);
   const [viewRegionalOffice, setViewRegionalOffice] = useState(false);
   const [showUploadRegionalOffice, setShowUploadRegionalOffice] =
@@ -100,18 +54,19 @@ const RegionalOfficeList = (props) => {
     () => [
       {
         Header: "#",
-        // accessor: "name",
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          // const totalRows = cellProps.rows.length;
+          // const reverseIndex = totalRows - cellProps.row.index;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
 
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -289,23 +244,24 @@ const RegionalOfficeList = (props) => {
     []
   );
 
+  useEffect(() => {
+    if (regOffices && !regOffices.length) {
+      dispatch(onGetRegionalOffice());
+    }
+  }, [dispatch, regOffices]);
+
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetRegionalOffice());
+  };
+
   const handleAddRegionalOffice = () => {
     setShowRegionalOffice(!showRegionalOffice);
   };
   const handleUploadRegionalOffice = () => {
     setShowUploadRegionalOffice(!showUploadRegionalOffice);
   };
-
-  // const handlePerPageChange = (perPage) => {
-  //   dispatch(setPerPageAction(perPage));
-  //   // Optionally, you can also dispatch fetchDataAction here to trigger data fetching
-  // };
-
-  // const handleCurrentPageChange = (currentPage) => {
-  //   setCurrPage(currentPage);
-  //   // dispatch(setCurrentPageAction(currentPage));
-  //   // dispatch(onGetRegionalOffice({perPage, currentPage}));
-  // };
 
   const [regOffData, setRegOffData] = useState({});
 
@@ -361,62 +317,24 @@ const RegionalOfficeList = (props) => {
                     {/* {console.log("currpage:" + currPage, perPage)} */}
                     {console.log(
                       "RRRRRRRRRRRRRRRRRRRRRRRRegionalOffices:" +
-                        JSON.stringify(regionaloffices)
+                        JSON.stringify(regOffices)
                     )}
-                    <RegionalTable />
-                    {/* <NewTableContainer
-                      isPagination={true}
-                      isLoading={isLoading}
+                    <TableContainerX
                       columns={columns}
-                      data={regionaloffices}
+                      data={regOffices}
+                      isLoading={loading}
+                      isPagination={true}
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      totalPage={Number(totalPage)}
                       isGlobalFilter={true}
-                      isShowTableActionButtons={true}
                       isShowingPageLength={true}
-                      iscustomPageSizeOptions={true}
                       tableActions={getTableActions()}
-                      customPageSize={perPage}
-                      // setCustomPageSize={handlePerPageChange}
-                      currentPage={currPage}
-                      totalRows={totalCount}
-                      totalPageCount={pageCount}
-                      rowsPerPage={perPage}
-                      pageChangeHandler={(num) => setCurrPage(num)}
-                      tableClass="table align-middle table-nowrap table-hover"
-                      theadClass="table-light"
-                      paginationDiv="col-sm-12 col-md-7"
-                      pagination="pagination pagination-rounded justify-content-end mt-4"
-                    /> */}
-                    <div className="table-responsive">
-                      <Table className="table mb-0">
-                        <thead className="table-light">
-                          <tr>
-                            <th>#</th>
-                            <th> Name</th>
-                            <th>Code</th>
-                            <th>Address</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {regionaloffices.map((row) => (
-                            <tr key={row.id}>
-                              <th scope="row">{row.id}</th>
-                              <td>{row.name}</td>
-                              <td>{row.code}</td>
-                              <td>{row.addr}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </Table>
-                    </div>
-                    <NewPagination
-                      pageChangeHandler={(num) => setCurrPage(num)}
-                      rowsPerPage={perPage}
-                      totalRows={totalCount}
-                      currentPage={parseInt(currPage)}
-                      paginationDiv="col-sm-12 col-md-7"
-                      pagination="pagination pagination-rounded justify-content-end mt-4"
-                      pageCount={pageCount}
-                      // pageIndex={state.pageIndex}
+                      handleRowClick={(row) => {
+                        handleViewRegionalOffice(row);
+                      }}
+                      goToPage={goToPage}
                     />
                   </CardBody>
                 </Card>

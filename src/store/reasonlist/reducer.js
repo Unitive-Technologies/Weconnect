@@ -9,7 +9,6 @@ import {
   ADD_REASON_FAIL,
   UPDATE_REASON_SUCCESS,
   UPDATE_REASON_FAIL,
-
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -79,7 +78,6 @@ const Reason = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
       };
-
 
     case ADD_REASON_SUCCESS:
       return {

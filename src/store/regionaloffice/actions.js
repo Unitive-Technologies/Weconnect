@@ -8,27 +8,17 @@ import {
   UPDATE_REGIONALOFFICE,
   UPDATE_REGIONALOFFICE_SUCCESS,
   UPDATE_REGIONALOFFICE_FAIL,
-  SET_PER_PAGE,
-  SET_CURRENT_PAGE,
+  UPDATE_REGIONALOFFICES_CURRENT_PAGE,
 } from "./actionTypes";
 
-export const setCurrentPageAction = (currentPage) => ({
-  type: SET_CURRENT_PAGE,
-  payload: currentPage,
+export const goToPage = (toPage) => ({
+  type: UPDATE_REGIONALOFFICES_CURRENT_PAGE,
+  payload: Number(toPage),
 });
 
-export const setPerPageAction = (perPage) => ({
-  type: SET_PER_PAGE,
-  payload: perPage,
-});
-
-export const getRegionalOffice = (currentPage, perPage) => {
+export const getRegionalOffice = (regionalOffice) => {
   return {
     type: GET_REGIONALOFFICE,
-    payload: {
-      currentPage,
-      perPage,
-    },
   };
 };
 

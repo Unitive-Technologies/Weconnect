@@ -335,7 +335,7 @@ const CustomerUserList = (props) => {
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleRowClick={(row) => {
-                        handleViewUser(row);
+                        handleViewCustomerUser(row);
                       }}
                       goToPage={goToPage}
                     />
