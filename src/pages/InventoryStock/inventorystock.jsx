@@ -25,6 +25,9 @@ import {
   getInventoryStock as onGetInventoryStock,
   getInventoryStockStb as onGetInventoryStockStb,
   getInventoryStockPairing as onGetInventoryStockPairing,
+  getInventoryFaultySmartcard as onGetInventoryFaultySmartcard,
+  getInventoryFaultyStb as onGetInventoryFaultyStb,
+  getInventoryFaultyPairing as onGetInventoryFaultyPairing,
 } from "/src/store/actions";
 import StockStb from "./StockStb";
 import StockPairing from "./StockPairing";
@@ -43,20 +46,36 @@ const InventoryStock = (props) => {
       loading: inventorystock.loading,
       stockstb: inventorystock.stockstb,
       stockpairing: inventorystock.stockpairing,
+      faultysmartcard: inventorystock.faultysmartcard,
+      faultystb: inventorystock.faultystb,
+      faultypairing: inventorystock.faultypairing,
     })
   );
 
-  const { inventory_stock, loading, stockstb, stockpairing } = useSelector(
-    inventorystockProperties
-  );
+  const {
+    inventory_stock,
+    loading,
+    stockstb,
+    stockpairing,
+    faultysmartcard,
+    faultystb,
+    faultypairing,
+  } = useSelector(inventorystockProperties);
 
   useEffect(() => {
     if (inventory_stock && !inventory_stock.length) {
       dispatch(onGetInventoryStock());
       dispatch(onGetInventoryStockStb());
       dispatch(onGetInventoryStockPairing());
+      dispatch(onGetInventoryFaultySmartcard());
+      dispatch(onGetInventoryFaultyStb());
+      dispatch(onGetInventoryFaultyPairing());
     }
   }, [dispatch, inventory_stock]);
+
+  console.log("Faulty smartcard: ", faultysmartcard);
+  console.log("Faulty Stb: ", faultystb);
+  console.log("Faulty pairing: ", faultypairing);
 
   const toggleTab = (tab) => {
     if (activeTab !== tab) {
@@ -72,6 +91,14 @@ const InventoryStock = (props) => {
         return stockstb;
       } else if (activeTab === "3") {
         return stockpairing;
+      }
+    } else if (selectedOption === "Faulty") {
+      if (activeTab === "1") {
+        return faultysmartcard;
+      } else if (activeTab === "2") {
+        return faultystb;
+      } else if (activeTab === "3") {
+        return faultypairing;
       }
     }
     return [];
