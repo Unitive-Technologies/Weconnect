@@ -8,7 +8,13 @@ import {
   UPDATE_LCO,
   UPDATE_LCO_SUCCESS,
   UPDATE_LCO_FAIL,
+  UPDATE_LCO_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_LCO_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getLco = () => ({
   type: GET_LCO,

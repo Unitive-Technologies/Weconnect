@@ -385,6 +385,9 @@ const DistributorList = (props) => {
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       goToPage={goToPage}
+                      handleRowClick={(row) => {
+                        handleViewModal(row);
+                      }}
                     />
                   </CardBody>
                 </Card>

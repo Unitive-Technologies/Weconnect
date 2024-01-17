@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 
 import { GET_LCO, ADD_NEW_LCO, UPDATE_LCO } from "./actionTypes";
 
@@ -43,13 +43,21 @@ const convertLcoListObject = (LcoList) => {
   });
 };
 
+export const getLcoStore = (state) => state.lco;
+
 function* fetchLco() {
   try {
-    const response = yield call(getLco);
-    // const lcoList = convertLcoListObject(response);
-    yield put(getLcoSuccess(response.data));
+    let lcoStore = yield select(getLcoStore);
+
+    const pageSize = lcoStore.pageSize;
+    const currentPage = lcoStore.currentPage;
+
+    const response = yield call(getLco, currentPage, pageSize);
+    console.log("Response from API -", response);
+    debugger;
+    yield put(getLcoSuccess(response));
   } catch (error) {
-    console.error("Error fetching LCO list:", error);
+    console.error("Error fetching lco list:", error);
     yield put(getLcoFail(error));
   }
 }

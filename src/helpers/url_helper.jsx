@@ -124,8 +124,10 @@ export const GET_DISTRIBUTORS =
 export const ADD_NEW_DISTRIBUTOR = "/add/distributors";
 export const UPDATE_DISTRIBUTOR = "/update/distributors";
 
-export const GET_LCO =
-  "/operator?expand=credit_limit_lbl,setting,balance,balance_h,reg_phase_lbl,created_by_lbl,distributor_lbl,status_lbl,branch_lbl,branch_code_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=3&page=1&per-page=50&vr=web1.0";
+export const getLcoUrl = (currPage, perPage) => {
+  console.log("current page in lco url - ", currPage, perPage);
+  return `/operator?expand=credit_limit_lbl,setting,balance,balance_h,reg_phase_lbl,created_by_lbl,distributor_lbl,status_lbl,branch_lbl,branch_code_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=3&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+};
 export const ADD_NEW_LCO = "/add/lco";
 export const UPDATE_LCO = "/update/lco";
 

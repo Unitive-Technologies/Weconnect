@@ -419,7 +419,12 @@ export const addNewDistributor = (distributors) =>
 export const updateDistributor = (distributors) =>
   put(url.UPDATE_DISTRIBUTOR, distributors);
 
-export const getLco = () => get(url.GET_LCO);
+// export const getLco = () => get(url.GET_LCO);
+export const getLco = async (currentPage, perPage = 20) => {
+  console.log("lco - Current Page in fakebackend: ", currentPage);
+  console.log("lco - Per Page: ", perPage);
+  return await getCompleteResponse(url.getLcoUrl(currentPage, perPage));
+};
 export const addNewLco = (lco) => post(url.ADD_NEW_LCO, lco);
 export const updateLco = (lco) => put(url.UPDATE_LCO, lco);
 

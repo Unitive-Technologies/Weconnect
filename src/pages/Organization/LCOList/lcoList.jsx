@@ -27,7 +27,10 @@ import { Email, Tags, Projects } from "./lcoListCol";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
 
-import { getLco as onGetLco } from "/src/store/actions";
+import {
+  goToPage as onGoToPage,
+  getLco as onGetLco,
+} from "/src/store/lcolist/actions";
 
 import { isEmpty } from "lodash";
 
@@ -43,6 +46,7 @@ import BulkUpdateModal from "./BulkUpdateModal";
 import UploadCreditModal from "./UploadCreditModal";
 import SettingsModal from "./SettingsModal";
 import AdjustColumns from "./AdjustColumns";
+import TableContainerX from "../../../components/Common/TableContainerX";
 
 const LCOList = (props) => {
   //meta title
@@ -107,16 +111,20 @@ const LCOList = (props) => {
   const LcoProperties = createSelector(selectLcoState, (lco) => ({
     lcos: lco.lco,
     loading: lco.loading,
+    totalPage: lco.totalPages,
+    totalCount: lco.totalCount,
+    pageSize: lco.perPage,
+    currentPage: lco.currentPage,
   }));
 
-  const { lcos, loading } = useSelector(LcoProperties);
+  const { lcos, loading, totalPage, totalCount, pageSize, currentPage } =
+    useSelector(LcoProperties);
 
   useEffect(() => {
     console.log("lcos data in component:", lcos);
   }, [lcos]);
   const [isLoading, setLoading] = useState(loading);
 
-  const [userList, setUserList] = useState([]);
   const [modal, setModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [showLco, setShowLco] = useState(false);
@@ -126,7 +134,8 @@ const LCOList = (props) => {
   const [showBulkUpdateLco, setShowBulkUpdateLco] = useState(false);
   const [showUploadCredit, setShowUploadCredit] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [showAdjustColumnDownload, setShowAdjustColumnDownload] = useState(false);
+  const [showAdjustColumnDownload, setShowAdjustColumnDownload] =
+    useState(false);
   const columns = useMemo(
     () => [
       {
@@ -135,14 +144,15 @@ const LCOList = (props) => {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          // const totalRows = cellProps.rows.length;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
 
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -324,7 +334,9 @@ const LCOList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.status_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.status_lbl}
+            </p>
           );
         },
       },
@@ -383,17 +395,11 @@ const LCOList = (props) => {
     }
   }, [dispatch, lcos]);
 
-  // useEffect(() => {
-  //   setContact(lcos);
-  //   setIsEdit(false);
-  // }, [lcos]);
-
-  // useEffect(() => {
-  //   if (!isEmpty(lcos) && !!isEdit) {
-  //     setContact(lcos);
-  //     setIsEdit(false);
-  //   }
-  // }, [lcos]);
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetLco());
+  };
 
   const toggle = () => {
     setModal(!modal);
@@ -411,19 +417,6 @@ const LCOList = (props) => {
   const handleViewLco = (lco) => {
     setViewLco(!viewLco);
     setLcoData(lco);
-  };
-
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
   };
 
   const getTableActions = () => {
@@ -468,8 +461,8 @@ const LCOList = (props) => {
         name: "Download",
         action: setShowAdjustColumnDownload,
         type: "normal",
-        icon: "download"
-      }
+        icon: "download",
+      },
     ];
   };
   return (
@@ -519,20 +512,24 @@ const LCOList = (props) => {
                 <Card>
                   <CardBody>
                     {/* {console.log("lcos:" + JSON.stringify(lcos))} */}
-                    <TableContainer
-                      isPagination={true}
+
+                    <TableContainerX
                       columns={columns}
                       data={lcos}
-                      isGlobalFilter={true}
+                      isLoading={loading}
                       isShowTableActionButtons={true}
+                      isPagination={true}
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      totalPage={Number(totalPage)}
+                      isGlobalFilter={true}
                       isShowingPageLength={true}
-                      // iscustomPageSizeOptions={true}
                       tableActions={getTableActions()}
-                      customPageSize={50}
-                      tableClass="table align-middle table-nowrap table-hover"
-                      theadClass="table-light"
-                      paginationDiv="col-sm-12 col-md-7"
-                      pagination="pagination pagination-rounded justify-content-end mt-4"
+                      goToPage={goToPage}
+                      handleRowClick={(row) => {
+                        handleViewLco(row);
+                      }}
                     />
                   </CardBody>
                 </Card>
