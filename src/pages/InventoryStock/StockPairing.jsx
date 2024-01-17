@@ -215,7 +215,6 @@ const StockPairing = (props) => {
       <Row>
         <Col lg="12">
           <Card>
-            {console.log("Stock Pairing: ", stockpairing)}
             <CardBody>
               <TableContainer
                 isPagination={true}

@@ -64,6 +64,19 @@ const InventoryStock = (props) => {
     }
   };
 
+  const getFilteredData = () => {
+    if (selectedOption === "In-stock") {
+      if (activeTab === "1") {
+        return inventory_stock;
+      } else if (activeTab === "2") {
+        return stockstb;
+      } else if (activeTab === "3") {
+        return stockpairing;
+      }
+    }
+    return [];
+  };
+
   const columns = useMemo(
     () => [
       {
@@ -402,7 +415,7 @@ const InventoryStock = (props) => {
                             <TableContainer
                               isPagination={true}
                               columns={columns}
-                              data={inventory_stock}
+                              data={getFilteredData()}
                               isGlobalFilter={true}
                               isShowTableActionButtons={true}
                               isShowingPageLength={true}
@@ -418,14 +431,14 @@ const InventoryStock = (props) => {
                       <TabPane tabId="2">
                         <Row>
                           <Col sm="12">
-                            <StockStb stockstb={stockstb} />
+                            <StockStb stockstb={getFilteredData()} />
                           </Col>
                         </Row>
                       </TabPane>
                       <TabPane tabId="3">
                         <Row>
                           <Col sm="12">
-                            <StockPairing stockpairing={stockpairing} />
+                            <StockPairing stockpairing={getFilteredData()} />
                           </Col>
                         </Row>
                       </TabPane>
