@@ -359,3 +359,9 @@ export const GET_LCO_USER_POLICY =
 export const GET_USER_BULKSETTINGS = "/user/setting?fields=id,name&vr=web1.0";
 export const GET_INVENTORYSTOCK =
   "/smartcard?expand=po_date,po_number,invoice_no,invoice_date,created_by_lbl,cas_lbl,status_lbl,brand_lbl,warehouse_lbl,state_lbl,inv_state_lbl&filter[status]=1&filter[stb_id]=0&page=1&per-page=50&vr=web1.0";
+
+export const GET_INVENTORYSTOCK_STB =
+  "/stb?expand=po_date,po_number,invoice_no,invoice_date,created_by_lbl,status_lbl,brand_lbl,boxtype_lbl,cas_lbl,warehouse_lbl,state_lbl,inv_state_lbl&filter[status]=1&filter[sc_id]=0&page=1&per-page=50&vr=web1.0";
+
+export const GET_INVENTORYSTOCK_PAIRING =
+  "/pairing?expand=created_by_lbl,status_lbl,cas_lbl,brand_lbl,boxtype_lbl,is_embeded_lbl,warehouse_lbl,state_lbl,inv_state_lbl,other_id_lbl,rsd_startdate&filter[status]=1&page=1&per-page=50&vr=web1.0";

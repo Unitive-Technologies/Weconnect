@@ -1,7 +1,22 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { GET_INVENTORYSTOCK } from "./actionTypes";
-import { getInventoryStockSuccess, getInventoryStockFail } from "./actions";
-import { getInventoryStock } from "../../helpers/fakebackend_helper";
+import {
+  GET_INVENTORYSTOCK,
+  GET_INVENTORYSTOCK_STB,
+  GET_INVENTORYSTOCK_PAIRING,
+} from "./actionTypes";
+import {
+  getInventoryStockSuccess,
+  getInventoryStockFail,
+  getInventoryStockStbSuccess,
+  getInventoryStockStbFail,
+  getInventoryStockPairingSuccess,
+  getInventoryStockPairingFail,
+} from "./actions";
+import {
+  getInventoryStock,
+  getInventoryStockStb,
+  getInventoryStockPairing,
+} from "../../helpers/fakebackend_helper";
 
 const convertInventoryStockListObject = (inventorystocklist) => {
   return inventorystocklist.map((inventorystock) => {
@@ -37,8 +52,30 @@ function* fetchInventoryStock() {
   }
 }
 
+function* fetchInventoryStockStb() {
+  try {
+    const response = yield call(getInventoryStockStb);
+    console.log("response:" + JSON.stringify(response.data));
+    yield put(getInventoryStockStbSuccess(response.data));
+  } catch (error) {
+    yield put(getInventoryStockStbFail(error));
+  }
+}
+
+function* fetchInventoryStockPairing() {
+  try {
+    const response = yield call(getInventoryStockPairing);
+    console.log("response:" + JSON.stringify(response.data));
+    yield put(getInventoryStockPairingSuccess(response.data));
+  } catch (error) {
+    yield put(getInventoryStockPairingFail(error));
+  }
+}
+
 function* inventorystockSaga() {
   yield takeEvery(GET_INVENTORYSTOCK, fetchInventoryStock);
+  yield takeEvery(GET_INVENTORYSTOCK_STB, fetchInventoryStockStb);
+  yield takeEvery(GET_INVENTORYSTOCK_PAIRING, fetchInventoryStockPairing);
 }
 
 export default inventorystockSaga;

@@ -525,6 +525,9 @@ export const addNewSMSMessageTempList = (smsmsg) =>
   post(url.ADD_NEW_SMSMESSAGETEMPLIST, smsmsg);
 
 export const getInventoryStock = () => get(url.GET_INVENTORYSTOCK);
+export const getInventoryStockStb = () => get(url.GET_INVENTORYSTOCK_STB);
+export const getInventoryStockPairing = () =>
+  get(url.GET_INVENTORYSTOCK_PAIRING);
 
 export const addNewUser = (user) => post(url.ADD_NEW_USER, user);
 
