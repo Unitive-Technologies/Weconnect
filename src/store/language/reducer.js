@@ -6,9 +6,14 @@ import {
 } from "../../constants/strings";
 
 import {
-  GET_LANGUAGELIST, GET_LANGUAGELIST_SUCCESS, GET_LANGUAGELIST_FAIL,
-  UPDATE_LANGUAGELIST_SUCCESS, UPDATE_LANGUAGELIST_FAIL,
-  GET_LANGUAGELIST_STATUS_SUCCESS, GET_LANGUAGELIST_STATUS_FAIL, ADD_LANGUAGELIST_SUCCESS,
+  GET_LANGUAGELIST,
+  GET_LANGUAGELIST_SUCCESS,
+  GET_LANGUAGELIST_FAIL,
+  UPDATE_LANGUAGELIST_SUCCESS,
+  UPDATE_LANGUAGELIST_FAIL,
+  GET_LANGUAGELIST_STATUS_SUCCESS,
+  GET_LANGUAGELIST_STATUS_FAIL,
+  ADD_LANGUAGELIST_SUCCESS,
   ADD_LANGUAGELIST_FAIL,
   UPDATE_LANGUAGELIST_CURRENT_PAGE,
 } from "./actionTypes";
@@ -27,13 +32,12 @@ const INIT_STATE = {
 
 const LanguageList = (state = INIT_STATE, action) => {
   switch (action.type) {
-
     case UPDATE_LANGUAGELIST_CURRENT_PAGE:
       return Number(action.payload) <= state.totalPages
         ? {
-          ...state,
-          currentPage: action.payload,
-        }
+            ...state,
+            currentPage: action.payload,
+          }
         : state;
     case GET_LANGUAGELIST:
       return {
@@ -45,7 +49,7 @@ const LanguageList = (state = INIT_STATE, action) => {
       console.log("LanguageList data in reducer:", action.payload);
       return {
         ...state,
-        users: action.payload.data.data,
+        languageList: action.payload.data.data,
         currentPage: action.payload.headers[RESPONSE_HEADER_CURRENT_PAGE],
         perPage: action.payload.headers[RESPONSE_HEADER_PER_PAGE],
         totalCount: action.payload.headers[RESPONSE_HEADER_TOTAL_COUNT],
@@ -94,10 +98,7 @@ const LanguageList = (state = INIT_STATE, action) => {
     case ADD_LANGUAGELIST_SUCCESS:
       return {
         ...state,
-        languageList: [
-          ...state.languageList,
-          action.payload,
-        ],
+        languageList: [...state.languageList, action.payload],
       };
 
     case ADD_LANGUAGELIST_FAIL:
