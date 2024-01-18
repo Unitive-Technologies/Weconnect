@@ -63,7 +63,6 @@ export const getCustomerUsersUrl = (currPage, perPage) => {
 };
 
 
-
 export const GET_REGIONALOFFICE =
   "/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,mso_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=1&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_REGIONALOFFICE = "/add/regionaloffice";
@@ -166,6 +165,10 @@ export const GET_LANGUAGELIST =
 export const GET_LANGUAGELIST_STATUS = "/list/status?fields=id,name&vr=web1.0";
 export const ADD_NEW_LANGUAGELIST = "/language?vr=web1.0";
 export const UPDATE_LANGUAGELIST = (id) => `/language/${id}?vr=web1.0`;
+export const getLanguageListUrl = (currPage, perPage) => {
+  console.log("current page in Language List url - ", currPage, perPage);
+  return `/language?expand=created_by_lbl,status_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+};
 
 export const GET_CHANNELLIST =
   "/channel?expand=created_by_lbl,broadcaster_lbl,genre_lbl,language_lbl,channel_type_lbl,isAlacarte_lbl,status_lbl,isFta_lbl,isNCF_lbl&sort=name&page=1&per-page=50&vr=web1.0";

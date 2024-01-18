@@ -11,7 +11,13 @@ import {
   UPDATE_LANGUAGELIST,
   UPDATE_LANGUAGELIST_FAIL,
   UPDATE_LANGUAGELIST_SUCCESS,
+  UPDATE_LANGUAGELIST_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_USERS_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getlanguageList = () => ({
   type: GET_LANGUAGELIST,

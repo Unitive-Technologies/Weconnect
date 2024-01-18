@@ -42,17 +42,6 @@ import {
 //   });
 // };
 
-// function* fetchGenreList() {
-//   try {
-//     const response = yield call(getGenreList);
-//     console.log("response:" + JSON.stringify(response));
-//     const genreList = convertGenreListObject(response.data);
-//     yield put(getGenreListSuccess(genreList));
-//   } catch (error) {
-//     yield put(getGenreListFail(error));
-//   }
-// }
-
 export const getGenreListStore = (state) => state.genreList;
 
 function* fetchGenreList() {
@@ -67,7 +56,7 @@ function* fetchGenreList() {
     // debugger;
     yield put(getGenreListSuccess(response));
   } catch (error) {
-    console.error("Error fetching GenreList list:", error);
+    console.error("Error fetching Genre list:", error);
     yield put(getGenreListFail(error));
   }
 }
@@ -102,10 +91,10 @@ function* onAddNewGenreList({ payload: GenreList }) {
     const response = yield call(addNewGenreList, GenreList);
 
     yield put(addGenreListSuccess(response));
-    // toast.success("GenreList Added Successfully", { autoClose: 2000 });
+    toast.success("GenreList Added Successfully", { autoClose: 2000 });
   } catch (error) {
     yield put(addGenreListFail(error));
-    // toast.error("GenreList Added Failed", { autoClose: 2000 });
+    toast.error("GenreList Added Failed", { autoClose: 2000 });
   }
 }
 

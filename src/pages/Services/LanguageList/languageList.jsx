@@ -9,26 +9,13 @@ import {
   Col,
   Container,
   Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
   UncontrolledTooltip,
-  UncontrolledDropdown,
-  DropdownToggle,
-  Input,
-  Form,
 } from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
 
-import { getlanguageList as onGetLanguageList, getLanguageListStatus as onGetLanguageListStatus } from "/src/store/language/actions";
-import { isEmpty } from "lodash";
+import { goToPage as onGoToPage, getlanguageList as onGetLanguageList, getLanguageListStatus as onGetLanguageListStatus } from "/src/store/language/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -37,6 +24,7 @@ import { ToastContainer } from "react-toastify";
 import AddNewLanguageList from './AddNewLanguageList'
 import UploadLanguageList from './UploadLanguageList'
 import ViewLanguageList from './ViewLanguageList'
+import TableContainerX from "../../../components/Common/TableContainerX";
 
 import {
   Description,
@@ -60,10 +48,17 @@ const LanguageList = (props) => {
       langlist: languageList.languageList,
       langlistStatus: languageList.languageListStatus,
       loading: languageList.loading,
+      totalPage: languageList.totalPages,
+      totalCount: languageList.totalCount,
+      pageSize: languageList.perPage,
+      currentPage: languageList.currentPage,
     })
   );
 
-  const { langlist, loading, langlistStatus } = useSelector(LanguageProperties);
+  const { langlist, loading, langlistStatus, totalPage,
+    totalCount,
+    pageSize,
+    currentPage } = useSelector(LanguageProperties);
 
   useEffect(() => {
     console.log("Language List data in component:", langlist);
@@ -85,14 +80,14 @@ const LanguageList = (props) => {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
 
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -208,6 +203,12 @@ const LanguageList = (props) => {
     }
   }, [dispatch, langlist]);
 
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetLanguageList());
+  };
+
   const handleAddNewLanguage = () => {
     setShowAddNewLanguageList(!showAddNewLanguageList);
   };
@@ -318,7 +319,7 @@ const LanguageList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("languagelist:" + JSON.stringify(langlist))}
+                    {/* {console.log("languagelist:" + JSON.stringify(langlist))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
@@ -337,6 +338,25 @@ const LanguageList = (props) => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
+                    /> */}
+                    <TableContainerX
+                      columns={columns}
+                      data={langlist}
+                      isLoading={loading}
+                      isPagination={true}
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      totalPage={Number(totalPage)}
+                      isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      tableActions={getTableActions()}
+                      handleAddNewLanguageList={() => setShowAddNewLanguageList(true)}
+                      handleUploadLanguageList={() => setShowUploadLanguageList(true)}
+                      handleRowClick={(userLanguageData) => {
+                        handleViewLanguageList(userLanguageData);
+                      }}
+                      goToPage={goToPage}
                     />
                   </CardBody>
                 </Card>

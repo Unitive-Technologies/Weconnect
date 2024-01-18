@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 
 import { GET_LANGUAGELIST, UPDATE_LANGUAGELIST, GET_LANGUAGELIST_STATUS, ADD_NEW_LANGUAGELIST } from "./actionTypes";
 
@@ -21,33 +21,41 @@ import {
   addNewLanguageList,
 } from "../../helpers/fakebackend_helper";
 
-const convertLanguageListObject = (languageList) => {
-  return languageList.map((langlist) => {
-    return {
-      ...langlist,
-      id: langlist.id,
-      name: langlist.name,
-      code: langlist.code,
-      description: langlist.description,
-      status:
-        langlist.status === 1
-          ? "ACTIVE"
-          : langlist.status === 0
-            ? "INACTIVE"
-            : "BLOCKED",
-      created_at: langlist.created_at,
-      created_by: langlist.created_by_lbl,
-    };
-  });
-};
+// const convertLanguageListObject = (languageList) => {
+//   return languageList.map((langlist) => {
+//     return {
+//       ...langlist,
+//       id: langlist.id,
+//       name: langlist.name,
+//       code: langlist.code,
+//       description: langlist.description,
+//       status:
+//         langlist.status === 1
+//           ? "ACTIVE"
+//           : langlist.status === 0
+//             ? "INACTIVE"
+//             : "BLOCKED",
+//       created_at: langlist.created_at,
+//       created_by: langlist.created_by_lbl,
+//     };
+//   });
+// };
+
+export const getLanguageListStore = (state) => state.languageList;
 
 function* fetchLanguageList() {
   try {
-    const response = yield call(getLanguageList);
-    console.log("response:" + JSON.stringify(response));
-    // const languageList = convertLanguageListObject(response);
-    yield put(getLanguageListSuccess(response.data));
+    let languageListStore = yield select(getLanguageListStore);
+
+    const pageSize = languageListStore.pageSize;
+    const currentPage = languageListStore.currentPage;
+
+    const response = yield call(getLanguageList, currentPage, pageSize);
+    console.log("Response from API -", response);
+    debugger;
+    yield put(getLanguageListSuccess(response));
   } catch (error) {
+    console.error("Error fetching Language List:", error);
     yield put(getLanguageListFail(error));
   }
 }

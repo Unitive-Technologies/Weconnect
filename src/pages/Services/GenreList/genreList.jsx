@@ -40,6 +40,7 @@ const GenreList = (props) => {
   const dispatch = useDispatch();
 
   const selectGenreState = (state) => state.genreList;
+  // console.log("state:" + JSON.stringify(state.genreList));
   const GenreProperties = createSelector(selectGenreState, (Genre) => ({
     genrelist: Genre.genreList,
     genrelistStatus: Genre.genreListStatus,
@@ -52,6 +53,11 @@ const GenreList = (props) => {
 
   const { genrelist, genrelistStatus, totalPage,
     totalCount, pageSize, currentPage, loading } = useSelector(GenreProperties);
+
+  console.log(`TotalCount - ${totalCount}`);
+  console.log(`PageSize - ${pageSize}`);
+  console.log(`CurrentPage - ${currentPage}`);
+  console.log(`TotalPage - ${totalPage}`);
 
   useEffect(() => {
     console.log("GenreList data in component:", genrelist);

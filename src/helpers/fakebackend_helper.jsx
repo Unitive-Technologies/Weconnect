@@ -255,6 +255,12 @@ export const updateCustomerUser = (customerUser, id) =>
 export const getCustomerUsersSettings = () =>
   get(url.GET_CUSTOMERUSERS_SETTINGS);
 
+export const getLanguageList = async (currentPage, perPage = 20) => {
+  console.log("Language List - Current Page in fakebackend: ", currentPage);
+  console.log("Language List - Per Page: ", perPage);
+  return await getCompleteResponse(url.getLanguageListUrl(currentPage, perPage));
+};
+
 export const getGroupPolicy = () => get(url.GET_GROUPPOLICY);
 export const addNewGroupPolicy = (groupPolicy) =>
   post(url.ADD_NEW_GROUPPOLICY, groupPolicy);
@@ -366,7 +372,7 @@ export const addNewGenreList = (genre) => post(url.ADD_NEW_GENRELIST, genre);
 export const updateGenreList = (genreList, id) =>
   put(url.UPDATE_GENRELIST(id), genreList);
 
-export const getLanguageList = () => get(url.GET_LANGUAGELIST);
+// export const getLanguageList = () => get(url.GET_LANGUAGELIST);
 export const getLanguageListStatus = () => get(url.GET_LANGUAGELIST_STATUS);
 export const addNewLanguageList = (langlist) =>
   post(url.ADD_NEW_LANGUAGELIST, langlist);
