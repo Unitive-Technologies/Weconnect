@@ -31,6 +31,9 @@ import {
   getInventoryBlacklistedSmartcard as onGetInventoryBlacklistedSmartcard,
   getInventoryBlacklistedStb as onGetInventoryBlacklistedStb,
   getInventoryBlacklistedPairing as onGetInventoryBlacklistedPairing,
+  getInventoryAllottedSmartcard as onGetInventoryAllottedSmartcard,
+  getInventoryAllottedStb as onGetInventoryAllottedStb,
+  getInventoryAllottedPairing as onGetInventoryAllottedPairing,
 } from "/src/store/actions";
 import StockStb from "./StockStb";
 import StockPairing from "./StockPairing";
@@ -55,6 +58,9 @@ const InventoryStock = (props) => {
       blacklistedsmartcard: inventorystock.blacklistedsmartcard,
       blacklistedstb: inventorystock.blacklistedstb,
       blacklistedpairing: inventorystock.blacklistedpairing,
+      allottedsmartcard: inventorystock.allottedsmartcard,
+      allottedstb: inventorystock.allottedstb,
+      allottedpairing: inventorystock.allottedpairing,
     })
   );
 
@@ -69,6 +75,9 @@ const InventoryStock = (props) => {
     blacklistedsmartcard,
     blacklistedstb,
     blacklistedpairing,
+    allottedsmartcard,
+    allottedstb,
+    allottedpairing,
   } = useSelector(inventorystockProperties);
 
   useEffect(() => {
@@ -82,6 +91,9 @@ const InventoryStock = (props) => {
       dispatch(onGetInventoryBlacklistedSmartcard());
       dispatch(onGetInventoryBlacklistedStb());
       dispatch(onGetInventoryBlacklistedPairing());
+      dispatch(onGetInventoryAllottedSmartcard());
+      dispatch(onGetInventoryAllottedStb());
+      dispatch(onGetInventoryAllottedPairing());
     }
   }, [dispatch, inventory_stock]);
 
@@ -115,6 +127,14 @@ const InventoryStock = (props) => {
         return blacklistedstb;
       } else if (activeTab === "3") {
         return blacklistedpairing;
+      }
+    } else if (selectedOption === "Allotted") {
+      if (activeTab === "1") {
+        return allottedsmartcard;
+      } else if (activeTab === "2") {
+        return allottedstb;
+      } else if (activeTab === "3") {
+        return allottedpairing;
       }
     }
     return [];
@@ -464,9 +484,10 @@ const InventoryStock = (props) => {
                               isShowingPageLength={true}
                               tableActions={getTableActions()}
                               customPageSize={100}
-                              tableClass="table-bordered align-middle nowrap mt-2"
+                              tableClass="table align-middle table-nowrap table-hover"
+                              theadClass="table-light"
                               paginationDiv="col-sm-12 col-md-7"
-                              pagination="pagination justify-content-end pagination-rounded"
+                              pagination="pagination pagination-rounded justify-content-end mt-4"
                             />
                           </Col>
                         </Row>
