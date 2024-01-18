@@ -546,8 +546,15 @@ export const addNewSMSMessageTempList = (smsmsg) =>
 
 export const getInventoryStock = () => get(url.GET_INVENTORYSTOCK);
 export const getInventoryStockStb = () => get(url.GET_INVENTORYSTOCK_STB);
-export const getInventoryStockPairing = () =>
-  get(url.GET_INVENTORYSTOCK_PAIRING);
+// export const getInventoryStockPairing = () =>
+//   get(url.GET_INVENTORYSTOCK_PAIRING);
+export const getInventoryStockPairing = async (currentPage, perPage = 20) => {
+  console.log("StockPairing - Current Page in fakebackend: ", currentPage);
+  console.log("StockPairing - Per Page: ", perPage);
+  return await getCompleteResponse(
+    url.getStockPairingUrl(currentPage, perPage)
+  );
+};
 
 export const getInventoryFaultySmartcard = () =>
   get(url.GET_INVENTORYFAULTY_SMARTCARD);

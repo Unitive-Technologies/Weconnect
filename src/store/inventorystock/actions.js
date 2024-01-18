@@ -35,7 +35,13 @@ import {
   GET_INVENTORYALLOTTED_PAIRING,
   GET_INVENTORYALLOTTED_PAIRING_SUCCESS,
   GET_INVENTORYALLOTTED_PAIRING_FAIL,
+  UPDATE_STOCKPAIRING_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_STOCKPAIRING_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getInventoryStock = () => ({
   type: GET_INVENTORYSTOCK,

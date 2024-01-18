@@ -2,26 +2,33 @@ import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardBody, Col, Row } from "reactstrap";
 import TableContainer from "../../components/Common/TableContainer";
+import TableContainerX from "../../components/Common/TableContainerX";
 
 const StockPairing = (props) => {
-  const { stockpairing } = props;
+  const {
+    stockpairing,
+    totalCount,
+    totalPage,
+    pageSize,
+    currentPage,
+    goToPage,
+    loading,
+  } = props;
 
   const columns = useMemo(
     () => [
       {
         Header: "#",
-        // accessor: "name",
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
-
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -216,7 +223,7 @@ const StockPairing = (props) => {
         <Col lg="12">
           <Card>
             <CardBody>
-              <TableContainer
+              {/* <TableContainer
                 isPagination={true}
                 columns={columns}
                 data={stockpairing}
@@ -230,9 +237,20 @@ const StockPairing = (props) => {
                 theadClass="table-light"
                 paginationDiv="col-sm-12 col-md-7"
                 pagination="pagination pagination-rounded justify-content-end mt-4"
-                // tableClass="table-bordered align-middle nowrap mt-2"
-                // paginationDiv="col-sm-12 col-md-7"
-                // pagination="pagination justify-content-end pagination-rounded"
+              /> */}
+              <TableContainerX
+                columns={columns}
+                data={stockpairing}
+                isLoading={loading}
+                isPagination={true}
+                totalCount={Number(totalCount)}
+                pageSize={Number(pageSize)}
+                currentPage={Number(currentPage)}
+                totalPage={Number(totalPage)}
+                isGlobalFilter={true}
+                isShowingPageLength={true}
+                tableActions={getTableActions()}
+                goToPage={goToPage}
               />
             </CardBody>
           </Card>

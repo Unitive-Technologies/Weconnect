@@ -34,7 +34,8 @@ import {
   getInventoryAllottedSmartcard as onGetInventoryAllottedSmartcard,
   getInventoryAllottedStb as onGetInventoryAllottedStb,
   getInventoryAllottedPairing as onGetInventoryAllottedPairing,
-} from "/src/store/actions";
+  goToPage as onGoToPage,
+} from "/src/store/inventorystock/actions";
 import StockStb from "./StockStb";
 import StockPairing from "./StockPairing";
 
@@ -61,6 +62,10 @@ const InventoryStock = (props) => {
       allottedsmartcard: inventorystock.allottedsmartcard,
       allottedstb: inventorystock.allottedstb,
       allottedpairing: inventorystock.allottedpairing,
+      totalPage: inventorystock.totalPages,
+      totalCount: inventorystock.totalCount,
+      pageSize: inventorystock.perPage,
+      currentPage: inventorystock.currentPage,
     })
   );
 
@@ -78,6 +83,10 @@ const InventoryStock = (props) => {
     allottedsmartcard,
     allottedstb,
     allottedpairing,
+    totalPage,
+    totalCount,
+    pageSize,
+    currentPage,
   } = useSelector(inventorystockProperties);
 
   useEffect(() => {
@@ -96,6 +105,12 @@ const InventoryStock = (props) => {
       dispatch(onGetInventoryAllottedPairing());
     }
   }, [dispatch, inventory_stock]);
+
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetInventoryStockPairing());
+  };
 
   const toggleTab = (tab) => {
     if (activeTab !== tab) {
@@ -156,7 +171,6 @@ const InventoryStock = (props) => {
       },
       {
         Header: "#",
-        // accessor: "name",
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
@@ -502,7 +516,15 @@ const InventoryStock = (props) => {
                       <TabPane tabId="3">
                         <Row>
                           <Col sm="12">
-                            <StockPairing stockpairing={getFilteredData()} />
+                            <StockPairing
+                              stockpairing={getFilteredData()}
+                              goToPage={goToPage}
+                              totalCount={totalCount}
+                              pageSize={pageSize}
+                              currentPage={currentPage}
+                              totalPage={totalPage}
+                              loading={loading}
+                            />
                           </Col>
                         </Row>
                       </TabPane>

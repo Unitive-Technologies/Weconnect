@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, takeEvery, select } from "redux-saga/effects";
 import {
   GET_INVENTORYSTOCK,
   GET_INVENTORYSTOCK_STB,
@@ -78,10 +78,12 @@ const convertInventoryStockListObject = (inventorystocklist) => {
   });
 };
 
+export const getStockPairingStore = (state) => state.stockpairing;
+
 function* fetchInventoryStock() {
   try {
     const response = yield call(getInventoryStock);
-    console.log("response:" + JSON.stringify(response.data));
+    // console.log("response:" + JSON.stringify(response.data));
     yield put(getInventoryStockSuccess(response.data));
   } catch (error) {
     yield put(getInventoryStockFail(error));
@@ -91,7 +93,7 @@ function* fetchInventoryStock() {
 function* fetchInventoryStockStb() {
   try {
     const response = yield call(getInventoryStockStb);
-    console.log("response:" + JSON.stringify(response.data));
+    // console.log("response:" + JSON.stringify(response.data));
     yield put(getInventoryStockStbSuccess(response.data));
   } catch (error) {
     yield put(getInventoryStockStbFail(error));
@@ -100,9 +102,22 @@ function* fetchInventoryStockStb() {
 
 function* fetchInventoryStockPairing() {
   try {
-    const response = yield call(getInventoryStockPairing);
-    console.log("response:" + JSON.stringify(response.data));
-    yield put(getInventoryStockPairingSuccess(response.data));
+    // const response = yield call(getInventoryStockPairing);
+    // console.log("response:" + JSON.stringify(response.data));
+    // yield put(getInventoryStockPairingSuccess(response.data));
+    let stockpairingStore = yield select(getStockPairingStore);
+
+    const pageSize = stockpairingStore.pageSize;
+    const currentPage = stockpairingStore.currentPage;
+
+    const response = yield call(
+      getInventoryStockPairing,
+      currentPage,
+      pageSize
+    );
+    console.log("Response from API -", response);
+    debugger;
+    yield put(getInventoryStockPairingSuccess(response));
   } catch (error) {
     yield put(getInventoryStockPairingFail(error));
   }
@@ -111,7 +126,7 @@ function* fetchInventoryStockPairing() {
 function* fetchInventoryFaultySmartcard() {
   try {
     const response = yield call(getInventoryFaultySmartcard);
-    console.log("response:" + JSON.stringify(response.data));
+    // console.log("response:" + JSON.stringify(response.data));
     yield put(getInventoryFaultySmartcardSuccess(response.data));
   } catch (error) {
     yield put(getInventoryFaultySmartcardFail(error));
@@ -121,7 +136,7 @@ function* fetchInventoryFaultySmartcard() {
 function* fetchInventoryFaultyStb() {
   try {
     const response = yield call(getInventoryFaultyStb);
-    console.log("response:" + JSON.stringify(response.data));
+    // console.log("response:" + JSON.stringify(response.data));
     yield put(getInventoryFaultyStbSuccess(response.data));
   } catch (error) {
     yield put(getInventoryFaultyStbFail(error));
@@ -131,7 +146,7 @@ function* fetchInventoryFaultyStb() {
 function* fetchInventoryFaultyPairing() {
   try {
     const response = yield call(getInventoryFaultyPairing);
-    console.log("response:" + JSON.stringify(response.data));
+    // console.log("response:" + JSON.stringify(response.data));
     yield put(getInventoryFaultyPairingSuccess(response.data));
   } catch (error) {
     yield put(getInventoryFaultyPairingFail(error));
@@ -141,7 +156,7 @@ function* fetchInventoryFaultyPairing() {
 function* fetchInventoryBlacklistedSmartcard() {
   try {
     const response = yield call(getInventoryBlacklistedSmartcard);
-    console.log("response:" + JSON.stringify(response.data));
+    // console.log("response:" + JSON.stringify(response.data));
     yield put(getInventoryBlacklistedSmartcardSuccess(response.data));
   } catch (error) {
     yield put(getInventoryBlacklistedSmartcardFail(error));
@@ -151,7 +166,7 @@ function* fetchInventoryBlacklistedSmartcard() {
 function* fetchInventoryBlacklistedStb() {
   try {
     const response = yield call(getInventoryBlacklistedStb);
-    console.log("response:" + JSON.stringify(response.data));
+    // console.log("response:" + JSON.stringify(response.data));
     yield put(getInventoryBlacklistedStbSuccess(response.data));
   } catch (error) {
     yield put(getInventoryBlacklistedStbFail(error));
@@ -161,7 +176,7 @@ function* fetchInventoryBlacklistedStb() {
 function* fetchInventoryBlacklistedPairing() {
   try {
     const response = yield call(getInventoryBlacklistedPairing);
-    console.log("response:" + JSON.stringify(response.data));
+    // console.log("response:" + JSON.stringify(response.data));
     yield put(getInventoryBlacklistedPairingSuccess(response.data));
   } catch (error) {
     yield put(getInventoryBlacklistedPairingFail(error));
@@ -171,7 +186,7 @@ function* fetchInventoryBlacklistedPairing() {
 function* fetchInventoryAllottedSmartcard() {
   try {
     const response = yield call(getInventoryAllottedSmartcard);
-    console.log("response:" + JSON.stringify(response.data));
+    // console.log("response:" + JSON.stringify(response.data));
     yield put(getInventoryAllottedSmartcardSuccess(response.data));
   } catch (error) {
     yield put(getInventoryAllottedSmartcardFail(error));
@@ -181,7 +196,7 @@ function* fetchInventoryAllottedSmartcard() {
 function* fetchInventoryAllottedStb() {
   try {
     const response = yield call(getInventoryAllottedStb);
-    console.log("response:" + JSON.stringify(response.data));
+    // console.log("response:" + JSON.stringify(response.data));
     yield put(getInventoryAllottedStbSuccess(response.data));
   } catch (error) {
     yield put(getInventoryAllottedStbFail(error));
@@ -191,7 +206,7 @@ function* fetchInventoryAllottedStb() {
 function* fetchInventoryAllottedPairing() {
   try {
     const response = yield call(getInventoryAllottedPairing);
-    console.log("response:" + JSON.stringify(response.data));
+    // console.log("response:" + JSON.stringify(response.data));
     yield put(getInventoryAllottedPairingSuccess(response.data));
   } catch (error) {
     yield put(getInventoryAllottedPairingFail(error));
