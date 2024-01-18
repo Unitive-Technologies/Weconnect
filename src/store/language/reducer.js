@@ -45,7 +45,7 @@ const LanguageList = (state = INIT_STATE, action) => {
       console.log("LanguageList data in reducer:", action.payload);
       return {
         ...state,
-        users: action.payload.data.data,
+        languageList: action.payload.data.data,
         currentPage: action.payload.headers[RESPONSE_HEADER_CURRENT_PAGE],
         perPage: action.payload.headers[RESPONSE_HEADER_PER_PAGE],
         totalCount: action.payload.headers[RESPONSE_HEADER_TOTAL_COUNT],
