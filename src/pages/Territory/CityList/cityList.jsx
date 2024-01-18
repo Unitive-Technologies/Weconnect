@@ -9,6 +9,7 @@ import {
   Col,
   Container,
   Row,
+  Spinner,
   UncontrolledTooltip,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -323,7 +324,12 @@ const CityList = (props) => {
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Territory" breadcrumbItem="Cities" />
           {isLoading ? (
-            <Spinners setLoading={setLoading} />
+            <React.Fragment>
+              <Spinner color="primary"
+                className="position-absolute top-50 start-50"
+              // setLoading={setLoading}
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">

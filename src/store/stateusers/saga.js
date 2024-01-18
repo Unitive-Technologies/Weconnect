@@ -19,8 +19,8 @@ const convertStateUsersListObject = (stateUserList) => {
         stateUser.status === 1
           ? "ACTIVE"
           : stateUser.status === 0
-          ? "INACTIVE"
-          : "BLOCKED",
+            ? "INACTIVE"
+            : "BLOCKED",
 
       created_at: stateUser.created_at,
     };

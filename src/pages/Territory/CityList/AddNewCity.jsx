@@ -170,7 +170,7 @@ const AddNewCity = (props) => {
                   value={validation.values.district_id || ""}
                   invalid={
                     validation.touched.district_id &&
-                    validation.errors.district_id
+                      validation.errors.district_id
                       ? true
                       : false
                   }
@@ -183,7 +183,7 @@ const AddNewCity = (props) => {
                   ))}
                 </Input>
                 {validation.touched.district_id &&
-                validation.errors.district_id ? (
+                  validation.errors.district_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.district_id}
                   </FormFeedback>
@@ -205,13 +205,13 @@ const AddNewCity = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -283,6 +283,9 @@ const AddNewCity = (props) => {
 AddNewCity.propTypes = {
   handleShowCity: PropTypes.func,
   isOpen: PropTypes.bool,
+  statelist: PropTypes.array,
+  status: PropTypes.array,
+
 };
 
 export default AddNewCity;

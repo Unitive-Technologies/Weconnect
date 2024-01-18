@@ -16,6 +16,7 @@ import {
   getDistrictByStateidFail,
   updateCitySuccess,
   updateCityFail,
+  getCity as fetchCities,
 } from "./actions";
 
 //Include Both Helper File with needed methods
@@ -77,6 +78,7 @@ function* onUpdateCity({ payload: city }) {
     const response = yield call(updateCity, city.id, city);
     console.log("Response data in saga: ", response);
     yield put(updateCitySuccess(response.data));
+    yield put(fetchCities());
   } catch (error) {
     console.log("Error in update city: ", error);
     yield put(updateCityFail(error));
@@ -88,6 +90,7 @@ function* onAddCity({ payload: city }) {
     const response = yield call(addCity, city);
     console.log("Response data in add city: ", response);
     yield put(addCitySuccess(response));
+    yield put(fetchCities());
   } catch (error) {
     console.log("Error in add city saga: ", error);
     yield put(addCityFail(error));
