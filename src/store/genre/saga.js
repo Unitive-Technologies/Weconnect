@@ -1,6 +1,11 @@
 import { call, put, select, takeEvery } from "redux-saga/effects";
 
-import { GET_GENRELIST, UPDATE_GENRELIST, GET_GENRELIST_STATUS, ADD_NEW_GENRELIST } from "./actionTypes";
+import {
+  GET_GENRELIST,
+  UPDATE_GENRELIST,
+  GET_GENRELIST_STATUS,
+  ADD_NEW_GENRELIST,
+} from "./actionTypes";
 
 import {
   getGenreListSuccess,
@@ -64,11 +69,7 @@ function* fetchGenreList() {
 function* onUpdateGenreList({ payload: genreList }) {
   console.log("Genre List in onUpdate:" + JSON.stringify(genreList));
   try {
-    const response = yield call(
-      updateGenreList,
-      genreList,
-      genreList.id
-    );
+    const response = yield call(updateGenreList, genreList, genreList.id);
     yield put(updateGenreListSuccess(response));
     console.log("update response:" + JSON.stringify(response));
   } catch (error) {
