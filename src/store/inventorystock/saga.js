@@ -9,6 +9,9 @@ import {
   GET_INVENTORYBLACKLISTED_SMARTCARD,
   GET_INVENTORYBLACKLISTED_STB,
   GET_INVENTORYBLACKLISTED_PAIRING,
+  GET_INVENTORYALLOTTED_SMARTCARD,
+  GET_INVENTORYALLOTTED_STB,
+  GET_INVENTORYALLOTTED_PAIRING,
 } from "./actionTypes";
 import {
   getInventoryStockSuccess,
@@ -29,6 +32,12 @@ import {
   getInventoryBlacklistedStbFail,
   getInventoryBlacklistedPairingSuccess,
   getInventoryBlacklistedPairingFail,
+  getInventoryAllottedSmartcardSuccess,
+  getInventoryAllottedSmartcardFail,
+  getInventoryAllottedStbSuccess,
+  getInventoryAllottedStbFail,
+  getInventoryAllottedPairingSuccess,
+  getInventoryAllottedPairingFail,
 } from "./actions";
 import {
   getInventoryStock,
@@ -40,6 +49,9 @@ import {
   getInventoryBlacklistedSmartcard,
   getInventoryBlacklistedStb,
   getInventoryBlacklistedPairing,
+  getInventoryAllottedSmartcard,
+  getInventoryAllottedStb,
+  getInventoryAllottedPairing,
 } from "../../helpers/fakebackend_helper";
 
 const convertInventoryStockListObject = (inventorystocklist) => {
@@ -156,6 +168,36 @@ function* fetchInventoryBlacklistedPairing() {
   }
 }
 
+function* fetchInventoryAllottedSmartcard() {
+  try {
+    const response = yield call(getInventoryAllottedSmartcard);
+    console.log("response:" + JSON.stringify(response.data));
+    yield put(getInventoryAllottedSmartcardSuccess(response.data));
+  } catch (error) {
+    yield put(getInventoryAllottedSmartcardFail(error));
+  }
+}
+
+function* fetchInventoryAllottedStb() {
+  try {
+    const response = yield call(getInventoryAllottedStb);
+    console.log("response:" + JSON.stringify(response.data));
+    yield put(getInventoryAllottedStbSuccess(response.data));
+  } catch (error) {
+    yield put(getInventoryAllottedStbFail(error));
+  }
+}
+
+function* fetchInventoryAllottedPairing() {
+  try {
+    const response = yield call(getInventoryAllottedPairing);
+    console.log("response:" + JSON.stringify(response.data));
+    yield put(getInventoryAllottedPairingSuccess(response.data));
+  } catch (error) {
+    yield put(getInventoryAllottedPairingFail(error));
+  }
+}
+
 function* inventorystockSaga() {
   yield takeEvery(GET_INVENTORYSTOCK, fetchInventoryStock);
   yield takeEvery(GET_INVENTORYSTOCK_STB, fetchInventoryStockStb);
@@ -172,6 +214,12 @@ function* inventorystockSaga() {
     GET_INVENTORYBLACKLISTED_PAIRING,
     fetchInventoryBlacklistedPairing
   );
+  yield takeEvery(
+    GET_INVENTORYALLOTTED_SMARTCARD,
+    fetchInventoryAllottedSmartcard
+  );
+  yield takeEvery(GET_INVENTORYALLOTTED_STB, fetchInventoryAllottedStb);
+  yield takeEvery(GET_INVENTORYALLOTTED_PAIRING, fetchInventoryAllottedPairing);
 }
 
 export default inventorystockSaga;
