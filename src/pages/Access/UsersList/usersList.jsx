@@ -95,6 +95,7 @@ const ContactsList = (props) => {
   const [showBulkUpdateUser, setShowBulkUpdateUser] = useState(false);
   const [showInactivateUser, setShowInactivateUser] = useState(false);
   const [showBulkUserSettings, setShowBulkUserSettings] = useState(false);
+
   const columns = useMemo(
     () => [
       {

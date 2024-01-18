@@ -62,10 +62,10 @@ const InventoryStock = (props) => {
       allottedsmartcard: inventorystock.allottedsmartcard,
       allottedstb: inventorystock.allottedstb,
       allottedpairing: inventorystock.allottedpairing,
-      totalPage: inventorystock.totalPages,
-      totalCount: inventorystock.totalCount,
-      pageSize: inventorystock.perPage,
-      currentPage: inventorystock.currentPage,
+      stocktotalPage: inventorystock.totalPages,
+      stocktotalCount: inventorystock.totalCount,
+      stockpageSize: inventorystock.perPage,
+      stockcurrentPage: inventorystock.currentPage,
     })
   );
 
@@ -83,10 +83,10 @@ const InventoryStock = (props) => {
     allottedsmartcard,
     allottedstb,
     allottedpairing,
-    totalPage,
-    totalCount,
-    pageSize,
-    currentPage,
+    stocktotalPage,
+    stocktotalCount,
+    stockpageSize,
+    stockcurrentPage,
   } = useSelector(inventorystockProperties);
 
   useEffect(() => {
@@ -111,6 +111,11 @@ const InventoryStock = (props) => {
     dispatch(onGoToPage(toPage));
     dispatch(onGetInventoryStockPairing());
   };
+
+  console.log("TotalCount - ", stocktotalCount);
+  // console.log(`PageSize - ${stockpageSize}`);
+  // console.log(`CurrentPage - ${stockcurrentPage}`);
+  console.log("TotalPage - ", stocktotalPage);
 
   const toggleTab = (tab) => {
     if (activeTab !== tab) {
@@ -153,6 +158,41 @@ const InventoryStock = (props) => {
       }
     }
     return [];
+  };
+
+  const getFilteredTotalPage = () => {
+    if (selectedOption === "In-stock") {
+      if (activeTab === "3") {
+        {
+          console.log("Stock total page: ", stocktotalPage);
+        }
+        return stocktotalPage;
+      }
+    }
+  };
+
+  const getFilteredTotalCount = () => {
+    if (selectedOption === "In-stock") {
+      if (activeTab === "3") {
+        return stocktotalCount;
+      }
+    }
+  };
+
+  const getFilteredPageSize = () => {
+    if (selectedOption === "In-stock") {
+      if (activeTab === "3") {
+        return stockpageSize;
+      }
+    }
+  };
+
+  const getFilteredCurrentPage = () => {
+    if (selectedOption === "In-stock") {
+      if (activeTab === "3") {
+        return stockcurrentPage;
+      }
+    }
   };
 
   const columns = useMemo(
@@ -519,10 +559,10 @@ const InventoryStock = (props) => {
                             <StockPairing
                               stockpairing={getFilteredData()}
                               goToPage={goToPage}
-                              totalCount={totalCount}
-                              pageSize={pageSize}
-                              currentPage={currentPage}
-                              totalPage={totalPage}
+                              totalCount={getFilteredTotalCount()}
+                              pageSize={getFilteredPageSize()}
+                              currentPage={getFilteredCurrentPage()}
+                              totalPage={getFilteredTotalPage()}
                               loading={loading}
                             />
                           </Col>
