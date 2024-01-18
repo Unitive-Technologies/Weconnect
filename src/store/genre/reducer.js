@@ -1,25 +1,55 @@
 import {
-  GET_GENRELIST_SUCCESS, GET_GENRELIST_FAIL,
+  RESPONSE_HEADER_CURRENT_PAGE,
+  RESPONSE_HEADER_PAGE_COUNT,
+  RESPONSE_HEADER_TOTAL_COUNT,
+  RESPONSE_HEADER_PER_PAGE,
+} from "../../constants/strings";
+
+import {
+  GET_GENRELIST, GET_GENRELIST_SUCCESS, GET_GENRELIST_FAIL,
   UPDATE_GENRELIST_SUCCESS, UPDATE_GENRELIST_FAIL,
   GET_GENRELIST_STATUS_SUCCESS, GET_GENRELIST_STATUS_FAIL,
   ADD_GENRELIST_SUCCESS,
   ADD_GENRELIST_FAIL,
+  UPDATE_GENRELIST_CURRENT_PAGE,
 } from "./actionTypes";
 
 const INIT_STATE = {
   genreList: [],
   genreListStatus: [],
+  pagination: {},
   error: {},
-  loading: true,
+  loading: false,
+  currentPage: 1,
+  perPage: 10,
+  totalCount: 0,
+  totalPages: 0,
 };
 
 const GenreList = (state = INIT_STATE, action) => {
   switch (action.type) {
+    case UPDATE_GENRELIST_CURRENT_PAGE:
+      return Number(action.payload) <= state.totalPages
+        ? {
+          ...state,
+          currentPage: action.payload,
+        }
+        : state;
+    case GET_GENRELIST:
+      return {
+        ...state,
+        loading: true,
+      };
+
     case GET_GENRELIST_SUCCESS:
       console.log("GenreList data in reducer:", action.payload);
       return {
         ...state,
-        genreList: action.payload,
+        users: action.payload.data.data,
+        currentPage: action.payload.headers[RESPONSE_HEADER_CURRENT_PAGE],
+        perPage: action.payload.headers[RESPONSE_HEADER_PER_PAGE],
+        totalCount: action.payload.headers[RESPONSE_HEADER_TOTAL_COUNT],
+        totalPages: action.payload.headers[RESPONSE_HEADER_PAGE_COUNT],
         loading: false,
       };
 
@@ -27,6 +57,8 @@ const GenreList = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+        pagination: {},
+        loading: false,
       };
 
     case UPDATE_GENRELIST_SUCCESS:

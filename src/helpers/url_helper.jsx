@@ -61,6 +61,9 @@ export const getCustomerUsersUrl = (currPage, perPage) => {
   console.log("current page in Customerusers url - ", currPage, perPage);
   return `/user?expand=setting,group_lbl,access_level,role_lbl,status_lbl,type_lbl,operator_lbl,operator,created_by_lbl,parent_lbl&filter[role]=4&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
+
+
+
 export const GET_REGIONALOFFICE =
   "/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,mso_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=1&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_REGIONALOFFICE = "/add/regionaloffice";
@@ -146,7 +149,6 @@ export const UPDATE_BROADCASTER = (id) => `/broadcaster/${id}?vr=web1.0`;
 export const getBroadcasterUrl = (currPage, perPage) => {
   console.log("current page in broadcaster url - ", currPage, perPage);
   return `/broadcaster?expand=created_by_lbl,status_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
-  // ,operator_lbl,created_by_lbl,parent_lbl&notfilter[role]=4&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
 
 export const GET_GENRELIST =
@@ -154,6 +156,10 @@ export const GET_GENRELIST =
 export const GET_GENRELIST_STATUS = "/list/status?fields=id,name&vr=web1.0";
 export const ADD_NEW_GENRELIST = "/genre?vr=web1.0";
 export const UPDATE_GENRELIST = (id) => `/genre/${id}?vr=web1.0`;
+export const getGenreListUrl = (currPage, perPage) => {
+  console.log("current page in genrelist url - ", currPage, perPage);
+  return `/genre?expand=created_by_lbl,status_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+};
 
 export const GET_LANGUAGELIST =
   "/language?expand=created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";

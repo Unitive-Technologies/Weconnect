@@ -244,6 +244,12 @@ export const getBroadCaster = async (currentPage, perPage = 20) => {
   return await getCompleteResponse(url.getUsersUrl(currentPage, perPage));
 };
 
+export const getGenreList = async (currentPage, perPage = 20) => {
+  console.log("GenreList - Current Page in fakebackend: ", currentPage);
+  console.log("GenreList - Per Page: ", perPage);
+  return await getCompleteResponse(url.getGenreListUrl(currentPage, perPage));
+};
+
 export const updateCustomerUser = (customerUser, id) =>
   put(url.UPDATE_CUSTOMERUSER(id), customerUser);
 export const getCustomerUsersSettings = () =>
@@ -354,7 +360,7 @@ export const getUserDistributor = () => get(url.GET_USER_DISTRIBUTOR);
 export const getUserLco = () => get(url.GET_USER_LCO);
 export const getUserBulkSettings = () => get(url.GET_USER_BULKSETTINGS);
 
-export const getGenreList = () => get(url.GET_GENRELIST);
+// export const getGenreList = () => get(url.GET_GENRELIST);
 export const getGenreListStatus = () => get(url.GET_GENRELIST_STATUS);
 export const addNewGenreList = (genre) => post(url.ADD_NEW_GENRELIST, genre);
 export const updateGenreList = (genreList, id) =>

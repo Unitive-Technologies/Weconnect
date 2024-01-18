@@ -11,7 +11,13 @@ import {
   UPDATE_GENRELIST,
   UPDATE_GENRELIST_SUCCESS,
   UPDATE_GENRELIST_FAIL,
+  UPDATE_GENRELIST_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_GENRELIST_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getGenreList = () => ({
   type: GET_GENRELIST,

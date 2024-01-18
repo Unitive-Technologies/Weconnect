@@ -9,24 +9,10 @@ import {
   Col,
   Container,
   Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
   UncontrolledTooltip,
-  Input,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  Form,
 } from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
 
 import {
-  Name,
   Description,
   Code,
   CreatedAt,
@@ -36,10 +22,8 @@ import {
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
-
-import { getGenreList as onGetGenreList, getGenreListStatus as onGetGenreListStatus } from "/src/store/genre/actions";
-import { isEmpty } from "lodash";
+import TableContainerX from "../../../components/Common/TableContainerX";
+import { goToPage as onGoToPage, getGenreList as onGetGenreList, getGenreListStatus as onGetGenreListStatus } from "/src/store/genre/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -60,9 +44,14 @@ const GenreList = (props) => {
     genrelist: Genre.genreList,
     genrelistStatus: Genre.genreListStatus,
     loading: Genre.loading,
+    totalPage: Genre.totalPages,
+    totalCount: Genre.totalCount,
+    pageSize: Genre.perPage,
+    currentPage: Genre.currentPage,
   }));
 
-  const { genrelist, genrelistStatus, loading } = useSelector(GenreProperties);
+  const { genrelist, genrelistStatus, totalPage,
+    totalCount, pageSize, currentPage, loading } = useSelector(GenreProperties);
 
   useEffect(() => {
     console.log("GenreList data in component:", genrelist);
@@ -83,14 +72,16 @@ const GenreList = (props) => {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          // const totalRows = cellProps.rows.length;
+          // const reverseIndex = totalRows - cellProps.row.index;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
 
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -201,6 +192,12 @@ const GenreList = (props) => {
     }
   }, [dispatch, genrelist]);
 
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetGenreList());
+  };
+
   const handleAddGenreList = () => {
     setShowAddNewGenreList(!showAddNewGenreList);
   };
@@ -271,7 +268,7 @@ const GenreList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("Genre List:" + JSON.stringify(genrelist))}
+                    {/* {console.log("Genre List:" + JSON.stringify(genrelist))}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
@@ -290,6 +287,26 @@ const GenreList = (props) => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
+                    />
+                  </CardBody> */}
+                    <TableContainerX
+                      columns={columns}
+                      data={genrelist}
+                      isLoading={loading}
+                      isPagination={true}
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      totalPage={Number(totalPage)}
+                      isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      tableActions={getTableActions()}
+                      handleAddNewGenreList={() => setShowAddNewGenreList(true)}
+                      handleUploadGenreList={() => setShowUploadGenreList(true)}
+                      handleRowClick={(row) => {
+                        handleViewGenreList(row);
+                      }}
+                      goToPage={goToPage}
                     />
                   </CardBody>
                 </Card>
