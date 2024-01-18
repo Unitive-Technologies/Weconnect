@@ -11,7 +11,13 @@ import {
   UPDATE_BROADCASTER,
   UPDATE_BROADCASTER_SUCCESS,
   UPDATE_BROADCASTER_FAIL,
+  UPDATE_BROADCASTER_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_BROADCASTER_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getBroadCaster = () => ({
   type: GET_BROADCASTER,

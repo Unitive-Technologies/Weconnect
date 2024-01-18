@@ -9,24 +9,10 @@ import {
   Col,
   Container,
   Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
   UncontrolledTooltip,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  Input,
-  Form,
 } from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
 
 import {
-  Name,
   FullName,
   Address,
   ContactPerson,
@@ -35,21 +21,16 @@ import {
   Status,
   CreatedAt,
   CreatedBy,
-  Email,
-  Tags,
-  Projects,
-  Img,
 } from "./broadcasterListCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
 
 import {
+  goToPage as onGoToPage,
   getBroadCaster as onGetBroadCasters,
   getBroadCasterStatus as onGetBroadCastersStatus,
 } from "/src/store/broadcaster/actions";
-import { isEmpty } from "lodash";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -57,6 +38,7 @@ import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddNewBroadCaster from "./AddNewBroadCaster";
 import UploadBroadCaster from "./UploadBroadCaster";
+import TableContainerX from "../../../components/Common/TableContainerX";
 import ViewBroadcasterModal from "./ViewBroadcasterModal";
 import ViewGenreList from "../GenreList/ViewGenreList";
 
@@ -74,12 +56,19 @@ const BroadcasterList = (props) => {
       brodcast: broadCasters.broadCasters,
       brodcastStatus: broadCasters.broadCastersStatus,
       loading: broadCasters.loading,
+      totalPage: broadCasters.totalPages,
+      totalCount: broadCasters.totalCount,
+      pageSize: broadCasters.perPage,
+      currentPage: broadCasters.currentPage,
     })
   );
 
-  const { brodcast, brodcastStatus, loading } = useSelector(
-    BroadCasterProperties
-  );
+  const { brodcast, brodcastStatus, totalPage,
+    totalCount,
+    pageSize,
+    currentPage, loading } = useSelector(
+      BroadCasterProperties
+    );
 
   useEffect(() => {
     console.log("BroadCaster data in component:", brodcast);
@@ -99,14 +88,16 @@ const BroadcasterList = (props) => {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          // const totalRows = cellProps.rows.length;
+          // const reverseIndex = totalRows - cellProps.row.index;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
 
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -250,6 +241,12 @@ const BroadcasterList = (props) => {
     }
   }, [dispatch, brodcast]);
 
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetBroadCasters());
+  };
+
   const toggle = () => {
     setShowAddNewBroadCaster(!showAddNewBroadCaster);
   };
@@ -327,7 +324,7 @@ const BroadcasterList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    <TableContainer
+                    {/* <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={brodcast}
@@ -347,6 +344,26 @@ const BroadcasterList = (props) => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
+                    /> */}
+                    <TableContainerX
+                      columns={columns}
+                      data={brodcast}
+                      isLoading={loading}
+                      isPagination={true}
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      totalPage={Number(totalPage)}
+                      isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      tableActions={getTableActions()}
+                      handleRowClick={(row) => {
+                        toggleViewBroadcaster(row);
+                      }}
+                      handleAddNewBroadCasterClick={() =>
+                        setShowAddNewBroadCaster(true)
+                      }
+                      goToPage={goToPage}
                     />
                   </CardBody>
                 </Card>

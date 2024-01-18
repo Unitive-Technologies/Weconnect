@@ -143,6 +143,11 @@ export const GET_BROADCASTER_STATUS = "/list/status?fields=id,name&vr=web1.0";
 ("/list/status?fields=id,name&vr=web1.0");
 export const ADD_NEW_BROADCASTER = "/broadcaster?vr=web1.0";
 export const UPDATE_BROADCASTER = (id) => `/broadcaster/${id}?vr=web1.0`;
+export const getBroadcasterUrl = (currPage, perPage) => {
+  console.log("current page in broadcaster url - ", currPage, perPage);
+  return `/broadcaster?expand=created_by_lbl,status_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+  // ,operator_lbl,created_by_lbl,parent_lbl&notfilter[role]=4&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+};
 
 export const GET_GENRELIST =
   "/genre?expand=created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";

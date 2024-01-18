@@ -237,6 +237,13 @@ export const getCustomerUsers = async (currentPage, perPage = 20) => {
     url.getCustomerUsersUrl(currentPage, perPage)
   );
 };
+
+export const getBroadCaster = async (currentPage, perPage = 20) => {
+  console.log("Broadcasters - Current Page in fakebackend: ", currentPage);
+  console.log("Broadcasters - Per Page: ", perPage);
+  return await getCompleteResponse(url.getUsersUrl(currentPage, perPage));
+};
+
 export const updateCustomerUser = (customerUser, id) =>
   put(url.UPDATE_CUSTOMERUSER(id), customerUser);
 export const getCustomerUsersSettings = () =>
@@ -329,7 +336,7 @@ export const addNewRegionalOffice = (regionaloffice) =>
 export const updateRegionalOffice = (regionaloffice) =>
   put(url.UPDATE_REGIONALOFFICE, regionaloffice);
 
-export const getBroadCasters = () => get(url.GET_BROADCASTER);
+// export const getBroadCasters = () => get(url.GET_BROADCASTER);
 export const getBroadCastersStatus = () => get(url.GET_BROADCASTER_STATUS);
 export const addNewBroadCaster = (broadcast) =>
   post(url.ADD_NEW_BROADCASTER, broadcast);
