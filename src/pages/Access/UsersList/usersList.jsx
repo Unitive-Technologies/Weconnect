@@ -137,7 +137,7 @@ const ContactsList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  handleViewUser(userData);
+                  toggleViewModal(userData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -388,19 +388,19 @@ const ContactsList = (props) => {
     dispatch(onGoToPage(toPage));
     dispatch(onGetUsers());
   };
+  const toggleAddModal = () => {
+    setShowAddUser(!showAddUser);
+  };
+  const toggleUploadModal = () => {
+    setShowUploadUser(!showUploadUser);
+  };
+
   const resetSelection = () => {
     setViewUser({});
   };
-  const toggleModal = () => {
-    setShowViewDistrict(!showViewDistrict);
-  };
-  const handleAddUser = () => {
-    setShowAddUser(!showAddUser);
-  };
-
-  const handleUploadUser = () => {
-    setShowUploadUser(!showUploadUser);
-  };
+  // const toggleViewModal = () => {
+  //   setShowViewUser(!showViewUser);
+  // };
 
   const handleBulkUpdateUser = () => {
     setShowBulkUpdateUser(!showBulkUpdateUser);
@@ -414,7 +414,7 @@ const ContactsList = (props) => {
     setShowBulkUserSettings(!showBulkUserSettings);
   };
 
-  const handleViewUser = (row) => {
+  const toggleViewModal = (row) => {
     // console.log("Row data:", row);
     setShowViewUser(!showViewUser);
     setViewUser(row);
@@ -423,37 +423,6 @@ const ContactsList = (props) => {
       setSelectedId(row.id);
     }
   };
-
-  // const [filteredUsers, setFilteredUsers] = useState([]);
-  // const [filteredActiveBlockUsers, setFilteredActiveBlockUsers] = useState([]);
-  // const [filteredInActiveUsers, setFilteredInActiveUsers] = useState([]);
-  // const [filteredActiveInactiveUsers, setFilteredActiveInactiveUsers] =
-  //   useState([]);
-  // useEffect(() => {
-  //   // console.log("@@@@users:" + JSON.stringify(users));
-  //   if (users) {
-  //     const filteredActiveBlockData = users.filter(
-  //       (user) => parseInt(user.status) === 1 && parseInt(user.status) === -7
-  //     );
-  //     // console.log("@@@@@@@@@filter:" + JSON.stringify(filteredActiveBlockData));
-  //     setFilteredActiveBlockUsers(filteredActiveBlockData);
-  //     const filteredInActiveData = users.filter(
-  //       (user) => parseInt(user.status) === 0
-  //     );
-
-  //     // console.log("@@@@@@@@@filter:" + JSON.stringify(filteredInActiveData));
-  //     setFilteredInActiveUsers(filteredInActiveData);
-  //     const filteredActiveInactiveData = users.filter(
-  //       (user) => parseInt(user.status) === 0 && parseInt(user.status) === 1
-  //     );
-  //     setFilteredActiveInactiveUsers(filteredActiveInactiveData);
-  //   }
-  //   // console.log("ActiveBlock:" + JSON.stringify(filteredActiveBlockUsers));
-  //   // console.log("Inactive:" + JSON.stringify(filteredInActiveUsers));
-  //   // console.log(
-  //   //   "ActiveInactive:" + JSON.stringify(filteredActiveInactiveUsers)
-  //   // );
-  // }, [users]);
 
   const keyField = "id";
 
@@ -497,18 +466,18 @@ const ContactsList = (props) => {
     <React.Fragment>
       <ViewUserModal
         isOpen={showViewUser}
-        handleViewUser={handleViewUser}
+        // handleViewUser={toggleViewModal}
         user={viewUser}
         userType={userType}
         userStatus={userStatus}
         userRole={userRole}
         userDesignation={userDesignation}
         resetSelection={resetSelection}
-        toggleModal={toggleModal}
+        toggleModal={toggleViewModal}
       />
       <AddUserModal
         isOpen={showAddUser}
-        handleAddUser={handleAddUser}
+        toggleAddModal={toggleAddModal}
         userType={userType}
         userStatus={userStatus}
         userRole={userRole}
@@ -520,7 +489,7 @@ const ContactsList = (props) => {
       />
       <UploadUserModal
         isOpen={showUploadUser}
-        handleUploadUser={handleUploadUser}
+        toggleUploadModal={toggleUploadModal}
       />
       <BulkUpdateUserModal
         isOpen={showBulkUpdateUser}
@@ -582,6 +551,7 @@ const ContactsList = (props) => {
                     <TableContainerX
                       columns={columns}
                       data={users}
+                      isShowTableActionButtons={true}
                       isLoading={loading}
                       isPagination={true}
                       totalCount={Number(totalCount)}
@@ -592,7 +562,7 @@ const ContactsList = (props) => {
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleRowClick={(row) => {
-                        handleViewUser(row);
+                        toggleViewModal(row);
                       }}
                       goToPage={goToPage}
                     />

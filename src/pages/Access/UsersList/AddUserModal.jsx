@@ -36,7 +36,7 @@ import {
 const AddUserModal = (props) => {
   const {
     isOpen,
-    handleAddUser,
+    toggleAddModal,
     userType,
     userStatus,
     userRole,
@@ -293,7 +293,7 @@ const AddUserModal = (props) => {
       dispatch(onAddNewUser(newUser));
       dispatch(onGetUsers());
       validation.resetForm();
-      handleAddUser();
+      toggleAddModal();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -309,9 +309,9 @@ const AddUserModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleAddUser}
+      toggle={toggleAddModal}
     >
-      <ModalHeader tag="h4" toggle={handleAddUser}>
+      <ModalHeader tag="h4" toggle={toggleAddModal}>
         Add User
       </ModalHeader>
       <ModalBody>
@@ -871,7 +871,7 @@ const AddUserModal = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    handleAddUser();
+                    toggleAddModal();
                   }}
                 >
                   Cancel
@@ -886,8 +886,12 @@ const AddUserModal = (props) => {
 };
 
 AddUserModal.propTypes = {
-  handleAddUser: PropTypes.func,
   isOpen: PropTypes.bool,
+  toggleAddModal: PropTypes.func,
+  userType: PropTypes.array,
+  userStatus: PropTypes.array,
+  userRole: PropTypes.array,
+  userDesignation: PropTypes.array,
+  userMsoPolicy: PropTypes.array,
 };
-
 export default AddUserModal;

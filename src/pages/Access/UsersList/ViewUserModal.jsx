@@ -22,11 +22,6 @@ import {
 } from "/src/store/users/actions";
 import { createSelector } from "reselect";
 import {
-  // getUserType as onGetUserType,
-  // getUserStatus as onGetUserStatus,
-  // getUserRole as onGetUserRole,
-  // getUserDesignation as onGetUserDesignation,
-  // getUserMsoPolicy as onGetUserMsoPolicy,
   getUserRegionalOffice as onGetUserRegionalOffice,
   getUserMsoDetails as onGetUserMsoDetails,
   getUserDistributor as onGetUserDistributor,
@@ -37,7 +32,6 @@ import axios from "axios";
 const ViewUserModal = (props) => {
   const {
     isOpen,
-    handleViewUser,
     user,
     userType,
     userStatus,
@@ -63,32 +57,15 @@ const ViewUserModal = (props) => {
 
   const selectContactsState = (state) => state.users;
   const ContactsProperties = createSelector(selectContactsState, (Users) => ({
-    // users: Users.users,
     loading: Users.loading,
-    // userType: Users.userType,
-    // userStatus: Users.userStatus,
-    // userRole: Users.userRole,
-    // userDesignation: Users.userDesignation,
-    // userMsoPolicy: Users.userMsoPolicy,
     userRegional: Users.userRegional,
     userMsoDetails: Users.userMsoDetails,
     userDistributor: Users.userDistributor,
     userLco: Users.userLco,
   }));
 
-  const {
-    // users,
-    // userType,
-    // userStatus,
-    // userRole,
-    // userDesignation,
-    // userMsoPolicy,
-    userRegional,
-    userMsoDetails,
-    userDistributor,
-    userLco,
-    loading,
-  } = useSelector(ContactsProperties);
+  const { userRegional, userMsoDetails, userDistributor, userLco, loading } =
+    useSelector(ContactsProperties);
 
   const handleStatusChange = (e) => {
     const status = e.target.value;
@@ -291,7 +268,6 @@ const ViewUserModal = (props) => {
       dispatch(onUpdateUser(updateUser));
       dispatch(onGetUsers());
       validation.resetForm();
-      handleViewUser();
       setShowEditUser(false);
       resetSelection();
       toggleModal();
@@ -300,7 +276,6 @@ const ViewUserModal = (props) => {
 
   const handleCancel = () => {
     setShowEditUser(false);
-    handleViewUser();
     resetSelection();
     toggleModal();
   };
@@ -486,17 +461,17 @@ const ViewUserModal = (props) => {
                   <Col lg={4}>
                     <div className="mb-3">
                       <Label className="form-label">
-                        User of {user.type_lbl}
+                        User of {user && user.type_lbl}
                       </Label>
                       <Input
                         name="mso"
                         type="select"
                         placeholder="Select MSO"
                         className="form-select"
-                        value={user.operator_lbl}
+                        value={user && user.operator_lbl}
                         disabled={!showEditUser}
                       >
-                        <option value="">{user.operator_lbl}</option>
+                        <option value="">{user && user.operator_lbl}</option>
                       </Input>
                     </div>
                   </Col>
@@ -701,10 +676,10 @@ const ViewUserModal = (props) => {
                       type="select"
                       // placeholder="Select MSO"
                       className="form-select"
-                      value={user.group_lbl}
+                      value={user && user.group_lbl}
                       disabled
                     >
-                      <option value="">{user.group_lbl}</option>
+                      <option value="">{user && user.group_lbl}</option>
                     </Input>
                   </div>
                 </Col>

@@ -267,14 +267,11 @@ const contacts = (state = INIT_STATE, action) => {
     case UPDATE_USER_SUCCESS:
       return {
         ...state,
-        users: state.users.map((user) =>
-          user.id.toString() === action.payload.id.toString()
-            ? { user, ...action.payload }
-            : user
-        ),
         loading: false,
+        users: state.users.map((user) =>
+          user.id === action.payload.id ? { ...user, ...action.payload } : user
+        ),
       };
-
     case UPDATE_USER_FAIL:
       return {
         ...state,

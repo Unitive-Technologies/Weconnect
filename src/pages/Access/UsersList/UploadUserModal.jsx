@@ -19,7 +19,7 @@ import { updateUser as onUpdateUser } from "/src/store/users/actions";
 import { addNewUser as onAddNewUser } from "/src/store/users/actions";
 
 const UploadUserModal = (props) => {
-  const { isOpen, handleUploadUser } = props;
+  const { isOpen, toggleUploadModal } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
 
@@ -117,7 +117,7 @@ const UploadUserModal = (props) => {
 
     // Move dispatch line above the return statement
     dispatch(onAddNewUser(data));
-    handleUploadUser();
+    toggleUploadModal();
     return data;
   };
 
@@ -130,9 +130,9 @@ const UploadUserModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleUploadUser}
+      toggle={toggleUploadModal}
     >
-      <ModalHeader toggle={handleUploadUser} tag="h4">
+      <ModalHeader toggle={toggleUploadModal} tag="h4">
         Upload User
       </ModalHeader>
       <ModalBody>

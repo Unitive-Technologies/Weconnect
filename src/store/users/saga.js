@@ -20,6 +20,7 @@ import {
 } from "./actionTypes";
 
 import {
+  getUsers as fetchusers,
   getUsersSuccess,
   getUsersFail,
   getUserProfileSuccess,
@@ -93,7 +94,7 @@ function* fetchUsers() {
 
     const response = yield call(getUsers, currentPage, pageSize);
     console.log("Response from API -", response);
-    debugger;
+    // debugger;
     yield put(getUsersSuccess(response));
   } catch (error) {
     console.error("Error fetching Reason list:", error);
@@ -215,10 +216,9 @@ function* onUpdateUser({ payload: user }) {
     const response = yield call(updateUser, user, user.id);
     yield put(updateUserSuccess(response));
     console.log("update response:" + JSON.stringify(response));
-    // toast.success("User Updated Successfully", { autoClose: 2000 });
+    yield put(fetchusers());
   } catch (error) {
     yield put(updateUserFail(error));
-    toast.error("User Updated Failed", { autoClose: 2000 });
   }
 }
 
@@ -239,10 +239,9 @@ function* onAddNewUser({ payload: user }) {
     const response = yield call(addNewUser, user);
 
     yield put(addUserSuccess(response));
-    toast.success("Contact Added Successfully", { autoClose: 2000 });
+    yield put(fetchusers());
   } catch (error) {
     yield put(addUserFail(error));
-    toast.error("Contact Added Failed", { autoClose: 2000 });
   }
 }
 
