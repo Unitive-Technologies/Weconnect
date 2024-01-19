@@ -35,6 +35,7 @@ import {
   getInventoryAllottedStb as onGetInventoryAllottedStb,
   getInventoryAllottedPairing as onGetInventoryAllottedPairing,
   goToPage as onGoToPage,
+  goToPage1 as onGoToPage1,
 } from "/src/store/inventorystock/actions";
 import StockStb from "./StockStb";
 import StockPairing from "./StockPairing";
@@ -66,6 +67,10 @@ const InventoryStock = (props) => {
       stocktotalCount: inventorystock.totalCount,
       stockpageSize: inventorystock.perPage,
       stockcurrentPage: inventorystock.currentPage,
+      faultytotalPage: inventorystock.totalPages,
+      faultytotalCount: inventorystock.totalCount,
+      faultypageSize: inventorystock.perPage,
+      faultycurrentPage: inventorystock.currentPage,
     })
   );
 
@@ -87,6 +92,10 @@ const InventoryStock = (props) => {
     stocktotalCount,
     stockpageSize,
     stockcurrentPage,
+    faultytotalPage,
+    faultytotalCount,
+    faultypageSize,
+    faultycurrentPage,
   } = useSelector(inventorystockProperties);
 
   useEffect(() => {
@@ -110,6 +119,12 @@ const InventoryStock = (props) => {
     console.log("[GOTO PAGE] Trigger to page - ", toPage);
     dispatch(onGoToPage(toPage));
     dispatch(onGetInventoryStockPairing());
+  };
+
+  const goToPage1 = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage1(toPage));
+    dispatch(onGetInventoryFaultyPairing());
   };
 
   console.log("TotalCount - ", stocktotalCount);
@@ -168,6 +183,10 @@ const InventoryStock = (props) => {
         }
         return stocktotalPage;
       }
+    } else if (selectedOption === "Faulty") {
+      if (activeTab === "3") {
+        return faultytotalPage;
+      }
     }
   };
 
@@ -175,6 +194,10 @@ const InventoryStock = (props) => {
     if (selectedOption === "In-stock") {
       if (activeTab === "3") {
         return stocktotalCount;
+      }
+    } else if (selectedOption === "Faulty") {
+      if (activeTab === "3") {
+        return faultytotalCount;
       }
     }
   };
@@ -184,6 +207,10 @@ const InventoryStock = (props) => {
       if (activeTab === "3") {
         return stockpageSize;
       }
+    } else if (selectedOption === "Faulty") {
+      if (activeTab === "3") {
+        return faultypageSize;
+      }
     }
   };
 
@@ -191,6 +218,22 @@ const InventoryStock = (props) => {
     if (selectedOption === "In-stock") {
       if (activeTab === "3") {
         return stockcurrentPage;
+      }
+    } else if (selectedOption === "Faulty") {
+      if (activeTab === "3") {
+        return faultycurrentPage;
+      }
+    }
+  };
+
+  const getFilteredGoToPage = () => {
+    if (selectedOption === "In-stock") {
+      if (activeTab === "3") {
+        return goToPage;
+      }
+    } else if (selectedOption === "Faulty") {
+      if (activeTab === "3") {
+        return goToPage1;
       }
     }
   };
@@ -558,7 +601,7 @@ const InventoryStock = (props) => {
                           <Col sm="12">
                             <StockPairing
                               stockpairing={getFilteredData()}
-                              goToPage={goToPage}
+                              goToPage={getFilteredGoToPage()}
                               totalCount={getFilteredTotalCount()}
                               pageSize={getFilteredPageSize()}
                               currentPage={getFilteredCurrentPage()}

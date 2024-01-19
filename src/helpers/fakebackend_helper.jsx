@@ -258,7 +258,9 @@ export const getCustomerUsersSettings = () =>
 export const getLanguageList = async (currentPage, perPage = 20) => {
   console.log("Language List - Current Page in fakebackend: ", currentPage);
   console.log("Language List - Per Page: ", perPage);
-  return await getCompleteResponse(url.getLanguageListUrl(currentPage, perPage));
+  return await getCompleteResponse(
+    url.getLanguageListUrl(currentPage, perPage)
+  );
 };
 
 export const getBroadcasterBouquetList = async (currentPage, perPage = 20) => {
@@ -583,8 +585,15 @@ export const getInventoryStockPairing = async (currentPage, perPage = 20) => {
 export const getInventoryFaultySmartcard = () =>
   get(url.GET_INVENTORYFAULTY_SMARTCARD);
 export const getInventoryFaultyStb = () => get(url.GET_INVENTORYFAULTY_STB);
-export const getInventoryFaultyPairing = () =>
-  get(url.GET_INVENTORYFAULTY_PAIRING);
+// export const getInventoryFaultyPairing = () =>
+//   get(url.GET_INVENTORYFAULTY_PAIRING);
+export const getInventoryFaultyPairing = async (currentPage, perPage = 20) => {
+  console.log("StockPairing - Current Page in fakebackend: ", currentPage);
+  console.log("StockPairing - Per Page: ", perPage);
+  return await getCompleteResponse(
+    url.getFaultyPairingUrl(currentPage, perPage)
+  );
+};
 
 export const getInventoryBlacklistedSmartcard = () =>
   get(url.GET_INVENTORYBLACKLISTED_SMARTCARD);

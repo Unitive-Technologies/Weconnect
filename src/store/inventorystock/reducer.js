@@ -16,6 +16,7 @@ import {
   GET_INVENTORYFAULTY_SMARTCARD_FAIL,
   GET_INVENTORYFAULTY_STB_SUCCESS,
   GET_INVENTORYFAULTY_STB_FAIL,
+  GET_INVENTORYFAULTY_PAIRING,
   GET_INVENTORYFAULTY_PAIRING_SUCCESS,
   GET_INVENTORYFAULTY_PAIRING_FAIL,
   GET_INVENTORYBLACKLISTED_SMARTCARD_SUCCESS,
@@ -31,6 +32,7 @@ import {
   GET_INVENTORYALLOTTED_PAIRING_SUCCESS,
   GET_INVENTORYALLOTTED_PAIRING_FAIL,
   UPDATE_STOCKPAIRING_CURRENT_PAGE,
+  UPDATE_FAULTYPAIRING_CURRENT_PAGE,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -66,6 +68,12 @@ const InventoryStock = (state = INIT_STATE, action) => {
         : state;
 
     case GET_INVENTORYSTOCK_PAIRING:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case GET_INVENTORYFAULTY_PAIRING:
       return {
         ...state,
         loading: true,
@@ -145,7 +153,11 @@ const InventoryStock = (state = INIT_STATE, action) => {
     case GET_INVENTORYFAULTY_PAIRING_SUCCESS:
       return {
         ...state,
-        faultypairing: action.payload,
+        faultypairing: action.payload.data.data,
+        currentPage: action.payload.headers[RESPONSE_HEADER_CURRENT_PAGE],
+        perPage: action.payload.headers[RESPONSE_HEADER_PER_PAGE],
+        totalCount: action.payload.headers[RESPONSE_HEADER_TOTAL_COUNT],
+        totalPages: action.payload.headers[RESPONSE_HEADER_PAGE_COUNT],
         loading: false,
       };
 

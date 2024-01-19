@@ -79,6 +79,7 @@ const convertInventoryStockListObject = (inventorystocklist) => {
 };
 
 export const getStockPairingStore = (state) => state.stockpairing;
+export const getFaultyPairingStore = (state) => state.faultypairing;
 
 function* fetchInventoryStock() {
   try {
@@ -145,9 +146,22 @@ function* fetchInventoryFaultyStb() {
 
 function* fetchInventoryFaultyPairing() {
   try {
-    const response = yield call(getInventoryFaultyPairing);
-    // console.log("response:" + JSON.stringify(response.data));
-    yield put(getInventoryFaultyPairingSuccess(response.data));
+    // const response = yield call(getInventoryFaultyPairing);
+    // // console.log("response:" + JSON.stringify(response.data));
+    // yield put(getInventoryFaultyPairingSuccess(response.data));
+    let stockpairingStore = yield select(getFaultyPairingStore);
+
+    const pageSize = stockpairingStore.pageSize;
+    const currentPage = stockpairingStore.currentPage;
+
+    const response = yield call(
+      getInventoryFaultyPairing,
+      currentPage,
+      pageSize
+    );
+    console.log("Response from API -", response);
+    debugger;
+    yield put(getInventoryFaultyPairingSuccess(response));
   } catch (error) {
     yield put(getInventoryFaultyPairingFail(error));
   }
