@@ -5,7 +5,13 @@ import {
   ADD_NEW_PACKAGELIST,
   ADD_PACKAGELIST_SUCCESS,
   ADD_PACKAGELIST_FAIL,
+  UPDATE_PACKAGELIST_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_PACKAGELIST_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getPackageList = () => ({
   type: GET_PACKAGELIST,

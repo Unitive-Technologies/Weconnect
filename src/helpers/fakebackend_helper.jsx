@@ -267,6 +267,12 @@ export const getBroadcasterBouquetList = async (currentPage, perPage = 20) => {
   return await getCompleteResponse(url.getBroadcasterBouquetListUrl(currentPage, perPage));
 };
 
+export const getPackageList = async (currentPage, perPage = 20) => {
+  console.log("Package List - Current Page in fakebackend: ", currentPage);
+  console.log("Package List - Per Page: ", perPage);
+  return await getCompleteResponse(url.getPackageListUrl(currentPage, perPage));
+};
+
 export const getGroupPolicy = () => get(url.GET_GROUPPOLICY);
 export const addNewGroupPolicy = (groupPolicy) =>
   post(url.ADD_NEW_GROUPPOLICY, groupPolicy);
@@ -394,7 +400,7 @@ export const addNewChannelList = (channel) =>
 export const addNewBroadcasterBouquetList = (broadcastbouquet) =>
   post(url.ADD_NEW_BROADCASTERBOUQUETLIST, broadcastbouquet);
 
-export const getPackageList = () => get(url.GET_PACKAGELIST);
+// export const getPackageList = () => get(url.GET_PACKAGELIST);
 export const addNewPackageList = (packlist) =>
   post(url.ADD_NEW_PACKAGELIST, packlist);
 

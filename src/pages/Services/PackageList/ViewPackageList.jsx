@@ -23,7 +23,7 @@ import ViewBroadcasterBouquets from "./ViewBroadcasterBouquets";
 import ViewChannels from "./ViewChannels";
 
 const ViewPackageList = (props) => {
-  const { isOpen, handleViewPackageList, packlist } = props;
+  const { isOpen, handleViewPackageList, packageList } = props;
   const dispatch = useDispatch();
   const [showEditChannel, setShowEditChannel] = useState(false);
   const validation = useFormik({
@@ -31,15 +31,15 @@ const ViewPackageList = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      code: (packlist && packlist.code) || "",
-      name: (packlist && packlist.name) || "",
-      description: (packlist && packlist.description) || "",
-      definition: (packlist && packlist.definition) || "",
-      packagetypetype: (packlist && packlist.packagetype) || "",
-      status: (packlist && packlist.status) || "",
-      // cas: (packlist && packlist.name) || "",
-      // cascode: (packlist && packlist.name) || "",
-      created_by: (packlist && packlist.name) || "",
+      code: (packageList && packageList.code) || "",
+      name: (packageList && packageList.name) || "",
+      description: (packageList && packageList.description) || "",
+      definition: (packageList && packageList.definition) || "",
+      packagetypetype: (packageList && packageList.packagetype) || "",
+      status: (packageList && packageList.status) || "",
+      // cas: (packageList && packageList.name) || "",
+      // cascode: (packageList && packageList.name) || "",
+      created_by: (packageList && packageList.name) || "",
     },
     validationSchema: Yup.object({
       code: Yup.string().required("Enter Channel Code"),
@@ -96,8 +96,8 @@ const ViewPackageList = (props) => {
     >
       <ModalHeader toggle={handleCancel} tag="h4">
         {!showEditChannel
-          ? `View ${(packlist && packlist.name) || ""}`
-          : `Edit ${(packlist && packlist.name) || ""}`}
+          ? `View ${(packageList && packageList.name) || ""}`
+          : `Edit ${(packageList && packageList.name) || ""}`}
       </ModalHeader>
       {!showEditChannel && (
         <Link

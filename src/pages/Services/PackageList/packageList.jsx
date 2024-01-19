@@ -28,7 +28,7 @@ import {
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 
-import { getPackageList as onGetPackageList } from "/src/store/packagelist/actions";
+import { goToPage as onGoToPage, getPackageList as onGetPackageList } from "/src/store/packagelist/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -39,6 +39,7 @@ import BulkUpdateCasCodePackageList from "./BulkUpdateCasCodePackageList";
 import BulkUpdatePackageList from "./BulkUpdatePackageList";
 import UploadPackageList from "../PackageList/UploadPackageList";
 import ViewPackageList from './ViewPackageList'
+import TableContainerX from "../../../components/Common/TableContainerX";
 
 const PackageList = (props) => {
   //meta title
@@ -50,16 +51,23 @@ const PackageList = (props) => {
   const PackageListProperties = createSelector(
     selectPackageListState,
     (packageList) => ({
-      packlist: packageList.packageList,
+      packageList: packageList.packageList,
       loading: packageList.loading,
+      totalPage: packageList.totalPages,
+      totalCount: packageList.totalCount,
+      pageSize: packageList.perPage,
+      currentPage: packageList.currentPage,
     })
   );
 
-  const { packlist, loading } = useSelector(PackageListProperties);
+  const { packageList, totalPage,
+    totalCount,
+    pageSize,
+    currentPage, loading } = useSelector(PackageListProperties);
 
   useEffect(() => {
     // console.log("Package List data in component:", packlist);
-  }, [packlist]);
+  }, [packageList]);
   const [isLoading, setLoading] = useState(loading);
   const [showAddNewPackageList, setShowAddNewPackageList] = useState(false);
   const [showUploadPackageList, setShowUploadPackageList] = useState(false);
@@ -77,14 +85,16 @@ const PackageList = (props) => {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          // const totalRows = cellProps.rows.length;
+          // const reverseIndex = totalRows - cellProps.row.index;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
 
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -173,7 +183,7 @@ const PackageList = (props) => {
       },
       {
         Header: "Staus",
-        accessor: "status",
+        accessor: "status_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Status {...cellProps} />;
@@ -243,10 +253,16 @@ const PackageList = (props) => {
   );
 
   useEffect(() => {
-    if (packlist && !packlist.length) {
+    if (packageList && !packageList.length) {
       dispatch(onGetPackageList());
     }
-  }, [dispatch, packlist]);
+  }, [dispatch, packageList]);
+
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetUsers());
+  };
 
   const toggle = () => {
     setShowAddNewPackageList(!showAddNewPackageList);
@@ -319,7 +335,7 @@ const PackageList = (props) => {
       <ViewPackageList
         isOpen={showViewPackageList}
         handleViewPackageList={handleViewPackageList}
-        packlist={viewData}
+        packageList={viewData}
       />
 
       <div className="page-content">
@@ -333,8 +349,8 @@ const PackageList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {/* {console.log("users:" + JSON.stringify(packlist))} */}
-                    <TableContainer
+                    {console.log("packageList:" + JSON.stringify(packageList))}
+                    {/* <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={packlist}
@@ -359,6 +375,32 @@ const PackageList = (props) => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
+                    /> */}
+                    <TableContainerX
+                      columns={columns}
+                      data={packageList}
+                      isLoading={loading}
+                      isPagination={true}
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      totalPage={Number(totalPage)}
+                      isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      tableActions={getTableActions()}
+                      handleAddNewPackageList={() =>
+                        setShowAddNewPackageList(true)
+                      }
+                      handleUploadPackageList={() =>
+                        setShowUploadPackageList(true)
+                      }
+                      handleBulkUpdateCasCodePackageList={() =>
+                        setShowBulkUpdateCasCodePackageList(true)
+                      }
+                      handleBulkUpdatePackageList={() =>
+                        setShowBulkUpdateCasCodePackageList(true)
+                      }
+                      goToPage={goToPage}
                     />
                   </CardBody>
                 </Card>

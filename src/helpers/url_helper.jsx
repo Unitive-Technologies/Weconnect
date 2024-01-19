@@ -184,6 +184,10 @@ export const getBroadcasterBouquetListUrl = (currPage, perPage) => {
 export const GET_PACKAGELIST =
   "/package?expand=created_by_lbl,package_type_lbl,isFta_lbl,status_lbl,channels,brdBouques&sort=name&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_PACKAGELIST = "/add/packagelist";
+export const getPackageListUrl = (currPage, perPage) => {
+  console.log("current page in Package List url - ", currPage, perPage);
+  return `/package?expand=created_by_lbl,package_type_lbl,isFta_lbl,status_lbl,brdBouques&sort=name&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+};
 
 export const GET_OSDCONFIGURATIONLIST =
   "/mtc?expand=created_by_lbl,status_lbl,is_reserved_lbl,type_lbl&page=1&per-page=50&vr=web1.0";
