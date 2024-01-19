@@ -29,7 +29,13 @@ import {
   GET_OPERATOR_FORBOUQUET,
   GET_OPERATOR_FORBOUQUET_SUCCESS,
   GET_OPERATOR_FORBOUQUET_FAIL,
+  UPDATE_BOUQUET_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_BOUQUET_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getBouquet = () => ({
   type: GET_BOUQUET,

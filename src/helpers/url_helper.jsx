@@ -290,6 +290,10 @@ export const GET_BOUQUET_PACKAGES =
   "/package/list?fields=id,name,code,broadcasterRate&expand=package_type_lbl,isFta_lbl,channelIds,brdBouqueIds,ftaChannelCount,payChannelCount,ncfChannelCount,totalChannelCount&sort=name&vr=web1.0";
 export const GET_OPERATOR_FORBOUQUET = (id) =>
   `/operator/list?fields=id,name,code&expand=type_lbl,status_lbl,branch_lbl,distributor_lbl&notfilter[type]=0&notfilter[bouque_id]=${id}&page=1&per-page=500&vr=web1.0`;
+export const getBouquetUrl = (currPage, perPage) => {
+  console.log("current page in users url - ", currPage, perPage);
+  return `/bouque?expand=setting,created_by_lbl,lco_rate,type_lbl,status_lbl,boxtype_lbl,rate,category_lbl,is_exclusive_lbl,is_promotional_lbl,additional_rates,is_online_app_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+};
 
 export const GET_CONNECTIONSCHEME = "/connectionscheme";
 export const ADD_CONNECTIONSCHEME = "/add/connectionscheme";

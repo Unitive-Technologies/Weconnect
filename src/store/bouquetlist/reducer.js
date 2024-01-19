@@ -1,4 +1,11 @@
 import {
+  RESPONSE_HEADER_CURRENT_PAGE,
+  RESPONSE_HEADER_PAGE_COUNT,
+  RESPONSE_HEADER_TOTAL_COUNT,
+  RESPONSE_HEADER_PER_PAGE,
+} from "../../constants/strings";
+import {
+  GET_BOUQUET,
   GET_BOUQUET_SUCCESS,
   GET_BOUQUET_FAIL,
   ADD_BOUQUET_SUCCESS,
@@ -19,6 +26,7 @@ import {
   GET_BOUQUET_PACKAGES_FAIL,
   GET_OPERATOR_FORBOUQUET_SUCCESS,
   GET_OPERATOR_FORBOUQUET_FAIL,
+  UPDATE_BOUQUET_CURRENT_PAGE,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -31,16 +39,38 @@ const INIT_STATE = {
   alacartechannels: [],
   bouquetpackages: [],
   operatorforbouquet: [],
+  pagination: {},
   error: {},
-  loading: true,
+  loading: false,
+  currentPage: 1,
+  perPage: 10,
+  totalCount: 0,
+  totalPages: 0,
 };
 
 const Bouquet = (state = INIT_STATE, action) => {
   switch (action.type) {
+    case UPDATE_BOUQUET_CURRENT_PAGE:
+      return Number(action.payload) <= state.totalPages
+        ? {
+          ...state,
+          currentPage: action.payload,
+        }
+        : state;
+    case GET_BOUQUET:
+      return {
+        ...state,
+        loading: true,
+      };
+
     case GET_BOUQUET_SUCCESS:
       return {
         ...state,
-        bouquet: action.payload,
+        bouquet: action.payload.data.data,
+        currentPage: action.payload.headers[RESPONSE_HEADER_CURRENT_PAGE],
+        perPage: action.payload.headers[RESPONSE_HEADER_PER_PAGE],
+        totalCount: action.payload.headers[RESPONSE_HEADER_TOTAL_COUNT],
+        totalPages: action.payload.headers[RESPONSE_HEADER_PAGE_COUNT],
         loading: false,
       };
 

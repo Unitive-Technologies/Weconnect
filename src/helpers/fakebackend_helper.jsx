@@ -306,6 +306,12 @@ export const getPromoVoucher = async (currentPage, perPage = 20) => {
   return await getCompleteResponse(url.getPromoVoucherUrl(currentPage, perPage));
 };
 
+export const getBouquet = async (currentPage, perPage = 20) => {
+  console.log("Reason - Current Page in fakebackend: ", currentPage);
+  console.log("Reason - Per Page: ", perPage);
+  return await getCompleteResponse(url.getBouquetUrl(currentPage, perPage));
+};
+
 export const getGroupPolicy = () => get(url.GET_GROUPPOLICY);
 export const addNewGroupPolicy = (groupPolicy) =>
   post(url.ADD_NEW_GROUPPOLICY, groupPolicy);
@@ -507,7 +513,7 @@ export const getOperatorForBulkAssign = (id) =>
 export const addBulkAssignNcf = (assignncf) =>
   post(url.ADD_BULKASSIGN_NCF, assignncf);
 
-export const getBouquet = () => get(url.GET_BOUQUET);
+// export const getBouquet = () => get(url.GET_BOUQUET);
 export const addBouquet = (bouquet) => post(url.ADD_BOUQUET, bouquet);
 export const getBouquetBoxtype = () => get(url.GET_BOUQUET_BOXTYPE);
 export const getBouquetType = () => get(url.GET_BOUQUETTYPE);

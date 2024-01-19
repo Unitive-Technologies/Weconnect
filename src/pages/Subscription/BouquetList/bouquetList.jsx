@@ -13,6 +13,7 @@ import {
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import {
+  goToPage as onGoToPage,
   getBouquet as onGetBouquet,
   getAlacarteChannels as onGetAlacarteChannels,
   getBouquetBoxtype as onGetBouquetBoxtype,
@@ -21,7 +22,7 @@ import {
   getBouquetType as onGetBouquetType,
   getBouquex as onGetBouquex,
   getRechargePeriod as onGetRechargePeriod,
-} from "/src/store/actions";
+} from "/src/store/bouquetlist/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
@@ -30,6 +31,7 @@ import CreateBouquet from "./CreateBouquet";
 import BulkAssign from "./BulkAssign";
 import BulkRemoval from "./BulkRemoval";
 import BulkSettings from "./BulkSettings";
+import TableContainerX from "../../../components/Common/TableContainerX";
 
 const BouquetList = () => {
   //meta title
@@ -48,6 +50,10 @@ const BouquetList = () => {
     bouquettype: bouquet.bouquettype,
     bouquex: bouquet.bouquex,
     rechargeperiod: bouquet.rechargeperiod,
+    totalPage: bouquet.totalPages,
+    totalCount: bouquet.totalCount,
+    pageSize: bouquet.perPage,
+    currentPage: bouquet.currentPage,
   }));
 
   const {
@@ -60,6 +66,10 @@ const BouquetList = () => {
     bouquettype,
     bouquex,
     rechargeperiod,
+    totalPage,
+    totalCount,
+    pageSize,
+    currentPage,
   } = useSelector(BouquetProperties);
 
   useEffect(() => {
@@ -123,14 +133,16 @@ const BouquetList = () => {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          // const totalRows = cellProps.rows.length;
+          // const reverseIndex = totalRows - cellProps.row.index;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
 
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -217,7 +229,7 @@ const BouquetList = () => {
       },
       {
         Header: "Status",
-        accessor: "status",
+        accessor: "status_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -239,7 +251,7 @@ const BouquetList = () => {
       },
       {
         Header: "Created By",
-        accessor: "created_by",
+        accessor: "created_by_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -286,6 +298,12 @@ const BouquetList = () => {
       dispatch(onGetRechargePeriod());
     }
   }, [dispatch, bouquets]);
+
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetBouquet());
+  };
 
   const getTableActions = () => {
     return [
@@ -355,7 +373,7 @@ const BouquetList = () => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    <TableContainer
+                    {/* <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={bouquets}
@@ -368,6 +386,23 @@ const BouquetList = () => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
+                    /> */}
+                    <TableContainerX
+                      columns={columns}
+                      data={bouquets}
+                      isLoading={loading}
+                      isPagination={true}
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      totalPage={Number(totalPage)}
+                      isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      tableActions={getTableActions()}
+                      // handleRowClick={(row) => {
+                      //   handleViewUser(row);
+                      // }}
+                      goToPage={goToPage}
                     />
                   </CardBody>
                 </Card>
