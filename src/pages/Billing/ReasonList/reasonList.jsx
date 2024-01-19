@@ -8,7 +8,7 @@ import { Card, CardBody, Col, Container, Row } from "reactstrap";
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 
-import { getReason as onGetReason, getReasonStatus as onGetReasonStatus, getReasonReasonType as onGetReasonReasonType } from "/src/store/actions";
+import { goToPage as onGoToPage, getReason as onGetReason, getReasonStatus as onGetReasonStatus, getReasonReasonType as onGetReasonReasonType } from "/src/store/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -17,6 +17,7 @@ import { ToastContainer } from "react-toastify";
 import AddNewReasonList from "./AddNewReasonList";
 import ViewReasonList from "./ViewReasonList";
 import UploadReasonList from "./UploadReasonList";
+import TableContainerX from "../../../components/Common/TableContainerX";
 
 const ReasonList = (props) => {
   //meta title
@@ -30,10 +31,17 @@ const ReasonList = (props) => {
     reasonStatus: reason.reasonStatus,
     reasonReasonType: reason.reasonReasonType,
     loading: reason.loading,
+    totalPage: reason.totalPages,
+    totalCount: reason.totalCount,
+    pageSize: reason.perPage,
+    currentPage: reason.currentPage,
   }));
 
   const { reasons, loading, reasonStatus,
-    reasonReasonType } = useSelector(ReasonProperties);
+    reasonReasonType, totalPage,
+    totalCount,
+    pageSize,
+    currentPage, } = useSelector(ReasonProperties);
 
   const [isLoading, setLoading] = useState(loading);
   const [showAddNewReasonList, setShowAddNewReasonList] = useState(false);
@@ -44,17 +52,19 @@ const ReasonList = (props) => {
     () => [
       {
         Header: "#",
-        // accessor: "name",
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          // const totalRows = cellProps.rows.length;
+          // const reverseIndex = totalRows - cellProps.row.index;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
+
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -156,6 +166,12 @@ const ReasonList = (props) => {
     }
   }, [dispatch, reasons]);
 
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetReason());
+  };
+
   const handleAddReason = () => {
     setShowAddNewReasonList(!showAddNewReasonList);
   };
@@ -220,7 +236,7 @@ const ReasonList = (props) => {
                 <Card>
                   <CardBody>
                     {/* {console.log("Tax list:" + JSON.stringify(reasons))} */}
-                    <TableContainer
+                    {/* <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={reasons}
@@ -236,6 +252,23 @@ const ReasonList = (props) => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
+                    /> */}
+                    <TableContainerX
+                      columns={columns}
+                      data={reasons}
+                      isLoading={loading}
+                      isPagination={true}
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      totalPage={Number(totalPage)}
+                      isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      tableActions={getTableActions()}
+                      handleRowClick={(row) => {
+                        handleViewReason(row);
+                      }}
+                      goToPage={goToPage}
                     />
                   </CardBody>
                 </Card>

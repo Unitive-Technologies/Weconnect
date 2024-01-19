@@ -294,6 +294,12 @@ export const getWarehouseList = async (currentPage, perPage = 20) => {
   return await getCompleteResponse(url.getWarehouseListUrl(currentPage, perPage));
 };
 
+export const getReason = async (currentPage, perPage = 20) => {
+  console.log("Reason - Current Page in fakebackend: ", currentPage);
+  console.log("Reason - Per Page: ", perPage);
+  return await getCompleteResponse(url.getReasonUrl(currentPage, perPage));
+};
+
 export const getGroupPolicy = () => get(url.GET_GROUPPOLICY);
 export const addNewGroupPolicy = (groupPolicy) =>
   post(url.ADD_NEW_GROUPPOLICY, groupPolicy);
@@ -565,7 +571,7 @@ export const getTaxValues = () => get(url.GET_TAX_VALUES);
 export const getTaxApply = () => get(url.GET_TAX_APPLY);
 export const getTaxTaxOnTax = () => get(url.GET_TAX_TAXONTAX);
 
-export const getReason = () => get(url.GET_REASON);
+// export const getReason = () => get(url.GET_REASON);
 export const getReasonStatus = () => get(url.GET_REASON_STATUS);
 export const getReasonReasonType = () => get(url.GET_REASON_REASONTYPE);
 export const addNewReason = (reasons) => post(url.ADD_NEW_REASON, reasons);

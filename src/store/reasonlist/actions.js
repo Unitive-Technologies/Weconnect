@@ -14,7 +14,13 @@ import {
   ADD_NEW_REASON,
   ADD_REASON_SUCCESS,
   ADD_REASON_FAIL,
+  UPDATE_REASON_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_REASON_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getReason = () => ({
   type: GET_REASON,

@@ -96,7 +96,7 @@ function* fetchUsers() {
     debugger;
     yield put(getUsersSuccess(response));
   } catch (error) {
-    console.error("Error fetching Users list:", error);
+    console.error("Error fetching Reason list:", error);
     yield put(getUsersFail(error));
   }
 }

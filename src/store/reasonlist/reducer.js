@@ -1,4 +1,11 @@
 import {
+  RESPONSE_HEADER_CURRENT_PAGE,
+  RESPONSE_HEADER_PAGE_COUNT,
+  RESPONSE_HEADER_TOTAL_COUNT,
+  RESPONSE_HEADER_PER_PAGE,
+} from "../../constants/strings";
+import {
+  GET_REASON,
   GET_REASON_SUCCESS,
   GET_REASON_FAIL,
   GET_REASON_STATUS_SUCCESS,
@@ -9,23 +16,46 @@ import {
   ADD_REASON_FAIL,
   UPDATE_REASON_SUCCESS,
   UPDATE_REASON_FAIL,
+  UPDATE_REASON_CURRENT_PAGE,
 } from "./actionTypes";
 
 const INIT_STATE = {
   reason: [],
   reasonStatus: [],
   reasonReasonType: [],
+  pagination: {},
   error: {},
-  loading: true,
+  loading: false,
+  currentPage: 1,
+  perPage: 10,
+  totalCount: 0,
+  totalPages: 0,
 };
 
 const Reason = (state = INIT_STATE, action) => {
   switch (action.type) {
+    case UPDATE_REASON_CURRENT_PAGE:
+      return Number(action.payload) <= state.totalPages
+        ? {
+          ...state,
+          currentPage: action.payload,
+        }
+        : state;
+    case GET_REASON:
+      return {
+        ...state,
+        loading: true,
+      };
+
     case GET_REASON_SUCCESS:
       console.log("Reason list data in reducer:", action.payload);
       return {
         ...state,
-        reason: action.payload,
+        reason: action.payload.data.data,
+        currentPage: action.payload.headers[RESPONSE_HEADER_CURRENT_PAGE],
+        perPage: action.payload.headers[RESPONSE_HEADER_PER_PAGE],
+        totalCount: action.payload.headers[RESPONSE_HEADER_TOTAL_COUNT],
+        totalPages: action.payload.headers[RESPONSE_HEADER_PAGE_COUNT],
         loading: false,
       };
 
@@ -33,6 +63,8 @@ const Reason = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+        pagination: {},
+        loading: false,
       };
 
     case UPDATE_REASON_SUCCESS:
