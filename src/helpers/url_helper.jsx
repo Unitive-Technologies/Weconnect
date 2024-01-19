@@ -257,6 +257,10 @@ export const GET_WAREHOUSELIST =
 export const GET_WAREHOUSELIST_STATUS = "/list/status?fields=id,name&vr=web1.0";
 export const GET_WAREHOUSELIST_OPERATOR =
   "/operator/list?fields=id,name,code&expand=branch_lbl,distributor_lbl,city_lbl,state_lbl&per-page=100&vr=web1.0";
+export const getWarehouseListUrl = (currPage, perPage) => {
+  console.log("current page in Warehouse List url - ", currPage, perPage);
+  return `/warehouse?expand=city_lbl,created_by_lbl,status_lbl,operator_lbl,operator_code_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+};
 
 export const GET_WAREHOUSESTATUS = "/list/status?fields=id,name&vr=web1.0";
 export const GET_WAREHOUSEOPERATOR =

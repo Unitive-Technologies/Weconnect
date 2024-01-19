@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 
 import { GET_WAREHOUSELIST, UPDATE_WAREHOUSELIST, GET_WAREHOUSELIST_STATUS, GET_WAREHOUSELIST_OPERATOR, ADD_WAREHOUSELIST } from "./actionTypes";
 
@@ -24,36 +24,21 @@ import {
   updateWarehouseList,
 } from "../../helpers/fakebackend_helper";
 
-const convertWarehouseListObject = (warehouselist) => {
-  // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
-  return warehouselist.map((warehouse) => {
-    return {
-      ...warehouse,
-      id: warehouse.id,
-      name: warehouse.name,
-      code: warehouse.code,
-      contact_person: warehouse.contact_person,
-      operator_id: warehouse.operator_id,
-      mobile_no: warehouse.mobile_no,
-      address: warehouse.address,
-      description: warehouse.description,
-      status: warehouse.status_lbl,
-      regionaloffice: warehouse.city_lbl,
-      lco: warehouse.operator_lbl,
-      lcocode: warehouse.operator_code_lbl,
-      created_at: warehouse.created_at,
-      created_by: warehouse.created_by_lbl,
-    };
-  });
-};
+export const getWarehouseListStore = (state) => state.warehouselist;
 
 function* fetchWarehouseList() {
   try {
-    const response = yield call(getWarehouseList);
-    console.log("response:" + JSON.stringify(response));
-    // const warehouseList = convertWarehouseListObject(response);
-    yield put(getWarehouseListSuccess(response.data));
+    let WarehouseListStore = yield select(getWarehouseListStore);
+
+    const pageSize = WarehouseListStore.pageSize;
+    const currentPage = WarehouseListStore.currentPage;
+
+    const response = yield call(getWarehouseList, currentPage, pageSize);
+    console.log("Response from API -", response);
+    debugger;
+    yield put(getWarehouseListSuccess(response));
   } catch (error) {
+    console.error("Error fetching Users list:", error);
     yield put(getWarehouseListFail(error));
   }
 }

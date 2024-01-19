@@ -288,6 +288,12 @@ export const getPackageList = async (currentPage, perPage = 20) => {
   return await getCompleteResponse(url.getPackageListUrl(currentPage, perPage));
 };
 
+export const getWarehouseList = async (currentPage, perPage = 20) => {
+  console.log("Warehouse List - Current Page in fakebackend: ", currentPage);
+  console.log("Warehouse List - Per Page: ", perPage);
+  return await getCompleteResponse(url.getWarehouseListUrl(currentPage, perPage));
+};
+
 export const getGroupPolicy = () => get(url.GET_GROUPPOLICY);
 export const addNewGroupPolicy = (groupPolicy) =>
   post(url.ADD_NEW_GROUPPOLICY, groupPolicy);
@@ -537,7 +543,7 @@ export const addBrandList = (brandlist) => post(url.ADD_BRANDLIST, brandlist);
 export const updateBrandList = (id, brandlist) =>
   put(url.UPDATE_BRANDLIST(id), brandlist);
 
-export const getWarehouseList = () => get(url.GET_WAREHOUSELIST);
+// export const getWarehouseList = () => get(url.GET_WAREHOUSELIST);
 export const getWarehouseListStatus = () => get(url.GET_WAREHOUSELIST_STATUS);
 export const getWarehouseListOperator = () =>
   get(url.GET_WAREHOUSELIST_OPERATOR);

@@ -14,8 +14,14 @@ import {
   UPDATE_WAREHOUSELIST,
   UPDATE_WAREHOUSELIST_FAIL,
   UPDATE_WAREHOUSELIST_SUCCESS,
+  UPDATE_WAREHOUSELIST_CURRENT_PAGE,
 
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_WAREHOUSELIST_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getWarehouseList = () => ({
   type: GET_WAREHOUSELIST,

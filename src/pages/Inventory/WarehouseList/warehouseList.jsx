@@ -25,7 +25,7 @@ import {
   CreatedBy,
 } from "./warehouseListCol";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import { getWarehouseList as onGetWarehouseList, getWarehouseListOperator as onGetWarehouseListOperator, getWarehouseListStatus as onGetWarehouseListStatus } from "/src/store/warehouse/actions";
+import { goToPage as onGoToPage, getWarehouseList as onGetWarehouseList, getWarehouseListOperator as onGetWarehouseListOperator, getWarehouseListStatus as onGetWarehouseListStatus } from "/src/store/warehouse/actions";
 
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
@@ -33,7 +33,7 @@ import { ToastContainer } from "react-toastify";
 import ViewWareHouse from "./ViewWareHouse";
 import AddNewWareHouse from "./AddNewWareHouse";
 import UploadWareHouse from "./UploadWareHouse";
-// import { getWarehouseList as onGetWarehouseList } from "/src/store/warehouse/actions";
+import TableContainerX from "../../../components/Common/TableContainerX";
 
 const WarehouseList = (props) => {
   //meta title
@@ -49,10 +49,17 @@ const WarehouseList = (props) => {
       warehouseStatus: warehouselist.warehouselistStatus,
       warehouseOperator: warehouselist.warehouselistOperator,
       loading: warehouselist.loading,
+      totalPage: warehouselist.totalPages,
+      totalCount: warehouselist.totalCount,
+      pageSize: warehouselist.perPage,
+      currentPage: warehouselist.currentPage,
     })
   );
 
-  const { warehouse, warehouseOperator, warehouseStatus, loading } = useSelector(WarehouseProperties);
+  const { warehouse, warehouseOperator, warehouseStatus, loading, totalPage,
+    totalCount,
+    pageSize,
+    currentPage } = useSelector(WarehouseProperties);
 
   const [isLoading, setLoading] = useState(loading);
   const [showAddWareHouse, setShowAddWareHouse] = useState(false);
@@ -80,20 +87,23 @@ const WarehouseList = (props) => {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          // const totalRows = cellProps.rows.length;
+          // const reverseIndex = totalRows - cellProps.row.index;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
 
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
           );
         },
       },
+
       {
         Header: "Name",
         accessor: "name",
@@ -219,6 +229,12 @@ const WarehouseList = (props) => {
     }
   }, [dispatch, warehouse]);
 
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetWarehouseList());
+  };
+
   const keyField = "id";
 
   const getTableActions = () => {
@@ -267,7 +283,7 @@ const WarehouseList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    <TableContainer
+                    {/* <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={warehouse}
@@ -283,6 +299,23 @@ const WarehouseList = (props) => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
+                    /> */}
+                    <TableContainerX
+                      columns={columns}
+                      data={warehouse}
+                      isLoading={loading}
+                      isPagination={true}
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      totalPage={Number(totalPage)}
+                      isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      tableActions={getTableActions()}
+                      handleRowClick={(warehouseData) => {
+                        handleViewWarehouse(warehouseData);
+                      }}
+                      goToPage={goToPage}
                     />
                   </CardBody>
                 </Card>
