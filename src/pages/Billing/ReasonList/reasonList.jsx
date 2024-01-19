@@ -8,7 +8,7 @@ import { Card, CardBody, Col, Container, Row } from "reactstrap";
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 
-import { goToPage as onGoToPage, getReason as onGetReason, getReasonStatus as onGetReasonStatus, getReasonReasonType as onGetReasonReasonType } from "/src/store/actions";
+import { goToPage as onGoToPage, getReason as onGetReason, getReasonStatus as onGetReasonStatus, getReasonReasonType as onGetReasonReasonType } from "/src/store/reasonlist/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
