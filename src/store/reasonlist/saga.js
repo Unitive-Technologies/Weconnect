@@ -30,7 +30,7 @@ import {
   addNewReason,
 } from "../../helpers/fakebackend_helper";
 
-export const getReasonStore = (state) => state.reasons;
+export const getReasonStore = (state) => state.reason;
 
 function* fetchReason() {
   try {
