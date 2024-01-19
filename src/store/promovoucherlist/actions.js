@@ -17,7 +17,13 @@ import {
   GET_PROMOVOUCHER_BOUQUET,
   GET_PROMOVOUCHER_BOUQUET_FAIL,
   GET_PROMOVOUCHER_BOUQUET_SUCCESS,
+  UPDATE_PROMOVOUCHER_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_PROMOVOUCHER_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getPromoVoucher = () => ({
   type: GET_PROMOVOUCHER,

@@ -261,7 +261,7 @@ const PackageList = (props) => {
   const goToPage = (toPage) => {
     console.log("[GOTO PAGE] Trigger to page - ", toPage);
     dispatch(onGoToPage(toPage));
-    dispatch(onGetUsers());
+    dispatch(onGetPackageList());
   };
 
   const toggle = () => {

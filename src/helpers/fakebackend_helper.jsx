@@ -300,6 +300,12 @@ export const getReason = async (currentPage, perPage = 20) => {
   return await getCompleteResponse(url.getReasonUrl(currentPage, perPage));
 };
 
+export const getPromoVoucher = async (currentPage, perPage = 20) => {
+  console.log("Users - Current Page in fakebackend: ", currentPage);
+  console.log("Users - Per Page: ", perPage);
+  return await getCompleteResponse(url.getPromoVoucherUrl(currentPage, perPage));
+};
+
 export const getGroupPolicy = () => get(url.GET_GROUPPOLICY);
 export const addNewGroupPolicy = (groupPolicy) =>
   post(url.ADD_NEW_GROUPPOLICY, groupPolicy);
@@ -583,7 +589,7 @@ export const getBankStatus = () => get(url.GET_BANK_STATUS);
 export const addNewBank = (banks) => post(url.ADD_NEW_BANK, banks);
 export const updateBank = (id, banks) => put(url.UPDATE_BANK(id), banks);
 
-export const getPromoVoucher = () => get(url.GET_PROMOVOUCHER);
+// export const getPromoVoucher = () => get(url.GET_PROMOVOUCHER);
 export const getPromoVoucherLCO = () => get(url.GET_PROMOVOUCHER_LCO);
 export const getPromoVoucherApply = () => get(url.GET_PROMOVOUCHER_APPLY);
 export const getPromoVoucherRecharge = () => get(url.GET_PROMOVOUCHER_RECHARGE);

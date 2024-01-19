@@ -251,7 +251,7 @@ const BroadcasterBouquetList = (props) => {
   const goToPage = (toPage) => {
     console.log("[GOTO PAGE] Trigger to page - ", toPage);
     dispatch(onGoToPage(toPage));
-    dispatch(onGetUsers());
+    dispatch(onGetBroadcasterBouquet());
   };
 
   const handleAddBroadcaster = () => {

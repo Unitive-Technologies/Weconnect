@@ -15,7 +15,7 @@ import {
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
-  type: UPDATE_USERS_CURRENT_PAGE,
+  type: UPDATE_LANGUAGELIST_CURRENT_PAGE,
   payload: Number(toPage),
 });
 

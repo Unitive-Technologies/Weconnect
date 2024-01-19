@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 
 import {
   GET_PROMOVOUCHER,
@@ -34,36 +34,21 @@ import {
   addNewPromoVoucher,
 } from "../../helpers/fakebackend_helper";
 
-const convertPromoVoucherListObject = (promoVoucherList) => {
-  return promoVoucherList.map((promovoucher) => {
-    return {
-      ...promovoucher,
-      id: promovoucher.id,
-      operator: promovoucher.operator,
-      operator_code: promovoucher.operator_code,
-      voucher_code: promovoucher.voucher_code,
-      expiry_date: promovoucher.expiry_date,
-      applied_on: promovoucher.applied_on,
-      recharge_period: promovoucher.recharge_period,
-      amount: promovoucher.amount,
-      mrp: promovoucher.mrp,
-      bouquets: promovoucher.bouquets,
-      smartcard_no: promovoucher.smartcard_no,
-      stb_no: promovoucher.stb_no,
-      created_at_lbl: promovoucher.created_at_lbl,
-      created_by_lbl: promovoucher.created_by_lbl,
-      status_lbl: promovoucher.status_lbl,
-    };
-  });
-};
+export const getPromoVoucherStore = (state) => state.promovoucher;
 
 function* fetchPromoVoucher() {
   try {
-    const response = yield call(getPromoVoucher);
-    console.log("Promo Voucher response:" + JSON.stringify(response));
-    // const promoVoucherList = convertPromoVoucherListObject(response);
-    yield put(getPromoVoucherSuccess(response.data));
+    let PromoVoucherStore = yield select(getPromoVoucherStore);
+
+    const pageSize = PromoVoucherStore.pageSize;
+    const currentPage = PromoVoucherStore.currentPage;
+
+    const response = yield call(getPromoVoucher, currentPage, pageSize);
+    console.log("Response from API -", response);
+    debugger;
+    yield put(getPromoVoucherSuccess(response));
   } catch (error) {
+    console.error("Error fetching Reason list:", error);
     yield put(getPromoVoucherFail(error));
   }
 }

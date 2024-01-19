@@ -226,23 +226,6 @@ const LanguageList = (props) => {
   };
 
 
-
-  // const handleUserClick = (arg) => {
-  //   const user = arg;
-
-  //   setContact({
-  //     id: user.id,
-  //     name: user.name,
-  //     designation: user.designation,
-  //     email: user.email,
-  //     tags: user.tags,
-  //     projects: user.projects,
-  //   });
-  //   setIsEdit(true);
-
-  //   toggle();
-  // };
-
   var node = useRef();
   const onPaginationPageChange = (page) => {
     if (
