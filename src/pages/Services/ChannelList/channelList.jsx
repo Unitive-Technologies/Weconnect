@@ -60,7 +60,7 @@ const ChannelList = (props) => {
   const [viewChannelList, setViewChannelList] = useState(false);
   const [showAddNewChannelList, setShowAddNewChannelList] = useState(false);
   const [showUploadChannelList, setShowUploadChannelList] = useState(false);
-  const [showsBulkUpdateChannelList, setShowBulkUpdateChannelList] =
+  const [showBulkUpdateChannelList, setShowBulkUpdateChannelList] =
     useState(false);
   const [
     showBulkUpdateCasCodeChannelList,
