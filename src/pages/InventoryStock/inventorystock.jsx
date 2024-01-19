@@ -84,9 +84,6 @@ const InventoryStock = (props) => {
     loading,
     stockstb,
     stockpairing,
-    faultysmartcard,
-    faultystb,
-    faultypairing,
     blacklistedsmartcard,
     blacklistedstb,
     blacklistedpairing,
@@ -97,10 +94,6 @@ const InventoryStock = (props) => {
     stocktotalCount,
     stockpageSize,
     stockcurrentPage,
-    faultytotalPage,
-    faultytotalCount,
-    faultypageSize,
-    faultycurrentPage,
     allottedtotalPage,
     allottedtotalCount,
     allottedpageSize,
@@ -112,9 +105,6 @@ const InventoryStock = (props) => {
       dispatch(onGetInventoryStock());
       dispatch(onGetInventoryStockStb());
       dispatch(onGetInventoryStockPairing());
-      dispatch(onGetInventoryFaultySmartcard());
-      dispatch(onGetInventoryFaultyStb());
-      dispatch(onGetInventoryFaultyPairing());
       dispatch(onGetInventoryBlacklistedSmartcard());
       dispatch(onGetInventoryBlacklistedStb());
       dispatch(onGetInventoryBlacklistedPairing());
@@ -123,6 +113,38 @@ const InventoryStock = (props) => {
       dispatch(onGetInventoryAllottedPairing());
     }
   }, [dispatch, inventory_stock]);
+
+  const selectInventoryFaultyState = (state) => state.faultysmartcard;
+  const inventoryfaultyProperties = createSelector(
+    selectInventoryFaultyState,
+    (faultysmartcard) => ({
+      faultysmartcard: faultysmartcard.faultysmartcard,
+      faultystb: faultysmartcard.faultystb,
+      faultypairing: faultysmartcard.faultypairing,
+      faultytotalPage: faultysmartcard.totalPages,
+      faultytotalCount: faultysmartcard.totalCount,
+      faultypageSize: faultysmartcard.perPage,
+      faultycurrentPage: faultysmartcard.currentPage,
+    })
+  );
+
+  const {
+    faultysmartcard,
+    faultystb,
+    faultypairing,
+    faultycurrentPage,
+    faultypageSize,
+    faultytotalCount,
+    faultytotalPage,
+  } = useSelector(inventoryfaultyProperties);
+
+  useEffect(() => {
+    // if (faultysmartcard && !faultysmartcard.length) {
+    dispatch(onGetInventoryFaultySmartcard());
+    dispatch(onGetInventoryFaultyStb());
+    dispatch(onGetInventoryFaultyPairing());
+    // }
+  }, [dispatch]);
 
   const goToPage = (toPage) => {
     console.log("[GOTO PAGE] Trigger to page - ", toPage);
