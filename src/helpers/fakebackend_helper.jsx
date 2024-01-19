@@ -241,7 +241,7 @@ export const getCustomerUsers = async (currentPage, perPage = 20) => {
 export const getBroadCaster = async (currentPage, perPage = 20) => {
   console.log("Broadcasters - Current Page in fakebackend: ", currentPage);
   console.log("Broadcasters - Per Page: ", perPage);
-  return await getCompleteResponse(url.getUsersUrl(currentPage, perPage));
+  return await getCompleteResponse(url.getBroadcasterUrl(currentPage, perPage));
 };
 
 export const getGenreList = async (currentPage, perPage = 20) => {
@@ -261,11 +261,11 @@ export const getLanguageList = async (currentPage, perPage = 20) => {
   return await getCompleteResponse(url.getLanguageListUrl(currentPage, perPage));
 };
 
-export const getUsers = async (currentPage, perPage = 20) => {
-  console.log("Users - Current Page in fakebackend: ", currentPage);
-  console.log("Users - Per Page: ", perPage);
-  return await getCompleteResponse(url.getUsersUrl(currentPage, perPage));
-};
+// export const getUsers = async (currentPage, perPage = 20) => {
+//   console.log("Users - Current Page in fakebackend: ", currentPage);
+//   console.log("Users - Per Page: ", perPage);
+//   return await getCompleteResponse(url.getUsersUrl(currentPage, perPage));
+// };
 
 export const getGroupPolicy = () => get(url.GET_GROUPPOLICY);
 export const addNewGroupPolicy = (groupPolicy) =>

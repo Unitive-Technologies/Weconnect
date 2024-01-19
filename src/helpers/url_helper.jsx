@@ -176,11 +176,11 @@ export const ADD_NEW_CHANNELLIST = "/add/channellist";
 export const GET_BROADCASTERBOUQUETLIST =
   "/broadcaster-bouque?expand=created_by_lbl,status_lbl,broadcaster_lbl,channel_type_lbl,isFta_lbl,isNCF_lbl,channels&sort=name&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_BROADCASTERBOUQUETLIST = "/add/broadcasterbouquet";
-export const getBroadcasterBouquetListUrl = (currPage, perPage) => {
-  console.log("current page in Broadcaster Bouquet List url - ", currPage, perPage);
-  return `/broadcaster-bouque?expand=created_by_lbl,status_lbl,broadcaster_lbl,channel_type_lbl,isFta_lbl,isNCF_lbl,channels&sort=name&page=${currPage}&per-page=${perPage}&vr=web1.0`;
-  // return `/language?expand=created_by_lbl,status_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
-};
+// export const getBroadcasterBouquetListUrl = (currPage, perPage) => {
+//   console.log("current page in Broadcaster Bouquet List url - ", currPage, perPage);
+//   return `/broadcaster-bouque?expand=created_by_lbl,status_lbl,broadcaster_lbl,channel_type_lbl,isFta_lbl,isNCF_lbl,channels&sort=name&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+//   // return `/language?expand=created_by_lbl,status_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+// };
 
 export const GET_PACKAGELIST =
   "/package?expand=created_by_lbl,package_type_lbl,isFta_lbl,status_lbl,channels,brdBouques&sort=name&page=1&per-page=50&vr=web1.0";
