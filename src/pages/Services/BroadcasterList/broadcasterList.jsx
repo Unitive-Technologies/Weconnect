@@ -164,7 +164,7 @@ const BroadcasterList = (props) => {
       },
       {
         Header: "Status",
-        accessor: "status",
+        accessor: "status_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Status {...cellProps} />;

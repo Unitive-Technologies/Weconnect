@@ -261,6 +261,12 @@ export const getLanguageList = async (currentPage, perPage = 20) => {
   return await getCompleteResponse(url.getLanguageListUrl(currentPage, perPage));
 };
 
+export const getUsers = async (currentPage, perPage = 20) => {
+  console.log("Users - Current Page in fakebackend: ", currentPage);
+  console.log("Users - Per Page: ", perPage);
+  return await getCompleteResponse(url.getUsersUrl(currentPage, perPage));
+};
+
 export const getGroupPolicy = () => get(url.GET_GROUPPOLICY);
 export const addNewGroupPolicy = (groupPolicy) =>
   post(url.ADD_NEW_GROUPPOLICY, groupPolicy);

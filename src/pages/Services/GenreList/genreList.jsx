@@ -129,7 +129,7 @@ const GenreList = (props) => {
       },
       {
         Header: "Status",
-        accessor: "status",
+        accessor: "status_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Status {...cellProps} />;
@@ -145,7 +145,7 @@ const GenreList = (props) => {
       },
       {
         Header: "Created By",
-        accessor: "created_by",
+        accessor: "created_by_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <CreatedBy {...cellProps} />;
