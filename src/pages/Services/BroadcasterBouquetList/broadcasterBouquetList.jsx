@@ -27,7 +27,7 @@ import {
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 
-import { getBroadcasterBouquetList as onGetBroadcasterBouquet } from "/src/store/broadcasterbouquet/actions";
+import { goToPage as onGoToPage, getBroadcasterBouquetList as onGetBroadcasterBouquet } from "/src/store/broadcasterbouquet/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -35,6 +35,7 @@ import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddNewBroadcasterBouquetList from "./AddNewBroadcasterBouquetList";
 import ViewBroadCasterBouquet from "./ViewBroadCasterBouquet";
+import TableContainerX from "../../../components/Common/TableContainerX";
 
 const BroadcasterBouquetList = (props) => {
   //meta title
@@ -44,17 +45,25 @@ const BroadcasterBouquetList = (props) => {
   const [viewBroadcastBouq, setViewBroadcastBouq] = useState(false);
 
   const selectBroadcasterBouquetState = (state) => state.broadcasterBouquetList;
+
   const BroadcasterBouquetProperties = createSelector(
     selectBroadcasterBouquetState,
     (broadcasterBouquetList) => ({
       brodcastbouquet: broadcasterBouquetList.broadcasterBouquetList,
       loading: broadcasterBouquetList.loading,
+      totalPage: broadcasterBouquetList.totalPages,
+      totalCount: broadcasterBouquetList.totalCount,
+      pageSize: broadcasterBouquetList.perPage,
+      currentPage: broadcasterBouquetList.currentPage,
     })
   );
 
-  const { brodcastbouquet, loading } = useSelector(
-    BroadcasterBouquetProperties
-  );
+  const { brodcastbouquet, loading, totalPage,
+    totalCount,
+    pageSize,
+    currentPage } = useSelector(
+      BroadcasterBouquetProperties
+    );
 
   useEffect(() => {
     // console.log("Broadcaster Bouquet data in component:", brodcastbouquet);
@@ -73,14 +82,14 @@ const BroadcasterBouquetList = (props) => {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
 
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -122,7 +131,7 @@ const BroadcasterBouquetList = (props) => {
       },
       {
         Header: "Broadcaster",
-        accessor: "broadcaster",
+        accessor: "broadcaster_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Broadcaster {...cellProps} />;
@@ -130,7 +139,7 @@ const BroadcasterBouquetList = (props) => {
       },
       {
         Header: "Type",
-        accessor: "type",
+        accessor: "channel_type_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Type {...cellProps} />;
@@ -164,7 +173,7 @@ const BroadcasterBouquetList = (props) => {
       },
       {
         Header: "Status",
-        accessor: "status",
+        accessor: "status_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Status {...cellProps} />;
@@ -188,7 +197,7 @@ const BroadcasterBouquetList = (props) => {
       },
       {
         Header: "Created By",
-        accessor: "created_by",
+        accessor: "created_by_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <CreatedBy {...cellProps} />;
@@ -239,6 +248,12 @@ const BroadcasterBouquetList = (props) => {
     }
   }, [dispatch, brodcastbouquet]);
 
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetUsers());
+  };
+
   const handleAddBroadcaster = () => {
     setShowAddNewBroadcasterBouquetList(!showAddNewBroadcasterBouquetList);
   };
@@ -286,7 +301,7 @@ const BroadcasterBouquetList = (props) => {
                     {console.log(
                       "broadcasterBouquet" + JSON.stringify(brodcastbouquet)
                     )}
-                    <TableContainer
+                    {/* <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={brodcastbouquet}
@@ -302,6 +317,23 @@ const BroadcasterBouquetList = (props) => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
+                    /> */}
+                    <TableContainerX
+                      columns={columns}
+                      data={brodcastbouquet}
+                      isLoading={loading}
+                      isPagination={true}
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      totalPage={Number(totalPage)}
+                      isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      tableActions={getTableActions()}
+                      handleAddNewBroadcasterBouquetList={() =>
+                        setShowAddNewBroadcasterBouquetList(true)
+                      }
+                      goToPage={goToPage}
                     />
                   </CardBody>
                 </Card>

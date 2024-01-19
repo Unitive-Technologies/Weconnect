@@ -5,7 +5,13 @@ import {
   ADD_NEW_BROADCASTERBOUQUETLIST,
   ADD_BROADCASTERBOUQUETLIST_SUCCESS,
   ADD_BROADCASTERBOUQUETLIST_FAIL,
+  UPDATE_BROADCASTERBOUQUETLIST_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_BROADCASTERBOUQUETLIST_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getBroadcasterBouquetList = () => ({
   type: GET_BROADCASTERBOUQUETLIST,

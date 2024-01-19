@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 
 import { GET_BROADCASTERBOUQUETLIST, ADD_NEW_BROADCASTERBOUQUETLIST } from "./actionTypes";
 
@@ -11,53 +11,21 @@ import {
 //Include Both Helper File with needed methods
 import { getBroadcasterBouquetList, addNewBroadcasterBouquetList } from "../../helpers/fakebackend_helper";
 
-const convertBroadcasterBouquetListObject = (broadcasterBouquetList) => {
-  // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
-  return broadcasterBouquetList.map((brodcastbouquet) => {
-    return {
-      ...brodcastbouquet,
-      id: brodcastbouquet.id,
-      name: brodcastbouquet.name,
-      code: brodcastbouquet.code,
-      broadcaster: brodcastbouquet.broadcaster_lbl,
-      type: brodcastbouquet.channel_type_lbl,
-      // FTA: brodcastbouquet.isFta_lbl,
-
-      FTA:
-        brodcastbouquet.FTA === 1
-          ? "No"
-          : brodcastbouquet.FTA === 0
-            ? "Yes"
-            : "Payment",
-      channels: brodcastbouquet.channels,
-      // channels: brodcastbouquet.channels[0].name + "(" + brodcastbouquet.channels[0].channel_type_lbl + ")",
-      // channels: brodcastbouquet.channels
-      //   .map((channel) => channel.broadcaster_lbl)
-      //   .join(", "),
-
-
-      status:
-        brodcastbouquet.status === 1
-          ? "ACTIVE"
-          : brodcastbouquet.status === 0
-            ? "INACTIVE"
-            : "BLOCKED",
-      rate: brodcastbouquet.broadcasterRate,
-      created_at: brodcastbouquet.created_at,
-      created_by: brodcastbouquet.created_by_lbl,
-    };
-
-  });
-};
+export const getBroadcasterBouquetListStore = (state) => state.broadcasterBouquetList;
 
 function* fetchBroadcasterBouquetList() {
   try {
-    const response = yield call(getBroadcasterBouquetList);
-    console.log("response:" + JSON.stringify(response));
-    const broadcasterBouquetList =
-      convertBroadcasterBouquetListObject(response.data);
-    yield put(getBroadcasterBouquetListSuccess(broadcasterBouquetList));
+    let BroadcasterBouquetListStore = yield select(getBroadcasterBouquetListStore);
+
+    const pageSize = BroadcasterBouquetListStore.pageSize;
+    const currentPage = BroadcasterBouquetListStore.currentPage;
+
+    const response = yield call(getBroadcasterBouquetList, currentPage, pageSize);
+    console.log("Response from API -", response);
+    debugger;
+    yield put(getBroadcasterBouquetListSuccess(response));
   } catch (error) {
+    console.error("Error fetching Broadcaster Bouquet List :", error);
     yield put(getBroadcasterBouquetListFail(error));
   }
 }

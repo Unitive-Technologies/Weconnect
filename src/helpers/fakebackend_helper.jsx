@@ -261,11 +261,11 @@ export const getLanguageList = async (currentPage, perPage = 20) => {
   return await getCompleteResponse(url.getLanguageListUrl(currentPage, perPage));
 };
 
-// export const getUsers = async (currentPage, perPage = 20) => {
-//   console.log("Users - Current Page in fakebackend: ", currentPage);
-//   console.log("Users - Per Page: ", perPage);
-//   return await getCompleteResponse(url.getUsersUrl(currentPage, perPage));
-// };
+export const getBroadcasterBouquetList = async (currentPage, perPage = 20) => {
+  console.log("BroadcasterBouquet - Current Page in fakebackend: ", currentPage);
+  console.log("BroadcasterBouquet - Per Page: ", perPage);
+  return await getCompleteResponse(url.getBroadcasterBouquetListUrl(currentPage, perPage));
+};
 
 export const getGroupPolicy = () => get(url.GET_GROUPPOLICY);
 export const addNewGroupPolicy = (groupPolicy) =>
@@ -389,8 +389,8 @@ export const getChannelList = () => get(url.GET_CHANNELLIST);
 export const addNewChannelList = (channel) =>
   post(url.ADD_NEW_CHANNELLIST, channel);
 
-export const getBroadcasterBouquetList = () =>
-  get(url.GET_BROADCASTERBOUQUETLIST);
+// export const getBroadcasterBouquetList = () =>
+//   get(url.GET_BROADCASTERBOUQUETLIST);
 export const addNewBroadcasterBouquetList = (broadcastbouquet) =>
   post(url.ADD_NEW_BROADCASTERBOUQUETLIST, broadcastbouquet);
 
