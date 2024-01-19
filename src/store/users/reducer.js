@@ -235,16 +235,23 @@ const contacts = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
       };
+    case ADD_NEW_USER:
+      return {
+        ...state,
+        loading: true,
+      };
     case ADD_USER_SUCCESS:
       return {
         ...state,
         users: [...state.users, action.payload],
+        loading: false,
       };
 
     case ADD_USER_FAIL:
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     case GET_USER_PROFILE_SUCCESS:
@@ -252,7 +259,11 @@ const contacts = (state = INIT_STATE, action) => {
         ...state,
         userProfile: action.payload,
       };
-
+    case UPDATE_USER:
+      return {
+        ...state,
+        loading: true,
+      };
     case UPDATE_USER_SUCCESS:
       return {
         ...state,
@@ -261,12 +272,14 @@ const contacts = (state = INIT_STATE, action) => {
             ? { user, ...action.payload }
             : user
         ),
+        loading: false,
       };
 
     case UPDATE_USER_FAIL:
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     case DELETE_USER_SUCCESS:

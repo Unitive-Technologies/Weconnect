@@ -24,7 +24,10 @@ import {
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 
-import { goToPage as onGoToPage, getChannelList as onGetChannelList } from "/src/store/channel/actions";
+import {
+  goToPage as onGoToPage,
+  getChannelList as onGetChannelList,
+} from "/src/store/channel/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -56,10 +59,8 @@ const ChannelList = (props) => {
     })
   );
 
-  const { channel, loading, totalPage,
-    totalCount,
-    pageSize,
-    currentPage, } = useSelector(ChannelProperties);
+  const { channel, loading, totalPage, totalCount, pageSize, currentPage } =
+    useSelector(ChannelProperties);
 
   useEffect(() => {
     // console.log("Channel List data in component:", channel);
@@ -240,7 +241,7 @@ const ChannelList = (props) => {
   const goToPage = (toPage) => {
     console.log("[GOTO PAGE] Trigger to page - ", toPage);
     dispatch(onGoToPage(toPage));
-    dispatch(onGetUsers());
+    dispatch(onGetChannelList());
   };
 
   const handleAddChannel = () => {

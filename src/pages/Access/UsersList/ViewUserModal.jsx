@@ -43,6 +43,8 @@ const ViewUserModal = (props) => {
     userStatus,
     userRole,
     userDesignation,
+    resetSelection,
+    toggleModal,
   } = props;
   // console.log("Userdata in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
@@ -229,7 +231,8 @@ const ViewUserModal = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      id: (user && user.id) || "",
+      // id: (user && user.id) || "",
+      id: (user && Number(user.id)) || -1,
       name: (user && user.name) || "",
       email: (user && user.email) || "",
       mobile: (user && user.mobile_no) || "",
@@ -289,12 +292,17 @@ const ViewUserModal = (props) => {
       dispatch(onGetUsers());
       validation.resetForm();
       handleViewUser();
+      setShowEditUser(false);
+      resetSelection();
+      toggleModal();
     },
   });
 
   const handleCancel = () => {
     setShowEditUser(false);
     handleViewUser();
+    resetSelection();
+    toggleModal();
   };
   useEffect(() => {
     if (user) {
@@ -960,6 +968,14 @@ const ViewUserModal = (props) => {
 ViewUserModal.propTypes = {
   handleViewUser: PropTypes.func,
   isOpen: PropTypes.bool,
+  resetSelection: PropTypes.func,
+  toggleModal: PropTypes.func,
+
+  user: PropTypes.object,
+  userType: PropTypes.array,
+  userStatus: PropTypes.array,
+  userRole: PropTypes.array,
+  userDesignation: PropTypes.array,
 };
 
 export default ViewUserModal;

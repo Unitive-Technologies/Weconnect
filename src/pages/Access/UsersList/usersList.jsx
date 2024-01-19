@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
 import Spinners from "../../../components/Common/Spinner";
-import { Card, CardBody, Col, Container, Row } from "reactstrap";
+import { Card, CardBody, Col, Container, Row, Spinner } from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -87,7 +87,7 @@ const ContactsList = (props) => {
   // useEffect(() => {
   //   console.log("Users data in component:", users);
   // }, [users]);
-  const [isLoading, setLoading] = useState(loading);
+  // const [isLoading, setLoading] = useState(loading);
 
   const [showAddUser, setShowAddUser] = useState(false);
   const [showViewUser, setShowViewUser] = useState(false);
@@ -95,7 +95,7 @@ const ContactsList = (props) => {
   const [showBulkUpdateUser, setShowBulkUpdateUser] = useState(false);
   const [showInactivateUser, setShowInactivateUser] = useState(false);
   const [showBulkUserSettings, setShowBulkUserSettings] = useState(false);
-
+  const [viewUser, setViewUser] = useState({});
   const columns = useMemo(
     () => [
       {
@@ -388,7 +388,12 @@ const ContactsList = (props) => {
     dispatch(onGoToPage(toPage));
     dispatch(onGetUsers());
   };
-
+  const resetSelection = () => {
+    setViewUser({});
+  };
+  const toggleModal = () => {
+    setShowViewDistrict(!showViewDistrict);
+  };
   const handleAddUser = () => {
     setShowAddUser(!showAddUser);
   };
@@ -408,12 +413,15 @@ const ContactsList = (props) => {
   const handleUserSettings = () => {
     setShowBulkUserSettings(!showBulkUserSettings);
   };
-  const [viewUser, setViewUser] = useState({});
 
   const handleViewUser = (row) => {
     // console.log("Row data:", row);
     setShowViewUser(!showViewUser);
     setViewUser(row);
+    if (row.length) {
+      console.log("Id: ", userData.id);
+      setSelectedId(row.id);
+    }
   };
 
   // const [filteredUsers, setFilteredUsers] = useState([]);
@@ -495,6 +503,8 @@ const ContactsList = (props) => {
         userStatus={userStatus}
         userRole={userRole}
         userDesignation={userDesignation}
+        resetSelection={resetSelection}
+        toggleModal={toggleModal}
       />
       <AddUserModal
         isOpen={showAddUser}
@@ -536,8 +546,15 @@ const ContactsList = (props) => {
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Access" breadcrumbItem="Users" />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
+          {/* {isLoading ? (
+            <Spinners setLoading={setLoading} /> */}
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">
