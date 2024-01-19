@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 
 import { GET_CHANNELLIST, ADD_NEW_CHANNELLIST } from "./actionTypes";
 
@@ -15,43 +15,21 @@ import {
   addNewChannelList,
 } from "../../helpers/fakebackend_helper";
 
-const convertChannelListObject = (channelList) => {
-  // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
-  return channelList.map((channel) => {
-    return {
-      ...channel,
-      id: channel.id,
-      name: channel.name,
-      code: channel.code,
-      broadcaster: channel.broadcaster_lbl,
-      genre: channel.genre_lbl,
-      language: channel.language_lbl,
-      type: channel.channel_type_lbl,
-      alacarte: channel.isAlacarte_lbl,
-      FTA: channel.isFta_lbl,
-      NCF: channel.isNCF_lbl,
-      cascode: channel.casCodes.length > 0 ? channel.casCodes[0].cas_lbl : "",
-
-      status:
-        channel.status === 1
-          ? "ACTIVE"
-          : channel.status === 0
-          ? "INACTIVE"
-          : "BLOCKED",
-      rate: channel.broadcasterRate,
-      created_at: channel.created_at,
-      created_by: channel.created_by_lbl,
-    };
-  });
-};
+export const getChannelListStore = (state) => state.channelList;
 
 function* fetchChannelList() {
   try {
-    const response = yield call(getChannelList);
-    console.log("response:" + JSON.stringify(response));
-    // const channelList = convertChannelListObject(response);
-    yield put(getChannelListSuccess(response.data));
+    let ChannelListStore = yield select(getChannelListStore);
+
+    const pageSize = ChannelListStore.pageSize;
+    const currentPage = ChannelListStore.currentPage;
+
+    const response = yield call(getChannelList, currentPage, pageSize);
+    console.log("Response from API -", response);
+    debugger;
+    yield put(getChannelListSuccess(response));
   } catch (error) {
+    console.error("Error fetching Channel list:", error);
     yield put(getChannelListFail(error));
   }
 }

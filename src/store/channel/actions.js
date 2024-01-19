@@ -5,7 +5,13 @@ import {
   ADD_NEW_CHANNELLIST,
   ADD_CHANNELLIST_SUCCESS,
   ADD_CHANNELLIST_FAIL,
+  UPDATE_CHANNELLIST_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_CHANNELLIST_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getChannelList = () => ({
   type: GET_CHANNELLIST,

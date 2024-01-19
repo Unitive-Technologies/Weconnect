@@ -24,7 +24,7 @@ import {
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 
-import { getChannelList as onGetChannelList } from "/src/store/channel/actions";
+import { goToPage as onGoToPage, getChannelList as onGetChannelList } from "/src/store/channel/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -35,6 +35,7 @@ import BulkUpdateCasCodeChannelList from "./BulkUpdateCasCodeChannelList";
 import BulkUpdateChannelList from "./BulkUpdateChannelList";
 import UploadChannelList from "./UploadChannelList";
 import ViewChannel from "./ViewChannel";
+import TableContainerX from "../../../components/Common/TableContainerX";
 
 const ChannelList = (props) => {
   //meta title
@@ -48,10 +49,17 @@ const ChannelList = (props) => {
     (channelList) => ({
       channel: channelList.channelList,
       loading: channelList.loading,
+      totalPage: channelList.totalPages,
+      totalCount: channelList.totalCount,
+      pageSize: channelList.perPage,
+      currentPage: channelList.currentPage,
     })
   );
 
-  const { channel, loading } = useSelector(ChannelProperties);
+  const { channel, loading, totalPage,
+    totalCount,
+    pageSize,
+    currentPage, } = useSelector(ChannelProperties);
 
   useEffect(() => {
     // console.log("Channel List data in component:", channel);
@@ -74,14 +82,16 @@ const ChannelList = (props) => {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          // const totalRows = cellProps.rows.length;
+          // const reverseIndex = totalRows - cellProps.row.index;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
 
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -227,6 +237,12 @@ const ChannelList = (props) => {
     }
   }, [dispatch, channel]);
 
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetUsers());
+  };
+
   const handleAddChannel = () => {
     setShowAddNewChannelList(!showAddNewChannelList);
   };
@@ -315,7 +331,7 @@ const ChannelList = (props) => {
                 <Card>
                   <CardBody>
                     {/* {console.log("Channel List:" + JSON.stringify(channel))} */}
-                    <TableContainer
+                    {/* <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={channel}
@@ -340,6 +356,32 @@ const ChannelList = (props) => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
+                    /> */}
+                    <TableContainerX
+                      columns={columns}
+                      data={channel}
+                      isLoading={loading}
+                      isPagination={true}
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      totalPage={Number(totalPage)}
+                      isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      tableActions={getTableActions()}
+                      handleAddNewChannelList={() =>
+                        setShowAddNewChannelList(true)
+                      }
+                      handleUploadChannelList={() =>
+                        setShowUploadChannelList(true)
+                      }
+                      handleBulkUpdateCasCodeChannelList={() =>
+                        setShowBulkUpdateCasCodeChannelList(true)
+                      }
+                      handleBulkUpdateChannelList={() =>
+                        setShowBulkUpdateChannelList(true)
+                      }
+                      goToPage={goToPage}
                     />
                   </CardBody>
                 </Card>
@@ -348,6 +390,7 @@ const ChannelList = (props) => {
           )}
         </Container>
       </div>
+
       <ToastContainer />
     </React.Fragment>
   );

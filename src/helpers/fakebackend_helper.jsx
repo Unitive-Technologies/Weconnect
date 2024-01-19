@@ -263,6 +263,14 @@ export const getLanguageList = async (currentPage, perPage = 20) => {
   );
 };
 
+export const getChannelList = async (currentPage, perPage = 20) => {
+  console.log("Channel List - Current Page in fakebackend: ", currentPage);
+  console.log("Channel List - Per Page: ", perPage);
+  return await getCompleteResponse(
+    url.getChannelListUrl(currentPage, perPage)
+  );
+};
+
 export const getBroadcasterBouquetList = async (currentPage, perPage = 20) => {
   console.log("BroadcasterBouquet - Current Page in fakebackend: ", currentPage);
   console.log("BroadcasterBouquet - Per Page: ", perPage);
@@ -393,7 +401,7 @@ export const addNewLanguageList = (langlist) =>
 export const updateLanguageList = (langlist, id) =>
   put(url.UPDATE_LANGUAGELIST(id), langlist);
 
-export const getChannelList = () => get(url.GET_CHANNELLIST);
+// export const getChannelList = () => get(url.GET_CHANNELLIST);
 export const addNewChannelList = (channel) =>
   post(url.ADD_NEW_CHANNELLIST, channel);
 
