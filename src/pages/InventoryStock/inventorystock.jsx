@@ -36,6 +36,7 @@ import {
   getInventoryAllottedPairing as onGetInventoryAllottedPairing,
   goToPage as onGoToPage,
   goToPage1 as onGoToPage1,
+  goToPage2 as onGoToPage2,
 } from "/src/store/inventorystock/actions";
 import StockStb from "./StockStb";
 import StockPairing from "./StockPairing";
@@ -71,6 +72,10 @@ const InventoryStock = (props) => {
       faultytotalCount: inventorystock.totalCount,
       faultypageSize: inventorystock.perPage,
       faultycurrentPage: inventorystock.currentPage,
+      allottedtotalPage: inventorystock.totalPages,
+      allottedtotalCount: inventorystock.totalCount,
+      allottedpageSize: inventorystock.perPage,
+      allottedcurrentPage: inventorystock.currentPage,
     })
   );
 
@@ -96,6 +101,10 @@ const InventoryStock = (props) => {
     faultytotalCount,
     faultypageSize,
     faultycurrentPage,
+    allottedtotalPage,
+    allottedtotalCount,
+    allottedpageSize,
+    allottedcurrentPage,
   } = useSelector(inventorystockProperties);
 
   useEffect(() => {
@@ -127,10 +136,11 @@ const InventoryStock = (props) => {
     dispatch(onGetInventoryFaultyPairing());
   };
 
-  console.log("TotalCount - ", stocktotalCount);
-  // console.log(`PageSize - ${stockpageSize}`);
-  // console.log(`CurrentPage - ${stockcurrentPage}`);
-  console.log("TotalPage - ", stocktotalPage);
+  const goToPage2 = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage2(toPage));
+    dispatch(onGetInventoryAllottedPairing());
+  };
 
   const toggleTab = (tab) => {
     if (activeTab !== tab) {
@@ -187,6 +197,10 @@ const InventoryStock = (props) => {
       if (activeTab === "3") {
         return faultytotalPage;
       }
+    } else if (selectedOption === "Allotted") {
+      if (activeTab === "3") {
+        return allottedtotalPage;
+      }
     }
   };
 
@@ -198,6 +212,10 @@ const InventoryStock = (props) => {
     } else if (selectedOption === "Faulty") {
       if (activeTab === "3") {
         return faultytotalCount;
+      }
+    } else if (selectedOption === "Allotted") {
+      if (activeTab === "3") {
+        return allottedtotalCount;
       }
     }
   };
@@ -211,6 +229,10 @@ const InventoryStock = (props) => {
       if (activeTab === "3") {
         return faultypageSize;
       }
+    } else if (selectedOption === "Allotted") {
+      if (activeTab === "3") {
+        return allottedpageSize;
+      }
     }
   };
 
@@ -223,6 +245,10 @@ const InventoryStock = (props) => {
       if (activeTab === "3") {
         return faultycurrentPage;
       }
+    } else if (selectedOption === "Allotted") {
+      if (activeTab === "3") {
+        return allottedcurrentPage;
+      }
     }
   };
 
@@ -234,6 +260,10 @@ const InventoryStock = (props) => {
     } else if (selectedOption === "Faulty") {
       if (activeTab === "3") {
         return goToPage1;
+      }
+    } else if (selectedOption === "Allotted") {
+      if (activeTab === "3") {
+        return goToPage2;
       }
     }
   };

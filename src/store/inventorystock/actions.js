@@ -37,6 +37,7 @@ import {
   GET_INVENTORYALLOTTED_PAIRING_FAIL,
   UPDATE_STOCKPAIRING_CURRENT_PAGE,
   UPDATE_FAULTYPAIRING_CURRENT_PAGE,
+  UPDATE_ALLOTTEDPAIRING_CURRENT_PAGE,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -46,6 +47,11 @@ export const goToPage = (toPage) => ({
 
 export const goToPage1 = (toPage) => ({
   type: UPDATE_FAULTYPAIRING_CURRENT_PAGE,
+  payload: Number(toPage),
+});
+
+export const goToPage2 = (toPage) => ({
+  type: UPDATE_ALLOTTEDPAIRING_CURRENT_PAGE,
   payload: Number(toPage),
 });
 

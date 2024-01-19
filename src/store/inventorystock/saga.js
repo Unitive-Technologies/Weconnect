@@ -80,6 +80,7 @@ const convertInventoryStockListObject = (inventorystocklist) => {
 
 export const getStockPairingStore = (state) => state.stockpairing;
 export const getFaultyPairingStore = (state) => state.faultypairing;
+export const getAllottedPairingStore = (state) => state.allottedpairing;
 
 function* fetchInventoryStock() {
   try {
@@ -149,10 +150,10 @@ function* fetchInventoryFaultyPairing() {
     // const response = yield call(getInventoryFaultyPairing);
     // // console.log("response:" + JSON.stringify(response.data));
     // yield put(getInventoryFaultyPairingSuccess(response.data));
-    let stockpairingStore = yield select(getFaultyPairingStore);
+    let FaultypairingStore = yield select(getFaultyPairingStore);
 
-    const pageSize = stockpairingStore.pageSize;
-    const currentPage = stockpairingStore.currentPage;
+    const pageSize = FaultypairingStore.pageSize;
+    const currentPage = FaultypairingStore.currentPage;
 
     const response = yield call(
       getInventoryFaultyPairing,
@@ -219,9 +220,22 @@ function* fetchInventoryAllottedStb() {
 
 function* fetchInventoryAllottedPairing() {
   try {
-    const response = yield call(getInventoryAllottedPairing);
-    // console.log("response:" + JSON.stringify(response.data));
-    yield put(getInventoryAllottedPairingSuccess(response.data));
+    // const response = yield call(getInventoryAllottedPairing);
+    // // console.log("response:" + JSON.stringify(response.data));
+    // yield put(getInventoryAllottedPairingSuccess(response.data));
+    let allottedpairingStore = yield select(getAllottedPairingStore);
+
+    const pageSize = allottedpairingStore.pageSize;
+    const currentPage = allottedpairingStore.currentPage;
+
+    const response = yield call(
+      getInventoryAllottedPairing,
+      currentPage,
+      pageSize
+    );
+    console.log("Response from API -", response);
+    debugger;
+    yield put(getInventoryAllottedPairingSuccess(response));
   } catch (error) {
     yield put(getInventoryAllottedPairingFail(error));
   }

@@ -181,7 +181,11 @@ export const GET_BROADCASTERBOUQUETLIST =
   "/broadcaster-bouque?expand=created_by_lbl,status_lbl,broadcaster_lbl,channel_type_lbl,isFta_lbl,isNCF_lbl,channels&sort=name&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_BROADCASTERBOUQUETLIST = "/add/broadcasterbouquet";
 export const getBroadcasterBouquetListUrl = (currPage, perPage) => {
-  console.log("current page in Broadcaster Bouquet List url - ", currPage, perPage);
+  console.log(
+    "current page in Broadcaster Bouquet List url - ",
+    currPage,
+    perPage
+  );
   return `/broadcaster-bouque?expand=created_by_lbl,status_lbl,broadcaster_lbl,channel_type_lbl,isFta_lbl,isNCF_lbl,channels&sort=name&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
 
@@ -428,3 +432,8 @@ export const GET_INVENTORYALLOTTED_STB =
   "/stb-allotment?expand=created_by_lbl,status_lbl,boxtype_lbl,cas_lbl,brand_lbl,is_embeded_lbl,operator_lbl,warehouse_lbl,inv_state_lbl&filter[status]=1&filter[account_id]=0&page=1&per-page=50&vr=web1.0";
 export const GET_INVENTORYALLOTTED_PAIRING =
   "/pairing-allotment?expand=created_by_lbl,status_lbl,cas_lbl,brand_lbl,boxtype_lbl,is_embeded_lbl,operator_lbl,warehouse_lbl,inv_state_lbl,other_id_lbl,rsd_startdate&filter[status]=1&filter[account_id]=0&page=1&per-page=50&vr=web1.0";
+
+export const getFaultyAllottedUrl = (currPage, perPage) => {
+  console.log("current page in users url - ", currPage, perPage);
+  return `/pairing-allotment?expand=created_by_lbl,status_lbl,cas_lbl,brand_lbl,boxtype_lbl,is_embeded_lbl,operator_lbl,warehouse_lbl,inv_state_lbl,other_id_lbl,rsd_startdate&filter[status]=1&filter[account_id]=0&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+};

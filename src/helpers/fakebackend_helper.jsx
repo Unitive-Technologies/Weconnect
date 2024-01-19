@@ -272,9 +272,14 @@ export const getChannelList = async (currentPage, perPage = 20) => {
 };
 
 export const getBroadcasterBouquetList = async (currentPage, perPage = 20) => {
-  console.log("BroadcasterBouquet - Current Page in fakebackend: ", currentPage);
+  console.log(
+    "BroadcasterBouquet - Current Page in fakebackend: ",
+    currentPage
+  );
   console.log("BroadcasterBouquet - Per Page: ", perPage);
-  return await getCompleteResponse(url.getBroadcasterBouquetListUrl(currentPage, perPage));
+  return await getCompleteResponse(
+    url.getBroadcasterBouquetListUrl(currentPage, perPage)
+  );
 };
 
 export const getPackageList = async (currentPage, perPage = 20) => {
@@ -583,8 +588,8 @@ export const getInventoryStockStb = () => get(url.GET_INVENTORYSTOCK_STB);
 // export const getInventoryStockPairing = () =>
 //   get(url.GET_INVENTORYSTOCK_PAIRING);
 export const getInventoryStockPairing = async (currentPage, perPage = 20) => {
-  console.log("StockPairing - Current Page in fakebackend: ", currentPage);
-  console.log("StockPairing - Per Page: ", perPage);
+  console.log("Stock Pairing - Current Page in fakebackend: ", currentPage);
+  console.log("Stock Pairing - Per Page: ", perPage);
   return await getCompleteResponse(
     url.getStockPairingUrl(currentPage, perPage)
   );
@@ -596,8 +601,8 @@ export const getInventoryFaultyStb = () => get(url.GET_INVENTORYFAULTY_STB);
 // export const getInventoryFaultyPairing = () =>
 //   get(url.GET_INVENTORYFAULTY_PAIRING);
 export const getInventoryFaultyPairing = async (currentPage, perPage = 20) => {
-  console.log("StockPairing - Current Page in fakebackend: ", currentPage);
-  console.log("StockPairing - Per Page: ", perPage);
+  console.log("Faulty Pairing - Current Page in fakebackend: ", currentPage);
+  console.log("Faulty Pairing - Per Page: ", perPage);
   return await getCompleteResponse(
     url.getFaultyPairingUrl(currentPage, perPage)
   );
@@ -613,8 +618,18 @@ export const getInventoryBlacklistedPairing = () =>
 export const getInventoryAllottedSmartcard = () =>
   get(url.GET_INVENTORYALLOTTED_SMARTCARD);
 export const getInventoryAllottedStb = () => get(url.GET_INVENTORYALLOTTED_STB);
-export const getInventoryAllottedPairing = () =>
-  get(url.GET_INVENTORYALLOTTED_PAIRING);
+// export const getInventoryAllottedPairing = () =>
+//   get(url.GET_INVENTORYALLOTTED_PAIRING);
+export const getInventoryAllottedPairing = async (
+  currentPage,
+  perPage = 20
+) => {
+  console.log("Allotted Pairing - Current Page in fakebackend: ", currentPage);
+  console.log("Allotted Pairing - Per Page: ", perPage);
+  return await getCompleteResponse(
+    url.getAllottedPairingUrl(currentPage, perPage)
+  );
+};
 
 export const addNewUser = (user) => post(url.ADD_NEW_USER, user);
 
