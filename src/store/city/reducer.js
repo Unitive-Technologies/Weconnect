@@ -1,4 +1,10 @@
 import {
+  RESPONSE_HEADER_CURRENT_PAGE,
+  RESPONSE_HEADER_PAGE_COUNT,
+  RESPONSE_HEADER_TOTAL_COUNT,
+  RESPONSE_HEADER_PER_PAGE,
+} from "../../constants/strings";
+import {
   GET_CITY,
   GET_CITY_SUCCESS,
   GET_CITY_FAIL,
@@ -10,18 +16,31 @@ import {
   UPDATE_CITY_SUCCESS,
   UPDATE_CITY_FAIL,
   UPDATE_CITY,
+  UPDATE_CITY_CURRENT_PAGE,
 } from "./actionTypes";
 
 const INIT_STATE = {
   city: [],
   districtlist: [],
+  pagination: {},
   error: {},
-  loading: true,
+  loading: false,
+  currentPage: 1,
+  perPage: 10,
+  totalCount: 0,
+  totalPages: 0,
 };
 
 const City = (state = INIT_STATE, action) => {
   switch (action.type) {
 
+    case UPDATE_CITY_CURRENT_PAGE:
+      return Number(action.payload) <= state.totalPages
+        ? {
+          ...state,
+          currentPage: action.payload,
+        }
+        : state;
     case GET_CITY:
       return {
         ...state,
@@ -31,7 +50,11 @@ const City = (state = INIT_STATE, action) => {
     case GET_CITY_SUCCESS:
       return {
         ...state,
-        city: action.payload,
+        city: action.payload.data.data,
+        currentPage: action.payload.headers[RESPONSE_HEADER_CURRENT_PAGE],
+        perPage: action.payload.headers[RESPONSE_HEADER_PER_PAGE],
+        totalCount: action.payload.headers[RESPONSE_HEADER_TOTAL_COUNT],
+        totalPages: action.payload.headers[RESPONSE_HEADER_PAGE_COUNT],
         loading: false,
       };
 
@@ -39,6 +62,8 @@ const City = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+        pagination: {},
+        loading: false,
       };
 
     case ADD_CITY:

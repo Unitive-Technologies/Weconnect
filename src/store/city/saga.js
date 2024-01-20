@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 
 import {
   GET_CITY,
@@ -28,38 +28,55 @@ import {
 } from "../../helpers/fakebackend_helper";
 import { toast } from "react-toastify";
 
-const convertCityListObject = (cityList) => {
-  // customer city list has more data than what we need, we need to convert each of the city user object in the list with needed colums of the table
-  return cityList.map((city) => {
-    return {
-      ...city,
-      id: city.id,
-      name: city.name,
-      code: city.code,
-      state_lbl: city.state_lbl,
-      state_code_lbl: city.state_code_lbl,
-      district_lbl: city.district_lbl,
-      district_code_lbl: city.district_code_lbl,
-      description: city.description,
-      status: city.status,
-      created_at: city.created_at,
-      created_by_lbl: city.created_by_lbl,
-      type: city.type,
-      state_id: city.state_id,
-      district_id: city.district_id,
-    };
-  });
-};
+export const getCityStore = (state) => state.city;
+// const convertCityListObject = (cityList) => {
+//   // customer city list has more data than what we need, we need to convert each of the city user object in the list with needed colums of the table
+//   return cityList.map((city) => {
+//     return {
+//       ...city,
+//       id: city.id,
+//       name: city.name,
+//       code: city.code,
+//       state_lbl: city.state_lbl,
+//       state_code_lbl: city.state_code_lbl,
+//       district_lbl: city.district_lbl,
+//       district_code_lbl: city.district_code_lbl,
+//       description: city.description,
+//       status: city.status,
+//       created_at: city.created_at,
+//       created_by_lbl: city.created_by_lbl,
+//       type: city.type,
+//       state_id: city.state_id,
+//       district_id: city.district_id,
+//     };
+//   });
+// };
 
 function* fetchCity() {
   try {
-    const response = yield call(getCity);
-    const cityList = convertCityListObject(response.data);
-    yield put(getCitySuccess(cityList));
+    let CityStore = yield select(getCityStore);
+
+    const pageSize = CityStore.pageSize;
+    const currentPage = CityStore.currentPage;
+
+    const response = yield call(getCity, currentPage, pageSize);
+    console.log("Response from API -", response);
+    // debugger;
+    yield put(getCitySuccess(response));
   } catch (error) {
+    console.error("Error fetching City list:", error);
     yield put(getCityFail(error));
   }
 }
+// function* fetchCity() {
+//   try {
+//     const response = yield call(getCity);
+//     const cityList = convertCityListObject(response.data);
+//     yield put(getCitySuccess(cityList));
+//   } catch (error) {
+//     yield put(getCityFail(error));
+//   }
+// }
 
 function* fetchDistrictByStateId({ payload: state_id }) {
   console.log("Selected state id: ", state_id);

@@ -250,6 +250,12 @@ export const getGenreList = async (currentPage, perPage = 20) => {
   return await getCompleteResponse(url.getGenreListUrl(currentPage, perPage));
 };
 
+export const getCity = async (currentPage, perPage = 20) => {
+  console.log("City - Current Page in fakebackend: ", currentPage);
+  console.log("City - Per Page: ", perPage);
+  return await getCompleteResponse(url.getCityUrl(currentPage, perPage));
+};
+
 export const updateCustomerUser = (customerUser, id) =>
   put(url.UPDATE_CUSTOMERUSER(id), customerUser);
 export const getCustomerUsersSettings = () =>
@@ -381,8 +387,9 @@ export const getAdministrativeDivisionStatus = () =>
 export const updateDistrict = (id, district) =>
   put(url.updateDistrictById(id), district);
 
-export const getCity = () => get(url.GET_CITY);
+// export const getCity = () => get(url.GET_CITY);
 export const addCity = (city) => post(url.ADD_CITY, city);
+
 export const getDistrictByStateid = (id) => get(url.GET_DISTRICT_BYSTATEID(id));
 export const updateCity = (id, city) => put(url.updateCityById(id), city);
 

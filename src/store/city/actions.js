@@ -11,7 +11,13 @@ import {
   UPDATE_CITY,
   UPDATE_CITY_SUCCESS,
   UPDATE_CITY_FAIL,
+  UPDATE_CITY_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_CITY_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getCity = () => ({
   type: GET_CITY,
@@ -58,6 +64,8 @@ export const getDistrictByStateidFail = (error) => ({
   type: GET_DISTRICT_BYSTATEID_FAIL,
   payload: error,
 });
+
+
 
 export const updateCity = (city) => ({
   type: UPDATE_CITY,

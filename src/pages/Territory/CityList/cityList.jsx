@@ -14,17 +14,21 @@ import {
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import {
+  goToPage as onGoToPage,
   getCity as onGetCity,
   getDistrictByStateid as onGetDistrictByStateid,
+} from "/src/store/city/actions";
+import {
   getDistrictStateList as onGetDistrictStateList,
   getAdministrativeDivisionStatus as onGetAdministrativeDivisionStatus,
-} from "/src/store/actions";
+} from "/src/store/district/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddNewCity from "./AddNewCity";
 import UploadCity from "./UploadCity";
 import ViewCity from "./ViewCity";
+import TableContainerX from "../../../components/Common/TableContainerX";
 
 const CityList = (props) => {
   //meta title
@@ -37,6 +41,10 @@ const CityList = (props) => {
     cits: city.city,
     loading: city.loading,
     districtlist: city.districtlist,
+    totalPage: city.totalPages,
+    totalCount: city.totalCount,
+    pageSize: city.perPage,
+    currentPage: city.currentPage,
   }));
 
   const selectDistrictState = (state) => state.district;
@@ -50,7 +58,10 @@ const CityList = (props) => {
   );
 
   const { districts, status, statelist } = useSelector(districtProperties);
-  const { cits, loading, districtlist } = useSelector(cityProperties);
+  const { cits, loading, districtlist, totalPage,
+    totalCount,
+    pageSize,
+    currentPage, } = useSelector(cityProperties);
   const [isLoading, setLoading] = useState(loading);
   const [showAddCity, setShowAddCity] = useState(false);
   const [showUploadCity, setShowUploadCity] = useState(false);
@@ -68,18 +79,19 @@ const CityList = (props) => {
     () => [
       {
         Header: "#",
-        // accessor: "name",
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          // const totalRows = cellProps.rows.length;
+          // const reverseIndex = totalRows - cellProps.row.index;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
 
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -270,6 +282,12 @@ const CityList = (props) => {
     }
   }, [dispatch, districts]);
 
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetCity());
+  };
+
   const handleShowCity = () => {
     setShowAddCity(!showAddCity);
   };
@@ -335,7 +353,7 @@ const CityList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    <TableContainer
+                    {/* <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={cits}
@@ -348,6 +366,24 @@ const CityList = (props) => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
+                    /> */}
+                    <TableContainerX
+                      columns={columns}
+                      data={cits}
+                      isShowTableActionButtons={true}
+                      isLoading={loading}
+                      isPagination={true}
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      totalPage={Number(totalPage)}
+                      isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      tableActions={getTableActions()}
+                      // handleRowClick={(row) => {
+                      //   toggleViewModal(row);
+                      // }}
+                      goToPage={goToPage}
                     />
                   </CardBody>
                 </Card>

@@ -57,6 +57,8 @@ export const getUsersUrl = (currPage, perPage) => {
   return `/user?expand=setting,group_lbl,access_level,role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[role]=4&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
 
+
+
 export const getCustomerUsersUrl = (currPage, perPage) => {
   console.log("current page in Customerusers url - ", currPage, perPage);
   return `/user?expand=setting,group_lbl,access_level,role_lbl,status_lbl,type_lbl,operator_lbl,operator,created_by_lbl,parent_lbl&filter[role]=4&page=${currPage}&per-page=${perPage}&vr=web1.0`;
@@ -97,9 +99,15 @@ export const GET_DISTRICT_STATELIST =
 // export const UPDATE_DISTRICT = "/administrative-division/1422?vr=web1.0";
 export const updateDistrictById = (id) =>
   `/administrative-division/${id}?vr=web1.0`;
+
 export const GET_CITY =
-  "/administrative-division?filter[type]=3&expand=created_by_lbl,operator_lbl,status_lbl,state_lbl,state_code_lbl,district_lbl,district_code_lbl&vr=web1.0";
+  "/administrative-division?filter[type]=3&expand=created_by_lbl,operator_lbl,status_lbl,state_lbl,state_code_lbl,district_lbl,district_code_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_CITY = "/administrative-division?vr=web1.0";
+export const getCityUrl = (currPage, perPage) => {
+  console.log("current page in City url - ", currPage, perPage);
+  return `/administrative-division?filter[type]=3&expand=created_by_lbl,operator_lbl,status_lbl,state_lbl,state_code_lbl,district_lbl,district_code_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+};
+
 export const GET_DISTRICT_BYSTATEID = (id) =>
   `/administrative-division?&filter[state_id]=${id}&filter[type]=2&per-page=100&vr=web1.0`;
 export const updateCityById = (id) =>

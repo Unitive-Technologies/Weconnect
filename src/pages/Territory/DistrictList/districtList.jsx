@@ -17,7 +17,7 @@ import {
   getDistrict as onGetDistrict,
   getDistrictStateList as onGetDistrictStateList,
   getAdministrativeDivisionStatus as onGetAdministrativeDivisionStatus,
-} from "/src/store/actions";
+} from "/src/store/district/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
