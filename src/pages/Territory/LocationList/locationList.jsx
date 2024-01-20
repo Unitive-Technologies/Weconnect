@@ -13,17 +13,21 @@ import {
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import {
+  goToPage as onGoToPage,
   getLocation as onGetLocation,
   getLcoOnLocation as onGetLcoOnLocation,
-  getAdministrativeDivisionStatus as onGetAdministrativeDivisionStatus,
   getSingleLocation as onGetSingleLocation,
-} from "/src/store/actions";
+} from "/src/store/location/actions";
+import {
+  getAdministrativeDivisionStatus as onGetAdministrativeDivisionStatus,
+} from "/src/store/district/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddNewLocation from "./AddNewLocation";
 import UploadLocation from "./UploadLocation";
 import ViewLocation from "./ViewLocation";
+import TableContainerX from "../../../components/Common/TableContainerX";
 
 const LocationList = (props) => {
   //meta title
@@ -39,6 +43,10 @@ const LocationList = (props) => {
       loading: location.loading,
       lcoonlocation: location.lcoonlocation,
       singlelocation: location.singlelocation,
+      totalPage: location.totalPages,
+      totalCount: location.totalCount,
+      pageSize: location.perPage,
+      currentPage: location.currentPage,
     })
   );
 
@@ -52,7 +60,10 @@ const LocationList = (props) => {
   );
 
   const { districts, status } = useSelector(districtProperties);
-  const { locations, loading, lcoonlocation, singlelocation } =
+  const { totalPage,
+    totalCount,
+    pageSize,
+    currentPage, locations, loading, lcoonlocation, singlelocation } =
     useSelector(locationProperties);
   const [isLoading, setLoading] = useState(loading);
   const [showAddLocation, setShowAddLocation] = useState(false);
@@ -71,18 +82,19 @@ const LocationList = (props) => {
     () => [
       {
         Header: "#",
-        // accessor: "name",
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          // const totalRows = cellProps.rows.length;
+          // const reverseIndex = totalRows - cellProps.row.index;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
 
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -237,6 +249,12 @@ const LocationList = (props) => {
     }
   }, [dispatch, districts]);
 
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetLocation());
+  };
+
   const handleAddLocation = () => {
     setShowAddLocation(!showAddLocation);
   };
@@ -294,7 +312,7 @@ const LocationList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    <TableContainer
+                    {/* <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={locations}
@@ -307,6 +325,24 @@ const LocationList = (props) => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
+                    /> */}
+                    <TableContainerX
+                      columns={columns}
+                      data={locations}
+                      isShowTableActionButtons={true}
+                      isLoading={loading}
+                      isPagination={true}
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      totalPage={Number(totalPage)}
+                      isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      tableActions={getTableActions()}
+                      // handleRowClick={(row) => {
+                      //   toggleViewModal(row);
+                      // }}
+                      goToPage={goToPage}
                     />
                   </CardBody>
                 </Card>

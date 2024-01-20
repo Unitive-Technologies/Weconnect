@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 import {
   GET_LOCATION,
   ADD_LOCATION,
@@ -28,34 +28,25 @@ import {
 } from "../../helpers/fakebackend_helper";
 import { toast } from "react-toastify";
 
-const convertLocationListObject = (locationList) => {
-  return locationList.map((location) => {
-    return {
-      ...location,
-      id: location.id,
-      name: location.name,
-      code: location.code,
-      status: location.status,
-      operator_code: location.operator_code,
-      operator_lbl: location.operator_lbl,
-      status_lbl: location.status_lbl,
-      created_at: location.created_at,
-      created_by_lbl: location.created_by_lbl,
-      operator_id: location.operator_id,
-    };
-  });
-};
+export const getLocationStore = (state) => state.location;
 
 function* fetchLocation() {
   try {
-    const response = yield call(getLocation);
-    // console.log("response:" + JSON.stringify(response.data));
-    const locationList = convertLocationListObject(response.data);
-    yield put(getLocationSuccess(locationList));
+    let LocationStore = yield select(getLocationStore);
+
+    const pageSize = LocationStore.pageSize;
+    const currentPage = LocationStore.currentPage;
+
+    const response = yield call(getLocation, currentPage, pageSize);
+    console.log("Response from API -", response);
+    // debugger;
+    yield put(getLocationSuccess(response));
   } catch (error) {
+    console.error("Error fetching Reason list:", error);
     yield put(getLocationFail(error));
   }
 }
+
 
 function* onAddLocation({ payload: location }) {
   try {

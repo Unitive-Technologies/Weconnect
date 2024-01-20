@@ -1,4 +1,11 @@
 import {
+  RESPONSE_HEADER_CURRENT_PAGE,
+  RESPONSE_HEADER_PAGE_COUNT,
+  RESPONSE_HEADER_TOTAL_COUNT,
+  RESPONSE_HEADER_PER_PAGE,
+} from "../../constants/strings";
+import {
+  GET_LOCATION,
   GET_LOCATION_SUCCESS,
   GET_LOCATION_FAIL,
   ADD_LOCATION_SUCCESS,
@@ -9,23 +16,47 @@ import {
   GET_LCO_ONLOCATION_FAIL,
   GET_SINGLE_LOCATION_SUCCESS,
   GET_SINGLE_LOCATION_FAIL,
+  UPDATE_LOCATION_CURRENT_PAGE,
 } from "./actionTypes";
 
 const INIT_STATE = {
   location: [],
   lcoonlocation: [],
   singlelocation: [],
+  pagination: {},
   error: {},
-  loading: true,
+  loading: false,
+  currentPage: 1,
+  perPage: 10,
+  totalCount: 0,
+  totalPages: 0,
 };
 
 const Location = (state = INIT_STATE, action) => {
   switch (action.type) {
+
+    case UPDATE_LOCATION_CURRENT_PAGE:
+      return Number(action.payload) <= state.totalPages
+        ? {
+          ...state,
+          currentPage: action.payload,
+        }
+        : state;
+    case GET_LOCATION:
+      return {
+        ...state,
+        loading: true,
+      };
+
     case GET_LOCATION_SUCCESS:
       // console.log("Location data in reducer:", action.payload);
       return {
         ...state,
-        location: action.payload,
+        location: action.payload.data.data,
+        currentPage: action.payload.headers[RESPONSE_HEADER_CURRENT_PAGE],
+        perPage: action.payload.headers[RESPONSE_HEADER_PER_PAGE],
+        totalCount: action.payload.headers[RESPONSE_HEADER_TOTAL_COUNT],
+        totalPages: action.payload.headers[RESPONSE_HEADER_PAGE_COUNT],
         loading: false,
       };
 
@@ -33,6 +64,8 @@ const Location = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+        pagination: {},
+        loading: false,
       };
 
     case ADD_LOCATION_SUCCESS:

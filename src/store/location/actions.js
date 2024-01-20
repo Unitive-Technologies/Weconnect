@@ -14,7 +14,13 @@ import {
   GET_SINGLE_LOCATION,
   GET_SINGLE_LOCATION_SUCCESS,
   GET_SINGLE_LOCATION_FAIL,
+  UPDATE_LOCATION_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_LOCATION_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getLocation = () => ({
   type: GET_LOCATION,

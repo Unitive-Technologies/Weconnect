@@ -256,6 +256,12 @@ export const getCity = async (currentPage, perPage = 20) => {
   return await getCompleteResponse(url.getCityUrl(currentPage, perPage));
 };
 
+export const getLocation = async (currentPage, perPage = 20) => {
+  console.log("Location - Current Page in fakebackend: ", currentPage);
+  console.log("Location - Per Page: ", perPage);
+  return await getCompleteResponse(url.getLocationUrl(currentPage, perPage));
+};
+
 export const updateCustomerUser = (customerUser, id) =>
   put(url.UPDATE_CUSTOMERUSER(id), customerUser);
 export const getCustomerUsersSettings = () =>
@@ -393,7 +399,7 @@ export const addCity = (city) => post(url.ADD_CITY, city);
 export const getDistrictByStateid = (id) => get(url.GET_DISTRICT_BYSTATEID(id));
 export const updateCity = (id, city) => put(url.updateCityById(id), city);
 
-export const getLocation = () => get(url.GET_LOCATION);
+// export const getLocation = () => get(url.GET_LOCATION);
 export const addLocation = (location) => post(url.ADD_LOCATION, location);
 export const updateLocation = (id, location) =>
   put(url.updateLocationById(id), location);
