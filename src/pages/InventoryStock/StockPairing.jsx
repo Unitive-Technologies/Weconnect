@@ -244,10 +244,10 @@ const StockPairing = (props) => {
                 data={stockpairing}
                 isLoading={loading}
                 isPagination={true}
-                totalCount={totalCount}
-                pageSize={pageSize}
-                currentPage={currentPage}
-                totalPage={totalPage}
+                totalCount={Number(totalCount)}
+                pageSize={Number(pageSize)}
+                currentPage={Number(currentPage)}
+                totalPage={Number(totalPage)}
                 isGlobalFilter={true}
                 isShowingPageLength={true}
                 tableActions={getTableActions()}
