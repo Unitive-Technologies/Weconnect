@@ -57,8 +57,6 @@ export const getUsersUrl = (currPage, perPage) => {
   return `/user?expand=setting,group_lbl,access_level,role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[role]=4&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
 
-
-
 export const getCustomerUsersUrl = (currPage, perPage) => {
   console.log("current page in Customerusers url - ", currPage, perPage);
   return `/user?expand=setting,group_lbl,access_level,role_lbl,status_lbl,type_lbl,operator_lbl,operator,created_by_lbl,parent_lbl&filter[role]=4&page=${currPage}&per-page=${perPage}&vr=web1.0`;
@@ -336,7 +334,11 @@ export const ADD_NEW_COMPLAINTSUBCATEGORY = "/complaint-subcategory?vr=web1.0";
 export const GET_CONFIGURATIONUPLOADLOGS =
   "/upload-q?expand=uploaded_file,created_by_lbl,status_lbl&notfilter[status]=0&filter[section]=configuration&page=1&per-page=50&vr=web1.0";
 export const getConfigurationUploadLogsUrl = (currPage, perPage) => {
-  console.log("current page in Configuration Upload Logs url - ", currPage, perPage);
+  console.log(
+    "current page in Configuration Upload Logs url - ",
+    currPage,
+    perPage
+  );
   return `/upload-q?expand=uploaded_file,created_by_lbl,status_lbl&notfilter[status]=0&filter[section]=configuration&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
 
@@ -347,7 +349,6 @@ export const GET_TAX_VALUES = "/list/valuetype?fields=id,name&vr=web1.0";
 export const GET_TAX_APPLY = "/list/chargetype?fields=id,name&vr=web1.0";
 export const GET_TAX_TAXONTAX =
   "/tax/list?fields=id,name&filter[parent_id]=0&vr=web1.0";
-
 
 export const ADD_NEW_TAXLIST = "/tax?vr=web1.0";
 export const UPDATE_TAX = (id) => `/tax/${id}?vr=web1.0`;
@@ -472,7 +473,7 @@ export const GET_INVENTORYALLOTTED_STB =
 export const GET_INVENTORYALLOTTED_PAIRING =
   "/pairing-allotment?expand=created_by_lbl,status_lbl,cas_lbl,brand_lbl,boxtype_lbl,is_embeded_lbl,operator_lbl,warehouse_lbl,inv_state_lbl,other_id_lbl,rsd_startdate&filter[status]=1&filter[account_id]=0&page=1&per-page=50&vr=web1.0";
 
-export const getFaultyAllottedUrl = (currPage, perPage) => {
-  console.log("current page in users url - ", currPage, perPage);
+export const getAllottedPairingUrl = (currPage, perPage) => {
+  console.log("current page in Allotted url - ", currPage, perPage);
   return `/pairing-allotment?expand=created_by_lbl,status_lbl,cas_lbl,brand_lbl,boxtype_lbl,is_embeded_lbl,operator_lbl,warehouse_lbl,inv_state_lbl,other_id_lbl,rsd_startdate&filter[status]=1&filter[account_id]=0&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };

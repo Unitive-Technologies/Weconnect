@@ -23,7 +23,7 @@ const StockPairing = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           const startIndex = (currentPage - 1) * pageSize;
-          // debugger;
+          debugger;
           const index = startIndex + cellProps.row.index + 1;
           return (
             <>
