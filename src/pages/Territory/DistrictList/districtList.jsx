@@ -14,6 +14,7 @@ import {
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import {
+  goToPage as onGoToPage,
   getDistrict as onGetDistrict,
   getDistrictStateList as onGetDistrictStateList,
   getAdministrativeDivisionStatus as onGetAdministrativeDivisionStatus,
@@ -24,6 +25,7 @@ import { ToastContainer } from "react-toastify";
 import AddNewDistrict from "./AddNewDistrict";
 import UploadDistrict from "./UploadDistrict";
 import ViewDistrict from "./ViewDistrict";
+import TableContainerX from "../../../components/Common/TableContainerX";
 
 const DistrictList = (props) => {
   //meta title
@@ -44,10 +46,17 @@ const DistrictList = (props) => {
       loading: district.loading,
       status: district.status,
       statelist: district.statelist,
+      totalPage: district.totalPages,
+      totalCount: district.totalCount,
+      pageSize: district.perPage,
+      currentPage: district.currentPage,
     })
   );
 
-  const { districts, loading, status, statelist } =
+  const { districts, loading, status, statelist, totalPage,
+    totalCount,
+    pageSize,
+    currentPage } =
     useSelector(districtProperties);
 
   console.log("Current District Data ---- ", districts);
@@ -55,18 +64,17 @@ const DistrictList = (props) => {
     () => [
       {
         Header: "#",
-        // accessor: "name",
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
 
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -227,6 +235,12 @@ const DistrictList = (props) => {
     }
   }, [dispatch, districts]);
 
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetDistrict());
+  };
+
   const toggleAddModal = () => {
     setShowAddDistrict(!showAddDistrict);
   };
@@ -309,7 +323,7 @@ const DistrictList = (props) => {
                 <Card>
                   <CardBody>
                     {/* {console.log("Districts:" + JSON.stringify(districts))} */}
-                    <TableContainer
+                    {/* <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={districts}
@@ -322,6 +336,24 @@ const DistrictList = (props) => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
+                    /> */}
+                    <TableContainerX
+                      columns={columns}
+                      data={districts}
+                      isShowTableActionButtons={true}
+                      isLoading={loading}
+                      isPagination={true}
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      totalPage={Number(totalPage)}
+                      isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      tableActions={getTableActions()}
+                      handleRowClick={(row) => {
+                        toggleViewModal(row);
+                      }}
+                      goToPage={goToPage}
                     />
                   </CardBody>
                 </Card>

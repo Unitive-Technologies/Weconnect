@@ -14,7 +14,13 @@ import {
   UPDATE_DISTRICT,
   UPDATE_DISTRICT_SUCCESS,
   UPDATE_DISTRICT_FAIL,
+  UPDATE_DISTRICT_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_DISTRICT_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getDistrict = () => ({
   type: GET_DISTRICT,

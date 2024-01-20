@@ -92,7 +92,7 @@ export const getStateUsersUrl = (currPage, perPage) => {
 };
 
 export const GET_DISTRICT =
-  "/administrative-division?filter[type]=2&expand=created_by_lbl,operator_lbl,status_lbl,state_lbl,state_code_lbl&vr=web1.0";
+  "/administrative-division?filter[type]=2&expand=created_by_lbl,operator_lbl,status_lbl,state_lbl,state_code_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_DISTRICT = "/administrative-division?vr=web1.0";
 export const GET_ADMINISTRATIVEDIVISION_STATUS =
   "/list/status?fields=id,name&vr=web1.0";
@@ -101,6 +101,10 @@ export const GET_DISTRICT_STATELIST =
 // export const UPDATE_DISTRICT = "/administrative-division/1422?vr=web1.0";
 export const updateDistrictById = (id) =>
   `/administrative-division/${id}?vr=web1.0`;
+export const getDistrictUrl = (currPage, perPage) => {
+  console.log("current page in District url - ", currPage, perPage);
+  return `/administrative-division?filter[type]=2&expand=created_by_lbl,operator_lbl,status_lbl,state_lbl,state_code_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+};
 
 export const GET_CITY =
   "/administrative-division?filter[type]=3&expand=created_by_lbl,operator_lbl,status_lbl,state_lbl,state_code_lbl,district_lbl,district_code_lbl&page=1&per-page=50&vr=web1.0";

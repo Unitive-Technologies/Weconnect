@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 
 import {
   GET_DISTRICT,
@@ -29,36 +29,35 @@ import {
   updateDistrict,
 } from "../../helpers/fakebackend_helper";
 
-const convertDistrictListObject = (districtList) => {
-  // customer district list has more data than what we need, we need to convert each of the district object in the list with needed colums of the table
-  return districtList.map((district) => {
-    return {
-      ...district,
-      id: district.id,
-      name: district.name,
-      code: district.code,
-      state_lbl: district.state_lbl,
-      created_by_lbl: district.created_by_lbl,
-      state_code_lbl: district.state_code_lbl,
-      description: district.description,
-      status: district.status,
-      created_at: district.created_at,
-      type: district.type,
-      state_id: district.state_id,
-    };
-  });
-};
+export const getDistrictStore = (state) => state.district;
 
 function* fetchDistrict() {
   try {
-    const response = yield call(getDistrict);
-    // console.log("response:" + JSON.stringify(response.data));
-    const districtList = convertDistrictListObject(response.data);
-    yield put(getDistrictSuccess(response.data));
+    let DistrictStore = yield select(getDistrictStore);
+
+    const pageSize = DistrictStore.pageSize;
+    const currentPage = DistrictStore.currentPage;
+
+    const response = yield call(getDistrict, currentPage, pageSize);
+    console.log("Response from API -", response);
+    // debugger;
+    yield put(getDistrictSuccess(response));
   } catch (error) {
+    console.error("Error fetching District list:", error);
     yield put(getDistrictFail(error));
   }
 }
+
+// function* fetchDistrict() {
+//   try {
+//     const response = yield call(getDistrict);
+//     // console.log("response:" + JSON.stringify(response.data));
+//     const districtList = convertDistrictListObject(response.data);
+//     yield put(getDistrictSuccess(response.data));
+//   } catch (error) {
+//     yield put(getDistrictFail(error));
+//   }
+// }
 
 function* fetchAdministrativeDivisionStatus() {
   try {

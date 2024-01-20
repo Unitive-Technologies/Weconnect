@@ -244,6 +244,12 @@ export const getBroadCaster = async (currentPage, perPage = 20) => {
   return await getCompleteResponse(url.getBroadcasterUrl(currentPage, perPage));
 };
 
+export const getDistrict = async (currentPage, perPage = 20) => {
+  console.log("Users - Current Page in fakebackend: ", currentPage);
+  console.log("Users - Per Page: ", perPage);
+  return await getCompleteResponse(url.getDistrictUrl(currentPage, perPage));
+};
+
 export const getGenreList = async (currentPage, perPage = 20) => {
   console.log("GenreList - Current Page in fakebackend: ", currentPage);
   console.log("GenreList - Per Page: ", perPage);
@@ -397,7 +403,7 @@ export const getScheduledNotification = () =>
   get(url.GET_SCHEDULEDNOTIFICATION);
 // export const getStateUsers = () => get(url.GET_STATEUSERS);
 
-export const getDistrict = () => get(url.GET_DISTRICT);
+// export const getDistrict = () => get(url.GET_DISTRICT);
 export const addDistrict = (district) => post(url.ADD_DISTRICT, district);
 export const getDistrictStateList = () => get(url.GET_DISTRICT_STATELIST);
 export const getAdministrativeDivisionStatus = () =>

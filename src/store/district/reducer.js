@@ -1,4 +1,10 @@
 import {
+  RESPONSE_HEADER_CURRENT_PAGE,
+  RESPONSE_HEADER_PAGE_COUNT,
+  RESPONSE_HEADER_TOTAL_COUNT,
+  RESPONSE_HEADER_PER_PAGE,
+} from "../../constants/strings";
+import {
   GET_DISTRICT,
   GET_DISTRICT_SUCCESS,
   GET_DISTRICT_FAIL,
@@ -12,33 +18,52 @@ import {
   UPDATE_DISTRICT_SUCCESS,
   UPDATE_DISTRICT_FAIL,
   UPDATE_DISTRICT,
+  UPDATE_DISTRICT_CURRENT_PAGE,
 } from "./actionTypes";
 
 const INIT_STATE = {
   district: [],
   status: [],
   statelist: [],
+  pagination: {},
   error: {},
   loading: false,
+  currentPage: 1,
+  perPage: 10,
+  totalCount: 0,
+  totalPages: 0,
 };
 
 const District = (state = INIT_STATE, action) => {
   switch (action.type) {
+    case UPDATE_DISTRICT_CURRENT_PAGE:
+      return Number(action.payload) <= state.totalPages
+        ? {
+          ...state,
+          currentPage: action.payload,
+        }
+        : state;
     case GET_DISTRICT:
       return {
         ...state,
         loading: true,
       };
+
     case GET_DISTRICT_SUCCESS:
       return {
         ...state,
-        district: action.payload,
+        district: action.payload.data.data,
+        currentPage: action.payload.headers[RESPONSE_HEADER_CURRENT_PAGE],
+        perPage: action.payload.headers[RESPONSE_HEADER_PER_PAGE],
+        totalCount: action.payload.headers[RESPONSE_HEADER_TOTAL_COUNT],
+        totalPages: action.payload.headers[RESPONSE_HEADER_PAGE_COUNT],
         loading: false,
       };
     case GET_DISTRICT_FAIL:
       return {
         ...state,
         error: action.payload,
+        pagination: {},
         loading: false,
       };
 
