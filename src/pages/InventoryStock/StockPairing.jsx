@@ -14,7 +14,8 @@ const StockPairing = (props) => {
     goToPage,
     loading,
   } = props;
-
+  console.log("currentPage, pageSize:" + currentPage, pageSize);
+  console.log("stockpairing:" + JSON.stringify(stockpairing));
   const columns = useMemo(
     () => [
       {
@@ -22,9 +23,11 @@ const StockPairing = (props) => {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
+          console.log("cellProps:" + cellProps.row.index);
           const startIndex = (currentPage - 1) * pageSize;
           debugger;
           const index = startIndex + cellProps.row.index + 1;
+          console.log("index:" + index);
           return (
             <>
               <h5 className="font-size-14 mb-1">
