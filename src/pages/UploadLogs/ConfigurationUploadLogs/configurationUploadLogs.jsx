@@ -16,7 +16,10 @@ import {
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
 
-import { goToPage as onGoToPage, getConfigurationUploadLogs as onGetConfigurationUploadLogs } from "/src/store/configurationuploadlogs/actions";
+import {
+  goToPage as onGoToPage,
+  getConfigurationUploadLogs as onGetConfigurationUploadLogs,
+} from "/src/store/configurationuploadlogs/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -44,12 +47,8 @@ const ConfigurationUploadLogs = (props) => {
     })
   );
 
-  const { configuplog, loading, totalPage,
-    totalCount,
-    pageSize,
-    currentPage } = useSelector(
-      ConfigurationUploadLogsProperties
-    );
+  const { configuplog, loading, totalPage, totalCount, pageSize, currentPage } =
+    useSelector(ConfigurationUploadLogsProperties);
 
   useEffect(() => {
     console.log("configuplog data in component:", configuplog);
@@ -341,6 +340,9 @@ const ConfigurationUploadLogs = (props) => {
 
   const keyField = "id";
 
+  const getTableActions = () => {
+    return [];
+  };
   return (
     <React.Fragment>
       <DeleteModal
@@ -392,7 +394,7 @@ const ConfigurationUploadLogs = (props) => {
                       totalPage={Number(totalPage)}
                       isGlobalFilter={true}
                       isShowingPageLength={true}
-                      // tableActions={getTableActions()}
+                      tableActions={getTableActions()}
                       handleUserClick={handleUserClicks}
                       goToPage={goToPage}
                     />
