@@ -281,6 +281,12 @@ export const getLanguageList = async (currentPage, perPage = 20) => {
   );
 };
 
+export const getStateUsers = async (currentPage, perPage = 20) => {
+  console.log("Users - Current Page in fakebackend: ", currentPage);
+  console.log("Users - Per Page: ", perPage);
+  return await getCompleteResponse(url.getStateUsersUrl(currentPage, perPage));
+};
+
 export const getChannelList = async (currentPage, perPage = 20) => {
   console.log("Channel List - Current Page in fakebackend: ", currentPage);
   console.log("Channel List - Per Page: ", perPage);
@@ -389,7 +395,7 @@ export const addNewScheduleCustomerNotification = (
 
 export const getScheduledNotification = () =>
   get(url.GET_SCHEDULEDNOTIFICATION);
-export const getStateUsers = () => get(url.GET_STATEUSERS);
+// export const getStateUsers = () => get(url.GET_STATEUSERS);
 
 export const getDistrict = () => get(url.GET_DISTRICT);
 export const addDistrict = (district) => post(url.ADD_DISTRICT, district);

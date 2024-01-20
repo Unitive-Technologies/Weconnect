@@ -7,14 +7,14 @@ import { Card, CardBody, Col, Container, Row } from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
 
-import { getStateUsers as onGetStateUsers } from "/src/store/actions";
+import { goToPage as onGoToPage, getStateUsers as onGetStateUsers } from "/src/store/stateusers/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import TableContainerX from "../../../components/Common/TableContainerX";
 
 const StateList = (props) => {
   //meta title
@@ -28,10 +28,17 @@ const StateList = (props) => {
     (stateUsers) => ({
       stateUser: stateUsers.stateUsers,
       loading: stateUsers.loading,
+      totalPage: stateUsers.totalPages,
+      totalCount: stateUsers.totalCount,
+      pageSize: stateUsers.perPage,
+      currentPage: stateUsers.currentPage,
     })
   );
 
-  const { stateUser, loading } = useSelector(stateUsersProperties);
+  const { stateUser, loading, totalPage,
+    totalCount,
+    pageSize,
+    currentPage } = useSelector(stateUsersProperties);
 
   const [isLoading, setLoading] = useState(loading);
 
@@ -39,18 +46,19 @@ const StateList = (props) => {
     () => [
       {
         Header: "#",
-        // accessor: "name",
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          // const totalRows = cellProps.rows.length;
+          // const reverseIndex = totalRows - cellProps.row.index;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
 
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -120,7 +128,17 @@ const StateList = (props) => {
     }
   }, [dispatch, stateUser]);
 
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetStateUsers());
+  };
+
   const keyField = "id";
+
+  const getTableActions = () => {
+    return [];
+  };
 
   return (
     <React.Fragment>
@@ -136,7 +154,7 @@ const StateList = (props) => {
                 <Card>
                   <CardBody>
                     {/* {console.log("users:" + JSON.stringify(stateUser))} */}
-                    <TableContainer
+                    {/* <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={stateUser}
@@ -147,6 +165,24 @@ const StateList = (props) => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
+                    /> */}
+                    <TableContainerX
+                      columns={columns}
+                      data={stateUser}
+                      isShowTableActionButtons={true}
+                      isLoading={loading}
+                      isPagination={true}
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      totalPage={Number(totalPage)}
+                      isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      tableActions={getTableActions()}
+                      // handleRowClick={(row) => {
+                      //   toggleViewModal(row);
+                      // }}
+                      goToPage={goToPage}
                     />
                   </CardBody>
                 </Card>

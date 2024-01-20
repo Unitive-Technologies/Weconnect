@@ -85,7 +85,11 @@ export const ADD_NEW_SCHEDULECUSTOMERNOTIFICATION =
 
 export const GET_SCHEDULEDNOTIFICATION = "/schedulednotificationlist";
 export const GET_STATEUSERS =
-  "/administrative-division?filter[type]=1&expand=created_by_lbl,status_lbl&vr=web1.0";
+  "/administrative-division?filter[type]=1&expand=created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
+export const getStateUsersUrl = (currPage, perPage) => {
+  console.log("current page in state users url - ", currPage, perPage);
+  return `/administrative-division?filter[type]=1&expand=created_by_lbl,status_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+};
 
 export const GET_DISTRICT =
   "/administrative-division?filter[type]=2&expand=created_by_lbl,operator_lbl,status_lbl,state_lbl,state_code_lbl&vr=web1.0";
