@@ -75,7 +75,7 @@ const InventoryFaulty = (state = INIT_STATE, action) => {
         ...state,
         faultypairing: action.payload.data.data,
         currentPage: action.payload.headers[RESPONSE_HEADER_CURRENT_PAGE],
-        perPage: action.payload.headers[RESPONSE_HEADER_PER_PAGE],
+        perPage: parseInt(action.payload.headers[RESPONSE_HEADER_PER_PAGE]),
         totalCount: action.payload.headers[RESPONSE_HEADER_TOTAL_COUNT],
         totalPages: action.payload.headers[RESPONSE_HEADER_PAGE_COUNT],
         loading: false,

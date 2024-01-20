@@ -41,7 +41,7 @@ function* fetchInventoryAllottedStb() {
 function* fetchInventoryAllottedPairing() {
   try {
     let allottedpairingStore = yield select(getAllottedPairingStore);
-
+    console.log("Allotted pairing store: ", allottedpairingStore);
     const pageSize = allottedpairingStore.pageSize;
     const currentPage = allottedpairingStore.currentPage;
 

@@ -55,7 +55,7 @@ export const getCityStore = (state) => state.city;
 function* fetchCity() {
   try {
     let CityStore = yield select(getCityStore);
-
+    console.log("City store in saga: ", CityStore);
     const pageSize = CityStore.pageSize;
     const currentPage = CityStore.currentPage;
 

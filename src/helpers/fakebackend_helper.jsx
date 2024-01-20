@@ -287,12 +287,6 @@ export const getLanguageList = async (currentPage, perPage = 20) => {
   );
 };
 
-export const getStateUsers = async (currentPage, perPage = 20) => {
-  console.log("Users - Current Page in fakebackend: ", currentPage);
-  console.log("Users - Per Page: ", perPage);
-  return await getCompleteResponse(url.getStateUsersUrl(currentPage, perPage));
-};
-
 export const getChannelList = async (currentPage, perPage = 20) => {
   console.log("Channel List - Current Page in fakebackend: ", currentPage);
   console.log("Channel List - Per Page: ", perPage);
@@ -347,7 +341,9 @@ export const getBouquet = async (currentPage, perPage = 20) => {
 export const getConfigurationUploadLogs = async (currentPage, perPage = 20) => {
   console.log("Users - Current Page in fakebackend: ", currentPage);
   console.log("Users - Per Page: ", perPage);
-  return await getCompleteResponse(url.getConfigurationUploadLogsUrl(currentPage, perPage));
+  return await getCompleteResponse(
+    url.getConfigurationUploadLogsUrl(currentPage, perPage)
+  );
 };
 
 // export const getDocumentUploadPolicy = async (currentPage, perPage = 20) => {
@@ -401,7 +397,7 @@ export const addNewScheduleCustomerNotification = (
 
 export const getScheduledNotification = () =>
   get(url.GET_SCHEDULEDNOTIFICATION);
-// export const getStateUsers = () => get(url.GET_STATEUSERS);
+export const getStateUsers = () => get(url.GET_STATEUSERS);
 
 // export const getDistrict = () => get(url.GET_DISTRICT);
 export const addDistrict = (district) => post(url.ADD_DISTRICT, district);
@@ -596,7 +592,6 @@ export const addNewComplaintSubCategory = (complaintsubcate) =>
 //   get(url.GET_CONFIGURATIONUPLOADLOGS);
 export const getCompanyList = () => get(url.GET_COMPANYLIST);
 
-
 export const getBrandList = () => get(url.GET_BRANDLIST);
 export const getBrandListBrandType = () => get(url.GET_BRANDLIST_BRANDTYPE);
 export const getBrandListBoxType = () => get(url.GET_BRANDLIST_BOXTYPE);
@@ -674,9 +669,7 @@ export const getInventoryFaultyStb = () => get(url.GET_INVENTORYFAULTY_STB);
 export const getInventoryFaultyPairing = async (currentPage, perPage = 20) => {
   console.log("Faulty Pairing - Current Page in fakebackend: ", currentPage);
   console.log("Faulty Pairing - Per Page: ", perPage);
-  return await getCompleteResponse(
-    url.getFaultyPairingUrl(currentPage, perPage)
-  );
+  return await getCompleteResponse(url.getFaultyPairingUrl(currentPage, 20));
 };
 
 export const getInventoryBlacklistedSmartcard = () =>

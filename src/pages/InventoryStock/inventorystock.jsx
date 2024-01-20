@@ -80,10 +80,12 @@ const InventoryStock = (props) => {
   } = useSelector(inventorystockProperties);
 
   useEffect(() => {
-    dispatch(onGetInventoryStockSmartcard());
-    dispatch(onGetInventoryStockStb());
-    dispatch(onGetInventoryStockPairing());
-  }, [dispatch]);
+    if (stockpairing && !stockpairing.length) {
+      dispatch(onGetInventoryStockSmartcard());
+      dispatch(onGetInventoryStockStb());
+      dispatch(onGetInventoryStockPairing());
+    }
+  }, [dispatch, stockpairing]);
 
   const selectInventoryFaultyState = (state) => state.faultysmartcard;
   const inventoryfaultyProperties = createSelector(
@@ -110,10 +112,12 @@ const InventoryStock = (props) => {
   } = useSelector(inventoryfaultyProperties);
 
   useEffect(() => {
-    dispatch(onGetInventoryFaultySmartcard());
-    dispatch(onGetInventoryFaultyStb());
-    dispatch(onGetInventoryFaultyPairing());
-  }, [dispatch]);
+    if (faultysmartcard && !faultysmartcard.length) {
+      dispatch(onGetInventoryFaultySmartcard());
+      dispatch(onGetInventoryFaultyStb());
+      dispatch(onGetInventoryFaultyPairing());
+    }
+  }, [dispatch, faultysmartcard]);
 
   const selectInventoryAllottedState = (state) => state.allottedpairing;
   const inventoryallottedProperties = createSelector(
@@ -140,10 +144,12 @@ const InventoryStock = (props) => {
   } = useSelector(inventoryallottedProperties);
 
   useEffect(() => {
-    dispatch(onGetInventoryAllottedSmartcard());
-    dispatch(onGetInventoryAllottedStb());
-    dispatch(onGetInventoryAllottedPairing());
-  }, [dispatch]);
+    if (allottedpairing && !allottedpairing.length) {
+      dispatch(onGetInventoryAllottedSmartcard());
+      dispatch(onGetInventoryAllottedStb());
+      dispatch(onGetInventoryAllottedPairing());
+    }
+  }, [dispatch, allottedpairing]);
 
   useEffect(() => {
     console.log("allotted pairing: ", allottedpairing);
@@ -553,6 +559,27 @@ const InventoryStock = (props) => {
       },
     ];
   };
+
+  console.log(
+    "Stock current page: ",
+    stockcurrentPage,
+    " stock page size: ",
+    stockpageSize
+  );
+
+  console.log(
+    "faultty current page: ",
+    faultycurrentPage,
+    " faulty page size: ",
+    faultypageSize
+  );
+
+  console.log(
+    "allotted current page: ",
+    allottedcurrentPage,
+    " allotted page size: ",
+    allottedpageSize
+  );
 
   return (
     <React.Fragment>

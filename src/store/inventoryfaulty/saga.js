@@ -41,7 +41,7 @@ function* fetchInventoryFaultyStb() {
 function* fetchInventoryFaultyPairing() {
   try {
     let faultypairingStore = yield select(getFaultyPairingStore);
-
+    console.log("faulty pairing store: ", faultypairingStore);
     const pageSize = faultypairingStore.pageSize;
     const currentPage = faultypairingStore.currentPage;
 
@@ -51,7 +51,7 @@ function* fetchInventoryFaultyPairing() {
       pageSize
     );
     console.log("Response from API -", response);
-    // debugger;
+    debugger;
     yield put(getInventoryFaultyPairingSuccess(response));
   } catch (error) {
     yield put(getInventoryFaultyPairingFail(error));
