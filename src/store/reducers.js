@@ -52,7 +52,7 @@ import reason from "./reasonlist/reducer";
 import bank from "./banklist/reducer";
 import promovoucher from "./promovoucherlist/reducer";
 import admindetails from "./admin/reducer";
-import inventorystock from "./inventorystock/reducer";
+import stocksmartcard from "./inventorystock/reducer";
 import operatorforassign from "./ncflist/reducer";
 import operatorforbouquet from "./bouquetlist/reducer";
 import stockstb from "./inventorystock/reducer";
@@ -117,7 +117,7 @@ const rootReducer = combineReducers({
   bank,
   promovoucher,
   admindetails,
-  inventorystock,
+  stocksmartcard,
   operatorforassign,
   operatorforbouquet,
   stockstb,

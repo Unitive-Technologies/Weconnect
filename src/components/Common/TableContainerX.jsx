@@ -66,7 +66,7 @@ const createLimitedArray = (startPage, totalPage, limit) => {
     { length: endPage - (startPage - 1) },
     (_, index) => startPage + index
   );
-  console.log(updatedArray);
+  // console.log(updatedArray);
   return updatedArray;
 };
 const TableContainerX = ({
@@ -91,7 +91,7 @@ const TableContainerX = ({
   goToPage,
 }) => {
   const [navigationPage, setNavigationPage] = React.useState(currentPage);
-  console.log("[Table ContainerX] Page Size: ", pageSize);
+  // console.log("[Table ContainerX] Page Size: ", pageSize);
   const {
     getTableProps,
     getTableBodyProps,

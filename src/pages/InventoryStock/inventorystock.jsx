@@ -53,46 +53,26 @@ const InventoryStock = (props) => {
   const [activeTab, setActiveTab] = useState("1");
   const [selectedOption, setSelectedOption] = useState("In-stock");
 
-  const selectInventoryStockState = (state) => state.inventorystock;
+  const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
     selectInventoryStockState,
-    (inventorystock) => ({
-      inventory_stock: inventorystock.inventorystock,
-      loading: inventorystock.loading,
-      stockstb: inventorystock.stockstb,
-      stockpairing: inventorystock.stockpairing,
-      faultysmartcard: inventorystock.faultysmartcard,
-      faultystb: inventorystock.faultystb,
-      faultypairing: inventorystock.faultypairing,
-      blacklistedsmartcard: inventorystock.blacklistedsmartcard,
-      blacklistedstb: inventorystock.blacklistedstb,
-      blacklistedpairing: inventorystock.blacklistedpairing,
-      allottedsmartcard: inventorystock.allottedsmartcard,
-      allottedstb: inventorystock.allottedstb,
-      allottedpairing: inventorystock.allottedpairing,
-      stocktotalPage: inventorystock.totalPages,
-      stocktotalCount: inventorystock.totalCount,
-      stockpageSize: inventorystock.perPage,
-      stockcurrentPage: inventorystock.currentPage,
-      faultytotalPage: inventorystock.totalPages,
-      faultytotalCount: inventorystock.totalCount,
-      faultypageSize: inventorystock.perPage,
-      faultycurrentPage: inventorystock.currentPage,
-      allottedtotalPage: inventorystock.totalPages,
-      allottedtotalCount: inventorystock.totalCount,
-      allottedpageSize: inventorystock.perPage,
-      allottedcurrentPage: inventorystock.currentPage,
+    (stockpairing) => ({
+      stocksmartcard: stockpairing.inventorystock,
+      loading: stockpairing.loading,
+      stockstb: stockpairing.stockstb,
+      stockpairing: stockpairing.stockpairing,
+      stocktotalPage: stockpairing.totalPages,
+      stocktotalCount: stockpairing.totalCount,
+      stockpageSize: stockpairing.perPage,
+      stockcurrentPage: stockpairing.currentPage,
     })
   );
 
   const {
-    inventory_stock,
+    stocksmartcard,
     loading,
     stockstb,
     stockpairing,
-    blacklistedsmartcard,
-    blacklistedstb,
-    blacklistedpairing,
     stocktotalPage,
     stocktotalCount,
     stockpageSize,
@@ -100,18 +80,10 @@ const InventoryStock = (props) => {
   } = useSelector(inventorystockProperties);
 
   useEffect(() => {
-    if (inventory_stock && !inventory_stock.length) {
-      dispatch(onGetInventoryStockSmartcard());
-      dispatch(onGetInventoryStockStb());
-      dispatch(onGetInventoryStockPairing());
-      dispatch(onGetInventoryBlacklistedSmartcard());
-      dispatch(onGetInventoryBlacklistedStb());
-      dispatch(onGetInventoryBlacklistedPairing());
-      dispatch(onGetInventoryAllottedSmartcard());
-      dispatch(onGetInventoryAllottedStb());
-      dispatch(onGetInventoryAllottedPairing());
-    }
-  }, [dispatch, inventory_stock]);
+    dispatch(onGetInventoryStockSmartcard());
+    dispatch(onGetInventoryStockStb());
+    dispatch(onGetInventoryStockPairing());
+  }, [dispatch]);
 
   const selectInventoryFaultyState = (state) => state.faultysmartcard;
   const inventoryfaultyProperties = createSelector(
@@ -138,24 +110,22 @@ const InventoryStock = (props) => {
   } = useSelector(inventoryfaultyProperties);
 
   useEffect(() => {
-    // if (faultysmartcard && !faultysmartcard.length) {
     dispatch(onGetInventoryFaultySmartcard());
     dispatch(onGetInventoryFaultyStb());
     dispatch(onGetInventoryFaultyPairing());
-    // }
   }, [dispatch]);
 
-  const selectInventoryAllottedState = (state) => state.allottedsmartcard;
+  const selectInventoryAllottedState = (state) => state.allottedpairing;
   const inventoryallottedProperties = createSelector(
     selectInventoryAllottedState,
-    (allottedsmartcard) => ({
-      allottedsmartcard: allottedsmartcard.faultysmartcard,
-      allottedstb: allottedsmartcard.faultystb,
-      allottedpairing: allottedsmartcard.faultypairing,
-      allottedtotalPage: allottedsmartcard.totalPages,
-      allottedtotalCount: allottedsmartcard.totalCount,
-      allottedpageSize: allottedsmartcard.perPage,
-      allottedcurrentPage: allottedsmartcard.currentPage,
+    (allottedpairing) => ({
+      allottedsmartcard: allottedpairing.allottedsmartcard,
+      allottedstb: allottedpairing.allottedstb,
+      allottedpairing: allottedpairing.allottedpairing,
+      allottedtotalPage: allottedpairing.totalPages,
+      allottedtotalCount: allottedpairing.totalCount,
+      allottedpageSize: allottedpairing.perPage,
+      allottedcurrentPage: allottedpairing.currentPage,
     })
   );
 
@@ -174,6 +144,30 @@ const InventoryStock = (props) => {
     dispatch(onGetInventoryAllottedStb());
     dispatch(onGetInventoryAllottedPairing());
   }, [dispatch]);
+
+  useEffect(() => {
+    console.log("allotted pairing: ", allottedpairing);
+  }, [allottedpairing]);
+
+  const selectInventoryBlacklistedState = (state) => state.blacklistedsmartcard;
+  const inventoryblacklistedProperties = createSelector(
+    selectInventoryBlacklistedState,
+    (blaclistedsmartcard) => ({
+      blacklistedsmartcard: blaclistedsmartcard.blacklistedsmartcard,
+      blacklistedstb: blaclistedsmartcard.blacklistedstb,
+      blacklistedpairing: blaclistedsmartcard.blacklistedpairing,
+    })
+  );
+
+  const { blacklistedsmartcard, blacklistedstb, blacklistedpairing } =
+    useSelector(inventoryblacklistedProperties);
+
+  useEffect(() => {
+    dispatch(onGetInventoryBlacklistedSmartcard());
+    dispatch(onGetInventoryBlacklistedStb());
+    dispatch(onGetInventoryBlacklistedPairing());
+  }, [dispatch]);
+
   const goToPage = (toPage) => {
     console.log("[GOTO PAGE] Trigger to page - ", toPage);
     dispatch(onGoToPage(toPage));
@@ -201,7 +195,7 @@ const InventoryStock = (props) => {
   const getFilteredData = () => {
     if (selectedOption === "In-stock") {
       if (activeTab === "1") {
-        return inventory_stock;
+        return stocksmartcard;
       } else if (activeTab === "2") {
         return stockstb;
       } else if (activeTab === "3") {
