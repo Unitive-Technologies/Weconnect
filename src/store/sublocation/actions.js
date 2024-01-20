@@ -11,7 +11,13 @@ import {
   GET_LOCATION_ONSUBLOCATION,
   GET_LOCATION_ONSUBLOCATION_SUCCESS,
   GET_LOCATION_ONSUBLOCATION_FAIL,
+  UPDATE_SUBLOCATION_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_SUBLOCATION_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getSublocation = () => ({
   type: GET_SUBLOCATION,

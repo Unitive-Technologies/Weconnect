@@ -126,11 +126,15 @@ export const GET_LCO_ONLOCATION =
 export const GET_SINGLE_LOCATION = (id) => `/location/${id}?vr=web1.0`;
 
 export const GET_SUBLOCATION =
-  "/sublocation?expand=created_by_lbl,operator_lbl,location_lbl,status_lbl,location_code,operator_code&vr=web1.0";
+  "/location?expand=created_by_lbl,operator_lbl,operator_code,status_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_SUBLOCATION = "/sublocation?vr=web1.0";
 export const updateSublocationById = (id) => `/sublocation/${id}?vr=web1.0`;
 export const GET_LOCATION_ONSUBLOCATION =
   "/location/list?fields=id,name&expand=operator_lbl&per-page=100&vr=web1.0";
+export const getSublocationUrl = (currPage, perPage) => {
+  console.log("current page in City url - ", currPage, perPage);
+  return `/location?expand=created_by_lbl,operator_lbl,operator_code,status_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+};
 
 export const GET_DISTRIBUTORS =
   "/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,branch_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=2&page=1&per-page=50&vr=web1.0";

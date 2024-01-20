@@ -256,6 +256,12 @@ export const getCity = async (currentPage, perPage = 20) => {
   return await getCompleteResponse(url.getCityUrl(currentPage, perPage));
 };
 
+export const getSublocation = async (currentPage, perPage = 20) => {
+  console.log("City - Current Page in fakebackend: ", currentPage);
+  console.log("City - Per Page: ", perPage);
+  return await getCompleteResponse(url.getSublocationUrl(currentPage, perPage));
+};
+
 export const getLocation = async (currentPage, perPage = 20) => {
   console.log("Location - Current Page in fakebackend: ", currentPage);
   console.log("Location - Per Page: ", perPage);
@@ -406,7 +412,7 @@ export const updateLocation = (id, location) =>
 export const getLcoOnLocation = () => get(url.GET_LCO_ONLOCATION);
 export const getSingleLocation = (id) => get(url.GET_SINGLE_LOCATION(id));
 
-export const getSublocation = () => get(url.GET_SUBLOCATION);
+// export const getSublocation = () => get(url.GET_SUBLOCATION);
 export const addSublocation = (sublocation) =>
   post(url.ADD_SUBLOCATION, sublocation);
 export const updateSublocation = (id, sublocation) =>

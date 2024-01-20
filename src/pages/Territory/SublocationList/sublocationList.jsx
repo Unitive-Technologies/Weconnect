@@ -13,16 +13,20 @@ import {
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import {
+  goToPage as onGoToPage,
   getSublocation as onGetSublocation,
-  getAdministrativeDivisionStatus as onGetAdministrativeDivisionStatus,
   getLocationOnSublocation as onGetLocationOnSublocation,
-} from "/src/store/actions";
+} from "/src/store/sublocation/actions";
+import {
+  getAdministrativeDivisionStatus as onGetAdministrativeDivisionStatus,
+} from "/src/store/district/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddSubLocation from "./AddSubLocation";
 import UploadSubLocation from "./UploadSubLocation";
 import ViewSubLocation from "./ViewSubLocation";
+import TableContainerX from "../../../components/Common/TableContainerX";
 
 const SublocationList = (props) => {
   //meta title
@@ -37,6 +41,10 @@ const SublocationList = (props) => {
       subloc: sublocation.sublocation,
       loading: sublocation.loading,
       locateonsublocate: sublocation.locateonsublocate,
+      totalPage: sublocation.totalPages,
+      totalCount: sublocation.totalCount,
+      pageSize: sublocation.perPage,
+      currentPage: sublocation.currentPage,
     })
   );
 
@@ -50,9 +58,12 @@ const SublocationList = (props) => {
   );
 
   const { districts, status } = useSelector(districtProperties);
-  const { subloc, loading, locateonsublocate } = useSelector(
-    sublocationProperties
-  );
+  const { subloc, loading, locateonsublocate, totalPage,
+    totalCount,
+    pageSize,
+    currentPage, } = useSelector(
+      sublocationProperties
+    );
   const [isLoading, setLoading] = useState(loading);
   const [showAddSubLocation, setShowAddSubLocation] = useState(false);
   const [showUploadSubLocation, setShowUploadSubLocation] = useState(false);
@@ -69,18 +80,19 @@ const SublocationList = (props) => {
     () => [
       {
         Header: "#",
-        // accessor: "name",
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          // const totalRows = cellProps.rows.length;
+          // const reverseIndex = totalRows - cellProps.row.index;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
 
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -169,11 +181,11 @@ const SublocationList = (props) => {
       },
       {
         Header: "Status",
-        accessor: "status",
+        accessor: "status_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.status}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.status_lbl}</p>
           );
         },
       },
@@ -253,6 +265,12 @@ const SublocationList = (props) => {
     }
   }, [dispatch, districts]);
 
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetSublocation());
+  };
+
   const handleAddSubLocation = () => {
     setShowAddSubLocation(!showAddSubLocation);
   };
@@ -309,7 +327,7 @@ const SublocationList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    <TableContainer
+                    {/* <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={subloc}
@@ -322,6 +340,24 @@ const SublocationList = (props) => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
+                    /> */}
+                    <TableContainerX
+                      columns={columns}
+                      data={subloc}
+                      isShowTableActionButtons={true}
+                      isLoading={loading}
+                      isPagination={true}
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      totalPage={Number(totalPage)}
+                      isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      tableActions={getTableActions()}
+                      // handleRowClick={(row) => {
+                      //   toggleViewModal(row);
+                      // }}
+                      goToPage={goToPage}
                     />
                   </CardBody>
                 </Card>
