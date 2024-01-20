@@ -67,7 +67,6 @@ const createLimitedArray = (startPage, totalPage, limit) => {
     (_, index) => startPage + index
   );
   console.log(updatedArray);
-  debugger;
   return updatedArray;
 };
 const TableContainerX = ({

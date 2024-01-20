@@ -22,22 +22,28 @@ import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import classnames from "classnames";
 import {
-  getInventoryStock as onGetInventoryStock,
+  getInventoryStockSmartcard as onGetInventoryStockSmartcard,
   getInventoryStockStb as onGetInventoryStockStb,
   getInventoryStockPairing as onGetInventoryStockPairing,
+  goToPage as onGoToPage,
+} from "/src/store/inventorystock/actions";
+import {
   getInventoryFaultySmartcard as onGetInventoryFaultySmartcard,
   getInventoryFaultyStb as onGetInventoryFaultyStb,
   getInventoryFaultyPairing as onGetInventoryFaultyPairing,
+  goToPage as onGoToPage1,
+} from "/src/store/inventoryfaulty/actions";
+import {
   getInventoryBlacklistedSmartcard as onGetInventoryBlacklistedSmartcard,
   getInventoryBlacklistedStb as onGetInventoryBlacklistedStb,
   getInventoryBlacklistedPairing as onGetInventoryBlacklistedPairing,
+} from "/src/store/inventoryblacklisted/actions";
+import {
   getInventoryAllottedSmartcard as onGetInventoryAllottedSmartcard,
   getInventoryAllottedStb as onGetInventoryAllottedStb,
   getInventoryAllottedPairing as onGetInventoryAllottedPairing,
-  goToPage as onGoToPage,
-  goToPage1 as onGoToPage1,
-  goToPage2 as onGoToPage2,
-} from "/src/store/inventorystock/actions";
+  goToPage as onGoToPage2,
+} from "/src/store/inventoryallotted/actions";
 import StockStb from "./StockStb";
 import StockPairing from "./StockPairing";
 
@@ -87,22 +93,15 @@ const InventoryStock = (props) => {
     blacklistedsmartcard,
     blacklistedstb,
     blacklistedpairing,
-    allottedsmartcard,
-    allottedstb,
-    allottedpairing,
     stocktotalPage,
     stocktotalCount,
     stockpageSize,
     stockcurrentPage,
-    allottedtotalPage,
-    allottedtotalCount,
-    allottedpageSize,
-    allottedcurrentPage,
   } = useSelector(inventorystockProperties);
 
   useEffect(() => {
     if (inventory_stock && !inventory_stock.length) {
-      dispatch(onGetInventoryStock());
+      dispatch(onGetInventoryStockSmartcard());
       dispatch(onGetInventoryStockStb());
       dispatch(onGetInventoryStockPairing());
       dispatch(onGetInventoryBlacklistedSmartcard());
@@ -146,6 +145,35 @@ const InventoryStock = (props) => {
     // }
   }, [dispatch]);
 
+  const selectInventoryAllottedState = (state) => state.allottedsmartcard;
+  const inventoryallottedProperties = createSelector(
+    selectInventoryAllottedState,
+    (allottedsmartcard) => ({
+      allottedsmartcard: allottedsmartcard.faultysmartcard,
+      allottedstb: allottedsmartcard.faultystb,
+      allottedpairing: allottedsmartcard.faultypairing,
+      allottedtotalPage: allottedsmartcard.totalPages,
+      allottedtotalCount: allottedsmartcard.totalCount,
+      allottedpageSize: allottedsmartcard.perPage,
+      allottedcurrentPage: allottedsmartcard.currentPage,
+    })
+  );
+
+  const {
+    allottedsmartcard,
+    allottedstb,
+    allottedpairing,
+    allottedcurrentPage,
+    allottedpageSize,
+    allottedtotalCount,
+    allottedtotalPage,
+  } = useSelector(inventoryallottedProperties);
+
+  useEffect(() => {
+    dispatch(onGetInventoryAllottedSmartcard());
+    dispatch(onGetInventoryAllottedStb());
+    dispatch(onGetInventoryAllottedPairing());
+  }, [dispatch]);
   const goToPage = (toPage) => {
     console.log("[GOTO PAGE] Trigger to page - ", toPage);
     dispatch(onGoToPage(toPage));

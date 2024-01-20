@@ -50,6 +50,9 @@ import bankSaga from "./banklist/saga";
 import promoVoucherSaga from "./promovoucherlist/saga";
 import admindetailsSaga from "./admin/saga";
 import inventorystockSaga from "./inventorystock/saga";
+import inventoryallottedSaga from "./inventoryallotted/saga";
+import inventoryfaultySaga from "./inventoryfaulty/saga";
+import inventoryblacklistedSaga from "./inventoryblacklisted/saga";
 
 export default function* rootSaga() {
   yield all([
@@ -103,5 +106,8 @@ export default function* rootSaga() {
     fork(promoVoucherSaga),
     fork(admindetailsSaga),
     fork(inventorystockSaga),
+    fork(inventoryallottedSaga),
+    fork(inventoryblacklistedSaga),
+    fork(inventoryfaultySaga),
   ]);
 }

@@ -57,15 +57,15 @@ import operatorforassign from "./ncflist/reducer";
 import operatorforbouquet from "./bouquetlist/reducer";
 import stockstb from "./inventorystock/reducer";
 import stockpairing from "./inventorystock/reducer";
-import faultysmartcard from "./inventorystock/reducer";
-import faultystb from "./inventorystock/reducer";
-import faultypairing from "./inventorystock/reducer";
-import blacklistedsmartcard from "./inventorystock/reducer";
-import blacklistedstb from "./inventorystock/reducer";
-import blacklistedpairing from "./inventorystock/reducer";
-import allottedsmartcard from "./inventorystock/reducer";
-import allottedstb from "./inventorystock/reducer";
-import allottedpairing from "./inventorystock/reducer";
+import faultysmartcard from "./inventoryfaulty/reducer";
+import faultystb from "./inventoryfaulty/reducer";
+import faultypairing from "./inventoryfaulty/reducer";
+import blacklistedsmartcard from "./inventoryblacklisted/reducer";
+import blacklistedstb from "./inventoryblacklisted/reducer";
+import blacklistedpairing from "./inventoryblacklisted/reducer";
+import allottedsmartcard from "./inventoryallotted/reducer";
+import allottedstb from "./inventoryallotted/reducer";
+import allottedpairing from "./inventoryallotted/reducer";
 
 const rootReducer = combineReducers({
   // public

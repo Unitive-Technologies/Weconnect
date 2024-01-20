@@ -266,9 +266,7 @@ export const getLanguageList = async (currentPage, perPage = 20) => {
 export const getChannelList = async (currentPage, perPage = 20) => {
   console.log("Channel List - Current Page in fakebackend: ", currentPage);
   console.log("Channel List - Per Page: ", perPage);
-  return await getCompleteResponse(
-    url.getChannelListUrl(currentPage, perPage)
-  );
+  return await getCompleteResponse(url.getChannelListUrl(currentPage, perPage));
 };
 
 export const getBroadcasterBouquetList = async (currentPage, perPage = 20) => {
@@ -291,7 +289,9 @@ export const getPackageList = async (currentPage, perPage = 20) => {
 export const getWarehouseList = async (currentPage, perPage = 20) => {
   console.log("Warehouse List - Current Page in fakebackend: ", currentPage);
   console.log("Warehouse List - Per Page: ", perPage);
-  return await getCompleteResponse(url.getWarehouseListUrl(currentPage, perPage));
+  return await getCompleteResponse(
+    url.getWarehouseListUrl(currentPage, perPage)
+  );
 };
 
 export const getReason = async (currentPage, perPage = 20) => {
@@ -303,7 +303,9 @@ export const getReason = async (currentPage, perPage = 20) => {
 export const getPromoVoucher = async (currentPage, perPage = 20) => {
   console.log("Users - Current Page in fakebackend: ", currentPage);
   console.log("Users - Per Page: ", perPage);
-  return await getCompleteResponse(url.getPromoVoucherUrl(currentPage, perPage));
+  return await getCompleteResponse(
+    url.getPromoVoucherUrl(currentPage, perPage)
+  );
 };
 
 export const getBouquet = async (currentPage, perPage = 20) => {
@@ -607,7 +609,8 @@ export const getSMSMessageTempList = () => get(url.GET_SMSMESSAGETEMPLIST);
 export const addNewSMSMessageTempList = (smsmsg) =>
   post(url.ADD_NEW_SMSMESSAGETEMPLIST, smsmsg);
 
-export const getInventoryStock = () => get(url.GET_INVENTORYSTOCK);
+export const getInventoryStockSmartcard = () =>
+  get(url.GET_INVENTORYSTOCK_SMARTCARD);
 export const getInventoryStockStb = () => get(url.GET_INVENTORYSTOCK_STB);
 // export const getInventoryStockPairing = () =>
 //   get(url.GET_INVENTORYSTOCK_PAIRING);
