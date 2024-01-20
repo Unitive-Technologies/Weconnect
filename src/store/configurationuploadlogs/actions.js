@@ -2,7 +2,13 @@ import {
   GET_CONFIGURATIONUPLOADLOGS,
   GET_CONFIGURATIONUPLOADLOGS_FAIL,
   GET_CONFIGURATIONUPLOADLOGS_SUCCESS,
+  UPDATE_CONFIGURATIONUPLOADLOGS_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_CONFIGURATIONUPLOADLOGS_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getConfigurationUploadLogs = () => ({
   type: GET_CONFIGURATIONUPLOADLOGS,

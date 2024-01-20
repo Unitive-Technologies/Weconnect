@@ -314,6 +314,18 @@ export const getBouquet = async (currentPage, perPage = 20) => {
   return await getCompleteResponse(url.getBouquetUrl(currentPage, perPage));
 };
 
+export const getConfigurationUploadLogs = async (currentPage, perPage = 20) => {
+  console.log("Users - Current Page in fakebackend: ", currentPage);
+  console.log("Users - Per Page: ", perPage);
+  return await getCompleteResponse(url.getConfigurationUploadLogsUrl(currentPage, perPage));
+};
+
+// export const getDocumentUploadPolicy = async (currentPage, perPage = 20) => {
+//   console.log("Users - Current Page in fakebackend: ", currentPage);
+//   console.log("Users - Per Page: ", perPage);
+//   return await getCompleteResponse(url.getDocumentUploadPolicyUrl(currentPage, perPage));
+// };
+
 export const getGroupPolicy = () => get(url.GET_GROUPPOLICY);
 export const addNewGroupPolicy = (groupPolicy) =>
   post(url.ADD_NEW_GROUPPOLICY, groupPolicy);
@@ -549,9 +561,10 @@ export const getComplaintSubCategoryDesignation = () =>
 export const addNewComplaintSubCategory = (complaintsubcate) =>
   post(url.ADD_NEW_COMPLAINTCATEGORY, complaintsubcate);
 
-export const getConfigurationUploadLogs = () =>
-  get(url.GET_CONFIGURATIONUPLOADLOGS);
+// export const getConfigurationUploadLogs = () =>
+//   get(url.GET_CONFIGURATIONUPLOADLOGS);
 export const getCompanyList = () => get(url.GET_COMPANYLIST);
+
 
 export const getBrandList = () => get(url.GET_BRANDLIST);
 export const getBrandListBrandType = () => get(url.GET_BRANDLIST_BRANDTYPE);

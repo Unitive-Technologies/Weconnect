@@ -9,31 +9,20 @@ import {
   Col,
   Container,
   Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
   UncontrolledTooltip,
-  Input,
-  Form,
 } from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-
-import { Email, Tags, Projects } from "./configurationUploadLogsCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
 
-import { getConfigurationUploadLogs as onGetConfigurationUploadLogs } from "/src/store/actions";
-import { isEmpty } from "lodash";
+import { goToPage as onGoToPage, getConfigurationUploadLogs as onGetConfigurationUploadLogs } from "/src/store/configurationuploadlogs/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import TableContainerX from "../../../components/Common/TableContainerX";
 
 const ConfigurationUploadLogs = (props) => {
   //meta title
@@ -48,12 +37,19 @@ const ConfigurationUploadLogs = (props) => {
     (configurationuploadlogs) => ({
       configuplog: configurationuploadlogs.configurationuploadlogs,
       loading: configurationuploadlogs.loading,
+      totalPage: configurationuploadlogs.totalPages,
+      totalCount: configurationuploadlogs.totalCount,
+      pageSize: configurationuploadlogs.perPage,
+      currentPage: configurationuploadlogs.currentPage,
     })
   );
 
-  const { configuplog, loading } = useSelector(
-    ConfigurationUploadLogsProperties
-  );
+  const { configuplog, loading, totalPage,
+    totalCount,
+    pageSize,
+    currentPage } = useSelector(
+      ConfigurationUploadLogsProperties
+    );
 
   useEffect(() => {
     console.log("configuplog data in component:", configuplog);
@@ -68,17 +64,19 @@ const ConfigurationUploadLogs = (props) => {
     () => [
       {
         Header: "#",
-        // accessor: "name",
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          // const totalRows = cellProps.rows.length;
+          // const reverseIndex = totalRows - cellProps.row.index;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
+
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -279,17 +277,11 @@ const ConfigurationUploadLogs = (props) => {
     }
   }, [dispatch, configuplog]);
 
-  // useEffect(() => {
-  //   setContact(users);
-  //   setIsEdit(false);
-  // }, [users]);
-
-  // useEffect(() => {
-  //   if (!isEmpty(users) && !!isEdit) {
-  //     setContact(users);
-  //     setIsEdit(false);
-  //   }
-  // }, [users]);
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetConfigurationUploadLogs());
+  };
 
   const toggle = () => {
     setModal(!modal);
@@ -373,7 +365,7 @@ const ConfigurationUploadLogs = (props) => {
                     {console.log(
                       "Configuration upload logs:" + JSON.stringify(configuplog)
                     )}
-                    <TableContainer
+                    {/* <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={configuplog}
@@ -387,169 +379,23 @@ const ConfigurationUploadLogs = (props) => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
+                    /> */}
+                    <TableContainerX
+                      columns={columns}
+                      data={configuplog}
+                      isShowTableActionButtons={true}
+                      isLoading={loading}
+                      isPagination={true}
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      totalPage={Number(totalPage)}
+                      isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      // tableActions={getTableActions()}
+                      handleUserClick={handleUserClicks}
+                      goToPage={goToPage}
                     />
-                    {/* <Modal isOpen={modal} toggle={toggle}>
-                      <ModalHeader toggle={toggle} tag="h4">
-                        {!!isEdit ? "Edit User" : "Add User"}
-                      </ModalHeader>
-                      <ModalBody>
-                        <Form
-                          onSubmit={(e) => {
-                            e.preventDefault();
-                            validation.handleSubmit();
-                            return false;
-                          }}
-                        >
-                          <Row>
-                            <Col xs={12}>
-                              <div className="mb-3">
-                                <Label className="form-label">Name</Label>
-                                <Input
-                                  name="name"
-                                  type="text"
-                                  placeholder="Insert Name"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.name || ""}
-                                  invalid={
-                                    validation.touched.name &&
-                                    validation.errors.name
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.name &&
-                                validation.errors.name ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.name}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">
-                                  Designation
-                                </Label>
-                                <Input
-                                  name="designation"
-                                  label="Designation"
-                                  placeholder="Insert Designation"
-                                  type="text"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.designation || ""}
-                                  invalid={
-                                    validation.touched.designation &&
-                                    validation.errors.designation
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.designation &&
-                                validation.errors.designation ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.designation}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">Email</Label>
-                                <Input
-                                  name="email"
-                                  label="Email"
-                                  type="email"
-                                  placeholder="Insert Email"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.email || ""}
-                                  invalid={
-                                    validation.touched.email &&
-                                    validation.errors.email
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.email &&
-                                validation.errors.email ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.email}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">Option</Label>
-                                <Input
-                                  type="select"
-                                  name="tags"
-                                  className="form-select"
-                                  multiple={true}
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.tags || []}
-                                  invalid={
-                                    validation.touched.tags &&
-                                    validation.errors.tags
-                                      ? true
-                                      : false
-                                  }
-                                >
-                                  <option>Photoshop</option>
-                                  <option>illustrator</option>
-                                  <option>Html</option>
-                                  <option>Php</option>
-                                  <option>Java</option>
-                                  <option>Python</option>
-                                  <option>UI/UX Designer</option>
-                                  <option>Ruby</option>
-                                  <option>Css</option>
-                                </Input>
-                                {validation.touched.tags &&
-                                validation.errors.tags ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.tags}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">Projects</Label>
-                                <Input
-                                  name="projects"
-                                  label="Projects"
-                                  type="text"
-                                  placeholder="Insert Projects"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.projects || ""}
-                                  invalid={
-                                    validation.touched.projects &&
-                                    validation.errors.projects
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.projects &&
-                                validation.errors.projects ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.projects}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                            </Col>
-                          </Row>
-                          <Row>
-                            <Col>
-                              <div className="text-end">
-                                <button
-                                  type="submit"
-                                  className="btn btn-success save-user"
-                                >
-                                  Save
-                                </button>
-                              </div>
-                            </Col>
-                          </Row>
-                        </Form>
-                      </ModalBody>
-                    </Modal> */}
                   </CardBody>
                 </Card>
               </Col>

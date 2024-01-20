@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 
 import { GET_CONFIGURATIONUPLOADLOGS } from "./actionTypes";
 
@@ -10,50 +10,22 @@ import {
 //Include Both Helper File with needed methods
 import { getConfigurationUploadLogs } from "../../helpers/fakebackend_helper";
 
-const convertConfigurationUploadLogsObject = (configurationUploadLogs) => {
-  // Notification Template has more data than what we need, we need to convert each of the Notification Template user object in the list with needed colums of the table
-  return configurationUploadLogs.map((configurationuploadlogs) => {
-    return {
-      ...configurationuploadlogs,
-      id: configurationuploadlogs.id,
-      job_id: configurationuploadlogs.job_id,
-      type: configurationuploadlogs.type,
-      uploaded_file: configurationuploadlogs.uploaded_file,
-      file_count: configurationuploadlogs.file_count,
-      row_count: configurationuploadlogs.row_count,
-      processed_count: configurationuploadlogs.processed_count,
-      success_count: configurationuploadlogs.success_count,
-      error_count: configurationuploadlogs.error_count,
-      created_by_lbl: configurationuploadlogs.created_by_lbl,
-      updated_at: configurationuploadlogs.updated_at,
-      processed_rows_file: configurationuploadlogs.processed_rows_file,
-      created_by:
-        configurationuploadlogs.created_by === -1 ? "console" : "My MSO(mso)",
-      status:
-        configurationuploadlogs.status === 1
-          ? "ACTIVE"
-          : configurationuploadlogs.status === 0
-            ? "INACTIVE"
-            : "BLOCKED",
-      showonweb:
-        configurationuploadlogs.showonweb === 1
-          ? "ACTIVE"
-          : configurationuploadlogs.showonweb === 0
-            ? "INACTIVE"
-            : "BLOCKED",
-    };
-  });
-};
+export const getConfigurationUploadLogsStore = (state) => state.configurationuploadlogs;
 
 function* fetchConfigurationUploadLogs() {
   try {
-    const response = yield call(getConfigurationUploadLogs);
-    // const configurationUploadLogsList =
-    //   convertConfigurationUploadLogsObject(response);
-    yield put(getConfigurationUploadLogsSuccess(response.data));
+    let ConfigurationUploadLogsStore = yield select(getConfigurationUploadLogsStore);
+
+    const pageSize = ConfigurationUploadLogsStore.pageSize;
+    const currentPage = ConfigurationUploadLogsStore.currentPage;
+
+    const response = yield call(getConfigurationUploadLogs, currentPage, pageSize);
+    console.log("Response from API -", response);
+    // debugger;
+    yield put(getConfigurationUploadLogsSuccess(response));
   } catch (error) {
-    console.error("Error fetching configuration upload logs:", error);
-    yield put(getConfigurationUploadLogsFail(error));
+    console.error("Error fetching Configuration Upload Logs list:", error);
+    yield put(getUsersFail(error));
   }
 }
 

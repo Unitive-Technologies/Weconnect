@@ -80,9 +80,9 @@ const contacts = (state = INIT_STATE, action) => {
     case UPDATE_USERS_CURRENT_PAGE:
       return Number(action.payload) <= state.totalPages
         ? {
-            ...state,
-            currentPage: action.payload,
-          }
+          ...state,
+          currentPage: action.payload,
+        }
         : state;
     case GET_USERS:
       return {

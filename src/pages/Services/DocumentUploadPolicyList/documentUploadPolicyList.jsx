@@ -9,22 +9,8 @@ import {
   Col,
   Container,
   Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
   UncontrolledTooltip,
-  Input,
-  Form,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-
 } from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
 
 import {
   Name,
@@ -42,7 +28,6 @@ import {
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
 
 // import {
 //   getUsers as onGetUsers,
@@ -52,7 +37,6 @@ import DeleteModal from "/src/components/Common/DeleteModal";
 // } from "/src/store/users/actions";
 
 // import { getdocumentUploadpolicy as onGetDocumentUploadPolicy } from "src/store/documentuploadpolicy/actions";
-import { isEmpty } from "lodash";
 import { getdocumentUploadpolicy as onGetDocumentUploadPolicy } from "../../../store/documentuploadpolicy/actions";
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -60,65 +44,13 @@ import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddNewDocumentUploadPolicy from "./AddNewDocumentUploadPolicyList";
 import UploadDocument from "./UploadDocument";
+import TableContainerX from "../../../components/Common/TableContainerX";
 
 const DocumentUploadPolicyList = (props) => {
   //meta title
   document.title = "Document Upload Policy List | VDigital";
 
   const dispatch = useDispatch();
-  // const [contact, setContact] = useState();
-  // validation
-  // const validation = useFormik({
-  //   // enableReinitialize : use this flag when initial values needs to be changed
-  //   enableReinitialize: true,
-
-  //   initialValues: {
-  //     name: (contact && contact.name) || "",
-  //     designation: (contact && contact.designation) || "",
-  //     tags: (contact && contact.tags) || "",
-  //     email: (contact && contact.email) || "",
-  //     projects: (contact && contact.projects) || "",
-  //   },
-  //   validationSchema: Yup.object({
-  //     name: Yup.string().required("Please Enter Your Name"),
-  //     designation: Yup.string().required("Please Enter Your Designation"),
-  //     tags: Yup.array().required("Please Enter Tag"),
-  //     email: Yup.string()
-  //       .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-  //       .required("Please Enter Your Email"),
-  //     projects: Yup.string().required("Please Enter Your Project"),
-  //   }),
-  //   onSubmit: (values) => {
-  //     if (isEdit) {
-  //       const updateUser = {
-  //         id: contact.id,
-  //         name: values.name,
-  //         designation: values.designation,
-  //         tags: values.tags,
-  //         email: values.email,
-  //         projects: values.projects,
-  //       };
-
-  //       // update user
-  //       dispatch(onUpdateUser(updateUser));
-  //       validation.resetForm();
-  //       setIsEdit(false);
-  //     } else {
-  //       const newUser = {
-  //         id: Math.floor(Math.random() * (30 - 20)) + 20,
-  //         name: values["name"],
-  //         designation: values["designation"],
-  //         email: values["email"],
-  //         tags: values["tags"],
-  //         projects: values["projects"],
-  //       };
-  //       // save new user
-  //       dispatch(onAddNewUser(newUser));
-  //       validation.resetForm();
-  //     }
-  //     toggle();
-  //   },
-  // });
 
   const selectDocumentPolicyState = (state) => state.documentUploadPolicy;
   const DocumentUploadProperties = createSelector(
@@ -126,10 +58,17 @@ const DocumentUploadPolicyList = (props) => {
     (documentUploadPolicy) => ({
       docupload: documentUploadPolicy.documentUploadPolicy,
       loading: documentUploadPolicy.loading,
+      totalPage: documentUploadPolicy.totalPages,
+      totalCount: documentUploadPolicy.totalCount,
+      pageSize: documentUploadPolicy.perPage,
+      currentPage: documentUploadPolicy.currentPage,
     })
   );
 
-  const { docupload, loading } = useSelector(DocumentUploadProperties);
+  const { docupload, loading, totalPage,
+    totalCount,
+    pageSize,
+    currentPage } = useSelector(DocumentUploadProperties);
 
   useEffect(() => {
     console.log("Doc Upload data in component:", docupload);
@@ -147,14 +86,16 @@ const DocumentUploadPolicyList = (props) => {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          // const totalRows = cellProps.rows.length;
+          // const reverseIndex = totalRows - cellProps.row.index;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
 
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -306,57 +247,15 @@ const DocumentUploadPolicyList = (props) => {
     }
   }, [dispatch, docupload]);
 
-  // useEffect(() => {
-  //   setContact(docupload);
-  //   setIsEdit(false);
-  // }, [docupload]);
-
-  // useEffect(() => {
-  //   if (!isEmpty(docupload) && !!isEdit) {
-  //     setContact(docupload);
-  //     setIsEdit(false);
-  //   }
-  // }, [docupload]);
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetDocumentUploadPolicy());
+  };
 
   const toggle = () => {
     setShowAddNewDocumentUploadPolicyList(!showAddNewDocumentUploadPolicyList);
   };
-
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
-
-  //delete customer
-  // const [deleteModal, setDeleteModal] = useState(false);
-
-  // const onClickDelete = (users) => {
-  //   setContact(users);
-  //   setDeleteModal(true);
-  // };
-
-  // const handleDeleteUser = () => {
-  //   if (contact && contact.id) {
-  //     dispatch(onDeleteUser(contact.id));
-  //   }
-  //   setContact("");
-  //   onPaginationPageChange(1);
-  //   setDeleteModal(false);
-  // };
-
-  // const handleUserClicks = () => {
-  //   setUserList("");
-  //   setIsEdit(false);
-  //   toggle();
-  // };
 
   const keyField = "id";
 
@@ -373,11 +272,6 @@ const DocumentUploadPolicyList = (props) => {
 
   return (
     <React.Fragment>
-      {/* <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
-      /> */}
       <AddNewDocumentUploadPolicy isOpen={showAddNewDocumentUploadPolicyList} toggle={toggle} />
       <div className="page-content">
         <Container fluid>
@@ -396,7 +290,7 @@ const DocumentUploadPolicyList = (props) => {
                     {console.log(
                       "DocUploadPolicy:" + JSON.stringify(docupload)
                     )}
-                    <TableContainer
+                    {/* <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={docupload}
@@ -410,6 +304,22 @@ const DocumentUploadPolicyList = (props) => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
+                    /> */}
+                    <TableContainerX
+                      columns={columns}
+                      data={docupload}
+                      isShowTableActionButtons={true}
+                      isLoading={loading}
+                      isPagination={true}
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      totalPage={Number(totalPage)}
+                      isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      tableActions={getTableActions()}
+                      handleAddNewDocumentUploadPolicyList={() => setShowAddNewDocumentUploadPolicyList(true)}
+                      goToPage={goToPage}
                     />
                   </CardBody>
                 </Card>

@@ -5,7 +5,13 @@ import {
   ADD_NEW_DOCUMENTUPLOADPOLICY,
   ADD_DOCUMENTUPLOADPOLICY_SUCCESS,
   ADD_DOCUMENTUPLOADPOLICY_FAIL,
+  UPDATE_DOCUMENTUPLOADPOLICY_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_DOCUMENTUPLOADPOLICY_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getdocumentUploadpolicy = () => ({
   type: GET_DOCUMENTUPLOADPOLICY,

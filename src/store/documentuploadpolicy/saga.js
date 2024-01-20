@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 
 import { GET_DOCUMENTUPLOADPOLICY, ADD_NEW_DOCUMENTUPLOADPOLICY } from "./actionTypes";
 
@@ -11,38 +11,21 @@ import {
 //Include Both Helper File with needed methods
 import { getDocumentUploadPolicy, addNewDocumentUploadPolicy } from "../../helpers/fakebackend_helper";
 
-const convertDocumentUploadPolicyListObject = (documentUploadPolicyList) => {
-  // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table
-  // return localChannelNumberList.map((localChannelNumber) => {
-  return documentUploadPolicyList.map((documentUploadPolicy) => {
-    console.log("lcno. :" + JSON.stringify(documentUploadPolicy));
-    return {
-      ...documentUploadPolicy,
-      id: documentUploadPolicy.id,
-      name: documentUploadPolicy.name,
-      code: documentUploadPolicy.code,
-      policystartdate: documentUploadPolicy.policystartdate,
-      policyuploaddate: documentUploadPolicy.policyuploaddate,
-      initiatedby: documentUploadPolicy.initiatedby,
-      approvedby: documentUploadPolicy.approvedby,
-      financialyear: documentUploadPolicy.financialyear,
-      remark: documentUploadPolicy.remark,
-      createdat: documentUploadPolicy.createdat,
-      status: documentUploadPolicy.status,
-      createdat: documentUploadPolicy.createdat,
-      createdby: documentUploadPolicy.createdby,
-    };
-  });
-};
+export const getDocumentUploadPolicyStore = (state) => state.documentUploadPolicy;
 
 function* fetchDocumentUploadPolicy() {
   try {
-    const response = yield call(getDocumentUploadPolicy);
-    console.log("response:" + JSON.stringify(response));
-    const documentUploadPolicyList =
-      convertDocumentUploadPolicyListObject(response);
-    yield put(getDocumentUploadPolicySuccess(documentUploadPolicyList));
+    let DocumentUploadPolicyStore = yield select(getDocumentUploadPolicyStore);
+
+    const pageSize = DocumentUploadPolicyStore.pageSize;
+    const currentPage = DocumentUploadPolicyStore.currentPage;
+
+    const response = yield call(getDocumentUploadPolicy, currentPage, pageSize);
+    console.log("Response from API -", response);
+    // debugger;
+    yield put(getDocumentUploadPolicySuccess(response));
   } catch (error) {
+    console.error("Error fetching Document Upload Policy:", error);
     yield put(getDocumentUploadPolicyFail(error));
   }
 }
