@@ -103,8 +103,6 @@ const ContactsList = (props) => {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          // const totalRows = cellProps.rows.length;
-          // const reverseIndex = totalRows - cellProps.row.index;
           const startIndex = (currentPage - 1) * pageSize;
           const index = startIndex + cellProps.row.index + 1;
 
@@ -192,8 +190,8 @@ const ContactsList = (props) => {
                   {cellProps.row.original.status === 1
                     ? "Active"
                     : cellProps.row.original.status === 0
-                      ? "In-Active"
-                      : "Blocked"}
+                    ? "In-Active"
+                    : "Blocked"}
                 </Link>
               </h5>
             </>
@@ -212,10 +210,10 @@ const ContactsList = (props) => {
                   {cellProps.row.original.status === 0
                     ? "MSO"
                     : cellProps.row.original.status === 1
-                      ? "RO"
-                      : cellProps.row.original.status === 2
-                        ? "DISTRIBUTOR"
-                        : "LCO"}
+                    ? "RO"
+                    : cellProps.row.original.status === 2
+                    ? "DISTRIBUTOR"
+                    : "LCO"}
                 </Link>
               </h5>
             </>
@@ -234,8 +232,8 @@ const ContactsList = (props) => {
                   {cellProps.row.original.status === 1
                     ? "Administrator"
                     : cellProps.row.original.status === 2
-                      ? "Staff"
-                      : "User"}
+                    ? "Staff"
+                    : "User"}
                 </Link>
               </h5>
             </>
@@ -418,10 +416,10 @@ const ContactsList = (props) => {
     // console.log("Row data:", row);
     setShowViewUser(!showViewUser);
     setViewUser(row);
-    if (row.length) {
-      console.log("Id: ", userData.id);
-      setSelectedId(row.id);
-    }
+    // if (row.length) {
+    //   console.log("Id: ", row.id);
+    //   setSelectedId(row.id);
+    // }
   };
 
   const keyField = "id";
@@ -483,9 +481,9 @@ const ContactsList = (props) => {
         userRole={userRole}
         userDesignation={userDesignation}
         userMsoPolicy={userMsoPolicy}
-      // userRegional={userRegional}
-      // userMsoDetails={userMsoDetails}
-      // userDistributor={userDistributor}
+        // userRegional={userRegional}
+        // userMsoDetails={userMsoDetails}
+        // userDistributor={userDistributor}
       />
       <UploadUserModal
         isOpen={showUploadUser}
@@ -502,7 +500,7 @@ const ContactsList = (props) => {
         // filteredInActiveUsers={filteredInActiveUsers}
         // filteredActiveInactiveUsers={filteredActiveInactiveUsers}
         users={users}
-      // setUsers={setUsers}
+        // setUsers={setUsers}
       />
       {/* {console.log("BulkUserSettings:" + JSON.stringify(userBulkSettings))} */}
       <BulkUserSettings

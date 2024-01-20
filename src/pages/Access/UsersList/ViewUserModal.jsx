@@ -941,7 +941,6 @@ const ViewUserModal = (props) => {
 };
 
 ViewUserModal.propTypes = {
-  handleViewUser: PropTypes.func,
   isOpen: PropTypes.bool,
   resetSelection: PropTypes.func,
   toggleModal: PropTypes.func,
