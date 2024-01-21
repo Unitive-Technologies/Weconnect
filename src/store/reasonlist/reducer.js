@@ -43,6 +43,7 @@ const Reason = (state = INIT_STATE, action) => {
           currentPage: action.payload,
         }
         : state;
+
     case GET_REASON:
       return {
         ...state,

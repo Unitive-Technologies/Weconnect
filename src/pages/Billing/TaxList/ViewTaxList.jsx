@@ -79,7 +79,7 @@ const ViewTaxList = (props) => {
 
   const handleCancel = () => {
     setShowEditTax(false);
-    resetSelection(); s
+    resetSelection();
     toggleViewModal();
   };
 

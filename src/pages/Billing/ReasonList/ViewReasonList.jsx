@@ -17,7 +17,7 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { updateReason as onUpdateReason } from "/src/store/reasonlist/actions";
+import { updateReason as onUpdateReason, getReason as onGetReason, } from "/src/store/reasonlist/actions";
 
 const ViewReason = (props) => {
   const { isOpen, resetSelection,
@@ -37,20 +37,21 @@ const ViewReason = (props) => {
       status: (reason && reason.status) || "",
       type_display_lbl: (reason && reason.type_display_lbl) || "",
       type: (reason && reason.type) || "",
+      applicableon: (reason && reason.applicableon) || "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required(""),
       status: Yup.string().required("Select Status"),
-      // type_display_lbl: Yup.string().required(""),
-      // type_display_lbl: Yup.array().min(1, "Select at least one Reason Type"),
       type: Yup.array().min(1, "Select at least one Reason Type"),
+      applicableon: Yup.array().required(
+        ""
+      ),
     }),
     onSubmit: (values) => {
-      // const type_display_lblArray = values["type_display_lbl"] || [];
-      // const type_display_lblIntegers = type_display_lblArray.map((option) =>
-      //   parseInt(option)
-      // );
-      console.log("Updated values" + JSON.stringify(values));
+      const applicableonArray = values["applicableon"] || [];
+      const applicableonIntegers = applicableonArray.map((option) =>
+        parseInt(option)
+      );
 
       const updateReason = {
         id: reason.id,
@@ -58,15 +59,16 @@ const ViewReason = (props) => {
         status: values.status,
         type_display_lbl: values.type_display_lbl,
         type: values.type,
-        // type_display_lbl: type_display_lblIntegers,
-        // type_display_lbl: values.type_display_lbl,
+        applicableon: applicableonIntegers,
       };
 
       // update user
       dispatch(onUpdateReason(updateReason));
+      dispatch(onGetReason());
       validation.resetForm();
-      resetSelection();
+      setShowEditReason(false);
       toggleViewModal();
+      resetSelection();
     },
   });
 
@@ -175,24 +177,29 @@ const ViewReason = (props) => {
                 <div className="mb-3">
                   <Label className="form-label">Reason Type</Label>
                   <Input
-                    name="type"
+                    name="applicableon"
                     type="select"
                     placeholder="Select at least one Reason Type"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.type || ""}
+                    value={validation.values.applicableon || []}
                     multiple
                     disabled={!showEditReason}
                   >
-                    {reasonReasonType.map((type) => (
+                    {reasonReasonType.map((applicableon) => (
+                      <option key={applicableon.id} value={applicableon.id}>
+                        {applicableon.name}
+                      </option>
+                    ))}
+                    {/* {reasonReasonType.map((type) => (
                       <option key={type.id} value={type.id}>
                         {type.name}
                       </option>
-                    ))}
+                    ))} */}
                   </Input>
-                  {validation.touched.type && validation.errors.type ? (
+                  {validation.touched.applicableon && validation.errors.applicableon ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.type}
+                      {validation.errors.applicableon}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -236,8 +243,8 @@ const ViewReason = (props) => {
 };
 
 ViewReason.propTypes = {
-  toggleViewModal: PropTypes.func,
   isOpen: PropTypes.bool,
+  toggleViewModal: PropTypes.func,
   resetSelection: PropTypes.func,
 
   reason: PropTypes.object,

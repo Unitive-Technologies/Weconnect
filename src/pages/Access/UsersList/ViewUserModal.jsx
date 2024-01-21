@@ -117,7 +117,7 @@ const ViewUserModal = (props) => {
 
       console.log(
         "distributorList after selection : " +
-          JSON.stringify(response.data.data)
+        JSON.stringify(response.data.data)
       );
       setDistributorList(response.data.data);
     } catch (error) {
@@ -157,7 +157,7 @@ const ViewUserModal = (props) => {
 
       console.log(
         "distributorList after selection : " +
-          JSON.stringify(response.data.data)
+        JSON.stringify(response.data.data)
       );
       setLcoList(response.data.data);
     } catch (error) {
@@ -252,10 +252,10 @@ const ViewUserModal = (props) => {
           parseInt(values["type"]) === 0
             ? parseInt(values["mso"])
             : parseInt(values["type"]) === 1
-            ? parseInt(values["regional"])
-            : parseInt(values["type"]) === 2
-            ? parseInt(values["distributor"])
-            : parseInt(values["lco"]),
+              ? parseInt(values["regional"])
+              : parseInt(values["type"]) === 2
+                ? parseInt(values["distributor"])
+                : parseInt(values["lco"]),
         status: parseInt(values["status"]),
         role: parseInt(values["role"]),
         username: values["username"],
@@ -515,7 +515,7 @@ const ViewUserModal = (props) => {
                       {(parseInt(selectedType) === 1 ||
                         parseInt(selectedType) === 2 ||
                         parseInt(selectedType) === 3) &&
-                      parseInt(validation.values.mso) == 1 ? (
+                        parseInt(validation.values.mso) == 1 ? (
                         <div className="mb-3">
                           <Label className="form-label">
                             Select Regional Office
@@ -539,7 +539,7 @@ const ViewUserModal = (props) => {
                               ))}
                           </Input>
                           {validation.touched.regional &&
-                          validation.errors.regional ? (
+                            validation.errors.regional ? (
                             <FormFeedback type="invalid">
                               {validation.errors.regional}
                             </FormFeedback>
@@ -554,10 +554,10 @@ const ViewUserModal = (props) => {
               )} */}
                     <Col lg={4}>
                       {validation.values.regional &&
-                      // (parseInt(selectedType) === 1 ||
-                      (parseInt(selectedType) === 2 ||
-                        parseInt(selectedType) === 3) &&
-                      parseInt(validation.values.mso) == 1 ? (
+                        // (parseInt(selectedType) === 1 ||
+                        (parseInt(selectedType) === 2 ||
+                          parseInt(selectedType) === 3) &&
+                        parseInt(validation.values.mso) == 1 ? (
                         <div className="mb-3">
                           <Label className="form-label">
                             Select Distributor
@@ -584,7 +584,7 @@ const ViewUserModal = (props) => {
                               ))}
                           </Input>
                           {validation.touched.distributor &&
-                          validation.errors.distributor ? (
+                            validation.errors.distributor ? (
                             <FormFeedback type="invalid">
                               {validation.errors.distributor}
                             </FormFeedback>
@@ -695,7 +695,7 @@ const ViewUserModal = (props) => {
                       onChange={validation.handleChange}
                       onBlur={validation.handleBlur}
                       value={validation.values.policy || ""}
-                      // disabled={!selectedType && !selectedRole}
+                    // disabled={!selectedType && !selectedRole}
                     >
                       <option value="">Select Group Policy</option>
                       {selectedType &&
@@ -740,7 +740,7 @@ const ViewUserModal = (props) => {
                       ))}
                   </Input>
                   {validation.touched.designation &&
-                  validation.errors.designation ? (
+                    validation.errors.designation ? (
                     <FormFeedback type="invalid">
                       {validation.errors.designation}
                     </FormFeedback>
@@ -794,7 +794,7 @@ const ViewUserModal = (props) => {
                     value={validation.values.block_message || ""}
                     invalid={
                       validation.touched.block_message &&
-                      validation.errors.block_message
+                        validation.errors.block_message
                         ? true
                         : false
                     }
@@ -805,7 +805,7 @@ const ViewUserModal = (props) => {
                     }
                   />
                   {validation.touched.block_message &&
-                  validation.errors.block_message ? (
+                    validation.errors.block_message ? (
                     <FormFeedback type="invalid">
                       {validation.errors.block_message}
                     </FormFeedback>
@@ -859,13 +859,13 @@ const ViewUserModal = (props) => {
                         value={validation.values.password || ""}
                         invalid={
                           validation.touched.password &&
-                          validation.errors.password
+                            validation.errors.password
                             ? true
                             : false
                         }
                       />
                       {validation.touched.password &&
-                      validation.errors.password ? (
+                        validation.errors.password ? (
                         <FormFeedback type="invalid">
                           {validation.errors.password}
                         </FormFeedback>
@@ -887,13 +887,13 @@ const ViewUserModal = (props) => {
                         value={validation.values.confirmpassword || ""}
                         invalid={
                           validation.touched.confirmpassword &&
-                          validation.errors.confirmpassword
+                            validation.errors.confirmpassword
                             ? true
                             : false
                         }
                       />
                       {validation.touched.confirmpassword &&
-                      validation.errors.confirmpassword ? (
+                        validation.errors.confirmpassword ? (
                         <FormFeedback type="invalid">
                           {validation.errors.confirmpassword}
                         </FormFeedback>

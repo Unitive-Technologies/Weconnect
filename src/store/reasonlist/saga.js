@@ -92,11 +92,10 @@ function* onAddNewReason({ payload: reason }) {
   try {
     const response = yield call(addNewReason, reason);
     yield put(addReasonSuccess(response));
-    toast.success("Reason Added Successfully", { autoClose: 2000 });
     yield put(fetchreasons());
   } catch (error) {
     yield put(addReasonFail(error));
-    toast.error("Reason List Added Failed", { autoClose: 2000 });
+
   }
 }
 

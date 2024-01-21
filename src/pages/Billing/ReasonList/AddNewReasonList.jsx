@@ -206,8 +206,6 @@ AddNewReason.propTypes = {
   isOpen: PropTypes.bool,
   reasonReasonType: PropTypes.array,
   reasonStatus: PropTypes.array,
-  reasonvaluesArray: PropTypes.array,
-  reasonvaluesIntegers: PropTypes.array,
 };
 
 export default AddNewReason;
