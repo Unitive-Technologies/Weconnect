@@ -7,6 +7,7 @@ import {
 } from "./actionTypes";
 
 import {
+  getCustomerUsers as fetchCusUsers,
   getCustomerUsersSuccess,
   getCustomerUsersFail,
   updateCustomerUserFail,
@@ -62,7 +63,7 @@ function* fetchCustomerUsers() {
 
     const response = yield call(getCustomerUsers, currentPage, pageSize);
     console.log("Response from API -", response);
-    debugger;
+    // debugger;
     yield put(getCustomerUsersSuccess(response));
   } catch (error) {
     console.error("Error fetching CustomerUsers list:", error);
@@ -91,10 +92,11 @@ function* onUpdateCustomerUser({ payload: customerUser }) {
     );
     yield put(updateCustomerUserSuccess(response));
     console.log("update response:" + JSON.stringify(response));
+    yield put(fetchCusUsers());
     // toast.success("CustomerUser Updated Successfully", { autoClose: 2000 });
   } catch (error) {
     yield put(updateCustomerUserFail(error));
-    toast.error("CustomerUser Updated Failed", { autoClose: 2000 });
+    // toast.error("CustomerUser Updated Failed", { autoClose: 2000 });
   }
 }
 

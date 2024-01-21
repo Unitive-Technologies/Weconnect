@@ -79,13 +79,18 @@ const CustomerUsers = (state = INIT_STATE, action) => {
     //     ...state,
     //     error: action.payload,
     //   };
-
+    case UPDATE_CUSTOMERUSER:
+      return {
+        ...state,
+        loading: true,
+      };
     case UPDATE_CUSTOMERUSER_SUCCESS:
       return {
         ...state,
+        loading: false,
         customerUsers: state.customerUsers.map((customerUser) =>
-          customerUser.id.toString() === action.payload.id.toString()
-            ? { customerUser, ...action.payload }
+          customerUser.id === action.payload.id
+            ? { ...customerUser, ...action.payload }
             : customerUser
         ),
       };
@@ -94,6 +99,7 @@ const CustomerUsers = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     case GET_CUSTOMERUSERS_SETTINGS_SUCCESS:

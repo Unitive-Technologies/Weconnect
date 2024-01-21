@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
-import { Card, CardBody, Col, Container, Row } from "reactstrap";
+import { Card, CardBody, Col, Container, Row, Spinner } from "reactstrap";
 import Spinners from "../../../components/Common/Spinner";
 import { Email } from "./customerUserlistCol";
 
@@ -64,7 +64,7 @@ const CustomerUserList = (props) => {
   const { userStatus } = useSelector(UsersProperties);
   console.log("customer: " + JSON.stringify(cusUsers));
 
-  const [isLoading, setLoading] = useState(loading);
+  // const [isLoading, setLoading] = useState(loading);
   const columns = useMemo(
     () => [
       {
@@ -247,11 +247,13 @@ const CustomerUserList = (props) => {
   };
   const [viewCustomerUser, setViewCustomerUser] = useState({});
 
-  const handleViewCustomerUser = (row) => {
+  const toggleViewModal = (row) => {
     setViewCustomerUserModal(!viewCustomerUserModal);
     setViewCustomerUser(row);
   };
-
+  const resetSelection = () => {
+    setViewUser({});
+  };
   const [filteredUsers, setFilteredUsers] = useState([]);
   useEffect(() => {
     // Filter users based on status values "Bulk" and "Inactive"
@@ -283,7 +285,8 @@ const CustomerUserList = (props) => {
     <React.Fragment>
       <ViewCustomerUserModal
         isOpen={viewCustomerUserModal}
-        handleViewCustomerUser={handleViewCustomerUser}
+        resetSelection={resetSelection}
+        toggleViewModal={toggleViewModal}
         customeruser={viewCustomerUser}
         userStatus={userStatus}
       />
@@ -297,8 +300,13 @@ const CustomerUserList = (props) => {
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Access" breadcrumbItem="Customer Users" />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">
@@ -335,7 +343,7 @@ const CustomerUserList = (props) => {
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleRowClick={(row) => {
-                        handleViewCustomerUser(row);
+                        toggleViewModal(row);
                       }}
                       goToPage={goToPage}
                     />

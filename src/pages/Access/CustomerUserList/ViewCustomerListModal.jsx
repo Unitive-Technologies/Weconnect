@@ -16,10 +16,13 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { updateCustomerUser as onUpdateCustomerUser } from "/src/store/customerusers/actions";
+import {
+  updateCustomerUser as onUpdateCustomerUser,
+  getCustomerUsers as onGetCustomerUsers,
+} from "/src/store/customerusers/actions";
 
 const ViewCustomerUserModal = (props) => {
-  const { isOpen, handleViewCustomerUser, customeruser, userStatus } = props;
+  const { isOpen, toggleViewModal, customeruser, userStatus } = props;
   console.log("customerUser in view modal:" + JSON.stringify(customeruser));
   const dispatch = useDispatch();
   const [showEditCustomerUser, setShowEditCustomerUser] = useState(false);
@@ -61,14 +64,16 @@ const ViewCustomerUserModal = (props) => {
 
       // update user
       dispatch(onUpdateCustomerUser(updateCustomerUser));
+      dispatch(onGetCustomerUsers);
       validation.resetForm();
-      handleViewCustomerUser();
+      resetSelection();
+      toggleViewModal();
     },
   });
 
   const handleCancel = () => {
     setShowEditCustomerUser(false);
-    handleViewCustomerUser();
+    toggleViewModal();
   };
   return (
     <Modal
@@ -274,7 +279,7 @@ const ViewCustomerUserModal = (props) => {
                   value={validation.values.block_message || ""}
                   invalid={
                     validation.touched.block_message &&
-                      validation.errors.block_message
+                    validation.errors.block_message
                       ? true
                       : false
                   }
@@ -285,7 +290,7 @@ const ViewCustomerUserModal = (props) => {
                   }
                 />
                 {validation.touched.block_message &&
-                  validation.errors.block_message ? (
+                validation.errors.block_message ? (
                   <FormFeedback type="invalid">
                     {validation.errors.block_message}
                   </FormFeedback>
@@ -337,13 +342,13 @@ const ViewCustomerUserModal = (props) => {
                       value={validation.values.password || ""}
                       invalid={
                         validation.touched.password &&
-                          validation.errors.password
+                        validation.errors.password
                           ? true
                           : false
                       }
                     />
                     {validation.touched.password &&
-                      validation.errors.password ? (
+                    validation.errors.password ? (
                       <FormFeedback type="invalid">
                         {validation.errors.password}
                       </FormFeedback>
@@ -365,13 +370,13 @@ const ViewCustomerUserModal = (props) => {
                       value={validation.values.confirmpassword || ""}
                       invalid={
                         validation.touched.confirmpassword &&
-                          validation.errors.confirmpassword
+                        validation.errors.confirmpassword
                           ? true
                           : false
                       }
                     />
                     {validation.touched.confirmpassword &&
-                      validation.errors.confirmpassword ? (
+                    validation.errors.confirmpassword ? (
                       <FormFeedback type="invalid">
                         {validation.errors.confirmpassword}
                       </FormFeedback>
