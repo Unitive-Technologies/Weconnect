@@ -12,8 +12,10 @@ import {
   GET_REASON_STATUS_FAIL,
   GET_REASON_REASONTYPE_SUCCESS,
   GET_REASON_REASONTYPE_FAIL,
+  ADD_REASON,
   ADD_REASON_SUCCESS,
   ADD_REASON_FAIL,
+  UPDATE_REASON,
   UPDATE_REASON_SUCCESS,
   UPDATE_REASON_FAIL,
   UPDATE_REASON_CURRENT_PAGE,
@@ -67,13 +69,18 @@ const Reason = (state = INIT_STATE, action) => {
         loading: false,
       };
 
+    case UPDATE_REASON:
+      return {
+        ...state,
+        loading: true,
+      };
+
     case UPDATE_REASON_SUCCESS:
       return {
         ...state,
+        loading: false,
         reason: state.reason.map((reason) =>
-          reason.id.toString() === action.payload.id.toString()
-            ? { reason, ...action.payload }
-            : reason
+          reason.id === action.payload.id ? { ...reason, ...action.payload } : reason
         ),
       };
 
@@ -81,6 +88,7 @@ const Reason = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     case GET_REASON_STATUS_SUCCESS:
@@ -111,16 +119,24 @@ const Reason = (state = INIT_STATE, action) => {
         error: action.payload,
       };
 
+    case ADD_REASON:
+      return {
+        ...state,
+        loading: true,
+      };
+
     case ADD_REASON_SUCCESS:
       return {
         ...state,
         reason: [...state.reason, action.payload],
+        loading: false,
       };
 
     case ADD_REASON_FAIL:
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     default:

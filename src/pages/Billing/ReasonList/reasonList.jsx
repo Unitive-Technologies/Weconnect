@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
 import Spinners from "../../../components/Common/Spinner";
-import { Card, CardBody, Col, Container, Row } from "reactstrap";
+import { Card, CardBody, Col, Container, Row, Spinner } from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -43,7 +43,7 @@ const ReasonList = (props) => {
     pageSize,
     currentPage, } = useSelector(ReasonProperties);
 
-  const [isLoading, setLoading] = useState(loading);
+
   const [showAddNewReasonList, setShowAddNewReasonList] = useState(false);
   const [showUploadReasonList, setShowUploadReasonList] = useState(false);
   const [showViewReasonList, setShowReasonList] = useState(false);
@@ -55,8 +55,6 @@ const ReasonList = (props) => {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          // const totalRows = cellProps.rows.length;
-          // const reverseIndex = totalRows - cellProps.row.index;
           const startIndex = (currentPage - 1) * pageSize;
           const index = startIndex + cellProps.row.index + 1;
 
@@ -80,10 +78,6 @@ const ReasonList = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-              // onClick={() => {
-              //   const userData = cellProps.row.original;
-              //   handleViewReason(userData);
-              // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -172,16 +166,20 @@ const ReasonList = (props) => {
     dispatch(onGetReason());
   };
 
-  const handleAddReason = () => {
+  const resetSelection = () => {
+    setViewUser({});
+  };
+
+  const toggleAddModal = () => {
     setShowAddNewReasonList(!showAddNewReasonList);
   };
 
-  const handleUploadReason = () => {
+  const toggleUploadModal = () => {
     setShowUploadReasonList(!showUploadReasonList);
   };
   const [viewReasonList, setViewReasonList] = useState({});
 
-  const handleViewReason = (row) => {
+  const toggleViewModal = (row) => {
     setShowReasonList(!showViewReasonList);
     setViewReasonList(row);
   };
@@ -209,27 +207,33 @@ const ReasonList = (props) => {
     <React.Fragment>
       <ViewReasonList
         isOpen={showViewReasonList}
-        handleViewReason={handleViewReason}
+        toggleViewModal={toggleViewModal}
         reason={viewReasonList}
         reasonReasonType={reasonReasonType}
         reasonStatus={reasonStatus}
+        resetSelection={resetSelection}
       />
       <AddNewReasonList
         isOpen={showAddNewReasonList}
-        handleAddReason={handleAddReason}
+        toggleAddModal={toggleAddModal}
         reasonReasonType={reasonReasonType}
         reasonStatus={reasonStatus}
       />
       <UploadReasonList
         isOpen={showUploadReasonList}
-        handleUploadReason={handleUploadReason}
+        toggleUploadModal={toggleUploadModal}
       />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Billing" breadcrumbItem="Reasons" />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">
@@ -266,7 +270,7 @@ const ReasonList = (props) => {
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleRowClick={(row) => {
-                        handleViewReason(row);
+                        toggleViewModal(row);
                       }}
                       goToPage={goToPage}
                     />

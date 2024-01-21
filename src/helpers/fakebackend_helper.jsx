@@ -615,7 +615,7 @@ export const getInventoryStateList = () => get(url.GET_INVENTORYSTATELIST);
 export const addInventoryStateList = (inventorystate) =>
   post(url.ADD_INVENTORYSTATELIST, inventorystate);
 
-export const getTax = () => get(url.GET_TAX);
+// export const getTax = () => get(url.GET_TAX);
 export const addNewTaxList = (taxes) => post(url.ADD_NEW_TAXLIST, taxes);
 export const updateTax = (id, taxes) => put(url.UPDATE_TAX(id), taxes);
 
@@ -623,6 +623,12 @@ export const getTaxStatus = () => get(url.GET_TAX_STATUS);
 export const getTaxValues = () => get(url.GET_TAX_VALUES);
 export const getTaxApply = () => get(url.GET_TAX_APPLY);
 export const getTaxTaxOnTax = () => get(url.GET_TAX_TAXONTAX);
+
+export const getTax = async (currentPage, perPage = 20) => {
+  console.log("Tax - Current Page in fakebackend: ", currentPage);
+  console.log("Tax - Per Page: ", perPage);
+  return await getCompleteResponse(url.getTaxUrl(currentPage, perPage));
+};
 
 // export const getReason = () => get(url.GET_REASON);
 export const getReasonStatus = () => get(url.GET_REASON_STATUS);

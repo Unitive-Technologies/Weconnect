@@ -189,7 +189,7 @@ const AddNewLocation = (props) => {
                   ))}
                 </Input>
                 {validation.touched.operator_id &&
-                validation.errors.operator_id ? (
+                  validation.errors.operator_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.operator_id}
                   </FormFeedback>

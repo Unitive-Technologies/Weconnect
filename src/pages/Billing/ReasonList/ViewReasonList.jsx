@@ -12,6 +12,7 @@ import {
   FormFeedback,
   Input,
   Form,
+
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -19,7 +20,8 @@ import { useDispatch } from "react-redux";
 import { updateReason as onUpdateReason } from "/src/store/reasonlist/actions";
 
 const ViewReason = (props) => {
-  const { isOpen, handleViewReason, reason, reasonStatus, reasonReasonType } =
+  const { isOpen, resetSelection,
+    toggleViewModal, reason, reasonStatus, reasonReasonType } =
     props;
   // console.log("View Reasonlist modal:" + JSON.stringify(reason));
   const dispatch = useDispatch();
@@ -63,14 +65,17 @@ const ViewReason = (props) => {
       // update user
       dispatch(onUpdateReason(updateReason));
       validation.resetForm();
-      handleViewReason();
+      resetSelection();
+      toggleViewModal();
     },
   });
 
   const handleCancel = () => {
     setShowEditReason(false);
-    handleViewReason();
+    resetSelection();
+    toggleViewModal();
   };
+
   return (
     <>
       <Modal
@@ -231,8 +236,13 @@ const ViewReason = (props) => {
 };
 
 ViewReason.propTypes = {
-  toggle: PropTypes.func,
+  toggleViewModal: PropTypes.func,
   isOpen: PropTypes.bool,
+  resetSelection: PropTypes.func,
+
+  reason: PropTypes.object,
+  reasonReasonType: PropTypes.array,
+  reasonStatus: PropTypes.array,
 };
 
 export default ViewReason;

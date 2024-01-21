@@ -1,5 +1,5 @@
 import {
-  GET_TAX, GET_TAX_FAIL, GET_TAX_SUCCESS, ADD_NEW_TAXLIST,
+  GET_TAX, GET_TAX_FAIL, GET_TAX_SUCCESS, ADD_TAXLIST,
   ADD_TAXLIST_SUCCESS,
   ADD_TAXLIST_FAIL,
   GET_TAX_STATUS,
@@ -14,9 +14,15 @@ import {
   GET_TAX_TAXONTAX,
   GET_TAX_TAXONTAX_FAIL,
   GET_TAX_TAXONTAX_SUCCESS,
-  UPDATE_TAX, UPDATE_TAX_FAIL, UPDATE_TAX_SUCCESS,
-
+  UPDATE_TAX,
+  UPDATE_TAX_FAIL, UPDATE_TAX_SUCCESS,
+  UPDATE_TAX_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_TAX_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getTax = () => ({
   type: GET_TAX,
@@ -53,7 +59,7 @@ export const updateTaxFail = (error) => ({
 export const addNewTaxList = (
   tax
 ) => ({
-  type: ADD_NEW_TAXLIST,
+  type: ADD_TAXLIST,
   payload: tax,
 });
 

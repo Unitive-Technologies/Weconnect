@@ -1,38 +1,28 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 
-import { GET_TAX, UPDATE_TAX, GET_TAX_STATUS, GET_TAX_APPLY, GET_TAX_VALUES, GET_TAX_TAXONTAX, ADD_NEW_TAXLIST } from "./actionTypes";
+import { GET_TAX, UPDATE_TAX, GET_TAX_STATUS, GET_TAX_APPLY, GET_TAX_VALUES, GET_TAX_TAXONTAX, ADD_TAXLIST } from "./actionTypes";
 
-import { getTaxSuccess, getTaxFail, updateTaxSuccess, updateTaxFail, getTaxStatusSuccess, getTaxStatusFail, getTaxValuesSuccess, getTaxValuesFail, getTaxApplySuccess, getTaxApplyFail, getTaxTaxOnTaxSuccess, getTaxTaxOnTaxFail, addTaxListSuccess, addTaxListFail } from "./actions";
+import { getTax as fetchtaxes, getTaxSuccess, getTaxFail, updateTaxSuccess, updateTaxFail, getTaxStatusSuccess, getTaxStatusFail, getTaxValuesSuccess, getTaxValuesFail, getTaxApplySuccess, getTaxApplyFail, getTaxTaxOnTaxSuccess, getTaxTaxOnTaxFail, addTaxListSuccess, addTaxListFail } from "./actions";
 
 //Include Both Helper File with needed methods
 import { getTax, updateTax, getTaxStatus, getTaxApply, getTaxTaxOnTax, getTaxValues, addNewTaxList } from "../../helpers/fakebackend_helper";
 
-const convertTaxListObject = (taxList) => {
-  return taxList.map((tax) => {
-    return {
-      ...tax,
-      id: tax.id,
-      name: tax.name,
-      code: tax.code,
-      taxvalue: tax.taxvalue,
-      status: tax.status,
-      valuetype: tax.valuetype,
-      parent_id: tax.parent_id,
-      applicableon: tax.applicableon,
-      description: tax.description,
-      created_at: tax.created_at,
-      created_by: tax.created_by,
-    };
-  });
-};
+export const getTaxStore = (state) => state.tax;
+
 
 function* fetchTax() {
   try {
-    const response = yield call(getTax);
-    console.log("response:" + JSON.stringify(response));
-    // const taxList = convertTaxListObject(response);
-    yield put(getTaxSuccess(response.data));
+    let TaxStore = yield select(getTaxStore);
+
+    const pageSize = TaxStore.pageSize;
+    const currentPage = TaxStore.currentPage;
+
+    const response = yield call(getTax, currentPage, pageSize);
+    console.log("Response from API -", response);
+    // debugger;
+    yield put(getTaxSuccess(response));
   } catch (error) {
+    console.error("Error fetching Tax list:", error);
     yield put(getTaxFail(error));
   }
 }
@@ -48,6 +38,7 @@ function* onUpdateTax({ payload: tax }) {
     );
     yield put(updateTaxSuccess(response));
     console.log("update response:" + JSON.stringify(response));
+    yield put(fetchtaxes());
   } catch (error) {
     yield put(updateTaxFail(error));
   }
@@ -97,16 +88,15 @@ function* onAddNewTaxList({ payload: tax }) {
   try {
     const response = yield call(addNewTaxList, tax);
     yield put(addTaxListSuccess(response));
-    toast.success("Tax List Added Successfully", { autoClose: 2000 });
+    yield put(fetchtaxes());
   } catch (error) {
     yield put(addTaxListFail(error));
-    toast.error("Tax List Added Failed", { autoClose: 2000 });
   }
 }
 
 function* taxSaga() {
   yield takeEvery(GET_TAX, fetchTax);
-  yield takeEvery(ADD_NEW_TAXLIST, onAddNewTaxList);
+  yield takeEvery(ADD_TAXLIST, onAddNewTaxList);
   yield takeEvery(GET_TAX_STATUS, fetchTaxStatus);
   yield takeEvery(GET_TAX_VALUES, fetchTaxValues);
   yield takeEvery(GET_TAX_APPLY, fetchTaxApply);

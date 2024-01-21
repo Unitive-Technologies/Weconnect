@@ -19,7 +19,7 @@ import { useDispatch } from "react-redux";
 import { getTax as onGetTax } from "/src/store/actions";
 
 const AddNewTaxList = (props) => {
-  const { isOpen, handleAddTax, taxValues, taxStatus, taxTaxOnTax, taxApply } =
+  const { isOpen, toggleAddModal, taxValues, taxStatus, taxTaxOnTax, taxApply } =
     props;
 
   const dispatch = useDispatch();
@@ -84,7 +84,7 @@ const AddNewTaxList = (props) => {
       dispatch(onAddNewTaxList(newTaxList));
       dispatch(onGetTax());
       validation.resetForm();
-      handleAddTax();
+      toggleAddModal();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -100,9 +100,9 @@ const AddNewTaxList = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleAddTax}
+      toggle={toggleAddModal}
     >
-      <ModalHeader tag="h4" toggle={handleAddTax}>
+      <ModalHeader tag="h4" toggle={toggleAddModal}>
         Add New Tax
       </ModalHeader>
       <ModalBody>
@@ -346,7 +346,7 @@ const AddNewTaxList = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    handleAddTax();
+                    toggleAddModal();
                   }}
                 >
                   Cancel
@@ -361,8 +361,13 @@ const AddNewTaxList = (props) => {
 };
 
 AddNewTaxList.propTypes = {
-  toggle: PropTypes.func,
+  toggleAddModal: PropTypes.func,
   isOpen: PropTypes.bool,
+  taxApply: PropTypes.array,
+  taxStatus: PropTypes.array,
+  taxTaxOnTax: PropTypes.array,
+  taxValues: PropTypes.array,
+  taxvalue: PropTypes.array,
 };
 
 export default AddNewTaxList;

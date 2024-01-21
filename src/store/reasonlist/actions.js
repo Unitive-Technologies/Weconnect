@@ -11,7 +11,7 @@ import {
   GET_REASON_REASONTYPE,
   GET_REASON_REASONTYPE_FAIL,
   GET_REASON_REASONTYPE_SUCCESS,
-  ADD_NEW_REASON,
+  ADD_REASON,
   ADD_REASON_SUCCESS,
   ADD_REASON_FAIL,
   UPDATE_REASON_CURRENT_PAGE,
@@ -55,7 +55,7 @@ export const updateReasonFail = (error) => ({
 });
 
 export const addNewReason = (reason) => ({
-  type: ADD_NEW_REASON,
+  type: ADD_REASON,
   payload: reason,
 });
 

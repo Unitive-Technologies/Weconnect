@@ -9,14 +9,15 @@ import {
   Col,
   Container,
   Row,
-  UncontrolledTooltip,
+  Spinner,
 } from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import {
+  goToPage as onGoToPage,
   getTax as onGetTax, getTaxStatus as onGetTaxStatus, getTaxValues as onGetTaxValues, getTaxTaxOnTax as onGetTaxTaxOnTax, getTaxApply as onGetTaxApply,
-} from "/src/store/actions";
+} from "/src/store/taxlist/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -24,6 +25,7 @@ import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddNewTaxList from "./AddNewTaxList";
 import ViewTaxList from "./ViewTaxList";
+import TableContainerX from "../../../components/Common/TableContainerX";
 
 const TaxList = (props) => {
   //meta title
@@ -40,11 +42,17 @@ const TaxList = (props) => {
     taxApply: tax.taxApply,
     taxTaxOnTax: tax.taxTaxOnTax,
     taxValues: tax.taxValues,
+    totalPage: tax.totalPages,
+    totalCount: tax.totalCount,
+    pageSize: tax.perPage,
+    currentPage: tax.currentPage,
   }));
 
-  const { taxes, loading, taxStatus, taxApply, taxTaxOnTax, taxValues } = useSelector(TaxProperties);
+  const { taxes, loading, taxStatus, taxApply, taxTaxOnTax, taxValues, totalPage,
+    totalCount,
+    pageSize,
+    currentPage } = useSelector(TaxProperties);
 
-  const [isLoading, setLoading] = useState(loading);
 
   const [showAddNewTaxList, setShowAddNewTaxList] = useState(false);
   const [showViewTaxList, setShowTaxList] = useState(false);
@@ -53,17 +61,17 @@ const TaxList = (props) => {
     () => [
       {
         Header: "#",
-        // accessor: "name",
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
+
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -79,18 +87,11 @@ const TaxList = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-              // onClick={() => {
-              //   const userData = cellProps.row.original;
-              //   handleViewTax(userData);
-              // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
               </h5>
-              {/* <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p> */}
             </>
           );
         },
@@ -189,16 +190,26 @@ const TaxList = (props) => {
     }
   }, [dispatch, taxes]);
 
-  const handleAddTax = () => {
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetTax());
+  };
+
+  const toggleAddModal = () => {
     setShowAddNewTaxList(!showAddNewTaxList);
   };
 
   const [viewTaxList, setViewTaxList] = useState({});
 
-  const handleViewTax = (userTaxData) => {
+  const toggleViewModal = (userTaxData) => {
     setShowTaxList(!showViewTaxList);
     setViewTaxList(userTaxData);
     // toggle();
+  };
+
+  const resetSelection = () => {
+    setViewTaxList({});
   };
 
   const keyField = "id";
@@ -218,30 +229,37 @@ const TaxList = (props) => {
     <React.Fragment>
       <ViewTaxList
         isOpen={showViewTaxList}
-        handleViewTax={handleViewTax}
+        toggleViewModal={toggleViewModal}
         tax={viewTaxList}
         taxApply={taxApply}
         taxStatus={taxStatus}
         taxTaxOnTax={taxTaxOnTax}
         taxValues={taxValues}
+        resetSelection={resetSelection}
       />
-      <AddNewTaxList isOpen={showAddNewTaxList} handleAddTax={handleAddTax} taxApply={taxApply} taxStatus={taxStatus} taxTaxOnTax={taxTaxOnTax} taxValues={taxValues} />
+      <AddNewTaxList isOpen={showAddNewTaxList} toggleAddModal={toggleAddModal} taxApply={taxApply} taxStatus={taxStatus} taxTaxOnTax={taxTaxOnTax} taxValues={taxValues} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Billing" breadcrumbItem="Taxes" />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">
                 <Card>
                   <CardBody>
                     {console.log("Tax list:" + JSON.stringify(taxes))}
-                    <TableContainer
+                    {/* <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={taxes}
+                      isLoading={loading}
                       isGlobalFilter={true}
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
@@ -254,6 +272,24 @@ const TaxList = (props) => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
+                    /> */}
+                    <TableContainerX
+                      columns={columns}
+                      data={taxes}
+                      isShowTableActionButtons={true}
+                      isLoading={loading}
+                      isPagination={true}
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      totalPage={Number(totalPage)}
+                      isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      tableActions={getTableActions()}
+                      handleRowClick={(row) => {
+                        toggleViewModal(row);
+                      }}
+                      goToPage={goToPage}
                     />
                   </CardBody>
                 </Card>

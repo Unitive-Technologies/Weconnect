@@ -5,10 +5,11 @@ import {
   UPDATE_REASON,
   GET_REASON_STATUS,
   GET_REASON_REASONTYPE,
-  ADD_NEW_REASON,
+  ADD_REASON,
 } from "./actionTypes";
 
 import {
+  getReason as fetchreasons,
   getReasonSuccess,
   getReasonFail,
   updateReasonSuccess,
@@ -49,16 +50,6 @@ function* fetchReason() {
   }
 }
 
-// function* fetchReason() {
-//   try {
-//     const response = yield call(getReason);
-//     console.log("response:" + JSON.stringify(response));
-//     const reasonList = convertReasonListObject(response.data);
-//     yield put(getReasonSuccess(reasonList));
-//   } catch (error) {
-//     yield put(getReasonFail(error));
-//   }
-// }
 
 function* onUpdateReason({ payload: reason }) {
   console.log("Reason onUpdate:" + JSON.stringify(reason));
@@ -71,6 +62,7 @@ function* onUpdateReason({ payload: reason }) {
     );
     yield put(updateReasonSuccess(response));
     console.log("update response:" + JSON.stringify(response));
+    yield put(fetchreasons());
   } catch (error) {
     yield put(updateReasonFail(error));
   }
@@ -101,6 +93,7 @@ function* onAddNewReason({ payload: reason }) {
     const response = yield call(addNewReason, reason);
     yield put(addReasonSuccess(response));
     toast.success("Reason Added Successfully", { autoClose: 2000 });
+    yield put(fetchreasons());
   } catch (error) {
     yield put(addReasonFail(error));
     toast.error("Reason List Added Failed", { autoClose: 2000 });
@@ -112,7 +105,7 @@ function* reasonSaga() {
   yield takeEvery(UPDATE_REASON, onUpdateReason);
   yield takeEvery(GET_REASON_STATUS, fetchReasonStatus);
   yield takeEvery(GET_REASON_REASONTYPE, fetchReasonReasonType);
-  yield takeEvery(ADD_NEW_REASON, onAddNewReason);
+  yield takeEvery(ADD_REASON, onAddNewReason);
 }
 
 export default reasonSaga;

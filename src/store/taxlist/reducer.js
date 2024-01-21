@@ -1,6 +1,18 @@
 import {
+  RESPONSE_HEADER_CURRENT_PAGE,
+  RESPONSE_HEADER_PAGE_COUNT,
+  RESPONSE_HEADER_TOTAL_COUNT,
+  RESPONSE_HEADER_PER_PAGE,
+} from "../../constants/strings";
+
+import {
+  GET_TAX,
   GET_TAX_SUCCESS, GET_TAX_FAIL,
-  UPDATE_TAX_SUCCESS, UPDATE_TAX_FAIL, ADD_TAXLIST_SUCCESS,
+  UPDATE_TAX,
+  UPDATE_TAX_SUCCESS,
+  UPDATE_TAX_FAIL,
+  ADD_TAXLIST,
+  ADD_TAXLIST_SUCCESS,
   ADD_TAXLIST_FAIL,
   GET_TAX_STATUS_FAIL,
   GET_TAX_STATUS_SUCCESS,
@@ -10,7 +22,7 @@ import {
   GET_TAX_APPLY_SUCCESS,
   GET_TAX_TAXONTAX_FAIL,
   GET_TAX_TAXONTAX_SUCCESS,
-
+  UPDATE_TAX_CURRENT_PAGE,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -19,17 +31,38 @@ const INIT_STATE = {
   taxValues: [],
   taxApply: [],
   taxTaxOnTax: [],
+  pagination: {},
   error: {},
-  loading: true,
+  loading: false,
+  currentPage: 1,
+  perPage: 10,
+  totalCount: 0,
+  totalPages: 0,
 };
 
 const Tax = (state = INIT_STATE, action) => {
   switch (action.type) {
+    case UPDATE_TAX_CURRENT_PAGE:
+      return Number(action.payload) <= state.totalPages
+        ? {
+          ...state,
+          currentPage: action.payload,
+        }
+        : state;
+    case GET_TAX:
+      return {
+        ...state,
+        loading: true,
+      };
     case GET_TAX_SUCCESS:
       console.log("Tax list data in reducer:", action.payload);
       return {
         ...state,
-        tax: action.payload,
+        tax: action.payload.data.data,
+        currentPage: action.payload.headers[RESPONSE_HEADER_CURRENT_PAGE],
+        perPage: action.payload.headers[RESPONSE_HEADER_PER_PAGE],
+        totalCount: action.payload.headers[RESPONSE_HEADER_TOTAL_COUNT],
+        totalPages: action.payload.headers[RESPONSE_HEADER_PAGE_COUNT],
         loading: false,
       };
 
@@ -37,22 +70,35 @@ const Tax = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+        pagination: {},
+        loading: false,
+      };
+
+    case UPDATE_TAX:
+      return {
+        ...state,
+        loading: true,
       };
 
     case UPDATE_TAX_SUCCESS:
       return {
         ...state,
+        loading: false,
         tax: state.tax.map((tax) =>
-          tax.id.toString() === action.payload.id.toString()
-            ? { tax, ...action.payload }
-            : tax
+          tax.id === action.payload.id ? { ...tax, ...action.payload } : tax
         ),
+        // tax: state.tax.map((tax) =>
+        //   tax.id.toString() === action.payload.id.toString()
+        //     ? { tax, ...action.payload }
+        //     : tax
+        // ),
       };
 
     case UPDATE_TAX_FAIL:
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     case GET_TAX_STATUS_SUCCESS:
@@ -111,6 +157,12 @@ const Tax = (state = INIT_STATE, action) => {
         error: action.payload,
       };
 
+    case ADD_TAXLIST:
+      return {
+        ...state,
+        loading: true,
+      };
+
     case ADD_TAXLIST_SUCCESS:
       return {
         ...state,
@@ -118,12 +170,14 @@ const Tax = (state = INIT_STATE, action) => {
           ...state.tax,
           action.payload,
         ],
+        loading: false,
       };
 
     case ADD_TAXLIST_FAIL:
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     default:

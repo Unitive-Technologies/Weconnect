@@ -19,7 +19,7 @@ import { useDispatch } from "react-redux";
 import { getReason as onGetReason } from "/src/store/actions";
 
 const AddNewReason = (props) => {
-  const { isOpen, handleAddReason, reasonStatus, reasonReasonType } = props;
+  const { isOpen, toggleAddModal, reasonStatus, reasonReasonType } = props;
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -58,7 +58,7 @@ const AddNewReason = (props) => {
       dispatch(onAddNewReason(newReason));
       dispatch(onGetReason());
       validation.resetForm();
-      handleAddReason();
+      toggleAddModal();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -74,9 +74,9 @@ const AddNewReason = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleAddReason}
+      toggle={toggleAddModal}
     >
-      <ModalHeader tag="h4" toggle={handleAddReason}>
+      <ModalHeader tag="h4" toggle={toggleAddModal}>
         Add New Reason
       </ModalHeader>
       <ModalBody>
@@ -187,7 +187,7 @@ const AddNewReason = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    handleAddReason();
+                    toggleAddModal();
                   }}
                 >
                   Cancel
@@ -202,8 +202,12 @@ const AddNewReason = (props) => {
 };
 
 AddNewReason.propTypes = {
-  toggle: PropTypes.func,
+  toggleAddModal: PropTypes.func,
   isOpen: PropTypes.bool,
+  reasonReasonType: PropTypes.array,
+  reasonStatus: PropTypes.array,
+  reasonvaluesArray: PropTypes.array,
+  reasonvaluesIntegers: PropTypes.array,
 };
 
 export default AddNewReason;

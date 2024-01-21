@@ -19,7 +19,7 @@ import { useDispatch } from "react-redux";
 import { updateTax as onUpdateTax } from "/src/store/taxlist/actions";
 
 const ViewTaxList = (props) => {
-  const { isOpen, handleViewTax, tax, taxValues, taxStatus, taxTaxOnTax, taxApply } = props;
+  const { isOpen, resetSelection, toggleViewModal, tax, taxValues, taxStatus, taxTaxOnTax, taxApply } = props;
   console.log("View in  Tax List :" + JSON.stringify(tax));
   const dispatch = useDispatch();
   const [showEditTax, setShowEditTax] = useState(false);
@@ -72,13 +72,15 @@ const ViewTaxList = (props) => {
       // update user
       dispatch(onUpdateTax(updateTax));
       validation.resetForm();
-      handleViewTax();
+      toggleViewModal();
+      resetSelection();
     },
   });
 
   const handleCancel = () => {
     setShowEditTax(false);
-    handleViewTax();
+    resetSelection(); s
+    toggleViewModal();
   };
 
   return (
@@ -374,8 +376,16 @@ const ViewTaxList = (props) => {
 };
 
 ViewTaxList.propTypes = {
-  toggle: PropTypes.func,
+  toggleViewModal: PropTypes.func,
+  resetSelection: PropTypes.func,
   isOpen: PropTypes.bool,
+
+  tax: PropTypes.object,
+  taxApply: PropTypes.array,
+  taxStatus: PropTypes.array,
+  taxTaxOnTax: PropTypes.array,
+  taxValues: PropTypes.array,
+  taxvalue: PropTypes.array,
 };
 
 export default ViewTaxList;

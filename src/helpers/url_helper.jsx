@@ -357,6 +357,10 @@ export const GET_TAX_VALUES = "/list/valuetype?fields=id,name&vr=web1.0";
 export const GET_TAX_APPLY = "/list/chargetype?fields=id,name&vr=web1.0";
 export const GET_TAX_TAXONTAX =
   "/tax/list?fields=id,name&filter[parent_id]=0&vr=web1.0";
+export const getTaxUrl = (currPage, perPage) => {
+  console.log("current page in users url - ", currPage, perPage);
+  return `/tax?expand=valuetype_lbl,parent_lbl,created_by_lbl,status_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+};
 
 export const ADD_NEW_TAXLIST = "/tax?vr=web1.0";
 export const UPDATE_TAX = (id) => `/tax/${id}?vr=web1.0`;

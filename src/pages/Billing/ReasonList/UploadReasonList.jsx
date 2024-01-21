@@ -18,7 +18,7 @@ import Dropzone from "react-dropzone";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const UploadReasonList = (props) => {
-  const { isOpen, handleUploadReason } = props;
+  const { isOpen, toggleUploadModal } = props;
 
   const [selectedFiles, setselectedFiles] = useState([]);
 
@@ -50,9 +50,9 @@ const UploadReasonList = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleUploadReason}
+      toggle={toggleUploadModal}
     >
-      <ModalHeader toggle={handleUploadReason} tag="h4">
+      <ModalHeader toggle={toggleUploadModal} tag="h4">
         Upload Reasons
       </ModalHeader>
       <ModalBody>
@@ -62,7 +62,7 @@ const UploadReasonList = (props) => {
               <button
                 type="button"
                 className="btn btn-primary"
-                // onClick={handleDownloadSampleFile}
+              // onClick={handleDownloadSampleFile}
               >
                 Download Sample Upload File
               </button>
@@ -73,10 +73,10 @@ const UploadReasonList = (props) => {
                 name="reaonstype"
                 type="text"
                 placeholder="Select reason type"
-                // className="form-select"
-                // onChange={validation.handleChange}
-                // onBlur={validation.handleBlur}
-                // value={validation.values.grouppolicy || ""}
+              // className="form-select"
+              // onChange={validation.handleChange}
+              // onBlur={validation.handleBlur}
+              // value={validation.values.grouppolicy || ""}
               ></Input>
             </div>
             <div className="mb-3">
@@ -86,9 +86,9 @@ const UploadReasonList = (props) => {
                 type="select"
                 placeholder="Select Group Policy"
                 className="form-select"
-                // onChange={validation.handleChange}
-                // onBlur={validation.handleBlur}
-                // value={validation.values.grouppolicy || ""}
+              // onChange={validation.handleChange}
+              // onBlur={validation.handleBlur}
+              // value={validation.values.grouppolicy || ""}
               >
                 <option value="">Select Status</option>
                 <option value="A">Active</option>
@@ -185,7 +185,7 @@ const UploadReasonList = (props) => {
 };
 
 UploadReasonList.propTypes = {
-  toggle: PropTypes.func,
+  toggleUploadModal: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
