@@ -53,6 +53,7 @@ import inventorystockSaga from "./inventorystock/saga";
 import inventoryallottedSaga from "./inventoryallotted/saga";
 import inventoryfaultySaga from "./inventoryfaulty/saga";
 import inventoryblacklistedSaga from "./inventoryblacklisted/saga";
+import inventorytrackSaga from "./inventorytrack/saga";
 
 export default function* rootSaga() {
   yield all([
@@ -109,5 +110,6 @@ export default function* rootSaga() {
     fork(inventoryallottedSaga),
     fork(inventoryblacklistedSaga),
     fork(inventoryfaultySaga),
+    fork(inventorytrackSaga),
   ]);
 }

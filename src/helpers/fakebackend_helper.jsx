@@ -709,6 +709,8 @@ export const getInventoryTrack = async (currentPage, perPage = 20) => {
   );
 };
 
+export const getInventoryTrackAction = () => get(url.GET_INVENTORYTRACK_ACTION);
+
 export const addNewUser = (user) => post(url.ADD_NEW_USER, user);
 
 // update user

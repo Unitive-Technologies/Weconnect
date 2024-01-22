@@ -9,10 +9,13 @@ import {
   GET_INVENTORYTRACK_SUCCESS,
   GET_INVENTORYTRACK_FAIL,
   UPDATE_INVENTORYTRACK_CURRENT_PAGE,
+  GET_INVENTORYTRACK_ACTION_SUCCESS,
+  GET_INVENTORYTRACK_ACTION_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
   inventorytrack: [],
+  inventorystockaction: [],
   pagination: {},
   error: {},
   loading: false,
@@ -54,6 +57,19 @@ const InventoryTrack = (state = INIT_STATE, action) => {
         error: action.payload,
         pagination: {},
         loading: false,
+      };
+
+    case GET_INVENTORYTRACK_ACTION_SUCCESS:
+      return {
+        ...state,
+        inventorystockaction: action.payload,
+        loading: false,
+      };
+
+    case GET_INVENTORYTRACK_ACTION_FAIL:
+      return {
+        ...state,
+        error: action.payload,
       };
 
     default:

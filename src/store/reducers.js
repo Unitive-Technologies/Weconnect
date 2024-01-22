@@ -8,7 +8,6 @@ import Login from "./auth/login/reducer";
 import Account from "./auth/register/reducer";
 import ForgetPassword from "./auth/forgetpwd/reducer";
 import Profile from "./auth/profile/reducer";
-
 import users from "./users/reducer";
 import customerUsers from "./customerusers/reducer";
 import groupPolicy from "./grouppolicy/reducer";
@@ -66,6 +65,8 @@ import blacklistedpairing from "./inventoryblacklisted/reducer";
 import allottedsmartcard from "./inventoryallotted/reducer";
 import allottedstb from "./inventoryallotted/reducer";
 import allottedpairing from "./inventoryallotted/reducer";
+import inventorytrack from "./inventorytrack/reducer";
+import inventorytrackaction from "./inventorytrack/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -131,6 +132,8 @@ const rootReducer = combineReducers({
   allottedsmartcard,
   allottedstb,
   allottedpairing,
+  inventorytrack,
+  inventorytrackaction,
 });
 
 export default rootReducer;

@@ -494,3 +494,5 @@ export const getInventoryTrackUrl = (currPage, perPage) => {
   console.log("current page in Allotted url - ", currPage, perPage);
   return `/track-sc-stb?expand=scCurrentStatus,stbCurrentStatus,stb_brand_lbl,state_lbl,inv_state_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
+
+export const GET_INVENTORYTRACK_ACTION = "/list/trackAction?vr=web1.0";

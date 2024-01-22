@@ -1,7 +1,15 @@
 import { call, put, select, takeEvery } from "redux-saga/effects";
-import { GET_INVENTORYTRACK } from "./actionTypes";
-import { getInventoryTrackSuccess, getInventoryTrackFail } from "./actions";
-import { getInventoryTrack } from "../../helpers/fakebackend_helper";
+import { GET_INVENTORYTRACK, GET_INVENTORYTRACK_ACTION } from "./actionTypes";
+import {
+  getInventoryTrackSuccess,
+  getInventoryTrackFail,
+  getInventoryTrackActionSuccess,
+  getInventoryTrackActionFail,
+} from "./actions";
+import {
+  getInventoryTrack,
+  getInventoryTrackAction,
+} from "../../helpers/fakebackend_helper";
 
 export const getInventoryTrackStore = (state) => state.inventorytrack;
 
@@ -22,8 +30,18 @@ function* fetchInventoryTrack() {
   }
 }
 
+function* fetchInventoryTrackAction() {
+  try {
+    const response = yield call(getInventoryTrackAction);
+    yield put(getInventoryTrackActionSuccess(response.data));
+  } catch (error) {
+    yield put(getInventoryTrackActionFail(error));
+  }
+}
+
 function* inventorytrackSaga() {
   yield takeEvery(GET_INVENTORYTRACK, fetchInventoryTrack);
+  yield takeEvery(GET_INVENTORYTRACK_ACTION, fetchInventoryTrackAction);
 }
 
 export default inventorytrackSaga;
