@@ -49,34 +49,33 @@ const BankList = (props) => {
   const [showViewBankList, setShowViewBankList] = useState(false);
   const [viewBankListData, setViewBankListData] = useState({});
 
-
   const handleViewBank = (bankData) => {
     console.log("User Data: ", bankData);
     setShowViewBankList(!showViewBankList);
     setViewBankListData(bankData);
   };
-
+  // const reversedData = banks.slice().reverse();
   const columns = useMemo(
     () => [
       {
         Header: "#",
-        // accessor: "name",
-        disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
           const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          const serialNumber = totalRows - cellProps.row.index;
+
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {serialNumber}
                 </Link>
               </h5>
             </>
           );
         },
       },
+
       {
         Header: "Name",
         accessor: "name",
@@ -86,10 +85,10 @@ const BankList = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-              // onClick={() => {
-              //   const userData = cellProps.row.original;
-              //   handleViewBankList(userData);
-              // }}
+                // onClick={() => {
+                //   const userData = cellProps.row.original;
+                //   handleViewBankList(userData);
+                // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -257,10 +256,14 @@ const BankList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {/* {console.log("Tax list:" + JSON.stringify(banks))} */}
+                    {console
+                      .log
+                      // "BBBBBBBBBBanks reverse:" + JSON.stringify(reversedData)
+                      ()}
                     <TableContainer
                       isPagination={true}
                       columns={columns}
+                      // data={banks}
                       data={banks}
                       isGlobalFilter={true}
                       isShowTableActionButtons={true}
