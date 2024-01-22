@@ -14,8 +14,21 @@ const StockPairing = (props) => {
     goToPage,
     loading,
   } = props;
-  // console.log("currentPage, pageSize:" + currentPage, pageSize);
+  console.log("currentPage, pageSize:" + currentPage, pageSize);
   // console.log("stockpairing:" + JSON.stringify(stockpairing));
+
+  if (
+    !stockpairing ||
+    !totalCount ||
+    !pageSize ||
+    !currentPage ||
+    !totalPage ||
+    !goToPage ||
+    loading === undefined
+  ) {
+    return <div>Loading...</div>;
+  }
+
   const columns = useMemo(
     () => [
       {

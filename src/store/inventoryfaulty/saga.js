@@ -51,7 +51,7 @@ function* fetchInventoryFaultyPairing() {
       pageSize
     );
     console.log("Response from API -", response);
-    debugger;
+    // debugger;
     yield put(getInventoryFaultyPairingSuccess(response));
   } catch (error) {
     yield put(getInventoryFaultyPairingFail(error));

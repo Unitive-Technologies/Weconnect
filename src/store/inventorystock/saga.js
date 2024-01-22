@@ -52,7 +52,7 @@ function* fetchInventoryStockPairing() {
       pageSize
     );
     console.log("Response from API -", response);
-    debugger;
+    // debugger;
     yield put(getInventoryStockPairingSuccess(response));
   } catch (error) {
     yield put(getInventoryStockPairingFail(error));

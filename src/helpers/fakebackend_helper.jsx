@@ -701,6 +701,14 @@ export const getInventoryAllottedPairing = async (
   );
 };
 
+export const getInventoryTrack = async (currentPage, perPage = 20) => {
+  console.log("Inventory track - Current Page in fakebackend: ", currentPage);
+  console.log("Inventory track - Per Page: ", perPage);
+  return await getCompleteResponse(
+    url.getInventoryTrackUrl(currentPage, perPage)
+  );
+};
+
 export const addNewUser = (user) => post(url.ADD_NEW_USER, user);
 
 // update user

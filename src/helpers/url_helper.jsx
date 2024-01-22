@@ -489,3 +489,8 @@ export const getAllottedPairingUrl = (currPage, perPage) => {
   console.log("current page in Allotted url - ", currPage, perPage);
   return `/pairing-allotment?expand=created_by_lbl,status_lbl,cas_lbl,brand_lbl,boxtype_lbl,is_embeded_lbl,operator_lbl,warehouse_lbl,inv_state_lbl,other_id_lbl,rsd_startdate&filter[status]=1&filter[account_id]=0&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
+
+export const getInventoryTrackUrl = (currPage, perPage) => {
+  console.log("current page in Allotted url - ", currPage, perPage);
+  return `/track-sc-stb?expand=scCurrentStatus,stbCurrentStatus,stb_brand_lbl,state_lbl,inv_state_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+};

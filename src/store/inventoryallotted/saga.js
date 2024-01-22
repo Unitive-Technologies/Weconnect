@@ -51,7 +51,7 @@ function* fetchInventoryAllottedPairing() {
       pageSize
     );
     console.log("Response from API -", response);
-    debugger;
+    // debugger;
     yield put(getInventoryAllottedPairingSuccess(response));
   } catch (error) {
     yield put(getInventoryAllottedPairingFail(error));
