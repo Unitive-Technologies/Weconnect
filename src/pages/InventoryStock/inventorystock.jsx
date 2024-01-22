@@ -152,10 +152,6 @@ const InventoryStock = (props) => {
     }
   }, [dispatch, allottedpairing]);
 
-  useEffect(() => {
-    console.log("allotted pairing: ", allottedpairing);
-  }, [allottedpairing]);
-
   const selectInventoryBlacklistedState = (state) => state.blacklistedsmartcard;
   const inventoryblacklistedProperties = createSelector(
     selectInventoryBlacklistedState,
@@ -239,9 +235,6 @@ const InventoryStock = (props) => {
   const getFilteredTotalPage = () => {
     if (selectedOption === "In-stock") {
       if (activeTab === "3") {
-        {
-          console.log("Stock total page: ", stocktotalPage);
-        }
         return stocktotalPage;
       }
     } else if (selectedOption === "Faulty") {
@@ -560,27 +553,6 @@ const InventoryStock = (props) => {
       },
     ];
   };
-
-  console.log(
-    "Stock current page: ",
-    stockcurrentPage,
-    " stock page size: ",
-    stockpageSize
-  );
-
-  console.log(
-    "faultty current page: ",
-    faultycurrentPage,
-    " faulty page size: ",
-    faultypageSize
-  );
-
-  console.log(
-    "allotted current page: ",
-    allottedcurrentPage,
-    " allotted page size: ",
-    allottedpageSize
-  );
 
   return (
     <React.Fragment>
