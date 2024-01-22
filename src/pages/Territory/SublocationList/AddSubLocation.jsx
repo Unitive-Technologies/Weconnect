@@ -14,13 +14,12 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addSubLocation as onAddSubLocation } from "/src/store/sublocation/actions";
+import { getSublocation as onGetSublocation, addSubLocation as onAddSubLocation } from "/src/store/sublocation/actions";
 import { useSelector, useDispatch } from "react-redux";
-import { createSelector } from "reselect";
 import Select from "react-select";
 
 const AddSubLocation = (props) => {
-  const { isOpen, handleAddSubLocation, status, locateonsublocate } = props;
+  const { isOpen, toggleAddModal, status, locateonsublocate } = props;
   const dispatch = useDispatch();
   const [selectedLocation, setSelectedLocation] = useState(null);
 
@@ -69,8 +68,9 @@ const AddSubLocation = (props) => {
       };
       console.log("new sub location:" + JSON.stringify(newSubLocation));
       dispatch(onAddSubLocation(newSubLocation));
+      dispatch(onGetSublocation());
       validation.resetForm();
-      handleAddSubLocation();
+      toggleAddModal();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -86,9 +86,9 @@ const AddSubLocation = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleAddSubLocation}
+      toggle={toggleAddModal}
     >
-      <ModalHeader tag="h4" toggle={handleAddSubLocation}>
+      <ModalHeader tag="h4" toggle={toggleAddModal}>
         Add New Sub Location
       </ModalHeader>
       <ModalBody>
@@ -150,7 +150,7 @@ const AddSubLocation = (props) => {
                   styles={customStyles}
                 />
                 {validation.touched.location_id &&
-                validation.errors.location_id ? (
+                  validation.errors.location_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.location_id}
                   </FormFeedback>
@@ -205,7 +205,7 @@ const AddSubLocation = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    handleAddSubLocation();
+                    toggleAddModal();
                   }}
                 >
                   Cancel
@@ -220,8 +220,12 @@ const AddSubLocation = (props) => {
 };
 
 AddSubLocation.propTypes = {
-  toggle: PropTypes.func,
+  toggleAddModal: PropTypes.func,
   isOpen: PropTypes.bool,
+
+  status: PropTypes.array,
+  locateonsublocate: PropTypes.array,
+
 };
 
 export default AddSubLocation;

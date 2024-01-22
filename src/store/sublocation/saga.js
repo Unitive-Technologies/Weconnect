@@ -6,6 +6,7 @@ import {
   GET_LOCATION_ONSUBLOCATION,
 } from "./actionTypes";
 import {
+  getSublocation as fetchsublocations,
   getSublocationSuccess,
   getSublocationFail,
   addSubLocationSuccess,
@@ -57,6 +58,7 @@ function* onUpdateSubLocation({ payload: sublocation }) {
     const response = yield call(updateSublocation, sublocation.id, sublocation);
     console.log("Response data in saga: ", response);
     yield put(updateSublocationSuccess(response));
+    yield put(fetchsublocations());
   } catch (error) {
     console.log("Error in update sublocation: ", error);
     yield put(updateSublocationFail(error));
@@ -68,6 +70,7 @@ function* onAddSubLocation({ payload: sublocation }) {
     const response = yield call(addSublocation, sublocation);
     console.log("Response data: ", response.data);
     yield put(addSubLocationSuccess(response.data));
+    yield put(fetchsublocations());
   } catch (error) {
     yield put(addSubLocationFail(error));
   }

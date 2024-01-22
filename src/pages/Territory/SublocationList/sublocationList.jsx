@@ -10,6 +10,7 @@ import {
   Container,
   Row,
   UncontrolledTooltip,
+  Spinner
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import {
@@ -64,13 +65,13 @@ const SublocationList = (props) => {
     currentPage, } = useSelector(
       sublocationProperties
     );
-  const [isLoading, setLoading] = useState(loading);
+  // const [isLoading, setLoading] = useState(loading);
   const [showAddSubLocation, setShowAddSubLocation] = useState(false);
   const [showUploadSubLocation, setShowUploadSubLocation] = useState(false);
   const [showViewSubLocation, setShowViewSubLocation] = useState(false);
   const [viewSubLocationData, setViewSubLocationData] = useState({});
 
-  const handleViewSubLocation = (userData) => {
+  const toggleViewModal = (userData) => {
     // console.log("User Data: ", userData);
     setShowViewSubLocation(!showViewSubLocation);
     setViewSubLocationData(userData);
@@ -110,7 +111,7 @@ const SublocationList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  handleViewSubLocation(userData);
+                  toggleViewModal(userData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -213,41 +214,7 @@ const SublocationList = (props) => {
           );
         },
       },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
-          );
-        },
-      },
+
     ],
     []
   );
@@ -271,12 +238,16 @@ const SublocationList = (props) => {
     dispatch(onGetSublocation());
   };
 
-  const handleAddSubLocation = () => {
+  const toggleAddModal = () => {
     setShowAddSubLocation(!showAddSubLocation);
   };
 
-  const handleUploadSubLocation = () => {
+  const toggleUploadModal = () => {
     setShowUploadSubLocation(!showUploadSubLocation);
+  };
+
+  const resetSelection = () => {
+    setViewSubLocationData({});
   };
 
   const getTableActions = () => {
@@ -300,28 +271,34 @@ const SublocationList = (props) => {
     <React.Fragment>
       <ViewSubLocation
         isOpen={showViewSubLocation}
-        handleViewSubLocation={handleViewSubLocation}
+        toggleViewModal={toggleViewModal}
         sublocation={viewSubLocationData}
         status={status}
+        resetSelection={resetSelection}
         locateonsublocate={locateonsublocate}
       />
       <AddSubLocation
         isOpen={showAddSubLocation}
-        handleAddSubLocation={handleAddSubLocation}
+        toggleAddModal={toggleAddModal}
         status={status}
         locateonsublocate={locateonsublocate}
       />
       <UploadSubLocation
         isOpen={showUploadSubLocation}
-        handleUploadSubLocation={handleUploadSubLocation}
+        toggleUploadModal={toggleUploadModal}
         status={status}
         locateonsublocate={locateonsublocate}
       />
       <div className="page-content">
         <Container fluid>
           <Breadcrumbs title="Territory" breadcrumbItem="Sublocations" />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">

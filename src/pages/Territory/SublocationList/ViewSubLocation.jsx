@@ -16,14 +16,13 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import Select from "react-select";
 import { updateSublocation as onUpdateSublocation } from "/src/store/sublocation/actions";
 import { getSublocation as onGetSublocation } from "/src/store/actions";
 
 const ViewSubLocation = (props) => {
   const {
     isOpen,
-    handleViewSubLocation,
+    toggleViewModal,
     sublocation,
     status,
     locateonsublocate,
@@ -77,13 +76,16 @@ const ViewSubLocation = (props) => {
       dispatch(onUpdateSublocation(updateSubLocation));
       dispatch(onGetSublocation());
       validation.resetForm();
-      handleViewSubLocation();
+      setShowEditSubLocation(false);
+      resetSelection();
+      toggleViewModal();
     },
   });
 
   const handleCancel = () => {
-    handleViewSubLocation();
     setShowEditSubLocation(false);
+    resetSelection();
+    toggleViewModal();
   };
 
   return (
@@ -209,7 +211,7 @@ const ViewSubLocation = (props) => {
                   ))}
                 </Input>
                 {validation.touched.location_id &&
-                validation.errors.location_id ? (
+                  validation.errors.location_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.location_id}
                   </FormFeedback>
@@ -253,8 +255,13 @@ const ViewSubLocation = (props) => {
 };
 
 ViewSubLocation.propTypes = {
-  toggle: PropTypes.func,
+  toggleViewModal: PropTypes.func,
+  resetSelection: PropTypes.func,
   isOpen: PropTypes.bool,
+
+  sublocation: PropTypes.object,
+  status: PropTypes.array,
+
 };
 
 export default ViewSubLocation;

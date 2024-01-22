@@ -8,8 +8,10 @@ import {
   GET_SUBLOCATION,
   GET_SUBLOCATION_SUCCESS,
   GET_SUBLOCATION_FAIL,
+  ADD_SUBLOCATION,
   ADD_SUBLOCATION_SUCCESS,
   ADD_SUBLOCATION_FAIL,
+  UPDATE_SUBLOCATION,
   UPDATE_SUBLOCATION_SUCCESS,
   UPDATE_SUBLOCATION_FAIL,
   GET_LOCATION_ONSUBLOCATION_SUCCESS,
@@ -63,28 +65,48 @@ const Sublocation = (state = INIT_STATE, action) => {
         loading: false,
       };
 
+    case ADD_SUBLOCATION:
+      return {
+        ...state,
+        loading: true,
+      };
+
     case ADD_SUBLOCATION_SUCCESS:
       return {
         ...state,
         sublocation: [...state.sublocation, action.payload],
+        loading: false,
       };
 
     case ADD_SUBLOCATION_FAIL:
       return {
         ...state,
         error: action.payload,
+        loading: false,
+      };
+
+    case UPDATE_SUBLOCATION:
+      return {
+        ...state,
+        loading: true,
       };
 
     case UPDATE_SUBLOCATION_SUCCESS:
-      console.log("Sublocation in reducer: ", action.payload);
+      // console.log("Sublocation in reducer: ", action.payload);
       return {
         ...state,
+        loading: false,
         sublocation: state.sublocation.map((sublocate) =>
-          sublocate.id.toString() === action.payload.id.toString()
-            ? { sublocation: sublocate, ...action.payload }
-            : sublocate
+          sublocate.id === action.payload.id ? { ...sublocate, ...action.payload } : sublocate
         ),
       };
+    //   ...state,
+    //   sublocation: state.sublocation.map((sublocate) =>
+    //     sublocate.id.toString() === action.payload.id.toString()
+    //       ? { sublocation: sublocate, ...action.payload }
+    //       : sublocate
+    //   ),
+    // };
 
     case UPDATE_SUBLOCATION_FAIL:
       return {

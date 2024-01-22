@@ -21,7 +21,7 @@ import Select from "react-select";
 import { useSelector, useDispatch } from "react-redux";
 
 const UploadSubLocation = (props) => {
-  const { isOpen, handleUploadSubLocation, status } = props;
+  const { isOpen, toggleUploadModal, status } = props;
   const dispatch = useDispatch();
   const [selectedFiles, setselectedFiles] = useState([]);
   const selectLcoState = (state) => state.lco;
@@ -107,9 +107,9 @@ const UploadSubLocation = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleUploadSubLocation}
+      toggle={toggleUploadModal}
     >
-      <ModalHeader toggle={handleUploadSubLocation} tag="h4">
+      <ModalHeader toggle={toggleUploadModal} tag="h4">
         Upload Sub Locations
       </ModalHeader>
       <ModalBody>
@@ -155,16 +155,16 @@ const UploadSubLocation = (props) => {
                     type="select"
                     placeholder="Select Status"
                     className="form-select"
-                    // onChange={validation.handleChange}
-                    // onBlur={validation.handleBlur}
-                    // value={validation.values.status || ""}
+                  // onChange={validation.handleChange}
+                  // onBlur={validation.handleBlur}
+                  // value={validation.values.status || ""}
                   >
                     <option value="">Select Status</option>
                     {status.map((options) => (
-                    <option key={options.id} value={options.id}>
-                      {options.name}
-                    </option>
-                  ))}
+                      <option key={options.id} value={options.id}>
+                        {options.name}
+                      </option>
+                    ))}
                   </Input>
                   {/* {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
@@ -252,7 +252,7 @@ const UploadSubLocation = (props) => {
                 <button
                   type="reset"
                   className="btn btn-warning"
-                  //   onClick={() => validation.resetForm()}
+                //   onClick={() => validation.resetForm()}
                 >
                   Reset
                 </button>
@@ -262,7 +262,7 @@ const UploadSubLocation = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     //   validation.resetForm();
-                    handleUploadSubLocation();
+                    toggleUploadModal();
                   }}
                 >
                   Cancel
@@ -277,8 +277,12 @@ const UploadSubLocation = (props) => {
 };
 
 UploadSubLocation.propTypes = {
-  toggle: PropTypes.func,
+  toggleUploadModal: PropTypes.func,
   isOpen: PropTypes.bool,
+
+  status: PropTypes.array,
+
+
 };
 
 export default UploadSubLocation;
