@@ -46,6 +46,7 @@ import {
 } from "/src/store/inventoryallotted/actions";
 import StockStb from "./StockStb";
 import StockPairing from "./StockPairing";
+import InventoryTrack from "./InventoryTrack";
 
 const InventoryStock = (props) => {
   document.title = "Inventory | VDigital";
@@ -709,6 +710,13 @@ const InventoryStock = (props) => {
                               totalPage={getFilteredTotalPage()}
                               loading={loading}
                             />
+                          </Col>
+                        </Row>
+                      </TabPane>
+                      <TabPane tabId="4">
+                        <Row>
+                          <Col sm="12">
+                            <InventoryTrack />
                           </Col>
                         </Row>
                       </TabPane>

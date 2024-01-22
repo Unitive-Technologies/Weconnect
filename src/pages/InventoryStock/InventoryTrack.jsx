@@ -1,52 +1,91 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardBody, Col, Row } from "reactstrap";
 import TableContainer from "../../components/Common/TableContainer";
+import {
+  getInventoryTrack as onGetInventoryTrack,
+  goToPage as onGoToPage,
+  getInventoryTrackAction as onGetInventoryTrackAction,
+} from "/src/store/inventorytrack/actions";
+import { useSelector, useDispatch } from "react-redux";
+import { createSelector } from "reselect";
 import TableContainerX from "../../components/Common/TableContainerX";
 
-const StockPairing = (props) => {
+const InventoryTrack = (props) => {
+  const dispatch = useDispatch();
+
+  const selectInventoryTrackState = (state) => state.inventorytrack;
+  const inventorytrackProperties = createSelector(
+    selectInventoryTrackState,
+    (inventorytrack) => ({
+      inventory_track: inventorytrack.inventorytrack,
+      loading: inventorytrack.loading,
+      inventorytrackaction: inventorytrack.inventorytrackaction,
+      totalPage: inventorytrack.totalPages,
+      totalCount: inventorytrack.totalCount,
+      pageSize: inventorytrack.perPage,
+      currentPage: inventorytrack.currentPage,
+    })
+  );
+
   const {
-    stockpairing,
-    totalCount,
+    inventory_track,
+    loading,
+    inventorytrackaction,
     totalPage,
+    totalCount,
     pageSize,
     currentPage,
-    goToPage,
-    loading,
-  } = props;
-  console.log("currentPage, pageSize:" + currentPage, pageSize);
-  // console.log("stockpairing:" + JSON.stringify(stockpairing));
+  } = useSelector(inventorytrackProperties);
 
-  if (
-    !stockpairing ||
-    !totalCount ||
-    !pageSize ||
-    !currentPage ||
-    !totalPage ||
-    !goToPage ||
-    loading === undefined
-  ) {
-    return <div>Loading...</div>;
-  }
+  useEffect(() => {
+    dispatch(onGetInventoryTrack());
+    dispatch(onGetInventoryTrackAction());
+  }, [dispatch]);
+
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetInventoryTrack());
+  };
 
   const columns = useMemo(
     () => [
+      //   {
+      //     Header: "",
+      //     filterable: true,
+      //     Cell: (cellProps) => {
+      //       return <p>+</p>;
+      //     },
+      //   },
       {
         Header: "#",
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          // console.log("cellProps:" + cellProps.row.index);
-          // console.log("currentPage, pageSize:" + currentPage, pageSize);
           const startIndex = (currentPage - 1) * pageSize;
-          // debugger;
           const index = startIndex + cellProps.row.index + 1;
-          // console.log("index:" + index);
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
                   {index}
+                </Link>
+              </h5>
+            </>
+          );
+        },
+      },
+      {
+        Header: "Action",
+        accessor: "action",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.action}
                 </Link>
               </h5>
             </>
@@ -75,29 +114,13 @@ const StockPairing = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.stbno}</p>
-          );
-        },
-      },
-      {
-        Header: "Box Type",
-        accessor: "boxtype_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.boxtype_lbl}
-            </p>
-          );
-        },
-      },
-      {
-        Header: "CAS",
-        accessor: "cas_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">{cellProps.row.original.cas_lbl}</p>
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.stbno}
+                </Link>
+              </h5>
+            </>
           );
         },
       },
@@ -114,37 +137,13 @@ const StockPairing = (props) => {
         },
       },
       {
-        Header: "IsEmbedded",
-        accessor: "is_embeded_lbl",
+        Header: "Stock Type",
+        accessor: "state_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.is_embeded_lbl}
-            </p>
-          );
-        },
-      },
-      {
-        Header: "Inventory State",
-        accessor: "inv_state_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.inv_state_lbl}
-            </p>
-          );
-        },
-      },
-      {
-        Header: "Warehouse",
-        accessor: "warehouse_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.warehouse_lbl}
+              {cellProps.row.original.state_lbl}
             </p>
           );
         },
@@ -162,29 +161,128 @@ const StockPairing = (props) => {
         },
       },
       {
-        Header: "Created At",
-        accessor: "created_at",
+        Header: "CAS Name",
+        accessor: "cas_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.cas_lbl}</p>
+          );
+        },
+      },
+      {
+        Header: "Inventory State",
+        accessor: "inv_state_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.created_at}
+              {cellProps.row.original.inv_state_lbl}
             </p>
           );
         },
       },
       {
-        Header: "Created by",
-        accessor: "created_by_lbl",
+        Header: "DOC No./Return DOC No.",
+        accessor: "doc_number",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.created_by_lbl}
+              {cellProps.row.original.doc_number}
             </p>
           );
         },
       },
+      {
+        Header: "Customer Id",
+        accessor: "customer_id",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.customer_id}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Operator Name",
+        accessor: "operator_name",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.operator_name}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Operator Code",
+        accessor: "operator_code",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.operator_code}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Remark",
+        accessor: "remark",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.remark}</p>
+          );
+        },
+      },
+      {
+        Header: "From Operator",
+        accessor: "from_operator",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.from_operator}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "To Operator",
+        accessor: "to_operator",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.to_operator}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Action Date",
+        accessor: "action_date",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.action_date}
+            </p>
+          );
+        },
+      },
+      //   {
+      //     Header: "Action Button",
+      //     filterable: true,
+      //     Cell: (cellProps) => {
+      //       return <p></p>;
+      //     },
+      //   },
     ],
     []
   );
@@ -243,7 +341,7 @@ const StockPairing = (props) => {
             <CardBody>
               <TableContainerX
                 columns={columns}
-                data={stockpairing}
+                data={inventory_track}
                 isLoading={loading}
                 isPagination={true}
                 totalCount={Number(totalCount)}
@@ -263,4 +361,4 @@ const StockPairing = (props) => {
   );
 };
 
-export default StockPairing;
+export default InventoryTrack;
