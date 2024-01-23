@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
 import {
@@ -12,6 +12,8 @@ import {
   FormFeedback,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { createSelector } from "reselect";
+import { useSelector, useDispatch } from "react-redux";
 
 const CasList = ({ data, updateList }) => {
   const selectChannelState = (state) => state.channelList;
@@ -155,6 +157,19 @@ const CasList = ({ data, updateList }) => {
       { casLabel: casSelection, casCode: casCode, serviceId: serviceId },
     ]);
   };
+
+  const handleChange = (e) => {
+    // Handle change for different input fields
+    const { name, value } = e.target;
+    if (name === "casSelection") {
+      setCasSelection(value);
+    } else if (name === "casCode") {
+      setCasCode(value);
+    } else if (name === "serviceID") {
+      setServiceId(value);
+    }
+  };
+
   const deleteCasList = (index) => {
     const list = [...data];
     list.splice(index, 1);
@@ -174,30 +189,20 @@ const CasList = ({ data, updateList }) => {
           >
             <Col lg={12}>
               <div className="mb-3">
-                {/* <Label className="form-label">
-                  Type<span style={{ color: "red" }}>*</span>
-                </Label> */}
+
                 <Input
-                  name="type"
+                  name="casSource"
                   type="select"
                   placeholder="Select CAS"
                   className="form-select"
-                  // disabled={!showEditChannel}
-                  // onChange={validation.handleChange}
-                  // onBlur={validation.handleBlur}
-                  // value={validation.values.type || ""}
+                  onChange={handleChange}
                 >
                   {casSource.map((options) => (
-                    <option key={options.id} value={options.name}>
+                    <option key={options.id} value={options.id}>
                       {options.name}
                     </option>
                   ))}
                 </Input>
-                {/* {validation.touched.type && validation.errors.type ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.type}
-                  </FormFeedback>
-                ) : null} */}
               </div>
             </Col>
             <div
@@ -210,15 +215,17 @@ const CasList = ({ data, updateList }) => {
               <Col lg={5} style={{ marginRight: "20px" }}>
                 <div className="mb-3">
                   {/* <TODO>Add handlechange and update cascode</TODO> */}
-                  <Input type="text" placeholder="CAS Code" value={casCode} />
+                  <Input name="casCode" type="text" placeholder="CAS Code" value={casCode} onChange={handleChange} />
                 </div>
               </Col>
               <Col lg={5} style={{ marginRight: "20px" }}>
                 <div className="mb-3">
                   <Input
+                    name="serviceID"
                     type="text"
                     placeholder="Service ID"
                     value={serviceId}
+                    onChange={handleChange}
                   />
                 </div>
               </Col>
