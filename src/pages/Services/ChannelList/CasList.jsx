@@ -196,6 +196,8 @@ const CasList = ({ data, updateList }) => {
                   className="form-select"
                   onChange={handleChange}
                 >
+                  {console.log(casSource)}
+
                   {casSource.map((options) => (
                     <option key={options.id} value={options.id}>
                       {options.name}

@@ -372,18 +372,6 @@ const ChannelList = (props) => {
                       isGlobalFilter={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleAddNewChannelList={() =>
-                        setShowAddNewChannelList(true)
-                      }
-                      handleUploadChannelList={() =>
-                        setShowUploadChannelList(true)
-                      }
-                      handleBulkUpdateCasCodeChannelList={() =>
-                        setShowBulkUpdateCasCodeChannelList(true)
-                      }
-                      handleBulkUpdateChannelList={() =>
-                        setShowBulkUpdateChannelList(true)
-                      }
                       goToPage={goToPage}
                     />
                   </CardBody>

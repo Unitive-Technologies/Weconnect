@@ -287,7 +287,7 @@ export const getLanguageList = async (currentPage, perPage = 20) => {
   );
 };
 
-export const getCASSource = async () => {
+export const getCASSourceList = async () => {
   return await getCompleteResponse(url.getCASSourceUrl());
 };
 
@@ -497,16 +497,16 @@ export const updateLanguageList = (langlist, id) =>
 export const addNewChannelList = (channel) =>
   post(url.ADD_NEW_CHANNELLIST, channel);
 export const getChannelListStatus = () => get(url.GET_CHANNELLIST_STATUS);
-export const getChannelListDefinition = () => get(url.GET_CHANNELLIST_DEFINITION);
+export const getChannelListDefinition = () =>
+  get(url.GET_CHANNELLIST_DEFINITION);
 export const getChannelListType = () => get(url.GET_CHANNELLIST_TYPE);
-export const getChannelListBroadcaster = () => get(url.GET_CHANNELLIST_BROADCASTER);
+export const getChannelListBroadcaster = () =>
+  get(url.GET_CHANNELLIST_BROADCASTER);
 export const getChannelListCascode = () => get(url.GET_CHANNELLIST_CASCODE);
 export const getChannelListGenre = () => get(url.GET_CHANNELLIST_GENRE);
 export const getChannelListLanguage = () => get(url.GET_CHANNELLIST_LANGUAGE);
 export const updateChannelList = (channelList, id) =>
   put(url.UPDATE_CHANNELLIST(id), channelList);
-
-
 
 // export const getBroadcasterBouquetList = () =>
 //   get(url.GET_BROADCASTERBOUQUETLIST);

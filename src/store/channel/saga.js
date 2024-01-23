@@ -20,13 +20,15 @@ import {
 import {
   getChannelList,
   addNewChannelList,
+  getCASSourceList,
 } from "../../helpers/fakebackend_helper";
 
 export const getChannelListStore = (state) => state.channelList;
 
 function* fetchCASSource() {
   try {
-    const response = yield call(getCASSource);
+    const response = yield call(getCASSourceList);
+    console.log("Response from CAS Source API -", response);
     yield put(getCASSourceSuccess(response));
   } catch (error) {
     console.error("Error fetching CAS Source:", error);
@@ -43,7 +45,6 @@ function* fetchChannelList() {
 
     const response = yield call(getChannelList, currentPage, pageSize);
     console.log("Response from API -", response);
-    debugger;
     yield put(getChannelListSuccess(response));
   } catch (error) {
     console.error("Error fetching Channel list:", error);
