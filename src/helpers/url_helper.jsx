@@ -384,7 +384,6 @@ export const GET_BANK_STATUS = "/list/status?fields=id,name&vr=web1.0";
 export const ADD_NEW_BANK = "/bank?vr=web1.0";
 export const UPDATE_BANK = (id) => `/bank/${id}?vr=web1.0`;
 
-
 export const GET_PROMOVOUCHER =
   "/promo-voucher?expand=status_lbl,bouque_lbl,expiry_date_lbl,apply_on_lbl,rperiod_lbl,operator_lbl,operator_code_lbl,smartcardno,stbno,created_at_lbl,created_by_lbl&page=1&per-page=50&vr=web1.0";
 export const GET_PROMOVOUCHER_LCO =
@@ -454,11 +453,12 @@ export const GET_INVENTORYSTOCK_STB =
   "/stb?expand=po_date,po_number,invoice_no,invoice_date,created_by_lbl,status_lbl,brand_lbl,boxtype_lbl,cas_lbl,warehouse_lbl,state_lbl,inv_state_lbl&filter[status]=1&filter[sc_id]=0&page=1&per-page=50&vr=web1.0";
 export const GET_INVENTORYSTOCK_PAIRING =
   "/pairing?expand=created_by_lbl,status_lbl,cas_lbl,brand_lbl,boxtype_lbl,is_embeded_lbl,warehouse_lbl,state_lbl,inv_state_lbl,other_id_lbl,rsd_startdate&filter[status]=1&page=1&per-page=50&vr=web1.0";
-
 export const getStockPairingUrl = (currPage, perPage) => {
   console.log("current page in users url - ", currPage, perPage);
   return `/pairing?expand=created_by_lbl,status_lbl,cas_lbl,brand_lbl,boxtype_lbl,is_embeded_lbl,warehouse_lbl,state_lbl,inv_state_lbl,other_id_lbl,rsd_startdate&filter[status]=1&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
+export const UPDATE_INVENTORYSTOCK_STB = (id) =>
+  `stb/change-stb/${id}?vr=web1.0`;
 
 export const GET_INVENTORYFAULTY_SMARTCARD =
   "/smartcard?expand=po_date,po_number,invoice_no,invoice_date,created_by_lbl,cas_lbl,status_lbl,brand_lbl,warehouse_lbl,state_lbl,inv_state_lbl&filter[status]=3&filter[stb_id]=0&page=1&per-page=50&vr=web1.0";

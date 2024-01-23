@@ -657,8 +657,6 @@ export const addNewSMSMessageTempList = (smsmsg) =>
 export const getInventoryStockSmartcard = () =>
   get(url.GET_INVENTORYSTOCK_SMARTCARD);
 export const getInventoryStockStb = () => get(url.GET_INVENTORYSTOCK_STB);
-// export const getInventoryStockPairing = () =>
-//   get(url.GET_INVENTORYSTOCK_PAIRING);
 export const getInventoryStockPairing = async (currentPage, perPage = 20) => {
   console.log("Stock Pairing - Current Page in fakebackend: ", currentPage);
   console.log("Stock Pairing - Per Page: ", perPage);
@@ -666,12 +664,12 @@ export const getInventoryStockPairing = async (currentPage, perPage = 20) => {
     url.getStockPairingUrl(currentPage, perPage)
   );
 };
+export const updateInventoryStockStb = (id, stockstb) =>
+  put(url.UPDATE_INVENTORYSTOCK_STB(id), stockstb);
 
 export const getInventoryFaultySmartcard = () =>
   get(url.GET_INVENTORYFAULTY_SMARTCARD);
 export const getInventoryFaultyStb = () => get(url.GET_INVENTORYFAULTY_STB);
-// export const getInventoryFaultyPairing = () =>
-//   get(url.GET_INVENTORYFAULTY_PAIRING);
 export const getInventoryFaultyPairing = async (currentPage, perPage = 20) => {
   console.log("Faulty Pairing - Current Page in fakebackend: ", currentPage);
   console.log("Faulty Pairing - Per Page: ", perPage);
@@ -688,8 +686,6 @@ export const getInventoryBlacklistedPairing = () =>
 export const getInventoryAllottedSmartcard = () =>
   get(url.GET_INVENTORYALLOTTED_SMARTCARD);
 export const getInventoryAllottedStb = () => get(url.GET_INVENTORYALLOTTED_STB);
-// export const getInventoryAllottedPairing = () =>
-//   get(url.GET_INVENTORYALLOTTED_PAIRING);
 export const getInventoryAllottedPairing = async (
   currentPage,
   perPage = 20
