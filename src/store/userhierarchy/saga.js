@@ -1,6 +1,7 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import { GET_USERHIERARCHY, ADD_USERHIERARCHY } from "./actionTypes";
 import {
+  getUserHierarchy as fetchuserhierarchy,
   getUserHierarchySuccess,
   getUserHierarchyFail,
   addUserHierarchyFail,
@@ -53,10 +54,10 @@ function* onAddUserHierarchy({ payload: userHierarchy }) {
   try {
     const response = yield call(addUserHierarchy, userHierarchy);
     yield put(addUserHierarchySuccess(response));
-    toast.success("User Hierarchy Added Successfully", { autoClose: 2000 });
+    yield put(fetchuserhierarchy());
   } catch (error) {
     yield put(addUserHierarchyFail(error));
-    toast.error("User Hierarchy Added Failed", { autoClose: 2000 });
+    // toast.error("User Hierarchy Added Failed", { autoClose: 2000 });
   }
 }
 

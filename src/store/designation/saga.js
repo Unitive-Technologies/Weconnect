@@ -10,6 +10,7 @@ import {
 } from "./actionTypes";
 
 import {
+  getDesignation as fetchdesignation,
   getDesignationSuccess,
   getDesignationFail,
   addDesignationSuccess,
@@ -123,6 +124,7 @@ function* onAddNewDesignation({ payload: designation }) {
 
     yield put(addDesignationSuccess(response.data));
     // toast.success("Designation Added Successfully", { autoClose: 2000 });
+    yield put(fetchdesignation());
   } catch (error) {
     yield put(addDesignationFail(error));
     // toast.error("Designation Added Failed", { autoClose: 2000 });
@@ -135,6 +137,7 @@ function* onUpdateDesignation({ payload: designation }) {
     const response = yield call(updateDesignation, designation, designation.id);
     yield put(updateDesignationSuccess(response));
     console.log("update response:" + JSON.stringify(response));
+    yield put(fetchdesignation());
     // toast.success("Designation Updated Successfully", { autoClose: 2000 });
   } catch (error) {
     yield put(updateDesignationFail(error));
