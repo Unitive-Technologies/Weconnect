@@ -401,7 +401,12 @@ export const addNewScheduleCustomerNotification = (
 
 export const getScheduledNotification = () =>
   get(url.GET_SCHEDULEDNOTIFICATION);
-export const getStateUsers = () => get(url.GET_STATEUSERS);
+// export const getStateUsers = () => get(url.GET_STATEUSERS);
+export const getStateUsers = async (currentPage, perPage = 20) => {
+  console.log("State Users - Current Page in fakebackend: ", currentPage);
+  console.log("State Users - Per Page: ", perPage);
+  return await getCompleteResponse(url.getStateUsersUrl(currentPage, perPage));
+};
 
 // export const getDistrict = () => get(url.GET_DISTRICT);
 export const addDistrict = (district) => post(url.ADD_DISTRICT, district);
@@ -478,6 +483,17 @@ export const updateLanguageList = (langlist, id) =>
 // export const getChannelList = () => get(url.GET_CHANNELLIST);
 export const addNewChannelList = (channel) =>
   post(url.ADD_NEW_CHANNELLIST, channel);
+export const getChannelListStatus = () => get(url.GET_CHANNELLIST_STATUS);
+export const getChannelListDefinition = () => get(url.GET_CHANNELLIST_DEFINITION);
+export const getChannelListType = () => get(url.GET_CHANNELLIST_TYPE);
+export const getChannelListBroadcaster = () => get(url.GET_CHANNELLIST_BROADCASTER);
+export const getChannelListCascode = () => get(url.GET_CHANNELLIST_CASCODE);
+export const getChannelListGenre = () => get(url.GET_CHANNELLIST_GENRE);
+export const getChannelListLanguage = () => get(url.GET_CHANNELLIST_LANGUAGE);
+export const updateChannelList = (channelList, id) =>
+  put(url.UPDATE_CHANNELLIST(id), channelList);
+
+
 
 // export const getBroadcasterBouquetList = () =>
 //   get(url.GET_BROADCASTERBOUQUETLIST);

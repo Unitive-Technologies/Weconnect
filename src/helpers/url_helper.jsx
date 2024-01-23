@@ -193,12 +193,24 @@ export const getLanguageListUrl = (currPage, perPage) => {
 
 export const GET_CHANNELLIST =
   "/channel?expand=created_by_lbl,broadcaster_lbl,genre_lbl,language_lbl,channel_type_lbl,isAlacarte_lbl,status_lbl,isFta_lbl,isNCF_lbl&sort=name&page=1&per-page=50&vr=web1.0";
-export const ADD_NEW_CHANNELLIST = "/add/channellist";
-export const getCASSourceUrl = (currPage, perPage) => {
-  return "/casvendor/list?fields=id,name&vr=web1.0";
-};
+export const ADD_NEW_CHANNELLIST = "/channel?vr=web1.0";
+export const GET_CHANNELLIST_DEFINITION =
+  "/list/boxtype?fields=id,name&vr=web1.0";
+export const GET_CHANNELLIST_TYPE =
+  "/list/channelType?fields=id,name&vr=web1.0";
+export const GET_CHANNELLIST_STATUS =
+  "/list/status?fields=id,name&vr=web1.0";
+export const GET_CHANNELLIST_CASCODE = "/casvendor/list?fields=id,name&vr=web1.0";
+export const GET_CHANNELLIST_GENRE =
+  "/genre/list?fields=id,name&vr=web1.0";
+export const GET_CHANNELLIST_BROADCASTER =
+  "/broadcaster/list?fields=id,name&vr=web1.0";
+export const GET_CHANNELLIST_LANGUAGE =
+  "/language/list?fields=id,name&vr=web1.0";
+export const UPDATE_CHANNELLIST = (id) => `/channel/${id}?vr=web1.0`;
+// export const getCASSourceUrl = "/casvendor/list?fields=id,name&vr=web1.0";
 export const getChannelListUrl = (currPage, perPage) => {
-  console.log("current page in Package List url - ", currPage, perPage);
+  console.log("current page in Channel List url - ", currPage, perPage);
   return `/channel?expand=created_by_lbl,broadcaster_lbl,genre_lbl,language_lbl,channel_type_lbl,isAlacarte_lbl,status_lbl,isFta_lbl,isNCF_lbl&sort=name&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
 
