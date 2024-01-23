@@ -16,11 +16,10 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { updateBank as onUpdateBank } from "/src/store/banklist/actions";
-
+import { getBank as onGetBank, updateBank as onUpdateBank } from "/src/store/banklist/actions";
 
 const ViewBankList = (props) => {
-  const { isOpen, handleViewBank, banks, bankStatus } = props;
+  const { isOpen, toggleViewModal, banks, bankStatus } = props;
   console.log("view Bank in view modal:" + JSON.stringify(banks));
 
   const dispatch = useDispatch();
@@ -64,8 +63,11 @@ const ViewBankList = (props) => {
       };
       // console.log("Update Brand:" + JSON.stringify(updateBank));
       dispatch(onUpdateBank(updateBank));
+      dispatch(onGetBank());
       validation.resetForm();
-      handleViewBank();
+      setShowEditUser(false);
+      resetSelection();
+      toggleViewModal();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -74,7 +76,8 @@ const ViewBankList = (props) => {
 
   const handleCancel = () => {
     setShowEditBank(false);
-    handleViewBank();
+    resetSelection();
+    toggleViewModal();
   };
 
   return (
@@ -310,8 +313,11 @@ const ViewBankList = (props) => {
 };
 
 ViewBankList.propTypes = {
-  toggle: PropTypes.func,
+  toggleViewModal: PropTypes.func,
   isOpen: PropTypes.bool,
+
+  banks: PropTypes.object,
+  bankStatus: PropTypes.array,
 };
 
 export default ViewBankList;

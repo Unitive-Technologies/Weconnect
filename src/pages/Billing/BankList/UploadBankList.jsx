@@ -13,10 +13,9 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
-import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const UploadBankList = (props) => {
-  const { isOpen, handleUploadBank } = props;
+  const { isOpen, toggleUploadModal } = props;
 
   const [selectedFiles, setselectedFiles] = useState([]);
 
@@ -48,9 +47,9 @@ const UploadBankList = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleUploadBank}
+      toggle={toggleUploadModal}
     >
-      <ModalHeader toggle={handleUploadBank} tag="h4">
+      <ModalHeader toggle={toggleUploadModal} tag="h4">
         Upload Genres
       </ModalHeader>
       <ModalBody>
@@ -60,7 +59,7 @@ const UploadBankList = (props) => {
               <button
                 type="button"
                 className="btn btn-primary"
-                // onClick={handleDownloadSampleFile}
+              // onClick={handleDownloadSampleFile}
               >
                 Download Sample Upload File
               </button>
@@ -155,7 +154,7 @@ const UploadBankList = (props) => {
 };
 
 UploadBankList.propTypes = {
-  toggle: PropTypes.func,
+  toggleUploadModal: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 

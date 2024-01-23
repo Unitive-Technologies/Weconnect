@@ -19,7 +19,7 @@ import { useDispatch } from "react-redux";
 import { getBank as onGetBank } from "/src/store/actions";
 
 const AddNewBankList = (props) => {
-  const { isOpen, handleAddBank, bankStatus } = props;
+  const { isOpen, toggleAddModal, bankStatus } = props;
 
   const dispatch = useDispatch();
 
@@ -72,7 +72,7 @@ const AddNewBankList = (props) => {
       dispatch(onGetBank());
       setShowAdditionalField(false);
       validation.resetForm();
-      handleAddBank();
+      toggleAddModal();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -88,9 +88,9 @@ const AddNewBankList = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleAddBank}
+      toggle={toggleAddModal}
     >
-      <ModalHeader tag="h4" toggle={handleAddBank}>
+      <ModalHeader tag="h4" toggle={toggleAddModal}>
         Add New Bank
       </ModalHeader>
       <ModalBody>
@@ -292,7 +292,7 @@ const AddNewBankList = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    handleAddBank();
+                    toggleAddModal();
                   }}
                 >
                   Cancel
@@ -308,8 +308,11 @@ const AddNewBankList = (props) => {
 };
 
 AddNewBankList.propTypes = {
-  toggle: PropTypes.func,
+  toggleAddModal: PropTypes.func,
   isOpen: PropTypes.bool,
+
+  bankStatus: PropTypes.array,
+
 };
 
 export default AddNewBankList;

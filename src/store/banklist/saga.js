@@ -3,6 +3,7 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import { GET_BANK, UPDATE_BANK, GET_BANK_STATUS, ADD_NEW_BANK } from "./actionTypes";
 
 import {
+  getBank as fetchbanks,
   getBankSuccess,
   getBankFail,
   updateBankSuccess,
@@ -59,6 +60,7 @@ function* onUpdateBank({ payload: bank }) {
     );
     yield put(updateBankSuccess(response));
     console.log("update response:" + JSON.stringify(response));
+    yield put(fetchbanks());
   } catch (error) {
     yield put(updateBankFail(error));
   }
@@ -80,6 +82,7 @@ function* onAddNewBank({ payload: bank }) {
 
     yield put(addBankSuccess(response));
     // toast.success("Bank Added Successfully", { autoClose: 2000 });
+    yield put(fetchbanks());
   } catch (error) {
     yield put(addBankFail(error));
     // toast.error("Bank Added Failed", { autoClose: 2000 });
