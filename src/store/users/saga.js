@@ -17,6 +17,7 @@ import {
   GET_USER_DISTRIBUTOR,
   GET_USER_LCO,
   GET_USER_BULKSETTINGS,
+  UPDATE_USER_SETTINGS,
 } from "./actionTypes";
 
 import {
@@ -51,6 +52,8 @@ import {
   getUserLcoSuccess,
   getUserBulkSettingsFail,
   getUserBulkSettingsSuccess,
+  updateUserSettingsSuccess,
+  updateUserSettingsFail,
 } from "./actions";
 
 //Include Both Helper File with needed methods
@@ -70,6 +73,7 @@ import {
   getUserDistributor,
   getUserLco,
   getUserBulkSettings,
+  updateUserSettings,
 } from "../../helpers/fakebackend_helper";
 import { toast } from "react-toastify";
 
@@ -222,6 +226,18 @@ function* onUpdateUser({ payload: user }) {
   }
 }
 
+function* onUpdateUserSettings({ payload: user }) {
+  console.log("user in onUpdate:" + JSON.stringify(user));
+  try {
+    const response = yield call(updateUserSettings, user, user.id);
+    yield put(updateUserSettingsSuccess(response));
+    console.log("update response:" + JSON.stringify(response));
+    yield put(fetchusers());
+  } catch (error) {
+    yield put(updateUserSettingsFail(error));
+  }
+}
+
 function* onDeleteUser({ payload: user }) {
   try {
     const response = yield call(deleteUser, user);
@@ -261,6 +277,7 @@ function* usersSaga() {
   yield takeEvery(GET_USER_DISTRIBUTOR, fetchUserDistributor);
   yield takeEvery(GET_USER_LCO, fetchUserLco);
   yield takeEvery(GET_USER_BULKSETTINGS, fetchUserBulkSettings);
+  yield takeEvery(UPDATE_USER_SETTINGS, onUpdateUserSettings);
 }
 
 export default usersSaga;

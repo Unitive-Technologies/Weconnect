@@ -407,6 +407,7 @@ export const GET_USERS =
 export const GET_USER_PROFILE = "/user";
 export const ADD_NEW_USER = "/user?vr=web1.0";
 export const UPDATE_USER = (id) => `/user/${id}?vr=web1.0`;
+export const UPDATE_USER_SETTINGS = "/user/setting?vr=web1.0";
 export const DELETE_USER = "/delete/user";
 export const GET_USER_TYPE = "/list/usertype?fields=id,name&vr=web1.0";
 export const GET_USER_STATUS = "/list/userstatus?fields=id,name&vr=web1.0";

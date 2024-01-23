@@ -189,7 +189,6 @@ const CasList = ({ data, updateList }) => {
           >
             <Col lg={12}>
               <div className="mb-3">
-
                 <Input
                   name="casSource"
                   type="select"
@@ -215,7 +214,13 @@ const CasList = ({ data, updateList }) => {
               <Col lg={5} style={{ marginRight: "20px" }}>
                 <div className="mb-3">
                   {/* <TODO>Add handlechange and update cascode</TODO> */}
-                  <Input name="casCode" type="text" placeholder="CAS Code" value={casCode} onChange={handleChange} />
+                  <Input
+                    name="casCode"
+                    type="text"
+                    placeholder="CAS Code"
+                    value={casCode}
+                    onChange={handleChange}
+                  />
                 </div>
               </Col>
               <Col lg={5} style={{ marginRight: "20px" }}>

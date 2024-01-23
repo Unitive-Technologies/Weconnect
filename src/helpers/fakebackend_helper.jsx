@@ -715,6 +715,7 @@ export const addNewUser = (user) => post(url.ADD_NEW_USER, user);
 
 // update user
 export const updateUser = (user, id) => put(url.UPDATE_USER(id), user);
+export const updateUserSettings = (user) => put(url.UPDATE_USER_SETTINGS, user);
 
 // delete user
 export const deleteUser = (user) => del(url.DELETE_USER, { headers: { user } });
