@@ -16,6 +16,18 @@ const StockPairing = (props) => {
     tableActions,
   } = props;
 
+  if (
+    !stockpairing ||
+    !totalCount ||
+    !pageSize ||
+    !currentPage ||
+    !totalPage ||
+    !goToPage ||
+    loading === undefined
+  ) {
+    return <div>Loading...</div>;
+  }
+
   const columns = useMemo(
     () => [
       {
@@ -171,19 +183,6 @@ const StockPairing = (props) => {
     ],
     []
   );
-
-  if (
-    !stockpairing ||
-    !totalCount ||
-    !pageSize ||
-    !currentPage ||
-    !totalPage ||
-    !goToPage ||
-    !tableActions ||
-    loading === undefined
-  ) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <React.Fragment>
