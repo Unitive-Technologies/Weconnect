@@ -158,7 +158,7 @@ const CasList = (props) => {
                   type="select"
                   placeholder="Select type"
                   className="form-select"
-                  disabled={!showEditChannel}
+                // disabled={!showEditChannel}
                 // onChange={validation.handleChange}
                 // onBlur={validation.handleBlur}
                 // value={validation.values.type || ""}
