@@ -4,7 +4,7 @@ import { Card, CardBody, Col, Row } from "reactstrap";
 import TableContainer from "../../components/Common/TableContainer";
 
 const StockStb = (props) => {
-  const { stockstb } = props;
+  const { stockstb, tableActions } = props;
 
   const columns = useMemo(
     () => [
@@ -154,52 +154,6 @@ const StockStb = (props) => {
     []
   );
 
-  const getTableActions = () => {
-    return [
-      {
-        name: "Create",
-        // action: setShowAddCity,
-        type: "normal",
-        icon: "create",
-      },
-      {
-        name: "Upload",
-        // action: setShowAddCity,
-        type: "dropdown",
-        // icon: "create",
-        dropdownName: "Bulk",
-      },
-      {
-        name: "Update",
-        // action: setShowAddCity,
-        type: "dropdown",
-        // icon: "create",
-        dropdownName: "Bulk",
-      },
-      {
-        name: "Mark Faulty",
-        // action: setShowAddCity,
-        type: "dot",
-        icon: "action",
-        dropdownName: "",
-      },
-      {
-        name: "Blacklist",
-        // action: setShowAddCity,
-        type: "dot",
-        icon: "action",
-        dropdownName: "",
-      },
-      {
-        name: "update Brand/Warehouse/Inventory state",
-        // action: setShowAddCity,
-        type: "dot",
-        icon: "action",
-        dropdownName: "",
-      },
-    ];
-  };
-
   return (
     <React.Fragment>
       <Row>
@@ -214,7 +168,7 @@ const StockStb = (props) => {
                 isAddRegionalOffice={true}
                 isShowTableActionButtons={true}
                 isShowingPageLength={true}
-                tableActions={getTableActions()}
+                tableActions={tableActions}
                 customPageSize={50}
                 tableClass="table align-middle table-nowrap table-hover"
                 theadClass="table-light"

@@ -13,19 +13,8 @@ const StockPairing = (props) => {
     currentPage,
     goToPage,
     loading,
+    tableActions,
   } = props;
-
-  if (
-    !stockpairing ||
-    !totalCount ||
-    !pageSize ||
-    !currentPage ||
-    !totalPage ||
-    !goToPage ||
-    loading === undefined
-  ) {
-    return <div>Loading...</div>;
-  }
 
   const columns = useMemo(
     () => [
@@ -183,51 +172,18 @@ const StockPairing = (props) => {
     []
   );
 
-  const getTableActions = () => {
-    return [
-      {
-        name: "Create",
-        // action: setShowAddCity,
-        type: "normal",
-        icon: "create",
-      },
-      {
-        name: "Upload",
-        // action: setShowAddCity,
-        type: "dropdown",
-        // icon: "create",
-        dropdownName: "Bulk",
-      },
-      {
-        name: "Update",
-        // action: setShowAddCity,
-        type: "dropdown",
-        // icon: "create",
-        dropdownName: "Bulk",
-      },
-      {
-        name: "Mark Faulty",
-        // action: setShowAddCity,
-        type: "dot",
-        icon: "action",
-        dropdownName: "",
-      },
-      {
-        name: "Blacklist",
-        // action: setShowAddCity,
-        type: "dot",
-        icon: "action",
-        dropdownName: "",
-      },
-      {
-        name: "update Brand/Warehouse/Inventory state",
-        // action: setShowAddCity,
-        type: "dot",
-        icon: "action",
-        dropdownName: "",
-      },
-    ];
-  };
+  if (
+    !stockpairing ||
+    !totalCount ||
+    !pageSize ||
+    !currentPage ||
+    !totalPage ||
+    !goToPage ||
+    !tableActions ||
+    loading === undefined
+  ) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <React.Fragment>
@@ -246,7 +202,7 @@ const StockPairing = (props) => {
                 totalPage={Number(totalPage)}
                 isGlobalFilter={true}
                 isShowingPageLength={true}
-                tableActions={getTableActions()}
+                tableActions={tableActions}
                 goToPage={goToPage}
               />
             </CardBody>
