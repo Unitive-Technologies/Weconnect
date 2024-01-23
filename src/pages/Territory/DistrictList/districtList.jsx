@@ -285,27 +285,32 @@ const DistrictList = (props) => {
 
   return (
     <React.Fragment>
-      <ViewDistrict
-        isOpen={showViewDistrict}
-        resetSelection={resetSelection}
-        // handleViewDistrict={handleViewDistrict}
-        toggleModal={toggleViewModal}
-        district={viewDistrictData}
-        statelist={statelist}
-        status={status}
-      />
-      <AddNewDistrict
-        isOpen={showAddDistrict}
-        toggleAddModal={toggleAddModal}
-        statelist={statelist}
-        status={status}
-      />
-      <UploadDistrict
-        isOpen={showUploadDistrict}
-        handleUploadDistrict={toggleUploadModal}
-        status={status}
-        statelist={statelist}
-      />
+      {showViewDistrict && (
+        <ViewDistrict
+          isOpen={showViewDistrict}
+          resetSelection={resetSelection}
+          // handleViewDistrict={handleViewDistrict}
+          toggleModal={toggleViewModal}
+          district={viewDistrictData}
+          statelist={statelist}
+          status={status}
+        />
+      )}
+      {showAddDistrict && (
+        <AddNewDistrict
+          isOpen={showAddDistrict}
+          toggleAddModal={toggleAddModal}
+          statelist={statelist}
+          status={status}
+        />
+      )}
+      {showUploadDistrict && (
+        <UploadDistrict
+          toggleUploadModal={toggleUploadModal}
+          status={status}
+          statelist={statelist}
+        />
+      )}
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}

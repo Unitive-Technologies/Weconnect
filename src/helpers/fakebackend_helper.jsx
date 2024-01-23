@@ -411,6 +411,19 @@ export const getAdministrativeDivisionStatus = () =>
 export const updateDistrict = (id, district) =>
   put(url.updateDistrictById(id), district);
 
+export const initiateSampleDownload_District = (uploadObject) =>
+  post(url.UPLOAD_ADMINISTRATIVE_DIVISION_QUEUE, uploadObject);
+
+export const uploadFileForInitiatedDistrictUpload = (
+  initiatedId,
+  uploadObject
+) => put(url.UPLOAD_ADMINISTRATIVE_DIVISION_QUEUE, uploadObject);
+
+export const uploadDistrictDataForInitiatedDistrictUpload = (
+  initiatedId,
+  fileFormData
+) => post(url.UPLOAD_ADMINISTRATIVE_DIVISION_QUEUE, uploadObject);
+
 // export const getCity = () => get(url.GET_CITY);
 export const addCity = (city) => post(url.ADD_CITY, city);
 

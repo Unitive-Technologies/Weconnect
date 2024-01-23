@@ -62,10 +62,6 @@ function* fetchDistrict() {
 function* fetchAdministrativeDivisionStatus() {
   try {
     const response = yield call(getAdministrativeDivisionStatus);
-    // console.log(
-    //   "status list data in District saga: ",
-    //   JSON.stringify(response.data)
-    // );
     yield put(getAdministrativeDivisionStatusSuccess(response.data));
   } catch (error) {
     yield put(getAdministrativeDivisionStatusFail(error));

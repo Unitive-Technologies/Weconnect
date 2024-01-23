@@ -1,0 +1,30 @@
+Handle upload of the files
+--------------------------
+
+1. Download file based on the type of entity
+2. Upload the completed file
+3. Schedule the creation of the entity
+
+Download sample file
+->  url: https://sms.unitch.in/api/index.php/v1/administrative-division/upload-q?vr=web1.0
+    type: POST
+    Request Body: {"meta_data":{"type":2},"url":""}
+    Response Body: 
+    {
+        "success": true,
+        "status": 201,
+        "data": {
+            "_id": 2870,
+            "token": "0YwI_Xsf83",
+            "fields": [
+                "name",
+                "description",
+                "status",
+                "state_code"
+            ],
+            "type": "AdministrativeDivision",
+            "sample-file": "https://sms.unitch.in/api/download.php?uploadq-sample=administrativedivision"
+        }
+    }
+
+

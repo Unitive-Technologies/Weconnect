@@ -96,6 +96,8 @@ export const GET_DISTRICT =
 export const ADD_DISTRICT = "/administrative-division?vr=web1.0";
 export const GET_ADMINISTRATIVEDIVISION_STATUS =
   "/list/status?fields=id,name&vr=web1.0";
+export const UPLOAD_ADMINISTRATIVE_DIVISION_QUEUE =
+  "/administrative-division/upload-q?vr=web1.0";
 export const GET_DISTRICT_STATELIST =
   "/administrative-division/list?fields=id,name&expand=state_id_lbl&filter[type]=1&per-page=100&vr=web1.0";
 // export const UPDATE_DISTRICT = "/administrative-division/1422?vr=web1.0";

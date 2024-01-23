@@ -15,13 +15,19 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
+import * as Yup from "yup";
+import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
+import { initiateSampleDownload_District } from "../../../helpers/fakebackend_helper";
+
+import axios from "axios";
 
 const UploadDistrict = (props) => {
-  const { isOpen, toggleUploadModal, status, statelist } = props;
+  const { toggleUploadModal, status, statelist } = props;
 
   const [selectedFiles, setselectedFiles] = useState([]);
+  const [uploadInitatedId, setUploadInitatedId] = useState("");
 
   function handleAcceptedFiles(files) {
     files.map((file) =>
@@ -46,27 +52,72 @@ const UploadDistrict = (props) => {
   const handleDownloadSampleFile = () => {
     // Create a sample CSV file with headers
     // field to be get from api as prop
-    const headers = ["name", "description", "status", "status_code"];
-    const data = [headers];
+    // call https://sms.unitch.in/api/index.php/v1/administrative-division/upload-q?vr=web1.0
 
-    // Convert the data to CSV format
-    const csvContent = data.map((row) => row.join(",")).join("\n");
+    const requestBody = {
+      meta_data: {
+        type: 2,
+        state_id: Number(validation.values.state_id),
+        status: Number(validation.values.status),
+      },
+      url: "",
+    };
 
-    // Create a Blob containing the data in CSV format
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    // axios call to POST endpoint with request body
+    initiateSampleDownload_District(requestBody).then((response) => {
+      debugger;
+      console.log(response);
+      const data = [response.data.fields];
+      setUploadInitatedId(response.data.token);
+      // Convert the data to CSV format
+      const csvContent = data.map((row) => row.join(",")).join("\n");
 
-    // Create a download link
-    const link = document.createElement("a");
-    link.href = window.URL.createObjectURL(blob);
-    link.download = "AdministrativeDivision.csv";
+      // Create a Blob containing the data in CSV format
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
 
-    // Trigger a click on the link to start the download
-    link.click();
+      // Create a download link
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = "AdministrativeDivision.csv";
+
+      // Trigger a click on the link to start the download
+      link.click();
+    });
   };
+
+  const validation = useFormik({
+    // enableReinitialize : use this flag when initial values needs to be changed
+    enableReinitialize: true,
+
+    initialValues: {
+      status: "-1",
+      type: "2",
+      state_id: "0",
+    },
+    validationSchema: Yup.object({
+      state_id: Yup.string(),
+      status: Yup.string(),
+    }),
+    onSubmit: (values) => {
+      console.log("Post values: ", values);
+      const newDistrict = {
+        status: Number(values["status"]),
+        type: "2",
+        state_id: Number(values["state_id"]),
+      };
+      console.log("new district:" + JSON.stringify(newDistrict));
+      dispatch(onUploadDistrict(newDistrict));
+      validation.resetForm();
+      toggleUploadModal();
+    },
+    onReset: (values) => {
+      validation.setValues(validation.initialValues);
+    },
+  });
 
   return (
     <Modal
-      isOpen={isOpen}
+      isOpen={true}
       role="dialog"
       size="xl"
       autoFocus={true}
@@ -79,73 +130,63 @@ const UploadDistrict = (props) => {
         Upload Districts
       </ModalHeader>
       <ModalBody>
-        <Card>
-          <CardBody>
-            <div className="text-left mb-4 r-0" style={{ marginLeft: "78%" }}>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleDownloadSampleFile}
-              >
-                Download Sample Upload File
-              </button>
-            </div>
+        <Form>
+          <Card>
+            <CardBody>
+              <div className="text-left mb-4 r-0" style={{ marginLeft: "78%" }}>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleDownloadSampleFile}
+                >
+                  Download Sample Upload File
+                </button>
+              </div>
 
-            <div className="mb-3">
-              <Label className="form-label">Select State</Label>
-              <Input
-                name="state_lbl"
-                type="select"
-                placeholder="Select state"
-                className="form-select"
-                // onChange={validation.handleChange}
-                // onBlur={validation.handleBlur}
-                // value={validation.values.state_lbl || ""}
-              >
-                {statelist.map((options) => (
-                  <option key={options.id} value={options.id}>
-                    {options.name}
-                  </option>
-                ))}
-              </Input>
-              {/* {validation.touched.state_lbl && validation.errors.state_lbl ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.state_lbl}
-                  </FormFeedback>
-                ) : null} */}
-            </div>
-            <div className="mb-3">
-              <Label className="form-label">Status</Label>
-              <Input
-                name="status"
-                type="select"
-                placeholder="Select Status"
-                className="form-select"
-                // onChange={validation.handleChange}
-                // onBlur={validation.handleBlur}
-                // value={validation.values.status || ""}
-              >
-                <option value="">Select Status</option>
-                {status.map((options) => (
-                  <option key={options.id} value={options.id}>
-                    {options.name}
-                  </option>
-                ))}
-              </Input>
-              {/* {validation.touched.status && validation.errors.status ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.status}
-                  </FormFeedback>
-                ) : null} */}
-            </div>
-          </CardBody>
-          <CardBody>
-            {/* <CardTitle>Dropzone</CardTitle>*/}
-            <CardSubtitle className="mb-3">
-              {" "}
-              Select File to Upload<span style={{ color: "red" }}>*</span>
-            </CardSubtitle>
-            <Form>
+              <div className="mb-3">
+                <Label className="form-label">Select State</Label>
+                <Input
+                  name="state_lbl"
+                  type="select"
+                  placeholder="Select state"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.state_id}
+                >
+                  {statelist.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
+                </Input>
+              </div>
+              <div className="mb-3">
+                <Label className="form-label">Status</Label>
+                <Input
+                  name="status"
+                  type="select"
+                  placeholder="Select Status"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.status || ""}
+                >
+                  <option value="">Select Status</option>
+                  {status.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
+                </Input>
+              </div>
+            </CardBody>
+            <CardBody>
+              {/* <CardTitle>Dropzone</CardTitle>*/}
+              <CardSubtitle className="mb-3">
+                {" "}
+                Select File to Upload<span style={{ color: "red" }}>*</span>
+              </CardSubtitle>
               <Dropzone
                 onDrop={(acceptedFiles) => {
                   handleAcceptedFiles(acceptedFiles);
@@ -201,29 +242,38 @@ const UploadDistrict = (props) => {
                   );
                 })}
               </div>
-            </Form>
-            <div className="text-center mt-4 ">
-              <div
-                style={{
-                  display: "flex",
-                  gap: 5,
-                  textAlign: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <button type="button" className="btn btn-primary mr-2 ">
-                  Upload File
-                </button>
-                <button type="button" className="btn btn-primary ml-2 ">
-                  Reset
-                </button>
-                <button type="button" className="btn btn-primary ">
-                  Cancel
-                </button>
+
+              <div className="text-center mt-4 ">
+                <div
+                  style={{
+                    display: "flex",
+                    gap: 5,
+                    textAlign: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <button type="submit" className="btn btn-primary mr-2 ">
+                    Upload File
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary ml-2 "
+                    onClick={() => validation.resetForm()}
+                  >
+                    Reset
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={toggleUploadModal}
+                  >
+                    Cancel
+                  </button>
+                </div>
               </div>
-            </div>
-          </CardBody>
-        </Card>
+            </CardBody>
+          </Card>
+        </Form>
       </ModalBody>
     </Modal>
   );
@@ -231,7 +281,6 @@ const UploadDistrict = (props) => {
 
 UploadDistrict.propTypes = {
   toggleUploadModal: PropTypes.func,
-  isOpen: PropTypes.bool,
   statelist: PropTypes.array,
   status: PropTypes.array,
 };
