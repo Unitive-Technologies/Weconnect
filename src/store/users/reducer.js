@@ -51,6 +51,9 @@ import {
   GET_USER_BULKSETTINGS_FAIL,
   GET_USER_BULKSETTINGS_SUCCESS,
   UPDATE_USERS_CURRENT_PAGE,
+  UPDATE_USER_SETTINGS,
+  UPDATE_USER_SETTINGS_SUCCESS,
+  UPDATE_USER_SETTINGS_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -80,9 +83,9 @@ const contacts = (state = INIT_STATE, action) => {
     case UPDATE_USERS_CURRENT_PAGE:
       return Number(action.payload) <= state.totalPages
         ? {
-          ...state,
-          currentPage: action.payload,
-        }
+            ...state,
+            currentPage: action.payload,
+          }
         : state;
     case GET_USERS:
       return {
@@ -297,6 +300,26 @@ const contacts = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+
+    case UPDATE_USER_SETTINGS:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_USER_SETTINGS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        users: state.users.map((user) =>
+          user.id === action.payload.id ? { ...user, ...action.payload } : user
+        ),
+      };
+    case UPDATE_USER_SETTINGS_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
       };
 
     default:

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
+import axios from "axios";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
 import {
@@ -20,10 +21,26 @@ import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const BulkUserSettings = (props) => {
   const { isOpen, handleUserSettings, users, userBulkSettings } = props;
-  // console.log("settings in bulkuser modal:" + JSON.stringify(userBulkSettings));
+  console.log("settings in bulkuser modal:" + JSON.stringify(userBulkSettings));
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [tableList, setTableList] = useState([]);
   const [settingTable, setSettingTable] = useState([]);
+  // const { bulk_limit, allowed_ips, enabled_pay_modes } = settings;
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
+  const [settings, setSettings] = useState({
+    bulk_limit: "",
+    allowed_ips: "",
+    enabled_pay_modes: "",
+  });
+  const handleChangeSettingValue = (e) => {
+    console.log("handleChangeSettingValue called");
+    const { name, value } = e.target;
+    console.log(`Setting ${name} to ${value}`);
+    setSettings((prevSettings) => ({
+      ...prevSettings,
+      [name]: value,
+    }));
+  };
 
   const handleActive = (row) => {
     const isRowSelected = selectedUsers.some((user) => user.id === row.id);
@@ -96,13 +113,13 @@ const BulkUserSettings = (props) => {
       try {
         const newSetting = {
           ids: selectedUsers.map((user) => user.id),
-          setting: values.setting,
+          setting: settings,
         };
 
         console.log("newStatus:", JSON.stringify(newSetting));
         const token = "Bearer " + localStorage.getItem("temptoken");
 
-        const response = await axios.post(
+        const response = await axios.put(
           `${API_URL}/user/setting?vr=web1.0`,
           newSetting,
           {
@@ -529,55 +546,45 @@ const BulkUserSettings = (props) => {
           );
         },
       },
+
       {
         Header: "SetData",
-        // accessor: "type",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <>
               {cellProps.row.original.key === "bulkLimit" ? (
-                <>
-                  <Input
-                    type="text"
-                    name="bulklimit"
-                    placeholder={cellProps.row.original.placeholder}
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.bulk_limit || ""}
-                  />{" "}
-                </>
+                <Input
+                  type="text"
+                  name="bulk_limit"
+                  placeholder={cellProps.row.original.placeholder}
+                  onChange={handleChangeSettingValue}
+                  value={settings.bulk_limit}
+                />
               ) : cellProps.row.original.key === "allowedIps" ? (
-                <>
-                  {" "}
-                  <Input
-                    type="text"
-                    name="allowed_ips"
-                    placeholder={cellProps.row.original.placeholder}
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.allowed_ips || ""}
-                  />
-                </>
+                <Input
+                  type="text"
+                  name="allowed_ips"
+                  placeholder={cellProps.row.original.placeholder}
+                  onChange={handleChangeSettingValue}
+                  value={settings.allowed_ips}
+                />
               ) : (
-                <>
-                  <Input
-                    name="enabled_pay_modes"
-                    type="select"
-                    placeholder={cellProps.row.original.placeholder}
-                    className="form-select"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.enabled_pay_modes || ""}
-                  >
-                    <option value="">Select Pay Mode Allowed</option>
-                    {cellProps.row.original.value.data.map((paymode) => (
-                      <option key={paymode.id} value={paymode.id}>
-                        {paymode.name}
-                      </option>
-                    ))}
-                  </Input>
-                </>
+                <Input
+                  name="enabled_pay_modes"
+                  type="select"
+                  placeholder={cellProps.row.original.placeholder}
+                  className="form-select"
+                  onChange={handleChangeSettingValue}
+                  value={settings.enabled_pay_modes}
+                >
+                  <option value="">Select Pay Mode Allowed</option>
+                  {cellProps.row.original.value.data.map((paymode) => (
+                    <option key={paymode.id} value={paymode.id}>
+                      {paymode.name}
+                    </option>
+                  ))}
+                </Input>
               )}
             </>
           );

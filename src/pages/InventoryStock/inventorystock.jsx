@@ -508,50 +508,268 @@ const InventoryStock = (props) => {
     []
   );
 
-  const getTableActions = () => {
-    return [
-      {
-        name: "Create",
-        // action: setShowAddCity,
-        type: "normal",
-        icon: "create",
-      },
-      {
-        name: "Upload",
-        // action: setShowAddCity,
-        type: "dropdown",
-        // icon: "create",
-        dropdownName: "Bulk",
-      },
-      {
-        name: "Update",
-        // action: setShowAddCity,
-        type: "dropdown",
-        // icon: "create",
-        dropdownName: "Bulk",
-      },
-      {
-        name: "Mark Faulty",
-        // action: setShowAddCity,
-        type: "dot",
-        icon: "action",
-        dropdownName: "",
-      },
-      {
-        name: "Blacklist",
-        // action: setShowAddCity,
-        type: "dot",
-        icon: "action",
-        dropdownName: "",
-      },
-      {
-        name: "update Brand/Warehouse/Inventory state",
-        // action: setShowAddCity,
-        type: "dot",
-        icon: "action",
-        dropdownName: "",
-      },
-    ];
+  const getFilteredTableActions = () => {
+    let actions = [];
+    if (selectedOption === "In-stock") {
+      if (activeTab === "1") {
+        actions = [
+          {
+            name: "Create",
+            type: "normal",
+            icon: "create",
+          },
+          {
+            name: "Upload",
+            type: "dropdown",
+            dropdownName: "Bulk",
+          },
+          {
+            name: "Update",
+            type: "dropdown",
+            dropdownName: "Bulk",
+          },
+          {
+            name: "Mark Faulty",
+            type: "dot",
+            icon: "action",
+            dropdownName: "",
+          },
+          {
+            name: "Blacklist",
+            type: "dot",
+            icon: "action",
+            dropdownName: "",
+          },
+          {
+            name: "Update Brand/Warehouse/Inventory state",
+            type: "dot",
+            icon: "action",
+            dropdownName: "",
+          },
+        ];
+        return actions;
+      } else if (activeTab === "2") {
+        actions = [
+          {
+            name: "Create",
+            type: "normal",
+            icon: "create",
+          },
+          {
+            name: "Upload",
+            type: "dropdown",
+            dropdownName: "Bulk",
+          },
+          {
+            name: "Update",
+            type: "dropdown",
+            dropdownName: "Bulk",
+          },
+          {
+            name: "Mark Faulty",
+            type: "dot",
+            icon: "action",
+            dropdownName: "",
+          },
+          {
+            name: "Blacklist",
+            type: "dot",
+            icon: "action",
+            dropdownName: "",
+          },
+          {
+            name: "Update Brand/Warehouse/Inventory state",
+            type: "dot",
+            icon: "action",
+            dropdownName: "",
+          },
+        ];
+        return actions;
+      } else if (activeTab === "3") {
+        actions = [
+          {
+            name: "Create",
+            type: "normal",
+            icon: "create",
+          },
+          {
+            name: "Upload",
+            type: "dropdown",
+            dropdownName: "Bulk",
+          },
+          {
+            name: "Update",
+            type: "dropdown",
+            dropdownName: "Bulk",
+          },
+          {
+            name: "Mark Faulty",
+            type: "dot",
+            icon: "action",
+            dropdownName: "",
+          },
+          {
+            name: "Blacklist",
+            type: "dot",
+            icon: "action",
+            dropdownName: "",
+          },
+          {
+            name: "Delete pairing",
+            type: "dot",
+            icon: "action",
+            dropdownName: "",
+          },
+        ];
+        return actions;
+      }
+    } else if (selectedOption === "Allotted") {
+      actions = [
+        {
+          name: "Create",
+          type: "normal",
+          icon: "create",
+        },
+        {
+          name: "Upload",
+          type: "dropdown",
+          dropdownName: "Bulk",
+        },
+        {
+          name: "Update",
+          type: "dropdown",
+          dropdownName: "Bulk",
+        },
+        {
+          name: "De-Allot",
+          type: "dot",
+          icon: "action",
+          dropdownName: "",
+        },
+      ];
+      return actions;
+    } else if (selectedOption === "Faulty") {
+      if (activeTab === "1") {
+        actions = [
+          {
+            name: "Create",
+            type: "normal",
+            icon: "create",
+          },
+          {
+            name: "Upload",
+            type: "dropdown",
+            dropdownName: "Bulk",
+          },
+          {
+            name: "Update",
+            type: "dropdown",
+            dropdownName: "Bulk",
+          },
+          {
+            name: "Send to Smartcard Stock",
+            type: "dot",
+            icon: "action",
+            dropdownName: "",
+          },
+          {
+            name: "Blacklist",
+            type: "dot",
+            icon: "action",
+            dropdownName: "",
+          },
+        ];
+        return actions;
+      } else if (activeTab === "2") {
+        actions = [
+          {
+            name: "Create",
+            type: "normal",
+            icon: "create",
+          },
+          {
+            name: "Upload",
+            type: "dropdown",
+            dropdownName: "Bulk",
+          },
+          {
+            name: "Update",
+            type: "dropdown",
+            dropdownName: "Bulk",
+          },
+          {
+            name: "Send to STB Stock",
+            type: "dot",
+            icon: "action",
+            dropdownName: "",
+          },
+          {
+            name: "Blacklist",
+            type: "dot",
+            icon: "action",
+            dropdownName: "",
+          },
+        ];
+        return actions;
+      } else if (activeTab === "3") {
+        actions = [
+          {
+            name: "Create",
+            type: "normal",
+            icon: "create",
+          },
+          {
+            name: "Upload",
+            type: "dropdown",
+            dropdownName: "Bulk",
+          },
+          {
+            name: "Update",
+            type: "dropdown",
+            dropdownName: "Bulk",
+          },
+          {
+            name: "Send to Pairing Stock",
+            type: "dot",
+            icon: "action",
+            dropdownName: "",
+          },
+          {
+            name: "Blacklist",
+            type: "dot",
+            icon: "action",
+            dropdownName: "",
+          },
+        ];
+        return actions;
+      }
+    } else if (selectedOption === "Blacklisted") {
+      actions = [
+        {
+          name: "Create",
+          type: "normal",
+          icon: "create",
+        },
+        {
+          name: "Upload",
+          type: "dropdown",
+          dropdownName: "Bulk",
+        },
+        {
+          name: "Update",
+          type: "dropdown",
+          dropdownName: "Bulk",
+        },
+        {
+          name: "",
+          type: "dot",
+          icon: "action",
+          dropdownName: "",
+        },
+      ];
+      return actions;
+    }
+    return [];
   };
 
   return (
@@ -653,7 +871,7 @@ const InventoryStock = (props) => {
                               isGlobalFilter={true}
                               isShowTableActionButtons={true}
                               isShowingPageLength={true}
-                              tableActions={getTableActions()}
+                              tableActions={getFilteredTableActions()}
                               customPageSize={100}
                               tableClass="table align-middle table-nowrap table-hover"
                               theadClass="table-light"
@@ -666,7 +884,10 @@ const InventoryStock = (props) => {
                       <TabPane tabId="2">
                         <Row>
                           <Col sm="12">
-                            <StockStb stockstb={getFilteredData()} />
+                            <StockStb
+                              stockstb={getFilteredData()}
+                              tableActions={getFilteredTableActions()}
+                            />
                           </Col>
                         </Row>
                       </TabPane>
@@ -681,6 +902,7 @@ const InventoryStock = (props) => {
                               currentPage={getFilteredCurrentPage()}
                               totalPage={getFilteredTotalPage()}
                               loading={loading}
+                              tableActions={getFilteredTableActions()}
                             />
                           </Col>
                         </Row>

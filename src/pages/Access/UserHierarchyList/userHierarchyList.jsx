@@ -12,6 +12,7 @@ import {
   Toast,
   ToastHeader,
   ToastBody,
+  Spinner,
 } from "reactstrap";
 
 //Import Breadcrumb
@@ -44,7 +45,7 @@ const UserHierarchyList = (props) => {
 
   const { userHier, loading } = useSelector(UserHierarchyProperties);
 
-  const [isLoading, setLoading] = useState(loading);
+  // const [isLoading, setLoading] = useState(loading);
 
   const columns = useMemo(
     () => [
@@ -237,7 +238,7 @@ const UserHierarchyList = (props) => {
     }
   }, [dispatch, userHier]);
 
-  const handleAddUserHierarchy = () => {
+  const toggleAddUserHierarchy = () => {
     setShowAddUserHierarchy(!showAddUserHierarchy);
   };
 
@@ -275,7 +276,7 @@ const UserHierarchyList = (props) => {
     <React.Fragment>
       <AddUserHierarchy
         isOpen={showAddUserHierarchy}
-        handleAddUserHierarchy={handleAddUserHierarchy}
+        toggleAddUserHierarchy={toggleAddUserHierarchy}
       />
       <div
         className="position-fixed top-0 end-0 p-3"
@@ -292,8 +293,13 @@ const UserHierarchyList = (props) => {
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Access" breadcrumbItem="User Hierarchies" />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">
@@ -304,9 +310,10 @@ const UserHierarchyList = (props) => {
                       isPagination={true}
                       columns={columns}
                       data={userHier}
+                      isLoading={loading}
                       isGlobalFilter={true}
-                    tableActions={getTableActions()}   isShowingPageLength={true}
-                     
+                      tableActions={getTableActions()}
+                      isShowingPageLength={true}
                       isShowTableActionButtons={true}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"

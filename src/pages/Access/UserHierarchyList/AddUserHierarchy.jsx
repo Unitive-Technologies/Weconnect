@@ -18,7 +18,7 @@ import { addUserHierarchy as onAddUserHierarchy } from "/src/store/userhierarchy
 import { useDispatch } from "react-redux";
 
 const AddUserHierarchy = (props) => {
-  const { isOpen, handleAddUserHierarchy } = props;
+  const { isOpen, toggleAddUserHierarchy } = props;
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -67,7 +67,7 @@ const AddUserHierarchy = (props) => {
       // save new user
       dispatch(onAddUserHierarchy(UserHierarchy));
       validation.resetForm();
-      handleAddUserHierarchy();
+      toggleAddUserHierarchy();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -83,10 +83,10 @@ const AddUserHierarchy = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleAddUserHierarchy}
+      toggle={toggleAddUserHierarchy}
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4" toggle={handleAddUserHierarchy}>
+      <ModalHeader tag="h4" toggle={toggleAddUserHierarchy}>
         Add New User Hierarchy
       </ModalHeader>
       <ModalBody>
@@ -330,7 +330,7 @@ const AddUserHierarchy = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    handleAddUserHierarchy();
+                    toggleAddUserHierarchy();
                   }}
                 >
                   Cancel

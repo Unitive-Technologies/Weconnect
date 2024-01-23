@@ -45,6 +45,9 @@ import {
   GET_USER_BULKSETTINGS_FAIL,
   GET_USER_BULKSETTINGS_SUCCESS,
   UPDATE_USERS_CURRENT_PAGE,
+  UPDATE_USER_SETTINGS,
+  UPDATE_USER_SETTINGS_SUCCESS,
+  UPDATE_USER_SETTINGS_FAIL,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -265,5 +268,20 @@ export const getUserBulkSettingsSuccess = (userBulkSettings) => ({
 
 export const getUserBulkSettingsFail = (error) => ({
   type: GET_USER_BULKSETTINGS_FAIL,
+  payload: error,
+});
+
+export const updateUserSettings = (user) => ({
+  type: UPDATE_USER_SETTINGS,
+  payload: user,
+});
+
+export const updateUserSettingsSuccess = (user) => ({
+  type: UPDATE_USER_SETTINGS_SUCCESS,
+  payload: user,
+});
+
+export const updateUserSettingsFail = (error) => ({
+  type: UPDATE_USER_SETTINGS_FAIL,
   payload: error,
 });

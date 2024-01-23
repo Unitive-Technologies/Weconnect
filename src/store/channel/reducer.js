@@ -13,6 +13,8 @@ import {
   ADD_CHANNELLIST_FAIL,
   UPDATE_CHANNELLIST_CURRENT_PAGE,
   GET_CAS_SOURCE,
+  GET_CAS_SOURCE_SUCCESS,
+  GET_CAS_SOURCE_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -32,9 +34,9 @@ const ChannelList = (state = INIT_STATE, action) => {
     case UPDATE_CHANNELLIST_CURRENT_PAGE:
       return Number(action.payload) <= state.totalPages
         ? {
-            ...state,
-            currentPage: action.payload,
-          }
+          ...state,
+          currentPage: action.payload,
+        }
         : state;
     case GET_CHANNELLIST:
       return {
