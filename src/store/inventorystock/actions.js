@@ -9,6 +9,9 @@ import {
   GET_INVENTORYSTOCK_PAIRING_SUCCESS,
   GET_INVENTORYSTOCK_PAIRING_FAIL,
   UPDATE_STOCKPAIRING_CURRENT_PAGE,
+  UPDATE_INVENTORYSTOCK_STB,
+  UPDATE_INVENTORYSTOCK_STB_SUCCESS,
+  UPDATE_INVENTORYSTOCK_STB_FAIL,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -55,5 +58,20 @@ export const getInventoryStockPairingSuccess = (stockpairing) => ({
 
 export const getInventoryStockPairingFail = (error) => ({
   type: GET_INVENTORYSTOCK_PAIRING_FAIL,
+  payload: error,
+});
+
+export const updateInventoryStockStb = (stockstb) => ({
+  type: UPDATE_INVENTORYSTOCK_STB,
+  payload: stockstb,
+});
+
+export const updateInventoryStockStbSuccess = (stockstb) => ({
+  type: UPDATE_INVENTORYSTOCK_STB_SUCCESS,
+  payload: stockstb,
+});
+
+export const updateInventoryStockStbFail = (error) => ({
+  type: UPDATE_INVENTORYSTOCK_STB_FAIL,
   payload: error,
 });

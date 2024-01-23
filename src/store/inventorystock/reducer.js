@@ -13,6 +13,9 @@ import {
   GET_INVENTORYSTOCK_PAIRING_SUCCESS,
   GET_INVENTORYSTOCK_PAIRING_FAIL,
   UPDATE_STOCKPAIRING_CURRENT_PAGE,
+  UPDATE_INVENTORYSTOCK_STB,
+  UPDATE_INVENTORYSTOCK_STB_SUCCESS,
+  UPDATE_INVENTORYSTOCK_STB_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -86,6 +89,28 @@ const InventoryStock = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
         pagination: {},
+        loading: false,
+      };
+
+    case UPDATE_INVENTORYSTOCK_STB:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_INVENTORYSTOCK_STB_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        stockstb: state.stockstb.map((stb) =>
+          stb.id === action.payload.id ? { ...stb, ...action.payload } : stb
+        ),
+      };
+
+    case UPDATE_INVENTORYSTOCK_STB_FAIL:
+      return {
+        ...state,
+        error: action.payload,
         loading: false,
       };
 
