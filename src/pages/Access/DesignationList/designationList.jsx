@@ -10,6 +10,7 @@ import {
   Container,
   Row,
   UncontrolledTooltip,
+  Spinner,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import {
@@ -46,12 +47,12 @@ const DesignationList = (props) => {
   const { desigList, loading, desigStatus, desigType, desigParent } =
     useSelector(designationProperties);
 
-  const [isLoading, setLoading] = useState(loading);
+  // const [isLoading, setLoading] = useState(loading);
   const [showAddDesignation, setShowAddDesignation] = useState(false);
   const [showViewDesignation, setShowViewDesignation] = useState(false);
   const [viewDesignationData, setViewDesignationData] = useState({});
 
-  const handleViewDesignation = (row) => {
+  const toggleViewDesignation = (row) => {
     console.log("row: ", row);
     setShowViewDesignation(!showViewDesignation);
     setViewDesignationData(row);
@@ -196,26 +197,13 @@ const DesignationList = (props) => {
     }
   }, [dispatch, desigList]);
 
-  const handleAddDesignation = () => {
+  const toggleAddDesignation = () => {
     setShowAddDesignation(!showAddDesignation);
   };
 
-  const handleUserClick = (arg) => {
-    const user = arg;
-
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-
-    handleAddDesignation();
+  const resetSelection = () => {
+    setViewDesignationData({});
   };
-
-  var node = useRef();
 
   const keyField = "id";
 
@@ -234,16 +222,17 @@ const DesignationList = (props) => {
     <React.Fragment>
       <ViewDesignation
         isOpen={showViewDesignation}
-        handleViewDesignation={handleViewDesignation}
         designation={viewDesignationData}
         desigStatus={desigStatus}
         desigType={desigType}
         desigParent={desigParent}
+        resetSelection={resetSelection}
+        toggleViewModal={toggleViewDesignation}
       />
       {console.log("desigStatus:" + JSON.stringify(desigStatus))}
       <AddNewDesignation
         isOpen={showAddDesignation}
-        handleAddDesignation={handleAddDesignation}
+        toggleAddDesignation={toggleAddDesignation}
         desigStatus={desigStatus}
         desigType={desigType}
         desigParent={desigParent}
@@ -252,8 +241,13 @@ const DesignationList = (props) => {
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Access" breadcrumbItem="Designations" />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">
@@ -264,13 +258,14 @@ const DesignationList = (props) => {
                       isPagination={true}
                       columns={columns}
                       data={desigList}
+                      isLoading={loading}
                       isGlobalFilter={true}
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleRowClick={(row) => {
                         // console.log("row:" + JSON.stringify(row));
-                        handleViewDesignation(row);
+                        toggleViewDesignation(row);
                       }}
                       handleDesignationClick={() => setShowAddDesignation(true)}
                       customPageSize={50}

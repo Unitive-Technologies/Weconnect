@@ -19,7 +19,7 @@ import { useDispatch } from "react-redux";
 import { getDesignation as onGetDesignation } from "/src/store/actions";
 
 const AddNewDesignation = (props) => {
-  const { isOpen, handleAddDesignation, desigStatus, desigParent, desigType } =
+  const { isOpen, toggleAddDesignation, desigStatus, desigParent, desigType } =
     props;
 
   console.log("desigStatus:" + JSON.stringify(desigStatus));
@@ -62,7 +62,7 @@ const AddNewDesignation = (props) => {
       dispatch(onAddNewDesignation(newDesignation));
       dispatch(onGetDesignation());
       validation.resetForm();
-      handleAddDesignation();
+      toggleAddDesignation();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -78,9 +78,9 @@ const AddNewDesignation = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleAddDesignation}
+      toggle={toggleAddDesignation}
     >
-      <ModalHeader tag="h4" toggle={handleAddDesignation}>
+      <ModalHeader tag="h4" toggle={toggleAddDesignation}>
         Add New Designation
       </ModalHeader>
       <ModalBody>
@@ -106,13 +106,13 @@ const AddNewDesignation = (props) => {
                   value={validation.values.designation || ""}
                   invalid={
                     validation.touched.designation &&
-                      validation.errors.designation
+                    validation.errors.designation
                       ? true
                       : false
                   }
                 />
                 {validation.touched.designation &&
-                  validation.errors.designation ? (
+                validation.errors.designation ? (
                   <FormFeedback type="invalid">
                     {validation.errors.designation}
                   </FormFeedback>
@@ -252,13 +252,13 @@ const AddNewDesignation = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -285,7 +285,7 @@ const AddNewDesignation = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    handleAddDesignation();
+                    toggleAddDesignation();
                   }}
                 >
                   Cancel

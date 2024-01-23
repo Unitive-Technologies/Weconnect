@@ -24,7 +24,8 @@ import {
 const ViewDesignation = (props) => {
   const {
     isOpen,
-    handleViewDesignation,
+    toggleViewModal,
+    resetSelection,
     designation,
     desigStatus,
     desigType,
@@ -67,13 +68,14 @@ const ViewDesignation = (props) => {
       dispatch(onUpdateDesignation(updateDesignation));
       dispatch(onGetDesignation());
       validation.resetForm();
-      handleViewDesignation();
+      resetSelection();
+      toggleViewModal();
     },
   });
 
   const handleCancel = () => {
     setShowEditDesignation(false);
-    handleViewDesignation();
+    toggleViewModal();
     dispatch(onGetDesignation());
   };
 
