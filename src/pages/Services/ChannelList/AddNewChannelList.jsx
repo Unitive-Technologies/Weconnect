@@ -22,6 +22,8 @@ const AddNewChannelList = (props) => {
   const { isOpen, handleAddChannel } = props;
   const dispatch = useDispatch();
 
+  const [casCodeList, setCasCodeList] = useState([]);
+
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -59,7 +61,7 @@ const AddNewChannelList = (props) => {
       rate: Yup.string().required(""),
       status: Yup.string().required("Enter status"),
       cas: Yup.string().required("Enter cas"),
-      cascode: Yup.string().required("cascode"),
+      casCodes: Yup.string().required("cascode"),
       serviceid: Yup.string().required("serviceid"),
     }),
     onSubmit: (values) => {
@@ -78,11 +80,12 @@ const AddNewChannelList = (props) => {
         rate: values["rate"],
         status: values["status"],
         cas: values["cas"],
-        cascode: values["cascode"],
+        casCodes: casCodeList,
         serviceid: values["serviceid"],
         created_at: new Date(),
         created_by: values["created_by"],
       };
+
       console.log("newChannelList:" + newChannelList);
       // save new user
       dispatch(onAddNewChannelList(newChannelList));
@@ -95,6 +98,10 @@ const AddNewChannelList = (props) => {
   });
 
   const [modal4, setModal4] = useState(false);
+
+  const handleUpdateCasList = (casList) => {
+    setCasCodeList(casList);
+  };
 
   const toggle4 = () => {
     setModal4(!modal4);
@@ -478,7 +485,7 @@ const AddNewChannelList = (props) => {
             }}
           >
             <Col sm="12">
-              <CasList />
+              <CasList data={casCodeList} updateList={handleUpdateCasList} />
             </Col>
           </Row>
           <Row>

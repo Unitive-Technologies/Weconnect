@@ -13,8 +13,17 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 
-const CasList = (props) => {
-  const { showEditChannel } = props;
+const CasList = ({ data, updateList }) => {
+  const selectChannelState = (state) => state.channelList;
+  const ChannelProperties = createSelector(
+    selectChannelState,
+    (channelList) => ({
+      casSource: channelList.casSource,
+    })
+  );
+
+  const { casSource } = useSelector(ChannelProperties);
+
   const columns = useMemo(
     () => [
       {
@@ -23,13 +32,12 @@ const CasList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
-
+          const index = startIndex + cellProps.row.index + 1;
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -53,7 +61,7 @@ const CasList = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"CAS"}
+                  {cellProps.row.casLabel || "-"}
                 </Link>
               </h5>
             </>
@@ -77,7 +85,7 @@ const CasList = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"CAS CODE"}
+                  {cellProps.row.casCode || "-"}
                 </Link>
               </h5>
             </>
@@ -101,7 +109,7 @@ const CasList = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"Service ID"}
+                  {cellProps.row.serviceId || "-"}
                 </Link>
               </h5>
             </>
@@ -125,7 +133,7 @@ const CasList = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"$"}
+                  {"deleteIcon"}
                 </Link>
               </h5>
             </>
@@ -136,7 +144,23 @@ const CasList = (props) => {
     []
   );
 
-  const casData = [];
+  const casData = [data];
+  const [casSelection, setCasSelection] = useState("");
+  const [casCode, setCasCode] = useState("");
+  const [serviceId, setServiceId] = useState("");
+
+  const updateCasList = () => {
+    updateList([
+      ...data,
+      { casLabel: casSelection, casCode: casCode, serviceId: serviceId },
+    ]);
+  };
+  const deleteCasList = (index) => {
+    const list = [...data];
+    list.splice(index, 1);
+    updateList(list);
+  };
+
   return (
     <Card>
       <CardBody>
@@ -156,16 +180,18 @@ const CasList = (props) => {
                 <Input
                   name="type"
                   type="select"
-                  placeholder="Select type"
+                  placeholder="Select CAS"
                   className="form-select"
-                // disabled={!showEditChannel}
-                // onChange={validation.handleChange}
-                // onBlur={validation.handleBlur}
-                // value={validation.values.type || ""}
+                  // disabled={!showEditChannel}
+                  // onChange={validation.handleChange}
+                  // onBlur={validation.handleBlur}
+                  // value={validation.values.type || ""}
                 >
-                  <option value="104">Select CAS</option>
-                  <option value="105">Pay Channel</option>
-                  <option value="106">FTA</option>
+                  {casSource.map((options) => (
+                    <option key={options.id} value={options.name}>
+                      {options.name}
+                    </option>
+                  ))}
                 </Input>
                 {/* {validation.touched.type && validation.errors.type ? (
                   <FormFeedback type="invalid">
@@ -183,17 +209,26 @@ const CasList = (props) => {
             >
               <Col lg={5} style={{ marginRight: "20px" }}>
                 <div className="mb-3">
-                  <Input type="text" placeholder="CAS Code" />
+                  {/* <TODO>Add handlechange and update cascode</TODO> */}
+                  <Input type="text" placeholder="CAS Code" value={casCode} />
                 </div>
               </Col>
               <Col lg={5} style={{ marginRight: "20px" }}>
                 <div className="mb-3">
-                  <Input type="text" placeholder="Service ID" />
+                  <Input
+                    type="text"
+                    placeholder="Service ID"
+                    value={serviceId}
+                  />
                 </div>
               </Col>
               <Col lg={2}>
                 <div className="mb-3">
-                  <button type="button" className="btn btn-primary ">
+                  <button
+                    type="button"
+                    className="btn btn-primary "
+                    onClick={updateCasList}
+                  >
                     <i
                       className="bx bx-right-arrow-alt"
                       style={{ fontSize: 20 }}
@@ -208,7 +243,7 @@ const CasList = (props) => {
             <TableContainer
               isPagination={true}
               columns={columns}
-              data={casData}
+              data={data}
               // isGlobalFilter={true}
               // isShowingPageLength={true}
               // customPageSize={50}

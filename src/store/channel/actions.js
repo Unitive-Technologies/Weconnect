@@ -17,6 +17,20 @@ export const getChannelList = () => ({
   type: GET_CHANNELLIST,
 });
 
+export const getCASSource = () => ({
+  type: GET_CAS_SOURCE,
+});
+
+export const getCASSourceSuccess = (casSource) => ({
+  type: GET_CAS_SOURCE_SUCCESS,
+  payload: casSource,
+});
+
+export const getCASSourceFail = (error) => ({
+  type: GET_CAS_SOURCE_FAIL,
+  payload: error,
+});
+
 export const getChannelListSuccess = (channellist) => {
   console.log("Received Channel List:", channellist);
   return {
@@ -30,16 +44,12 @@ export const getChannelListFail = (error) => ({
   payload: error,
 });
 
-export const addNewChannelList = (
-  channellist
-) => ({
+export const addNewChannelList = (channellist) => ({
   type: ADD_NEW_CHANNELLIST,
   payload: channellist,
 });
 
-export const addChannelListSuccess = (
-  channellist
-) => ({
+export const addChannelListSuccess = (channellist) => ({
   type: ADD_CHANNELLIST_SUCCESS,
   payload: channellist,
 });

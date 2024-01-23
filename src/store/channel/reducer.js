@@ -6,13 +6,19 @@ import {
 } from "../../constants/strings";
 
 import {
-  GET_CHANNELLIST, GET_CHANNELLIST_SUCCESS, GET_CHANNELLIST_FAIL, ADD_CHANNELLIST_SUCCESS,
-  ADD_CHANNELLIST_FAIL, UPDATE_CHANNELLIST_CURRENT_PAGE,
+  GET_CHANNELLIST,
+  GET_CHANNELLIST_SUCCESS,
+  GET_CHANNELLIST_FAIL,
+  ADD_CHANNELLIST_SUCCESS,
+  ADD_CHANNELLIST_FAIL,
+  UPDATE_CHANNELLIST_CURRENT_PAGE,
+  GET_CAS_SOURCE,
 } from "./actionTypes";
 
 const INIT_STATE = {
   channelList: [],
   pagination: {},
+  casSource: [],
   error: {},
   loading: false,
   currentPage: 1,
@@ -26,9 +32,9 @@ const ChannelList = (state = INIT_STATE, action) => {
     case UPDATE_CHANNELLIST_CURRENT_PAGE:
       return Number(action.payload) <= state.totalPages
         ? {
-          ...state,
-          currentPage: action.payload,
-        }
+            ...state,
+            currentPage: action.payload,
+          }
         : state;
     case GET_CHANNELLIST:
       return {
@@ -36,6 +42,23 @@ const ChannelList = (state = INIT_STATE, action) => {
         loading: true,
       };
 
+    case GET_CAS_SOURCE:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_CAS_SOURCE_SUCCESS:
+      return {
+        ...state,
+        casSource: action.payload.data.data,
+        loading: false,
+      };
+    case GET_CAS_SOURCE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
     case GET_CHANNELLIST_SUCCESS:
       console.log("ChannelList data in reducer:", action.payload);
       return {
@@ -59,10 +82,7 @@ const ChannelList = (state = INIT_STATE, action) => {
     case ADD_CHANNELLIST_SUCCESS:
       return {
         ...state,
-        channelList: [
-          ...state.channelList,
-          action.payload,
-        ],
+        channelList: [...state.channelList, action.payload],
       };
 
     case ADD_CHANNELLIST_FAIL:

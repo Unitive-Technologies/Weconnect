@@ -287,6 +287,10 @@ export const getLanguageList = async (currentPage, perPage = 20) => {
   );
 };
 
+export const getCASSource = async () => {
+  return await getCompleteResponse(url.getCASSourceUrl());
+};
+
 export const getChannelList = async (currentPage, perPage = 20) => {
   console.log("Channel List - Current Page in fakebackend: ", currentPage);
   console.log("Channel List - Per Page: ", perPage);

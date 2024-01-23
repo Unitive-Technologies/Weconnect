@@ -27,6 +27,7 @@ import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import {
   goToPage as onGoToPage,
   getChannelList as onGetChannelList,
+  getCASSource as onGetCASSource,
 } from "/src/store/channel/actions";
 
 //redux
@@ -235,6 +236,7 @@ const ChannelList = (props) => {
   useEffect(() => {
     if (channel && !channel.length) {
       dispatch(onGetChannelList());
+      dispatch(onGetCASSource());
     }
   }, [dispatch, channel]);
 
