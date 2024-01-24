@@ -172,19 +172,16 @@ const InventoryStock = (props) => {
   }, [dispatch]);
 
   const goToPage = (toPage) => {
-    console.log("[GOTO PAGE] Trigger to page - ", toPage);
     dispatch(onGoToPage(toPage));
     dispatch(onGetInventoryStockPairing());
   };
 
   const goToPage1 = (toPage) => {
-    console.log("[GOTO PAGE] Trigger to page - ", toPage);
     dispatch(onGoToPage1(toPage));
     dispatch(onGetInventoryFaultyPairing());
   };
 
   const goToPage2 = (toPage) => {
-    console.log("[GOTO PAGE] Trigger to page - ", toPage);
     dispatch(onGoToPage2(toPage));
     dispatch(onGetInventoryAllottedPairing());
   };

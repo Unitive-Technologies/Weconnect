@@ -14,7 +14,7 @@ const INIT_STATE = {
 const InventoryStateList = (state = INIT_STATE, action) => {
   switch (action.type) {
     case GET_INVENTORYSTATELIST_SUCCESS:
-      console.log("Inventory State List data in reducer:", action.payload);
+      // console.log("Inventory State List data in reducer:", action.payload);
       return {
         ...state,
         inventorystatelist: action.payload,

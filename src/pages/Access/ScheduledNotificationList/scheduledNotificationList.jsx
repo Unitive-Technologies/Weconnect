@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
 import Spinners from "../../../components/Common/Spinner";
-import { Card, CardBody, Col, Container, Row } from "reactstrap";
+import { Card, CardBody, Col, Container, Row, Spinner } from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -34,33 +34,26 @@ const ScheduledNotificationList = (props) => {
   const { schedulednotify, loading } = useSelector(
     ScheduledNotificationProperties
   );
-  const [isLoading, setLoading] = useState(loading);
+  // const [isLoading, setLoading] = useState(loading);
   const columns = useMemo(
     () => [
       {
         Header: "#",
-        // accessor: "name",
-        disableFilters: true,
         filterable: true,
-        accessor: (cellProps) => (
-          <>
-            {!cellProps.img ? (
-              <div className="avatar-xs">
-                <span className="avatar-title rounded-circle">
-                  {cellProps.name.charAt(0)}
-                </span>
-              </div>
-            ) : (
-              <div>
-                <img
-                  className="rounded-circle avatar-xs"
-                  src={cellProps.img}
-                  alt=""
-                />
-              </div>
-            )}
-          </>
-        ),
+        Cell: (cellProps) => {
+          const totalRows = cellProps.rows.length;
+          const serialNumber = totalRows - cellProps.row.index;
+
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {serialNumber}
+                </Link>
+              </h5>
+            </>
+          );
+        },
       },
       {
         Header: "Name",
@@ -71,12 +64,12 @@ const ScheduledNotificationList = (props) => {
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.name}
+                  {cellProps.row.original.announcement_templ_lbl.msg_head}
                 </Link>
               </h5>
-              <p className="text-muted mb-0">
+              {/* <p className="text-muted mb-0">
                 {cellProps.row.original.designation}
-              </p>
+              </p> */}
             </>
           );
         },
@@ -87,7 +80,17 @@ const ScheduledNotificationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.content}</p>
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 200,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {cellProps.row.original.announcement_templ_lbl.msg_content}
+            </p>
           );
         },
       },
@@ -97,7 +100,9 @@ const ScheduledNotificationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.type}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.announcement_templ_lbl.msg_type}
+            </p>
           );
         },
       },
@@ -108,7 +113,7 @@ const ScheduledNotificationList = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.starttime}
+              {cellProps.row.original.start_time_lbl}
             </p>
           );
         },
@@ -119,7 +124,9 @@ const ScheduledNotificationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.endtime}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.end_time_lbl}
+            </p>
           );
         },
       },
@@ -129,7 +136,9 @@ const ScheduledNotificationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.status}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.status_lbl}
+            </p>
           );
         },
       },
@@ -140,7 +149,7 @@ const ScheduledNotificationList = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.broadcast_status}
+              {cellProps.row.original.broadcast_status_lbl}
             </p>
           );
         },
@@ -152,7 +161,7 @@ const ScheduledNotificationList = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.usercount}
+              {cellProps.row.original.user_count}
             </p>
           );
         },
@@ -164,7 +173,7 @@ const ScheduledNotificationList = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.scheduledat}
+              {cellProps.row.original.created_at_lbl}
             </p>
           );
         },
@@ -176,7 +185,7 @@ const ScheduledNotificationList = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.sheduledby}
+              {cellProps.row.original.created_by_lbl}
             </p>
           );
         },
@@ -199,8 +208,13 @@ const ScheduledNotificationList = (props) => {
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Access" breadcrumbItem="Scheduled Notification" />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">
@@ -212,6 +226,9 @@ const ScheduledNotificationList = (props) => {
                       data={schedulednotify}
                       isGlobalFilter={true}
                       isShowingPageLength={true}
+                      // handleRowClick={(row) => {
+                      //   handleViewScheduledNotification(row);
+                      // }}
                       // iscustomPageSizeOptions={true}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"

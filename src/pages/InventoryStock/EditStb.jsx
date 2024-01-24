@@ -14,27 +14,29 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addCity as onAddCity } from "/src/store/city/actions";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateInventoryStockStb as onUpdateInventoryStockStb } from "/src/store/inventorystock/actions";
-import { createSelector } from "reselect";
 
 const EditStb = (props) => {
+  const { isOpen, stbData, toggle } = props;
+
+  const dispatch = useDispatch();
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
-      id: "",
-      name: "",
+      id: (stbData && stbData.id) || "",
+      stbno: (stbData && stbData.stbno) || "",
+      stbno1: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter city name"),
+      stbno1: Yup.string().required("Enter New STB No."),
     }),
     onSubmit: (values) => {
       const updatedStb = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
-        name: values["name"],
+        id: values["id"],
+        stbno: values["stbno1"],
       };
       dispatch(onUpdateInventoryStockStb(updatedStb));
       validation.resetForm();
@@ -46,14 +48,18 @@ const EditStb = (props) => {
 
   return (
     <Modal
+      isOpen={isOpen}
       role="dialog"
       size="xl"
       autoFocus={true}
       centered={true}
       className="exampleModal"
       tabIndex="-1"
+      toggle={toggle}
     >
-      <ModalHeader tag="h4">Edit</ModalHeader>
+      <ModalHeader tag="h4" toggle={toggle}>
+        Change STB Number
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -65,25 +71,49 @@ const EditStb = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">
-                  City Name<span style={{ color: "red" }}>*</span>
-                </Label>
+                <Label className="form-label">Current STB No.</Label>
                 <Input
-                  name="name"
+                  name="stbno"
                   type="text"
-                  placeholder="Enter city name"
+                  // placeholder="Enter city name"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.name || ""}
+                  value={validation.values.stbno || ""}
                   invalid={
-                    validation.touched.name && validation.errors.name
+                    validation.touched.stbno && validation.errors.stbno
+                      ? true
+                      : false
+                  }
+                  disabled
+                />
+                {validation.touched.stbno && validation.errors.stbno ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.stbno}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  New STB No.<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="stbno1"
+                  type="text"
+                  placeholder="Enter New STB No."
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.stbno1 || ""}
+                  invalid={
+                    validation.touched.stbno1 && validation.errors.stbno1
                       ? true
                       : false
                   }
                 />
-                {validation.touched.name && validation.errors.name ? (
+                {validation.touched.stbno1 && validation.errors.stbno1 ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.name}
+                    {validation.errors.stbno1}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -93,22 +123,14 @@ const EditStb = (props) => {
             <Col>
               <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
-                  Save
+                  Change
                 </button>
-                <button
-                  type="reset"
-                  className="btn btn-warning"
-                  onClick={() => validation.resetForm()}
-                >
-                  Reset
-                </button>
-
                 <button
                   type="button"
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    handleShowCity();
+                    toggle();
                   }}
                 >
                   Cancel

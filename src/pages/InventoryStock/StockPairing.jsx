@@ -1,7 +1,6 @@
 import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardBody, Col, Row } from "reactstrap";
-import TableContainer from "../../components/Common/TableContainer";
 import TableContainerX from "../../components/Common/TableContainerX";
 
 const StockPairing = (props) => {

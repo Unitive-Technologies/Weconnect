@@ -71,7 +71,7 @@ const InventoryAllotted = (state = INIT_STATE, action) => {
       };
 
     case GET_INVENTORYALLOTTED_PAIRING_SUCCESS:
-      console.log("Allotted pairing in reducer: ", action.payload);
+      // console.log("Allotted pairing in reducer: ", action.payload);
       return {
         ...state,
         allottedpairing: action.payload.data.data,

@@ -38,9 +38,9 @@ const convertScheduledNotificationListObject = (ScheduledNotificationList) => {
 function* fetchScheduledNotification() {
   try {
     const response = yield call(getScheduledNotification);
-    const scheduledNotificationList =
-      convertScheduledNotificationListObject(response);
-    yield put(getScheduledNotificationSuccess(scheduledNotificationList));
+    // const scheduledNotificationList =
+    //   convertScheduledNotificationListObject(response);
+    yield put(getScheduledNotificationSuccess(response.data));
   } catch (error) {
     console.error("Error fetching Scheduled notification list:", error);
     yield put(getScheduledNotificationFail(error));
