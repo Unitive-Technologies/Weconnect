@@ -25,7 +25,7 @@ import { getScheduleCustomerNotification as onGetScheduleCustomerNotification } 
 const AddNewScheduleCustomerNotification = (props) => {
   const {
     isOpen,
-    handleAddNewScheduleCustNoti,
+    toggleAddNewScheduleCustNoti,
     SchCusNotStatus,
     SchCusNotType,
     SchCusNotSMS,
@@ -114,7 +114,7 @@ const AddNewScheduleCustomerNotification = (props) => {
       );
       dispatch(onGetScheduleCustomerNotification());
       validation.resetForm();
-      handleAddNewScheduleCustNoti();
+      toggleAddNewScheduleCustNoti();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -130,10 +130,10 @@ const AddNewScheduleCustomerNotification = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleAddNewScheduleCustNoti}
+      toggle={toggleAddNewScheduleCustNoti}
     >
       {/* <Modal isOpen={modal} toggle={toggle}> */}
-      <ModalHeader tag="h4" toggle={handleAddNewScheduleCustNoti}>
+      <ModalHeader tag="h4" toggle={toggleAddNewScheduleCustNoti}>
         Add New Schedule Customer Notification
       </ModalHeader>
       <ModalBody>
@@ -518,7 +518,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    handleAddNewScheduleCustNoti();
+                    toggleAddNewScheduleCustNoti();
                   }}
                 >
                   Cancel

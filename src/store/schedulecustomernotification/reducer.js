@@ -1,4 +1,5 @@
 import {
+  GET_SCHEDULECUSTOMERNOTIFICATION,
   GET_SCHEDULECUSTOMERNOTIFICATION_SUCCESS,
   GET_SCHEDULECUSTOMERNOTIFICATION_FAIL,
   GET_SCHEDULECUSTOMERNOTIFICATION_STATUS_FAIL,
@@ -11,6 +12,7 @@ import {
   GET_SCHEDULECUSTOMERNOTIFICATION_SMS_SUCCESS,
   GET_SCHEDULECUSTOMERNOTIFICATION_OSD_FAIL,
   GET_SCHEDULECUSTOMERNOTIFICATION_OSD_SUCCESS,
+  ADD_NEW_SCHEDULECUSTOMERNOTIFICATION,
   ADD_SCHEDULECUSTOMERNOTIFICATION_SUCCESS,
   ADD_SCHEDULECUSTOMERNOTIFICATION_FAIL,
 } from "./actionTypes";
@@ -23,11 +25,16 @@ const INIT_STATE = {
   SchCusNotOSD: [],
   SchCusNotBmail: [],
   error: {},
-  loading: true,
+  loading: false,
 };
 
 const ScheduleCustomerNotification = (state = INIT_STATE, action) => {
   switch (action.type) {
+    case GET_SCHEDULECUSTOMERNOTIFICATION:
+      return {
+        ...state,
+        loading: true,
+      };
     case GET_SCHEDULECUSTOMERNOTIFICATION_SUCCESS:
       console.log(
         "Schedule Customer Notification data in reducer:",
@@ -43,11 +50,14 @@ const ScheduleCustomerNotification = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
-
     case GET_SCHEDULECUSTOMERNOTIFICATION_STATUS_SUCCESS:
-      console.log("Schedule Customer Notification data in reducer:", action.payload);
+      console.log(
+        "Schedule Customer Notification data in reducer:",
+        action.payload
+      );
       return {
         ...state,
         SchCusNotStatus: action.payload,
@@ -60,9 +70,11 @@ const ScheduleCustomerNotification = (state = INIT_STATE, action) => {
         error: action.payload,
       };
 
-
     case GET_SCHEDULECUSTOMERNOTIFICATION_TYPE_SUCCESS:
-      console.log("Schedule Customer Notification Data in reducer:", action.payload);
+      console.log(
+        "Schedule Customer Notification Data in reducer:",
+        action.payload
+      );
       return {
         ...state,
         SchCusNotType: action.payload,
@@ -76,7 +88,10 @@ const ScheduleCustomerNotification = (state = INIT_STATE, action) => {
       };
 
     case GET_SCHEDULECUSTOMERNOTIFICATION_SMS_SUCCESS:
-      console.log("Schedule Customer Notification Data in reducer:", action.payload);
+      console.log(
+        "Schedule Customer Notification Data in reducer:",
+        action.payload
+      );
       return {
         ...state,
         SchCusNotSMS: action.payload,
@@ -90,7 +105,10 @@ const ScheduleCustomerNotification = (state = INIT_STATE, action) => {
       };
 
     case GET_SCHEDULECUSTOMERNOTIFICATION_BMAIL_SUCCESS:
-      console.log("Schedule Customer Notification Data in reducer:", action.payload);
+      console.log(
+        "Schedule Customer Notification Data in reducer:",
+        action.payload
+      );
       return {
         ...state,
         SchCusNotBmail: action.payload,
@@ -104,7 +122,10 @@ const ScheduleCustomerNotification = (state = INIT_STATE, action) => {
       };
 
     case GET_SCHEDULECUSTOMERNOTIFICATION_OSD_SUCCESS:
-      console.log("Schedule Customer Notification Data in reducer:", action.payload);
+      console.log(
+        "Schedule Customer Notification Data in reducer:",
+        action.payload
+      );
       return {
         ...state,
         SchCusNotOSD: action.payload,
@@ -117,6 +138,11 @@ const ScheduleCustomerNotification = (state = INIT_STATE, action) => {
         error: action.payload,
       };
 
+    case ADD_NEW_SCHEDULECUSTOMERNOTIFICATION:
+      return {
+        ...state,
+        loading: true,
+      };
     case ADD_SCHEDULECUSTOMERNOTIFICATION_SUCCESS:
       return {
         ...state,
@@ -124,12 +150,14 @@ const ScheduleCustomerNotification = (state = INIT_STATE, action) => {
           ...state.scheduleCustomerNotification,
           action.payload,
         ],
+        loading: false,
       };
 
     case ADD_SCHEDULECUSTOMERNOTIFICATION_FAIL:
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     default:

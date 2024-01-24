@@ -2,7 +2,15 @@ import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import Spinners from "../../../components/Common/Spinner";
-import { Card, CardBody, Col, Container, Row, Table } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  Col,
+  Container,
+  Row,
+  Table,
+  Spinner,
+} from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -44,7 +52,7 @@ const RegionalOfficeList = (props) => {
 
   const { regOffices, loading, totalPage, totalCount, currentPage, pageSize } =
     useSelector(RegionalOfficeProperties);
-  const [isLoading, setLoading] = useState(loading);
+  // const [isLoading, setLoading] = useState(loading);
   const [showRegionalOffice, setShowRegionalOffice] = useState(false);
   const [viewRegionalOffice, setViewRegionalOffice] = useState(false);
   const [showUploadRegionalOffice, setShowUploadRegionalOffice] =
@@ -84,7 +92,7 @@ const RegionalOfficeList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  handleViewRegionalOffice(userData);
+                  toggleViewRegionalOffice(userData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -256,7 +264,7 @@ const RegionalOfficeList = (props) => {
     dispatch(onGetRegionalOffice());
   };
 
-  const handleAddRegionalOffice = () => {
+  const toggleAddRegionalOffice = () => {
     setShowRegionalOffice(!showRegionalOffice);
   };
   const handleUploadRegionalOffice = () => {
@@ -265,11 +273,14 @@ const RegionalOfficeList = (props) => {
 
   const [regOffData, setRegOffData] = useState({});
 
-  const handleViewRegionalOffice = (regOffData) => {
+  const toggleViewRegionalOffice = (regOffData) => {
     setViewRegionalOffice(!viewRegionalOffice);
     setRegOffData(regOffData);
   };
 
+  const resetSelection = () => {
+    setRegOffData({});
+  };
   const getTableActions = () => {
     return [
       {
@@ -291,13 +302,14 @@ const RegionalOfficeList = (props) => {
     <React.Fragment>
       <ViewRegionalOfficeModal
         isOpen={viewRegionalOffice}
-        handleViewRegionalOffice={handleViewRegionalOffice}
+        toggleViewRegionalOffice={toggleViewRegionalOffice}
+        resetSelection={resetSelection}
         regionalOffData={regOffData}
         setViewRegionalOffice={setViewRegionalOffice}
       />
       <AddRegionalOfficeModal
         isOpen={showRegionalOffice}
-        handleAddRegionalOffice={handleAddRegionalOffice}
+        toggleAddRegionalOffice={toggleAddRegionalOffice}
       />
       <UploadRegionalOfficeModal
         isOpen={showUploadRegionalOffice}
@@ -307,8 +319,13 @@ const RegionalOfficeList = (props) => {
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Organization" breadcrumbItem="Regional Offices" />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">
@@ -332,7 +349,7 @@ const RegionalOfficeList = (props) => {
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleRowClick={(row) => {
-                        handleViewRegionalOffice(row);
+                        toggleViewRegionalOffice(row);
                       }}
                       goToPage={goToPage}
                     />

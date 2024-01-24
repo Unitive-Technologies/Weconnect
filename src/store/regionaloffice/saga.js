@@ -62,7 +62,7 @@ function* fetchRegionalOffice() {
 
     const response = yield call(getRegionalOffices, currentPage, pageSize);
     console.log("Response from API -", response);
-    debugger;
+    // debugger;
     yield put(getRegionalOfficeSuccess(response));
   } catch (error) {
     console.error("Error fetching Users list:", error);

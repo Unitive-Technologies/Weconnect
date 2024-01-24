@@ -6,14 +6,16 @@ import {
 } from "../../constants/strings";
 
 import {
+  GET_REGIONALOFFICE,
   GET_REGIONALOFFICE_SUCCESS,
   GET_REGIONALOFFICE_FAIL,
+  ADD_NEW_REGIONALOFFICE,
   ADD_REGIONALOFFICE_SUCCESS,
   ADD_REGIONALOFFICE_FAIL,
+  UPDATE_REGIONALOFFICE,
   UPDATE_REGIONALOFFICE_SUCCESS,
   UPDATE_REGIONALOFFICE_FAIL,
   UPDATE_REGIONALOFFICES_CURRENT_PAGE,
-  GET_REGIONALOFFICE,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -60,24 +62,37 @@ const RegionalOffice = (state = INIT_STATE, action) => {
         pagination: {},
         loading: false,
       };
+    case ADD_NEW_REGIONALOFFICE:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
 
     case ADD_REGIONALOFFICE_SUCCESS:
       return {
         ...state,
         regionaloffice: [...state.regionaloffice, action.payload],
+        loading: false,
       };
 
     case ADD_REGIONALOFFICE_FAIL:
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
-
+    case UPDATE_REGIONALOFFICE:
+      return {
+        ...state,
+        loading: true,
+      };
     case UPDATE_REGIONALOFFICE_SUCCESS:
       return {
         ...state,
+        loading: false,
         regionaloffice: state.regionaloffice.map((regoff) =>
-          regoff.id.toString() === action.payload.id.toString()
+          regoff.id === action.payload.id
             ? { regoff, ...action.payload }
             : regoff
         ),
@@ -87,6 +102,7 @@ const RegionalOffice = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     default:

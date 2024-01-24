@@ -22,7 +22,8 @@ import EditRegionalOfficeModal from "./EditRegionalOfficeModal";
 const ViewRegionalOfficeModal = (props) => {
   const {
     isOpen,
-    handleViewRegionalOffice,
+    toggleViewRegionalOffice,
+    resetSelection,
     regionalOffData,
     setViewRegionalOffice,
   } = props;
@@ -115,41 +116,19 @@ const ViewRegionalOfficeModal = (props) => {
       // update user
       dispatch(onUpdateUser(updateRegionalOffice));
       validation.resetForm();
-      handleViewRegionalOffice();
+      resetSelection();
+      toggleViewRegionalOffice();
     },
   });
 
-  const handleEditRegionalOffice = () => {
-    setShowEditRegionalOffice(!showEditRegionalOffice);
+  const handleCancel = () => {
+    setShowEditRegionalOffice(false);
+    resetSelection();
+    toggleViewRegionalOffice();
   };
-  // const getTableActions = () => {
-  //   return [
-  //     {
-  //       name: "Create",
-  //       // action: setShowRegionalOffice,
-  //       type: "normal",
-  //       icon: "create",
-  //     },
-  //     {
-  //       name: "Upload",
-  //       // action: setShowUploadRegionalOffice,
-  //       type: "normal",
-  //       icon: "upload",
-  //     },
-  //   ];
-  // };
 
-  // useEffect(() => {
-  //   getTableActions();
-  // }, []);
   return (
     <>
-      {/* <EditRegionalOfficeModal
-        isOpen={showEditRegionalOffice}
-        togglelink={handleEditRegionalOffice}
-        regionalOffData={regionalOffData}
-      /> */}
-
       <Modal
         isOpen={isOpen}
         role="dialog"
@@ -158,15 +137,11 @@ const ViewRegionalOfficeModal = (props) => {
         centered={true}
         className="exampleModal"
         tabIndex="-1"
-        toggle={handleViewRegionalOffice}
+        toggle={handleCancel}
       >
         {!showEditRegionalOffice ? (
           <>
-            <ModalHeader
-              toggle={handleViewRegionalOffice}
-              tag="h4"
-              position="relative"
-            >
+            <ModalHeader toggle={handleCancel} tag="h4" position="relative">
               <h4>View - {regionalOffData.name}</h4>
             </ModalHeader>
             <Link
@@ -421,8 +396,11 @@ const ViewRegionalOfficeModal = (props) => {
 };
 
 ViewRegionalOfficeModal.propTypes = {
-  toggle: PropTypes.func,
   isOpen: PropTypes.bool,
+  toggleViewRegionalOffice: PropTypes.func,
+  resetSelection: PropTypes.func,
+  regionalOffData: PropTypes.array,
+  setViewRegionalOffice: PropTypes.bool,
 };
 
 export default ViewRegionalOfficeModal;

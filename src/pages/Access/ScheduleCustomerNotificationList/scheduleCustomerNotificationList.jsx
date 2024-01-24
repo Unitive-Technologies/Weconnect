@@ -9,6 +9,7 @@ import {
   Col,
   Container,
   Row,
+  Spinner,
   UncontrolledTooltip,
 } from "reactstrap";
 
@@ -72,7 +73,7 @@ const ScheduleCustomerNotificationList = (props) => {
     SchCusNotType,
   } = useSelector(scheduleCustomerNotificationProperties);
 
-  const [isLoading, setLoading] = useState(loading);
+  // const [isLoading, setLoading] = useState(loading);
 
   const [showAddNewScheduleCustNoti, setShowAddNewScheduleCustNoti] =
     useState(false);
@@ -193,7 +194,15 @@ const ScheduleCustomerNotificationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 200,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.sms_template_id_lbl}
             </p>
           );
@@ -284,7 +293,7 @@ const ScheduleCustomerNotificationList = (props) => {
     }
   }, [dispatch, schCusNotification]);
 
-  const handleAddNewScheduleCustNoti = () => {
+  const toggleAddNewScheduleCustNoti = () => {
     setShowAddNewScheduleCustNoti(!showAddNewScheduleCustNoti);
   };
 
@@ -304,7 +313,7 @@ const ScheduleCustomerNotificationList = (props) => {
     <React.Fragment>
       <AddNewScheduleCustomerNotification
         isOpen={showAddNewScheduleCustNoti}
-        handleAddNewScheduleCustNoti={handleAddNewScheduleCustNoti}
+        toggleAddNewScheduleCustNoti={toggleAddNewScheduleCustNoti}
         SchCusNotBmail={SchCusNotBmail}
         SchCusNotOSD={SchCusNotOSD}
         SchCusNotSMS={SchCusNotSMS}
@@ -328,8 +337,13 @@ const ScheduleCustomerNotificationList = (props) => {
             title="Access"
             breadcrumbItem="Schedule Customer Notification"
           />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">
