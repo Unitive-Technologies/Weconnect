@@ -20,21 +20,22 @@ import { updateInventoryStockStb as onUpdateInventoryStockStb } from "/src/store
 import { createSelector } from "reselect";
 
 const EditStb = (props) => {
+  const { isOpen, stbData, toggle } = props;
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
-      id: "",
-      name: "",
+      id: (stbData && stbData.id) || "",
+      stbno: (stbData && stbData.stbno) || "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter city name"),
+      stbno: Yup.string().required("Enter New STB No."),
     }),
     onSubmit: (values) => {
       const updatedStb = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
-        name: values["name"],
+        id: values["id"],
+        stbno: values["stbno"],
       };
       dispatch(onUpdateInventoryStockStb(updatedStb));
       validation.resetForm();
@@ -46,14 +47,18 @@ const EditStb = (props) => {
 
   return (
     <Modal
+      isOpen={isOpen}
       role="dialog"
       size="xl"
       autoFocus={true}
       centered={true}
       className="exampleModal"
       tabIndex="-1"
+      toggle={toggle}
     >
-      <ModalHeader tag="h4">Edit</ModalHeader>
+      <ModalHeader tag="h4" toggle={toggle}>
+        Change STB Number
+      </ModalHeader>
       <ModalBody>
         <Form
           onSubmit={(e) => {
@@ -65,13 +70,36 @@ const EditStb = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
+                <Label className="form-label">Current STB No.</Label>
+                <Input
+                  name="stbno"
+                  type="text"
+                  // placeholder="Enter city name"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.stbno || ""}
+                  invalid={
+                    validation.touched.stbno && validation.errors.stbno
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.stbno && validation.errors.stbno ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.stbno}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
                 <Label className="form-label">
-                  City Name<span style={{ color: "red" }}>*</span>
+                  New STB No.<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
                   name="name"
                   type="text"
-                  placeholder="Enter city name"
+                  placeholder="Enter New STB No."
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}

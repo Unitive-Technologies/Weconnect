@@ -1,10 +1,18 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardBody, Col, Row } from "reactstrap";
 import TableContainer from "../../components/Common/TableContainer";
+import EditStb from "./EditStb";
 
 const StockStb = (props) => {
   const { stockstb, tableActions } = props;
+  const [showEditStb, setShowEditStb] = useState(false);
+  const [editStb, setEditStb] = useState({});
+
+  const toggleEditStb = (row) => {
+    setShowEditStb(!showEditStb);
+    setEditStb(row);
+  };
 
   const columns = useMemo(
     () => [
@@ -35,7 +43,13 @@ const StockStb = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const stbData = cellProps.row.original;
+                  toggleEditStb(stbData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.stbno}
                 </Link>
@@ -156,6 +170,7 @@ const StockStb = (props) => {
 
   return (
     <React.Fragment>
+      <EditStb isOpen={showEditStb} toggle={toggleEditStb} stbData={editStb} />
       <Row>
         <Col lg="12">
           <Card>
@@ -174,6 +189,9 @@ const StockStb = (props) => {
                 theadClass="table-light"
                 paginationDiv="col-sm-12 col-md-7"
                 pagination="pagination pagination-rounded justify-content-end mt-4"
+                handleRowClick={(row) => {
+                  toggleEditStb(row);
+                }}
               />
             </CardBody>
           </Card>
