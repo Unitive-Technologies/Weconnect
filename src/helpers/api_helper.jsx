@@ -18,7 +18,7 @@ axiosApi.interceptors.response.use(
 );
 
 export async function getCompleteResponse(url, config = {}) {
-  console.log("url:" + url);
+  // console.log("url:" + url);
   axiosApi.defaults.headers.common["Authorization"] =
     "Bearer " + localStorage.getItem("temptoken");
 
@@ -31,7 +31,7 @@ export async function getCompleteResponse(url, config = {}) {
 }
 
 export async function get(url, config = {}) {
-  console.log("url:" + url);
+  // console.log("url:" + url);
   axiosApi.defaults.headers.common["Authkey"] =
     import.meta.env.VITE_APP_AUTHKEY;
 

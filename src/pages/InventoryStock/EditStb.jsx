@@ -15,7 +15,11 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { updateInventoryStockStb as onUpdateInventoryStockStb } from "/src/store/inventorystock/actions";
+import {
+  updateInventoryStockStb as onUpdateInventoryStockStb,
+  // getInventoryStockStb as onGetInventoryStockStb,
+} from "/src/store/inventorystock/actions";
+import { getInventoryStockStb as onGetInventoryStockStb } from "/src/store/actions";
 
 const EditStb = (props) => {
   const { isOpen, stbData, toggle } = props;
@@ -38,7 +42,9 @@ const EditStb = (props) => {
         id: values["id"],
         stbno: values["stbno1"],
       };
+      console.log("Updated stb: ", updatedStb);
       dispatch(onUpdateInventoryStockStb(updatedStb));
+      dispatch(onGetInventoryStockStb());
       validation.resetForm();
     },
     onReset: (values) => {
@@ -65,6 +71,7 @@ const EditStb = (props) => {
           onSubmit={(e) => {
             e.preventDefault();
             validation.handleSubmit();
+            // toggle();
             return false;
           }}
         >

@@ -7,11 +7,11 @@ import EditStb from "./EditStb";
 const StockStb = (props) => {
   const { stockstb, tableActions } = props;
   const [showEditStb, setShowEditStb] = useState(false);
-  const [editStb, setEditStb] = useState({});
+  const [editStbData, setEditStbData] = useState({});
 
   const toggleEditStb = (row) => {
     setShowEditStb(!showEditStb);
-    setEditStb(row);
+    setEditStbData(row);
   };
 
   const columns = useMemo(
@@ -46,8 +46,9 @@ const StockStb = (props) => {
               <h5
                 className="font-size-14 mb-1"
                 onClick={() => {
-                  const stbData = cellProps.row.original;
-                  toggleEditStb(stbData);
+                  const row = cellProps.row.original;
+                  console.log("Selected row: ", row);
+                  toggleEditStb(row);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -170,7 +171,11 @@ const StockStb = (props) => {
 
   return (
     <React.Fragment>
-      <EditStb isOpen={showEditStb} toggle={toggleEditStb} stbData={editStb} />
+      <EditStb
+        isOpen={showEditStb}
+        toggle={toggleEditStb}
+        stbData={editStbData}
+      />
       <Row>
         <Col lg="12">
           <Card>

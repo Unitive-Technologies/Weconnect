@@ -6,6 +6,7 @@ import {
   UPDATE_INVENTORYSTOCK_STB,
 } from "./actionTypes";
 import {
+  getInventoryStockStb as onGetInventoryStockStb,
   getInventoryStockSmartcardSuccess,
   getInventoryStockSmartcardFail,
   getInventoryStockStbSuccess,
@@ -63,6 +64,7 @@ function* onUpdateInventoryStockStb({ payload: stockstb }) {
     const response = yield call(updateInventoryStockStb, stockstb.id, stockstb);
     // console.log("Response data in saga: ", response);
     yield put(updateInventoryStockStbSuccess(response.data));
+    yield put(onGetInventoryStockStb());
   } catch (error) {
     // console.log("Error in update district: ", error);
     yield put(updateInventoryStockStbFail(error));
