@@ -323,14 +323,15 @@ const ViewChannel = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.type || ""}
+                  value={validation.values.channel_type_lbl || ""}
                   disabled={!showEditChannel}
                 >
-                  {channelListType.map((type) => (
-                    <option key={type.id} value={type.id}>
-                      {type.name}
-                    </option>
-                  ))}
+                  {channelListType &&
+                    channelListType.map((channel_type_lbl) => (
+                      <option key={channel_type_lbl.id} value={channel_type_lbl.id}>
+                        {channel_type_lbl.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.type && validation.errors.type ? (
                   <FormFeedback type="invalid">

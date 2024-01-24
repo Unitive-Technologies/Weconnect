@@ -324,7 +324,7 @@ const ChannelList = (props) => {
     ];
   };
 
-  console.log("View in channel List Type" + channelListType)
+  console.log("View in Channel List Type " + channelListType)
 
   return (
     <React.Fragment>

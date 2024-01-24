@@ -19,7 +19,7 @@ import { useDispatch } from "react-redux";
 import CasList from "./CasList";
 
 const AddNewChannelList = (props) => {
-  const { isOpen, toggleAddModal, channelListBroadcaster, channelListStatus, channelListType, channelListDefinition, channelListGenre, channelListCascode, channelListLanguage, } = props;
+  const { isOpen, toggleAddModal, channelListBroadcaster, channelListStatus, channelListType, channelListDefinition, channelListGenre, channelListLanguage, } = props;
   const dispatch = useDispatch();
 
   const [casCodeList, setCasCodeList] = useState([]);
@@ -309,7 +309,7 @@ const AddNewChannelList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.channel_type_lbl || ""}
                 >
-                  {channelListType.map((channel_type_lbl) => (
+                  {channelListType && channelListType.map((channel_type_lbl) => (
                     <option key={channel_type_lbl.id} value={channel_type_lbl.id}>
                       {channel_type_lbl.name}
                     </option>
@@ -524,7 +524,6 @@ const AddNewChannelList = (props) => {
                 >
                   Reset
                 </button>
-
                 <button
                   type="button"
                   className="btn btn-outline-danger"
