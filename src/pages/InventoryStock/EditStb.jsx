@@ -46,6 +46,7 @@ const EditStb = (props) => {
       dispatch(onUpdateInventoryStockStb(updatedStb));
       dispatch(onGetInventoryStockStb());
       validation.resetForm();
+      toggle();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -71,7 +72,6 @@ const EditStb = (props) => {
           onSubmit={(e) => {
             e.preventDefault();
             validation.handleSubmit();
-            // toggle();
             return false;
           }}
         >
