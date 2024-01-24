@@ -83,7 +83,8 @@ export const GET_SCHEDULECUSTOMERNOTIFICATION_OSD =
 export const ADD_NEW_SCHEDULECUSTOMERNOTIFICATION =
   "/schedule-notification?vr=web1.0";
 
-export const GET_SCHEDULEDNOTIFICATION = "/schedulednotificationlist";
+export const GET_SCHEDULEDNOTIFICATION =
+  "/schedule-announcement?expand=status_lbl,created_by_lbl,created_at_lbl,user_count,announcement_templ_lbl,start_time_lbl,end_time_lbl,broadcast_status,broadcast_status_lbl&filter[hide_expire]=1&page=1&per-page=50&vr=web1.0";
 export const GET_STATEUSERS =
   "/administrative-division?filter[type]=1&expand=created_by_lbl,status_lbl&page=1&per-page=50&vr=web1.0";
 export const getStateUsersUrl = (currPage, perPage) => {
