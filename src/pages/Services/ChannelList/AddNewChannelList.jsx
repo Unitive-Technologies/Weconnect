@@ -19,7 +19,7 @@ import { useDispatch } from "react-redux";
 import CasList from "./CasList";
 
 const AddNewChannelList = (props) => {
-  const { isOpen, toggleAddModal, channelListBroadcaster, channelListStatus, channelListType, channelListDefinition, channelListGenre, channelListLanguage, } = props;
+  const { isOpen, toggleAddModal, channelListBroadcaster, channelListStatus, channelListType, channelListDefinition, channelListGenre, channelListCascode, channelListLanguage, } = props;
   const dispatch = useDispatch();
 
   const [casCodeList, setCasCodeList] = useState([]);
@@ -35,7 +35,7 @@ const AddNewChannelList = (props) => {
       name: "",
       description: "",
       definition: "",
-      type: "",
+      isFta: "",
       broadcaster: "",
       genre: "",
       language: "",
@@ -43,7 +43,7 @@ const AddNewChannelList = (props) => {
       rate: "",
       status: "",
       cas: "",
-      channel_type_lbl: "",
+      // type: "",
       cascode: "",
       serviceid: "",
       created_by: "Admin",
@@ -54,8 +54,8 @@ const AddNewChannelList = (props) => {
       name: Yup.string().required("Enter channel name"),
       description: Yup.string().required("Enter description"),
       definition: Yup.string().required("Enter channel definition"),
-      type: Yup.string().required("Enter channel type"),
-      channel_type_lbl: Yup.string().required("Enter channel type"),
+      isFta: Yup.string().required("Enter channel type"),
+      // type: Yup.string().required("Enter channel type"),
       broadcaster: Yup.string().required("select broadcaster"),
       genre: Yup.string().required("Enter genre"),
       language: Yup.string().required("Select language"),
@@ -73,13 +73,13 @@ const AddNewChannelList = (props) => {
         name: values["name"],
         description: values["description"],
         definition: values["definition"],
-        type: values["type"],
+        isFta: values["isFta"],
         broadcaster: values["broadcaster"],
         genre: values["genre"],
         language: values["language"],
         isalacarte: values["isalacarte"],
         rate: values["rate"],
-        channel_type_lbl: values["channel_type_lbl"],
+        // type: values["type"],
         status: values["status"],
         cas: values["cas"],
         casCodes: casCodeList,
@@ -301,23 +301,24 @@ const AddNewChannelList = (props) => {
                   Type<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="channel_type_lbl"
+                  name="type"
                   type="select"
                   placeholder="Select type"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.channel_type_lbl || ""}
+                  value={validation.values.isFta || ""}
                 >
-                  {channelListType && channelListType.map((channel_type_lbl) => (
-                    <option key={channel_type_lbl.id} value={channel_type_lbl.id}>
-                      {channel_type_lbl.name}
+                  <option value="">Select type</option>
+                  {channelListType && channelListType.map((isFta) => (
+                    <option key={isFta.id} value={isFta.id}>
+                      {isFta.name}
                     </option>
                   ))}
                 </Input>
-                {validation.touched.type && validation.errors.type ? (
+                {validation.touched.isFta && validation.errors.isFta ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.type}
+                    {validation.errors.isFta}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -508,7 +509,7 @@ const AddNewChannelList = (props) => {
             }}
           >
             <Col sm="12">
-              <CasList isOpen={handleUpdateCasList} data={casCodeList} updateList={handleUpdateCasList} />
+              <CasList isOpen={handleUpdateCasList} data={casCodeList} updateList={handleUpdateCasList} channelListCascode={channelListCascode} />
             </Col>
           </Row>
           <Row>
@@ -550,6 +551,7 @@ AddNewChannelList.propTypes = {
   channelListDefinition: PropTypes.array,
   channelListGenre: PropTypes.array,
   channelListLanguage: PropTypes.array,
+  channelListCascode: PropTypes.array,
   channelListStatus: PropTypes.array,
   channelListType: PropTypes.array,
 };

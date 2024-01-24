@@ -195,7 +195,9 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
                   placeholder="Select CAS"
                   className="form-select"
                   onChange={handleChange}
+
                 >
+                  <option value="">select cascode</option>
                   {channelListCascode && channelListCascode.map((options) => (
                     <option key={options.id} value={options.id}>
                       {options.name}

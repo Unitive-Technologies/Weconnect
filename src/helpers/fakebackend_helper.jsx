@@ -503,6 +503,7 @@ export const getChannelListType = () => get(url.GET_CHANNELLIST_TYPE);
 export const getChannelListBroadcaster = () =>
   get(url.GET_CHANNELLIST_BROADCASTER);
 export const getChannelListCascode = () => get(url.GET_CHANNELLIST_CASCODE);
+// export const getChannelListCascode = () => get(url.GET_CHANNELLIST_CASCODE);
 export const getChannelListGenre = () => get(url.GET_CHANNELLIST_GENRE);
 export const getChannelListLanguage = () => get(url.GET_CHANNELLIST_LANGUAGE);
 export const updateChannelList = (channelList, id) =>

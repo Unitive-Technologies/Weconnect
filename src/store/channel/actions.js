@@ -23,9 +23,9 @@ import {
   GET_CHANNELLIST_LANGUAGE,
   GET_CHANNELLIST_LANGUAGE_FAIL,
   GET_CHANNELLIST_LANGUAGE_SUCCESS,
-  GET_CAS_SOURCE,
-  GET_CAS_SOURCE_SUCCESS,
-  GET_CAS_SOURCE_FAIL,
+  // GET_CAS_SOURCE,
+  // GET_CAS_SOURCE_SUCCESS,
+  // GET_CAS_SOURCE_FAIL,
   ADD_NEW_CHANNELLIST,
   ADD_CHANNELLIST_SUCCESS,
   ADD_CHANNELLIST_FAIL,
@@ -43,19 +43,19 @@ export const getChannelList = () => ({
   type: GET_CHANNELLIST,
 });
 
-export const getCASSource = () => ({
-  type: GET_CAS_SOURCE,
-});
+// export const getCASSource = () => ({
+//   type: GET_CAS_SOURCE,
+// });
 
-export const getCASSourceSuccess = (casSource) => ({
-  type: GET_CAS_SOURCE_SUCCESS,
-  payload: casSource,
-});
+// export const getCASSourceSuccess = (casSource) => ({
+//   type: GET_CAS_SOURCE_SUCCESS,
+//   payload: casSource,
+// });
 
-export const getCASSourceFail = (error) => ({
-  type: GET_CAS_SOURCE_FAIL,
-  payload: error,
-});
+// export const getCASSourceFail = (error) => ({
+//   type: GET_CAS_SOURCE_FAIL,
+//   payload: error,
+// });
 
 export const getChannelListSuccess = (channellist) => {
   console.log("Received Channel List:", channellist);
@@ -142,13 +142,18 @@ export const getChannelListType = () => ({
   type: GET_CHANNELLIST_TYPE,
 });
 
-export const getChannelListTypeSuccess = (channellistType) => {
-  console.log("Received Channel List Type:", channellistType);
-  return {
-    type: GET_CHANNELLIST_TYPE_SUCCESS,
-    payload: channellistType,
-  };
-};
+// export const getChannelListTypeSuccess = (channellistType) => {
+//   console.log("Received Channel List Type:", channellistType);
+//   return {
+//     type: GET_CHANNELLIST_TYPE_SUCCESS,
+//     payload: channellistType,
+//   };
+// };
+
+export const getChannelListTypeSuccess = (channellistType) => ({
+  type: GET_CHANNELLIST_TYPE_SUCCESS,
+  payload: channellistType,
+});
 
 export const getChannelListTypeFail = (error) => ({
   type: GET_CHANNELLIST_TYPE_FAIL,

@@ -210,7 +210,7 @@ export const GET_CHANNELLIST_BROADCASTER =
 export const GET_CHANNELLIST_LANGUAGE =
   "/language/list?fields=id,name&vr=web1.0";
 export const UPDATE_CHANNELLIST = (id) => `/channel/${id}?vr=web1.0`;
-export const getCASSourceUrl = () => "/casvendor/list?fields=id,name&vr=web1.0";
+// export const getCASSourceUrl = () => "/casvendor/list?fields=id,name&vr=web1.0";
 export const getChannelListUrl = (currPage, perPage) => {
   console.log("current page in Channel List url - ", currPage, perPage);
   return `/channel?expand=created_by_lbl,broadcaster_lbl,genre_lbl,language_lbl,channel_type_lbl,isAlacarte_lbl,status_lbl,isFta_lbl,isNCF_lbl&sort=name&page=${currPage}&per-page=${perPage}&vr=web1.0`;

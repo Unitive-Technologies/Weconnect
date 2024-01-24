@@ -333,9 +333,9 @@ const ViewChannel = (props) => {
                       </option>
                     ))}
                 </Input>
-                {validation.touched.type && validation.errors.type ? (
+                {validation.touched.channel_type_lbl && validation.errors.channel_type_lbl ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.type}
+                    {validation.errors.channel_type_lbl}
                   </FormFeedback>
                 ) : null}
               </div>

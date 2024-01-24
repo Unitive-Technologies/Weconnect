@@ -34,7 +34,7 @@ import {
   getChannelListBroadcaster as onGetChannelListBroadcaster,
   getChannelListLanguage as onGetChannelListLanguage,
   getChannelList as onGetChannelList,
-  getCASSource as onGetCASSource,
+  // getCASSource as onGetCASSource,
 } from "/src/store/channel/actions";
 
 //redux
@@ -256,8 +256,8 @@ const ChannelList = (props) => {
       dispatch(onGetChannelListDefinition());
       dispatch(onGetChannelListGenre());
       dispatch(onGetChannelListLanguage());
-      dispatch(onGetChannelListCascode());
-      dispatch(onGetCASSource());
+      dispatch(onGetChannelListType());
+      // dispatch(onGetCASSource());
     }
   }, [dispatch, channel]);
 

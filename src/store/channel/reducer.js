@@ -37,9 +37,9 @@ import {
   UPDATE_CHANNELLIST_SUCCESS,
   UPDATE_CHANNELLIST_FAIL,
   UPDATE_CHANNELLIST_CURRENT_PAGE,
-  GET_CAS_SOURCE,
-  GET_CAS_SOURCE_SUCCESS,
-  GET_CAS_SOURCE_FAIL,
+  // GET_CAS_SOURCE,
+  // GET_CAS_SOURCE_SUCCESS,
+  // GET_CAS_SOURCE_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -72,23 +72,23 @@ const ChannelList = (state = INIT_STATE, action) => {
         : state;
 
 
-    case GET_CAS_SOURCE:
-      return {
-        ...state,
-        loading: true,
-      };
-    case GET_CAS_SOURCE_SUCCESS:
-      return {
-        ...state,
-        casSource: action.payload.data,
-        loading: false,
-      };
-    case GET_CAS_SOURCE_FAIL:
-      return {
-        ...state,
-        error: action.payload,
-        loading: false,
-      };
+    // case GET_CAS_SOURCE:
+    //   return {
+    //     ...state,
+    //     loading: true,
+    //   };
+    // case GET_CAS_SOURCE_SUCCESS:
+    //   return {
+    //     ...state,
+    //     casSource: action.payload.data,
+    //     loading: false,
+    //   };
+    // case GET_CAS_SOURCE_FAIL:
+    //   return {
+    //     ...state,
+    //     error: action.payload,
+    //     loading: false,
+    //   };
 
     case GET_CHANNELLIST:
       return {

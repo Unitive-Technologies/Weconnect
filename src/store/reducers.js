@@ -67,6 +67,7 @@ import allottedstb from "./inventoryallotted/reducer";
 import allottedpairing from "./inventoryallotted/reducer";
 import inventorytrack from "./inventorytrack/reducer";
 import inventorytrackaction from "./inventorytrack/reducer";
+import channellistType from "./channel/reducer"
 
 const rootReducer = combineReducers({
   // public
@@ -88,6 +89,7 @@ const rootReducer = combineReducers({
   broadCasters,
   genreList,
   languageList,
+  channellistType,
   channelList,
   broadcasterBouquetList,
   packageList,

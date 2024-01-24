@@ -11,7 +11,7 @@ import {
   GET_CHANNELLIST_TYPE,
   UPDATE_CHANNELLIST,
   ADD_NEW_CHANNELLIST,
-  GET_CAS_SOURCE,
+  // GET_CAS_SOURCE,
 } from "./actionTypes";
 
 import {
@@ -32,9 +32,9 @@ import {
   getChannelListDefinitionFail,
   getChannelListCascodeSuccess,
   getChannelListCascodeFail,
-  getCASSource,
-  getCASSourceSuccess,
-  getCASSourceFail,
+  // getCASSource,
+  // getCASSourceSuccess,
+  // getCASSourceFail,
   addChannelListSuccess,
   addChannelListFail,
   updateChannelListSuccess,
@@ -53,21 +53,21 @@ import {
   getChannelListBroadcaster,
   updateChannelList,
   addNewChannelList,
-  getCASSourceList,
+  // getCASSourceList,
 } from "../../helpers/fakebackend_helper";
 
 export const getChannelListStore = (state) => state.channelList;
 
-function* fetchCASSource() {
-  try {
-    const response = yield call(getCASSourceList);
-    console.log("Response from CAS Source API -", response);
-    yield put(getCASSourceSuccess(response));
-  } catch (error) {
-    console.error("Error fetching CAS Source:", error);
-    yield put(getCASSourceFail(error));
-  }
-}
+// function* fetchCASSource() {
+//   try {
+//     const response = yield call(getCASSourceList);
+//     console.log("Response from CAS Source API -", response);
+//     yield put(getCASSourceSuccess(response));
+//   } catch (error) {
+//     console.error("Error fetching CAS Source:", error);
+//     yield put(getCASSourceFail(error));
+//   }
+// }
 
 function* fetchChannelList() {
   try {
@@ -177,7 +177,7 @@ function* fetchChannelListStatus() {
 function* fetchChannelListType() {
   try {
     const response = yield call(getChannelListType);
-    console.log("Channel List Genre response:" + JSON.stringify(response));
+    console.log("Channel List Type response:" + JSON.stringify(response));
     yield put(getChannelListTypeSuccess(response.data));
   } catch (error) {
     console.log("Fetching error in channel list type" + error)
@@ -185,11 +185,10 @@ function* fetchChannelListType() {
   }
 }
 
-
 function* channelListSaga() {
   yield takeEvery(GET_CHANNELLIST, fetchChannelList);
   yield takeEvery(ADD_NEW_CHANNELLIST, onAddNewChannelList);
-  yield takeEvery(GET_CAS_SOURCE, fetchCASSource);
+  // yield takeEvery(GET_CAS_SOURCE, fetchCASSource);
   yield takeEvery(UPDATE_CHANNELLIST, onUpdateChannelList);
   yield takeEvery(GET_CHANNELLIST_BROADCASTER, fetchChannelListBroadcaster);
   yield takeEvery(GET_CHANNELLIST_DEFINITION, fetchChannelListDefinition);
