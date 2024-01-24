@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import { createSelector } from "reselect";
 import { useSelector, useDispatch } from "react-redux";
 
-const CasList = ({ data, updateList }) => {
+const CasList = ({ data, updateList, handleUpdateCasList }) => {
   const selectChannelState = (state) => state.channelList;
   const ChannelProperties = createSelector(
     selectChannelState,
@@ -152,11 +152,13 @@ const CasList = ({ data, updateList }) => {
   const [serviceId, setServiceId] = useState("");
 
   const updateCasList = () => {
-    updateList([
-      ...data,
-      { casLabel: casSelection, casCode: casCode, serviceId: serviceId },
-    ]);
+    // Check if data is an array before spreading
+    const newData = Array.isArray(data) ? [...data] : [];
+    newData.push({ cas_lbl: casSelection, cascode: casCode, serviceid: serviceId });
+    updateList(newData);
   };
+
+
 
   const handleChange = (e) => {
     // Handle change for different input fields
@@ -196,9 +198,13 @@ const CasList = ({ data, updateList }) => {
                   className="form-select"
                   onChange={handleChange}
                 >
+<<<<<<< Updated upstream
                   {console.log(casSource)}
 
                   {casSource.map((options) => (
+=======
+                  {casSource && casSource.map((options) => (
+>>>>>>> Stashed changes
                     <option key={options.id} value={options.id}>
                       {options.name}
                     </option>
