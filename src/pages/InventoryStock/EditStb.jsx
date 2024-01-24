@@ -14,10 +14,8 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addCity as onAddCity } from "/src/store/city/actions";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateInventoryStockStb as onUpdateInventoryStockStb } from "/src/store/inventorystock/actions";
-import { createSelector } from "reselect";
 
 const EditStb = (props) => {
   const { isOpen, stbData, toggle } = props;
@@ -86,7 +84,7 @@ const EditStb = (props) => {
                       ? true
                       : false
                   }
-                  // disabled
+                  disabled
                 />
                 {validation.touched.stbno && validation.errors.stbno ? (
                   <FormFeedback type="invalid">
