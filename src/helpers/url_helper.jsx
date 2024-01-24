@@ -515,3 +515,10 @@ export const getInventoryTrackUrl = (currPage, perPage) => {
 };
 
 export const GET_INVENTORYTRACK_ACTION = "/list/trackAction?vr=web1.0";
+export const GET_INVENTORYSTOCK_SC_CASTYPE =
+  "/casvendor/list?fields=id,name&vr=web1.0";
+export const GET_INVENTORYSTOCK_SC_WAREHOUSE =
+  "/warehouse/list?fields=id,name&filter[type]=0&filter[status]=1&vr=web1.0";
+export const GET_INVENTORYSTOCK_SC_STATETYPE = "/list/stateType?vr=web1.0";
+export const GET_INVENTORYSTOCK_SC_INVENTORYSTATE =
+  "/inventory-state/list?fields=id,name&filter[status]=1&filter[state_type]=-1&vr=web1.0";

@@ -16,12 +16,24 @@ import {
   UPDATE_INVENTORYSTOCK_STB,
   UPDATE_INVENTORYSTOCK_STB_SUCCESS,
   UPDATE_INVENTORYSTOCK_STB_FAIL,
+  GET_INVENTORYSTOCK_SC_CASTYPE_SUCCESS,
+  GET_INVENTORYSTOCK_SC_CASTYPE_FAIL,
+  GET_INVENTORYSTOCK_SC_INVENTORYSTATE_SUCCESS,
+  GET_INVENTORYSTOCK_SC_INVENTORYSTATE_FAIL,
+  GET_INVENTORYSTOCK_SC_WAREHOUSE_SUCCESS,
+  GET_INVENTORYSTOCK_SC_WAREHOUSE_FAIL,
+  GET_INVENTORYSTOCK_SC_STATETYPE_SUCCESS,
+  GET_INVENTORYSTOCK_SC_STATETYPE_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
   stocksmartcard: [],
   stockstb: [],
   stockpairing: [],
+  stocksccastype: [],
+  stockscwarehouse: [],
+  stockscstatetype: [],
+  stockscinventorystate: [],
   pagination: {},
   error: {},
   loading: false,
@@ -112,6 +124,58 @@ const InventoryStock = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
         loading: false,
+      };
+
+    case GET_INVENTORYSTOCK_SC_INVENTORYSTATE_SUCCESS:
+      return {
+        ...state,
+        stockscinventorystate: action.payload,
+        loading: false,
+      };
+
+    case GET_INVENTORYSTOCK_SC_INVENTORYSTATE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_INVENTORYSTOCK_SC_WAREHOUSE_SUCCESS:
+      return {
+        ...state,
+        stockscwarehouse: action.payload,
+        loading: false,
+      };
+
+    case GET_INVENTORYSTOCK_SC_WAREHOUSE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_INVENTORYSTOCK_SC_STATETYPE_SUCCESS:
+      return {
+        ...state,
+        stockscstatetype: action.payload,
+        loading: false,
+      };
+
+    case GET_INVENTORYSTOCK_SC_STATETYPE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_INVENTORYSTOCK_SC_CASTYPE_SUCCESS:
+      return {
+        ...state,
+        stocksccastype: action.payload,
+        loading: false,
+      };
+
+    case GET_INVENTORYSTOCK_SC_CASTYPE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
       };
 
     default:

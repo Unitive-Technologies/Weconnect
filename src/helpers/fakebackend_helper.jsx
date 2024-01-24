@@ -739,6 +739,14 @@ export const getInventoryTrack = async (currentPage, perPage = 20) => {
 };
 
 export const getInventoryTrackAction = () => get(url.GET_INVENTORYTRACK_ACTION);
+export const getInventoryStockScCastype = () =>
+  get(url.GET_INVENTORYSTOCK_SC_CASTYPE);
+export const getInventoryStockScStatetype = () =>
+  get(url.GET_INVENTORYSTOCK_SC_STATETYPE);
+export const getInventoryStockScInventorystate = () =>
+  get(url.GET_INVENTORYSTOCK_SC_INVENTORYSTATE);
+export const getInventoryStockScWarehouse = () =>
+  get(url.GET_INVENTORYSTOCK_SC_WAREHOUSE);
 
 export const addNewUser = (user) => post(url.ADD_NEW_USER, user);
 
