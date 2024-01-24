@@ -99,7 +99,7 @@ export const getChannelListDefinitionSuccess = (channellistDefinition) => {
   };
 };
 
-export const getChannelDefinitionStatusFail = (error) => ({
+export const getChannelListDefinitionFail = (error) => ({
   type: GET_CHANNELLIST_DEFINITION_FAIL,
   payload: error,
 });
@@ -116,7 +116,7 @@ export const getChannelListLanguageSuccess = (channellistLanguage) => {
   };
 };
 
-export const getChannelDefinitionLanguageFail = (error) => ({
+export const getChannelListLanguageFail = (error) => ({
   type: GET_CHANNELLIST_LANGUAGE_FAIL,
   payload: error,
 });
@@ -133,7 +133,7 @@ export const getChannelListBroadcasterSuccess = (channellistBroadcaster) => {
   };
 };
 
-export const getChannelDefinitionBroadcasterFail = (error) => ({
+export const getChannelListBroadcasterFail = (error) => ({
   type: GET_CHANNELLIST_BROADCASTER_FAIL,
   payload: error,
 });
@@ -150,7 +150,7 @@ export const getChannelListTypeSuccess = (channellistType) => {
   };
 };
 
-export const getChannelDefinitionTypeFail = (error) => ({
+export const getChannelListTypeFail = (error) => ({
   type: GET_CHANNELLIST_TYPE_FAIL,
   payload: error,
 });

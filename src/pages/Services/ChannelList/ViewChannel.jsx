@@ -16,12 +16,12 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addNewChannelList as onAddNewChannelList } from "/src/store/channel/actions";
+import { updateChannelList as onUpdateChannelList, addNewChannelList as onAddNewChannelList } from "/src/store/channel/actions";
 import { useDispatch } from "react-redux";
 import CasList from "./CasList";
 
 const ViewChannel = (props) => {
-  const { isOpen, handleViewChannel, channel } = props;
+  const { isOpen, resetSelection, toggleViewModal, channel, channelListBroadcaster, channelListStatus, channelListType, channelListDefinition, channelListGenre, channelListCascode, channelListLanguage } = props;
   const dispatch = useDispatch();
   const [showEditChannel, setShowEditChannel] = useState(false);
   const validation = useFormik({
@@ -65,8 +65,8 @@ const ViewChannel = (props) => {
       serviceid: Yup.string().required("serviceid"),
     }),
     onSubmit: (values) => {
-      const newChannelList = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
+      const updateChannelList = {
+        id: values["id"],
         code: values["code"],
         logo: values["logo"],
         name: values[" name"],
@@ -85,11 +85,12 @@ const ViewChannel = (props) => {
         created_at: new Date(),
         created_by: values["created_by"],
       };
-      console.log("newChannelList:" + newChannelList);
+      console.log("newChannelList:" + updateChannelList);
       // save new user
-      dispatch(onAddNewChannelList(newChannelList));
+      dispatch(onUpdateChannelList(updateChannelList));
       validation.resetForm();
-      handleViewChannel();
+      toggleViewModal();
+      resetSelection();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -98,7 +99,8 @@ const ViewChannel = (props) => {
 
   const handleCancel = () => {
     setShowEditChannel(false);
-    handleViewChannel();
+    resetSelection();
+    toggleViewModal();
   };
 
   return (
@@ -296,9 +298,11 @@ const ViewChannel = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.definition || ""}
                 >
-                  <option value="101">Select channel definition</option>
-                  <option value="102">Standard Definition(SD)</option>
-                  <option value="103">High Definition(HD)</option>
+                  {channelListDefinition.map((definition) => (
+                    <option key={definition.id} value={definition.id}>
+                      {definition.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.definition &&
                   validation.errors.definition ? (
@@ -323,9 +327,11 @@ const ViewChannel = (props) => {
                   value={validation.values.type || ""}
                   disabled={!showEditChannel}
                 >
-                  <option value="104">Select channel type</option>
-                  <option value="105">Pay Channel</option>
-                  <option value="106">FTA</option>
+                  {channelListType.map((type) => (
+                    <option key={type.id} value={type.id}>
+                      {type.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.type && validation.errors.type ? (
                   <FormFeedback type="invalid">
@@ -351,9 +357,11 @@ const ViewChannel = (props) => {
                   value={validation.values.broadcaster || ""}
                   disabled={!showEditChannel}
                 >
-                  <option value="110">Select broadcaster</option>
-                  <option value="111">Lex Sportal Vision Pvt Ltd.</option>
-                  <option value="112">Jangama Media Pvt Ltd.</option>
+                  {channelListBroadcaster.map((broadcaster) => (
+                    <option key={broadcaster.id} value={broadcaster.id}>
+                      {broadcaster.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.broadcaster &&
                   validation.errors.broadcaster ? (
@@ -378,10 +386,11 @@ const ViewChannel = (props) => {
                   value={validation.values.genre || ""}
                   disabled={!showEditChannel}
                 >
-                  <option value="101">Select genre</option>
-                  <option value="102">TRAVEL</option>
-                  <option value="103">TELUGU NEWS</option>
-                  <option value="103">TELUGU GEC</option>
+                  {channelListGenre.map((genre) => (
+                    <option key={genre.id} value={genre.id}>
+                      {genre.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.genre && validation.errors.genre ? (
                   <FormFeedback type="invalid">
@@ -404,7 +413,13 @@ const ViewChannel = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.language || ""}
                   disabled={!showEditChannel}
-                ></Input>
+                >
+                  {channelListLanguage.map((language) => (
+                    <option key={language.id} value={language.id}>
+                      {language.name}
+                    </option>
+                  ))}
+                </Input>
                 {validation.touched.language && validation.errors.language ? (
                   <FormFeedback type="invalid">
                     {validation.errors.language}
@@ -471,9 +486,11 @@ const ViewChannel = (props) => {
                   value={validation.values.status || ""}
                   disabled={!showEditChannel}
                 >
-                  <option value="101">Select Status</option>
-                  <option value="102">Active</option>
-                  <option value="103">In-Active</option>
+                  {channelListStatus.map((status) => (
+                    <option key={status.id} value={status.id}>
+                      {status.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
@@ -574,8 +591,16 @@ const ViewChannel = (props) => {
 };
 
 ViewChannel.propTypes = {
-  toggle: PropTypes.func,
+  toggleViewModal: PropTypes.func,
+  resetSelection: PropTypes.func,
   isOpen: PropTypes.bool,
+  channel: PropTypes.object,
+  channelListBroadcaster: PropTypes.array,
+  channelListDefinition: PropTypes.array,
+  channelListGenre: PropTypes.array,
+  channelListLanguage: PropTypes.array,
+  channelListStatus: PropTypes.array,
+  channelListType: PropTypes.array,
 };
 
 export default ViewChannel;

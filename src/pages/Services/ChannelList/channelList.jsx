@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
 import Spinners from "../../../components/Common/Spinner";
-import { Card, CardBody, Col, Container, Row } from "reactstrap";
+import { Card, CardBody, Col, Container, Row, Spinner } from "reactstrap";
 
 import {
   Code,
@@ -26,6 +26,13 @@ import Breadcrumbs from "/src/components/Common/Breadcrumb";
 
 import {
   goToPage as onGoToPage,
+  getChannelListStatus as onGetChannelListStatus,
+  getChannelListDefinition as onGetChannelListDefinition,
+  getChannelListType as onGetChannelListType,
+  getChannelListCascode as onGetChannelListCascode,
+  getChannelListGenre as onGetChannelListGenre,
+  getChannelListBroadcaster as onGetChannelListBroadcaster,
+  getChannelListLanguage as onGetChannelListLanguage,
   getChannelList as onGetChannelList,
   getCASSource as onGetCASSource,
 } from "/src/store/channel/actions";
@@ -52,6 +59,13 @@ const ChannelList = (props) => {
     selectChannelState,
     (channelList) => ({
       channel: channelList.channelList,
+      channelListStatus: channelList.channelListStatus,
+      channelListDefinition: channelList.channelListDefinition,
+      channelListType: channelList.channelListType,
+      channelListCascode: channelList.channelListCascode,
+      channelListGenre: channelList.channelListGenre,
+      channelListBroadcaster: channelList.channelListBroadcaster,
+      channelListLanguage: channelList.channelListLanguage,
       loading: channelList.loading,
       totalPage: channelList.totalPages,
       totalCount: channelList.totalCount,
@@ -60,13 +74,13 @@ const ChannelList = (props) => {
     })
   );
 
-  const { channel, loading, totalPage, totalCount, pageSize, currentPage } =
+  const { channel, channelListBroadcaster, channelListCascode, channelListDefinition, channelListGenre, channelListLanguage, channelListStatus, channelListType, loading, totalPage, totalCount, pageSize, currentPage } =
     useSelector(ChannelProperties);
 
   useEffect(() => {
     // console.log("Channel List data in component:", channel);
   }, [channel]);
-  const [isLoading, setLoading] = useState(loading);
+
   const [viewChannelList, setViewChannelList] = useState(false);
   const [showAddNewChannelList, setShowAddNewChannelList] = useState(false);
   const [showUploadChannelList, setShowUploadChannelList] = useState(false);
@@ -111,7 +125,7 @@ const ChannelList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const channelData = cellProps.row.original;
-                  handleViewChannel(channelData);
+                  toggleViewModal(channelData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -236,6 +250,13 @@ const ChannelList = (props) => {
   useEffect(() => {
     if (channel && !channel.length) {
       dispatch(onGetChannelList());
+      dispatch(onGetChannelListStatus());
+      dispatch(onGetChannelListCascode());
+      dispatch(onGetChannelListBroadcaster());
+      dispatch(onGetChannelListDefinition());
+      dispatch(onGetChannelListGenre());
+      dispatch(onGetChannelListLanguage());
+      dispatch(onGetChannelListCascode());
       dispatch(onGetCASSource());
     }
   }, [dispatch, channel]);
@@ -246,15 +267,15 @@ const ChannelList = (props) => {
     dispatch(onGetChannelList());
   };
 
-  const handleAddChannel = () => {
+  const toggleAddModal = () => {
     setShowAddNewChannelList(!showAddNewChannelList);
   };
 
-  const handleUploadChannel = () => {
+  const toggleUploadModal = () => {
     setShowUploadChannelList(!showUploadChannelList);
   };
 
-  const handleUpdateChannel = () => {
+  const toggleUpdateModal = () => {
     setShowBulkUpdateChannelList(!showBulkUpdateChannelList);
   };
 
@@ -263,9 +284,14 @@ const ChannelList = (props) => {
   };
 
   const [viewChanel, setViewChanel] = useState({});
-  const handleViewChannel = (channelData) => {
+
+  const toggleViewModal = (channelData) => {
     setViewChannelList(!viewChannelList);
     setViewChanel(channelData);
+  };
+
+  const resetSelection = () => {
+    setViewChanel({});
   };
   const keyField = "id";
 
@@ -302,15 +328,22 @@ const ChannelList = (props) => {
     <React.Fragment>
       <AddNewChannelList
         isOpen={showAddNewChannelList}
-        handleAddChannel={handleAddChannel}
+        toggleAddModal={toggleAddModal}
+        channelListBroadcaster={channelListBroadcaster}
+        channelListCascode={channelListCascode}
+        channelListDefinition={channelListDefinition}
+        channelListGenre={channelListGenre}
+        channelListLanguage={channelListLanguage}
+        channelListStatus={channelListStatus}
+        channelListType={channelListType}
       />
       <UploadChannelList
         isOpen={showUploadChannelList}
-        handleUploadChannel={handleUploadChannel}
+        toggleUploadModal={toggleUploadModal}
       />
       <BulkUpdateChannelList
         isOpen={showBulkUpdateChannelList}
-        handleUpdateChannel={handleUpdateChannel}
+        toggleUpdateModal={toggleUpdateModal}
       />
       <BulkUpdateCasCodeChannelList
         isOpen={showBulkUpdateCasCodeChannelList}
@@ -318,16 +351,29 @@ const ChannelList = (props) => {
       />
       <ViewChannel
         isOpen={viewChannelList}
-        handleViewChannel={handleViewChannel}
+        toggleViewModal={toggleViewModal}
         channel={viewChanel}
+        channelListBroadcaster={channelListBroadcaster}
+        channelListCascode={channelListCascode}
+        channelListDefinition={channelListDefinition}
+        channelListGenre={channelListGenre}
+        channelListLanguage={channelListLanguage}
+        channelListStatus={channelListStatus}
+        channelListType={channelListType}
+        resetSelection={resetSelection}
       />
 
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Services" breadcrumbItem="Channels" />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">
@@ -373,6 +419,18 @@ const ChannelList = (props) => {
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       goToPage={goToPage}
+                      toggleAddModal={() =>
+                        setShowAddNewChannelList(true)
+                      }
+                      toggleUploadModal={() =>
+                        setShowUploadChannelList(true)
+                      }
+                      handleUpdateCasCode={() =>
+                        setShowBulkUpdateCasCodeChannelList(true)
+                      }
+                      toggleUpdateModal={() =>
+                        setShowBulkUpdateChannelList(true)
+                      }
                     />
                   </CardBody>
                 </Card>

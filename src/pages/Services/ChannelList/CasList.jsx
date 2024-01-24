@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import { createSelector } from "reselect";
 import { useSelector, useDispatch } from "react-redux";
 
-const CasList = ({ data, updateList, handleUpdateCasList }) => {
+const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) => {
   const selectChannelState = (state) => state.channelList;
   const ChannelProperties = createSelector(
     selectChannelState,
@@ -31,7 +31,7 @@ const CasList = ({ data, updateList, handleUpdateCasList }) => {
       {
         Header: "#",
         disableFilters: true,
-        filterable: true,
+        // filterable: true,
         Cell: (cellProps) => {
           const totalRows = cellProps.rows.length;
           const index = startIndex + cellProps.row.index + 1;
@@ -158,8 +158,6 @@ const CasList = ({ data, updateList, handleUpdateCasList }) => {
     updateList(newData);
   };
 
-
-
   const handleChange = (e) => {
     // Handle change for different input fields
     const { name, value } = e.target;
@@ -198,20 +196,15 @@ const CasList = ({ data, updateList, handleUpdateCasList }) => {
                   className="form-select"
                   onChange={handleChange}
                 >
-<<<<<<< Updated upstream
-                  {console.log(casSource)}
-
-                  {casSource.map((options) => (
-=======
                   {casSource && casSource.map((options) => (
->>>>>>> Stashed changes
                     <option key={options.id} value={options.id}>
                       {options.name}
                     </option>
-                  ))}
-                </Input>
-              </div>
-            </Col>
+                  ))
+                  }
+                </Input >
+              </div >
+            </Col >
             <div
               style={{
                 display: "flex",
@@ -257,7 +250,7 @@ const CasList = ({ data, updateList, handleUpdateCasList }) => {
                 </div>
               </Col>
             </div>
-          </Col>
+          </Col >
 
           <Col lg={6}>
             <TableContainer
@@ -273,9 +266,9 @@ const CasList = ({ data, updateList, handleUpdateCasList }) => {
               pagination="pagination pagination-rounded justify-content-end mt-4"
             />
           </Col>
-        </Row>
-      </CardBody>
-    </Card>
+        </Row >
+      </CardBody >
+    </Card >
   );
 };
 

@@ -14,12 +14,12 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addNewChannelList as onAddNewChannelList } from "/src/store/channel/actions";
+import { getChannelList as onGetChannelList, addNewChannelList as onAddNewChannelList } from "/src/store/channel/actions";
 import { useDispatch } from "react-redux";
 import CasList from "./CasList";
 
 const AddNewChannelList = (props) => {
-  const { isOpen, handleAddChannel } = props;
+  const { isOpen, toggleAddModal, channelListBroadcaster, channelListStatus, channelListType, channelListDefinition, channelListGenre, channelListCascode, channelListLanguage, } = props;
   const dispatch = useDispatch();
 
   const [casCodeList, setCasCodeList] = useState([]);
@@ -89,8 +89,9 @@ const AddNewChannelList = (props) => {
       console.log("newChannelList:" + newChannelList);
       // save new user
       dispatch(onAddNewChannelList(newChannelList));
+      dispatch(onGetChannelList());
       validation.resetForm();
-      handleAddChannel();
+      toggleAddModal();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -115,10 +116,10 @@ const AddNewChannelList = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleAddChannel}
+      toggle={toggleAddModal}
       size="xl"
     >
-      <ModalHeader tag="h4" toggle={handleAddChannel}>
+      <ModalHeader tag="h4" toggle={toggleAddModal}>
         Add New Channel
       </ModalHeader>
       <ModalBody>
@@ -281,9 +282,13 @@ const AddNewChannelList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.definition || ""}
                 >
-                  <option value="101">Select channel definition</option>
-                  <option value="102">Standard Definition(SD)</option>
-                  <option value="103">High Definition(HD)</option>
+                  <option value="">Select channel definition</option>
+                  {channelListDefinition &&
+                    channelListDefinition.map((definition) => (
+                      <option key={definition.id} value={definition.id}>
+                        {definition.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.definition &&
                   validation.errors.definition ? (
@@ -334,9 +339,13 @@ const AddNewChannelList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.broadcaster || ""}
                 >
-                  <option value="110">Select broadcaster</option>
-                  <option value="111">Lex Sportal Vision Pvt Ltd.</option>
-                  <option value="112">Jangama Media Pvt Ltd.</option>
+                  <option value="">Select Broadcaster</option>
+                  {channelListBroadcaster &&
+                    channelListBroadcaster.map((broadcaster) => (
+                      <option key={broadcaster.id} value={broadcaster.id}>
+                        {status.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.broadcaster &&
                   validation.errors.broadcaster ? (
@@ -360,10 +369,13 @@ const AddNewChannelList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.genre || ""}
                 >
-                  <option value="101">Select genre</option>
-                  <option value="102">TRAVEL</option>
-                  <option value="103">TELUGU NEWS</option>
-                  <option value="103">TELUGU GEC</option>
+                  <option value="">Select Genre</option>
+                  {channelListGenre &&
+                    channelListGenre.map((genre) => (
+                      <option key={genre.id} value={genre.id}>
+                        {genre.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.genre && validation.errors.genre ? (
                   <FormFeedback type="invalid">
@@ -385,7 +397,15 @@ const AddNewChannelList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.language || ""}
-                ></Input>
+                >
+                  <option value="">Select Language</option>
+                  {channelListLanguage &&
+                    channelListLanguage.map((language) => (
+                      <option key={language.id} value={language.id}>
+                        {language.name}
+                      </option>
+                    ))}
+                </Input>
                 {validation.touched.language && validation.errors.language ? (
                   <FormFeedback type="invalid">
                     {validation.errors.language}
@@ -449,9 +469,13 @@ const AddNewChannelList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
                 >
-                  <option value="101">Select Status</option>
-                  <option value="102">Active</option>
-                  <option value="103">In-Active</option>
+                  <option value="">Select Status</option>
+                  {channelListStatus &&
+                    channelListStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
@@ -492,7 +516,7 @@ const AddNewChannelList = (props) => {
             <Col>
               <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
-                  Save
+                  Create
                 </button>
                 <button
                   type="reset"
@@ -507,7 +531,7 @@ const AddNewChannelList = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    handleAddChannel();
+                    toggleAddModal();
                   }}
                 >
                   Cancel
@@ -522,8 +546,14 @@ const AddNewChannelList = (props) => {
 };
 
 AddNewChannelList.propTypes = {
-  toggle: PropTypes.func,
+  toggleAddModal: PropTypes.func,
   isOpen: PropTypes.bool,
+  channelListBroadcaster: PropTypes.array,
+  channelListDefinition: PropTypes.array,
+  channelListGenre: PropTypes.array,
+  channelListLanguage: PropTypes.array,
+  channelListStatus: PropTypes.array,
+  channelListType: PropTypes.array,
 };
 
 export default AddNewChannelList;
