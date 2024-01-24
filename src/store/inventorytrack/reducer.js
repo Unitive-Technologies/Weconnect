@@ -40,7 +40,7 @@ const InventoryTrack = (state = INIT_STATE, action) => {
         loading: true,
       };
     case GET_INVENTORYTRACK_SUCCESS:
-      console.log("Inventory track data in reducer:", action.payload);
+      // console.log("Inventory track data in reducer:", action.payload);
       return {
         ...state,
         inventorytrack: action.payload.data.data,

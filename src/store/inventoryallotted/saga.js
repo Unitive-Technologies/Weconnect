@@ -41,7 +41,7 @@ function* fetchInventoryAllottedStb() {
 function* fetchInventoryAllottedPairing() {
   try {
     let allottedpairingStore = yield select(getAllottedPairingStore);
-    console.log("Allotted pairing store: ", allottedpairingStore);
+    // console.log("Allotted pairing store: ", allottedpairingStore);
     const pageSize = allottedpairingStore.pageSize;
     const currentPage = allottedpairingStore.currentPage;
 
@@ -50,7 +50,7 @@ function* fetchInventoryAllottedPairing() {
       currentPage,
       pageSize
     );
-    console.log("Response from API -", response);
+    // console.log("Response from API -", response);
     // debugger;
     yield put(getInventoryAllottedPairingSuccess(response));
   } catch (error) {

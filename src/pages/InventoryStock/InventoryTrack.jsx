@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardBody, Col, Row } from "reactstrap";
-import TableContainer from "../../components/Common/TableContainer";
 import {
   getInventoryTrack as onGetInventoryTrack,
   goToPage as onGoToPage,
@@ -44,7 +43,6 @@ const InventoryTrack = (props) => {
   }, [dispatch]);
 
   const goToPage = (toPage) => {
-    console.log("[GOTO PAGE] Trigger to page - ", toPage);
     dispatch(onGoToPage(toPage));
     dispatch(onGetInventoryTrack());
   };

@@ -21,11 +21,11 @@ function* fetchInventoryTrack() {
     const currentPage = inventoryTrackStore.currentPage;
 
     const response = yield call(getInventoryTrack, currentPage, pageSize);
-    console.log("Response from API -", response);
+    // console.log("Response from API -", response);
     // debugger;
     yield put(getInventoryTrackSuccess(response));
   } catch (error) {
-    console.error("Error fetching inventory track list:", error);
+    // console.error("Error fetching inventory track list:", error);
     yield put(getInventoryTrackFail(error));
   }
 }

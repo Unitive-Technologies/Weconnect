@@ -61,10 +61,10 @@ function* fetchInventoryStockPairing() {
 function* onUpdateInventoryStockStb({ payload: stockstb }) {
   try {
     const response = yield call(updateInventoryStockStb, stockstb.id, stockstb);
-    console.log("Response data in saga: ", response);
+    // console.log("Response data in saga: ", response);
     yield put(updateInventoryStockStbSuccess(response.data));
   } catch (error) {
-    console.log("Error in update district: ", error);
+    // console.log("Error in update district: ", error);
     yield put(updateInventoryStockStbFail(error));
   }
 }

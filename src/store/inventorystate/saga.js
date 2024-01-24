@@ -35,7 +35,7 @@ const convertInventoryStateListObject = (inventorystatelist) => {
 function* fetchInventoryStateList() {
   try {
     const response = yield call(getInventoryStateList);
-    console.log("response:" + JSON.stringify(response));
+    // console.log("response:" + JSON.stringify(response));
     const inventoryStateList = convertInventoryStateListObject(response);
     yield put(getInventoryStateListSuccess(inventoryStateList));
   } catch (error) {
