@@ -21,6 +21,8 @@ import { createSelector } from "reselect";
 
 const EditStb = (props) => {
   const { isOpen, stbData, toggle } = props;
+
+  const dispatch = useDispatch();
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -28,14 +30,15 @@ const EditStb = (props) => {
     initialValues: {
       id: (stbData && stbData.id) || "",
       stbno: (stbData && stbData.stbno) || "",
+      stbno1: "",
     },
     validationSchema: Yup.object({
-      stbno: Yup.string().required("Enter New STB No."),
+      stbno1: Yup.string().required("Enter New STB No."),
     }),
     onSubmit: (values) => {
       const updatedStb = {
         id: values["id"],
-        stbno: values["stbno"],
+        stbno: values["stbno1"],
       };
       dispatch(onUpdateInventoryStockStb(updatedStb));
       validation.resetForm();
@@ -83,6 +86,7 @@ const EditStb = (props) => {
                       ? true
                       : false
                   }
+                  // disabled
                 />
                 {validation.touched.stbno && validation.errors.stbno ? (
                   <FormFeedback type="invalid">
@@ -97,21 +101,21 @@ const EditStb = (props) => {
                   New STB No.<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="name"
+                  name="stbno1"
                   type="text"
                   placeholder="Enter New STB No."
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.name || ""}
+                  value={validation.values.stbno1 || ""}
                   invalid={
-                    validation.touched.name && validation.errors.name
+                    validation.touched.stbno1 && validation.errors.stbno1
                       ? true
                       : false
                   }
                 />
-                {validation.touched.name && validation.errors.name ? (
+                {validation.touched.stbno1 && validation.errors.stbno1 ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.name}
+                    {validation.errors.stbno1}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -121,22 +125,14 @@ const EditStb = (props) => {
             <Col>
               <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
-                  Save
+                  Change
                 </button>
-                <button
-                  type="reset"
-                  className="btn btn-warning"
-                  onClick={() => validation.resetForm()}
-                >
-                  Reset
-                </button>
-
                 <button
                   type="button"
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    handleShowCity();
+                    toggle();
                   }}
                 >
                   Cancel
