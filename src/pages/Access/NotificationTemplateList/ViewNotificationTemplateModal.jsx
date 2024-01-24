@@ -27,7 +27,8 @@ import {
 const ViewNotificationTemplateModal = (props) => {
   const {
     isOpen,
-    handleViewNotificationTemplate,
+    toggleViewNotificationTemplate,
+    resetSelection,
     notiTemplate,
     noTemplateType,
     noTemplateStatus,
@@ -89,13 +90,14 @@ const ViewNotificationTemplateModal = (props) => {
       dispatch(onUpdateNotificationTemplate(updateNotification));
       dispatch(onGetNotificationTemplate());
       validation.resetForm();
-      handleViewNotificationTemplate();
+      resetSelection();
+      toggleViewNotificationTemplate();
     },
   });
 
   const handleCancel = () => {
     setShowEditNotificationTemp(false);
-    handleViewNotificationTemplate();
+    toggleViewNotificationTemplate();
     onGetNotificationTemplate();
   };
 

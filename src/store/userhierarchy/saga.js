@@ -43,8 +43,8 @@ function* fetchUserHierarchy() {
   try {
     const response = yield call(getUserHierarchy);
     console.log("response:" + JSON.stringify(response));
-    const userHierarchyList = convertUserHierarchyListObject(response);
-    yield put(getUserHierarchySuccess(userHierarchyList));
+    // const userHierarchyList = convertUserHierarchyListObject(response);
+    yield put(getUserHierarchySuccess(response));
   } catch (error) {
     yield put(getUserHierarchyFail(error));
   }

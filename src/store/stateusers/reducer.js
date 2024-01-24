@@ -27,9 +27,9 @@ const StateUsers = (state = INIT_STATE, action) => {
     case UPDATE_STATEUSERS_CURRENT_PAGE:
       return Number(action.payload) <= state.totalPages
         ? {
-          ...state,
-          currentPage: action.payload,
-        }
+            ...state,
+            currentPage: action.payload,
+          }
         : state;
 
     case GET_STATEUSERS:

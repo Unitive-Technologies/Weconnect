@@ -23,7 +23,7 @@ import { getNotificationTemplate as onGetNotificationTemplate } from "/src/store
 const AddNotificationTemplateModal = (props) => {
   const {
     isOpen,
-    handleAddNotificationTemplate,
+    toggleAddNotificationTemplate,
     noTemplateType,
     noTemplateStatus,
     noTemplateSize,
@@ -85,7 +85,7 @@ const AddNotificationTemplateModal = (props) => {
       dispatch(onAddNewNotificationTemplate(newNotification));
       dispatch(onGetNotificationTemplate());
       validation.resetForm();
-      handleAddNotificationTemplate();
+      toggleAddNotificationTemplate();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -102,9 +102,9 @@ const AddNotificationTemplateModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleAddNotificationTemplate}
+      toggle={toggleAddNotificationTemplate}
     >
-      <ModalHeader tag="h4" toggle={handleAddNotificationTemplate}>
+      <ModalHeader tag="h4" toggle={toggleAddNotificationTemplate}>
         Create Notification Template
       </ModalHeader>
       <ModalBody>
@@ -392,7 +392,7 @@ const AddNotificationTemplateModal = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    handleAddNotificationTemplate();
+                    toggleAddNotificationTemplate();
                   }}
                 >
                   Cancel

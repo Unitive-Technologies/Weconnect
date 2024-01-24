@@ -14,6 +14,7 @@ import {
   Toast,
   ToastHeader,
   ToastBody,
+  Spinner,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import {
@@ -62,7 +63,7 @@ const NotificationTemplateList = (props) => {
   const { noTemplate, loading, noTemplateStatus, noTemplateType, addUser } =
     useSelector(notificationTemplateProperties);
 
-  const [isLoading, setLoading] = useState(loading);
+  // const [isLoading, setLoading] = useState(loading);
 
   const [showAddNotificationTemplate, setShowAddNotificationTemplate] =
     useState(false);
@@ -126,7 +127,7 @@ const NotificationTemplateList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  handleViewNotificationTemplate(userData);
+                  toggleViewNotificationTemplate(userData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -288,20 +289,23 @@ const NotificationTemplateList = (props) => {
     }
   }, [dispatch, noTemplate]);
 
-  const handleAddNotificationTemplate = () => {
+  const toggleAddNotificationTemplate = () => {
     setShowAddNotificationTemplate(!showAddNotificationTemplate);
   };
 
   const toggle2 = () => {
     setModal2(!modal2);
   };
-  const [viewNotiTemp, setViewUser] = useState({});
+  const [viewNotiTemp, setViewNotiTemp] = useState({});
 
-  const handleViewNotificationTemplate = (row) => {
+  const toggleViewNotificationTemplate = (row) => {
     setViewNotificationTemplate(!viewNotificationTemplate);
-    setViewUser(row);
+    setViewNotiTemp(row);
   };
 
+  const resetSelection = () => {
+    setViewNotiTemp({});
+  };
   const getTableActions = () => {
     return [
       {
@@ -360,23 +364,29 @@ const NotificationTemplateList = (props) => {
 
       <AddNotificationTemplateModal
         isOpen={showAddNotificationTemplate}
-        handleAddNotificationTemplate={handleAddNotificationTemplate}
+        toggleAddNotificationTemplate={toggleAddNotificationTemplate}
         noTemplateStatus={noTemplateStatus}
         noTemplateType={noTemplateType}
       />
       <ViewNotificationTemplateModal
         isOpen={viewNotificationTemplate}
-        handleViewNotificationTemplate={handleViewNotificationTemplate}
+        toggleViewNotificationTemplate={toggleViewNotificationTemplate}
         notiTemplate={viewNotiTemp}
         noTemplateStatus={noTemplateStatus}
         noTemplateType={noTemplateType}
+        resetSelection={resetSelection}
       />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Access" breadcrumbItem="Notification Templates" />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">
