@@ -81,36 +81,48 @@ const BulkScheduleNotification = (props) => {
       );
     }
   };
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hour = String(date.getHours()).padStart(2, "0");
+    const minute = String(date.getMinutes()).padStart(2, "0");
+    const second = String(date.getSeconds()).padStart(2, "0");
+
+    return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+  };
 
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
-      starttime: new Date()
-        .toLocaleString("en-US", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        })
-        .replace(
-          /(\d+)\/(\d+)\/(\d+),? (\d+):(\d+):(\d+) (AM|PM)/,
-          "$3-$1-$2 $4:$5:$6"
-        ),
-      endtime: new Date()
-        .toLocaleString("en-US", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        })
-        .replace(
-          /(\d+)\/(\d+)\/(\d+),? (\d+):(\d+):(\d+) (AM|PM)/,
-          "$3-$1-$2 $4:$5:$6"
-        ),
+      starttime: "",
+      endtime: "",
+      // starttime: new Date()
+      //   .toLocaleString("en-US", {
+      //     year: "numeric",
+      //     month: "2-digit",
+      //     day: "2-digit",
+      //     hour: "2-digit",
+      //     minute: "2-digit",
+      //     second: "2-digit",
+      //   })
+      //   .replace(
+      //     /(\d+)\/(\d+)\/(\d+),? (\d+):(\d+):(\d+) (AM|PM)/,
+      //     "$3-$1-$2 $4:$5:$6"
+      //   ),
+      // endtime: new Date()
+      //   .toLocaleString("en-US", {
+      //     year: "numeric",
+      //     month: "2-digit",
+      //     day: "2-digit",
+      //     hour: "2-digit",
+      //     minute: "2-digit",
+      //     second: "2-digit",
+      //   })
+      // .replace(
+      //   /(\d+)\/(\d+)\/(\d+),? (\d+):(\d+):(\d+) (AM|PM)/,
+      //   "$3-$1-$2 $4:$5:$6"
+      // ),
     },
 
     validationSchema: Yup.object({
@@ -122,8 +134,8 @@ const BulkScheduleNotification = (props) => {
       try {
         const newSchedule = {
           target_users_id: targetUsers.map((user) => user.id),
-          start_time: values["starttime"] || "",
-          end_time: values["endtime"] || "",
+          start_time: formatDate(new Date(values.starttime)),
+          end_time: formatDate(new Date(values.endtime)),
           annoucement_template_id: selectedRow.id,
           status: selectedRow.status,
         };
@@ -143,7 +155,7 @@ const BulkScheduleNotification = (props) => {
 
         console.log("Axios Response:", response);
         dispatch(onGetNotificationTemplate());
-
+        setTargetUsers([]);
         validation.resetForm();
         onClose();
       } catch (error) {
@@ -164,18 +176,18 @@ const BulkScheduleNotification = (props) => {
 
   const columns = useMemo(
     () => [
-      {
-        Header: ".",
-        disableFilters: true,
-        filterable: true,
+      // {
+      //   Header: ".",
+      //   disableFilters: true,
+      //   filterable: true,
 
-        Cell: (cellProps) => (
-          <input
-            type="checkbox"
-            onChange={() => handleCheckboxClick(cellProps.row.original)}
-          />
-        ),
-      },
+      //   Cell: (cellProps) => (
+      //     <input
+      //       type="checkbox"
+      //       onChange={() => handleCheckboxClick(cellProps.row.original)}
+      //     />
+      //   ),
+      // },
 
       {
         Header: "#",
@@ -493,24 +505,27 @@ const BulkScheduleNotification = (props) => {
                       <div className="col-md-10">
                         <input
                           name="starttime"
-                          className="form-control"
+                          className={`form-control ${
+                            validation.touched.starttime &&
+                            validation.errors.starttime
+                              ? "is-invalid"
+                              : ""
+                          }`}
                           type="datetime-local"
-                          defaultValue="2019-08-19T13:45:00"
                           id="example-datetime-local-input"
                           onChange={validation.handleChange}
-                          value={validation.values.starttime}
+                          value={validation.values.starttime || ""}
                         />
+                        {validation.touched.starttime &&
+                          validation.errors.starttime && (
+                            <div className="invalid-feedback">
+                              {validation.errors.starttime}
+                            </div>
+                          )}
                       </div>
-
-                      {validation.touched.starttime &&
-                      validation.errors.starttime ? (
-                        <FormFeedback type="invalid">
-                          {validation.errors.starttime}
-                        </FormFeedback>
-                      ) : null}
                     </div>
                   </Col>
-                  {console.log("startime: " + validation.values.starttime)}
+
                   <Col lg={4}>
                     <div className="mb-3">
                       <label
@@ -522,23 +537,27 @@ const BulkScheduleNotification = (props) => {
                       <div className="col-md-10">
                         <input
                           name="endtime"
-                          className="form-control"
+                          className={`form-control ${
+                            validation.touched.endtime &&
+                            validation.errors.endtime
+                              ? "is-invalid"
+                              : ""
+                          }`}
                           type="datetime-local"
-                          defaultValue="2019-08-19T13:45:00"
                           id="example-datetime-local-input"
                           onChange={validation.handleChange}
-                          value={validation.values.endtime}
+                          value={validation.values.endtime || ""}
                         />
+                        {validation.touched.endtime &&
+                          validation.errors.endtime && (
+                            <div className="invalid-feedback">
+                              {validation.errors.endtime}
+                            </div>
+                          )}
                       </div>
-
-                      {validation.touched.endtime &&
-                      validation.errors.endtime ? (
-                        <FormFeedback type="invalid">
-                          {validation.errors.endtime}
-                        </FormFeedback>
-                      ) : null}
                     </div>
                   </Col>
+
                   {console.log("endtime: " + validation.values.endtime)}
                   <Col lg={4}>
                     <div className="mt-3">
