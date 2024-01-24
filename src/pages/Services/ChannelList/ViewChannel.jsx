@@ -16,7 +16,7 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { updateChannelList as onUpdateChannelList, addNewChannelList as onAddNewChannelList } from "/src/store/channel/actions";
+import { updateChannelList as onUpdateChannelList } from "/src/store/channel/actions";
 import { useDispatch } from "react-redux";
 import CasList from "./CasList";
 
@@ -30,22 +30,21 @@ const ViewChannel = (props) => {
 
     initialValues: {
       //BroadCaster: "",
-      code: "",
-      logo: "",
-      name: "",
-      description: "",
-      definition: "",
-      type: "",
-      broadcaster: "",
-      genre: "",
-      language: "",
-      isalacarte: "",
-      rate: "",
-      status: "",
+      code: (channel && channel.code) || "",
+      logo: (channel && channel.logo) || "",
+      name: (channel && channel.name) || "",
+      description: (channel && channel.description) || "",
+      definition: (channel && channel.definition) || "",
+      type: (channel && channel.type) || "",
+      broadcaster: (channel && channel.broadcaster) || "",
+      genre: (channel && channel.genre) || "",
+      language: (channel && channel.language) || "",
+      isalacarte: (channel && channel.isalacarte) || "",
+      rate: (channel && channel.rate) || "",
+      status: (channel && channel.status) || "",
       cas: "",
-      cascode: "",
+      cascode: (channel && channel.cascode) || "",
       serviceid: "",
-      created_by: "Admin",
     },
     validationSchema: Yup.object({
       code: Yup.string().required("Enter Channel Code"),
@@ -66,24 +65,24 @@ const ViewChannel = (props) => {
     }),
     onSubmit: (values) => {
       const updateChannelList = {
-        id: values["id"],
-        code: values["code"],
-        logo: values["logo"],
-        name: values[" name"],
-        description: values["description"],
-        definition: values["definition"],
-        type: values["type"],
-        broadcaster: values["broadcaster"],
-        genre: values["genre"],
-        language: values["language"],
-        isalacarte: values["isalacarte"],
-        rate: values["rate"],
-        status: values["status"],
-        cas: values["cas"],
-        cascode: values["cascode"],
-        serviceid: values["serviceid"],
+        id: values.id,
+        code: values.code,
+        logo: values.logo,
+        name: values.name,
+        description: values.description,
+        definition: values.definition,
+        type: values.type,
+        broadcaster: values.broadcaster,
+        genre: values.genre,
+        language: values.language,
+        isalacarte: values.isalacarte,
+        rate: values.rate,
+        status: values.status,
+        cas: values.cas,
+        cascode: values.cascode,
+        serviceid: values.serviceid,
         created_at: new Date(),
-        created_by: values["created_by"],
+        created_by: values.created_by,
       };
       console.log("newChannelList:" + updateChannelList);
       // save new user

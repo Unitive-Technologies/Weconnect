@@ -190,18 +190,24 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
             <Col lg={12}>
               <div className="mb-3">
                 <Input
-                  name="casSource"
+                  name="options"
                   type="select"
                   placeholder="Select CAS"
                   className="form-select"
                   onChange={handleChange}
                 >
-                  {casSource && casSource.map((options) => (
+                  {channelListCascode && channelListCascode.map((options) => (
                     <option key={options.id} value={options.id}>
                       {options.name}
                     </option>
                   ))
                   }
+                  {/* {casSource && casSource.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))
+                  } */}
                 </Input >
               </div >
             </Col >

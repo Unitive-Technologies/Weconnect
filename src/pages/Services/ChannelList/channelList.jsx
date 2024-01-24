@@ -59,13 +59,13 @@ const ChannelList = (props) => {
     selectChannelState,
     (channelList) => ({
       channel: channelList.channelList,
-      channelListStatus: channelList.channelListStatus,
-      channelListDefinition: channelList.channelListDefinition,
-      channelListType: channelList.channelListType,
-      channelListCascode: channelList.channelListCascode,
-      channelListGenre: channelList.channelListGenre,
-      channelListBroadcaster: channelList.channelListBroadcaster,
-      channelListLanguage: channelList.channelListLanguage,
+      channelListStatus: channelList.channellistStatus,
+      channelListDefinition: channelList.channellistDefinition,
+      channelListType: channelList.channellistType,
+      channelListCascode: channelList.channellistCascode,
+      channelListGenre: channelList.channellistGenre,
+      channelListBroadcaster: channelList.channellistBroadcaster,
+      channelListLanguage: channelList.channellistLanguage,
       loading: channelList.loading,
       totalPage: channelList.totalPages,
       totalCount: channelList.totalCount,
@@ -323,6 +323,8 @@ const ChannelList = (props) => {
       },
     ];
   };
+
+  console.log("View in channel List Type" + channelListType)
 
   return (
     <React.Fragment>

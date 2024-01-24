@@ -180,6 +180,7 @@ function* fetchChannelListType() {
     console.log("Channel List Genre response:" + JSON.stringify(response));
     yield put(getChannelListTypeSuccess(response.data));
   } catch (error) {
+    console.log("Fetching error in channel list type" + error)
     yield put(getChannelListTypeFail(error));
   }
 }

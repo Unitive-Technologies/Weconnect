@@ -66,9 +66,9 @@ const ChannelList = (state = INIT_STATE, action) => {
     case UPDATE_CHANNELLIST_CURRENT_PAGE:
       return Number(action.payload) <= state.totalPages
         ? {
-            ...state,
-            currentPage: action.payload,
-          }
+          ...state,
+          currentPage: action.payload,
+        }
         : state;
 
 

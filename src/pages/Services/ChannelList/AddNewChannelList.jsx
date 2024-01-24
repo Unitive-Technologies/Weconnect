@@ -43,6 +43,7 @@ const AddNewChannelList = (props) => {
       rate: "",
       status: "",
       cas: "",
+      channel_type_lbl: "",
       cascode: "",
       serviceid: "",
       created_by: "Admin",
@@ -54,6 +55,7 @@ const AddNewChannelList = (props) => {
       description: Yup.string().required("Enter description"),
       definition: Yup.string().required("Enter channel definition"),
       type: Yup.string().required("Enter channel type"),
+      channel_type_lbl: Yup.string().required("Enter channel type"),
       broadcaster: Yup.string().required("select broadcaster"),
       genre: Yup.string().required("Enter genre"),
       language: Yup.string().required("Select language"),
@@ -66,7 +68,6 @@ const AddNewChannelList = (props) => {
     }),
     onSubmit: (values) => {
       const newChannelList = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
         code: values["code"],
         logo: values["logo"],
         name: values["name"],
@@ -78,6 +79,7 @@ const AddNewChannelList = (props) => {
         language: values["language"],
         isalacarte: values["isalacarte"],
         rate: values["rate"],
+        channel_type_lbl: values["channel_type_lbl"],
         status: values["status"],
         cas: values["cas"],
         casCodes: casCodeList,
@@ -98,15 +100,10 @@ const AddNewChannelList = (props) => {
     },
   });
 
-  const [modal4, setModal4] = useState(false);
-
   const handleUpdateCasList = (casList) => {
     setCasCodeList(casList);
   };
 
-  const toggle4 = () => {
-    setModal4(!modal4);
-  };
 
   return (
     <Modal
@@ -304,17 +301,19 @@ const AddNewChannelList = (props) => {
                   Type<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="type"
+                  name="channel_type_lbl"
                   type="select"
                   placeholder="Select type"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.type || ""}
+                  value={validation.values.channel_type_lbl || ""}
                 >
-                  <option value="104">Select channel type</option>
-                  <option value="105">Pay Channel</option>
-                  <option value="106">FTA</option>
+                  {channelListType.map((channel_type_lbl) => (
+                    <option key={channel_type_lbl.id} value={channel_type_lbl.id}>
+                      {channel_type_lbl.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.type && validation.errors.type ? (
                   <FormFeedback type="invalid">
@@ -343,7 +342,7 @@ const AddNewChannelList = (props) => {
                   {channelListBroadcaster &&
                     channelListBroadcaster.map((broadcaster) => (
                       <option key={broadcaster.id} value={broadcaster.id}>
-                        {status.name}
+                        {broadcaster.name}
                       </option>
                     ))}
                 </Input>
@@ -391,7 +390,7 @@ const AddNewChannelList = (props) => {
                 </Label>
                 <Input
                   name="language"
-                  type="text"
+                  type="select"
                   placeholder="Select language"
                   // className="form-select"
                   onChange={validation.handleChange}
