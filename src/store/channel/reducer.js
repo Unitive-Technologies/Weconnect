@@ -158,6 +158,12 @@ const ChannelList = (state = INIT_STATE, action) => {
         error: action.payload,
       };
 
+    case GET_CHANNELLIST_CASCODE:
+      return {
+        ...state,
+        loading: true,
+      };
+
     case GET_CHANNELLIST_CASCODE_SUCCESS:
       // console.log("Tax status data success in reducer:", action.payload);
       return {
