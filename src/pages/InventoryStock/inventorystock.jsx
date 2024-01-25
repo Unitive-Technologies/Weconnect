@@ -51,12 +51,14 @@ import {
 import StockStb from "./StockStb";
 import StockPairing from "./StockPairing";
 import InventoryTrack from "./InventoryTrack";
+import AddStockSmartcard from "./AddStockSmartcard";
 
 const InventoryStock = (props) => {
   document.title = "Inventory | VDigital";
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState("1");
   const [selectedOption, setSelectedOption] = useState("In-stock");
+  const [showAddStockSmartcard, setShowAddStockSmartcard] = useState(false);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -521,6 +523,10 @@ const InventoryStock = (props) => {
     []
   );
 
+  const handleAddStockSmartcard = () => {
+    setShowAddStockSmartcard(!showAddStockSmartcard);
+  };
+
   const getFilteredTableActions = () => {
     let actions = [];
     if (selectedOption === "In-stock") {
@@ -530,6 +536,7 @@ const InventoryStock = (props) => {
             name: "Create",
             type: "normal",
             icon: "create",
+            action: setShowAddStockSmartcard,
           },
           {
             name: "Upload",
@@ -787,6 +794,14 @@ const InventoryStock = (props) => {
 
   return (
     <React.Fragment>
+      {/* <AddStockSmartcard
+        isOpen={showAddStockSmartcard}
+        toggle={handleAddStockSmartcard}
+        stocksccastype={stocksccastype}
+        stockscwarehouse={stockscwarehouse}
+        stockscstatetype={stockscstatetype}
+        stockscinventorystate={stockscinventorystate}
+      /> */}
       <div className="page-content">
         <Container fluid>
           <Breadcrumbs breadcrumbItem="Inventory" />
@@ -875,6 +890,14 @@ const InventoryStock = (props) => {
                       className="p-3 text-muted"
                     >
                       <TabPane tabId="1">
+                        <AddStockSmartcard
+                          isOpen={showAddStockSmartcard}
+                          toggle={handleAddStockSmartcard}
+                          stocksccastype={stocksccastype}
+                          stockscwarehouse={stockscwarehouse}
+                          stockscstatetype={stockscstatetype}
+                          stockscinventorystate={stockscinventorystate}
+                        />
                         <Row>
                           <Col sm="12">
                             <TableContainer

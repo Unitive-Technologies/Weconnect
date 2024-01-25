@@ -700,6 +700,8 @@ export const getInventoryStockPairing = async (currentPage, perPage = 20) => {
 };
 export const updateInventoryStockStb = (id, stockstb) =>
   put(url.UPDATE_INVENTORYSTOCK_STB(id), stockstb);
+export const addInventoryStockSmartcard = (stocksmartcard) =>
+  post(url.ADD_INVENTORYSTOCK_SMARTCARD, stocksmartcard);
 
 export const getInventoryFaultySmartcard = () =>
   get(url.GET_INVENTORYFAULTY_SMARTCARD);

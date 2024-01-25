@@ -24,6 +24,9 @@ import {
   GET_INVENTORYSTOCK_SC_WAREHOUSE_FAIL,
   GET_INVENTORYSTOCK_SC_STATETYPE_SUCCESS,
   GET_INVENTORYSTOCK_SC_STATETYPE_FAIL,
+  ADD_INVENTORYSTOCK_SMARTCARD,
+  ADD_INVENTORYSTOCK_SMARTCARD_SUCCESS,
+  ADD_INVENTORYSTOCK_SMARTCARD_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -176,6 +179,26 @@ const InventoryStock = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+
+    case ADD_INVENTORYSTOCK_SMARTCARD:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case ADD_INVENTORYSTOCK_SMARTCARD_SUCCESS:
+      return {
+        ...state,
+        stocksmartcard: [...state.stocksmartcard, action.payload],
+        loading: false,
+      };
+
+    case ADD_INVENTORYSTOCK_SMARTCARD_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
       };
 
     default:

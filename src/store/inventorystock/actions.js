@@ -24,6 +24,9 @@ import {
   GET_INVENTORYSTOCK_SC_STATETYPE,
   GET_INVENTORYSTOCK_SC_STATETYPE_SUCCESS,
   GET_INVENTORYSTOCK_SC_STATETYPE_FAIL,
+  ADD_INVENTORYSTOCK_SMARTCARD,
+  ADD_INVENTORYSTOCK_SMARTCARD_SUCCESS,
+  ADD_INVENTORYSTOCK_SMARTCARD_FAIL,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -35,9 +38,9 @@ export const getInventoryStockSmartcard = () => ({
   type: GET_INVENTORYSTOCK_SMARTCARD,
 });
 
-export const getInventoryStockSmartcardSuccess = (inventorystock) => ({
+export const getInventoryStockSmartcardSuccess = (stocksmartcard) => ({
   type: GET_INVENTORYSTOCK_SMARTCARD_SUCCESS,
-  payload: inventorystock,
+  payload: stocksmartcard,
 });
 
 export const getInventoryStockSmartcardFail = (error) => ({
@@ -143,5 +146,20 @@ export const getInventoryStockScInventorystateSuccess = (
 
 export const getInventoryStockScInventorystateFail = (error) => ({
   type: GET_INVENTORYSTOCK_SC_INVENTORYSTATE_FAIL,
+  payload: error,
+});
+
+export const addInventoryStockSmartcard = (stocksmartcard) => ({
+  type: ADD_INVENTORYSTOCK_SMARTCARD,
+  payload: stocksmartcard,
+});
+
+export const addInventoryStockSmartcardSuccess = (stocksmartcard) => ({
+  type: ADD_INVENTORYSTOCK_SMARTCARD_SUCCESS,
+  payload: stocksmartcard,
+});
+
+export const addInventoryStockSmartcardFail = (error) => ({
+  type: ADD_INVENTORYSTOCK_SMARTCARD_FAIL,
   payload: error,
 });

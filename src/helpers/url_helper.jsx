@@ -478,6 +478,7 @@ export const getStockPairingUrl = (currPage, perPage) => {
 };
 export const UPDATE_INVENTORYSTOCK_STB = (id) =>
   `stb/change-stb/${id}?vr=web1.0`;
+export const ADD_INVENTORYSTOCK_SMARTCARD = "/smartcard?vr=web1.0";
 
 export const GET_INVENTORYFAULTY_SMARTCARD =
   "/smartcard?expand=po_date,po_number,invoice_no,invoice_date,created_by_lbl,cas_lbl,status_lbl,brand_lbl,warehouse_lbl,state_lbl,inv_state_lbl&filter[status]=3&filter[stb_id]=0&page=1&per-page=50&vr=web1.0";
