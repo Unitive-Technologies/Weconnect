@@ -9,9 +9,12 @@ import {
   Label,
   Input,
   Form,
+  CardTitle,
+  Table,
   FormFeedback,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+
 import { createSelector } from "reselect";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -51,6 +54,7 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
   );
 
   const { casSource } = useSelector(ChannelProperties);
+
 
   const columns = useMemo(
     () => [
@@ -160,109 +164,248 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
   };
 
   return (
-    <Card>
-      <CardBody>
-        <Row>
-          <Col
-            lg={6}
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-            }}
-          >
-            <Col lg={12}>
-              <div className="mb-3">
-                <Input
-                  name="casSelection"
-                  type="select"
-                  placeholder="Select CAS"
-                  className="form-select"
-                  value={casSelection}
-                  // onChange={(e) => setCasSelection(e.target.value)}
-                  onChange={(e) => setCasSelection(e.target.value)}
-                >
-                  <option value="">Select cascode</option>
-                  {channelListCascode &&
-                    channelListCascode.map((options) => (
-                      <option key={options.id} value={options.id}>
-                        {options.name}
-                      </option>
-                    ))}
-                </Input>
-                {/* {casSource && casSource.map((options) => (
-                    <option key={options.id} value={options.id}>
-                      {options.name}
-                    </option>
-                  ))
-                  } */}
 
-              </div >
-            </Col >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <Col lg={5} style={{ marginRight: "20px" }}>
-                <div className="mb-3">
-                  {/* <TODO>Add handlechange and update cascode</TODO> */}
-                  <Input
-                    name="casCode"
-                    type="text"
-                    placeholder="CAS Code"
-                    value={casCode}
-                    onChange={(e) => setCasCode(e.target.value)}
-                  />
-                </div>
-              </Col>
-              <Col lg={5} style={{ marginRight: "20px" }}>
-                <div className="mb-3">
-                  <Input
-                    name="serviceId"
-                    type="text"
-                    placeholder="service id"
-                    value={serviceId}
-                    onChange={(e) => setServiceId(e.target.value)}
-                  />
-                </div>
-              </Col>
-              <Col lg={2}>
-                <div className="mb-3">
-                  <button
-                    type="button"
-                    className="btn btn-primary "
-                    onClick={updateCasList}
-                  >
-                    <i
-                      className="bx bx-right-arrow-alt"
-                      style={{ fontSize: 20 }}
-                    ></i>
-                  </button>
-                </div>
-              </Col>
+    <Row>
+      <Col xl={6}>
+        <Card>
+          <CardBody>
+            <CardTitle className="h4">Basic example</CardTitle>
+            <p className="card-title-desc">
+              For basic styling—light padding and only horizontal
+              dividers—add the base className <code>.table</code> to any
+              <code>&lt;table&gt;</code>.
+            </p>
+
+            <div className="table-responsive">
+              <Table className="table mb-0">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Username</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                  </tr>
+                </tbody>
+              </Table>
             </div>
-          </Col >
-          {console.log("Cas List table Data" + JSON.stringify(data))}
-          <Col lg={6}>
-            <TableContainer
-              isPagination={true}
-              columns={columns}
-              data={data}
-              // isGlobalFilter={true}
-              // isShowingPageLength={true}
-              // customPageSize={50}
-              tableClass="table align-middle table-nowrap table-hover"
-              theadClass="table-light"
-              paginationDiv="col-sm-12 col-md-7"
-              pagination="pagination pagination-rounded justify-content-end mt-4"
-            />
-          </Col>
-        </Row >
-      </CardBody >
-    </Card >
+          </CardBody>
+        </Card>
+      </Col>
+    </Row>
+
+    // <Row>
+    //   <Card>
+    //     <CardBody>
+    //       <Row>
+    //         <Col
+    //           lg={6}
+    //           style={{
+    //             display: "flex",
+    //             flexWrap: "wrap",
+    //           }}
+    //         >
+    //           <Col lg={12}>
+    //             <div className="mb-3">
+    //               <Input
+    //                 name="casSelection"
+    //                 type="select"
+    //                 placeholder="Select CAS"
+    //                 className="form-select"
+    //                 value={casSelection}
+    //                 // onChange={(e) => setCasSelection(e.target.value)}
+    //                 onChange={(e) => setCasSelection(e.target.value)}
+    //               >
+    //                 <option value="">Select cascode</option>
+    //                 {channelListCascode &&
+    //                   channelListCascode.map((options) => (
+    //                     <option key={options.id} value={options.id}>
+    //                       {options.name}
+    //                     </option>
+    //                   ))}
+    //               </Input>
+    //               {/* {casSource && casSource.map((options) => (
+    //               <option key={options.id} value={options.id}>
+    //                 {options.name}
+    //               </option>
+    //             ))
+    //             } */}
+
+    //             </div >
+    //           </Col >
+    //           <div
+    //             style={{
+    //               display: "flex",
+    //               alignItems: "center",
+    //               justifyContent: "space-between",
+    //             }}
+    //           >
+    //             <Col lg={5} style={{ marginRight: "20px" }}>
+    //               <div className="mb-3">
+    //                 {/* <TODO>Add handlechange and update cascode</TODO> */}
+    //                 <Input
+    //                   name="casCode"
+    //                   type="text"
+    //                   placeholder="CAS Code"
+    //                   value={casCode}
+    //                   onChange={(e) => setCasCode(e.target.value)}
+    //                 />
+    //               </div>
+    //             </Col>
+    //             <Col lg={5} style={{ marginRight: "20px" }}>
+    //               <div className="mb-3">
+    //                 <Input
+    //                   name="serviceId"
+    //                   type="text"
+    //                   placeholder="service id"
+    //                   value={serviceId}
+    //                   onChange={(e) => setServiceId(e.target.value)}
+    //                 />
+    //               </div>
+    //             </Col>
+    //             <Col lg={2}>
+    //               <div className="mb-3">
+    //                 <button
+    //                   type="button"
+    //                   className="btn btn-primary "
+    //                   onClick={updateCasList}
+    //                 >
+    //                   <i
+    //                     className="bx bx-right-arrow-alt"
+    //                     style={{ fontSize: 20 }}
+    //                   ></i>
+    //                 </button>
+    //               </div>
+    //             </Col>
+    //           </div>
+    //         </Col >
+
+    // <Row>
+    //   <Card>
+    //     <CardBody>
+    //       <Row>
+    //         <Col
+    //           lg={6}
+    //           style={{
+    //             display: "flex",
+    //             flexWrap: "wrap",
+    //           }}
+    //         >
+    //           <Col lg={12}>
+    //             <div className="mb-3">
+    //               <Input
+    //                 name="casSelection"
+    //                 type="select"
+    //                 placeholder="Select CAS"
+    //                 className="form-select"
+    //                 value={casSelection}
+    //                 // onChange={(e) => setCasSelection(e.target.value)}
+    //                 onChange={(e) => setCasSelection(e.target.value)}
+    //               >
+    //                 <option value="">Select cascode</option>
+    //                 {channelListCascode &&
+    //                   channelListCascode.map((options) => (
+    //                     <option key={options.id} value={options.id}>
+    //                       {options.name}
+    //                     </option>
+    //                   ))}
+    //               </Input>
+    //               {/* {casSource && casSource.map((options) => (
+    //               <option key={options.id} value={options.id}>
+    //                 {options.name}
+    //               </option>
+    //             ))
+    //             } */}
+
+    //             </div >
+    //           </Col >
+    //           <div
+    //             style={{
+    //               display: "flex",
+    //               alignItems: "center",
+    //               justifyContent: "space-between",
+    //             }}
+    //           >
+    //             <Col lg={5} style={{ marginRight: "20px" }}>
+    //               <div className="mb-3">
+    //                 {/* <TODO>Add handlechange and update cascode</TODO> */}
+    //                 <Input
+    //                   name="casCode"
+    //                   type="text"
+    //                   placeholder="CAS Code"
+    //                   value={casCode}
+    //                   onChange={(e) => setCasCode(e.target.value)}
+    //                 />
+    //               </div>
+    //             </Col>
+    //             <Col lg={5} style={{ marginRight: "20px" }}>
+    //               <div className="mb-3">
+    //                 <Input
+    //                   name="serviceId"
+    //                   type="text"
+    //                   placeholder="service id"
+    //                   value={serviceId}
+    //                   onChange={(e) => setServiceId(e.target.value)}
+    //                 />
+    //               </div>
+    //             </Col>
+    //             <Col lg={2}>
+    //               <div className="mb-3">
+    //                 <button
+    //                   type="button"
+    //                   className="btn btn-primary "
+    //                   onClick={updateCasList}
+    //                 >
+    //                   <i
+    //                     className="bx bx-right-arrow-alt"
+    //                     style={{ fontSize: 20 }}
+    //                   ></i>
+    //                 </button>
+    //               </div>
+    //             </Col>
+    //           </div>
+    //         </Col >
+    //         {/* {console.log("Cas List table Data" + JSON.stringify(data))}
+    //     <Col lg={6}>
+    //       <TableContainer
+    //         isPagination={true}
+    //         columns={columns}
+    //         data={data}
+    //         // isGlobalFilter={true}
+    //         // isShowingPageLength={true}
+    //         // customPageSize={50}
+    //         tableClass="table align-middle table-nowrap table-hover"
+    //         theadClass="table-light"
+    //         paginationDiv="col-sm-12 col-md-7"
+    //         pagination="pagination pagination-rounded justify-content-end mt-4"
+    //       /> */}
+    //       </Col>
+    //     </Row >
+    //   </CardBody >
+    // </Card >
+
+
   );
+
 };
 
 CasList.propTypes = {
