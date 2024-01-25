@@ -149,6 +149,7 @@ const AddDistributorModal = (props) => {
     initialValues: {
       name: "",
       code: "",
+      parentRO: "",
       addr1: "",
       addr2: "",
       addr3: "",
@@ -175,8 +176,6 @@ const AddDistributorModal = (props) => {
       username: "",
       password: "",
       confirmpassword: "",
-      // created_at: "",
-      // created_by: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
@@ -184,12 +183,13 @@ const AddDistributorModal = (props) => {
       addr1: Yup.string().required("Please Address"),
       contact_person: Yup.string().required("Please Enter Contact Person"),
       mobile_no: Yup.string().required("Please Enter Mobile"),
-      // state_lbl: Yup.string().required("Please Enter State"),
-      // district_lbl: Yup.string().required("Please Enter District"),
-      // city_lbl: Yup.string().required("Please Enter City"),
+      status: Yup.string().required("Please Enter Status"),
+      state: Yup.string().required("Please Enter State"),
+      district: Yup.string().required("Please Enter District"),
+      city: Yup.string().required("Please Enter City"),
       // gstno: Yup.string().required("Please Enter GST"),
       // panno: Yup.string().required("Please Enter PAN"),
-      // username: Yup.string().required("Please Enter LoginID"),
+      username: Yup.string().required("Please Enter LoginID"),
       // status: Yup.string().required("Please Enter Status"),
     }),
     onSubmit: (values) => {
@@ -197,21 +197,26 @@ const AddDistributorModal = (props) => {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         code: values["code"],
+        agreement_data: [],
+        parent_id: values["parentRO"],
+        addr: {
+          addr1: values["addr1"],
+          addr2: values["addr2"],
+          addr3: values["addr3"],
+        },
         addr1: values["addr1"],
         addr2: values["addr2"],
-        addr3: values["addr3"],
+        addr3: values["addr2"],
         contact_person: values["contact_person"],
+        status: values["status"],
         mobile_no: values["mobile_no"],
         phone_no: values["phone_no"],
         email: values["email"],
-        state_lbl: values["state_lbl"],
-        district_lbl: values["district_lbl"],
-        city_lbl: values["city_lbl"],
+        state_id: values["state"],
+        district_id: values["district"],
+        city_id: values["city"],
         gstno: values["gstno"],
         panno: values["panno"],
-
-        // status_lbl: values["status_lbl"],
-
         pincode: values["pincode"],
         por_number: values["por_number"],
         reg_phase: values["reg_phase"],
@@ -223,7 +228,7 @@ const AddDistributorModal = (props) => {
         // agreement_data: values["agreement_data"],
         username: values["username"],
         password: values["password"],
-        confirmpassword: values["confirmpassword"],
+        // confirmpassword: values["confirmpassword"],
       };
       console.log("Distributor values:" + newDistributor);
       // save new user
@@ -317,7 +322,9 @@ const AddDistributorModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Name</Label>
+                <Label className="form-label">
+                  Name<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="name"
                   label="Regional Office Name"
@@ -341,7 +348,9 @@ const AddDistributorModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Contact Person</Label>
+                <Label className="form-label">
+                  Contact Person<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="contact_person"
                   label="Contact Person"
@@ -367,7 +376,9 @@ const AddDistributorModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Parent Regional Office</Label>
+                <Label className="form-label">
+                  Parent Regional Office<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="parentRO"
                   type="select"
@@ -514,7 +525,9 @@ const AddDistributorModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">State</Label>
+                <Label className="form-label">
+                  State<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="state"
                   type="select"
@@ -543,7 +556,9 @@ const AddDistributorModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">District</Label>
+                <Label className="form-label">
+                  District<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="district"
                   type="select"
@@ -569,7 +584,9 @@ const AddDistributorModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">City</Label>
+                <Label className="form-label">
+                  City<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="city"
                   type="select"
@@ -597,7 +614,9 @@ const AddDistributorModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Address1</Label>
+                <Label className="form-label">
+                  Address1<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="addr1"
                   label="Address1"
@@ -875,7 +894,9 @@ const AddDistributorModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Credit Limit</Label>
+                <Label className="form-label">
+                  Credit Limit<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="credit_limit"
                   type="text"
@@ -902,7 +923,9 @@ const AddDistributorModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Area ID</Label>
+                <Label className="form-label">
+                  Area ID<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="area_id"
                   type="text"
@@ -1027,7 +1050,9 @@ const AddDistributorModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Login ID</Label>
+                <Label className="form-label">
+                  Login ID<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="username"
                   label="Login ID"
