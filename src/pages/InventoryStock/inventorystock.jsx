@@ -26,6 +26,10 @@ import {
   getInventoryStockStb as onGetInventoryStockStb,
   getInventoryStockPairing as onGetInventoryStockPairing,
   goToPage as onGoToPage,
+  getInventoryStockScCastype as onGetInventoryStockScCastype,
+  getInventoryStockScInventorystate as onGetInventoryStockScInventorystate,
+  getInventoryStockScStatetype as onGetInventoryStockScStatetype,
+  getInventoryStockScWarehouse as onGetInventoryStockScWarehouse,
 } from "/src/store/inventorystock/actions";
 import {
   getInventoryFaultySmartcard as onGetInventoryFaultySmartcard,
@@ -66,6 +70,10 @@ const InventoryStock = (props) => {
       stocktotalCount: stockpairing.totalCount,
       stockpageSize: stockpairing.perPage,
       stockcurrentPage: stockpairing.currentPage,
+      stocksccastype: stockpairing.stocksccastype,
+      stockscwarehouse: stockpairing.stockscwarehouse,
+      stockscstatetype: stockpairing.stockscstatetype,
+      stockscinventorystate: stockpairing.stockscinventorystate,
     })
   );
 
@@ -78,6 +86,10 @@ const InventoryStock = (props) => {
     stocktotalCount,
     stockpageSize,
     stockcurrentPage,
+    stocksccastype,
+    stockscwarehouse,
+    stockscstatetype,
+    stockscinventorystate,
   } = useSelector(inventorystockProperties);
 
   useEffect(() => {
@@ -85,6 +97,10 @@ const InventoryStock = (props) => {
       dispatch(onGetInventoryStockSmartcard());
       dispatch(onGetInventoryStockStb());
       dispatch(onGetInventoryStockPairing());
+      dispatch(onGetInventoryStockScCastype());
+      dispatch(onGetInventoryStockScInventorystate());
+      dispatch(onGetInventoryStockScStatetype());
+      dispatch(onGetInventoryStockScWarehouse());
     }
   }, [dispatch, stockpairing]);
 
