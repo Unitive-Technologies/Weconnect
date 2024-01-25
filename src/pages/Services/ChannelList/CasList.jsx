@@ -16,6 +16,7 @@ import { createSelector } from "reselect";
 import { useSelector, useDispatch } from "react-redux";
 
 const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) => {
+
   const selectChannelState = (state) => state.channelList;
   const ChannelProperties = createSelector(
     selectChannelState,
@@ -63,7 +64,7 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {cellProps.row.casLabel || "-"}
+                  {cellProps.row.cas_lbl || "-"}
                 </Link>
               </h5>
             </>
@@ -87,7 +88,7 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {cellProps.row.casCode || "-"}
+                  {cellProps.row.cascode || "-"}
                 </Link>
               </h5>
             </>
@@ -111,7 +112,7 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {cellProps.row.serviceId || "-"}
+                  {cellProps.row.serviceid || "-"}
                 </Link>
               </h5>
             </>
@@ -156,6 +157,11 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
     const newData = Array.isArray(data) ? [...data] : [];
     newData.push({ cas_lbl: casSelection, cascode: casCode, serviceid: serviceId });
     updateList(newData);
+
+    // Reset the input values after updating the list
+    setCasSelection("");
+    setCasCode("");
+    setServiceId("");
   };
 
   const handleChange = (e) => {
@@ -165,7 +171,7 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
       setCasSelection(value);
     } else if (name === "casCode") {
       setCasCode(value);
-    } else if (name === "serviceID") {
+    } else if (name === "serviceId") {
       setServiceId(value);
     }
   };
@@ -190,27 +196,28 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
             <Col lg={12}>
               <div className="mb-3">
                 <Input
-                  name="options"
+                  name="casSelection"
                   type="select"
                   placeholder="Select CAS"
                   className="form-select"
+                  value={casSelection}
                   onChange={handleChange}
-
                 >
-                  <option value="">select cascode</option>
-                  {channelListCascode && channelListCascode.map((options) => (
-                    <option key={options.id} value={options.id}>
-                      {options.name}
-                    </option>
-                  ))
-                  }
-                  {/* {casSource && casSource.map((options) => (
+                  <option value="">Select cascode</option>
+                  {channelListCascode &&
+                    channelListCascode.map((options) => (
+                      <option key={options.id} value={options.id}>
+                        {options.name}
+                      </option>
+                    ))}
+                </Input>
+                {/* {casSource && casSource.map((options) => (
                     <option key={options.id} value={options.id}>
                       {options.name}
                     </option>
                   ))
                   } */}
-                </Input >
+
               </div >
             </Col >
             <div
@@ -235,9 +242,9 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
               <Col lg={5} style={{ marginRight: "20px" }}>
                 <div className="mb-3">
                   <Input
-                    name="serviceID"
+                    name="serviceId"
                     type="text"
-                    placeholder="Service ID"
+                    placeholder="service id"
                     value={serviceId}
                     onChange={handleChange}
                   />
