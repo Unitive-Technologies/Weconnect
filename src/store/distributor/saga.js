@@ -5,30 +5,30 @@ import {
   ADD_NEW_DISTRIBUTOR,
   UPDATE_DISTRIBUTOR,
   UPDATE_DISTRIBUTOR_CURRENT_PAGE,
+  GET_DISTRIBUTORS_PHASE,
 } from "./actionTypes";
 
 import {
+  getDistributors as fetchdistributors,
   getDistributorsSuccess,
   getDistributorsFail,
   addDistributorsFail,
   addDistributorsSuccess,
   updateDistributorsSuccess,
   updateDistributorsFail,
+  getDistributorsPhaseFail,
+  getDistributorsPhaseSuccess,
 } from "./actions";
 
 //Include Both Helper File with needed methods
 import {
   getDistributors,
+  getDistributorsPhase,
   addNewDistributor,
   updateDistributor,
 } from "../../helpers/fakebackend_helper";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
-
-import {
-  RESPONSE_HEADER_CURRENT_PAGE,
-  RESPONSE_HEADER_PER_PAGE,
-} from "../../constants/strings";
 
 export const getDistributorStore = (state) => state.distributors;
 
@@ -65,28 +65,6 @@ function* fetchDistributors() {
   try {
     let distributorsStore = yield select(getDistributorStore);
 
-    // const distributorProperties = yield createSelector(
-    //   (state) => state.distributors,
-    //   (distributors) => ({
-    //     pageSize: distributors.perPage,
-    //     currentPage: distributors.currentPage,
-    //   })
-    // );
-
-    // useSelector to fetch the totalCount
-    // yield takeLatest("DISTRIBUTORS/FETCH_TOTAL
-    // _COUNT", function* () {
-    //   const { pageSize } = yield useSelector(distributorProperties);
-    //   const response = yield call(getDistributors, 1, pageSize);
-    //   yield put(getDistributorsSuccess(response));
-    // });
-    // const data = yield select(distributorProperties);
-    // console.log("data:", data);
-    // const result = yield call(getDistributors, data.currentPage, data.page
-    // Size);
-    // console.log("result:", result);
-    // // const { pageSize, currentPage } = yield useSelector(distributorProperties);
-
     const pageSize = distributorsStore.pageSize;
     const currentPage = distributorsStore.currentPage;
     // const { pageSize, currentPage } = yield useSelector(distributorProperties);
@@ -100,15 +78,26 @@ function* fetchDistributors() {
   }
 }
 
+function* fetchDistributorsPhase() {
+  try {
+    const response = yield call(getDistributorsPhaes);
+    // console.log("response:" + JSON.stringify(response));
+    yield put(getDistributorsPhaseSuccess(response.data));
+  } catch (error) {
+    yield put(getDistributorsPhaseFail(error));
+  }
+}
+
 function* onAddNewDistributor({ payload: distributors }) {
   try {
     const response = yield call(addNewDistributor, distributors);
 
     yield put(addDistributorsSuccess(response));
-    toast.success("Distributor Added Successfully", { autoClose: 2000 });
+    yield put(fetchdistributors());
+    // toast.success("Distributor Added Successfully", { autoClose: 2000 });
   } catch (error) {
     yield put(addDistributorsFail(error));
-    toast.error("Distributor Added Failed", { autoClose: 2000 });
+    // toast.error("Distributor Added Failed", { autoClose: 2000 });
   }
 }
 
@@ -116,10 +105,11 @@ function* onUpdateDistributor({ payload: distributors }) {
   try {
     const response = yield call(updateDistributor, distributors);
     yield put(updateDistributorsSuccess(response));
-    toast.success("Distributor Updated Successfully", { autoClose: 2000 });
+    yield put(fetchdistributors());
+    // toast.success("Distributor Updated Successfully", { autoClose: 2000 });
   } catch (error) {
     yield put(updateDistributorsFail(error));
-    toast.error("Distributor Updated Failed", { autoClose: 2000 });
+    // toast.error("Distributor Updated Failed", { autoClose: 2000 });
   }
 }
 
@@ -139,6 +129,7 @@ function* distributorsSaga() {
   yield takeEvery(GET_DISTRIBUTORS, fetchDistributors);
   yield takeEvery(ADD_NEW_DISTRIBUTOR, onAddNewDistributor);
   yield takeEvery(UPDATE_DISTRIBUTOR, onUpdateDistributor);
+  yield takeEvery(GET_DISTRIBUTORS_PHASE, fetchDistributorsPhase);
 }
 
 export default distributorsSaga;

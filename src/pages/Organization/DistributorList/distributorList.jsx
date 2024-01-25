@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
-import { Card, CardBody, Col, Container, Row } from "reactstrap";
+import { Card, CardBody, Col, Container, Row, Spinner } from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -9,6 +9,7 @@ import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import {
   goToPage as onGoToPage,
   getDistributors as onGetDistributors,
+  getDistributorsPhase as onGetDistributorsPhase,
 } from "../../../store/distributor/actions";
 
 //redux
@@ -34,6 +35,7 @@ const DistributorList = (props) => {
     selectDistributorsState,
     (distributors) => ({
       distributor: distributors.distributors,
+      distributorsPhase: distributors.distributorsPhase,
       loading: distributors.loading,
       totalPage: distributors.totalPages,
       totalCount: distributors.totalCount,
@@ -42,10 +44,17 @@ const DistributorList = (props) => {
     })
   );
 
-  const { distributor, loading, totalCount, pageSize, currentPage, totalPage } =
-    useSelector(DistributorsProperties);
+  const {
+    distributor,
+    loading,
+    totalCount,
+    pageSize,
+    currentPage,
+    totalPage,
+    distributorsPhase,
+  } = useSelector(DistributorsProperties);
 
-  console.log("Distributor Value - From UseSelector..", distributor);
+  console.log("DistributorsPhase", distributorsPhase);
   console.log(`TotalCount - ${totalCount}`);
   console.log(`PageSize - ${pageSize}`);
   console.log(`CurrentPage - ${currentPage}`);
@@ -300,8 +309,9 @@ const DistributorList = (props) => {
     console.log("[GOTO PAGE] Trigger to page - ", toPage);
     dispatch(onGoToPage(toPage));
     dispatch(onGetDistributors());
+    dispatch(onGetDistributorsPhase());
   };
-  const handleAddDistributor = () => {
+  const toggleAddDistributor = () => {
     setShowDistributor(!showDistributor);
   };
   const handleUploadDistributor = () => {
@@ -350,7 +360,8 @@ const DistributorList = (props) => {
       />
       <AddDistributorModal
         isOpen={showDistributor}
-        handleAddDistributor={handleAddDistributor}
+        toggleAddDistributor={toggleAddDistributor}
+        distributorsPhase={distributorsPhase}
       />
       <UploadDistributorModal
         isOpen={showUploadDistributor}
@@ -364,10 +375,15 @@ const DistributorList = (props) => {
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Organization" breadcrumbItem="Distributors" />
-          {
-            // isLoading ? (
-            //   <Spinners setLoading={setLoading} />
-            // ) :
+
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
+          ) : (
             <Row>
               <Col lg="12">
                 <Card>
@@ -393,7 +409,7 @@ const DistributorList = (props) => {
                 </Card>
               </Col>
             </Row>
-          }
+          )}
         </Container>
       </div>
       <ToastContainer />

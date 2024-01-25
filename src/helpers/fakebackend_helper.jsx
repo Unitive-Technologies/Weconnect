@@ -558,9 +558,9 @@ export const getDistributors = async (currentPage, perPage = 20) => {
   console.log("Distributor - Per Page: ", perPage);
   return await getCompleteResponse(url.getDistributorUrl(currentPage, perPage));
 };
-
-export const addNewDistributor = (distributors) =>
-  post(url.ADD_NEW_DISTRIBUTOR, distributors);
+export const getDistributorsPhase = () => get(url.GET_DISTRIBUTORS_PHASE);
+export const addNewDistributor = (distributor) =>
+  post(url.ADD_NEW_DISTRIBUTOR, distributor);
 export const updateDistributor = (distributors) =>
   put(url.UPDATE_DISTRIBUTOR, distributors);
 

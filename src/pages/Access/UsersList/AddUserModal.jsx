@@ -132,7 +132,7 @@ const AddUserModal = (props) => {
       const response = await axios.get(
         `${API_URL}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[mso_id]=1&filter[branch_id]=${parseInt(
           regional
-        )}&filter[type]=${parseInt(selectedType)}&vr=web1.0`,
+        )}&filter[typet]=${parseInt(selectedType)}&vr=web1.0`,
         {
           headers: {
             Authorization: token, // Include your token here

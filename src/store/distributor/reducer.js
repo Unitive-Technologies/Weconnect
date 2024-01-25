@@ -8,8 +8,10 @@ import {
   GET_DISTRIBUTORS,
   GET_DISTRIBUTORS_SUCCESS,
   GET_DISTRIBUTORS_FAIL,
+  ADD_NEW_DISTRIBUTOR,
   ADD_DISTRIBUTORS_SUCCESS,
   ADD_DISTRIBUTORS_FAIL,
+  UPDATE_DISTRIBUTOR,
   UPDATE_DISTRIBUTORS_SUCCESS,
   UPDATE_DISTRIBUTORS_FAIL,
   UPDATE_DISTRIBUTOR_CURRENT_PAGE,
@@ -17,6 +19,7 @@ import {
 
 const INIT_STATE = {
   distributors: [],
+  distributorsPhase: [],
   pagination: {},
   error: {},
   loading: false,
@@ -60,23 +63,51 @@ const Distributors = (state = INIT_STATE, action) => {
         loading: false,
       };
 
+    case GET_DISTRIBUTORS_SUCCESS:
+      return {
+        ...state,
+        distributorsPhase: action.payload,
+        loading: false,
+      };
+
+    case GET_DISTRIBUTORS_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_NEW_DISTRIBUTOR:
+      return {
+        ...state,
+        loading: true,
+      };
+
     case ADD_DISTRIBUTORS_SUCCESS:
       return {
         ...state,
         distributors: [...state.distributors, action.payload],
+        loading: false,
       };
 
     case ADD_DISTRIBUTORS_FAIL:
       return {
         ...state,
         error: action.payload,
+        loading: false,
+      };
+
+    case UPDATE_DISTRIBUTOR:
+      return {
+        ...state,
+        loading: true,
       };
 
     case UPDATE_DISTRIBUTORS_SUCCESS:
       return {
         ...state,
+        loading: false,
         distributors: state.distributors.map((distributor) =>
-          distributor.id.toString() === action.payload.id.toString()
+          distributor.id === action.payload.id
             ? { distributor, ...action.payload }
             : distributor
         ),
@@ -86,6 +117,7 @@ const Distributors = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     default:

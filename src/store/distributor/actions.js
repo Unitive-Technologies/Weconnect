@@ -2,6 +2,9 @@ import {
   GET_DISTRIBUTORS,
   GET_DISTRIBUTORS_FAIL,
   GET_DISTRIBUTORS_SUCCESS,
+  GET_DISTRIBUTORS_PHASE,
+  GET_DISTRIBUTORS_PHASE_FAIL,
+  GET_DISTRIBUTORS_PHASE_SUCCESS,
   ADD_NEW_DISTRIBUTOR,
   ADD_DISTRIBUTORS_SUCCESS,
   ADD_DISTRIBUTORS_FAIL,
@@ -33,14 +36,31 @@ export const getDistributorsFail = (error) => ({
   payload: error,
 });
 
-export const addNewDistributor = (distributors) => ({
-  type: ADD_NEW_DISTRIBUTOR,
-  payload: distributors,
+export const getDistributorsPhase = () => ({
+  type: GET_DISTRIBUTORS_PHASE,
 });
 
-export const addDistributorsSuccess = (distributors) => ({
+export const getDistributorsPhaseSuccess = (distributors) => {
+  console.log("Received Distributors.. :", distributors);
+  return {
+    type: GET_DISTRIBUTORS_PHASE_SUCCESS,
+    payload: distributors,
+  };
+};
+
+export const getDistributorsPhaseFail = (error) => ({
+  type: GET_DISTRIBUTORS_PHASE_FAIL,
+  payload: error,
+});
+
+export const addNewDistributor = (distributor) => ({
+  type: ADD_NEW_DISTRIBUTOR,
+  payload: distributor,
+});
+
+export const addDistributorsSuccess = (distributor) => ({
   type: ADD_DISTRIBUTORS_SUCCESS,
-  payload: distributors,
+  payload: distributor,
 });
 
 export const addDistributorsFail = (error) => ({

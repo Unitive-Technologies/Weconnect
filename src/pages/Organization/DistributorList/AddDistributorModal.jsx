@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
 import { createSelector } from "reselect";
 import {
   Col,
@@ -17,25 +18,105 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { getRegionalOffice as onGetRegionalOffice } from "/src/store/regionaloffice/actions";
 import { addNewDistributor as onAddNewDistributor } from "/src/store/distributor/actions";
+import { getStateUsers as onGetStateUsers } from "../../../store/stateusers/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 const AddDistributorModal = (props) => {
-  const { isOpen, handleAddDistributor } = props;
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
+  const { isOpen, toggleAddDistributor, distributorsPhase } = props;
+  console.log("distributorsPhase" + JSON.stringify(distributorsPhase));
   const dispatch = useDispatch();
   const [toggleSwitch, settoggleSwitch] = useState(true);
+  const [districtsList, setDistrictsList] = useState([]);
+  const [selectedState, setSelectedState] = useState("");
+  const [cityList, setCityList] = useState([]);
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+
   const selectRegionalOfficeState = (state) => state.regionaloffice;
+  const selectStatesState = (state) => state.stateUsers;
+
   const RegionalOfficeProperties = createSelector(
     selectRegionalOfficeState,
     (regionaloffice) => ({
       regOff: regionaloffice.regionaloffice,
     })
   );
-
+  const StatesProperties = createSelector(selectStatesState, (states) => ({
+    statesList: states.stateUsers,
+  }));
   const { regOff } = useSelector(RegionalOfficeProperties);
+  const { statesList } = useSelector(StatesProperties);
+  console.log("statesList:" + JSON.stringify(statesList));
 
+  const handleStateChange = async (e) => {
+    try {
+      const stateName = e.target.value;
+      setSelectedState(stateName);
+
+      validation.handleChange(e);
+      {
+        console.log("selectedState:" + typeof selectedState);
+      }
+
+      // Assuming you have a token stored in localStorage
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${selectedState}&filter[type]=2&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token, // Include your token here
+          },
+        }
+      );
+
+      console.log(
+        "districtlist after selection : " + JSON.stringify(response.data.data)
+      );
+      setDistrictsList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching policy data:", error);
+      // Handle error if necessary
+    }
+    // };
+  };
+
+  const handleDistrictChange = async (e) => {
+    try {
+      const districtName = e.target.value;
+      setSelectedDistrict(districtName);
+
+      validation.handleChange(e);
+      {
+        console.log("selectedDistrict:" + typeof selectedDistrict);
+      }
+
+      // Assuming you have a token stored in localStorage
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${selectedState}&filter[district_id]=${selectedDistrict}&filter[type]=3&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      console.log(
+        "cityList after selection : " + JSON.stringify(response.data.data)
+      );
+      setCityList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching policy data:", error);
+      // Handle error if necessary
+    }
+    // };
+  };
   useEffect(() => {
     if (regOff && !regOff.length) {
       dispatch(onGetRegionalOffice());
+      dispatch(onGetStateUsers());
     }
   }, [dispatch, regOff]);
   // console.log("regOfficelist:" + JSON.stringify(regOff));
@@ -77,13 +158,13 @@ const AddDistributorModal = (props) => {
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
-      code: Yup.string().required("Please Enter Code"),
+      // code: Yup.string().required("Please Enter Code"),
       addr1: Yup.string().required("Please Address"),
       contact_person: Yup.string().required("Please Enter Contact Person"),
       mobile_no: Yup.string().required("Please Enter Mobile"),
-      state_lbl: Yup.string().required("Please Enter State"),
-      district_lbl: Yup.string().required("Please Enter District"),
-      city_lbl: Yup.string().required("Please Enter City"),
+      // state_lbl: Yup.string().required("Please Enter State"),
+      // district_lbl: Yup.string().required("Please Enter District"),
+      // city_lbl: Yup.string().required("Please Enter City"),
       // gstno: Yup.string().required("Please Enter GST"),
       // panno: Yup.string().required("Please Enter PAN"),
       // username: Yup.string().required("Please Enter LoginID"),
@@ -126,7 +207,7 @@ const AddDistributorModal = (props) => {
       // save new user
       dispatch(onAddNewDistributor(newDistributor));
       validation.resetForm();
-      handleAddDistributor();
+      toggleAddDistributor();
     },
   });
   return (
@@ -138,9 +219,9 @@ const AddDistributorModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleAddDistributor}
+      toggle={toggleAddDistributor}
     >
-      <ModalHeader tag="h4" toggle={handleAddDistributor}>
+      <ModalHeader tag="h4" toggle={toggleAddDistributor}>
         Add New Distributor
       </ModalHeader>
       <ModalBody>
@@ -266,30 +347,38 @@ const AddDistributorModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Parent Regional Office</Label>
                 <Input
-                  name="status_lbl"
+                  name="parentRO"
                   type="select"
                   placeholder="Select Parent Regional Office"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.status_lbl || ""}
+                  value={validation.values.parentRO || ""}
                 >
                   <option value="">Select Parent Regional Office</option>
-                  {regOff.map((item) => (
-                    <optgroup key={item.id} label={`${item.name}`}>
-                      <option value={item.code}>{item.code}</option>
+                  {/* {regOff.map((item) => (
+                    <optgroup
+                      key={item.id}
+                      value={item.id}
+                      label={`${item.name}`}
+                    >
+                      <option value={item.parentRO}>{item.code}</option>
                     </optgroup>
                   ))}
                   {regOff.map((item) => (
                     <option key={item.id} value={item.code}>
                       {item.name}
                     </option>
+                  ))} */}
+                  {regOff.map((item) => (
+                    <option key={item.id} value={item.parentRO}>
+                      {item.name}
+                    </option>
                   ))}
                 </Input>
-                {validation.touched.status_lbl &&
-                validation.errors.status_lbl ? (
+                {validation.touched.parentRO && validation.errors.parentRO ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.status_lbl}
+                    {validation.errors.parentRO}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -374,19 +463,23 @@ const AddDistributorModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">State</Label>
                 <Input
-                  name="state_lbl"
+                  name="state"
                   type="select"
                   placeholder="Select State"
                   className="form-select"
-                  onChange={validation.handleChange}
+                  // onChange={validation.handleChange}
+                  // onBlur={validation.handleBlur}
+                  // value={validation.values.state || ""}
+                  onChange={handleStateChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.state_lbl || ""}
+                  value={selectedState}
                 >
                   <option value="">Select State</option>
-                  <option value="1">Tamilnadu</option>
-                  <option value="2">Kerala</option>
-                  <option value="3">Assam</option>
-                  <option value="4">Karnataka</option>
+                  {statesList.map((state) => (
+                    <option key={state.id} value={state.id}>
+                      {state.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.state_lbl && validation.errors.state_lbl ? (
                   <FormFeedback type="invalid">
@@ -399,24 +492,24 @@ const AddDistributorModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">District</Label>
                 <Input
-                  name="district_lbl"
+                  name="district"
                   type="select"
                   placeholder="Select District"
                   className="form-select"
-                  onChange={validation.handleChange}
+                  onChange={handleDistrictChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.district_lbl || ""}
+                  value={selectedDistrict}
                 >
                   <option value="">Select District</option>
-                  <option value="1">Virudhunagar</option>
-                  <option value="2">Tuticori</option>
-                  <option value="3">Chennai</option>
-                  <option value="4">Erode</option>
+                  {districtsList.map((district) => (
+                    <option key={district.id} value={district.id}>
+                      {district.name}
+                    </option>
+                  ))}
                 </Input>
-                {validation.touched.district_lbl &&
-                validation.errors.district_lbl ? (
+                {validation.touched.district && validation.errors.district ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.district_lbl}
+                    {validation.errors.district}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -425,23 +518,24 @@ const AddDistributorModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">City</Label>
                 <Input
-                  name="city_lbl"
+                  name="city"
                   type="select"
                   placeholder="Select City"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.city_lbl || ""}
+                  value={validation.values.city || ""}
                 >
                   <option value="">Select City</option>
-                  <option value="1">Virudhunagar</option>
-                  <option value="2">Sivakasi</option>
-                  <option value="3">Kovilpatti</option>
-                  <option value="4">Erode</option>
+                  {cityList.map((city) => (
+                    <option key={city.id} value={city.id}>
+                      {city.name}
+                    </option>
+                  ))}
                 </Input>
-                {validation.touched.city_lbl && validation.errors.city_lbl ? (
+                {validation.touched.city && validation.errors.city ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.city_lbl}
+                    {validation.errors.city}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -589,10 +683,12 @@ const AddDistributorModal = (props) => {
                   value={validation.values.reg_phase || ""}
                 >
                   <option value="">Select Phase</option>
-                  <option value="1">Phase 1</option>
-                  <option value="2">Phase 2</option>
-                  <option value="3">Phase 3</option>
-                  <option value="4">Phase 4</option>
+                  {distributorsPhase &&
+                    distributorsPhase.map((phase) => (
+                      <option key={phase.id} value={phase.id}>
+                        {phase.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.reg_phase && validation.errors.reg_phase ? (
                   <FormFeedback type="invalid">
@@ -970,7 +1066,7 @@ const AddDistributorModal = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    handleAddDistributor();
+                    toggleAddDistributor();
                   }}
                 >
                   Cancel
@@ -985,8 +1081,9 @@ const AddDistributorModal = (props) => {
 };
 
 AddDistributorModal.propTypes = {
-  toggle: PropTypes.func,
+  toggleAddDistributor: PropTypes.bool,
   isOpen: PropTypes.bool,
+  distributorsPhase: PropTypes.array,
 };
 
 export default AddDistributorModal;
