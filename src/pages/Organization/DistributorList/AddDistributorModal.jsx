@@ -154,7 +154,6 @@ const AddDistributorModal = (props) => {
       addr2: "",
       addr3: "",
       contact_person: "",
-      // parent_regoff: "",
       mobile_no: "",
       phone_no: "",
       email: "",
@@ -190,20 +189,22 @@ const AddDistributorModal = (props) => {
       // gstno: Yup.string().required("Please Enter GST"),
       // panno: Yup.string().required("Please Enter PAN"),
       username: Yup.string().required("Please Enter LoginID"),
-      // status: Yup.string().required("Please Enter Status"),
     }),
     onSubmit: (values) => {
       const newDistributor = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         code: values["code"],
-        agreement_data: [],
-        parent_id: values["parentRO"],
-        addr: {
-          addr1: values["addr1"],
-          addr2: values["addr2"],
-          addr3: values["addr3"],
+        agreement_data: {
+          name: "",
+          type: "",
+          ext: "",
+          start_date: values["agreestart"],
+          end_date: values["agreeend"],
+          data: "",
         },
+        parent_id: parseInt(values["parentRO"]),
+        addr: values["addr1"],
         addr1: values["addr1"],
         addr2: values["addr2"],
         addr3: values["addr2"],
@@ -212,9 +213,9 @@ const AddDistributorModal = (props) => {
         mobile_no: values["mobile_no"],
         phone_no: values["phone_no"],
         email: values["email"],
-        state_id: values["state"],
-        district_id: values["district"],
-        city_id: values["city"],
+        state_id: parseInt(values["state"]),
+        district_id: parseInt(values["district"]),
+        city_id: parseInt(values["city"]),
         gstno: values["gstno"],
         panno: values["panno"],
         pincode: values["pincode"],
@@ -224,8 +225,7 @@ const AddDistributorModal = (props) => {
         reg_enddate: values["reg_enddate"],
         gst_date: values["gst_date"],
         credit_limit: values["credit_limit"],
-        area_id: values["area_id"],
-        // agreement_data: values["agreement_data"],
+        area_id: parseInt(values["area_id"]),
         username: values["username"],
         password: values["password"],
         // confirmpassword: values["confirmpassword"],
@@ -404,7 +404,7 @@ const AddDistributorModal = (props) => {
                     </option>
                   ))} */}
                   {regOff.map((item) => (
-                    <option key={item.id} value={item.parentRO}>
+                    <option key={item.id} value={item.id}>
                       {item.name}
                     </option>
                   ))}
