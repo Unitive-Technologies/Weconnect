@@ -150,7 +150,7 @@ export const GET_DISTRIBUTORS =
 export const ADD_NEW_DISTRIBUTOR = "/operator?vr=web1.0";
 export const UPDATE_DISTRIBUTOR = "/update/distributors";
 export const GET_DISTRIBUTORS_PHASE = "/list/phase?fields=id,name&vr=web1.0";
-
+export const GET_DISTRIBUTORS_STATUS = "/list/status?fields=id,name&vr=web1.0";
 export const getLcoUrl = (currPage, perPage) => {
   console.log("current page in lco url - ", currPage, perPage);
   return `/operator?expand=credit_limit_lbl,setting,balance,balance_h,reg_phase_lbl,created_by_lbl,distributor_lbl,status_lbl,branch_lbl,branch_code_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=3&page=${currPage}&per-page=${perPage}&vr=web1.0`;

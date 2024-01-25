@@ -44,7 +44,7 @@ const RegionalOffice = (state = INIT_STATE, action) => {
         loading: true,
       };
     case GET_REGIONALOFFICE_SUCCESS:
-      console.log("RegionalOffice data in reducer:", action.payload);
+      // console.log("RegionalOffice data in reducer:", action.payload);
       return {
         ...state,
         regionaloffice: action.payload.data.data,

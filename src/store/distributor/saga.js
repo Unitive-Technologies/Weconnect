@@ -6,6 +6,7 @@ import {
   UPDATE_DISTRIBUTOR,
   UPDATE_DISTRIBUTOR_CURRENT_PAGE,
   GET_DISTRIBUTORS_PHASE,
+  GET_DISTRIBUTORS_STATUS,
 } from "./actionTypes";
 
 import {
@@ -18,12 +19,15 @@ import {
   updateDistributorsFail,
   getDistributorsPhaseFail,
   getDistributorsPhaseSuccess,
+  getDistributorsStatusFail,
+  getDistributorsStatusSuccess,
 } from "./actions";
 
 //Include Both Helper File with needed methods
 import {
   getDistributors,
   getDistributorsPhase,
+  getDistributorsStatus,
   addNewDistributor,
   updateDistributor,
 } from "../../helpers/fakebackend_helper";
@@ -80,11 +84,25 @@ function* fetchDistributors() {
 
 function* fetchDistributorsPhase() {
   try {
-    const response = yield call(getDistributorsPhaes);
-    // console.log("response:" + JSON.stringify(response));
+    const response = yield call(getDistributorsPhase);
+    console.log(
+      "dddddddddd disphase response:" + JSON.stringify(response.data)
+    );
     yield put(getDistributorsPhaseSuccess(response.data));
   } catch (error) {
     yield put(getDistributorsPhaseFail(error));
+  }
+}
+
+function* fetchDistributorsStatus() {
+  try {
+    const response = yield call(getDistributorsStatus);
+    console.log(
+      "dddddddddd disstatus response:" + JSON.stringify(response.data)
+    );
+    yield put(getDistributorsStatusSuccess(response.data));
+  } catch (error) {
+    yield put(getDistributorsStatusFail(error));
   }
 }
 
@@ -130,6 +148,7 @@ function* distributorsSaga() {
   yield takeEvery(ADD_NEW_DISTRIBUTOR, onAddNewDistributor);
   yield takeEvery(UPDATE_DISTRIBUTOR, onUpdateDistributor);
   yield takeEvery(GET_DISTRIBUTORS_PHASE, fetchDistributorsPhase);
+  yield takeEvery(GET_DISTRIBUTORS_STATUS, fetchDistributorsStatus);
 }
 
 export default distributorsSaga;

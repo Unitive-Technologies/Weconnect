@@ -8,6 +8,10 @@ import {
   GET_DISTRIBUTORS,
   GET_DISTRIBUTORS_SUCCESS,
   GET_DISTRIBUTORS_FAIL,
+  GET_DISTRIBUTORS_PHASE_FAIL,
+  GET_DISTRIBUTORS_PHASE_SUCCESS,
+  GET_DISTRIBUTORS_STATUS_SUCCESS,
+  GET_DISTRIBUTORS_STATUS_FAIL,
   ADD_NEW_DISTRIBUTOR,
   ADD_DISTRIBUTORS_SUCCESS,
   ADD_DISTRIBUTORS_FAIL,
@@ -20,6 +24,7 @@ import {
 const INIT_STATE = {
   distributors: [],
   distributorsPhase: [],
+  distributorsStatus: [],
   pagination: {},
   error: {},
   loading: false,
@@ -44,7 +49,7 @@ const Distributors = (state = INIT_STATE, action) => {
         loading: true,
       };
     case GET_DISTRIBUTORS_SUCCESS:
-      console.log("Distributor data in reducer:", action.payload);
+      // console.log("Distributor data in reducer:", action.payload);
       return {
         ...state,
         distributors: action.payload.data.data,
@@ -63,19 +68,33 @@ const Distributors = (state = INIT_STATE, action) => {
         loading: false,
       };
 
-    case GET_DISTRIBUTORS_SUCCESS:
+    case GET_DISTRIBUTORS_PHASE_SUCCESS:
+      console.log("DistributorPhase data in reducer:", action.payload);
       return {
         ...state,
         distributorsPhase: action.payload,
         loading: false,
       };
 
-    case GET_DISTRIBUTORS_FAIL:
+    case GET_DISTRIBUTORS_PHASE_FAIL:
       return {
         ...state,
         error: action.payload,
       };
 
+    case GET_DISTRIBUTORS_STATUS_SUCCESS:
+      console.log("DistributorsStatus data in reducer:", action.payload);
+      return {
+        ...state,
+        distributorsStatus: action.payload,
+        loading: false,
+      };
+
+    case GET_DISTRIBUTORS_STATUS_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
     case ADD_NEW_DISTRIBUTOR:
       return {
         ...state,

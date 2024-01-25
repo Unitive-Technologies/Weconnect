@@ -38,7 +38,7 @@ const StateUsers = (state = INIT_STATE, action) => {
         loading: true,
       };
     case GET_STATEUSERS_SUCCESS:
-      console.log("State Users data in reducer:", action.payload);
+      // console.log("State Users data in reducer:", action.payload);
       return {
         ...state,
         stateUsers: action.payload.data.data,

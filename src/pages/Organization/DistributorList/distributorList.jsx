@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, json } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import { Card, CardBody, Col, Container, Row, Spinner } from "reactstrap";
 
@@ -10,6 +10,7 @@ import {
   goToPage as onGoToPage,
   getDistributors as onGetDistributors,
   getDistributorsPhase as onGetDistributorsPhase,
+  getDistributorsStatus as onGetDistributorsStatus,
 } from "../../../store/distributor/actions";
 
 //redux
@@ -31,11 +32,16 @@ const DistributorList = (props) => {
   const [showSetting, setShowSetting] = useState(false);
 
   const selectDistributorsState = (state) => state.distributors;
+  // console.log(
+  //   "$$$$$$$$$$$$$$$$$$$$$$state: " + JSON.stringify(state.distributors)
+  // );
+
   const DistributorsProperties = createSelector(
     selectDistributorsState,
     (distributors) => ({
       distributor: distributors.distributors,
       distributorsPhase: distributors.distributorsPhase,
+      distributorsStatus: distributors.distributorsStatus,
       loading: distributors.loading,
       totalPage: distributors.totalPages,
       totalCount: distributors.totalCount,
@@ -52,13 +58,14 @@ const DistributorList = (props) => {
     currentPage,
     totalPage,
     distributorsPhase,
+    distributorsStatus,
   } = useSelector(DistributorsProperties);
 
   console.log("DistributorsPhase", distributorsPhase);
-  console.log(`TotalCount - ${totalCount}`);
-  console.log(`PageSize - ${pageSize}`);
-  console.log(`CurrentPage - ${currentPage}`);
-  console.log(`TotalPage - ${totalPage}`);
+  // console.log(`TotalCount - ${totalCount}`);
+  // console.log(`PageSize - ${pageSize}`);
+  // console.log(`CurrentPage - ${currentPage}`);
+  // console.log(`TotalPage - ${totalPage}`);
   // const [isLoading, setLoading] = useState(loading);
   const [showDistributor, setShowDistributor] = useState(false);
   const [viewDistributor, setViewDistributor] = useState(false);
@@ -298,6 +305,8 @@ const DistributorList = (props) => {
   useEffect(() => {
     if (distributor && !distributor.length) {
       dispatch(onGetDistributors());
+      dispatch(onGetDistributorsPhase());
+      dispatch(onGetDistributorsStatus());
     }
   }, [distributor]);
 
@@ -309,7 +318,8 @@ const DistributorList = (props) => {
     console.log("[GOTO PAGE] Trigger to page - ", toPage);
     dispatch(onGoToPage(toPage));
     dispatch(onGetDistributors());
-    dispatch(onGetDistributorsPhase());
+    // dispatch(onGetDistributorsPhase());
+    dis;
   };
   const toggleAddDistributor = () => {
     setShowDistributor(!showDistributor);
@@ -362,6 +372,7 @@ const DistributorList = (props) => {
         isOpen={showDistributor}
         toggleAddDistributor={toggleAddDistributor}
         distributorsPhase={distributorsPhase}
+        distributorsStatus={distributorsStatus}
       />
       <UploadDistributorModal
         isOpen={showUploadDistributor}

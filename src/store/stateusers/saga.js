@@ -17,7 +17,7 @@ function* fetchStateUsers() {
     const currentPage = StateUsersStore.currentPage;
 
     const response = yield call(getStateUsers, currentPage, pageSize);
-    console.log("Response from API -", response);
+    // console.log("Response from API -", response);
     // debugger;
     yield put(getStateUsersSuccess(response));
   } catch (error) {

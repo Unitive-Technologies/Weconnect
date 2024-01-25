@@ -15,7 +15,7 @@ export const getStateUsers = () => ({
 });
 
 export const getStateUsersSuccess = (stateUsers) => {
-  console.log("Received State Users:", stateUsers);
+  // console.log("Received State Users:", stateUsers);
   return {
     type: GET_STATEUSERS_SUCCESS,
     payload: stateUsers,

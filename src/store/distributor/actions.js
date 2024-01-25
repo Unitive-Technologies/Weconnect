@@ -5,6 +5,9 @@ import {
   GET_DISTRIBUTORS_PHASE,
   GET_DISTRIBUTORS_PHASE_FAIL,
   GET_DISTRIBUTORS_PHASE_SUCCESS,
+  GET_DISTRIBUTORS_STATUS,
+  GET_DISTRIBUTORS_STATUS_FAIL,
+  GET_DISTRIBUTORS_STATUS_SUCCESS,
   ADD_NEW_DISTRIBUTOR,
   ADD_DISTRIBUTORS_SUCCESS,
   ADD_DISTRIBUTORS_FAIL,
@@ -24,7 +27,7 @@ export const getDistributors = () => ({
 });
 
 export const getDistributorsSuccess = (distributors) => {
-  console.log("Received Distributors.. :", distributors);
+  // console.log("Received Distributors.. :", distributors);
   return {
     type: GET_DISTRIBUTORS_SUCCESS,
     payload: distributors,
@@ -40,16 +43,33 @@ export const getDistributorsPhase = () => ({
   type: GET_DISTRIBUTORS_PHASE,
 });
 
-export const getDistributorsPhaseSuccess = (distributors) => {
-  console.log("Received Distributors.. :", distributors);
+export const getDistributorsPhaseSuccess = (distributorsPhase) => {
+  console.log("Received DistributorsPhase.. :", distributorsPhase);
   return {
     type: GET_DISTRIBUTORS_PHASE_SUCCESS,
-    payload: distributors,
+    payload: distributorsPhase,
   };
 };
 
 export const getDistributorsPhaseFail = (error) => ({
   type: GET_DISTRIBUTORS_PHASE_FAIL,
+  payload: error,
+});
+
+export const getDistributorsStatus = () => ({
+  type: GET_DISTRIBUTORS_STATUS,
+});
+
+export const getDistributorsStatusSuccess = (distributorsStatus) => {
+  console.log("Received DistributorsStatus.. :", distributorsStatus);
+  return {
+    type: GET_DISTRIBUTORS_STATUS_SUCCESS,
+    payload: distributorsStatus,
+  };
+};
+
+export const getDistributorsStatusFail = (error) => ({
+  type: GET_DISTRIBUTORS_STATUS_FAIL,
   payload: error,
 });
 

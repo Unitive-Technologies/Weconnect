@@ -23,7 +23,7 @@ export const getRegionalOffice = (regionalOffice) => {
 };
 
 export const getRegionalOfficeSuccess = (regionalOffice) => {
-  console.log("#############Received Regional Offices:", regionalOffice);
+  // console.log("#############Received Regional Offices:", regionalOffice);
   return {
     type: GET_REGIONALOFFICE_SUCCESS,
     payload: regionalOffice,

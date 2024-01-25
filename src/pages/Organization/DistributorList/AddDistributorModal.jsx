@@ -17,14 +17,23 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { getRegionalOffice as onGetRegionalOffice } from "/src/store/regionaloffice/actions";
-import { addNewDistributor as onAddNewDistributor } from "/src/store/distributor/actions";
+import {
+  addNewDistributor as onAddNewDistributor,
+  getDistributorsPhase as onGetDistributorsPhase,
+} from "/src/store/distributor/actions";
 import { getStateUsers as onGetStateUsers } from "../../../store/stateusers/actions";
+import { getReasonStatus as onGetReasonStatus } from "../../../store/reasonlist/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 const AddDistributorModal = (props) => {
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
-  const { isOpen, toggleAddDistributor, distributorsPhase } = props;
-  console.log("distributorsPhase" + JSON.stringify(distributorsPhase));
+  const {
+    isOpen,
+    toggleAddDistributor,
+    distributorsPhase,
+    distributorsStatus,
+  } = props;
+  console.log("distributorsStatus" + JSON.stringify(distributorsStatus));
   const dispatch = useDispatch();
   const [toggleSwitch, settoggleSwitch] = useState(true);
   const [districtsList, setDistrictsList] = useState([]);
@@ -34,6 +43,8 @@ const AddDistributorModal = (props) => {
 
   const selectRegionalOfficeState = (state) => state.regionaloffice;
   const selectStatesState = (state) => state.stateUsers;
+  // const selectPhaseState = (state) => state.distributors;
+  const selectReasonState = (state) => state.reason;
 
   const RegionalOfficeProperties = createSelector(
     selectRegionalOfficeState,
@@ -44,9 +55,18 @@ const AddDistributorModal = (props) => {
   const StatesProperties = createSelector(selectStatesState, (states) => ({
     statesList: states.stateUsers,
   }));
+  // const PhaseProperties = createSelector(selectPhaseState, (states) => ({
+  //   phaseList: states.distributorsPhase,
+  // }));
+  const ReasonProperties = createSelector(selectReasonState, (reason) => ({
+    reasonStatus: reason.reasonStatus,
+  }));
+
   const { regOff } = useSelector(RegionalOfficeProperties);
   const { statesList } = useSelector(StatesProperties);
-  console.log("statesList:" + JSON.stringify(statesList));
+  // const { phaseList } = useSelector(PhaseProperties);
+  const { reasonStatus } = useSelector(ReasonProperties);
+  console.log("status:" + JSON.stringify(reasonStatus));
 
   const handleStateChange = async (e) => {
     try {
@@ -117,6 +137,8 @@ const AddDistributorModal = (props) => {
     if (regOff && !regOff.length) {
       dispatch(onGetRegionalOffice());
       dispatch(onGetStateUsers());
+      dispatch(onGetDistributorsPhase());
+      dispatch(onGetReasonStatus());
     }
   }, [dispatch, regOff]);
   // console.log("regOfficelist:" + JSON.stringify(regOff));
@@ -135,12 +157,12 @@ const AddDistributorModal = (props) => {
       mobile_no: "",
       phone_no: "",
       email: "",
-      state_lbl: "",
-      district_lbl: "",
-      city_lbl: "",
+      state: "",
+      district: "",
+      city: "",
       gstno: "",
       panno: "",
-      status_lbl: "",
+      status: "",
       pincode: "",
       por_number: "",
       reg_phase: "",
@@ -453,6 +475,37 @@ const AddDistributorModal = (props) => {
                 {validation.touched.email && validation.errors.email ? (
                   <FormFeedback type="invalid">
                     {validation.errors.email}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Status<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="status"
+                  type="select"
+                  placeholder="Select Status"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.status || ""}
+                >
+                  <option value="">Select Status</option>
+                  {reasonStatus &&
+                    reasonStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
+                </Input>
+                {validation.touched.status && validation.errors.status ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.status}
                   </FormFeedback>
                 ) : null}
               </div>

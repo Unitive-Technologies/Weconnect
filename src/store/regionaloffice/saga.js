@@ -61,7 +61,7 @@ function* fetchRegionalOffice() {
     const currentPage = regionalOfficeStore.currentPage;
 
     const response = yield call(getRegionalOffices, currentPage, pageSize);
-    console.log("Response from API -", response);
+    // console.log("Response from API -", response);
     // debugger;
     yield put(getRegionalOfficeSuccess(response));
   } catch (error) {
@@ -75,10 +75,10 @@ function* onAddNewRegionalOffice({ payload: regionalofficeList }) {
     const response = yield call(addNewLco, regionalofficeList);
 
     yield put(addRegionalOfficeSuccess(response));
-    toast.success("Regional Office Added Successfully", { autoClose: 2000 });
+    // toast.success("Regional Office Added Successfully", { autoClose: 2000 });
   } catch (error) {
     yield put(addRegionalOfficeFail(error));
-    toast.error("Regional Office Added Failed", { autoClose: 2000 });
+    // toast.error("Regional Office Added Failed", { autoClose: 2000 });
   }
 }
 
