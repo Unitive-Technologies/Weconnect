@@ -17,6 +17,31 @@ import { useSelector, useDispatch } from "react-redux";
 
 const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) => {
 
+  console.log("Cas List Data" + JSON.stringify(data))
+
+  const updateCasList = () => {
+    if (!casSelection || !casCode || !serviceId) {
+      return;
+    }
+
+    const newItem = {
+      cas_id: data.length + 1,
+      casSelection: casSelection,
+      casCode: casCode,
+      serviceId: serviceId,
+    };
+
+    const updatedData = [...data, newItem];
+    console.log("Updated Data in CasList" + updatedData)
+    updateList(updatedData);
+
+
+    setCasSelection("");
+    setCasCode("");
+    setServiceId("");
+  };
+
+
   const selectChannelState = (state) => state.channelList;
   const ChannelProperties = createSelector(
     selectChannelState,
@@ -31,6 +56,7 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
     () => [
       {
         Header: "#",
+        accessor: "cas_id",
         disableFilters: true,
         // filterable: true,
         Cell: (cellProps) => {
@@ -38,11 +64,10 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
           const index = startIndex + cellProps.row.index + 1;
           return (
             <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {index}
-                </Link>
-              </h5>
+              <p className="text-dark">
+                {/* {index} */}
+                {cellProps.row.original.cas_id}
+              </p>
             </>
           );
         },
@@ -50,72 +75,37 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
 
       {
         Header: "CAS",
+        accessor: "casSelection",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {cellProps.row.cas_lbl || "-"}
-                </Link>
-              </h5>
-            </>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.casSelection}
+            </p>
           );
         },
       },
       {
         Header: "CAS CODE",
-        // accessor: "login",
+        accessor: "casCode",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {cellProps.row.cascode || "-"}
-                </Link>
-              </h5>
-            </>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.casCode}
+            </p>
           );
         },
       },
       {
         Header: "Service ID",
-        // accessor: "status",
+        accessor: "serviceId",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {cellProps.row.serviceid || "-"}
-                </Link>
-              </h5>
-            </>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.serviceId}
+            </p>
           );
         },
       },
@@ -147,34 +137,21 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
     []
   );
 
-  const casData = [data];
+  // const casData = [data];
   const [casSelection, setCasSelection] = useState("");
   const [casCode, setCasCode] = useState("");
   const [serviceId, setServiceId] = useState("");
 
-  const updateCasList = () => {
-    // Check if data is an array before spreading
-    const newData = Array.isArray(data) ? [...data] : [];
-    newData.push({ cas_lbl: casSelection, cascode: casCode, serviceid: serviceId });
-    updateList(newData);
-
-    // Reset the input values after updating the list
-    setCasSelection("");
-    setCasCode("");
-    setServiceId("");
-  };
-
-  const handleChange = (e) => {
-    // Handle change for different input fields
-    const { name, value } = e.target;
-    if (name === "casSelection") {
-      setCasSelection(value);
-    } else if (name === "casCode") {
-      setCasCode(value);
-    } else if (name === "serviceId") {
-      setServiceId(value);
-    }
-  };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   if (name === "casSelection") {
+  //     setCasSelection(value);
+  //   } else if (name === "casCode") {
+  //     setCasCode(value);
+  //   } else if (name === "serviceId") {
+  //     setServiceId(value);
+  //   }
+  // };
 
   const deleteCasList = (index) => {
     const list = [...data];
@@ -201,7 +178,8 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
                   placeholder="Select CAS"
                   className="form-select"
                   value={casSelection}
-                  onChange={handleChange}
+                  // onChange={(e) => setCasSelection(e.target.value)}
+                  onChange={(e) => setCasSelection(e.target.value)}
                 >
                   <option value="">Select cascode</option>
                   {channelListCascode &&
@@ -235,7 +213,7 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
                     type="text"
                     placeholder="CAS Code"
                     value={casCode}
-                    onChange={handleChange}
+                    onChange={(e) => setCasCode(e.target.value)}
                   />
                 </div>
               </Col>
@@ -246,7 +224,7 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
                     type="text"
                     placeholder="service id"
                     value={serviceId}
-                    onChange={handleChange}
+                    onChange={(e) => setServiceId(e.target.value)}
                   />
                 </div>
               </Col>
@@ -266,7 +244,7 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
               </Col>
             </div>
           </Col >
-
+          {console.log("Cas List table Data" + JSON.stringify(data))}
           <Col lg={6}>
             <TableContainer
               isPagination={true}
@@ -288,8 +266,10 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
 };
 
 CasList.propTypes = {
-  toggle: PropTypes.func,
+  handleUpdateCasList: PropTypes.func,
   isOpen: PropTypes.bool,
+  channelListCascode: PropTypes.array,
+  data: PropTypes.array,
 };
 
 export default CasList;

@@ -24,6 +24,7 @@ const AddNewChannelList = (props) => {
 
   const [casCodeList, setCasCodeList] = useState([]);
 
+
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -103,7 +104,6 @@ const AddNewChannelList = (props) => {
   const handleUpdateCasList = (casList) => {
     setCasCodeList(casList);
   };
-
 
   return (
     <Modal
@@ -301,7 +301,7 @@ const AddNewChannelList = (props) => {
                   Type<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="type"
+                  name="isFta"
                   type="select"
                   placeholder="Select type"
                   className="form-select"
@@ -509,7 +509,7 @@ const AddNewChannelList = (props) => {
             }}
           >
             <Col sm="12">
-              <CasList isOpen={handleUpdateCasList} data={casCodeList} updateList={handleUpdateCasList} channelListCascode={channelListCascode} />
+              <CasList isOpen={handleUpdateCasList} data={casCodeList} updateList={setCasCodeList} channelListCascode={channelListCascode} />
             </Col>
           </Row>
           <Row>
