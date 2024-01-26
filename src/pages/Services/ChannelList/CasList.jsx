@@ -56,90 +56,90 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
   const { casSource } = useSelector(ChannelProperties);
 
 
-  const columns = useMemo(
-    () => [
-      {
-        Header: "#",
-        accessor: "cas_id",
-        disableFilters: true,
-        // filterable: true,
-        Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const index = startIndex + cellProps.row.index + 1;
-          return (
-            <>
-              <p className="text-dark">
-                {/* {index} */}
-                {cellProps.row.original.cas_id}
-              </p>
-            </>
-          );
-        },
-      },
+  // const columns = useMemo(
+  //   () => [
+  //     {
+  //       Header: "#",
+  //       accessor: "cas_id",
+  //       disableFilters: true,
+  //       // filterable: true,
+  //       Cell: (cellProps) => {
+  //         const totalRows = cellProps.rows.length;
+  //         const index = startIndex + cellProps.row.index + 1;
+  //         return (
+  //           <>
+  //             <p className="text-dark">
+  //               {/* {index} */}
+  //               {cellProps.row.original.cas_id}
+  //             </p>
+  //           </>
+  //         );
+  //       },
+  //     },
 
-      {
-        Header: "CAS",
-        accessor: "casSelection",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.casSelection}
-            </p>
-          );
-        },
-      },
-      {
-        Header: "CAS CODE",
-        accessor: "casCode",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.casCode}
-            </p>
-          );
-        },
-      },
-      {
-        Header: "Service ID",
-        accessor: "serviceId",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.serviceId}
-            </p>
-          );
-        },
-      },
-      {
-        Header: "$",
-        // accessor: "type",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"deleteIcon"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-    ],
-    []
-  );
+  //     {
+  //       Header: "CAS",
+  //       accessor: "casSelection",
+  //       filterable: true,
+  //       Cell: (cellProps) => {
+  //         return (
+  //           <p className="text-muted mb-0">
+  //             {cellProps.row.original.casSelection}
+  //           </p>
+  //         );
+  //       },
+  //     },
+  //     {
+  //       Header: "CAS CODE",
+  //       accessor: "casCode",
+  //       filterable: true,
+  //       Cell: (cellProps) => {
+  //         return (
+  //           <p className="text-muted mb-0">
+  //             {cellProps.row.original.casCode}
+  //           </p>
+  //         );
+  //       },
+  //     },
+  //     {
+  //       Header: "Service ID",
+  //       accessor: "serviceId",
+  //       filterable: true,
+  //       Cell: (cellProps) => {
+  //         return (
+  //           <p className="text-muted mb-0">
+  //             {cellProps.row.original.serviceId}
+  //           </p>
+  //         );
+  //       },
+  //     },
+  //     {
+  //       Header: "$",
+  //       // accessor: "type",
+  //       filterable: true,
+  //       Cell: (cellProps) => {
+  //         return (
+  //           <>
+  //             <h5
+  //               style={{
+  //                 maxWidth: 200,
+  //                 overflow: "hidden",
+  //                 textOverflow: "ellipsis",
+  //                 whiteSpace: "nowrap",
+  //               }}
+  //               className="font-size-14 mb-1"
+  //             >
+  //               <Link className="text-dark" to="#">
+  //                 {"deleteIcon"}
+  //               </Link>
+  //             </h5>
+  //           </>
+  //         );
+  //       },
+  //     },
+  //   ],
+  //   []
+  // );
 
   // const casData = [data];
   const [casSelection, setCasSelection] = useState("");
@@ -166,52 +166,121 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
   return (
 
     <Row>
+      <Col
+        lg={6}
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+        }}
+      >
+        <Col lg={12}>
+          <div className="mb-3">
+            <Input
+              name="casSelection"
+              type="select"
+              placeholder="Select CAS"
+              className="form-select"
+              value={casSelection}
+              // onChange={(e) => setCasSelection(e.target.value)}
+              onChange={(e) => setCasSelection(e.target.value)}
+            >
+              <option value="">Select cascode</option>
+              {channelListCascode &&
+                channelListCascode.map((options) => (
+                  <option key={options.id} value={options.id}>
+                    {options.name}
+                  </option>
+                ))}
+            </Input>
+
+          </div >
+        </Col >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Col lg={5} style={{ marginRight: "20px" }}>
+            <div className="mb-3">
+              {/* <TODO>Add handlechange and update cascode</TODO> */}
+              <Input
+                name="casCode"
+                type="text"
+                placeholder="CAS Code"
+                value={casCode}
+                onChange={(e) => setCasCode(e.target.value)}
+              />
+            </div>
+          </Col>
+          <Col lg={5} style={{ marginRight: "20px" }}>
+            <div className="mb-3">
+              <Input
+                name="serviceId"
+                type="text"
+                placeholder="service id"
+                value={serviceId}
+                onChange={(e) => setServiceId(e.target.value)}
+              />
+            </div>
+          </Col>
+          <Col lg={2}>
+            <div className="mb-3">
+              <button
+                type="button"
+                className="btn btn-primary "
+                onClick={updateCasList}
+              >
+                <i
+                  className="bx bx-right-arrow-alt"
+                  style={{ fontSize: 20 }}
+                ></i>
+              </button>
+            </div>
+          </Col>
+        </div>
+      </Col>
       <Col xl={6}>
         <Card>
           <CardBody>
-            <CardTitle className="h4">Basic example</CardTitle>
-            <p className="card-title-desc">
-              For basic styling—light padding and only horizontal
-              dividers—add the base className <code>.table</code> to any
-              <code>&lt;table&gt;</code>.
-            </p>
-
             <div className="table-responsive">
               <Table className="table mb-0">
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Username</th>
+                    <th>CAS</th>
+                    <th>CAS CODE</th>
+                    <th>SERVICE ID</th>
+                    <th>$</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
+                  {data.map((item, index) => (
+                    <tr key={index}>
+                      <th scope="row">{item.cas_id}</th>
+                      <td>{item.casSelection}</td>
+                      <td>{item.casCode}</td>
+                      <td>{item.serviceId}</td>
+                      <td>
+                        <h5>
+                          <Link className="text-dark" to="#" onClick={() => deleteCasList(index)}>
+                            <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
+                          </Link>
+                        </h5>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </Table>
             </div>
           </CardBody>
         </Card>
       </Col>
+
     </Row>
+
+
 
     // <Row>
     //   <Card>
@@ -403,9 +472,7 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
     //   </CardBody >
     // </Card >
 
-
   );
-
 };
 
 CasList.propTypes = {
