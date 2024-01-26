@@ -6,6 +6,8 @@ import "react-rangeslider/lib/index.css";
 
 const RevenueShare = () => {
   const [def, setdef] = useState(50);
+  const [def1, setdef1] = useState(20);
+  const [def2, setdef2] = useState(0);
   return (
     <div>
       <Row>
@@ -29,10 +31,10 @@ const RevenueShare = () => {
               value={def}
               orientation="horizontal"
               onChange={(value) => {
-                setdef(value);
+                setdef1(value);
               }}
             />
-            <span className="float-right  mt-4">Value: {def} %</span>
+            <span className="float-right  mt-4">Value: {def1} %</span>
           </div>
           <div className="p-3">
             <h5 className="font-size-14 mb-3 mt-0">MSO Discount</h5>
@@ -41,14 +43,14 @@ const RevenueShare = () => {
               value={def}
               orientation="horizontal"
               onChange={(value) => {
-                setdef(value);
+                setdef2(value);
               }}
             />
-            <span className="float-right  mt-4">Value: {def} %</span>
+            <span className="float-right  mt-4">Value: {def2} %</span>
           </div>
           <span>Note: Discount won't be shared with LCO</span>
         </Col>
-        <Col lg={6}>
+        {/* <Col lg={6}>
           <Card>
             <CardBody>
               <span>Graphical representation of SHARE</span>
@@ -56,7 +58,7 @@ const RevenueShare = () => {
               <PieChart dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]' />
             </CardBody>
           </Card>
-        </Col>
+        </Col> */}
       </Row>
     </div>
   );

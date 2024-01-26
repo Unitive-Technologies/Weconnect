@@ -18,6 +18,7 @@ import { useFormik } from "formik";
 import { getChannelList as onGetChannelList, addNewChannelList as onAddNewChannelList } from "/src/store/channel/actions";
 import { useDispatch } from "react-redux";
 import CasList from "./CasList";
+import PieChart from "./PieChart";
 
 const AddNewChannelList = (props) => {
   const { isOpen, toggleAddModal, channelListBroadcaster, channelListStatus, channelListType, channelListDefinition, channelListGenre, channelListCascode, channelListLanguage, } = props;
@@ -521,6 +522,7 @@ const AddNewChannelList = (props) => {
               </Row>
             </div>
           )}
+          {/* <PieChart /> */}
           <div
             style={{
               // margin: "20px 0px",
