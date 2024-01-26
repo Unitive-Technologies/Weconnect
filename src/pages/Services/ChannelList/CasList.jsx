@@ -79,7 +79,6 @@ const CasList = ({
       >
         <Col lg={12}>
           <div className="mb-3">
-            {console.log("casSelection:" + JSON.stringify(data))}
             <Input
               name="casSelection"
               type="select"
@@ -161,7 +160,6 @@ const CasList = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {console.log("casSelection:" + casSelection)}
                   {data.map((item, index) => (
                     <tr key={index}>
                       <th scope="row">{item.cas_id}</th>
