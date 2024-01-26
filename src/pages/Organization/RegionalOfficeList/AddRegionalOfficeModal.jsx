@@ -174,7 +174,9 @@ const AddRegionalOfficeModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Name</Label>
+                <Label className="form-label">
+                  Name<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="name"
                   label="Regional Office Name"
@@ -198,7 +200,9 @@ const AddRegionalOfficeModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Contact Person</Label>
+                <Label className="form-label">
+                  Contact Person<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="contact_person"
                   label="Contact Person"
@@ -224,7 +228,9 @@ const AddRegionalOfficeModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Status</Label>
+                <Label className="form-label">
+                  Status<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="status_lbl"
                   type="select"
@@ -250,7 +256,9 @@ const AddRegionalOfficeModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Mobile No.</Label>
+                <Label className="form-label">
+                  Mobile No.<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="mobile_no"
                   label="Mobile No."
@@ -324,7 +332,9 @@ const AddRegionalOfficeModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">State</Label>
+                <Label className="form-label">
+                  State<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="state_lbl"
                   type="select"
@@ -349,7 +359,9 @@ const AddRegionalOfficeModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">District</Label>
+                <Label className="form-label">
+                  District<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="district_lbl"
                   type="select"
@@ -375,7 +387,9 @@ const AddRegionalOfficeModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">City</Label>
+                <Label className="form-label">
+                  City<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="city_lbl"
                   type="select"
@@ -402,7 +416,9 @@ const AddRegionalOfficeModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Address1</Label>
+                <Label className="form-label">
+                  Address1<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="addr1"
                   label="Address1"
@@ -705,7 +721,9 @@ const AddRegionalOfficeModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Credit Limit</Label>
+                <Label className="form-label">
+                  Credit Limit<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="credit_limit"
                   type="text"
@@ -730,7 +748,9 @@ const AddRegionalOfficeModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Area ID</Label>
+                <Label className="form-label">
+                  Area ID<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="area_id"
                   type="text"
@@ -855,7 +875,9 @@ const AddRegionalOfficeModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Login ID</Label>
+                <Label className="form-label">
+                  Login ID<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="loginid"
                   label="Login ID"

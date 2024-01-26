@@ -102,7 +102,6 @@ const EditDistributorModal = (props) => {
         console.log("selectedDistrict:" + typeof selectedDistrict);
       }
 
-      // Assuming you have a token stored in localStorage
       const token = "Bearer " + localStorage.getItem("temptoken");
 
       const response = await axios.get(
@@ -183,51 +182,71 @@ const EditDistributorModal = (props) => {
       // password: Yup.string().required("Please Enter Password"),
       // confirmpassword: Yup.string().required("Please Enter Confirm Password"),
     }),
-    onSubmit: (values) => {
-      const updateDistributor = {
-        id: distributor.id,
-        name: values["name"],
-        code: values["code"],
-        agreement_data: {
-          name: "",
-          type: "",
-          ext: "",
-          start_date: values["agreestart"],
-          end_date: values["agreeend"],
-          data: "",
-        },
-        parent_id: parseInt(values["parent_lbl"]),
-        addr: values["addr1"],
-        addr1: values["addr1"],
-        addr2: values["addr2"],
-        addr3: values["addr2"],
-        contact_person: values["contact_person"],
-        status: parseInt(values["status_lbl"]),
-        mobile_no: values["mobile_no"],
-        phone_no: values["phone_no"],
-        email: values["email"],
-        state_id: parseInt(values["state_lbl"]),
-        district_id: parseInt(values["district_lbl"]),
-        city_id: parseInt(values["city_lbl"]),
-        gstno: values["gstno"],
-        panno: values["panno"],
-        pincode: values["pincode"],
-        por_number: values["por_number"],
-        reg_phase: values["reg_phase"],
-        reg_startdate: values["reg_startdate"],
-        reg_enddate: values["reg_enddate"],
-        gst_date: values["gst_date"],
-        credit_limit: values["credit_limit"],
-        area_id: values["area_id"],
-        // username: values["username"],
-        // password: values["password"],
-        type: 2,
-      };
+    onSubmit: async (values) => {
+      try {
+        const updateDistributor = {
+          id: distributor.id,
+          name: values["name"],
+          code: values["code"],
+          agreement_data: {
+            name: "",
+            type: "",
+            ext: "",
+            start_date: values["agreestart"],
+            end_date: values["agreeend"],
+            data: "",
+          },
+          parent_id: parseInt(values["parent_lbl"]),
+          addr: values["addr1"],
+          addr1: values["addr1"],
+          addr2: values["addr2"],
+          addr3: values["addr2"],
+          contact_person: values["contact_person"],
+          status: parseInt(values["status_lbl"]),
+          mobile_no: values["mobile_no"],
+          phone_no: values["phone_no"],
+          email: values["email"],
+          state_id: parseInt(values["state_lbl"]),
+          district_id: parseInt(values["district_lbl"]),
+          city_id: parseInt(values["city_lbl"]),
+          gstno: values["gstno"],
+          panno: values["panno"],
+          pincode: values["pincode"],
+          por_number: values["por_number"],
+          reg_phase: values["reg_phase"],
+          reg_startdate: values["reg_startdate"],
+          reg_enddate: values["reg_enddate"],
+          gst_date: values["gst_date"],
+          credit_limit: values["credit_limit"],
+          area_id: values["area_id"],
+          // username: values["username"],
+          // password: values["password"],
+          type: 2,
+        };
 
-      // update user
-      dispatch(onUpdateDistributor(updateDistributor));
-      validation.resetForm();
-      closeEditModal();
+        // const token = "Bearer " + localStorage.getItem("temptoken");
+
+        // const response = await axios.put(
+        //   `${API_URL}/operator/${distributor.id}?vr=web1.0`,
+        //   updateDistributor,
+        //   {
+        //     headers: {
+        //       Authorization: token,
+        //     },
+        //   }
+        // );
+
+        // console.log("Axios Response:", response);
+        dispatch(onUpdateDistributor(updateDistributor));
+
+        validation.resetForm();
+        closeEditModal();
+      } catch (error) {
+        console.error("Error in onSubmit:", error);
+      }
+    },
+    onReset: () => {
+      validation.setValues(validation.initialValues);
     },
   });
   return (
