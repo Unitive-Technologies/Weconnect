@@ -14,7 +14,10 @@ import {
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-
+import {
+  getDistributorsPhase as onGetDistributorsPhase,
+  getDistributorsStatus as onGetDistributorsStatus,
+} from "/src/store/distributor/actions";
 import {
   getRegionalOffice as onGetRegionalOffice,
   goToPage as onGoToPage,
@@ -36,7 +39,7 @@ const RegionalOfficeList = (props) => {
   const dispatch = useDispatch();
 
   const selectRegionalOfficeState = (state) => state.regionaloffice;
-
+  const selectDistributorsState = (state) => state.distributors;
   const RegionalOfficeProperties = createSelector(
     selectRegionalOfficeState,
 
@@ -49,9 +52,17 @@ const RegionalOfficeList = (props) => {
       currentPage: regionalOfficesState.currentPage,
     })
   );
-
+  const DistributorsProperties = createSelector(
+    selectDistributorsState,
+    (distributors) => ({
+      phaseList: distributors.distributorsPhase,
+      statusList: distributors.distributorsStatus,
+    })
+  );
   const { regOffices, loading, totalPage, totalCount, currentPage, pageSize } =
     useSelector(RegionalOfficeProperties);
+
+  const { phaseList, statusList } = useSelector(DistributorsProperties);
   // const [isLoading, setLoading] = useState(loading);
   const [showRegionalOffice, setShowRegionalOffice] = useState(false);
   const [viewRegionalOffice, setViewRegionalOffice] = useState(false);
@@ -255,6 +266,8 @@ const RegionalOfficeList = (props) => {
   useEffect(() => {
     if (regOffices && !regOffices.length) {
       dispatch(onGetRegionalOffice());
+      dispatch(onGetDistributorsPhase());
+      dispatch(onGetDistributorsStatus());
     }
   }, [dispatch, regOffices]);
 
@@ -310,6 +323,8 @@ const RegionalOfficeList = (props) => {
       <AddRegionalOfficeModal
         isOpen={showRegionalOffice}
         toggleAddRegionalOffice={toggleAddRegionalOffice}
+        phaseList={phaseList}
+        statusList={statusList}
       />
       <UploadRegionalOfficeModal
         isOpen={showUploadRegionalOffice}
@@ -332,10 +347,10 @@ const RegionalOfficeList = (props) => {
                 <Card>
                   <CardBody>
                     {/* {console.log("currpage:" + currPage, perPage)} */}
-                    {console.log(
+                    {/* {console.log(
                       "RRRRRRRRRRRRRRRRRRRRRRRRegionalOffices:" +
                         JSON.stringify(regOffices)
-                    )}
+                    )} */}
                     <TableContainerX
                       columns={columns}
                       data={regOffices}

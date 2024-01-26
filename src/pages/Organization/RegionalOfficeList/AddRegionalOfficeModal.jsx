@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
+import { createSelector } from "reselect";
 import {
   Col,
   Row,
@@ -15,11 +17,96 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewRegionalOffice as onAddNewRegionalOffice } from "/src/store/regionaloffice/actions";
-import { useDispatch } from "react-redux";
+
+import { getStateUsers as onGetStateUsers } from "../../../store/stateusers/actions";
+import { useSelector, useDispatch } from "react-redux";
 
 const AddRegionalOfficeModal = (props) => {
-  const { isOpen, toggleAddRegionalOffice } = props;
+  const { isOpen, toggleAddRegionalOffice, statusList, phaseList } = props;
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
+  const [toggleSwitch, settoggleSwitch] = useState(true);
   const dispatch = useDispatch();
+  const [districtsList, setDistrictsList] = useState([]);
+  const [selectedState, setSelectedState] = useState("");
+  const [cityList, setCityList] = useState([]);
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+
+  const selectStatesState = (state) => state.stateUsers;
+
+  const StatesProperties = createSelector(selectStatesState, (states) => ({
+    statesList: states.stateUsers,
+  }));
+
+  const { statesList } = useSelector(StatesProperties);
+
+  const handleStateChange = async (e) => {
+    try {
+      const stateName = e.target.value;
+      setSelectedState(stateName);
+
+      validation.handleChange(e);
+      {
+        console.log("selectedState:" + typeof selectedState);
+      }
+
+      // Assuming you have a token stored in localStorage
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${selectedState}&filter[type]=2&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token, // Include your token here
+          },
+        }
+      );
+
+      console.log(
+        "districtlist after selection : " + JSON.stringify(response.data.data)
+      );
+      setDistrictsList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching policy data:", error);
+      // Handle error if necessary
+    }
+    // };
+  };
+
+  const handleDistrictChange = async (e) => {
+    try {
+      const districtName = e.target.value;
+      setSelectedDistrict(districtName);
+
+      validation.handleChange(e);
+      {
+        console.log("selectedDistrict:" + typeof selectedDistrict);
+      }
+
+      // Assuming you have a token stored in localStorage
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${selectedState}&filter[district_id]=${selectedDistrict}&filter[type]=3&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      console.log(
+        "cityList after selection : " + JSON.stringify(response.data.data)
+      );
+      setCityList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching policy data:", error);
+      // Handle error if necessary
+    }
+    // };
+  };
+  useEffect(() => {
+    dispatch(onGetStateUsers());
+  }, [dispatch]);
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -40,7 +127,6 @@ const AddRegionalOfficeModal = (props) => {
       city_lbl: "",
       gstno: "",
       panno: "",
-      username: "",
       status_lbl: "",
       email: "",
       pincode: "",
@@ -51,29 +137,30 @@ const AddRegionalOfficeModal = (props) => {
       gst_date: "",
       credit_limit: "",
       area_id: "",
-      agreement_data: [],
-      // created_at: "",
-      // created_by: "",
+      // agreement_data: [],
+      username: "",
+      password: "",
+      confirmpassword: "",
     },
+
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
-      code: Yup.string().required("Please Enter Code"),
-      addr: Yup.string().required("Please Address"),
+      addr1: Yup.string().required("Please Address"),
       contact_person: Yup.string().required("Please Enter Contact Person"),
       mobile_no: Yup.string().required("Please Enter Mobile"),
+      status_lbl: Yup.string().required("Please Enter Status"),
       state_lbl: Yup.string().required("Please Enter State"),
       district_lbl: Yup.string().required("Please Enter District"),
       city_lbl: Yup.string().required("Please Enter City"),
-      gstno: Yup.string().required("Please Enter GST"),
-      panno: Yup.string().required("Please Enter PAN"),
       username: Yup.string().required("Please Enter LoginID"),
-      status: Yup.string().required("Please Enter Status"),
     }),
     onSubmit: (values) => {
+      debugger;
       const newRegionalOffice = {
-        // id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         code: values["code"],
+        // agreement_data: null,
+        addr: values["addr1"],
         addr1: values["addr1"],
         addr2: values["addr2"],
         addr3: values["addr3"],
@@ -81,14 +168,13 @@ const AddRegionalOfficeModal = (props) => {
         mobile_no: values["mobile_no"],
         phone_no: values["phone_no"],
         faxno: values["faxno"],
-        message: values["message"],
-        state_lbl: values["state_lbl"],
-        district_lbl: values["district_lbl"],
-        city_lbl: values["city_lbl"],
+        state_id: parseInt(values["state_lbl"]),
+        district_id: parseInt(values["district_lbl"]),
+        city_id: parseInt(values["city_lbl"]),
         gstno: values["gstno"],
         panno: values["panno"],
         username: values["username"],
-        status_lbl: values["status_lbl"],
+        status: values["status_lbl"],
         email: values["email"],
         pincode: values["pincode"],
         por_number: values["por_number"],
@@ -98,16 +184,17 @@ const AddRegionalOfficeModal = (props) => {
         gst_date: values["gst_date"],
         credit_limit: values["credit_limit"],
         area_id: values["area_id"],
-        agreement_data: values["agreement_data"],
         type: 1,
       };
-      console.log("newUser:" + newRegionalOffice);
+      console.log("newRO:" + newRegionalOffice);
+
       // save new user
       dispatch(onAddNewRegionalOffice(newRegionalOffice));
       validation.resetForm();
       toggleAddRegionalOffice();
     },
   });
+
   return (
     <Modal
       isOpen={isOpen}
@@ -146,6 +233,7 @@ const AddRegionalOfficeModal = (props) => {
                       ? true
                       : false
                   }
+                  disabled
                 />
                 {validation.touched.code && validation.errors.code ? (
                   <FormFeedback type="invalid">
@@ -155,19 +243,37 @@ const AddRegionalOfficeModal = (props) => {
               </div>
             </Col>
             <Col lg={2}>
-              <div className="form-check form-switch form-switch-lg mb-3">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitchsizelg"
-                  defaultChecked
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="customSwitchsizelg"
+              <div className="mt-3">
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
                 >
-                  Custom / Auto
-                </label>
+                  <label style={{ marginRight: "10px" }}>Custom</label>
+                  <div className="form-check form-switch form-switch-lg mb-2">
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id="customSwitchsizelg"
+                      defaultChecked
+                      onClick={(e) => {
+                        settoggleSwitch(!toggleSwitch);
+                      }}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="customSwitchsizelg"
+                    >
+                      Auto
+                    </label>
+                  </div>
+                </div>
+                {/* {validation.touched.ifFixNCF && validation.errors.ifFixNCF ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.ifFixNCF}
+                  </FormFeedback>
+                ) : null} */}
               </div>
             </Col>
           </Row>
@@ -241,8 +347,12 @@ const AddRegionalOfficeModal = (props) => {
                   value={validation.values.status_lbl || ""}
                 >
                   <option value="">Select Status</option>
-                  <option value="11">Active</option>
-                  <option value="12">In-Active</option>
+                  {statusList &&
+                    statusList.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.status_lbl &&
                 validation.errors.status_lbl ? (
@@ -340,15 +450,16 @@ const AddRegionalOfficeModal = (props) => {
                   type="select"
                   placeholder="Select State"
                   className="form-select"
-                  onChange={validation.handleChange}
+                  onChange={handleStateChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.state_lbl || ""}
+                  value={selectedState}
                 >
                   <option value="">Select State</option>
-                  <option value="1">Tamilnadu</option>
-                  <option value="2">Kerala</option>
-                  <option value="3">Assam</option>
-                  <option value="4">Karnataka</option>
+                  {statesList.map((state) => (
+                    <option key={state.id} value={state.id}>
+                      {state.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.state_lbl && validation.errors.state_lbl ? (
                   <FormFeedback type="invalid">
@@ -367,15 +478,16 @@ const AddRegionalOfficeModal = (props) => {
                   type="select"
                   placeholder="Select District"
                   className="form-select"
-                  onChange={validation.handleChange}
+                  onChange={handleDistrictChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.district_lbl || ""}
+                  value={selectedDistrict}
                 >
                   <option value="">Select District</option>
-                  <option value="1">Virudhunagar</option>
-                  <option value="2">Tuticori</option>
-                  <option value="3">Chennai</option>
-                  <option value="4">Erode</option>
+                  {districtsList.map((district) => (
+                    <option key={district.id} value={district.id}>
+                      {district.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.district_lbl &&
                 validation.errors.district_lbl ? (
@@ -400,10 +512,11 @@ const AddRegionalOfficeModal = (props) => {
                   value={validation.values.city_lbl || ""}
                 >
                   <option value="">Select City</option>
-                  <option value="1">Virudhunagar</option>
-                  <option value="2">Sivakasi</option>
-                  <option value="3">Kovilpatti</option>
-                  <option value="4">Erode</option>
+                  {cityList.map((city) => (
+                    <option key={city.id} value={city.id}>
+                      {city.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.city_lbl && validation.errors.city_lbl ? (
                   <FormFeedback type="invalid">
@@ -557,10 +670,12 @@ const AddRegionalOfficeModal = (props) => {
                   value={validation.values.reg_phase || ""}
                 >
                   <option value="">Select Phase</option>
-                  <option value="1">Phase 1</option>
-                  <option value="2">Phase 2</option>
-                  <option value="3">Phase 3</option>
-                  <option value="4">Phase 4</option>
+                  {phaseList &&
+                    phaseList.map((phase) => (
+                      <option key={phase.id} value={phase.id}>
+                        {phase.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.reg_phase && validation.errors.reg_phase ? (
                   <FormFeedback type="invalid">
@@ -984,8 +1099,10 @@ const AddRegionalOfficeModal = (props) => {
 };
 
 AddRegionalOfficeModal.propTypes = {
-  toggle: PropTypes.func,
+  toggleAddRegionalOffice: PropTypes.func,
   isOpen: PropTypes.bool,
+  phaseList: PropTypes.array,
+  statusList: PropTypes.array,
 };
 
 export default AddRegionalOfficeModal;

@@ -399,8 +399,8 @@ ViewRegionalOfficeModal.propTypes = {
   isOpen: PropTypes.bool,
   toggleViewRegionalOffice: PropTypes.func,
   resetSelection: PropTypes.func,
-  regionalOffData: PropTypes.array,
-  setViewRegionalOffice: PropTypes.bool,
+  regionalOffData: PropTypes.object,
+  setViewRegionalOffice: PropTypes.func,
 };
 
 export default ViewRegionalOfficeModal;

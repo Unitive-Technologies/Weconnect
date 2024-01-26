@@ -65,8 +65,7 @@ const RegionalOffice = (state = INIT_STATE, action) => {
     case ADD_NEW_REGIONALOFFICE:
       return {
         ...state,
-        error: action.payload,
-        loading: false,
+        loading: true,
       };
 
     case ADD_REGIONALOFFICE_SUCCESS:

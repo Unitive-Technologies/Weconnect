@@ -17,12 +17,7 @@ import { useDispatch } from "react-redux";
 import { updateRegionalOffice as onUpdateRegionalOffice } from "/src/store/regionaloffice/actions";
 
 const EditRegionalOfficeModal = (props) => {
-  const {
-    closeViewModal,
-    regionalOffData,
-    setViewRegionalOffice,
-    closeEditModal,
-  } = props;
+  const { closeViewModal, regionalOffData, closeEditModal } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
   const [showEditRegionalOffice, setShowEditRegionalOffice] = useState(false);

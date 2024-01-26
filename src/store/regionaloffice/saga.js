@@ -7,6 +7,7 @@ import {
 } from "./actionTypes";
 
 import {
+  getRegionalOffice as fetchregionaloffices,
   getRegionalOfficeSuccess,
   getRegionalOfficeFail,
   addRegionalOfficeFail,
@@ -75,6 +76,7 @@ function* onAddNewRegionalOffice({ payload: regionalofficeList }) {
     const response = yield call(addNewLco, regionalofficeList);
 
     yield put(addRegionalOfficeSuccess(response));
+    yield put(fetchregionaloffices());
     // toast.success("Regional Office Added Successfully", { autoClose: 2000 });
   } catch (error) {
     yield put(addRegionalOfficeFail(error));
@@ -84,9 +86,13 @@ function* onAddNewRegionalOffice({ payload: regionalofficeList }) {
 
 function* onUpdateRegionalOffice({ payload: regionaloffice }) {
   try {
-    const response = yield call(updateRegionalOffice, regionaloffices);
+    const response = yield call(
+      updateRegionalOffice,
+      regionaloffice,
+      regionaloffice.id
+    );
     yield put(updateRegionalOfficeSuccess(response));
-    toast.success("Regiional Office Updated Successfully", { autoClose: 2000 });
+    yield put(fetchregionaloffices());
   } catch (error) {
     yield put(updateRegionalOfficeFail(error));
     toast.error("Regional Office Updated Failed", { autoClose: 2000 });
