@@ -71,7 +71,7 @@ const AddRegionalOfficeModal = (props) => {
     }),
     onSubmit: (values) => {
       const newRegionalOffice = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
+        // id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         code: values["code"],
         addr1: values["addr1"],
@@ -99,6 +99,7 @@ const AddRegionalOfficeModal = (props) => {
         credit_limit: values["credit_limit"],
         area_id: values["area_id"],
         agreement_data: values["agreement_data"],
+        type: 1,
       };
       console.log("newUser:" + newRegionalOffice);
       // save new user

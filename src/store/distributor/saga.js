@@ -119,9 +119,9 @@ function* onAddNewDistributor({ payload: distributors }) {
   }
 }
 
-function* onUpdateDistributor({ payload: distributors }) {
+function* onUpdateDistributor({ payload: distributor }) {
   try {
-    const response = yield call(updateDistributor, distributors);
+    const response = yield call(updateDistributor, distributor, distributor.id);
     yield put(updateDistributorsSuccess(response));
     yield put(fetchdistributors());
     // toast.success("Distributor Updated Successfully", { autoClose: 2000 });

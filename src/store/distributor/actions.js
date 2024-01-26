@@ -88,14 +88,14 @@ export const addDistributorsFail = (error) => ({
   payload: error,
 });
 
-export const updateDistributors = (distributors) => ({
+export const updateDistributors = (distributor) => ({
   type: UPDATE_DISTRIBUTOR,
-  payload: distributors,
+  payload: distributor,
 });
 
-export const updateDistributorsSuccess = (distributors) => ({
+export const updateDistributorsSuccess = (distributor) => ({
   type: UPDATE_DISTRIBUTORS_SUCCESS,
-  payload: distributors,
+  payload: distributor,
 });
 
 export const updateDistributorsFail = (error) => ({

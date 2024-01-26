@@ -148,7 +148,8 @@ export const getSublocationUrl = (currPage, perPage) => {
 export const GET_DISTRIBUTORS =
   "/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,branch_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=2&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_DISTRIBUTOR = "/operator?vr=web1.0";
-export const UPDATE_DISTRIBUTOR = "/update/distributors";
+export const UPDATE_DISTRIBUTOR = (id) => `/operator/${id}?vr=web1.0`;
+
 export const GET_DISTRIBUTORS_PHASE = "/list/phase?fields=id,name&vr=web1.0";
 export const GET_DISTRIBUTORS_STATUS = "/list/status?fields=id,name&vr=web1.0";
 export const getLcoUrl = (currPage, perPage) => {

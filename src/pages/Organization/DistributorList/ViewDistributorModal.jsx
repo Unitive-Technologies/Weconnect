@@ -20,8 +20,15 @@ import TapsOfViewDistributor from "./TapsOfViewDistributor";
 import EditDistributorModal from "./EditDistributorModal";
 
 const ViewDistributorModal = (props) => {
-  const { isOpen, handleViewModal, distributor, setViewDistributor } = props;
-  //   console.log("user in viewuser modal:" + JSON.stringify(user));
+  const {
+    isOpen,
+    toggleViewModal,
+    distributor,
+    setViewDistributor,
+    distributorsPhase,
+    distributorsStatus,
+  } = props;
+  // console.log("distributor in viewuser modal:" + JSON.stringify(distributor));
   const dispatch = useDispatch();
   const [showEditDistributor, setShowEditDistributor] = useState(false);
 
@@ -34,6 +41,7 @@ const ViewDistributorModal = (props) => {
       id: (distributor && distributor.id) || "",
       name: (distributor && distributor.name) || "",
       code: (distributor && distributor.code) || "",
+      addr: (distributor && distributor.addr) || "",
       addr1: (distributor && distributor.addr1) || "",
       addr2: (distributor && distributor.addr2) || "",
       addr3: (distributor && distributor.addr3) || "",
@@ -57,6 +65,7 @@ const ViewDistributorModal = (props) => {
       gst_date: (distributor && distributor.gst_date) || "",
       credit_limit: (distributor && distributor.credit_limit) || "",
       area_id: (distributor && distributor.area_id) || "",
+      branch_lbl: (distributor && distributor.branch_lbl) || "",
       agreement_data: [],
     },
     validationSchema: Yup.object({
@@ -111,7 +120,7 @@ const ViewDistributorModal = (props) => {
       // update user
       dispatch(onUpdateUser(updateDistributor));
       validation.resetForm();
-      handleViewModal();
+      toggleViewModal();
     },
   });
 
@@ -124,11 +133,11 @@ const ViewDistributorModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleViewModal}
+      toggle={toggleViewModal}
     >
       {!showEditDistributor ? (
         <>
-          <ModalHeader toggle={handleViewModal} tag="h4" position="relative">
+          <ModalHeader toggle={toggleViewModal} tag="h4" position="relative">
             <h4>View - {distributor.name}</h4>
           </ModalHeader>
           <Link
@@ -210,7 +219,7 @@ const ViewDistributorModal = (props) => {
                           disabled
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
-                          value={validation.values.upload || ""}
+                          value={validation.values.name || ""}
                           invalid={
                             validation.touched.name && validation.errors.name
                               ? true
@@ -307,25 +316,23 @@ const ViewDistributorModal = (props) => {
                       <div className="mb-3">
                         <Label className="form-label">Address</Label>
                         <Input
-                          name="address"
+                          name="addr"
                           label="Address"
                           type="text"
                           placeholder="Enter Address"
                           disabled
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
-                          value={validation.values.address || ""}
+                          value={validation.values.addr || ""}
                           invalid={
-                            validation.touched.address &&
-                            validation.errors.address
+                            validation.touched.addr && validation.errors.addr
                               ? true
                               : false
                           }
                         />
-                        {validation.touched.address &&
-                        validation.errors.address ? (
+                        {validation.touched.addr && validation.errors.addr ? (
                           <FormFeedback type="invalid">
-                            {validation.errors.address}
+                            {validation.errors.addr}
                           </FormFeedback>
                         ) : null}
                       </div>
@@ -334,25 +341,25 @@ const ViewDistributorModal = (props) => {
                       <div className="mb-3">
                         <Label className="form-label">Parent</Label>
                         <Input
-                          name="parent"
+                          name="branch_lbl"
                           label="Parent"
                           type="text"
                           placeholder="Enter Parent"
                           disabled
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
-                          value={validation.values.parent || ""}
+                          value={validation.values.branch_lbl || ""}
                           invalid={
-                            validation.touched.parent &&
-                            validation.errors.parent
+                            validation.touched.branch_lbl &&
+                            validation.errors.branch_lbl
                               ? true
                               : false
                           }
                         />
-                        {validation.touched.parent &&
-                        validation.errors.parent ? (
+                        {validation.touched.branch_lbl &&
+                        validation.errors.branch_lbl ? (
                           <FormFeedback type="invalid">
-                            {validation.errors.parent}
+                            {validation.errors.branch_lbl}
                           </FormFeedback>
                         ) : null}
                       </div>
@@ -375,9 +382,10 @@ const ViewDistributorModal = (props) => {
           distributor={distributor}
           closeViewModal={() => setViewDistributor(false)}
           closeEditModal={() => setShowEditDistributor(false)}
+          distributorsPhase={distributorsPhase}
+          distributorsStatus={distributorsStatus}
         />
       )}
-      {/* </Modal> */}
     </Modal>
   );
 };

@@ -105,7 +105,7 @@ const DistributorList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  handleViewModal(userData);
+                  toggleViewModal(userData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -328,11 +328,11 @@ const DistributorList = (props) => {
     setShowUploadDistributor(!showUploadDistributor);
   };
 
-  const [viewDistributors, setViewDistributors] = useState({});
+  const [selectedDistributor, setSelectedDistributor] = useState({});
 
-  const handleViewModal = (userData) => {
+  const toggleViewModal = (userData) => {
     setViewDistributor(!viewDistributor);
-    setViewDistributors(userData);
+    setSelectedDistributor(userData);
   };
 
   const getTableActions = () => {
@@ -364,9 +364,11 @@ const DistributorList = (props) => {
     <React.Fragment>
       <ViewDistributorModal
         isOpen={viewDistributor}
-        handleViewModal={handleViewModal}
-        distributor={viewDistributors}
+        toggleViewModal={toggleViewModal}
+        distributor={selectedDistributor}
         setViewDistributor={setViewDistributor}
+        distributorsPhase={distributorsPhase}
+        distributorsStatus={distributorsStatus}
       />
       <AddDistributorModal
         isOpen={showDistributor}
@@ -413,7 +415,7 @@ const DistributorList = (props) => {
                       tableActions={getTableActions()}
                       goToPage={goToPage}
                       handleRowClick={(row) => {
-                        handleViewModal(row);
+                        toggleViewModal(row);
                       }}
                     />
                   </CardBody>

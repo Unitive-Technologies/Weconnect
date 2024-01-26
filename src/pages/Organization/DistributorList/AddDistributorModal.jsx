@@ -43,8 +43,6 @@ const AddDistributorModal = (props) => {
 
   const selectRegionalOfficeState = (state) => state.regionaloffice;
   const selectStatesState = (state) => state.stateUsers;
-  // const selectPhaseState = (state) => state.distributors;
-  // const selectReasonState = (state) => state.reason;
 
   const RegionalOfficeProperties = createSelector(
     selectRegionalOfficeState,
@@ -55,18 +53,9 @@ const AddDistributorModal = (props) => {
   const StatesProperties = createSelector(selectStatesState, (states) => ({
     statesList: states.stateUsers,
   }));
-  // const PhaseProperties = createSelector(selectPhaseState, (states) => ({
-  //   phaseList: states.distributorsPhase,
-  // }));
-  // const ReasonProperties = createSelector(selectReasonState, (reason) => ({
-  //   reasonStatus: reason.reasonStatus,
-  // }));
 
   const { regOff } = useSelector(RegionalOfficeProperties);
   const { statesList } = useSelector(StatesProperties);
-  // const { phaseList } = useSelector(PhaseProperties);
-  // const { reasonStatus } = useSelector(ReasonProperties);
-  console.log("regionoffice:" + JSON.stringify(regOff));
 
   const handleStateChange = async (e) => {
     try {
@@ -137,8 +126,8 @@ const AddDistributorModal = (props) => {
     if (regOff && !regOff.length) {
       dispatch(onGetRegionalOffice());
       dispatch(onGetStateUsers());
-      dispatch(onGetDistributorsPhase());
-      dispatch(onGetReasonStatus());
+      // dispatch(onGetDistributorsPhase());
+      // dispatch(onGetReasonStatus());
     }
   }, [dispatch, regOff]);
   // console.log("regOfficelist:" + JSON.stringify(regOff));
@@ -186,13 +175,10 @@ const AddDistributorModal = (props) => {
       state: Yup.string().required("Please Enter State"),
       district: Yup.string().required("Please Enter District"),
       city: Yup.string().required("Please Enter City"),
-      // gstno: Yup.string().required("Please Enter GST"),
-      // panno: Yup.string().required("Please Enter PAN"),
       username: Yup.string().required("Please Enter LoginID"),
     }),
     onSubmit: (values) => {
       const newDistributor = {
-        // id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         code: values["code"],
         agreement_data: {
