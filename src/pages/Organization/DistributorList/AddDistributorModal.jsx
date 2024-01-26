@@ -44,7 +44,7 @@ const AddDistributorModal = (props) => {
   const selectRegionalOfficeState = (state) => state.regionaloffice;
   const selectStatesState = (state) => state.stateUsers;
   // const selectPhaseState = (state) => state.distributors;
-  const selectReasonState = (state) => state.reason;
+  // const selectReasonState = (state) => state.reason;
 
   const RegionalOfficeProperties = createSelector(
     selectRegionalOfficeState,
@@ -58,15 +58,15 @@ const AddDistributorModal = (props) => {
   // const PhaseProperties = createSelector(selectPhaseState, (states) => ({
   //   phaseList: states.distributorsPhase,
   // }));
-  const ReasonProperties = createSelector(selectReasonState, (reason) => ({
-    reasonStatus: reason.reasonStatus,
-  }));
+  // const ReasonProperties = createSelector(selectReasonState, (reason) => ({
+  //   reasonStatus: reason.reasonStatus,
+  // }));
 
   const { regOff } = useSelector(RegionalOfficeProperties);
   const { statesList } = useSelector(StatesProperties);
   // const { phaseList } = useSelector(PhaseProperties);
-  const { reasonStatus } = useSelector(ReasonProperties);
-  console.log("status:" + JSON.stringify(reasonStatus));
+  // const { reasonStatus } = useSelector(ReasonProperties);
+  console.log("regionoffice:" + JSON.stringify(regOff));
 
   const handleStateChange = async (e) => {
     try {
@@ -192,7 +192,7 @@ const AddDistributorModal = (props) => {
     }),
     onSubmit: (values) => {
       const newDistributor = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
+        // id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         code: values["code"],
         agreement_data: {
@@ -209,7 +209,7 @@ const AddDistributorModal = (props) => {
         addr2: values["addr2"],
         addr3: values["addr2"],
         contact_person: values["contact_person"],
-        status: values["status"],
+        status: parseInt(values["status"]),
         mobile_no: values["mobile_no"],
         phone_no: values["phone_no"],
         email: values["email"],
@@ -225,9 +225,10 @@ const AddDistributorModal = (props) => {
         reg_enddate: values["reg_enddate"],
         gst_date: values["gst_date"],
         credit_limit: values["credit_limit"],
-        area_id: parseInt(values["area_id"]),
+        area_id: values["area_id"],
         username: values["username"],
         password: values["password"],
+        type: 2,
         // confirmpassword: values["confirmpassword"],
       };
       console.log("Distributor values:" + newDistributor);
@@ -403,11 +404,12 @@ const AddDistributorModal = (props) => {
                       {item.name}
                     </option>
                   ))} */}
-                  {regOff.map((item) => (
-                    <option key={item.id} value={item.id}>
-                      {item.name}
-                    </option>
-                  ))}
+                  {regOff &&
+                    regOff.map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.parentRO && validation.errors.parentRO ? (
                   <FormFeedback type="invalid">
@@ -507,8 +509,8 @@ const AddDistributorModal = (props) => {
                   value={validation.values.status || ""}
                 >
                   <option value="">Select Status</option>
-                  {reasonStatus &&
-                    reasonStatus.map((status) => (
+                  {distributorsStatus &&
+                    distributorsStatus.map((status) => (
                       <option key={status.id} value={status.id}>
                         {status.name}
                       </option>
