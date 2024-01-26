@@ -19,9 +19,13 @@ import { createSelector } from "reselect";
 import { useSelector, useDispatch } from "react-redux";
 import RevenueShare from "./RevenueShare";
 
-const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) => {
-
-  console.log("Cas List Data" + JSON.stringify(data))
+const CasList = ({
+  data,
+  updateList,
+  handleUpdateCasList,
+  channelListCascode,
+}) => {
+  console.log("Cas List Data" + JSON.stringify(data));
 
   const updateCasList = () => {
     if (!casSelection || !casCode || !serviceId) {
@@ -36,15 +40,13 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
     };
 
     const updatedData = [...data, newItem];
-    console.log("Updated Data in CasList" + updatedData)
+    console.log("Updated Data in CasList" + updatedData);
     updateList(updatedData);
-
 
     setCasSelection("");
     setCasCode("");
     setServiceId("");
   };
-
 
   const selectChannelState = (state) => state.channelList;
   const ChannelProperties = createSelector(
@@ -56,11 +58,9 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
 
   const { casSource } = useSelector(ChannelProperties);
 
-
   const [casSelection, setCasSelection] = useState("");
   const [casCode, setCasCode] = useState("");
   const [serviceId, setServiceId] = useState("");
-
 
   const deleteCasList = (index) => {
     const list = [...data];
@@ -69,7 +69,6 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
   };
 
   return (
-
     <Row>
       <Col
         lg={6}
@@ -80,6 +79,7 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
       >
         <Col lg={12}>
           <div className="mb-3">
+            {console.log("casSelection:" + JSON.stringify(data))}
             <Input
               name="casSelection"
               type="select"
@@ -88,18 +88,18 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
               value={casSelection}
               // onChange={(e) => setCasSelection(e.target.value)}
               onChange={(e) => setCasSelection(e.target.value)}
+              disabled={data.length === 0 ? false : true}
             >
               <option value="">Select cascode</option>
               {channelListCascode &&
                 channelListCascode.map((options) => (
-                  <option key={options.id} value={options.id}>
+                  <option key={options.id} value={options.name}>
                     {options.name}
                   </option>
                 ))}
             </Input>
-
-          </div >
-        </Col >
+          </div>
+        </Col>
         <div
           style={{
             display: "flex",
@@ -161,6 +161,7 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
                   </tr>
                 </thead>
                 <tbody>
+                  {console.log("casSelection:" + casSelection)}
                   {data.map((item, index) => (
                     <tr key={index}>
                       <th scope="row">{item.cas_id}</th>
@@ -169,8 +170,15 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
                       <td>{item.serviceId}</td>
                       <td>
                         <h5>
-                          <Link className="text-dark" to="#" onClick={() => deleteCasList(index)}>
-                            <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
+                          <Link
+                            className="text-dark"
+                            to="#"
+                            onClick={() => deleteCasList(index)}
+                          >
+                            <i
+                              className="mdi mdi-delete font-size-18"
+                              id="deletetooltip"
+                            />
                           </Link>
                         </h5>
                       </td>
@@ -183,7 +191,6 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
         </Card>
       </Col>
     </Row>
-
   );
 };
 
