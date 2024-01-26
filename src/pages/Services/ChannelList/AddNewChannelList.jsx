@@ -7,9 +7,12 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  CardBody,
   Label,
   FormFeedback,
   Input,
+  CardTitle,
+  Card,
   Form,
 } from "reactstrap";
 import RevenueShare from "./RevenueShare";
@@ -27,6 +30,8 @@ const AddNewChannelList = (props) => {
   const [casCodeList, setCasCodeList] = useState([]);
 
   const [selectedType, setSelectedType] = useState("");
+
+  const [selectedRate, setSelectedRate] = useState("");
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -450,7 +455,11 @@ const AddNewChannelList = (props) => {
                   name="rate"
                   type="number"
                   step="0.01"
-                  onChange={validation.handleChange}
+                  onChange={(e) => {
+                    validation.handleChange(e);
+                    setSelectedRate(e.target.value);
+                  }}
+                  placeholder="0"
                   onBlur={validation.handleBlur}
                   value={validation.values.rate || ""}
                 ></Input>
@@ -491,37 +500,52 @@ const AddNewChannelList = (props) => {
               </div>
             </Col>
           </Row>
-          {selectedType === "0" && (
-            <div>
-              <div
-                style={{
-                  // margin: "20px 0px",
-                  marginTop: "20px",
-                  marginBottom: "18px",
-                  zIndex: 12000,
-                  backgroundColor: "#fff",
-                  width: "fit-content",
-                  marginLeft: "40%",
-                  position: "absolute",
-                  padding: "0px 10px",
-                }}
-              >
-                <h5 style={{}}>MRP Revenue Share</h5>
+          <div>
+            {selectedType === "0" && (
+              <div>
+                <div
+                  style={{
+                    // margin: "20px 0px",
+                    marginTop: "20px",
+                    marginBottom: "18px",
+                    zIndex: 12000,
+                    backgroundColor: "#fff",
+                    width: "fit-content",
+                    marginLeft: "40%",
+                    position: "absolute",
+                    padding: "0px 10px",
+                  }}
+                >
+                  <h5 style={{}}>MRP Revenue Share</h5>
+                </div>
+                <Row
+                  style={{
+                    position: "relative",
+                    border: "1px solid #ced4da",
+                    padding: "20px 0px",
+                    margin: "30px 0px",
+                  }}
+                >
+                  <Col sm="12">
+                    <RevenueShare />
+                  </Col>
+                </Row>
               </div>
-              <Row
-                style={{
-                  position: "relative",
-                  border: "1px solid #ced4da",
-                  padding: "20px 0px",
-                  margin: "30px 0px",
-                }}
-              >
-                <Col sm="12">
-                  <RevenueShare />
+            )}
+            {selectedRate === "0" && (
+              <Row>
+                <Col lg={6}>
+                  <Card>
+                    <CardBody>
+                      <span>Graphical representation of SHARE</span>
+                      <CardTitle className="mb-4">(MRP: 15) </CardTitle>
+                      <PieChart dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]' />
+                    </CardBody>
+                  </Card>
                 </Col>
               </Row>
-            </div>
-          )}
+            )}
+          </div>
           {/* <PieChart /> */}
           <div
             style={{
