@@ -17,6 +17,7 @@ import { Link } from "react-router-dom";
 
 import { createSelector } from "reselect";
 import { useSelector, useDispatch } from "react-redux";
+import RevenueShare from "./RevenueShare";
 
 const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) => {
 
@@ -182,6 +183,7 @@ const CasList = ({ data, updateList, handleUpdateCasList, channelListCascode }) 
         </Card>
       </Col>
     </Row>
+
   );
 };
 

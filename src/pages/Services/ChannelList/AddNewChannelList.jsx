@@ -12,6 +12,7 @@ import {
   Input,
   Form,
 } from "reactstrap";
+import RevenueShare from "./RevenueShare";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { getChannelList as onGetChannelList, addNewChannelList as onAddNewChannelList } from "/src/store/channel/actions";
@@ -24,6 +25,7 @@ const AddNewChannelList = (props) => {
 
   const [casCodeList, setCasCodeList] = useState([]);
 
+  const [selectedType, setSelectedType] = useState("");
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -305,7 +307,10 @@ const AddNewChannelList = (props) => {
                   type="select"
                   placeholder="Select type"
                   className="form-select"
-                  onChange={validation.handleChange}
+                  onChange={(e) => {
+                    validation.handleChange(e);
+                    setSelectedType(e.target.value);
+                  }}
                   onBlur={validation.handleBlur}
                   value={validation.values.isFta || ""}
                 >
@@ -436,14 +441,14 @@ const AddNewChannelList = (props) => {
                 ) : null}
               </div>
             </Col>
+
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">MRP Rate(INR)</Label>
                 <Input
                   name="rate"
                   type="number"
-                  // placeholder="Enter channel code"
-                  // className="form-select"
+                  step="0.01"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.rate || ""}
@@ -485,6 +490,37 @@ const AddNewChannelList = (props) => {
               </div>
             </Col>
           </Row>
+          {selectedType === "0" && (
+            <div>
+              <div
+                style={{
+                  // margin: "20px 0px",
+                  marginTop: "20px",
+                  marginBottom: "18px",
+                  zIndex: 12000,
+                  backgroundColor: "#fff",
+                  width: "fit-content",
+                  marginLeft: "40%",
+                  position: "absolute",
+                  padding: "0px 10px",
+                }}
+              >
+                <h5 style={{}}>MRP Revenue Share</h5>
+              </div>
+              <Row
+                style={{
+                  position: "relative",
+                  border: "1px solid #ced4da",
+                  padding: "20px 0px",
+                  margin: "30px 0px",
+                }}
+              >
+                <Col sm="12">
+                  <RevenueShare />
+                </Col>
+              </Row>
+            </div>
+          )}
           <div
             style={{
               // margin: "20px 0px",
@@ -512,6 +548,8 @@ const AddNewChannelList = (props) => {
               <CasList isOpen={handleUpdateCasList} data={casCodeList} updateList={setCasCodeList} channelListCascode={channelListCascode} />
             </Col>
           </Row>
+
+
           <Row>
             <Col>
               <ModalFooter>
