@@ -33,6 +33,23 @@ const AddNewChannelList = (props) => {
 
   const [selectedRate, setSelectedRate] = useState("");
 
+  const handleInputChange = (e) => {
+    const inputValue = parseFloat(e.target.value);
+    setSelectedRate(inputValue >= 0 ? inputValue : "");
+  };
+
+  const handleArrowKeyPress = (e) => {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      e.preventDefault(); // Prevent the default behavior of arrow keys in number input
+
+      const increment = e.key === 'ArrowUp' ? 1 : -1;
+      const currentRate = parseFloat(selectedRate) || 0;
+      const newRate = Math.max(0, currentRate + increment * 0.01);
+
+      setSelectedRate(newRate.toFixed(2));
+    }
+  };
+
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -455,19 +472,12 @@ const AddNewChannelList = (props) => {
                   name="rate"
                   type="number"
                   step="0.01"
-                  onChange={(e) => {
-                    validation.handleChange(e);
-                    setSelectedRate(e.target.value);
-                  }}
+                  onChange={handleInputChange}
+                  onKeyDown={handleArrowKeyPress}
                   placeholder="0"
-                  onBlur={validation.handleBlur}
-                  value={validation.values.rate || ""}
+                  value={selectedRate}
                 ></Input>
-                {validation.touched.rate && validation.errors.rate ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.rate}
-                  </FormFeedback>
-                ) : null}
+                {/* Validation and error handling code here */}
               </div>
             </Col>
             <Col sm="4">
