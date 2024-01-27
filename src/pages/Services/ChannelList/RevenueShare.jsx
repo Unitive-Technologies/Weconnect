@@ -6,6 +6,7 @@ import "react-rangeslider/lib/index.css";
 
 const RevenueShare = ({ def, def1, def2, setDef1, setDef2, setDef }) => {
 
+
   return (
     <div>
       <Row>
