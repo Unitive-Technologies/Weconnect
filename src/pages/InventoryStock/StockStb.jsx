@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Card, CardBody, Col, Row } from "reactstrap";
 import TableContainer from "../../components/Common/TableContainer";
 import EditStb from "./EditStb";
-import AddStockSmartcard from "./AddStockSmartcard";
+import AddStockStb from "./AddStockStb";
 
 const StockStb = (props) => {
   const {
@@ -16,18 +16,15 @@ const StockStb = (props) => {
     stockscinventorystate,
     brand1,
     brand2,
+    isOpen,
+    toggle,
   } = props;
   const [showEditStb, setShowEditStb] = useState(false);
   const [editStbData, setEditStbData] = useState({});
-  const [showAddStockStb, setShowAddStockStb] = useState(false);
 
   const toggleEditStb = (row) => {
     setShowEditStb(!showEditStb);
     setEditStbData(row);
-  };
-
-  const handleAddStockStb = () => {
-    setShowAddStockStb(!showAddStockStb);
   };
 
   const columns = useMemo(
@@ -192,9 +189,9 @@ const StockStb = (props) => {
         toggle={toggleEditStb}
         stbData={editStbData}
       />
-      <AddStockSmartcard
-        isOpen={showAddStockStb}
-        toggle={handleAddStockStb}
+      <AddStockStb
+        isOpen={isOpen}
+        toggle={toggle}
         stocksccastype={stocksccastype}
         stockscwarehouse={stockscwarehouse}
         stockscstatetype={stockscstatetype}
@@ -241,6 +238,8 @@ StockStb.propTypes = {
   stockscinventorystate: PropTypes.array,
   brand1: PropTypes.array,
   brand2: PropTypes.array,
+  isOpen: PropTypes.bool,
+  toggle: PropTypes.func,
 };
 
 export default StockStb;
