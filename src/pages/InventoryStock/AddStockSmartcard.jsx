@@ -62,7 +62,7 @@ const AddStockSmartcard = (props) => {
       smartcardno: Yup.string().required("Enter smartcard no."),
       stbbrand_id: Yup.string().required("Select stb brand"),
       stbno: Yup.string().required("Enter STB no."),
-      po_id: Yup.string().required("Enter purchase order"),
+      po_number: Yup.string().required("Enter purchase order"),
       po_date: Yup.string().required("Select purchase date"),
       invoice_no: Yup.string().required("Enter invoice order"),
       invoice_date: Yup.string().required("Select invoice date"),
@@ -173,12 +173,6 @@ const AddStockSmartcard = (props) => {
                       : false
                   }
                 />
-                {validation.touched.is_embeded &&
-                validation.errors.is_embeded ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.is_embeded}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
           </Row>
@@ -191,11 +185,16 @@ const AddStockSmartcard = (props) => {
                 <Input
                   name="brand_id"
                   type="select"
-                  placeholder="Select smartcard No"
+                  placeholder="Select smartcard brand"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.brand_id || ""}
+                  invalid={
+                    validation.touched.brand_id && validation.errors.brand_id
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select smartcard brand</option>
                   {brand2.map((options) => (
@@ -224,6 +223,12 @@ const AddStockSmartcard = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.smartcardno || ""}
                   disabled={validation.values.brand_id === "" ? true : false}
+                  invalid={
+                    validation.touched.smartcardno_id &&
+                    validation.errors.smartcardno_id
+                      ? true
+                      : false
+                  }
                 />
                 {validation.touched.smartcardno &&
                 validation.errors.smartcardno ? (
@@ -249,6 +254,12 @@ const AddStockSmartcard = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.stbbrand_id || ""}
+                    invalid={
+                      validation.touched.stbbrand_id &&
+                      validation.errors.stbbrand_id
+                        ? true
+                        : false
+                    }
                   >
                     <option value="">Select stb brand</option>
                     {brand1.map((options) => (
@@ -280,6 +291,11 @@ const AddStockSmartcard = (props) => {
                     disabled={
                       validation.values.stbbrand_id === "" ? true : false
                     }
+                    invalid={
+                      validation.touched.stbno && validation.errors.stbno
+                        ? true
+                        : false
+                    }
                   />
                   {validation.touched.stbno && validation.errors.stbno ? (
                     <FormFeedback type="invalid">
@@ -303,6 +319,11 @@ const AddStockSmartcard = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.po_number || ""}
+                  invalid={
+                    validation.touched.po_number && validation.errors.po_number
+                      ? true
+                      : false
+                  }
                 />
                 {validation.touched.po_number && validation.errors.po_number ? (
                   <FormFeedback type="invalid">
@@ -323,6 +344,11 @@ const AddStockSmartcard = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.po_date || ""}
+                  invalid={
+                    validation.touched.po_date && validation.errors.po_date
+                      ? true
+                      : false
+                  }
                 />
                 {validation.touched.po_date && validation.errors.po_date ? (
                   <FormFeedback type="invalid">
@@ -345,6 +371,12 @@ const AddStockSmartcard = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.invoice_no || ""}
+                  invalid={
+                    validation.touched.invoice_no &&
+                    validation.errors.invoice_no
+                      ? true
+                      : false
+                  }
                 />
                 {validation.touched.invoice_no &&
                 validation.errors.invoice_no ? (
@@ -366,6 +398,12 @@ const AddStockSmartcard = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.invoice_date || ""}
+                  invalid={
+                    validation.touched.invoice_date &&
+                    validation.errors.invoice_date
+                      ? true
+                      : false
+                  }
                 />
                 {validation.touched.invoice_date &&
                 validation.errors.invoice_date ? (
@@ -390,6 +428,12 @@ const AddStockSmartcard = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.warehouse_id || ""}
+                  invalid={
+                    validation.touched.warehouse_id &&
+                    validation.errors.warehouse_id
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select warehouse</option>
                   {stockscwarehouse.map((options) => (
@@ -419,6 +463,12 @@ const AddStockSmartcard = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.inv_state_id || ""}
+                  invalid={
+                    validation.touched.inv_state_id &&
+                    validation.errors.inv_state_id
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Stock Type</option>
                   {stockscstatetype.map((options) => (
@@ -480,6 +530,11 @@ const AddStockSmartcard = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.state || ""}
+                  invalid={
+                    validation.touched.state && validation.errors.state
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select inventory state</option>
                   {stockscinventorystate.map((options) => (
