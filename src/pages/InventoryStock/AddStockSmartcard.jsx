@@ -58,6 +58,18 @@ const AddStockSmartcard = (props) => {
     },
     validationSchema: Yup.object({
       cas_id: Yup.string().required("Select CAS Type"),
+      brand_id: Yup.string().required("Select smartcard brand"),
+      smartcardno: Yup.string().required("Enter smartcard no."),
+      stbbrand_id: Yup.string().required("Select stb brand"),
+      stbno: Yup.string().required("Enter STB no."),
+      po_id: Yup.string().required("Enter purchase order"),
+      po_date: Yup.string().required("Select purchase date"),
+      invoice_no: Yup.string().required("Enter invoice order"),
+      invoice_date: Yup.string().required("Select invoice date"),
+      warehouse_id: Yup.string().required("Select warehouse"),
+      state: Yup.string().required("Select Stock Type"),
+      description: Yup.string().required("description"),
+      inv_state_id: Yup.string().required("Select inentory state"),
     }),
     onSubmit: (values) => {
       const newSmartcard = {
@@ -261,7 +273,7 @@ const AddStockSmartcard = (props) => {
                   <Input
                     name="stbno"
                     type="text"
-                    placeholder="Enter Smartcard no."
+                    placeholder="Enter STB no."
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.stbno || ""}
