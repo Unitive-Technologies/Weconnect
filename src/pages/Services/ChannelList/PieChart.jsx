@@ -7,8 +7,8 @@ const PieChart = ({ dataColors, selectedRate, def, def1, def2 }) => {
   const PieApexChartColors = getChartColorsArray(dataColors);
 
 
-  const MSOShare = def1 * selectedRate
-  const BroadCasterShare = def * selectedRate
+  const MSOShare = def1 / 100 * selectedRate
+  const BroadCasterShare = def / 100 * selectedRate
   const MSODiscount = def2 * selectedRate
 
   const series = [MSOShare, BroadCasterShare, MSODiscount];
