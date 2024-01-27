@@ -18,19 +18,31 @@ import {
 import RevenueShare from "./RevenueShare";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { getChannelList as onGetChannelList, addNewChannelList as onAddNewChannelList } from "/src/store/channel/actions";
+import {
+  getChannelList as onGetChannelList,
+  addNewChannelList as onAddNewChannelList,
+} from "/src/store/channel/actions";
 import { useDispatch } from "react-redux";
 import CasList from "./CasList";
 import PieChart from "./PieChart";
 
 const AddNewChannelList = (props) => {
-  const { isOpen, toggleAddModal, channelListBroadcaster, channelListStatus, channelListType, channelListDefinition, channelListGenre, channelListCascode, channelListLanguage, } = props;
+  const {
+    isOpen,
+    toggleAddModal,
+    channelListBroadcaster,
+    channelListStatus,
+    channelListType,
+    channelListDefinition,
+    channelListGenre,
+    channelListCascode,
+    channelListLanguage,
+  } = props;
   const dispatch = useDispatch();
 
   const [def, setDef] = useState(80);
   const [def1, setdef1] = useState(20);
   const [def2, setdef2] = useState(0);
-
 
   const [casCodeList, setCasCodeList] = useState([]);
 
@@ -39,15 +51,15 @@ const AddNewChannelList = (props) => {
   const [selectedRate, setSelectedRate] = useState("");
 
   const handleInputChange = (e) => {
-    const inputValue = (e.target.value);
+    const inputValue = e.target.value;
     setSelectedRate(inputValue >= 0 ? inputValue : 0);
   };
 
   const handleArrowKeyPress = (e) => {
-    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
       e.preventDefault(); // Prevent the default behavior of arrow keys in number input
 
-      const increment = e.key === 'ArrowUp' ? 1 : -1;
+      const increment = e.key === "ArrowUp" ? 1 : -1;
       const currentRate = parseFloat(selectedRate) || 0;
       const newRate = Math.max(0, currentRate + increment * 0.01);
 
@@ -281,13 +293,13 @@ const AddNewChannelList = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -318,7 +330,7 @@ const AddNewChannelList = (props) => {
                     ))}
                 </Input>
                 {validation.touched.definition &&
-                  validation.errors.definition ? (
+                validation.errors.definition ? (
                   <FormFeedback type="invalid">
                     {validation.errors.definition}
                   </FormFeedback>
@@ -343,11 +355,12 @@ const AddNewChannelList = (props) => {
                   value={validation.values.isFta || ""}
                 >
                   <option value="">Select type</option>
-                  {channelListType && channelListType.map((isFta) => (
-                    <option key={isFta.id} value={isFta.id}>
-                      {isFta.name}
-                    </option>
-                  ))}
+                  {channelListType &&
+                    channelListType.map((isFta) => (
+                      <option key={isFta.id} value={isFta.id}>
+                        {isFta.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.isFta && validation.errors.isFta ? (
                   <FormFeedback type="invalid">
@@ -381,7 +394,7 @@ const AddNewChannelList = (props) => {
                     ))}
                 </Input>
                 {validation.touched.broadcaster &&
-                  validation.errors.broadcaster ? (
+                validation.errors.broadcaster ? (
                   <FormFeedback type="invalid">
                     {validation.errors.broadcaster}
                   </FormFeedback>
@@ -462,7 +475,7 @@ const AddNewChannelList = (props) => {
                   <option value="202">No</option>
                 </Input>
                 {validation.touched.isalacarte &&
-                  validation.errors.isalacarte ? (
+                validation.errors.isalacarte ? (
                   <FormFeedback type="invalid">
                     {validation.errors.isalacarte}
                   </FormFeedback>
@@ -515,7 +528,7 @@ const AddNewChannelList = (props) => {
               </div>
             </Col>
           </Row>
-          <div>
+          <Row>
             {selectedType === "0" && (
               <div>
                 <div
@@ -541,27 +554,44 @@ const AddNewChannelList = (props) => {
                     margin: "30px 0px",
                   }}
                 >
-                  <Col sm="12">
-                    <RevenueShare def={def} def1={def1} def2={def2} setdef={setDef} setdef1={setdef1} setdef2={setdef2} />
+                  <Col lg={6}>
+                    <RevenueShare
+                      def={def}
+                      def1={def1}
+                      def2={def2}
+                      setdef={setDef}
+                      setdef1={setdef1}
+                      setdef2={setdef2}
+                    />
                   </Col>
+
+                  {/* {console.log("select rate value" + validation.values.rate, selectedRate, selectedType)} */}
+                  {selectedType === "0" && selectedRate !== "" ? (
+                    // <Row>
+                    <Col lg={6}>
+                      <Card>
+                        <CardBody>
+                          <span>Graphical representation of SHARE</span>
+                          <CardTitle className="mb-4">
+                            (MRP: {selectedRate}){" "}
+                          </CardTitle>
+                          <PieChart
+                            def={def}
+                            def1={def1}
+                            def2={def2}
+                            selectedRate={selectedRate}
+                            dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
+                          />
+                        </CardBody>
+                      </Card>
+                    </Col>
+                  ) : (
+                    <></>
+                  )}
                 </Row>
               </div>
             )}
-            {console.log("select rate value" + validation.values.rate, selectedRate, selectedType)}
-            {(selectedType === "0" && selectedRate !== "") ? (
-              <Row>
-                <Col lg={6}>
-                  <Card>
-                    <CardBody>
-                      <span>Graphical representation of SHARE</span>
-                      <CardTitle className="mb-4">(MRP: {selectedRate}) </CardTitle>
-                      <PieChart def={def} def1={def1} def2={def2} selectedRate={selectedRate} dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]' />
-                    </CardBody>
-                  </Card>
-                </Col>
-              </Row>
-            ) : <></>}
-          </div>
+          </Row>
           {/* <PieChart /> */}
           <div
             style={{
@@ -587,10 +617,14 @@ const AddNewChannelList = (props) => {
             }}
           >
             <Col sm="12">
-              <CasList isOpen={handleUpdateCasList} data={casCodeList} updateList={setCasCodeList} channelListCascode={channelListCascode} />
+              <CasList
+                isOpen={handleUpdateCasList}
+                data={casCodeList}
+                updateList={setCasCodeList}
+                channelListCascode={channelListCascode}
+              />
             </Col>
           </Row>
-
 
           <Row>
             <Col>

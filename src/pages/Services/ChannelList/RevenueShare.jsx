@@ -3,12 +3,8 @@ import { Row, Col } from "reactstrap";
 import Slider from "react-rangeslider";
 import "react-rangeslider/lib/index.css";
 
-const RevenueShare = ({ def, def1, def2, setDef1, setDef2, setDef }) => {
-
-  const handleSliderChange = (value, stateSetter) => {
-    stateSetter(value);
-  };
-
+const RevenueShare = ({ def, def1, def2, setdef1, setdef2, setdef }) => {
+  console.log("def value:" + def, def1, def2);
   return (
     <div>
       <Row>
@@ -18,9 +14,11 @@ const RevenueShare = ({ def, def1, def2, setDef1, setDef2, setDef }) => {
 
             <Slider
               value={def}
+              min={65}
+              max={100}
               orientation="horizontal"
-              onChange={(value) => {
-                handleSliderChange(value, setDef);
+              onChange={(newValue) => {
+                setdef(newValue);
               }}
             />
             <span className="float-right  mt-4">Value: {def} %</span>
@@ -30,9 +28,11 @@ const RevenueShare = ({ def, def1, def2, setDef1, setDef2, setDef }) => {
 
             <Slider
               value={def1}
+              min={0}
+              max={35}
               orientation="horizontal"
-              onChange={(value) => {
-                handleSliderChange(value, setDef1);
+              onChange={(newValue) => {
+                setdef1(newValue);
               }}
             />
             <span className="float-right  mt-4">Value: {def1} %</span>
@@ -42,9 +42,11 @@ const RevenueShare = ({ def, def1, def2, setDef1, setDef2, setDef }) => {
 
             <Slider
               value={def2}
+              min={0}
+              max={15}
               orientation="horizontal"
-              onChange={(value) => {
-                handleSliderChange(value, setDef2);
+              onChange={(newValue) => {
+                setdef2(newValue);
               }}
             />
             <span className="float-right  mt-4">Value: {def2} %</span>
