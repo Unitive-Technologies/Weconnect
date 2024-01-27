@@ -239,7 +239,7 @@ const AddStockStb = (props) => {
               </div>
             </Col>
           </Row>
-          {!validation.values.is_embeded ? (
+          {validation.values.is_embeded ? (
             <Row>
               <Col lg={4}>
                 <div className="mb-3">

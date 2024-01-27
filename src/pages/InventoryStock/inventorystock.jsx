@@ -937,6 +937,8 @@ const InventoryStock = (props) => {
                               stockscinventorystate={stockscinventorystate}
                               brand1={brand1}
                               brand2={brand2}
+                              isOpen={showAddStockStb}
+                              toggle={handleAddStockStb}
                             />
                           </Col>
                         </Row>

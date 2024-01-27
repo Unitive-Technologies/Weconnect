@@ -231,7 +231,7 @@ const StockStb = (props) => {
 
 StockStb.propTypes = {
   stockstb: PropTypes.array,
-  tableActions: PropTypes.func,
+  tableActions: PropTypes.array,
   stocksccastype: PropTypes.array,
   stockscwarehouse: PropTypes.array,
   stockscstatetype: PropTypes.array,
