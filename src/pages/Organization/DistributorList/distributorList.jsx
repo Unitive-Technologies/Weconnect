@@ -321,9 +321,13 @@ const DistributorList = (props) => {
     // dispatch(onGetDistributorsPhase());
     dis;
   };
+
   const toggleAddDistributor = () => {
+    console.log("showDistributor before: " + typeof showDistributor);
     setShowDistributor(!showDistributor);
+    console.log("showDistributor after: " + typeof showDistributor);
   };
+
   const handleUploadDistributor = () => {
     setShowUploadDistributor(!showUploadDistributor);
   };
@@ -371,7 +375,7 @@ const DistributorList = (props) => {
         distributorsStatus={distributorsStatus}
       />
       <AddDistributorModal
-        isOpen={showDistributor}
+        isOpen={Boolean(showDistributor)}
         toggleAddDistributor={toggleAddDistributor}
         distributorsPhase={distributorsPhase}
         distributorsStatus={distributorsStatus}

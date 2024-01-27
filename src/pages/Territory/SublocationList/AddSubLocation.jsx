@@ -51,8 +51,6 @@ const AddSubLocation = (props) => {
       name: "",
       location_id: null,
       status: "",
-      created_at: "",
-      created_by: "Admin",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
@@ -62,12 +60,9 @@ const AddSubLocation = (props) => {
     onSubmit: (values) => {
       console.log("Entered values in Add sublocation : ", values);
       const newSubLocation = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         location_id: values["location_id"],
-        status: values["status"],
-        created_at: new Date(),
-        created_by: values["created_by"],
+        status: parseInt(values["status"]),
       };
       console.log("new sub location:" + JSON.stringify(newSubLocation));
       dispatch(onAddSubLocation(newSubLocation));
@@ -150,7 +145,7 @@ const AddSubLocation = (props) => {
                   value={options.find(
                     (opt) => opt.value === validation.values.location_id
                   )}
-                  // styles={customStyles}
+                  styles={customStyles}
                 />
                 {validation.touched.location_id &&
                 validation.errors.location_id ? (

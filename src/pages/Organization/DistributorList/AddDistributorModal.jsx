@@ -1147,7 +1147,7 @@ const AddDistributorModal = (props) => {
 };
 
 AddDistributorModal.propTypes = {
-  toggleAddDistributor: PropTypes.bool,
+  toggleAddDistributor: PropTypes.func,
   isOpen: PropTypes.bool,
   distributorsPhase: PropTypes.array,
 };
