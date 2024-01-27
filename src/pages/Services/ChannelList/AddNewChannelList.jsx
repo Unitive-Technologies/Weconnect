@@ -542,19 +542,17 @@ const AddNewChannelList = (props) => {
                 </Row>
               </div>
             )}
-            {selectedRate === "0" && (
-              <Row>
-                <Col lg={6}>
-                  <Card>
-                    <CardBody>
-                      <span>Graphical representation of SHARE</span>
-                      <CardTitle className="mb-4">(MRP: 15) </CardTitle>
-                      <PieChart dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]' />
-                    </CardBody>
-                  </Card>
-                </Col>
-              </Row>
-            )}
+            <Row>
+              <Col lg={6}>
+                <Card>
+                  <CardBody>
+                    <span>Graphical representation of SHARE</span>
+                    <CardTitle className="mb-4">(MRP: 15) </CardTitle>
+                    <PieChart dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]' />
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
           </div>
           {/* <PieChart /> */}
           <div
