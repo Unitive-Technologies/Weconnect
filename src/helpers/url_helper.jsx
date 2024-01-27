@@ -525,3 +525,7 @@ export const GET_INVENTORYSTOCK_SC_WAREHOUSE =
 export const GET_INVENTORYSTOCK_SC_STATETYPE = "/list/stateType?vr=web1.0";
 export const GET_INVENTORYSTOCK_SC_INVENTORYSTATE =
   "/inventory-state/list?fields=id,name&filter[status]=1&filter[state_type]=-1&vr=web1.0";
+export const GET_INVENTORYSTOCK_SC_BRAND1 =
+  "/brand/list?fields=id,name,length&expand=char_allowed_lbl&filter[type]=1&filter[cas_id]=1&vr=web1.0";
+export const GET_INVENTORYSTOCK_SC_BRAND2 =
+  "/brand/list?fields=id,name,length&expand=char_allowed_lbl&filter[type]=2&filter[cas_id]=1&vr=web1.0";

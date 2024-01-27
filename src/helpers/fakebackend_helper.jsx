@@ -751,6 +751,10 @@ export const getInventoryStockScInventorystate = () =>
   get(url.GET_INVENTORYSTOCK_SC_INVENTORYSTATE);
 export const getInventoryStockScWarehouse = () =>
   get(url.GET_INVENTORYSTOCK_SC_WAREHOUSE);
+export const getInventoryStockScBrand1 = () =>
+  get(url.GET_INVENTORYSTOCK_SC_BRAND1);
+export const getInventoryStockScBrand2 = () =>
+  get(url.GET_INVENTORYSTOCK_SC_BRAND2);
 
 export const addNewUser = (user) => post(url.ADD_NEW_USER, user);
 

@@ -27,6 +27,10 @@ import {
   ADD_INVENTORYSTOCK_SMARTCARD,
   ADD_INVENTORYSTOCK_SMARTCARD_SUCCESS,
   ADD_INVENTORYSTOCK_SMARTCARD_FAIL,
+  GET_INVENTORYSTOCK_SC_BRAND1_SUCCESS,
+  GET_INVENTORYSTOCK_SC_BRAND1_FAIL,
+  GET_INVENTORYSTOCK_SC_BRAND2_SUCCESS,
+  GET_INVENTORYSTOCK_SC_BRAND2_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -37,6 +41,8 @@ const INIT_STATE = {
   stockscwarehouse: [],
   stockscstatetype: [],
   stockscinventorystate: [],
+  brand1: [],
+  brand2: [],
   pagination: {},
   error: {},
   loading: false,
@@ -199,6 +205,32 @@ const InventoryStock = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
         loading: false,
+      };
+
+    case GET_INVENTORYSTOCK_SC_BRAND1_SUCCESS:
+      return {
+        ...state,
+        brand1: action.payload,
+        loading: false,
+      };
+
+    case GET_INVENTORYSTOCK_SC_BRAND1_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_INVENTORYSTOCK_SC_BRAND2_SUCCESS:
+      return {
+        ...state,
+        brand2: action.payload,
+        loading: false,
+      };
+
+    case GET_INVENTORYSTOCK_SC_BRAND2_FAIL:
+      return {
+        ...state,
+        error: action.payload,
       };
 
     default:

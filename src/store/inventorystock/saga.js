@@ -9,6 +9,8 @@ import {
   GET_INVENTORYSTOCK_SC_STATETYPE,
   GET_INVENTORYSTOCK_SC_WAREHOUSE,
   ADD_INVENTORYSTOCK_SMARTCARD,
+  GET_INVENTORYSTOCK_SC_BRAND1,
+  GET_INVENTORYSTOCK_SC_BRAND2,
 } from "./actionTypes";
 import {
   getInventoryStockStb as onGetInventoryStockStb,
@@ -31,6 +33,10 @@ import {
   getInventoryStockScWarehouseFail,
   addInventoryStockSmartcardSuccess,
   addInventoryStockSmartcardFail,
+  getInventoryStockScBrand1Success,
+  getInventoryStockScBrand1Fail,
+  getInventoryStockScBrand2Success,
+  getInventoryStockScBrand2Fail,
 } from "./actions";
 import {
   getInventoryStockSmartcard,
@@ -42,6 +48,8 @@ import {
   getInventoryStockScStatetype,
   getInventoryStockScWarehouse,
   addInventoryStockSmartcard,
+  getInventoryStockScBrand1,
+  getInventoryStockScBrand2,
 } from "../../helpers/fakebackend_helper";
 
 export const getStockPairingStore = (state) => state.stockpairing;
@@ -138,6 +146,24 @@ function* onAddInventoryStockSmartcard({ payload: stocksmartcard }) {
   }
 }
 
+function* fetchInventoryStockCsBrand1() {
+  try {
+    const response = yield call(getInventoryStockScBrand1);
+    yield put(getInventoryStockScBrand1Success(response.data));
+  } catch (error) {
+    yield put(getInventoryStockScBrand1Fail(error));
+  }
+}
+
+function* fetchInventoryStockCsBrand2() {
+  try {
+    const response = yield call(getInventoryStockScBrand2);
+    yield put(getInventoryStockScBrand2Success(response.data));
+  } catch (error) {
+    yield put(getInventoryStockScBrand2Fail(error));
+  }
+}
+
 function* inventorystockSaga() {
   yield takeEvery(GET_INVENTORYSTOCK_SMARTCARD, fetchInventoryStockSmartcard);
   yield takeEvery(GET_INVENTORYSTOCK_STB, fetchInventoryStockStb);
@@ -157,6 +183,8 @@ function* inventorystockSaga() {
     fetchInventoryStockCsWarehouse
   );
   yield takeEvery(ADD_INVENTORYSTOCK_SMARTCARD, onAddInventoryStockSmartcard);
+  yield takeEvery(GET_INVENTORYSTOCK_SC_BRAND1, fetchInventoryStockCsBrand1);
+  yield takeEvery(GET_INVENTORYSTOCK_SC_BRAND2, fetchInventoryStockCsBrand2);
 }
 
 export default inventorystockSaga;
