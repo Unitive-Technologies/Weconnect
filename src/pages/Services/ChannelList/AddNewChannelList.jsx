@@ -31,11 +31,11 @@ const AddNewChannelList = (props) => {
 
   const [selectedType, setSelectedType] = useState("");
 
-  const [selectedRate, setSelectedRate] = useState("");
+  const [selectedRate, setSelectedRate] = useState(0);
 
   const handleInputChange = (e) => {
-    const inputValue = parseFloat(e.target.value);
-    setSelectedRate(inputValue >= 0 ? inputValue : "");
+    const inputValue = (e.target.value);
+    setSelectedRate(inputValue >= 0 ? inputValue : 0);
   };
 
   const handleArrowKeyPress = (e) => {
@@ -49,6 +49,13 @@ const AddNewChannelList = (props) => {
       setSelectedRate(newRate.toFixed(2));
     }
   };
+
+  const [showGraphicalRepresentation, setShowGraphicalRepresentation] = useState(false);
+
+  const toggleGraphicalRepresentation = () => {
+    setShowGraphicalRepresentation(!showGraphicalRepresentation);
+  };
+
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -542,17 +549,20 @@ const AddNewChannelList = (props) => {
                 </Row>
               </div>
             )}
-            <Row>
-              <Col lg={6}>
-                <Card>
-                  <CardBody>
-                    <span>Graphical representation of SHARE</span>
-                    <CardTitle className="mb-4">(MRP: 15) </CardTitle>
-                    <PieChart dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]' />
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
+            {console.log("select rate value" + validation.values.rate, selectedRate, selectedType)}
+            {(selectedType === "0" && selectedRate !== "0") ? (
+              <Row>
+                <Col lg={6}>
+                  <Card>
+                    <CardBody>
+                      <span>Graphical representation of SHARE</span>
+                      <CardTitle className="mb-4">(MRP: 15) </CardTitle>
+                      <PieChart dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]' />
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+            ) : <></>}
           </div>
           {/* <PieChart /> */}
           <div
