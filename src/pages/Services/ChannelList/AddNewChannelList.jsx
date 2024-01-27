@@ -27,11 +27,16 @@ const AddNewChannelList = (props) => {
   const { isOpen, toggleAddModal, channelListBroadcaster, channelListStatus, channelListType, channelListDefinition, channelListGenre, channelListCascode, channelListLanguage, } = props;
   const dispatch = useDispatch();
 
+  const [def, setDef] = useState(50);
+  const [def1, setdef1] = useState(20);
+  const [def2, setdef2] = useState(0);
+
+
   const [casCodeList, setCasCodeList] = useState([]);
 
   const [selectedType, setSelectedType] = useState("");
 
-  const [selectedRate, setSelectedRate] = useState(0);
+  const [selectedRate, setSelectedRate] = useState("");
 
   const handleInputChange = (e) => {
     const inputValue = (e.target.value);
@@ -544,20 +549,20 @@ const AddNewChannelList = (props) => {
                   }}
                 >
                   <Col sm="12">
-                    <RevenueShare />
+                    <RevenueShare def={def} def1={def1} def2={def2} setdef={setDef} setdef1={setdef1} setdef2={setdef2} />
                   </Col>
                 </Row>
               </div>
             )}
             {console.log("select rate value" + validation.values.rate, selectedRate, selectedType)}
-            {(selectedType === "0" && selectedRate !== "0") ? (
+            {(selectedType === "0" && selectedRate !== "") ? (
               <Row>
                 <Col lg={6}>
                   <Card>
                     <CardBody>
                       <span>Graphical representation of SHARE</span>
-                      <CardTitle className="mb-4">(MRP: 15) </CardTitle>
-                      <PieChart dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]' />
+                      <CardTitle className="mb-4">(MRP: {selectedRate}) </CardTitle>
+                      <PieChart def={def} def1={def1} def2={def2} selectedRate={selectedRate} dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]' />
                     </CardBody>
                   </Card>
                 </Col>

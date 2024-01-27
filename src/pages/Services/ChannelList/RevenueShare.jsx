@@ -4,10 +4,8 @@ import Slider from "react-rangeslider";
 import PieChart from "./PieChart";
 import "react-rangeslider/lib/index.css";
 
-const RevenueShare = () => {
-  const [def, setdef] = useState(50);
-  const [def1, setdef1] = useState(20);
-  const [def2, setdef2] = useState(0);
+const RevenueShare = ({ def, def1, def2, setDef1, setDef2, setDef }) => {
+
   return (
     <div>
       <Row>
@@ -18,8 +16,8 @@ const RevenueShare = () => {
             <Slider
               value={def}
               orientation="horizontal"
-              onChange={(value) => {
-                setdef(value);
+              onChange={(e) => {
+                setDef(e.target.value);
               }}
             />
             <span className="float-right  mt-4">Value: {def} %</span>
@@ -28,10 +26,10 @@ const RevenueShare = () => {
             <h5 className="font-size-14 mb-3 mt-0">MSO Share</h5>
 
             <Slider
-              value={def}
+              value={def1}
               orientation="horizontal"
-              onChange={(value) => {
-                setdef1(value);
+              onChange={(e) => {
+                setDef1(e.target.value);
               }}
             />
             <span className="float-right  mt-4">Value: {def1} %</span>
@@ -40,10 +38,10 @@ const RevenueShare = () => {
             <h5 className="font-size-14 mb-3 mt-0">MSO Discount</h5>
 
             <Slider
-              value={def}
+              value={def2}
               orientation="horizontal"
-              onChange={(value) => {
-                setdef2(value);
+              onChange={(e) => {
+                setDef2(e.target.value);
               }}
             />
             <span className="float-right  mt-4">Value: {def2} %</span>
