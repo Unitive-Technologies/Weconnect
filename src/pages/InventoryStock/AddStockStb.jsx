@@ -20,7 +20,7 @@ import {
   getInventoryStockSmartcard as onGetInventoryStockSmartcard,
 } from "/src/store/inventorystock/actions";
 
-const AddStockSmartcard = (props) => {
+const AddStockStb = (props) => {
   const {
     isOpen,
     toggle,
@@ -112,7 +112,7 @@ const AddStockSmartcard = (props) => {
       toggle={toggle}
     >
       <ModalHeader tag="h4" toggle={toggle}>
-        Add New Smartcard
+        Add New STB
       </ModalHeader>
       <ModalBody>
         <Form
@@ -180,32 +180,34 @@ const AddStockSmartcard = (props) => {
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
-                  Smartcard Band<span style={{ color: "red" }}>*</span>
+                  STB Band<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="brand_id"
+                  name="stbbrand_id"
                   type="select"
-                  placeholder="Select smartcard brand"
+                  placeholder="Select state"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.brand_id || ""}
+                  value={validation.values.stbbrand_id || ""}
                   invalid={
-                    validation.touched.brand_id && validation.errors.brand_id
+                    validation.touched.stbbrand_id &&
+                    validation.errors.stbbrand_id
                       ? true
                       : false
                   }
                 >
-                  <option value="">Select smartcard brand</option>
-                  {brand2.map((options) => (
+                  <option value="">Select stb brand</option>
+                  {brand1.map((options) => (
                     <option key={options.id} value={options.id}>
                       {options.name}
                     </option>
                   ))}
                 </Input>
-                {validation.touched.brand_id && validation.errors.brand_id ? (
+                {validation.touched.stbbrand_id &&
+                validation.errors.stbbrand_id ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.brand_id}
+                    {validation.errors.stbbrand_id}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -213,27 +215,25 @@ const AddStockSmartcard = (props) => {
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
-                  Smartcard No<span style={{ color: "red" }}>*</span>
+                  STB No<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="smartcardno"
+                  name="stbno"
                   type="text"
-                  placeholder="Enter Smartcard no."
+                  placeholder="Enter STB no."
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.smartcardno || ""}
-                  disabled={validation.values.brand_id === "" ? true : false}
+                  value={validation.values.stbno || ""}
+                  disabled={validation.values.stbbrand_id === "" ? true : false}
                   invalid={
-                    validation.touched.smartcardno_id &&
-                    validation.errors.smartcardno_id
+                    validation.touched.stbno && validation.errors.stbno
                       ? true
                       : false
                   }
                 />
-                {validation.touched.smartcardno &&
-                validation.errors.smartcardno ? (
+                {validation.touched.stbno && validation.errors.stbno ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.smartcardno}
+                    {validation.errors.stbno}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -244,34 +244,32 @@ const AddStockSmartcard = (props) => {
               <Col lg={4}>
                 <div className="mb-3">
                   <Label className="form-label">
-                    STB Band<span style={{ color: "red" }}>*</span>
+                    Smartcard Band<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="stbbrand_id"
+                    name="brand_id"
                     type="select"
-                    placeholder="Select state"
+                    placeholder="Select smartcard brand"
                     className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.stbbrand_id || ""}
+                    value={validation.values.brand_id || ""}
                     invalid={
-                      validation.touched.stbbrand_id &&
-                      validation.errors.stbbrand_id
+                      validation.touched.brand_id && validation.errors.brand_id
                         ? true
                         : false
                     }
                   >
-                    <option value="">Select stb brand</option>
-                    {brand1.map((options) => (
+                    <option value="">Select smartcard brand</option>
+                    {brand2.map((options) => (
                       <option key={options.id} value={options.id}>
                         {options.name}
                       </option>
                     ))}
                   </Input>
-                  {validation.touched.stbbrand_id &&
-                  validation.errors.stbbrand_id ? (
+                  {validation.touched.brand_id && validation.errors.brand_id ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.stbbrand_id}
+                      {validation.errors.brand_id}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -279,27 +277,27 @@ const AddStockSmartcard = (props) => {
               <Col lg={4}>
                 <div className="mb-3">
                   <Label className="form-label">
-                    STB No<span style={{ color: "red" }}>*</span>
+                    Smartcard No<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="stbno"
+                    name="smartcardno"
                     type="text"
-                    placeholder="Enter STB no."
+                    placeholder="Enter Smartcard no."
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.stbno || ""}
-                    disabled={
-                      validation.values.stbbrand_id === "" ? true : false
-                    }
+                    value={validation.values.smartcardno || ""}
+                    disabled={validation.values.brand_id === "" ? true : false}
                     invalid={
-                      validation.touched.stbno && validation.errors.stbno
+                      validation.touched.smartcardno_id &&
+                      validation.errors.smartcardno_id
                         ? true
                         : false
                     }
                   />
-                  {validation.touched.stbno && validation.errors.stbno ? (
+                  {validation.touched.smartcardno &&
+                  validation.errors.smartcardno ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.stbno}
+                      {validation.errors.smartcardno}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -584,7 +582,7 @@ const AddStockSmartcard = (props) => {
   );
 };
 
-AddStockSmartcard.propTypes = {
+AddStockStb.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
   stocksccastype: PropTypes.array,
@@ -595,4 +593,4 @@ AddStockSmartcard.propTypes = {
   brand2: PropTypes.array,
 };
 
-export default AddStockSmartcard;
+export default AddStockStb;

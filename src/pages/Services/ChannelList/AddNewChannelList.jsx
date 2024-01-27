@@ -27,7 +27,7 @@ const AddNewChannelList = (props) => {
   const { isOpen, toggleAddModal, channelListBroadcaster, channelListStatus, channelListType, channelListDefinition, channelListGenre, channelListCascode, channelListLanguage, } = props;
   const dispatch = useDispatch();
 
-  const [def, setDef] = useState(50);
+  const [def, setDef] = useState(80);
   const [def1, setdef1] = useState(20);
   const [def2, setdef2] = useState(0);
 
@@ -54,13 +54,6 @@ const AddNewChannelList = (props) => {
       setSelectedRate(newRate.toFixed(2));
     }
   };
-
-  const [showGraphicalRepresentation, setShowGraphicalRepresentation] = useState(false);
-
-  const toggleGraphicalRepresentation = () => {
-    setShowGraphicalRepresentation(!showGraphicalRepresentation);
-  };
-
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed

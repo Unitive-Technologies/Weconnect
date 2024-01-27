@@ -1,11 +1,24 @@
 import React, { useMemo, useState } from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Card, CardBody, Col, Row } from "reactstrap";
 import TableContainer from "../../components/Common/TableContainer";
 import EditStb from "./EditStb";
+import AddStockStb from "./AddStockStb";
 
 const StockStb = (props) => {
-  const { stockstb, tableActions } = props;
+  const {
+    stockstb,
+    tableActions,
+    stocksccastype,
+    stockscwarehouse,
+    stockscstatetype,
+    stockscinventorystate,
+    brand1,
+    brand2,
+    isOpen,
+    toggle,
+  } = props;
   const [showEditStb, setShowEditStb] = useState(false);
   const [editStbData, setEditStbData] = useState({});
 
@@ -176,6 +189,16 @@ const StockStb = (props) => {
         toggle={toggleEditStb}
         stbData={editStbData}
       />
+      <AddStockStb
+        isOpen={isOpen}
+        toggle={toggle}
+        stocksccastype={stocksccastype}
+        stockscwarehouse={stockscwarehouse}
+        stockscstatetype={stockscstatetype}
+        stockscinventorystate={stockscinventorystate}
+        brand1={brand1}
+        brand2={brand2}
+      />
       <Row>
         <Col lg="12">
           <Card>
@@ -204,6 +227,19 @@ const StockStb = (props) => {
       </Row>
     </React.Fragment>
   );
+};
+
+StockStb.propTypes = {
+  stockstb: PropTypes.array,
+  tableActions: PropTypes.array,
+  stocksccastype: PropTypes.array,
+  stockscwarehouse: PropTypes.array,
+  stockscstatetype: PropTypes.array,
+  stockscinventorystate: PropTypes.array,
+  brand1: PropTypes.array,
+  brand2: PropTypes.array,
+  isOpen: PropTypes.bool,
+  toggle: PropTypes.func,
 };
 
 export default StockStb;

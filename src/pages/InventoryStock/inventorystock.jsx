@@ -54,6 +54,7 @@ import StockStb from "./StockStb";
 import StockPairing from "./StockPairing";
 import InventoryTrack from "./InventoryTrack";
 import AddStockSmartcard from "./AddStockSmartcard";
+import AddStockStb from "./AddStockStb";
 
 const InventoryStock = (props) => {
   document.title = "Inventory | VDigital";
@@ -61,6 +62,7 @@ const InventoryStock = (props) => {
   const [activeTab, setActiveTab] = useState("1");
   const [selectedOption, setSelectedOption] = useState("In-stock");
   const [showAddStockSmartcard, setShowAddStockSmartcard] = useState(false);
+  const [showAddStockStb, setShowAddStockStb] = useState(false);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -535,6 +537,9 @@ const InventoryStock = (props) => {
     setShowAddStockSmartcard(!showAddStockSmartcard);
   };
 
+  const handleAddStockStb = () => {
+    setShowAddStockStb(!showAddStockStb);
+  };
   const getFilteredTableActions = () => {
     let actions = [];
     if (selectedOption === "In-stock") {
@@ -582,6 +587,7 @@ const InventoryStock = (props) => {
             name: "Create",
             type: "normal",
             icon: "create",
+            action: setShowAddStockStb,
           },
           {
             name: "Upload",
@@ -925,6 +931,14 @@ const InventoryStock = (props) => {
                             <StockStb
                               stockstb={getFilteredData()}
                               tableActions={getFilteredTableActions()}
+                              stocksccastype={stocksccastype}
+                              stockscwarehouse={stockscwarehouse}
+                              stockscstatetype={stockscstatetype}
+                              stockscinventorystate={stockscinventorystate}
+                              brand1={brand1}
+                              brand2={brand2}
+                              isOpen={showAddStockStb}
+                              toggle={handleAddStockStb}
                             />
                           </Col>
                         </Row>
@@ -941,6 +955,8 @@ const InventoryStock = (props) => {
                               totalPage={getFilteredTotalPage()}
                               loading={loading}
                               tableActions={getFilteredTableActions()}
+                              isOpen={showAddStockStb}
+                              toggle={handleAddStockStb}
                             />
                           </Col>
                         </Row>
