@@ -146,6 +146,8 @@ function AddStockSmartcard(props) {
                 ) : null}
               </div>
             </Col>
+          </Row>
+          <Row>
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
@@ -154,14 +156,14 @@ function AddStockSmartcard(props) {
                 <Input
                   name="brand_id"
                   type="select"
-                  placeholder="Select state"
+                  placeholder="Select smartcard No"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.brand_id || ""}
                 >
                   <option value="">Select smartcard brand</option>
-                  {brand1.map((options) => (
+                  {brand2.map((options) => (
                     <option key={options.id} value={options.id}>
                       {options.name}
                     </option>
@@ -170,6 +172,284 @@ function AddStockSmartcard(props) {
                 {validation.touched.brand_id && validation.errors.brand_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.brand_id}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Smartcard No<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="smartcardno"
+                  type="text"
+                  placeholder="Enter Smartcard no."
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.smartcardno || ""}
+                />
+                {validation.touched.smartcardno &&
+                validation.errors.smartcardno ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.smartcardno}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  STB Band<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="stbbrand_id"
+                  type="select"
+                  placeholder="Select state"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.stbbrand_id || ""}
+                >
+                  <option value="">Select stb brand</option>
+                  {brand1.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
+                </Input>
+                {validation.touched.stbbrand_id &&
+                validation.errors.stbbrand_id ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.stbbrand_id}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  STB No<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="stbno"
+                  type="text"
+                  placeholder="Enter Smartcard no."
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.stbno || ""}
+                />
+                {validation.touched.stbno && validation.errors.stbno ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.stbno}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Purchase Order<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="po_number"
+                  type="text"
+                  placeholder="Enter Purchase Order"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.po_number || ""}
+                />
+                {validation.touched.po_number && validation.errors.po_number ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.po_number}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  PO Date<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="po_date"
+                  type="Date"
+                  placeholder="Select purchase date"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.po_date || ""}
+                />
+                {validation.touched.po_date && validation.errors.po_date ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.po_date}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Invoice Order<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="invoice_no"
+                  type="text"
+                  placeholder="Enter invoice Order"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.invoice_no || ""}
+                />
+                {validation.touched.invoice_no &&
+                validation.errors.invoice_no ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.invoice_no}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Invoice Date<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="invoice_date"
+                  type="Date"
+                  placeholder="Select invoice date"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.invoice_date || ""}
+                />
+                {validation.touched.invoice_date &&
+                validation.errors.invoice_date ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.invoice_date}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Warehouse<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="warehouse_id"
+                  type="select"
+                  placeholder="Select warehouse"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.warehouse_id || ""}
+                >
+                  <option value="">Select warehouse</option>
+                  {stockscwarehouse.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
+                </Input>
+                {validation.touched.warehouse_id &&
+                validation.errors.warehouse_id ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.warehouse_id}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Stock type<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="inv_state_id"
+                  type="select"
+                  placeholder="Select Stock Type"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.inv_state_id || ""}
+                >
+                  <option value="">Select Stock Type</option>
+                  {stockscstatetype.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
+                </Input>
+                {validation.touched.inv_state_id &&
+                validation.errors.inv_state_id ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.inv_state_id}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Description<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="description"
+                  type="textarea"
+                  placeholder="Enter description"
+                  rows="3"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.description || ""}
+                  invalid={
+                    validation.touched.description &&
+                    validation.errors.description
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.description &&
+                validation.errors.description ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.description}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Inentory state<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="state"
+                  type="select"
+                  placeholder="Select inventory state"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.state || ""}
+                >
+                  <option value="">Select inventory state</option>
+                  {stockscinventorystate.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
+                </Input>
+                {validation.touched.state && validation.errors.state ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.state}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -208,37 +488,15 @@ function AddStockSmartcard(props) {
   );
 }
 
-// AddStockSmartcard.propTypes = {
-//   toggle: PropTypes.func,
-//   isOpen: PropTypes.bool,
-//   stocksccastype: PropTypes.array,
-//   stockscwarehouse: PropTypes.array,
-//   stockscstatetype: PropTypes.array,
-//   stockscinventorystate: PropTypes.array,
-// };
+AddStockSmartcard.propTypes = {
+  toggle: PropTypes.func,
+  isOpen: PropTypes.bool,
+  stocksccastype: PropTypes.array,
+  stockscwarehouse: PropTypes.array,
+  stockscstatetype: PropTypes.array,
+  stockscinventorystate: PropTypes.array,
+  brand1: PropTypes.array,
+  brand2: PropTypes.array,
+};
 
 export default AddStockSmartcard;
-
-// "data": {
-//   "id": 323341,
-//   "smartcardno": "a123453456780898",
-//   "is_embeded": 1,
-//   "brand_id": 2,
-//   "cas_id": 1,
-//   "po_id": 46,
-//   "meta_data": [],
-//   "status": 1,
-//   "stb_id": 323336,
-//   "warehouse_id": 4,
-//   "state": 2,
-//   "account_id": null,
-//   "created_at": "2024-01-27 12:57:54",
-//   "updated_at": "2024-01-27 12:57:54",
-//   "created_by": 2,
-//   "updated_by": 2,
-//   "scheme_id": null,
-//   "scheme_name": null,
-//   "other_id": null,
-//   "locked_at": null,
-//   "locked_token": null
-// }
