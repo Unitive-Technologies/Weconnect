@@ -25,6 +25,7 @@ const ViewSubLocation = (props) => {
     toggleViewModal,
     sublocation,
     status,
+    resetSelection,
     locateonsublocate,
     singleSubLocation,
   } = props;

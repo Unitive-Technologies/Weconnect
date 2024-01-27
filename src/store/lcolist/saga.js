@@ -54,7 +54,7 @@ function* fetchLco() {
 
     const response = yield call(getLco, currentPage, pageSize);
     console.log("Response from API -", response);
-    debugger;
+    // debugger;
     yield put(getLcoSuccess(response));
   } catch (error) {
     console.error("Error fetching lco list:", error);
