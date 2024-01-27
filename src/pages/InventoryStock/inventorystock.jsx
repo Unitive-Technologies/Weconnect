@@ -802,14 +802,16 @@ const InventoryStock = (props) => {
 
   return (
     <React.Fragment>
-      {/* <AddStockSmartcard
+      <AddStockSmartcard
         isOpen={showAddStockSmartcard}
         toggle={handleAddStockSmartcard}
         stocksccastype={stocksccastype}
         stockscwarehouse={stockscwarehouse}
         stockscstatetype={stockscstatetype}
         stockscinventorystate={stockscinventorystate}
-      /> */}
+        brand1={brand1}
+        brand2={brand2}
+      />
       <div className="page-content">
         <Container fluid>
           <Breadcrumbs breadcrumbItem="Inventory" />
@@ -898,16 +900,6 @@ const InventoryStock = (props) => {
                       className="p-3 text-muted"
                     >
                       <TabPane tabId="1">
-                        <AddStockSmartcard
-                          isOpen={showAddStockSmartcard}
-                          toggle={handleAddStockSmartcard}
-                          stocksccastype={stocksccastype}
-                          stockscwarehouse={stockscwarehouse}
-                          stockscstatetype={stockscstatetype}
-                          stockscinventorystate={stockscinventorystate}
-                          brand1={brand1}
-                          brand2={brand2}
-                        />
                         <Row>
                           <Col sm="12">
                             <TableContainer

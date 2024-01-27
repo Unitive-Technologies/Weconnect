@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import {
@@ -15,14 +16,14 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 
-function AddStockSmartcard(props) {
+const AddStockSmartcard = (props) => {
   const {
+    isOpen,
+    toggle,
     stocksccastype,
     stockscwarehouse,
     stockscstatetype,
     stockscinventorystate,
-    isOpen,
-    toggle,
     brand1,
     brand2,
   } = props;
@@ -486,7 +487,7 @@ function AddStockSmartcard(props) {
       </ModalBody>
     </Modal>
   );
-}
+};
 
 AddStockSmartcard.propTypes = {
   toggle: PropTypes.func,
