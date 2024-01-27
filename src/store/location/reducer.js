@@ -8,15 +8,17 @@ import {
   GET_LOCATION,
   GET_LOCATION_SUCCESS,
   GET_LOCATION_FAIL,
+  ADD_LOCATION,
   ADD_LOCATION_SUCCESS,
   ADD_LOCATION_FAIL,
   UPDATE_LOCATION_SUCCESS,
   UPDATE_LOCATION_FAIL,
   GET_LCO_ONLOCATION_SUCCESS,
   GET_LCO_ONLOCATION_FAIL,
-  GET_SINGLE_LOCATION_SUCCESS,
-  GET_SINGLE_LOCATION_FAIL,
+  // GET_SINGLE_LOCATION_SUCCESS,
+  // GET_SINGLE_LOCATION_FAIL,
   UPDATE_LOCATION_CURRENT_PAGE,
+  UPDATE_LOCATION,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -34,13 +36,12 @@ const INIT_STATE = {
 
 const Location = (state = INIT_STATE, action) => {
   switch (action.type) {
-
     case UPDATE_LOCATION_CURRENT_PAGE:
       return Number(action.payload) <= state.totalPages
         ? {
-          ...state,
-          currentPage: action.payload,
-        }
+            ...state,
+            currentPage: action.payload,
+          }
         : state;
     case GET_LOCATION:
       return {
@@ -68,23 +69,35 @@ const Location = (state = INIT_STATE, action) => {
         loading: false,
       };
 
+    case ADD_LOCATION:
+      return {
+        ...state,
+        loading: true,
+      };
     case ADD_LOCATION_SUCCESS:
       return {
         ...state,
         location: [...state.location, action.payload],
+        loading: false,
       };
 
     case ADD_LOCATION_FAIL:
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
-
+    case UPDATE_LOCATION:
+      return {
+        ...state,
+        loading: true,
+      };
     case UPDATE_LOCATION_SUCCESS:
       return {
         ...state,
+        loading: false,
         location: state.location.map((locate) =>
-          locate.id.toString() === action.payload.id.toString()
+          locate.id === action.payload.id
             ? { location: locate, ...action.payload }
             : locate
         ),
@@ -94,6 +107,7 @@ const Location = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     case GET_LCO_ONLOCATION_SUCCESS:
@@ -109,19 +123,19 @@ const Location = (state = INIT_STATE, action) => {
         error: action.payload,
       };
 
-    case GET_SINGLE_LOCATION_SUCCESS:
-      console.log("Single Location data in reducer:", action.payload);
-      return {
-        ...state,
-        singlelocation: action.payload,
-        loading: false,
-      };
+    // case GET_SINGLE_LOCATION_SUCCESS:
+    //   console.log("Single Location data in reducer:", action.payload);
+    //   return {
+    //     ...state,
+    //     singlelocation: action.payload,
+    //     loading: false,
+    //   };
 
-    case GET_SINGLE_LOCATION_FAIL:
-      return {
-        ...state,
-        error: action.payload,
-      };
+    // case GET_SINGLE_LOCATION_FAIL:
+    //   return {
+    //     ...state,
+    //     error: action.payload,
+    //   };
 
     default:
       return state;

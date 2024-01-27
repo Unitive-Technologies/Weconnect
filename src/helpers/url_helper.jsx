@@ -132,7 +132,7 @@ export const getLocationUrl = (currPage, perPage) => {
 export const updateLocationById = (id) => `/location/${id}?vr=web1.0`;
 export const GET_LCO_ONLOCATION =
   "/operator/list?fields=id,name,code&expand=branch_lbl,distributor_lbl&filter[type]=3&per-page=100&vr=web1.0";
-export const GET_SINGLE_LOCATION = (id) => `/location/${id}?vr=web1.0`;
+// export const GET_SINGLE_LOCATION = (id) => `/location/${id}?vr=web1.0`;
 
 export const GET_SUBLOCATION =
   "/location?expand=created_by_lbl,operator_lbl,operator_code,status_lbl&page=1&per-page=50&vr=web1.0";

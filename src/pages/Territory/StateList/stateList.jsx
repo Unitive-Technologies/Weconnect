@@ -3,12 +3,15 @@ import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
 import Spinners from "../../../components/Common/Spinner";
-import { Card, CardBody, Col, Container, Row } from "reactstrap";
+import { Card, CardBody, Col, Container, Row, Spinner } from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 
-import { goToPage as onGoToPage, getStateUsers as onGetStateUsers } from "/src/store/stateusers/actions";
+import {
+  goToPage as onGoToPage,
+  getStateUsers as onGetStateUsers,
+} from "/src/store/stateusers/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -35,12 +38,10 @@ const StateList = (props) => {
     })
   );
 
-  const { stateUser, loading, totalPage,
-    totalCount,
-    pageSize,
-    currentPage } = useSelector(stateUsersProperties);
+  const { stateUser, loading, totalPage, totalCount, pageSize, currentPage } =
+    useSelector(stateUsersProperties);
 
-  const [isLoading, setLoading] = useState(loading);
+  // const [isLoading, setLoading] = useState(loading);
 
   const columns = useMemo(
     () => [
@@ -146,8 +147,13 @@ const StateList = (props) => {
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Territory" breadcrumbItem="States" />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">

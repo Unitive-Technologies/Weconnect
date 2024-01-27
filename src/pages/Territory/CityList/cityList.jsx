@@ -58,11 +58,16 @@ const CityList = (props) => {
   );
 
   const { districts, status, statelist } = useSelector(districtProperties);
-  const { cits, loading, districtlist, totalPage,
+  const {
+    cits,
+    loading,
+    districtlist,
+    totalPage,
     totalCount,
     pageSize,
-    currentPage, } = useSelector(cityProperties);
-  const [isLoading, setLoading] = useState(loading);
+    currentPage,
+  } = useSelector(cityProperties);
+  // const [isLoading, setLoading] = useState(loading);
   const [showAddCity, setShowAddCity] = useState(false);
   const [showUploadCity, setShowUploadCity] = useState(false);
   const [showViewCity, setShowViewCity] = useState(false);
@@ -341,11 +346,11 @@ const CityList = (props) => {
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Territory" breadcrumbItem="Cities" />
-          {isLoading ? (
+          {loading ? (
             <React.Fragment>
-              <Spinner color="primary"
+              <Spinner
+                color="primary"
                 className="position-absolute top-50 start-50"
-              // setLoading={setLoading}
               />
             </React.Fragment>
           ) : (

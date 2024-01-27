@@ -20,13 +20,13 @@ import { Link } from "react-router-dom";
 import { updateLocation as onUpdateLocation } from "/src/store/location/actions";
 import {
   getLocation as onGetLocation,
-  getSingleLocation as onGetSingleLocation,
+  // getSingleLocation as onGetSingleLocation,
 } from "/src/store/actions";
 
 const ViewLocation = (props) => {
   const {
     isOpen,
-    handleViewLocation,
+    toggleViewLocation,
     location,
     lcoonlocation,
     status,
@@ -35,7 +35,7 @@ const ViewLocation = (props) => {
   const dispatch = useDispatch();
   const [showEditLocation, setShowEditLocation] = useState(false);
 
-  // console.log("Single location: ", singlelocation);
+  console.log("Single location: ", JSON.stringify(location));
   const options = lcoonlocation.map((option) => ({
     value: option.name,
     label: (
@@ -54,6 +54,10 @@ const ViewLocation = (props) => {
       backgroundColor: "white",
     }),
   };
+  // const lcoName = lcoonlocation
+  //   .filter((singlelco) => singlelco.id === location.operator_id)
+  //   .map((filteredLco) => filteredLco.distributor_lbl);
+  // console.log("lcoName: " + lcoName);
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -64,8 +68,6 @@ const ViewLocation = (props) => {
       name: (location && location.name) || "",
       operator_id: (location && location.operator_id) || "",
       status: (location && location.status) || "",
-      created_at: (location && location.created_at) || "",
-      created_by_lbl: (location && location.created_by_lbl) || "my mso(mso)",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter district name"),
@@ -78,19 +80,17 @@ const ViewLocation = (props) => {
         name: values["name"],
         operator_id: values["operator_id"],
         status: values["status"],
-        created_at: new Date(),
-        created_by_lbl: values["created_by_lbl"],
       };
       console.log("Updated Location:" + updateLocation);
       dispatch(onUpdateLocation(updateLocation));
       dispatch(onGetLocation());
       validation.resetForm();
-      handleViewLocation();
+      toggleViewLocation();
     },
   });
 
   const handleCancel = () => {
-    handleViewLocation();
+    toggleViewLocation();
     setShowEditLocation(false);
   };
 
@@ -133,7 +133,7 @@ const ViewLocation = (props) => {
           }}
         >
           <Row>
-            <Col lg={5}>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Location Name</Label>
                 <Input
@@ -156,6 +156,37 @@ const ViewLocation = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">Select LCO</Label>
+
+                <Input
+                  name="operator_id"
+                  type="select"
+                  placeholder="Select lco"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.operator_id || ""}
+                  disabled={!showEditLocation}
+                >
+                  <option value="">Select lco</option>
+                  {lcoonlocation.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
+                </Input>
+                {validation.touched.operator_id &&
+                validation.errors.operator_id ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.operator_id}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Status</Label>
                 <Input
@@ -178,47 +209,6 @@ const ViewLocation = (props) => {
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
                     {validation.errors.status}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={5}>
-              <div className="mb-3">
-                <Label className="form-label">Select LCO</Label>
-                {/* <Select
-                  name="operator_id"
-                  options={options}
-                  onChange={(selectedOption) =>
-                    validation.handleChange(selectedOption.value)
-                  }
-                  onBlur={validation.handleBlur}
-                  value={options.find(
-                    (opt) => opt.value === validation.values.operator_id
-                  )}
-                  styles={customStyles}
-                  disabled={!showEditLocation}
-                /> */}
-                <Input
-                  name="operator_id"
-                  type="select"
-                  placeholder="Select lco"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.operator_id || ""}
-                  disabled={!showEditLocation}
-                >
-                  <option value="">Select lco</option>
-                  {lcoonlocation.map((options) => (
-                    <option key={options.id} value={options.id}>
-                      {options.name}
-                    </option>
-                  ))}
-                </Input>
-                {validation.touched.operator_id &&
-                validation.errors.operator_id ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.operator_id}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -261,7 +251,7 @@ const ViewLocation = (props) => {
 };
 
 ViewLocation.propTypes = {
-  handleViewLocation: PropTypes.func,
+  toggleViewLocation: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 

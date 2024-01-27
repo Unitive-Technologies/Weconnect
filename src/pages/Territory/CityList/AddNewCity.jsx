@@ -56,14 +56,14 @@ const AddNewCity = (props) => {
     }),
     onSubmit: (values) => {
       const newCity = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
+        // id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
         state_id: values["state_id"],
         district_id: values["district_id"],
         status: values["status"],
         description: values["description"],
-        created_at: new Date(),
-        created_by: values["created_by"],
+        // created_at: new Date(),
+        // created_by: values["created_by"],
         type: values["type"],
       };
       console.log("new city:" + JSON.stringify(newCity));
@@ -170,7 +170,7 @@ const AddNewCity = (props) => {
                   value={validation.values.district_id || ""}
                   invalid={
                     validation.touched.district_id &&
-                      validation.errors.district_id
+                    validation.errors.district_id
                       ? true
                       : false
                   }
@@ -183,7 +183,7 @@ const AddNewCity = (props) => {
                   ))}
                 </Input>
                 {validation.touched.district_id &&
-                  validation.errors.district_id ? (
+                validation.errors.district_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.district_id}
                   </FormFeedback>
@@ -205,13 +205,13 @@ const AddNewCity = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -285,7 +285,6 @@ AddNewCity.propTypes = {
   isOpen: PropTypes.bool,
   statelist: PropTypes.array,
   status: PropTypes.array,
-
 };
 
 export default AddNewCity;

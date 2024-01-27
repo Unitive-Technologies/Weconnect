@@ -8,6 +8,7 @@ import {
   CardBody,
   Col,
   Container,
+  Spinner,
   Row,
   UncontrolledTooltip,
 } from "reactstrap";
@@ -16,11 +17,9 @@ import {
   goToPage as onGoToPage,
   getLocation as onGetLocation,
   getLcoOnLocation as onGetLcoOnLocation,
-  getSingleLocation as onGetSingleLocation,
+  // getSingleLocation as onGetSingleLocation,
 } from "/src/store/location/actions";
-import {
-  getAdministrativeDivisionStatus as onGetAdministrativeDivisionStatus,
-} from "/src/store/district/actions";
+import { getAdministrativeDivisionStatus as onGetAdministrativeDivisionStatus } from "/src/store/district/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
@@ -42,7 +41,7 @@ const LocationList = (props) => {
       locations: location.location,
       loading: location.loading,
       lcoonlocation: location.lcoonlocation,
-      singlelocation: location.singlelocation,
+      // singlelocation: location.singlelocation,
       totalPage: location.totalPages,
       totalCount: location.totalCount,
       pageSize: location.perPage,
@@ -60,22 +59,28 @@ const LocationList = (props) => {
   );
 
   const { districts, status } = useSelector(districtProperties);
-  const { totalPage,
+  const {
+    totalPage,
     totalCount,
     pageSize,
-    currentPage, locations, loading, lcoonlocation, singlelocation } =
-    useSelector(locationProperties);
-  const [isLoading, setLoading] = useState(loading);
+    currentPage,
+    locations,
+    loading,
+    lcoonlocation,
+    // singlelocation,
+  } = useSelector(locationProperties);
+  // console.log("lcoon:" + JSON.stringify(lcoonlocation));
+  // const [isLoading, setLoading] = useState(loading);
   const [showAddLocation, setShowAddLocation] = useState(false);
   const [showUploadLocation, setShowUploadLocation] = useState(false);
   const [showViewLocation, setShowViewLocation] = useState(false);
   const [viewLocationData, setViewLocationData] = useState({});
 
-  const handleViewLocation = (userData) => {
+  const toggleViewLocation = (userData) => {
     console.log("User Data: ", userData);
     setShowViewLocation(!showViewLocation);
     setViewLocationData(userData);
-    dispatch(onGetSingleLocation(userData.id));
+    // dispatch(onGetSingleLocation(userData.id));
   };
 
   const columns = useMemo(
@@ -112,7 +117,7 @@ const LocationList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  handleViewLocation(userData);
+                  toggleViewLocation(userData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -239,9 +244,9 @@ const LocationList = (props) => {
     }
   }, [dispatch, locations]);
 
-  useEffect(() => {
-    dispatch(onGetSingleLocation());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(onGetSingleLocation());
+  // }, [dispatch]);
 
   useEffect(() => {
     if (districts && !districts.length) {
@@ -255,7 +260,7 @@ const LocationList = (props) => {
     dispatch(onGetLocation());
   };
 
-  const handleAddLocation = () => {
+  const toggleAddLocation = () => {
     setShowAddLocation(!showAddLocation);
   };
 
@@ -284,15 +289,15 @@ const LocationList = (props) => {
     <React.Fragment>
       <ViewLocation
         isOpen={showViewLocation}
-        handleViewLocation={handleViewLocation}
+        toggleViewLocation={toggleViewLocation}
         location={viewLocationData}
         lcoonlocation={lcoonlocation}
         status={status}
-        singlelocation={singlelocation}
+        // singlelocation={singlelocation}
       />
       <AddNewLocation
         isOpen={showAddLocation}
-        handleAddLocation={handleAddLocation}
+        toggleAddLocation={toggleAddLocation}
         lcoonlocation={lcoonlocation}
         status={status}
       />
@@ -305,8 +310,13 @@ const LocationList = (props) => {
       <div className="page-content">
         <Container fluid>
           <Breadcrumbs title="Territory" breadcrumbItem="Locations" />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">
@@ -339,9 +349,9 @@ const LocationList = (props) => {
                       isGlobalFilter={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      // handleRowClick={(row) => {
-                      //   toggleViewModal(row);
-                      // }}
+                      handleRowClick={(row) => {
+                        toggleViewLocation(row);
+                      }}
                       goToPage={goToPage}
                     />
                   </CardBody>

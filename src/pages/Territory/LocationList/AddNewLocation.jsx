@@ -19,27 +19,28 @@ import { useSelector, useDispatch } from "react-redux";
 import Select from "react-select";
 
 const AddNewLocation = (props) => {
-  const { isOpen, handleAddLocation, lcoonlocation, status } = props;
+  const { isOpen, toggleAddLocation, lcoonlocation, status } = props;
+  console.log("locations:" + JSON.stringify(lcoonlocation));
   const dispatch = useDispatch();
 
-  const options = lcoonlocation.map((option) => ({
-    value: option.id,
-    label: (
-      <div>
-        <h6>{option.name}</h6>
-        <h6>{option.username}</h6>
-        <p>Regional Office: {option.branch_lbl}</p>
-        <p>Distributor: {option.distributor_lbl}</p>
-      </div>
-    ),
-  }));
+  // const options = lcoonlocation.map((option) => ({
+  //   value: option.id,
+  //   label: (
+  //     <div>
+  //       <h6>{option.name}</h6>
+  //       <h6>{option.username}</h6>
+  //       <p>Regional Office: {option.branch_lbl}</p>
+  //       <p>Distributor: {option.distributor_lbl}</p>
+  //     </div>
+  //   ),
+  // }));
 
-  const customStyles = {
-    option: (provided) => ({
-      ...provided,
-      backgroundColor: "white",
-    }),
-  };
+  // const customStyles = {
+  //   option: (provided) => ({
+  //     ...provided,
+  //     backgroundColor: "white",
+  //   }),
+  // };
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -48,30 +49,23 @@ const AddNewLocation = (props) => {
     initialValues: {
       name: "",
       operator_id: "",
-      status_lbl: "",
-      created_at: "",
-      created_by_lbl: "NIKHIL REDDY(nikky)",
       status: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter location name"),
-      operator_id: Yup.string().required("Select LCO"),
+      location: Yup.string().required("Select LCO"),
       status: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
-      console.log("Submittted values: ", values);
       const newLocation = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
-        operator_id: values["operator_id"],
-        status: values["status"],
-        created_at: new Date(),
-        created_by_lbl: values["created_by_lbl"],
+        operator_id: parseInt(values["operator_id"]),
+        status: parseInt(values["status"]),
       };
       console.log("new location:" + JSON.stringify(newLocation));
       dispatch(onAddLocation(newLocation));
       validation.resetForm();
-      handleAddLocation();
+      toggleAddLocation();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -87,9 +81,9 @@ const AddNewLocation = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleAddLocation}
+      toggle={toggleAddLocation}
     >
-      <ModalHeader tag="h4" toggle={handleAddLocation}>
+      <ModalHeader tag="h4" toggle={toggleAddLocation}>
         Add New Location
       </ModalHeader>
       <ModalBody>
@@ -101,7 +95,7 @@ const AddNewLocation = (props) => {
           }}
         >
           <Row>
-            <Col lg={5}>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Location Name<span style={{ color: "red" }}>*</span>
@@ -125,7 +119,37 @@ const AddNewLocation = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Select LCO<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="operator_id"
+                  type="select"
+                  placeholder="Select LCO"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.operator_id || ""}
+                >
+                  <option value="">Select LCO</option>
+                  {lcoonlocation.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
+                </Input>
+                {validation.touched.operator_id &&
+                validation.errors.operator_id ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.operator_id}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Status<span style={{ color: "red" }}>*</span>
@@ -152,49 +176,6 @@ const AddNewLocation = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-            </Col>{" "}
-            <Col lg={5}>
-              <div className="mb-3">
-                <Label className="form-label">
-                  Select LCO<span style={{ color: "red" }}>*</span>
-                </Label>
-                {/* <Select
-                  name="operator_id"
-                  placeholder="select LCO"
-                  options={options}
-                  onChange={(selectedOption) => {
-                    console.log("selected option: ", selectedOption.value);
-                    validation.handleChange(selectedOption.value);
-                  }}
-                  onBlur={validation.handleBlur}
-                  value={options.find(
-                    (opt) => opt.value === validation.values.operator_id
-                  )}
-                  styles={customStyles}
-                /> */}
-                <Input
-                  name="operator_id"
-                  type="select"
-                  placeholder="Select LCO"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.operator_id || ""}
-                >
-                  <option value="">Select LCO</option>
-                  {lcoonlocation.map((options) => (
-                    <option key={options.id} value={options.id}>
-                      {options.name}
-                    </option>
-                  ))}
-                </Input>
-                {validation.touched.operator_id &&
-                  validation.errors.operator_id ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.operator_id}
-                  </FormFeedback>
-                ) : null}
-              </div>
             </Col>
           </Row>
           <Row>
@@ -216,7 +197,7 @@ const AddNewLocation = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    handleAddLocation();
+                    toggleAddLocation();
                   }}
                 >
                   Cancel
@@ -231,8 +212,9 @@ const AddNewLocation = (props) => {
 };
 
 AddNewLocation.propTypes = {
-  handleAddLocation: PropTypes.func,
+  toggleAddLocation: PropTypes.func,
   isOpen: PropTypes.bool,
+  lcoonlocation: PropTypes.array,
 };
 
 export default AddNewLocation;

@@ -440,7 +440,8 @@ export const addLocation = (location) => post(url.ADD_LOCATION, location);
 export const updateLocation = (id, location) =>
   put(url.updateLocationById(id), location);
 export const getLcoOnLocation = () => get(url.GET_LCO_ONLOCATION);
-export const getSingleLocation = (id) => get(url.GET_SINGLE_LOCATION(id));
+// export const getSingleLocation = (id, location) =>
+//   get(url.GET_SINGLE_LOCATION(id), location);
 
 // export const getSublocation = () => get(url.GET_SUBLOCATION);
 export const addSublocation = (sublocation) =>
