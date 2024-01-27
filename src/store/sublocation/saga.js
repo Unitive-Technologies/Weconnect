@@ -4,7 +4,6 @@ import {
   ADD_SUBLOCATION,
   UPDATE_SUBLOCATION,
   GET_LOCATION_ONSUBLOCATION,
-  GET_SINGLE_SUBLOCATION,
 } from "./actionTypes";
 import {
   getSublocation as fetchsublocations,
@@ -16,15 +15,12 @@ import {
   updateSublocationFail,
   getLocationOnSublocationSuccess,
   getLocationOnSublocationFail,
-  getSingleSubLocationSuccess,
-  getSingleSubLocationFail,
 } from "./actions";
 import {
   getSublocation,
   addSublocation,
   updateSublocation,
   getLocationOnSublocation,
-  getSingleSubLocation,
 } from "../../helpers/fakebackend_helper";
 
 export const getSublocationStore = (state) => state.sublocation;
@@ -89,23 +85,11 @@ function* fetchLocationOnSublocation() {
   }
 }
 
-function* fetchSingleSublocation({ payload: singleSublocation }) {
-  console.log("single in saga:" + singleSublocation);
-  try {
-    const response = yield call(getSingleSubLocation, singleSublocation.id);
-    console.log("singleData in saga:" + response);
-    yield put(getSingleSubLocationSuccess(response.data));
-  } catch (error) {
-    yield put(getSingleSubLocationFail(error));
-  }
-}
-
 function* sublocationSaga() {
   yield takeEvery(GET_SUBLOCATION, fetchSublocation);
   yield takeEvery(ADD_SUBLOCATION, onAddSubLocation);
   yield takeEvery(UPDATE_SUBLOCATION, onUpdateSubLocation);
   yield takeEvery(GET_LOCATION_ONSUBLOCATION, fetchLocationOnSublocation);
-  yield takeEvery(GET_SINGLE_SUBLOCATION, fetchSingleSublocation);
 }
 
 export default sublocationSaga;

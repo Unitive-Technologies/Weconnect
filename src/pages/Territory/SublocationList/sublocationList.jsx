@@ -18,7 +18,6 @@ import {
   goToPage as onGoToPage,
   getSublocation as onGetSublocation,
   getLocationOnSublocation as onGetLocationOnSublocation,
-  getSingleSubLocation as onGetSingleSubLocation,
 } from "/src/store/sublocation/actions";
 import { getAdministrativeDivisionStatus as onGetAdministrativeDivisionStatus } from "/src/store/district/actions";
 import { useSelector, useDispatch } from "react-redux";
@@ -247,7 +246,6 @@ const SublocationList = (props) => {
     if (subloc && !subloc.length) {
       dispatch(onGetSublocation());
       dispatch(onGetLocationOnSublocation());
-      dispatch(onGetSingleSubLocation());
     }
   }, [dispatch, subloc]);
 

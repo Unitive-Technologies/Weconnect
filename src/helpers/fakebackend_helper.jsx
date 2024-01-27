@@ -450,7 +450,6 @@ export const updateSublocation = (id, sublocation) =>
   put(url.updateSublocationById(id), sublocation);
 export const getLocationOnSublocation = () =>
   get(url.GET_LOCATION_ONSUBLOCATION);
-export const getSingleSubLocation = (id) => get(url.getSublocationById(id));
 
 export const getRegionalOffices = async (currentPage, perPage = 20) => {
   console.log("RegionalOffice - Current Page in fakebackend: ", currentPage);

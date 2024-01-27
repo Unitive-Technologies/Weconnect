@@ -144,7 +144,6 @@ export const getSublocationUrl = (currPage, perPage) => {
   console.log("current page in sublocation url - ", currPage, perPage);
   return `/sublocation?expand=created_by_lbl,operator_lbl,location_lbl,status_lbl,location_code,operator_code&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
-export const getSublocationById = (id) => `/sublocation/${id}?vr=web1.0`;
 export const GET_DISTRIBUTORS =
   "/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,branch_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=2&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_DISTRIBUTOR = "/operator?vr=web1.0";

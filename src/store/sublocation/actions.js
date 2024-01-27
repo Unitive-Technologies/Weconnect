@@ -12,9 +12,6 @@ import {
   GET_LOCATION_ONSUBLOCATION_SUCCESS,
   GET_LOCATION_ONSUBLOCATION_FAIL,
   UPDATE_SUBLOCATION_CURRENT_PAGE,
-  GET_SINGLE_SUBLOCATION,
-  GET_SINGLE_SUBLOCATION_FAIL,
-  GET_SINGLE_SUBLOCATION_SUCCESS,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -36,23 +33,6 @@ export const getSublocationSuccess = (sublocation) => {
 
 export const getSublocationFail = (error) => ({
   type: GET_SUBLOCATION_FAIL,
-  payload: error,
-});
-
-export const getSingleSubLocation = () => ({
-  type: GET_SINGLE_SUBLOCATION,
-});
-
-export const getSingleSubLocationSuccess = (singleSublocation) => {
-  console.log("Received Sublocation:", singleSublocation);
-  return {
-    type: GET_SINGLE_SUBLOCATION_SUCCESS,
-    payload: singleSublocation,
-  };
-};
-
-export const getSingleSubLocationFail = (error) => ({
-  type: GET_SINGLE_SUBLOCATION_FAIL,
   payload: error,
 });
 
