@@ -4,6 +4,44 @@ import Slider from "react-rangeslider";
 import "react-rangeslider/lib/index.css";
 
 const RevenueShare = ({ def, def1, def2, setdef1, setdef2, setdef }) => {
+  const handleBroadCastShare = (newValue) => {
+    setdef(newValue);
+    const MsoShareValue = def1;
+    const DiscountValue = def2;
+
+    const RevisedMsoValue = 100 - newValue - DiscountValue;
+    setdef1(RevisedMsoValue);
+    // const RevisedDisCountValue = 100 - newValue - MsoShareValue;
+    // setdef2(RevisedDisCountValue);
+  };
+
+  const handleMsoShare = (newValue) => {
+    setdef1(newValue);
+    const MsoShareValue = def1;
+    const DiscountValue = def2;
+
+    const RevisedBroadCastValue = 100 - newValue - DiscountValue;
+    setdef(RevisedBroadCastValue);
+    // const RevisedDisCountValue = 100 - newValue - MsoShareValue;
+    // setdef2(RevisedDisCountValue);
+  };
+
+  const handleDiscount = (newValue) => {
+    setdef2(newValue);
+    const MsoShareValue = def1;
+    // const DiscountValue = def2;
+    if (MsoShareValue > 0) {
+      const RevisedMsoShare = def1 - newValue;
+      setdef1(RevisedMsoShare);
+    } else {
+      const RevisedBroadCastValue = def - newValue;
+      setdef(RevisedBroadCastValue);
+    }
+
+    // const RevisedDisCountValue = 100 - newValue - MsoShareValue;
+    // setdef2(RevisedDisCountValue);
+  };
+
   console.log("def value:" + def, def1, def2);
   return (
     <div>
@@ -17,9 +55,10 @@ const RevenueShare = ({ def, def1, def2, setdef1, setdef2, setdef }) => {
               min={65}
               max={100}
               orientation="horizontal"
-              onChange={(newValue) => {
-                setdef(newValue);
-              }}
+              onChange={(newValue) => handleBroadCastShare(newValue)}
+              // onChange={(newValue) => {
+              //   setdef(newValue);
+              // }}
             />
             <span className="float-right  mt-4">Value: {def} %</span>
           </div>
@@ -31,9 +70,10 @@ const RevenueShare = ({ def, def1, def2, setdef1, setdef2, setdef }) => {
               min={0}
               max={35}
               orientation="horizontal"
-              onChange={(newValue) => {
-                setdef1(newValue);
-              }}
+              onChange={(newValue) => handleMsoShare(newValue)}
+              // onChange={(newValue) => {
+              //   setdef1(newValue);
+              // }}
             />
             <span className="float-right  mt-4">Value: {def1} %</span>
           </div>
@@ -45,9 +85,10 @@ const RevenueShare = ({ def, def1, def2, setdef1, setdef2, setdef }) => {
               min={0}
               max={15}
               orientation="horizontal"
-              onChange={(newValue) => {
-                setdef2(newValue);
-              }}
+              onChange={(newValue) => handleDiscount(newValue)}
+              // onChange={(newValue) => {
+              //   setdef2(newValue);
+              // }}
             />
             <span className="float-right  mt-4">Value: {def2} %</span>
           </div>
