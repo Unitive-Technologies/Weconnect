@@ -44,7 +44,7 @@ const AddStockSmartcard = (props) => {
       inv_state_id: "",
       invoice_date: "",
       invoice_no: "",
-      is_embeded: "",
+      is_embeded: false,
       po_date: "",
       po_number: "",
       smartcardno: "",
@@ -144,10 +144,10 @@ const AddStockSmartcard = (props) => {
               </div>
             </Col>
             <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">
-                  Is Embedded<span style={{ color: "red" }}>*</span>
-                </Label>
+              <div>
+                <Label className="form-label">Is Embedded</Label>
+              </div>
+              <div>
                 <Input
                   name="is_embeded"
                   type="checkbox"
@@ -211,6 +211,7 @@ const AddStockSmartcard = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.smartcardno || ""}
+                  disabled={validation.values.brand_id === "" ? true : false}
                 />
                 {validation.touched.smartcardno &&
                 validation.errors.smartcardno ? (
@@ -221,57 +222,62 @@ const AddStockSmartcard = (props) => {
               </div>
             </Col>
           </Row>
-          <Row>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">
-                  STB Band<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="stbbrand_id"
-                  type="select"
-                  placeholder="Select state"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.stbbrand_id || ""}
-                >
-                  <option value="">Select stb brand</option>
-                  {brand1.map((options) => (
-                    <option key={options.id} value={options.id}>
-                      {options.name}
-                    </option>
-                  ))}
-                </Input>
-                {validation.touched.stbbrand_id &&
-                validation.errors.stbbrand_id ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.stbbrand_id}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">
-                  STB No<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="stbno"
-                  type="text"
-                  placeholder="Enter Smartcard no."
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.stbno || ""}
-                />
-                {validation.touched.stbno && validation.errors.stbno ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.stbno}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-          </Row>
+          {validation.values.is_embeded ? (
+            <Row>
+              <Col lg={4}>
+                <div className="mb-3">
+                  <Label className="form-label">
+                    STB Band<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="stbbrand_id"
+                    type="select"
+                    placeholder="Select state"
+                    className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.stbbrand_id || ""}
+                  >
+                    <option value="">Select stb brand</option>
+                    {brand1.map((options) => (
+                      <option key={options.id} value={options.id}>
+                        {options.name}
+                      </option>
+                    ))}
+                  </Input>
+                  {validation.touched.stbbrand_id &&
+                  validation.errors.stbbrand_id ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.stbbrand_id}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              <Col lg={4}>
+                <div className="mb-3">
+                  <Label className="form-label">
+                    STB No<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="stbno"
+                    type="text"
+                    placeholder="Enter Smartcard no."
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.stbno || ""}
+                    disabled={
+                      validation.values.stbbrand_id === "" ? true : false
+                    }
+                  />
+                  {validation.touched.stbno && validation.errors.stbno ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.stbno}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+            </Row>
+          ) : null}
           <Row>
             <Col lg={4}>
               <div className="mb-3">
