@@ -14,7 +14,10 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { getSublocation as onGetSublocation, addSubLocation as onAddSubLocation } from "/src/store/sublocation/actions";
+import {
+  getSublocation as onGetSublocation,
+  addSubLocation as onAddSubLocation,
+} from "/src/store/sublocation/actions";
 import { useSelector, useDispatch } from "react-redux";
 import Select from "react-select";
 
@@ -147,16 +150,17 @@ const AddSubLocation = (props) => {
                   value={options.find(
                     (opt) => opt.value === validation.values.location_id
                   )}
-                  styles={customStyles}
+                  // styles={customStyles}
                 />
                 {validation.touched.location_id &&
-                  validation.errors.location_id ? (
+                validation.errors.location_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.location_id}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
+
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
@@ -225,7 +229,6 @@ AddSubLocation.propTypes = {
 
   status: PropTypes.array,
   locateonsublocate: PropTypes.array,
-
 };
 
 export default AddSubLocation;

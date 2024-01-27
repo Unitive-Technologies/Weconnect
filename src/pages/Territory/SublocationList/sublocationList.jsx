@@ -10,7 +10,7 @@ import {
   Container,
   Row,
   UncontrolledTooltip,
-  Spinner
+  Spinner,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import {
@@ -18,9 +18,7 @@ import {
   getSublocation as onGetSublocation,
   getLocationOnSublocation as onGetLocationOnSublocation,
 } from "/src/store/sublocation/actions";
-import {
-  getAdministrativeDivisionStatus as onGetAdministrativeDivisionStatus,
-} from "/src/store/district/actions";
+import { getAdministrativeDivisionStatus as onGetAdministrativeDivisionStatus } from "/src/store/district/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
@@ -59,12 +57,15 @@ const SublocationList = (props) => {
   );
 
   const { districts, status } = useSelector(districtProperties);
-  const { subloc, loading, locateonsublocate, totalPage,
+  const {
+    subloc,
+    loading,
+    locateonsublocate,
+    totalPage,
     totalCount,
     pageSize,
-    currentPage, } = useSelector(
-      sublocationProperties
-    );
+    currentPage,
+  } = useSelector(sublocationProperties);
   // const [isLoading, setLoading] = useState(loading);
   const [showAddSubLocation, setShowAddSubLocation] = useState(false);
   const [showUploadSubLocation, setShowUploadSubLocation] = useState(false);
@@ -186,7 +187,9 @@ const SublocationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.status_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.status_lbl}
+            </p>
           );
         },
       },
@@ -214,7 +217,6 @@ const SublocationList = (props) => {
           );
         },
       },
-
     ],
     []
   );
@@ -331,9 +333,9 @@ const SublocationList = (props) => {
                       isGlobalFilter={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      // handleRowClick={(row) => {
-                      //   toggleViewModal(row);
-                      // }}
+                      handleRowClick={(row) => {
+                        toggleViewModal(row);
+                      }}
                       goToPage={goToPage}
                     />
                   </CardBody>

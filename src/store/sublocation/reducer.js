@@ -36,9 +36,9 @@ const Sublocation = (state = INIT_STATE, action) => {
     case UPDATE_SUBLOCATION_CURRENT_PAGE:
       return Number(action.payload) <= state.totalPages
         ? {
-          ...state,
-          currentPage: action.payload,
-        }
+            ...state,
+            currentPage: action.payload,
+          }
         : state;
     case GET_SUBLOCATION:
       return {
@@ -97,7 +97,9 @@ const Sublocation = (state = INIT_STATE, action) => {
         ...state,
         loading: false,
         sublocation: state.sublocation.map((sublocate) =>
-          sublocate.id === action.payload.id ? { ...sublocate, ...action.payload } : sublocate
+          sublocate.id === action.payload.id
+            ? { ...sublocate, ...action.payload }
+            : sublocate
         ),
       };
     //   ...state,
@@ -112,6 +114,7 @@ const Sublocation = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     case GET_LOCATION_ONSUBLOCATION_SUCCESS:
@@ -125,6 +128,7 @@ const Sublocation = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     default:

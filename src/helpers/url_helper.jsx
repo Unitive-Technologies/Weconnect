@@ -126,7 +126,7 @@ export const GET_LOCATION =
   "/location?expand=created_by_lbl,operator_lbl,operator_code,status_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_LOCATION = "/location?vr=web1.0";
 export const getLocationUrl = (currPage, perPage) => {
-  console.log("current page in City url - ", currPage, perPage);
+  console.log("current page in location url - ", currPage, perPage);
   return `/location?expand=created_by_lbl,operator_lbl,operator_code,status_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
 export const updateLocationById = (id) => `/location/${id}?vr=web1.0`;
@@ -135,14 +135,14 @@ export const GET_LCO_ONLOCATION =
 // export const GET_SINGLE_LOCATION = (id) => `/location/${id}?vr=web1.0`;
 
 export const GET_SUBLOCATION =
-  "/location?expand=created_by_lbl,operator_lbl,operator_code,status_lbl&page=1&per-page=50&vr=web1.0";
+  "/sublocation?expand=created_by_lbl,operator_lbl,location_lbl,status_lbl,location_code,operator_code&page=1&per-page=50&vr=web1.0";
 export const ADD_SUBLOCATION = "/sublocation?vr=web1.0";
 export const updateSublocationById = (id) => `/sublocation/${id}?vr=web1.0`;
 export const GET_LOCATION_ONSUBLOCATION =
   "/location/list?fields=id,name&expand=operator_lbl&per-page=100&vr=web1.0";
 export const getSublocationUrl = (currPage, perPage) => {
-  console.log("current page in City url - ", currPage, perPage);
-  return `/location?expand=created_by_lbl,operator_lbl,operator_code,status_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+  console.log("current page in sublocation url - ", currPage, perPage);
+  return `/sublocation?expand=created_by_lbl,operator_lbl,location_lbl,status_lbl,location_code,operator_code&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
 
 export const GET_DISTRIBUTORS =
