@@ -15,6 +15,10 @@ import {
   Row,
 } from "reactstrap";
 import * as Yup from "yup";
+import {
+  addInventoryStockSmartcard as onAddInventoryStockSmartcard,
+  getInventoryStockSmartcard as onGetInventoryStockSmartcard,
+} from "/src/store/inventorystock/actions";
 
 const AddStockSmartcard = (props) => {
   const {
@@ -50,15 +54,32 @@ const AddStockSmartcard = (props) => {
       stbbrand_id: "",
       stbno: "",
       po_id: "",
+      cas_id: "",
     },
-    validationSchema: Yup.object({}),
+    validationSchema: Yup.object({
+      cas_id: Yup.string().required("Select CAS Type"),
+    }),
     onSubmit: (values) => {
       const newSmartcard = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
+        cas_id: values["cas_id"],
+        is_embeded: values["is_embeded"],
+        brand_id: values["brand_id"],
+        smartcardno: values["smartcardno"],
+        stbbrand_id: values["stbbrand_id"],
+        stbno: values["stbno"],
+        po_number: values["po_number"],
+        po_date: values["po_date"],
+        invoice_no: values["invoice_no"],
+        invoice_date: values["invoice_date"],
+        warehouse_id: values["warehouse_id"],
+        state: values["state"],
+        description: values["description"],
+        inv_state_id: values["inv_state_id"],
       };
       console.log("New smartcard: " + JSON.stringify(newSmartcard));
-      // dispatch(onAddCity(newSmartcard));
-      // dispatch(onGetCity());
+      dispatch(onAddInventoryStockSmartcard(newSmartcard));
+      dispatch(onGetInventoryStockSmartcard());
       validation.resetForm();
       toggle();
     },
@@ -108,6 +129,7 @@ const AddStockSmartcard = (props) => {
                       : false
                   }
                 >
+                  <option value="">Select CAS Type</option>
                   {stocksccastype.map((castype) => (
                     <option key={castype.id} value={castype.id}>
                       {castype.name}
