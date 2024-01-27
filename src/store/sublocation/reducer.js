@@ -4,6 +4,7 @@ import {
   RESPONSE_HEADER_TOTAL_COUNT,
   RESPONSE_HEADER_PER_PAGE,
 } from "../../constants/strings";
+
 import {
   GET_SUBLOCATION,
   GET_SUBLOCATION_SUCCESS,
@@ -16,12 +17,15 @@ import {
   UPDATE_SUBLOCATION_FAIL,
   GET_LOCATION_ONSUBLOCATION_SUCCESS,
   GET_LOCATION_ONSUBLOCATION_FAIL,
+  GET_SINGLE_SUBLOCATION_SUCCESS,
+  GET_SINGLE_SUBLOCATION_FAIL,
   UPDATE_SUBLOCATION_CURRENT_PAGE,
 } from "./actionTypes";
 
 const INIT_STATE = {
   sublocation: [],
   locateonsublocate: [],
+  singleSublocation: {},
   pagination: {},
   error: {},
   loading: false,
@@ -65,6 +69,23 @@ const Sublocation = (state = INIT_STATE, action) => {
         loading: false,
       };
 
+    case GET_SINGLE_SUBLOCATION_SUCCESS:
+      console.log("single in reducer:" + action.payload);
+      return {
+        ...state,
+        // singleSublocation: action.payload,
+        singleSublocation: state.sublocation.map(
+          (sublocate) => sublocate.id === action.payload.id && sublocate
+        ),
+        loading: false,
+      };
+
+    case GET_SINGLE_SUBLOCATION_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
     case ADD_SUBLOCATION:
       return {
         ...state,

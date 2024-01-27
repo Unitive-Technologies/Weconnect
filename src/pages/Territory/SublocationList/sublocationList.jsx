@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
@@ -17,6 +18,7 @@ import {
   goToPage as onGoToPage,
   getSublocation as onGetSublocation,
   getLocationOnSublocation as onGetLocationOnSublocation,
+  getSingleSubLocation as onGetSingleSubLocation,
 } from "/src/store/sublocation/actions";
 import { getAdministrativeDivisionStatus as onGetAdministrativeDivisionStatus } from "/src/store/district/actions";
 import { useSelector, useDispatch } from "react-redux";
@@ -30,9 +32,9 @@ import TableContainerX from "../../../components/Common/TableContainerX";
 const SublocationList = (props) => {
   //meta title
   document.title = "Sublocations | VDigital";
-
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const dispatch = useDispatch();
-
+  const [singleSubLocation, setSingleSubLocation] = useState({});
   const selectSublocationState = (state) => state.sublocation;
   const sublocationProperties = createSelector(
     selectSublocationState,
@@ -66,16 +68,36 @@ const SublocationList = (props) => {
     pageSize,
     currentPage,
   } = useSelector(sublocationProperties);
+  console.log("singleSubLocation:" + JSON.stringify(singleSubLocation));
   // const [isLoading, setLoading] = useState(loading);
   const [showAddSubLocation, setShowAddSubLocation] = useState(false);
   const [showUploadSubLocation, setShowUploadSubLocation] = useState(false);
   const [showViewSubLocation, setShowViewSubLocation] = useState(false);
   const [viewSubLocationData, setViewSubLocationData] = useState({});
 
-  const toggleViewModal = (userData) => {
-    // console.log("User Data: ", userData);
+  const toggleViewModal = async (userData) => {
     setShowViewSubLocation(!showViewSubLocation);
-    setViewSubLocationData(userData);
+    try {
+      // setViewSubLocationData(userData);
+
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/sublocation/${userData.id}?vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      // debugger;
+      console.log(
+        "singleData after selection : " + JSON.stringify(response.data.data)
+      );
+      setSingleSubLocation(response.data.data);
+    } catch (error) {
+      console.error("Error fetching policy data:", error);
+    }
   };
 
   const columns = useMemo(
@@ -225,6 +247,7 @@ const SublocationList = (props) => {
     if (subloc && !subloc.length) {
       dispatch(onGetSublocation());
       dispatch(onGetLocationOnSublocation());
+      dispatch(onGetSingleSubLocation());
     }
   }, [dispatch, subloc]);
 
@@ -278,6 +301,7 @@ const SublocationList = (props) => {
         status={status}
         resetSelection={resetSelection}
         locateonsublocate={locateonsublocate}
+        singleSubLocation={singleSubLocation}
       />
       <AddSubLocation
         isOpen={showAddSubLocation}

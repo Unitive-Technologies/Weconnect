@@ -26,6 +26,7 @@ const ViewSubLocation = (props) => {
     sublocation,
     status,
     locateonsublocate,
+    singleSubLocation,
   } = props;
   const dispatch = useDispatch();
   const [showEditSubLocation, setShowEditSubLocation] = useState(false);
@@ -51,12 +52,10 @@ const ViewSubLocation = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      id: (sublocation && sublocation.id) || "",
-      name: (sublocation && sublocation.name) || "",
-      location_id: (sublocation && sublocation.location_id) || "",
-      status: (sublocation && sublocation.status) || "",
-      created_at: (sublocation && sublocation.created_at) || "",
-      created_by: (sublocation && sublocation.created_by) || "my mso(mso)",
+      id: (singleSubLocation && singleSubLocation.id) || "",
+      name: (singleSubLocation && singleSubLocation.name) || "",
+      location_id: (singleSubLocation && singleSubLocation.location_id) || "",
+      status: (singleSubLocation && singleSubLocation.status) || "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter district name"),
@@ -66,11 +65,11 @@ const ViewSubLocation = (props) => {
     onSubmit: (values) => {
       const updateSubLocation = {
         id: values["id"],
+        code: values["code"],
+        discount_value: {},
         name: values["name"],
         location_id: values["location_id"],
         status: values["status"],
-        created_at: new Date(),
-        created_by: values["created_by"],
       };
       console.log("Updated Sublocation:" + JSON.stringify(updateSubLocation));
       dispatch(onUpdateSublocation(updateSubLocation));
@@ -101,8 +100,8 @@ const ViewSubLocation = (props) => {
     >
       <ModalHeader toggle={handleCancel} tag="h4">
         {!showEditSubLocation
-          ? `View ${(sublocation && sublocation.name) || ""}`
-          : `Edit ${(sublocation && sublocation.name) || ""}`}
+          ? `View ${(singleSubLocation && singleSubLocation.name) || ""}`
+          : `Edit ${(singleSubLocation && singleSubLocation.name) || ""}`}
       </ModalHeader>
       {!showEditSubLocation && (
         <Link
@@ -127,7 +126,7 @@ const ViewSubLocation = (props) => {
           }}
         >
           <Row>
-            <Col lg={5}>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Sub Location Name</Label>
                 <Input
@@ -150,33 +149,8 @@ const ViewSubLocation = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-              <div className="mb-3">
-                <Label className="form-label">Status</Label>
-                <Input
-                  name="status"
-                  type="select"
-                  placeholder="Select Status"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.status || ""}
-                  disabled={!showEditSubLocation}
-                >
-                  <option value="">Select Status</option>
-                  {status.map((options) => (
-                    <option key={options.id} value={options.id}>
-                      {options.name}
-                    </option>
-                  ))}
-                </Input>
-                {validation.touched.status && validation.errors.status ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.status}
-                  </FormFeedback>
-                ) : null}
-              </div>
             </Col>
-            <Col lg={5}>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Select Location</Label>
                 {/* <Select
@@ -211,9 +185,36 @@ const ViewSubLocation = (props) => {
                   ))}
                 </Input>
                 {validation.touched.location_id &&
-                  validation.errors.location_id ? (
+                validation.errors.location_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.location_id}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">Status</Label>
+                <Input
+                  name="status"
+                  type="select"
+                  placeholder="Select Status"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.status || ""}
+                  disabled={!showEditSubLocation}
+                >
+                  <option value="">Select Status</option>
+                  {status.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
+                </Input>
+                {validation.touched.status && validation.errors.status ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.status}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -261,7 +262,6 @@ ViewSubLocation.propTypes = {
 
   sublocation: PropTypes.object,
   status: PropTypes.array,
-
 };
 
 export default ViewSubLocation;
