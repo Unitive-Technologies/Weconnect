@@ -30,6 +30,8 @@ import {
   getInventoryStockScInventorystate as onGetInventoryStockScInventorystate,
   getInventoryStockScStatetype as onGetInventoryStockScStatetype,
   getInventoryStockScWarehouse as onGetInventoryStockScWarehouse,
+  getInventoryStockScBrand1 as onGetInventoryStockScBrand1,
+  getInventoryStockScBrand2 as onGetInventoryStockScBrand2,
 } from "/src/store/inventorystock/actions";
 import {
   getInventoryFaultySmartcard as onGetInventoryFaultySmartcard,
@@ -76,6 +78,8 @@ const InventoryStock = (props) => {
       stockscwarehouse: stockpairing.stockscwarehouse,
       stockscstatetype: stockpairing.stockscstatetype,
       stockscinventorystate: stockpairing.stockscinventorystate,
+      brand1: stockpairing.brand1,
+      brand2: stockpairing.brand2,
     })
   );
 
@@ -92,6 +96,8 @@ const InventoryStock = (props) => {
     stockscwarehouse,
     stockscstatetype,
     stockscinventorystate,
+    brand1,
+    brand2,
   } = useSelector(inventorystockProperties);
 
   useEffect(() => {
@@ -103,6 +109,8 @@ const InventoryStock = (props) => {
       dispatch(onGetInventoryStockScInventorystate());
       dispatch(onGetInventoryStockScStatetype());
       dispatch(onGetInventoryStockScWarehouse());
+      dispatch(onGetInventoryStockScBrand1());
+      dispatch(onGetInventoryStockScBrand2());
     }
   }, [dispatch, stockpairing]);
 
@@ -897,6 +905,8 @@ const InventoryStock = (props) => {
                           stockscwarehouse={stockscwarehouse}
                           stockscstatetype={stockscstatetype}
                           stockscinventorystate={stockscinventorystate}
+                          brand1={brand1}
+                          brand2={brand2}
                         />
                         <Row>
                           <Col sm="12">
