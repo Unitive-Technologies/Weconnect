@@ -571,13 +571,13 @@ const AddNewChannelList = (props) => {
                   name="rate"
                   type="number"
                   step="0.01"
-                  // onChange={handleInputChange}
+                  onChange={handleInputChange}
                   onKeyDown={handleArrowKeyPress}
                   placeholder="0"
-                  // value={selectedRate}
-                  onChange={validation.handleChange}
+                  value={selectedRate}
+                  // onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.rate || ""}
+                  // value={validation.values.rate || ""}
                 ></Input>
                 {/* Validation and error handling code here */}
               </div>
