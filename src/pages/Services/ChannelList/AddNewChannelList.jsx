@@ -165,7 +165,7 @@ const AddNewChannelList = (props) => {
                   name="code"
                   type="text"
                   placeholder="Enter code"
-                  // className="form-select"
+                  disabled
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.code || ""}
@@ -179,7 +179,7 @@ const AddNewChannelList = (props) => {
             </Col>
 
             <Col lg={2}>
-              <div className="form-check form-switch form-switch-lg mb-3">
+              <div className="form-check form-switch form-switch-lg mt-3">
                 <input
                   type="checkbox"
                   className="form-check-input"
@@ -195,7 +195,7 @@ const AddNewChannelList = (props) => {
               </div>
             </Col>
             <Col lg={2}>
-              <div className="mt-3">
+              <div className="mt-3 ">
                 <div
                   style={{
                     display: "flex",
