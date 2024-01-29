@@ -30,6 +30,7 @@ const ViewSubLocation = (props) => {
     singleSubLocation,
   } = props;
   const dispatch = useDispatch();
+  console.log("rowdata on view:" + JSON.stringify(sublocation));
   const [showEditSubLocation, setShowEditSubLocation] = useState(false);
 
   const options = locateonsublocate.map((option) => ({
@@ -53,10 +54,10 @@ const ViewSubLocation = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      id: (singleSubLocation && singleSubLocation.id) || "",
-      name: (singleSubLocation && singleSubLocation.name) || "",
-      location_id: (singleSubLocation && singleSubLocation.location_id) || "",
-      status: (singleSubLocation && singleSubLocation.status) || "",
+      id: (sublocation && sublocation.id) || "",
+      name: (sublocation && sublocation.name) || "",
+      location_id: (sublocation && sublocation.location_id) || "",
+      status: (sublocation && sublocation.status) || "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter district name"),
@@ -101,8 +102,8 @@ const ViewSubLocation = (props) => {
     >
       <ModalHeader toggle={handleCancel} tag="h4">
         {!showEditSubLocation
-          ? `View ${(singleSubLocation && singleSubLocation.name) || ""}`
-          : `Edit ${(singleSubLocation && singleSubLocation.name) || ""}`}
+          ? `View ${(sublocation && sublocation.name) || ""}`
+          : `Edit ${(sublocation && sublocation.name) || ""}`}
       </ModalHeader>
       {!showEditSubLocation && (
         <Link

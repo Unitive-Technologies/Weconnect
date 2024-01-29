@@ -74,30 +74,33 @@ const SublocationList = (props) => {
   const [showViewSubLocation, setShowViewSubLocation] = useState(false);
   const [viewSubLocationData, setViewSubLocationData] = useState({});
 
-  const toggleViewModal = async (userData) => {
+  const toggleViewModal = (userData) => {
     setShowViewSubLocation(!showViewSubLocation);
-    try {
-      // setViewSubLocationData(userData);
-
-      const token = "Bearer " + localStorage.getItem("temptoken");
-
-      const response = await axios.get(
-        `${API_URL}/sublocation/${userData.id}?vr=web1.0`,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
-      // debugger;
-      console.log(
-        "singleData after selection : " + JSON.stringify(response.data.data)
-      );
-      setSingleSubLocation(response.data.data);
-    } catch (error) {
-      console.error("Error fetching policy data:", error);
-    }
+    setViewSubLocationData(userData);
   };
+  // const toggleViewModal = async (userData) => {
+  //   setShowViewSubLocation(!showViewSubLocation);
+  //   setViewSubLocationData(userData);
+  //   try {
+  //     const token = "Bearer " + localStorage.getItem("temptoken");
+
+  //     const response = await axios.get(
+  //       `${API_URL}/sublocation/${userData.id}?vr=web1.0`,
+  //       {
+  //         headers: {
+  //           Authorization: token,
+  //         },
+  //       }
+  //     );
+  //     // debugger;
+  //     console.log(
+  //       "singleData after selection : " + JSON.stringify(response.data.data)
+  //     );
+  //     setSingleSubLocation(response.data.data);
+  //   } catch (error) {
+  //     console.error("Error fetching policy data:", error);
+  //   }
+  // };
 
   const columns = useMemo(
     () => [
