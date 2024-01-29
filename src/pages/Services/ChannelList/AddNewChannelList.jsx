@@ -40,9 +40,9 @@ const AddNewChannelList = (props) => {
   } = props;
   const dispatch = useDispatch();
 
-  const [def, setDef] = useState(80);
-  const [def1, setdef1] = useState(20);
-  const [def2, setdef2] = useState(0);
+  const [broadPercent, setBroadPercent] = useState(80);
+  const [msoPercent, setMsoPercent] = useState(20);
+  const [discountPercent, setDiscountPercent] = useState(0);
 
   const [casCodeList, setCasCodeList] = useState([]);
 
@@ -556,12 +556,12 @@ const AddNewChannelList = (props) => {
                 >
                   <Col lg={6}>
                     <RevenueShare
-                      def={def}
-                      def1={def1}
-                      def2={def2}
-                      setdef={setDef}
-                      setdef1={setdef1}
-                      setdef2={setdef2}
+                      broadPercent={broadPercent}
+                      msoPercent={msoPercent}
+                      discountPercent={discountPercent}
+                      setBroadPercent={setBroadPercent}
+                      setMsoPercent={setMsoPercent}
+                      setDiscountPercent={setDiscountPercent}
                     />
                   </Col>
 
@@ -576,9 +576,9 @@ const AddNewChannelList = (props) => {
                             (MRP: {selectedRate}){" "}
                           </CardTitle>
                           <PieChart
-                            def={def}
-                            def1={def1}
-                            def2={def2}
+                            broadPercent={broadPercent}
+                            msoPercent={msoPercent}
+                            discountPercent={discountPercent}
                             selectedRate={selectedRate}
                             dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
                           />

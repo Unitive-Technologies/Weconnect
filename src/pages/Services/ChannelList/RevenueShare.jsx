@@ -3,47 +3,44 @@ import { Row, Col } from "reactstrap";
 import Slider from "react-rangeslider";
 import "react-rangeslider/lib/index.css";
 
-const RevenueShare = ({ def, def1, def2, setdef1, setdef2, setdef }) => {
+const RevenueShare = ({
+  broadPercent,
+  msoPercent,
+  discountPercent,
+  setBroadPercent,
+  setMsoPercent,
+  setDiscountPercent,
+}) => {
   const handleBroadCastShare = (newValue) => {
-    setdef(newValue);
-    const MsoShareValue = def1;
-    const DiscountValue = def2;
+    setBroadPercent(newValue);
 
-    const RevisedMsoValue = 100 - newValue - DiscountValue;
-    setdef1(RevisedMsoValue);
-    // const RevisedDisCountValue = 100 - newValue - MsoShareValue;
-    // setdef2(RevisedDisCountValue);
+    const RevisedMsoValue = 100 - newValue - discountPercent;
+    setMsoPercent(RevisedMsoValue);
   };
 
   const handleMsoShare = (newValue) => {
-    setdef1(newValue);
-    const MsoShareValue = def1;
-    const DiscountValue = def2;
+    setMsoPercent(newValue);
 
-    const RevisedBroadCastValue = 100 - newValue - DiscountValue;
-    setdef(RevisedBroadCastValue);
-    // const RevisedDisCountValue = 100 - newValue - MsoShareValue;
-    // setdef2(RevisedDisCountValue);
+    const RevisedBroadCastValue = 100 - newValue - discountPercent;
+    setBroadPercent(RevisedBroadCastValue);
   };
 
   const handleDiscount = (newValue) => {
-    setdef2(newValue);
-    const MsoShareValue = def1;
-    const BroadCastValue = def;
-    const BalanceValue = 100 - BroadCastValue;
+    setDiscountPercent(newValue);
 
-    if (MsoShareValue > newValue) {
+    const BalanceValue = 100 - broadPercent;
+
+    if (msoPercent > newValue) {
       const RevisedMsoShare = BalanceValue - newValue;
-      setdef1(RevisedMsoShare);
+      setMsoPercent(RevisedMsoShare);
     } else {
       const RevisedMsoShare = 0;
-      setdef1(RevisedMsoShare);
+      setMsoPercent(RevisedMsoShare);
       const RevisedBroadCastValue = 100 - newValue;
-      setdef(RevisedBroadCastValue);
+      setBroadPercent(RevisedBroadCastValue);
     }
   };
 
-  console.log("def value:" + def, def1, def2);
   return (
     <div>
       <Row>
@@ -52,46 +49,39 @@ const RevenueShare = ({ def, def1, def2, setdef1, setdef2, setdef }) => {
             <h5 className="font-size-14 mb-3 mt-0">Brodcaster Share</h5>
 
             <Slider
-              value={def}
+              value={broadPercent}
               min={65}
               max={100}
               orientation="horizontal"
               onChange={(newValue) => handleBroadCastShare(newValue)}
-              // onChange={(newValue) => {
-              //   setdef(newValue);
-              // }}
             />
-            <span className="float-right  mt-4">Value: {def} %</span>
+            <span className="float-right  mt-4">Value: {broadPercent} %</span>
           </div>
           <div className="p-3">
             <h5 className="font-size-14 mb-3 mt-0">MSO Share</h5>
 
             <Slider
-              value={def1}
+              value={msoPercent}
               min={0}
               max={35}
               orientation="horizontal"
               onChange={(newValue) => handleMsoShare(newValue)}
-              // onChange={(newValue) => {
-              //   setdef1(newValue);
-              // }}
             />
-            <span className="float-right  mt-4">Value: {def1} %</span>
+            <span className="float-right  mt-4">Value: {msoPercent} %</span>
           </div>
           <div className="p-3">
             <h5 className="font-size-14 mb-3 mt-0">MSO Discount</h5>
 
             <Slider
-              value={def2}
+              value={discountPercent}
               min={0}
               max={15}
               orientation="horizontal"
               onChange={(newValue) => handleDiscount(newValue)}
-              // onChange={(newValue) => {
-              //   setdef2(newValue);
-              // }}
             />
-            <span className="float-right  mt-4">Value: {def2} %</span>
+            <span className="float-right  mt-4">
+              Value: {discountPercent} %
+            </span>
           </div>
           <span>Note: Discount won't be shared with LCO</span>
         </Col>
