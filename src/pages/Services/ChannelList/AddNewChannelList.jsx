@@ -43,9 +43,8 @@ const AddNewChannelList = (props) => {
   const [broadPercent, setBroadPercent] = useState(80);
   const [msoPercent, setMsoPercent] = useState(20);
   const [discountPercent, setDiscountPercent] = useState(0);
-
+  const [toggleSwitch, settoggleSwitch] = useState(true);
   const [casCodeList, setCasCodeList] = useState([]);
-
   const [selectedType, setSelectedType] = useState("");
 
   const [selectedRate, setSelectedRate] = useState("");
@@ -72,63 +71,52 @@ const AddNewChannelList = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      //BroadCaster: "",
       code: "",
-      logo: "",
+      type: "",
+      logo: { name: "", type: "", ext: "", data: "" },
       name: "",
       description: "",
       definition: "",
       isFta: "",
+      isNCF: "",
       broadcaster: "",
       genre: "",
-      language: "",
+      language: [],
       isalacarte: "",
       rate: "",
       status: "",
-      cas: "",
-      // type: "",
-      cascode: "",
-      serviceid: "",
-      created_by: "Admin",
     },
     validationSchema: Yup.object({
-      code: Yup.string().required("Enter Channel Code"),
-      logo: Yup.string().required("upload logo"),
       name: Yup.string().required("Enter channel name"),
       description: Yup.string().required("Enter description"),
       definition: Yup.string().required("Enter channel definition"),
       isFta: Yup.string().required("Enter channel type"),
-      // type: Yup.string().required("Enter channel type"),
       broadcaster: Yup.string().required("select broadcaster"),
       genre: Yup.string().required("Enter genre"),
       language: Yup.string().required("Select language"),
-      isalacarte: Yup.string().required(""),
-      rate: Yup.string().required(""),
       status: Yup.string().required("Enter status"),
-      cas: Yup.string().required("Enter cas"),
-      casCodes: Yup.string().required("cascode"),
-      serviceid: Yup.string().required("serviceid"),
     }),
     onSubmit: (values) => {
       const newChannelList = {
-        code: values["code"],
-        logo: values["logo"],
-        name: values["name"],
-        description: values["description"],
-        definition: values["definition"],
-        isFta: values["isFta"],
-        broadcaster: values["broadcaster"],
-        genre: values["genre"],
-        language: values["language"],
-        isalacarte: values["isalacarte"],
-        rate: values["rate"],
-        // type: values["type"],
-        status: values["status"],
-        cas: values["cas"],
+        broadcasterRate: values["rate"],
+        broadcaster_id: parseInt(values["broadcaster"]),
         casCodes: casCodeList,
-        serviceid: values["serviceid"],
-        created_at: new Date(),
-        created_by: values["created_by"],
+        code: values["code"],
+        description: values["description"],
+        genre_id: parseInt(values["genre"]),
+        isAlacarte: parseInt(values["isalacarte"]),
+        isFta: values["isFta"],
+        isHD: parseInt(values["definition"]),
+        isNCF: values["isNCF"],
+        language_id: values["language"],
+        // logo: { name: "", type: "", ext: "", data: "" },
+        name: values["name"],
+        revenue_share: {
+          mso_share: msoPercent,
+          mso_discount: discountPercent,
+          broadcaster_share: broadPercent,
+        },
+        status: parseInt(values["status"]),
       };
 
       console.log("newChannelList:" + newChannelList);
@@ -206,22 +194,45 @@ const AddNewChannelList = (props) => {
                 </label>
               </div>
             </Col>
-
             <Col lg={2}>
-              <div className="form-check form-switch form-switch-lg mb-3">
-                NCF:
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitchsizelg"
-                  defaultChecked
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="customSwitchsizelg"
+              <div className="mt-3">
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
                 >
-                  No / Yes
-                </label>
+                  <label style={{ marginRight: "10px" }}>No</label>
+                  <div className="form-check form-switch form-switch-lg mb-2">
+                    <Input
+                      type="checkbox"
+                      className="form-check-input"
+                      id="customSwitchsizelg"
+                      // defaultChecked={!!validation.values.isNCF}
+                      defaultChecked
+                      onClick={(e) => {
+                        // Toggle the state of isNCF (if checked, set to 0; if unchecked, set to 1)
+                        const newValue = e.target.checked ? 1 : 0;
+                        validation.setFieldValue("isNCF", newValue); // Set the new value in Formik
+                        // Other logic if needed...
+                        settoggleSwitch(!toggleSwitch);
+                      }}
+                    />
+
+                    <label
+                      className="form-check-label"
+                      htmlFor="customSwitchsizelg"
+                    >
+                      Yes
+                    </label>
+                  </div>
+                </div>
+                {/* {validation.touched.isNCF &&
+                      validation.errors.isNCF ? (
+                        <FormFeedback type="invalid">
+                          {validation.errors.isNCF}
+                        </FormFeedback>
+                      ) : null} */}
               </div>
             </Col>
           </Row>
@@ -336,8 +347,6 @@ const AddNewChannelList = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-              {/* </Col>
-            <Col sm="4"> */}
               <div className="mb-3">
                 <Label className="form-label">
                   Type<span style={{ color: "red" }}>*</span>
@@ -438,6 +447,7 @@ const AddNewChannelList = (props) => {
                 <Input
                   name="language"
                   type="select"
+                  // multiple
                   placeholder="Select language"
                   // className="form-select"
                   onChange={validation.handleChange}

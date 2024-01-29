@@ -66,11 +66,10 @@ const ChannelList = (state = INIT_STATE, action) => {
     case UPDATE_CHANNELLIST_CURRENT_PAGE:
       return Number(action.payload) <= state.totalPages
         ? {
-          ...state,
-          currentPage: action.payload,
-        }
+            ...state,
+            currentPage: action.payload,
+          }
         : state;
-
 
     // case GET_CAS_SOURCE:
     //   return {
@@ -229,12 +228,14 @@ const ChannelList = (state = INIT_STATE, action) => {
       return {
         ...state,
         channelList: [...state.channelList, action.payload],
+        loading: false,
       };
 
     case ADD_CHANNELLIST_FAIL:
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     case UPDATE_CHANNELLIST:
@@ -248,13 +249,10 @@ const ChannelList = (state = INIT_STATE, action) => {
         ...state,
         loading: false,
         channelList: state.channelList.map((channelList) =>
-          channelList.id === action.payload.id ? { ...channelList, ...action.payload } : channelList
+          channelList.id === action.payload.id
+            ? { ...channelList, ...action.payload }
+            : channelList
         ),
-        // tax: state.tax.map((tax) =>
-        //   tax.id.toString() === action.payload.id.toString()
-        //     ? { tax, ...action.payload }
-        //     : tax
-        // ),
       };
 
     case UPDATE_CHANNELLIST_FAIL:
@@ -267,8 +265,6 @@ const ChannelList = (state = INIT_STATE, action) => {
     default:
       return state;
   }
-
-
 };
 
 export default ChannelList;

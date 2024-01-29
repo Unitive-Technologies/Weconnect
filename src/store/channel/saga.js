@@ -89,22 +89,18 @@ function* onAddNewChannelList({ payload: channelList }) {
   try {
     const response = yield call(addNewChannelList, channelList);
     yield put(addChannelListSuccess(response));
-    toast.success("ChannelList Added Successfully", { autoClose: 2000 });
+    // toast.success("ChannelList Added Successfully", { autoClose: 2000 });
     yield put(fetchchannellists());
   } catch (error) {
     yield put(addChannelListFail(error));
-    toast.error("Channel List Added Failed", { autoClose: 2000 });
+    // toast.error("Channel List Added Failed", { autoClose: 2000 });
   }
 }
 
 function* onUpdateChannelList({ payload: channelList }) {
   console.log("Tax in onUpdate:" + JSON.stringify(channelList));
   try {
-    const response = yield call(
-      updateChannelList,
-      channelList.id,
-      tax,
-    );
+    const response = yield call(updateChannelList, channelList.id, tax);
     yield put(updateChannelListSuccess(response));
     console.log("update response:" + JSON.stringify(response));
     yield put(fetchchannellists());
@@ -116,7 +112,9 @@ function* onUpdateChannelList({ payload: channelList }) {
 function* fetchChannelListBroadcaster() {
   try {
     const response = yield call(getChannelListBroadcaster);
-    console.log("Channel List Broadcaster response:" + JSON.stringify(response));
+    console.log(
+      "Channel List Broadcaster response:" + JSON.stringify(response)
+    );
     yield put(getChannelListBroadcasterSuccess(response.data));
   } catch (error) {
     yield put(getChannelListBroadcasterFail(error));
@@ -142,7 +140,6 @@ function* fetchChannelListDefinition() {
     yield put(getChannelListDefinitionFail(error));
   }
 }
-
 
 function* fetchChannelListGenre() {
   try {
@@ -180,7 +177,7 @@ function* fetchChannelListType() {
     console.log("Channel List Type response:" + JSON.stringify(response));
     yield put(getChannelListTypeSuccess(response.data));
   } catch (error) {
-    console.log("Fetching error in channel list type" + error)
+    console.log("Fetching error in channel list type" + error);
     yield put(getChannelListTypeFail(error));
   }
 }

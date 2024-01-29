@@ -34,9 +34,9 @@ const CasList = ({
 
     const newItem = {
       cas_id: data.length + 1,
-      casSelection: casSelection,
-      casCode: casCode,
-      serviceId: serviceId,
+      // cas_lbl: casSelection,
+      cascode: casCode,
+      serviceid: serviceId,
     };
 
     const updatedData = [...data, newItem];
@@ -163,9 +163,9 @@ const CasList = ({
                   {data.map((item, index) => (
                     <tr key={index}>
                       <th scope="row">{item.cas_id}</th>
-                      <td>{item.casSelection}</td>
-                      <td>{item.casCode}</td>
-                      <td>{item.serviceId}</td>
+                      <td>{item.cas_lbl}</td>
+                      <td>{item.cascode}</td>
+                      <td>{item.serviceid}</td>
                       <td>
                         <h5>
                           <Link
