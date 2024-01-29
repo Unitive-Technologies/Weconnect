@@ -60,8 +60,21 @@ const AddStockSmartcard = (props) => {
       cas_id: Yup.string().required("Select CAS Type"),
       brand_id: Yup.string().required("Select smartcard brand"),
       smartcardno: Yup.string().required("Enter smartcard no."),
-      stbbrand_id: Yup.string().required("Select stb brand"),
-      stbno: Yup.string().required("Enter STB no."),
+      is_embeded: Yup.boolean(),
+      stbbrand_id: Yup.string().test(
+        "isRequired",
+        "Select stb brand",
+        function (value) {
+          const { is_embeded } = this.parent;
+          return is_embeded ? !!value : true;
+        }
+      ),
+      stbno: Yup.string().test("isRequired", "Enter STB no.", function (value) {
+        const { is_embeded } = this.parent;
+        return is_embeded ? !!value : true;
+      }),
+      // stbbrand_id: Yup.string().required("Select stb brand"),
+      // stbno: Yup.string().required("Enter STB no."),
       po_number: Yup.string().required("Enter purchase order"),
       po_date: Yup.string().required("Select purchase date"),
       invoice_no: Yup.string().required("Enter invoice order"),
