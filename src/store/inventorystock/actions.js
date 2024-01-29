@@ -33,6 +33,9 @@ import {
   GET_INVENTORYSTOCK_SC_BRAND2,
   GET_INVENTORYSTOCK_SC_BRAND2_SUCCESS,
   GET_INVENTORYSTOCK_SC_BRAND2_FAIL,
+  ADD_INVENTORYSTOCK_STB,
+  ADD_INVENTORYSTOCK_STB_SUCCESS,
+  ADD_INVENTORYSTOCK_STB_FAIL,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -195,5 +198,20 @@ export const getInventoryStockScBrand2Success = (brand2) => ({
 
 export const getInventoryStockScBrand2Fail = (error) => ({
   type: GET_INVENTORYSTOCK_SC_BRAND2_FAIL,
+  payload: error,
+});
+
+export const addInventoryStockStb = (stockstb) => ({
+  type: ADD_INVENTORYSTOCK_STB,
+  payload: stockstb,
+});
+
+export const addInventoryStockStbSuccess = (stockstb) => ({
+  type: ADD_INVENTORYSTOCK_STB_SUCCESS,
+  payload: stockstb,
+});
+
+export const addInventoryStockStbFail = (error) => ({
+  type: ADD_INVENTORYSTOCK_STB_FAIL,
   payload: error,
 });

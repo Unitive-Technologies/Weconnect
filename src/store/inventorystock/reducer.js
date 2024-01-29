@@ -31,6 +31,9 @@ import {
   GET_INVENTORYSTOCK_SC_BRAND1_FAIL,
   GET_INVENTORYSTOCK_SC_BRAND2_SUCCESS,
   GET_INVENTORYSTOCK_SC_BRAND2_FAIL,
+  ADD_INVENTORYSTOCK_STB,
+  ADD_INVENTORYSTOCK_STB_SUCCESS,
+  ADD_INVENTORYSTOCK_STB_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -231,6 +234,26 @@ const InventoryStock = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+
+    case ADD_INVENTORYSTOCK_STB:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case ADD_INVENTORYSTOCK_STB_SUCCESS:
+      return {
+        ...state,
+        stockstb: [...state.stockstb, action.payload],
+        loading: false,
+      };
+
+    case ADD_INVENTORYSTOCK_STB_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
       };
 
     default:

@@ -11,10 +11,11 @@ import {
   ADD_INVENTORYSTOCK_SMARTCARD,
   GET_INVENTORYSTOCK_SC_BRAND1,
   GET_INVENTORYSTOCK_SC_BRAND2,
+  ADD_INVENTORYSTOCK_STB,
 } from "./actionTypes";
 import {
   getInventoryStockStb as onGetInventoryStockStb,
-  getInventoryStockSmartcard as onGetIventoryStockSmartcard,
+  getInventoryStockSmartcard as onGetInventoryStockSmartcard,
   getInventoryStockSmartcardSuccess,
   getInventoryStockSmartcardFail,
   getInventoryStockStbSuccess,
@@ -37,6 +38,8 @@ import {
   getInventoryStockScBrand1Fail,
   getInventoryStockScBrand2Success,
   getInventoryStockScBrand2Fail,
+  addInventoryStockStbSuccess,
+  addInventoryStockStbFail,
 } from "./actions";
 import {
   getInventoryStockSmartcard,
@@ -50,6 +53,7 @@ import {
   addInventoryStockSmartcard,
   getInventoryStockScBrand1,
   getInventoryStockScBrand2,
+  addInventoryStockStb,
 } from "../../helpers/fakebackend_helper";
 
 export const getStockPairingStore = (state) => state.stockpairing;
@@ -139,7 +143,7 @@ function* onAddInventoryStockSmartcard({ payload: stocksmartcard }) {
     const response = yield call(addInventoryStockSmartcard, stocksmartcard);
     console.log("Response data in add smartcard: ", response);
     yield put(addInventoryStockSmartcardSuccess(response));
-    yield put(onGetIventoryStockSmartcard());
+    yield put(onGetInventoryStockSmartcard());
   } catch (error) {
     console.log("Error in add smartcard saga: ", error);
     yield put(addInventoryStockSmartcardFail(error));
@@ -164,6 +168,18 @@ function* fetchInventoryStockCsBrand2() {
   }
 }
 
+function* onAddInventoryStockStb({ payload: stockstb }) {
+  try {
+    const response = yield call(addInventoryStockStb, stockstb);
+    console.log("Response data in add stb: ", response);
+    yield put(addInventoryStockStbSuccess(response));
+    yield put(onGetInventoryStockStb());
+  } catch (error) {
+    console.log("Error in add stb saga: ", error);
+    yield put(addInventoryStockStbFail(error));
+  }
+}
+
 function* inventorystockSaga() {
   yield takeEvery(GET_INVENTORYSTOCK_SMARTCARD, fetchInventoryStockSmartcard);
   yield takeEvery(GET_INVENTORYSTOCK_STB, fetchInventoryStockStb);
@@ -185,6 +201,7 @@ function* inventorystockSaga() {
   yield takeEvery(ADD_INVENTORYSTOCK_SMARTCARD, onAddInventoryStockSmartcard);
   yield takeEvery(GET_INVENTORYSTOCK_SC_BRAND1, fetchInventoryStockCsBrand1);
   yield takeEvery(GET_INVENTORYSTOCK_SC_BRAND2, fetchInventoryStockCsBrand2);
+  yield takeEvery(ADD_INVENTORYSTOCK_STB, onAddInventoryStockStb);
 }
 
 export default inventorystockSaga;
