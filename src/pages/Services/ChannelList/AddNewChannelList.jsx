@@ -481,8 +481,8 @@ const AddNewChannelList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.isalacarte || ""}
                 >
-                  <option value="201">Yes</option>
-                  <option value="202">No</option>
+                  <option value="1">Yes</option>
+                  <option value="0">No</option>
                 </Input>
                 {validation.touched.isalacarte &&
                 validation.errors.isalacarte ? (
