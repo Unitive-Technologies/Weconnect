@@ -29,17 +29,18 @@ const RevenueShare = ({ def, def1, def2, setdef1, setdef2, setdef }) => {
   const handleDiscount = (newValue) => {
     setdef2(newValue);
     const MsoShareValue = def1;
-    // const DiscountValue = def2;
-    if (MsoShareValue > 0) {
-      const RevisedMsoShare = def1 - newValue;
+    const BroadCastValue = def;
+    const BalanceValue = 100 - BroadCastValue;
+
+    if (MsoShareValue > newValue) {
+      const RevisedMsoShare = BalanceValue - newValue;
       setdef1(RevisedMsoShare);
     } else {
-      const RevisedBroadCastValue = def - newValue;
+      const RevisedMsoShare = 0;
+      setdef1(RevisedMsoShare);
+      const RevisedBroadCastValue = 100 - newValue;
       setdef(RevisedBroadCastValue);
     }
-
-    // const RevisedDisCountValue = 100 - newValue - MsoShareValue;
-    // setdef2(RevisedDisCountValue);
   };
 
   console.log("def value:" + def, def1, def2);
