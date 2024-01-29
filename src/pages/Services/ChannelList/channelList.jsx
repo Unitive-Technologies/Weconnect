@@ -74,8 +74,21 @@ const ChannelList = (props) => {
     })
   );
 
-  const { channel, channelListBroadcaster, channelListCascode, channelListDefinition, channelListGenre, channelListLanguage, channelListStatus, channelListType, loading, totalPage, totalCount, pageSize, currentPage } =
-    useSelector(ChannelProperties);
+  const {
+    channel,
+    channelListBroadcaster,
+    channelListCascode,
+    channelListDefinition,
+    channelListGenre,
+    channelListLanguage,
+    channelListStatus,
+    channelListType,
+    loading,
+    totalPage,
+    totalCount,
+    pageSize,
+    currentPage,
+  } = useSelector(ChannelProperties);
 
   useEffect(() => {
     // console.log("Channel List data in component:", channel);
@@ -324,12 +337,12 @@ const ChannelList = (props) => {
     ];
   };
 
-  console.log("View in Channel List Type " + channelListType)
+  console.log("View in Channel List Type " + channelListType);
 
   return (
     <React.Fragment>
       <AddNewChannelList
-        isOpen={showAddNewChannelList}
+        isOpen={Boolean(showAddNewChannelList)}
         toggleAddModal={toggleAddModal}
         channelListBroadcaster={channelListBroadcaster}
         channelListCascode={channelListCascode}
@@ -352,7 +365,7 @@ const ChannelList = (props) => {
         handleUpdateCasCode={handleUpdateCasCode}
       />
       <ViewChannel
-        isOpen={viewChannelList}
+        isOpen={Boolean(viewChannelList)}
         toggleViewModal={toggleViewModal}
         channel={viewChanel}
         channelListBroadcaster={channelListBroadcaster}
@@ -421,12 +434,8 @@ const ChannelList = (props) => {
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       goToPage={goToPage}
-                      toggleAddModal={() =>
-                        setShowAddNewChannelList(true)
-                      }
-                      toggleUploadModal={() =>
-                        setShowUploadChannelList(true)
-                      }
+                      toggleAddModal={() => setShowAddNewChannelList(true)}
+                      toggleUploadModal={() => setShowUploadChannelList(true)}
                       handleUpdateCasCode={() =>
                         setShowBulkUpdateCasCodeChannelList(true)
                       }

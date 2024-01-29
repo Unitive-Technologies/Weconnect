@@ -54,6 +54,37 @@ const AddNewChannelList = (props) => {
     setSelectedRate(inputValue >= 0 ? inputValue : 0);
   };
 
+  const handleChangeLogo = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const { name, type } = file;
+      const ext = name.split(".").pop();
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const data = reader.result;
+
+        validation.setFieldValue("logo", {
+          name,
+          type,
+          ext,
+          data,
+        });
+      };
+    }
+  };
+
+  const [selectedLanguages, setSelectedLanguages] = useState([]);
+
+  const handleChangeLanguages = (e) => {
+    const selectedOptions = Array.from(
+      e.target.selectedOptions,
+      (option) => option.value
+    );
+
+    setSelectedLanguages(selectedOptions);
+  };
+  console.log("lang handle:" + selectedLanguages);
   const handleArrowKeyPress = (e) => {
     if (e.key === "ArrowUp" || e.key === "ArrowDown") {
       e.preventDefault(); // Prevent the default behavior of arrow keys in number input
@@ -73,7 +104,7 @@ const AddNewChannelList = (props) => {
     initialValues: {
       code: "",
       type: "",
-      logo: { name: "", type: "", ext: "", data: "" },
+      // logo: { name: "", type: "", ext: "", data: "" },
       name: "",
       description: "",
       definition: "",
@@ -93,14 +124,20 @@ const AddNewChannelList = (props) => {
       isFta: Yup.string().required("Enter channel type"),
       broadcaster: Yup.string().required("select broadcaster"),
       genre: Yup.string().required("Enter genre"),
-      language: Yup.string().required("Select language"),
+      language: Yup.array().min(1, "Select language"),
       status: Yup.string().required("Enter status"),
     }),
     onSubmit: (values) => {
       const newChannelList = {
         broadcasterRate: values["rate"],
         broadcaster_id: parseInt(values["broadcaster"]),
-        casCodes: casCodeList,
+        casCodes: casCodeList.map((single) => {
+          return {
+            cas_id: single.cas_id,
+            cascode: single.cascode,
+            serviceid: single.serviceid,
+          };
+        }),
         code: values["code"],
         description: values["description"],
         genre_id: parseInt(values["genre"]),
@@ -109,7 +146,9 @@ const AddNewChannelList = (props) => {
         isHD: parseInt(values["definition"]),
         isNCF: values["isNCF"],
         language_id: values["language"],
+        // language_id: selectedLanguages,
         // logo: { name: "", type: "", ext: "", data: "" },
+        logo: values["logo"],
         name: values["name"],
         revenue_share: {
           mso_share: msoPercent,
@@ -183,12 +222,12 @@ const AddNewChannelList = (props) => {
                 <input
                   type="checkbox"
                   className="form-check-input"
-                  id="customSwitchsizelg"
+                  id="customSwitchsizelg1"
                   defaultChecked
                 />
                 <label
                   className="form-check-label"
-                  htmlFor="customSwitchsizelg"
+                  htmlFor="customSwitchsizelg1"
                 >
                   Custom / Auto
                 </label>
@@ -248,8 +287,6 @@ const AddNewChannelList = (props) => {
                   }}
                   name="logo"
                   type="text"
-                  // placeholder="Enter channel code"
-                  // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.logo || ""}
@@ -268,6 +305,34 @@ const AddNewChannelList = (props) => {
                 </button>
               </div>
             </Col>
+            <Col lg={2}>
+              <div className="mb-3">
+                <Label className="form-label">Logo</Label>
+                <input
+                  style={{
+                    width: "170px",
+                    height: "150px",
+                    borderRadius: "10px",
+                  }}
+                  name="logo"
+                  type="file"
+                  onChange={handleChangeLogo}
+                ></input>
+                {validation.touched.logo && validation.errors.logo ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.logo}
+                  </FormFeedback>
+                ) : null}
+                <button
+                  type="button"
+                  className="btn btn-primary "
+                  style={{ marginTop: "10px" }}
+                >
+                  Upload Logo
+                </button>
+              </div>
+            </Col>
+            {console.log("logo:" + JSON.stringify(validation.values.logo))}
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
@@ -447,12 +512,15 @@ const AddNewChannelList = (props) => {
                 <Input
                   name="language"
                   type="select"
-                  // multiple
+                  multiple
                   placeholder="Select language"
-                  // className="form-select"
+                  className="form-select"
+                  aria-label="multiple select example"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.language || ""}
+                  value={validation.values.language || []}
+                  // onChange={handleChangeLanguages}
+                  // value={selectedLanguages}
                 >
                   <option value="">Select Language</option>
                   {channelListLanguage &&
@@ -469,6 +537,9 @@ const AddNewChannelList = (props) => {
                 ) : null}
               </div>
             </Col>
+            {console.log(
+              "languages: " + JSON.stringify(validation.values.language)
+            )}
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">IsAlacarte</Label>
@@ -500,10 +571,13 @@ const AddNewChannelList = (props) => {
                   name="rate"
                   type="number"
                   step="0.01"
-                  onChange={handleInputChange}
+                  // onChange={handleInputChange}
                   onKeyDown={handleArrowKeyPress}
                   placeholder="0"
-                  value={selectedRate}
+                  // value={selectedRate}
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.rate || ""}
                 ></Input>
                 {/* Validation and error handling code here */}
               </div>
@@ -628,7 +702,7 @@ const AddNewChannelList = (props) => {
           >
             <Col sm="12">
               <CasList
-                isOpen={handleUpdateCasList}
+                isOpen={Boolean(handleUpdateCasList)}
                 data={casCodeList}
                 updateList={setCasCodeList}
                 channelListCascode={channelListCascode}

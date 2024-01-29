@@ -34,7 +34,7 @@ const CasList = ({
 
     const newItem = {
       cas_id: data.length + 1,
-      // cas_lbl: casSelection,
+      cas_lbl: casSelection,
       cascode: casCode,
       serviceid: serviceId,
     };
