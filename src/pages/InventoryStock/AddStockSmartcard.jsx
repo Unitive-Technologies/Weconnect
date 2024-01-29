@@ -210,11 +210,15 @@ const AddStockSmartcard = (props) => {
                   }
                 >
                   <option value="">Select smartcard brand</option>
-                  {brand2.map((options) => (
-                    <option key={options.id} value={options.id}>
-                      {options.name}
-                    </option>
-                  ))}
+                  {validation.values.cas_id !== "" ? (
+                    <>
+                      {brand2.map((options) => (
+                        <option key={options.id} value={options.id}>
+                          {options.name}
+                        </option>
+                      ))}
+                    </>
+                  ) : null}
                 </Input>
                 {validation.touched.brand_id && validation.errors.brand_id ? (
                   <FormFeedback type="invalid">

@@ -215,11 +215,15 @@ const AddStockStb = (props) => {
                   }
                 >
                   <option value="">Select stb brand</option>
-                  {brand1.map((options) => (
-                    <option key={options.id} value={options.id}>
-                      {options.name}
-                    </option>
-                  ))}
+                  {validation.values.cas_id !== "" ? (
+                    <>
+                      {brand1.map((options) => (
+                        <option key={options.id} value={options.id}>
+                          {options.name}
+                        </option>
+                      ))}{" "}
+                    </>
+                  ) : null}
                 </Input>
                 {validation.touched.stbbrand_id &&
                 validation.errors.stbbrand_id ? (
