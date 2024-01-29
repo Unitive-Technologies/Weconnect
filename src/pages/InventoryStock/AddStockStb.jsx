@@ -16,8 +16,8 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import {
-  addInventoryStockSmartcard as onAddInventoryStockSmartcard,
-  getInventoryStockSmartcard as onGetInventoryStockSmartcard,
+  addInventoryStockStb as onAddInventoryStockStb,
+  getInventoryStockStb as onGetInventoryStockStb,
 } from "/src/store/inventorystock/actions";
 
 const AddStockStb = (props) => {
@@ -72,7 +72,7 @@ const AddStockStb = (props) => {
       inv_state_id: Yup.string().required("Select inentory state"),
     }),
     onSubmit: (values) => {
-      const newSmartcard = {
+      const newStb = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         cas_id: values["cas_id"],
         is_embeded: values["is_embeded"],
@@ -89,9 +89,9 @@ const AddStockStb = (props) => {
         description: values["description"],
         inv_state_id: values["inv_state_id"],
       };
-      console.log("New smartcard: " + JSON.stringify(newSmartcard));
-      dispatch(onAddInventoryStockSmartcard(newSmartcard));
-      dispatch(onGetInventoryStockSmartcard());
+      console.log("New stb: " + JSON.stringify(newStb));
+      dispatch(onAddInventoryStockStb(newStb));
+      dispatch(onGetInventoryStockStb());
       validation.resetForm();
       toggle();
     },
