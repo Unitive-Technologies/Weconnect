@@ -113,7 +113,6 @@ const AddStockSmartcard = (props) => {
     },
   });
 
-  console.log("Brand 2: ", brand2);
   return (
     <Modal
       isOpen={isOpen}

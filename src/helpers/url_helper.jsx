@@ -529,3 +529,7 @@ export const GET_INVENTORYSTOCK_SC_BRAND1 =
   "/brand/list?fields=id,name,length&expand=char_allowed_lbl&filter[type]=1&filter[cas_id]=1&vr=web1.0";
 export const GET_INVENTORYSTOCK_SC_BRAND2 =
   "/brand/list?fields=id,name,length&expand=char_allowed_lbl&filter[type]=2&filter[cas_id]=1&vr=web1.0";
+export const GET_PAIRING_SMARTCARDLIST =
+  "/smartcard/list?fields=id,smartcardno&expand=brand_lbl,cas_lbl&per-page=100&filter[cas_id]=1&vr=web1.0";
+export const GET_PAIRING_STBLIST =
+  "/stb/list?fields=id,stbno&expand=brand_lbl,boxtype_lbl&per-page=100&filter[cas_id]=1&vr=web1.0";
