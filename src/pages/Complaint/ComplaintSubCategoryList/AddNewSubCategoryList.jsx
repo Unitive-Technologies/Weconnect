@@ -28,21 +28,20 @@ const AddNewSubCategoryList = (props) => {
     complaintsubcateStatus,
   } = props;
   const dispatch = useDispatch();
+
   const [timeArray, setTimeArray] = useState([]);
   console.log("timeArray: " + JSON.stringify(timeArray));
+
   const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
-      //BroadCaster: "",
       name: "",
       category_lbl: "",
       status: "",
       showonweb: "",
       description: "",
-      // escalations: [],
-      // escalations: [{ designation: "", tat_time: "" }],
+      escalations: [],
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
@@ -50,6 +49,7 @@ const AddNewSubCategoryList = (props) => {
       status: Yup.string().required("Select status"),
       showonweb: Yup.string().required("Select showonweb"),
       description: Yup.string().required("Enter description"),
+      escalations: Yup.array().min(1, "Enter time"),
     }),
     onSubmit: (values) => {
       const newComplaintSubCategory = {

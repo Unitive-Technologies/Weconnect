@@ -18,13 +18,11 @@ const AddNewMatrix = (props) => {
   const handleTimeChange = (event, singleId) => {
     const { value } = event.target;
 
-    // Update time for the specific singleId
     setTimeForId((prevState) => ({
       ...prevState,
       [singleId]: value,
     }));
 
-    // Check if the value is a valid time format
     const isValidTimeFormat =
       /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/.test(value);
 
@@ -32,19 +30,16 @@ const AddNewMatrix = (props) => {
       return;
     }
 
-    // Create a new item with the selected designation and time value
     const newItem = {
       designation: selectedDesignationId,
       tat_time: value,
     };
 
-    // Filter out any existing item with the same designation and update the time value
     const updatedData = timeArray.filter(
       (item) => item.designation !== selectedDesignationId
     );
-    updatedData.push(newItem); // Add the new item
+    updatedData.push(newItem);
 
-    // Update timeArray with the new data
     setTimeArray(updatedData);
   };
 
