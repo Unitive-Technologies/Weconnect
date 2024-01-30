@@ -285,7 +285,7 @@ const AddNewChannelList = (props) => {
             </Col>
           </Row>
           <Row>
-            <Col lg={2}>
+            {/* <Col lg={2}>
               <div className="mb-3">
                 <Label className="form-label">Logo</Label>
                 <Input
@@ -313,7 +313,7 @@ const AddNewChannelList = (props) => {
                   Upload Logo
                 </button>
               </div>
-            </Col>
+            </Col> */}
             <Col lg={2}>
               <div className="mb-3">
                 <Label className="form-label">Logo</Label>

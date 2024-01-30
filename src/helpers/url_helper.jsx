@@ -220,6 +220,14 @@ export const getChannelListUrl = (currPage, perPage) => {
 export const GET_BROADCASTERBOUQUETLIST =
   "/broadcaster-bouque?expand=created_by_lbl,status_lbl,broadcaster_lbl,channel_type_lbl,isFta_lbl,isNCF_lbl,channels&sort=name&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_BROADCASTERBOUQUETLIST = "/add/broadcasterbouquet";
+export const GET_BROADCASTERBOUQUETLIST_DEFINITION =
+  "/list/boxtype?fields=id,name&vr=web1.0";
+export const GET_BROADCASTERBOUQUETLIST_TYPE =
+  "list/channelType?fields=id,name&vr=web1.0";
+export const GET_BROADCASTERBOUQUETLIST_STATUS =
+  "list/status?fields=id,name&vr=web1.0";
+export const GET_BROADCASTERBOUQUETLIST_BROADCASTER =
+  "broadcaster/list?fields=id,name&vr=web1.0";
 export const getBroadcasterBouquetListUrl = (currPage, perPage) => {
   console.log(
     "current page in Broadcaster Bouquet List url - ",

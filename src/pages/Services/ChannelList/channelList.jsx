@@ -36,7 +36,6 @@ import {
   getChannelList as onGetChannelList,
   // getCASSource as onGetCASSource,
 } from "/src/store/channel/actions";
-
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
@@ -51,6 +50,9 @@ import TableContainerX from "../../../components/Common/TableContainerX";
 const ChannelList = (props) => {
   //meta title
   document.title = "Channels | VDigital";
+
+  const [casCodes, setCasCodes] = useState([]);
+
 
   const dispatch = useDispatch();
 
@@ -71,8 +73,14 @@ const ChannelList = (props) => {
       totalCount: channelList.totalCount,
       pageSize: channelList.perPage,
       currentPage: channelList.currentPage,
+      casCodes: channelList.casCodes,
     })
   );
+
+  useEffect(() => {
+    dispatch(onGetChannelListCascode());
+  }, [dispatch]);
+
 
   const {
     channel,
@@ -221,9 +229,16 @@ const ChannelList = (props) => {
         accessor: "cascode",
         filterable: true,
         Cell: (cellProps) => {
-          return <CasCodes {...cellProps} />;
+          const channelData = cellProps.row.original;
+          const casCodesData = getMatchingCasCodes(channelData.cascode);
+
+          // Extract the 'name' property from casCodesData
+          const casCodesNames = casCodesData.map(casCode => casCode.name).join(', ');
+
+          return <CasCodes {...cellProps} casCodes={casCodesNames} />;
         },
       },
+
       {
         Header: "Status",
         accessor: "status_lbl",
@@ -260,12 +275,21 @@ const ChannelList = (props) => {
     []
   );
 
+  const getMatchingCasCodes = (cascode) => {
+    // Assuming casCodes is the array you have received from the API
+    const matchingCasCodes = casCodes.filter((code) => code.cascode === cascode);
+    return matchingCasCodes;
+  };
+
+
+
   useEffect(() => {
     if (channel && !channel.length) {
       dispatch(onGetChannelList());
       dispatch(onGetChannelListStatus());
       dispatch(onGetChannelListCascode());
       dispatch(onGetChannelListBroadcaster());
+
       dispatch(onGetChannelListDefinition());
       dispatch(onGetChannelListGenre());
       dispatch(onGetChannelListLanguage());
