@@ -19,9 +19,14 @@ import { useDispatch } from "react-redux";
 import AddNewMatrix from "./AddNewMatrix";
 import { getComplaintSubCategory as onGetComplaintSubCategory } from "/src/store/actions";
 
-
 const AddNewSubCategoryList = (props) => {
-  const { isOpen, handleAddSubCategory, complaintsubcateDesignation, complaintsubcateCategory, complaintsubcateStatus } = props;
+  const {
+    isOpen,
+    toggleAddSubCategory,
+    complaintsubcateDesignation,
+    complaintsubcateCategory,
+    complaintsubcateStatus,
+  } = props;
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -61,7 +66,7 @@ const AddNewSubCategoryList = (props) => {
       dispatch(onAddNewComplaintSubCategory(newComplaintSubCategory));
       dispatch(onGetComplaintSubCategory());
       validation.resetForm();
-      handleAddSubCategory();
+      toggleAddSubCategory();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -77,9 +82,9 @@ const AddNewSubCategoryList = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleAddSubCategory}
+      toggle={toggleAddSubCategory}
     >
-      <ModalHeader tag="h4" toggle={handleAddSubCategory}>
+      <ModalHeader tag="h4" toggle={toggleAddSubCategory}>
         Add New Complaint Sub-Category
       </ModalHeader>
       <ModalBody>
@@ -135,7 +140,7 @@ const AddNewSubCategoryList = (props) => {
                     ))}
                 </Input>
                 {validation.touched.category_lbl &&
-                  validation.errors.category_lbl ? (
+                validation.errors.category_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.category_lbl}
                   </FormFeedback>
@@ -164,8 +169,7 @@ const AddNewSubCategoryList = (props) => {
                       </option>
                     ))}
                 </Input>
-                {validation.touched.status &&
-                  validation.errors.status ? (
+                {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
                     {validation.errors.status}
                   </FormFeedback>
@@ -188,12 +192,14 @@ const AddNewSubCategoryList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.showonweb || ""}
                 >
-                  <option value="101">Select showonweb</option>
-                  <option value="102">Active</option>
-                  <option value="103">In-Active</option>
+                  {complaintsubcateStatus &&
+                    complaintsubcateStatus.map((showonweb) => (
+                      <option key={showonweb.id} value={showonweb.id}>
+                        {showonweb.name}
+                      </option>
+                    ))}
                 </Input>
-                {validation.touched.showonweb &&
-                  validation.errors.showonweb ? (
+                {validation.touched.showonweb && validation.errors.showonweb ? (
                   <FormFeedback type="invalid">
                     {validation.errors.showonweb}
                   </FormFeedback>
@@ -215,13 +221,13 @@ const AddNewSubCategoryList = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -257,7 +263,9 @@ const AddNewSubCategoryList = (props) => {
             }}
           >
             <Col sm="12">
-              <AddNewMatrix complaintsubcateDesignation={complaintsubcateDesignation} />
+              <AddNewMatrix
+                complaintsubcateDesignation={complaintsubcateDesignation}
+              />
             </Col>
           </Row>
 
@@ -280,7 +288,7 @@ const AddNewSubCategoryList = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    handleAddSubCategory();
+                    toggleAddSubCategory();
                   }}
                 >
                   Cancel

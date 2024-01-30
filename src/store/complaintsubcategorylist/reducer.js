@@ -40,7 +40,10 @@ const ComplaintSubCategory = (state = INIT_STATE, action) => {
       };
 
     case GET_COMPLAINTSUBCATEGORY_STATUS_SUCCESS:
-      console.log("complaintsubcategory Status data in reducer:", action.payload);
+      console.log(
+        "complaintsubcategory Status data in reducer:",
+        action.payload
+      );
       return {
         ...state,
         complaintsubcategoryStatus: action.payload,
@@ -54,7 +57,7 @@ const ComplaintSubCategory = (state = INIT_STATE, action) => {
       };
 
     case GET_COMPLAINTSUBCATEGORY_CATEGORY_SUCCESS:
-      console.log("complaintsubcategory Status data in reducer:", action.payload);
+      console.log("complaintsubcategoryCategory in reducer:", action.payload);
       return {
         ...state,
         complaintsubcategoryCategory: action.payload,
@@ -65,10 +68,14 @@ const ComplaintSubCategory = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     case GET_COMPLAINTSUBCATEGORY_DESIGNATION_SUCCESS:
-      console.log("complaintsubcategory Status data in reducer:", action.payload);
+      console.log(
+        "complaintsubcategory Status data in reducer:",
+        action.payload
+      );
       return {
         ...state,
         complaintsubcategoryDesignation: action.payload,
@@ -84,10 +91,7 @@ const ComplaintSubCategory = (state = INIT_STATE, action) => {
     case ADD_COMPLAINTSUBCATEGORY_SUCCESS:
       return {
         ...state,
-        complaintsubcategory: [
-          ...state.complaintsubcategory,
-          action.payload,
-        ],
+        complaintsubcategory: [...state.complaintsubcategory, action.payload],
       };
 
     case ADD_COMPLAINTSUBCATEGORY_FAIL:

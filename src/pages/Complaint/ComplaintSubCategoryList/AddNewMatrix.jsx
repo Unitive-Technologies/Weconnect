@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import TableContainer from "../../../components/Common/TableContainer";
 import { Card, CardBody } from "reactstrap";
 import { useDispatch } from "react-redux";
@@ -13,14 +14,18 @@ import {
 const AddNewMatrix = (props) => {
   const { isOpen, complaintsubcateDesignation, handleAddSubCategory } = props;
   const dispatch = useDispatch();
-
+  console.log(
+    "complaintsubcateDesignation:" + JSON.stringify(complaintsubcateDesignation)
+  );
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
-      escalations: [{
-        designation: "",
-        tat_time: "",
-      }],
+      escalations: [
+        {
+          designation: "",
+          tat_time: "",
+        },
+      ],
     },
     validationSchema: Yup.object({
       escalations: Yup.array().of(
@@ -68,27 +73,19 @@ const AddNewMatrix = (props) => {
       },
       {
         Header: "Designation",
-        accessor: "designation",
+        accessor: "name",
         filterable: true,
-        Cell: () => (
-          <h5
-            style={{
-              maxWidth: 200,
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-            }}
-            className="font-size-14 mb-1"
-          >
-            <p className="text-muted mb-0">
-              {/* Displaying selected designation */}
-              {complaintsubcateDesignation &&
-                complaintsubcateDesignation.map((designation) => (
-                  <span key={designation.id}>{designation.name}</span>
-                ))}
-            </p>
-          </h5>
-        ),
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.name}
+                </Link>
+              </h5>
+            </>
+          );
+        },
       },
       {
         Header: "TAT(HH:mm:ss)",
@@ -102,7 +99,8 @@ const AddNewMatrix = (props) => {
         ),
       },
     ],
-    [validation.values.tat_time, complaintsubcateDesignation]
+    []
+    // [validation.values.tat_time, complaintsubcateDesignation]
   );
 
   return (
@@ -111,7 +109,7 @@ const AddNewMatrix = (props) => {
         <TableContainer
           isPagination={true}
           columns={columns}
-          data={handleAddSubCategory}
+          data={complaintsubcateDesignation}
           customPageSize={50}
           tableClass="table align-middle table-nowrap table-hover"
           theadClass="table-light"

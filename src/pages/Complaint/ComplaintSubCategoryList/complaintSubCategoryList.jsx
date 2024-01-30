@@ -9,12 +9,18 @@ import {
   Col,
   Container,
   Row,
+  Spinner,
   UncontrolledTooltip,
 } from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import { getComplaintSubCategory as onGetComplaintSubCategory, getComplaintSubCategoryStatus as onGetComplaintSubCategoryStatus, getComplaintSubCategoryCategory as onGetComplaintSubCategoryCategory, getComplaintSubCategoryDesignation as onGetComplaintSubCategoryDesignation } from "/src/store/actions";
+import {
+  getComplaintSubCategory as onGetComplaintSubCategory,
+  getComplaintSubCategoryStatus as onGetComplaintSubCategoryStatus,
+  getComplaintSubCategoryCategory as onGetComplaintSubCategoryCategory,
+  getComplaintSubCategoryDesignation as onGetComplaintSubCategoryDesignation,
+} from "/src/store/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -35,18 +41,23 @@ const ComplaintSubCategoryList = (props) => {
     (complaintsubcategory) => ({
       complaintsubcate: complaintsubcategory.complaintsubcategory,
       complaintsubcateStatus: complaintsubcategory.complaintsubcategoryStatus,
-      complaintsubcateCategory: complaintsubcategory.complaintsubcategoryCategory,
-      complaintsubcateDesignation: complaintsubcategory.complaintsubcategoryDesignation,
+      complaintsubcateCategory:
+        complaintsubcategory.complaintsubcategoryCategory,
+      complaintsubcateDesignation:
+        complaintsubcategory.complaintsubcategoryDesignation,
       loading: complaintsubcategory.loading,
     })
   );
 
-  const { complaintsubcate, complaintsubcateStatus, complaintsubcateCategory, complaintsubcateDesignation, loading } =
-    useSelector(
-      ComplaintSubCategoryProperties
-    );
+  const {
+    complaintsubcate,
+    complaintsubcateStatus,
+    complaintsubcateCategory,
+    complaintsubcateDesignation,
+    loading,
+  } = useSelector(ComplaintSubCategoryProperties);
 
-  const [isLoading, setLoading] = useState(loading);
+  // const [isLoading, setLoading] = useState(loading);
 
   const [showAddNewSubCategoryList, setShowAddNewSubCategoryList] =
     useState(false);
@@ -85,7 +96,7 @@ const ComplaintSubCategoryList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  handleViewSubCategory(userData);
+                  toggleViewSubCategory(userData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -172,13 +183,13 @@ const ComplaintSubCategoryList = (props) => {
     }
   }, [dispatch, complaintsubcate]);
 
-  const handleAddSubCategory = () => {
+  const toggleAddSubCategory = () => {
     setShowAddNewSubCategoryList(!showAddNewSubCategoryList);
   };
 
   const [viewSubCategoryList, setViewSubCategoryList] = useState({});
 
-  const handleViewSubCategory = (userSubCategoryData) => {
+  const toggleViewSubCategory = (userSubCategoryData) => {
     setShowViewSubCategoryList(!showViewSubCategoryList);
     setViewSubCategoryList(userSubCategoryData);
   };
@@ -200,15 +211,15 @@ const ComplaintSubCategoryList = (props) => {
     <React.Fragment>
       <ViewSubCategoryList
         isOpen={showViewSubCategoryList}
-        handleViewSubCategory={handleViewSubCategory}
+        toggleViewSubCategory={toggleViewSubCategory}
         complaintsubcategory={viewSubCategoryList}
       />
       <AddNewSubCategoryList
         isOpen={showAddNewSubCategoryList}
-        handleAddSubCategory={handleAddSubCategory}
-
+        toggleAddSubCategory={toggleAddSubCategory}
         complaintsubcateStatus={complaintsubcateStatus}
         complaintsubcateCategory={complaintsubcateCategory}
+        complaintsubcateDesignation={complaintsubcateDesignation}
       />
       <div className="page-content">
         <Container fluid>
@@ -217,8 +228,13 @@ const ComplaintSubCategoryList = (props) => {
             title="Complaint"
             breadcrumbItem="Complaint Sub-Categories"
           />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">

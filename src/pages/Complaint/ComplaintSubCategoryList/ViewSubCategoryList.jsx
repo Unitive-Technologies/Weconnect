@@ -20,7 +20,7 @@ import { updateUser as onUpdateUser } from "/src/store/users/actions";
 import ViewMatrix from "./ViewMatrix";
 
 const ViewSubCategoryList = (props) => {
-  const { isOpen, handleViewSubCategory, complaintsubcategory } = props;
+  const { isOpen, toggleViewSubCategory, complaintsubcategory } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
   const [showEditSubCategory, setShowEditSubCategory] = useState(false);
@@ -60,13 +60,13 @@ const ViewSubCategoryList = (props) => {
       // update user
       dispatch(onUpdateUser(updateUser));
       validation.resetForm();
-      handleViewSubCategory();
+      toggleViewSubCategory();
     },
   });
 
   const handleCancel = () => {
     setShowEditSubCategory(false);
-    handleViewSubCategory();
+    toggleViewSubCategory();
   };
 
   return (
@@ -79,7 +79,7 @@ const ViewSubCategoryList = (props) => {
         centered={true}
         className="exampleModal"
         tabIndex="-1"
-        toggle={handleViewSubCategory}
+        toggle={toggleViewSubCategory}
       >
         <ModalHeader toggle={handleCancel} tag="h4">
           {!showEditSubCategory
