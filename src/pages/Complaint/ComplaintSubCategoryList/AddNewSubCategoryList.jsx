@@ -46,10 +46,10 @@ const AddNewSubCategoryList = (props) => {
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
-      // category_lbl: Yup.string().required("Select Category"),
-      // status: Yup.string().required("Select status"),
-      // showonweb: Yup.string().required("Select showonweb"),
-      // description: Yup.string().required("Enter description"),
+      category_lbl: Yup.string().required("Select Category"),
+      status: Yup.string().required("Select status"),
+      showonweb: Yup.string().required("Select showonweb"),
+      description: Yup.string().required("Enter description"),
     }),
     onSubmit: (values) => {
       const newComplaintSubCategory = {

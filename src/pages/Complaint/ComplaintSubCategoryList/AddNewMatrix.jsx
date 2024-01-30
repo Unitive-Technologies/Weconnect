@@ -9,33 +9,50 @@ const AddNewMatrix = (props) => {
   console.log("timeArray:" + JSON.stringify(timeArray));
   const [time, setTime] = useState("");
   const [selectedDesignationId, setSelectedDesignationId] = useState("");
-
-  const handleCheckboxChange = (row) => (event) => {
-    setSelectedDesignationId(row.id);
+  const [timeForId, setTimeForId] = useState({});
+  const handleCheckboxChange = (singleId) => {
+    setSelectedDesignationId(singleId);
   };
   console.log("selectedID:" + selectedDesignationId);
 
-  const handleTimeChange = (event) => {
+  const handleTimeChange = (event, singleId) => {
     const { value } = event.target;
-    setTime(event.target.value);
 
-    if (!selectedDesignationId || !value) {
+    // Update time for the specific singleId
+    setTimeForId((prevState) => ({
+      ...prevState,
+      [singleId]: value,
+    }));
+
+    // Check if the value is a valid time format
+    const isValidTimeFormat =
+      /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/.test(value);
+
+    if (!isValidTimeFormat || !selectedDesignationId || !value) {
       return;
     }
+
+    // Create a new item with the selected designation and time value
     const newItem = {
       designation: selectedDesignationId,
       tat_time: value,
     };
-    const updatedData = [...timeArray, newItem];
 
+    // Filter out any existing item with the same designation and update the time value
+    const updatedData = timeArray.filter(
+      (item) => item.designation !== selectedDesignationId
+    );
+    updatedData.push(newItem); // Add the new item
+
+    // Update timeArray with the new data
     setTimeArray(updatedData);
   };
 
-  const newArray = complaintsubcateDesignation.map((single) => {
-    return { id: single.id, name: single.name, time: time };
-  });
+  // const newArray = complaintsubcateDesignation.map((single) => {
+  //   return { id: single.id, name: single.name, time: time };
+  // });
 
-  console.log("newArray:" + JSON.stringify(newArray));
+  // console.log("newArray:" + JSON.stringify(newArray));
   const columns = useMemo(
     () => [
       {
@@ -105,14 +122,14 @@ const AddNewMatrix = (props) => {
               </tr>
             </thead>
             <tbody>
-              {newArray.map((single) => (
+              {complaintsubcateDesignation.map((single) => (
                 <tr key={single.id}>
                   <th>
                     <input
                       className="form-check-input"
                       type="checkbox"
                       id={`upcomingtaskCheck_${single.id}`}
-                      onClick={handleCheckboxChange(single)}
+                      onClick={() => handleCheckboxChange(single.id)}
                     />
                   </th>
                   <td>{single.name}</td>
@@ -120,8 +137,8 @@ const AddNewMatrix = (props) => {
                     <input
                       type="text"
                       id={single.id}
-                      onChange={handleTimeChange}
-                      value={time}
+                      onChange={(event) => handleTimeChange(event, single.id)}
+                      value={timeForId[single.id] || ""}
                       pattern="[0-2][0-9]:[0-5][0-9]:[0-5][0-9]"
                       title="Please enter time in the format hh:mm:ss"
                     />
