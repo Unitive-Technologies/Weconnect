@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
@@ -33,6 +33,8 @@ const AddStockStb = (props) => {
   } = props;
 
   const dispatch = useDispatch();
+
+  const [selectedBrand1, setSelectedBrand1] = useState({});
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -259,6 +261,36 @@ const AddStockStb = (props) => {
                 ) : null}
               </div>
             </Col>
+            {validation.values.stbbrand_id !== "" &&
+              (() => {
+                console.log(
+                  "Selected STB Brand ID:",
+                  validation.values.stbbrand_id
+                );
+                console.log("Brand1 Array:", brand1);
+                const selectedBrand = brand1.filter(
+                  (brand) => brand.id === validation.values.stbbrand_id
+                );
+                console.log("Selected Brand:", selectedBrand);
+                if (!selectedBrand) {
+                  console.log(
+                    "No brand found with the specified ID:",
+                    validation.values.stbbrand_id
+                  );
+                }
+                if (selectedBrand) {
+                  return (
+                    <Col lg={3}>
+                      <Label></Label>
+                      <p style={{ color: "green" }}>
+                        Number to be length {selectedBrand.length} and only{" "}
+                        {selectedBrand.char_allowed_lbl} is allowed
+                      </p>
+                    </Col>
+                  );
+                }
+                return null;
+              })()}
           </Row>
           {validation.values.is_embeded ? (
             <Row>
