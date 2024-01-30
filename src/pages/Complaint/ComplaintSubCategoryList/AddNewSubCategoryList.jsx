@@ -191,7 +191,7 @@ const AddNewSubCategoryList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.showonweb || ""}
                 >
-                  <option value="">Select Status</option>
+                  <option value="">{validation.values.showonweb}</option>
                   <option value="1">Active</option>
                   <option value="0">In-Active</option>
                 </Input>

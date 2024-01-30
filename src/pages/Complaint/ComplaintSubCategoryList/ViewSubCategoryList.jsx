@@ -20,8 +20,15 @@ import { updateUser as onUpdateUser } from "/src/store/users/actions";
 import ViewMatrix from "./ViewMatrix";
 
 const ViewSubCategoryList = (props) => {
-  const { isOpen, toggleViewSubCategory, complaintsubcategory } = props;
-  //   console.log("user in viewuser modal:" + JSON.stringify(user));
+  const {
+    isOpen,
+    toggleViewSubCategory,
+    complaintsubcategory,
+    complaintsubcateDesignation,
+    complaintsubcateCategory,
+    complaintsubcateStatus,
+  } = props;
+  console.log("list in view modal:" + JSON.stringify(complaintsubcategory));
   const dispatch = useDispatch();
   const [showEditSubCategory, setShowEditSubCategory] = useState(false);
 
@@ -40,6 +47,8 @@ const ViewSubCategoryList = (props) => {
         (complaintsubcategory && complaintsubcategory.status_lbl) || "",
       description:
         (complaintsubcategory && complaintsubcategory.description) || "",
+      escalations:
+        (complaintsubcategory && complaintsubcategory.escalations) || [],
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Name"),
@@ -126,6 +135,7 @@ const ViewSubCategoryList = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.name || ""}
+                    disabled
                   ></Input>
                   {validation.touched.name && validation.errors.name ? (
                     <FormFeedback type="invalid">
@@ -147,9 +157,14 @@ const ViewSubCategoryList = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.category_lbl || ""}
+                    disabled
                   >
-                    <option value="101"></option>
-                    <option value="102">STB Power Issue</option>
+                    {complaintsubcateCategory &&
+                      complaintsubcateCategory.map((category_lbl) => (
+                        <option key={category_lbl.id} value={category_lbl.id}>
+                          {category_lbl.name}
+                        </option>
+                      ))}
                   </Input>
                   {validation.touched.category_lbl &&
                   validation.errors.category_lbl ? (
@@ -172,10 +187,14 @@ const ViewSubCategoryList = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.status_lbl || ""}
+                    disabled
                   >
-                    <option value="101">Select Status</option>
-                    <option value="102">Active</option>
-                    <option value="103">In-Active</option>
+                    {complaintsubcateStatus &&
+                      complaintsubcateStatus.map((status) => (
+                        <option key={status.id} value={status.id}>
+                          {status.name}
+                        </option>
+                      ))}
                   </Input>
                   {validation.touched.status_lbl &&
                   validation.errors.status_lbl ? (
@@ -200,10 +219,9 @@ const ViewSubCategoryList = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.showonweb_lbl || ""}
+                    disabled
                   >
-                    <option value="101">Select showonweb</option>
-                    <option value="102">Active</option>
-                    <option value="103">In-Active</option>
+                    <option>{validation.values.showonweb_lbl}</option>
                   </Input>
                   {validation.touched.showonweb_lbl &&
                   validation.errors.showonweb_lbl ? (
@@ -232,6 +250,7 @@ const ViewSubCategoryList = (props) => {
                         ? true
                         : false
                     }
+                    disabled
                   />
                   {validation.touched.description &&
                   validation.errors.description ? (
@@ -268,7 +287,12 @@ const ViewSubCategoryList = (props) => {
               }}
             >
               <Col sm="12">
-                <ViewMatrix />
+                <ViewMatrix
+                  complaintsubcateDesignation={complaintsubcateDesignation}
+                  escalations={
+                    complaintsubcategory && complaintsubcategory.escalations
+                  }
+                />
               </Col>
             </Row>
             <Row>

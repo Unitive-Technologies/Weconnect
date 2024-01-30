@@ -56,7 +56,7 @@ const ComplaintSubCategoryList = (props) => {
     complaintsubcateDesignation,
     loading,
   } = useSelector(ComplaintSubCategoryProperties);
-  console.log("complaintsubcate:" + JSON.stringify(complaintsubcate));
+  // console.log("complaintsubcate:" + JSON.stringify(complaintsubcate));
   // const [isLoading, setLoading] = useState(loading);
 
   const [showAddNewSubCategoryList, setShowAddNewSubCategoryList] =
@@ -92,13 +92,7 @@ const ComplaintSubCategoryList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5
-                className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  toggleViewSubCategory(userData);
-                }}
-              >
+              <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -213,6 +207,9 @@ const ComplaintSubCategoryList = (props) => {
         isOpen={showViewSubCategoryList}
         toggleViewSubCategory={toggleViewSubCategory}
         complaintsubcategory={viewSubCategoryList}
+        complaintsubcateStatus={complaintsubcateStatus}
+        complaintsubcateCategory={complaintsubcateCategory}
+        complaintsubcateDesignation={complaintsubcateDesignation}
       />
       <AddNewSubCategoryList
         isOpen={Boolean(showAddNewSubCategoryList)}
@@ -254,6 +251,9 @@ const ComplaintSubCategoryList = (props) => {
                       // iscustomPageSizeOptions={true}
                       customPageSize={8}
                       tableActions={getTableActions()}
+                      handleRowClick={(row) => {
+                        toggleViewSubCategory(row);
+                      }}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"

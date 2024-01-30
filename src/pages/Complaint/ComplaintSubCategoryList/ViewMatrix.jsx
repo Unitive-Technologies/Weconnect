@@ -4,7 +4,12 @@ import TableContainer from "../../../components/Common/TableContainer";
 import { Card, CardBody, Input } from "reactstrap";
 import { Link } from "react-router-dom";
 
-const ViewMatrix = (props) => {
+const ViewMatrix = ({ complaintsubcateDesignation, escalations }) => {
+  console.log("data in view" + JSON.stringify(escalations));
+  console.log(
+    "datadetails in view" + JSON.stringify(complaintsubcateDesignation)
+  );
+
   const columns = useMemo(
     () => [
       {
@@ -12,7 +17,22 @@ const ViewMatrix = (props) => {
         // disableFilters: true,
         // filterable: true,
         Cell: (cellProps) => {
-          return <input type="checkbox" />;
+          const matchingEscalation = escalations.find(
+            (single) => single.designation === cellProps.row.original.id
+          );
+          return matchingEscalation ? (
+            <>
+              <input
+                type="checkbox"
+                disabled
+                checked={matchingEscalation.designation}
+              />
+            </>
+          ) : (
+            <>
+              <input type="checkbox" disabled />
+            </>
+          );
         },
       },
 
@@ -32,9 +52,7 @@ const ViewMatrix = (props) => {
                 }}
                 className="font-size-14 mb-1"
               >
-                <p className="text-muted mb-0">
-                  {cellProps.row.original.designation}
-                </p>
+                <p className="text-muted mb-0">{cellProps.row.original.name}</p>
               </h5>
             </>
           );
@@ -44,9 +62,16 @@ const ViewMatrix = (props) => {
         Header: "TAT(HH:mm:ss)",
         filterable: true,
         Cell: (cellProps) => {
-          return (
+          const matchingEscalation = escalations.find(
+            (single) => single.designation === cellProps.row.original.id
+          );
+          return matchingEscalation ? (
             <>
-              <input type="text"></input>
+              <input type="text" placeholder={matchingEscalation.tat_time} />
+            </>
+          ) : (
+            <>
+              <input type="text" placeholder="" />
             </>
           );
         },
@@ -67,7 +92,7 @@ const ViewMatrix = (props) => {
         <TableContainer
           isPagination={true}
           columns={columns}
-          data={complaintsubcateData}
+          data={complaintsubcateDesignation}
           // isGlobalFilter={true}
           // isShowingPageLength={true}
           customPageSize={50}
