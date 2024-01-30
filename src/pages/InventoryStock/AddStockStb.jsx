@@ -268,6 +268,7 @@ const AddStockStb = (props) => {
                   validation.values.stbbrand_id
                 );
                 console.log("Brand1 Array:", brand1);
+                // const brandId = Number(validation.values.stbbrand_id);
                 const selectedBrand = brand1.filter(
                   (brand) => brand.id === validation.values.stbbrand_id
                 );

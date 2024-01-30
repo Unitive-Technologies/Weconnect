@@ -758,6 +758,8 @@ export const getInventoryStockScBrand1 = () =>
   get(url.GET_INVENTORYSTOCK_SC_BRAND1);
 export const getInventoryStockScBrand2 = () =>
   get(url.GET_INVENTORYSTOCK_SC_BRAND2);
+export const getPairingSmartcardList = () => get(url.GET_PAIRING_SMARTCARDLIST);
+export const getPairingStbList = () => get(url.GET_PAIRING_STBLIST);
 
 export const addNewUser = (user) => post(url.ADD_NEW_USER, user);
 
