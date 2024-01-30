@@ -36,6 +36,12 @@ import {
   ADD_INVENTORYSTOCK_STB,
   ADD_INVENTORYSTOCK_STB_SUCCESS,
   ADD_INVENTORYSTOCK_STB_FAIL,
+  GET_PAIRING_SMARTCARDLIST,
+  GET_PAIRING_SMARTCARDLIST_SUCCESS,
+  GET_PAIRING_SMARTCARDLIST_FAIL,
+  GET_PAIRING_STBLIST,
+  GET_PAIRING_STBLIST_SUCCESS,
+  GET_PAIRING_STBLIST_FAIL,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -213,5 +219,33 @@ export const addInventoryStockStbSuccess = (stockstb) => ({
 
 export const addInventoryStockStbFail = (error) => ({
   type: ADD_INVENTORYSTOCK_STB_FAIL,
+  payload: error,
+});
+
+export const getPairingSmartcardList = () => ({
+  type: GET_PAIRING_SMARTCARDLIST,
+});
+
+export const getPairingSmartcardListSuccess = (smartcardlist) => ({
+  type: GET_PAIRING_SMARTCARDLIST_SUCCESS,
+  payload: smartcardlist,
+});
+
+export const getPairingSmartcardListFail = (error) => ({
+  type: GET_PAIRING_SMARTCARDLIST_FAIL,
+  payload: error,
+});
+
+export const getPairingStbList = () => ({
+  type: GET_PAIRING_STBLIST,
+});
+
+export const getPairingStbListSuccess = (stblist) => ({
+  type: GET_PAIRING_STBLIST_SUCCESS,
+  payload: stblist,
+});
+
+export const getPairingStbListFail = (error) => ({
+  type: GET_PAIRING_STBLIST_FAIL,
   payload: error,
 });

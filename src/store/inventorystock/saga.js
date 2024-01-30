@@ -12,6 +12,8 @@ import {
   GET_INVENTORYSTOCK_SC_BRAND1,
   GET_INVENTORYSTOCK_SC_BRAND2,
   ADD_INVENTORYSTOCK_STB,
+  GET_PAIRING_SMARTCARDLIST,
+  GET_PAIRING_STBLIST,
 } from "./actionTypes";
 import {
   getInventoryStockStb as onGetInventoryStockStb,
@@ -40,6 +42,10 @@ import {
   getInventoryStockScBrand2Fail,
   addInventoryStockStbSuccess,
   addInventoryStockStbFail,
+  getPairingSmartcardListSuccess,
+  getPairingSmartcardListFail,
+  getPairingStbListSuccess,
+  getPairingStbListFail,
 } from "./actions";
 import {
   getInventoryStockSmartcard,
@@ -54,6 +60,8 @@ import {
   getInventoryStockScBrand1,
   getInventoryStockScBrand2,
   addInventoryStockStb,
+  getPairingSmartcardList,
+  getPairingStbList,
 } from "../../helpers/fakebackend_helper";
 
 export const getStockPairingStore = (state) => state.stockpairing;
@@ -180,6 +188,24 @@ function* onAddInventoryStockStb({ payload: stockstb }) {
   }
 }
 
+function* fetchPairingSmartcardList() {
+  try {
+    const response = yield call(getPairingSmartcardList);
+    yield put(getPairingSmartcardListSuccess(response.data));
+  } catch (error) {
+    yield put(getPairingSmartcardListFail(error));
+  }
+}
+
+function* fetchPairingStbList() {
+  try {
+    const response = yield call(getPairingStbList);
+    yield put(getPairingStbListSuccess(response.data));
+  } catch (error) {
+    yield put(getPairingStbListFail(error));
+  }
+}
+
 function* inventorystockSaga() {
   yield takeEvery(GET_INVENTORYSTOCK_SMARTCARD, fetchInventoryStockSmartcard);
   yield takeEvery(GET_INVENTORYSTOCK_STB, fetchInventoryStockStb);
@@ -202,6 +228,8 @@ function* inventorystockSaga() {
   yield takeEvery(GET_INVENTORYSTOCK_SC_BRAND1, fetchInventoryStockCsBrand1);
   yield takeEvery(GET_INVENTORYSTOCK_SC_BRAND2, fetchInventoryStockCsBrand2);
   yield takeEvery(ADD_INVENTORYSTOCK_STB, onAddInventoryStockStb);
+  yield takeEvery(GET_PAIRING_SMARTCARDLIST, fetchPairingSmartcardList);
+  yield takeEvery(GET_PAIRING_STBLIST, fetchPairingStbList);
 }
 
 export default inventorystockSaga;

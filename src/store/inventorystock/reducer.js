@@ -34,6 +34,10 @@ import {
   ADD_INVENTORYSTOCK_STB,
   ADD_INVENTORYSTOCK_STB_SUCCESS,
   ADD_INVENTORYSTOCK_STB_FAIL,
+  GET_PAIRING_SMARTCARDLIST_SUCCESS,
+  GET_PAIRING_SMARTCARDLIST_FAIL,
+  GET_PAIRING_STBLIST_SUCCESS,
+  GET_PAIRING_STBLIST_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -46,6 +50,8 @@ const INIT_STATE = {
   stockscinventorystate: [],
   brand1: [],
   brand2: [],
+  smartcardlist: [],
+  stblist: [],
   pagination: {},
   error: {},
   loading: false,
@@ -254,6 +260,32 @@ const InventoryStock = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
         loading: false,
+      };
+
+    case GET_PAIRING_SMARTCARDLIST_SUCCESS:
+      return {
+        ...state,
+        smartcardlist: action.payload,
+        loading: false,
+      };
+
+    case GET_PAIRING_SMARTCARDLIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_PAIRING_STBLIST_SUCCESS:
+      return {
+        ...state,
+        stblist: action.payload,
+        loading: false,
+      };
+
+    case GET_PAIRING_STBLIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
       };
 
     default:
