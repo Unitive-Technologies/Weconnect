@@ -215,7 +215,7 @@ const ComplaintSubCategoryList = (props) => {
         complaintsubcategory={viewSubCategoryList}
       />
       <AddNewSubCategoryList
-        isOpen={showAddNewSubCategoryList}
+        isOpen={Boolean(showAddNewSubCategoryList)}
         toggleAddSubCategory={toggleAddSubCategory}
         complaintsubcateStatus={complaintsubcateStatus}
         complaintsubcateCategory={complaintsubcateCategory}

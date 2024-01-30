@@ -28,7 +28,8 @@ const AddNewSubCategoryList = (props) => {
     complaintsubcateStatus,
   } = props;
   const dispatch = useDispatch();
-
+  const [timeArray, setTimeArray] = useState([]);
+  console.log("timeArray: " + JSON.stringify(timeArray));
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -40,26 +41,24 @@ const AddNewSubCategoryList = (props) => {
       status: "",
       showonweb: "",
       description: "",
-      created_at: "",
-      created_by: "Admin",
+      // escalations: [],
+      // escalations: [{ designation: "", tat_time: "" }],
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
-      category_lbl: Yup.string().required("Select Category"),
-      status: Yup.string().required("Select status"),
-      showonweb: Yup.string().required("Select showonweb"),
-      description: Yup.string().required("Enter description"),
+      // category_lbl: Yup.string().required("Select Category"),
+      // status: Yup.string().required("Select status"),
+      // showonweb: Yup.string().required("Select showonweb"),
+      // description: Yup.string().required("Enter description"),
     }),
     onSubmit: (values) => {
       const newComplaintSubCategory = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
-        category_lbl: values["category_lbl"],
-        status: values["status"],
-        showonweb: values["showonweb"],
+        category_id: parseInt(values["category_lbl"]),
+        status: parseInt(values["status"]),
+        showonweb: parseInt(values["showonweb"]),
         description: values["description"],
-        created_at: new Date(),
-        created_by: values["created_by"],
+        escalations: timeArray,
       };
       console.log("ComplaintSubCategory:" + newComplaintSubCategory);
       // save new user
@@ -192,12 +191,9 @@ const AddNewSubCategoryList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.showonweb || ""}
                 >
-                  {complaintsubcateStatus &&
-                    complaintsubcateStatus.map((showonweb) => (
-                      <option key={showonweb.id} value={showonweb.id}>
-                        {showonweb.name}
-                      </option>
-                    ))}
+                  <option value="">Select Status</option>
+                  <option value="1">Active</option>
+                  <option value="0">In-Active</option>
                 </Input>
                 {validation.touched.showonweb && validation.errors.showonweb ? (
                   <FormFeedback type="invalid">
@@ -264,6 +260,8 @@ const AddNewSubCategoryList = (props) => {
           >
             <Col sm="12">
               <AddNewMatrix
+                timeArray={timeArray}
+                setTimeArray={setTimeArray}
                 complaintsubcateDesignation={complaintsubcateDesignation}
               />
             </Col>
@@ -305,6 +303,9 @@ const AddNewSubCategoryList = (props) => {
 AddNewSubCategoryList.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
+  complaintsubcateDesignation: PropTypes.array,
+  complaintsubcateCategory: PropTypes.array,
+  complaintsubcateStatus: PropTypes.array,
 };
 
 export default AddNewSubCategoryList;
