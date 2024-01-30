@@ -428,7 +428,7 @@ const AddNewChannelList = (props) => {
                 <Input
                   name="isFta"
                   type="select"
-                  placeholder="Select Type"
+                  placeholder="Select"
                   className="form-select"
                   onChange={(e) => {
                     validation.handleChange(e);

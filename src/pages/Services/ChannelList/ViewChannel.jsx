@@ -552,7 +552,7 @@ const ViewChannel = (props) => {
             }}
           >
             <Col sm="12">
-              <CasList showEditChannel={showEditChannel} />
+              {/* <CasList showEditChannel={showEditChannel} /> */}
             </Col>
           </Row>
           {!showEditChannel && (
