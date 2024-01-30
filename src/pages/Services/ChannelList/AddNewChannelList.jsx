@@ -174,6 +174,13 @@ const AddNewChannelList = (props) => {
     setCasCodeList(casList);
   };
 
+  const [isCustomEnabled, setIsCustomEnabled] = useState(false);
+
+  const handleChange = (e) => {
+    // Handle switch change
+    setIsCustomEnabled(e.target.checked);
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -204,7 +211,8 @@ const AddNewChannelList = (props) => {
                   name="code"
                   type="text"
                   placeholder="Enter code"
-                  disabled
+                  disabled={!isCustomEnabled} // Disable if isCustomEnabled is false
+                  // disabled
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.code || ""}
@@ -224,6 +232,7 @@ const AddNewChannelList = (props) => {
                   className="form-check-input"
                   id="customSwitchsizelg1"
                   defaultChecked
+                  onChange={handleChange} // Handle switch change
                 />
                 <label
                   className="form-check-label"
@@ -369,13 +378,13 @@ const AddNewChannelList = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -406,7 +415,7 @@ const AddNewChannelList = (props) => {
                     ))}
                 </Input>
                 {validation.touched.definition &&
-                validation.errors.definition ? (
+                  validation.errors.definition ? (
                   <FormFeedback type="invalid">
                     {validation.errors.definition}
                   </FormFeedback>
@@ -419,7 +428,7 @@ const AddNewChannelList = (props) => {
                 <Input
                   name="isFta"
                   type="select"
-                  placeholder="Select type"
+                  placeholder="Select Type"
                   className="form-select"
                   onChange={(e) => {
                     validation.handleChange(e);
@@ -428,7 +437,6 @@ const AddNewChannelList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.isFta || ""}
                 >
-                  <option value="">Select type</option>
                   {channelListType &&
                     channelListType.map((isFta) => (
                       <option key={isFta.id} value={isFta.id}>
@@ -468,7 +476,7 @@ const AddNewChannelList = (props) => {
                     ))}
                 </Input>
                 {validation.touched.broadcaster &&
-                validation.errors.broadcaster ? (
+                  validation.errors.broadcaster ? (
                   <FormFeedback type="invalid">
                     {validation.errors.broadcaster}
                   </FormFeedback>
@@ -519,8 +527,8 @@ const AddNewChannelList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.language || []}
-                  // onChange={handleChangeLanguages}
-                  // value={selectedLanguages}
+                // onChange={handleChangeLanguages}
+                // value={selectedLanguages}
                 >
                   <option value="">Select Language</option>
                   {channelListLanguage &&
@@ -556,7 +564,7 @@ const AddNewChannelList = (props) => {
                   <option value="0">No</option>
                 </Input>
                 {validation.touched.isalacarte &&
-                validation.errors.isalacarte ? (
+                  validation.errors.isalacarte ? (
                   <FormFeedback type="invalid">
                     {validation.errors.isalacarte}
                   </FormFeedback>
@@ -574,12 +582,10 @@ const AddNewChannelList = (props) => {
                   onChange={handleInputChange}
                   onKeyDown={handleArrowKeyPress}
                   placeholder="0"
+                  disabled={selectedType === "1"}
                   value={selectedRate}
-                  // onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  // value={validation.values.rate || ""}
                 ></Input>
-                {/* Validation and error handling code here */}
               </div>
             </Col>
             <Col sm="4">
