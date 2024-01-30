@@ -32,6 +32,8 @@ import {
   getInventoryStockScWarehouse as onGetInventoryStockScWarehouse,
   getInventoryStockScBrand1 as onGetInventoryStockScBrand1,
   getInventoryStockScBrand2 as onGetInventoryStockScBrand2,
+  getPairingSmartcardList as onGetPairingSmartcardList,
+  getPairingStbList as onGetPairingStbList,
 } from "/src/store/inventorystock/actions";
 import {
   getInventoryFaultySmartcard as onGetInventoryFaultySmartcard,
@@ -63,6 +65,7 @@ const InventoryStock = (props) => {
   const [selectedOption, setSelectedOption] = useState("In-stock");
   const [showAddStockSmartcard, setShowAddStockSmartcard] = useState(false);
   const [showAddStockStb, setShowAddStockStb] = useState(false);
+  const [showCreatePairing, setShowCreatePairing] = useState(false);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -82,6 +85,8 @@ const InventoryStock = (props) => {
       stockscinventorystate: stockpairing.stockscinventorystate,
       brand1: stockpairing.brand1,
       brand2: stockpairing.brand2,
+      smartcardlist: stockpairing.smartcardlist,
+      stblist: stockpairing.stblist,
     })
   );
 
@@ -100,6 +105,8 @@ const InventoryStock = (props) => {
     stockscinventorystate,
     brand1,
     brand2,
+    smartcardlist,
+    stblist,
   } = useSelector(inventorystockProperties);
 
   useEffect(() => {
@@ -113,6 +120,8 @@ const InventoryStock = (props) => {
       dispatch(onGetInventoryStockScWarehouse());
       dispatch(onGetInventoryStockScBrand1());
       dispatch(onGetInventoryStockScBrand2());
+      dispatch(onGetPairingSmartcardList());
+      dispatch(onGetPairingStbList());
     }
   }, [dispatch, stockpairing]);
 
@@ -540,6 +549,11 @@ const InventoryStock = (props) => {
   const handleAddStockStb = () => {
     setShowAddStockStb(!showAddStockStb);
   };
+
+  const handleCreatePairing = () => {
+    setShowCreatePairing(!showCreatePairing);
+  };
+
   const getFilteredTableActions = () => {
     let actions = [];
     if (selectedOption === "In-stock") {
@@ -625,6 +639,7 @@ const InventoryStock = (props) => {
             name: "Create",
             type: "normal",
             icon: "create",
+            action: setShowCreatePairing,
           },
           {
             name: "Upload",
@@ -806,6 +821,8 @@ const InventoryStock = (props) => {
     return [];
   };
 
+  console.log("Smartcardlist: ", smartcardlist);
+  console.log("stb list: ", stblist);
   return (
     <React.Fragment>
       <AddStockSmartcard
@@ -955,8 +972,11 @@ const InventoryStock = (props) => {
                               totalPage={getFilteredTotalPage()}
                               loading={loading}
                               tableActions={getFilteredTableActions()}
-                              isOpen={showAddStockStb}
-                              toggle={handleAddStockStb}
+                              isOpen={showCreatePairing}
+                              toggle={handleCreatePairing}
+                              smartcardlist={smartcardlist}
+                              stblist={stblist}
+                              stocksccastype={stocksccastype}
                             />
                           </Col>
                         </Row>

@@ -2,6 +2,8 @@ import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardBody, Col, Row } from "reactstrap";
 import TableContainerX from "../../components/Common/TableContainerX";
+import PropTypes from "prop-types";
+import CreatePairing from "./CreatePairing";
 
 const StockPairing = (props) => {
   const {
@@ -13,6 +15,11 @@ const StockPairing = (props) => {
     goToPage,
     loading,
     tableActions,
+    isOpen,
+    toggle,
+    smartcardlist,
+    stblist,
+    stocksccastype,
   } = props;
 
   if (
@@ -185,6 +192,13 @@ const StockPairing = (props) => {
 
   return (
     <React.Fragment>
+      <CreatePairing
+        isOpen={isOpen}
+        toggle={toggle}
+        smartcardlist={smartcardlist}
+        stblist={stblist}
+        stocksccastype={stocksccastype}
+      />
       <Row>
         <Col lg="12">
           <Card>
@@ -209,6 +223,22 @@ const StockPairing = (props) => {
       </Row>
     </React.Fragment>
   );
+};
+
+StockPairing.propTypes = {
+  stockpairing: PropTypes.array,
+  tableActions: PropTypes.array,
+  smartcardlist: PropTypes.array,
+  stblist: PropTypes.array,
+  totalCount: PropTypes.number,
+  totalPage: PropTypes.number,
+  pageSize: PropTypes.number,
+  currentPage: PropTypes.number,
+  goToPage: PropTypes.func,
+  loading: PropTypes.bool,
+  isOpen: PropTypes.bool,
+  toggle: PropTypes.func,
+  stocksccastype: PropTypes.array,
 };
 
 export default StockPairing;
