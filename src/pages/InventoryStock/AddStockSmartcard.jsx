@@ -113,6 +113,7 @@ const AddStockSmartcard = (props) => {
     },
   });
 
+  console.log("Brand 2: ", brand2);
   return (
     <Modal
       isOpen={isOpen}
@@ -241,8 +242,8 @@ const AddStockSmartcard = (props) => {
                   value={validation.values.smartcardno || ""}
                   disabled={validation.values.brand_id === "" ? true : false}
                   invalid={
-                    validation.touched.smartcardno_id &&
-                    validation.errors.smartcardno_id
+                    validation.touched.smartcardno &&
+                    validation.errors.smartcardno
                       ? true
                       : false
                   }
@@ -255,6 +256,15 @@ const AddStockSmartcard = (props) => {
                 ) : null}
               </div>
             </Col>
+            {validation.values.brand_id !== "" ? (
+              <Col lg={3}>
+                <Label></Label>
+                <p style={{ color: "green" }}>
+                  Number to be length {brand2[0].length} and only{" "}
+                  {brand2[0].char_allowed_lbl} is allowed
+                </p>
+              </Col>
+            ) : null}
           </Row>
           {validation.values.is_embeded ? (
             <Row>
