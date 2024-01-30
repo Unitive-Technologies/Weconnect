@@ -41,7 +41,7 @@ const AddNewSubCategoryList = (props) => {
       status: "",
       showonweb: "",
       description: "",
-      escalations: [],
+      // escalations: [],
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
@@ -49,7 +49,7 @@ const AddNewSubCategoryList = (props) => {
       status: Yup.string().required("Select status"),
       showonweb: Yup.string().required("Select showonweb"),
       description: Yup.string().required("Enter description"),
-      escalations: Yup.array().min(1, "Enter time"),
+      // escalations: Yup.array().min(1, "Enter time"),
     }),
     onSubmit: (values) => {
       const newComplaintSubCategory = {

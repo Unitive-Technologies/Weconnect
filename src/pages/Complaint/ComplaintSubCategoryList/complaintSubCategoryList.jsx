@@ -56,7 +56,7 @@ const ComplaintSubCategoryList = (props) => {
     complaintsubcateDesignation,
     loading,
   } = useSelector(ComplaintSubCategoryProperties);
-
+  console.log("complaintsubcate:" + JSON.stringify(complaintsubcate));
   // const [isLoading, setLoading] = useState(loading);
 
   const [showAddNewSubCategoryList, setShowAddNewSubCategoryList] =
