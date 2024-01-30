@@ -1,0 +1,321 @@
+{
+  "url": "v1/subscriber/search",
+  "response": {
+    "success": true,
+    "status": 200,
+    "data": {
+      "smartcardno": {
+        "data": null,
+        "type": "file_string",
+        "label": "Smartcard No",
+        "not": false,
+        "file_search": true,
+        "multi": false,
+        "delimited": true
+      },
+      "stbno": {
+        "data": null,
+        "type": "file_string",
+        "label": "STB No",
+        "not": false,
+        "file_search": true,
+        "multi": false,
+        "delimited": true
+      },
+      "customer_id": {
+        "data": null,
+        "type": "file_string",
+        "label": "CustomerID",
+        "file_search": true,
+        "multi": false,
+        "delimited": true
+      },
+      "uid": {
+        "data": null,
+        "type": "file_string",
+        "label": "UID",
+        "file_search": true,
+        "multi": false,
+        "delimited": true
+      },
+      "account_autorenew": {
+        "data": [
+          {
+            "id": 0,
+            "name": "Not Auto Renew"
+          },
+          {
+            "id": " 1,2",
+            "name": "Auto Renew"
+          },
+          {
+            "id": 1,
+            "name": "Bouquet Wise Auto Renew"
+          },
+          {
+            "id": 2,
+            "name": "Account Auto Renew"
+          }
+        ],
+        "type": "enum",
+        "label": "Auto Renew",
+        "multi": false
+      },
+      "formno": {
+        "data": null,
+        "type": "string",
+        "label": "SAF No",
+        "file_search": true,
+        "multi": false
+      },
+      "operator_id": {
+        "data": "https://sms.unitch.in/api/index.php/v1/operator/list?filter[_alias][name]=code&status=1",
+        "type": "file_lookup",
+        "label": "LCO",
+        "multi": true,
+        "file_search": true,
+        "delimited": true,
+        "not": false
+      },
+      "distributor_id": {
+        "data": "https://sms.unitch.in/api/index.php/v1/operator/list?filter[_alias][name]=code&status=1&filter[type]=2",
+        "type": "file_lookup",
+        "label": "Distributor",
+        "multi": true,
+        "file_search": true,
+        "delimited": true
+      },
+      "branch_id": {
+        "data": "https://sms.unitch.in/api/index.php/v1/operator/list?filter[_alias][name]=code&status=1&filter[type]=1",
+        "type": "file_lookup",
+        "label": "RO",
+        "multi": true,
+        "file_search": true,
+        "delimited": true
+      },
+      "status": {
+        "data": [
+          {
+            "id": 15,
+            "name": "Subscriber With No Account"
+          }
+        ],
+        "type": "enum",
+        "label": "Subscriber With No Account",
+        "multi": false,
+        "not": false
+      },
+      "cas_status": {
+        "data": [
+          {
+            "id": 1,
+            "name": "CAS Command Success"
+          },
+          {
+            "id": 0,
+            "name": "CAS Command Pending"
+          },
+          {
+            "id": 10,
+            "name": "CAS Command Failed"
+          }
+        ],
+        "type": "enum",
+        "label": "Cas Status",
+        "multi": true
+      },
+      "cas_id": {
+        "data": [
+          {
+            "id": "1",
+            "name": "NSTV"
+          }
+        ],
+        "type": "enum",
+        "label": "CAS",
+        "multi": true
+      },
+      "tag_id": {
+        "data": [],
+        "type": "enum",
+        "label": "Tag",
+        "multi": true
+      },
+      "sublocation_id": {
+        "data": "https://sms.unitch.in/api/index.php/v1/sublocation/list",
+        "type": "lookup",
+        "label": "Sublocation",
+        "multi": true
+      },
+      "location_id": {
+        "data": "https://sms.unitch.in/api/index.php/v1/location/list",
+        "type": "lookup",
+        "label": "Location",
+        "multi": true
+      },
+      "created_by": {
+        "data": "https://sms.unitch.in/api/index.php/v1/user/list",
+        "type": "lookup",
+        "label": "Added By",
+        "multi": true
+      },
+      "updated_by": {
+        "data": "https://sms.unitch.in/api/index.php/v1/user/list",
+        "type": "lookup",
+        "label": "Updated By",
+        "multi": true
+      },
+      "name": {
+        "data": null,
+        "type": "string",
+        "label": "Name",
+        "multi": false
+      },
+      "fname": {
+        "data": null,
+        "type": "string",
+        "label": "First Name",
+        "multi": false
+      },
+      "lname": {
+        "data": null,
+        "type": "string",
+        "label": "Last Name",
+        "multi": false
+      },
+      "mname": {
+        "data": null,
+        "type": "string",
+        "label": "Middle Name",
+        "multi": false
+      },
+      "gender": {
+        "data": [
+          {
+            "id": 0,
+            "name": "Male"
+          },
+          {
+            "id": 1,
+            "name": "Female"
+          },
+          {
+            "id": 2,
+            "name": "Others"
+          }
+        ],
+        "type": "enum",
+        "label": "Gender",
+        "multi": true
+      },
+      "caf_uploaded": {
+        "data": [
+          {
+            "id": 1,
+            "name": "Yes"
+          },
+          {
+            "id": 0,
+            "name": "No"
+          }
+        ],
+        "type": "enum",
+        "label": "Is CAF Uploaded",
+        "multi": false
+      },
+      "customer_type": {
+        "data": [
+          {
+            "id": 1,
+            "name": "Residential"
+          },
+          {
+            "id": 2,
+            "name": "Commercial"
+          }
+        ],
+        "type": "enum",
+        "label": "Customer Type",
+        "multi": false
+      },
+      "pincode": {
+        "data": null,
+        "type": "string",
+        "label": "Pincode",
+        "multi": false
+      },
+      "flatno": {
+        "data": null,
+        "type": "string",
+        "label": "Flat No",
+        "multi": false
+      },
+      "floor": {
+        "data": null,
+        "type": "string",
+        "label": "Floor",
+        "multi": false
+      },
+      "wing": {
+        "data": null,
+        "type": "string",
+        "label": "Wing"
+      },
+      "dob": {
+        "data": null,
+        "type": "date",
+        "label": "Date Of Birth",
+        "not": false
+      },
+      "mobile_no": {
+        "data": null,
+        "type": "string",
+        "label": "Mobile No"
+      },
+      "phone_no": {
+        "data": null,
+        "type": "string",
+        "label": "Phone No",
+        "not": false
+      },
+      "email": {
+        "data": null,
+        "type": "string",
+        "label": "Email",
+        "not": false
+      },
+      "created_at": {
+        "data": null,
+        "type": "date_range",
+        "label": "Added On",
+        "not": false
+      },
+      "updated_at": {
+        "data": null,
+        "type": "date_range",
+        "label": "Updated On",
+        "not": false
+      },
+      "lco_formno": {
+        "data": null,
+        "type": "string",
+        "label": "LCO FormNo"
+      },
+      "is_ekyc_done": {
+        "data": [
+          {
+            "id": 1,
+            "name": "Yes"
+          },
+          {
+            "id": 0,
+            "name": "No"
+          }
+        ],
+        "type": "enum",
+        "label": "Ekyc Done",
+        "multi": false
+      }
+    }
+  }
+}
