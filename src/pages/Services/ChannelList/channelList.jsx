@@ -131,7 +131,7 @@ const ChannelList = (props) => {
     //   setSelectedData(data[0]);
     // }
   };
-
+  console.log("Channel Lists:" + JSON.stringify(channel));
   const columns = useMemo(
     () => [
       {
@@ -290,7 +290,7 @@ const ChannelList = (props) => {
         accessor: "casCodes",
         filterable: true,
         Cell: (cellProps) => {
-          // return <CasCodes {...cellProps} />;
+          return <CasCodes {...cellProps} />;
         },
       },
 

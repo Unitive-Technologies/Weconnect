@@ -123,7 +123,7 @@ const AddNewSubCategoryList = (props) => {
                 </Label>
                 <Input
                   name="category_lbl"
-                  type="select"z
+                  type="select"
                   placeholder="Select Category"
                   className="form-select"
                   onChange={validation.handleChange}

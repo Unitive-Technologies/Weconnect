@@ -39,8 +39,15 @@ const NCF = (cell) => {
 };
 
 const CasCodes = (cell) => {
-  // console.log("cascode row value: " + cell[0].cas_lbl);
-  return cell.value ? cell.value : "";
+  // console.log("cascode row value: " + cell.value);
+  // return cell.value ? cell.value : "";
+  return cell.value.map((casCode) => {
+    return (
+      <p key={casCode.cas_id}>
+        {casCode.cas_lbl} ({casCode.cascode})
+      </p>
+    );
+  });
 };
 
 const Status = (cell) => {
