@@ -26,7 +26,8 @@ import {
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { goToPage as onGoToPage, getBroadcasterBouquetList as onGetBroadcasterBouquet } from "/src/store/broadcasterbouquet/actions";
 
 //redux
@@ -77,6 +78,27 @@ const BroadcasterBouquetList = (props) => {
 
   const columns = useMemo(
     () => [
+      {
+        Header: "    ",
+        disableFilters: true,
+        filterable: true,
+        Cell: (cellProps) => (
+          <div>
+            <FontAwesomeIcon
+              icon={faPlus}
+              style={{
+                cursor: 'pointer',
+                border: 'solid 1px',
+                padding: '4px',
+                background: '#151b1e',
+                color: 'white',
+              }}
+            // onClick={handlePlusClick}
+            />
+
+          </div>
+        ),
+      },
       {
         Header: "#",
         disableFilters: true,
