@@ -821,8 +821,6 @@ const InventoryStock = (props) => {
     return [];
   };
 
-  console.log("Smartcardlist: ", smartcardlist);
-  console.log("stb list: ", stblist);
   return (
     <React.Fragment>
       <AddStockSmartcard

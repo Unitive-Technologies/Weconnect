@@ -242,6 +242,14 @@ function CreatePairing(props) {
               </Card>
             </Col>
           </Row>
+          <Row>
+            <Col xl="3" lg="4" sm="6">
+              <button>
+                <i className="mdi mdi-handshake-outline"></i>
+                <i className="mdi mdi-spin mdi-star"></i> mdi-spin
+              </button>
+            </Col>
+          </Row>
         </Form>
       </ModalBody>
     </Modal>

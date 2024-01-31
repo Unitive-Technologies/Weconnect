@@ -31,7 +31,11 @@ const StockPairing = (props) => {
     !goToPage ||
     loading === undefined
   ) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <i className="mdi mdi-spin mdi-loading"></i>Loading...
+      </div>
+    );
   }
 
   const columns = useMemo(
