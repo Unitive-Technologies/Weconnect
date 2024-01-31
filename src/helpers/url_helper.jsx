@@ -362,6 +362,8 @@ export const GET_COMPLAINTSUBCATEGORY_CATEGORY =
   "/complaint-category?filter[status]=1&fields=id,name&vr=web1.0";
 export const GET_COMPLAINTSUBCATEGORY_DESIGNATION =
   "/user-designation?fields=id,name&vr=web1.0";
+export const UPDATE_COMPLAINTSUBCATEGORY = (id) =>
+  `/complaint-subcategory/${id}?vr=web1.0`;
 
 export const ADD_NEW_COMPLAINTSUBCATEGORY = "/complaint-subcategory?vr=web1.0";
 

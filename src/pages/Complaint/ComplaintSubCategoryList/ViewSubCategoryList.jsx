@@ -16,8 +16,12 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { updateUser as onUpdateUser } from "/src/store/users/actions";
+import {
+  updateComplaintSubCategory as onUpdateComplaintSubCategory,
+  getComplaintSubCategory as onGetComplaintSubCategory,
+} from "/src/store/complaintsubcategorylist/actions";
 import ViewMatrix from "./ViewMatrix";
+import AddNewMatrix from "./AddNewMatrix";
 
 const ViewSubCategoryList = (props) => {
   const {
@@ -29,6 +33,7 @@ const ViewSubCategoryList = (props) => {
     complaintsubcateStatus,
   } = props;
   console.log("list in view modal:" + JSON.stringify(complaintsubcategory));
+  const [timeArray, setTimeArray] = useState([]);
   const dispatch = useDispatch();
   const [showEditSubCategory, setShowEditSubCategory] = useState(false);
 
@@ -58,16 +63,19 @@ const ViewSubCategoryList = (props) => {
       description: Yup.string().required("Please Enter description"),
     }),
     onSubmit: (values) => {
-      const updateUser = {
+      const updatedSubCategory = {
         id: complaintsubcategory.id,
-        name: values.name,
-        category_lbl: values.category_lbl,
-        showonweb_lbl: values.showonweb_lbl,
-        status_lbl: values.status_lbl,
-        description: values.description,
+        name: values["name"],
+        category_id: parseInt(values["category_lbl"]),
+        status: parseInt(values["status_lbl"]),
+        showonweb: parseInt(values["showonweb_lbl"]),
+        description: values["description"],
+        escalations: timeArray,
       };
-      // update user
-      dispatch(onUpdateUser(updateUser));
+      console.log("ComplaintSubCategory:" + updatedSubCategory);
+      // save new user
+      dispatch(onUpdateComplaintSubCategory(updatedSubCategory));
+      dispatch(onGetComplaintSubCategory());
       validation.resetForm();
       toggleViewSubCategory();
     },
@@ -135,7 +143,7 @@ const ViewSubCategoryList = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.name || ""}
-                    disabled
+                    disabled={!showEditSubCategory}
                   ></Input>
                   {validation.touched.name && validation.errors.name ? (
                     <FormFeedback type="invalid">
@@ -157,7 +165,7 @@ const ViewSubCategoryList = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.category_lbl || ""}
-                    disabled
+                    disabled={!showEditSubCategory}
                   >
                     {complaintsubcateCategory &&
                       complaintsubcateCategory.map((category_lbl) => (
@@ -187,7 +195,7 @@ const ViewSubCategoryList = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.status_lbl || ""}
-                    disabled
+                    disabled={!showEditSubCategory}
                   >
                     {complaintsubcateStatus &&
                       complaintsubcateStatus.map((status) => (
@@ -219,9 +227,17 @@ const ViewSubCategoryList = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.showonweb_lbl || ""}
-                    disabled
+                    disabled={!showEditSubCategory}
                   >
-                    <option>{validation.values.showonweb_lbl}</option>
+                    {!showEditSubCategory ? (
+                      <option>{validation.values.showonweb_lbl}</option>
+                    ) : (
+                      <>
+                        {/* <option value="">{validation.values.showonweb}</option> */}
+                        <option value="1">Active</option>
+                        <option value="0">In-Active</option>
+                      </>
+                    )}
                   </Input>
                   {validation.touched.showonweb_lbl &&
                   validation.errors.showonweb_lbl ? (
@@ -250,7 +266,7 @@ const ViewSubCategoryList = (props) => {
                         ? true
                         : false
                     }
-                    disabled
+                    disabled={!showEditSubCategory}
                   />
                   {validation.touched.description &&
                   validation.errors.description ? (
@@ -287,12 +303,20 @@ const ViewSubCategoryList = (props) => {
               }}
             >
               <Col sm="12">
-                <ViewMatrix
-                  complaintsubcateDesignation={complaintsubcateDesignation}
-                  escalations={
-                    complaintsubcategory && complaintsubcategory.escalations
-                  }
-                />
+                {!showEditSubCategory ? (
+                  <ViewMatrix
+                    complaintsubcateDesignation={complaintsubcateDesignation}
+                    escalations={
+                      complaintsubcategory && complaintsubcategory.escalations
+                    }
+                  />
+                ) : (
+                  <AddNewMatrix
+                    timeArray={timeArray}
+                    setTimeArray={setTimeArray}
+                    complaintsubcateDesignation={complaintsubcateDesignation}
+                  />
+                )}
               </Col>
             </Row>
             <Row>

@@ -623,7 +623,8 @@ export const getComplaintSubCategoryDesignation = () =>
   get(url.GET_COMPLAINTSUBCATEGORY_DESIGNATION);
 export const addNewComplaintSubCategory = (complaintsubcate) =>
   post(url.ADD_NEW_COMPLAINTSUBCATEGORY, complaintsubcate);
-
+export const updateComplaintSubCategory = (id, complaint) =>
+  put(url.UPDATE_COMPLAINTSUBCATEGORY(id), complaint);
 // export const getConfigurationUploadLogs = () =>
 //   get(url.GET_CONFIGURATIONUPLOADLOGS);
 export const getCompanyList = () => get(url.GET_COMPANYLIST);

@@ -3,9 +3,17 @@ import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
 import Spinners from "../../../components/Common/Spinner";
-import { Table, Card, CardBody, Col, Container, Row, Spinner } from "reactstrap";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import {
+  Table,
+  Card,
+  CardBody,
+  Col,
+  Container,
+  Row,
+  Spinner,
+} from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import {
   Code,
   Broadcaster,
@@ -54,7 +62,6 @@ const ChannelList = (props) => {
 
   const [casCodes, setCasCodes] = useState([]);
 
-
   const dispatch = useDispatch();
 
   const selectChannelState = (state) => state.channelList;
@@ -81,7 +88,6 @@ const ChannelList = (props) => {
   useEffect(() => {
     dispatch(onGetChannelListCascode());
   }, [dispatch]);
-
 
   const {
     channel,
@@ -118,7 +124,7 @@ const ChannelList = (props) => {
   const [selectedData, setSelectedData] = useState(null);
 
   const handlePlusClick = () => {
-    console.log("button clicked" + handlePlusClick)
+    console.log("button clicked" + handlePlusClick);
     setIsTableVisible(true);
     // if (data.length > 0) {
     //   // Show details of the first item
@@ -137,15 +143,14 @@ const ChannelList = (props) => {
             <FontAwesomeIcon
               icon={faPlus}
               style={{
-                cursor: 'pointer',
-                border: 'solid 1px',
-                padding: '4px',
-                background: '#151b1e',
-                color: 'white',
+                cursor: "pointer",
+                border: "solid 1px",
+                padding: "4px",
+                background: "#151b1e",
+                color: "white",
               }}
               onClick={handlePlusClick}
             />
-
           </div>
         ),
       },
@@ -192,7 +197,6 @@ const ChannelList = (props) => {
                 {cellProps.row.original.designation}
               </p>
               {isTableVisible && (
-
                 <Table className="table mb-0">
                   <thead>
                     <tr>
@@ -283,10 +287,10 @@ const ChannelList = (props) => {
       },
       {
         Header: "CAS CODES",
-        accessor: "cascode",
+        accessor: "casCodes",
         filterable: true,
         Cell: (cellProps) => {
-          return <CasCodes {...cellProps} />;
+          // return <CasCodes {...cellProps} />;
         },
       },
 
@@ -325,7 +329,6 @@ const ChannelList = (props) => {
     ],
     []
   );
-
 
   useEffect(() => {
     if (channel && !channel.length) {

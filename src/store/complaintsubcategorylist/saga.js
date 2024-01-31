@@ -2,6 +2,7 @@ import { call, put, takeEvery } from "redux-saga/effects";
 
 import {
   GET_COMPLAINTSUBCATEGORY,
+  UPDATE_COMPLAINTSUBCATEGORY,
   GET_COMPLAINTSUBCATEGORY_STATUS,
   GET_COMPLAINTSUBCATEGORY_DESIGNATION,
   GET_COMPLAINTSUBCATEGORY_CATEGORY,
@@ -20,6 +21,8 @@ import {
   getComplaintSubCategoryCategoryFail,
   addComplaintSubCategorySuccess,
   addComplaintSubCategoryFail,
+  updateComplaintSubCategorySuccess,
+  updateComplaintSubCategoryFail,
 } from "./actions";
 
 //Include Both Helper File with needed methods
@@ -29,6 +32,7 @@ import {
   getComplaintSubCategoryCategory,
   getComplaintSubCategoryStatus,
   addNewComplaintSubCategory,
+  updateComplaintSubCategory,
 } from "../../helpers/fakebackend_helper";
 
 const convertComplaintSubCategoryListObject = (complaintSubCategoryList) => {
@@ -115,6 +119,24 @@ function* onAddNewComplaintSubCategory({ payload: complaintsubcategory }) {
   }
 }
 
+function* onUpdateComplaintSubCategory({ payload: complaintsubcategory }) {
+  console.log(
+    "customerUser in onUpdate:" + JSON.stringify(complaintsubcategory)
+  );
+  try {
+    const response = yield call(
+      updateComplaintSubCategory,
+      complaintsubcategory.id,
+      complaintsubcategory
+    );
+    yield put(updateComplaintSubCategorySuccess(response));
+    console.log("update response:" + JSON.stringify(response));
+    yield put(fetchAllSubCategories());
+  } catch (error) {
+    yield put(updateComplaintSubCategoryFail(error));
+  }
+}
+
 function* complaintSubCategorySaga() {
   yield takeEvery(GET_COMPLAINTSUBCATEGORY, fetchComplaintSubCategory);
   yield takeEvery(
@@ -130,6 +152,7 @@ function* complaintSubCategorySaga() {
     fetchComplaintSubCategoryCategory
   );
   yield takeEvery(ADD_NEW_COMPLAINTSUBCATEGORY, onAddNewComplaintSubCategory);
+  yield takeEvery(UPDATE_COMPLAINTSUBCATEGORY, onUpdateComplaintSubCategory);
 }
 
 export default complaintSubCategorySaga;

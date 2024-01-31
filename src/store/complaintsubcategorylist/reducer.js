@@ -10,6 +10,9 @@ import {
   ADD_COMPLAINTSUBCATEGORY_SUCCESS,
   ADD_COMPLAINTSUBCATEGORY_FAIL,
   ADD_NEW_COMPLAINTSUBCATEGORY,
+  UPDATE_COMPLAINTSUBCATEGORY,
+  UPDATE_COMPLAINTSUBCATEGORY_SUCCESS,
+  UPDATE_COMPLAINTSUBCATEGORY_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -103,6 +106,31 @@ const ComplaintSubCategory = (state = INIT_STATE, action) => {
       };
 
     case ADD_COMPLAINTSUBCATEGORY_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+    case UPDATE_COMPLAINTSUBCATEGORY:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_COMPLAINTSUBCATEGORY_SUCCESS:
+      return {
+        ...state,
+        complaintsubcategory: state.complaintsubcategory.map(
+          (complaintcategory) =>
+            complaintcategory.id === action.payload.id
+              ? { complaintcategory, ...action.payload }
+              : complaintcategory
+        ),
+        loading: false,
+      };
+
+    case UPDATE_COMPLAINTSUBCATEGORY_FAIL:
       return {
         ...state,
         error: action.payload,

@@ -14,6 +14,9 @@ import {
   ADD_NEW_COMPLAINTSUBCATEGORY,
   ADD_COMPLAINTSUBCATEGORY_SUCCESS,
   ADD_COMPLAINTSUBCATEGORY_FAIL,
+  UPDATE_COMPLAINTSUBCATEGORY,
+  UPDATE_COMPLAINTSUBCATEGORY_FAIL,
+  UPDATE_COMPLAINTSUBCATEGORY_SUCCESS,
 } from "./actionTypes";
 
 export const getComplaintSubCategory = () => ({
@@ -37,7 +40,9 @@ export const getComplaintSubCategoryStatus = () => ({
   type: GET_COMPLAINTSUBCATEGORY_STATUS,
 });
 
-export const getComplaintSubCategoryStatusSuccess = (complaintsubcategoryStatus) => {
+export const getComplaintSubCategoryStatusSuccess = (
+  complaintsubcategoryStatus
+) => {
   return {
     type: GET_COMPLAINTSUBCATEGORY_STATUS_SUCCESS,
     payload: complaintsubcategoryStatus,
@@ -53,7 +58,9 @@ export const getComplaintSubCategoryDesignation = () => ({
   type: GET_COMPLAINTSUBCATEGORY_DESIGNATION,
 });
 
-export const getComplaintSubCategoryDesignationSuccess = (complaintsubcategoryDesignation) => {
+export const getComplaintSubCategoryDesignationSuccess = (
+  complaintsubcategoryDesignation
+) => {
   return {
     type: GET_COMPLAINTSUBCATEGORY_DESIGNATION_SUCCESS,
     payload: complaintsubcategoryDesignation,
@@ -69,7 +76,9 @@ export const getComplaintSubCategoryCategory = () => ({
   type: GET_COMPLAINTSUBCATEGORY_CATEGORY,
 });
 
-export const getComplaintSubCategoryCategorySuccess = (complaintsubcategoryCategory) => {
+export const getComplaintSubCategoryCategorySuccess = (
+  complaintsubcategoryCategory
+) => {
   return {
     type: GET_COMPLAINTSUBCATEGORY_CATEGORY_SUCCESS,
     payload: complaintsubcategoryCategory,
@@ -81,21 +90,32 @@ export const getComplaintSubCategoryCategoryFail = (error) => ({
   payload: error,
 });
 
-export const addNewComplaintSubCategory = (
-  complaintsubcategory
-) => ({
+export const addNewComplaintSubCategory = (complaintsubcategory) => ({
   type: ADD_NEW_COMPLAINTSUBCATEGORY,
   payload: complaintsubcategory,
 });
 
-export const addComplaintSubCategorySuccess = (
-  complaintsubcategory
-) => ({
+export const addComplaintSubCategorySuccess = (complaintsubcategory) => ({
   type: ADD_COMPLAINTSUBCATEGORY_SUCCESS,
   payload: complaintsubcategory,
 });
 
 export const addComplaintSubCategoryFail = (error) => ({
   type: ADD_COMPLAINTSUBCATEGORY_FAIL,
+  payload: error,
+});
+
+export const updateComplaintSubCategory = (complaintcategory) => ({
+  type: UPDATE_COMPLAINTSUBCATEGORY,
+  payload: complaintcategory,
+});
+
+export const updateComplaintSubCategorySuccess = (complaintcategory) => ({
+  type: UPDATE_COMPLAINTSUBCATEGORY_SUCCESS,
+  payload: complaintcategory,
+});
+
+export const updateComplaintSubCategoryFail = (error) => ({
+  type: UPDATE_COMPLAINTSUBCATEGORY_FAIL,
   payload: error,
 });

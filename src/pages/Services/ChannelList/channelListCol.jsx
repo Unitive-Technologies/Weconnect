@@ -39,6 +39,7 @@ const NCF = (cell) => {
 };
 
 const CasCodes = (cell) => {
+  // console.log("cascode row value: " + cell[0].cas_lbl);
   return cell.value ? cell.value : "";
 };
 
