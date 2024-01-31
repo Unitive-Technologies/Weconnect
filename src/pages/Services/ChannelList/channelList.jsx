@@ -177,7 +177,7 @@ const ChannelList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              {/* <h5
+              <h5
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const channelData = cellProps.row.original;
@@ -190,7 +190,7 @@ const ChannelList = (props) => {
               </h5>
               <p className="text-muted mb-0">
                 {cellProps.row.original.designation}
-              </p> */}
+              </p>
               {isTableVisible && (
 
                 <Table className="table mb-0">
