@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
 import Spinners from "../../../components/Common/Spinner";
-import { Card, CardBody, Col, Container, Row, Spinner } from "reactstrap";
-
+import { Table, Card, CardBody, Col, Container, Row, Spinner } from "reactstrap";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import {
   Code,
   Broadcaster,
@@ -112,8 +113,42 @@ const ChannelList = (props) => {
     setShowBulkUpdateCasCodeChannelList,
   ] = useState(false);
 
+  const [isTableVisible, setIsTableVisible] = useState(false);
+  const [data, setData] = useState([]); // Assuming you have data state
+  const [selectedData, setSelectedData] = useState(null);
+
+  const handlePlusClick = () => {
+    console.log("button clicked" + handlePlusClick)
+    setIsTableVisible(true);
+    // if (data.length > 0) {
+    //   // Show details of the first item
+    //   setSelectedData(data[0]);
+    // }
+  };
+
   const columns = useMemo(
     () => [
+      {
+        Header: "    ",
+        disableFilters: true,
+        filterable: true,
+        Cell: (cellProps) => (
+          <div>
+            <FontAwesomeIcon
+              icon={faPlus}
+              style={{
+                cursor: 'pointer',
+                border: 'solid 1px',
+                padding: '4px',
+                background: '#151b1e',
+                color: 'white',
+              }}
+              onClick={handlePlusClick}
+            />
+
+          </div>
+        ),
+      },
       {
         Header: "#",
         disableFilters: true,
@@ -142,7 +177,7 @@ const ChannelList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5
+              {/* <h5
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const channelData = cellProps.row.original;
@@ -155,7 +190,29 @@ const ChannelList = (props) => {
               </h5>
               <p className="text-muted mb-0">
                 {cellProps.row.original.designation}
-              </p>
+              </p> */}
+              {isTableVisible && (
+
+                <Table className="table mb-0">
+                  <thead>
+                    <tr>
+                      <th>CAS</th>
+                      <th>CAS CODE</th>
+                      <th>SERVICE ID</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.map((item, index) => (
+                      <tr key={index}>
+                        {/* <th scope="row">1{selectedData.cas_id}</th> */}
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              )}
             </>
           );
         },
@@ -229,13 +286,7 @@ const ChannelList = (props) => {
         accessor: "cascode",
         filterable: true,
         Cell: (cellProps) => {
-          const channelData = cellProps.row.original;
-          const casCodesData = getMatchingCasCodes(channelData.cascode);
-
-          // Extract the 'name' property from casCodesData
-          const casCodesNames = casCodesData.map(casCode => casCode.name).join(', ');
-
-          return <CasCodes {...cellProps} casCodes={casCodesNames} />;
+          return <CasCodes {...cellProps} />;
         },
       },
 
@@ -274,13 +325,6 @@ const ChannelList = (props) => {
     ],
     []
   );
-
-  const getMatchingCasCodes = (cascode) => {
-    // Assuming casCodes is the array you have received from the API
-    const matchingCasCodes = casCodes.filter((code) => code.cascode === cascode);
-    return matchingCasCodes;
-  };
-
 
 
   useEffect(() => {
