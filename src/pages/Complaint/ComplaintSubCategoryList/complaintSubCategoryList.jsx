@@ -188,6 +188,9 @@ const ComplaintSubCategoryList = (props) => {
     setViewSubCategoryList(userSubCategoryData);
   };
 
+  const resetSelection = () => {
+    setViewSubCategoryList({});
+  };
   const keyField = "id";
 
   const getTableActions = () => {
@@ -210,6 +213,7 @@ const ComplaintSubCategoryList = (props) => {
         complaintsubcateStatus={complaintsubcateStatus}
         complaintsubcateCategory={complaintsubcateCategory}
         complaintsubcateDesignation={complaintsubcateDesignation}
+        resetSelection={resetSelection}
       />
       <AddNewSubCategoryList
         isOpen={Boolean(showAddNewSubCategoryList)}

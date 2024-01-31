@@ -22,10 +22,12 @@ import {
 } from "/src/store/complaintsubcategorylist/actions";
 import ViewMatrix from "./ViewMatrix";
 import AddNewMatrix from "./AddNewMatrix";
+import { resetSection } from "redux-form";
 
 const ViewSubCategoryList = (props) => {
   const {
     isOpen,
+    resetSelection,
     toggleViewSubCategory,
     complaintsubcategory,
     complaintsubcateDesignation,
@@ -44,12 +46,10 @@ const ViewSubCategoryList = (props) => {
     initialValues: {
       id: (complaintsubcategory && complaintsubcategory.id) || "",
       name: (complaintsubcategory && complaintsubcategory.name) || "",
-      category_lbl:
-        (complaintsubcategory && complaintsubcategory.category_lbl) || "",
-      showonweb_lbl:
-        (complaintsubcategory && complaintsubcategory.showonweb_lbl) || "",
-      status_lbl:
-        (complaintsubcategory && complaintsubcategory.status_lbl) || "",
+      category:
+        (complaintsubcategory && complaintsubcategory.category_id) || "",
+      showonweb: (complaintsubcategory && complaintsubcategory.showonweb) || "",
+      status: (complaintsubcategory && complaintsubcategory.status) || "",
       description:
         (complaintsubcategory && complaintsubcategory.description) || "",
       escalations:
@@ -57,26 +57,29 @@ const ViewSubCategoryList = (props) => {
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Name"),
-      category_lbl: Yup.string().required("Please Enter category"),
-      showonweb_lbl: Yup.string().required("Please Enter Showonweb"),
-      status_lbl: Yup.string().required("Please Enter status_lbl"),
+      category: Yup.string().required("Please Enter category"),
+      showonweb: Yup.string().required("Please Enter Showonweb"),
+      status: Yup.string().required("Please Enter status"),
       description: Yup.string().required("Please Enter description"),
     }),
     onSubmit: (values) => {
+      console.log("values:" + JSON.stringify(values));
       const updatedSubCategory = {
         id: complaintsubcategory.id,
         name: values["name"],
-        category_id: parseInt(values["category_lbl"]),
-        status: parseInt(values["status_lbl"]),
-        showonweb: parseInt(values["showonweb_lbl"]),
+        category_id: parseInt(values["category"]),
+        status: parseInt(values["status"]),
+        showonweb: parseInt(values["showonweb"]),
         description: values["description"],
         escalations: timeArray,
       };
-      console.log("ComplaintSubCategory:" + updatedSubCategory);
+      console.log("ComplaintSubCategory:" + JSON.stringify(updatedSubCategory));
       // save new user
       dispatch(onUpdateComplaintSubCategory(updatedSubCategory));
       dispatch(onGetComplaintSubCategory());
       validation.resetForm();
+      resetSection();
+      setShowEditSubCategory(false);
       toggleViewSubCategory();
     },
   });
@@ -158,26 +161,25 @@ const ViewSubCategoryList = (props) => {
                     Category<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="category_lbl"
+                    name="category"
                     type="select"
                     placeholder="Select Category"
                     className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.category_lbl || ""}
+                    value={validation.values.category || ""}
                     disabled={!showEditSubCategory}
                   >
                     {complaintsubcateCategory &&
-                      complaintsubcateCategory.map((category_lbl) => (
-                        <option key={category_lbl.id} value={category_lbl.id}>
-                          {category_lbl.name}
+                      complaintsubcateCategory.map((category) => (
+                        <option key={category.id} value={category.id}>
+                          {category.name}
                         </option>
                       ))}
                   </Input>
-                  {validation.touched.category_lbl &&
-                  validation.errors.category_lbl ? (
+                  {validation.touched.category && validation.errors.category ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.category_lbl}
+                      {validation.errors.category}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -188,13 +190,13 @@ const ViewSubCategoryList = (props) => {
                     Status<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="status_lbl"
+                    name="status"
                     type="select"
                     placeholder="Select Status"
                     className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.status_lbl || ""}
+                    value={validation.values.status || ""}
                     disabled={!showEditSubCategory}
                   >
                     {complaintsubcateStatus &&
@@ -204,10 +206,9 @@ const ViewSubCategoryList = (props) => {
                         </option>
                       ))}
                   </Input>
-                  {validation.touched.status_lbl &&
-                  validation.errors.status_lbl ? (
+                  {validation.touched.status && validation.errors.status ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.status_lbl}
+                      {validation.errors.status}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -220,29 +221,29 @@ const ViewSubCategoryList = (props) => {
                     Show on Web<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="showonweb_lbl"
+                    name="showonweb"
                     type="select"
                     placeholder="Select showonweb"
                     className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.showonweb_lbl || ""}
+                    value={validation.values.showonweb || ""}
                     disabled={!showEditSubCategory}
                   >
-                    {!showEditSubCategory ? (
+                    {/* {!showEditSubCategory ? (
                       <option>{validation.values.showonweb_lbl}</option>
                     ) : (
-                      <>
-                        {/* <option value="">{validation.values.showonweb}</option> */}
-                        <option value="1">Active</option>
-                        <option value="0">In-Active</option>
-                      </>
-                    )}
+                      <> */}
+                    {/* <option value="">{validation.values.showonweb}</option> */}
+                    <option value="1">Active</option>
+                    <option value="0">In-Active</option>
+                    {/* </>
+                    )} */}
                   </Input>
-                  {validation.touched.showonweb_lbl &&
-                  validation.errors.showonweb_lbl ? (
+                  {validation.touched.showonweb &&
+                  validation.errors.showonweb ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.showonweb_lbl}
+                      {validation.errors.showonweb}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -303,20 +304,24 @@ const ViewSubCategoryList = (props) => {
               }}
             >
               <Col sm="12">
-                {!showEditSubCategory ? (
+                {/* {!showEditSubCategory ? (
                   <ViewMatrix
                     complaintsubcateDesignation={complaintsubcateDesignation}
                     escalations={
                       complaintsubcategory && complaintsubcategory.escalations
                     }
                   />
-                ) : (
-                  <AddNewMatrix
-                    timeArray={timeArray}
-                    setTimeArray={setTimeArray}
-                    complaintsubcateDesignation={complaintsubcateDesignation}
-                  />
-                )}
+                ) : ( */}
+                <AddNewMatrix
+                  timeArray={timeArray}
+                  setTimeArray={setTimeArray}
+                  complaintsubcateDesignation={complaintsubcateDesignation}
+                  escalations={
+                    complaintsubcategory && complaintsubcategory.escalations
+                  }
+                  showEditSubCategory={showEditSubCategory}
+                />
+                {/* )} */}
               </Col>
             </Row>
             <Row>

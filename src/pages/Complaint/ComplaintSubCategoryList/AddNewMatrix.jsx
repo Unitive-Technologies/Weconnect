@@ -5,7 +5,13 @@ import TableContainer from "../../../components/Common/TableContainer";
 import { Card, CardBody, Table } from "reactstrap";
 
 const AddNewMatrix = (props) => {
-  const { complaintsubcateDesignation, timeArray, setTimeArray } = props;
+  const {
+    complaintsubcateDesignation,
+    timeArray,
+    setTimeArray,
+    escalations,
+    showEditSubCategory,
+  } = props;
   console.log("timeArray:" + JSON.stringify(timeArray));
   const [time, setTime] = useState("");
   const [selectedDesignationId, setSelectedDesignationId] = useState("");
@@ -52,97 +58,126 @@ const AddNewMatrix = (props) => {
     () => [
       {
         Header: "Enabled",
-        Cell: (cellProps) => (
-          <input
-            className="form-check-input"
-            type="checkbox"
-            id={`upcomingtaskCheck_${cellProps.row.original.id}`}
-            onClick={handleCheckboxChange(cellProps.row.original)}
-          />
-        ),
+        // disableFilters: true,
+        // filterable: true,
+        Cell: (cellProps) => {
+          const matchingEscalation = escalations.find(
+            (single) => single.designation === cellProps.row.original.id
+          );
+          return matchingEscalation ? (
+            <>
+              <input
+                type="checkbox"
+                disabled
+                checked={matchingEscalation.designation}
+              />
+            </>
+          ) : (
+            <>
+              <input type="checkbox" disabled />
+            </>
+          );
+        },
       },
+
       {
         Header: "Designation",
-        accessor: "name",
+        accessor: "designation",
         filterable: true,
-        Cell: (cellProps) => (
-          <h5 className="font-size-14 mb-1">
-            <Link className="text-dark" to="#">
-              {cellProps.row.original.name}
-            </Link>
-          </h5>
-        ),
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5
+                style={{
+                  maxWidth: 200,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+                className="font-size-14 mb-1"
+              >
+                <p className="text-muted mb-0">{cellProps.row.original.name}</p>
+              </h5>
+            </>
+          );
+        },
       },
       {
         Header: "TAT(HH:mm:ss)",
         filterable: true,
         Cell: (cellProps) => {
-          // Generate unique ID for each input field
-          const uniqueId = `timeInput_${cellProps.row.original.id}`;
-
-          return (
-            <input
-              type="text"
-              id={uniqueId}
-              onChange={handleTimeChange}
-              value={time}
-            />
+          const matchingEscalation = escalations.find(
+            (single) => single.designation === cellProps.row.original.id
+          );
+          return matchingEscalation ? (
+            <>
+              <input type="text" placeholder={matchingEscalation.tat_time} />
+            </>
+          ) : (
+            <>
+              <input type="text" placeholder="" />
+            </>
           );
         },
       },
     ],
-    [time, handleTimeChange, selectedDesignationId, timeArray, setTimeArray]
+    []
   );
 
   return (
     <Card>
       <CardBody>
-        {/* <TableContainer
-          isPagination={true}
-          columns={columns}
-          data={newArray}
-          customPageSize={50}
-          tableClass="table align-middle table-nowrap table-hover"
-          theadClass="table-light"
-          paginationDiv="col-sm-12 col-md-7"
-          pagination="pagination pagination-rounded justify-content-end mt-4"
-        /> */}
-        <div className="table-responsive">
-          <Table className="table mb-0">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Designation</th>
-                <th>TAT(HH:mm:ss)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {complaintsubcateDesignation.map((single) => (
-                <tr key={single.id}>
-                  <th>
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      id={`upcomingtaskCheck_${single.id}`}
-                      onClick={() => handleCheckboxChange(single.id)}
-                    />
-                  </th>
-                  <td>{single.name}</td>
-                  <td>
-                    <input
-                      type="text"
-                      id={single.id}
-                      onChange={(event) => handleTimeChange(event, single.id)}
-                      value={timeForId[single.id] || ""}
-                      pattern="[0-2][0-9]:[0-5][0-9]:[0-5][0-9]"
-                      title="Please enter time in the format hh:mm:ss"
-                    />
-                  </td>
+        {showEditSubCategory ? (
+          <div className="table-responsive">
+            <Table className="table mb-0">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Designation</th>
+                  <th>TAT(HH:mm:ss)</th>
                 </tr>
-              ))}
-            </tbody>
-          </Table>
-        </div>
+              </thead>
+              <tbody>
+                {complaintsubcateDesignation.map((single) => (
+                  <tr key={single.id}>
+                    <th>
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id={`upcomingtaskCheck_${single.id}`}
+                        onClick={() => handleCheckboxChange(single.id)}
+                      />
+                    </th>
+                    <td>{single.name}</td>
+                    <td>
+                      <input
+                        type="text"
+                        id={single.id}
+                        onChange={(event) => handleTimeChange(event, single.id)}
+                        value={timeForId[single.id] || ""}
+                        pattern="[0-2][0-9]:[0-5][0-9]:[0-5][0-9]"
+                        title="Please enter time in the format hh:mm:ss"
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+        ) : (
+          <TableContainer
+            isPagination={true}
+            columns={columns}
+            data={complaintsubcateDesignation}
+            // isGlobalFilter={true}
+            // isShowingPageLength={true}
+            customPageSize={50}
+            tableClass="table align-middle table-nowrap table-hover"
+            theadClass="table-light"
+            paginationDiv="col-sm-12 col-md-7"
+            pagination="pagination pagination-rounded justify-content-end mt-4"
+          />
+        )}
       </CardBody>
     </Card>
   );
