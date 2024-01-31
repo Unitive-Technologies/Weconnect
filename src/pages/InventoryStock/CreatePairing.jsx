@@ -243,10 +243,10 @@ function CreatePairing(props) {
             </Col>
           </Row>
           <Row>
+            <Col lg="6"></Col>
             <Col xl="3" lg="4" sm="6">
               <button>
                 <i className="mdi mdi-handshake-outline"></i>
-                <i className="mdi mdi-spin mdi-star"></i> mdi-spin
               </button>
             </Col>
           </Row>

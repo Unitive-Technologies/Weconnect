@@ -707,6 +707,8 @@ export const addInventoryStockSmartcard = (stocksmartcard) =>
   post(url.ADD_INVENTORYSTOCK_SMARTCARD, stocksmartcard);
 export const addInventoryStockStb = (stockstb) =>
   post(url.ADD_INVENTORYSTOCK_STB, stockstb);
+export const addInventoryStockPairing = (stockpairing) =>
+  post(url.ADD_INVENTORYSTOCK_PAIRING, stockpairing);
 
 export const getInventoryFaultySmartcard = () =>
   get(url.GET_INVENTORYFAULTY_SMARTCARD);
