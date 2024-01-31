@@ -38,6 +38,9 @@ import {
   GET_PAIRING_SMARTCARDLIST_FAIL,
   GET_PAIRING_STBLIST_SUCCESS,
   GET_PAIRING_STBLIST_FAIL,
+  ADD_INVENTORYSTOCK_PAIRING,
+  ADD_INVENTORYSTOCK_PAIRING_SUCCESS,
+  ADD_INVENTORYSTOCK_PAIRING_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -286,6 +289,26 @@ const InventoryStock = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+
+    case ADD_INVENTORYSTOCK_PAIRING:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case ADD_INVENTORYSTOCK_PAIRING_SUCCESS:
+      return {
+        ...state,
+        stockpairing: [...state.stockpairing, action.payload],
+        loading: false,
+      };
+
+    case ADD_INVENTORYSTOCK_PAIRING_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
       };
 
     default:
