@@ -14,10 +14,12 @@ import {
   ADD_INVENTORYSTOCK_STB,
   GET_PAIRING_SMARTCARDLIST,
   GET_PAIRING_STBLIST,
+  ADD_INVENTORYSTOCK_PAIRING,
 } from "./actionTypes";
 import {
   getInventoryStockStb as onGetInventoryStockStb,
   getInventoryStockSmartcard as onGetInventoryStockSmartcard,
+  getInventoryStockPairing as onGetInventoryStockPairing,
   getInventoryStockSmartcardSuccess,
   getInventoryStockSmartcardFail,
   getInventoryStockStbSuccess,
@@ -46,6 +48,8 @@ import {
   getPairingSmartcardListFail,
   getPairingStbListSuccess,
   getPairingStbListFail,
+  addInventoryStockPairingSuccess,
+  addInventoryStockPairingFail,
 } from "./actions";
 import {
   getInventoryStockSmartcard,
@@ -62,6 +66,7 @@ import {
   addInventoryStockStb,
   getPairingSmartcardList,
   getPairingStbList,
+  addInventoryStockPairing,
 } from "../../helpers/fakebackend_helper";
 
 export const getStockPairingStore = (state) => state.stockpairing;
@@ -206,6 +211,18 @@ function* fetchPairingStbList() {
   }
 }
 
+function* onAddInventoryStockPairing({ payload: stockpairing }) {
+  try {
+    const response = yield call(addInventoryStockPairing, stockpairing);
+    console.log("Response data in add pairing: ", response);
+    yield put(addInventoryStockPairingSuccess(response));
+    yield put(onGetInventoryStockPairing());
+  } catch (error) {
+    console.log("Error in add pairing saga: ", error);
+    yield put(addInventoryStockPairingFail(error));
+  }
+}
+
 function* inventorystockSaga() {
   yield takeEvery(GET_INVENTORYSTOCK_SMARTCARD, fetchInventoryStockSmartcard);
   yield takeEvery(GET_INVENTORYSTOCK_STB, fetchInventoryStockStb);
@@ -230,6 +247,7 @@ function* inventorystockSaga() {
   yield takeEvery(ADD_INVENTORYSTOCK_STB, onAddInventoryStockStb);
   yield takeEvery(GET_PAIRING_SMARTCARDLIST, fetchPairingSmartcardList);
   yield takeEvery(GET_PAIRING_STBLIST, fetchPairingStbList);
+  yield takeEvery(ADD_INVENTORYSTOCK_PAIRING, onAddInventoryStockPairing);
 }
 
 export default inventorystockSaga;

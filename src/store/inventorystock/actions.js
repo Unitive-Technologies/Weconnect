@@ -42,6 +42,9 @@ import {
   GET_PAIRING_STBLIST,
   GET_PAIRING_STBLIST_SUCCESS,
   GET_PAIRING_STBLIST_FAIL,
+  ADD_INVENTORYSTOCK_PAIRING,
+  ADD_INVENTORYSTOCK_PAIRING_SUCCESS,
+  ADD_INVENTORYSTOCK_PAIRING_FAIL,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -247,5 +250,20 @@ export const getPairingStbListSuccess = (stblist) => ({
 
 export const getPairingStbListFail = (error) => ({
   type: GET_PAIRING_STBLIST_FAIL,
+  payload: error,
+});
+
+export const addInventoryStockPairing = (stockpairing) => ({
+  type: ADD_INVENTORYSTOCK_PAIRING,
+  payload: stockpairing,
+});
+
+export const addInventoryStockPairingSuccess = (stockpairing) => ({
+  type: ADD_INVENTORYSTOCK_PAIRING_SUCCESS,
+  payload: stockpairing,
+});
+
+export const addInventoryStockPairingFail = (error) => ({
+  type: ADD_INVENTORYSTOCK_PAIRING_FAIL,
   payload: error,
 });
