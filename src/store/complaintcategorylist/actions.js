@@ -45,7 +45,6 @@ export const updateComplaintCategoryFail = (error) => ({
   payload: error,
 });
 
-
 export const getComplaintCategoryStatus = () => ({
   type: GET_COMPLAINTCATEGORY_STATUS,
 });
@@ -62,17 +61,12 @@ export const getComplaintCategoryStatusFail = (error) => ({
   payload: error,
 });
 
-
-export const addNewComplaintCategory = (
-  complaintcategory
-) => ({
+export const addNewComplaintCategory = (complaintcategory) => ({
   type: ADD_NEW_COMPLAINTCATEGORY,
   payload: complaintcategory,
 });
 
-export const addComplaintCategorySuccess = (
-  complaintcategory
-) => ({
+export const addComplaintCategorySuccess = (complaintcategory) => ({
   type: ADD_COMPLAINTCATEGORY_SUCCESS,
   payload: complaintcategory,
 });

@@ -16,11 +16,22 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { updateComplaintCategory as onUpdateComplaintCategory } from "/src/store/complaintcategorylist/actions";
+import {
+  updateComplaintCategory as onUpdateComplaintCategory,
+  getComplaintCategory as onGetComplaintCategory,
+} from "/src/store/complaintcategorylist/actions";
 
 const ViewComplaintCategoryList = (props) => {
-  const { isOpen, handleViewComplaintCategory, complaintcategory, complaintcateStatus } = props;
-  console.log("View Complaint Category modal:" + JSON.stringify(complaintcategory));
+  const {
+    isOpen,
+    toggleViewModal,
+    complaintcategory,
+    complaintcateStatus,
+    resetSelection,
+  } = props;
+  console.log(
+    "View Complaint Category modal:" + JSON.stringify(complaintcategory)
+  );
 
   const dispatch = useDispatch();
   const [showEditComplaintCategory, setShowEditComplaintCategory] =
@@ -55,14 +66,17 @@ const ViewComplaintCategoryList = (props) => {
 
       // update user
       dispatch(onUpdateComplaintCategory(updateComplaintCategory));
+      dispatch(onGetComplaintCategory());
       validation.resetForm();
-      handleViewComplaintCategory();
+      setShowEditComplaintCategory(false);
+      resetSelection();
+      toggleViewModal();
     },
   });
 
   const handleCancel = () => {
     setShowEditComplaintCategory(false);
-    handleViewComplaintCategory();
+    toggleViewModal();
   };
   return (
     <>
@@ -74,7 +88,7 @@ const ViewComplaintCategoryList = (props) => {
         centered={true}
         className="exampleModal"
         tabIndex="-1"
-        toggle={handleViewComplaintCategory}
+        toggle={toggleViewModal}
       >
         <ModalHeader toggle={handleCancel} tag="h4">
           {!showEditComplaintCategory
@@ -176,7 +190,7 @@ const ViewComplaintCategoryList = (props) => {
                     <option value="2">In-Active</option>
                   </Input>
                   {validation.touched.showonweb_lbl &&
-                    validation.errors.showonweb_lbl ? (
+                  validation.errors.showonweb_lbl ? (
                     <FormFeedback type="invalid">
                       {validation.errors.showonweb_lbl}
                     </FormFeedback>
@@ -199,13 +213,13 @@ const ViewComplaintCategoryList = (props) => {
                     value={validation.values.description || ""}
                     invalid={
                       validation.touched.description &&
-                        validation.errors.description
+                      validation.errors.description
                         ? true
                         : false
                     }
                   />
                   {validation.touched.description &&
-                    validation.errors.description ? (
+                  validation.errors.description ? (
                     <FormFeedback type="invalid">
                       {validation.errors.description}
                     </FormFeedback>

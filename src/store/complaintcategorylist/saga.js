@@ -8,6 +8,7 @@ import {
 } from "./actionTypes";
 
 import {
+  getComplaintCategory as fetchAllCategories,
   getComplaintCategorySuccess,
   getComplaintCategoryFail,
   getComplaintCategoryStatusSuccess,
@@ -21,8 +22,8 @@ import {
 //Include Both Helper File with needed methods
 import {
   getComplaintCategory,
-  getComplaintCategoryStatus,
   addNewComplaintCategory,
+  getComplaintCategoryStatus,
   updateComplaintCategory,
 } from "../../helpers/fakebackend_helper";
 
@@ -45,14 +46,14 @@ const convertComplaintCategoryListObject = (complaintCategoryList) => {
         complaintcategory.status === 1
           ? "ACTIVE"
           : complaintcategory.status === 0
-            ? "INACTIVE"
-            : "BLOCKED",
+          ? "INACTIVE"
+          : "BLOCKED",
       showonweb:
         complaintcategory.showonweb === 1
           ? "ACTIVE"
           : complaintcategory.showonweb === 0
-            ? "INACTIVE"
-            : "BLOCKED",
+          ? "INACTIVE"
+          : "BLOCKED",
     };
   });
 };
@@ -76,10 +77,11 @@ function* onUpdateComplaintCategory({ payload: complaintcategory }) {
     const response = yield call(
       updateComplaintCategory,
       complaintcategory.id,
-      complaintcategory,
+      complaintcategory
     );
     yield put(updateComplaintCategorySuccess(response));
     console.log("update response:" + JSON.stringify(response));
+    yield put(fetchAllCategories());
   } catch (error) {
     yield put(updateComplaintCategoryFail(error));
   }
@@ -88,7 +90,9 @@ function* onUpdateComplaintCategory({ payload: complaintcategory }) {
 function* fetchComplaintCategoryStatus() {
   try {
     const response = yield call(getComplaintCategoryStatus);
-    console.log("Complaint Category status response:" + JSON.stringify(response));
+    console.log(
+      "Complaint Category status response:" + JSON.stringify(response)
+    );
     yield put(getComplaintCategoryStatusSuccess(response.data));
   } catch (error) {
     yield put(getComplaintCategoryStatusFail(error));
@@ -100,10 +104,10 @@ function* onAddNewComplaintCategory({ payload: complaintcategory }) {
     const response = yield call(addNewComplaintCategory, complaintcategory);
 
     yield put(addComplaintCategorySuccess(response));
-    toast.success("Complaint Category Added Successfully", { autoClose: 2000 });
+    yield put(fetchAllCategories());
   } catch (error) {
     yield put(addComplaintCategoryFail(error));
-    toast.error("ComplaintCategory Added Failed", { autoClose: 2000 });
+    // toast.error("ComplaintCategory Added Failed", { autoClose: 2000 });
   }
 }
 

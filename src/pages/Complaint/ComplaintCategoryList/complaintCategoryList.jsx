@@ -9,12 +9,16 @@ import {
   Col,
   Container,
   Row,
+  Spinner,
   UncontrolledTooltip,
 } from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import { getComplaintCategory as onGetComplaintCategory, getComplaintCategoryStatus as onGetComplaintCategoryStatus } from "/src/store/actions";
+import {
+  getComplaintCategory as onGetComplaintCategory,
+  getComplaintCategoryStatus as onGetComplaintCategoryStatus,
+} from "/src/store/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -39,9 +43,11 @@ const ComplaintCategoryList = (props) => {
     })
   );
 
-  const { complaintcate, loading, complaintcateStatus } = useSelector(ComplaintCategoryProperties);
+  const { complaintcate, loading, complaintcateStatus } = useSelector(
+    ComplaintCategoryProperties
+  );
 
-  const [isLoading, setLoading] = useState(loading);
+  // const [isLoading, setLoading] = useState(loading);
 
   const [showAddNewComplaintCategoryList, setShowAddNewComplaintCategoryList] =
     useState(false);
@@ -79,10 +85,10 @@ const ComplaintCategoryList = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-              // onClick={() => {
-              //   const userData = cellProps.row.original;
-              //   handleViewComplaintCategory(userData);
-              // }}
+                // onClick={() => {
+                //   const userData = cellProps.row.original;
+                //   handleViewComplaintCategory(userData);
+                // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -166,7 +172,7 @@ const ComplaintCategoryList = (props) => {
     }
   }, [dispatch, complaintcate]);
 
-  const handleAddComplaintCategory = () => {
+  const toggleAddModal = () => {
     setShowAddNewComplaintCategoryList(!showAddNewComplaintCategoryList);
   };
 
@@ -174,11 +180,14 @@ const ComplaintCategoryList = (props) => {
     {}
   );
 
-  const handleViewComplaintCategory = (userComplaintData) => {
+  const toggleViewModal = (userComplaintData) => {
     setShowViewComplaintCategoryList(!showViewComplaintCategoryList);
     setViewComplaintCategoryList(userComplaintData);
   };
 
+  const resetSelection = () => {
+    setViewComplaintCategoryList({});
+  };
   const keyField = "id";
 
   const getTableActions = () => {
@@ -196,13 +205,14 @@ const ComplaintCategoryList = (props) => {
     <React.Fragment>
       <ViewComplaintCategoryList
         isOpen={showViewComplaintCategoryList}
-        handleViewComplaintCategory={handleViewComplaintCategory}
+        toggleViewModal={toggleViewModal}
         complaintcategory={viewComplaintCategoryList}
         complaintcateStatus={complaintcateStatus}
+        resetSelection={resetSelection}
       />
       <AddNewComplaintCategoryList
         isOpen={showAddNewComplaintCategoryList}
-        handleAddComplaintCategory={handleAddComplaintCategory}
+        toggleAddModal={toggleAddModal}
         complaintcateStatus={complaintcateStatus}
       />
       <div className="page-content">
@@ -211,8 +221,13 @@ const ComplaintCategoryList = (props) => {
             title="Complaint"
             breadcrumbItem="Complaint Categories"
           />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">
@@ -228,7 +243,7 @@ const ComplaintCategoryList = (props) => {
                       tableActions={getTableActions()}
                       customPageSize={8}
                       handleRowClick={(userComplaintData) => {
-                        handleViewComplaintCategory(userComplaintData);
+                        toggleViewModal(userComplaintData);
                       }}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

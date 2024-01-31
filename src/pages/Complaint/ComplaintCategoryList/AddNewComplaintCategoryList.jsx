@@ -19,7 +19,7 @@ import { useDispatch } from "react-redux";
 import { getComplaintCategory as onGetComplaintCategory } from "/src/store/actions";
 
 const AddNewComplaintCategoryList = (props) => {
-  const { isOpen, handleAddComplaintCategory, complaintcategory, complaintcateStatus } = props;
+  const { isOpen, toggleAddModal, complaintcateStatus } = props;
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -32,8 +32,6 @@ const AddNewComplaintCategoryList = (props) => {
       status: "",
       showonweb_lbl: "",
       description: "",
-      created_at: "",
-      created_by: "Admin",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter category name"),
@@ -43,20 +41,17 @@ const AddNewComplaintCategoryList = (props) => {
     }),
     onSubmit: (values) => {
       const newComplaintCategory = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
-        status: values["status"],
-        showonweb_lbl: values["showonweb_lbl"],
+        status: parseInt(values["status"]),
+        showonweb: parseInt(values["showonweb_lbl"]),
         description: values["description"],
-        created_at: new Date(),
-        created_by: values["created_by"],
       };
       console.log("newComplaintCategory:" + newComplaintCategory);
       // save new user
       dispatch(onAddNewComplaintCategory(newComplaintCategory));
-      dispatch(onGetComplaintCategory());
+      // dispatch(onGetComplaintCategory());
       validation.resetForm();
-      handleAddComplaintCategory();
+      toggleAddModal();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -72,9 +67,9 @@ const AddNewComplaintCategoryList = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleAddComplaintCategory}
+      toggle={toggleAddModal}
     >
-      <ModalHeader tag="h4" toggle={handleAddComplaintCategory}>
+      <ModalHeader tag="h4" toggle={toggleAddModal}>
         Add New Complaint Category
       </ModalHeader>
       <ModalBody>
@@ -130,8 +125,7 @@ const AddNewComplaintCategoryList = (props) => {
                     ))}
                 </Input>
 
-                {validation.touched.status &&
-                  validation.errors.status ? (
+                {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
                     {validation.errors.status}
                   </FormFeedback>
@@ -153,12 +147,12 @@ const AddNewComplaintCategoryList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.showonweb_lbl || ""}
                 >
-                  <option value="11">Select to show on portal</option>
-                  <option value="12">Active</option>
-                  <option value="13">In-Active</option>
+                  <option value="">Select to show on portal</option>
+                  <option value="1">Active</option>
+                  <option value="0">In-Active</option>
                 </Input>
                 {validation.touched.showonweb_lbl &&
-                  validation.errors.showonweb_lbl ? (
+                validation.errors.showonweb_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.showonweb_lbl}
                   </FormFeedback>
@@ -181,13 +175,13 @@ const AddNewComplaintCategoryList = (props) => {
                 value={validation.values.description || ""}
                 invalid={
                   validation.touched.description &&
-                    validation.errors.description
+                  validation.errors.description
                     ? true
                     : false
                 }
               />
               {validation.touched.description &&
-                validation.errors.description ? (
+              validation.errors.description ? (
                 <FormFeedback type="invalid">
                   {validation.errors.description}
                 </FormFeedback>
@@ -212,7 +206,7 @@ const AddNewComplaintCategoryList = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    handleAddComplaintCategory();
+                    toggleAddModal();
                   }}
                 >
                   Cancel
