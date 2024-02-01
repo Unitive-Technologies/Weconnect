@@ -31,7 +31,7 @@ import {
 const INIT_STATE = {
   broadcasterBouquetList: [],
   broadbouquetStatus: [],
-  broadbouquetStatus: [],
+  broadbouquetType: [],
   broadbouquetBroadcaster: [],
   broadbouquetAddchannels: [],
   broadbouquetDefinition: [],

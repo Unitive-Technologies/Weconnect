@@ -59,7 +59,7 @@ const BroadcasterBouquetList = (props) => {
     (broadcasterBouquetList) => ({
       brodcastbouquet: broadcasterBouquetList.broadcasterBouquetList,
       brodcastbouquetStatus: broadcasterBouquetList.broadbouquetStatus,
-      brodcastbouquetType: broadcasterBouquetList.broadbouquetStatus,
+      brodcastbouquetType: broadcasterBouquetList.broadbouquetType,
       brodcastbouquetAddchannels:
         broadcasterBouquetList.broadbouquetAddchannels,
       brodcastbouquetDefinition:

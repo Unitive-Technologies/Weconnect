@@ -7,6 +7,9 @@ import {
   ModalFooter,
   ModalHeader,
   ModalBody,
+  Card,
+  CardBody,
+  CardTitle,
   Label,
   FormFeedback,
   Input,
@@ -17,6 +20,7 @@ import { useFormik } from "formik";
 import { addNewBroadcasterBouquetList as onAddNewBroadcasterBouquetList, getBroadcasterBouquetList as onGetBroadcasterBouquetList } from "/src/store/broadcasterbouquet/actions";
 import { useDispatch } from "react-redux";
 import AddChannels from "./AddChannels";
+import RevenueShare from "./RevenueShare";
 import PieChart from "./PieChart";
 
 const AddNewBroadcasterBouquetList = (props) => {
@@ -314,25 +318,28 @@ const AddNewBroadcasterBouquetList = (props) => {
                   Type<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="type"
+                  name="isFTA"
                   type="select"
                   placeholder="Select Channel type"
                   className="form-select"
-                  onChange={validation.handleChange}
+                  onChange={(e) => {
+                    validation.handleChange(e);
+                    setSelectedType(e.target.value);
+                  }}
                   onBlur={validation.handleBlur}
-                  value={validation.values.type || ""}
+                  value={validation.values.isFta || ""}
                 >
                   <option value="">Select Type</option>
                   {broadcasterBouquetType &&
-                    broadcasterBouquetType.map((type) => (
-                      <option key={type.id} value={type.id}>
-                        {type.name}
+                    broadcasterBouquetType.map((isFta) => (
+                      <option key={isFta.id} value={isFta.id}>
+                        {isFta.name}
                       </option>
                     ))}
                 </Input>
-                {validation.touched.type && validation.errors.type ? (
+                {validation.touched.isFta && validation.errors.isFta ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.type}
+                    {validation.errors.isFta}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -414,6 +421,70 @@ const AddNewBroadcasterBouquetList = (props) => {
               </div>
             </Col>
           </Row>
+          <Row>
+            {selectedType === "0" && (
+              <div>
+                <div
+                  style={{
+                    // margin: "20px 0px",
+                    marginTop: "20px",
+                    marginBottom: "18px",
+                    zIndex: 12000,
+                    backgroundColor: "#fff",
+                    width: "fit-content",
+                    marginLeft: "40%",
+                    position: "absolute",
+                    padding: "0px 10px",
+                  }}
+                >
+                  <h5 style={{}}>MRP Revenue Share</h5>
+                </div>
+                <Row
+                  style={{
+                    position: "relative",
+                    border: "1px solid #ced4da",
+                    padding: "20px 0px",
+                    margin: "30px 0px",
+                  }}
+                >
+                  <Col lg={6}>
+                    <RevenueShare
+                      broadPercent={broadPercent}
+                      msoPercent={msoPercent}
+                      discountPercent={discountPercent}
+                      setBroadPercent={setBroadPercent}
+                      setMsoPercent={setMsoPercent}
+                      setDiscountPercent={setDiscountPercent}
+                    />
+                  </Col>
+
+                  {/* {console.log("select rate value" + validation.values.rate, selectedRate, selectedType)} */}
+                  {selectedType === "0" && selectedRate !== "" ? (
+                    // <Row>
+                    <Col lg={6}>
+                      <Card>
+                        <CardBody>
+                          <span>Graphical representation of SHARE</span>
+                          <CardTitle className="mb-4">
+                            (MRP: {selectedRate}){" "}
+                          </CardTitle>
+                          <PieChart
+                            broadPercent={broadPercent}
+                            msoPercent={msoPercent}
+                            discountPercent={discountPercent}
+                            selectedRate={selectedRate}
+                            dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
+                          />
+                        </CardBody>
+                      </Card>
+                    </Col>
+                  ) : (
+                    <></>
+                  )}
+                </Row>
+              </div>
+            )}
+          </Row>
 
           <div
             style={{
@@ -445,6 +516,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                 broadcasterBouquetAddchannels={broadcasterBouquetAddchannels} />
             </Col>
           </Row>
+
           <Row>
             <Col>
               <ModalFooter>
