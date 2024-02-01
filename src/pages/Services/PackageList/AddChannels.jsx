@@ -350,11 +350,12 @@ const AddChannels = (props) => {
             <Col lg={4}>
               <div className="mb-3  d-flex justify-content-end">
                 <button
-                  onClick={handleAddChannelsTable}
-                  //   selectedType
-                  //     ? handleAddChannelsTable
-                  //     : handleAddChannelsWarning
-                  // }
+                  onClick={
+                    // {handleAddChannelsTable}
+                    selectedType
+                      ? handleAddChannelsTable
+                      : handleAddChannelsWarning
+                  }
                   type="button"
                   className="btn btn-primary"
                 >
@@ -374,7 +375,13 @@ const AddChannels = (props) => {
           <Table className="table mb-0">
             <thead>
               <tr>
-                <th>#</th>
+                <th
+                  style={{
+                    maxWidth: 10,
+                  }}
+                >
+                  #
+                </th>
                 <th>Name</th>
                 <th>BroadCaster</th>
                 <th>Type</th>
@@ -387,13 +394,45 @@ const AddChannels = (props) => {
             <tbody>
               {channels.map((item, index) => (
                 <tr key={index}>
-                  <th scope="row">{index + 1}</th>
-                  <td>{item.name}</td>
-                  <td>{item.broadcaster_lbl}</td>
+                  <th
+                    scope="row"
+                    style={{
+                      maxWidth: 10,
+                    }}
+                  >
+                    {index + 1}
+                  </th>
+                  <td
+                    style={{
+                      maxWidth: 100,
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {item.name}
+                  </td>
+                  <td
+                    style={{
+                      maxWidth: 50,
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {item.broadcaster_lbl}
+                  </td>
                   <td>{item.channel_type_lbl}</td>
                   <td>{item.isAlacarte_lbl}</td>
                   <td>{item.isFta_lbl}</td>
-                  <td>
+                  <td
+                    style={{
+                      maxWidth: 50,
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
                     {" "}
                     <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td>
                   </td>
