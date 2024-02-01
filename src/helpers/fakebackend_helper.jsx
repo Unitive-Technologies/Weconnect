@@ -528,6 +528,9 @@ export const updateBroadcasterBouquet = (broadcasterBouquetList, id) =>
 // export const getPackageList = () => get(url.GET_PACKAGELIST);
 export const addNewPackageList = (packlist) =>
   post(url.ADD_NEW_PACKAGELIST, packlist);
+export const getPackageType = () => get(url.GET_PACKAGE_TYPE);
+export const getPackageBoxType = () => get(url.GET_PACKAGE_BOXTYPE);
+export const getPackageStatus = () => get(url.GET_PACKAGE_STATUS);
 
 export const getOSDConfiguration = () => get(url.GET_OSDCONFIGURATIONLIST);
 export const getOSDConfigurationEnable = () =>

@@ -6,12 +6,28 @@ import {
 } from "../../constants/strings";
 
 import {
-  GET_PACKAGELIST, GET_PACKAGELIST_SUCCESS, GET_PACKAGELIST_FAIL, ADD_PACKAGELIST_SUCCESS,
-  ADD_PACKAGELIST_FAIL, UPDATE_PACKAGELIST_CURRENT_PAGE
+  GET_PACKAGELIST,
+  GET_PACKAGELIST_SUCCESS,
+  GET_PACKAGELIST_FAIL,
+  GET_PACKAGE_TYPE,
+  GET_PACKAGE_TYPE_SUCCESS,
+  GET_PACKAGE_TYPE_FAIL,
+  GET_PACKAGE_BOXTYPE,
+  GET_PACKAGE_BOXTYPE_SUCCESS,
+  GET_PACKAGE_BOXTYPE_FAIL,
+  GET_PACKAGE_STATUS,
+  GET_PACKAGE_STATUS_SUCCESS,
+  GET_PACKAGE_STATUS_FAIL,
+  ADD_PACKAGELIST_SUCCESS,
+  ADD_PACKAGELIST_FAIL,
+  UPDATE_PACKAGELIST_CURRENT_PAGE,
 } from "./actionTypes";
 
 const INIT_STATE = {
   packageList: [],
+  packagetype: [],
+  packageboxtype: [],
+  packagestatus: [],
   pagination: {},
   error: {},
   loading: false,
@@ -23,13 +39,12 @@ const INIT_STATE = {
 
 const PackageList = (state = INIT_STATE, action) => {
   switch (action.type) {
-
     case UPDATE_PACKAGELIST_CURRENT_PAGE:
       return Number(action.payload) <= state.totalPages
         ? {
-          ...state,
-          currentPage: action.payload,
-        }
+            ...state,
+            currentPage: action.payload,
+          }
         : state;
 
     case GET_PACKAGELIST:
@@ -57,13 +72,52 @@ const PackageList = (state = INIT_STATE, action) => {
         loading: false,
       };
 
+    case GET_PACKAGE_TYPE_SUCCESS:
+      console.log("PackageType in reducer:", action.payload);
+      return {
+        ...state,
+        packagetype: action.payload,
+        loading: false,
+      };
+
+    case GET_PACKAGE_TYPE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_PACKAGE_BOXTYPE_SUCCESS:
+      console.log("PackageBoxType in reducer:", action.payload);
+      return {
+        ...state,
+        packageboxtype: action.payload,
+        loading: false,
+      };
+
+    case GET_PACKAGE_BOXTYPE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_PACKAGE_STATUS_SUCCESS:
+      console.log("PackageStatus in reducer:", action.payload);
+      return {
+        ...state,
+        packagestatus: action.payload,
+        loading: false,
+      };
+
+    case GET_PACKAGE_STATUS_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
     case ADD_PACKAGELIST_SUCCESS:
       return {
         ...state,
-        packageList: [
-          ...state.packageList,
-          action.payload,
-        ],
+        packageList: [...state.packageList, action.payload],
       };
 
     case ADD_PACKAGELIST_FAIL:

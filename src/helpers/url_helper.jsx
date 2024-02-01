@@ -247,6 +247,9 @@ export const getPackageListUrl = (currPage, perPage) => {
   console.log("current page in Package List url - ", currPage, perPage);
   return `/package?expand=created_by_lbl,package_type_lbl,isFta_lbl,status_lbl,brdBouques&sort=name&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
+export const GET_PACKAGE_TYPE = "/list/packageType?fields=id,name&vr=web1.0";
+export const GET_PACKAGE_BOXTYPE = "/list/boxtype?fields=id,name&vr=web1.0";
+export const GET_PACKAGE_STATUS = "/list/status?fields=id,name&vr=web1.0";
 
 export const GET_OSDCONFIGURATIONLIST =
   "/mtc?expand=created_by_lbl,status_lbl,is_reserved_lbl,type_lbl&page=1&per-page=50&vr=web1.0";

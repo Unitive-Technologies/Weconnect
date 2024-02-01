@@ -1,12 +1,34 @@
 import { call, put, select, takeEvery } from "redux-saga/effects";
 
-import { GET_PACKAGELIST, ADD_NEW_PACKAGELIST } from "./actionTypes";
+import {
+  GET_PACKAGELIST,
+  GET_PACKAGE_TYPE,
+  GET_PACKAGE_BOXTYPE,
+  GET_PACKAGE_STATUS,
+  ADD_NEW_PACKAGELIST,
+} from "./actionTypes";
 
-import { getPackageListSuccess, getPackageListFail, addPackageListSuccess, addPackageListFail } from "./actions";
+import {
+  getPackageListSuccess,
+  getPackageListFail,
+  getPackageTypeSuccess,
+  getPackageTypeFail,
+  getPackageBoxTypeSuccess,
+  getPackageBoxTypeFail,
+  getPackageStatusSuccess,
+  getPackageStatusFail,
+  addPackageListSuccess,
+  addPackageListFail,
+} from "./actions";
 
 //Include Both Helper File with needed methods
-import { getPackageList, addNewPackageList } from "../../helpers/fakebackend_helper";
-
+import {
+  getPackageList,
+  getPackageType,
+  getPackageBoxType,
+  getPackageStatus,
+  addNewPackageList,
+} from "../../helpers/fakebackend_helper";
 
 // function* fetchPackageList() {
 //   try {
@@ -24,7 +46,7 @@ export const getPackageListStore = (state) => state.packageList;
 function* fetchPackageList() {
   try {
     let PackageListStore = yield select(getPackageListStore);
-    console.log("Package List store in Saga" + PackageListStore)
+    console.log("Package List store in Saga" + PackageListStore);
 
     const pageSize = PackageListStore.pageSize;
     const currentPage = PackageListStore.currentPage;
@@ -36,6 +58,42 @@ function* fetchPackageList() {
   } catch (error) {
     console.error("Error fetching Package List:", error);
     yield put(getPackageListFail(error));
+  }
+}
+
+function* fetchPackageType() {
+  try {
+    const response = yield call(getPackageType);
+
+    yield put(getPackageTypeSuccess(response.data));
+    console.log("Package Type response data" + response.data);
+  } catch (error) {
+    console.error("Error fetching packae type:", error);
+    yield put(getPackageTypeFail(error));
+  }
+}
+
+function* fetchPackageBoxType() {
+  try {
+    const response = yield call(getPackageBoxType);
+
+    yield put(getPackageBoxTypeSuccess(response.data));
+    console.log("Package BoxType response data" + response.data);
+  } catch (error) {
+    console.error("Error fetching packae boxtype:", error);
+    yield put(getPackageBoxTypeFail(error));
+  }
+}
+
+function* fetchPackageStatus() {
+  try {
+    const response = yield call(getPackageStatus);
+
+    yield put(getPackageStatusSuccess(response.data));
+    console.log("Package Status response data" + response.data);
+  } catch (error) {
+    console.error("Error fetching packae Status:", error);
+    yield put(getPackageStatusFail(error));
   }
 }
 
@@ -53,6 +111,9 @@ function* onAddNewPackageList({ payload: packageList }) {
 function* packageListSaga() {
   yield takeEvery(GET_PACKAGELIST, fetchPackageList);
   yield takeEvery(ADD_NEW_PACKAGELIST, onAddNewPackageList);
+  yield takeEvery(GET_PACKAGE_TYPE, fetchPackageType);
+  yield takeEvery(GET_PACKAGE_BOXTYPE, fetchPackageBoxType);
+  yield takeEvery(GET_PACKAGE_STATUS, fetchPackageStatus);
 }
 
 export default packageListSaga;
