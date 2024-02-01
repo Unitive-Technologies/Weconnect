@@ -219,7 +219,7 @@ export const getChannelListUrl = (currPage, perPage) => {
 
 export const GET_BROADCASTERBOUQUETLIST =
   "/broadcaster-bouque?expand=created_by_lbl,status_lbl,broadcaster_lbl,channel_type_lbl,isFta_lbl,isNCF_lbl,channels&sort=name&page=1&per-page=50&vr=web1.0";
-export const ADD_NEW_BROADCASTERBOUQUETLIST = "/add/broadcasterbouquet";
+export const ADD_NEW_BROADCASTERBOUQUETLIST = "/broadcaster-bouque?vr=web1.0";
 export const GET_BROADCASTERBOUQUETLIST_DEFINITION =
   "/list/boxtype?fields=id,name&vr=web1.0";
 export const GET_BROADCASTERBOUQUETLIST_TYPE =
@@ -228,6 +228,8 @@ export const GET_BROADCASTERBOUQUETLIST_STATUS =
   "list/status?fields=id,name&vr=web1.0";
 export const GET_BROADCASTERBOUQUETLIST_BROADCASTER =
   "broadcaster/list?fields=id,name&vr=web1.0";
+export const GET_BROADCASTERBOUQUETLIST_ADDCHANNELS =
+  "channel/list?fields=id,name,broadcasterRate&expand=broadcaster_lbl,channel_type_lbl,isFta_lbl,isAlacarte_lbl&sort=name&filter[isFta]=0&filter[broadcaster_id]=15&vr=web1.0";
 export const getBroadcasterBouquetListUrl = (currPage, perPage) => {
   console.log(
     "current page in Broadcaster Bouquet List url - ",
@@ -236,6 +238,7 @@ export const getBroadcasterBouquetListUrl = (currPage, perPage) => {
   );
   return `/broadcaster-bouque?expand=created_by_lbl,status_lbl,broadcaster_lbl,channel_type_lbl,isFta_lbl,isNCF_lbl,channels&sort=name&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
+export const UPDATE_BROADCASTERBOUQUETLIST = (id) => `/broadcaster-bouque/${id}?vr=web1.0`;
 
 export const GET_PACKAGELIST =
   "/package?expand=created_by_lbl,package_type_lbl,isFta_lbl,status_lbl,channels,brdBouques&sort=name&page=1&per-page=50&vr=web1.0";
