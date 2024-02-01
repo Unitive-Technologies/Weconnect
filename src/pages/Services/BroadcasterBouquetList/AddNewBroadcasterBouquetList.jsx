@@ -14,13 +14,72 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addNewBroadcasterBouquetList as onAddNewBroadcasterBouquetList } from "/src/store/broadcasterbouquet/actions";
+import { addNewBroadcasterBouquetList as onAddNewBroadcasterBouquetList, getBroadcasterBouquetList as onGetBroadcasterBouquetList } from "/src/store/broadcasterbouquet/actions";
 import { useDispatch } from "react-redux";
 import AddChannels from "./AddChannels";
+import PieChart from "./PieChart";
 
 const AddNewBroadcasterBouquetList = (props) => {
-  const { isOpen, handleAddBroadcaster } = props;
+  const { isOpen, toggleAddModal, broadcasterBouquetAddchannels, broadcasterBouquetType, broadcasterBouquetBroadcaster, broadcasterBouquetDefinition, broadcasterBouquetStatus } = props;
   const dispatch = useDispatch();
+
+
+  const [broadPercent, setBroadPercent] = useState(80);
+  const [msoPercent, setMsoPercent] = useState(20);
+  const [discountPercent, setDiscountPercent] = useState(0);
+  const [toggleSwitch, settoggleSwitch] = useState(true);
+  const [channels, setChannels] = useState([]);
+  const [selectedType, setSelectedType] = useState("");
+
+  const [selectedRate, setSelectedRate] = useState("");
+
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value;
+    setSelectedRate(inputValue >= 0 ? inputValue : 0);
+  };
+
+  const handleChangeLogo = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const { name, type } = file;
+      const ext = name.split(".").pop();
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const data = reader.result;
+
+        validation.setFieldValue("logo", {
+          name,
+          type,
+          ext,
+          data,
+        });
+      };
+    }
+  };
+
+  const [selectedLanguages, setSelectedLanguages] = useState([]);
+
+  const handleChangeLanguages = (e) => {
+    const selectedOptions = Array.from(
+      e.target.selectedOptions,
+      (option) => option.value
+    );
+
+    setSelectedLanguages(selectedOptions);
+  };
+  console.log("lang handle:" + selectedLanguages);
+  const handleArrowKeyPress = (e) => {
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+      e.preventDefault(); // Prevent the default behavior of arrow keys in number input
+
+      const increment = e.key === "ArrowUp" ? 1 : -1;
+      const currentRate = parseFloat(selectedRate) || 0;
+      const newRate = Math.max(0, currentRate + increment * 0.01);
+
+      setSelectedRate(newRate.toFixed(2));
+    }
+  };
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -32,7 +91,7 @@ const AddNewBroadcasterBouquetList = (props) => {
       name: "",
       definition: "",
       description: "",
-      type: "",
+      isFta: "",
       broadcaster: "",
       status: "",
       rate: "",
@@ -43,7 +102,7 @@ const AddNewBroadcasterBouquetList = (props) => {
       name: Yup.string().required("Enter name"),
       definition: Yup.string().required("Select definition"),
       description: Yup.string().required("Enter description"),
-      type: Yup.string().required("Select type"),
+      isFta: Yup.string().required("Select type"),
       broadcaster: Yup.string().required("select broadcaster"),
       status: Yup.string().required("Enter status"),
       rate: Yup.string().required(""),
@@ -56,24 +115,54 @@ const AddNewBroadcasterBouquetList = (props) => {
         name: values["name"],
         definition: values["definition"],
         description: values["description"],
-        type: values["type"],
+        isFta: values["isFta"],
         broadcaster: values["broadcaster"],
-        status: values["status"],
-        rate: values["rate"],
-        created_at: new Date(),
-        created_by: values["created_by"],
+        status: parseInt(values["status"]), rate: values["rate"],
+        channels: channels.map((single) => {
+          return {
+            broadcasterRate: single.broadcasterRate,
+            broadcaster_lbl: single.broadcaster_lbl,
+            channel_type_lbl: single.channel_type_lbl,
+            id: single.id,
+            isAlacarte: single.isAlacarte,
+            isAlacarte_lbl: single.isAlacarte,
+            isFta: single.isFta,
+            isFta_lbl: single.isFta_lbl,
+            isNCF: single.isNCF,
+            isNCF_lbl: single.isNCF_lbl,
+            name: single.name,
+          };
+        }),
+        revenue_share: {
+          mso_share: msoPercent,
+          mso_discount: discountPercent,
+          broadcaster_share: broadPercent,
+        },
       };
       console.log(
         "newBroadcasterBouquetList:" + JSON.stringify(newBroadcasterBouquetList)
       );
       dispatch(onAddNewBroadcasterBouquetList(newBroadcasterBouquetList));
+      dispatch(onGetBroadcasterBouquetList());
       validation.resetForm();
-      handleAddBroadcaster();
+      toggleAddModal();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
     },
   });
+
+  const handleUpdateChannels = (channels) => {
+    setChannels(channels);
+  };
+
+  const [isCustomEnabled, setIsCustomEnabled] = useState(false);
+
+  const handleChange = (e) => {
+    // Handle switch change
+    setIsCustomEnabled(e.target.checked);
+  };
+
 
   return (
     <Modal
@@ -83,10 +172,10 @@ const AddNewBroadcasterBouquetList = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleAddBroadcaster}
+      toggle={toggleAddModal}
       size="xl"
     >
-      <ModalHeader tag="h4" toggle={handleAddBroadcaster}>
+      <ModalHeader tag="h4" toggle={toggleAddModal}>
         Add New Broadcaster Bouquet
       </ModalHeader>
       <ModalBody>
@@ -106,6 +195,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                   type="text"
                   placeholder="Enter code"
                   // className="form-select"
+                  disabled={!isCustomEnabled}
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.code || ""}
@@ -172,12 +262,16 @@ const AddNewBroadcasterBouquetList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.definition || ""}
                 >
-                  <option value="101">Select definition</option>
-                  <option value="102">Standard Definition(SD)</option>
-                  <option value="103">High Definition(HD)</option>
+                  <option value="">Select Definition</option>
+                  {broadcasterBouquetDefinition &&
+                    broadcasterBouquetDefinition.map((status) => (
+                      <option key={definition.id} value={definition.id}>
+                        {definition.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.definition &&
-                validation.errors.definition ? (
+                  validation.errors.definition ? (
                   <FormFeedback type="invalid">
                     {validation.errors.definition}
                   </FormFeedback>
@@ -200,13 +294,13 @@ const AddNewBroadcasterBouquetList = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -228,9 +322,13 @@ const AddNewBroadcasterBouquetList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.type || ""}
                 >
-                  <option value="104">Select channel type</option>
-                  <option value="105">Pay Channel</option>
-                  <option value="106">FTA</option>
+                  <option value="">Select Type</option>
+                  {broadcasterBouquetType &&
+                    broadcasterBouquetType.map((type) => (
+                      <option key={type.id} value={type.id}>
+                        {type.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.type && validation.errors.type ? (
                   <FormFeedback type="invalid">
@@ -253,12 +351,16 @@ const AddNewBroadcasterBouquetList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.broadcaster || ""}
                 >
-                  <option value="110">Select broadcaster</option>
-                  <option value="111">Lex Sportal Vision Pvt Ltd.</option>
-                  <option value="112">Jangama Media Pvt Ltd.</option>
+                  <option value="">Select Type</option>
+                  {broadcasterBouquetBroadcaster &&
+                    broadcasterBouquetBroadcaster.map((broadcaster) => (
+                      <option key={broadcaster.id} value={broadcaster.id}>
+                        {broadcaster.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.broadcaster &&
-                validation.errors.broadcaster ? (
+                  validation.errors.broadcaster ? (
                   <FormFeedback type="invalid">
                     {validation.errors.broadcaster}
                   </FormFeedback>
@@ -279,9 +381,13 @@ const AddNewBroadcasterBouquetList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
                 >
-                  <option value="101">Select Status</option>
-                  <option value="102">Active</option>
-                  <option value="103">In-Active</option>
+                  <option value="">Select Status</option>
+                  {broadcasterBouquetStatus &&
+                    broadcasterBouquetStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
@@ -293,23 +399,18 @@ const AddNewBroadcasterBouquetList = (props) => {
 
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">
-                  MRP Rate(INR)<span style={{ color: "red" }}>*</span>
-                </Label>
+                <Label className="form-label">MRP Rate(INR)</Label>
                 <Input
                   name="rate"
                   type="number"
-                  // placeholder="Enter channel code"
-                  // className="form-select"
-                  onChange={validation.handleChange}
+                  step="0.01"
+                  onChange={handleInputChange}
+                  onKeyDown={handleArrowKeyPress}
+                  placeholder="0"
+                  disabled={selectedType === "1"}
+                  value={selectedRate}
                   onBlur={validation.handleBlur}
-                  value={validation.values.rate || ""}
                 ></Input>
-                {validation.touched.rate && validation.errors.rate ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.rate}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
           </Row>
@@ -338,14 +439,17 @@ const AddNewBroadcasterBouquetList = (props) => {
             }}
           >
             <Col sm="12">
-              <AddChannels />
+              <AddChannels isOpen={Boolean(handleUpdateChannels)}
+                data={channels}
+                updateList={setChannels}
+                broadcasterBouquetAddchannels={broadcasterBouquetAddchannels} />
             </Col>
           </Row>
           <Row>
             <Col>
               <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
-                  Save
+                  Create
                 </button>
                 <button
                   type="reset"
@@ -360,7 +464,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    handleAddBroadcaster();
+                    toggleAddModal();
                   }}
                 >
                   Cancel
@@ -376,8 +480,15 @@ const AddNewBroadcasterBouquetList = (props) => {
 };
 
 AddNewBroadcasterBouquetList.propTypes = {
-  toggle: PropTypes.func,
+  toggleAddModal: PropTypes.func,
   isOpen: PropTypes.bool,
+
+  broadcasterBouquetAddchannels: PropTypes.array,
+  broadcasterBouquetType: PropTypes.array,
+  broadcasterBouquetBroadcaster: PropTypes.array,
+  broadcasterBouquetStatus: PropTypes.array,
+  broadcasterBouquetDefinition: PropTypes.array,
+
 };
 
 export default AddNewBroadcasterBouquetList;

@@ -1,14 +1,13 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
-import TableContainer from "../../../components/Common/TableContainer";
-import Spinners from "../../../components/Common/Spinner";
 import {
   Card,
   CardBody,
   Col,
   Container,
   Row,
+  Spinner,
   UncontrolledTooltip,
 } from "reactstrap";
 
@@ -28,7 +27,7 @@ import {
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { goToPage as onGoToPage, getBroadcasterBouquetList as onGetBroadcasterBouquet } from "/src/store/broadcasterbouquet/actions";
+import { goToPage as onGoToPage, getBroadcasterBouquetList as onGetBroadcasterBouquet, getBroadcasterBouquetStatus as onGetBroadcasterBouquetStatus, getBroadcasterBouquetType as onGetBroadcasterBouquetType, getBroadcasterBouquetBroadcaster as onGetBroadcasterBouquetBroadcaster, getBroadcasterBouquetAddchannel as onGetBroadcasterBouquetAddchannel, getBroadcasterBouquetDefinition as onGetBroadcasterBouquetDefinition } from "/src/store/broadcasterbouquet/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -51,6 +50,11 @@ const BroadcasterBouquetList = (props) => {
     selectBroadcasterBouquetState,
     (broadcasterBouquetList) => ({
       brodcastbouquet: broadcasterBouquetList.broadcasterBouquetList,
+      brodcastbouquetStatus: broadcasterBouquetList.broadcasterBouquetStatus,
+      brodcastbouquetType: broadcasterBouquetList.broadcasterBouquetType,
+      brodcastbouquetAddchannels: broadcasterBouquetList.broadcasterBouquetAddchannels,
+      brodcastbouquetDefinition: broadcasterBouquetList.broadcasterBouquetDefinition,
+      brodcastbouquetBroadcaster: broadcasterBouquetList.broadcasterBouquetBroadcaster,
       loading: broadcasterBouquetList.loading,
       totalPage: broadcasterBouquetList.totalPages,
       totalCount: broadcasterBouquetList.totalCount,
@@ -59,7 +63,7 @@ const BroadcasterBouquetList = (props) => {
     })
   );
 
-  const { brodcastbouquet, loading, totalPage,
+  const { brodcastbouquet, brodcastbouquetAddchannels, brodcastbouquetDefinition, brodcastbouquetBroadcaster, brodcastbouquetStatus, brodcastbouquetType, loading, totalPage,
     totalCount,
     pageSize,
     currentPage } = useSelector(
@@ -129,7 +133,7 @@ const BroadcasterBouquetList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const broadData = cellProps.row.original;
-                  handleViewBroadcast(broadData);
+                  toggleViewModal(broadData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -225,41 +229,7 @@ const BroadcasterBouquetList = (props) => {
           return <CreatedBy {...cellProps} />;
         },
       },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
-          );
-        },
-      },
+
     ],
     []
   );
@@ -267,6 +237,11 @@ const BroadcasterBouquetList = (props) => {
   useEffect(() => {
     if (brodcastbouquet && !brodcastbouquet.length) {
       dispatch(onGetBroadcasterBouquet());
+      dispatch(onGetBroadcasterBouquetAddchannel());
+      dispatch(onGetBroadcasterBouquetBroadcaster());
+      dispatch(onGetBroadcasterBouquetDefinition());
+      dispatch(onGetBroadcasterBouquetStatus());
+      dispatch(onGetBroadcasterBouquetType());
     }
   }, [dispatch, brodcastbouquet]);
 
@@ -276,13 +251,17 @@ const BroadcasterBouquetList = (props) => {
     dispatch(onGetBroadcasterBouquet());
   };
 
-  const handleAddBroadcaster = () => {
+  const toggleAddModal = () => {
     setShowAddNewBroadcasterBouquetList(!showAddNewBroadcasterBouquetList);
   };
   const [viewBrocast, setViewBrocast] = useState({});
-  const handleViewBroadcast = (broadData) => {
+  const toggleViewModal = (broadData) => {
     setViewBroadcastBouq(!viewBroadcastBouq);
     setViewBrocast(broadData);
+  };
+
+  const resetSelection = () => {
+    setViewBrocast({});
   };
 
   const keyField = "id";
@@ -302,19 +281,35 @@ const BroadcasterBouquetList = (props) => {
     <React.Fragment>
       <AddNewBroadcasterBouquetList
         isOpen={showAddNewBroadcasterBouquetList}
-        handleAddBroadcaster={handleAddBroadcaster}
+        toggleAddModal={toggleAddModal}
+        broadcasterBouquetAddchannels={brodcastbouquetAddchannels}
+        broadcasterBouquetBroadcaster={brodcastbouquetBroadcaster}
+        broadcasterBouquetDefinition={brodcastbouquetDefinition}
+        broadcasterBouquetStatus={brodcastbouquetStatus}
+        broadcasterBouquetType={brodcastbouquetType}
       />
       <ViewBroadCasterBouquet
         isOpen={viewBroadcastBouq}
-        handleViewBroadcast={handleViewBroadcast}
+        toggleViewModal={toggleViewModal}
         broadcast={viewBrocast}
+        broadcasterBouquetAddchannels={brodcastbouquetAddchannels}
+        broadcasterBouquetBroadcaster={brodcastbouquetBroadcaster}
+        broadcasterBouquetDefinition={brodcastbouquetDefinition}
+        broadcasterBouquetStatus={brodcastbouquetStatus}
+        broadcasterBouquetType={brodcastbouquetType}
+        resetSelection={resetSelection}
       />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Services" breadcrumbItem="Broadcaster Bouquets" />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">
@@ -352,7 +347,7 @@ const BroadcasterBouquetList = (props) => {
                       isGlobalFilter={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleAddNewBroadcasterBouquetList={() =>
+                      toggleAddModal={() =>
                         setShowAddNewBroadcasterBouquetList(true)
                       }
                       goToPage={goToPage}

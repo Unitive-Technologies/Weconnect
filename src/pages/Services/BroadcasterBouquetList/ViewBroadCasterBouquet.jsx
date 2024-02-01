@@ -19,13 +19,13 @@ import {
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addNewBroadcasterBouquetList as onAddNewBroadcasterBouquetList } from "/src/store/broadcasterbouquet/actions";
+import { updateBroadcasterBouquet as onUpdateBroadcasterBouquet, addNewBroadcasterBouquetList as onAddNewBroadcasterBouquetList } from "/src/store/broadcasterbouquet/actions";
 import { useSelector, useDispatch } from "react-redux";
 import AddChannels from "./AddChannels";
 import RevenueShare from "./RevenueShare";
 
 const ViewBroadCasterBouquet = (props) => {
-  const { isOpen, handleViewBroadcast, broadcast } = props;
+  const { isOpen, broadcasterBouquetAddchannels, broadcasterBouquetType, broadcasterBouquetBroadcaster, broadcasterBouquetDefinition, broadcasterBouquetStatus, resetSelection, toggleViewModal, broadcast } = props;
   const dispatch = useDispatch();
 
   const [showEditBroadcast, setShowEditBroadcast] = useState(false);
@@ -35,14 +35,15 @@ const ViewBroadCasterBouquet = (props) => {
 
     initialValues: {
       //BroadCaster: "",
-      code: "",
-      name: "",
-      definition: "",
-      description: "",
-      type: "",
-      broadcaster: "",
-      status: "",
-      rate: "",
+      code: (broadcast && broadcast.code) || "",
+      name: (broadcast && broadcast.name) || "",
+      definition: (broadcast && broadcast.definition) || "",
+      description: (broadcast && broadcast.description) || "",
+      type: (broadcast && broadcast.type) || "",
+      broadcaster: (broadcast && broadcast.broadcaster) || "",
+      status: (broadcast && broadcast.status) || "",
+      rate: (broadcast && broadcast.rate) || "",
+      channels: (broadcast && broadcast.channels) || "",
       created_by: "Admin",
     },
     validationSchema: Yup.object({
@@ -54,28 +55,31 @@ const ViewBroadCasterBouquet = (props) => {
       broadcaster: Yup.string().required("select broadcaster"),
       status: Yup.string().required("Enter status"),
       rate: Yup.string().required(""),
+      channels: Yup.string().required("channels"),
       // serviceid: Yup.string().required("serviceid"),
     }),
     onSubmit: (values) => {
-      const newBroadcasterBouquetList = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
-        code: values["code"],
-        name: values["name"],
-        definition: values["definition"],
-        description: values["description"],
-        type: values["type"],
-        broadcaster: values["broadcaster"],
-        status: values["status"],
-        rate: values["rate"],
+      const updateBroadcasterBouque = {
+        id: values.id,
+        code: values.code,
+        name: values.name,
+        definition: values.definition,
+        description: values.description,
+        type: values.type,
+        broadcaster: values.broadcaster,
+        status: values.status,
+        rate: values.rate,
+        channels: values.channels,
         created_at: new Date(),
-        created_by: values["created_by"],
+        created_by: values.created_by,
       };
       console.log(
-        "newBroadcasterBouquetList:" + JSON.stringify(newBroadcasterBouquetList)
+        "newBroadcasterBouquetList:" + JSON.stringify(updateBroadcasterBouque)
       );
-      dispatch(onAddNewBroadcasterBouquetList(newBroadcasterBouquetList));
+      dispatch(onUpdateBroadcasterBouquet(updateBroadcasterBouque));
       validation.resetForm();
-      handleViewBroadcast();
+      toggleViewModal();
+      resetSelection();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -83,7 +87,8 @@ const ViewBroadCasterBouquet = (props) => {
   });
   const handleCancel = () => {
     setShowEditBroadcast(false);
-    handleViewBroadcast();
+    resetSelection();
+    toggleViewModal();
   };
   return (
     <Modal
@@ -206,7 +211,7 @@ const ViewBroadCasterBouquet = (props) => {
                   <option value="103">High Definition(HD)</option>
                 </Input>
                 {validation.touched.definition &&
-                validation.errors.definition ? (
+                  validation.errors.definition ? (
                   <FormFeedback type="invalid">
                     {validation.errors.definition}
                   </FormFeedback>
@@ -230,13 +235,13 @@ const ViewBroadCasterBouquet = (props) => {
                   disabled={!showEditBroadcast}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -290,7 +295,7 @@ const ViewBroadCasterBouquet = (props) => {
                   <option value="112">Jangama Media Pvt Ltd.</option>
                 </Input>
                 {validation.touched.broadcaster &&
-                validation.errors.broadcaster ? (
+                  validation.errors.broadcaster ? (
                   <FormFeedback type="invalid">
                     {validation.errors.broadcaster}
                   </FormFeedback>
@@ -437,8 +442,16 @@ const ViewBroadCasterBouquet = (props) => {
 };
 
 ViewBroadCasterBouquet.propTypes = {
-  toggle: PropTypes.func,
+  toggleViewModal: PropTypes.func,
+  resetSelection: PropTypes.func,
   isOpen: PropTypes.bool,
+
+  broadcast: PropTypes.object,
+  broadcasterBouquetAddchannels: PropTypes.object,
+  broadcasterBouquetBroadcaster: PropTypes.object,
+  broadcasterBouquetDefinition: PropTypes.object,
+  broadcasterBouquetStatus: PropTypes.object,
+  broadcasterBouquetType: PropTypes.object,
 };
 
 export default ViewBroadCasterBouquet;

@@ -5,7 +5,9 @@ import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const AddChannels = (props) => {
-  const { showEditBroadcast } = props;
+  const { data, updateList, broadcasterBouquetAddchannels, showEditBroadcast } = props;
+
+
   const columns = useMemo(
     () => [
       {
