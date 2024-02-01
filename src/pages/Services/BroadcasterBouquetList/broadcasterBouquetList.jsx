@@ -59,13 +59,13 @@ const BroadcasterBouquetList = (props) => {
     (broadcasterBouquetList) => ({
       brodcastbouquet: broadcasterBouquetList.broadcasterBouquetList,
       brodcastbouquetStatus: broadcasterBouquetList.broadbouquetStatus,
-      brodcastbouquetType: broadcasterBouquetList.broadcasterBouquetType,
+      brodcastbouquetType: broadcasterBouquetList.broadbouquetStatus,
       brodcastbouquetAddchannels:
-        broadcasterBouquetList.broadcasterBouquetAddchannels,
+        broadcasterBouquetList.broadbouquetAddchannels,
       brodcastbouquetDefinition:
-        broadcasterBouquetList.broadcasterBouquetDefinition,
+        broadcasterBouquetList.broadbouquetDefinition,
       brodcastbouquetBroadcaster:
-        broadcasterBouquetList.broadcasterBouquetBroadcaster,
+        broadcasterBouquetList.broadbouquetBroadcaster,
       loading: broadcasterBouquetList.loading,
       totalPage: broadcasterBouquetList.totalPages,
       totalCount: broadcasterBouquetList.totalCount,
@@ -115,7 +115,7 @@ const BroadcasterBouquetList = (props) => {
                 background: "#151b1e",
                 color: "white",
               }}
-              // onClick={handlePlusClick}
+            // onClick={handlePlusClick}
             />
           </div>
         ),
@@ -201,15 +201,7 @@ const BroadcasterBouquetList = (props) => {
         accessor: "channels",
         filterable: true,
         Cell: (cellProps) => {
-<<<<<<< Updated upstream
-          {
-            console.log(
-              "channels Data" + JSON.stringify(cellProps.row.original.channels)
-            );
-          }
-=======
           // { console.log("channels Data" + JSON.stringify(cellProps.row.original.channels)) }
->>>>>>> Stashed changes
           return (
             <p
               className="text-muted mb-0"
