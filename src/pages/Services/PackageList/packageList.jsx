@@ -28,7 +28,13 @@ import {
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 
-import { goToPage as onGoToPage, getPackageList as onGetPackageList } from "/src/store/packagelist/actions";
+import {
+  goToPage as onGoToPage,
+  getPackageList as onGetPackageList,
+  getPackageType as onGetPackageType,
+  getPackageBoxType as onGetPackageBoxType,
+  getPackageStatus as onGetPackageStatus,
+} from "/src/store/packagelist/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -38,7 +44,7 @@ import AddNewPackageList from "./AddNewPackageList";
 import BulkUpdateCasCodePackageList from "./BulkUpdateCasCodePackageList";
 import BulkUpdatePackageList from "./BulkUpdatePackageList";
 import UploadPackageList from "../PackageList/UploadPackageList";
-import ViewPackageList from './ViewPackageList'
+import ViewPackageList from "./ViewPackageList";
 import TableContainerX from "../../../components/Common/TableContainerX";
 
 const PackageList = (props) => {
@@ -52,6 +58,9 @@ const PackageList = (props) => {
     selectPackageListState,
     (packageList) => ({
       packageList: packageList.packageList,
+      packageType: packageList.packagetype,
+      packageBoxType: packageList.packageboxtype,
+      packageStatus: packageList.packagestatus,
       loading: packageList.loading,
       totalPage: packageList.totalPages,
       totalCount: packageList.totalCount,
@@ -60,10 +69,17 @@ const PackageList = (props) => {
     })
   );
 
-  const { packageList, totalPage,
+  const {
+    packageList,
+    packageType,
+    packageBoxType,
+    packageStatus,
+    totalPage,
     totalCount,
     pageSize,
-    currentPage, loading } = useSelector(PackageListProperties);
+    currentPage,
+    loading,
+  } = useSelector(PackageListProperties);
 
   useEffect(() => {
     // console.log("Package List data in component:", packlist);
@@ -164,10 +180,19 @@ const PackageList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0"
-              style={{ maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{cellProps.row.original.channels}</p>
-          )
-        }
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 200,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {cellProps.row.original.channels}
+            </p>
+          );
+        },
 
         // Cell: (cellProps) => {
         //   return <Channels {...cellProps} />;
@@ -255,6 +280,9 @@ const PackageList = (props) => {
   useEffect(() => {
     if (packageList && !packageList.length) {
       dispatch(onGetPackageList());
+      dispatch(onGetPackageType());
+      dispatch(onGetPackageBoxType());
+      dispatch(onGetPackageStatus());
     }
   }, [dispatch, packageList]);
 
@@ -264,7 +292,7 @@ const PackageList = (props) => {
     dispatch(onGetPackageList());
   };
 
-  const toggle = () => {
+  const toggleAddModal = () => {
     setShowAddNewPackageList(!showAddNewPackageList);
   };
 
@@ -322,7 +350,13 @@ const PackageList = (props) => {
 
   return (
     <React.Fragment>
-      <AddNewPackageList isOpen={showAddNewPackageList} toggle={toggle} />
+      <AddNewPackageList
+        isOpen={showAddNewPackageList}
+        toggleAddModal={toggleAddModal}
+        packageType={packageType}
+        packageBoxType={packageBoxType}
+        packageStatus={packageStatus}
+      />
       <UploadPackageList isOpen={showUploadPackageList} toggle={toggle1} />
       <BulkUpdatePackageList
         isOpen={showBulkUpdatePackageList}
@@ -349,7 +383,7 @@ const PackageList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("packageList:" + JSON.stringify(packageList))}
+                    {/* {console.log("packageList:" + JSON.stringify(packageList))} */}
                     {/* <TableContainer
                       isPagination={true}
                       columns={columns}

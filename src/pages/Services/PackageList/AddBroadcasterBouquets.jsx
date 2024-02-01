@@ -2,7 +2,12 @@ import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
 import {
-  Card, CardBody, Col, Input, Row, Toast,
+  Card,
+  CardBody,
+  Col,
+  Input,
+  Row,
+  Toast,
   ToastHeader,
   ToastBody,
 } from "reactstrap";
@@ -11,7 +16,7 @@ import { Link } from "react-router-dom";
 
 const AddBroadcasterBouquets = (props) => {
   const { type, definition } = props;
-  console.log("type, definition:" + type, definition);
+  // console.log("type, definition:" + type, definition);
 
   const columns = useMemo(
     () => [
@@ -208,7 +213,6 @@ const AddBroadcasterBouquets = (props) => {
 
   const [showAddChannelsPlus, setShowAddChannelsPlus] = useState(false);
   const [showChannelTableList, setShowChannelTableList] = useState(false);
-
 
   const handleAddChannelsWarning = () => {
     setShowAddChannelsPlus(!showAddChannelsPlus);

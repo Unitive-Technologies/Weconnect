@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 
 const AddChannels = (props) => {
   const { type, definition } = props;
-  console.log("type, definition:" + type, definition);
+  // console.log("type, definition:" + type, definition);
   const columns = useMemo(
     () => [
       {

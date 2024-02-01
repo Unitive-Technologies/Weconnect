@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import PropTypes from "prop-types";
 import {
   Col,
@@ -22,9 +23,53 @@ import AddBroadcasterBouquets from "./AddBroadcasterBouquets";
 import AddBroadcasterBouquetsTableList from "./AddBroadcasterBouquetsTableList";
 
 const AddNewPackageList = (props) => {
-  const { isOpen, toggle } = props;
-  const dispatch = useDispatch();
+  const { isOpen, toggleAddModal, packageType, packageBoxType, packageStatus } =
+    props;
 
+  console.log("type:" + JSON.stringify(packageType));
+  // console.log("Boxtype:" + JSON.stringify(packageBoxType));
+  // console.log("status:" + JSON.stringify(packageStatus));
+  const dispatch = useDispatch();
+  const [casCodeList, setCasCodeList] = useState([]);
+  const [selectedType, setSelectedType] = useState("");
+  const [casSelectList, setCasSelectList] = useState([]);
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
+
+  const handleTypeChange = async (e) => {
+    const selectValue = e.target.value;
+    setSelectedType(selectValue);
+    console.log("type of selectType:" + typeof selectedType);
+    console.log("selectType:" + selectedType);
+    try {
+      validation.handleChange(e);
+      // console.log("type of selectType:" + typeof selectedType);
+      const token = "Bearer " + localStorage.getItem("temptoken");
+      if (selectedType === "1") {
+        const response = await axios.get(
+          `${API_URL}/casvendor/list?fields=id,name&filter[package_type]=1&vr=web1.0`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        setCasSelectList(response.data.data);
+      } else if (selectedType === "0") {
+        const response = await axios.get(
+          `${API_URL}/casvendor/list?fields=id,name&filter[package_type]=0&vr=web1.0`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        setCasSelectList(response.data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching CasSelectList data:", error);
+    }
+  };
+  console.log("casSelectList:" + JSON.stringify(casSelectList));
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -53,13 +98,20 @@ const AddNewPackageList = (props) => {
     }),
     onSubmit: (values) => {
       const newPackageList = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
         code: values["code"],
         name: values["name"],
         description: values["description"],
-        definition: values["definition"],
-        type: values["type"],
-        status: values["status"],
+        isHD: parseInt(values["definition"]),
+        isFta: parseInt(values["type"]),
+        status: parseInt(values["status"]),
+
+        broadcasterRate: values["rate"],
+        casCodes: casCodeList.map((single) => {
+          return {
+            cas_id: single.cas_id,
+            cascode: single.cascode,
+          };
+        }),
         cas: values["cas"],
         cascode: values["cascode"],
         // serviceid: values["serviceid"],
@@ -70,13 +122,16 @@ const AddNewPackageList = (props) => {
       // save new user
       dispatch(onAddNewPackageList(newPackageList));
       validation.resetForm();
-      toggle();
+      toggleAddModal();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
     },
   });
 
+  const handleUpdateCasList = (casList) => {
+    setCasCodeList(casList);
+  };
   return (
     <Modal
       isOpen={isOpen}
@@ -85,10 +140,10 @@ const AddNewPackageList = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={toggleAddModal}
       size="xl"
     >
-      <ModalHeader tag="h4" toggle={toggle}>
+      <ModalHeader tag="h4" toggle={toggleAddModal}>
         Add New Package
       </ModalHeader>
       <ModalBody>
@@ -173,12 +228,19 @@ const AddNewPackageList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.definition || ""}
                 >
-                  <option value="101">Select channel definition</option>
+                  {/* <option value="101">Select channel definition</option>
                   <option value="102">Standard Definition(SD)</option>
-                  <option value="103">High Definition(HD)</option>
+                  <option value="103">High Definition(HD)</option> */}
+                  <option value="">Select channel definition</option>
+                  {packageBoxType &&
+                    packageBoxType.map((boxtype) => (
+                      <option key={boxtype.id} value={boxtype.id}>
+                        {boxtype.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.definition &&
-                  validation.errors.definition ? (
+                validation.errors.definition ? (
                   <FormFeedback type="invalid">
                     {validation.errors.definition}
                   </FormFeedback>
@@ -200,13 +262,13 @@ const AddNewPackageList = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -225,13 +287,22 @@ const AddNewPackageList = (props) => {
                   type="select"
                   placeholder="Select type"
                   className="form-select"
-                  onChange={validation.handleChange}
+                  // onChange={validation.handleChange}
+                  // onBlur={validation.handleBlur}
+                  // value={validation.values.type || ""}
+                  onChange={handleTypeChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.type || ""}
+                  value={selectedType}
                 >
-                  <option value="104">Select channel type</option>
-                  <option value="105">Pay Channel</option>
-                  <option value="106">FTA</option>
+                  <option value="">Select channel type</option>
+                  {/* <option value="105">Pay Channel</option>
+                  <option value="106">FTA</option> */}
+                  {packageType &&
+                    packageType.map((type) => (
+                      <option key={type.id} value={type.id}>
+                        {type.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.type && validation.errors.type ? (
                   <FormFeedback type="invalid">
@@ -254,9 +325,15 @@ const AddNewPackageList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
                 >
-                  <option value="101">Select Status</option>
-                  <option value="102">Active</option>
-                  <option value="103">In-Active</option>
+                  <option value="">Select Status</option>
+                  {/* <option value="102">Active</option>
+                  <option value="103">In-Active</option> */}
+                  {packageStatus &&
+                    packageStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
@@ -290,7 +367,12 @@ const AddNewPackageList = (props) => {
             }}
           >
             <Col sm="12">
-              <CasList />
+              <CasList
+                isOpen={Boolean(handleUpdateCasList)}
+                data={casCodeList}
+                updateList={setCasCodeList}
+                casSelectList={casSelectList}
+              />
             </Col>
           </Row>
           <div
@@ -323,10 +405,10 @@ const AddNewPackageList = (props) => {
               }}
             >
               <Col sm="12" style={{ width: "550px" }}>
-                {console.log(
+                {/* {console.log(
                   "type, definition:" + validation.values.type,
                   validation.values.definition
-                )}
+                )} */}
                 <AddChannels
                   type={validation.values.type}
                   definition={validation.values.definition}
@@ -357,10 +439,10 @@ const AddNewPackageList = (props) => {
               }}
             >
               <Col sm="12" style={{ width: "550px" }}>
-                {console.log(
+                {/* {console.log(
                   "type, definition:" + validation.values.type,
                   validation.values.definition
-                )}
+                )} */}
                 <AddBroadcasterBouquets
                   type={validation.values.type}
                   definition={validation.values.definition}
@@ -437,7 +519,7 @@ const AddNewPackageList = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    toggle();
+                    toggleAddModal();
                   }}
                 >
                   Cancel
