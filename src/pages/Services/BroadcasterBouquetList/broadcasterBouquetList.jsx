@@ -264,6 +264,8 @@ const BroadcasterBouquetList = (props) => {
     setViewBrocast({});
   };
 
+  console.log("broadcaster bouquet List Status" + brodcastbouquetStatus)
+
   const keyField = "id";
 
   const getTableActions = () => {
@@ -315,9 +317,9 @@ const BroadcasterBouquetList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log(
+                    {/* {console.log(
                       "broadcasterBouquet" + JSON.stringify(brodcastbouquet)
-                    )}
+                    )} */}
                     {/* <TableContainer
                       isPagination={true}
                       columns={columns}

@@ -512,8 +512,8 @@ export const updateChannelList = (channelList, id) =>
 
 // export const getBroadcasterBouquetList = () =>
 //   get(url.GET_BROADCASTERBOUQUETLIST);
-export const addNewBroadcasterBouquetList = (broadcastbouquet) =>
-  post(url.ADD_NEW_BROADCASTERBOUQUETLIST, broadcastbouquet);
+export const addNewBroadcasterBouquetList = (broadcasterBouquetList) =>
+  post(url.ADD_NEW_BROADCASTERBOUQUETLIST, broadcasterBouquetList);
 export const getBroadcasterBouquetStatus = () => get(url.GET_BROADCASTERBOUQUETLIST_STATUS);
 export const getBroadcasterBouquetDefinition = () => get(url.GET_BROADCASTERBOUQUETLIST_DEFINITION);
 export const getBroadcasterBouquetType = () => get(url.GET_BROADCASTERBOUQUETLIST_TYPE);
@@ -521,8 +521,6 @@ export const getBroadcasterBouquetBroadcaster = () => get(url.GET_BROADCASTERBOU
 export const getBroadcasterBouquetAddchannels = () => get(url.GET_BROADCASTERBOUQUETLIST_ADDCHANNELS);
 export const updateBroadcasterBouquet = (broadcasterBouquetList, id) =>
   put(url.UPDATE_BROADCASTERBOUQUETLIST(id), broadcasterBouquetList);
-
-
 
 
 // export const getPackageList = () => get(url.GET_PACKAGELIST);

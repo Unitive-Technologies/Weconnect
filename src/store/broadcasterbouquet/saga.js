@@ -112,6 +112,7 @@ function* fetchBroadcasterBouquetAddchannel() {
 function* fetchBroadcasterBouquetStatus() {
   try {
     const response = yield call(getBroadcasterBouquetStatus);
+    console.log("Broadcaster Bouquets Saga Status" + JSON.stringify(response))
     yield put(getBroadcasterBouquetStatusSuccess(response.data));
   } catch (error) {
     yield put(getBroadcasterBouquetStatusFail(error));
