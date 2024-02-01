@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
 import TableContainer from "../../../components/Common/TableContainer";
 import {
   Card,
@@ -10,13 +11,20 @@ import {
   Toast,
   ToastHeader,
   ToastBody,
+  Table,
 } from "reactstrap";
 import AddChannelsTableList from "./AddChannelsTableList";
 import { Link } from "react-router-dom";
 
 const AddChannels = (props) => {
-  const { type, definition } = props;
-  // console.log("type, definition:" + type, definition);
+  const { selectedType, channels, setChannels } = props;
+  console.log("type after:" + selectedType, typeof selectedType);
+  const [addChannelsList, setAddChannelsList] = useState([]);
+  // const [channels, setChannels] = useState([]);
+  {
+    console.log("Channels:" + JSON.stringify(channels));
+  }
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const columns = useMemo(
     () => [
       {
@@ -40,6 +48,7 @@ const AddChannels = (props) => {
       },
       {
         Header: "Name",
+        accessor: "name",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -54,7 +63,7 @@ const AddChannels = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"Name"}
+                  {cellProps.row.original.name}
                 </Link>
               </h5>
             </>
@@ -63,7 +72,7 @@ const AddChannels = (props) => {
       },
       {
         Header: "Broadcaster",
-        // accessor: "login",
+        accessor: "brocaster_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -78,7 +87,7 @@ const AddChannels = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"Broadcaster"}
+                  {cellProps.row.original.broadcaster_lbl}
                 </Link>
               </h5>
             </>
@@ -87,7 +96,7 @@ const AddChannels = (props) => {
       },
       {
         Header: "Type",
-        // accessor: "status",
+        accessor: "channel_type_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -102,7 +111,7 @@ const AddChannels = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"Type"}
+                  {cellProps.row.original.channel_type_lbl}
                 </Link>
               </h5>
             </>
@@ -110,8 +119,8 @@ const AddChannels = (props) => {
         },
       },
       {
-        Header: "Channel Count",
-        // accessor: "status",
+        Header: "Alacarte",
+        accessor: "isAlacarte_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -126,7 +135,7 @@ const AddChannels = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"Channel Count"}
+                  {cellProps.row.original.isAlacarte_lbl}
                 </Link>
               </h5>
             </>
@@ -135,7 +144,7 @@ const AddChannels = (props) => {
       },
       {
         Header: "FTA",
-        // accessor: "status",
+        accessor: "isFta_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -150,7 +159,7 @@ const AddChannels = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"FTA"}
+                  {cellProps.row.original.isFta_lbl}
                 </Link>
               </h5>
             </>
@@ -159,7 +168,7 @@ const AddChannels = (props) => {
       },
       {
         Header: "Rate",
-        // accessor: "status",
+        accessor: "broadcasterRate",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -174,7 +183,7 @@ const AddChannels = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"rate"}
+                  {cellProps.row.original.broadcasterRate}
                 </Link>
               </h5>
             </>
@@ -216,10 +225,33 @@ const AddChannels = (props) => {
     setShowAddChannelsPlus(!showAddChannelsPlus);
   };
 
-  const handleAddChannelsTable = () => {
-    setShowChannelTableList(!showChannelTableList);
-  };
+  // const handleAddChannelsTable = () => {
+  //   setShowChannelTableList(!showChannelTableList);
+  // };
 
+  const handleAddChannelsTable = async (e) => {
+    setShowChannelTableList(true);
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+      // console.log("type in handle:" + selectedType, typeof selectedType);
+      const type = parseInt(selectedType);
+      console.log("type in handle:" + type, typeof type);
+
+      const response = await axios.get(
+        `${API_URL}/channel/list?fields=id,name,broadcasterRate&expand=broadcaster_lbl,channel_type_lbl,isFta_lbl,isAlacarte_lbl&sort=name&filter[isFta]=${type}&vr=web1.0`,
+
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setAddChannelsList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching addChannels data:", error);
+    }
+  };
+  console.log("ShowChannelTableList:" + JSON.stringify(addChannelsList));
   const columns1 = useMemo(
     () => [
       {
@@ -272,15 +304,31 @@ const AddChannels = (props) => {
     []
   );
 
-  // const allColumns = useMemo(() => columns.concat(columns1), [columns, columns1]);
+  const deleteChannel = (index) => {
+    const list = [...channels];
+    list.splice(index, 1);
+    setChannels(list);
+  };
 
-  const casData = [];
+  let totalRate = 0;
+
+  channels.forEach((item) => {
+    const rate = parseFloat(item.broadcasterRate);
+
+    if (!isNaN(rate)) {
+      totalRate += rate;
+    }
+  });
+
+  console.log("Total Rate:", totalRate);
 
   return (
     <>
       <AddChannelsTableList
         isOpen={showChannelTableList}
-        handleAddChannelsTable={handleAddChannelsTable}
+        data={addChannelsList}
+        toggleClose={() => setShowChannelTableList(false)}
+        setChannels={setChannels}
       />
 
       <div
@@ -298,29 +346,75 @@ const AddChannels = (props) => {
       <Card>
         <CardBody>
           <Row>
-            <Col lg={10}></Col>
-            <Col lg={2}>
-              <div className="mb-3">
+            <Col lg={8}></Col>
+            <Col lg={4}>
+              <div className="mb-3  d-flex justify-content-end">
                 <button
-                  onClick={
-                    type && definition
-                      ? handleAddChannelsTable
-                      : handleAddChannelsWarning
-                  }
+                  onClick={handleAddChannelsTable}
+                  //   selectedType
+                  //     ? handleAddChannelsTable
+                  //     : handleAddChannelsWarning
+                  // }
                   type="button"
-                  className="btn btn-primary d-flex justify-content-end"
+                  className="btn btn-primary"
                 >
-                  <i className="mdi mdi-plus ms-1" style={{ fontSize: 20 }}></i>
+                  Add Channels
+                  {/* <i className="mdi mdi-plus ms-1" style={{ fontSize: 20 }}></i> */}
                 </button>
               </div>
             </Col>
           </Row>
-          <TableContainer
+
+          {/* <TableContainer
             columns={columns}
-            data={casData}
+            data={channels && channels}
             tableClass="table align-middle table-nowrap table-hover"
             theadClass="table-light"
-          />
+          /> */}
+          <Table className="table mb-0">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>BroadCaster</th>
+                <th>Type</th>
+                <th>Alacarte</th>
+                <th>FTA</th>
+                <th>Rate</th>
+                <th>$</th>
+              </tr>
+            </thead>
+            <tbody>
+              {channels.map((item, index) => (
+                <tr key={index}>
+                  <th scope="row">{index + 1}</th>
+                  <td>{item.name}</td>
+                  <td>{item.broadcaster_lbl}</td>
+                  <td>{item.channel_type_lbl}</td>
+                  <td>{item.isAlacarte_lbl}</td>
+                  <td>{item.isFta_lbl}</td>
+                  <td>
+                    {" "}
+                    <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td>
+                  </td>
+                  <td>
+                    <h5>
+                      <Link
+                        className="text-dark"
+                        to="#"
+                        onClick={() => deleteChannel(index)}
+                      >
+                        <i
+                          className="mdi mdi-delete font-size-18"
+                          id="deletetooltip"
+                        />
+                      </Link>
+                    </h5>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
         </CardBody>
 
         <div style={{ display: "flex" }}>
@@ -342,7 +436,9 @@ const AddChannels = (props) => {
                 boxSizing: "border-box",
               }}
             >
-              <h6 style={{ textAlign: "left", margin: 0 }}>Total Channels:</h6>
+              <h6 style={{ textAlign: "left", margin: 0 }}>
+                Total Channels: {channels.length}
+              </h6>
             </div>
           </Row>
           <Row
@@ -362,7 +458,9 @@ const AddChannels = (props) => {
                 boxSizing: "border-box",
               }}
             >
-              <h6 style={{ textAlign: "center", margin: 0 }}>Total:</h6>
+              <h6 style={{ textAlign: "center", margin: 0 }}>
+                Total: {parseFloat(totalRate).toFixed(2)}
+              </h6>
             </div>
           </Row>
         </div>

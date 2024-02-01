@@ -31,6 +31,7 @@ const AddNewPackageList = (props) => {
   // console.log("status:" + JSON.stringify(packageStatus));
   const dispatch = useDispatch();
   const [casCodeList, setCasCodeList] = useState([]);
+  const [channels, setChannels] = useState([]);
   const [selectedType, setSelectedType] = useState("");
   const [casSelectList, setCasSelectList] = useState([]);
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
@@ -112,11 +113,10 @@ const AddNewPackageList = (props) => {
             cascode: single.cascode,
           };
         }),
-        cas: values["cas"],
-        cascode: values["cascode"],
-        // serviceid: values["serviceid"],
-        created_at: new Date(),
-        created_by: values["created_by"],
+        channels: channels.map((single) => {
+          return single.id;
+        }),
+        // brd_bouques: values["brd_bouques"],
       };
       console.log("newPackageList:" + newPackageList);
       // save new user
@@ -394,7 +394,7 @@ const AddNewPackageList = (props) => {
                 padding: "0px 10px",
               }}
             >
-              <h5 style={{}}>Add Channels</h5>
+              <h5 style={{}}>Selected Channels</h5>
             </div>
             <Row
               style={{
@@ -405,12 +405,14 @@ const AddNewPackageList = (props) => {
               }}
             >
               <Col sm="12" style={{ width: "550px" }}>
-                {/* {console.log(
-                  "type, definition:" + validation.values.type,
+                {console.log(
+                  "type before:" + selectedType,
                   validation.values.definition
-                )} */}
+                )}
                 <AddChannels
-                  type={validation.values.type}
+                  channels={channels}
+                  setChannels={setChannels}
+                  selectedType={selectedType}
                   definition={validation.values.definition}
                 />
               </Col>
@@ -428,7 +430,7 @@ const AddNewPackageList = (props) => {
                 padding: "0px 10px",
               }}
             >
-              <h5 style={{}}>Add Broadcaster Bouquets</h5>
+              <h5 style={{}}>Selected Broadcaster Bouquets</h5>
             </div>
             <Row
               style={{
