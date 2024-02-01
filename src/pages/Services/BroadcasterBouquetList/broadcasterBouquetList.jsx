@@ -25,9 +25,17 @@ import {
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { goToPage as onGoToPage, getBroadcasterBouquetList as onGetBroadcasterBouquet, getBroadcasterBouquetStatus as onGetBroadcasterBouquetStatus, getBroadcasterBouquetType as onGetBroadcasterBouquetType, getBroadcasterBouquetBroadcaster as onGetBroadcasterBouquetBroadcaster, getBroadcasterBouquetAddchannel as onGetBroadcasterBouquetAddchannel, getBroadcasterBouquetDefinition as onGetBroadcasterBouquetDefinition } from "/src/store/broadcasterbouquet/actions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  goToPage as onGoToPage,
+  getBroadcasterBouquetList as onGetBroadcasterBouquet,
+  getBroadcasterBouquetStatus as onGetBroadcasterBouquetStatus,
+  getBroadcasterBouquetType as onGetBroadcasterBouquetType,
+  getBroadcasterBouquetBroadcaster as onGetBroadcasterBouquetBroadcaster,
+  getBroadcasterBouquetAddchannel as onGetBroadcasterBouquetAddchannel,
+  getBroadcasterBouquetDefinition as onGetBroadcasterBouquetDefinition,
+} from "/src/store/broadcasterbouquet/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -50,11 +58,14 @@ const BroadcasterBouquetList = (props) => {
     selectBroadcasterBouquetState,
     (broadcasterBouquetList) => ({
       brodcastbouquet: broadcasterBouquetList.broadcasterBouquetList,
-      brodcastbouquetStatus: broadcasterBouquetList.broadcasterBouquetStatus,
+      brodcastbouquetStatus: broadcasterBouquetList.broadbouquetStatus,
       brodcastbouquetType: broadcasterBouquetList.broadcasterBouquetType,
-      brodcastbouquetAddchannels: broadcasterBouquetList.broadcasterBouquetAddchannels,
-      brodcastbouquetDefinition: broadcasterBouquetList.broadcasterBouquetDefinition,
-      brodcastbouquetBroadcaster: broadcasterBouquetList.broadcasterBouquetBroadcaster,
+      brodcastbouquetAddchannels:
+        broadcasterBouquetList.broadcasterBouquetAddchannels,
+      brodcastbouquetDefinition:
+        broadcasterBouquetList.broadcasterBouquetDefinition,
+      brodcastbouquetBroadcaster:
+        broadcasterBouquetList.broadcasterBouquetBroadcaster,
       loading: broadcasterBouquetList.loading,
       totalPage: broadcasterBouquetList.totalPages,
       totalCount: broadcasterBouquetList.totalCount,
@@ -63,12 +74,19 @@ const BroadcasterBouquetList = (props) => {
     })
   );
 
-  const { brodcastbouquet, brodcastbouquetAddchannels, brodcastbouquetDefinition, brodcastbouquetBroadcaster, brodcastbouquetStatus, brodcastbouquetType, loading, totalPage,
+  const {
+    brodcastbouquet,
+    brodcastbouquetAddchannels,
+    brodcastbouquetDefinition,
+    brodcastbouquetBroadcaster,
+    brodcastbouquetStatus,
+    brodcastbouquetType,
+    loading,
+    totalPage,
     totalCount,
     pageSize,
-    currentPage } = useSelector(
-      BroadcasterBouquetProperties
-    );
+    currentPage,
+  } = useSelector(BroadcasterBouquetProperties);
 
   useEffect(() => {
     // console.log("Broadcaster Bouquet data in component:", brodcastbouquet);
@@ -91,15 +109,14 @@ const BroadcasterBouquetList = (props) => {
             <FontAwesomeIcon
               icon={faPlus}
               style={{
-                cursor: 'pointer',
-                border: 'solid 1px',
-                padding: '4px',
-                background: '#151b1e',
-                color: 'white',
+                cursor: "pointer",
+                border: "solid 1px",
+                padding: "4px",
+                background: "#151b1e",
+                color: "white",
               }}
-            // onClick={handlePlusClick}
+              // onClick={handlePlusClick}
             />
-
           </div>
         ),
       },
@@ -184,16 +201,29 @@ const BroadcasterBouquetList = (props) => {
         accessor: "channels",
         filterable: true,
         Cell: (cellProps) => {
-          { console.log("channels Data" + JSON.stringify(cellProps.row.original.channels)) }
+          {
+            console.log(
+              "channels Data" + JSON.stringify(cellProps.row.original.channels)
+            );
+          }
           return (
-
-            <p className="text-muted mb-0"
-              style={{ maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-              {cellProps.row.original.channels && cellProps.row.original.channels.map((channel) =>
-                channel.name + "(" + channel.channel_type_lbl + ")").join(", ")
-              }
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 200,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {cellProps.row.original.channels &&
+                cellProps.row.original.channels
+                  .map(
+                    (channel) =>
+                      channel.name + "(" + channel.channel_type_lbl + ")"
+                  )
+                  .join(", ")}
             </p>
-
           );
         },
       },
@@ -229,7 +259,6 @@ const BroadcasterBouquetList = (props) => {
           return <CreatedBy {...cellProps} />;
         },
       },
-
     ],
     []
   );
@@ -264,7 +293,7 @@ const BroadcasterBouquetList = (props) => {
     setViewBrocast({});
   };
 
-  console.log("broadcaster bouquet List Status" + brodcastbouquetStatus)
+  console.log("broadcaster bouquet List Status" + brodcastbouquetStatus);
 
   const keyField = "id";
 
