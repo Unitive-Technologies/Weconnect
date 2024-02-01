@@ -264,7 +264,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                 >
                   <option value="">Select Definition</option>
                   {broadcasterBouquetDefinition &&
-                    broadcasterBouquetDefinition.map((status) => (
+                    broadcasterBouquetDefinition.map((definition) => (
                       <option key={definition.id} value={definition.id}>
                         {definition.name}
                       </option>

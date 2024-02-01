@@ -201,11 +201,15 @@ const BroadcasterBouquetList = (props) => {
         accessor: "channels",
         filterable: true,
         Cell: (cellProps) => {
+<<<<<<< Updated upstream
           {
             console.log(
               "channels Data" + JSON.stringify(cellProps.row.original.channels)
             );
           }
+=======
+          // { console.log("channels Data" + JSON.stringify(cellProps.row.original.channels)) }
+>>>>>>> Stashed changes
           return (
             <p
               className="text-muted mb-0"
