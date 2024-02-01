@@ -22,7 +22,8 @@ import {
   getBroadcasterBouquetDefinitionFail,
   getBroadcasterBouquetListFail,
   addBroadcasterBouquetListSuccess,
-  addBroadcasterBouquetListFail, updateBroadcasterBouquetFail,
+  addBroadcasterBouquetListFail,
+  updateBroadcasterBouquetFail,
   updateBroadcasterBouquetSuccess,
 } from "./actions";
 

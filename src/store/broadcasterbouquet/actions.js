@@ -31,12 +31,12 @@ export const updateBroadcasterBouquet = (broadbouquet) => ({
   payload: broadbouquet,
 });
 
-export const updateBroadcasterSuccess = (broadbouquet) => ({
+export const updateBroadcasterBouquetSuccess = (broadbouquet) => ({
   type: UPDATE_BROADCASTERBOUQUETLIST_SUCCESS,
   payload: broadbouquet,
 });
 
-export const updateBroadcasterFail = (error) => ({
+export const updateBroadcasterBouquetFail = (error) => ({
   type: UPDATE_BROADCASTERBOUQUETLIST_FAIL,
   payload: error,
 });
@@ -131,11 +131,11 @@ export const getBroadcasterBouquetBroadcasterFail = (error) => ({
   payload: error,
 });
 
-export const getBroadcasterBouquetAddchannels = () => ({
+export const getBroadcasterBouquetAddchannel = () => ({
   type: GET_BROADCASTERBOUQUETLIST_ADDCHANNELS,
 });
 
-export const getBroadcasterBouquetAddchannelsSuccess = (broadbouquetAddchannels) => {
+export const getBroadcasterBouquetAddchannelSuccess = (broadbouquetAddchannels) => {
   // console.log("Received Channel List Status:", channellistStatus);
   return {
     type: GET_BROADCASTERBOUQUETLIST_ADDCHANNELS_SUCCESS,
@@ -143,7 +143,7 @@ export const getBroadcasterBouquetAddchannelsSuccess = (broadbouquetAddchannels)
   };
 };
 
-export const getBroadcasterBouquetAddchannelsFail = (error) => ({
+export const getBroadcasterBouquetAddchannelFail = (error) => ({
   type: GET_BROADCASTERBOUQUETLIST_ADDCHANNELS_FAIL,
   payload: error,
 });
