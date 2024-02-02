@@ -1,18 +1,23 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
 import {
-  Card, CardBody, Col, Input, Row, Toast,
+  Card,
+  CardBody,
+  Col,
+  Input,
+  Row,
+  Toast,
   ToastHeader,
   ToastBody,
+  Table,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import ViewBroadcasterBouquetsTableList from "./ViewBroadcasterBouquetsTableList";
 
 const ViewBroadcasterBouquets = (props) => {
-
-  const { showEditChannel } = props
-
+  const { showEditChannel, data } = props;
+  console.log("data in viewbrodcastBouquets:" + JSON.stringify(data));
   const columns = useMemo(
     () => [
       {
@@ -51,7 +56,7 @@ const ViewBroadcasterBouquets = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"Name"}
+                  {cellProps.row.original.name}
                 </Link>
               </h5>
             </>
@@ -75,7 +80,7 @@ const ViewBroadcasterBouquets = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"Broadcaster"}
+                  {cellProps.row.original.broadcaster_lbl}
                 </Link>
               </h5>
             </>
@@ -99,7 +104,7 @@ const ViewBroadcasterBouquets = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"Type"}
+                  {cellProps.row.original.channel_type_lbl}
                 </Link>
               </h5>
             </>
@@ -123,7 +128,7 @@ const ViewBroadcasterBouquets = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"Channel Count"}
+                  {cellProps.row.original.channelsGroup.length}
                 </Link>
               </h5>
             </>
@@ -147,7 +152,7 @@ const ViewBroadcasterBouquets = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"FTA"}
+                  {cellProps.row.original.isFta_lbl}
                 </Link>
               </h5>
             </>
@@ -171,7 +176,7 @@ const ViewBroadcasterBouquets = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"rate"}
+                  {cellProps.row.original.broadcasterRate}
                 </Link>
               </h5>
             </>
@@ -217,17 +222,27 @@ const ViewBroadcasterBouquets = (props) => {
     <Card>
       <CardBody>
         <Row>
-          <Col lg={10}>
-          </Col>
+          <Col lg={10}></Col>
           <Col lg={2}>
             <div className="mb-3">
-              <button disabled={!showEditChannel} type="button" onClick={handleViewChannelsPlus} className="btn btn-primary d-flex justify-content-end">
-                <i className="mdi mdi-plus ms-1" style={{ fontSize: 20, textAlign: "right" }}></i>
+              <button
+                disabled={!showEditChannel}
+                type="button"
+                onClick={handleViewChannelsPlus}
+                className="btn btn-primary d-flex justify-content-end"
+              >
+                <i
+                  className="mdi mdi-plus ms-1"
+                  style={{ fontSize: 20, textAlign: "right" }}
+                ></i>
               </button>
             </div>
           </Col>
         </Row>
-        <ViewBroadcasterBouquetsTableList isOpen={showViewChannelsPlus} handleAddChannelsTable={() => setShowViewChannelsPlus(false)} />
+        <ViewBroadcasterBouquetsTableList
+          isOpen={showViewChannelsPlus}
+          handleAddChannelsTable={() => setShowViewChannelsPlus(false)}
+        />
         {/* <div
           className="position-fixed top-0 end-0 p-3"
           style={{ zIndex: "1005" }}
@@ -240,13 +255,96 @@ const ViewBroadcasterBouquets = (props) => {
           </Toast>
         </div> */}
 
-
-        <TableContainer
+        {/* <TableContainer
           columns={columns}
-          data={casData}
+          data={data}
           tableClass="table align-middle table-nowrap table-hover"
           theadClass="table-light"
-        />
+        /> */}
+        <Table className="table mb-0">
+          <thead>
+            <tr>
+              <th
+                style={{
+                  maxWidth: 10,
+                }}
+              >
+                #
+              </th>
+              <th>Name</th>
+              <th>BroadCaster</th>
+              <th>Type</th>
+              <th>Channel Count</th>
+              <th>FTA</th>
+              <th>Rate</th>
+              <th>$</th>
+            </tr>
+          </thead>
+          {data && (
+            <tbody>
+              {data.map((item, index) => (
+                <tr key={index}>
+                  <th
+                    scope="row"
+                    style={{
+                      maxWidth: 10,
+                    }}
+                  >
+                    {index + 1}
+                  </th>
+                  <td
+                    style={{
+                      maxWidth: 100,
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {item.name}
+                  </td>
+                  <td
+                    style={{
+                      maxWidth: 50,
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {item.broadcaster_lbl}
+                  </td>
+                  <td>{item.channel_type_lbl}</td>
+                  <td>{item.channelsGroup.length}</td>
+                  <td>{item.isFta_lbl}</td>
+                  <td
+                    style={{
+                      maxWidth: 50,
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {" "}
+                    <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td>
+                  </td>
+                  <td>
+                    <h5>
+                      <Link
+                        className="text-dark"
+                        to="#"
+                        onClick={() => deleteChannel(index)}
+                      >
+                        <i
+                          className="mdi mdi-delete font-size-18"
+                          id="deletetooltip"
+                        />
+                      </Link>
+                    </h5>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          )}
+        </Table>
       </CardBody>
 
       <div style={{ display: "flex" }}>
@@ -292,8 +390,6 @@ const ViewBroadcasterBouquets = (props) => {
           </div>
         </Row>
       </div>
-
-
     </Card>
   );
 };

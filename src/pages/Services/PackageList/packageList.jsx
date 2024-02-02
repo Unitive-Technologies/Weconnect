@@ -370,6 +370,10 @@ const PackageList = (props) => {
         isOpen={showViewPackageList}
         handleViewPackageList={handleViewPackageList}
         packageList={viewData}
+        selectedRowId={viewData.id}
+        packageType={packageType}
+        packageBoxType={packageBoxType}
+        packageStatus={packageStatus}
       />
 
       <div className="page-content">

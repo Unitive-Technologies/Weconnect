@@ -2,7 +2,12 @@ import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
 import {
-  Card, CardBody, Col, Input, Row, Toast,
+  Card,
+  CardBody,
+  Col,
+  Input,
+  Row,
+  Toast,
   ToastHeader,
   ToastBody,
 } from "reactstrap";
@@ -10,7 +15,8 @@ import { Link } from "react-router-dom";
 import ViewChannelsTableList from "./ViewChannelsTableList";
 
 const ViewChannels = (props) => {
-  const { showEditChannel } = props
+  const { showEditChannel, data } = props;
+  console.log("data in viewchannels:" + JSON.stringify(data));
   const columns = useMemo(
     () => [
       {
@@ -242,7 +248,6 @@ const ViewChannels = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-
             <h5
               style={{
                 maxWidth: 200,
@@ -256,7 +261,6 @@ const ViewChannels = (props) => {
                 {"Total"}
               </Link>
             </h5>
-
           );
         },
       },
@@ -269,21 +273,27 @@ const ViewChannels = (props) => {
   const casData = [];
 
   return (
-
     <Card>
       <CardBody>
         <Row>
-          <Col lg={10}>
-          </Col>
+          <Col lg={10}></Col>
           <Col lg={2}>
             <div className="mb-3">
-              <button disabled={!showEditChannel} type="button" onClick={handleViewChannelsPlus} className="btn btn-primary d-flex justify-content-end">
-                <i className="mdi mdi-plus ms-1" style={{ fontSize: 20 }} ></i>
+              <button
+                disabled={!showEditChannel}
+                type="button"
+                onClick={handleViewChannelsPlus}
+                className="btn btn-primary d-flex justify-content-end"
+              >
+                <i className="mdi mdi-plus ms-1" style={{ fontSize: 20 }}></i>
               </button>
             </div>
           </Col>
         </Row>
-        <ViewChannelsTableList isOpen={showViewChannelsPlus} handleAddChannelsTable={() => setShowViewChannelsPlus(false)} />
+        <ViewChannelsTableList
+          isOpen={showViewChannelsPlus}
+          handleAddChannelsTable={() => setShowViewChannelsPlus(false)}
+        />
         {/* <div
           className="position-fixed top-0 end-0 p-3"
           style={{ zIndex: "1005" }}
@@ -299,13 +309,12 @@ const ViewChannels = (props) => {
         <TableContainer
           // isPagination={true}
           columns={columns}
-          data={casData}
+          data={data}
           tableClass="table align-middle table-nowrap table-hover"
           theadClass="table-light"
-        // paginationDiv="col-sm-12 col-md-7"
-        // pagination="pagination pagination-rounded justify-content-end mt-4"
+          // paginationDiv="col-sm-12 col-md-7"
+          // pagination="pagination pagination-rounded justify-content-end mt-4"
         />
-
       </CardBody>
 
       <div style={{ display: "flex" }}>
@@ -351,8 +360,7 @@ const ViewChannels = (props) => {
           </div>
         </Row>
       </div>
-
-    </Card >
+    </Card>
   );
 };
 

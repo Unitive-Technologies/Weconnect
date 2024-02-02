@@ -10,6 +10,7 @@ import {
   Input,
   Form,
   FormFeedback,
+  Table,
 } from "reactstrap";
 import * as Yup from "yup";
 
@@ -18,8 +19,8 @@ import { addNewPackageList as onAddNewPackageList } from "/src/store/packagelist
 import { Link } from "react-router-dom";
 
 const ViewCasList = (props) => {
-  const { showEditChannel } = props;
-
+  const { data, showEditChannel } = props;
+  console.log("data in viewcaslist:" + JSON.stringify(data));
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -58,6 +59,7 @@ const ViewCasList = (props) => {
     () => [
       {
         Header: "#",
+        accessor: "cas_id",
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
@@ -68,7 +70,8 @@ const ViewCasList = (props) => {
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {/* {reverseIndex} */}
+                  {cellProps.row.original.cas_id}
                 </Link>
               </h5>
             </>
@@ -78,7 +81,7 @@ const ViewCasList = (props) => {
 
       {
         Header: "CAS",
-        accessor: "cas",
+        accessor: "cas_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -93,7 +96,7 @@ const ViewCasList = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"CAS"}
+                  {cellProps.row.original.cas_lbl}
                 </Link>
               </h5>
             </>
@@ -117,7 +120,7 @@ const ViewCasList = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"CAS CODE"}
+                  {cellProps.row.original.cascode}
                 </Link>
               </h5>
             </>
@@ -175,6 +178,7 @@ const ViewCasList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.cas || ""}
+                  disabled={!showEditChannel}
                 >
                   <option value="104">Select CAS</option>
                   <option value="105">FTA</option>
@@ -203,6 +207,7 @@ const ViewCasList = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.cascode || ""}
+                    disabled={!showEditChannel}
                   ></Input>
                   {validation.touched.cascode && validation.errors.cascode ? (
                     <FormFeedback type="invalid">
@@ -213,7 +218,11 @@ const ViewCasList = (props) => {
               </Col>
               <Col lg={2}>
                 <div className="mb-3">
-                  <button type="submit" className="btn btn-primary ">
+                  <button
+                    type="submit"
+                    className="btn btn-primary "
+                    disabled={!showEditChannel}
+                  >
                     <i
                       className="bx bx-right-arrow-alt"
                       style={{ fontSize: 20 }}
@@ -225,10 +234,10 @@ const ViewCasList = (props) => {
           </Col>
 
           <Col lg={6}>
-            <TableContainer
+            {/* <TableContainer
               isPagination={true}
               columns={columns}
-              data={casData}
+              data={data}
               // isGlobalFilter={true}
               // isShowingPageLength={true}
               // customPageSize={50}
@@ -236,7 +245,49 @@ const ViewCasList = (props) => {
               theadClass="table-light"
               paginationDiv="col-sm-12 col-md-7"
               pagination="pagination pagination-rounded justify-content-end mt-4"
-            />
+            /> */}
+            <Table className="table mb-0">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>CAS</th>
+                  <th>CAS CODE</th>
+                  <th>$</th>
+                </tr>
+              </thead>
+              {data && (
+                <tbody>
+                  {data.map((item, index) => (
+                    <tr key={index}>
+                      <th
+                        scope="row"
+                        style={{
+                          maxWidth: 10,
+                        }}
+                      >
+                        {item.cas_id}
+                      </th>
+                      <td>{item.cas_lbl}</td>
+                      <td>{item.cascode}</td>
+                      <td>
+                        <h5>
+                          <Link
+                            className="text-dark"
+                            to="#"
+                            onClick={() => deleteChannel(index)}
+                          >
+                            <i
+                              className="mdi mdi-delete font-size-18"
+                              id="deletetooltip"
+                            />
+                          </Link>
+                        </h5>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              )}
+            </Table>
           </Col>
         </Row>
       </CardBody>
