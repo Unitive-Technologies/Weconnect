@@ -16,7 +16,14 @@ import { Link } from "react-router-dom";
 import ViewBroadcasterBouquetsTableList from "./ViewBroadcasterBouquetsTableList";
 
 const ViewBroadcasterBouquets = (props) => {
-  const { showEditChannel, data } = props;
+  const {
+    showEditChannel,
+    data,
+    setTotalChannelsInBouquets,
+    setTotalPackageRateInBouquets,
+    totalChannelsInBouquets,
+    totalPackageRateInBouquets,
+  } = props;
   console.log("data in viewbrodcastBouquets:" + JSON.stringify(data));
   const columns = useMemo(
     () => [
@@ -216,7 +223,28 @@ const ViewBroadcasterBouquets = (props) => {
   const handleViewChannelsPlus = () => {
     setShowViewChannelsPlus(!showViewChannelsPlus);
   };
+  useEffect(() => {
+    let totalRate = 0;
+    let totalCount = 0;
+    if (data) {
+      data.forEach((item) => {
+        const rate = parseFloat(item.broadcasterRate);
+        const count = parseFloat(item.channelsGroup.length);
 
+        if (!isNaN(rate)) {
+          totalRate += rate;
+        }
+
+        if (!isNaN(count)) {
+          totalCount += count;
+        }
+      });
+
+      // Update state after the loop
+      setTotalPackageRateInBouquets(totalRate);
+      setTotalChannelsInBouquets(totalCount);
+    }
+  }, [data]);
   const casData = [];
   return (
     <Card>
@@ -366,7 +394,9 @@ const ViewBroadcasterBouquets = (props) => {
               boxSizing: "border-box",
             }}
           >
-            <h6 style={{ textAlign: "left", margin: 0 }}>Total Channels:</h6>
+            <h6 style={{ textAlign: "left", margin: 0 }}>
+              Total Channels: {totalChannelsInBouquets}
+            </h6>
           </div>
         </Row>
         <Row
@@ -386,7 +416,9 @@ const ViewBroadcasterBouquets = (props) => {
               boxSizing: "border-box",
             }}
           >
-            <h6 style={{ textAlign: "center", margin: 0 }}>Total:</h6>
+            <h6 style={{ textAlign: "center", margin: 0 }}>
+              Total: {parseFloat(totalPackageRateInBouquets).toFixed(2)}
+            </h6>
           </div>
         </Row>
       </div>

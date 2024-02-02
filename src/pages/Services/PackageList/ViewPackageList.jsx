@@ -39,6 +39,12 @@ const ViewPackageList = (props) => {
   const dispatch = useDispatch();
   const [showEditChannel, setShowEditChannel] = useState(false);
   const [selectedRowDetails, setSelectedRowDetails] = useState({});
+  const [totalChannelsInChannels, setTotalChannelsInChannels] = useState(0);
+  const [totalPackageRateInChannels, setTotalPackageRateInChannels] =
+    useState(0);
+  const [totalChannelsInBouquets, setTotalChannelsInBouquets] = useState(0);
+  const [totalPackageRateInBouquets, setTotalPackageRateInBouquets] =
+    useState(0);
   console.log("selectedRowDetails:" + JSON.stringify(selectedRowDetails));
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -395,6 +401,10 @@ const ViewPackageList = (props) => {
                 <ViewChannels
                   showEditChannel={showEditChannel}
                   data={selectedRowDetails.channels}
+                  setTotalChannelsInChannels={setTotalChannelsInChannels}
+                  setTotalPackageRateInChannels={setTotalPackageRateInChannels}
+                  totalChannelsInChannels={totalChannelsInChannels}
+                  totalPackageRateInChannels={totalPackageRateInChannels}
                 />
               </Col>
             </Row>
@@ -425,6 +435,10 @@ const ViewPackageList = (props) => {
                 <ViewBroadcasterBouquets
                   showEditChannel={showEditChannel}
                   data={selectedRowDetails.brdBouques}
+                  setTotalChannelsInBouquets={setTotalChannelsInBouquets}
+                  setTotalPackageRateInBouquets={setTotalPackageRateInBouquets}
+                  totalChannelsInBouquets={totalChannelsInBouquets}
+                  totalPackageRateInBouquets={totalPackageRateInBouquets}
                 />
               </Col>
             </Row>
