@@ -20,7 +20,8 @@ import { Link } from "react-router-dom";
 
 const AddBroadcasterBouquetsTableList = (props) => {
   // const { isOpen } = props
-  const { isOpen, handleAddChannelsTable } = props;
+  const { isOpen, data, toggleClose, setBouquets } = props;
+  console.log("data in inside table:" + JSON.stringify(data));
   const columns = useMemo(
     () => [
       {
@@ -56,7 +57,7 @@ const AddBroadcasterBouquetsTableList = (props) => {
       },
 
       {
-        Header: "Name",
+        Header: "Channel Name",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -71,7 +72,7 @@ const AddBroadcasterBouquetsTableList = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"Name"}
+                  {cellProps.row.original.name}
                 </Link>
               </h5>
             </>
@@ -95,7 +96,31 @@ const AddBroadcasterBouquetsTableList = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"Broadcaster"}
+                  {cellProps.row.original.broadcaster_lbl}
+                </Link>
+              </h5>
+            </>
+          );
+        },
+      },
+      {
+        Header: "Channel Count",
+        // accessor: "status",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5
+                style={{
+                  maxWidth: 200,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+                className="font-size-14 mb-1"
+              >
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.channelsGroup.length}
                 </Link>
               </h5>
             </>
@@ -119,31 +144,7 @@ const AddBroadcasterBouquetsTableList = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"Type"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Alacarte",
-        // accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"Channel Count"}
+                  {cellProps.row.original.channel_type_lbl}
                 </Link>
               </h5>
             </>
@@ -167,7 +168,7 @@ const AddBroadcasterBouquetsTableList = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"FTA"}
+                  {cellProps.row.original.isFta_lbl}
                 </Link>
               </h5>
             </>
@@ -191,7 +192,10 @@ const AddBroadcasterBouquetsTableList = (props) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"rate"}
+                  {/* {cellProps.row.original.broadcasterRate} */}
+                  {parseFloat(cellProps.row.original.broadcasterRate).toFixed(
+                    2
+                  )}
                 </Link>
               </h5>
             </>
@@ -201,13 +205,31 @@ const AddBroadcasterBouquetsTableList = (props) => {
     ],
     []
   );
+  const [selectedRows, setSelectedRows] = useState([]);
 
-  const [showAddChannelsPlus, setShowAddChannelsPlus] = useState(false);
+  const handleSelectedRows = (row) => {
+    // Check if the row is already selected
+    const isSelected = selectedRows.some(
+      (selectedRow) => selectedRow.id === row.id
+    );
 
-  const handleAddChannelsPlus = () => {
-    setShowAddChannelsPlus(!showAddChannelsPlus);
+    // If the row is selected, remove it from the selected rows array
+    if (isSelected) {
+      const updatedSelectedRows = selectedRows.filter(
+        (selectedRow) => selectedRow.id !== row.id
+      );
+      setSelectedRows(updatedSelectedRows);
+    } else {
+      // If the row is not selected, add it to the selected rows array
+      setSelectedRows([...selectedRows, row]);
+    }
   };
+  console.log("selectedRows:" + JSON.stringify(selectedRows));
 
+  const handleAddButtonClick = () => {
+    setBouquets(selectedRows);
+    toggleClose();
+  };
   const columns1 = useMemo(
     () => [
       {
@@ -260,12 +282,7 @@ const AddBroadcasterBouquetsTableList = (props) => {
     []
   );
 
-  // const allColumns = useMemo(() => columns.concat(columns1), [columns, columns1]);
-
-  const casData = [];
-
   return (
-
     <Modal
       isOpen={isOpen}
       role="dialog"
@@ -274,18 +291,18 @@ const AddBroadcasterBouquetsTableList = (props) => {
       className="exampleModal"
       tabIndex="-1"
       size="xl"
-      toggle={handleAddChannelsTable}
-    // toggle={toggle}
+      toggle={toggleClose}
     >
-      <ModalHeader toggle={handleAddChannelsTable} tag="h4">
+      <ModalHeader toggle={toggleClose} tag="h4">
         Add Broadcaster Bouquets
       </ModalHeader>
-      <ModalHeader tag="h6">**To Select row, Click <i className="bx bx-bx bx-check"></i></ModalHeader>
+      <ModalHeader tag="h6">
+        **To Select row, Click <i className="bx bx-bx bx-check"></i>
+      </ModalHeader>
       <ModalBody>
         <Card>
           <CardBody>
-
-            <div
+            {/* <div
               className="position-fixed top-0 end-0 p-3"
               style={{ zIndex: "1005" }}
             >
@@ -295,18 +312,23 @@ const AddBroadcasterBouquetsTableList = (props) => {
                 </ToastHeader>
                 <ToastBody>Please select package definition</ToastBody>
               </Toast>
-            </div>
+            </div> */}
 
             <TableContainer
-              // isPagination={true}
+              isPagination={true}
               columns={columns}
-              data={casData}
+              data={data}
+              handleRowClick={(row) => {
+                handleSelectedRows(row);
+              }}
+              isGlobalFilter={true}
+              isShowingPageLength={true}
+              customPageSize={50}
               tableClass="table align-middle table-nowrap table-hover"
               theadClass="table-light"
-            // paginationDiv="col-sm-12 col-md-7"
-            // pagination="pagination pagination-rounded justify-content-end mt-4"
+              paginationDiv="col-sm-12 col-md-7"
+              pagination="pagination pagination-rounded justify-content-end mt-4"
             />
-
           </CardBody>
 
           <div
@@ -327,7 +349,9 @@ const AddBroadcasterBouquetsTableList = (props) => {
               boxSizing: "border-box",
             }}
           >
-            <h6 style={{ textAlign: "left", margin: 0 }}>*Click tick to select channels</h6>
+            <h6 style={{ textAlign: "left", margin: 0 }}>
+              *Click tick to select channels
+            </h6>
           </div>
           <div
             style={{
@@ -337,20 +361,26 @@ const AddBroadcasterBouquetsTableList = (props) => {
               boxSizing: "border-box",
             }}
           >
-            <h6 style={{ textAlign: "left", margin: 0 }}>**HD packages can contain both types(HD & SD)</h6>
+            <h6 style={{ textAlign: "left", margin: 0 }}>
+              **HD packages can contain both types(HD & SD)
+            </h6>
           </div>
           <Row>
             <Col>
               <ModalFooter>
-                <button type="submit" className="btn btn-success save-user">
+                <button
+                  type="submit"
+                  className="btn btn-success save-user"
+                  onClick={handleAddButtonClick}
+                >
                   ADD
                 </button>
               </ModalFooter>
             </Col>
           </Row>
-        </Card >
+        </Card>
       </ModalBody>
-    </Modal >
+    </Modal>
   );
 };
 

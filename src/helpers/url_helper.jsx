@@ -238,11 +238,12 @@ export const getBroadcasterBouquetListUrl = (currPage, perPage) => {
   );
   return `/broadcaster-bouque?expand=created_by_lbl,status_lbl,broadcaster_lbl,channel_type_lbl,isFta_lbl,isNCF_lbl,channels&sort=name&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
-export const UPDATE_BROADCASTERBOUQUETLIST = (id) => `/broadcaster-bouque/${id}?vr=web1.0`;
+export const UPDATE_BROADCASTERBOUQUETLIST = (id) =>
+  `/broadcaster-bouque/${id}?vr=web1.0`;
 
 export const GET_PACKAGELIST =
   "/package?expand=created_by_lbl,package_type_lbl,isFta_lbl,status_lbl,channels,brdBouques&sort=name&page=1&per-page=50&vr=web1.0";
-export const ADD_NEW_PACKAGELIST = "/add/packagelist";
+export const ADD_NEW_PACKAGELIST = "/package?vr=web1.0";
 export const getPackageListUrl = (currPage, perPage) => {
   console.log("current page in Package List url - ", currPage, perPage);
   return `/package?expand=created_by_lbl,package_type_lbl,isFta_lbl,status_lbl,brdBouques&sort=name&page=${currPage}&per-page=${perPage}&vr=web1.0`;

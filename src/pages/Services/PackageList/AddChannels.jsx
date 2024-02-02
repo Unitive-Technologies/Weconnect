@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import TableContainer from "../../../components/Common/TableContainer";
@@ -17,7 +17,13 @@ import AddChannelsTableList from "./AddChannelsTableList";
 import { Link } from "react-router-dom";
 
 const AddChannels = (props) => {
-  const { selectedType, channels, setChannels } = props;
+  const {
+    selectedType,
+    channels,
+    setChannels,
+    setTotalChannelsInChannels,
+    setTotalPackageRateInChannels,
+  } = props;
   console.log("type after:" + selectedType, typeof selectedType);
   const [addChannelsList, setAddChannelsList] = useState([]);
   // const [channels, setChannels] = useState([]);
@@ -310,17 +316,21 @@ const AddChannels = (props) => {
     setChannels(list);
   };
 
-  let totalRate = 0;
+  useEffect(() => {
+    let totalRate = 0;
+    if (channels) {
+      channels.forEach((item) => {
+        const rate = parseFloat(item.broadcasterRate);
 
-  channels.forEach((item) => {
-    const rate = parseFloat(item.broadcasterRate);
-
-    if (!isNaN(rate)) {
-      totalRate += rate;
+        if (!isNaN(rate)) {
+          totalRate += rate;
+          setTotalPackageRateInChannels(totalRate);
+        }
+      });
+      setTotalChannelsInChannels(channels.length);
     }
-  });
-
-  console.log("Total Rate:", totalRate);
+  }, [channels]);
+  // console.log("Total Rate:", totalRate);
 
   return (
     <>
@@ -351,7 +361,6 @@ const AddChannels = (props) => {
               <div className="mb-3  d-flex justify-content-end">
                 <button
                   onClick={
-                    // {handleAddChannelsTable}
                     selectedType
                       ? handleAddChannelsTable
                       : handleAddChannelsWarning
@@ -498,7 +507,7 @@ const AddChannels = (props) => {
               }}
             >
               <h6 style={{ textAlign: "center", margin: 0 }}>
-                Total: {parseFloat(totalRate).toFixed(2)}
+                {/* Total: {parseFloat(totalRate).toFixed(2)} */}
               </h6>
             </div>
           </Row>

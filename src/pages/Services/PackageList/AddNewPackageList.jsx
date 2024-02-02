@@ -32,20 +32,37 @@ const AddNewPackageList = (props) => {
   const dispatch = useDispatch();
   const [casCodeList, setCasCodeList] = useState([]);
   const [channels, setChannels] = useState([]);
+  const [bouquets, setBouquets] = useState([]);
   const [selectedType, setSelectedType] = useState("");
   const [casSelectList, setCasSelectList] = useState([]);
+  const [totalChannelsInChannels, setTotalChannelsInChannels] = useState(0);
+  const [totalPackageRateInChannels, setTotalPackageRateInChannels] =
+    useState(0);
+  const [totalChannelsInBouquets, setTotalChannelsInBouquets] = useState(0);
+  const [totalPackageRateInBouquets, setTotalPackageRateInBouquets] =
+    useState(0);
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
-
+  console.log(
+    "Totals in Channel" + totalChannelsInChannels,
+    totalPackageRateInChannels
+  );
+  console.log(
+    "Totals in Bouquets" + totalChannelsInBouquets,
+    totalPackageRateInBouquets
+  );
   const handleTypeChange = async (e) => {
     const selectValue = e.target.value;
     setSelectedType(selectValue);
-    console.log("type of selectType:" + typeof selectedType);
-    console.log("selectType:" + selectedType);
+    console.log(
+      "SSSSSSSSSSSSSSSSSSSSelectedType:" + selectedType,
+      typeof selectedType
+    );
+
     try {
       validation.handleChange(e);
       // console.log("type of selectType:" + typeof selectedType);
       const token = "Bearer " + localStorage.getItem("temptoken");
-      if (selectedType === "1") {
+      if (selectValue === "1") {
         const response = await axios.get(
           `${API_URL}/casvendor/list?fields=id,name&filter[package_type]=1&vr=web1.0`,
           {
@@ -55,7 +72,7 @@ const AddNewPackageList = (props) => {
           }
         );
         setCasSelectList(response.data.data);
-      } else if (selectedType === "0") {
+      } else if (selectValue === "0") {
         const response = await axios.get(
           `${API_URL}/casvendor/list?fields=id,name&filter[package_type]=0&vr=web1.0`,
           {
@@ -70,7 +87,7 @@ const AddNewPackageList = (props) => {
       console.error("Error fetching CasSelectList data:", error);
     }
   };
-  console.log("casSelectList:" + JSON.stringify(casSelectList));
+  // console.log("casSelectList:" + JSON.stringify(casSelectList));
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -82,20 +99,14 @@ const AddNewPackageList = (props) => {
       definition: "",
       type: "",
       status: "",
-      cas: "",
-      cascode: "",
-      created_by: "Admin",
     },
     validationSchema: Yup.object({
-      code: Yup.string().required("Enter Channel Code"),
+      // code: Yup.string().required("Enter Channel Code"),
       name: Yup.string().required("Enter channel name"),
       description: Yup.string().required("Enter description"),
-      definition: Yup.string().required("Enter channel definition"),
-      type: Yup.string().required("Enter channel type"),
-      status: Yup.string().required("Enter status"),
-      cas: Yup.string().required("Enter cas"),
-      cascode: Yup.string().required("cascode"),
-      // serviceid: Yup.string().required("serviceid"),
+      // definition: Yup.string().required("Enter channel definition"),
+      // type: Yup.string().required("Enter channel type"),
+      // status: Yup.string().required("Enter status"),
     }),
     onSubmit: (values) => {
       const newPackageList = {
@@ -106,7 +117,8 @@ const AddNewPackageList = (props) => {
         isFta: parseInt(values["type"]),
         status: parseInt(values["status"]),
 
-        broadcasterRate: values["rate"],
+        broadcasterRate:
+          totalPackageRateInChannels + totalPackageRateInBouquets,
         casCodes: casCodeList.map((single) => {
           return {
             cas_id: single.cas_id,
@@ -116,7 +128,9 @@ const AddNewPackageList = (props) => {
         channels: channels.map((single) => {
           return single.id;
         }),
-        // brd_bouques: values["brd_bouques"],
+        brd_bouques: bouquets.map((single) => {
+          return single.id;
+        }),
       };
       console.log("newPackageList:" + newPackageList);
       // save new user
@@ -166,6 +180,7 @@ const AddNewPackageList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.code || ""}
+                  disabled
                 ></Input>
                 {validation.touched.code && validation.errors.code ? (
                   <FormFeedback type="invalid">
@@ -414,6 +429,8 @@ const AddNewPackageList = (props) => {
                   setChannels={setChannels}
                   selectedType={selectedType}
                   definition={validation.values.definition}
+                  setTotalChannelsInChannels={setTotalChannelsInChannels}
+                  setTotalPackageRateInChannels={setTotalPackageRateInChannels}
                 />
               </Col>
             </Row>
@@ -446,8 +463,12 @@ const AddNewPackageList = (props) => {
                   validation.values.definition
                 )} */}
                 <AddBroadcasterBouquets
-                  type={validation.values.type}
+                  bouquets={bouquets}
+                  setBouquets={setBouquets}
+                  selectedType={selectedType}
                   definition={validation.values.definition}
+                  setTotalChannelsInBouquets={setTotalChannelsInBouquets}
+                  setTotalPackageRateInBouquets={setTotalPackageRateInBouquets}
                 />
               </Col>
             </Row>
@@ -476,7 +497,10 @@ const AddNewPackageList = (props) => {
                   padding: "0px 10px",
                 }}
               >
-                <h6 style={{ textAlign: "center" }}>TOTAL CHANNELS:</h6>
+                <h6 style={{ textAlign: "center" }}>
+                  TOTAL CHANNELS:
+                  {totalChannelsInChannels + totalChannelsInBouquets}
+                </h6>
               </div>
             </Row>
             <Row
@@ -498,7 +522,10 @@ const AddNewPackageList = (props) => {
                   padding: "0px 10px",
                 }}
               >
-                <h6 style={{ textAlign: "center" }}>PACKAGE RATE:</h6>
+                <h6 style={{ textAlign: "center" }}>
+                  PACKAGE RATE:
+                  {totalPackageRateInChannels + totalPackageRateInBouquets}
+                </h6>
               </div>
             </Row>
           </div>
