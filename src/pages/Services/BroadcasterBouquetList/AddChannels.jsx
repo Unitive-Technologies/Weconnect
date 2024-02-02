@@ -234,6 +234,12 @@ const AddChannels = (props) => {
     []
   );
 
+  const deleteChannel = (index) => {
+    const list = [...channels];
+    list.splice(index, 1);
+    setChannels(list);
+  };
+
   const addChannelsData = [];
 
   const [showAddChannelsPlus, setShowAddChannelsPlus] = useState(false);
