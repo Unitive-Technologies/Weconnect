@@ -18,11 +18,14 @@ import { Link } from "react-router-dom";
 
 const AddChannels = (props) => {
   const {
+    definition,
     selectedType,
     channels,
     setChannels,
     setTotalChannelsInChannels,
     setTotalPackageRateInChannels,
+    totalChannelsInChannels,
+    totalPackageRateInChannels,
   } = props;
   console.log("type after:" + selectedType, typeof selectedType);
   const [addChannelsList, setAddChannelsList] = useState([]);
@@ -349,7 +352,11 @@ const AddChannels = (props) => {
           <ToastHeader toggle={handleAddChannelsWarning}>
             <i className="mdi mdi-alert-outline me-2"></i> Warning
           </ToastHeader>
-          <ToastBody>Please select package definition</ToastBody>
+          <ToastBody>
+            {!definition
+              ? "Please select Package Definition"
+              : "Please select Package Type"}{" "}
+          </ToastBody>
         </Toast>
       </div>
 
@@ -485,7 +492,8 @@ const AddChannels = (props) => {
               }}
             >
               <h6 style={{ textAlign: "left", margin: 0 }}>
-                Total Channels: {channels.length}
+                {/* Total Channels: {channels.length} */}
+                Total Channels: {totalChannelsInChannels}
               </h6>
             </div>
           </Row>
@@ -508,6 +516,7 @@ const AddChannels = (props) => {
             >
               <h6 style={{ textAlign: "center", margin: 0 }}>
                 {/* Total: {parseFloat(totalRate).toFixed(2)} */}
+                Total: {parseFloat(totalPackageRateInChannels).toFixed(2)}
               </h6>
             </div>
           </Row>

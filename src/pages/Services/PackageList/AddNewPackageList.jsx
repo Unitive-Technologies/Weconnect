@@ -255,7 +255,7 @@ const AddNewPackageList = (props) => {
                     ))}
                 </Input>
                 {validation.touched.definition &&
-                  validation.errors.definition ? (
+                validation.errors.definition ? (
                   <FormFeedback type="invalid">
                     {validation.errors.definition}
                   </FormFeedback>
@@ -277,13 +277,13 @@ const AddNewPackageList = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -403,7 +403,7 @@ const AddNewPackageList = (props) => {
                 zIndex: 12000,
                 backgroundColor: "#fff",
                 width: "fit-content",
-                marginLeft: "20%",
+                marginLeft: "15%",
 
                 position: "absolute",
                 padding: "0px 10px",
@@ -420,10 +420,10 @@ const AddNewPackageList = (props) => {
               }}
             >
               <Col sm="12" style={{ width: "550px" }}>
-                {console.log(
+                {/* {console.log(
                   "type before:" + selectedType,
                   validation.values.definition
-                )}
+                )} */}
                 <AddChannels
                   channels={channels}
                   setChannels={setChannels}
@@ -431,6 +431,8 @@ const AddNewPackageList = (props) => {
                   definition={validation.values.definition}
                   setTotalChannelsInChannels={setTotalChannelsInChannels}
                   setTotalPackageRateInChannels={setTotalPackageRateInChannels}
+                  totalChannelsInChannels={totalChannelsInChannels}
+                  totalPackageRateInChannels={totalPackageRateInChannels}
                 />
               </Col>
             </Row>
@@ -442,7 +444,7 @@ const AddNewPackageList = (props) => {
                 zIndex: 12000,
                 backgroundColor: "#fff",
                 width: "fit-content",
-                marginLeft: "50%",
+                marginLeft: "60%",
                 position: "absolute",
                 padding: "0px 10px",
               }}
@@ -469,6 +471,8 @@ const AddNewPackageList = (props) => {
                   definition={validation.values.definition}
                   setTotalChannelsInBouquets={setTotalChannelsInBouquets}
                   setTotalPackageRateInBouquets={setTotalPackageRateInBouquets}
+                  totalChannelsInBouquets={totalChannelsInBouquets}
+                  totalPackageRateInBouquets={totalPackageRateInBouquets}
                 />
               </Col>
             </Row>

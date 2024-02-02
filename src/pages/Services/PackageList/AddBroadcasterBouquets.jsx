@@ -18,11 +18,14 @@ import { Link } from "react-router-dom";
 
 const AddBroadcasterBouquets = (props) => {
   const {
+    definition,
     selectedType,
     bouquets,
     setBouquets,
     setTotalChannelsInBouquets,
     setTotalPackageRateInBouquets,
+    totalChannelsInBouquets,
+    totalPackageRateInBouquets,
   } = props;
   const [addBouquetsList, setAddBouquetsList] = useState([]);
   // const [channels, setChannels] = useState([]);
@@ -302,7 +305,11 @@ const AddBroadcasterBouquets = (props) => {
           <ToastHeader toggle={handleAddChannelsWarning}>
             <i className="mdi mdi-alert-outline me-2"></i> Warning
           </ToastHeader>
-          <ToastBody>Please select package definition</ToastBody>
+          <ToastBody>
+            {!definition
+              ? "Please select Package Definition"
+              : "Please select Package Type"}{" "}
+          </ToastBody>
         </Toast>
       </div>
       <Card>
@@ -437,6 +444,7 @@ const AddBroadcasterBouquets = (props) => {
             >
               <h6 style={{ textAlign: "left", margin: 0 }}>
                 {/* Total Channels: {totalCount} */}
+                Total Channels: {totalChannelsInBouquets}
               </h6>
             </div>
           </Row>
@@ -459,6 +467,7 @@ const AddBroadcasterBouquets = (props) => {
             >
               <h6 style={{ textAlign: "center", margin: 0 }}>
                 {/* Total: {parseFloat(totalRate).toFixed(2)} */}
+                Total: {parseFloat(totalPackageRateInBouquets).toFixed(2)}
               </h6>
             </div>
           </Row>

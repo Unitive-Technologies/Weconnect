@@ -28,12 +28,8 @@ const AddBroadcasterBouquetsTableList = (props) => {
         Header: "*",
         disableFilters: true,
         filterable: true,
-        Cell: () => {
-          return (
-            <>
-              <i className="bx bx-bx bx-check"></i>
-            </>
-          );
+        Cell: (cellProps) => {
+          return <input type="checkbox" />;
         },
       },
       {
