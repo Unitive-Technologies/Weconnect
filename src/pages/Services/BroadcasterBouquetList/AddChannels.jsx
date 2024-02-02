@@ -249,11 +249,13 @@ const AddChannels = (props) => {
       // console.log("type in handle:" + selectedType, typeof selectedType);
       const type = parseInt(selectedType);
       const broadcaster = parseInt(selectedBroadcaster);
+      console.log("checking of broadcaster" + JSON.stringify(broadcaster));
       console.log("type in handle:" + type, typeof type);
       console.log("broadcaster in handle:" + type, typeof broadcaster);
 
       const response = await axios.get(
         `${API_URL}/channel/list?fields=id,name,broadcasterRate&expand=broadcaster_lbl,channel_type_lbl,isFta_lbl,isAlacarte_lbl&sort=name&filter[isFta]=${type}&filter[broadcaster]=${broadcaster}&vr=web1.0`,
+        // `$(API_URL)/channel/list?fields=id,name,broadcasterRate&expand=broadcaster_lbl,channel_type_lbl,isFta_lbl,isAlacarte_lbl&sort=name&filter[isFta]=${broadcaster}&vr=web1.0`
 
         // `${API_URL}/channel/list?fields=id,name,broadcasterRate&expand=broadcaster_lbl,channel_type_lbl,isFta_lbl,isAlacarte_lbl&sort=name&filter[isFta]=${type}&vr=web1.0`,
 

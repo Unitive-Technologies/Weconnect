@@ -286,7 +286,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                     ))}
                 </Input>
                 {validation.touched.definition &&
-                validation.errors.definition ? (
+                  validation.errors.definition ? (
                   <FormFeedback type="invalid">
                     {validation.errors.definition}
                   </FormFeedback>
@@ -309,13 +309,13 @@ const AddNewBroadcasterBouquetList = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -382,7 +382,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                     ))}
                 </Input>
                 {validation.touched.broadcaster &&
-                validation.errors.broadcaster ? (
+                  validation.errors.broadcaster ? (
                   <FormFeedback type="invalid">
                     {validation.errors.broadcaster}
                   </FormFeedback>
