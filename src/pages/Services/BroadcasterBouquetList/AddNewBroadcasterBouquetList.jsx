@@ -34,8 +34,10 @@ const AddNewBroadcasterBouquetList = (props) => {
   const [toggleSwitch, settoggleSwitch] = useState(true);
   const [channels, setChannels] = useState([]);
   const [selectedType, setSelectedType] = useState("");
+  const [selectedBroadcaster, setSelectedBroadcaster] = useState("");
 
   const [selectedRate, setSelectedRate] = useState("");
+
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
@@ -499,7 +501,7 @@ const AddNewBroadcasterBouquetList = (props) => {
               padding: "0px 10px",
             }}
           >
-            <h5 style={{}}>Add Channels</h5>
+            <h5 style={{}}>Selected Channels</h5>
           </div>
           <Row
             style={{
@@ -510,10 +512,15 @@ const AddNewBroadcasterBouquetList = (props) => {
             }}
           >
             <Col sm="12">
-              <AddChannels isOpen={Boolean(handleUpdateChannels)}
-                data={channels}
+              <AddChannels
+                channels={channels}
+                setChannels={setChannels}
+                selectedType={selectedType}
+                selectedBroadcaster={selectedBroadcaster}
                 updateList={setChannels}
-                broadcasterBouquetAddchannels={broadcasterBouquetAddchannels} />
+                broadcasterBouquetAddchannels={broadcasterBouquetAddchannels}
+                definition={validation.values.definition}
+              />
             </Col>
           </Row>
 
