@@ -17,6 +17,7 @@ import AddChannelsTableList from "./AddChannelsTableList";
 
 const AddChannels = (props) => {
   const {
+    definition,
     selectedType,
     selectedBroadcaster,
     channels,
@@ -254,7 +255,7 @@ const AddChannels = (props) => {
       console.log("broadcaster in handle:" + type, typeof broadcaster);
 
       const response = await axios.get(
-        `${API_URL}/channel/list?fields=id,name,broadcasterRate&expand=broadcaster_lbl,channel_type_lbl,isFta_lbl,isAlacarte_lbl&sort=name&filter[isFta]=${type}&filter[broadcaster]=${broadcaster}&vr=web1.0`,
+        `${API_URL}/channel/list?fields=id,name,broadcasterRate&expand=broadcaster_lbl,channel_type_lbl,isFta_lbl,isAlacarte_lbl&sort=name&filter[isFta]=${type}&filter[broadcaster_id]=${broadcaster}&vr=web1.0`,
         // `$(API_URL)/channel/list?fields=id,name,broadcasterRate&expand=broadcaster_lbl,channel_type_lbl,isFta_lbl,isAlacarte_lbl&sort=name&filter[isFta]=${broadcaster}&vr=web1.0`
 
         // `${API_URL}/channel/list?fields=id,name,broadcasterRate&expand=broadcaster_lbl,channel_type_lbl,isFta_lbl,isAlacarte_lbl&sort=name&filter[isFta]=${type}&vr=web1.0`,
