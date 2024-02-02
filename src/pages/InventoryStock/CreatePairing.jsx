@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import {
   Card,
   CardBody,
@@ -10,6 +10,7 @@ import {
   ModalBody,
   ModalHeader,
   Row,
+  Table,
 } from "reactstrap";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
@@ -17,6 +18,8 @@ import TableContainer from "../../components/Common/TableContainer";
 
 function CreatePairing(props) {
   const { isOpen, toggle, smartcardlist, stblist, stocksccastype } = props;
+
+  const [cas_id, setCas_id] = useState();
 
   const smartcardColumns = useMemo(
     () => [
@@ -190,6 +193,8 @@ function CreatePairing(props) {
                   //       ? true
                   //       : false
                   //   }
+                  onChange={(e) => setCas_id(e.target.value)}
+                  value={cas_id}
                 >
                   <option value="">Select CAS Type</option>
                   {stocksccastype.map((castype) => (
@@ -213,7 +218,8 @@ function CreatePairing(props) {
                   <TableContainer
                     isPagination={true}
                     columns={smartcardColumns}
-                    data={smartcardlist}
+                    data={cas_id !== "" ? smartcardlist : []}
+                    // data={smartcardlist}
                     isShowingPageLength={true}
                     customPageSize={50}
                     tableClass="table align-middle table-nowrap table-hover"
@@ -230,7 +236,8 @@ function CreatePairing(props) {
                   <TableContainer
                     isPagination={true}
                     columns={stbColumns}
-                    data={stblist}
+                    data={cas_id !== "" ? stblist : []}
+                    // data={stblist}
                     isShowingPageLength={true}
                     customPageSize={50}
                     tableClass="table align-middle table-nowrap table-hover"
@@ -248,6 +255,64 @@ function CreatePairing(props) {
               <button>
                 <i className="mdi mdi-handshake-outline"></i>
               </button>
+            </Col>
+          </Row>
+          <Row>
+            <div
+              style={{
+                marginTop: "20px",
+                marginBottom: "18px",
+                zIndex: 12000,
+                backgroundColor: "#fff",
+                width: "fit-content",
+                marginLeft: "40%",
+                position: "absolute",
+                padding: "0px 10px",
+              }}
+            >
+              <h5 style={{}}>Selected Pairs</h5>
+            </div>
+            <Col>
+              <Card>
+                <CardBody>
+                  <div className="table-responsive">
+                    <Table className="table mb-0">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Smartcard No.</th>
+                          <th>STB No.</th>
+                          <th>$</th>
+                        </tr>
+                      </thead>
+                      {/* <tbody>
+                        {data.map((item, index) => (
+                          <tr key={index}>
+                            <th scope="row">{item.cas_id}</th>
+                            <td>{item.cas_lbl}</td>
+                            <td>{item.cascode}</td>
+                            <td>{item.serviceid}</td>
+                            <td>
+                              <h5>
+                                <Link
+                            className="text-dark"
+                            to="#"
+                            onClick={() => deleteCasList(index)}
+                          >
+                                <i
+                                  className="mdi mdi-delete font-size-18"
+                                  id="deletetooltip"
+                                />
+                                </Link>
+                              </h5>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody> */}
+                    </Table>
+                  </div>
+                </CardBody>
+              </Card>
             </Col>
           </Row>
         </Form>
