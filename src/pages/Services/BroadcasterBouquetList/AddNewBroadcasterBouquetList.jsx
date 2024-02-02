@@ -17,16 +17,26 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addNewBroadcasterBouquetList as onAddNewBroadcasterBouquetList, getBroadcasterBouquetList as onGetBroadcasterBouquetList } from "/src/store/broadcasterbouquet/actions";
+import {
+  addNewBroadcasterBouquetList as onAddNewBroadcasterBouquetList,
+  getBroadcasterBouquetList as onGetBroadcasterBouquetList,
+} from "/src/store/broadcasterbouquet/actions";
 import { useDispatch } from "react-redux";
 import AddChannels from "./AddChannels";
 import RevenueShare from "./RevenueShare";
 import PieChart from "./PieChart";
 
 const AddNewBroadcasterBouquetList = (props) => {
-  const { isOpen, toggleAddModal, broadcasterBouquetAddchannels, broadcasterBouquetType, broadcasterBouquetBroadcaster, broadcasterBouquetDefinition, broadcasterBouquetStatus } = props;
+  const {
+    isOpen,
+    toggleAddModal,
+    broadcasterBouquetAddchannels,
+    broadcasterBouquetType,
+    broadcasterBouquetBroadcaster,
+    broadcasterBouquetDefinition,
+    broadcasterBouquetStatus,
+  } = props;
   const dispatch = useDispatch();
-
 
   const [broadPercent, setBroadPercent] = useState(80);
   const [msoPercent, setMsoPercent] = useState(20);
@@ -37,7 +47,6 @@ const AddNewBroadcasterBouquetList = (props) => {
   const [selectedBroadcaster, setSelectedBroadcaster] = useState("");
 
   const [selectedRate, setSelectedRate] = useState("");
-
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
@@ -123,7 +132,8 @@ const AddNewBroadcasterBouquetList = (props) => {
         description: values["description"],
         isFta: values["isFta"],
         broadcaster: values["broadcaster"],
-        status: parseInt(values["status"]), rate: values["rate"],
+        status: parseInt(values["status"]),
+        rate: values["rate"],
         channels: channels.map((single) => {
           return {
             broadcasterRate: single.broadcasterRate,
@@ -168,7 +178,6 @@ const AddNewBroadcasterBouquetList = (props) => {
     // Handle switch change
     setIsCustomEnabled(e.target.checked);
   };
-
 
   return (
     <Modal
@@ -277,7 +286,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                     ))}
                 </Input>
                 {validation.touched.definition &&
-                  validation.errors.definition ? (
+                validation.errors.definition ? (
                   <FormFeedback type="invalid">
                     {validation.errors.definition}
                   </FormFeedback>
@@ -300,13 +309,13 @@ const AddNewBroadcasterBouquetList = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -329,7 +338,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                     setSelectedType(e.target.value);
                   }}
                   onBlur={validation.handleBlur}
-                  value={validation.values.isFta || ""}
+                  value={selectedType}
                 >
                   <option value="">Select Type</option>
                   {broadcasterBouquetType &&
@@ -356,9 +365,13 @@ const AddNewBroadcasterBouquetList = (props) => {
                   type="select"
                   placeholder="Select broadcaster"
                   className="form-select"
-                  onChange={validation.handleChange}
+                  // onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.broadcaster || ""}
+                  value={selectedBroadcaster}
+                  onChange={(e) => {
+                    validation.handleChange(e);
+                    setSelectedBroadcaster(e.target.value);
+                  }}
                 >
                   <option value="">Select Type</option>
                   {broadcasterBouquetBroadcaster &&
@@ -369,7 +382,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                     ))}
                 </Input>
                 {validation.touched.broadcaster &&
-                  validation.errors.broadcaster ? (
+                validation.errors.broadcaster ? (
                   <FormFeedback type="invalid">
                     {validation.errors.broadcaster}
                   </FormFeedback>
@@ -567,7 +580,6 @@ AddNewBroadcasterBouquetList.propTypes = {
   broadcasterBouquetBroadcaster: PropTypes.array,
   broadcasterBouquetStatus: PropTypes.array,
   broadcasterBouquetDefinition: PropTypes.array,
-
 };
 
 export default AddNewBroadcasterBouquetList;
