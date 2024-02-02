@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import {
   Card,
   CardBody,
@@ -28,6 +28,7 @@ function CreatePairing(props) {
   const [selectedPairs, setSelectedPairs] = useState([]);
   const [smartcardData, setSmartcardData] = useState(smartcardlist);
   const [stbData, setStbData] = useState(stblist);
+  const [isPairingEnabled, setIsPairingEnabled] = useState(false);
 
   const handleSmartcardSelection = (smartcard) => {
     setSelectedSmartcard(smartcard);
@@ -38,6 +39,10 @@ function CreatePairing(props) {
     setSelectedStb(stb);
     setIsCheckedStb(true);
   };
+
+  useEffect(() => {
+    setIsPairingEnabled(isCheckedSc && isCheckedStb);
+  }, [isCheckedSc, isCheckedStb]);
 
   const handleHandshake = () => {
     if (selectedSmartcard && selectedStb) {
@@ -289,7 +294,11 @@ function CreatePairing(props) {
           <Row>
             <Col lg="6"></Col>
             <Col xl="3" lg="4" sm="6">
-              <button type="button" onClick={handleHandshake}>
+              <button
+                type="button"
+                onClick={handleHandshake}
+                disabled={!isPairingEnabled}
+              >
                 {/* <i className="mdi mdi-handshake-outline"></i> */}
                 Create Pairing
               </button>
