@@ -15,6 +15,8 @@ import {
   ADD_PACKAGELIST_SUCCESS,
   ADD_PACKAGELIST_FAIL,
   UPDATE_PACKAGELIST_CURRENT_PAGE,
+  UPDATE_PACKAGE_FAIL,
+  UPDATE_PACKAGE_SUCCESS,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -102,5 +104,20 @@ export const addPackageListSuccess = (packagelist) => ({
 
 export const addPackageListFail = (error) => ({
   type: ADD_PACKAGELIST_FAIL,
+  payload: error,
+});
+
+export const updatePackage = (packageList) => ({
+  type: UPDATE_PACKAGE,
+  payload: packageList,
+});
+
+export const updatePackageSuccess = (packageList) => ({
+  type: UPDATE_PACKAGE_SUCCESS,
+  payload: packageList,
+});
+
+export const updatePackageFail = (error) => ({
+  type: UPDATE_PACKAGE_FAIL,
   payload: error,
 });

@@ -251,6 +251,7 @@ export const getPackageListUrl = (currPage, perPage) => {
 export const GET_PACKAGE_TYPE = "/list/packageType?fields=id,name&vr=web1.0";
 export const GET_PACKAGE_BOXTYPE = "/list/boxtype?fields=id,name&vr=web1.0";
 export const GET_PACKAGE_STATUS = "/list/status?fields=id,name&vr=web1.0";
+export const UPDATE_PACKAGE = (id) => `/user/${id}?vr=web1.0`;
 
 export const GET_OSDCONFIGURATIONLIST =
   "/mtc?expand=created_by_lbl,status_lbl,is_reserved_lbl,type_lbl&page=1&per-page=50&vr=web1.0";

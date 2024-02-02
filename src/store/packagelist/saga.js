@@ -6,9 +6,11 @@ import {
   GET_PACKAGE_BOXTYPE,
   GET_PACKAGE_STATUS,
   ADD_NEW_PACKAGELIST,
+  UPDATE_PACKAGE,
 } from "./actionTypes";
 
 import {
+  getPackageList as fetchallpackages,
   getPackageListSuccess,
   getPackageListFail,
   getPackageTypeSuccess,
@@ -19,6 +21,8 @@ import {
   getPackageStatusFail,
   addPackageListSuccess,
   addPackageListFail,
+  updatePackageSuccess,
+  updatePackageFail,
 } from "./actions";
 
 //Include Both Helper File with needed methods
@@ -28,6 +32,7 @@ import {
   getPackageBoxType,
   getPackageStatus,
   addNewPackageList,
+  updatePackage,
 } from "../../helpers/fakebackend_helper";
 
 // function* fetchPackageList() {
@@ -101,10 +106,23 @@ function* onAddNewPackageList({ payload: packageList }) {
   try {
     const response = yield call(addNewPackageList, packageList);
     yield put(addPackageListSuccess(response));
-    toast.success("PackageList Added Successfully", { autoClose: 2000 });
+    yield put(fetchallpackages());
+    // toast.success("PackageList Added Successfully", { autoClose: 2000 });
   } catch (error) {
     yield put(addPackageListFail(error));
-    toast.error("Package List Added Failed", { autoClose: 2000 });
+    // toast.error("Package List Added Failed", { autoClose: 2000 });
+  }
+}
+
+function* onUpdatePackage({ payload: packlist }) {
+  console.log("package in onUpdate:" + JSON.stringify(packlist));
+  try {
+    const response = yield call(updatePackage, packlist, packlist.id);
+    yield put(updatePackageSuccess(response));
+    console.log("update response:" + JSON.stringify(response));
+    yield put(fetchallpackages());
+  } catch (error) {
+    yield put(updatePackageFail(error));
   }
 }
 
@@ -114,6 +132,7 @@ function* packageListSaga() {
   yield takeEvery(GET_PACKAGE_TYPE, fetchPackageType);
   yield takeEvery(GET_PACKAGE_BOXTYPE, fetchPackageBoxType);
   yield takeEvery(GET_PACKAGE_STATUS, fetchPackageStatus);
+  yield takeEvery(UPDATE_PACKAGE, onUpdatePackage);
 }
 
 export default packageListSaga;

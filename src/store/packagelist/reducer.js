@@ -18,9 +18,13 @@ import {
   GET_PACKAGE_STATUS,
   GET_PACKAGE_STATUS_SUCCESS,
   GET_PACKAGE_STATUS_FAIL,
+  ADD_NEW_PACKAGELIST,
   ADD_PACKAGELIST_SUCCESS,
   ADD_PACKAGELIST_FAIL,
   UPDATE_PACKAGELIST_CURRENT_PAGE,
+  UPDATE_PACKAGE,
+  UPDATE_PACKAGE_SUCCESS,
+  UPDATE_PACKAGE_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -114,16 +118,46 @@ const PackageList = (state = INIT_STATE, action) => {
         error: action.payload,
       };
 
+    case ADD_NEW_PACKAGELIST:
+      return {
+        ...state,
+        loading: true,
+      };
+
     case ADD_PACKAGELIST_SUCCESS:
       return {
         ...state,
         packageList: [...state.packageList, action.payload],
+        loading: false,
       };
 
     case ADD_PACKAGELIST_FAIL:
       return {
         ...state,
         error: action.payload,
+        loading: false,
+      };
+
+    case UPDATE_PACKAGE:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_PACKAGE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        packageList: state.packageList.map((packlist) =>
+          packlist.id === action.payload.id
+            ? { ...packlist, ...action.payload }
+            : packlist
+        ),
+      };
+    case UPDATE_PACKAGE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
       };
 
     default:
