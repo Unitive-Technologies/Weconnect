@@ -24,17 +24,48 @@ function CreatePairing(props) {
   const [selectedStb, setSelectedStb] = useState({});
   const [isCheckedSc, setIsCheckedSC] = useState(false);
   const [isCheckedStb, setIsCheckedStb] = useState(false);
+  const [selectedPairs, setSelectedPairs] = useState([]);
+  const [smartcardData, setSmartcardData] = useState(smartcardlist);
+  const [stbData, setStbData] = useState(stblist);
 
-  const handleCheckboxClick = (row) => {
-    // setShowViewNcf(false);
-    setIsCheckedSC(true);
-    setSelectedSmartcard(row);
+  // const handleCheckboxClick = (row) => {
+  //   // setShowViewNcf(false);
+  //   setIsCheckedSC(true);
+  //   setSelectedSmartcard(row);
+  // };
+
+  // const handleStbCheckboxClick = (row) => {
+  //   // setShowViewNcf(false);
+  //   setIsCheckedStb(true);
+  //   setSelectedStb(row);
+  // };
+
+  const handleSmartcardSelection = (smartcard) => {
+    setSelectedSmartcard(smartcard);
   };
 
-  const handleStbCheckboxClick = (row) => {
-    // setShowViewNcf(false);
-    setIsCheckedStb(true);
-    setSelectedStb(row);
+  const handleStbSelection = (stb) => {
+    setSelectedStb(stb);
+  };
+
+  const handleHandshake = () => {
+    if (selectedSmartcard && selectedStb) {
+      setSelectedPairs([
+        ...selectedPairs,
+        { smartcard: selectedSmartcard, stb: selectedStb },
+      ]);
+      // Remove selected smartcard and STB from lists
+      const updatedSmartcardList = smartcardlist.filter(
+        (item) => item.id !== selectedSmartcard.id
+      );
+      const updatedStbList = stblist.filter(
+        (item) => item.id !== selectedStb.id
+      );
+      setSelectedSmartcard(null);
+      setSelectedStb(null);
+      setSmartcardData(updatedSmartcardList);
+      setStbData(updatedStbList);
+    }
   };
 
   const smartcardColumns = useMemo(
@@ -46,10 +77,7 @@ function CreatePairing(props) {
         Cell: (cellProps) => (
           <input
             type="checkbox"
-            onChange={() => handleCheckboxClick(cellProps.row.original)}
-            // checked={selectedSmartcard.some(
-            //   (item) => item.id === cellProps.row.original.id
-            // )}
+            onChange={() => handleSmartcardSelection(cellProps.row.original)}
           />
         ),
       },
@@ -113,10 +141,7 @@ function CreatePairing(props) {
         Cell: (cellProps) => (
           <input
             type="checkbox"
-            onChange={() => handleStbCheckboxClick(cellProps.row.original)}
-            // checked={selectedStb.some(
-            //   (item) => item.id === cellProps.row.original.id
-            // )}
+            onChange={() => handleStbSelection(cellProps.row.original)}
           />
         ),
       },
@@ -226,10 +251,11 @@ function CreatePairing(props) {
             <Col lg={6}>
               <Card>
                 <CardBody>
+                  {console.log("Smartcard data: ", smartcardData)}
                   <TableContainer
                     isPagination={true}
                     columns={smartcardColumns}
-                    data={cas_id !== "" ? smartcardlist : []}
+                    data={cas_id !== "" ? smartcardData : []}
                     isShowingPageLength={true}
                     customPageSize={50}
                     tableClass="table align-middle table-nowrap table-hover"
@@ -243,10 +269,11 @@ function CreatePairing(props) {
             <Col lg={6}>
               <Card>
                 <CardBody>
+                  {console.log("stb data: ", stbData)}
                   <TableContainer
                     isPagination={true}
                     columns={stbColumns}
-                    data={cas_id !== "" ? stblist : []}
+                    data={cas_id !== "" ? stbData : []}
                     isShowingPageLength={true}
                     customPageSize={50}
                     tableClass="table align-middle table-nowrap table-hover"
@@ -261,8 +288,9 @@ function CreatePairing(props) {
           <Row>
             <Col lg="6"></Col>
             <Col xl="3" lg="4" sm="6">
-              <button>
-                <i className="mdi mdi-handshake-outline"></i>
+              <button type="button" onClick={handleHandshake}>
+                {/* <i className="mdi mdi-handshake-outline"></i> */}
+                Create Pairing
               </button>
             </Col>
           </Row>
@@ -281,7 +309,17 @@ function CreatePairing(props) {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
+                        {selectedPairs.map((pair, index) => (
+                          <tr key={index}>
+                            <td>{index + 1}</td>
+                            <td>{pair.smartcard.smartcardno}</td>
+                            <td>{pair.stb.stbno}</td>
+                            <td>
+                              <i className="mdi mdi-delete"></i>
+                            </td>
+                          </tr>
+                        ))}
+                        {/* <tr>
                           <td scope="row">1</td>
                           <td>{selectedSmartcard.smartcardno}</td>
                           <td>{selectedStb.stbno}</td>
@@ -295,7 +333,7 @@ function CreatePairing(props) {
                               </Link>
                             </h5>
                           </td>
-                        </tr>
+                        </tr> */}
                       </tbody>
                     </Table>
                   </div>
