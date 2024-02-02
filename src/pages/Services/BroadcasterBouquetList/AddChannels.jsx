@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import TableContainer from "../../../components/Common/TableContainer";
 import {
-  Card, CardBody, Row,
+  Card,
+  CardBody,
+  Row,
   Toast,
   Col,
   ToastHeader,
@@ -14,10 +16,22 @@ import { Link } from "react-router-dom";
 import AddChannelsTableList from "./AddChannelsTableList";
 
 const AddChannels = (props) => {
-  const { selectedType, selectedBroadcaster, channels, setChannels, data, updateList, broadcasterBouquetAddchannels, showEditBroadcast } = props;
+  const {
+    selectedType,
+    selectedBroadcaster,
+    channels,
+    setChannels,
+    data,
+    updateList,
+    broadcasterBouquetAddchannels,
+    showEditBroadcast,
+  } = props;
 
   console.log("type after:" + selectedType, typeof selectedType);
-  console.log("broadcaster after:" + selectedBroadcaster, typeof selectedBroadcaster);
+  console.log(
+    "broadcaster after:" + selectedBroadcaster,
+    typeof selectedBroadcaster
+  );
 
   const [addChannelsList, setAddChannelsList] = useState([]);
   // const [channels, setChannels] = useState([]);
@@ -219,7 +233,6 @@ const AddChannels = (props) => {
     []
   );
 
-
   const addChannelsData = [];
 
   const [showAddChannelsPlus, setShowAddChannelsPlus] = useState(false);
@@ -240,7 +253,7 @@ const AddChannels = (props) => {
       console.log("broadcaster in handle:" + type, typeof broadcaster);
 
       const response = await axios.get(
-        `${API_URL}/channel/list?fields=id,name,broadcasterRate&expand=broadcaster_lbl,channel_type_lselectedTypebl,isFta_lbl,isAlacarte_lbl&sort=name&filter[isFta]=${type}&filter[broadcaster]=${broadcaster}&vr=web1.0`,
+        `${API_URL}/channel/list?fields=id,name,broadcasterRate&expand=broadcaster_lbl,channel_type_lbl,isFta_lbl,isAlacarte_lbl&sort=name&filter[isFta]=${type}&filter[broadcaster]=${broadcaster}&vr=web1.0`,
 
         // `${API_URL}/channel/list?fields=id,name,broadcasterRate&expand=broadcaster_lbl,channel_type_lbl,isFta_lbl,isAlacarte_lbl&sort=name&filter[isFta]=${type}&vr=web1.0`,
 
@@ -258,7 +271,6 @@ const AddChannels = (props) => {
   console.log("ShowChannelTableList:" + JSON.stringify(addChannelsList));
 
   return (
-
     <>
       <AddChannelsTableList
         isOpen={showChannelTableList}
@@ -404,7 +416,7 @@ const AddChannels = (props) => {
       </Card>
     </>
   );
-}
+};
 
 AddChannels.propTypes = {
   toggle: PropTypes.func,
