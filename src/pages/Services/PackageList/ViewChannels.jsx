@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
 import {
@@ -10,12 +10,20 @@ import {
   Toast,
   ToastHeader,
   ToastBody,
+  Table,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import ViewChannelsTableList from "./ViewChannelsTableList";
 
 const ViewChannels = (props) => {
-  const { showEditChannel, data } = props;
+  const {
+    showEditChannel,
+    data,
+    setTotalChannelsInChannels,
+    setTotalPackageRateInChannels,
+    totalChannelsInChannels,
+    totalPackageRateInChannels,
+  } = props;
   console.log("data in viewchannels:" + JSON.stringify(data));
   const columns = useMemo(
     () => [
@@ -268,10 +276,20 @@ const ViewChannels = (props) => {
     []
   );
 
-  // const allColumns = useMemo(() => columns.concat(columns1), [columns, columns1]);
+  useEffect(() => {
+    let totalRate = 0;
+    if (data) {
+      data.forEach((item) => {
+        const rate = parseFloat(item.broadcasterRate);
 
-  const casData = [];
-
+        if (!isNaN(rate)) {
+          totalRate += rate;
+          setTotalPackageRateInChannels(totalRate);
+        }
+      });
+      setTotalChannelsInChannels(data.length);
+    }
+  }, [data]);
   return (
     <Card>
       <CardBody>
@@ -306,15 +324,99 @@ const ViewChannels = (props) => {
           </Toast>
         </div> */}
 
-        <TableContainer
-          // isPagination={true}
+        {/* <TableContainer
+          isPagination={true}
           columns={columns}
           data={data}
           tableClass="table align-middle table-nowrap table-hover"
           theadClass="table-light"
-          // paginationDiv="col-sm-12 col-md-7"
-          // pagination="pagination pagination-rounded justify-content-end mt-4"
-        />
+          paginationDiv="col-sm-12 col-md-7"
+          pagination="pagination pagination-rounded justify-content-end mt-4"
+        /> */}
+        <Table className="table mb-0">
+          <thead>
+            <tr>
+              <th
+                style={{
+                  maxWidth: 10,
+                }}
+              >
+                #
+              </th>
+              <th>Name</th>
+              <th>BroadCaster</th>
+              <th>Type</th>
+              <th>Alacarte</th>
+              <th>FTA</th>
+              <th>Rate</th>
+              <th>$</th>
+            </tr>
+          </thead>
+          {data && (
+            <tbody>
+              {data.map((item, index) => (
+                <tr key={index}>
+                  <th
+                    scope="row"
+                    style={{
+                      maxWidth: 10,
+                    }}
+                  >
+                    {index + 1}
+                  </th>
+                  <td
+                    style={{
+                      maxWidth: 100,
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {item.name}
+                  </td>
+                  <td
+                    style={{
+                      maxWidth: 50,
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {item.broadcaster_lbl}
+                  </td>
+                  <td>{item.channel_type_lbl}</td>
+                  <td>{item.isAlacarte_lbl}</td>
+                  <td>{item.isFta_lbl}</td>
+                  <td
+                    style={{
+                      maxWidth: 50,
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {" "}
+                    <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td>
+                  </td>
+                  <td>
+                    <h5>
+                      <Link
+                        className="text-dark"
+                        to="#"
+                        onClick={() => deleteChannel(index)}
+                      >
+                        <i
+                          className="mdi mdi-delete font-size-18"
+                          id="deletetooltip"
+                        />
+                      </Link>
+                    </h5>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          )}
+        </Table>
       </CardBody>
 
       <div style={{ display: "flex" }}>
@@ -336,7 +438,9 @@ const ViewChannels = (props) => {
               boxSizing: "border-box",
             }}
           >
-            <h6 style={{ textAlign: "left", margin: 0 }}>Total Channels:</h6>
+            <h6 style={{ textAlign: "left", margin: 0 }}>
+              Total Channels: {totalChannelsInChannels}
+            </h6>
           </div>
         </Row>
         <Row
@@ -356,7 +460,9 @@ const ViewChannels = (props) => {
               boxSizing: "border-box",
             }}
           >
-            <h6 style={{ textAlign: "center", margin: 0 }}>Total:</h6>
+            <h6 style={{ textAlign: "center", margin: 0 }}>
+              Total: {parseFloat(totalPackageRateInChannels).toFixed(2)}
+            </h6>
           </div>
         </Row>
       </div>

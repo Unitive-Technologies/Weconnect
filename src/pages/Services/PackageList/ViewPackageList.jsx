@@ -467,7 +467,10 @@ const ViewPackageList = (props) => {
                   padding: "0px 10px",
                 }}
               >
-                <h6 style={{ textAlign: "center" }}>TOTAL CHANNELS:</h6>
+                <h6 style={{ textAlign: "center" }}>
+                  TOTAL CHANNELS:{" "}
+                  {totalChannelsInChannels + totalChannelsInBouquets}
+                </h6>
               </div>
             </Row>
             <Row
@@ -489,7 +492,10 @@ const ViewPackageList = (props) => {
                   padding: "0px 10px",
                 }}
               >
-                <h6 style={{ textAlign: "center" }}>PACKAGE RATE:</h6>
+                <h6 style={{ textAlign: "center" }}>
+                  PACKAGE RATE:{" "}
+                  {totalPackageRateInChannels + totalPackageRateInBouquets}
+                </h6>
               </div>
             </Row>
           </div>
