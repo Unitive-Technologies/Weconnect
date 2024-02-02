@@ -8,6 +8,7 @@ import {
   Label,
   Modal,
   ModalBody,
+  ModalFooter,
   ModalHeader,
   Row,
   Table,
@@ -28,24 +29,14 @@ function CreatePairing(props) {
   const [smartcardData, setSmartcardData] = useState(smartcardlist);
   const [stbData, setStbData] = useState(stblist);
 
-  // const handleCheckboxClick = (row) => {
-  //   // setShowViewNcf(false);
-  //   setIsCheckedSC(true);
-  //   setSelectedSmartcard(row);
-  // };
-
-  // const handleStbCheckboxClick = (row) => {
-  //   // setShowViewNcf(false);
-  //   setIsCheckedStb(true);
-  //   setSelectedStb(row);
-  // };
-
   const handleSmartcardSelection = (smartcard) => {
     setSelectedSmartcard(smartcard);
+    setIsCheckedSC(true);
   };
 
   const handleStbSelection = (stb) => {
     setSelectedStb(stb);
+    setIsCheckedStb(true);
   };
 
   const handleHandshake = () => {
@@ -55,17 +46,27 @@ function CreatePairing(props) {
         { smartcard: selectedSmartcard, stb: selectedStb },
       ]);
       // Remove selected smartcard and STB from lists
-      const updatedSmartcardList = smartcardlist.filter(
+      const updatedSmartcardList = smartcardData.filter(
         (item) => item.id !== selectedSmartcard.id
       );
-      const updatedStbList = stblist.filter(
+      const updatedStbList = stbData.filter(
         (item) => item.id !== selectedStb.id
       );
       setSelectedSmartcard(null);
       setSelectedStb(null);
       setSmartcardData(updatedSmartcardList);
       setStbData(updatedStbList);
+      setIsCheckedStb(false);
+      setIsCheckedSC(false);
     }
+  };
+
+  const handleDeletePair = (index) => {
+    const pairToRemove = selectedPairs[index];
+    const updatedSelectedPairs = selectedPairs.filter((pair, i) => i !== index);
+    setSelectedPairs(updatedSelectedPairs);
+    setSmartcardData([...smartcardData, pairToRemove.smartcard]);
+    setStbData([...stbData, pairToRemove.stb]);
   };
 
   const smartcardColumns = useMemo(
@@ -315,7 +316,12 @@ function CreatePairing(props) {
                             <td>{pair.smartcard.smartcardno}</td>
                             <td>{pair.stb.stbno}</td>
                             <td>
-                              <i className="mdi mdi-delete"></i>
+                              <button
+                                type="button"
+                                onClick={() => handleDeletePair(index)}
+                              >
+                                <i className="mdi mdi-delete"></i>{" "}
+                              </button>
                             </td>
                           </tr>
                         ))}
@@ -339,6 +345,33 @@ function CreatePairing(props) {
                   </div>
                 </CardBody>
               </Card>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <ModalFooter>
+                <button type="submit" className="btn btn-success save-user">
+                  Save
+                </button>
+                <button
+                  type="reset"
+                  className="btn btn-warning"
+                  // onClick={() => validation.resetForm()}
+                >
+                  Reset
+                </button>
+
+                <button
+                  type="button"
+                  className="btn btn-outline-danger"
+                  // onClick={() => {
+                  //   validation.resetForm();
+                  //   toggle();
+                  // }}
+                >
+                  Cancel
+                </button>
+              </ModalFooter>
             </Col>
           </Row>
         </Form>
