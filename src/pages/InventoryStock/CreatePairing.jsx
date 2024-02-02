@@ -19,7 +19,23 @@ import TableContainer from "../../components/Common/TableContainer";
 function CreatePairing(props) {
   const { isOpen, toggle, smartcardlist, stblist, stocksccastype } = props;
 
-  const [cas_id, setCas_id] = useState();
+  const [cas_id, setCas_id] = useState("");
+  const [selectedSmartcard, setSelectedSmartcard] = useState({});
+  const [selectedStb, setSelectedStb] = useState({});
+  const [isCheckedSc, setIsCheckedSC] = useState(false);
+  const [isCheckedStb, setIsCheckedStb] = useState(false);
+
+  const handleCheckboxClick = (row) => {
+    // setShowViewNcf(false);
+    setIsCheckedSC(true);
+    setSelectedSmartcard(row);
+  };
+
+  const handleStbCheckboxClick = (row) => {
+    // setShowViewNcf(false);
+    setIsCheckedStb(true);
+    setSelectedStb(row);
+  };
 
   const smartcardColumns = useMemo(
     () => [
@@ -28,9 +44,13 @@ function CreatePairing(props) {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => (
-          <>
-            <input type="checkbox" />
-          </>
+          <input
+            type="checkbox"
+            onChange={() => handleCheckboxClick(cellProps.row.original)}
+            // checked={selectedSmartcard.some(
+            //   (item) => item.id === cellProps.row.original.id
+            // )}
+          />
         ),
       },
       {
@@ -91,9 +111,13 @@ function CreatePairing(props) {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => (
-          <>
-            <input type="checkbox" />
-          </>
+          <input
+            type="checkbox"
+            onChange={() => handleStbCheckboxClick(cellProps.row.original)}
+            // checked={selectedStb.some(
+            //   (item) => item.id === cellProps.row.original.id
+            // )}
+          />
         ),
       },
       {
@@ -185,14 +209,6 @@ function CreatePairing(props) {
                   name="cas_id"
                   type="select"
                   placeholder="Select CAS Type"
-                  //   onChange={validation.handleChange}
-                  //   onBlur={validation.handleBlur}
-                  //   value={validation.values.cas_id || ""}
-                  //   invalid={
-                  //     validation.touched.cas_id && validation.errors.cas_id
-                  //       ? true
-                  //       : false
-                  //   }
                   onChange={(e) => setCas_id(e.target.value)}
                   value={cas_id}
                 >
@@ -203,11 +219,6 @@ function CreatePairing(props) {
                     </option>
                   ))}
                 </Input>
-                {/* {validation.touched.cas_id && validation.errors.cas_id ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.cas_id}
-                  </FormFeedback>
-                ) : null} */}
               </div>
             </Col>
           </Row>
@@ -219,7 +230,6 @@ function CreatePairing(props) {
                     isPagination={true}
                     columns={smartcardColumns}
                     data={cas_id !== "" ? smartcardlist : []}
-                    // data={smartcardlist}
                     isShowingPageLength={true}
                     customPageSize={50}
                     tableClass="table align-middle table-nowrap table-hover"
@@ -237,7 +247,6 @@ function CreatePairing(props) {
                     isPagination={true}
                     columns={stbColumns}
                     data={cas_id !== "" ? stblist : []}
-                    // data={stblist}
                     isShowingPageLength={true}
                     customPageSize={50}
                     tableClass="table align-middle table-nowrap table-hover"
@@ -258,20 +267,6 @@ function CreatePairing(props) {
             </Col>
           </Row>
           <Row>
-            <div
-              style={{
-                marginTop: "20px",
-                marginBottom: "18px",
-                zIndex: 12000,
-                backgroundColor: "#fff",
-                width: "fit-content",
-                marginLeft: "40%",
-                position: "absolute",
-                padding: "0px 10px",
-              }}
-            >
-              <h5 style={{}}>Selected Pairs</h5>
-            </div>
             <Col>
               <Card>
                 <CardBody>
@@ -285,30 +280,23 @@ function CreatePairing(props) {
                           <th>$</th>
                         </tr>
                       </thead>
-                      {/* <tbody>
-                        {data.map((item, index) => (
-                          <tr key={index}>
-                            <th scope="row">{item.cas_id}</th>
-                            <td>{item.cas_lbl}</td>
-                            <td>{item.cascode}</td>
-                            <td>{item.serviceid}</td>
-                            <td>
-                              <h5>
-                                <Link
-                            className="text-dark"
-                            to="#"
-                            onClick={() => deleteCasList(index)}
-                          >
+                      <tbody>
+                        <tr>
+                          <td scope="row">1</td>
+                          <td>{selectedSmartcard.smartcardno}</td>
+                          <td>{selectedStb.stbno}</td>
+                          <td>
+                            <h5>
+                              <Link className="text-dark" to="#">
                                 <i
                                   className="mdi mdi-delete font-size-18"
                                   id="deletetooltip"
                                 />
-                                </Link>
-                              </h5>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody> */}
+                              </Link>
+                            </h5>
+                          </td>
+                        </tr>
+                      </tbody>
                     </Table>
                   </div>
                 </CardBody>
