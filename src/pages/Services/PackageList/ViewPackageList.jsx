@@ -377,13 +377,13 @@ const ViewPackageList = (props) => {
           >
             <Col sm="12">
               {console.log("casCodeList:" + JSON.stringify(casCodeList))}
-              {/* <ViewCasList
+              <ViewCasList
                 data={selectedRowDetails.casCodes}
                 showEditChannel={showEditChannel}
                 updateList={setCasCodeList}
                 casSelectList={casSelectList}
-              /> */}
-              <CasList
+              />
+              {/* <CasList
                 isOpen={Boolean(handleUpdateCasList)}
                 data={
                   !selectedRowDetails
@@ -392,7 +392,7 @@ const ViewPackageList = (props) => {
                 }
                 updateList={setCasCodeList}
                 casSelectList={casSelectList}
-              />
+              /> */}
             </Col>
           </Row>
           <div

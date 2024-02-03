@@ -11,6 +11,7 @@ import {
   ToastHeader,
   ToastBody,
   Table,
+  CardFooter,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import ViewChannelsTableList from "./ViewChannelsTableList";
@@ -333,7 +334,14 @@ const ViewChannels = (props) => {
           paginationDiv="col-sm-12 col-md-7"
           pagination="pagination pagination-rounded justify-content-end mt-4"
         /> */}
-        <Table className="table mb-0">
+        <Table
+          className="table mb-0"
+          style={{
+            minHeight: "200px",
+            maxHeight: "200px",
+            overflowY: "hidden",
+          }}
+        >
           <thead>
             <tr>
               <th
@@ -418,54 +426,55 @@ const ViewChannels = (props) => {
           )}
         </Table>
       </CardBody>
-
-      <div style={{ display: "flex" }}>
-        <Row
-          style={{
-            border: "1px solid #ced4da",
-            padding: "5px 0px",
-            margin: "1px 0px",
-            width: "450px",
-            height: "50px",
-            display: "flex",
-          }}
-        >
-          <div
+      <CardFooter className="fixed">
+        <div style={{ display: "flex" }}>
+          <Row
             style={{
-              backgroundColor: "#fff",
-              padding: "10px",
-              width: "100%",
-              boxSizing: "border-box",
+              border: "1px solid #ced4da",
+              padding: "5px 0px",
+              margin: "1px 0px",
+              width: "450px",
+              height: "50px",
+              display: "flex",
             }}
           >
-            <h6 style={{ textAlign: "left", margin: 0 }}>
-              Total Channels: {totalChannelsInChannels}
-            </h6>
-          </div>
-        </Row>
-        <Row
-          style={{
-            border: "1px solid #ced4da",
-            padding: "5px 0px",
-            margin: "1px 0px",
-            width: "250px",
-            display: "flex",
-          }}
-        >
-          <div
+            <div
+              style={{
+                backgroundColor: "#fff",
+                padding: "10px",
+                width: "100%",
+                boxSizing: "border-box",
+              }}
+            >
+              <h6 style={{ textAlign: "left", margin: 0 }}>
+                Total Channels: {totalChannelsInChannels}
+              </h6>
+            </div>
+          </Row>
+          <Row
             style={{
-              backgroundColor: "#fff",
-              padding: "10px",
-              width: "100%",
-              boxSizing: "border-box",
+              border: "1px solid #ced4da",
+              padding: "5px 0px",
+              margin: "1px 0px",
+              width: "250px",
+              display: "flex",
             }}
           >
-            <h6 style={{ textAlign: "center", margin: 0 }}>
-              Total: {parseFloat(totalPackageRateInChannels).toFixed(2)}
-            </h6>
-          </div>
-        </Row>
-      </div>
+            <div
+              style={{
+                backgroundColor: "#fff",
+                padding: "10px",
+                width: "100%",
+                boxSizing: "border-box",
+              }}
+            >
+              <h6 style={{ textAlign: "center", margin: 0 }}>
+                Total: {parseFloat(totalPackageRateInChannels).toFixed(2)}
+              </h6>
+            </div>
+          </Row>
+        </div>
+      </CardFooter>
     </Card>
   );
 };
