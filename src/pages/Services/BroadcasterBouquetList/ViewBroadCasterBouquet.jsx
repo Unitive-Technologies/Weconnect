@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
+import axios from "axios";
 import PropTypes from "prop-types";
 import {
   Card,
@@ -29,6 +30,23 @@ const ViewBroadCasterBouquet = (props) => {
   const dispatch = useDispatch();
 
   const [showEditBroadcast, setShowEditBroadcast] = useState(false);
+
+  const [broadPercent, setBroadPercent] = useState(80);
+  const [msoPercent, setMsoPercent] = useState(20);
+  const [discountPercent, setDiscountPercent] = useState(0);
+  const [toggleSwitch, settoggleSwitch] = useState(true);
+  const [channels, setChannels] = useState([]);
+  const [selectedType, setSelectedType] = useState("");
+  const [selectedBroadcaster, setSelectedBroadcaster] = useState("");
+  const [selectedRowDetails, setSelectedRowDetails] = useState({});
+
+  const [selectedRate, setSelectedRate] = useState("");
+
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value;
+    setSelectedRate(inputValue >= 0 ? inputValue : 0);
+  };
+
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -60,18 +78,24 @@ const ViewBroadCasterBouquet = (props) => {
     }),
     onSubmit: (values) => {
       const updateBroadcasterBouque = {
-        id: values.id,
-        code: values.code,
-        name: values.name,
-        definition: values.definition,
-        description: values.description,
-        type: values.type,
-        broadcaster: values.broadcaster,
-        status: values.status,
-        rate: values.rate,
-        channels: values.channels,
-        created_at: new Date(),
-        created_by: values.created_by,
+        id: Math.floor(Math.random() * (30 - 20)) + 20,
+        code: values["code"],
+        name: values["name"],
+        // definition: values["definition"],
+        description: values["description"],
+        isHD: parseInt(values["definition"]),
+        isFta: parseInt(values["type"]),
+        broadcaster_id: parseInt(values["broadcaster_id"]),
+        status: parseInt(values["status"]),
+        broadcasterRate: values["broadcasterRate"],
+        channelsGroup: channels.map((single) => {
+          return single.id;
+        }),
+        revenue_share: {
+          mso_share: msoPercent,
+          mso_discount: discountPercent,
+          broadcaster_share: broadPercent,
+        },
       };
       console.log(
         "newBroadcasterBouquetList:" + JSON.stringify(updateBroadcasterBouque)
@@ -79,7 +103,6 @@ const ViewBroadCasterBouquet = (props) => {
       dispatch(onUpdateBroadcasterBouquet(updateBroadcasterBouque));
       validation.resetForm();
       toggleViewModal();
-      resetSelection();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -87,9 +110,33 @@ const ViewBroadCasterBouquet = (props) => {
   });
   const handleCancel = () => {
     setShowEditBroadcast(false);
-    resetSelection();
     toggleViewModal();
   };
+
+  useEffect(() => {
+    const getSelectedRowDetails = async (e) => {
+      try {
+        const token = "Bearer " + localStorage.getItem("temptoken");
+
+        const response = await axios.get(
+          `${API_URL}/package/${selectedRowId}?expand=channels,brdBouques&vr=web1.0`,
+
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        setSelectedRowDetails(response.data.data);
+        console.log("response in useEffect:" + JSON.stringify(response));
+      } catch (error) {
+        console.error("Error fetching addChannels data:", error);
+      }
+    };
+    getSelectedRowDetails();
+  }, [selectedRowId]);
+
+
   return (
     <Modal
       isOpen={isOpen}
@@ -206,9 +253,13 @@ const ViewBroadCasterBouquet = (props) => {
                   value={validation.values.definition || ""}
                   disabled={!showEditBroadcast}
                 >
-                  <option value="101">Select definition</option>
-                  <option value="102">Standard Definition(SD)</option>
-                  <option value="103">High Definition(HD)</option>
+                  <option value="">Select Definition</option>
+                  {broadcasterBouquetDefinition &&
+                    broadcasterBouquetDefinition.map((isHD) => (
+                      <option key={isHD.id} value={isHD.id}>
+                        {isHD.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.definition &&
                   validation.errors.definition ? (
@@ -259,14 +310,22 @@ const ViewBroadCasterBouquet = (props) => {
                   type="select"
                   placeholder="Select Channel type"
                   className="form-select"
-                  onChange={validation.handleChange}
+                  onChange={(e) => {
+                    validation.handleChange(e);
+                    setSelectedType(e.target.value);
+                  }}
                   onBlur={validation.handleBlur}
-                  value={validation.values.type || ""}
+                  value={selectedType}
+                  // value={validation.values.type || ""}
                   disabled={!showEditBroadcast}
                 >
-                  <option value="104">Select channel type</option>
-                  <option value="105">Pay Channel</option>
-                  <option value="106">FTA</option>
+                  <option value="">Select Type</option>
+                  {broadcasterBouquetType &&
+                    broadcasterBouquetType.map((type) => (
+                      <option key={type.id} value={type.id}>
+                        {type.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.type && validation.errors.type ? (
                   <FormFeedback type="invalid">
@@ -281,18 +340,25 @@ const ViewBroadCasterBouquet = (props) => {
                   Broadcaster<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="broadcaster"
+                  name="broadcaster_id"
                   type="select"
                   placeholder="Select broadcaster"
                   className="form-select"
-                  onChange={validation.handleChange}
+                  onChange={(e) => {
+                    validation.handleChange(e);
+                    setSelectedBroadcaster(e.target.value);
+                  }}
                   onBlur={validation.handleBlur}
                   value={validation.values.broadcaster || ""}
                   disabled={!showEditBroadcast}
                 >
-                  <option value="110">Select broadcaster</option>
-                  <option value="111">Lex Sportal Vision Pvt Ltd.</option>
-                  <option value="112">Jangama Media Pvt Ltd.</option>
+                  <option value="">Select Type</option>
+                  {broadcasterBouquetBroadcaster &&
+                    broadcasterBouquetBroadcaster.map((broadcaster_id) => (
+                      <option key={broadcaster_id.id} value={broadcaster_id.id}>
+                        {broadcaster_id.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.broadcaster &&
                   validation.errors.broadcaster ? (
@@ -317,9 +383,13 @@ const ViewBroadCasterBouquet = (props) => {
                   value={validation.values.status || ""}
                   disabled={!showEditBroadcast}
                 >
-                  <option value="101">Select Status</option>
-                  <option value="102">Active</option>
-                  <option value="103">In-Active</option>
+                  <option value="">Select Status</option>
+                  {broadcasterBouquetStatus &&
+                    broadcasterBouquetStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
