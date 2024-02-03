@@ -129,10 +129,10 @@ const AddNewBroadcasterBouquetList = (props) => {
         description: values["description"],
         isHD: parseInt(values["definition"]),
         isFta: parseInt(values["type"]),
-        broadcaster: parseInt(values["broadcaster"]),
+        broadcaster_id: parseInt(values["broadcaster_id"]),
         status: parseInt(values["status"]),
         broadcasterRate: values["broadcasterRate"],
-        channels: channels.map((single) => {
+        channelsGroup: channels.map((single) => {
           return single.id;
         }),
         // channels: channels.map((single) => {
@@ -362,7 +362,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                   Broadcaster<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="broadcaster"
+                  name="broadcaster_id"
                   type="select"
                   placeholder="Select broadcaster"
                   className="form-select"
@@ -376,16 +376,16 @@ const AddNewBroadcasterBouquetList = (props) => {
                 >
                   <option value="">Select Type</option>
                   {broadcasterBouquetBroadcaster &&
-                    broadcasterBouquetBroadcaster.map((broadcaster) => (
-                      <option key={broadcaster.id} value={broadcaster.id}>
-                        {broadcaster.name}
+                    broadcasterBouquetBroadcaster.map((broadcaster_id) => (
+                      <option key={broadcaster_id.id} value={broadcaster_id.id}>
+                        {broadcaster_id.name}
                       </option>
                     ))}
                 </Input>
-                {validation.touched.broadcaster &&
-                  validation.errors.broadcaster ? (
+                {validation.touched.broadcaster_id &&
+                  validation.errors.broadcaster_id ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.broadcaster}
+                    {validation.errors.broadcaster_id}
                   </FormFeedback>
                 ) : null}
               </div>
