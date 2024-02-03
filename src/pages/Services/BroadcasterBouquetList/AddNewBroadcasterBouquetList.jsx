@@ -101,53 +101,55 @@ const AddNewBroadcasterBouquetList = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      //BroadCaster: "",
       code: "",
       name: "",
       definition: "",
       description: "",
-      isFta: "",
-      broadcaster: "",
+      // isFta: "",
+      // broadcaster: "",
       status: "",
-      rate: "",
-      created_by: "Admin",
+      // rate: "",
     },
     validationSchema: Yup.object({
-      code: Yup.string().required("Enter Code"),
+      // code: Yup.string().required("Enter Code"),
       name: Yup.string().required("Enter name"),
-      definition: Yup.string().required("Select definition"),
+      // definition: Yup.string().required("Select definition"),
       description: Yup.string().required("Enter description"),
-      isFta: Yup.string().required("Select type"),
-      broadcaster: Yup.string().required("select broadcaster"),
-      status: Yup.string().required("Enter status"),
-      rate: Yup.string().required(""),
+      // isFta: Yup.string().required("Select type"),
+      // broadcaster: Yup.string().required("select broadcaster"),
+      // status: Yup.string().required("Enter status"),
+      // rate: Yup.string().required(""),
       // serviceid: Yup.string().required("serviceid"),
     }),
     onSubmit: (values) => {
       const newBroadcasterBouquetList = {
         code: values["code"],
         name: values["name"],
-        definition: values["definition"],
+        // definition: values["definition"],
         description: values["description"],
-        isFta: values["isFta"],
-        broadcaster: values["broadcaster"],
+        isHD: parseInt(values["definition"]),
+        isFta: parseInt(values["type"]),
+        broadcaster: parseInt(values["broadcaster"]),
         status: parseInt(values["status"]),
-        rate: values["rate"],
+        broadcasterRate: values["broadcasterRate"],
         channels: channels.map((single) => {
-          return {
-            broadcasterRate: single.broadcasterRate,
-            broadcaster_lbl: single.broadcaster_lbl,
-            channel_type_lbl: single.channel_type_lbl,
-            id: single.id,
-            isAlacarte: single.isAlacarte,
-            isAlacarte_lbl: single.isAlacarte,
-            isFta: single.isFta,
-            isFta_lbl: single.isFta_lbl,
-            isNCF: single.isNCF,
-            isNCF_lbl: single.isNCF_lbl,
-            name: single.name,
-          };
+          return single.id;
         }),
+        // channels: channels.map((single) => {
+        //   return {
+        //     broadcasterRate: single.broadcasterRate,
+        //     broadcaster_lbl: single.broadcaster_lbl,
+        //     channel_type_lbl: single.channel_type_lbl,
+        //     id: single.id,
+        //     isAlacarte: single.isAlacarte,
+        //     isAlacarte_lbl: single.isAlacarte,
+        //     isFta: single.isFta,
+        //     isFta_lbl: single.isFta_lbl,
+        //     isNCF: single.isNCF,
+        //     isNCF_lbl: single.isNCF_lbl,
+        //     name: single.name,
+        //   };
+        // }),
         revenue_share: {
           mso_share: msoPercent,
           mso_discount: discountPercent,
@@ -278,9 +280,9 @@ const AddNewBroadcasterBouquetList = (props) => {
                 >
                   <option value="">Select Definition</option>
                   {broadcasterBouquetDefinition &&
-                    broadcasterBouquetDefinition.map((definition) => (
-                      <option key={definition.id} value={definition.id}>
-                        {definition.name}
+                    broadcasterBouquetDefinition.map((isHD) => (
+                      <option key={isHD.id} value={isHD.id}>
+                        {isHD.name}
                       </option>
                     ))}
                 </Input>
@@ -328,7 +330,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                   Type<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="isFTA"
+                  name="type"
                   type="select"
                   placeholder="Select Channel type"
                   className="form-select"
@@ -341,15 +343,15 @@ const AddNewBroadcasterBouquetList = (props) => {
                 >
                   <option value="">Select Type</option>
                   {broadcasterBouquetType &&
-                    broadcasterBouquetType.map((isFta) => (
-                      <option key={isFta.id} value={isFta.id}>
-                        {isFta.name}
+                    broadcasterBouquetType.map((type) => (
+                      <option key={type.id} value={type.id}>
+                        {type.name}
                       </option>
                     ))}
                 </Input>
-                {validation.touched.isFta && validation.errors.isFta ? (
+                {validation.touched.type && validation.errors.type ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.isFta}
+                    {validation.errors.type}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -422,7 +424,7 @@ const AddNewBroadcasterBouquetList = (props) => {
               <div className="mb-3">
                 <Label className="form-label">MRP Rate(INR)</Label>
                 <Input
-                  name="rate"
+                  name="broadcasterRate"
                   type="number"
                   step="0.01"
                   onChange={handleInputChange}
