@@ -190,7 +190,7 @@ const BroadcasterBouquetList = (props) => {
       },
       {
         Header: "FTA",
-        accessor: "FTA",
+        accessor: "isFta_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <FTA {...cellProps} />;
@@ -233,7 +233,7 @@ const BroadcasterBouquetList = (props) => {
       },
       {
         Header: "Rate",
-        accessor: "rate",
+        accessor: "broadcasterRate",
         filterable: true,
         Cell: (cellProps) => {
           return <Rate {...cellProps} />;
