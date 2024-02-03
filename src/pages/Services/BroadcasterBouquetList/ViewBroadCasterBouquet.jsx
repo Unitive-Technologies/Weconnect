@@ -20,14 +20,18 @@ import {
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { updateBroadcasterBouquet as onUpdateBroadcasterBouquet, addNewBroadcasterBouquetList as onAddNewBroadcasterBouquetList } from "/src/store/broadcasterbouquet/actions";
-import { useSelector, useDispatch } from "react-redux";
-import AddChannels from "./AddChannels";
+import { updateBroadcasterBouquet as onUpdateBroadcasterBouquet } from "/src/store/broadcasterbouquet/actions";
+import { useDispatch } from "react-redux";
+import ViewChannels from "./ViewChannels";
 import RevenueShare from "./RevenueShare";
 
 const ViewBroadCasterBouquet = (props) => {
-  const { isOpen, broadcasterBouquetAddchannels, broadcasterBouquetType, broadcasterBouquetBroadcaster, broadcasterBouquetDefinition, broadcasterBouquetStatus, resetSelection, toggleViewModal, broadcast } = props;
+  const { isOpen, broadcasterBouquetAddchannels,
+    selectedRowId,
+    broadcasterBouquetType, broadcasterBouquetBroadcaster, broadcasterBouquetDefinition, broadcasterBouquetStatus, resetSelection, toggleViewModal, broadcast } = props;
   const dispatch = useDispatch();
+
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
 
   const [showEditBroadcast, setShowEditBroadcast] = useState(false);
 
@@ -65,15 +69,15 @@ const ViewBroadCasterBouquet = (props) => {
       created_by: "Admin",
     },
     validationSchema: Yup.object({
-      code: Yup.string().required("Enter Code"),
+      // code: Yup.string().required("Enter Code"),
       name: Yup.string().required("Enter name"),
-      definition: Yup.string().required("Select definition"),
+      // definition: Yup.string().required("Select definition"),
       description: Yup.string().required("Enter description"),
-      type: Yup.string().required("Select type"),
-      broadcaster: Yup.string().required("select broadcaster"),
-      status: Yup.string().required("Enter status"),
-      rate: Yup.string().required(""),
-      channels: Yup.string().required("channels"),
+      // type: Yup.string().required("Select type"),
+      // broadcaster: Yup.string().required("select broadcaster"),
+      // status: Yup.string().required("Enter status"),
+      // rate: Yup.string().required(""),
+      // channels: Yup.string().required("channels"),
       // serviceid: Yup.string().required("serviceid"),
     }),
     onSubmit: (values) => {
@@ -119,7 +123,7 @@ const ViewBroadCasterBouquet = (props) => {
         const token = "Bearer " + localStorage.getItem("temptoken");
 
         const response = await axios.get(
-          `${API_URL}/package/${selectedRowId}?expand=channels,brdBouques&vr=web1.0`,
+          `${API_URL}/broadcaster-bouque/${selectedRowId}?expand=channels&vr=web1.0`,
 
           {
             headers: {
@@ -474,7 +478,13 @@ const ViewBroadCasterBouquet = (props) => {
             }}
           >
             <Col sm="12">
-              <AddChannels showEditBroadcast={showEditBroadcast} />
+              <ViewChannels showEditBroadcast={showEditBroadcast} channels={channels}
+                setChannels={setChannels}
+                selectedType={selectedType}
+                selectedBroadcaster={selectedBroadcaster}
+                updateList={setChannels}
+                broadcasterBouquetAddchannels={broadcasterBouquetAddchannels}
+                definition={validation.values.definition} />
             </Col>
           </Row>
           <Row>
