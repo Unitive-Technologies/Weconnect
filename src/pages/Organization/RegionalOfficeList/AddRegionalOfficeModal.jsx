@@ -178,7 +178,14 @@ const AddRegionalOfficeModal = (props) => {
       const newRegionalOffice = {
         name: values["name"],
         code: values["code"],
-        // logo: values["logo"],
+        agreement_data: {
+          name: values["upload"].name,
+          type: values["upload"].type,
+          ext: values["upload"].ext,
+          data: values["upload"].data,
+          start_date: values["agreestart"],
+          end_date: values["agreeend"],
+        },
         addr: values["addr1"],
         addr1: values["addr1"],
         addr2: values["addr2"],

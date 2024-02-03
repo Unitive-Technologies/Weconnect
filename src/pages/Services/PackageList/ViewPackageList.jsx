@@ -136,7 +136,9 @@ const ViewPackageList = (props) => {
         console.error("Error fetching addChannels data:", error);
       }
     };
-    getSelectedRowDetails();
+    if (selectedRowId) {
+      getSelectedRowDetails();
+    }
   }, [selectedRowId]);
   console.log("selectedRowDetails:" + JSON.stringify(selectedRowDetails));
   return (

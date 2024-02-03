@@ -47,7 +47,9 @@ const BBQ = (cell) => {
 };
 
 const Channels = (cell) => {
-  return cell.value ? cell.value : "";
+  return cell.value.map((channel) => {
+    return <p key={channel.cas_id}>{channel.name}</p>;
+  });
 };
 
 const Rate = (cell) => {

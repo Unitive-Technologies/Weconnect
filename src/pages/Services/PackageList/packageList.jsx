@@ -178,25 +178,23 @@ const PackageList = (props) => {
         Header: "CHANNELS",
         accessor: "channels",
         filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p
-              className="text-muted mb-0"
-              style={{
-                maxWidth: 200,
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {cellProps.row.original.channels}
-            </p>
-          );
-        },
-
         // Cell: (cellProps) => {
-        //   return <Channels {...cellProps} />;
-        // },
+        // return (
+        // <p
+        //   className="text-muted mb-0"
+        //   style={{
+        //     maxWidth: 200,
+        //     overflow: "hidden",
+        //     textOverflow: "ellipsis",
+        //     whiteSpace: "nowrap",
+        //   }}
+        // >
+        //   {cellProps.row.original.channels}
+        // </p>)
+
+        Cell: (cellProps) => {
+          return <Channels {...cellProps} />;
+        },
       },
       {
         Header: "BBQ",

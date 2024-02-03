@@ -574,7 +574,7 @@ const ViewChannel = (props) => {
               margin: "30px 0px",
             }}
           >
-            <Col lg={6}>
+            <Col lg={4}>
               <RevenueShare
                 broadPercent={broadPercent}
                 msoPercent={msoPercent}
@@ -585,8 +585,12 @@ const ViewChannel = (props) => {
               />
             </Col>
             {console.log("XXXXXXXX:" + channel.isFta, channel.broadcasterRate)}
-            {channel.isFta === "0" && channel.broadcasterRate !== "" ? (
-              <Col lg={6}>
+            {console.log(
+              "XXXTYPE:" + typeof channel.isFta,
+              typeof channel.broadcasterRate
+            )}
+            {channel.isFta === 0 && channel.broadcasterRate !== "" ? (
+              <Col lg={4}>
                 <Card>
                   <CardBody>
                     <span>Graphical representation of SHARE</span>
@@ -597,7 +601,7 @@ const ViewChannel = (props) => {
                       broadPercent={broadPercent}
                       msoPercent={msoPercent}
                       discountPercent={discountPercent}
-                      selectedRate={channel.broadcasterRate}
+                      selectedRate={parseInt(channel.broadcasterRate)}
                       dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
                     />
                   </CardBody>
