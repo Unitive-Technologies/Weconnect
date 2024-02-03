@@ -57,6 +57,25 @@ const AddDistributorModal = (props) => {
   const { regOff } = useSelector(RegionalOfficeProperties);
   const { statesList } = useSelector(StatesProperties);
 
+  const handleChangeUploadFile = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const { name, type } = file;
+      const ext = name.split(".").pop();
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const data = reader.result;
+
+        validation.setFieldValue("upload", {
+          name,
+          type,
+          ext,
+          data,
+        });
+      };
+    }
+  };
   const handleStateChange = async (e) => {
     try {
       const stateName = e.target.value;
@@ -182,12 +201,12 @@ const AddDistributorModal = (props) => {
         name: values["name"],
         code: values["code"],
         agreement_data: {
-          name: "",
-          type: "",
-          ext: "",
+          name: values["upload"].name,
+          type: values["upload"].type,
+          ext: values["upload"].ext,
+          data: values["upload"].data,
           start_date: values["agreestart"],
           end_date: values["agreeend"],
-          data: "",
         },
         parent_id: parseInt(values["parentRO"]),
         addr: values["addr1"],
@@ -961,26 +980,29 @@ const AddDistributorModal = (props) => {
           >
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Upload</Label>
-                <Input
+                {/* <Label className="form-label">Logo</Label> */}
+                <input
+                  style={{
+                    width: "170px",
+                    height: "150px",
+                    borderRadius: "10px",
+                  }}
                   name="upload"
-                  label="Upload"
                   type="file"
-                  placeholder="Upload"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.upload || ""}
-                  invalid={
-                    validation.touched.upload && validation.errors.upload
-                      ? true
-                      : false
-                  }
-                />
+                  onChange={handleChangeUploadFile}
+                ></input>
                 {validation.touched.upload && validation.errors.upload ? (
                   <FormFeedback type="invalid">
                     {validation.errors.upload}
                   </FormFeedback>
                 ) : null}
+                <button
+                  type="button"
+                  className="btn btn-primary "
+                  style={{ marginTop: "10px" }}
+                >
+                  Upload File
+                </button>
               </div>
             </Col>
             <Col lg={4}>
@@ -1034,7 +1056,9 @@ const AddDistributorModal = (props) => {
               </div>
             </Col>
           </Row>
-
+          {console.log(
+            "agreement upload:" + JSON.stringify(validation.values.upload)
+          )}
           <Row>
             <Col lg={4}>
               <div className="mb-3">

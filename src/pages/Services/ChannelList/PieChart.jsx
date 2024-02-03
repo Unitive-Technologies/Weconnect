@@ -9,11 +9,12 @@ const PieChart = ({
   msoPercent,
   discountPercent,
 }) => {
-  console.log(
-    "Percent values in Piechart:" + broadPercent,
-    msoPercent,
-    discountPercent
-  );
+  console.log("selectedRate in piechart: " + selectedRate);
+  // console.log(
+  //   "Percent values in Piechart:" + broadPercent,
+  //   msoPercent,
+  //   discountPercent
+  // );
   const PieApexChartColors = getChartColorsArray(dataColors);
 
   const BroadCasterShare = (broadPercent * selectedRate) / 100;

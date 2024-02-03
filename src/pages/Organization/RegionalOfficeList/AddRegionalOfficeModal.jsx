@@ -39,7 +39,7 @@ const AddRegionalOfficeModal = (props) => {
 
   const { statesList } = useSelector(StatesProperties);
 
-  const handleChangeLogo = (e) => {
+  const handleChangeUploadFile = (e) => {
     const file = e.target.files[0];
     if (file) {
       const { name, type } = file;
@@ -49,7 +49,7 @@ const AddRegionalOfficeModal = (props) => {
       reader.onload = () => {
         const data = reader.result;
 
-        validation.setFieldValue("logo", {
+        validation.setFieldValue("upload", {
           name,
           type,
           ext,
@@ -165,20 +165,20 @@ const AddRegionalOfficeModal = (props) => {
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
       addr1: Yup.string().required("Please Address"),
-      contact_person: Yup.string().required("Please Enter Contact Person"),
-      mobile_no: Yup.string().required("Please Enter Mobile"),
-      status_lbl: Yup.string().required("Please Enter Status"),
-      state_lbl: Yup.string().required("Please Enter State"),
-      district_lbl: Yup.string().required("Please Enter District"),
-      city_lbl: Yup.string().required("Please Enter City"),
-      username: Yup.string().required("Please Enter LoginID"),
+      // contact_person: Yup.string().required("Please Enter Contact Person"),
+      // mobile_no: Yup.string().required("Please Enter Mobile"),
+      // status_lbl: Yup.string().required("Please Enter Status"),
+      // state_lbl: Yup.string().required("Please Enter State"),
+      // district_lbl: Yup.string().required("Please Enter District"),
+      // city_lbl: Yup.string().required("Please Enter City"),
+      // username: Yup.string().required("Please Enter LoginID"),
     }),
     onSubmit: (values) => {
       debugger;
       const newRegionalOffice = {
         name: values["name"],
         code: values["code"],
-        logo: values["logo"],
+        // logo: values["logo"],
         addr: values["addr1"],
         addr1: values["addr1"],
         addr2: values["addr2"],
@@ -932,20 +932,20 @@ const AddRegionalOfficeModal = (props) => {
           >
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Logo</Label>
+                {/* <Label className="form-label">Logo</Label> */}
                 <input
                   style={{
                     width: "170px",
                     height: "150px",
                     borderRadius: "10px",
                   }}
-                  name="logo"
+                  name="upload"
                   type="file"
-                  onChange={handleChangeLogo}
+                  onChange={handleChangeUploadFile}
                 ></input>
-                {validation.touched.logo && validation.errors.logo ? (
+                {validation.touched.upload && validation.errors.upload ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.logo}
+                    {validation.errors.upload}
                   </FormFeedback>
                 ) : null}
                 <button
@@ -953,7 +953,7 @@ const AddRegionalOfficeModal = (props) => {
                   className="btn btn-primary "
                   style={{ marginTop: "10px" }}
                 >
-                  Upload Logo
+                  Upload File
                 </button>
               </div>
             </Col>
