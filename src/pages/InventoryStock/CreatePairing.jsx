@@ -362,14 +362,14 @@ function CreatePairing(props) {
           </Row>
           <Row>
             <Col lg="6"></Col>
-            <Col xl="3" lg="4" sm="6">
+            <Col>
               <button
                 type="button"
                 onClick={handleHandshake}
                 disabled={!isPairingEnabled}
               >
-                {/* <i className="mdi mdi-handshake-outline"></i> */}
-                Create Pairing
+                <i className="mdi mdi-handshake-outline"></i>
+                {/* Create Pairing */}
               </button>
             </Col>
           </Row>
