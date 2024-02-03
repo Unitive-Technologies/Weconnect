@@ -12,6 +12,7 @@ import {
   ToastHeader,
   ToastBody,
   Table,
+  CardFooter,
 } from "reactstrap";
 import AddBroadcasterBouquetsTableList from "./AddBroadcasterBouquetsTableList";
 import { Link } from "react-router-dom";
@@ -339,7 +340,14 @@ const AddBroadcasterBouquets = (props) => {
             tableClass="table align-middle table-nowrap table-hover"
             theadClass="table-light"
           /> */}
-          <Table className="table mb-0">
+          <Table
+            className="table mb-0"
+            style={{
+              minHeight: "200px",
+              maxHeight: "400px",
+              overflow: "scroll",
+            }}
+          >
             <thead>
               <tr>
                 <th
@@ -422,56 +430,57 @@ const AddBroadcasterBouquets = (props) => {
             </tbody>
           </Table>
         </CardBody>
-
-        <div style={{ display: "flex" }}>
-          <Row
-            style={{
-              border: "1px solid #ced4da",
-              padding: "5px 0px",
-              margin: "1px 0px",
-              width: "450px",
-              height: "50px",
-              display: "flex",
-            }}
-          >
-            <div
+        <CardFooter className="fixed">
+          <div style={{ display: "flex" }}>
+            <Row
               style={{
-                backgroundColor: "#fff",
-                padding: "10px",
-                width: "100%",
-                boxSizing: "border-box",
+                border: "1px solid #ced4da",
+                padding: "5px 0px",
+                margin: "1px 0px",
+                width: "450px",
+                height: "50px",
+                display: "flex",
               }}
             >
-              <h6 style={{ textAlign: "left", margin: 0 }}>
-                {/* Total Channels: {totalCount} */}
-                Total Channels: {totalChannelsInBouquets}
-              </h6>
-            </div>
-          </Row>
-          <Row
-            style={{
-              border: "1px solid #ced4da",
-              padding: "5px 0px",
-              margin: "1px 0px",
-              width: "250px",
-              display: "flex",
-            }}
-          >
-            <div
+              <div
+                style={{
+                  backgroundColor: "#fff",
+                  padding: "10px",
+                  width: "100%",
+                  boxSizing: "border-box",
+                }}
+              >
+                <h6 style={{ textAlign: "left", margin: 0 }}>
+                  {/* Total Channels: {totalCount} */}
+                  Total Channels: {totalChannelsInBouquets}
+                </h6>
+              </div>
+            </Row>
+            <Row
               style={{
-                backgroundColor: "#fff",
-                padding: "10px",
-                width: "100%",
-                boxSizing: "border-box",
+                border: "1px solid #ced4da",
+                padding: "5px 0px",
+                margin: "1px 0px",
+                width: "250px",
+                display: "flex",
               }}
             >
-              <h6 style={{ textAlign: "center", margin: 0 }}>
-                {/* Total: {parseFloat(totalRate).toFixed(2)} */}
-                Total: {parseFloat(totalPackageRateInBouquets).toFixed(2)}
-              </h6>
-            </div>
-          </Row>
-        </div>
+              <div
+                style={{
+                  backgroundColor: "#fff",
+                  padding: "10px",
+                  width: "100%",
+                  boxSizing: "border-box",
+                }}
+              >
+                <h6 style={{ textAlign: "center", margin: 0 }}>
+                  {/* Total: {parseFloat(totalRate).toFixed(2)} */}
+                  Total: {parseFloat(totalPackageRateInBouquets).toFixed(2)}
+                </h6>
+              </div>
+            </Row>
+          </div>
+        </CardFooter>
       </Card>
     </>
   );
