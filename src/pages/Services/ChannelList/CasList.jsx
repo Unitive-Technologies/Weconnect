@@ -24,6 +24,7 @@ const CasList = ({
   updateList,
   handleUpdateCasList,
   channelListCascode,
+  showEditChannel,
 }) => {
   console.log("Cas List Data" + JSON.stringify(data));
 

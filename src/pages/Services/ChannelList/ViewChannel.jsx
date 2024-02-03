@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import RevenueShare from "./RevenueShare";
@@ -21,9 +21,28 @@ import { useDispatch } from "react-redux";
 import CasList from "./CasList";
 
 const ViewChannel = (props) => {
-  const { isOpen, resetSelection, toggleViewModal, channel, channelListBroadcaster, channelListStatus, channelListType, channelListDefinition, channelListGenre, channelListCascode, channelListLanguage } = props;
+  const {
+    isOpen,
+    resetSelection,
+    toggleViewModal,
+    channel,
+    channelListBroadcaster,
+    channelListStatus,
+    channelListType,
+    channelListDefinition,
+    channelListGenre,
+    channelListCascode,
+    channelListLanguage,
+  } = props;
   const dispatch = useDispatch();
   const [showEditChannel, setShowEditChannel] = useState(false);
+  console.log("selected row in view:" + JSON.stringify(channel));
+  const [casCodeList, setCasCodeList] = useState([]);
+  const [revenueData, setRevenueData] = useState({});
+  const [broadPercent, setBroadPercent] = useState();
+  const [msoPercent, setMsoPercent] = useState();
+  const [discountPercent, setDiscountPercent] = useState();
+
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -38,13 +57,11 @@ const ViewChannel = (props) => {
       type: (channel && channel.type) || "",
       broadcaster: (channel && channel.broadcaster) || "",
       genre: (channel && channel.genre) || "",
-      language: (channel && channel.language) || "",
+      language: (channel && channel.language_lbl) || "",
       isalacarte: (channel && channel.isalacarte) || "",
-      rate: (channel && channel.rate) || "",
+      rate: (channel && channel.broadcasterRate) || "",
       status: (channel && channel.status) || "",
-      cas: "",
-      cascode: (channel && channel.cascode) || "",
-      serviceid: "",
+      // revenue: (channel && channel.revenue_share) || {},
     },
     validationSchema: Yup.object({
       code: Yup.string().required("Enter Channel Code"),
@@ -101,6 +118,26 @@ const ViewChannel = (props) => {
     resetSelection();
     toggleViewModal();
   };
+
+  useEffect(() => {
+    if (channel) {
+      setRevenueData(channel.revenue_share);
+    } else {
+      setRevenueData({});
+    }
+  }, [channel]);
+
+  useEffect(() => {
+    if (revenueData && revenueData.broadcaster_share) {
+      setBroadPercent(revenueData.broadcaster_share);
+    }
+    if (revenueData && revenueData.mso_share) {
+      setMsoPercent(revenueData.mso_share);
+    }
+    if (revenueData && revenueData.mso_discount) {
+      setDiscountPercent(revenueData.mso_discount);
+    }
+  }, [revenueData]);
 
   return (
     <Modal
@@ -268,13 +305,13 @@ const ViewChannel = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -304,7 +341,7 @@ const ViewChannel = (props) => {
                   ))}
                 </Input>
                 {validation.touched.definition &&
-                  validation.errors.definition ? (
+                validation.errors.definition ? (
                   <FormFeedback type="invalid">
                     {validation.errors.definition}
                   </FormFeedback>
@@ -328,12 +365,16 @@ const ViewChannel = (props) => {
                 >
                   {channelListType &&
                     channelListType.map((channel_type_lbl) => (
-                      <option key={channel_type_lbl.id} value={channel_type_lbl.id}>
+                      <option
+                        key={channel_type_lbl.id}
+                        value={channel_type_lbl.id}
+                      >
                         {channel_type_lbl.name}
                       </option>
                     ))}
                 </Input>
-                {validation.touched.channel_type_lbl && validation.errors.channel_type_lbl ? (
+                {validation.touched.channel_type_lbl &&
+                validation.errors.channel_type_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.channel_type_lbl}
                   </FormFeedback>
@@ -364,7 +405,7 @@ const ViewChannel = (props) => {
                   ))}
                 </Input>
                 {validation.touched.broadcaster &&
-                  validation.errors.broadcaster ? (
+                validation.errors.broadcaster ? (
                   <FormFeedback type="invalid">
                     {validation.errors.broadcaster}
                   </FormFeedback>
@@ -444,7 +485,7 @@ const ViewChannel = (props) => {
                   <option value="202">No</option>
                 </Input>
                 {validation.touched.isalacarte &&
-                  validation.errors.isalacarte ? (
+                validation.errors.isalacarte ? (
                   <FormFeedback type="invalid">
                     {validation.errors.isalacarte}
                   </FormFeedback>
@@ -524,7 +565,14 @@ const ViewChannel = (props) => {
             }}
           >
             <Col sm="12">
-              <RevenueShare />
+              <RevenueShare
+                broadPercent={broadPercent}
+                msoPercent={msoPercent}
+                discountPercent={discountPercent}
+                setBroadPercent={setBroadPercent}
+                setMsoPercent={setMsoPercent}
+                setDiscountPercent={setDiscountPercent}
+              />
             </Col>
           </Row>
 
@@ -552,7 +600,10 @@ const ViewChannel = (props) => {
             }}
           >
             <Col sm="12">
-              {/* <CasList showEditChannel={showEditChannel} /> */}
+              <CasList
+                showEditChannel={showEditChannel}
+                data={channel.casCodes}
+              />
             </Col>
           </Row>
           {!showEditChannel && (
