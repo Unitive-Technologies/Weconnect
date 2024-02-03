@@ -126,10 +126,10 @@ const PackageList = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-                onClick={() => {
-                  const packageData = cellProps.row.original;
-                  handleViewPackageList(packageData);
-                }}
+                // onClick={() => {
+                //   const packageData = cellProps.row.original;
+                //   handleViewPackageList(packageData);
+                // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -152,7 +152,7 @@ const PackageList = (props) => {
       },
       {
         Header: "Type",
-        accessor: "type",
+        accessor: "package_type_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Type {...cellProps} />;
@@ -160,7 +160,7 @@ const PackageList = (props) => {
       },
       {
         Header: "Package Type",
-        accessor: "packagetype",
+        accessor: "isFta_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <PackageType {...cellProps} />;
@@ -168,7 +168,7 @@ const PackageList = (props) => {
       },
       {
         Header: "CAS CODES",
-        accessor: "cascodes",
+        accessor: "casCodes",
         filterable: true,
         Cell: (cellProps) => {
           return <CasCodes {...cellProps} />;
@@ -200,7 +200,7 @@ const PackageList = (props) => {
       },
       {
         Header: "BBQ",
-        accessor: "BBQ",
+        accessor: "brdBouques",
         filterable: true,
         Cell: (cellProps) => {
           return <BBQ {...cellProps} />;
@@ -236,41 +236,6 @@ const PackageList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return <CreatedBy {...cellProps} />;
-        },
-      },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
-          );
         },
       },
     ],
@@ -311,10 +276,12 @@ const PackageList = (props) => {
   const [showViewPackageList, setShowViewPackageList] = useState(false);
 
   const [viewData, setViewData] = useState({});
+  const [selectedRowId, setSelectedRowId] = useState("");
 
   const handleViewPackageList = (packageData) => {
     setShowViewPackageList(!showViewPackageList);
     setViewData(packageData);
+    setSelectedRowId(packageData.id);
   };
 
   const keyField = "id";
@@ -370,7 +337,7 @@ const PackageList = (props) => {
         isOpen={showViewPackageList}
         handleViewPackageList={handleViewPackageList}
         packageList={viewData}
-        selectedRowId={viewData.id}
+        selectedRowId={selectedRowId}
         packageType={packageType}
         packageBoxType={packageBoxType}
         packageStatus={packageStatus}
@@ -387,7 +354,7 @@ const PackageList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {/* {console.log("packageList:" + JSON.stringify(packageList))} */}
+                    {console.log("packageList:" + JSON.stringify(packageList))}
                     {/* <TableContainer
                       isPagination={true}
                       columns={columns}
@@ -426,6 +393,7 @@ const PackageList = (props) => {
                       isGlobalFilter={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
+                      handleRowClick={(row) => handleViewPackageList(row)}
                       handleAddNewPackageList={() =>
                         setShowAddNewPackageList(true)
                       }

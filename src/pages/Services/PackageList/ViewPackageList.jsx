@@ -17,11 +17,12 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addNewPackageList as onAddNewPackageList } from "/src/store/packagelist/actions";
+import { updatePackage as onUpdatePackage } from "/src/store/packagelist/actions";
 import { useDispatch } from "react-redux";
 import ViewCasList from "./ViewCasList";
 import ViewBroadcasterBouquets from "./ViewBroadcasterBouquets";
 import ViewChannels from "./ViewChannels";
+import CasList from "./CasList";
 
 const ViewPackageList = (props) => {
   const {
@@ -33,63 +34,71 @@ const ViewPackageList = (props) => {
     packageBoxType,
     packageStatus,
   } = props;
-  console.log("selectedRowId:" + selectedRowId);
-  console.log("selectedRow by props:" + JSON.stringify(packageList));
+  // console.log("selectedRowId:" + selectedRowId);
+  // console.log("selectedRow by useEffect:" + JSON.stringify(selectedRowDetails));
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const dispatch = useDispatch();
   const [showEditChannel, setShowEditChannel] = useState(false);
   const [selectedRowDetails, setSelectedRowDetails] = useState({});
+  const [casCodeList, setCasCodeList] = useState([]);
+
+  const [casSelectList, setCasSelectList] = useState([]);
+
   const [totalChannelsInChannels, setTotalChannelsInChannels] = useState(0);
   const [totalPackageRateInChannels, setTotalPackageRateInChannels] =
     useState(0);
   const [totalChannelsInBouquets, setTotalChannelsInBouquets] = useState(0);
   const [totalPackageRateInBouquets, setTotalPackageRateInBouquets] =
     useState(0);
-  console.log("selectedRowDetails:" + JSON.stringify(selectedRowDetails));
+
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
-      code: (packageList && packageList.code) || "",
-      name: (packageList && packageList.name) || "",
-      description: (packageList && packageList.description) || "",
-      definition: (packageList && packageList.definition) || "",
-      packagetypetype: (packageList && packageList.packagetype) || "",
-      status: (packageList && packageList.status) || "",
-      // cas: (packageList && packageList.name) || "",
-      // cascode: (packageList && packageList.name) || "",
-      created_by: (packageList && packageList.name) || "",
+      code: (selectedRowDetails && selectedRowDetails.code) || "",
+      name: (selectedRowDetails && selectedRowDetails.name) || "",
+      description: (selectedRowDetails && selectedRowDetails.description) || "",
+      definition: (selectedRowDetails && selectedRowDetails.isHD) || "",
+      type: (selectedRowDetails && selectedRowDetails.isFta) || "",
+      status: (selectedRowDetails && selectedRowDetails.status) || "",
+      // casCodeArray: (selectedRowDetails && selectedRowDetails.casCodes) || [],
     },
     validationSchema: Yup.object({
       code: Yup.string().required("Enter Channel Code"),
       name: Yup.string().required("Enter channel name"),
       description: Yup.string().required("Enter description"),
-      definition: Yup.string().required("Enter channel definition"),
-      packagetypetype: Yup.string().required("Enter channel type"),
-      status: Yup.string().required("Enter status"),
-      cas: Yup.string().required("Enter cas"),
-      cascode: Yup.string().required("cascode"),
-      // serviceid: Yup.string().required("serviceid"),
+      // definition: Yup.string().required("Enter channel definition"),
+      // packagetype: Yup.string().required("Enter channel type"),
+      // status: Yup.string().required("Enter status"),
     }),
     onSubmit: (values) => {
-      const newPackageList = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
+      const updatedPackage = {
         code: values["code"],
         name: values["name"],
         description: values["description"],
-        definition: values["definition"],
-        packagetype: values["packagetype"],
-        status: values["status"],
-        cas: values["cas"],
-        cascode: values["cascode"],
-        // serviceid: values["serviceid"],
-        created_at: new Date(),
-        created_by: values["created_by"],
+        isHD: parseInt(values["definition"]),
+        isFta: parseInt(values["type"]),
+        status: parseInt(values["status"]),
+
+        broadcasterRate:
+          totalPackageRateInChannels + totalPackageRateInBouquets,
+        casCodes: casCodeList.map((single) => {
+          return {
+            cas_id: single.cas_id,
+            cascode: single.cascode,
+          };
+        }),
+        channels: channels.map((single) => {
+          return single.id;
+        }),
+        brd_bouques: bouquets.map((single) => {
+          return single.id;
+        }),
       };
-      console.log("newPackageList:" + newPackageList);
+      console.log("newPackageList:" + updatedPackage);
       // save new user
-      dispatch(onAddNewPackageList(newPackageList));
+      dispatch(onUpdatePackage(updatedPackage));
       validation.resetForm();
       handleViewPackageList();
     },
@@ -101,6 +110,10 @@ const ViewPackageList = (props) => {
   const handleCancel = () => {
     setShowEditChannel(false);
     handleViewPackageList();
+  };
+
+  const handleUpdateCasList = (casList) => {
+    setCasCodeList(casList);
   };
 
   useEffect(() => {
@@ -125,6 +138,7 @@ const ViewPackageList = (props) => {
     };
     getSelectedRowDetails();
   }, [selectedRowId]);
+  console.log("selectedRowDetails:" + JSON.stringify(selectedRowDetails));
   return (
     <Modal
       isOpen={isOpen}
@@ -362,9 +376,22 @@ const ViewPackageList = (props) => {
             }}
           >
             <Col sm="12">
-              <ViewCasList
+              {console.log("casCodeList:" + JSON.stringify(casCodeList))}
+              {/* <ViewCasList
                 data={selectedRowDetails.casCodes}
                 showEditChannel={showEditChannel}
+                updateList={setCasCodeList}
+                casSelectList={casSelectList}
+              /> */}
+              <CasList
+                isOpen={Boolean(handleUpdateCasList)}
+                data={
+                  !selectedRowDetails
+                    ? casCodeList
+                    : selectedRowDetails.casCodes
+                }
+                updateList={setCasCodeList}
+                casSelectList={casSelectList}
               />
             </Col>
           </Row>

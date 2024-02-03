@@ -31,11 +31,19 @@ const CreatedBy = (cell) => {
 };
 
 const CasCodes = (cell) => {
-  return cell.value ? cell.value : "";
+  return cell.value.map((casCode) => {
+    return (
+      <p key={casCode.cas_id}>
+        {casCode.cas_lbl} ({casCode.cascode})
+      </p>
+    );
+  });
 };
 
 const BBQ = (cell) => {
-  return cell.value ? cell.value : "";
+  return cell.value.map((bbq) => {
+    return <p key={bbq.cas_id}>{bbq.name}</p>;
+  });
 };
 
 const Channels = (cell) => {

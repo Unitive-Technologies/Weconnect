@@ -246,6 +246,9 @@ const AddChannelsTableList = (props) => {
       <ModalBody>
         <Card>
           <CardBody>
+            {/* {isLoading ? (
+            <Spinners setLoading={setLoading} />
+          ) : ( */}
             <TableContainer
               isPagination={true}
               columns={columns}

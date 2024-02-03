@@ -65,6 +65,7 @@ const CasList = ({ data, updateList, casSelectList }) => {
               value={casSelection}
               onChange={(e) => setCasSelection(e.target.value)}
               disabled={data.length === 0 ? false : true}
+              // disabled={data}
             >
               <option value="">Select cascode</option>
               {casSelectList &&
@@ -125,29 +126,31 @@ const CasList = ({ data, updateList, casSelectList }) => {
                     <th>$</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {data.map((item, index) => (
-                    <tr key={index}>
-                      <th scope="row">{item.cas_id}</th>
-                      <td>{item.cas_lbl}</td>
-                      <td>{item.cascode}</td>
-                      <td>
-                        <h5>
-                          <Link
-                            className="text-dark"
-                            to="#"
-                            onClick={() => deleteCasList(index)}
-                          >
-                            <i
-                              className="mdi mdi-delete font-size-18"
-                              id="deletetooltip"
-                            />
-                          </Link>
-                        </h5>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
+                {data && (
+                  <tbody>
+                    {data.map((item, index) => (
+                      <tr key={index}>
+                        <th scope="row">{item.cas_id}</th>
+                        <td>{item.cas_lbl}</td>
+                        <td>{item.cascode}</td>
+                        <td>
+                          <h5>
+                            <Link
+                              className="text-dark"
+                              to="#"
+                              onClick={() => deleteCasList(index)}
+                            >
+                              <i
+                                className="mdi mdi-delete font-size-18"
+                                id="deletetooltip"
+                              />
+                            </Link>
+                          </h5>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                )}
               </Table>
             </div>
           </CardBody>

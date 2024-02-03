@@ -54,7 +54,7 @@ const AddStockSmartcard = (props) => {
       stbbrand_id: "",
       stbno: "",
       po_id: "",
-      cas_id: "",
+      // cas_id: "",
     },
     validationSchema: Yup.object({
       cas_id: Yup.string().required("Select CAS Type"),

@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
 
 const ViewCasList = (props) => {
   const { data, showEditChannel } = props;
+
   console.log("data in viewcaslist:" + JSON.stringify(data));
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -154,8 +155,12 @@ const ViewCasList = (props) => {
     ],
     []
   );
+  const deleteCasList = (index) => {
+    const list = [...data];
+    list.splice(index, 1);
+    updateList(list);
+  };
 
-  const casData = [];
   return (
     <Card>
       <CardBody>
@@ -274,7 +279,7 @@ const ViewCasList = (props) => {
                           <Link
                             className="text-dark"
                             to="#"
-                            onClick={() => deleteChannel(index)}
+                            onClick={() => deleteCasList(index)}
                           >
                             <i
                               className="mdi mdi-delete font-size-18"
