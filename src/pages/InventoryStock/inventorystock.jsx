@@ -56,8 +56,8 @@ import StockStb from "./StockStb";
 import StockPairing from "./StockPairing";
 import InventoryTrack from "./InventoryTrack";
 import AddStockSmartcard from "./AddStockSmartcard";
-import AddStockStb from "./AddStockStb";
 import UploadSmartcard from "./UploadSmartcaed";
+import StockScMarkfaulty from "./StockScMarkfaulty";
 
 const InventoryStock = (props) => {
   document.title = "Inventory | VDigital";
@@ -68,6 +68,7 @@ const InventoryStock = (props) => {
   const [showAddStockStb, setShowAddStockStb] = useState(false);
   const [showCreatePairing, setShowCreatePairing] = useState(false);
   const [showUploadSmartcard, setShowUploadSmartcard] = useState(false);
+  const [showStockScMarkfaulty, setShowStockScMarkfaulty] = useState(false);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -560,6 +561,10 @@ const InventoryStock = (props) => {
     setShowUploadSmartcard(!showUploadSmartcard);
   };
 
+  const handleStockScMarkfaulty = () => {
+    setShowStockScMarkfaulty(!showStockScMarkfaulty);
+  };
+
   const getFilteredTableActions = () => {
     let actions = [];
     if (selectedOption === "In-stock") {
@@ -587,6 +592,7 @@ const InventoryStock = (props) => {
             type: "dot",
             icon: "action",
             dropdownName: "",
+            action: setShowStockScMarkfaulty,
           },
           {
             name: "Blacklist",
@@ -849,6 +855,10 @@ const InventoryStock = (props) => {
         stockscinventorystate={stockscinventorystate}
         brand1={brand1}
         brand2={brand2}
+      />
+      <StockScMarkfaulty
+        isOpen={showStockScMarkfaulty}
+        toggle={handleStockScMarkfaulty}
       />
       <div className="page-content">
         <Container fluid>
