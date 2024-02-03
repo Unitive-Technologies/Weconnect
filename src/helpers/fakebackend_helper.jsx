@@ -726,6 +726,8 @@ export const addInventoryStockStb = (stockstb) =>
   post(url.ADD_INVENTORYSTOCK_STB, stockstb);
 export const addInventoryStockPairing = (stockpairing) =>
   post(url.ADD_INVENTORYSTOCK_PAIRING, stockpairing);
+export const updateStockSmartcardMarkfaulty = (stocksmartcard) =>
+  put(url.UPDATE_STOCKSMARTCARD_MARKFAULTY, stocksmartcard);
 
 export const getInventoryFaultySmartcard = () =>
   get(url.GET_INVENTORYFAULTY_SMARTCARD);
