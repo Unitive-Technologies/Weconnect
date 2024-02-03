@@ -557,7 +557,7 @@ const InventoryStock = (props) => {
   };
 
   const handleUploadSmartcard = () => {
-    setShowAUploadSmartcard(!showUploadSmartcard);
+    setShowUploadSmartcard(!showUploadSmartcard);
   };
 
   const getFilteredTableActions = () => {
