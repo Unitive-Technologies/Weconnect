@@ -4,6 +4,7 @@ import {
   CardBody,
   Col,
   Form,
+  FormFeedback,
   Input,
   Label,
   Modal,
@@ -16,6 +17,13 @@ import {
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import TableContainer from "../../components/Common/TableContainer";
+import { useDispatch } from "react-redux";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import {
+  addInventoryStockPairing as onAddInventoryStockPairing,
+  getInventoryStockPairing as onGetInventoryStockPairing,
+} from "/src/store/inventorystock/actions";
 
 function CreatePairing(props) {
   const { isOpen, toggle, smartcardlist, stblist, stocksccastype } = props;
@@ -73,6 +81,47 @@ function CreatePairing(props) {
     setSmartcardData([...smartcardData, pairToRemove.smartcard]);
     setStbData([...stbData, pairToRemove.stb]);
   };
+
+  // console.log("Selected pairs: ", selectedPairs);
+
+  const dispatch = useDispatch();
+
+  const validation = useFormik({
+    // enableReinitialize : use this flag when initial values needs to be changed
+    enableReinitialize: true,
+
+    initialValues: {
+      cas_id: "",
+      smartcardno: "",
+      stbno: "",
+    },
+    validationSchema: Yup.object({
+      cas_id: Yup.string().required("Select CAS Type"),
+    }),
+    onSubmit: (values) => {
+      const newPairing = {
+        id: Math.floor(Math.random() * (30 - 20)) + 20,
+        // cas_id: values["cas_id"],
+        pairing: selectedPairs.map((pair) => ({
+          sc_id: pair.smartcard.id,
+          stb_id: pair.stb.id,
+        })),
+      };
+      console.log("New pairing: " + JSON.stringify(newPairing));
+      dispatch(onAddInventoryStockPairing(newPairing));
+      dispatch(onGetInventoryStockPairing());
+      validation.resetForm();
+      toggle();
+      setSelectedPairs([]);
+      setSelectedSmartcard(null);
+      setSelectedStb(null);
+      setIsCheckedStb(false);
+      setIsCheckedSC(false);
+    },
+    onReset: (values) => {
+      validation.setValues(validation.initialValues);
+    },
+  });
 
   const smartcardColumns = useMemo(
     () => [
@@ -229,7 +278,13 @@ function CreatePairing(props) {
         Create New Pairing
       </ModalHeader>
       <ModalBody>
-        <Form>
+        <Form
+          onSubmit={(e) => {
+            e.preventDefault();
+            validation.handleSubmit();
+            return false;
+          }}
+        >
           <Row>
             <Col lg={4}>
               <div className="mb-3">
@@ -240,8 +295,17 @@ function CreatePairing(props) {
                   name="cas_id"
                   type="select"
                   placeholder="Select CAS Type"
-                  onChange={(e) => setCas_id(e.target.value)}
-                  value={cas_id}
+                  onChange={(e) => {
+                    validation.handleChange(e);
+                    setCas_id(e.target.value);
+                  }}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.cas_id || ""}
+                  invalid={
+                    validation.touched.cas_id && validation.errors.cas_id
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select CAS Type</option>
                   {stocksccastype.map((castype) => (
@@ -250,6 +314,11 @@ function CreatePairing(props) {
                     </option>
                   ))}
                 </Input>
+                {validation.touched.cas_id && validation.errors.cas_id ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.cas_id}
+                  </FormFeedback>
+                ) : null}
               </div>
             </Col>
           </Row>
@@ -257,7 +326,7 @@ function CreatePairing(props) {
             <Col lg={6}>
               <Card>
                 <CardBody>
-                  {console.log("Smartcard data: ", smartcardData)}
+                  {/* {console.log("Smartcard data: ", smartcardData)} */}
                   <TableContainer
                     isPagination={true}
                     columns={smartcardColumns}
@@ -275,7 +344,7 @@ function CreatePairing(props) {
             <Col lg={6}>
               <Card>
                 <CardBody>
-                  {console.log("stb data: ", stbData)}
+                  {/* {console.log("stb data: ", stbData)} */}
                   <TableContainer
                     isPagination={true}
                     columns={stbColumns}
@@ -334,21 +403,6 @@ function CreatePairing(props) {
                             </td>
                           </tr>
                         ))}
-                        {/* <tr>
-                          <td scope="row">1</td>
-                          <td>{selectedSmartcard.smartcardno}</td>
-                          <td>{selectedStb.stbno}</td>
-                          <td>
-                            <h5>
-                              <Link className="text-dark" to="#">
-                                <i
-                                  className="mdi mdi-delete font-size-18"
-                                  id="deletetooltip"
-                                />
-                              </Link>
-                            </h5>
-                          </td>
-                        </tr> */}
                       </tbody>
                     </Table>
                   </div>
@@ -365,7 +419,7 @@ function CreatePairing(props) {
                 <button
                   type="reset"
                   className="btn btn-warning"
-                  // onClick={() => validation.resetForm()}
+                  onClick={() => validation.resetForm()}
                 >
                   Reset
                 </button>
@@ -373,10 +427,10 @@ function CreatePairing(props) {
                 <button
                   type="button"
                   className="btn btn-outline-danger"
-                  // onClick={() => {
-                  //   validation.resetForm();
-                  //   toggle();
-                  // }}
+                  onClick={() => {
+                    validation.resetForm();
+                    toggle();
+                  }}
                 >
                   Cancel
                 </button>
