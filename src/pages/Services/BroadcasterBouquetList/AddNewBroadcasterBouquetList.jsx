@@ -125,7 +125,6 @@ const AddNewBroadcasterBouquetList = (props) => {
     }),
     onSubmit: (values) => {
       const newBroadcasterBouquetList = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
         code: values["code"],
         name: values["name"],
         definition: values["definition"],
