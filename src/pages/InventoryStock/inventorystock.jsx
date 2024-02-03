@@ -57,6 +57,7 @@ import StockPairing from "./StockPairing";
 import InventoryTrack from "./InventoryTrack";
 import AddStockSmartcard from "./AddStockSmartcard";
 import AddStockStb from "./AddStockStb";
+import UploadSmartcard from "./UploadSmartcaed";
 
 const InventoryStock = (props) => {
   document.title = "Inventory | VDigital";
@@ -66,6 +67,7 @@ const InventoryStock = (props) => {
   const [showAddStockSmartcard, setShowAddStockSmartcard] = useState(false);
   const [showAddStockStb, setShowAddStockStb] = useState(false);
   const [showCreatePairing, setShowCreatePairing] = useState(false);
+  const [showUploadSmartcard, setShowUploadSmartcard] = useState(false);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -554,6 +556,10 @@ const InventoryStock = (props) => {
     setShowCreatePairing(!showCreatePairing);
   };
 
+  const handleUploadSmartcard = () => {
+    setShowAUploadSmartcard(!showUploadSmartcard);
+  };
+
   const getFilteredTableActions = () => {
     let actions = [];
     if (selectedOption === "In-stock") {
@@ -569,6 +575,7 @@ const InventoryStock = (props) => {
             name: "Upload",
             type: "dropdown",
             dropdownName: "Bulk",
+            action: setShowUploadSmartcard,
           },
           {
             name: "Update",
@@ -826,6 +833,16 @@ const InventoryStock = (props) => {
       <AddStockSmartcard
         isOpen={showAddStockSmartcard}
         toggle={handleAddStockSmartcard}
+        stocksccastype={stocksccastype}
+        stockscwarehouse={stockscwarehouse}
+        stockscstatetype={stockscstatetype}
+        stockscinventorystate={stockscinventorystate}
+        brand1={brand1}
+        brand2={brand2}
+      />
+      <UploadSmartcard
+        isOpen={showUploadSmartcard}
+        toggleUploadModal={handleUploadSmartcard}
         stocksccastype={stocksccastype}
         stockscwarehouse={stockscwarehouse}
         stockscstatetype={stockscstatetype}
