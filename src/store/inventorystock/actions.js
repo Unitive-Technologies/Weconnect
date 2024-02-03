@@ -45,6 +45,9 @@ import {
   ADD_INVENTORYSTOCK_PAIRING,
   ADD_INVENTORYSTOCK_PAIRING_SUCCESS,
   ADD_INVENTORYSTOCK_PAIRING_FAIL,
+  UPDATE_STOCKSMARTCARD_MARKFAULTY,
+  UPDATE_STOCKSMARTCARD_MARKFAULTY_SUCCESS,
+  UPDATE_STOCKSMARTCARD_MARKFAULTY_FAIL,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -265,5 +268,20 @@ export const addInventoryStockPairingSuccess = (stockpairing) => ({
 
 export const addInventoryStockPairingFail = (error) => ({
   type: ADD_INVENTORYSTOCK_PAIRING_FAIL,
+  payload: error,
+});
+
+export const updateStockSmartcardMarkfaulty = (stocksmartcard) => ({
+  type: UPDATE_STOCKSMARTCARD_MARKFAULTY,
+  payload: stocksmartcard,
+});
+
+export const updateStockSmartcardMarkfaultySuccess = (stocksmartcard) => ({
+  type: UPDATE_STOCKSMARTCARD_MARKFAULTY_SUCCESS,
+  payload: stocksmartcard,
+});
+
+export const updateStockSmartcardMarkfaultyFail = (error) => ({
+  type: UPDATE_STOCKSMARTCARD_MARKFAULTY_FAIL,
   payload: error,
 });

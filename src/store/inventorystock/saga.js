@@ -15,6 +15,7 @@ import {
   GET_PAIRING_SMARTCARDLIST,
   GET_PAIRING_STBLIST,
   ADD_INVENTORYSTOCK_PAIRING,
+  UPDATE_STOCKSMARTCARD_MARKFAULTY,
 } from "./actionTypes";
 import {
   getInventoryStockStb as onGetInventoryStockStb,
@@ -50,6 +51,8 @@ import {
   getPairingStbListFail,
   addInventoryStockPairingSuccess,
   addInventoryStockPairingFail,
+  updateStockSmartcardMarkfaultySuccess,
+  updateStockSmartcardMarkfaultyFail,
 } from "./actions";
 import {
   getInventoryStockSmartcard,
@@ -67,6 +70,7 @@ import {
   getPairingSmartcardList,
   getPairingStbList,
   addInventoryStockPairing,
+  updateStockSmartcardMarkfaulty,
 } from "../../helpers/fakebackend_helper";
 
 export const getStockPairingStore = (state) => state.stockpairing;
@@ -223,6 +227,16 @@ function* onAddInventoryStockPairing({ payload: stockpairing }) {
   }
 }
 
+function* onUpdateStockSmartcardMarkfaulty({ payload: stocksmartcard }) {
+  try {
+    const response = yield call(updateStockSmartcardMarkfaulty, stocksmartcard);
+    yield put(updateStockSmartcardMarkfaultySuccess(response.data));
+    yield put(onGetInventoryStockSmartcard());
+  } catch (error) {
+    yield put(updateStockSmartcardMarkfaultyFail(error));
+  }
+}
+
 function* inventorystockSaga() {
   yield takeEvery(GET_INVENTORYSTOCK_SMARTCARD, fetchInventoryStockSmartcard);
   yield takeEvery(GET_INVENTORYSTOCK_STB, fetchInventoryStockStb);
@@ -248,6 +262,10 @@ function* inventorystockSaga() {
   yield takeEvery(GET_PAIRING_SMARTCARDLIST, fetchPairingSmartcardList);
   yield takeEvery(GET_PAIRING_STBLIST, fetchPairingStbList);
   yield takeEvery(ADD_INVENTORYSTOCK_PAIRING, onAddInventoryStockPairing);
+  yield takeEvery(
+    UPDATE_STOCKSMARTCARD_MARKFAULTY,
+    onUpdateStockSmartcardMarkfaulty
+  );
 }
 
 export default inventorystockSaga;
