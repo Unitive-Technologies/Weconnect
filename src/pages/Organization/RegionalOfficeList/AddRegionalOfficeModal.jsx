@@ -39,6 +39,25 @@ const AddRegionalOfficeModal = (props) => {
 
   const { statesList } = useSelector(StatesProperties);
 
+  const handleChangeLogo = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const { name, type } = file;
+      const ext = name.split(".").pop();
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const data = reader.result;
+
+        validation.setFieldValue("logo", {
+          name,
+          type,
+          ext,
+          data,
+        });
+      };
+    }
+  };
   const handleStateChange = async (e) => {
     try {
       const stateName = e.target.value;
@@ -159,7 +178,7 @@ const AddRegionalOfficeModal = (props) => {
       const newRegionalOffice = {
         name: values["name"],
         code: values["code"],
-        // agreement_data: null,
+        logo: values["logo"],
         addr: values["addr1"],
         addr1: values["addr1"],
         addr2: values["addr2"],
@@ -913,26 +932,29 @@ const AddRegionalOfficeModal = (props) => {
           >
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Upload</Label>
-                <Input
-                  name="upload"
-                  label="Upload"
+                <Label className="form-label">Logo</Label>
+                <input
+                  style={{
+                    width: "170px",
+                    height: "150px",
+                    borderRadius: "10px",
+                  }}
+                  name="logo"
                   type="file"
-                  placeholder="Upload"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.upload || ""}
-                  invalid={
-                    validation.touched.upload && validation.errors.upload
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.upload && validation.errors.upload ? (
+                  onChange={handleChangeLogo}
+                ></input>
+                {validation.touched.logo && validation.errors.logo ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.upload}
+                    {validation.errors.logo}
                   </FormFeedback>
                 ) : null}
+                <button
+                  type="button"
+                  className="btn btn-primary "
+                  style={{ marginTop: "10px" }}
+                >
+                  Upload Logo
+                </button>
               </div>
             </Col>
             <Col lg={4}>

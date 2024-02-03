@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import RevenueShare from "./RevenueShare";
 import {
   Col,
+  Card,
+  CardTitle,
+  CardBody,
   Row,
   Modal,
   ModalHeader,
@@ -19,6 +22,7 @@ import { useFormik } from "formik";
 import { updateChannelList as onUpdateChannelList } from "/src/store/channel/actions";
 import { useDispatch } from "react-redux";
 import CasList from "./CasList";
+import PieChart from "./PieChart";
 
 const ViewChannel = (props) => {
   const {
@@ -50,11 +54,11 @@ const ViewChannel = (props) => {
     initialValues: {
       //BroadCaster: "",
       code: (channel && channel.code) || "",
-      logo: (channel && channel.logo) || "",
+      // logo: (channel && channel.logo) || "",
       name: (channel && channel.name) || "",
       description: (channel && channel.description) || "",
-      definition: (channel && channel.definition) || "",
-      type: (channel && channel.type) || "",
+      definition: (channel && channel.isHD) || "",
+      type: (channel && channel.isFta) || "",
       broadcaster: (channel && channel.broadcaster) || "",
       genre: (channel && channel.genre) || "",
       language: (channel && channel.language_lbl) || "",
@@ -84,7 +88,7 @@ const ViewChannel = (props) => {
       const updateChannelList = {
         id: values.id,
         code: values.code,
-        logo: values.logo,
+        // logo: values.logo,
         name: values.name,
         description: values.description,
         definition: values.definition,
@@ -266,6 +270,12 @@ const ViewChannel = (props) => {
                   Upload Logo
                 </button>
               </div>
+              {/* <div className="mb-3">
+                <img
+                  src={`data:${logo.type};base64,${logo.data}`}
+                  alt={logo.name}
+                />
+              </div> */}
             </Col>
             <Col lg={4}>
               <div className="mb-3">
@@ -564,7 +574,7 @@ const ViewChannel = (props) => {
               margin: "30px 0px",
             }}
           >
-            <Col sm="12">
+            <Col lg={6}>
               <RevenueShare
                 broadPercent={broadPercent}
                 msoPercent={msoPercent}
@@ -574,6 +584,28 @@ const ViewChannel = (props) => {
                 setDiscountPercent={setDiscountPercent}
               />
             </Col>
+            {console.log("XXXXXXXX:" + channel.isFta, channel.broadcasterRate)}
+            {channel.isFta === "0" && channel.broadcasterRate !== "" ? (
+              <Col lg={6}>
+                <Card>
+                  <CardBody>
+                    <span>Graphical representation of SHARE</span>
+                    <CardTitle className="mb-4">
+                      (MRP: {channel.broadcasterRate}){" "}
+                    </CardTitle>
+                    <PieChart
+                      broadPercent={broadPercent}
+                      msoPercent={msoPercent}
+                      discountPercent={discountPercent}
+                      selectedRate={channel.broadcasterRate}
+                      dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
+                    />
+                  </CardBody>
+                </Card>
+              </Col>
+            ) : (
+              <></>
+            )}
           </Row>
 
           <div
