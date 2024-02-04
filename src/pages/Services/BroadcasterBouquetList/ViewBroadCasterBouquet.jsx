@@ -155,7 +155,7 @@ const ViewBroadCasterBouquet = (props) => {
       <ModalHeader toggle={handleCancel} tag="h4">
         {!showEditBroadcast
           ? `View ${(broadcast && broadcast.name) || ""}`
-          : `Edit ${(broadcast && broadcast.name) || ""}`}
+          : `Edit ${(broadcast && broadcast.name) || ""} `}
       </ModalHeader>
       {!showEditBroadcast && (
         <Link
@@ -523,15 +523,15 @@ const ViewBroadCasterBouquet = (props) => {
 
 ViewBroadCasterBouquet.propTypes = {
   toggleViewModal: PropTypes.func,
-  resetSelection: PropTypes.func,
+  // resetSelection: PropTypes.func,
   isOpen: PropTypes.bool,
 
-  broadcast: PropTypes.object,
-  broadcasterBouquetAddchannels: PropTypes.object,
-  broadcasterBouquetBroadcaster: PropTypes.object,
-  broadcasterBouquetDefinition: PropTypes.object,
-  broadcasterBouquetStatus: PropTypes.object,
-  broadcasterBouquetType: PropTypes.object,
+  // broadcast: PropTypes.object,
+  // broadcasterBouquetAddchannels: PropTypes.object,
+  // broadcasterBouquetBroadcaster: PropTypes.object,
+  // broadcasterBouquetDefinition: PropTypes.object,
+  // broadcasterBouquetStatus: PropTypes.object,
+  // broadcasterBouquetType: PropTypes.object,
 };
 
 export default ViewBroadCasterBouquet;
