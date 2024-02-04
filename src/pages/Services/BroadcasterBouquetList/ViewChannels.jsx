@@ -18,20 +18,11 @@ import ViewChannelsTableList from "./ViewChannelsTableList";
 
 const ViewChannels = (props) => {
   const {
-    broadcasterBouquetAddchannels,
-    selectedType,
-    selectedBroadcaster,
     channels,
-    setChannels,
-    showEditChannel,
-    data,
-    setTotalChannelsInChannels,
-    setTotalPackageRateInChannels,
-    totalChannelsInChannels,
-    totalPackageRateInChannels,
-  } = props;
-  console.log("data in viewchannels:" + JSON.stringify(data));
+    showEditBroadcast,
 
+  } = props;
+  console.log("data in viewchannels:" + JSON.stringify(channels));
 
   const columns = useMemo(
     () => [
@@ -292,7 +283,7 @@ const ViewChannels = (props) => {
           <Col lg={2}>
             <div className="mb-3">
               <button
-                disabled={!showEditChannel}
+                disabled={!showEditBroadcast}
                 type="button"
                 onClick={handleViewChannelsPlus}
                 className="btn btn-primary d-flex justify-content-end"
@@ -353,9 +344,9 @@ const ViewChannels = (props) => {
               <th>$</th>
             </tr>
           </thead>
-          {data && (
+          {channels && (
             <tbody>
-              {data.map((item, index) => (
+              {channels.map((item, index) => (
                 <tr key={index}>
                   <th
                     scope="row"

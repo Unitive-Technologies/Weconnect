@@ -126,10 +126,10 @@ const PackageList = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-                // onClick={() => {
-                //   const packageData = cellProps.row.original;
-                //   handleViewPackageList(packageData);
-                // }}
+              // onClick={() => {
+              //   const packageData = cellProps.row.original;
+              //   handleViewPackageList(packageData);
+              // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -176,7 +176,7 @@ const PackageList = (props) => {
       },
       {
         Header: "CHANNELS",
-        accessor: "channels",
+        accessor: " gdzchannels",
         filterable: true,
         // Cell: (cellProps) => {
         // return (

@@ -23,7 +23,7 @@ import { useFormik } from "formik";
 import { updateBroadcasterBouquet as onUpdateBroadcasterBouquet } from "/src/store/broadcasterbouquet/actions";
 import { useDispatch } from "react-redux";
 import ViewChannels from "./ViewChannels";
-import RevenueShare from "./RevenueShare";
+import ViewRevenueShare from "./RevenueShare";
 
 const ViewBroadCasterBouquet = (props) => {
   const { isOpen, broadcasterBouquetAddchannels,
@@ -124,21 +124,24 @@ const ViewBroadCasterBouquet = (props) => {
 
         const response = await axios.get(
           `${API_URL}/broadcaster-bouque/${selectedRowId}?expand=channels&vr=web1.0`,
-
           {
             headers: {
               Authorization: token,
             },
           }
         );
+
         setSelectedRowDetails(response.data.data);
         console.log("response in useEffect:" + JSON.stringify(response));
       } catch (error) {
         console.error("Error fetching addChannels data:", error);
       }
     };
-    getSelectedRowDetails();
+    if (selectedRowId) {
+      getSelectedRowDetails();
+    }
   }, [selectedRowId]);
+  console.log("selectedRowDetails:" + JSON.stringify(selectedRowDetails));
 
 
   return (
@@ -450,7 +453,8 @@ const ViewBroadCasterBouquet = (props) => {
             }}
           >
             <Col sm="12">
-              <RevenueShare showEditBroadcast={showEditBroadcast} />
+              <ViewRevenueShare
+                showEditBroadcast={showEditBroadcast} />
             </Col>
           </Row>
 
@@ -478,13 +482,10 @@ const ViewBroadCasterBouquet = (props) => {
             }}
           >
             <Col sm="12">
-              <ViewChannels showEditBroadcast={showEditBroadcast} channels={channels}
-                setChannels={setChannels}
-                selectedType={selectedType}
-                selectedBroadcaster={selectedBroadcaster}
-                updateList={setChannels}
-                broadcasterBouquetAddchannels={broadcasterBouquetAddchannels}
-                definition={validation.values.definition} />
+              <ViewChannels
+                showEditBroadcast={showEditBroadcast}
+                channels={selectedRowDetails.channels}
+              />
             </Col>
           </Row>
           <Row>
