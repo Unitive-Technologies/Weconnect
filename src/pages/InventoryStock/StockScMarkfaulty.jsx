@@ -22,6 +22,7 @@ import {
   updateStockSmartcardMarkfaulty as onUpdateStockSmartcardMarkfaulty,
   getInventoryStockSmartcard as onGetInventoryStockSmartcard,
 } from "/src/store/inventorystock/actions";
+import { getInventoryFaultySmartcard as onGetInventoryFaultySmartcard } from "/src/store/inventoryfaulty/actions";
 
 function StockScMarkfaulty(props) {
   const { isOpen, toggle, selectedRows } = props;
@@ -49,6 +50,7 @@ function StockScMarkfaulty(props) {
       console.log("mark faulty: " + JSON.stringify(newMarkfaulty));
       dispatch(onUpdateStockSmartcardMarkfaulty(newMarkfaulty));
       dispatch(onGetInventoryStockSmartcard());
+      dispatch(onGetInventoryFaultySmartcard());
       validation.resetForm();
       toggle();
     },
