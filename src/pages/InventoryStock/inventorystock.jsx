@@ -14,6 +14,9 @@ import {
   Row,
   TabContent,
   TabPane,
+  Toast,
+  ToastBody,
+  ToastHeader,
   UncontrolledTooltip,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -69,6 +72,8 @@ const InventoryStock = (props) => {
   const [showCreatePairing, setShowCreatePairing] = useState(false);
   const [showUploadSmartcard, setShowUploadSmartcard] = useState(false);
   const [showStockScMarkfaulty, setShowStockScMarkfaulty] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
+  const [selectedRows, setSelectedRows] = useState([]);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -349,16 +354,38 @@ const InventoryStock = (props) => {
     }
   };
 
+  useEffect(() => {
+    console.log("Selected rows: ", selectedRows);
+  }, [selectedRows]);
+
+  const handleSelectedRows = (row) => {
+    // Check if the row is already selected
+    const isSelected = selectedRows.some(
+      (selectedRow) => selectedRow.id === row.id
+    );
+
+    // If the row is selected, remove it from the selected rows array
+    if (isSelected) {
+      const updatedSelectedRows = selectedRows.filter(
+        (selectedRow) => selectedRow.id !== row.id
+      );
+      setSelectedRows(updatedSelectedRows);
+    } else {
+      // If the row is not selected, add it to the selected rows array
+      setSelectedRows([...selectedRows, row]);
+    }
+  };
+
   const columns = useMemo(
     () => [
       {
         Header: "*",
         disableFilters: true,
         filterable: true,
-        Cell: () => {
+        Cell: (cellProps) => {
           return (
             <>
-              <i className="bx bx-bx bx-check"></i>
+              <input type="checkbox" />
             </>
           );
         },
@@ -565,6 +592,10 @@ const InventoryStock = (props) => {
     setShowStockScMarkfaulty(!showStockScMarkfaulty);
   };
 
+  const handleWarning = () => {
+    setShowWarning(!showWarning);
+  };
+
   const getFilteredTableActions = () => {
     let actions = [];
     if (selectedOption === "In-stock") {
@@ -592,7 +623,10 @@ const InventoryStock = (props) => {
             type: "dot",
             icon: "action",
             dropdownName: "",
-            action: setShowStockScMarkfaulty,
+            action:
+              Object.keys(selectedRows).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowStockScMarkfaulty(true),
           },
           {
             name: "Blacklist",
@@ -860,6 +894,17 @@ const InventoryStock = (props) => {
         isOpen={showStockScMarkfaulty}
         toggle={handleStockScMarkfaulty}
       />
+      <div
+        className="position-fixed top-0 end-0 p-3"
+        style={{ zIndex: "1005" }}
+      >
+        <Toast isOpen={showWarning}>
+          <ToastHeader toggle={handleWarning}>
+            <i className="mdi mdi-alert-outline me-2"></i> Warning
+          </ToastHeader>
+          <ToastBody>Please select NCF</ToastBody>
+        </Toast>
+      </div>
       <div className="page-content">
         <Container fluid>
           <Breadcrumbs breadcrumbItem="Inventory" />
@@ -963,6 +1008,9 @@ const InventoryStock = (props) => {
                               theadClass="table-light"
                               paginationDiv="col-sm-12 col-md-7"
                               pagination="pagination pagination-rounded justify-content-end mt-4"
+                              handleRowClick={(row) => {
+                                handleSelectedRows(row);
+                              }}
                             />
                           </Col>
                         </Row>
