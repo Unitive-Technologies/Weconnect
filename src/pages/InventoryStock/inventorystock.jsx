@@ -893,6 +893,7 @@ const InventoryStock = (props) => {
       <StockScMarkfaulty
         isOpen={showStockScMarkfaulty}
         toggle={handleStockScMarkfaulty}
+        selectedRows={selectedRows}
       />
       <div
         className="position-fixed top-0 end-0 p-3"
@@ -902,7 +903,7 @@ const InventoryStock = (props) => {
           <ToastHeader toggle={handleWarning}>
             <i className="mdi mdi-alert-outline me-2"></i> Warning
           </ToastHeader>
-          <ToastBody>Please select NCF</ToastBody>
+          <ToastBody>Please select atleast one smartcard</ToastBody>
         </Toast>
       </div>
       <div className="page-content">

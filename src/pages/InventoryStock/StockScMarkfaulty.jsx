@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import {
   Card,
   CardBody,
@@ -12,16 +12,23 @@ import PropTypes from "prop-types";
 import TableContainer from "../../components/Common/TableContainer";
 
 function StockScMarkfaulty(props) {
-  const { isOpen, toggle } = props;
+  const { isOpen, toggle, selectedRows } = props;
+  const [isChecked, setIsChecked] = useState(true);
 
   const columns = useMemo(
     () => [
       {
-        Header: ".",
+        Header: "*",
         disableFilters: true,
         filterable: true,
         Cell: () => {
-          <input type="checkbox" />;
+          return (
+            <input
+              type="checkbox"
+              checked={isChecked}
+              onClick={() => setIsChecked(!isChecked)}
+            />
+          );
         },
       },
       {
@@ -29,11 +36,11 @@ function StockScMarkfaulty(props) {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const startIndex = (currentPage - 1) * pageSize;
-          const index = startIndex + cellProps.row.index + 1;
+          const totalRows = cellProps.rows.length;
+          const reverseIndex = totalRows - cellProps.row.index;
           return (
             <>
-              <h5 className="font-size-14 mb-1">{index}</h5>
+              <h5 className="font-size-14 mb-1">{reverseIndex}</h5>
             </>
           );
         },
@@ -75,7 +82,7 @@ function StockScMarkfaulty(props) {
                 <TableContainer
                   isPagination={true}
                   columns={columns}
-                  data={[]}
+                  data={selectedRows}
                   isShowingPageLength={true}
                   customPageSize={50}
                   tableClass="table align-middle table-nowrap table-hover"
@@ -95,6 +102,7 @@ function StockScMarkfaulty(props) {
 StockScMarkfaulty.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
+  selectedRows: PropTypes.array,
 };
 
 export default StockScMarkfaulty;
