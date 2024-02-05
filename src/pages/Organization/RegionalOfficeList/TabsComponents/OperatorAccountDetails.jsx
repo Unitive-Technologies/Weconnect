@@ -17,6 +17,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import AddCreditModal from "./AddCreditModal";
 
 const OperatorAccountDetails = (props) => {
   const {
@@ -29,7 +30,7 @@ const OperatorAccountDetails = (props) => {
   } = props;
   //meta title
   document.title = "Regional Offices | VDigital";
-
+  const [showAddCreditModal, setShowAddCreditModal] = useState(false);
   const columns = useMemo(
     () => [
       {
@@ -274,7 +275,9 @@ const OperatorAccountDetails = (props) => {
   var node = useRef();
 
   const keyField = "id";
-
+  const toggleAddCreditModal = () => {
+    setShowAddCreditModal(!showAddCreditModal);
+  };
   const getTableActions = () => {
     return [
       {
@@ -285,7 +288,7 @@ const OperatorAccountDetails = (props) => {
       },
       {
         name: "Add Credit",
-        // action: setShowUploadRegionalOffice,
+        action: setShowAddCreditModal,
         type: "normal",
         icon: "create",
       },
@@ -300,6 +303,10 @@ const OperatorAccountDetails = (props) => {
 
   return (
     <React.Fragment>
+      <AddCreditModal
+        isOpen={showAddCreditModal}
+        toggleAddModal={toggleAddCreditModal}
+      />
       <Form onSubmit={handleSearch}>
         <Row>
           <Col lg={2}>

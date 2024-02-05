@@ -177,6 +177,7 @@ const AllottedScheme = (props) => {
                 isAddRegionalOffice={true}
                 isShowingPageLength={true}
                 tableActions={getTableActions()}
+                isShowTableActionButtons={true}
                 customPageSize={50}
                 tableClass="table align-middle table-nowrap table-hover"
                 theadClass="table-light"

@@ -181,6 +181,7 @@ const SmsLogs = (props) => {
                 isAddRegionalOffice={true}
                 isShowingPageLength={true}
                 tableActions={getTableActions()}
+                isShowTableActionButtons={true}
                 customPageSize={5}
                 tableClass="table align-middle table-nowrap table-hover"
                 theadClass="table-light"
