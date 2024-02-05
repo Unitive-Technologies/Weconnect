@@ -64,7 +64,7 @@ export const getCustomerUsersUrl = (currPage, perPage) => {
 
 export const GET_REGIONALOFFICE =
   "/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,mso_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=1&page=1&per-page=50&vr=web1.0";
-export const ADD_NEW_REGIONALOFFICE = "/add/regionaloffice";
+export const ADD_NEW_REGIONALOFFICE = "/operator?vr=web1.0";
 export const UPDATE_REGIONALOFFICE = "/update/regionaloffice";
 
 export const GET_SCHEDULECUSTOMERNOTIFICATION =

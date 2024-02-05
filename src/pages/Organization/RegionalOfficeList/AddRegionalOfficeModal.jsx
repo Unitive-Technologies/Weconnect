@@ -174,10 +174,13 @@ const AddRegionalOfficeModal = (props) => {
       // username: Yup.string().required("Please Enter LoginID"),
     }),
     onSubmit: (values) => {
-      debugger;
+      // debugger;
       const newRegionalOffice = {
         name: values["name"],
-        code: values["code"],
+        addr: `${values["addr1"]}, ${values["addr2"]}, ${values["addr3"]}`,
+        addr1: values["addr1"],
+        addr2: values["addr2"],
+        addr3: values["addr3"],
         agreement_data: {
           name: values["upload"].name,
           type: values["upload"].type,
@@ -186,30 +189,29 @@ const AddRegionalOfficeModal = (props) => {
           start_date: values["agreestart"],
           end_date: values["agreeend"],
         },
-        addr: values["addr1"],
-        addr1: values["addr1"],
-        addr2: values["addr2"],
-        addr3: values["addr3"],
+        area_id: values["area_id"],
+        city_id: parseInt(values["city_lbl"]),
+        code: values["code"],
         contact_person: values["contact_person"],
+        credit_limit: values["credit_limit"],
+        district_id: parseInt(values["district_lbl"]),
+        email: values["email"],
+        gst_date: values["gst_date"],
+        gstno: values["gstno"],
         mobile_no: values["mobile_no"],
         phone_no: values["phone_no"],
         faxno: values["faxno"],
-        state_id: parseInt(values["state_lbl"]),
-        district_id: parseInt(values["district_lbl"]),
-        city_id: parseInt(values["city_lbl"]),
-        gstno: values["gstno"],
         panno: values["panno"],
+
         username: values["username"],
-        status: values["status_lbl"],
-        email: values["email"],
+        password: values["password"],
+        reg_startdate: values["reg_startdate"],
+        reg_enddate: values["reg_enddate"],
+        state_id: parseInt(values["state_lbl"]),
+        status: parseInt(values["status_lbl"]),
         pincode: values["pincode"],
         por_number: values["por_number"],
         reg_phase: values["reg_phase"],
-        reg_startdate: values["reg_startdate"],
-        reg_enddate: values["reg_enddate"],
-        gst_date: values["gst_date"],
-        credit_limit: values["credit_limit"],
-        area_id: values["area_id"],
         type: 1,
       };
       console.log("newRO:" + newRegionalOffice);
@@ -1023,22 +1025,22 @@ const AddRegionalOfficeModal = (props) => {
                   Login ID<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="loginid"
+                  name="username"
                   label="Login ID"
                   type="text"
                   placeholder="Login ID"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.loginid || ""}
+                  value={validation.values.username || ""}
                   invalid={
-                    validation.touched.loginid && validation.errors.loginid
+                    validation.touched.username && validation.errors.username
                       ? true
                       : false
                   }
                 />
-                {validation.touched.loginid && validation.errors.loginid ? (
+                {validation.touched.username && validation.errors.username ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.loginid}
+                    {validation.errors.username}
                   </FormFeedback>
                 ) : null}
               </div>

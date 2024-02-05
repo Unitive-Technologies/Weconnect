@@ -19,8 +19,8 @@ import {
 //Include Both Helper File with needed methods
 import {
   getRegionalOffices,
-  addNewLco,
   updateRegionalOffice,
+  addNewRegionalOffice,
 } from "../../helpers/fakebackend_helper";
 
 const convertRegionalOfficeListObject = (regionalofficeList) => {
@@ -73,7 +73,7 @@ function* fetchRegionalOffice() {
 
 function* onAddNewRegionalOffice({ payload: regionalofficeList }) {
   try {
-    const response = yield call(addNewLco, regionalofficeList);
+    const response = yield call(addNewRegionalOffice, regionalofficeList);
 
     yield put(addRegionalOfficeSuccess(response));
     yield put(fetchregionaloffices());
