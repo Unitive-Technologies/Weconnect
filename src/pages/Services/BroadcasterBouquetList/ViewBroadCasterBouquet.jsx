@@ -328,7 +328,6 @@ const ViewBroadCasterBouquet = (props) => {
                   // value={validation.values.type || ""}
                   disabled={!showEditBroadcast}
                 >
-                  <option value="">Select Type</option>
                   {broadcasterBouquetType &&
                     broadcasterBouquetType.map((type) => (
                       <option key={type.id} value={type.id}>
@@ -358,10 +357,11 @@ const ViewBroadCasterBouquet = (props) => {
                     setSelectedBroadcaster(e.target.value);
                   }}
                   onBlur={validation.handleBlur}
-                  value={validation.values.broadcaster || ""}
+                  value={selectedBroadcaster}
+                  // value={validation.values.broadcaster || ""}
                   disabled={!showEditBroadcast}
                 >
-                  <option value="">Select Type</option>
+                  {/* <option value="">Select Type</option> */}
                   {broadcasterBouquetBroadcaster &&
                     broadcasterBouquetBroadcaster.map((broadcaster_id) => (
                       <option key={broadcaster_id.id} value={broadcaster_id.id}>
