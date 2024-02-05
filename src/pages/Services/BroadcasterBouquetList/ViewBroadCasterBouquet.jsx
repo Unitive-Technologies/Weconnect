@@ -63,8 +63,8 @@ const ViewBroadCasterBouquet = (props) => {
       name: (broadcast && broadcast.name) || "",
       isHD: (broadcast && broadcast.isHD) || "",
       description: (broadcast && broadcast.description) || "",
-      type: (broadcast && broadcast.type) || "",
-      broadcaster: (broadcast && broadcast.broadcaster) || "",
+      isFta: (broadcast && broadcast.isFta) || "",
+      broadcaster_id: (broadcast && broadcast.broadcaster_id) || "",
       status: (broadcast && broadcast.status) || "",
       rate: (broadcast && broadcast.rate) || "",
       channels: (broadcast && broadcast.channels) || "",
@@ -76,7 +76,7 @@ const ViewBroadCasterBouquet = (props) => {
       // definition: Yup.string().required("Select definition"),
       description: Yup.string().required("Enter description"),
       // type: Yup.string().required("Select type"),
-      // broadcaster: Yup.string().required("select broadcaster"),
+      // broadcaster_id: Yup.string().required("select broadcaster_id"),
       // status: Yup.string().required("Enter status"),
       // rate: Yup.string().required(""),
       // channels: Yup.string().required("channels"),
@@ -90,8 +90,8 @@ const ViewBroadCasterBouquet = (props) => {
         // definition: values["definition"],
         description: values["description"],
         isHD: parseInt(values["isHD"]),
-        isFta: parseInt(values["type"]),
-        broadcaster_id: parseInt(values["broadcaster_id"]),
+        isFta: parseInt(values["isFta"]),
+        broadcaster_id_id: parseInt(values["broadcaster_id"]),
         status: parseInt(values["status"]),
         broadcasterRate: values["broadcasterRate"],
         channelsGroup: channels.map((single) => {
@@ -315,7 +315,7 @@ const ViewBroadCasterBouquet = (props) => {
                   Type<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="type"
+                  name="isFta"
                   type="select"
                   placeholder="Select Channel type"
                   className="form-select"
@@ -329,15 +329,15 @@ const ViewBroadCasterBouquet = (props) => {
                   disabled={!showEditBroadcast}
                 >
                   {broadcasterBouquetType &&
-                    broadcasterBouquetType.map((type) => (
-                      <option key={type.id} value={type.id}>
-                        {type.name}
+                    broadcasterBouquetType.map((isFta) => (
+                      <option key={isFta.id} value={isFta.id}>
+                        {isFta.name}
                       </option>
                     ))}
                 </Input>
-                {validation.touched.type && validation.errors.type ? (
+                {validation.touched.isFta && validation.errors.isFta ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.type}
+                    {validation.errors.isFta}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -357,8 +357,8 @@ const ViewBroadCasterBouquet = (props) => {
                     setSelectedBroadcaster(e.target.value);
                   }}
                   onBlur={validation.handleBlur}
-                  value={selectedBroadcaster}
-                  // value={validation.values.broadcaster || ""}
+                  // value={selectedBroadcaster}
+                  value={validation.values.broadcaster_id || ""}
                   disabled={!showEditBroadcast}
                 >
                   {/* <option value="">Select Type</option> */}
@@ -369,10 +369,10 @@ const ViewBroadCasterBouquet = (props) => {
                       </option>
                     ))}
                 </Input>
-                {validation.touched.broadcaster &&
-                  validation.errors.broadcaster ? (
+                {validation.touched.broadcaster_id &&
+                  validation.errors.broadcaster_id ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.broadcaster}
+                    {validation.errors.broadcaster_id}
                   </FormFeedback>
                 ) : null}
               </div>
