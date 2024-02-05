@@ -26,9 +26,8 @@ import ViewChannels from "./ViewChannels";
 import ViewRevenueShare from "./RevenueShare";
 
 const ViewBroadCasterBouquet = (props) => {
-  const { isOpen, broadcasterBouquetAddchannels,
-    selectedRowId,
-    broadcasterBouquetType, broadcasterBouquetBroadcaster, broadcasterBouquetDefinition, broadcasterBouquetStatus, resetSelection, toggleViewModal, broadcast } = props;
+  const { isOpen, selectedRowId,
+    broadcasterBouquetType, broadcasterBouquetBroadcaster, broadcasterBouquetDefinition, broadcasterBouquetStatus, toggleViewModal, broadcast } = props;
   const dispatch = useDispatch();
 
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
@@ -53,6 +52,18 @@ const ViewBroadCasterBouquet = (props) => {
 
   console.log("View broadcast" + JSON.stringify(broadcast))
 
+  const handleArrowKeyPress = (e) => {
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+      e.preventDefault(); // Prevent the default behavior of arrow keys in number input
+
+      const increment = e.key === "ArrowUp" ? 1 : -1;
+      const currentRate = parseFloat(selectedRate) || 0;
+      const newRate = Math.max(0, currentRate + increment * 0.01);
+
+      setSelectedRate(newRate.toFixed(2));
+    }
+  };
+
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -66,7 +77,7 @@ const ViewBroadCasterBouquet = (props) => {
       isFta: (broadcast && broadcast.isFta) || "",
       broadcaster_id: (broadcast && broadcast.broadcaster_id) || "",
       status: (broadcast && broadcast.status) || "",
-      rate: (broadcast && broadcast.rate) || "",
+      broadcasterRate: (broadcast && broadcast.broadcasterRate) || "",
       channels: (broadcast && broadcast.channels) || "",
       created_by: "Admin",
     },
@@ -91,7 +102,7 @@ const ViewBroadCasterBouquet = (props) => {
         description: values["description"],
         isHD: parseInt(values["isHD"]),
         isFta: parseInt(values["isFta"]),
-        broadcaster_id_id: parseInt(values["broadcaster_id"]),
+        broadcaster_id: parseInt(values["broadcaster_id"]),
         status: parseInt(values["status"]),
         broadcasterRate: values["broadcasterRate"],
         channelsGroup: channels.map((single) => {
@@ -413,20 +424,22 @@ const ViewBroadCasterBouquet = (props) => {
                   MRP Rate(INR)<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="rate"
+                  name="broadcasterRate"
                   type="number"
-                  // placeholder="Enter channel code"
-                  // className="form-select"
-                  onChange={validation.handleChange}
+                  step="0.01"
+                  onChange={handleInputChange}
+                  onKeyDown={handleArrowKeyPress}
+                  placeholder="0"
+                  disabled={selectedType === "1"}
+                  value={selectedRate}
                   onBlur={validation.handleBlur}
-                  value={validation.values.rate || ""}
-                  disabled={!showEditBroadcast}
+                // disabled={!showEditBroadcast}
                 ></Input>
-                {validation.touched.rate && validation.errors.rate ? (
+                {/* {validation.touched.rate && validation.errors.rate ? (
                   <FormFeedback type="invalid">
                     {validation.errors.rate}
                   </FormFeedback>
-                ) : null}
+                ) : null} */}
               </div>
             </Col>
           </Row>
@@ -455,8 +468,37 @@ const ViewBroadCasterBouquet = (props) => {
           >
             <Col sm="12">
               <ViewRevenueShare
-                showEditBroadcast={showEditBroadcast} />
+                showEditBroadcast={showEditBroadcast}
+                broadPercent={broadPercent}
+                msoPercent={msoPercent}
+                discountPercent={discountPercent}
+                setBroadPercent={setBroadPercent}
+                setMsoPercent={setMsoPercent}
+                setDiscountPercent={setDiscountPercent} />
             </Col>
+
+            {selectedType === "0" && selectedRate !== "" ? (
+              // <Row>
+              <Col lg={6}>
+                <Card>
+                  <CardBody>
+                    <span>Graphical representation of SHARE</span>
+                    <CardTitle className="mb-4">
+                      (MRP: {selectedRate}){" "}
+                    </CardTitle>
+                    <ViewPieChart
+                      broadPercent={broadPercent}
+                      msoPercent={msoPercent}
+                      discountPercent={discountPercent}
+                      selectedRate={selectedRate}
+                      dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
+                    />
+                  </CardBody>
+                </Card>
+              </Col>
+            ) : (
+              <></>
+            )}
           </Row>
 
           <div
