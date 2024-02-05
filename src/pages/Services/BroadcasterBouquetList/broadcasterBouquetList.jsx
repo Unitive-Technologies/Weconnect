@@ -148,10 +148,10 @@ const BroadcasterBouquetList = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-                onClick={() => {
-                  const broadData = cellProps.row.original;
-                  toggleViewModal(broadData);
-                }}
+              // onClick={() => {
+              //   const broadData = cellProps.row.original;
+              //   toggleViewModal(broadData);
+              // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -190,7 +190,7 @@ const BroadcasterBouquetList = (props) => {
       },
       {
         Header: "FTA",
-        accessor: "isNCF_lbl",
+        accessor: "isFTA" === 0 ? "payChannel" : "FTA",
         filterable: true,
         Cell: (cellProps) => {
           return <FTA {...cellProps} />;
@@ -377,6 +377,7 @@ const BroadcasterBouquetList = (props) => {
                       totalPage={Number(totalPage)}
                       isGlobalFilter={true}
                       isShowingPageLength={true}
+                      handleRowClick={(row) => toggleViewModal(row)}
                       tableActions={getTableActions()}
                       toggleAddModal={() =>
                         setShowAddNewBroadcasterBouquetList(true)

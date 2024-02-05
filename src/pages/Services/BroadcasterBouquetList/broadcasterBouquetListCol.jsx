@@ -16,6 +16,7 @@ const Broadcaster = (cell) => {
 
 const Type = (cell) => {
   return cell.value ? cell.value : "";
+
 };
 
 const FTA = (cell) => {

@@ -51,6 +51,8 @@ const ViewBroadCasterBouquet = (props) => {
     setSelectedRate(inputValue >= 0 ? inputValue : 0);
   };
 
+  console.log("View broadcast" + JSON.stringify(broadcast))
+
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -59,7 +61,7 @@ const ViewBroadCasterBouquet = (props) => {
       //BroadCaster: "",
       code: (broadcast && broadcast.code) || "",
       name: (broadcast && broadcast.name) || "",
-      definition: (broadcast && broadcast.definition) || "",
+      isHD: (broadcast && broadcast.isHD) || "",
       description: (broadcast && broadcast.description) || "",
       type: (broadcast && broadcast.type) || "",
       broadcaster: (broadcast && broadcast.broadcaster) || "",
@@ -87,7 +89,7 @@ const ViewBroadCasterBouquet = (props) => {
         name: values["name"],
         // definition: values["definition"],
         description: values["description"],
-        isHD: parseInt(values["definition"]),
+        isHD: parseInt(values["isHD"]),
         isFta: parseInt(values["type"]),
         broadcaster_id: parseInt(values["broadcaster_id"]),
         status: parseInt(values["status"]),
@@ -251,16 +253,16 @@ const ViewBroadCasterBouquet = (props) => {
                   Definition<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="definition"
+                  name="isHD"
                   type="select"
                   placeholder="Select Definition"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.definition || ""}
+                  value={validation.values.isHD || ""}
                   disabled={!showEditBroadcast}
                 >
-                  <option value="">Select Definition</option>
+                  {/* <option value="">Select Definition</option> */}
                   {broadcasterBouquetDefinition &&
                     broadcasterBouquetDefinition.map((isHD) => (
                       <option key={isHD.id} value={isHD.id}>
@@ -268,10 +270,10 @@ const ViewBroadCasterBouquet = (props) => {
                       </option>
                     ))}
                 </Input>
-                {validation.touched.definition &&
-                  validation.errors.definition ? (
+                {validation.touched.isHD &&
+                  validation.errors.isHD ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.definition}
+                    {validation.errors.isHD}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -390,7 +392,6 @@ const ViewBroadCasterBouquet = (props) => {
                   value={validation.values.status || ""}
                   disabled={!showEditBroadcast}
                 >
-                  <option value="">Select Status</option>
                   {broadcasterBouquetStatus &&
                     broadcasterBouquetStatus.map((status) => (
                       <option key={status.id} value={status.id}>
