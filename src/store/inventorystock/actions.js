@@ -48,6 +48,9 @@ import {
   UPDATE_STOCKSMARTCARD_MARKFAULTY,
   UPDATE_STOCKSMARTCARD_MARKFAULTY_SUCCESS,
   UPDATE_STOCKSMARTCARD_MARKFAULTY_FAIL,
+  UPDATE_STOCKSMARTCARD_BLACKLIST,
+  UPDATE_STOCKSMARTCARD_BLACKLIST_SUCCESS,
+  UPDATE_STOCKSMARTCARD_BLACKLIST_FAIL,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -283,5 +286,20 @@ export const updateStockSmartcardMarkfaultySuccess = (stocksmartcard) => ({
 
 export const updateStockSmartcardMarkfaultyFail = (error) => ({
   type: UPDATE_STOCKSMARTCARD_MARKFAULTY_FAIL,
+  payload: error,
+});
+
+export const updateStockSmartcardBlacklist = (stocksmartcard) => ({
+  type: UPDATE_STOCKSMARTCARD_BLACKLIST,
+  payload: stocksmartcard,
+});
+
+export const updateStockSmartcardBlacklistSuccess = (stocksmartcard) => ({
+  type: UPDATE_STOCKSMARTCARD_BLACKLIST_SUCCESS,
+  payload: stocksmartcard,
+});
+
+export const updateStockSmartcardBlacklistFail = (error) => ({
+  type: UPDATE_STOCKSMARTCARD_BLACKLIST_FAIL,
   payload: error,
 });

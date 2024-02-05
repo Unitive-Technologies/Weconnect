@@ -713,8 +713,6 @@ export const getInventoryStockSmartcard = () =>
   get(url.GET_INVENTORYSTOCK_SMARTCARD);
 export const getInventoryStockStb = () => get(url.GET_INVENTORYSTOCK_STB);
 export const getInventoryStockPairing = async (currentPage, perPage = 20) => {
-  // console.log("Stock Pairing - Current Page in fakebackend: ", currentPage);
-  // console.log("Stock Pairing - Per Page: ", perPage);
   return await getCompleteResponse(
     url.getStockPairingUrl(currentPage, perPage)
   );
@@ -729,13 +727,13 @@ export const addInventoryStockPairing = (stockpairing) =>
   post(url.ADD_INVENTORYSTOCK_PAIRING, stockpairing);
 export const updateStockSmartcardMarkfaulty = (stocksmartcard) =>
   put(url.UPDATE_STOCKSMARTCARD_MARKFAULTY, stocksmartcard);
+export const updateStockSmartcardBlacklist = (stocksmartcard) =>
+  put(url.UPDATE_STOCKSMARTCARD_BLACKLIST, stocksmartcard);
 
 export const getInventoryFaultySmartcard = () =>
   get(url.GET_INVENTORYFAULTY_SMARTCARD);
 export const getInventoryFaultyStb = () => get(url.GET_INVENTORYFAULTY_STB);
 export const getInventoryFaultyPairing = async (currentPage, perPage = 20) => {
-  // console.log("Faulty Pairing - Current Page in fakebackend: ", currentPage);
-  // console.log("Faulty Pairing - Per Page: ", perPage);
   return await getCompleteResponse(url.getFaultyPairingUrl(currentPage, 20));
 };
 
@@ -753,16 +751,12 @@ export const getInventoryAllottedPairing = async (
   currentPage,
   perPage = 20
 ) => {
-  // console.log("Allotted Pairing - Current Page in fakebackend: ", currentPage);
-  // console.log("Allotted Pairing - Per Page: ", perPage);
   return await getCompleteResponse(
     url.getAllottedPairingUrl(currentPage, perPage)
   );
 };
 
 export const getInventoryTrack = async (currentPage, perPage = 20) => {
-  // console.log("Inventory track - Current Page in fakebackend: ", currentPage);
-  // console.log("Inventory track - Per Page: ", perPage);
   return await getCompleteResponse(
     url.getInventoryTrackUrl(currentPage, perPage)
   );

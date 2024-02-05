@@ -44,6 +44,9 @@ import {
   UPDATE_STOCKSMARTCARD_MARKFAULTY,
   UPDATE_STOCKSMARTCARD_MARKFAULTY_SUCCESS,
   UPDATE_STOCKSMARTCARD_MARKFAULTY_FAIL,
+  UPDATE_STOCKSMARTCARD_BLACKLIST,
+  UPDATE_STOCKSMARTCARD_BLACKLIST_SUCCESS,
+  UPDATE_STOCKSMARTCARD_BLACKLIST_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -332,6 +335,30 @@ const InventoryStock = (state = INIT_STATE, action) => {
       };
 
     case UPDATE_STOCKSMARTCARD_MARKFAULTY_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+    case UPDATE_STOCKSMARTCARD_BLACKLIST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_STOCKSMARTCARD_BLACKLIST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        stocksmartcard: state.stocksmartcard.map((smartcard) =>
+          smartcard.id === action.payload.id
+            ? { ...smartcard, ...action.payload }
+            : smartcard
+        ),
+      };
+
+    case UPDATE_STOCKSMARTCARD_BLACKLIST_FAIL:
       return {
         ...state,
         error: action.payload,
