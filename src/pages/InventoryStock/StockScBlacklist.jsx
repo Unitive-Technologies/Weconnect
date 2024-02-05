@@ -117,7 +117,7 @@ function StockScBlacklist(props) {
       tabIndex="-1"
       toggle={toggle}
     >
-      <ModalHeader toggle={toggle}>Mark Faulty Smartcard</ModalHeader>
+      <ModalHeader toggle={toggle}>Blacklist Smartcard</ModalHeader>
       <Form
         onSubmit={(e) => {
           e.preventDefault();

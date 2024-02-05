@@ -61,6 +61,7 @@ import InventoryTrack from "./InventoryTrack";
 import AddStockSmartcard from "./AddStockSmartcard";
 import UploadSmartcard from "./UploadSmartcaed";
 import StockScMarkfaulty from "./StockScMarkfaulty";
+import StockScBlacklist from "./StockScBlacklist";
 
 const InventoryStock = (props) => {
   document.title = "Inventory | VDigital";
@@ -74,6 +75,7 @@ const InventoryStock = (props) => {
   const [showStockScMarkfaulty, setShowStockScMarkfaulty] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
+  const [showStockScBlacklist, setShowStockScBlacklist] = useState(false);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -596,6 +598,10 @@ const InventoryStock = (props) => {
     setShowWarning(!showWarning);
   };
 
+  const handleStockScBlacklist = () => {
+    setShowStockScBlacklist(!showStockScBlacklist);
+  };
+
   const getFilteredTableActions = () => {
     let actions = [];
     if (selectedOption === "In-stock") {
@@ -633,6 +639,10 @@ const InventoryStock = (props) => {
             type: "dot",
             icon: "action",
             dropdownName: "",
+            action:
+              Object.keys(selectedRows).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowStockScBlacklist(true),
           },
           {
             name: "Update Brand/Warehouse/Inventory state",
@@ -893,6 +903,11 @@ const InventoryStock = (props) => {
       <StockScMarkfaulty
         isOpen={showStockScMarkfaulty}
         toggle={handleStockScMarkfaulty}
+        selectedRows={selectedRows}
+      />
+      <StockScBlacklist
+        isOpen={showStockScBlacklist}
+        toggle={handleStockScBlacklist}
         selectedRows={selectedRows}
       />
       <div
