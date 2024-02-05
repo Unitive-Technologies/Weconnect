@@ -2,7 +2,16 @@ import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import TableContainer from "../../../../components/Common/TableContainer";
 import Spinners from "../../../../components/Common/Spinner";
-import { Card, CardBody, Col, Container, Row } from "reactstrap";
+import {
+  Button,
+  Card,
+  CardBody,
+  Col,
+  Container,
+  Form,
+  Input,
+  Row,
+} from "reactstrap";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -10,10 +19,16 @@ import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
 const OperatorAccountDetails = (props) => {
+  const {
+    accountDetails,
+    setFromDate,
+    setToDate,
+    fromDate,
+    toDate,
+    handleSearch,
+  } = props;
   //meta title
   document.title = "Regional Offices | VDigital";
-
-  const operatorAccount = [];
 
   const columns = useMemo(
     () => [
@@ -74,7 +89,7 @@ const OperatorAccountDetails = (props) => {
       },
       {
         Header: "Amount",
-        accessor: "addr",
+        // accessor: "addr",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -84,7 +99,7 @@ const OperatorAccountDetails = (props) => {
       },
       {
         Header: "SGST",
-        accessor: "contact_person",
+        // accessor: "contact_person",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -96,7 +111,7 @@ const OperatorAccountDetails = (props) => {
       },
       {
         Header: "CGST",
-        accessor: "mobile_no",
+        // accessor: "mobile_no",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -108,7 +123,31 @@ const OperatorAccountDetails = (props) => {
       },
       {
         Header: "IGST",
-        accessor: "state_lbl",
+        // accessor: "state_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.state_lbl}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "TDS",
+        // accessor: "state_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.state_lbl}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "MRP",
+        // accessor: "state_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -120,7 +159,7 @@ const OperatorAccountDetails = (props) => {
       },
       {
         Header: "Total Tax",
-        accessor: "District_lbl",
+        // accessor: "District_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -132,7 +171,7 @@ const OperatorAccountDetails = (props) => {
       },
       {
         Header: "Total Amount",
-        accessor: "city_lbl",
+        // accessor: "city_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -142,7 +181,7 @@ const OperatorAccountDetails = (props) => {
       },
       {
         Header: "Debit Amount",
-        accessor: "gstno",
+        // accessor: "gstno",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -152,7 +191,7 @@ const OperatorAccountDetails = (props) => {
       },
       {
         Header: "Credit Amount",
-        accessor: "panno",
+        // accessor: "panno",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -162,7 +201,7 @@ const OperatorAccountDetails = (props) => {
       },
       {
         Header: "Type",
-        accessor: "username",
+        // accessor: "username",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -172,7 +211,7 @@ const OperatorAccountDetails = (props) => {
       },
       {
         Header: "Remark",
-        accessor: "status",
+        // accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -250,11 +289,41 @@ const OperatorAccountDetails = (props) => {
         type: "normal",
         icon: "create",
       },
+      {
+        name: "Setoff Account",
+        // action: setShowUploadRegionalOffice,
+        type: "normal",
+        icon: "create",
+      },
     ];
   };
 
   return (
     <React.Fragment>
+      <Form onSubmit={handleSearch}>
+        <Row>
+          <Col lg={2}>
+            <p>Transaction Date:</p>
+          </Col>
+          <Col lg={2}>
+            <Input
+              value={fromDate}
+              onChange={(e) => setFromDate(e.target.value)}
+              type="date"
+            />
+          </Col>
+          <Col lg={2}>
+            <Input
+              value={toDate}
+              onChange={(e) => setToDate(e.target.value)}
+              type="date"
+            />
+          </Col>
+          <Col lg={2}>
+            <Button type="submit">Search</Button>
+          </Col>
+        </Row>
+      </Form>
       <Row>
         <Col lg="12">
           <Card>
@@ -262,8 +331,9 @@ const OperatorAccountDetails = (props) => {
               <TableContainer
                 isPagination={true}
                 columns={columns}
-                data={operatorAccount}
+                data={accountDetails}
                 isTransactionDate={true}
+                isShowTableActionButtons={true}
                 // isGlobalFilter={true}
                 isAddRegionalOffice={true}
                 isShowingPageLength={true}

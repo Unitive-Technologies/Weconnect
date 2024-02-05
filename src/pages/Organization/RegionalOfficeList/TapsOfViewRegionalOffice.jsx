@@ -21,9 +21,24 @@ import AllottedBouquet from "./TabsComponents/AllottedBouquet";
 import AllottedScheme from "./TabsComponents/AllottedScheme";
 import AllottedNCF from "./TabsComponents/AllottedNCF";
 import UploadDocuments from "./TabsComponents/UploadDocuments";
+import AllottedPairing from "./TabsComponents/AllottedPairing";
+import SmsLogs from "./TabsComponents/SmsLogs";
 
-const TapsOfViewRegionalOffice = ({ allottedBouquets }) => {
-  console.log("allottedBouquet:" + JSON.stringify(allottedBouquets));
+const TapsOfViewRegionalOffice = ({
+  accountDetails,
+  setFromDate,
+  setToDate,
+  fromDate,
+  toDate,
+  handleSearch,
+  allottedBouquets,
+  allottedScheme,
+  allottedPairing,
+  allottedNCF,
+  uploadDocuments,
+  smsLogs,
+}) => {
+  // console.log("allotted:" + JSON.stringify(smsLogs));
   const [customActiveTab, setcustomActiveTab] = useState("1");
 
   const handleTab = (tab) => {
@@ -153,7 +168,14 @@ const TapsOfViewRegionalOffice = ({ allottedBouquets }) => {
         <TabPane tabId="1">
           <Row>
             <Col sm="12">
-              <OperatorAccountDetails />
+              <OperatorAccountDetails
+                accountDetails={accountDetails}
+                handleSearch={handleSearch}
+                fromDate={fromDate}
+                toDate={toDate}
+                setFromDate={setFromDate}
+                setToDate={setToDate}
+              />
             </Col>
           </Row>
         </TabPane>
@@ -167,35 +189,43 @@ const TapsOfViewRegionalOffice = ({ allottedBouquets }) => {
         <TabPane tabId="3">
           <Row>
             <Col sm="12">
-              <AllottedScheme />
+              <AllottedScheme allottedScheme={allottedScheme} />
             </Col>
           </Row>
         </TabPane>
         <TabPane tabId="4">
           <Row>
             <Col sm="12">
-              <CardText className="mb-0">No Data</CardText>
+              {allottedPairing.length > 0 ? (
+                <AllottedPairing />
+              ) : (
+                <CardText className="mb-0">No Data</CardText>
+              )}
             </Col>
           </Row>
         </TabPane>
         <TabPane tabId="5">
           <Row>
             <Col sm="12">
-              <AllottedNCF />
+              <AllottedNCF allottedNCF={allottedNCF} />
             </Col>
           </Row>
         </TabPane>
         <TabPane tabId="6">
           <Row>
             <Col sm="12">
-              <UploadDocuments />
+              <UploadDocuments uploadDocuments={uploadDocuments} />
             </Col>
           </Row>
         </TabPane>
         <TabPane tabId="7">
           <Row>
             <Col sm="12">
-              <CardText className="mb-0">No Data</CardText>
+              {smsLogs.length > 0 ? (
+                <SmsLogs smsLogs={smsLogs} />
+              ) : (
+                <CardText className="mb-0">No Data</CardText>
+              )}
             </Col>
           </Row>
         </TabPane>

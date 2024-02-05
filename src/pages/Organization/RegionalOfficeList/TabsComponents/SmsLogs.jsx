@@ -14,8 +14,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const AllottedScheme = (props) => {
-  const { allottedScheme } = props;
+const SmsLogs = (props) => {
+  const { smsLogs } = props;
   //meta title
   document.title = "Regional Offices | VDigital";
 
@@ -79,68 +79,72 @@ const AllottedScheme = (props) => {
         },
       },
       {
-        Header: "Type",
-        accessor: "addr",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">{cellProps.row.original.addr}</p>
-          );
-        },
-      },
-      {
-        Header: "Type",
-        accessor: "type",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">{cellProps.row.original.type}</p>
-          );
-        },
-      },
-      {
-        Header: "Hardware Charge",
-        accessor: "mobile_no",
+        Header: "Commission(%)",
+        accessor: "commision",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.mobile_no}
+              {cellProps.row.original.commision}
             </p>
           );
         },
       },
       {
-        Header: "Installation Charge",
-        accessor: "state_lbl",
+        Header: "Type",
+        accessor: "boxtype_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.state_lbl}
+              {cellProps.row.original.boxtype_lbl}
             </p>
+          );
+        },
+      },
+      {
+        Header: "Bouquet Type",
+        accessor: "type_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.type_lbl}</p>
           );
         },
       },
       {
         Header: "Status",
-        accessor: "District_lbl",
+        accessor: "status_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.district_lbl}
+              {cellProps.row.original.status_lbl}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Is Refundable",
+        accessor: "is_refundable",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.is_refundable}
             </p>
           );
         },
       },
       {
         Header: "Allotted By",
-        accessor: "city_lbl",
+        accessor: "created_by_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.city_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by_lbl}
+            </p>
           );
         },
       },
@@ -172,12 +176,12 @@ const AllottedScheme = (props) => {
               <TableContainer
                 isPagination={true}
                 columns={columns}
-                data={allottedScheme}
+                data={smsLogs}
                 isGlobalFilter={true}
                 isAddRegionalOffice={true}
                 isShowingPageLength={true}
                 tableActions={getTableActions()}
-                customPageSize={50}
+                customPageSize={5}
                 tableClass="table align-middle table-nowrap table-hover"
                 theadClass="table-light"
                 paginationDiv="col-sm-12 col-md-7"
@@ -191,4 +195,4 @@ const AllottedScheme = (props) => {
   );
 };
 
-export default AllottedScheme;
+export default SmsLogs;

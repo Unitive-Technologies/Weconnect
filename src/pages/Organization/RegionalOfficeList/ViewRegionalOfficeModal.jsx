@@ -39,8 +39,18 @@ const ViewRegionalOfficeModal = (props) => {
   );
   const dispatch = useDispatch();
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
+  const [accountDetails, setAccountDetails] = useState([]);
+  const currentDate = new Date().toISOString().split("T")[0];
+  const [fromDate, setFromDate] = useState(currentDate);
+  const [toDate, setToDate] = useState(currentDate);
+  // 2024-02-05
+  console.log("from & to Date:" + fromDate, toDate);
   const [allottedBouquets, setAllottedBouquets] = useState([]);
-
+  const [allottedScheme, setAllottedScheme] = useState([]);
+  const [allottedPairing, setAllottedPairing] = useState([]);
+  const [allottedNCF, setAllottedNCF] = useState([]);
+  const [uploadDocuments, setUploadDocuments] = useState([]);
+  const [smsLogs, setSmsLogs] = useState([]);
   // const selectRegionalOfficeState = (state) => state.regionaloffice;
   // const RegionalOfficeProperties = createSelector(
   //   selectRegionalOfficeState,
@@ -176,32 +186,172 @@ const ViewRegionalOfficeModal = (props) => {
     resetSelection();
     toggleViewRegionalOffice();
   };
+  const handleSearch = async (e) => {
+    // e.preventDefault();
+    // console.log("From Date:", fromDate);
+    // console.log("To Date:", toDate);
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
 
+      const response = await axios.get(
+        `${API_URL}/operator-account?expand=created_by_lbl,type_lbl,cr_operator_lbl,dr_operator_lbl,credited_by,igst,cgst,sgst,name,balance,credit,debit,balance_h,credit_h,debit_h&filter[operator_id]=${selectedRowId}&filter[wallet_type]=2&filter[FRM_created_at]=${fromDate}&filter[TO_created_at]=${toDate}&page=1&per-page=50&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setAccountDetails(response.data.data);
+      console.log("response in useEffect:" + JSON.stringify(response));
+    } catch (error) {
+      console.error("Error fetching bouquet data:", error);
+    }
+  };
+  const getAccountDetails = async (e) => {
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/operator-account?expand=created_by_lbl,type_lbl,cr_operator_lbl,dr_operator_lbl,credited_by,igst,cgst,sgst,name,balance,credit,debit,balance_h,credit_h,debit_h&filter[operator_id]=${selectedRowId}&filter[wallet_type]=2&filter[FRM_created_at]=${fromDate}&filter[TO_created_at]=${toDate}&page=1&per-page=50&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setAccountDetails(response.data.data);
+      console.log("response in useEffect:" + JSON.stringify(response));
+    } catch (error) {
+      console.error("Error fetching bouquet data:", error);
+    }
+  };
+  const getAllottedBouquets = async (e) => {
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/operator-bouque?expand=boxtype_lbl,type_lbl,status_lbl,created_by_lbl&filter[operator_id]=${selectedRowId}&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setAllottedBouquets(response.data.data);
+      console.log("response in useEffect:" + JSON.stringify(response));
+    } catch (error) {
+      console.error("Error fetching bouquet data:", error);
+    }
+  };
+  const getAllottedScheme = async (e) => {
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/operator-scheme?expand=boxtype_lbl,status_lbl,created_by_lbl&filter[operator_id]=${parseInt(
+          selectedRowId
+        )}&vr=web1.0`,
+
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setAllottedScheme(response.data.data);
+      console.log("response in useEffect:" + JSON.stringify(response));
+    } catch (error) {
+      console.error("Error fetching scheme data:", error);
+    }
+  };
+  const getAllottedPairing = async (e) => {
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/pairing?expand=created_by_lbl,status_lbl,cas_lbl,brand_lbl,boxtype_lbl,is_embeded_lbl,account_detail&filter[track]=1&filter[operator_id]=${parseInt(
+          selectedRowId
+        )}&page=1&per-page=50&vr=web1.0`,
+
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setAllottedPairing(response.data.data);
+      console.log("response in useEffect:" + JSON.stringify(response));
+    } catch (error) {
+      console.error("Error fetching pairing data:", error);
+    }
+  };
+  const getAllottedNCF = async (e) => {
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/ncf-rates?filter[status]=1&filter[operator_id]=${selectedRowId}&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setAllottedNCF(response.data.data);
+      console.log("response in useEffect:" + JSON.stringify(response));
+    } catch (error) {
+      console.error("Error fetching bouquet data:", error);
+    }
+  };
+  const getUploadDocuments = async (e) => {
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/operator/view-upload-doc?filter[model_id]=${selectedRowId}&expand=data&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setUploadDocuments(response.data.data);
+      console.log("response in useEffect:" + JSON.stringify(response));
+    } catch (error) {
+      console.error("Error fetching bouquet data:", error);
+    }
+  };
+  const getSmsLogs = async (e) => {
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/smslog?expand=created_by_lbl,created_on_lbl&filter[is_operator]=1&filter[id]=${selectedRowId}&page=1&per-page=50&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setSmsLogs(response.data.data);
+      console.log("response in useEffect:" + JSON.stringify(response));
+    } catch (error) {
+      console.error("Error fetching bouquet data:", error);
+    }
+  };
   useEffect(() => {
-    const getAllottedBouquets = async (e) => {
-      try {
-        const token = "Bearer " + localStorage.getItem("temptoken");
-
-        const response = await axios.get(
-          `${API_URL}/operator-bouque?expand=boxtype_lbl,type_lbl,status_lbl,created_by_lbl&filter[operator_id]=${selectedRowId}&vr=web1.0`,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
-        setAllottedBouquets(response.data.data);
-        console.log("response in useEffect:" + JSON.stringify(response));
-      } catch (error) {
-        console.error("Error fetching addChannels data:", error);
-      }
-    };
     if (selectedRowId) {
+      getAccountDetails();
       getAllottedBouquets();
+      getAllottedScheme();
+      getAllottedPairing();
+      getAllottedNCF();
+      getUploadDocuments();
+      getSmsLogs();
     }
   }, [selectedRowId]);
 
-  console.log("allotted:" + JSON.stringify(allottedBouquets));
+  // console.log("allotted:" + JSON.stringify(allottedScheme));
   return (
     <>
       <Modal
@@ -451,7 +601,18 @@ const ViewRegionalOfficeModal = (props) => {
                 <Row>
                   <Col lg={12}>
                     <TapsOfViewRegionalOffice
+                      fromDate={fromDate}
+                      toDate={toDate}
+                      setFromDate={setFromDate}
+                      setToDate={setToDate}
+                      handleSearch={handleSearch}
+                      accountDetails={accountDetails}
                       allottedBouquets={allottedBouquets}
+                      allottedScheme={allottedScheme}
+                      allottedPairing={allottedPairing}
+                      allottedNCF={allottedNCF}
+                      uploadDocuments={uploadDocuments}
+                      smsLogs={smsLogs}
                     />
                   </Col>
                 </Row>

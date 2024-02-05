@@ -14,7 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const AllottedNCF = (props) => {
+const AllottedNCF = ({ allottedNCF }) => {
   //meta title
   document.title = "Regional Offices | VDigital";
 
@@ -79,79 +79,81 @@ const AllottedNCF = (props) => {
       },
       {
         Header: "From",
-        accessor: "addr",
+        accessor: "from_channel_no",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.addr}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.from_channel_no}
+            </p>
           );
         },
       },
       {
         Header: "To",
-        accessor: "contact_person",
+        accessor: "to_channel_no",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.contact_person}
+              {cellProps.row.original.to_channel_no}
             </p>
           );
         },
       },
       {
         Header: "MRP",
-        accessor: "mobile_no",
+        accessor: "mrp",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.mobile_no}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.mrp}</p>
           );
         },
       },
       {
         Header: "LCO Discount(%)",
-        accessor: "state_lbl",
+        accessor: "lmo_discount",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.state_lbl}
+              {cellProps.row.original.lmo_discount}
             </p>
           );
         },
       },
       {
         Header: "LCO Rate",
-        accessor: "District_lbl",
+        accessor: "lmo_rate",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.district_lbl}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.lmo_rate}</p>
           );
         },
       },
       {
         Header: "Per Channel",
-        // accessor: "city_lbl",
+        accessor: "calculate_per_channel",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.city_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.calculate_per_channel}
+            </p>
           );
         },
       },
       {
         Header: "Is Refundable",
-        accessor: "city_lbl",
+        accessor: "is_refundable",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.city_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.is_refundable}
+            </p>
           );
         },
       },
@@ -183,7 +185,7 @@ const AllottedNCF = (props) => {
               <TableContainer
                 isPagination={true}
                 columns={columns}
-                data={operatorAccount}
+                data={allottedNCF}
                 // isGlobalFilter={true}
                 // isAddRegionalOffice={true}
                 isShowingPageLength={true}

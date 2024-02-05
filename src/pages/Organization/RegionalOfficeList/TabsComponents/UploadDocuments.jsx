@@ -16,8 +16,7 @@ import {
 } from "reactstrap";
 import TableContainer from "../../../../components/Common/TableContainer";
 
-const UploadDocuments = () => {
-  const uploaddocs = [];
+const UploadDocuments = ({ uploadDocuments }) => {
   const columns = useMemo(
     () => [
       {
@@ -185,7 +184,7 @@ const UploadDocuments = () => {
                 <TableContainer
                   isPagination={true}
                   columns={columns}
-                  data={uploaddocs}
+                  data={uploadDocuments}
                   // isGlobalFilter={true}
                   // isAddRegionalOffice={true}
                   isShowingPageLength={true}
