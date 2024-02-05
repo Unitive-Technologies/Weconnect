@@ -2,6 +2,7 @@ import { call, put, select, takeEvery } from "redux-saga/effects";
 
 import {
   GET_REGIONALOFFICE,
+  GET_REGIONAL_ALLOTTEDBOUQUET,
   ADD_NEW_REGIONALOFFICE,
   UPDATE_REGIONALOFFICE,
 } from "./actionTypes";
@@ -10,6 +11,8 @@ import {
   getRegionalOffice as fetchregionaloffices,
   getRegionalOfficeSuccess,
   getRegionalOfficeFail,
+  getRegionalAllottedBouquetSuccess,
+  getRegionalAllottedBouquetFail,
   addRegionalOfficeFail,
   addRegionalOfficeSuccess,
   updateRegionalOfficeSuccess,
@@ -21,6 +24,7 @@ import {
   getRegionalOffices,
   updateRegionalOffice,
   addNewRegionalOffice,
+  getRegionalAllottedBouquet,
 } from "../../helpers/fakebackend_helper";
 
 const convertRegionalOfficeListObject = (regionalofficeList) => {
@@ -53,6 +57,7 @@ const convertRegionalOfficeListObject = (regionalofficeList) => {
 };
 
 export const getRegionalOfficeStore = (state) => state.regionaloffice;
+export const getRegionalBouquetStore = (state) => state.regionalBouquet;
 
 function* fetchRegionalOffice() {
   try {
@@ -71,6 +76,18 @@ function* fetchRegionalOffice() {
   }
 }
 
+function* fetchRegionalAllottedBouquets() {
+  try {
+    const response = yield call(getRegionalAllottedBouquet);
+    console.log("response:" + JSON.stringify(response));
+    // const scheduleCustomerNotificationList = convertScheduleCustomerNotificationListObject(response);
+    // yield put(getScheduleCustomerNotificationSuccess(scheduleCustomerNotificationList));
+    yield put(getRegionalAllottedBouquetSuccess(response.data));
+  } catch (error) {
+    console.error("Error fetching Bouquets list:", error);
+    yield put(getRegionalAllottedBouquetFail(error));
+  }
+}
 function* onAddNewRegionalOffice({ payload: regionalofficeList }) {
   try {
     const response = yield call(addNewRegionalOffice, regionalofficeList);
@@ -103,6 +120,7 @@ function* regionalOfficeSaga() {
   yield takeEvery(GET_REGIONALOFFICE, fetchRegionalOffice);
   yield takeEvery(ADD_NEW_REGIONALOFFICE, onAddNewRegionalOffice);
   yield takeEvery(UPDATE_REGIONALOFFICE, onUpdateRegionalOffice);
+  yield takeEvery(GET_REGIONAL_ALLOTTEDBOUQUET, fetchRegionalAllottedBouquets);
 }
 
 export default regionalOfficeSaga;

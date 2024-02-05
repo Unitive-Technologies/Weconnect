@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import {
   Col,
   Row,
@@ -14,10 +15,15 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
 import { updateRegionalOffice as onUpdateRegionalOffice } from "/src/store/regionaloffice/actions";
 import TapsOfViewRegionalOffice from "./TapsOfViewRegionalOffice";
 import EditRegionalOfficeModal from "./EditRegionalOfficeModal";
+import {
+  goToPage as onGoToPage,
+  getRegionalAllottedBouquet as onGetRegionalAllottedBouquet,
+} from "../../../store/regionaloffice/actions";
+import { useSelector, useDispatch } from "react-redux";
+import { createSelector } from "reselect";
 
 const ViewRegionalOfficeModal = (props) => {
   const {
@@ -26,9 +32,49 @@ const ViewRegionalOfficeModal = (props) => {
     resetSelection,
     regionalOffData,
     setViewRegionalOffice,
+    selectedRowId,
   } = props;
-  //   console.log("user in viewuser modal:" + JSON.stringify(user));
+  console.log(
+    "@@@@@@@@@regionalOffData in view modal:" + JSON.stringify(regionalOffData)
+  );
   const dispatch = useDispatch();
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
+  const [allottedBouquets, setAllottedBouquets] = useState([]);
+
+  // const selectRegionalOfficeState = (state) => state.regionaloffice;
+  // const RegionalOfficeProperties = createSelector(
+  //   selectRegionalOfficeState,
+
+  //   (regionalStates) => ({
+  //     allottedBouquet: regionalStates.regionalBouquet,
+  //     loading: regionalStates.loading,
+  //     totalPage: regionalStates.totalPages,
+  //     totalCount: regionalStates.totalCount,
+  //     pageSize: regionalStates.perPage,
+  //     currentPage: regionalStates.currentPage,
+  //   })
+  // );
+
+  // const {
+  //   allottedBouquet,
+  //   loading,
+  //   totalPage,
+  //   totalCount,
+  //   currentPage,
+  //   pageSize,
+  // } = useSelector(RegionalOfficeProperties);
+
+  // useEffect(() => {
+  //   if (regionalOffData && !regionalOffData.length) {
+  //     dispatch(onGetRegionalAllottedBouquet());
+  //   }
+  // }, [dispatch, regionalOffData]);
+
+  // const goToPage = (toPage) => {
+  //   console.log("[GOTO PAGE] Trigger to page - ", toPage);
+  //   dispatch(onGoToPage(toPage));
+  //   dispatch(onGetRegionalAllottedBouquet());
+  // };
   const [showEditRegionalOffice, setShowEditRegionalOffice] = useState(false);
   const [showOperatorDetails, setShowOperatorDetails] = useState(true);
   const validation = useFormik({
@@ -36,33 +82,37 @@ const ViewRegionalOfficeModal = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      id: (regionalOffData && regionalOffData.id) || "",
-      name: regionalOffData.name,
-      code: regionalOffData.code,
-      addr1: regionalOffData.addr1,
-      addr2: regionalOffData.addr2,
-      addr3: regionalOffData.addr3,
-      contact_person: regionalOffData.contact_person,
-      mobile_no: regionalOffData.mobile_no,
-      phone_no: regionalOffData.phone_no,
-      fax_no: regionalOffData.fax_no,
-      state_lbl: regionalOffData.state_lbl,
-      district_lbl: regionalOffData.district_lbl,
-      city_lbl: regionalOffData.city_lbl,
-      gstno: regionalOffData.gstno,
-      panno: "",
-      username: "",
-      status_lbl: "",
-      email: "",
-      pincode: "",
-      por_number: "",
-      reg_phase: "",
-      reg_startdate: "",
-      reg_enddate: "",
-      gst_date: "",
-      credit_limit: "",
-      area_id: "",
-      agreement_data: [],
+      // id: (regionalOffData && regionalOffData.id) || "",
+      name: (regionalOffData && regionalOffData.name) || "",
+      code: (regionalOffData && regionalOffData.code) || "",
+      addr: (regionalOffData && regionalOffData.addr) || "",
+      addr1: (regionalOffData && regionalOffData.addr1) || "",
+      addr2: (regionalOffData && regionalOffData.addr2) || "",
+      addr3: (regionalOffData && regionalOffData.addr3) || "",
+      contact_person: (regionalOffData && regionalOffData.contact_person) || "",
+      mobile_no: (regionalOffData && regionalOffData.mobile_no) || "",
+      phone_no: (regionalOffData && regionalOffData.phone_no) || "",
+      mso_lbl: (regionalOffData && regionalOffData.mso_lbl) || "",
+      username: (regionalOffData && regionalOffData.username) || "",
+      // fax_no: regionalOffData.fax_no,
+      // state_lbl: regionalOffData.state_lbl,
+      // district_lbl: regionalOffData.district_lbl,
+      // city_lbl: regionalOffData.city_lbl,
+      // gstno: regionalOffData.gstno,
+
+      // panno: "",
+
+      // status_lbl: "",
+      // email: "",
+      // pincode: "",
+      // por_number: "",
+      // reg_phase: "",
+      // reg_startdate: "",
+      // reg_enddate: "",
+      // gst_date: "",
+      // credit_limit: "",
+      // area_id: "",
+      // agreement_data: [],
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
@@ -127,6 +177,31 @@ const ViewRegionalOfficeModal = (props) => {
     toggleViewRegionalOffice();
   };
 
+  useEffect(() => {
+    const getAllottedBouquets = async (e) => {
+      try {
+        const token = "Bearer " + localStorage.getItem("temptoken");
+
+        const response = await axios.get(
+          `${API_URL}/operator-bouque?expand=boxtype_lbl,type_lbl,status_lbl,created_by_lbl&filter[operator_id]=${selectedRowId}&vr=web1.0`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        setAllottedBouquets(response.data.data);
+        console.log("response in useEffect:" + JSON.stringify(response));
+      } catch (error) {
+        console.error("Error fetching addChannels data:", error);
+      }
+    };
+    if (selectedRowId) {
+      getAllottedBouquets();
+    }
+  }, [selectedRowId]);
+
+  console.log("allotted:" + JSON.stringify(allottedBouquets));
   return (
     <>
       <Modal
@@ -223,7 +298,7 @@ const ViewRegionalOfficeModal = (props) => {
                             disabled
                             onChange={validation.handleChange}
                             onBlur={validation.handleBlur}
-                            value={validation.values.upload || ""}
+                            value={validation.values.name || ""}
                             invalid={
                               validation.touched.name && validation.errors.name
                                 ? true
@@ -320,25 +395,23 @@ const ViewRegionalOfficeModal = (props) => {
                         <div className="mb-3">
                           <Label className="form-label">Address</Label>
                           <Input
-                            name="address"
+                            name="addr"
                             label="Address"
                             type="text"
                             placeholder="Enter Address"
                             disabled
                             onChange={validation.handleChange}
                             onBlur={validation.handleBlur}
-                            value={validation.values.address || ""}
+                            value={validation.values.addr || ""}
                             invalid={
-                              validation.touched.address &&
-                              validation.errors.address
+                              validation.touched.addr && validation.errors.addr
                                 ? true
                                 : false
                             }
                           />
-                          {validation.touched.address &&
-                          validation.errors.address ? (
+                          {validation.touched.addr && validation.errors.addr ? (
                             <FormFeedback type="invalid">
-                              {validation.errors.address}
+                              {validation.errors.addr}
                             </FormFeedback>
                           ) : null}
                         </div>
@@ -347,25 +420,25 @@ const ViewRegionalOfficeModal = (props) => {
                         <div className="mb-3">
                           <Label className="form-label">Parent</Label>
                           <Input
-                            name="parent"
+                            name="mso_lbl"
                             label="Parent"
                             type="text"
                             placeholder="Enter Parent"
                             disabled
                             onChange={validation.handleChange}
                             onBlur={validation.handleBlur}
-                            value={validation.values.parent || ""}
+                            value={validation.values.mso_lbl || ""}
                             invalid={
-                              validation.touched.parent &&
-                              validation.errors.parent
+                              validation.touched.mso_lbl &&
+                              validation.errors.mso_lbl
                                 ? true
                                 : false
                             }
                           />
-                          {validation.touched.parent &&
-                          validation.errors.parent ? (
+                          {validation.touched.mso_lbl &&
+                          validation.errors.mso_lbl ? (
                             <FormFeedback type="invalid">
-                              {validation.errors.parent}
+                              {validation.errors.mso_lbl}
                             </FormFeedback>
                           ) : null}
                         </div>
@@ -377,7 +450,9 @@ const ViewRegionalOfficeModal = (props) => {
                 )}
                 <Row>
                   <Col lg={12}>
-                    <TapsOfViewRegionalOffice />
+                    <TapsOfViewRegionalOffice
+                      allottedBouquets={allottedBouquets}
+                    />
                   </Col>
                 </Row>
               </Form>

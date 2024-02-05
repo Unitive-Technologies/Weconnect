@@ -22,7 +22,8 @@ import AllottedScheme from "./TabsComponents/AllottedScheme";
 import AllottedNCF from "./TabsComponents/AllottedNCF";
 import UploadDocuments from "./TabsComponents/UploadDocuments";
 
-const TapsOfViewRegionalOffice = () => {
+const TapsOfViewRegionalOffice = ({ allottedBouquets }) => {
+  console.log("allottedBouquet:" + JSON.stringify(allottedBouquets));
   const [customActiveTab, setcustomActiveTab] = useState("1");
 
   const handleTab = (tab) => {
@@ -159,7 +160,7 @@ const TapsOfViewRegionalOffice = () => {
         <TabPane tabId="2">
           <Row>
             <Col sm="12">
-              <AllottedBouquet />
+              <AllottedBouquet allottedBouquets={allottedBouquets} />
             </Col>
           </Row>
         </TabPane>

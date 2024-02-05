@@ -9,6 +9,9 @@ import {
   UPDATE_REGIONALOFFICE_SUCCESS,
   UPDATE_REGIONALOFFICE_FAIL,
   UPDATE_REGIONALOFFICES_CURRENT_PAGE,
+  GET_REGIONAL_ALLOTTEDBOUQUET,
+  GET_REGIONAL_ALLOTTEDBOUQUET_SUCCESS,
+  GET_REGIONAL_ALLOTTEDBOUQUET_FAIL,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -16,22 +19,39 @@ export const goToPage = (toPage) => ({
   payload: Number(toPage),
 });
 
-export const getRegionalOffice = (regionalOffice) => {
+export const getRegionalOffice = () => {
   return {
     type: GET_REGIONALOFFICE,
   };
 };
 
-export const getRegionalOfficeSuccess = (regionalOffice) => {
-  // console.log("#############Received Regional Offices:", regionalOffice);
+export const getRegionalOfficeSuccess = (regionaloffice) => {
   return {
     type: GET_REGIONALOFFICE_SUCCESS,
-    payload: regionalOffice,
+    payload: regionaloffice,
   };
 };
 
 export const getRegionalOfficeFail = (error) => ({
   type: GET_REGIONALOFFICE_FAIL,
+  payload: error,
+});
+
+export const getRegionalAllottedBouquet = () => {
+  return {
+    type: GET_REGIONAL_ALLOTTEDBOUQUET,
+  };
+};
+
+export const getRegionalAllottedBouquetSuccess = (regionalBouquet) => {
+  return {
+    type: GET_REGIONAL_ALLOTTEDBOUQUET_SUCCESS,
+    payload: regionalBouquet,
+  };
+};
+
+export const getRegionalAllottedBouquetFail = (error) => ({
+  type: GET_REGIONAL_ALLOTTEDBOUQUET_FAIL,
   payload: error,
 });
 

@@ -15,6 +15,7 @@ import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
 const AllottedBouquet = (props) => {
+  const { allottedBouquets } = props;
   //meta title
   document.title = "Regional Offices | VDigital";
 
@@ -79,69 +80,71 @@ const AllottedBouquet = (props) => {
       },
       {
         Header: "Commission(%)",
-        accessor: "addr",
+        accessor: "commision",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.addr}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.commision}
+            </p>
           );
         },
       },
       {
         Header: "Type",
-        accessor: "contact_person",
+        accessor: "boxtype_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.contact_person}
+              {cellProps.row.original.boxtype_lbl}
             </p>
           );
         },
       },
       {
         Header: "Bouquet Type",
-        accessor: "mobile_no",
+        accessor: "type_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.mobile_no}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.type_lbl}</p>
           );
         },
       },
       {
         Header: "Status",
-        accessor: "state_lbl",
+        accessor: "status_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.state_lbl}
+              {cellProps.row.original.status_lbl}
             </p>
           );
         },
       },
       {
         Header: "Is Refundable",
-        accessor: "District_lbl",
+        accessor: "is_refundable",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.district_lbl}
+              {cellProps.row.original.is_refundable}
             </p>
           );
         },
       },
       {
         Header: "Allotted By",
-        accessor: "city_lbl",
+        accessor: "created_by_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.city_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by_lbl}
+            </p>
           );
         },
       },
@@ -173,12 +176,12 @@ const AllottedBouquet = (props) => {
               <TableContainer
                 isPagination={true}
                 columns={columns}
-                data={operatorAccount}
+                data={allottedBouquets}
                 isGlobalFilter={true}
                 isAddRegionalOffice={true}
                 isShowingPageLength={true}
                 tableActions={getTableActions()}
-                customPageSize={50}
+                customPageSize={5}
                 tableClass="table align-middle table-nowrap table-hover"
                 theadClass="table-light"
                 paginationDiv="col-sm-12 col-md-7"

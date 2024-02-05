@@ -462,7 +462,8 @@ export const addNewRegionalOffice = (regionaloffice) =>
   post(url.ADD_NEW_REGIONALOFFICE, regionaloffice);
 export const updateRegionalOffice = (regionaloffice) =>
   put(url.UPDATE_REGIONALOFFICE, regionaloffice);
-
+export const getRegionalAllottedBouquet = (id) =>
+  get(url.GET_REGIONAL_ALLOTTEDBOUQUET(id));
 // export const getBroadCasters = () => get(url.GET_BROADCASTER);
 export const getBroadCastersStatus = () => get(url.GET_BROADCASTER_STATUS);
 export const addNewBroadCaster = (broadcast) =>

@@ -66,7 +66,8 @@ export const GET_REGIONALOFFICE =
   "/operator?expand=reg_phase_lbl,created_by_lbl,status_lbl,mso_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=1&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_REGIONALOFFICE = "/operator?vr=web1.0";
 export const UPDATE_REGIONALOFFICE = "/update/regionaloffice";
-
+export const GET_REGIONAL_ALLOTTEDBOUQUET = (id) =>
+  `/operator-bouque?expand=boxtype_lbl,type_lbl,status_lbl,created_by_lbl&filter[operator_id]=${id}&vr=web1.0`;
 export const GET_SCHEDULECUSTOMERNOTIFICATION =
   "/schedule-notification?expand=type_lbl,osd_template_id_lbl,bmail_template_id_lbl,sms_template_id_lbl,osd_configuration_id_lbl,status_lbl,created_by_lbl&page=1&per-page=50&vr=web1.0";
 export const GET_SCHEDULECUSTOMERNOTIFICATION_TYPE =

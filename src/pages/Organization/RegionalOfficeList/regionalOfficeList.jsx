@@ -285,10 +285,12 @@ const RegionalOfficeList = (props) => {
   };
 
   const [regOffData, setRegOffData] = useState({});
+  const [selectedRowId, setSelectedRowId] = useState("");
 
   const toggleViewRegionalOffice = (regOffData) => {
     setViewRegionalOffice(!viewRegionalOffice);
     setRegOffData(regOffData);
+    setSelectedRowId(regOffData.id);
   };
 
   const resetSelection = () => {
@@ -319,6 +321,7 @@ const RegionalOfficeList = (props) => {
         resetSelection={resetSelection}
         regionalOffData={regOffData}
         setViewRegionalOffice={setViewRegionalOffice}
+        selectedRowId={selectedRowId}
       />
       <AddRegionalOfficeModal
         isOpen={showRegionalOffice}

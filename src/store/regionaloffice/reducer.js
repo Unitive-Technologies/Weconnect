@@ -16,10 +16,14 @@ import {
   UPDATE_REGIONALOFFICE_SUCCESS,
   UPDATE_REGIONALOFFICE_FAIL,
   UPDATE_REGIONALOFFICES_CURRENT_PAGE,
+  GET_REGIONAL_ALLOTTEDBOUQUET,
+  GET_REGIONAL_ALLOTTEDBOUQUET_SUCCESS,
+  GET_REGIONAL_ALLOTTEDBOUQUET_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
   regionaloffice: [],
+  regionalBouquet: [],
   pagination: {},
   error: {},
   loading: false,
@@ -56,6 +60,36 @@ const RegionalOffice = (state = INIT_STATE, action) => {
       };
 
     case GET_REGIONALOFFICE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        pagination: {},
+        loading: false,
+      };
+
+    case GET_REGIONAL_ALLOTTEDBOUQUET:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_REGIONAL_ALLOTTEDBOUQUET_SUCCESS:
+      // console.log("RegionalOffice data in reducer:", action.payload);
+      return {
+        ...state,
+        // regionalBouquet: action.payload.data.data,
+        regionalBouquet: state.regionaloffice.map((regoff) =>
+          regoff.id === action.payload.id
+            ? { regoff, ...action.payload }
+            : regoff
+        ),
+        currentPage: action.payload.headers[RESPONSE_HEADER_CURRENT_PAGE],
+        perPage: action.payload.headers[RESPONSE_HEADER_PER_PAGE],
+        totalCount: action.payload.headers[RESPONSE_HEADER_TOTAL_COUNT],
+        totalPages: action.payload.headers[RESPONSE_HEADER_PAGE_COUNT],
+        loading: false,
+      };
+
+    case GET_REGIONAL_ALLOTTEDBOUQUET_FAIL:
       return {
         ...state,
         error: action.payload,
