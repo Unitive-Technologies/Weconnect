@@ -132,13 +132,17 @@ const ViewChannel = (props) => {
   }, [channel]);
 
   useEffect(() => {
-    if (revenueData && revenueData.broadcaster_share) {
+    if (revenueData) {
       setBroadPercent(revenueData.broadcaster_share);
     }
-    if (revenueData && revenueData.mso_share) {
+    if (revenueData) {
       setMsoPercent(revenueData.mso_share);
     }
-    if (revenueData && revenueData.mso_discount) {
+    if (revenueData) {
+      console.log(
+        "discountPercent:" + typeof revenueData.mso_discount,
+        revenueData.mso_discount
+      );
       setDiscountPercent(revenueData.mso_discount);
     }
   }, [revenueData]);
@@ -574,7 +578,7 @@ const ViewChannel = (props) => {
               margin: "30px 0px",
             }}
           >
-            <Col lg={4}>
+            <Col lg={6}>
               <RevenueShare
                 broadPercent={broadPercent}
                 msoPercent={msoPercent}
@@ -582,15 +586,20 @@ const ViewChannel = (props) => {
                 setBroadPercent={setBroadPercent}
                 setMsoPercent={setMsoPercent}
                 setDiscountPercent={setDiscountPercent}
+                showEditChannel={showEditChannel}
               />
             </Col>
-            {console.log("XXXXXXXX:" + channel.isFta, channel.broadcasterRate)}
+            {/* {console.log(
+              "XXXXXXXX:" + channel.isFta,
+              channel.broadcasterRate,
+              channel.mso_discount
+            )}
             {console.log(
               "XXXTYPE:" + typeof channel.isFta,
-              typeof channel.broadcasterRate
-            )}
-            {channel.isFta === 0 && channel.broadcasterRate !== "" ? (
-              <Col lg={4}>
+              typeof parseInt(channel.broadcasterRate)
+            )} */}
+            {channel.isFta === 0 && parseInt(channel.broadcasterRate) !== "" ? (
+              <Col lg={6}>
                 <Card>
                   <CardBody>
                     <span>Graphical representation of SHARE</span>

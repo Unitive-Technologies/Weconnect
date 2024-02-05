@@ -10,6 +10,7 @@ const RevenueShare = ({
   setBroadPercent,
   setMsoPercent,
   setDiscountPercent,
+  showEditChannel,
 }) => {
   const handleBroadCastShare = (newValue) => {
     setBroadPercent(newValue);
@@ -47,13 +48,16 @@ const RevenueShare = ({
         <Col md={6}>
           <div className="p-3">
             <h5 className="font-size-14 mb-3 mt-0">Brodcaster Share</h5>
-
+            {console.log("showEditChannel:" + showEditChannel)}
             <Slider
               value={broadPercent}
               min={65}
               max={100}
               orientation="horizontal"
-              onChange={(newValue) => handleBroadCastShare(newValue)}
+              onChange={(newValue) =>
+                showEditChannel && handleBroadCastShare(newValue)
+              }
+              disabled={!showEditChannel}
             />
             <span className="float-right  mt-4">Value: {broadPercent} %</span>
           </div>
@@ -65,7 +69,9 @@ const RevenueShare = ({
               min={0}
               max={35}
               orientation="horizontal"
-              onChange={(newValue) => handleMsoShare(newValue)}
+              onChange={(newValue) =>
+                showEditChannel && handleMsoShare(newValue)
+              }
             />
             <span className="float-right  mt-4">Value: {msoPercent} %</span>
           </div>
@@ -77,7 +83,9 @@ const RevenueShare = ({
               min={0}
               max={15}
               orientation="horizontal"
-              onChange={(newValue) => handleDiscount(newValue)}
+              onChange={(newValue) =>
+                showEditChannel && handleDiscount(newValue)
+              }
             />
             <span className="float-right  mt-4">
               Value: {discountPercent} %
