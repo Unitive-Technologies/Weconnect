@@ -3,17 +3,59 @@ import {
   Card,
   CardBody,
   Col,
+  Form,
+  FormFeedback,
+  Input,
+  Label,
   Modal,
   ModalBody,
+  ModalFooter,
   ModalHeader,
   Row,
 } from "reactstrap";
 import PropTypes from "prop-types";
 import TableContainer from "../../components/Common/TableContainer";
+import { useDispatch } from "react-redux";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import {
+  updateStockSmartcardMarkfaulty as onUpdateStockSmartcardMarkfaulty,
+  getInventoryStockSmartcard as onGetInventoryStockSmartcard,
+} from "/src/store/inventorystock/actions";
 
 function StockScMarkfaulty(props) {
   const { isOpen, toggle, selectedRows } = props;
   const [isChecked, setIsChecked] = useState(true);
+
+  const dispatch = useDispatch();
+
+  const validation = useFormik({
+    // enableReinitialize : use this flag when initial values needs to be changed
+    enableReinitialize: true,
+
+    initialValues: {
+      remark: "",
+      faulty: [],
+    },
+    validationSchema: Yup.object({
+      remark: Yup.string().required("Enter remark"),
+    }),
+    onSubmit: (values) => {
+      const newMarkfaulty = {
+        id: Math.floor(Math.random() * (30 - 20)) + 20,
+        remark: values["remark"],
+        faulty: selectedRows.map((row) => row.id),
+      };
+      console.log("mark faulty: " + JSON.stringify(newMarkfaulty));
+      dispatch(onUpdateStockSmartcardMarkfaulty(newMarkfaulty));
+      dispatch(onGetInventoryStockSmartcard());
+      validation.resetForm();
+      toggle();
+    },
+    onReset: (values) => {
+      validation.setValues(validation.initialValues);
+    },
+  });
 
   const columns = useMemo(
     () => [
@@ -74,27 +116,71 @@ function StockScMarkfaulty(props) {
       toggle={toggle}
     >
       <ModalHeader toggle={toggle}>Mark Faulty Smartcard</ModalHeader>
-      <ModalBody>
+      <Form
+        onSubmit={(e) => {
+          e.preventDefault();
+          validation.handleSubmit();
+          return false;
+        }}
+      >
+        <ModalBody>
+          <Row>
+            <Col lg="12">
+              <Card>
+                <CardBody>
+                  <TableContainer
+                    isPagination={true}
+                    columns={columns}
+                    data={selectedRows}
+                    isShowingPageLength={true}
+                    customPageSize={50}
+                    tableClass="table align-middle table-nowrap table-hover"
+                    theadClass="table-light"
+                    paginationDiv="col-sm-12 col-md-7"
+                    pagination="pagination pagination-rounded justify-content-end mt-4"
+                  />
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg="6">
+              <Label>
+                Remark (atleast 4 characters)
+                <span style={{ color: "red" }}>*</span>
+              </Label>
+              <Input
+                name="remark"
+                type="textarea"
+                placeholder="Enter remark"
+                rows="3"
+                onChange={validation.handleChange}
+                onBlur={validation.handleBlur}
+                value={validation.values.remark || ""}
+                invalid={
+                  validation.touched.remark && validation.errors.remark
+                    ? true
+                    : false
+                }
+              />
+              {validation.touched.remark && validation.errors.remark ? (
+                <FormFeedback type="invalid">
+                  {validation.errors.remark}
+                </FormFeedback>
+              ) : null}
+            </Col>
+          </Row>
+        </ModalBody>
         <Row>
-          <Col lg="12">
-            <Card>
-              <CardBody>
-                <TableContainer
-                  isPagination={true}
-                  columns={columns}
-                  data={selectedRows}
-                  isShowingPageLength={true}
-                  customPageSize={50}
-                  tableClass="table align-middle table-nowrap table-hover"
-                  theadClass="table-light"
-                  paginationDiv="col-sm-12 col-md-7"
-                  pagination="pagination pagination-rounded justify-content-end mt-4"
-                />
-              </CardBody>
-            </Card>
+          <Col>
+            <ModalFooter>
+              <button type="submit" className="btn btn-success save-user">
+                Mark Faulty
+              </button>
+            </ModalFooter>
           </Col>
         </Row>
-      </ModalBody>
+      </Form>
     </Modal>
   );
 }
