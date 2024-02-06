@@ -37,6 +37,7 @@ import {
   getInventoryStockScBrand2 as onGetInventoryStockScBrand2,
   getPairingSmartcardList as onGetPairingSmartcardList,
   getPairingStbList as onGetPairingStbList,
+  getStockActionInventorystate as onGetStockActionInventorystate,
 } from "/src/store/inventorystock/actions";
 import {
   getInventoryFaultySmartcard as onGetInventoryFaultySmartcard,
@@ -62,6 +63,7 @@ import AddStockSmartcard from "./AddStockSmartcard";
 import UploadSmartcard from "./UploadSmartcaed";
 import StockScMarkfaulty from "./StockScMarkfaulty";
 import StockScBlacklist from "./StockScBlacklist";
+import StockActionUpdation from "./StockActionUpdation";
 
 const InventoryStock = (props) => {
   document.title = "Inventory | VDigital";
@@ -76,6 +78,7 @@ const InventoryStock = (props) => {
   const [showWarning, setShowWarning] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   const [showStockScBlacklist, setShowStockScBlacklist] = useState(false);
+  const [showStockActionupdated, setShowStockActionupdated] = useState(false);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -97,6 +100,7 @@ const InventoryStock = (props) => {
       brand2: stockpairing.brand2,
       smartcardlist: stockpairing.smartcardlist,
       stblist: stockpairing.stblist,
+      actioninventorystate: stockpairing.actioninventorystate,
     })
   );
 
@@ -117,6 +121,7 @@ const InventoryStock = (props) => {
     brand2,
     smartcardlist,
     stblist,
+    actioninventorystate,
   } = useSelector(inventorystockProperties);
 
   useEffect(() => {
@@ -132,6 +137,7 @@ const InventoryStock = (props) => {
       dispatch(onGetInventoryStockScBrand2());
       dispatch(onGetPairingSmartcardList());
       dispatch(onGetPairingStbList());
+      dispatch(onGetStockActionInventorystate());
     }
   }, [dispatch, stockpairing]);
 
@@ -602,6 +608,10 @@ const InventoryStock = (props) => {
     setShowStockScBlacklist(!showStockScBlacklist);
   };
 
+  const handleStockScActionUpdated = () => {
+    setShowStockActionupdated(!showStockActionupdated);
+  };
+
   const getFilteredTableActions = () => {
     let actions = [];
     if (selectedOption === "In-stock") {
@@ -649,6 +659,10 @@ const InventoryStock = (props) => {
             type: "dot",
             icon: "action",
             dropdownName: "",
+            action:
+              Object.keys(selectedRows).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowStockActionupdated(true),
           },
         ];
         return actions;
@@ -909,6 +923,14 @@ const InventoryStock = (props) => {
         isOpen={showStockScBlacklist}
         toggle={handleStockScBlacklist}
         selectedRows={selectedRows}
+      />
+      <StockActionUpdation
+        isOpen={showStockActionupdated}
+        toggle={handleStockScActionUpdated}
+        selectedRows={selectedRows}
+        stocksccastype={stocksccastype}
+        stockscwarehouse={stockscwarehouse}
+        actioninventorystate={actioninventorystate}
       />
       <div
         className="position-fixed top-0 end-0 p-3"

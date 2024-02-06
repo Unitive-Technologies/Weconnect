@@ -30,7 +30,7 @@ function StockActionUpdation(props) {
     selectedRows,
     stocksccastype,
     stockscwarehouse,
-    stockscinventorystate,
+    actioninventorystate,
   } = props;
   const [isChecked, setIsChecked] = useState(true);
 
@@ -280,7 +280,7 @@ function StockActionUpdation(props) {
                   }
                 >
                   <option value="">Select inventory state</option>
-                  {stockscinventorystate.map((options) => (
+                  {actioninventorystate.map((options) => (
                     <option key={options.id} value={options.id}>
                       {options.name}
                     </option>
@@ -340,7 +340,7 @@ StockActionUpdation.propTypes = {
   selectedRows: PropTypes.array,
   stocksccastype: PropTypes.array,
   stockscwarehouse: PropTypes.array,
-  stockscinventorystate: PropTypes.array,
+  actioninventorystate: PropTypes.array,
 };
 
 export default StockActionUpdation;
