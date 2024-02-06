@@ -9,6 +9,12 @@ import {
   GET_REGIONALOFFICE,
   GET_REGIONALOFFICE_SUCCESS,
   GET_REGIONALOFFICE_FAIL,
+  GET_REGIONAL_CREDIT_LIST,
+  GET_REGIONAL_CREDIT_LIST_SUCCESS,
+  GET_REGIONAL_CREDIT_LIST_FAIL,
+  GET_REGIONAL_BANK_LIST,
+  GET_REGIONAL_BANK_LIST_SUCCESS,
+  GET_REGIONAL_BANK_LIST_FAIL,
   ADD_NEW_REGIONALOFFICE,
   ADD_REGIONALOFFICE_SUCCESS,
   ADD_REGIONALOFFICE_FAIL,
@@ -24,6 +30,8 @@ import {
 const INIT_STATE = {
   regionaloffice: [],
   regionalBouquet: [],
+  regionalCreditList: [],
+  regionalBankList: [],
   pagination: {},
   error: {},
   loading: false,
@@ -137,7 +145,44 @@ const RegionalOffice = (state = INIT_STATE, action) => {
         error: action.payload,
         loading: false,
       };
+    case GET_REGIONAL_CREDIT_LIST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_REGIONAL_CREDIT_LIST_SUCCESS:
+      // console.log("RegionalOffice data in reducer:", action.payload);
+      return {
+        ...state,
+        regionalCreditList: action.payload,
+        loading: false,
+      };
 
+    case GET_REGIONAL_CREDIT_LIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+    case GET_REGIONAL_BANK_LIST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_REGIONAL_BANK_LIST_SUCCESS:
+      // console.log("RegionalOffice data in reducer:", action.payload);
+      return {
+        ...state,
+        regionalBankList: action.payload,
+        loading: false,
+      };
+
+    case GET_REGIONAL_BANK_LIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
     default:
       return state;
   }

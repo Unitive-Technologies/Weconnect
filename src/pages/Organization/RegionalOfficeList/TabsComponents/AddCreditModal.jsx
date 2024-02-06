@@ -35,8 +35,65 @@ import {
 } from "/src/store/users/actions";
 
 const AddCreditModal = (props) => {
-  const { isOpen, toggleAddModal } = props;
+  const {
+    isOpen,
+    toggleAddModal,
+    regionalCreditList,
+    regionalOffData,
+    regionalBankList,
+  } = props;
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
+  const validation = useFormik({
+    // enableReinitialize : use this flag when initial values needs to be changed
+    enableReinitialize: true,
 
+    initialValues: {
+      amount: "",
+      mode: "",
+      remark: "",
+    },
+
+    validationSchema: Yup.object({
+      amount: Yup.string().required("Please Enter Amount"),
+      mode: Yup.string().required("Select Payment Mode"),
+      remark: Yup.string().required("Please Enter Remark"),
+    }),
+    onSubmit: async (values) => {
+      try {
+        const newCredit = {
+          amount: values["amount"],
+          mode: parseInt(values["mode"]),
+          remark: values["remark"],
+          operator_id: regionalOffData.id,
+          wallet_type: 0,
+          // bankname:values["bankname"],
+          // chequedate:values["chequedate"],
+          // chequeno:values["chequeno"],
+        };
+        console.log("newCredit:" + newCredit);
+
+        const token = "Bearer " + localStorage.getItem("temptoken");
+
+        const response = await axios.post(
+          `${API_URL}/operator-account?vr=web1.0`,
+          newCredit,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        console.log("response after submit credit:" + JSON.stringify(response));
+        validation.resetForm();
+        toggleAddModal();
+      } catch (error) {
+        console.error("Error in onSubmit:", error);
+      }
+    },
+    onReset: (values) => {
+      validation.setValues(validation.initialValues);
+    },
+  });
   return (
     <Modal
       isOpen={isOpen}
@@ -49,16 +106,25 @@ const AddCreditModal = (props) => {
       toggle={toggleAddModal}
     >
       <ModalHeader tag="h4" toggle={toggleAddModal}>
-        Add Credit to
+        Add Credit to <strong>{regionalOffData && regionalOffData.name}</strong>{" "}
+        account
       </ModalHeader>
       <ModalBody>
         <Row>
           <Col lg={6}>
-            <p>Operator Name:</p>
+            <p>
+              Operator Name:{" "}
+              <strong>{regionalOffData && regionalOffData.name}</strong>
+            </p>
           </Col>
 
           <Col lg={6}>
-            <p>Contact Person:</p>
+            <p>
+              Contact Person:{" "}
+              <strong>
+                {regionalOffData && regionalOffData.contact_person}
+              </strong>
+            </p>
           </Col>
         </Row>
         <Row>
@@ -94,12 +160,12 @@ const AddCreditModal = (props) => {
         <Form
           onSubmit={(e) => {
             e.preventDefault();
-            // validation.handleSubmit();
-            // return false;
+            validation.handleSubmit();
+            return false;
           }}
         >
           <Row>
-            <Col lg={6}>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Credit Amount<span style={{ color: "red" }}>*</span>
@@ -108,79 +174,180 @@ const AddCreditModal = (props) => {
                   name="amount"
                   type="number"
                   placeholder="Insert Credit Amount"
-                  // onChange={validation.handleChange}
-                  // onBlur={validation.handleBlur}
-                  // value={validation.values.amount || ""}
-                  // invalid={
-                  //   validation.touched.amount && validation.errors.amount
-                  //     ? true
-                  //     : false
-                  // }
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.amount || ""}
+                  invalid={
+                    validation.touched.amount && validation.errors.amount
+                      ? true
+                      : false
+                  }
                 />
-                {/* {validation.touched.amount && validation.errors.amount ? (
+                {validation.touched.amount && validation.errors.amount ? (
                   <FormFeedback type="invalid">
                     {validation.errors.amount}
                   </FormFeedback>
-                ) : null} */}
+                ) : null}
               </div>
             </Col>
 
-            <Col lg={6}>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Payment Mode<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="type"
+                  name="mode"
                   type="select"
-                  placeholder="Select Type"
+                  placeholder="Select Mode"
                   className="form-select"
-                  // onChange={handleTypeChange}
-                  // value={type}
-                  // onBlur={validation.handleBlur}
-                  // value={validation.values.type || ""}
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.mode || ""}
+                  // invalid={
+                  //   validation.touched.amount && validation.errors.amount
+                  //     ? true
+                  //     : false
+                  // }
                 >
                   <option value="">Select Payment Mode</option>
-                  {/* {userType.map((type) => (
-                    <option key={type.id} value={type.id}>
-                      {type.name}
+                  {regionalCreditList.map((mode) => (
+                    <option key={mode.id} value={mode.id}>
+                      {mode.name}
                     </option>
-                  ))} */}
+                  ))}
                 </Input>
-                {/* {validation.touched.type && validation.errors.type ? (
+                {validation.touched.mode && validation.errors.mode ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.type}
+                    {validation.errors.mode}
                   </FormFeedback>
-                ) : null} */}
+                ) : null}
               </div>
             </Col>
+          </Row>
+          {console.log(
+            "validation.values.mode:" + validation.values.mode,
+            typeof validation.values.mode
+          )}
+          {!(
+            validation.values.mode === "0" || validation.values.mode === "-1"
+          ) && (
+            <Row>
+              <Col lg={4}>
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Bank<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="bankname"
+                    type="select"
+                    placeholder="Select Bank"
+                    className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.bankname || ""}
+                    // invalid={
+                    //   validation.touched.amount && validation.errors.amount
+                    //     ? true
+                    //     : false
+                    // }
+                  >
+                    <option value="">Select Bank</option>
+                    {regionalBankList.map((bank) => (
+                      <option key={bank.id} value={bank.id}>
+                        {bank.name}
+                      </option>
+                    ))}
+                  </Input>
+                  {validation.touched.bankname && validation.errors.bankname ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.bankname}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
 
+              <Col lg={4}>
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Cheque/Instrument No.
+                    <span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="chequeno"
+                    type="text"
+                    placeholder="Insert Cheque Number"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.chequeno || ""}
+                    invalid={
+                      validation.touched.chequeno && validation.errors.chequeno
+                        ? true
+                        : false
+                    }
+                  />
+                  {validation.touched.chequeno && validation.errors.chequeno ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.chequeno}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              <Col lg={4}>
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Cheque/Instrument Date
+                    <span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="chequedate"
+                    type="date"
+                    placeholder="Insert Cheque Date"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.chequedate || ""}
+                    invalid={
+                      validation.touched.chequedate &&
+                      validation.errors.chequedate
+                        ? true
+                        : false
+                    }
+                  />
+                  {validation.touched.chequedate &&
+                  validation.errors.chequedate ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.chequedate}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+            </Row>
+          )}
+          <Row>
             <Col lg={12}>
               <div className="mb-3">
                 <Label className="form-label">
                   Remarks<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="block_message"
+                  name="remark"
                   type="textarea"
-                  placeholder="Enter Message"
+                  placeholder="Enter Remarks"
                   rows="3"
-                  // onChange={validation.handleChange}
-                  // onBlur={validation.handleBlur}
-                  // value={validation.values.block_message || ""}
-                  // invalid={
-                  //   validation.touched.block_message &&
-                  //   validation.errors.block_message
-                  //     ? true
-                  //     : false
-                  // }
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.remark || ""}
+                  invalid={
+                    validation.touched.remark && validation.errors.remark
+                      ? true
+                      : false
+                  }
                 />
-                {/* {validation.touched.block_message &&
-                validation.errors.block_message ? (
+                {validation.touched.remark && validation.errors.remark ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.block_message}
+                    {validation.errors.remark}
                   </FormFeedback>
-                ) : null} */}
+                ) : null}
               </div>
             </Col>
           </Row>
@@ -192,7 +359,7 @@ const AddCreditModal = (props) => {
                   type="submit"
                   className="btn btn-success save-user"
                   onClick={() => {
-                    // validation.handleSubmit();
+                    validation.handleSubmit();
                   }}
                 >
                   Credit
@@ -202,7 +369,7 @@ const AddCreditModal = (props) => {
                   type="button"
                   className="btn btn-outline-danger"
                   onClick={() => {
-                    // validation.resetForm();
+                    validation.resetForm();
                     toggleAddModal();
                   }}
                 >

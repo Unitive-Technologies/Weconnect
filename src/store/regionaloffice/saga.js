@@ -3,6 +3,8 @@ import { call, put, select, takeEvery } from "redux-saga/effects";
 import {
   GET_REGIONALOFFICE,
   GET_REGIONAL_ALLOTTEDBOUQUET,
+  GET_REGIONAL_CREDIT_LIST,
+  GET_REGIONAL_BANK_LIST,
   ADD_NEW_REGIONALOFFICE,
   UPDATE_REGIONALOFFICE,
 } from "./actionTypes";
@@ -13,6 +15,10 @@ import {
   getRegionalOfficeFail,
   getRegionalAllottedBouquetSuccess,
   getRegionalAllottedBouquetFail,
+  getRegionalCreditListSuccess,
+  getRegionalCreditListFail,
+  getRegionalBankListSuccess,
+  getRegionalBankListFail,
   addRegionalOfficeFail,
   addRegionalOfficeSuccess,
   updateRegionalOfficeSuccess,
@@ -25,6 +31,8 @@ import {
   updateRegionalOffice,
   addNewRegionalOffice,
   getRegionalAllottedBouquet,
+  getRegionalCreditList,
+  getRegionalBankList,
 } from "../../helpers/fakebackend_helper";
 
 const convertRegionalOfficeListObject = (regionalofficeList) => {
@@ -88,6 +96,31 @@ function* fetchRegionalAllottedBouquets() {
     yield put(getRegionalAllottedBouquetFail(error));
   }
 }
+
+function* fetchRegionalCreditList() {
+  try {
+    const response = yield call(getRegionalCreditList);
+    console.log("response:" + JSON.stringify(response));
+
+    yield put(getRegionalCreditListSuccess(response.data));
+  } catch (error) {
+    console.error("Error fetching credit list:", error);
+    yield put(getRegionalCreditListFail(error));
+  }
+}
+
+function* fetchRegionalBankList() {
+  try {
+    const response = yield call(getRegionalBankList);
+    console.log("response:" + JSON.stringify(response));
+
+    yield put(getRegionalBankListSuccess(response.data));
+  } catch (error) {
+    console.error("Error fetching bank list:", error);
+    yield put(getRegionalBankListFail(error));
+  }
+}
+
 function* onAddNewRegionalOffice({ payload: regionalofficeList }) {
   try {
     const response = yield call(addNewRegionalOffice, regionalofficeList);
@@ -121,6 +154,8 @@ function* regionalOfficeSaga() {
   yield takeEvery(ADD_NEW_REGIONALOFFICE, onAddNewRegionalOffice);
   yield takeEvery(UPDATE_REGIONALOFFICE, onUpdateRegionalOffice);
   yield takeEvery(GET_REGIONAL_ALLOTTEDBOUQUET, fetchRegionalAllottedBouquets);
+  yield takeEvery(GET_REGIONAL_CREDIT_LIST, fetchRegionalCreditList);
+  yield takeEvery(GET_REGIONAL_BANK_LIST, fetchRegionalBankList);
 }
 
 export default regionalOfficeSaga;

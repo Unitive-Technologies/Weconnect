@@ -12,6 +12,12 @@ import {
   GET_REGIONAL_ALLOTTEDBOUQUET,
   GET_REGIONAL_ALLOTTEDBOUQUET_SUCCESS,
   GET_REGIONAL_ALLOTTEDBOUQUET_FAIL,
+  GET_REGIONAL_CREDIT_LIST,
+  GET_REGIONAL_CREDIT_LIST_SUCCESS,
+  GET_REGIONAL_CREDIT_LIST_FAIL,
+  GET_REGIONAL_BANK_LIST,
+  GET_REGIONAL_BANK_LIST_SUCCESS,
+  GET_REGIONAL_BANK_LIST_FAIL,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -52,6 +58,42 @@ export const getRegionalAllottedBouquetSuccess = (regionalBouquet) => {
 
 export const getRegionalAllottedBouquetFail = (error) => ({
   type: GET_REGIONAL_ALLOTTEDBOUQUET_FAIL,
+  payload: error,
+});
+
+export const getRegionalCreditList = () => {
+  return {
+    type: GET_REGIONAL_CREDIT_LIST,
+  };
+};
+
+export const getRegionalCreditListSuccess = (regionalCreditList) => {
+  return {
+    type: GET_REGIONAL_CREDIT_LIST_SUCCESS,
+    payload: regionalCreditList,
+  };
+};
+
+export const getRegionalCreditListFail = (error) => ({
+  type: GET_REGIONAL_CREDIT_LIST_FAIL,
+  payload: error,
+});
+
+export const getRegionalBankList = () => {
+  return {
+    type: GET_REGIONAL_BANK_LIST,
+  };
+};
+
+export const getRegionalBankListSuccess = (regionalCreditList) => {
+  return {
+    type: GET_REGIONAL_BANK_LIST_SUCCESS,
+    payload: regionalBankList,
+  };
+};
+
+export const getRegionalBankListFail = (error) => ({
+  type: GET_REGIONAL_BANK_LIST_FAIL,
   payload: error,
 });
 

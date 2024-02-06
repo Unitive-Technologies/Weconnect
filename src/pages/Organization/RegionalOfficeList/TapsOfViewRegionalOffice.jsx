@@ -37,6 +37,7 @@ const TapsOfViewRegionalOffice = ({
   allottedNCF,
   uploadDocuments,
   smsLogs,
+  regionalOffData,
 }) => {
   // console.log("allotted:" + JSON.stringify(smsLogs));
   const [customActiveTab, setcustomActiveTab] = useState("1");
@@ -175,6 +176,7 @@ const TapsOfViewRegionalOffice = ({
                 toDate={toDate}
                 setFromDate={setFromDate}
                 setToDate={setToDate}
+                regionalOffData={regionalOffData}
               />
             </Col>
           </Row>

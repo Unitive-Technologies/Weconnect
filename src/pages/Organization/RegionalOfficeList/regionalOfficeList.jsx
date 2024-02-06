@@ -59,8 +59,15 @@ const RegionalOfficeList = (props) => {
       statusList: distributors.distributorsStatus,
     })
   );
-  const { regOffices, loading, totalPage, totalCount, currentPage, pageSize } =
-    useSelector(RegionalOfficeProperties);
+  const {
+    regOffices,
+    regionalCreditList,
+    loading,
+    totalPage,
+    totalCount,
+    currentPage,
+    pageSize,
+  } = useSelector(RegionalOfficeProperties);
 
   const { phaseList, statusList } = useSelector(DistributorsProperties);
   // const [isLoading, setLoading] = useState(loading);

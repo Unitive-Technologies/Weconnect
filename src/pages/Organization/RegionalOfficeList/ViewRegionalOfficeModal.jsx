@@ -34,9 +34,7 @@ const ViewRegionalOfficeModal = (props) => {
     setViewRegionalOffice,
     selectedRowId,
   } = props;
-  console.log(
-    "@@@@@@@@@regionalOffData in view modal:" + JSON.stringify(regionalOffData)
-  );
+
   const dispatch = useDispatch();
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [accountDetails, setAccountDetails] = useState([]);
@@ -613,6 +611,7 @@ const ViewRegionalOfficeModal = (props) => {
                       allottedNCF={allottedNCF}
                       uploadDocuments={uploadDocuments}
                       smsLogs={smsLogs}
+                      regionalOffData={regionalOffData}
                     />
                   </Col>
                 </Row>

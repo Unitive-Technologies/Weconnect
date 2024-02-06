@@ -12,12 +12,14 @@ import {
   Input,
   Row,
 } from "reactstrap";
-
-//redux
-import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
+import { useSelector, useDispatch } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import AddCreditModal from "./AddCreditModal";
+import {
+  getRegionalCreditList as onGetRegionalCreditList,
+  getRegionalBankList as onGetRegionalBankList,
+} from "/src/store/regionaloffice/actions";
 
 const OperatorAccountDetails = (props) => {
   const {
@@ -27,10 +29,27 @@ const OperatorAccountDetails = (props) => {
     fromDate,
     toDate,
     handleSearch,
+    regionalOffData,
   } = props;
-  //meta title
+  // console.log(
+  //   "data in operatoraccountdetails:" + JSON.stringify(regionalOffData)
+  // );
   document.title = "Regional Offices | VDigital";
   const [showAddCreditModal, setShowAddCreditModal] = useState(false);
+  const dispatch = useDispatch();
+
+  const selectRegionalOfficeState = (state) => state.regionaloffice;
+
+  const RegionalOfficeProperties = createSelector(
+    selectRegionalOfficeState,
+    (regionalOfficesState) => ({
+      regionalCreditList: regionalOfficesState.regionalCreditList,
+      regionalBankList: regionalOfficesState.regionalBankList,
+    })
+  );
+  const { regionalCreditList, regionalBankList } = useSelector(
+    RegionalOfficeProperties
+  );
   const columns = useMemo(
     () => [
       {
@@ -55,46 +74,45 @@ const OperatorAccountDetails = (props) => {
       },
       {
         Header: "Transaction Date",
-        accessor: "name",
+        accessor: "created_at",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <>
               <h5
                 className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleViewRegionalOffice(userData);
-                }}
+                // onClick={() => {
+                //   const userData = cellProps.row.original;
+                //   handleViewRegionalOffice(userData);
+                // }}
               >
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.name}
+                  {cellProps.row.original.created_at}
                 </Link>
               </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
             </>
           );
         },
       },
       {
         Header: "Receipt No.",
-        accessor: "code",
+        accessor: "reciept_no",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.code}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.reciept_no}
+            </p>
           );
         },
       },
       {
         Header: "Amount",
-        // accessor: "addr",
+        accessor: "amount",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.addr}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.amount}</p>
           );
         },
       },
@@ -104,9 +122,7 @@ const OperatorAccountDetails = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.contact_person}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.sgst}</p>
           );
         },
       },
@@ -116,9 +132,7 @@ const OperatorAccountDetails = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.mobile_no}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.cgst}</p>
           );
         },
       },
@@ -128,9 +142,7 @@ const OperatorAccountDetails = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.state_lbl}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.igst}</p>
           );
         },
       },
@@ -140,9 +152,7 @@ const OperatorAccountDetails = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.state_lbl}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.tds}</p>
           );
         },
       },
@@ -152,9 +162,7 @@ const OperatorAccountDetails = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.state_lbl}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.mrp}</p>
           );
         },
       },
@@ -164,9 +172,7 @@ const OperatorAccountDetails = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.district_lbl}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.tax}</p>
           );
         },
       },
@@ -176,7 +182,9 @@ const OperatorAccountDetails = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.city_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.total_amount}
+            </p>
           );
         },
       },
@@ -186,7 +194,9 @@ const OperatorAccountDetails = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.gstno}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.debit_amount}
+            </p>
           );
         },
       },
@@ -196,7 +206,9 @@ const OperatorAccountDetails = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.panno}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.credit_amount}
+            </p>
           );
         },
       },
@@ -206,7 +218,7 @@ const OperatorAccountDetails = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.username}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.type_lbl}</p>
           );
         },
       },
@@ -216,7 +228,7 @@ const OperatorAccountDetails = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.status}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.remark}</p>
           );
         },
       },
@@ -228,7 +240,7 @@ const OperatorAccountDetails = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.created_by}
+              {cellProps.row.original.created_by_lbl}
             </p>
           );
         },
@@ -271,10 +283,11 @@ const OperatorAccountDetails = (props) => {
     ],
     []
   );
+  useEffect(() => {
+    dispatch(onGetRegionalCreditList());
+    dispatch(onGetRegionalBankList());
+  }, [dispatch]);
 
-  var node = useRef();
-
-  const keyField = "id";
   const toggleAddCreditModal = () => {
     setShowAddCreditModal(!showAddCreditModal);
   };
@@ -306,6 +319,9 @@ const OperatorAccountDetails = (props) => {
       <AddCreditModal
         isOpen={showAddCreditModal}
         toggleAddModal={toggleAddCreditModal}
+        regionalCreditList={regionalCreditList}
+        regionalBankList={regionalBankList}
+        regionalOffData={regionalOffData}
       />
       <Form onSubmit={handleSearch}>
         <Row>
