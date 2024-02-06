@@ -458,7 +458,7 @@ const ViewBroadCasterBouquet = (props) => {
                   // margin: "20px 0px",
                   marginTop: "20px",
                   marginBottom: "18px",
-                  zIndex: 12000,
+                  zIndex: 10000,
                   backgroundColor: "#fff",
                   width: "fit-content",
                   marginLeft: "40%",
@@ -477,8 +477,9 @@ const ViewBroadCasterBouquet = (props) => {
                     margin: "30px 0px",
                   }}
                 >
-                  <Col sm="12">
+                  <Col lg="6">
                     <ViewRevenueShare
+                      // disabled={!showEditBroadcast}
                       showEditBroadcast={showEditBroadcast}
                       broadPercent={broadPercent}
                       msoPercent={msoPercent}
@@ -490,21 +491,23 @@ const ViewBroadCasterBouquet = (props) => {
                   {broadcast.isFta === 0 && parseInt(broadcast.broadcasterRate) !== "" ? (
                     // {selectedType === "0" && selectedRate !== "" ? (
                     // <Row>
-                    <Card>
-                      <CardBody>
-                        <span>Graphical representation of SHARE</span>
-                        <CardTitle className="mb-4">
-                          (MRP: {broadcast.broadcasterRate}){" "}
-                        </CardTitle>
-                        <ViewPieChart
-                          broadPercent={broadPercent}
-                          msoPercent={msoPercent}
-                          discountPercent={discountPercent}
-                          selectedRate={parseInt(broadcast.broadcasterRate)}
-                          dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
-                        />
-                      </CardBody>
-                    </Card>
+                    <Col lg={6}>
+                      <Card>
+                        <CardBody>
+                          <span>Graphical representation of SHARE</span>
+                          <CardTitle className="mb-4">
+                            (MRP: {broadcast.broadcasterRate}){" "}
+                          </CardTitle>
+                          <ViewPieChart
+                            broadPercent={broadPercent}
+                            msoPercent={msoPercent}
+                            discountPercent={discountPercent}
+                            selectedRate={parseInt(broadcast.broadcasterRate)}
+                            dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
+                          />
+                        </CardBody>
+                      </Card>
+                    </Col>
                   ) : (
                     <></>
                   )}

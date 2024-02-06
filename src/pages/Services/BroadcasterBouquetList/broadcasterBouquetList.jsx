@@ -193,9 +193,11 @@ const BroadcasterBouquetList = (props) => {
         accessor: "isFta_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          return <FTA {...cellProps} />;
+          const { value } = cellProps;
+          return value === "No" ? <span>Pay Channel</span> : <span>FTA</span>;
         },
       },
+
       {
         Header: "CHANNELS",
         accessor: "channels",
