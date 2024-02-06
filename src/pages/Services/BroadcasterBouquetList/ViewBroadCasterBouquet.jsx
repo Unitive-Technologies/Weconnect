@@ -25,7 +25,9 @@ import { updateBroadcasterBouquet as onUpdateBroadcasterBouquet } from "/src/sto
 import { useDispatch } from "react-redux";
 import ViewChannels from "./ViewChannels";
 import ViewRevenueShare from "./RevenueShare";
+import PieChart from "./PieChart";
 import ViewPieChart from "./ViewPieChart";
+import { resetSection } from "redux-form";
 
 const ViewBroadCasterBouquet = (props) => {
   const { isOpen, selectedRowId,
@@ -131,6 +133,7 @@ const ViewBroadCasterBouquet = (props) => {
   });
   const handleCancel = () => {
     setShowEditBroadcast(false);
+    resetSection();
     toggleViewModal();
   };
 
@@ -488,28 +491,29 @@ const ViewBroadCasterBouquet = (props) => {
                       setMsoPercent={setMsoPercent}
                       setDiscountPercent={setDiscountPercent} />
                   </Col>
-                  {broadcast.isFta === 0 && parseInt(broadcast.broadcasterRate) !== "" ? (
-                    // {selectedType === "0" && selectedRate !== "" ? (
-                    // <Row>
-                    <Col lg={6}>
-                      <Card>
-                        <CardBody>
-                          <span>Graphical representation of SHARE</span>
-                          <CardTitle className="mb-4">
-                            (MRP: {broadcast.broadcasterRate}){" "}
-                          </CardTitle>
-                          <ViewPieChart
-                            broadPercent={broadPercent}
-                            msoPercent={msoPercent}
-                            discountPercent={discountPercent}
-                            selectedRate={parseInt(broadcast.broadcasterRate)}
-                            dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
-                          />
-                        </CardBody>
-                      </Card>
-                    </Col>
-                  ) : (
-                    <></>
+                  {broadcast && (
+                    <>
+                      {broadcast.isFta === 0 && parseInt(broadcast.broadcasterRate) !== "" && (
+                        <Col lg={6}>
+                          <Card>
+                            <CardBody>
+                              <span>Graphical representation of SHARE</span>
+                              <CardTitle className="mb-4">
+                                (MRP: {broadcast.broadcasterRate}){" "}
+                              </CardTitle>
+                              <PieChart
+                                broadPercent={broadPercent}
+                                msoPercent={msoPercent}
+                                discountPercent={discountPercent}
+                                // selectedRate={selectedRate}
+                                selectedRate={parseInt(broadcast.broadcasterRate)}
+                                dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
+                              />
+                            </CardBody>
+                          </Card>
+                        </Col>
+                      )}
+                    </>
                   )}
                 </Row>
               </Col>

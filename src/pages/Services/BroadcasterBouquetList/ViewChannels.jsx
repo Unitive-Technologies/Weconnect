@@ -282,14 +282,15 @@ const ViewChannels = (props) => {
           <Col lg={10}></Col>
           <Col lg={2}>
             <div className="mb-3">
-              <button
-                disabled={!showEditBroadcast}
-                type="button"
-                onClick={handleViewChannelsPlus}
-                className="btn btn-primary d-flex justify-content-end"
-              >
-                <i className="mdi mdi-plus ms-1" style={{ fontSize: 20 }}></i>
-              </button>
+              {showEditBroadcast && ( // Only render the button if showEditBroadcast is true
+                <button
+                  type="button"
+                  onClick={handleViewChannelsPlus}
+                  className="btn btn-primary d-flex justify-content-end"
+                >
+                  <i className="mdi mdi-plus ms-1" style={{ fontSize: 20 }}></i>
+                </button>
+              )}
             </div>
           </Col>
         </Row>
