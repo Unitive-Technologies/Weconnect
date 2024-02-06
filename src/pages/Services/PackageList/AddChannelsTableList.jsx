@@ -20,8 +20,9 @@ import { Link } from "react-router-dom";
 import TableContainerX from "../../../components/Common/TableContainerX";
 
 const AddChannelsTableList = (props) => {
-  const { isOpen, data, toggleClose, setChannels } = props;
-  console.log("data in addchannels table:" + JSON.stringify(data));
+  const { isOpen, data, toggleClose, setChannels, definition } = props;
+
+  console.log("definition:" + definition);
 
   const [selectedRows, setSelectedRows] = useState([]);
 
@@ -55,8 +56,33 @@ const AddChannelsTableList = (props) => {
         Header: "*",
         disableFilters: true,
         filterable: true,
+
         Cell: (cellProps) => {
-          return <input type="checkbox" />;
+          return (
+            <input
+              type="checkbox"
+              disabled={
+                definition === "0" &&
+                cellProps.row.original.channel_type_lbl === "HD"
+              }
+            />
+          );
+        },
+        getRowProps: (row) => {
+          if (definition === "0" && row.original.channel_type_lbl === "HD") {
+            return {
+              style: {
+                background: "red",
+                pointerEvents: "none", // Disable clicking
+              },
+            };
+          } else {
+            return {
+              style: {
+                background: "inherit", // Use default background color
+              },
+            };
+          }
         },
       },
       {
@@ -139,6 +165,8 @@ const AddChannelsTableList = (props) => {
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
+                  background:
+                    cellProps.row.original.channel_type_lbl === "HD" && "red",
                 }}
                 className="font-size-14 mb-1"
               >
@@ -150,6 +178,7 @@ const AddChannelsTableList = (props) => {
           );
         },
       },
+
       {
         Header: "Alacarte",
         accessor: "isAlacarte_lbl",
@@ -223,7 +252,7 @@ const AddChannelsTableList = (props) => {
         },
       },
     ],
-    []
+    [definition]
   );
 
   return (
@@ -253,8 +282,22 @@ const AddChannelsTableList = (props) => {
               isPagination={true}
               columns={columns}
               data={data}
+              getRowProps={(row) => ({
+                style: {
+                  background:
+                    definition === "0" && row.original.channel_type_lbl === "HD"
+                      ? "red"
+                      : "inherit",
+                },
+              })}
               handleRowClick={(row) => {
-                handleSelectedRows(row);
+                if (
+                  !(
+                    definition === "0" && row.original.channel_type_lbl === "HD"
+                  )
+                ) {
+                  handleSelectedRows(row);
+                }
               }}
               isGlobalFilter={true}
               isShowingPageLength={true}
@@ -297,6 +340,7 @@ const AddChannelsTableList = (props) => {
                   type="submit"
                   className="btn btn-success save-user"
                   onClick={handleAddButtonClick}
+                  disabled={!selectedRows}
                 >
                   ADD
                 </button>

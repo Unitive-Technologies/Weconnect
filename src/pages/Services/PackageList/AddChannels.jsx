@@ -343,6 +343,7 @@ const AddChannels = (props) => {
         data={addChannelsList}
         toggleClose={() => setShowChannelTableList(false)}
         setChannels={setChannels}
+        definition={definition}
       />
 
       <div

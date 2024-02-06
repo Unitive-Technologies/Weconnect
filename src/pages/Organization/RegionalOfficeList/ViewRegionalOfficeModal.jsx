@@ -367,7 +367,7 @@ const ViewRegionalOfficeModal = (props) => {
         {!showEditRegionalOffice ? (
           <>
             <ModalHeader toggle={handleCancel} tag="h4" position="relative">
-              <h4>View - {regionalOffData.name}</h4>
+              <h4>View - {regionalOffData && regionalOffData.name}</h4>
             </ModalHeader>
             <Link
               style={{

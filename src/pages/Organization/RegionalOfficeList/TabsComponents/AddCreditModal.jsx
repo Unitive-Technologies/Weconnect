@@ -94,8 +94,8 @@ const AddCreditModal = (props) => {
         <Form
           onSubmit={(e) => {
             e.preventDefault();
-            validation.handleSubmit();
-            return false;
+            // validation.handleSubmit();
+            // return false;
           }}
         >
           <Row>
@@ -108,20 +108,20 @@ const AddCreditModal = (props) => {
                   name="amount"
                   type="number"
                   placeholder="Insert Credit Amount"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.amount || ""}
-                  invalid={
-                    validation.touched.amount && validation.errors.amount
-                      ? true
-                      : false
-                  }
+                  // onChange={validation.handleChange}
+                  // onBlur={validation.handleBlur}
+                  // value={validation.values.amount || ""}
+                  // invalid={
+                  //   validation.touched.amount && validation.errors.amount
+                  //     ? true
+                  //     : false
+                  // }
                 />
-                {validation.touched.amount && validation.errors.amount ? (
+                {/* {validation.touched.amount && validation.errors.amount ? (
                   <FormFeedback type="invalid">
                     {validation.errors.amount}
                   </FormFeedback>
-                ) : null}
+                ) : null} */}
               </div>
             </Col>
 
@@ -135,9 +135,10 @@ const AddCreditModal = (props) => {
                   type="select"
                   placeholder="Select Type"
                   className="form-select"
-                  onChange={handleTypeChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.type || ""}
+                  // onChange={handleTypeChange}
+                  // value={type}
+                  // onBlur={validation.handleBlur}
+                  // value={validation.values.type || ""}
                 >
                   <option value="">Select Payment Mode</option>
                   {/* {userType.map((type) => (
@@ -146,11 +147,11 @@ const AddCreditModal = (props) => {
                     </option>
                   ))} */}
                 </Input>
-                {validation.touched.type && validation.errors.type ? (
+                {/* {validation.touched.type && validation.errors.type ? (
                   <FormFeedback type="invalid">
                     {validation.errors.type}
                   </FormFeedback>
-                ) : null}
+                ) : null} */}
               </div>
             </Col>
 
@@ -164,27 +165,22 @@ const AddCreditModal = (props) => {
                   type="textarea"
                   placeholder="Enter Message"
                   rows="3"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.block_message || ""}
-                  invalid={
-                    validation.touched.block_message &&
-                    validation.errors.block_message
-                      ? true
-                      : false
-                  }
-                  disabled={
-                    selectedStatus === "0" || selectedStatus === "-7"
-                      ? false
-                      : true
-                  }
+                  // onChange={validation.handleChange}
+                  // onBlur={validation.handleBlur}
+                  // value={validation.values.block_message || ""}
+                  // invalid={
+                  //   validation.touched.block_message &&
+                  //   validation.errors.block_message
+                  //     ? true
+                  //     : false
+                  // }
                 />
-                {validation.touched.block_message &&
+                {/* {validation.touched.block_message &&
                 validation.errors.block_message ? (
                   <FormFeedback type="invalid">
                     {validation.errors.block_message}
                   </FormFeedback>
-                ) : null}
+                ) : null} */}
               </div>
             </Col>
           </Row>
@@ -196,7 +192,7 @@ const AddCreditModal = (props) => {
                   type="submit"
                   className="btn btn-success save-user"
                   onClick={() => {
-                    validation.handleSubmit();
+                    // validation.handleSubmit();
                   }}
                 >
                   Credit
@@ -206,7 +202,7 @@ const AddCreditModal = (props) => {
                   type="button"
                   className="btn btn-outline-danger"
                   onClick={() => {
-                    validation.resetForm();
+                    // validation.resetForm();
                     toggleAddModal();
                   }}
                 >
