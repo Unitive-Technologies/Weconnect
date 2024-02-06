@@ -555,3 +555,5 @@ export const GET_PAIRING_SMARTCARDLIST =
   "/smartcard/list?fields=id,smartcardno&expand=brand_lbl,cas_lbl&per-page=100&filter[cas_id]=1&vr=web1.0";
 export const GET_PAIRING_STBLIST =
   "/stb/list?fields=id,stbno&expand=brand_lbl,boxtype_lbl&per-page=100&filter[cas_id]=1&vr=web1.0";
+export const GET_STOCKACTION_INVENTORYSTATE =
+  "/inventory-state/list?fields=id,name&filter[status]=1&vr=web1.0";
