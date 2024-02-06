@@ -51,6 +51,9 @@ import {
   UPDATE_STOCKSMARTCARD_BLACKLIST,
   UPDATE_STOCKSMARTCARD_BLACKLIST_SUCCESS,
   UPDATE_STOCKSMARTCARD_BLACKLIST_FAIL,
+  GET_STOCKACTION_INVENTORYSTATE,
+  GET_STOCKACTION_INVENTORYSTATE_SUCCESS,
+  GET_STOCKACTION_INVENTORYSTATE_FAIL,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -301,5 +304,19 @@ export const updateStockSmartcardBlacklistSuccess = (stocksmartcard) => ({
 
 export const updateStockSmartcardBlacklistFail = (error) => ({
   type: UPDATE_STOCKSMARTCARD_BLACKLIST_FAIL,
+  payload: error,
+});
+
+export const getStockActionInventorystate = () => ({
+  type: GET_STOCKACTION_INVENTORYSTATE,
+});
+
+export const getStockActionInventorystateSuccess = (actioninventorystate) => ({
+  type: GET_STOCKACTION_INVENTORYSTATE_SUCCESS,
+  payload: actioninventorystate,
+});
+
+export const getStockActionInventorystateFail = (error) => ({
+  type: GET_STOCKACTION_INVENTORYSTATE_FAIL,
   payload: error,
 });

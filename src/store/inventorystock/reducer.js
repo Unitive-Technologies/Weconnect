@@ -47,6 +47,8 @@ import {
   UPDATE_STOCKSMARTCARD_BLACKLIST,
   UPDATE_STOCKSMARTCARD_BLACKLIST_SUCCESS,
   UPDATE_STOCKSMARTCARD_BLACKLIST_FAIL,
+  GET_STOCKACTION_INVENTORYSTATE_SUCCESS,
+  GET_STOCKACTION_INVENTORYSTATE_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -59,6 +61,7 @@ const INIT_STATE = {
   stockscinventorystate: [],
   brand1: [],
   brand2: [],
+  actioninventorystate: [],
   smartcardlist: [],
   stblist: [],
   pagination: {},
@@ -363,6 +366,19 @@ const InventoryStock = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
         loading: false,
+      };
+
+    case GET_STOCKACTION_INVENTORYSTATE_SUCCESS:
+      return {
+        ...state,
+        actioninventorystate: action.payload,
+        loading: false,
+      };
+
+    case GET_STOCKACTION_INVENTORYSTATE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
       };
 
     default:
