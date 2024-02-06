@@ -27,6 +27,12 @@ import { getInventoryBlacklistedSmartcard as onGetInventoryBlacklistedSmartcard 
 function StockScBlacklist(props) {
   const { isOpen, toggle, selectedRows } = props;
   const [isChecked, setIsChecked] = useState(true);
+  const [selectedFileDetails, setSelectedFileDetails] = useState({
+    name: "",
+    type: "",
+    ext: "",
+    data: "",
+  });
 
   const dispatch = useDispatch();
 
@@ -36,7 +42,8 @@ function StockScBlacklist(props) {
 
     initialValues: {
       remark: "",
-      faulty: [],
+      blacklist: [],
+      docs: { name: "", type: "", ext: "", data: "" },
     },
     validationSchema: Yup.object({
       remark: Yup.string().required("Enter remark"),
@@ -45,9 +52,10 @@ function StockScBlacklist(props) {
       const newBlacklist = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         remark: values["remark"],
-        faulty: selectedRows.map((row) => row.id),
+        blacklist: selectedRows.map((row) => row.id),
+        docs: selectedFileDetails,
       };
-      console.log("mark faulty: " + JSON.stringify(newBlacklist));
+      console.log("Blacklist: " + JSON.stringify(newBlacklist));
       dispatch(onUpdateStockSmartcardBlacklist(newBlacklist));
       dispatch(onGetInventoryStockSmartcard());
       dispatch(onGetInventoryBlacklistedSmartcard());
@@ -146,7 +154,7 @@ function StockScBlacklist(props) {
             </Col>
           </Row>
           <Row>
-            <Col lg="6">
+            <Col lg="4">
               <Label>
                 Remark (atleast 4 characters)
                 <span style={{ color: "red" }}>*</span>
@@ -170,6 +178,28 @@ function StockScBlacklist(props) {
                   {validation.errors.remark}
                 </FormFeedback>
               ) : null}
+            </Col>
+            <Col lg="4">
+              <Label>
+                Select Blacklisting reason file (MAX 2Mb)
+                <span style={{ color: "red" }}>*</span>
+              </Label>
+              <div className="mt-4 mt-md-0">
+                <Input
+                  type="file"
+                  className="form-control"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    const fileExtension = file.name.split(".").pop();
+                    setSelectedFileDetails({
+                      name: file.name,
+                      type: file.type,
+                      ext: fileExtension,
+                      data: "file", // Store the entire file object if needed
+                    });
+                  }}
+                />
+              </div>
             </Col>
           </Row>
         </ModalBody>
