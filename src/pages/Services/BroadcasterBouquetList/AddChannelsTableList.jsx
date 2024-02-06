@@ -20,8 +20,9 @@ import { Link } from "react-router-dom";
 import TableContainerX from "../../../components/Common/TableContainerX";
 
 const AddChannelsTableList = (props) => {
-    const { isOpen, data, toggleClose, setChannels } = props;
+    const { isOpen, data, toggleClose, setChannels, definition } = props;
     console.log("data in addchannels table:" + JSON.stringify(data));
+    console.log("data in definition" + definition);
 
     const [selectedRows, setSelectedRows] = useState([]);
 
@@ -31,15 +32,16 @@ const AddChannelsTableList = (props) => {
             (selectedRow) => selectedRow.id === row.id
         );
 
+        // Check if the definition is HD (ID 0)
+        const channel_type_lbl = props.definition === 0;
+
         // If the row is selected, remove it from the selected rows array
-        if (isSelected) {
-            const updatedSelectedRows = selectedRows.filter(
-                (selectedRow) => selectedRow.id !== row.id
-            );
+        if ((isSelected && channel_type_lbl) || !isSelected) {
+            const updatedSelectedRows = isSelected
+                ? selectedRows.filter((selectedRow) => selectedRow.id !== row.id)
+                : [...selectedRows, row];
+
             setSelectedRows(updatedSelectedRows);
-        } else {
-            // If the row is not selected, add it to the selected rows array
-            setSelectedRows([...selectedRows, row]);
         }
     };
     console.log("selectedRows:" + JSON.stringify(selectedRows));
@@ -131,22 +133,28 @@ const AddChannelsTableList = (props) => {
                 accessor: "channel_type_lbl",
                 filterable: true,
                 Cell: (cellProps) => {
+                    const isHD = props.definition === 0;
+                    const isSD = cellProps.row.original.channel_type_lbl === "HD";
+
+                    const cellStyle = {
+                        maxWidth: 200,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                    };
+
+                    if (isHD && isSD) {
+                        cellStyle.backgroundColor = "lightgray";
+                        cellStyle.color = "red";
+                        cellStyle.fontWeight = "bold";
+                    };
+
                     return (
-                        <>
-                            <h5
-                                style={{
-                                    maxWidth: 200,
-                                    overflow: "hidden",
-                                    textOverflow: "ellipsis",
-                                    whiteSpace: "nowrap",
-                                }}
-                                className="font-size-14 mb-1"
-                            >
-                                <Link className="text-dark" to="#">
-                                    {cellProps.row.original.channel_type_lbl}
-                                </Link>
-                            </h5>
-                        </>
+                        <h5 style={cellStyle} className="font-size-14 mb-1">
+                            <Link className="text-dark" to="#">
+                                {cellProps.row.original.channel_type_lbl}
+                            </Link>
+                        </h5>
                     );
                 },
             },

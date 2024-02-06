@@ -278,7 +278,7 @@ const AddChannels = (props) => {
     }
   };
   console.log("ShowChannelTableList:" + JSON.stringify(addChannelsList));
-
+  console.log("AddChannels definition:" + definition);
   return (
     <>
       <AddChannelsTableList
@@ -286,6 +286,7 @@ const AddChannels = (props) => {
         data={addChannelsList}
         toggleClose={() => setShowChannelTableList(false)}
         setChannels={setChannels}
+        definition={definition}
       />
 
       <div

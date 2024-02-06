@@ -180,6 +180,8 @@ const AddNewBroadcasterBouquetList = (props) => {
     setIsCustomEnabled(e.target.checked);
   };
 
+  console.log("AddNewBroadcasterBouquetList definition" + validation.values.isHD)
+
   return (
     <Modal
       isOpen={isOpen}
@@ -501,7 +503,6 @@ const AddNewBroadcasterBouquetList = (props) => {
               </div>
             )}
           </Row>
-
           <div
             style={{
               // margin: "20px 0px",
@@ -525,6 +526,7 @@ const AddNewBroadcasterBouquetList = (props) => {
               margin: "30px 0px",
             }}
           >
+
             <Col sm="12">
               <AddChannels
                 channels={channels}
@@ -535,7 +537,9 @@ const AddNewBroadcasterBouquetList = (props) => {
                 broadcasterBouquetAddchannels={broadcasterBouquetAddchannels}
                 definition={validation.values.definition}
               />
+
             </Col>
+
           </Row>
 
           <Row>
