@@ -2,7 +2,7 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 import getChartColorsArray from "../../../components/Common/ChartDynamicColor";
 
-const ViewwPieChart = ({ dataColors, selectedRate,
+const ViewPieChart = ({ dataColors, selectedRate,
   broadPercent,
   msoPercent,
   discountPercent, }) => {

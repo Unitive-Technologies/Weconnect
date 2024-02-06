@@ -7,6 +7,7 @@ import {
   Col,
   Container,
   Row,
+  CardTitle,
   Modal,
   ModalFooter,
   ModalHeader,
@@ -24,6 +25,7 @@ import { updateBroadcasterBouquet as onUpdateBroadcasterBouquet } from "/src/sto
 import { useDispatch } from "react-redux";
 import ViewChannels from "./ViewChannels";
 import ViewRevenueShare from "./RevenueShare";
+import ViewPieChart from "./ViewPieChart";
 
 const ViewBroadCasterBouquet = (props) => {
   const { isOpen, selectedRowId,
@@ -74,10 +76,10 @@ const ViewBroadCasterBouquet = (props) => {
       name: (broadcast && broadcast.name) || "",
       isHD: (broadcast && broadcast.isHD) || "",
       description: (broadcast && broadcast.description) || "",
-      isFta: (broadcast && broadcast.isFta) || "",
+      type: (broadcast && broadcast.isFta) || "",
       broadcaster_id: (broadcast && broadcast.broadcaster_id) || "",
       status: (broadcast && broadcast.status) || "",
-      broadcasterRate: (broadcast && broadcast.broadcasterRate) || "",
+      rate: (broadcast && broadcast.broadcasterRate) || "",
       channels: (broadcast && broadcast.channels) || "",
       created_by: "Admin",
     },
@@ -101,10 +103,12 @@ const ViewBroadCasterBouquet = (props) => {
         // definition: values["definition"],
         description: values["description"],
         isHD: parseInt(values["isHD"]),
-        isFta: parseInt(values["isFta"]),
+        type: values["type"],
+        // isFta: parseInt(values["isFta"]),
         broadcaster_id: parseInt(values["broadcaster_id"]),
         status: parseInt(values["status"]),
-        broadcasterRate: values["broadcasterRate"],
+        rate: values["rate"],
+        // broadcasterRate: values["broadcasterRate"],
         channelsGroup: channels.map((single) => {
           return single.id;
         }),
@@ -326,29 +330,31 @@ const ViewBroadCasterBouquet = (props) => {
                   Type<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="isFta"
+                  name="type"
                   type="select"
                   placeholder="Select Channel type"
                   className="form-select"
-                  onChange={(e) => {
-                    validation.handleChange(e);
-                    setSelectedType(e.target.value);
-                  }}
+                  // onChange={(e) => {
+                  //   validation.handleChange(e);
+                  //   setSelectedType(e.target.value);
+                  // }}
+                  onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={selectedType}
+                  // value={selectedType}
+                  value={validation.values.channel_type_lbl || ""}
                   // value={validation.values.type || ""}
                   disabled={!showEditBroadcast}
                 >
                   {broadcasterBouquetType &&
-                    broadcasterBouquetType.map((isFta) => (
-                      <option key={isFta.id} value={isFta.id}>
-                        {isFta.name}
+                    broadcasterBouquetType.map((channel_type_lbl) => (
+                      <option key={channel_type_lbl.id} value={channel_type_lbl.id}>
+                        {channel_type_lbl.name}
                       </option>
                     ))}
                 </Input>
-                {validation.touched.isFta && validation.errors.isFta ? (
+                {validation.touched.channel_type_lbl && validation.errors.channel_type_lbl ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.isFta}
+                    {validation.errors.channel_type_lbl}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -424,81 +430,87 @@ const ViewBroadCasterBouquet = (props) => {
                   MRP Rate(INR)<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="broadcasterRate"
+                  name="rate"
                   type="number"
                   step="0.01"
-                  onChange={handleInputChange}
-                  onKeyDown={handleArrowKeyPress}
+                  onChange={validation.handleChange}
+                  // onChange={handleInputChange}
+                  // onKeyDown={handleArrowKeyPress}
                   placeholder="0"
-                  disabled={selectedType === "1"}
-                  value={selectedRate}
+                  // disabled={selectedType === "1"}
+                  // value={selectedRate}
+                  value={validation.values.rate || ""}
                   onBlur={validation.handleBlur}
-                // disabled={!showEditBroadcast}
+                  disabled={!showEditBroadcast}
                 ></Input>
-                {/* {validation.touched.rate && validation.errors.rate ? (
+                {validation.touched.rate && validation.errors.rate ? (
                   <FormFeedback type="invalid">
                     {validation.errors.rate}
                   </FormFeedback>
-                ) : null} */}
+                ) : null}
               </div>
             </Col>
           </Row>
-          <div
-            style={{
-              // margin: "20px 0px",
-              marginTop: "20px",
-              marginBottom: "18px",
-              zIndex: 12000,
-              backgroundColor: "#fff",
-              width: "fit-content",
-              marginLeft: "40%",
-              position: "absolute",
-              padding: "0px 10px",
-            }}
-          >
-            <h5 style={{}}>MRP Revenue Share</h5>
-          </div>
-          <Row
-            style={{
-              position: "relative",
-              border: "1px solid #ced4da",
-              padding: "20px 0px",
-              margin: "30px 0px",
-            }}
-          >
-            <Col sm="12">
-              <ViewRevenueShare
-                showEditBroadcast={showEditBroadcast}
-                broadPercent={broadPercent}
-                msoPercent={msoPercent}
-                discountPercent={discountPercent}
-                setBroadPercent={setBroadPercent}
-                setMsoPercent={setMsoPercent}
-                setDiscountPercent={setDiscountPercent} />
-            </Col>
-
-            {selectedType === "0" && selectedRate !== "" ? (
-              // <Row>
-              <Col lg={6}>
-                <Card>
-                  <CardBody>
-                    <span>Graphical representation of SHARE</span>
-                    <CardTitle className="mb-4">
-                      (MRP: {selectedRate}){" "}
-                    </CardTitle>
-                    <ViewPieChart
+          <Row>
+            <Col>
+              <div
+                style={{
+                  // margin: "20px 0px",
+                  marginTop: "20px",
+                  marginBottom: "18px",
+                  zIndex: 12000,
+                  backgroundColor: "#fff",
+                  width: "fit-content",
+                  marginLeft: "40%",
+                  position: "absolute",
+                  padding: "0px 10px",
+                }}
+              >
+                <h5 style={{}}>MRP Revenue Share</h5>
+              </div>
+              <Col>
+                <Row
+                  style={{
+                    position: "relative",
+                    border: "1px solid #ced4da",
+                    padding: "20px 0px",
+                    margin: "30px 0px",
+                  }}
+                >
+                  <Col sm="12">
+                    <ViewRevenueShare
+                      showEditBroadcast={showEditBroadcast}
                       broadPercent={broadPercent}
                       msoPercent={msoPercent}
                       discountPercent={discountPercent}
-                      selectedRate={selectedRate}
-                      dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
-                    />
-                  </CardBody>
-                </Card>
+                      setBroadPercent={setBroadPercent}
+                      setMsoPercent={setMsoPercent}
+                      setDiscountPercent={setDiscountPercent} />
+                  </Col>
+                  {broadcast.isFta === 0 && parseInt(broadcast.broadcasterRate) !== "" ? (
+                    // {selectedType === "0" && selectedRate !== "" ? (
+                    // <Row>
+                    <Card>
+                      <CardBody>
+                        <span>Graphical representation of SHARE</span>
+                        <CardTitle className="mb-4">
+                          (MRP: {broadcast.broadcasterRate}){" "}
+                        </CardTitle>
+                        <ViewPieChart
+                          broadPercent={broadPercent}
+                          msoPercent={msoPercent}
+                          discountPercent={discountPercent}
+                          selectedRate={parseInt(broadcast.broadcasterRate)}
+                          dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
+                        />
+                      </CardBody>
+                    </Card>
+                  ) : (
+                    <></>
+                  )}
+                </Row>
               </Col>
-            ) : (
-              <></>
-            )}
+            </Col>
           </Row>
 
           <div
