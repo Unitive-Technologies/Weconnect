@@ -19,13 +19,19 @@ import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
-  updateStockSmartcardMarkfaulty as onUpdateStockSmartcardMarkfaulty,
+  updateStockSmartcardActionupdation as onUpdateStockSmartcardActionupdation,
   getInventoryStockSmartcard as onGetInventoryStockSmartcard,
 } from "/src/store/inventorystock/actions";
-import { getInventoryFaultySmartcard as onGetInventoryFaultySmartcard } from "/src/store/inventoryfaulty/actions";
 
 function StockActionUpdation(props) {
-  const { isOpen, toggle, selectedRows } = props;
+  const {
+    isOpen,
+    toggle,
+    selectedRows,
+    stocksccastype,
+    stockscwarehouse,
+    stockscinventorystate,
+  } = props;
   const [isChecked, setIsChecked] = useState(true);
 
   const dispatch = useDispatch();
@@ -36,21 +42,26 @@ function StockActionUpdation(props) {
 
     initialValues: {
       remark: "",
-      faulty: [],
+      ids: [],
+      brand_id: "",
+      warehouse_id: "",
+      state: "",
     },
     validationSchema: Yup.object({
       remark: Yup.string().required("Enter remark"),
     }),
     onSubmit: (values) => {
-      const newMarkfaulty = {
+      const newUpdation = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         remark: values["remark"],
-        faulty: selectedRows.map((row) => row.id),
+        ids: selectedRows.map((row) => row.id),
+        brand_id: values["brand_id"],
+        warehouse_id: values["warehouse_id"],
+        state: values["state"],
       };
-      console.log("mark faulty: " + JSON.stringify(newMarkfaulty));
-      dispatch(onUpdateStockSmartcardMarkfaulty(newMarkfaulty));
+      console.log("New Updation: " + JSON.stringify(newUpdation));
+      dispatch(onUpdateStockSmartcardActionupdation(newUpdation));
       dispatch(onGetInventoryStockSmartcard());
-      dispatch(onGetInventoryFaultySmartcard());
       validation.resetForm();
       toggle();
     },
@@ -188,7 +199,101 @@ function StockActionUpdation(props) {
             </Col>
           </Row>
           <Row>
-            <Col lg="6">
+            <Col lg={3}>
+              <div className="mb-3">
+                <Label className="form-label">Smartcard Brand</Label>
+                <Input
+                  name="brand_id"
+                  type="select"
+                  placeholder="Select brand Type"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.brand_id || ""}
+                  invalid={
+                    validation.touched.brand_id && validation.errors.brand_id
+                      ? true
+                      : false
+                  }
+                >
+                  <option value="">Select brand Type</option>
+                  {stocksccastype.map((brandtype) => (
+                    <option key={brandtype.id} value={brandtype.id}>
+                      {brandtype.name}
+                    </option>
+                  ))}
+                </Input>
+                {validation.touched.brand_id && validation.errors.brand_id ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.brand_id}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={3}>
+              <div className="mb-3">
+                <Label className="form-label">Smartcard Warehouse</Label>
+                <Input
+                  name="warehouse_id"
+                  type="select"
+                  placeholder="Select warehouse"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.warehouse_id || ""}
+                  invalid={
+                    validation.touched.warehouse_id &&
+                    validation.errors.warehouse_id
+                      ? true
+                      : false
+                  }
+                >
+                  <option value="">Select warehouse</option>
+                  {stockscwarehouse.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
+                </Input>
+                {validation.touched.warehouse_id &&
+                validation.errors.warehouse_id ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.warehouse_id}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={3}>
+              <div className="mb-3">
+                <Label className="form-label">Smatcard Inentory state</Label>
+                <Input
+                  name="state"
+                  type="select"
+                  placeholder="Select inventory state"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.state || ""}
+                  invalid={
+                    validation.touched.state && validation.errors.state
+                      ? true
+                      : false
+                  }
+                >
+                  <option value="">Select inventory state</option>
+                  {stockscinventorystate.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
+                </Input>
+                {validation.touched.state && validation.errors.state ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.state}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg="3">
               <Label>
                 Remark (atleast 4 characters)
                 <span style={{ color: "red" }}>*</span>
@@ -233,6 +338,9 @@ StockActionUpdation.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
   selectedRows: PropTypes.array,
+  stocksccastype: PropTypes.array,
+  stockscwarehouse: PropTypes.array,
+  stockscinventorystate: PropTypes.array,
 };
 
 export default StockActionUpdation;
