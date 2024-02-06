@@ -27,18 +27,20 @@ const AddChannelsTableList = (props) => {
     const [selectedRows, setSelectedRows] = useState([]);
 
     const handleSelectedRows = (row) => {
-        // Check if the row is already selected
         const isSelected = selectedRows.some(
             (selectedRow) => selectedRow.id === row.id
         );
 
-        // Check if the definition is HD (ID 0)
-        const channel_type_lbl = props.definition === 0;
+        const channel_type_lbl = row.channel_type_lbl;
 
-        // If the row is selected, remove it from the selected rows array
-        if ((isSelected && channel_type_lbl) || !isSelected) {
+        if (
+            (isSelected && channel_type_lbl === "HD" && definition === 1) ||
+            !isSelected
+        ) {
             const updatedSelectedRows = isSelected
-                ? selectedRows.filter((selectedRow) => selectedRow.id !== row.id)
+                ? selectedRows.filter(
+                    (selectedRow) => selectedRow.id !== row.id
+                )
                 : [...selectedRows, row];
 
             setSelectedRows(updatedSelectedRows);
@@ -133,8 +135,8 @@ const AddChannelsTableList = (props) => {
                 accessor: "channel_type_lbl",
                 filterable: true,
                 Cell: (cellProps) => {
-                    const isHD = props.definition === 0;
-                    const isSD = cellProps.row.original.channel_type_lbl === "HD";
+                    const isHD = definition === 1; // Update to 1
+                    const isHDType = cellProps.row.original.channel_type_lbl === "HD";
 
                     const cellStyle = {
                         maxWidth: 200,
@@ -143,7 +145,7 @@ const AddChannelsTableList = (props) => {
                         whiteSpace: "nowrap",
                     };
 
-                    if (isHD && isSD) {
+                    if (isHD && isHDType) { // Check for HD and HD type
                         cellStyle.backgroundColor = "lightgray";
                         cellStyle.color = "red";
                         cellStyle.fontWeight = "bold";
@@ -158,6 +160,7 @@ const AddChannelsTableList = (props) => {
                     );
                 },
             },
+
             {
                 Header: "Alacarte",
                 accessor: "isAlacarte_lbl",
