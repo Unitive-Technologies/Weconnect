@@ -54,6 +54,9 @@ import {
   GET_STOCKACTION_INVENTORYSTATE,
   GET_STOCKACTION_INVENTORYSTATE_SUCCESS,
   GET_STOCKACTION_INVENTORYSTATE_FAIL,
+  UPDATE_STOCKSMARTCARD_ACTIONUPDATION,
+  UPDATE_STOCKSMARTCARD_ACTIONUPDATION_SUCCESS,
+  UPDATE_STOCKSMARTCARD_ACTIONUPDATION_FAIL,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -318,5 +321,20 @@ export const getStockActionInventorystateSuccess = (actioninventorystate) => ({
 
 export const getStockActionInventorystateFail = (error) => ({
   type: GET_STOCKACTION_INVENTORYSTATE_FAIL,
+  payload: error,
+});
+
+export const updateStockSmartcardActionupdation = (stocksmartcard) => ({
+  type: UPDATE_STOCKSMARTCARD_ACTIONUPDATION,
+  payload: stocksmartcard,
+});
+
+export const updateStockSmartcardActionupdationSuccess = (stocksmartcard) => ({
+  type: UPDATE_STOCKSMARTCARD_ACTIONUPDATION_SUCCESS,
+  payload: stocksmartcard,
+});
+
+export const updateStockSmartcardActionupdationFail = (error) => ({
+  type: UPDATE_STOCKSMARTCARD_ACTIONUPDATION_FAIL,
   payload: error,
 });
