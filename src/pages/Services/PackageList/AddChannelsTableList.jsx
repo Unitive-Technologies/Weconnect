@@ -161,18 +161,14 @@ const AddChannelsTableList = (props) => {
             <>
               <h5
                 style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                  background:
-                    cellProps.row.original.channel_type_lbl === "HD" && "red",
+                  color:
+                    definition === "0" &&
+                    cellProps.row.original.channel_type_lbl === "HD" &&
+                    "red",
                 }}
                 className="font-size-14 mb-1"
               >
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.channel_type_lbl}
-                </Link>
+                {cellProps.row.original.channel_type_lbl}
               </h5>
             </>
           );
