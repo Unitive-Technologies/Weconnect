@@ -278,23 +278,15 @@ const AddChannelsTableList = (props) => {
               isPagination={true}
               columns={columns}
               data={data}
-              getRowProps={(row) => ({
-                style: {
-                  background:
-                    definition === "0" && row.original.channel_type_lbl === "HD"
-                      ? "red"
-                      : "inherit",
-                },
-              })}
-              handleRowClick={(row) => {
-                if (
-                  !(
-                    definition === "0" && row.original.channel_type_lbl === "HD"
-                  )
-                ) {
-                  handleSelectedRows(row);
-                }
-              }}
+              // getRowProps={(row) => ({
+              //   style: {
+              //     background:
+              //       definition === "0" && row.original.channel_type_lbl === "HD"
+              //         ? "red"
+              //         : "inherit",
+              //   },
+              // })}
+              handleRowClick={(row) => handleSelectedRows(row)}
               isGlobalFilter={true}
               isShowingPageLength={true}
               customPageSize={50}

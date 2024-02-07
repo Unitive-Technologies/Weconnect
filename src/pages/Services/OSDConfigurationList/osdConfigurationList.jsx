@@ -29,7 +29,14 @@ import DeleteModal from "/src/components/Common/DeleteModal";
 
 import {
   getOSDConfiguration as onGetOSDConfiguration,
-  getOSDConfigurationEnable as onGetOSDConfigurationEnable, getOSDConfigurationForcedDisplay as onGetOSDConfigurationForcedDisplay, getOSDConfigurationDisplay as onGetOSDConfigurationDisplay, getOSDConfigurationFontColor as onGetOSDConfigurationFontColor, getOSDConfigurationBackgroundColor as onGetOSDConfigurationBackgroundColor, getOSDConfigurationFontSize as onGetOSDConfigurationFontSize, getOSDConfigurationBackgroundArea as onGetOSDConfigurationBackgroundArea, getOSDConfigurationStatus as onGetOSDConfigurationStatus
+  getOSDConfigurationEnable as onGetOSDConfigurationEnable,
+  getOSDConfigurationForcedDisplay as onGetOSDConfigurationForcedDisplay,
+  getOSDConfigurationDisplay as onGetOSDConfigurationDisplay,
+  getOSDConfigurationFontColor as onGetOSDConfigurationFontColor,
+  getOSDConfigurationBackgroundColor as onGetOSDConfigurationBackgroundColor,
+  getOSDConfigurationFontSize as onGetOSDConfigurationFontSize,
+  getOSDConfigurationBackgroundArea as onGetOSDConfigurationBackgroundArea,
+  getOSDConfigurationStatus as onGetOSDConfigurationStatus,
 } from "/src/store/actions";
 
 import { isEmpty } from "lodash";
@@ -38,7 +45,7 @@ import { isEmpty } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
-import NSTVList from './NSTVList';
+import NSTVList from "./NSTVList";
 import ViewNSTVList from "./ViewNSTVList";
 
 const OSDConfigurationList = (props) => {
@@ -56,7 +63,8 @@ const OSDConfigurationList = (props) => {
       osdConfigForcedDisplay: osdConfiguration.osdConfigurationForcedDisplay,
       osdConfigDisplay: osdConfiguration.osdConfigurationDisplay,
       osdConfigFontColor: osdConfiguration.osdConfigurationFontColor,
-      osdConfigBackgroundColor: osdConfiguration.osdConfigurationBackgroundColor,
+      osdConfigBackgroundColor:
+        osdConfiguration.osdConfigurationBackgroundColor,
       osdConfigFontSize: osdConfiguration.osdConfigurationFontSize,
       osdConfigBackgroundArea: osdConfiguration.osdConfigurationBackgroundArea,
       osdConfigStatus: osdConfiguration.osdConfigurationStatus,
@@ -64,7 +72,18 @@ const OSDConfigurationList = (props) => {
     })
   );
 
-  const { osdConfig, osdConfigStatus, osdConfigBackgroundArea, osdConfigBackgroundColor, osdConfigDisplay, osdConfigEnable, osdConfigFontColor, osdConfigFontSize, osdConfigForcedDisplay, loading } = useSelector(osdConfigurationProperties);
+  const {
+    osdConfig,
+    osdConfigStatus,
+    osdConfigBackgroundArea,
+    osdConfigBackgroundColor,
+    osdConfigDisplay,
+    osdConfigEnable,
+    osdConfigFontColor,
+    osdConfigFontSize,
+    osdConfigForcedDisplay,
+    loading,
+  } = useSelector(osdConfigurationProperties);
 
   useEffect(() => {
     console.log("OSD Configuration data in component:", osdConfig);
@@ -76,7 +95,6 @@ const OSDConfigurationList = (props) => {
   const [isEdit, setIsEdit] = useState(false);
   const [showNSTV, setShowNSTV] = useState(false);
   const [showViewNSTVList, setShowViewNSTVList] = useState(false);
-
 
   const columns = useMemo(
     () => [
@@ -107,10 +125,13 @@ const OSDConfigurationList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1" onClick={() => {
-                const userData = cellProps.row.original;
-                handleViewNSTVList(userData);
-              }}>
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  handleViewNSTVList(userData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -138,7 +159,9 @@ const OSDConfigurationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.status_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.status_lbl}
+            </p>
           );
         },
       },
@@ -148,7 +171,9 @@ const OSDConfigurationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.is_reserved_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.is_reserved_lbl}
+            </p>
           );
         },
       },
@@ -168,7 +193,9 @@ const OSDConfigurationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.start_time}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.start_time}
+            </p>
           );
         },
       },
@@ -188,7 +215,9 @@ const OSDConfigurationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.created_at}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_at}
+            </p>
           );
         },
       },
@@ -198,42 +227,9 @@ const OSDConfigurationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.created_by_lbl}</p>
-          );
-        },
-      },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by_lbl}
+            </p>
           );
         },
       },
@@ -337,16 +333,18 @@ const OSDConfigurationList = (props) => {
         type: "dropdown",
         dropdownName: "create",
       },
-
     ];
   };
 
   return (
     <React.Fragment>
-      <ViewNSTVList isOpen={showViewNSTVList}
+      <ViewNSTVList
+        isOpen={showViewNSTVList}
         toggle={handleViewNSTVList}
-        osdConfiguration={viewNSTVList} />
-      <NSTVList isOpen={showNSTV}
+        osdConfiguration={viewNSTVList}
+      />
+      <NSTVList
+        isOpen={showNSTV}
         toggle={toggle}
         osdConfigBackgroundArea={osdConfigBackgroundArea}
         osdConfigBackgroundColor={osdConfigBackgroundColor}
