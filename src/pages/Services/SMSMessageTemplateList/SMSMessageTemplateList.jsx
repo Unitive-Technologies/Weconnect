@@ -158,6 +158,12 @@ const SMSMessageTemplateList = (props) => {
           return (
             <>
               <h5
+                style={{
+                  maxWidth: 200,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const SMSData = cellProps.row.original;
@@ -229,41 +235,6 @@ const SMSMessageTemplateList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return <CreatedBy {...cellProps} />;
-        },
-      },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
-          );
         },
       },
     ],
@@ -345,7 +316,8 @@ const SMSMessageTemplateList = (props) => {
   //   toggle();
   // };
 
-  const [showViewSMSMessageTamplateList, setShowSMSMessageTamplateList] = useState(false);
+  const [showViewSMSMessageTamplateList, setShowSMSMessageTamplateList] =
+    useState(false);
 
   const [viewSMSData, setViewSMSData] = useState({});
 
@@ -387,7 +359,7 @@ const SMSMessageTemplateList = (props) => {
                       // isAddUserList={true}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
-                      handleUserClick={() => { }}
+                      handleUserClick={() => {}}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

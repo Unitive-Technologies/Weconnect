@@ -21,7 +21,6 @@ import {
   Toast,
   ToastHeader,
   ToastBody,
-
   UncontrolledTooltip,
   Input,
   Form,
@@ -34,7 +33,12 @@ import { Email, Tags, Projects } from "./osdTemplateListCol";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
 
-import { getOSDTemplate as onGetOSDTemplate, getOSDTemplateOSD as onGetOSDTemplateOSD, getOSDTemplateStatus as onGetOSDTemplateStatus, getOSDTemplateTemplateFor as onGetOSDTemplateTemplateFor } from "/src/store/OSDTemplate/actions";
+import {
+  getOSDTemplate as onGetOSDTemplate,
+  getOSDTemplateOSD as onGetOSDTemplateOSD,
+  getOSDTemplateStatus as onGetOSDTemplateStatus,
+  getOSDTemplateTemplateFor as onGetOSDTemplateTemplateFor,
+} from "/src/store/OSDTemplate/actions";
 
 import { isEmpty } from "lodash";
 
@@ -42,9 +46,8 @@ import { isEmpty } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
-import AddNewOSDTemplate from './AddOSDTemplateList';
-import ViewOSDTemplateList from './ViewOSDTemplateList';
-
+import AddNewOSDTemplate from "./AddOSDTemplateList";
+import ViewOSDTemplateList from "./ViewOSDTemplateList";
 
 const OSDTemplateList = (props) => {
   //meta title
@@ -66,7 +69,8 @@ const OSDTemplateList = (props) => {
     })
   );
 
-  const { osdTemp, osdTempOSD, osdTempTemplateFor, osdTempStatus, loading } = useSelector(osdTemplateProperties);
+  const { osdTemp, osdTempOSD, osdTempTemplateFor, osdTempStatus, loading } =
+    useSelector(osdTemplateProperties);
 
   useEffect(() => {
     console.log("OSD Temp data in component:", osdTemp);
@@ -77,7 +81,6 @@ const OSDTemplateList = (props) => {
   const [userList, setUserList] = useState([]);
   const [showAddOSDTemplateList, setShowAddOSDTemplateList] = useState(false);
   const [showViewOSDTemplateList, setShowViewOSDTemplateList] = useState(false);
-
 
   const [isEdit, setIsEdit] = useState(false);
 
@@ -110,10 +113,13 @@ const OSDTemplateList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1" onClick={() => {
-                const userData = cellProps.row.original;
-                handleViewOSDTemplateList(userData);
-              }}>
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  handleViewOSDTemplateList(userData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -181,41 +187,6 @@ const OSDTemplateList = (props) => {
             <p className="text-muted mb-0">
               {cellProps.row.original.created_by_lbl}
             </p>
-          );
-        },
-      },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
           );
         },
       },
@@ -302,7 +273,6 @@ const OSDTemplateList = (props) => {
     setToast(!toast);
   };
 
-
   const keyField = "id";
 
   const getTableActions = () => {
@@ -311,7 +281,7 @@ const OSDTemplateList = (props) => {
         name: "Create",
         action: setShowAddOSDTemplateList,
         type: "normal",
-        icon: "create"
+        icon: "create",
       },
       {
         name: "Bulk Assign to Operator",
@@ -328,14 +298,16 @@ const OSDTemplateList = (props) => {
     ];
   };
 
-
-
   return (
     <React.Fragment>
-      <ViewOSDTemplateList isOpen={showViewOSDTemplateList}
+      <ViewOSDTemplateList
+        isOpen={showViewOSDTemplateList}
         toggle={handleViewOSDTemplateList}
-        osdTemplate={viewOSDTemplateList} />
-      <AddNewOSDTemplate isOpen={showAddOSDTemplateList} handleAddOSDTemplateList={handleAddOSDTemplateList}
+        osdTemplate={viewOSDTemplateList}
+      />
+      <AddNewOSDTemplate
+        isOpen={showAddOSDTemplateList}
+        handleAddOSDTemplateList={handleAddOSDTemplateList}
         osdTempOSD={osdTempOSD}
         osdTempStatus={osdTempStatus}
         osdTempTemplateFor={osdTempTemplateFor}
@@ -379,7 +351,9 @@ const OSDTemplateList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleAddOSDTemplateList={() => setShowAddOSDTemplateList(true)}
+                      handleAddOSDTemplateList={() =>
+                        setShowAddOSDTemplateList(true)
+                      }
                       handleUserClick={handleUserClicks}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
