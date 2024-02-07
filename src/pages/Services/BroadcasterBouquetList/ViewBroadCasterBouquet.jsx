@@ -464,7 +464,8 @@ const ViewBroadCasterBouquet = (props) => {
                   placeholder="0"
                   // disabled={selectedType === "1"}
                   // value={selectedRate}
-                  value={validation.values.rate || ""}
+
+                  value={parseFloat(validation.values.rate).toFixed(2) || ""}
                   onBlur={validation.handleBlur}
                   disabled={!showEditBroadcast}
                 ></Input>
@@ -522,14 +523,14 @@ const ViewBroadCasterBouquet = (props) => {
                             <CardBody>
                               <span>Graphical representation of SHARE</span>
                               <CardTitle className="mb-4">
-                                (MRP: {broadcast.broadcasterRate}){" "}
+                                (MRP: {!showEditBroadcast ? (parseFloat(broadcast.broadcasterRate.toFixed(2))) : validation.values.rate}){" "}
                               </CardTitle>
                               <PieChart
                                 broadPercent={broadPercent}
                                 msoPercent={msoPercent}
                                 discountPercent={discountPercent}
                                 // selectedRate={selectedRate}
-                                selectedRate={parseInt(broadcast.broadcasterRate)}
+                                selectedRate={!showEditBroadcast ? parseInt(broadcast.broadcasterRate) : validation.values.rate}
                                 dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
                               />
                             </CardBody>

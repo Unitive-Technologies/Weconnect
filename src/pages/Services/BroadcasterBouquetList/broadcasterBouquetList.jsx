@@ -98,6 +98,16 @@ const BroadcasterBouquetList = (props) => {
     setShowAddNewBroadcasterBouquetList,
   ] = useState(false);
 
+  const Rate = ({ value }) => {
+    // Parse the value as a float
+    const rate = parseFloat(value);
+
+    // Format the rate to have exactly two digits after the decimal point
+    const formattedRate = rate.toFixed(2);
+
+    return <span>{formattedRate}</span>;
+  };
+
   const columns = useMemo(
     () => [
       {
@@ -238,7 +248,7 @@ const BroadcasterBouquetList = (props) => {
         accessor: "broadcasterRate",
         filterable: true,
         Cell: (cellProps) => {
-          return <Rate {...cellProps} />;
+          return <Rate value={cellProps.value} />;
         },
       },
       {
