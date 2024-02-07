@@ -508,6 +508,10 @@ export const UPDATE_STOCKSMARTCARD_MARKFAULTY = "/smartcard/faulty?vr=web1.0";
 export const UPDATE_STOCKSMARTCARD_BLACKLIST = "/smartcard/blacklist?vr=web1.0";
 export const UPDATE_STOCKSMARTCARD_ACTIONUPDATION =
   "/smartcard/bulk-change-scdetail?vr=web1.0";
+export const UPDATE_STOCKSTB_MARKFAULTY = "/stb/faulty?vr=web1.0";
+export const UPDATE_STOCKSTB_BLACKLIST = "/stb/blacklist?vr=web1.0";
+export const ADD_STOCKATB_ACTIONUPDATION =
+  "/stb/bulk-change-stbdetail?vr=web1.0";
 
 export const GET_INVENTORYFAULTY_SMARTCARD =
   "/smartcard?expand=po_date,po_number,invoice_no,invoice_date,created_by_lbl,cas_lbl,status_lbl,brand_lbl,warehouse_lbl,state_lbl,inv_state_lbl&filter[status]=3&filter[stb_id]=0&page=1&per-page=50&vr=web1.0";
