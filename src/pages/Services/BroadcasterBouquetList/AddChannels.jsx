@@ -297,7 +297,11 @@ const AddChannels = (props) => {
           <ToastHeader toggle={handleAddChannelsWarning}>
             <i className="mdi mdi-alert-outline me-2"></i> Warning
           </ToastHeader>
-          <ToastBody>Please select package definition</ToastBody>
+          <ToastBody>
+            {!definition
+              ? "Please select Channel Definition"
+              : "Please select Channel Type"}{" "}
+          </ToastBody>
         </Toast>
       </div>
 
