@@ -9,7 +9,7 @@ const RevenueShare = ({ broadPercent,
   discountPercent,
   setBroadPercent,
   setMsoPercent,
-  setDiscountPercent, }) => {
+  setDiscountPercent, showEditBroadcast }) => {
   const handleBroadCastShare = (newValue) => {
     setBroadPercent(newValue);
 
@@ -53,7 +53,10 @@ const RevenueShare = ({ broadPercent,
               min={65}
               max={100}
               orientation="horizontal"
-              onChange={(newValue) => handleBroadCastShare(newValue)}
+              onChange={(newValue) =>
+                showEditBroadcast && handleBroadCastShare(newValue)
+              }
+              disabled={!showEditBroadcast}
             />
             <span className="float-right  mt-4">Value: {broadPercent} %</span>
           </div>
@@ -65,7 +68,9 @@ const RevenueShare = ({ broadPercent,
               min={0}
               max={35}
               orientation="horizontal"
-              onChange={(newValue) => handleMsoShare(newValue)}
+              onChange={(newValue) =>
+                showEditBroadcast && handleMsoShare(newValue)
+              }
             />
             <span className="float-right  mt-4">Value: {msoPercent} %</span>
           </div>
@@ -77,7 +82,9 @@ const RevenueShare = ({ broadPercent,
               min={0}
               max={15}
               orientation="horizontal"
-              onChange={(newValue) => handleDiscount(newValue)}
+              onChange={(newValue) =>
+                showEditBroadcast && handleDiscount(newValue)
+              }
             />
             <span className="float-right  mt-4">
               Value: {discountPercent} %

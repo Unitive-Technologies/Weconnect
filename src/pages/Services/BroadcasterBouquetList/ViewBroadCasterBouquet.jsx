@@ -24,9 +24,8 @@ import { useFormik } from "formik";
 import { updateBroadcasterBouquet as onUpdateBroadcasterBouquet } from "/src/store/broadcasterbouquet/actions";
 import { useDispatch } from "react-redux";
 import ViewChannels from "./ViewChannels";
-import ViewRevenueShare from "./RevenueShare";
+import RevenueShare from "./RevenueShare";
 import PieChart from "./PieChart";
-import ViewPieChart from "./ViewPieChart";
 import { resetSection } from "redux-form";
 
 const ViewBroadCasterBouquet = (props) => {
@@ -37,7 +36,7 @@ const ViewBroadCasterBouquet = (props) => {
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
 
   const [showEditBroadcast, setShowEditBroadcast] = useState(false);
-
+  const [revenueData, setRevenueData] = useState({});
   const [broadPercent, setBroadPercent] = useState(80);
   const [msoPercent, setMsoPercent] = useState(20);
   const [discountPercent, setDiscountPercent] = useState(0);
@@ -163,6 +162,29 @@ const ViewBroadCasterBouquet = (props) => {
   }, [selectedRowId]);
   console.log("selectedRowDetails:" + JSON.stringify(selectedRowDetails));
 
+  useEffect(() => {
+    if (broadcast) {
+      setRevenueData(broadcast.revenue_share);
+    } else {
+      setRevenueData({});
+    }
+  }, [broadcast]);
+
+  useEffect(() => {
+    if (revenueData) {
+      setBroadPercent(revenueData.broadcaster_share);
+    }
+    if (revenueData) {
+      setMsoPercent(revenueData.mso_share);
+    }
+    if (revenueData) {
+      console.log(
+        "discountPercent:" + typeof revenueData.mso_discount,
+        revenueData.mso_discount
+      );
+      setDiscountPercent(revenueData.mso_discount);
+    }
+  }, [revenueData]);
 
   return (
     <Modal
@@ -446,6 +468,7 @@ const ViewBroadCasterBouquet = (props) => {
                   onBlur={validation.handleBlur}
                   disabled={!showEditBroadcast}
                 ></Input>
+
                 {validation.touched.rate && validation.errors.rate ? (
                   <FormFeedback type="invalid">
                     {validation.errors.rate}
@@ -481,7 +504,7 @@ const ViewBroadCasterBouquet = (props) => {
                   }}
                 >
                   <Col lg="6">
-                    <ViewRevenueShare
+                    <RevenueShare
                       // disabled={!showEditBroadcast}
                       showEditBroadcast={showEditBroadcast}
                       broadPercent={broadPercent}
