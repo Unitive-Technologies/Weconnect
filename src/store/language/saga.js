@@ -1,6 +1,11 @@
 import { call, put, select, takeEvery } from "redux-saga/effects";
 
-import { GET_LANGUAGELIST, UPDATE_LANGUAGELIST, GET_LANGUAGELIST_STATUS, ADD_NEW_LANGUAGELIST } from "./actionTypes";
+import {
+  GET_LANGUAGELIST,
+  UPDATE_LANGUAGELIST,
+  GET_LANGUAGELIST_STATUS,
+  ADD_NEW_LANGUAGELIST,
+} from "./actionTypes";
 
 import {
   getLanguageListSuccess,
@@ -52,7 +57,7 @@ function* fetchLanguageList() {
 
     const response = yield call(getLanguageList, currentPage, pageSize);
     console.log("Response from API -", response);
-    debugger;
+    // debugger;
     yield put(getLanguageListSuccess(response));
   } catch (error) {
     console.error("Error fetching Language List:", error);

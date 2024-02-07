@@ -45,7 +45,7 @@ function* fetchPromoVoucher() {
 
     const response = yield call(getPromoVoucher, currentPage, pageSize);
     console.log("Response from API -", response);
-    debugger;
+    // debugger;
     yield put(getPromoVoucherSuccess(response));
   } catch (error) {
     console.error("Error fetching Reason list:", error);

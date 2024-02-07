@@ -42,7 +42,7 @@ function* fetchReason() {
 
     const response = yield call(getReason, currentPage, pageSize);
     console.log("Response from API -", response);
-    debugger;
+    // debugger;
     yield put(getReasonSuccess(response));
   } catch (error) {
     console.error("Error fetching Users list:", error);
@@ -50,16 +50,11 @@ function* fetchReason() {
   }
 }
 
-
 function* onUpdateReason({ payload: reason }) {
   console.log("Reason onUpdate:" + JSON.stringify(reason));
   console.log("reason id:" + reason.id);
   try {
-    const response = yield call(
-      updateReason,
-      reason.id,
-      reason
-    );
+    const response = yield call(updateReason, reason.id, reason);
     yield put(updateReasonSuccess(response));
     console.log("update response:" + JSON.stringify(response));
     yield put(fetchreasons());
@@ -95,7 +90,6 @@ function* onAddNewReason({ payload: reason }) {
     yield put(fetchreasons());
   } catch (error) {
     yield put(addReasonFail(error));
-
   }
 }
 

@@ -63,12 +63,15 @@ const BroadcasterList = (props) => {
     })
   );
 
-  const { brodcast, brodcastStatus, totalPage,
+  const {
+    brodcast,
+    brodcastStatus,
+    totalPage,
     totalCount,
     pageSize,
-    currentPage, loading } = useSelector(
-      BroadCasterProperties
-    );
+    currentPage,
+    loading,
+  } = useSelector(BroadCasterProperties);
 
   useEffect(() => {
     console.log("BroadCaster data in component:", brodcast);
@@ -118,10 +121,10 @@ const BroadcasterList = (props) => {
                 whiteSpace: "nowrap",
               }}
               className="font-size-14 mb-1"
-            // onClick={() => {
-            //   const userData = cellProps.row.original;
-            //   toggleViewBroadcaster(userData);
-            // }}
+              // onClick={() => {
+              //   const userData = cellProps.row.original;
+              //   toggleViewBroadcaster(userData);
+              // }}
             >
               <Link className="text-dark" to="#">
                 {cellProps.row.original.name}
@@ -192,41 +195,6 @@ const BroadcasterList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return <CreatedBy {...cellProps} />;
-        },
-      },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
-          );
         },
       },
     ],

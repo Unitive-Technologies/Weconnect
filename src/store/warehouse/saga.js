@@ -1,6 +1,12 @@
 import { call, put, select, takeEvery } from "redux-saga/effects";
 
-import { GET_WAREHOUSELIST, UPDATE_WAREHOUSELIST, GET_WAREHOUSELIST_STATUS, GET_WAREHOUSELIST_OPERATOR, ADD_WAREHOUSELIST } from "./actionTypes";
+import {
+  GET_WAREHOUSELIST,
+  UPDATE_WAREHOUSELIST,
+  GET_WAREHOUSELIST_STATUS,
+  GET_WAREHOUSELIST_OPERATOR,
+  ADD_WAREHOUSELIST,
+} from "./actionTypes";
 
 import {
   getWarehouseListSuccess,
@@ -35,7 +41,7 @@ function* fetchWarehouseList() {
 
     const response = yield call(getWarehouseList, currentPage, pageSize);
     console.log("Response from API -", response);
-    debugger;
+    // debugger;
     yield put(getWarehouseListSuccess(response));
   } catch (error) {
     console.error("Error fetching Users list:", error);
@@ -45,13 +51,12 @@ function* fetchWarehouseList() {
 
 function* onUpdateWarehouseList({ payload: warehouselist }) {
   console.log("WarehouseList in onUpdate:" + JSON.stringify(warehouselist));
-  console.log("Updated Id" + warehouselist.id)
+  console.log("Updated Id" + warehouselist.id);
   try {
     const response = yield call(
       updateWarehouseList,
       warehouselist.id,
-      warehouselist,
-
+      warehouselist
     );
     yield put(updateWarehouseListSuccess(response));
     console.log("update response:" + JSON.stringify(response));

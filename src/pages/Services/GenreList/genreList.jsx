@@ -23,15 +23,19 @@ import {
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import TableContainerX from "../../../components/Common/TableContainerX";
-import { goToPage as onGoToPage, getGenreList as onGetGenreList, getGenreListStatus as onGetGenreListStatus } from "/src/store/genre/actions";
+import {
+  goToPage as onGoToPage,
+  getGenreList as onGetGenreList,
+  getGenreListStatus as onGetGenreListStatus,
+} from "/src/store/genre/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
-import AddNewGenreList from './AddNewGenreList'
-import UploadGenreList from './UploadGenreList'
-import ViewGenreList from './ViewGenreList'
+import AddNewGenreList from "./AddNewGenreList";
+import UploadGenreList from "./UploadGenreList";
+import ViewGenreList from "./ViewGenreList";
 
 const GenreList = (props) => {
   //meta title
@@ -51,8 +55,15 @@ const GenreList = (props) => {
     currentPage: Genre.currentPage,
   }));
 
-  const { genrelist, genrelistStatus, totalPage,
-    totalCount, pageSize, currentPage, loading } = useSelector(GenreProperties);
+  const {
+    genrelist,
+    genrelistStatus,
+    totalPage,
+    totalCount,
+    pageSize,
+    currentPage,
+    loading,
+  } = useSelector(GenreProperties);
 
   console.log(`TotalCount - ${totalCount}`);
   console.log(`PageSize - ${pageSize}`);
@@ -100,10 +111,13 @@ const GenreList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <h5 className="font-size-14 mb-1" onClick={() => {
-              const userData = cellProps.row.original;
-              handleViewGenreList(userData);
-            }}>
+            <h5
+              className="font-size-14 mb-1"
+              onClick={() => {
+                const userData = cellProps.row.original;
+                handleViewGenreList(userData);
+              }}
+            >
               <Link className="text-dark" to="#">
                 {cellProps.row.original.name}
               </Link>
@@ -149,41 +163,6 @@ const GenreList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return <CreatedBy {...cellProps} />;
-        },
-      },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
-          );
         },
       },
     ],
@@ -241,7 +220,7 @@ const GenreList = (props) => {
         name: "Create",
         action: setShowAddNewGenreList,
         type: "normal",
-        icon: "create"
+        icon: "create",
       },
       {
         name: "Upload",
@@ -249,7 +228,6 @@ const GenreList = (props) => {
         type: "normal",
         icon: "upload",
       },
-
     ];
   };
 
@@ -259,8 +237,13 @@ const GenreList = (props) => {
         isOpen={showViewGenreList}
         handleViewGenreList={handleViewGenreList}
         genre={viewGenreList}
-        genrelistStatus={genrelistStatus} />
-      <AddNewGenreList isOpen={showAddNewGenreList} handleAddGenreList={handleAddGenreList} genreListStatus={genrelistStatus} />
+        genrelistStatus={genrelistStatus}
+      />
+      <AddNewGenreList
+        isOpen={showAddNewGenreList}
+        handleAddGenreList={handleAddGenreList}
+        genreListStatus={genrelistStatus}
+      />
       <UploadGenreList isOpen={showUploadGenreList} toggle={toggle1} />
 
       <div className="page-content">
@@ -322,9 +305,7 @@ const GenreList = (props) => {
         </Container>
       </div>
       <ToastContainer />
-
     </React.Fragment>
-
   );
 };
 

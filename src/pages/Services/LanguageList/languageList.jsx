@@ -15,15 +15,19 @@ import {
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 
-import { goToPage as onGoToPage, getlanguageList as onGetLanguageList, getLanguageListStatus as onGetLanguageListStatus } from "/src/store/language/actions";
+import {
+  goToPage as onGoToPage,
+  getlanguageList as onGetLanguageList,
+  getLanguageListStatus as onGetLanguageListStatus,
+} from "/src/store/language/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
-import AddNewLanguageList from './AddNewLanguageList'
-import UploadLanguageList from './UploadLanguageList'
-import ViewLanguageList from './ViewLanguageList'
+import AddNewLanguageList from "./AddNewLanguageList";
+import UploadLanguageList from "./UploadLanguageList";
+import ViewLanguageList from "./ViewLanguageList";
 import TableContainerX from "../../../components/Common/TableContainerX";
 
 import {
@@ -55,10 +59,15 @@ const LanguageList = (props) => {
     })
   );
 
-  const { langlist, loading, langlistStatus, totalPage,
+  const {
+    langlist,
+    loading,
+    langlistStatus,
+    totalPage,
     totalCount,
     pageSize,
-    currentPage } = useSelector(LanguageProperties);
+    currentPage,
+  } = useSelector(LanguageProperties);
 
   useEffect(() => {
     console.log("Language List data in component:", langlist);
@@ -69,7 +78,6 @@ const LanguageList = (props) => {
   const [showAddNewLanguageList, setShowAddNewLanguageList] = useState(false);
   const [showUploadLanguageList, setShowUploadLanguageList] = useState(false);
   const [showViewLanguageList, setShowLanguageList] = useState(false);
-
 
   const [isEdit, setIsEdit] = useState(false);
 
@@ -101,10 +109,13 @@ const LanguageList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1" onClick={() => {
-                const userData = cellProps.row.original;
-                handleViewLanguageList(userData);
-              }}>
+              <h5
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  handleViewLanguageList(userData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -156,41 +167,6 @@ const LanguageList = (props) => {
           return <CreatedBy {...cellProps} />;
         },
       },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
-          );
-        },
-      },
     ],
     []
   );
@@ -224,7 +200,6 @@ const LanguageList = (props) => {
     setViewLanguageList(userLanguageData);
     // toggle();
   };
-
 
   var node = useRef();
   const onPaginationPageChange = (page) => {
@@ -270,7 +245,7 @@ const LanguageList = (props) => {
         name: "Create",
         action: setShowAddNewLanguageList,
         type: "normal",
-        icon: "create"
+        icon: "create",
       },
       {
         name: "Upload",
@@ -278,17 +253,22 @@ const LanguageList = (props) => {
         type: "normal",
         icon: "upload",
       },
-
     ];
   };
 
-
   return (
     <React.Fragment>
-      <ViewLanguageList isOpen={showViewLanguageList}
+      <ViewLanguageList
+        isOpen={showViewLanguageList}
         handleViewLanguageList={handleViewLanguageList}
-        language={viewLanguageList} langlistStatus={langlistStatus} />
-      <AddNewLanguageList isOpen={showAddNewLanguageList} handleAddNewLanguage={handleAddNewLanguage} langlistStatus={langlistStatus} />
+        language={viewLanguageList}
+        langlistStatus={langlistStatus}
+      />
+      <AddNewLanguageList
+        isOpen={showAddNewLanguageList}
+        handleAddNewLanguage={handleAddNewLanguage}
+        langlistStatus={langlistStatus}
+      />
       <UploadLanguageList isOpen={showUploadLanguageList} toggle={toggle1} />
 
       <div className="page-content">
@@ -334,8 +314,12 @@ const LanguageList = (props) => {
                       isGlobalFilter={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleAddNewLanguageList={() => setShowAddNewLanguageList(true)}
-                      handleUploadLanguageList={() => setShowUploadLanguageList(true)}
+                      handleAddNewLanguageList={() =>
+                        setShowAddNewLanguageList(true)
+                      }
+                      handleUploadLanguageList={() =>
+                        setShowUploadLanguageList(true)
+                      }
                       handleRowClick={(userLanguageData) => {
                         handleViewLanguageList(userLanguageData);
                       }}
