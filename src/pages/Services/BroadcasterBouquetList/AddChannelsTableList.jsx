@@ -243,7 +243,7 @@ const AddChannelsTableList = (props) => {
                                 className="font-size-14 mb-1"
                             >
                                 <Link className="text-dark" to="#">
-                                    {cellProps.row.original.broadcasterRate}
+                                    {parseFloat(cellProps.row.original.broadcasterRate).toFixed(2)}
                                 </Link>
                             </h5>
                         </>
