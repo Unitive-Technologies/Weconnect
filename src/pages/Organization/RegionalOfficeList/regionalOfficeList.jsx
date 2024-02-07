@@ -238,7 +238,9 @@ const RegionalOfficeList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.status}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.status_lbl}
+            </p>
           );
         },
       },
@@ -261,7 +263,7 @@ const RegionalOfficeList = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.created_by}
+              {cellProps.row.original.created_by_lbl}
             </p>
           );
         },
