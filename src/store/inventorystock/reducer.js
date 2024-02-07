@@ -52,6 +52,15 @@ import {
   UPDATE_STOCKSMARTCARD_ACTIONUPDATION,
   UPDATE_STOCKSMARTCARD_ACTIONUPDATION_SUCCESS,
   UPDATE_STOCKSMARTCARD_ACTIONUPDATION_FAIL,
+  UPDATE_STOCKSTB_MARKFAULTY,
+  UPDATE_STOCKSTB_MARKFAULTY_SUCCESS,
+  UPDATE_STOCKSTB_MARKFAULTY_FAIL,
+  UPDATE_STOCKSTB_BLACKLIST,
+  UPDATE_STOCKSTB_BLACKLIST_SUCCESS,
+  UPDATE_STOCKSTB_BLACKLIST_FAIL,
+  ADD_STOCKSTB_ACTIONUPDATION,
+  ADD_STOCKSTB_ACTIONUPDATION_SUCCESS,
+  ADD_STOCKSTB_ACTIONUPDATION_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -408,6 +417,71 @@ const InventoryStock = (state = INIT_STATE, action) => {
         loading: false,
       };
 
+    case UPDATE_STOCKSTB_MARKFAULTY:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_STOCKSTB_MARKFAULTY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        stockstb: state.stockstb.map((stb) =>
+          stb.id === action.payload.id ? { ...stb, ...action.payload } : stb
+        ),
+      };
+
+    case UPDATE_STOCKSTB_MARKFAULTY_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+    case UPDATE_STOCKSTB_BLACKLIST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_STOCKSTB_BLACKLIST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        stockstb: state.stockstb.map((stb) =>
+          stb.id === action.payload.id ? { ...stb, ...action.payload } : stb
+        ),
+      };
+
+    case UPDATE_STOCKSTB_BLACKLIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+    case ADD_STOCKSTB_ACTIONUPDATION:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case ADD_STOCKSTB_ACTIONUPDATION_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        stockstb: state.stockstb.map((stb) =>
+          stb.id === action.payload.id ? { ...stb, ...action.payload } : stb
+        ),
+      };
+
+    case ADD_STOCKSTB_ACTIONUPDATION_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
     default:
       return state;
   }

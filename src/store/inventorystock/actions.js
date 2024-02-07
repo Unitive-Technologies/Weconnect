@@ -57,6 +57,15 @@ import {
   UPDATE_STOCKSMARTCARD_ACTIONUPDATION,
   UPDATE_STOCKSMARTCARD_ACTIONUPDATION_SUCCESS,
   UPDATE_STOCKSMARTCARD_ACTIONUPDATION_FAIL,
+  UPDATE_STOCKSTB_MARKFAULTY,
+  UPDATE_STOCKSTB_MARKFAULTY_SUCCESS,
+  UPDATE_STOCKSTB_MARKFAULTY_FAIL,
+  UPDATE_STOCKSTB_BLACKLIST,
+  UPDATE_STOCKSTB_BLACKLIST_SUCCESS,
+  UPDATE_STOCKSTB_BLACKLIST_FAIL,
+  ADD_STOCKSTB_ACTIONUPDATION,
+  ADD_STOCKSTB_ACTIONUPDATION_SUCCESS,
+  ADD_STOCKSTB_ACTIONUPDATION_FAIL,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -336,5 +345,50 @@ export const updateStockSmartcardActionupdationSuccess = (stocksmartcard) => ({
 
 export const updateStockSmartcardActionupdationFail = (error) => ({
   type: UPDATE_STOCKSMARTCARD_ACTIONUPDATION_FAIL,
+  payload: error,
+});
+
+export const updateStockStbMarkfaulty = (stockstb) => ({
+  type: UPDATE_STOCKSTB_MARKFAULTY,
+  payload: stockstb,
+});
+
+export const updateStockStbMarkfaultySuccess = (stockstb) => ({
+  type: UPDATE_STOCKSTB_MARKFAULTY_SUCCESS,
+  payload: stockstb,
+});
+
+export const updateStockStbMarkfaultyFail = (error) => ({
+  type: UPDATE_STOCKSTB_MARKFAULTY_FAIL,
+  payload: error,
+});
+
+export const updateStockStbBlacklist = (stockstb) => ({
+  type: UPDATE_STOCKSTB_BLACKLIST,
+  payload: stockstb,
+});
+
+export const updateStockStbBlacklistSuccess = (stockstb) => ({
+  type: UPDATE_STOCKSTB_BLACKLIST_SUCCESS,
+  payload: stockstb,
+});
+
+export const updateStockStbBlacklistFail = (error) => ({
+  type: UPDATE_STOCKSTB_BLACKLIST_FAIL,
+  payload: error,
+});
+
+export const addStockStbActionupdation = (stockstb) => ({
+  type: ADD_STOCKSTB_ACTIONUPDATION,
+  payload: stockstb,
+});
+
+export const addStockStbActionupdationSuccess = (stockstb) => ({
+  type: ADD_STOCKSTB_ACTIONUPDATION_SUCCESS,
+  payload: stockstb,
+});
+
+export const addStockStbActionupdationFail = (error) => ({
+  type: ADD_STOCKSTB_ACTIONUPDATION_FAIL,
   payload: error,
 });
