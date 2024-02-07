@@ -318,7 +318,7 @@ const ChannelList = (props) => {
       },
       {
         Header: "Created By",
-        accessor: "created_by",
+        accessor: "created_by_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <CreatedBy {...cellProps} />;
