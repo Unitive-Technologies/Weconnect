@@ -523,7 +523,8 @@ const ViewBroadCasterBouquet = (props) => {
                             <CardBody>
                               <span>Graphical representation of SHARE</span>
                               <CardTitle className="mb-4">
-                                (MRP: {!showEditBroadcast ? (parseFloat(broadcast.broadcasterRate.toFixed(2))) : validation.values.rate}){" "}
+                                (MRP: {!showEditBroadcast ? (parseFloat(broadcast.broadcasterRate).toFixed(2)) : parseFloat(validation.values.rate).toFixed(2)}){" "}
+                                {/* parseFloat(validation.values.rate).toFixed(2) */}
                               </CardTitle>
                               <PieChart
                                 broadPercent={broadPercent}
