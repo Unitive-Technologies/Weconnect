@@ -61,9 +61,11 @@ const AddNewMatrix = (props) => {
         // disableFilters: true,
         // filterable: true,
         Cell: (cellProps) => {
-          const matchingEscalation = escalations.find(
-            (single) => single.designation === cellProps.row.original.id
-          );
+          const matchingEscalation =
+            escalations &&
+            escalations.find(
+              (single) => single.designation === cellProps.row.original.id
+            );
           return matchingEscalation ? (
             <>
               <input
@@ -106,9 +108,11 @@ const AddNewMatrix = (props) => {
         Header: "TAT(HH:mm:ss)",
         filterable: true,
         Cell: (cellProps) => {
-          const matchingEscalation = escalations.find(
-            (single) => single.designation === cellProps.row.original.id
-          );
+          const matchingEscalation =
+            escalations &&
+            escalations.find(
+              (single) => single.designation === cellProps.row.original.id
+            );
           return matchingEscalation ? (
             <>
               <input type="text" placeholder={matchingEscalation.tat_time} />
