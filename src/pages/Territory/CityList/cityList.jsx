@@ -112,10 +112,10 @@ const CityList = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleViewCity(userData);
-                }}
+                // onClick={() => {
+                //   const userData = cellProps.row.original;
+                //   handleViewCity(userData);
+                // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -228,41 +228,6 @@ const CityList = (props) => {
             <p className="text-muted mb-0">
               {cellProps.row.original.created_by_lbl}
             </p>
-          );
-        },
-      },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const selectedData = cellProps.row.original;
-                  handleUserClick(selectedData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
           );
         },
       },
@@ -385,9 +350,9 @@ const CityList = (props) => {
                       isGlobalFilter={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      // handleRowClick={(row) => {
-                      //   toggleViewModal(row);
-                      // }}
+                      handleRowClick={(row) => {
+                        handleViewCity(row);
+                      }}
                       goToPage={goToPage}
                     />
                   </CardBody>
