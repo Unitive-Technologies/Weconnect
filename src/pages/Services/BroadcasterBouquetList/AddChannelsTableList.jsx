@@ -59,8 +59,33 @@ const AddChannelsTableList = (props) => {
                 Header: "*",
                 disableFilters: true,
                 filterable: true,
+
                 Cell: (cellProps) => {
-                    return <input type="checkbox" />;
+                    return (
+                        <input
+                            type="checkbox"
+                            disabled={
+                                definition === "0" &&
+                                cellProps.row.original.channel_type_lbl === "HD"
+                            }
+                        />
+                    );
+                },
+                getRowProps: (row) => {
+                    if (definition === "0" && row.original.channel_type_lbl === "HD") {
+                        return {
+                            style: {
+                                background: "red",
+                                pointerEvents: "none", // Disable clicking
+                            },
+                        };
+                    } else {
+                        return {
+                            style: {
+                                background: "inherit", // Use default background color
+                            },
+                        };
+                    }
                 },
             },
             {
@@ -135,28 +160,20 @@ const AddChannelsTableList = (props) => {
                 accessor: "channel_type_lbl",
                 filterable: true,
                 Cell: (cellProps) => {
-                    const isHD = definition === 1; // Update to 1
-                    const isHDType = cellProps.row.original.channel_type_lbl === "HD";
-
-                    const cellStyle = {
-                        maxWidth: 200,
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                    };
-
-                    if (isHD && isHDType) { // Check for HD and HD type
-                        cellStyle.backgroundColor = "lightgray";
-                        cellStyle.color = "red";
-                        cellStyle.fontWeight = "bold";
-                    };
-
                     return (
-                        <h5 style={cellStyle} className="font-size-14 mb-1">
-                            <Link className="text-dark" to="#">
+                        <>
+                            <h5
+                                style={{
+                                    color:
+                                        definition === "0" &&
+                                        cellProps.row.original.channel_type_lbl === "HD" &&
+                                        "red",
+                                }}
+                                className="font-size-14 mb-1"
+                            >
                                 {cellProps.row.original.channel_type_lbl}
-                            </Link>
-                        </h5>
+                            </h5>
+                        </>
                     );
                 },
             },
