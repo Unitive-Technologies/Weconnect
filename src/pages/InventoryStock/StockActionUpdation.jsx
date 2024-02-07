@@ -28,7 +28,7 @@ function StockActionUpdation(props) {
     isOpen,
     toggle,
     selectedRows,
-    stocksccastype,
+    brand2,
     stockscwarehouse,
     actioninventorystate,
   } = props;
@@ -205,7 +205,8 @@ function StockActionUpdation(props) {
                 <Input
                   name="brand_id"
                   type="select"
-                  placeholder="Select brand Type"
+                  placeholder="Select smartcard brand"
+                  className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.brand_id || ""}
@@ -215,10 +216,10 @@ function StockActionUpdation(props) {
                       : false
                   }
                 >
-                  <option value="">Select brand Type</option>
-                  {stocksccastype.map((brandtype) => (
-                    <option key={brandtype.id} value={brandtype.id}>
-                      {brandtype.name}
+                  <option value="">Select smartcard brand</option>
+                  {brand2.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
                     </option>
                   ))}
                 </Input>
@@ -338,7 +339,7 @@ StockActionUpdation.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
   selectedRows: PropTypes.array,
-  stocksccastype: PropTypes.array,
+  brand2: PropTypes.array,
   stockscwarehouse: PropTypes.array,
   actioninventorystate: PropTypes.array,
 };

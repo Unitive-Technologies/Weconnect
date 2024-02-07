@@ -731,7 +731,7 @@ export const updateStockSmartcardMarkfaulty = (stocksmartcard) =>
 export const updateStockSmartcardBlacklist = (stocksmartcard) =>
   put(url.UPDATE_STOCKSMARTCARD_BLACKLIST, stocksmartcard);
 export const updateStockSmartcardActionupdation = (stocksmartcard) =>
-  put(url.UPDATE_STOCKSMARTCARD_ACTIONUPDATION);
+  post(url.UPDATE_STOCKSMARTCARD_ACTIONUPDATION, stocksmartcard);
 
 export const getInventoryFaultySmartcard = () =>
   get(url.GET_INVENTORYFAULTY_SMARTCARD);

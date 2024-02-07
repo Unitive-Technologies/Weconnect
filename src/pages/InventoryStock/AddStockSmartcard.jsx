@@ -193,7 +193,7 @@ const AddStockSmartcard = (props) => {
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
-                  Smartcard Band<span style={{ color: "red" }}>*</span>
+                  Smartcard Brand<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
                   name="brand_id"

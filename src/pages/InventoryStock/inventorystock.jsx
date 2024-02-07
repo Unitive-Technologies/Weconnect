@@ -928,7 +928,7 @@ const InventoryStock = (props) => {
         isOpen={showStockActionupdated}
         toggle={handleStockScActionUpdated}
         selectedRows={selectedRows}
-        stocksccastype={stocksccastype}
+        brand2={brand2}
         stockscwarehouse={stockscwarehouse}
         actioninventorystate={actioninventorystate}
       />
