@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Card, CardBody, Col, Row } from "reactstrap";
@@ -18,9 +18,20 @@ const StockStb = (props) => {
     brand2,
     isOpen,
     toggle,
+    showStockStbBlacklist,
+    setShowStockStbBlacklist,
+    showStbActionupdated,
+    setShowStbActionupdated,
+    showStockStbMarkfaulty,
+    setShowStockStbMarkfaulty,
+    handleSelectedStbs,
   } = props;
   const [showEditStb, setShowEditStb] = useState(false);
   const [editStbData, setEditStbData] = useState({});
+
+  useEffect(() => {
+    console.log("Type: ", typeof setShowStockStbMarkfaulty);
+  }, []);
 
   const toggleEditStb = (row) => {
     setShowEditStb(!showEditStb);
@@ -29,6 +40,18 @@ const StockStb = (props) => {
 
   const columns = useMemo(
     () => [
+      {
+        Header: "*",
+        disableFilters: true,
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <>
+              <input type="checkbox" />
+            </>
+          );
+        },
+      },
       {
         Header: "#",
         // accessor: "name",
@@ -217,9 +240,12 @@ const StockStb = (props) => {
                 theadClass="table-light"
                 paginationDiv="col-sm-12 col-md-7"
                 pagination="pagination pagination-rounded justify-content-end mt-4"
-                handleRowClick={(row) => {
-                  toggleEditStb(row);
-                }}
+                // handleRowClick={(row) => {
+                //   toggleEditStb(row);
+                // }}
+                // handleRowClick={(row) => {
+                //   handleSelectedRows(row);
+                // }}
               />
             </CardBody>
           </Card>
@@ -240,6 +266,13 @@ StockStb.propTypes = {
   brand2: PropTypes.array,
   isOpen: PropTypes.bool,
   toggle: PropTypes.func,
+  showStockStbBlacklist: PropTypes.bool,
+  setShowStockStbBlacklist: PropTypes.func,
+  showStbActionupdated: PropTypes.bool,
+  setShowStbActionupdated: PropTypes.func,
+  showStockStbMarkfaulty: PropTypes.bool,
+  setShowStockStbMarkfaulty: PropTypes.func,
+  handleSelectedStbs: PropTypes.func,
 };
 
 export default StockStb;

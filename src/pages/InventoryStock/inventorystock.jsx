@@ -1101,6 +1101,17 @@ const InventoryStock = (props) => {
                               brand2={brand2}
                               isOpen={showAddStockStb}
                               toggle={handleAddStockStb}
+                              showStockStbMarkfaulty={showStockStbMarkfaulty}
+                              setShowStockStbMarkfaulty={
+                                setShowStockStbMarkfaulty
+                              }
+                              showStockStbBlacklist={showStockStbBlacklist}
+                              setShowStockStbBlacklist={
+                                setShowStockStbBlacklist
+                              }
+                              showStbActionupdated={showStbActionupdated}
+                              setShowStbActionupdated={setShowStbActionupdated}
+                              handleSelectedStbs={handleSelectedStbs}
                             />
                           </Col>
                         </Row>
