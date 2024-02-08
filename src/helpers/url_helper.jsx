@@ -317,6 +317,8 @@ export const getBrandListUrl = (currPage, perPage) => {
   return `/brand?expand=box_type_lbl,brand_type_lbl,char_allowed_lbl,cas_lbl,created_by_lbl,status_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
 
+
+
 export const GET_WAREHOUSELIST =
   "/warehouse?expand=city_lbl,created_by_lbl,status_lbl,operator_lbl,operator_code_lbl&page=1&per-page=50&vr=web1.0";
 export const GET_WAREHOUSELIST_STATUS = "/list/status?fields=id,name&vr=web1.0";

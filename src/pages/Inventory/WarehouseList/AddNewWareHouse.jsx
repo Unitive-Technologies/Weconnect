@@ -320,6 +320,10 @@ const AddNewWareHouse = (props) => {
 AddNewWareHouse.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
+
+  warehouseOperator: PropTypes.array,
+  warehouseStatus: PropTypes.array,
+
 };
 
 export default AddNewWareHouse;

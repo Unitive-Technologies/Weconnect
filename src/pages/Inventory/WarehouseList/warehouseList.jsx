@@ -2,13 +2,14 @@ import React, { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
-import Spinners from "../../../components/Common/Spinner";
+// import Spinners from "../../../components/Common/Spinner";
 import {
   Card,
   CardBody,
   Col,
   Container,
   Row,
+  Spinner,
   UncontrolledTooltip,
 } from "reactstrap";
 import {
@@ -275,9 +276,15 @@ const WarehouseList = (props) => {
       />
       <div className="page-content">
         <Container fluid>
-          <Breadcrumbs title="Inventory" breadcrumbItem="Warhouses" />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
+          {/* Render Breadcrumbs */}
+          <Breadcrumbs title="Billing" breadcrumbItem="Warehouse" />
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">

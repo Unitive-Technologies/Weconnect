@@ -24,19 +24,17 @@ import { getBrandList, updateBrandList, getBrandListBoxType, getBrandListCasType
 export const getBrandListStore = (state) => state.brandlist;
 
 
-function* fetchBrandList() {
+function* fetchBrandListSaga() {
   try {
-    let BrandListStore = yield select(getBrandListStore);
-
-    const pageSize = BrandListStore.pageSize;
-    const currentPage = BrandListStore.currentPage;
+    let brandListStore = yield select(getBrandListStore);
+    const { pageSize, currentPage } = brandListStore;
 
     const response = yield call(getBrandList, currentPage, pageSize);
-    console.log("Response from API -", response);
-    // debugger;
+    console.log("Response from API:", response);
+
     yield put(getBrandListSuccess(response));
   } catch (error) {
-    console.error("Error fetching Tax list:", error);
+    console.error("Error fetching brand list:", error);
     yield put(getBrandListFail(error));
   }
 }
@@ -78,7 +76,7 @@ function* onUpdateBrandList({ payload: brandlist }) {
     const response = yield call(
       updateBrandList,
       brandlist.id,
-      brandlist
+      brandlist,
     );
     yield put(updateBrandListSuccess(response));
     console.log("update response:" + JSON.stringify(response));
@@ -151,7 +149,7 @@ function* onAddBrandList({ payload: brandlist }) {
 }
 
 function* brandListSaga() {
-  yield takeEvery(GET_BRANDLIST, fetchBrandList);
+  yield takeEvery(GET_BRANDLIST, fetchBrandListSaga);
   yield takeEvery(GET_BRANDLIST_BOXTYPE, fetchBrandListBoxType);
   yield takeEvery(GET_BRANDLIST_BRANDTYPE, fetchBrandListBrandType);
   yield takeEvery(GET_BRANDLIST_CASTYPE, fetchBrandListCasType);
