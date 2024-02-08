@@ -14,7 +14,11 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { updateRegionalOffice as onUpdateRegionalOffice } from "/src/store/regionaloffice/actions";
+import {
+  updateRegionalOffice as onUpdateRegionalOffice,
+  getRegionalOffice as onGetRegionalOffice,
+} from "/src/store/regionaloffice/actions";
+import { resetSection } from "redux-form";
 
 const EditRegionalOfficeModal = (props) => {
   const { closeViewModal, regionalOffData, closeEditModal } = props;
@@ -31,20 +35,19 @@ const EditRegionalOfficeModal = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      id: (regionalOffData && regionalOffData.id) || "",
-      name: regionalOffData.name,
-      code: regionalOffData.code,
-      addr1: regionalOffData.addr1,
-      addr2: regionalOffData.addr2,
-      addr3: regionalOffData.addr3,
-      contact_person: regionalOffData.contact_person,
-      mobile_no: regionalOffData.mobile_no,
-      phone_no: regionalOffData.phone_no,
-      fax_no: regionalOffData.fax_no,
-      state_lbl: regionalOffData.state_lbl,
-      district_lbl: regionalOffData.district_lbl,
-      city_lbl: regionalOffData.city_lbl,
-      gstno: regionalOffData.gstno,
+      name: regionalOffData && regionalOffData.name,
+      code: regionalOffData && regionalOffData.code,
+      addr1: regionalOffData && regionalOffData.addr1,
+      addr2: regionalOffData && regionalOffData.addr2,
+      addr3: regionalOffData && regionalOffData.addr3,
+      contact_person: regionalOffData && regionalOffData.contact_person,
+      mobile_no: regionalOffData && regionalOffData.mobile_no,
+      phone_no: regionalOffData && regionalOffData.phone_no,
+      fax_no: regionalOffData && regionalOffData.fax_no,
+      state_lbl: regionalOffData && regionalOffData.state_lbl,
+      district_lbl: regionalOffData && regionalOffData.district_lbl,
+      city_lbl: regionalOffData && regionalOffData.city_lbl,
+      gstno: regionalOffData && regionalOffData.gstno,
       panno: "",
       username: "",
       status_lbl: "",
@@ -57,65 +60,79 @@ const EditRegionalOfficeModal = (props) => {
       gst_date: "",
       credit_limit: "",
       area_id: "",
-      agreement_data: [],
+      // agreement_data: [],
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
-      email: Yup.string()
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-        .required("Please Enter Your Email"),
-      // mobile: Yup.array().required("Please Enter mobile"),
-      mobile: Yup.string().required("Please Enter mobile Number"),
-      usertype: Yup.string().required("Please Enter User Type"),
-      status: Yup.string().required("Please Enter Status"),
-      message: Yup.string().required("Please Enter Message"),
-      role: Yup.string().required("Please Enter Role"),
-      designation: Yup.string().required("Please Enter Designation"),
-      grouppolicy: Yup.string().required("Please Enter Group Policy"),
-      loginid: Yup.string().required("Please Enter Login ID"),
-      password: Yup.string().required("Please Enter Password"),
-      confirmpassword: Yup.string().required("Please Enter Confirm Password"),
+      // email: Yup.string()
+      //   .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
+      //   .required("Please Enter Your Email"),
+      // // mobile: Yup.array().required("Please Enter mobile"),
+      // mobile: Yup.string().required("Please Enter mobile Number"),
+      // usertype: Yup.string().required("Please Enter User Type"),
+      // status: Yup.string().required("Please Enter Status"),
+      // message: Yup.string().required("Please Enter Message"),
+      // role: Yup.string().required("Please Enter Role"),
+      // designation: Yup.string().required("Please Enter Designation"),
+      // grouppolicy: Yup.string().required("Please Enter Group Policy"),
+      // loginid: Yup.string().required("Please Enter Login ID"),
+      // password: Yup.string().required("Please Enter Password"),
+      // confirmpassword: Yup.string().required("Please Enter Confirm Password"),
     }),
     onSubmit: (values) => {
+      // debugger;
       const updateRegionalOffice = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
+        id: regionalOffData.id,
         name: values["name"],
-        code: values["code"],
+        addr: `${values["addr1"]}, ${values["addr2"]}, ${values["addr3"]}`,
         addr1: values["addr1"],
         addr2: values["addr2"],
         addr3: values["addr3"],
+        // agreement_data: {
+        //   name: values["upload"].name,
+        //   type: values["upload"].type,
+        //   ext: values["upload"].ext,
+        //   data: values["upload"].data,
+        //   start_date: values["agreestart"],
+        //   end_date: values["agreeend"],
+        // },
+        area_id: values["area_id"],
+        city_id: parseInt(values["city_lbl"]),
+        code: values["code"],
         contact_person: values["contact_person"],
+        credit_limit: values["credit_limit"],
+        district_id: parseInt(values["district_lbl"]),
+        email: values["email"],
+        gst_date: values["gst_date"],
+        gstno: values["gstno"],
         mobile_no: values["mobile_no"],
         phone_no: values["phone_no"],
-        faxno: values["fax_no"],
-        message: values["message"],
-        state_lbl: values["state_lbl"],
-        district_lbl: values["district_lbl"],
-        city_lbl: values["city_lbl"],
-        gstno: values["gstno"],
+        faxno: values["faxno"],
         panno: values["panno"],
+
         username: values["username"],
-        status_lbl: values["status_lbl"],
-        email: values["email"],
+        password: values["password"],
+        reg_startdate: values["reg_startdate"],
+        reg_enddate: values["reg_enddate"],
+        state_id: parseInt(values["state_lbl"]),
+        status: parseInt(values["status_lbl"]),
         pincode: values["pincode"],
         por_number: values["por_number"],
         reg_phase: values["reg_phase"],
-        reg_startdate: values["reg_startdate"],
-        reg_enddate: values["reg_enddate"],
-        gst_date: values["gst_date"],
-        credit_limit: values["credit_limit"],
-        area_id: values["area_id"],
-        agreement_data: values["agreement_data"],
+        type: 1,
       };
+      console.log("newRO:" + updateRegionalOffice);
 
-      // update user
-      dispatch(onUpdateUser(updateRegionalOffice));
+      // save new user
+      dispatch(onUpdateRegionalOffice(updateRegionalOffice));
+      dispatch(onGetRegionalOffice());
       validation.resetForm();
-      closeViewModal();
+      resetSection();
+      handleCancel();
     },
-    onReset: (values) => {
-      validation.setValues(validation.initialValues);
-    },
+    // onReset: (values) => {
+    //   validation.setValues(validation.initialValues);
+    // },
   });
   return (
     <>

@@ -85,7 +85,7 @@ export const getRegionalBankList = () => {
   };
 };
 
-export const getRegionalBankListSuccess = (regionalCreditList) => {
+export const getRegionalBankListSuccess = (regionalBankList) => {
   return {
     type: GET_REGIONAL_BANK_LIST_SUCCESS,
     payload: regionalBankList,

@@ -34,7 +34,7 @@ const ViewRegionalOfficeModal = (props) => {
     setViewRegionalOffice,
     selectedRowId,
   } = props;
-
+  console.log("selected regionalOffData:" + JSON.stringify(regionalOffData));
   const dispatch = useDispatch();
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [accountDetails, setAccountDetails] = useState([]);
@@ -42,13 +42,14 @@ const ViewRegionalOfficeModal = (props) => {
   const [fromDate, setFromDate] = useState(currentDate);
   const [toDate, setToDate] = useState(currentDate);
   // 2024-02-05
-  console.log("from & to Date:" + fromDate, toDate);
+  // console.log("from & to Date:" + fromDate, toDate);
   const [allottedBouquets, setAllottedBouquets] = useState([]);
   const [allottedScheme, setAllottedScheme] = useState([]);
   const [allottedPairing, setAllottedPairing] = useState([]);
   const [allottedNCF, setAllottedNCF] = useState([]);
   const [uploadDocuments, setUploadDocuments] = useState([]);
   const [smsLogs, setSmsLogs] = useState([]);
+  const [selectedRowData, setSelectedRowData] = useState([]);
   // const selectRegionalOfficeState = (state) => state.regionaloffice;
   // const RegionalOfficeProperties = createSelector(
   //   selectRegionalOfficeState,
@@ -337,6 +338,25 @@ const ViewRegionalOfficeModal = (props) => {
       console.error("Error fetching bouquet data:", error);
     }
   };
+
+  const getSelectedRowDetails = async (e) => {
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/operator-account/${selectedRowId}?expand=logo,type_lbl,mso_lbl,branch_lbl,distributor_lbl,igst,cgst,sgst,name,balance,credit,debit,balance_h,credit_h,debit_h&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setSelectedRowData(response.data.data);
+      console.log("response in useEffect:" + JSON.stringify(response));
+    } catch (error) {
+      console.error("Error fetching bouquet data:", error);
+    }
+  };
   useEffect(() => {
     if (selectedRowId) {
       getAccountDetails();
@@ -346,6 +366,7 @@ const ViewRegionalOfficeModal = (props) => {
       getAllottedNCF();
       getUploadDocuments();
       getSmsLogs();
+      getSelectedRowDetails();
     }
   }, [selectedRowId]);
 
@@ -612,6 +633,7 @@ const ViewRegionalOfficeModal = (props) => {
                       uploadDocuments={uploadDocuments}
                       smsLogs={smsLogs}
                       regionalOffData={regionalOffData}
+                      selectedRowData={selectedRowData}
                     />
                   </Col>
                 </Row>

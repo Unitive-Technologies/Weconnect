@@ -466,8 +466,8 @@ export const getRegionalOffices = async (currentPage, perPage = 20) => {
 };
 export const addNewRegionalOffice = (regionaloffice) =>
   post(url.ADD_NEW_REGIONALOFFICE, regionaloffice);
-export const updateRegionalOffice = (regionaloffice) =>
-  put(url.UPDATE_REGIONALOFFICE, regionaloffice);
+export const updateRegionalOffice = (regionaloffice, id) =>
+  put(url.UPDATE_REGIONALOFFICE(id), regionaloffice);
 export const getRegionalAllottedBouquet = (id) =>
   get(url.GET_REGIONAL_ALLOTTEDBOUQUET(id));
 export const getRegionalCreditList = () => get(url.GET_REGIONAL_CREDIT_LIST);

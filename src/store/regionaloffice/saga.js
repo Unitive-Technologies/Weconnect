@@ -145,7 +145,7 @@ function* onUpdateRegionalOffice({ payload: regionaloffice }) {
     yield put(fetchregionaloffices());
   } catch (error) {
     yield put(updateRegionalOfficeFail(error));
-    toast.error("Regional Office Updated Failed", { autoClose: 2000 });
+    // toast.error("Regional Office Updated Failed", { autoClose: 2000 });
   }
 }
 

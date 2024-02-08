@@ -20,7 +20,8 @@ import {
   getRegionalCreditList as onGetRegionalCreditList,
   getRegionalBankList as onGetRegionalBankList,
 } from "/src/store/regionaloffice/actions";
-
+import { useFormik } from "formik";
+import * as Yup from "yup";
 const OperatorAccountDetails = (props) => {
   const {
     accountDetails,
@@ -30,12 +31,17 @@ const OperatorAccountDetails = (props) => {
     toDate,
     handleSearch,
     regionalOffData,
+    selectedRowData,
   } = props;
   // console.log(
   //   "data in operatoraccountdetails:" + JSON.stringify(regionalOffData)
   // );
   document.title = "Regional Offices | VDigital";
   const [showAddCreditModal, setShowAddCreditModal] = useState(false);
+  // const [accountsData, setAccountsData] = useState([]);
+  // const currentDate = new Date().toISOString().split("T")[0];
+  // const [fromDate, setFromDate] = useState(currentDate);
+  // const [toDate, setToDate] = useState(currentDate);
   const dispatch = useDispatch();
 
   const selectRegionalOfficeState = (state) => state.regionaloffice;
@@ -50,6 +56,48 @@ const OperatorAccountDetails = (props) => {
   const { regionalCreditList, regionalBankList } = useSelector(
     RegionalOfficeProperties
   );
+  const validation = useFormik({
+    // enableReinitialize : use this flag when initial values needs to be changed
+    enableReinitialize: true,
+
+    initialValues: {
+      fromDate: "",
+      toDate: "",
+    },
+
+    validationSchema: Yup.object({
+      // amount: Yup.string().required("Please Enter Amount"),
+      // mode: Yup.string().required("Select Payment Mode"),
+    }),
+    onSubmit: async (values) => {
+      try {
+        const newCredit = {
+          fromDate: values["fromDate"],
+          toDate: parseInt(values["toDate"]),
+        };
+        console.log("newCredit:" + newCredit);
+
+        const token = "Bearer " + localStorage.getItem("temptoken");
+
+        const response = await axios.get(
+          `${API_URL}/operator-account?expand=created_by_lbl,type_lbl,cr_operator_lbl,dr_operator_lbl,credited_by,igst,cgst,sgst,name,balance,credit,debit,balance_h,credit_h,debit_h&filter[operator_id]=${regionalOffData.id}&filter[wallet_type]=2&filter[FRM_created_at]=${fromDate}&filter[TO_created_at]=${toDate}&page=1&per-page=50&vr=web1.0`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        setAccountsData(response.data.data);
+        console.log("response in useEffect:" + JSON.stringify(response));
+        validation.resetForm();
+      } catch (error) {
+        console.error("Error fetching bouquet data:", error);
+      }
+    },
+    onReset: (values) => {
+      validation.setValues(validation.initialValues);
+    },
+  });
   const columns = useMemo(
     () => [
       {
@@ -322,10 +370,18 @@ const OperatorAccountDetails = (props) => {
         regionalCreditList={regionalCreditList}
         regionalBankList={regionalBankList}
         regionalOffData={regionalOffData}
+        selectedRowData={selectedRowData}
       />
-      <Form onSubmit={handleSearch}>
+      <Form
+        // onSubmit={handleSearch}
+        onSubmit={(e) => {
+          e.preventDefault();
+          validation.handleSubmit();
+          return false;
+        }}
+      >
         <Row>
-          <Col lg={2}>
+          <Col lg={2} className="mt-2">
             <p>Transaction Date:</p>
           </Col>
           <Col lg={2}>
@@ -333,6 +389,9 @@ const OperatorAccountDetails = (props) => {
               value={fromDate}
               onChange={(e) => setFromDate(e.target.value)}
               type="date"
+              // onChange={validation.handleChange}
+              // onBlur={validation.handleBlur}
+              // value={validation.values.fromDate || ""}
             />
           </Col>
           <Col lg={2}>
@@ -340,10 +399,15 @@ const OperatorAccountDetails = (props) => {
               value={toDate}
               onChange={(e) => setToDate(e.target.value)}
               type="date"
+              // onChange={validation.handleChange}
+              // onBlur={validation.handleBlur}
+              // value={validation.values.toDate || ""}
             />
           </Col>
           <Col lg={2}>
-            <Button type="submit">Search</Button>
+            <button type="submit" className="btn btn-success save-user">
+              Search
+            </button>
           </Col>
         </Row>
       </Form>

@@ -38,6 +38,7 @@ const TapsOfViewRegionalOffice = ({
   uploadDocuments,
   smsLogs,
   regionalOffData,
+  selectedRowData,
 }) => {
   // console.log("allotted:" + JSON.stringify(smsLogs));
   const [customActiveTab, setcustomActiveTab] = useState("1");
@@ -177,6 +178,7 @@ const TapsOfViewRegionalOffice = ({
                 setFromDate={setFromDate}
                 setToDate={setToDate}
                 regionalOffData={regionalOffData}
+                selectedRowData={selectedRowData}
               />
             </Col>
           </Row>

@@ -41,15 +41,24 @@ const AddCreditModal = (props) => {
     regionalCreditList,
     regionalOffData,
     regionalBankList,
+    selectedRowData,
   } = props;
+  // console.log(
+  //   "selected Row in Add CreditModal:" + JSON.stringify(regionalOffData)
+  // );
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
+  const [selectedCreditDetails, setSelectedCreditDetails] = useState({});
+  const [selectedDebitDetails, setSelectedDebitDetails] = useState({});
+  const [selectedBalance, setSelectedBalance] = useState("");
+  const [completeDetails, setCompleteDetails] = useState([]);
+
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
       amount: "",
-      mode: "",
+      mode: "0",
       remark: "",
     },
 
@@ -64,11 +73,11 @@ const AddCreditModal = (props) => {
           amount: values["amount"],
           mode: parseInt(values["mode"]),
           remark: values["remark"],
-          operator_id: regionalOffData.id,
+          operator_id: completeDetails.id,
           wallet_type: 0,
-          // bankname:values["bankname"],
-          // chequedate:values["chequedate"],
-          // chequeno:values["chequeno"],
+          bankname: values["bankname"],
+          chequedate: values["chequedate"],
+          chequeno: values["chequeno"],
         };
         console.log("newCredit:" + newCredit);
 
@@ -84,16 +93,43 @@ const AddCreditModal = (props) => {
           }
         );
         console.log("response after submit credit:" + JSON.stringify(response));
-        validation.resetForm();
+        // validation.resetForm();
         toggleAddModal();
       } catch (error) {
         console.error("Error in onSubmit:", error);
       }
     },
-    onReset: (values) => {
-      validation.setValues(validation.initialValues);
-    },
+    // onReset: (values) => {
+    //   validation.setValues(validation.initialValues);
+    // },
   });
+  useEffect(() => {
+    const getSelectedRowDetails = async (e) => {
+      try {
+        const token = "Bearer " + localStorage.getItem("temptoken");
+
+        const response = await axios.get(
+          `${API_URL}/operator-account/${regionalOffData.id}?expand=logo,type_lbl,mso_lbl,branch_lbl,distributor_lbl,igst,cgst,sgst,name,balance,credit,debit,balance_h,credit_h,debit_h&vr=web1.0`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        setCompleteDetails(response.data.data);
+        console.log("response in useEffect:" + JSON.stringify(response));
+      } catch (error) {
+        console.error("Error fetching bouquet data:", error);
+      }
+    };
+    // setSelectedCreditDetails(selectedRowData.credit);
+    // setSelectedDebitDetails(selectedRowData.debit);
+    // setSelectedBalance(selectedRowData.balance);
+    getSelectedRowDetails();
+  }, [regionalOffData]);
+  console.log(
+    "complete details @@@@@@@@@@: " + JSON.stringify(completeDetails)
+  );
   return (
     <Modal
       isOpen={isOpen}
@@ -106,7 +142,7 @@ const AddCreditModal = (props) => {
       toggle={toggleAddModal}
     >
       <ModalHeader tag="h4" toggle={toggleAddModal}>
-        Add Credit to <strong>{regionalOffData && regionalOffData.name}</strong>{" "}
+        Add Credit to <strong>{selectedRowData && selectedRowData.name}</strong>{" "}
         account
       </ModalHeader>
       <ModalBody>
@@ -114,16 +150,13 @@ const AddCreditModal = (props) => {
           <Col lg={6}>
             <p>
               Operator Name:{" "}
-              <strong>{regionalOffData && regionalOffData.name}</strong>
+              <strong>{selectedRowData && selectedRowData.name}</strong>
             </p>
           </Col>
 
           <Col lg={6}>
             <p>
-              Contact Person:{" "}
-              <strong>
-                {regionalOffData && regionalOffData.contact_person}
-              </strong>
+              Contact Person: <strong>{selectedRowData.contact_person}</strong>
             </p>
           </Col>
         </Row>
@@ -140,18 +173,18 @@ const AddCreditModal = (props) => {
               <tbody>
                 <tr>
                   <td>Balance</td>
-                  <td></td>
+                  <td>{selectedRowData.balance}</td>
                   <td></td>
                 </tr>
                 <tr>
                   <td>Credit</td>
-                  <td></td>
-                  <td></td>
+                  <td>{selectedRowData.credit?.amt || "N/A"}</td>
+                  <td>{selectedRowData.credit?.cnt || "N/A"}</td>
                 </tr>
                 <tr>
                   <td>Debit</td>
-                  <td></td>
-                  <td></td>
+                  <td>{selectedRowData.debit?.amt || "N/A"}</td>
+                  <td>{selectedRowData.debit?.cnt || "N/A"}</td>
                 </tr>
               </tbody>
             </Table>
@@ -210,7 +243,7 @@ const AddCreditModal = (props) => {
                   //     : false
                   // }
                 >
-                  <option value="">Select Payment Mode</option>
+                  {/* <option value="">Select Payment Mode</option> */}
                   {regionalCreditList.map((mode) => (
                     <option key={mode.id} value={mode.id}>
                       {mode.name}

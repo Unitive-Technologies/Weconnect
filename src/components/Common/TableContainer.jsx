@@ -131,11 +131,19 @@ const TableContainer = ({
   return (
     <Fragment>
       <Row className="mb-3  ">
-        <div
+        {/* <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+          }}
+        > */}
+        <Col
+          lg={6}
+          style={{
+            display: "flex",
+            alignItems: "left",
+            justifyContent: "left",
           }}
         >
           {iscustomPageSizeOptions && (
@@ -161,10 +169,21 @@ const TableContainer = ({
               isJobListGlobalFilter={isJobListGlobalFilter}
             />
           )}
+        </Col>
+        <Col
+          lg={6}
+          style={{
+            display: "flex",
+            alignItems: "right",
+            justifyContent: "right",
+          }}
+        >
           {isShowTableActionButtons && (
             <TableActionButtons tableActions={tableActions} />
           )}
-        </div>
+        </Col>
+
+        {/* </div> */}
       </Row>
       {isLoading ? (
         <React.Fragment>

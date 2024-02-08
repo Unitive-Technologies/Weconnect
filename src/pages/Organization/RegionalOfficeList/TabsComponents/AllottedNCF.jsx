@@ -17,7 +17,7 @@ import { ToastContainer } from "react-toastify";
 const AllottedNCF = ({ allottedNCF }) => {
   //meta title
   document.title = "Regional Offices | VDigital";
-  console.log("allottedNCF:" + JSON.stringify(allottedNCF));
+  // console.log("allottedNCF:" + JSON.stringify(allottedNCF));
 
   const columns = useMemo(
     () => [
