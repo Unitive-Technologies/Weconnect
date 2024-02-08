@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
+import { createSelector } from "reselect";
 import {
   Col,
   Row,
@@ -13,54 +15,163 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   updateRegionalOffice as onUpdateRegionalOffice,
   getRegionalOffice as onGetRegionalOffice,
 } from "/src/store/regionaloffice/actions";
 import { resetSection } from "redux-form";
+import { getStateUsers as onGetStateUsers } from "../../../store/stateusers/actions";
 
 const EditRegionalOfficeModal = (props) => {
-  const { closeViewModal, regionalOffData, closeEditModal } = props;
+  const {
+    closeViewModal,
+    regionalOffData,
+    closeEditModal,
+    phaseList,
+    statusList,
+  } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
   const [showEditRegionalOffice, setShowEditRegionalOffice] = useState(false);
+  const [districtsList, setDistrictsList] = useState([]);
+  const [selectedState, setSelectedState] = useState("");
+  const [cityList, setCityList] = useState([]);
+  const [selectedDistrict, setSelectedDistrict] = useState("");
 
+  const selectStatesState = (state) => state.stateUsers;
+
+  const StatesProperties = createSelector(selectStatesState, (states) => ({
+    statesList: states.stateUsers,
+  }));
+
+  const { statesList } = useSelector(StatesProperties);
   const handleCancel = () => {
     closeViewModal();
     closeEditModal();
+  };
+
+  useEffect(() => {
+    dispatch(onGetStateUsers());
+  }, [dispatch]);
+  const handleChangeUploadFile = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const { name, type } = file;
+      const ext = name.split(".").pop();
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const data = reader.result;
+
+        validation.setFieldValue("upload", {
+          name,
+          type,
+          ext,
+          data,
+        });
+      };
+    }
+  };
+  const handleStateChange = async (e) => {
+    try {
+      const stateName = e.target.value;
+      setSelectedState(stateName);
+
+      validation.handleChange(e);
+      {
+        console.log("selectedState:" + typeof selectedState);
+      }
+
+      // Assuming you have a token stored in localStorage
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${selectedState}&filter[type]=2&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token, // Include your token here
+          },
+        }
+      );
+
+      console.log(
+        "districtlist after selection : " + JSON.stringify(response.data.data)
+      );
+      setDistrictsList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching policy data:", error);
+      // Handle error if necessary
+    }
+    // };
+  };
+
+  const handleDistrictChange = async (e) => {
+    try {
+      const districtName = e.target.value;
+      setSelectedDistrict(districtName);
+
+      validation.handleChange(e);
+      {
+        console.log("selectedDistrict:" + typeof selectedDistrict);
+      }
+
+      // Assuming you have a token stored in localStorage
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${selectedState}&filter[district_id]=${selectedDistrict}&filter[type]=3&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      console.log(
+        "cityList after selection : " + JSON.stringify(response.data.data)
+      );
+      setCityList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching policy data:", error);
+      // Handle error if necessary
+    }
+    // };
   };
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
-      name: regionalOffData && regionalOffData.name,
-      code: regionalOffData && regionalOffData.code,
-      addr1: regionalOffData && regionalOffData.addr1,
-      addr2: regionalOffData && regionalOffData.addr2,
-      addr3: regionalOffData && regionalOffData.addr3,
-      contact_person: regionalOffData && regionalOffData.contact_person,
-      mobile_no: regionalOffData && regionalOffData.mobile_no,
-      phone_no: regionalOffData && regionalOffData.phone_no,
-      fax_no: regionalOffData && regionalOffData.fax_no,
-      state_lbl: regionalOffData && regionalOffData.state_lbl,
-      district_lbl: regionalOffData && regionalOffData.district_lbl,
-      city_lbl: regionalOffData && regionalOffData.city_lbl,
-      gstno: regionalOffData && regionalOffData.gstno,
-      panno: "",
-      username: "",
-      status_lbl: "",
-      email: "",
-      pincode: "",
-      por_number: "",
-      reg_phase: "",
-      reg_startdate: "",
-      reg_enddate: "",
-      gst_date: "",
-      credit_limit: "",
-      area_id: "",
+      name: (regionalOffData && regionalOffData.name) || "",
+      code: (regionalOffData && regionalOffData.code) || "",
+      addr1: (regionalOffData && regionalOffData.addr1) || "",
+      addr2: (regionalOffData && regionalOffData.addr2) || "",
+      addr3: (regionalOffData && regionalOffData.addr3) || "",
+      contact_person: (regionalOffData && regionalOffData.contact_person) || "",
+      mobile_no: (regionalOffData && regionalOffData.mobile_no) || "",
+      phone_no: (regionalOffData && regionalOffData.phone_no) || "",
+      faxno: (regionalOffData && regionalOffData.faxno) || "",
+      state_lbl: (regionalOffData && regionalOffData.state_lbl) || "",
+      district_lbl: (regionalOffData && regionalOffData.district_lbl) || "",
+      city_lbl: (regionalOffData && regionalOffData.city_lbl) || "",
+      gstno: (regionalOffData && regionalOffData.gstno) || "",
+      panno: (regionalOffData && regionalOffData.panno) || "",
+      status_lbl: (regionalOffData && regionalOffData.status_lbl) || "",
+      email: (regionalOffData && regionalOffData.email) || "",
+      pincode: (regionalOffData && regionalOffData.pincode) || "",
+      por_number: (regionalOffData && regionalOffData.por_number) || "",
+      reg_phase: (regionalOffData && regionalOffData.reg_phase) || "",
+      reg_startdate: (regionalOffData && regionalOffData.reg_startdate) || "",
+      reg_enddate: (regionalOffData && regionalOffData.reg_enddate) || "",
+      gst_date: (regionalOffData && regionalOffData.gst_date) || "",
+      credit_limit: (regionalOffData && regionalOffData.credit_limit) || "",
+      area_id: (regionalOffData && regionalOffData.area_id) || "",
       // agreement_data: [],
+      username: (regionalOffData && regionalOffData.username) || "",
+      password: (regionalOffData && regionalOffData.password) || "",
+      confirmpassword:
+        (regionalOffData && regionalOffData.confirmpassword) || "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
@@ -151,12 +262,11 @@ const EditRegionalOfficeModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Regional Office Code</Label>
+                <Label className="form-label">Code</Label>
                 <Input
                   name="code"
                   type="text"
                   placeholder="Enter Code"
-                  disabled
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.code || ""}
@@ -165,6 +275,7 @@ const EditRegionalOfficeModal = (props) => {
                       ? true
                       : false
                   }
+                  disabled
                 />
                 {validation.touched.code && validation.errors.code ? (
                   <FormFeedback type="invalid">
@@ -174,26 +285,46 @@ const EditRegionalOfficeModal = (props) => {
               </div>
             </Col>
             <Col lg={2}>
-              <div className="form-check form-switch form-switch-lg mb-3">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitchsizelg"
-                  defaultChecked
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="customSwitchsizelg"
+              <div className="mt-3">
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
                 >
-                  Custom / Auto
-                </label>
+                  <label style={{ marginRight: "10px" }}>Custom</label>
+                  <div className="form-check form-switch form-switch-lg mb-2">
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id="customSwitchsizelg"
+                      defaultChecked
+                      onClick={(e) => {
+                        settoggleSwitch(!toggleSwitch);
+                      }}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="customSwitchsizelg"
+                    >
+                      Auto
+                    </label>
+                  </div>
+                </div>
+                {/* {validation.touched.ifFixNCF && validation.errors.ifFixNCF ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.ifFixNCF}
+                  </FormFeedback>
+                ) : null} */}
               </div>
             </Col>
           </Row>
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Regional Office Name</Label>
+                <Label className="form-label">
+                  Name<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="name"
                   label="Regional Office Name"
@@ -217,7 +348,9 @@ const EditRegionalOfficeModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Contact Person</Label>
+                <Label className="form-label">
+                  Contact Person<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="contact_person"
                   label="Contact Person"
@@ -243,7 +376,9 @@ const EditRegionalOfficeModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Status</Label>
+                <Label className="form-label">
+                  Status<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="status_lbl"
                   type="select"
@@ -254,8 +389,12 @@ const EditRegionalOfficeModal = (props) => {
                   value={validation.values.status_lbl || ""}
                 >
                   <option value="">Select Status</option>
-                  <option value="11">Active</option>
-                  <option value="12">In-Active</option>
+                  {statusList &&
+                    statusList.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.status_lbl &&
                 validation.errors.status_lbl ? (
@@ -269,7 +408,9 @@ const EditRegionalOfficeModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Mobile No.</Label>
+                <Label className="form-label">
+                  Mobile No.<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="mobile_no"
                   label="Mobile No."
@@ -343,21 +484,24 @@ const EditRegionalOfficeModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">State</Label>
+                <Label className="form-label">
+                  State<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="state_lbl"
                   type="select"
                   placeholder="Select State"
                   className="form-select"
-                  onChange={validation.handleChange}
+                  onChange={handleStateChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.state_lbl || ""}
+                  value={selectedState}
                 >
                   <option value="">Select State</option>
-                  <option value="1">Tamilnadu</option>
-                  <option value="2">Kerala</option>
-                  <option value="3">Assam</option>
-                  <option value="4">Karnataka</option>
+                  {statesList.map((state) => (
+                    <option key={state.id} value={state.id}>
+                      {state.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.state_lbl && validation.errors.state_lbl ? (
                   <FormFeedback type="invalid">
@@ -368,21 +512,24 @@ const EditRegionalOfficeModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">District</Label>
+                <Label className="form-label">
+                  District<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="district_lbl"
                   type="select"
                   placeholder="Select District"
                   className="form-select"
-                  onChange={validation.handleChange}
+                  onChange={handleDistrictChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.district_lbl || ""}
+                  value={selectedDistrict}
                 >
                   <option value="">Select District</option>
-                  <option value="1">Virudhunagar</option>
-                  <option value="2">Tuticori</option>
-                  <option value="3">Chennai</option>
-                  <option value="4">Erode</option>
+                  {districtsList.map((district) => (
+                    <option key={district.id} value={district.id}>
+                      {district.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.district_lbl &&
                 validation.errors.district_lbl ? (
@@ -394,7 +541,9 @@ const EditRegionalOfficeModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">City</Label>
+                <Label className="form-label">
+                  City<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="city_lbl"
                   type="select"
@@ -405,10 +554,11 @@ const EditRegionalOfficeModal = (props) => {
                   value={validation.values.city_lbl || ""}
                 >
                   <option value="">Select City</option>
-                  <option value="1">Virudhunagar</option>
-                  <option value="2">Sivakasi</option>
-                  <option value="3">Kovilpatti</option>
-                  <option value="4">Erode</option>
+                  {cityList.map((city) => (
+                    <option key={city.id} value={city.id}>
+                      {city.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.city_lbl && validation.errors.city_lbl ? (
                   <FormFeedback type="invalid">
@@ -421,7 +571,9 @@ const EditRegionalOfficeModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Address1</Label>
+                <Label className="form-label">
+                  Address1<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="addr1"
                   label="Address1"
@@ -560,10 +712,12 @@ const EditRegionalOfficeModal = (props) => {
                   value={validation.values.reg_phase || ""}
                 >
                   <option value="">Select Phase</option>
-                  <option value="1">Phase 1</option>
-                  <option value="2">Phase 2</option>
-                  <option value="3">Phase 3</option>
-                  <option value="4">Phase 4</option>
+                  {phaseList &&
+                    phaseList.map((phase) => (
+                      <option key={phase.id} value={phase.id}>
+                        {phase.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.reg_phase && validation.errors.reg_phase ? (
                   <FormFeedback type="invalid">
@@ -724,7 +878,9 @@ const EditRegionalOfficeModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Credit Limit</Label>
+                <Label className="form-label">
+                  Credit Limit<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="credit_limit"
                   type="text"
@@ -749,7 +905,9 @@ const EditRegionalOfficeModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Area ID</Label>
+                <Label className="form-label">
+                  Area ID<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="area_id"
                   type="text"
@@ -797,26 +955,29 @@ const EditRegionalOfficeModal = (props) => {
           >
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Upload</Label>
-                <Input
+                {/* <Label className="form-label">Logo</Label> */}
+                <input
+                  style={{
+                    width: "170px",
+                    height: "150px",
+                    borderRadius: "10px",
+                  }}
                   name="upload"
-                  label="Upload"
                   type="file"
-                  placeholder="Upload"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.upload || ""}
-                  invalid={
-                    validation.touched.upload && validation.errors.upload
-                      ? true
-                      : false
-                  }
-                />
+                  onChange={handleChangeUploadFile}
+                ></input>
                 {validation.touched.upload && validation.errors.upload ? (
                   <FormFeedback type="invalid">
                     {validation.errors.upload}
                   </FormFeedback>
                 ) : null}
+                <button
+                  type="button"
+                  className="btn btn-primary "
+                  style={{ marginTop: "10px" }}
+                >
+                  Upload File
+                </button>
               </div>
             </Col>
             <Col lg={4}>
@@ -872,10 +1033,88 @@ const EditRegionalOfficeModal = (props) => {
           </Row>
 
           <Row>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Login ID<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="username"
+                  label="Login ID"
+                  type="text"
+                  placeholder="Login ID"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.username || ""}
+                  invalid={
+                    validation.touched.username && validation.errors.username
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.username && validation.errors.username ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.username}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">Password</Label>
+                <Input
+                  name="password"
+                  label="Password"
+                  type="text"
+                  placeholder="Password"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.password || ""}
+                  invalid={
+                    validation.touched.password && validation.errors.password
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.password && validation.errors.password ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.password}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">Confirm-Password</Label>
+                <Input
+                  name="confirmpassword"
+                  label="Confirm Password"
+                  type="text"
+                  placeholder="Retype Password"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.confirmpassword || ""}
+                  invalid={
+                    validation.touched.confirmpassword &&
+                    validation.errors.confirmpassword
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.confirmpassword &&
+                validation.errors.confirmpassword ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.confirmpassword}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+          </Row>
+          <Row>
             <Col>
               <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
-                  Save
+                  Create
                 </button>
                 <button
                   type="reset"
@@ -888,7 +1127,10 @@ const EditRegionalOfficeModal = (props) => {
                 <button
                   type="button"
                   className="btn btn-outline-danger"
-                  onClick={handleCancel}
+                  onClick={() => {
+                    validation.resetForm();
+                    handleCancel();
+                  }}
                 >
                   Cancel
                 </button>

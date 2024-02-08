@@ -331,6 +331,8 @@ const RegionalOfficeList = (props) => {
         regionalOffData={regOffData}
         setViewRegionalOffice={setViewRegionalOffice}
         selectedRowId={selectedRowId}
+        phaseList={phaseList}
+        statusList={statusList}
       />
       <AddRegionalOfficeModal
         isOpen={showRegionalOffice}

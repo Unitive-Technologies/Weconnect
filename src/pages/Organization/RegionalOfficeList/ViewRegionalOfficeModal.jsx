@@ -33,6 +33,8 @@ const ViewRegionalOfficeModal = (props) => {
     regionalOffData,
     setViewRegionalOffice,
     selectedRowId,
+    phaseList,
+    statusList,
   } = props;
   console.log("selected regionalOffData:" + JSON.stringify(regionalOffData));
   const dispatch = useDispatch();
@@ -645,6 +647,8 @@ const ViewRegionalOfficeModal = (props) => {
             regionalOffData={regionalOffData}
             closeViewModal={() => setViewRegionalOffice(false)}
             closeEditModal={() => setShowEditRegionalOffice(false)}
+            phaseList={phaseList}
+            statusList={statusList}
           />
         )}
       </Modal>
