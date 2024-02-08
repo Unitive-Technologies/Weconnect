@@ -143,7 +143,7 @@ const AddNewLocation = (props) => {
                   <option value="">Select LCO</option>
                   {lcoonlocation.map((options) => (
                     <option key={options.id} value={options.id}>
-                      {options.name}
+                      {options.name}, {options.distributor_lbl}, {options.branch_lbl}, {options.code}
                     </option>
                   ))}
                 </Input>
