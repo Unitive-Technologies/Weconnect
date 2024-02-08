@@ -17,10 +17,15 @@ import { useFormik } from "formik";
 import { addLocation as onAddLocation } from "/src/store/location/actions";
 import { useSelector, useDispatch } from "react-redux";
 import Select from "react-select";
+import {
+  getLocation as onGetLocation,
+
+} from "/src/store/actions";
 
 const AddNewLocation = (props) => {
   const { isOpen, toggleAddLocation, lcoonlocation, status } = props;
   console.log("locations:" + JSON.stringify(lcoonlocation));
+  console.log("status:" + JSON.stringify(status));
   const dispatch = useDispatch();
 
   // const options = lcoonlocation.map((option) => ({
@@ -53,17 +58,18 @@ const AddNewLocation = (props) => {
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter location name"),
-      location: Yup.string().required("Select LCO"),
+      operator_id: Yup.string().required("Select LCO"),
       status: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
       const newLocation = {
         name: values["name"],
-        operator_id: parseInt(values["operator_id"]),
+        operator_id: values["operator_id"],
         status: parseInt(values["status"]),
       };
       console.log("new location:" + JSON.stringify(newLocation));
       dispatch(onAddLocation(newLocation));
+      dispatch(onGetLocation());
       validation.resetForm();
       toggleAddLocation();
     },
@@ -142,7 +148,7 @@ const AddNewLocation = (props) => {
                   ))}
                 </Input>
                 {validation.touched.operator_id &&
-                validation.errors.operator_id ? (
+                  validation.errors.operator_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.operator_id}
                   </FormFeedback>
@@ -215,6 +221,7 @@ AddNewLocation.propTypes = {
   toggleAddLocation: PropTypes.func,
   isOpen: PropTypes.bool,
   lcoonlocation: PropTypes.array,
+  status: PropTypes.array,
 };
 
 export default AddNewLocation;
