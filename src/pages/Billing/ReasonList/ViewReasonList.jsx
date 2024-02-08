@@ -66,7 +66,6 @@ const ViewReason = (props) => {
       dispatch(onUpdateReason(updateReason));
       dispatch(onGetReason());
       validation.resetForm();
-      setShowEditReason(false);
       toggleViewModal();
       resetSelection();
     },
