@@ -79,6 +79,10 @@ const InventoryStock = (props) => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [showStockScBlacklist, setShowStockScBlacklist] = useState(false);
   const [showStockActionupdated, setShowStockActionupdated] = useState(false);
+  const [selectedStbs, setSelectedStbs] = useState([]);
+  const [showStockStbMarkfaulty, setShowStockStbMarkfaulty] = useState(false);
+  const [showStockStbBlacklist, setShowStockStbBlacklist] = useState(false);
+  const [showStbActionupdated, setShowStbActionupdated] = useState(false);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -381,6 +385,24 @@ const InventoryStock = (props) => {
     } else {
       // If the row is not selected, add it to the selected rows array
       setSelectedRows([...selectedRows, row]);
+    }
+  };
+
+  const handleSelectedStbs = (row) => {
+    // Check if the row is already selected
+    const isSelected = selectedStbs.some(
+      (selectedStb) => selectedStb.id === row.id
+    );
+
+    // If the row is selected, remove it from the selected rows array
+    if (isSelected) {
+      const updatedSelectedStbs = selectedStbs.filter(
+        (selectedStb) => selectedStb.id !== row.id
+      );
+      setSelectedStbs(updatedSelectedStbs);
+    } else {
+      // If the row is not selected, add it to the selected rows array
+      setSelectedStbs([...selectedStbs, row]);
     }
   };
 
@@ -689,18 +711,30 @@ const InventoryStock = (props) => {
             type: "dot",
             icon: "action",
             dropdownName: "",
+            action:
+              Object.keys(selectedStbs).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowStockStbMarkfaulty(true),
           },
           {
             name: "Blacklist",
             type: "dot",
             icon: "action",
             dropdownName: "",
+            action:
+              Object.keys(selectedStbs).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowStockStbBlacklist(true),
           },
           {
             name: "Update Brand/Warehouse/Inventory state",
             type: "dot",
             icon: "action",
             dropdownName: "",
+            action:
+              Object.keys(selectedStbs).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowStbActionupdated(true),
           },
         ];
         return actions;
