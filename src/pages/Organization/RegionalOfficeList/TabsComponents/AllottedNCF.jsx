@@ -17,8 +17,7 @@ import { ToastContainer } from "react-toastify";
 const AllottedNCF = ({ allottedNCF }) => {
   //meta title
   document.title = "Regional Offices | VDigital";
-
-  const operatorAccount = [];
+  console.log("allottedNCF:" + JSON.stringify(allottedNCF));
 
   const columns = useMemo(
     () => [
@@ -140,7 +139,9 @@ const AllottedNCF = ({ allottedNCF }) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.calculate_per_channel}
+              {cellProps.row.original.calculate_per_channel === 1
+                ? "Yes"
+                : "No"}
             </p>
           );
         },
@@ -152,7 +153,7 @@ const AllottedNCF = ({ allottedNCF }) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.is_refundable}
+              {cellProps.row.original.is_refundable === 1 ? "Yes" : "No"}
             </p>
           );
         },

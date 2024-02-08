@@ -18,8 +18,7 @@ const SmsLogs = (props) => {
   const { smsLogs } = props;
   //meta title
   document.title = "Regional Offices | VDigital";
-
-  const operatorAccount = [];
+  console.log("smsLogs:" + JSON.stringify(smsLogs));
 
   const columns = useMemo(
     () => [
@@ -44,101 +43,74 @@ const SmsLogs = (props) => {
         },
       },
       {
-        Header: "Name",
-        accessor: "name",
+        Header: "Mobile No.",
+        // accessor: "name",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <>
-              <h5
-                className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleViewRegionalOffice(userData);
-                }}
-              >
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.name}
-                </Link>
-              </h5>
               <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
+                {cellProps.row.original.mobileno}
               </p>
             </>
           );
         },
       },
       {
-        Header: "Code",
-        accessor: "code",
+        Header: "Message",
+        // accessor: "code",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.code}</p>
+            <p
+              style={{
+                maxWidth: 200,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+              className="text-muted mb-0"
+            >
+              {cellProps.row.original.message}
+            </p>
           );
         },
       },
       {
-        Header: "Commission(%)",
-        accessor: "commision",
+        Header: "Response",
+        // accessor: "commision",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.commision}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.response}</p>
           );
         },
       },
       {
         Header: "Type",
-        accessor: "boxtype_lbl",
+        // accessor: "boxtype_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.type}</p>
+          );
+        },
+      },
+      {
+        Header: "Created On",
+        // accessor: "type_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.boxtype_lbl}
+              {cellProps.row.original.created_on_lbl}
             </p>
           );
         },
       },
       {
-        Header: "Bouquet Type",
-        accessor: "type_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">{cellProps.row.original.type_lbl}</p>
-          );
-        },
-      },
-      {
-        Header: "Status",
-        accessor: "status_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.status_lbl}
-            </p>
-          );
-        },
-      },
-      {
-        Header: "Is Refundable",
-        accessor: "is_refundable",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.is_refundable}
-            </p>
-          );
-        },
-      },
-      {
-        Header: "Allotted By",
-        accessor: "created_by_lbl",
+        Header: "Created By",
+        // accessor: "status_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -148,24 +120,81 @@ const SmsLogs = (props) => {
           );
         },
       },
+      {
+        Header: "LCO",
+        // accessor: "is_refundable",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.operator_lbl}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "LCO Code",
+        // accessor: "created_by_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.operator_code_lbl}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Distributor",
+        // accessor: "created_by_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {/* {cellProps.row.original.created_by_lbl} */}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Distributor Code",
+        // accessor: "created_by_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {/* {cellProps.row.original.created_by_lbl} */}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Regional Office",
+        // accessor: "created_by_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {/* {cellProps.row.original.created_by_lbl} */}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Regional Office Code",
+        // accessor: "created_by_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {/* {cellProps.row.original.created_by_lbl} */}
+            </p>
+          );
+        },
+      },
     ],
     []
   );
-
-  var node = useRef();
-
-  const keyField = "id";
-
-  const getTableActions = () => {
-    return [
-      {
-        name: "Remove",
-        // action: setShowRegionalOffice,
-        type: "normal",
-        icon: "create",
-      },
-    ];
-  };
 
   return (
     <React.Fragment>
@@ -177,11 +206,10 @@ const SmsLogs = (props) => {
                 isPagination={true}
                 columns={columns}
                 data={smsLogs}
-                isGlobalFilter={true}
-                isAddRegionalOffice={true}
+                // isGlobalFilter={true}
                 isShowingPageLength={true}
-                tableActions={getTableActions()}
-                isShowTableActionButtons={true}
+                // tableActions={getTableActions()}
+                // isShowTableActionButtons={true}
                 customPageSize={5}
                 tableClass="table align-middle table-nowrap table-hover"
                 theadClass="table-light"
