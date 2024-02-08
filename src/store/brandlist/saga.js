@@ -1,6 +1,7 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 import { GET_BRANDLIST, UPDATE_BRANDLIST, GET_BRANDLIST_BOXTYPE, GET_BRANDLIST_BRANDTYPE, GET_BRANDLIST_CASTYPE, GET_BRANDLIST_CHARACTERS, GET_BRANDLIST_STATUS, ADD_BRANDLIST } from "./actionTypes";
 import {
+  getBrandList as fetchbrandlists,
   getBrandListSuccess,
   getBrandListFail,
   getBrandListBoxTypeSuccess,
@@ -19,37 +20,56 @@ import {
   updateBrandListFail,
 } from "./actions";
 import { getBrandList, updateBrandList, getBrandListBoxType, getBrandListCasType, getBrandListBrandType, getBrandListCharacters, getBrandListStatus, addBrandList } from "../../helpers/fakebackend_helper";
-import { toast } from "react-toastify";
 
-const convertBrandListObject = (brandlist) => {
-  return brandlist.map((brand) => {
-    return {
-      ...brand,
-      id: brand.id,
-      name: brand.name,
-      code: brand.code,
-      box_type_lbl: brand.box_type_lbl,
-      brand_type_lbl: brand.brand_type_lbl,
-      length: brand.length,
-      significant_length: brand.significant_length,
-      char_allowed_lbl: brand.char_allowed_lbl,
-      cas_lbl: brand.cas_lbl,
-      status: brand.status_lbl,
-      created_at: brand.created_at,
-      created_by: brand.created_by_lbl,
-    };
-  });
-};
+export const getBrandListStore = (state) => state.brandlist;
+
 
 function* fetchBrandList() {
   try {
-    const response = yield call(getBrandList);
-    console.log("response:" + JSON.stringify(response));
-    yield put(getBrandListSuccess(response.data));
+    let BrandListStore = yield select(getBrandListStore);
+
+    const pageSize = BrandListStore.pageSize;
+    const currentPage = BrandListStore.currentPage;
+
+    const response = yield call(getBrandList, currentPage, pageSize);
+    console.log("Response from API -", response);
+    // debugger;
+    yield put(getBrandListSuccess(response));
   } catch (error) {
+    console.error("Error fetching Tax list:", error);
     yield put(getBrandListFail(error));
   }
 }
+
+// const convertBrandListObject = (brandlist) => {
+//   return brandlist.map((brand) => {
+//     return {
+//       ...brand,
+//       id: brand.id,
+//       name: brand.name,
+//       code: brand.code,
+//       box_type_lbl: brand.box_type_lbl,
+//       brand_type_lbl: brand.brand_type_lbl,
+//       length: brand.length,
+//       significant_length: brand.significant_length,
+//       char_allowed_lbl: brand.char_allowed_lbl,
+//       cas_lbl: brand.cas_lbl,
+//       status: brand.status_lbl,
+//       created_at: brand.created_at,
+//       created_by: brand.created_by_lbl,
+//     };
+//   });
+// };
+
+// function* fetchBrandList() {
+//   try {
+//     const response = yield call(getBrandList);
+//     console.log("response:" + JSON.stringify(response));
+//     yield put(getBrandListSuccess(response.data));
+//   } catch (error) {
+//     yield put(getBrandListFail(error));
+//   }
+// }
 
 function* onUpdateBrandList({ payload: brandlist }) {
   console.log("Brand List in onUpdate:" + JSON.stringify(brandlist));
@@ -62,6 +82,7 @@ function* onUpdateBrandList({ payload: brandlist }) {
     );
     yield put(updateBrandListSuccess(response));
     console.log("update response:" + JSON.stringify(response));
+    yield put(fetchbrandlists());
   } catch (error) {
     yield put(updateBrandListFail(error));
   }
@@ -121,6 +142,7 @@ function* onAddBrandList({ payload: brandlist }) {
   try {
     const response = yield call(addBrandList, brandlist);
     yield put(addBrandListSuccess(response));
+    yield put(fetchbrandlists());
     // toast.success("Brand list Added Successfully", { autoClose: 2000 });
   } catch (error) {
     yield put(addBrandListFail(error));

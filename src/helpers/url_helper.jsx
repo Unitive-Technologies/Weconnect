@@ -312,6 +312,10 @@ export const GET_BRANDLIST_STATUS = "/list/status?fields=id,name&vr=web1.0";
 export const GET_BRANDLIST_CASTYPE = "/casvendor/list?fields=id,name&vr=web1.0";
 export const ADD_BRANDLIST = "/brand?vr=web1.0";
 export const UPDATE_BRANDLIST = (id) => `/brand/${id}?vr=web1.0`;
+export const getBrandListUrl = (currPage, perPage) => {
+  console.log("current page in Brand List url - ", currPage, perPage);
+  return `/brand?expand=box_type_lbl,brand_type_lbl,char_allowed_lbl,cas_lbl,created_by_lbl,status_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+};
 
 export const GET_WAREHOUSELIST =
   "/warehouse?expand=city_lbl,created_by_lbl,status_lbl,operator_lbl,operator_code_lbl&page=1&per-page=50&vr=web1.0";

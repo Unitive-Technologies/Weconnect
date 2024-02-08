@@ -369,6 +369,12 @@ const AddNewBrandList = (props) => {
 AddNewBrandList.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
+
+  brandBoxType: PropTypes.array,
+  brandBrandType: PropTypes.array,
+  brandCasType: PropTypes.array,
+  brandCharacters: PropTypes.array,
+  brandStatus: PropTypes.array,
 };
 
 export default AddNewBrandList;

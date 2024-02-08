@@ -23,7 +23,13 @@ import {
   UPDATE_BRANDLIST,
   UPDATE_BRANDLIST_FAIL,
   UPDATE_BRANDLIST_SUCCESS,
+  UPDATE_BRANDLIST_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_BRANDLIST_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getBrandList = () => ({
   type: GET_BRANDLIST,

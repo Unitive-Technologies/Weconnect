@@ -322,6 +322,12 @@ export const getWarehouseList = async (currentPage, perPage = 20) => {
   );
 };
 
+export const getBrandList = async (currentPage, perPage = 20) => {
+  console.log("City - Current Page in fakebackend: ", currentPage);
+  console.log("City - Per Page: ", perPage);
+  return await getCompleteResponse(url.getBrandListUrl(currentPage, perPage));
+};
+
 export const getReason = async (currentPage, perPage = 20) => {
   console.log("Reason - Current Page in fakebackend: ", currentPage);
   console.log("Reason - Per Page: ", perPage);
@@ -648,7 +654,7 @@ export const updateComplaintSubCategory = (id, complaint) =>
 //   get(url.GET_CONFIGURATIONUPLOADLOGS);
 export const getCompanyList = () => get(url.GET_COMPANYLIST);
 
-export const getBrandList = () => get(url.GET_BRANDLIST);
+// export const getBrandList = () => get(url.GET_BRANDLIST);
 export const getBrandListBrandType = () => get(url.GET_BRANDLIST_BRANDTYPE);
 export const getBrandListBoxType = () => get(url.GET_BRANDLIST_BOXTYPE);
 export const getBrandListCharacters = () => get(url.GET_BRANDLIST_CHARACTERS);

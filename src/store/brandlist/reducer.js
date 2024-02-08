@@ -1,4 +1,11 @@
 import {
+  RESPONSE_HEADER_CURRENT_PAGE,
+  RESPONSE_HEADER_PAGE_COUNT,
+  RESPONSE_HEADER_TOTAL_COUNT,
+  RESPONSE_HEADER_PER_PAGE,
+} from "../../constants/strings";
+
+import {
   GET_BRANDLIST_SUCCESS,
   GET_BRANDLIST_FAIL,
   GET_BRANDLIST_BRANDTYPE_SUCCESS,
@@ -13,8 +20,11 @@ import {
   GET_BRANDLIST_CASTYPE_FAIL,
   ADD_BRANDLIST_SUCCESS,
   ADD_BRANDLIST_FAIL,
+  UPDATE_BRANDLIST,
   UPDATE_BRANDLIST_SUCCESS,
   UPDATE_BRANDLIST_FAIL,
+  UPDATE_BRANDLIST_CURRENT_PAGE,
+  GET_BRANDLIST,
 
 } from "./actionTypes";
 
@@ -25,40 +35,78 @@ const INIT_STATE = {
   brandlistCharacters: [],
   brandlistStatus: [],
   brandlistCasType: [],
+  pagination: {},
   error: {},
-  loading: true,
+  loading: false,
+  currentPage: 1,
+  perPage: 10,
+  totalCount: 0,
+  totalPages: 0,
 };
 
 const BrandList = (state = INIT_STATE, action) => {
   switch (action.type) {
+
+    case UPDATE_BRANDLIST_CURRENT_PAGE:
+      return Number(action.payload) <= state.totalPages
+        ? {
+          ...state,
+          currentPage: action.payload,
+        }
+        : state;
+
+    case GET_BRANDLIST:
+      return {
+        ...state,
+        loading: true,
+      };
+
     case GET_BRANDLIST_SUCCESS:
       console.log("BrandList data in reducer:", action.payload);
       return {
         ...state,
-        brandlist: action.payload,
+        brandlist: action.payload.data.data,
+        currentPage: action.payload.headers[RESPONSE_HEADER_CURRENT_PAGE],
+        perPage: action.payload.headers[RESPONSE_HEADER_PER_PAGE],
+        totalCount: action.payload.headers[RESPONSE_HEADER_TOTAL_COUNT],
+        totalPages: action.payload.headers[RESPONSE_HEADER_PAGE_COUNT],
         loading: false,
       };
+
 
     case GET_BRANDLIST_FAIL:
       return {
         ...state,
         error: action.payload,
+        pagination: {},
+        loading: false,
+      };
+
+    case UPDATE_BRANDLIST:
+      return {
+        ...state,
+        loading: true,
       };
 
     case UPDATE_BRANDLIST_SUCCESS:
       return {
         ...state,
+        loading: false,
         brandlist: state.brandlist.map((brandlist) =>
-          brandlist.id.toString() === action.payload.id.toString()
-            ? { brandlist, ...action.payload }
-            : brandlist
+          brandlist.id === action.payload.id ? { ...brandlist, ...action.payload } : brandlist
         ),
+        // brandlist: state.brandlist.map((brandlist) =>
+        //   brandlist.id.toString() === action.payload.id.toString()
+        //     ? { brandlist, ...action.payload }
+        //     : brandlist
+        // ),
       };
 
     case UPDATE_BRANDLIST_FAIL:
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     case GET_BRANDLIST_BRANDTYPE_SUCCESS:
