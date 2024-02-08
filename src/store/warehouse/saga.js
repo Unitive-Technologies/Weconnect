@@ -9,6 +9,7 @@ import {
 } from "./actionTypes";
 
 import {
+  getWarehouseList as fetchwarehouselists,
   getWarehouseListSuccess,
   getWarehouseListFail,
   updateWarehouseListSuccess,
@@ -60,6 +61,7 @@ function* onUpdateWarehouseList({ payload: warehouselist }) {
     );
     yield put(updateWarehouseListSuccess(response));
     console.log("update response:" + JSON.stringify(response));
+    yield put(fetchwarehouselists());
   } catch (error) {
     yield put(updateWarehouseListFail(error));
   }
@@ -89,6 +91,7 @@ function* onAddWareHouseList({ payload: warehouselist }) {
   try {
     const response = yield call(addWareHouseList, warehouselist);
     yield put(addWareHouseListSuccess(response));
+    yield put(fetchwarehouselists());
   } catch (error) {
     yield put(addWareHouseListFail(error));
   }

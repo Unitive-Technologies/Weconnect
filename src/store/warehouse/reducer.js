@@ -12,11 +12,13 @@ import {
   GET_WAREHOUSELIST_STATUS_FAIL,
   GET_WAREHOUSELIST_OPERATOR_SUCCESS,
   GET_WAREHOUSELIST_OPERATOR_FAIL,
+  ADD_WAREHOUSELIST,
   ADD_WAREHOUSELIST_SUCCESS,
   ADD_WAREHOUSELIST_FAIL,
   UPDATE_WAREHOUSELIST_SUCCESS,
   UPDATE_WAREHOUSELIST_FAIL,
   UPDATE_WAREHOUSELIST_CURRENT_PAGE,
+  UPDATE_WAREHOUSELIST,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -68,20 +70,31 @@ const WarehouseList = (state = INIT_STATE, action) => {
         loading: false,
       };
 
+    case UPDATE_WAREHOUSELIST:
+      return {
+        ...state,
+        loading: true,
+      };
+
     case UPDATE_WAREHOUSELIST_SUCCESS:
       return {
         ...state,
+        loading: false,
         warehouselist: state.warehouselist.map((warehouselist) =>
-          warehouselist.id.toString() === action.payload.id.toString()
-            ? { warehouselist, ...action.payload }
-            : warehouselist
+          warehouselist.id === action.payload.id ? { ...warehouselist, ...action.payload } : warehouselist
         ),
+        // warehouselist: state.warehouselist.map((warehouselist) =>
+        //   warehouselist.id.toString() === action.payload.id.toString()
+        //     ? { warehouselist, ...action.payload }
+        //     : warehouselist
+        // ),
       };
 
     case UPDATE_WAREHOUSELIST_FAIL:
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     case GET_WAREHOUSELIST_STATUS_SUCCESS:
@@ -110,6 +123,12 @@ const WarehouseList = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+
+    case ADD_WAREHOUSELIST:
+      return {
+        ...state,
+        loading: true,
       };
 
     case ADD_WAREHOUSELIST_SUCCESS:
