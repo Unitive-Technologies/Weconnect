@@ -29,10 +29,6 @@ const StockStb = (props) => {
   const [showEditStb, setShowEditStb] = useState(false);
   const [editStbData, setEditStbData] = useState({});
 
-  useEffect(() => {
-    console.log("Type: ", typeof setShowStockStbMarkfaulty);
-  }, []);
-
   const toggleEditStb = (row) => {
     setShowEditStb(!showEditStb);
     setEditStbData(row);
