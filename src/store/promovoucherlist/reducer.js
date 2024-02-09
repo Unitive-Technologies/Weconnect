@@ -74,32 +74,32 @@ const PromoVoucher = (state = INIT_STATE, action) => {
         loading: false,
       };
 
-    case UPDATE_PROMOVOUCHER:
-      return {
-        ...state,
-        loading: true,
-      };
+    // case UPDATE_PROMOVOUCHER:
+    //   return {
+    //     ...state,
+    //     loading: true,
+    //   };
 
-    case UPDATE_PROMOVOUCHER_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        promovoucher: state.promovoucher.map((promovoucher) =>
-          promovoucher.id === action.payload.id ? { ...promovoucher, ...action.payload } : tax
-        ),
-        // tax: state.tax.map((tax) =>
-        //   tax.id.toString() === action.payload.id.toString()
-        //     ? { tax, ...action.payload }
-        //     : tax
-        // ),
-      };
+    // case UPDATE_PROMOVOUCHER_SUCCESS:
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     promovoucher: state.promovoucher.map((promovoucher) =>
+    //       promovoucher.id === action.payload.id ? { ...promovoucher, ...action.payload } : tax
+    //     ),
+    //     // tax: state.tax.map((tax) =>
+    //     //   tax.id.toString() === action.payload.id.toString()
+    //     //     ? { tax, ...action.payload }
+    //     //     : tax
+    //     // ),
+    //   };
 
-    case UPDATE_PROMOVOUCHER_FAIL:
-      return {
-        ...state,
-        error: action.payload,
-        loading: false,
-      };
+    // case UPDATE_PROMOVOUCHER_FAIL:
+    //   return {
+    //     ...state,
+    //     error: action.payload,
+    //     loading: false,
+    //   };
 
     case GET_PROMOVOUCHER_LCO_SUCCESS:
       console.log("LCO data in reducer:", action.payload);
