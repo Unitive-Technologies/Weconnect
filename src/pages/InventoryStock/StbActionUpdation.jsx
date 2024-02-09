@@ -19,16 +19,16 @@ import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
-  updateStockSmartcardActionupdation as onUpdateStockSmartcardActionupdation,
-  getInventoryStockSmartcard as onGetInventoryStockSmartcard,
+  addStockStbActionupdation as onAddStockStbActionupdation,
+  getInventoryStockStb as onGetInventoryStockStb,
 } from "/src/store/inventorystock/actions";
 
-function StockActionUpdation(props) {
+function StbActionUpdation(props) {
   const {
     isOpen,
     toggle,
-    selectedRows,
-    brand2,
+    selectedStbs,
+    brand1,
     stockscwarehouse,
     actioninventorystate,
   } = props;
@@ -43,7 +43,7 @@ function StockActionUpdation(props) {
     initialValues: {
       remark: "",
       ids: [],
-      brand_id: "",
+      stbbrand_id: "",
       warehouse_id: "",
       state: "",
     },
@@ -54,14 +54,14 @@ function StockActionUpdation(props) {
       const newUpdation = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         remark: values["remark"],
-        ids: selectedRows.map((row) => row.id),
-        brand_id: values["brand_id"],
+        ids: selectedStbs.map((row) => row.id),
+        stbbrand_id: values["brand_id"],
         warehouse_id: values["warehouse_id"],
         state: values["state"],
       };
       console.log("New Updation: " + JSON.stringify(newUpdation));
-      dispatch(onUpdateStockSmartcardActionupdation(newUpdation));
-      dispatch(onGetInventoryStockSmartcard());
+      dispatch(onAddStockStbActionupdation(newUpdation));
+      dispatch(onGetInventoryStockStb());
       validation.resetForm();
       toggle();
     },
@@ -101,14 +101,14 @@ function StockActionUpdation(props) {
         },
       },
       {
-        Header: "Smartcard No.",
-        accessor: "smartcardno",
+        Header: "STB No.",
+        accessor: "stbno",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <>
               <h5 className="font-size-14 mb-1">
-                {cellProps.row.original.smartcardno}
+                {cellProps.row.original.stbno}
               </h5>
             </>
           );
@@ -188,7 +188,7 @@ function StockActionUpdation(props) {
                   <TableContainer
                     isPagination={true}
                     columns={columns}
-                    data={selectedRows}
+                    data={selectedStbs}
                     isShowingPageLength={true}
                     customPageSize={50}
                     tableClass="table align-middle table-nowrap table-hover"
@@ -203,42 +203,48 @@ function StockActionUpdation(props) {
           <Row>
             <Col lg={3}>
               <div className="mb-3">
-                <Label className="form-label">Smartcard Brand</Label>
+                <Label className="form-label">STB Brand</Label>
                 <Input
-                  name="brand_id"
+                  name="stbbrand_id"
                   type="select"
-                  placeholder="Select smartcard brand"
+                  placeholder="Select stb brand"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.brand_id || ""}
+                  value={validation.values.stbbrand_id || ""}
                   invalid={
-                    validation.touched.brand_id && validation.errors.brand_id
+                    validation.touched.stbbrand_id &&
+                    validation.errors.stbbrand_id
                       ? true
                       : false
                   }
                 >
-                  <option value="">Select smartcard brand</option>
-                  {brand2.map((options) => (
-                    <option key={options.id} value={options.id}>
-                      {options.name}
-                    </option>
-                  ))}
+                  <option value="">Select stb brand</option>
+                  {validation.values.cas_id !== "" ? (
+                    <>
+                      {brand1.map((options) => (
+                        <option key={options.id} value={options.id}>
+                          {options.name}
+                        </option>
+                      ))}{" "}
+                    </>
+                  ) : null}
                 </Input>
-                {validation.touched.brand_id && validation.errors.brand_id ? (
+                {validation.touched.stbbrand_id &&
+                validation.errors.stbbrand_id ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.brand_id}
+                    {validation.errors.stbbrand_id}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
             <Col lg={3}>
               <div className="mb-3">
-                <Label className="form-label">Smartcard Warehouse</Label>
+                <Label className="form-label">STB Warehouse</Label>
                 <Input
                   name="warehouse_id"
                   type="select"
-                  placeholder="Select warehouse"
+                  placeholder="Select stb warehouse"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
@@ -267,11 +273,11 @@ function StockActionUpdation(props) {
             </Col>
             <Col lg={3}>
               <div className="mb-3">
-                <Label className="form-label">Smatcard Inentory state</Label>
+                <Label className="form-label">STB Inentory state</Label>
                 <Input
                   name="state"
                   type="select"
-                  placeholder="Select inventory state"
+                  placeholder="Select STB inventory state"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
@@ -337,13 +343,13 @@ function StockActionUpdation(props) {
   );
 }
 
-StockActionUpdation.propTypes = {
+StbActionUpdation.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
-  selectedRows: PropTypes.array,
-  brand2: PropTypes.array,
+  selectedStbs: PropTypes.array,
+  brand1: PropTypes.array,
   stockscwarehouse: PropTypes.array,
   actioninventorystate: PropTypes.array,
 };
 
-export default StockActionUpdation;
+export default StbActionUpdation;

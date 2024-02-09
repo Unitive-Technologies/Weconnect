@@ -7,6 +7,7 @@ import EditStb from "./EditStb";
 import AddStockStb from "./AddStockStb";
 import StockStbMarkfaulty from "./StockStbMarkfaulty";
 import StockStbBlacklist from "./StockStbBlacklist";
+import StbActionUpdation from "./StbActionUpdation";
 
 const StockStb = (props) => {
   const {
@@ -28,6 +29,7 @@ const StockStb = (props) => {
     setShowStockStbMarkfaulty,
     handleSelectedStbs,
     selectedStbs,
+    actioninventorystate,
   } = props;
   const [showEditStb, setShowEditStb] = useState(false);
   const [editStbData, setEditStbData] = useState({});
@@ -45,7 +47,7 @@ const StockStb = (props) => {
     setShowStockStbBlacklist(!showStockStbBlacklist);
   };
 
-  const handleStockStbActionUpdated = () => {
+  const handleStbActionUpdated = () => {
     setShowStbActionupdated(!showStbActionupdated);
   };
 
@@ -243,6 +245,14 @@ const StockStb = (props) => {
         toggle={handleStockStbBlacklist}
         selectedStbs={selectedStbs}
       />
+      <StbActionUpdation
+        isOpen={showStbActionupdated}
+        toggle={handleStbActionUpdated}
+        selectedStbs={selectedStbs}
+        brand1={brand1}
+        stockscwarehouse={stockscwarehouse}
+        actioninventorystate={actioninventorystate}
+      />
       <Row>
         <Col lg="12">
           <Card>
@@ -295,6 +305,7 @@ StockStb.propTypes = {
   setShowStockStbMarkfaulty: PropTypes.func,
   handleSelectedStbs: PropTypes.func,
   selectedStbs: PropTypes.array,
+  actioninventorystate: PropTypes.array,
 };
 
 export default StockStb;

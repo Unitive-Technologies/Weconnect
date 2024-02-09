@@ -199,7 +199,7 @@ const AddStockStb = (props) => {
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
-                  STB Band<span style={{ color: "red" }}>*</span>
+                  STB Brand<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
                   name="stbbrand_id"

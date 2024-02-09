@@ -1113,6 +1113,7 @@ const InventoryStock = (props) => {
                               setShowStbActionupdated={setShowStbActionupdated}
                               handleSelectedStbs={handleSelectedStbs}
                               selectedStbs={selectedStbs}
+                              actioninventorystate={actioninventorystate}
                             />
                           </Col>
                         </Row>
