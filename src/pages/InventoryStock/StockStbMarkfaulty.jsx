@@ -19,13 +19,13 @@ import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
-  updateStockSmartcardMarkfaulty as onUpdateStockSmartcardMarkfaulty,
-  getInventoryStockSmartcard as onGetInventoryStockSmartcard,
+  updateStockStbMarkfaulty as onUpdateStockStbMarkfaulty,
+  getInventoryStockStb as onGetInventoryStockStb,
 } from "/src/store/inventorystock/actions";
-import { getInventoryFaultySmartcard as onGetInventoryFaultySmartcard } from "/src/store/inventoryfaulty/actions";
+import { getInventoryFaultyStb as onGetInventoryFaultyStb } from "/src/store/inventoryfaulty/actions";
 
 function StockStbMarkfaulty(props) {
-  const { isOpen, toggle, selectedRows } = props;
+  const { isOpen, toggle, selectedStbs } = props;
   const [isChecked, setIsChecked] = useState(true);
 
   const dispatch = useDispatch();
@@ -45,12 +45,12 @@ function StockStbMarkfaulty(props) {
       const newMarkfaulty = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         remark: values["remark"],
-        faulty: selectedRows.map((row) => row.id),
+        faulty: selectedStbs.map((row) => row.id),
       };
       console.log("mark faulty: " + JSON.stringify(newMarkfaulty));
-      dispatch(onUpdateStockSmartcardMarkfaulty(newMarkfaulty));
-      dispatch(onGetInventoryStockSmartcard());
-      dispatch(onGetInventoryFaultySmartcard());
+      dispatch(onUpdateStockStbMarkfaulty(newMarkfaulty));
+      dispatch(onGetInventoryStockStb());
+      dispatch(onGetInventoryFaultyStb());
       validation.resetForm();
       toggle();
     },
@@ -134,7 +134,7 @@ function StockStbMarkfaulty(props) {
                   <TableContainer
                     isPagination={true}
                     columns={columns}
-                    data={selectedRows}
+                    data={selectedStbs}
                     isShowingPageLength={true}
                     customPageSize={50}
                     tableClass="table align-middle table-nowrap table-hover"
@@ -191,7 +191,7 @@ function StockStbMarkfaulty(props) {
 StockStbMarkfaulty.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
-  selectedRows: PropTypes.array,
+  selectedStbs: PropTypes.array,
 };
 
 export default StockStbMarkfaulty;

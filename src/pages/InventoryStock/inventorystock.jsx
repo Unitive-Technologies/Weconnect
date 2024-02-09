@@ -367,8 +367,8 @@ const InventoryStock = (props) => {
   };
 
   useEffect(() => {
-    console.log("Selected rows: ", selectedRows);
-  }, [selectedRows]);
+    console.log("Selected stbs: ", selectedStbs);
+  }, [selectedStbs]);
 
   const handleSelectedRows = (row) => {
     // Check if the row is already selected
@@ -974,7 +974,7 @@ const InventoryStock = (props) => {
           <ToastHeader toggle={handleWarning}>
             <i className="mdi mdi-alert-outline me-2"></i> Warning
           </ToastHeader>
-          <ToastBody>Please select atleast one smartcard</ToastBody>
+          <ToastBody>Please select atleast one Data</ToastBody>
         </Toast>
       </div>
       <div className="page-content">
@@ -1112,6 +1112,7 @@ const InventoryStock = (props) => {
                               showStbActionupdated={showStbActionupdated}
                               setShowStbActionupdated={setShowStbActionupdated}
                               handleSelectedStbs={handleSelectedStbs}
+                              selectedStbs={selectedStbs}
                             />
                           </Col>
                         </Row>

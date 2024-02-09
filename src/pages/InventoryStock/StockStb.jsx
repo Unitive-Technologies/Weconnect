@@ -5,6 +5,7 @@ import { Card, CardBody, Col, Row } from "reactstrap";
 import TableContainer from "../../components/Common/TableContainer";
 import EditStb from "./EditStb";
 import AddStockStb from "./AddStockStb";
+import StockStbMarkfaulty from "./StockStbMarkfaulty";
 
 const StockStb = (props) => {
   const {
@@ -25,6 +26,7 @@ const StockStb = (props) => {
     showStockStbMarkfaulty,
     setShowStockStbMarkfaulty,
     handleSelectedStbs,
+    selectedStbs,
   } = props;
   const [showEditStb, setShowEditStb] = useState(false);
   const [editStbData, setEditStbData] = useState({});
@@ -32,6 +34,18 @@ const StockStb = (props) => {
   const toggleEditStb = (row) => {
     setShowEditStb(!showEditStb);
     setEditStbData(row);
+  };
+
+  const handleStockStbMarkfaulty = () => {
+    setShowStockStbMarkfaulty(!showStockStbMarkfaulty);
+  };
+
+  const handleStockStbBlacklist = () => {
+    setShowStockStbBlacklist(!showStockStbBlacklist);
+  };
+
+  const handleStockStbActionUpdated = () => {
+    setShowStbActionupdated(!showStbActionupdated);
   };
 
   const columns = useMemo(
@@ -218,6 +232,11 @@ const StockStb = (props) => {
         brand1={brand1}
         brand2={brand2}
       />
+      <StockStbMarkfaulty
+        isOpen={showStockStbMarkfaulty}
+        toggle={handleStockStbMarkfaulty}
+        selectedStbs={selectedStbs}
+      />
       <Row>
         <Col lg="12">
           <Card>
@@ -239,9 +258,9 @@ const StockStb = (props) => {
                 // handleRowClick={(row) => {
                 //   toggleEditStb(row);
                 // }}
-                // handleRowClick={(row) => {
-                //   handleSelectedRows(row);
-                // }}
+                handleRowClick={(row) => {
+                  handleSelectedStbs(row);
+                }}
               />
             </CardBody>
           </Card>
@@ -269,6 +288,7 @@ StockStb.propTypes = {
   showStockStbMarkfaulty: PropTypes.bool,
   setShowStockStbMarkfaulty: PropTypes.func,
   handleSelectedStbs: PropTypes.func,
+  selectedStbs: PropTypes.array,
 };
 
 export default StockStb;
