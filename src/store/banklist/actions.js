@@ -7,7 +7,13 @@ import {
   ADD_BANK_SUCCESS,
   ADD_BANK_FAIL,
   UPDATE_BANK, UPDATE_BANK_FAIL, UPDATE_BANK_SUCCESS,
+  UPDATE_BANK_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_BANK_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getBank = () => ({
   type: GET_BANK,

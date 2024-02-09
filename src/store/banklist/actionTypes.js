@@ -16,3 +16,5 @@ export const ADD_BANK_SUCCESS =
     "ADD_BANK_SUCCESS";
 export const ADD_BANK_FAIL =
     "ADD_BANK_FAIL";
+
+export const UPDATE_BANK_CURRENT_PAGE = "UPDATE_BANK_CURRENT_PAGE";

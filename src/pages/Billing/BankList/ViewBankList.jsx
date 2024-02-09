@@ -65,12 +65,10 @@ const ViewBankList = (props) => {
       dispatch(onUpdateBank(updateBank));
       dispatch(onGetBank());
       validation.resetForm();
-      setShowEditUser(false);
-      resetSelection();
       toggleViewModal();
-    },
-    onReset: (values) => {
-      validation.setValues(validation.initialValues);
+      // setShowEditUser(false);
+      resetSelection();
+
     },
   });
 
@@ -314,6 +312,7 @@ const ViewBankList = (props) => {
 
 ViewBankList.propTypes = {
   toggleViewModal: PropTypes.func,
+  resetSelection: PropTypes.func,
   isOpen: PropTypes.bool,
 
   banks: PropTypes.object,
