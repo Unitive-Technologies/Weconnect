@@ -15,9 +15,10 @@ import {
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import {
+  goToPage as onGoToPage,
   getBank as onGetBank,
   getBankStatus as onGetBankStatus,
-} from "/src/store/actions";
+} from "/src/store/banklist/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -40,9 +41,16 @@ const BankList = (props) => {
     banks: bank.bank,
     loading: bank.loading,
     bankStatus: bank.bankStatus,
+    totalPage: bank.totalPages,
+    totalCount: bank.totalCount,
+    pageSize: bank.perPage,
+    currentPage: bank.currentPage,
   }));
 
-  const { banks, loading, bankStatus } = useSelector(BankProperties);
+  const { banks, loading, bankStatus, totalPage,
+    totalCount,
+    pageSize,
+    currentPage } = useSelector(BankProperties);
 
   // const [isLoading, setLoading] = useState(loading);
 
@@ -57,6 +65,12 @@ const BankList = (props) => {
     setViewBankListData(bankData);
   };
 
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetTax());
+  };
+
   // const reversedData = banks.slice().reverse();
   const columns = useMemo(
     () => [
@@ -64,14 +78,14 @@ const BankList = (props) => {
         Header: "#",
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const serialNumber = totalRows - cellProps.row.index;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
 
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {serialNumber}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -88,18 +102,11 @@ const BankList = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-              // onClick={() => {
-              //   const userData = cellProps.row.original;
-              //   handleViewBankList(userData);
-              // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
               </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
             </>
           );
         },
@@ -288,10 +295,11 @@ const BankList = (props) => {
                       handleRowClick={(row) => {
                         toggleViewModal(row);
                       }}
-                      tableClass="table align-middle table-nowrap table-hover"
-                      theadClass="table-light"
-                      paginationDiv="col-sm-12 col-md-7"
-                      pagination="pagination pagination-rounded justify-content-end mt-4"
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      totalPage={Number(totalPage)}
+                      goToPage={goToPage}
                     />
                   </CardBody>
                 </Card>
