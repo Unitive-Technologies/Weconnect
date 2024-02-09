@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import TableContainer from "../../../../components/Common/TableContainer";
 import Spinners from "../../../../components/Common/Spinner";
-import { Card, CardBody, Col, Container, Row } from "reactstrap";
+import { Card, CardBody, Col, Container, Row, Form, Input } from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -14,11 +15,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const OperatorAccountDetails = (props) => {
+const OperatorAccountDetails = ({ selectedRowId }) => {
   //meta title
   document.title = "Regional Offices | VDigital";
-
-  const operatorAccount = [];
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
+  const [accountDetails, setAccountDetails] = useState([]);
+  const currentDate = new Date().toISOString().split("T")[0];
+  const [fromDate, setFromDate] = useState(currentDate);
+  const [toDate, setToDate] = useState(currentDate);
+  // const operatorAccount = [];
 
   const columns = useMemo(
     () => [
@@ -237,10 +242,6 @@ const OperatorAccountDetails = (props) => {
     []
   );
 
-  var node = useRef();
-
-  const keyField = "id";
-
   const getTableActions = () => {
     return [
       {
@@ -258,16 +259,96 @@ const OperatorAccountDetails = (props) => {
     ];
   };
 
+  const getOperatorAccountDetails = async (e) => {
+    e.preventDefault();
+    console.log("Form submitted");
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+      console.log("Dates: " + fromDate, toDate);
+      const response = await axios.get(
+        `${API_URL}/operator-account?expand=created_by_lbl,type_lbl,cr_operator_lbl,dr_operator_lbl,credited_by,igst,cgst,sgst,name,balance,credit,debit,balance_h,credit_h,debit_h&filter[operator_id]=${selectedRowId}&filter[wallet_type]=2&filter[FRM_created_at]=${fromDate}&filter[TO_created_at]=${toDate}&page=1&per-page=50&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setAccountDetails(response.data.data);
+      console.log("response in useEffect:" + JSON.stringify(response));
+    } catch (error) {
+      console.error("Error fetching bouquet data:", error);
+    }
+  };
+  useEffect(() => {
+    if (selectedRowId) {
+      getOperatorAccountDetails();
+    }
+  }, [selectedRowId]);
+
   return (
     <React.Fragment>
+      <Form
+        // onSubmit={handleSearch}
+        onSubmit={(e) => {
+          e.preventDefault();
+          validation.handleSubmit();
+          return false;
+        }}
+      >
+        <Row>
+          <Col lg={2} className="mt-2">
+            <p>Transaction Date:</p>
+          </Col>
+          <Col lg={2}>
+            <Input
+              value={fromDate}
+              onChange={(e) => setFromDate(e.target.value)}
+              type="date"
+              // onChange={validation.handleChange}
+              // onBlur={validation.handleBlur}
+              // value={validation.values.fromDate || ""}
+            />
+          </Col>
+          <Col lg={2}>
+            <Input
+              value={toDate}
+              onChange={(e) => setToDate(e.target.value)}
+              type="date"
+              // onChange={validation.handleChange}
+              // onBlur={validation.handleBlur}
+              // value={validation.values.toDate || ""}
+            />
+          </Col>
+          <Col lg={2}>
+            <button type="submit" className="btn btn-success save-user">
+              {" "}
+              Search
+            </button>
+          </Col>
+        </Row>
+      </Form>
+      <form onSubmit={getOperatorAccountDetails}>
+        <input
+          type="date"
+          value={fromDate}
+          onChange={(e) => setFromDate(e.target.value)}
+        />
+        <input
+          type="date"
+          value={toDate}
+          onChange={(e) => setToDate(e.target.value)}
+        />
+        <button type="submit">Search</button>
+      </form>
       <Row>
         <Col lg="12">
           <Card>
             <CardBody>
+              {console.log("Account Details:" + JSON.stringify(accountDetails))}
               <TableContainer
                 isPagination={true}
                 columns={columns}
-                data={operatorAccount}
+                data={accountDetails}
                 isTransactionDate={true}
                 // isGlobalFilter={true}
                 isAddRegionalOffice={true}

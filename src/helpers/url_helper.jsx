@@ -170,7 +170,8 @@ export const GET_LCO_STATES =
 export const GET_LCO_CUSTOMERPORTAL = "/list/subscriberAccess?vr=web1.0";
 export const GET_LCO_PARENTDISTRIBUTOR =
   "/operator/list?fields=id,name,code&filter[type]=2&expand=branch_lbl&vr=web1.0";
-
+export const GET_SINGLE_LCO = (id) =>
+  `/operator-account/${id}?expand=logo,type_lbl,mso_lbl,branch_lbl,distributor_lbl,igst,cgst,sgst,name,balance,credit,debit,balance_h,credit_h,debit_h&vr=web1.0`;
 export const GET_APPADBANNER = "/appadbanner";
 export const ADD_APPADBANNER = "/add/appadbanner";
 

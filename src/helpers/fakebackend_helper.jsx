@@ -605,6 +605,7 @@ export const getLcoPhase = () => get(url.GET_LCO_PHASE);
 export const getLcoStates = () => get(url.GET_LCO_STATES);
 export const getLcoCustomerPortal = () => get(url.GET_LCO_CUSTOMERPORTAL);
 export const getLcoParentDistributor = () => get(url.GET_LCO_PARENTDISTRIBUTOR);
+export const getSingleLco = (id) => get(url.GET_SINGLE_LCO(id));
 
 export const getAppAdBanner = () => get(url.GET_APPADBANNER);
 export const addAppAdBanner = (appadbanner) =>

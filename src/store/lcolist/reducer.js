@@ -26,6 +26,8 @@ import {
   GET_LCO_PARENTDISTRIBUTOR,
   GET_LCO_PARENTDISTRIBUTOR_SUCCESS,
   GET_LCO_PARENTDISTRIBUTOR_FAIL,
+  GET_SINGLE_LCO_SUCCESS,
+  GET_SINGLE_LCO_FAIL,
   ADD_NEW_LCO,
   ADD_LCO_SUCCESS,
   ADD_LCO_FAIL,
@@ -199,6 +201,29 @@ const Lco = (state = INIT_STATE, action) => {
         error: action.payload,
         loading: false,
       };
+
+    case GET_SINGLE_LCO_SUCCESS:
+      const updatedLco = state.lco.map((lcodata) => {
+        if (lcodata.id === action.payload.id) {
+          // If the id matches, update the data
+          return action.payload;
+        }
+        // Otherwise, return the original data
+        return lcodata;
+      });
+      console.log("updatedLco in reducer:" + JSON.stringify(updatedLco));
+      return {
+        ...state,
+        lco: updatedLco,
+        loading: false,
+      };
+
+    case GET_SINGLE_LCO_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
     default:
       return state;
   }

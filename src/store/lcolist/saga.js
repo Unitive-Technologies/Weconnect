@@ -8,6 +8,7 @@ import {
   GET_LCO_STATES,
   GET_LCO_CUSTOMERPORTAL,
   GET_LCO_PARENTDISTRIBUTOR,
+  GET_SINGLE_LCO,
   ADD_NEW_LCO,
   UPDATE_LCO,
 } from "./actionTypes";
@@ -28,6 +29,8 @@ import {
   getLcoCustomerPortalFail,
   getLcoParentDistributorSuccess,
   getLcoParentDistributorFail,
+  getSingleLcoSuccess,
+  getSingleLcoFail,
   addLcoFail,
   addLcoSuccess,
   updateLcoSuccess,
@@ -45,6 +48,7 @@ import {
   getLcoParentDistributor,
   addNewLco,
   updateLco,
+  getSingleLco,
 } from "../../helpers/fakebackend_helper";
 
 const convertLcoListObject = (LcoList) => {
@@ -176,6 +180,17 @@ function* onUpdateLco({ payload: lco }) {
   }
 }
 
+function* onGetSingleLco({ payload: lco }) {
+  try {
+    const response = yield call(getSingleLco, lco.id);
+    console.log(
+      "response in saga to get single lco: " + JSON.stringify(response.data)
+    );
+    yield put(getSingleLcoSuccess(response.data));
+  } catch (error) {
+    yield put(getSingleLcoFail(error));
+  }
+}
 function* lcoSaga() {
   yield takeEvery(GET_LCO, fetchLco);
   yield takeEvery(GET_LCO_BILLEDBY, fetchLcoBilledby);
@@ -186,6 +201,7 @@ function* lcoSaga() {
   yield takeEvery(GET_LCO_PARENTDISTRIBUTOR, fetchLcoParentDistributor);
   yield takeEvery(ADD_NEW_LCO, onAddNewLco);
   yield takeEvery(UPDATE_LCO, onUpdateLco);
+  yield takeEvery(GET_SINGLE_LCO, onGetSingleLco);
 }
 
 export default lcoSaga;

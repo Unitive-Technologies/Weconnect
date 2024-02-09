@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import {
   Card,
   CardBody,
@@ -20,8 +21,10 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import { updateRegionalOffice as onUpdateRegionalOffice } from "/src/store/regionaloffice/actions";
+import { getSingleLco as onGetSingleLco } from "/src/store/lcolist/actions";
 import TapsOfLco from "./TapsOfLco";
 import EditLcoModal from "./EditLcoModal";
+import { createSelector } from "reselect";
 
 const ViewLcoModal = (props) => {
   const {
@@ -36,10 +39,19 @@ const ViewLcoModal = (props) => {
     lcoCustomerPortal,
     lcoParentDistributor,
   } = props;
-  console.log("lco in view modal:" + JSON.stringify(lcoData));
+  // console.log("lco in view modal:" + JSON.stringify(lcoData));
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const dispatch = useDispatch();
   const [showEditLco, setShowEditLco] = useState(false);
   const [showOperatorDetails, setShowOperatorDetails] = useState(true);
+  const [selectedRowData, setSelectedRowData] = useState({});
+  // const selectLcoState = (state) => state.lco;
+  // const LcoProperties = createSelector(selectLcoState, (lco) => ({
+  //   lco: lco.lco,
+  // }));
+
+  // const { lco } = useSelector(LcoProperties);
+  // console.log("single Lco000000000:" + JSON.stringify(lco));
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -148,15 +160,36 @@ const ViewLcoModal = (props) => {
   //     },
   //   ];
   // };
+  const getSelectedRowDetails = async (e) => {
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
 
-  // useEffect(() => {
-  //   getTableActions();
-  // }, []);
+      const response = await axios.get(
+        `${API_URL}/operator-account/${lcoData.id}?expand=logo,type_lbl,mso_lbl,branch_lbl,distributor_lbl,igst,cgst,sgst,name,balance,credit,debit,balance_h,credit_h,debit_h&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setSelectedRowData(response.data.data);
+      console.log("response in useEffect:" + JSON.stringify(response));
+    } catch (error) {
+      console.error("Error fetching bouquet data:", error);
+    }
+  };
+  useEffect(() => {
+    if (lcoData) {
+      getSelectedRowDetails();
+      // dispatch(onGetSingleLco());
+    }
+  }, [lcoData]);
 
   const handleClose = () => {
     setViewLco(false);
     setShowEditLco(false);
   };
+  console.log("selectedRowData:" + JSON.stringify(selectedRowData));
   return (
     <>
       {/* <EditRegionalOfficeModal
@@ -413,7 +446,7 @@ const ViewLcoModal = (props) => {
                 )}
                 <Row>
                   <Col lg={12}>
-                    <TapsOfLco />
+                    <TapsOfLco selectedRowId={selectedRowData.id} />
                   </Col>
                 </Row>
               </Form>

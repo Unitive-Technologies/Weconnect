@@ -22,7 +22,7 @@ import AllottedScheme from "./TabsComponents/AllottedScheme";
 import AllottedNCF from "./TabsComponents/AllottedNCF";
 import UploadDocuments from "./TabsComponents/UploadDocuments";
 
-const TapsOfLco = () => {
+const TapsOfLco = ({ selectedRowId }) => {
   const [customActiveTab, setcustomActiveTab] = useState("1");
 
   const toggleCustom = (tab) => {
@@ -152,7 +152,7 @@ const TapsOfLco = () => {
         <TabPane tabId="1">
           <Row>
             <Col sm="12">
-              <OperatorAccountDetails />
+              <OperatorAccountDetails selectedRowId={selectedRowId} />
             </Col>
           </Row>
         </TabPane>

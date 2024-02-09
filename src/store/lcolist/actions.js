@@ -27,6 +27,9 @@ import {
   UPDATE_LCO_SUCCESS,
   UPDATE_LCO_FAIL,
   UPDATE_LCO_CURRENT_PAGE,
+  GET_SINGLE_LCO,
+  GET_SINGLE_LCO_FAIL,
+  GET_SINGLE_LCO_SUCCESS,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -180,5 +183,22 @@ export const updateLcoSuccess = (lco) => ({
 
 export const updateLcoFail = (error) => ({
   type: UPDATE_LCO_FAIL,
+  payload: error,
+});
+
+export const getSingleLco = () => ({
+  type: GET_SINGLE_LCO,
+});
+
+export const getSingleLcoSuccess = (lco) => {
+  console.log("Received LCO List:", lco);
+  return {
+    type: GET_SINGLE_LCO_SUCCESS,
+    payload: lco,
+  };
+};
+
+export const getSingleLcoFail = (error) => ({
+  type: GET_SINGLE_LCO_FAIL,
   payload: error,
 });
