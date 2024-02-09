@@ -173,9 +173,9 @@ const EditLcoModal = (props) => {
       mobile_no: (lcoData && lcoData.mobile_no) || "",
       phone_no: (lcoData && lcoData.phone_no) || "",
       fax_no: (lcoData && lcoData.fax_no) || "",
-      state: (lcoData && lcoData.state_id) || "",
-      district: (lcoData && lcoData.district_id) || "",
-      city: (lcoData && lcoData.city_id) || "",
+      state: (lcoData && lcoData.state_lbl) || "",
+      district: (lcoData && lcoData.district_lbl) || "",
+      city: (lcoData && lcoData.city_lbl) || "",
       gstno: (lcoData && lcoData.gstno) || "",
       panno: (lcoData && lcoData.panno) || "",
       username: (lcoData && lcoData.username) || "",
@@ -603,7 +603,7 @@ const EditLcoModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={selectedState}
                 >
-                  <option value="">Select State</option>
+                  {/* <option value="">Select State</option> */}
                   {lcoStates &&
                     lcoStates.map((state) => (
                       <option key={state.id} value={state.id}>
@@ -630,7 +630,7 @@ const EditLcoModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={selectedDistrict}
                 >
-                  <option value="">Select District</option>
+                  {/* <option value="">Select District</option> */}
                   {districtsList.map((district) => (
                     <option key={district.id} value={district.id}>
                       {district.name}
@@ -656,7 +656,7 @@ const EditLcoModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.city || ""}
                 >
-                  <option value="">Select City</option>
+                  {/* <option value="">Select City</option> */}
                   {cityList.map((city) => (
                     <option key={city.id} value={city.id}>
                       {city.name}
@@ -1313,7 +1313,7 @@ const EditLcoModal = (props) => {
             <Col>
               <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
-                  Create
+                  Save
                 </button>
                 <button
                   type="reset"
@@ -1328,7 +1328,7 @@ const EditLcoModal = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    toggleAddLco();
+                    toggleCloseModal();
                   }}
                 >
                   Cancel
@@ -1338,29 +1338,6 @@ const EditLcoModal = (props) => {
           </Row>
         </Form>
       </ModalBody>
-      <ModalFooter>
-        <button type="submit" className="btn btn-success save-user">
-          Save
-        </button>
-        <button
-          type="reset"
-          className="btn btn-warning"
-          onClick={() => validation.resetForm()}
-        >
-          Reset
-        </button>
-
-        <button
-          type="button"
-          className="btn btn-outline-danger"
-          onClick={() => {
-            validation.resetForm();
-            toggleCloseModal();
-          }}
-        >
-          Cancel
-        </button>
-      </ModalFooter>
     </>
   );
 };

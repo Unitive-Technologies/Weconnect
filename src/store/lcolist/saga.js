@@ -166,7 +166,7 @@ function* onAddNewLco({ payload: lco }) {
 
 function* onUpdateLco({ payload: lco }) {
   try {
-    const response = yield call(updateLco, lco);
+    const response = yield call(updateLco, lco, lco.id);
     yield put(updateLcoSuccess(response));
     yield put(fetchAllLco());
     // toast.success("LCO Updated Successfully", { autoClose: 2000 });
