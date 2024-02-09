@@ -84,11 +84,13 @@ function* fetchLco() {
 
     const pageSize = lcoStore.pageSize;
     const currentPage = lcoStore.currentPage;
+    console.log("currentPage in saga -", pageSize);
+    console.log("pageSize in saga -", currentPage);
 
     const response = yield call(getLco, currentPage, pageSize);
     console.log("Response from API -", response);
     // debugger;
-    yield put(getLcoSuccess(response.data));
+    yield put(getLcoSuccess(response));
   } catch (error) {
     console.error("Error fetching lco list:", error);
     yield put(getLcoFail(error));

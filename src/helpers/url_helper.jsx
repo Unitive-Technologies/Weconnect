@@ -161,7 +161,7 @@ export const getLcoUrl = (currPage, perPage) => {
   return `/operator?expand=credit_limit_lbl,setting,balance,balance_h,reg_phase_lbl,created_by_lbl,distributor_lbl,status_lbl,branch_lbl,branch_code_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=3&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
 export const ADD_NEW_LCO = "/operator?vr=web1.0";
-export const UPDATE_LCO = "/update/lco";
+export const UPDATE_LCO = (id) => `/operator/${id}?vr=web1.0`;
 export const GET_LCO_BILLEDBY = "/list/usertype?fields=id,name&vr=web1.0";
 export const GET_LCO_STATUS = "/list/status?fields=id,name&vr=web1.0";
 export const GET_LCO_PHASE = "/list/phase?fields=id,name&vr=web1.0";

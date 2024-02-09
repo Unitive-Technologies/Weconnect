@@ -24,7 +24,18 @@ import TapsOfLco from "./TapsOfLco";
 import EditLcoModal from "./EditLcoModal";
 
 const ViewLcoModal = (props) => {
-  const { isOpen, handleViewLco, lcoData, setViewLco } = props;
+  const {
+    isOpen,
+    toggleViewLco,
+    lcoData,
+    setViewLco,
+    lcoBilledby,
+    lcoStatus,
+    lcoPhase,
+    lcoStates,
+    lcoCustomerPortal,
+    lcoParentDistributor,
+  } = props;
   console.log("lco in view modal:" + JSON.stringify(lcoData));
   const dispatch = useDispatch();
   const [showEditLco, setShowEditLco] = useState(false);
@@ -114,7 +125,7 @@ const ViewLcoModal = (props) => {
       // update user
       dispatch(onUpdateUser(updateRegionalOffice));
       validation.resetForm();
-      handleViewLco();
+      toggleViewLco();
     },
   });
 
@@ -141,6 +152,11 @@ const ViewLcoModal = (props) => {
   // useEffect(() => {
   //   getTableActions();
   // }, []);
+
+  const handleClose = () => {
+    setViewLco(false);
+    setShowEditLco(false);
+  };
   return (
     <>
       {/* <EditRegionalOfficeModal
@@ -157,11 +173,11 @@ const ViewLcoModal = (props) => {
         centered={true}
         className="exampleModal"
         tabIndex="-1"
-        toggle={handleViewLco}
+        toggle={toggleViewLco}
       >
         {!showEditLco ? (
           <>
-            <ModalHeader toggle={handleViewLco} tag="h4">
+            <ModalHeader toggle={toggleViewLco} tag="h4">
               <h4>View - {lcoData.name}</h4>
             </ModalHeader>
             <Link
@@ -406,8 +422,15 @@ const ViewLcoModal = (props) => {
         ) : (
           <EditLcoModal
             lcoData={lcoData}
-            closeViewModal={() => setViewLco(false)}
-            closeEditModal={() => setShowEditLco(false)}
+            toggleCloseModal={handleClose}
+            // closeViewModal={() => setViewLco(false)}
+            // closeEditModal={() => setShowEditLco(false)}
+            lcoBilledby={lcoBilledby}
+            lcoStatus={lcoStatus}
+            lcoPhase={lcoPhase}
+            lcoStates={lcoStates}
+            lcoCustomerPortal={lcoCustomerPortal}
+            lcoParentDistributor={lcoParentDistributor}
           />
         )}
       </Modal>
@@ -416,8 +439,15 @@ const ViewLcoModal = (props) => {
 };
 
 ViewLcoModal.propTypes = {
-  toggle: PropTypes.func,
+  toggleViewLco: PropTypes.func,
   isOpen: PropTypes.bool,
+
+  lcoBilledby: PropTypes.array,
+  lcoStatus: PropTypes.array,
+  lcoPhase: PropTypes.array,
+  lcoStates: PropTypes.array,
+  lcoCustomerPortal: PropTypes.array,
+  lcoParentDistributor: PropTypes.array,
 };
 
 export default ViewLcoModal;

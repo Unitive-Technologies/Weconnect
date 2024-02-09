@@ -25,7 +25,7 @@ import { useDispatch, useSelector } from "react-redux";
 const AddLcoModal = (props) => {
   const {
     isOpen,
-    handleAddLco,
+    toggleAddLco,
     lcoBilledby,
     lcoStatus,
     lcoPhase,
@@ -35,7 +35,7 @@ const AddLcoModal = (props) => {
   } = props;
   console.log("lcoCustomerPortal:" + JSON.stringify(lcoCustomerPortal));
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
-  // const [toggleSwitch, settoggleSwitch] = useState(true);
+  const [toggleSwitch, settoggleSwitch] = useState(true);
   const dispatch = useDispatch();
   const [districtsList, setDistrictsList] = useState([]);
   const [selectedState, setSelectedState] = useState("");
@@ -268,7 +268,7 @@ const AddLcoModal = (props) => {
       dispatch(onAddNewLco(newLco));
       dispatch(onGetLco());
       validation.resetForm();
-      handleAddLco();
+      toggleAddLco();
     },
   });
   return (
@@ -280,9 +280,9 @@ const AddLcoModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleAddLco}
+      toggle={toggleAddLco}
     >
-      <ModalHeader tag="h4" toggle={handleAddLco}>
+      <ModalHeader tag="h4" toggle={toggleAddLco}>
         Add New Lco
       </ModalHeader>
       <ModalBody>
@@ -298,6 +298,7 @@ const AddLcoModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Code</Label>
                 <Input
+                  disabled
                   name="code"
                   type="text"
                   placeholder="Enter Code"
@@ -318,19 +319,37 @@ const AddLcoModal = (props) => {
               </div>
             </Col>
             <Col lg={2}>
-              <div className="form-check form-switch form-switch-lg mb-3">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitchsizelg"
-                  defaultChecked
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="customSwitchsizelg"
+              <div className="mt-3">
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
                 >
-                  Custom / Auto
-                </label>
+                  <label style={{ marginRight: "10px" }}>Custom</label>
+                  <div className="form-check form-switch form-switch-lg mb-2">
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id="customSwitchsizelg"
+                      defaultChecked
+                      onClick={(e) => {
+                        settoggleSwitch(!toggleSwitch);
+                      }}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="customSwitchsizelg"
+                    >
+                      Auto
+                    </label>
+                  </div>
+                </div>
+                {/* {validation.touched.ifFixNCF && validation.errors.ifFixNCF ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.ifFixNCF}
+                  </FormFeedback>
+                ) : null} */}
               </div>
             </Col>
           </Row>
@@ -1284,7 +1303,7 @@ const AddLcoModal = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    handleAddLco();
+                    toggleAddLco();
                   }}
                 >
                   Cancel
@@ -1299,8 +1318,15 @@ const AddLcoModal = (props) => {
 };
 
 AddLcoModal.propTypes = {
-  toggle: PropTypes.func,
+  toggleAddLco: PropTypes.func,
   isOpen: PropTypes.bool,
+
+  lcoBilledby: PropTypes.array,
+  lcoStatus: PropTypes.array,
+  lcoPhase: PropTypes.array,
+  lcoStates: PropTypes.array,
+  lcoCustomerPortal: PropTypes.array,
+  lcoParentDistributor: PropTypes.array,
 };
 
 export default AddLcoModal;

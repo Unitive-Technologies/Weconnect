@@ -194,7 +194,7 @@ const LCOList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const lcoData = cellProps.row.original;
-                  handleViewLco(lcoData);
+                  toggleViewLco(lcoData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -435,7 +435,7 @@ const LCOList = (props) => {
     setModal(!modal);
   };
 
-  const handleAddLco = () => {
+  const toggleAddLco = () => {
     setShowLco(!showLco);
   };
   const handleUploadRegionalOffice = () => {
@@ -444,7 +444,7 @@ const LCOList = (props) => {
 
   const [lcoData, setLcoData] = useState({});
 
-  const handleViewLco = (lco) => {
+  const toggleViewLco = (lco) => {
     setViewLco(!viewLco);
     setLcoData(lco);
   };
@@ -498,15 +498,21 @@ const LCOList = (props) => {
   return (
     <React.Fragment>
       <ViewLcoModal
-        isOpen={viewLco}
-        handleViewLco={handleViewLco}
+        isOpen={Boolean(viewLco)}
+        toggleViewLco={toggleViewLco}
         lcoData={lcoData}
         setViewLco={setViewLco}
+        lcoBilledby={lcoBilledby}
+        lcoStatus={lcoStatus}
+        lcoPhase={lcoPhase}
+        lcoStates={lcoStates}
+        lcoCustomerPortal={lcoCustomerPortal}
+        lcoParentDistributor={lcoParentDistributor}
       />
 
       <AddLcoModal
-        isOpen={showLco}
-        handleAddLco={handleAddLco}
+        isOpen={Boolean(showLco)}
+        toggleAddLco={toggleAddLco}
         lcoBilledby={lcoBilledby}
         lcoStatus={lcoStatus}
         lcoPhase={lcoPhase}
@@ -567,7 +573,7 @@ const LCOList = (props) => {
                       tableActions={getTableActions()}
                       goToPage={goToPage}
                       handleRowClick={(row) => {
-                        handleViewLco(row);
+                        toggleViewLco(row);
                       }}
                     />
                   </CardBody>
