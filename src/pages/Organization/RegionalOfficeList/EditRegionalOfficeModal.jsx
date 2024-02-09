@@ -33,6 +33,7 @@ const EditRegionalOfficeModal = (props) => {
   } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [showEditRegionalOffice, setShowEditRegionalOffice] = useState(false);
   const [districtsList, setDistrictsList] = useState([]);
   const [selectedState, setSelectedState] = useState("");
@@ -199,14 +200,14 @@ const EditRegionalOfficeModal = (props) => {
         addr1: values["addr1"],
         addr2: values["addr2"],
         addr3: values["addr3"],
-        // agreement_data: {
-        //   name: values["upload"].name,
-        //   type: values["upload"].type,
-        //   ext: values["upload"].ext,
-        //   data: values["upload"].data,
-        //   start_date: values["agreestart"],
-        //   end_date: values["agreeend"],
-        // },
+        agreement_data: {
+          name: values["upload"].name,
+          type: values["upload"].type,
+          ext: values["upload"].ext,
+          data: values["upload"].data,
+          start_date: values["agreestart"],
+          end_date: values["agreeend"],
+        },
         area_id: values["area_id"],
         city_id: parseInt(values["city_lbl"]),
         code: values["code"],
