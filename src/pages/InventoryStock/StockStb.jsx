@@ -6,6 +6,7 @@ import TableContainer from "../../components/Common/TableContainer";
 import EditStb from "./EditStb";
 import AddStockStb from "./AddStockStb";
 import StockStbMarkfaulty from "./StockStbMarkfaulty";
+import StockStbBlacklist from "./StockStbBlacklist";
 
 const StockStb = (props) => {
   const {
@@ -235,6 +236,11 @@ const StockStb = (props) => {
       <StockStbMarkfaulty
         isOpen={showStockStbMarkfaulty}
         toggle={handleStockStbMarkfaulty}
+        selectedStbs={selectedStbs}
+      />
+      <StockStbBlacklist
+        isOpen={showStockStbBlacklist}
+        toggle={handleStockStbBlacklist}
         selectedStbs={selectedStbs}
       />
       <Row>
