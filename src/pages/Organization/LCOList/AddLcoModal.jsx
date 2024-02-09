@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import axios from "axios";
 import PropTypes from "prop-types";
+import { createSelector } from "reselect";
 import {
   Col,
   Row,
@@ -14,8 +16,11 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addNewRegionalOffice as onAddNewRegionalOffice } from "/src/store/regionaloffice/actions";
-import { useDispatch } from "react-redux";
+import {
+  addNewLco as onAddNewLco,
+  getLco as onGetLco,
+} from "/src/store/lcolist/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 const AddLcoModal = (props) => {
   const {
@@ -28,7 +33,22 @@ const AddLcoModal = (props) => {
     lcoCustomerPortal,
     lcoParentDistributor,
   } = props;
+  console.log("lcoCustomerPortal:" + JSON.stringify(lcoCustomerPortal));
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
+  // const [toggleSwitch, settoggleSwitch] = useState(true);
   const dispatch = useDispatch();
+  const [districtsList, setDistrictsList] = useState([]);
+  const [selectedState, setSelectedState] = useState("");
+  const [cityList, setCityList] = useState([]);
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+
+  const selectStatesState = (state) => state.stateUsers;
+
+  const StatesProperties = createSelector(selectStatesState, (states) => ({
+    statesList: states.stateUsers,
+  }));
+
+  const { statesList } = useSelector(StatesProperties);
 
   const handleChangeUploadFile = (e) => {
     const file = e.target.files[0];
@@ -50,6 +70,92 @@ const AddLcoModal = (props) => {
     }
   };
 
+  const handleChangeLogo = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const { name, type } = file;
+      const ext = name.split(".").pop();
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const data = reader.result;
+
+        validation.setFieldValue("logo", {
+          name,
+          type,
+          ext,
+          data,
+        });
+      };
+    }
+  };
+
+  const handleStateChange = async (e) => {
+    try {
+      const stateName = e.target.value;
+      setSelectedState(stateName);
+
+      validation.handleChange(e);
+      {
+        console.log("selectedState:" + typeof selectedState);
+      }
+
+      // Assuming you have a token stored in localStorage
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${selectedState}&filter[type]=2&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token, // Include your token here
+          },
+        }
+      );
+
+      console.log(
+        "districtlist after selection : " + JSON.stringify(response.data.data)
+      );
+      setDistrictsList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching policy data:", error);
+      // Handle error if necessary
+    }
+    // };
+  };
+
+  const handleDistrictChange = async (e) => {
+    try {
+      const districtName = e.target.value;
+      setSelectedDistrict(districtName);
+
+      validation.handleChange(e);
+      {
+        console.log("selectedDistrict:" + typeof selectedDistrict);
+      }
+
+      // Assuming you have a token stored in localStorage
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${selectedState}&filter[district_id]=${selectedDistrict}&filter[type]=3&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      console.log(
+        "cityList after selection : " + JSON.stringify(response.data.data)
+      );
+      setCityList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching policy data:", error);
+      // Handle error if necessary
+    }
+    // };
+  };
+
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -63,14 +169,14 @@ const AddLcoModal = (props) => {
       contact_person: "",
       mobile_no: "",
       phone_no: "",
-      faxno: "",
-      state_lbl: "",
-      district_lbl: "",
-      city_lbl: "",
+      fax_no: "",
+      state: "",
+      district: "",
+      city: "",
       gstno: "",
       panno: "",
       username: "",
-      status_lbl: "",
+      status: "",
       email: "",
       pincode: "",
       por_number: "",
@@ -80,58 +186,87 @@ const AddLcoModal = (props) => {
       gst_date: "",
       credit_limit: "",
       area_id: "",
-      agreement_data: [],
-      // created_at: "",
-      // created_by: "",
+      billed_by: "",
+      collection_enabled: "",
+      customer_portal_config: "",
+      enable_customer_billing: "",
+      parent_id: "",
+      password: "",
+      uid: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
-      code: Yup.string().required("Please Enter Code"),
-      addr: Yup.string().required("Please Address"),
+      parent_id: Yup.string().required("Please Select Your Parent Distributor"),
       contact_person: Yup.string().required("Please Enter Contact Person"),
-      mobile_no: Yup.string().required("Please Enter Mobile"),
-      state_lbl: Yup.string().required("Please Enter State"),
-      district_lbl: Yup.string().required("Please Enter District"),
-      city_lbl: Yup.string().required("Please Enter City"),
-      gstno: Yup.string().required("Please Enter GST"),
-      panno: Yup.string().required("Please Enter PAN"),
-      username: Yup.string().required("Please Enter LoginID"),
       status: Yup.string().required("Please Enter Status"),
+      mobile_no: Yup.string().required("Please Enter Mobile"),
+      email: Yup.string().required("Please Enter Email"),
+      // state: Yup.string().required("Please Enter State"),
+      // district: Yup.string().required("Please Enter District"),
+      // city: Yup.string().required("Please Enter City"),
+      addr1: Yup.string().required("Please Address"),
+
+      billed_by: Yup.string().required("Please Select BilledBy"),
+      collection_enabled: Yup.string().required(
+        "Please Select Enable Customer Collection"
+      ),
+      credit_limit: Yup.string().required("Please Enter Credit Limit"),
+      area_id: Yup.string().required("Please Enter Area ID"),
+      username: Yup.string().required("Please Enter LoginID"),
+      password: Yup.string().required("Please Enter Password"),
+      confirmpassword: Yup.string().required("Please Enter Confirm Password"),
     }),
     onSubmit: (values) => {
-      const newRegionalOffice = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
+      const newLco = {
         name: values["name"],
-        code: values["code"],
-        addr1: values["addr1"],
+        // addr: `${values["addr1"]}, ${values["addr2"]}, ${values["addr3"]}`,
+        addr: values["addr1"],
+        // addr1: values["addr1"],
         addr2: values["addr2"],
         addr3: values["addr3"],
+        agreement_data: {
+          name: values["upload"].name,
+          type: values["upload"].type,
+          ext: values["upload"].ext,
+          data: values["upload"].data,
+          start_date: values["agreestart"],
+          end_date: values["agreeend"],
+        },
+        area_id: values["area_id"],
+        city_id: parseInt(values["city"]),
+        code: values["code"],
         contact_person: values["contact_person"],
+        credit_limit: values["credit_limit"],
+        district_id: parseInt(values["district"]),
+        email: values["email"],
+        gst_date: values["gst_date"],
+        gstno: values["gstno"],
         mobile_no: values["mobile_no"],
         phone_no: values["phone_no"],
-        faxno: values["faxno"],
-        message: values["message"],
-        state_lbl: values["state_lbl"],
-        district_lbl: values["district_lbl"],
-        city_lbl: values["city_lbl"],
-        gstno: values["gstno"],
+        fax_no: values["fax_no"],
         panno: values["panno"],
+
         username: values["username"],
-        status_lbl: values["status_lbl"],
-        email: values["email"],
-        pincode: values["pincode"],
-        por_number: values["por_number"],
-        reg_phase: values["reg_phase"],
+        password: values["password"],
         reg_startdate: values["reg_startdate"],
         reg_enddate: values["reg_enddate"],
-        gst_date: values["gst_date"],
-        credit_limit: values["credit_limit"],
-        area_id: values["area_id"],
-        agreement_data: values["agreement_data"],
+        state_id: parseInt(values["state"]),
+        status: parseInt(values["status"]),
+        pincode: values["pincode"],
+        por_number: values["por_number"],
+        reg_phase: parseInt(values["reg_phase"]),
+        billed_by: parseInt(values["billed_by"]),
+        collection_enabled: parseInt(values["collection_enabled"]),
+        customer_portal_config: parseInt(values["customer_portal_config"]),
+        enable_customer_billing: parseInt(values["enable_customer_billing"]),
+        parent_id: parseInt(values["parent_id"]),
+        uid: values["uid"],
+        type: 3,
       };
-      console.log("newUser:" + newRegionalOffice);
+      console.log("newLco:" + newLco);
       // save new user
-      dispatch(onAddNewRegionalOffice(newRegionalOffice));
+      dispatch(onAddNewLco(newLco));
+      dispatch(onGetLco());
       validation.resetForm();
       handleAddLco();
     },
@@ -214,7 +349,7 @@ const AddLcoModal = (props) => {
                   // }}
                   name="logo"
                   type="file"
-                  // onChange={handleChangeLogo}
+                  onChange={handleChangeLogo}
                 ></input>
                 {validation.touched.logo && validation.errors.logo ? (
                   <FormFeedback type="invalid">
@@ -420,9 +555,9 @@ const AddLcoModal = (props) => {
                   type="select"
                   placeholder="Select State"
                   className="form-select"
-                  onChange={validation.handleChange}
+                  onChange={handleStateChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.state || ""}
+                  value={selectedState}
                 >
                   <option value="">Select State</option>
                   {lcoStates &&
@@ -447,16 +582,16 @@ const AddLcoModal = (props) => {
                   type="select"
                   placeholder="Select District"
                   className="form-select"
-                  onChange={validation.handleChange}
+                  onChange={handleDistrictChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.district || ""}
+                  value={selectedDistrict}
                 >
                   <option value="">Select District</option>
-                  {/* {lcoDistricts.map((district) => (
-                      <option key={district.id} value={district.id}>
-                        {district.name}
-                      </option>
-                    ))} */}
+                  {districtsList.map((district) => (
+                    <option key={district.id} value={district.id}>
+                      {district.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.district && validation.errors.district ? (
                   <FormFeedback type="invalid">
@@ -478,11 +613,11 @@ const AddLcoModal = (props) => {
                   value={validation.values.city || ""}
                 >
                   <option value="">Select City</option>
-                  {/* {lcoCity.map((city) => (
-                      <option key={city.id} value={city.id}>
-                        {city.name}
-                      </option>
-                    ))} */}
+                  {cityList.map((city) => (
+                    <option key={city.id} value={city.id}>
+                      {city.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.city && validation.errors.city ? (
                   <FormFeedback type="invalid">
@@ -840,8 +975,8 @@ const AddLcoModal = (props) => {
                   value={validation.values.collection_enabled || ""}
                 >
                   <option value="">Select Enable Customer Collection</option>
-                  <option value="0">Yes</option>
-                  <option value="1">No</option>
+                  <option value="1">Yes</option>
+                  <option value="0">No</option>
                 </Input>
                 {validation.touched.collection_enabled &&
                 validation.errors.collection_enabled ? (

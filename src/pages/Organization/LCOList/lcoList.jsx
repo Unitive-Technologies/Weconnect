@@ -30,6 +30,12 @@ import DeleteModal from "/src/components/Common/DeleteModal";
 import {
   goToPage as onGoToPage,
   getLco as onGetLco,
+  getLcoBilledby as onGetLcoBilledby,
+  getLcoStatus as onGetLcoStatus,
+  getLcoStates as onGetLcoStates,
+  getLcoPhase as onGetLcoPhase,
+  getLcoCustomerPortal as onGetLcoCustomerPortal,
+  getLcoParentDistributor as onGetLcoParentDistributor,
 } from "/src/store/lcolist/actions";
 
 import { isEmpty } from "lodash";
@@ -409,6 +415,12 @@ const LCOList = (props) => {
   useEffect(() => {
     if (lcos && !lcos.length) {
       dispatch(onGetLco());
+      dispatch(onGetLcoBilledby());
+      dispatch(onGetLcoCustomerPortal());
+      dispatch(onGetLcoParentDistributor());
+      dispatch(onGetLcoPhase());
+      dispatch(onGetLcoStates());
+      dispatch(onGetLcoStatus());
       setIsEdit(false);
     }
   }, [dispatch, lcos]);

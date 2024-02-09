@@ -88,7 +88,7 @@ function* fetchLco() {
     const response = yield call(getLco, currentPage, pageSize);
     console.log("Response from API -", response);
     // debugger;
-    yield put(getLcoSuccess(response));
+    yield put(getLcoSuccess(response.data));
   } catch (error) {
     console.error("Error fetching lco list:", error);
     yield put(getLcoFail(error));
@@ -98,7 +98,7 @@ function* fetchLco() {
 function* fetchLcoBilledby() {
   try {
     const response = yield call(getLcoBilledby);
-    yield put(getLcoBilledbySuccess(response));
+    yield put(getLcoBilledbySuccess(response.data));
   } catch (error) {
     yield put(getLcoBilledbyFail(error));
   }
@@ -107,7 +107,7 @@ function* fetchLcoBilledby() {
 function* fetchLcoStatus() {
   try {
     const response = yield call(getLcoStatus);
-    yield put(getLcoStatusSuccess(response));
+    yield put(getLcoStatusSuccess(response.data));
   } catch (error) {
     yield put(getLcoStatusFail(error));
   }
@@ -116,7 +116,7 @@ function* fetchLcoStatus() {
 function* fetchLcoPhase() {
   try {
     const response = yield call(getLcoPhase);
-    yield put(getLcoPhaseSuccess(response));
+    yield put(getLcoPhaseSuccess(response.data));
   } catch (error) {
     yield put(getLcoPhaseFail(error));
   }
@@ -125,7 +125,7 @@ function* fetchLcoPhase() {
 function* fetchLcoStates() {
   try {
     const response = yield call(getLcoStates);
-    yield put(getLcoStatesSuccess(response));
+    yield put(getLcoStatesSuccess(response.data));
   } catch (error) {
     yield put(getLcoStatesFail(error));
   }
@@ -134,7 +134,7 @@ function* fetchLcoStates() {
 function* fetchLcoCustomerPortal() {
   try {
     const response = yield call(getLcoCustomerPortal);
-    yield put(getLcoCustomerPortalSuccess(response));
+    yield put(getLcoCustomerPortalSuccess(response.data));
   } catch (error) {
     yield put(getLcoCustomerPortalFail(error));
   }
@@ -143,7 +143,7 @@ function* fetchLcoCustomerPortal() {
 function* fetchLcoParentDistributor() {
   try {
     const response = yield call(getLcoParentDistributor);
-    yield put(getLcoParentDistributorSuccess(response));
+    yield put(getLcoParentDistributorSuccess(response.data));
   } catch (error) {
     yield put(getLcoParentDistributorFail(error));
   }
