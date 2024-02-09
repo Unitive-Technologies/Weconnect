@@ -160,8 +160,16 @@ export const getLcoUrl = (currPage, perPage) => {
   console.log("current page in lco url - ", currPage, perPage);
   return `/operator?expand=credit_limit_lbl,setting,balance,balance_h,reg_phase_lbl,created_by_lbl,distributor_lbl,status_lbl,branch_lbl,branch_code_lbl,state_lbl,district_lbl,city_lbl,username&filter[type]=3&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
-export const ADD_NEW_LCO = "/add/lco";
+export const ADD_NEW_LCO = "/operator?vr=web1.0";
 export const UPDATE_LCO = "/update/lco";
+export const GET_LCO_BILLEDBY = "/list/usertype?fields=id,name&vr=web1.0";
+export const GET_LCO_STATUS = "/list/status?fields=id,name&vr=web1.0";
+export const GET_LCO_PHASE = "/list/phase?fields=id,name&vr=web1.0";
+export const GET_LCO_STATES =
+  "/administrative-division/list?fields=id,name&filter[type]=1&vr=web1.0";
+export const GET_LCO_CUSTOMERPORTAL = "/list/subscriberAccess?vr=web1.0";
+export const GET_LCO_PARENTDISTRIBUTOR =
+  "/operator/list?fields=id,name,code&filter[type]=2&expand=branch_lbl&vr=web1.0";
 
 export const GET_APPADBANNER = "/appadbanner";
 export const ADD_APPADBANNER = "/add/appadbanner";
@@ -316,8 +324,6 @@ export const getBrandListUrl = (currPage, perPage) => {
   console.log("current page in Brand List url - ", currPage, perPage);
   return `/brand?expand=box_type_lbl,brand_type_lbl,char_allowed_lbl,cas_lbl,created_by_lbl,status_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
-
-
 
 export const GET_WAREHOUSELIST =
   "/warehouse?expand=city_lbl,created_by_lbl,status_lbl,operator_lbl,operator_code_lbl&page=1&per-page=50&vr=web1.0";

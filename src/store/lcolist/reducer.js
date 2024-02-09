@@ -8,6 +8,25 @@ import {
   GET_LCO,
   GET_LCO_SUCCESS,
   GET_LCO_FAIL,
+  GET_LCO_BILLEDBY,
+  GET_LCO_BILLEDBY_SUCCESS,
+  GET_LCO_BILLEDBY_FAIL,
+  GET_LCO_STATUS,
+  GET_LCO_STATUS_SUCCESS,
+  GET_LCO_STATUS_FAIL,
+  GET_LCO_PHASE,
+  GET_LCO_PHASE_SUCCESS,
+  GET_LCO_PHASE_FAIL,
+  GET_LCO_STATES,
+  GET_LCO_STATES_SUCCESS,
+  GET_LCO_STATES_FAIL,
+  GET_LCO_CUSTOMERPORTAL,
+  GET_LCO_CUSTOMERPORTAL_SUCCESS,
+  GET_LCO_CUSTOMERPORTAL_FAIL,
+  GET_LCO_PARENTDISTRIBUTOR,
+  GET_LCO_PARENTDISTRIBUTOR_SUCCESS,
+  GET_LCO_PARENTDISTRIBUTOR_FAIL,
+  ADD_NEW_LCO,
   ADD_LCO_SUCCESS,
   ADD_LCO_FAIL,
   UPDATE_LCO_SUCCESS,
@@ -17,6 +36,12 @@ import {
 
 const INIT_STATE = {
   lco: [],
+  lcoBilledby: [],
+  lcoStatus: [],
+  lcoPhase: [],
+  lcoStates: [],
+  lcoCustomerPortal: [],
+  lcoParentDistributor: [],
   error: {},
   loading: false,
   currentPage: 1,
@@ -59,23 +84,110 @@ const Lco = (state = INIT_STATE, action) => {
         loading: false,
       };
 
+    case GET_LCO_BILLEDBY_SUCCESS:
+      return {
+        ...state,
+        lcoBilledby: action.payload,
+        loading: false,
+      };
+
+    case GET_LCO_BILLEDBY_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_LCO_STATUS_SUCCESS:
+      return {
+        ...state,
+        lcoStatus: action.payload,
+        loading: false,
+      };
+
+    case GET_LCO_STATUS_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_LCO_PHASE_SUCCESS:
+      return {
+        ...state,
+        lcoPhase: action.payload,
+        loading: false,
+      };
+
+    case GET_LCO_PHASE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_LCO_STATES_SUCCESS:
+      return {
+        ...state,
+        lcoStates: action.payload,
+        loading: false,
+      };
+
+    case GET_LCO_STATES_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_LCO_CUSTOMERPORTAL_SUCCESS:
+      return {
+        ...state,
+        lcoCustomerPortal: action.payload,
+        loading: false,
+      };
+
+    case GET_LCO_CUSTOMERPORTAL_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_LCO_PARENTDISTRIBUTOR_SUCCESS:
+      return {
+        ...state,
+        lcoParentDistributor: action.payload,
+        loading: false,
+      };
+
+    case GET_LCO_PARENTDISTRIBUTOR_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ADD_NEW_LCO:
+      return {
+        ...state,
+        loading: true,
+      };
+
     case ADD_LCO_SUCCESS:
       return {
         ...state,
         lco: [...state.lco, action.payload],
+        loading: false,
       };
 
     case ADD_LCO_FAIL:
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     case UPDATE_LCO_SUCCESS:
       return {
         ...state,
+        loading: false,
         lco: state.lco.map((lcodata) =>
-          lcodata.id.toString() === action.payload.id.toString()
+          lcodata.id === action.payload.id
             ? { lcodata, ...action.payload }
             : lcodata
         ),
@@ -85,6 +197,7 @@ const Lco = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
     default:
       return state;

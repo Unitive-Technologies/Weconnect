@@ -110,6 +110,12 @@ const LCOList = (props) => {
   const selectLcoState = (state) => state.lco;
   const LcoProperties = createSelector(selectLcoState, (lco) => ({
     lcos: lco.lco,
+    lcoBilledby: lco.lcoBilledby,
+    lcoStatus: lco.lcoStatus,
+    lcoPhase: lco.lcoPhase,
+    lcoStates: lco.lcoStates,
+    lcoCustomerPortal: lco.lcoCustomerPortal,
+    lcoParentDistributor: lco.lcoParentDistributor,
     loading: lco.loading,
     totalPage: lco.totalPages,
     totalCount: lco.totalCount,
@@ -117,8 +123,20 @@ const LCOList = (props) => {
     currentPage: lco.currentPage,
   }));
 
-  const { lcos, loading, totalPage, totalCount, pageSize, currentPage } =
-    useSelector(LcoProperties);
+  const {
+    lcos,
+    lcoBilledby,
+    lcoStatus,
+    lcoPhase,
+    lcoStates,
+    lcoCustomerPortal,
+    lcoParentDistributor,
+    loading,
+    totalPage,
+    totalCount,
+    pageSize,
+    currentPage,
+  } = useSelector(LcoProperties);
 
   useEffect(() => {
     console.log("lcos data in component:", lcos);
@@ -474,7 +492,16 @@ const LCOList = (props) => {
         setViewLco={setViewLco}
       />
 
-      <AddLcoModal isOpen={showLco} handleAddLco={handleAddLco} />
+      <AddLcoModal
+        isOpen={showLco}
+        handleAddLco={handleAddLco}
+        lcoBilledby={lcoBilledby}
+        lcoStatus={lcoStatus}
+        lcoPhase={lcoPhase}
+        lcoStates={lcoStates}
+        lcoCustomerPortal={lcoCustomerPortal}
+        lcoParentDistributor={lcoParentDistributor}
+      />
       <BulkAddCreditModal
         isOpen={showBulkCredit}
         handleBulkCredit={() => setShowBulkCredit(false)}

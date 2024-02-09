@@ -18,9 +18,37 @@ import { addNewRegionalOffice as onAddNewRegionalOffice } from "/src/store/regio
 import { useDispatch } from "react-redux";
 
 const AddLcoModal = (props) => {
-  const { isOpen, handleAddLco } = props;
+  const {
+    isOpen,
+    handleAddLco,
+    lcoBilledby,
+    lcoStatus,
+    lcoPhase,
+    lcoStates,
+    lcoCustomerPortal,
+    lcoParentDistributor,
+  } = props;
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
+
+  const handleChangeUploadFile = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const { name, type } = file;
+      const ext = name.split(".").pop();
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const data = reader.result;
+
+        validation.setFieldValue("upload", {
+          name,
+          type,
+          ext,
+          data,
+        });
+      };
+    }
+  };
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -173,30 +201,59 @@ const AddLcoModal = (props) => {
           </Row>
           <Row>
             <Col lg={4}>
+              <div
+                className="mb-3"
+                style={{ display: "flex", flexDirection: "column" }}
+              >
+                <Label className="form-label">Logo</Label>
+                <input
+                  // style={{
+                  //   width: "170px",
+                  //   height: "150px",
+                  //   borderRadius: "10px",
+                  // }}
+                  name="logo"
+                  type="file"
+                  // onChange={handleChangeLogo}
+                ></input>
+                {validation.touched.logo && validation.errors.logo ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.logo}
+                  </FormFeedback>
+                ) : null}
+                <button
+                  type="button"
+                  className="btn btn-primary "
+                  style={{ marginTop: "10px", width: "50%" }}
+                >
+                  Upload Logo
+                </button>
+              </div>
+            </Col>
+            {console.log("logo:" + JSON.stringify(validation.values.logo))}
+            <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Regional Office Name</Label>
+                <Label className="form-label">
+                  Name<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="name"
-                  label="Regional Office Name"
                   type="text"
-                  placeholder="Enter Name"
+                  placeholder="Enter name"
+                  // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}
-                  invalid={
-                    validation.touched.name && validation.errors.name
-                      ? true
-                      : false
-                  }
-                />
+                ></Input>
                 {validation.touched.name && validation.errors.name ? (
                   <FormFeedback type="invalid">
                     {validation.errors.name}
                   </FormFeedback>
                 ) : null}
               </div>
-            </Col>
-            <Col lg={4}>
+              {/* </Col>
+            <Col lg={4}> */}
+
               <div className="mb-3">
                 <Label className="form-label">Contact Person</Label>
                 <Input
@@ -222,31 +279,64 @@ const AddLcoModal = (props) => {
                 ) : null}
               </div>
             </Col>
+
             <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Parent Distributor<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="parent_id"
+                  type="select"
+                  placeholder="Select Parent Distributor"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.parent_id || ""}
+                >
+                  <option value="">Select Parent Distributor</option>
+                  {lcoParentDistributor &&
+                    lcoParentDistributor.map((parent) => (
+                      <option key={parent.id} value={parent.id}>
+                        {parent.name}
+                      </option>
+                    ))}
+                </Input>
+                {validation.touched.parent_id && validation.errors.parent_id ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.parent_id}
+                  </FormFeedback>
+                ) : null}
+              </div>
+
               <div className="mb-3">
                 <Label className="form-label">Status</Label>
                 <Input
-                  name="status_lbl"
+                  name="status"
                   type="select"
                   placeholder="Select Status"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.status_lbl || ""}
+                  value={validation.values.status || ""}
                 >
                   <option value="">Select Status</option>
-                  <option value="11">Active</option>
-                  <option value="12">In-Active</option>
+                  {lcoStatus &&
+                    lcoStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                 </Input>
-                {validation.touched.status_lbl &&
-                validation.errors.status_lbl ? (
+                {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.status_lbl}
+                    {validation.errors.status}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
           </Row>
+
           <Row>
             <Col lg={4}>
               <div className="mb-3">
@@ -326,23 +416,25 @@ const AddLcoModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">State</Label>
                 <Input
-                  name="state_lbl"
+                  name="state"
                   type="select"
                   placeholder="Select State"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.state_lbl || ""}
+                  value={validation.values.state || ""}
                 >
                   <option value="">Select State</option>
-                  <option value="1">Tamilnadu</option>
-                  <option value="2">Kerala</option>
-                  <option value="3">Assam</option>
-                  <option value="4">Karnataka</option>
+                  {lcoStates &&
+                    lcoStates.map((state) => (
+                      <option key={state.id} value={state.id}>
+                        {state.name}
+                      </option>
+                    ))}
                 </Input>
-                {validation.touched.state_lbl && validation.errors.state_lbl ? (
+                {validation.touched.state && validation.errors.state ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.state_lbl}
+                    {validation.errors.state}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -351,24 +443,24 @@ const AddLcoModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">District</Label>
                 <Input
-                  name="district_lbl"
+                  name="district"
                   type="select"
                   placeholder="Select District"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.district_lbl || ""}
+                  value={validation.values.district || ""}
                 >
                   <option value="">Select District</option>
-                  <option value="1">Virudhunagar</option>
-                  <option value="2">Tuticori</option>
-                  <option value="3">Chennai</option>
-                  <option value="4">Erode</option>
+                  {/* {lcoDistricts.map((district) => (
+                      <option key={district.id} value={district.id}>
+                        {district.name}
+                      </option>
+                    ))} */}
                 </Input>
-                {validation.touched.district_lbl &&
-                validation.errors.district_lbl ? (
+                {validation.touched.district && validation.errors.district ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.district_lbl}
+                    {validation.errors.district}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -377,23 +469,24 @@ const AddLcoModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">City</Label>
                 <Input
-                  name="city_lbl"
+                  name="city"
                   type="select"
                   placeholder="Select City"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.city_lbl || ""}
+                  value={validation.values.city || ""}
                 >
                   <option value="">Select City</option>
-                  <option value="1">Virudhunagar</option>
-                  <option value="2">Sivakasi</option>
-                  <option value="3">Kovilpatti</option>
-                  <option value="4">Erode</option>
+                  {/* {lcoCity.map((city) => (
+                      <option key={city.id} value={city.id}>
+                        {city.name}
+                      </option>
+                    ))} */}
                 </Input>
-                {validation.touched.city_lbl && validation.errors.city_lbl ? (
+                {validation.touched.city && validation.errors.city ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.city_lbl}
+                    {validation.errors.city}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -541,10 +634,12 @@ const AddLcoModal = (props) => {
                   value={validation.values.reg_phase || ""}
                 >
                   <option value="">Select Phase</option>
-                  <option value="1">Phase 1</option>
-                  <option value="2">Phase 2</option>
-                  <option value="3">Phase 3</option>
-                  <option value="4">Phase 4</option>
+                  {lcoPhase &&
+                    lcoPhase.map((phase) => (
+                      <option key={phase.id} value={phase.id}>
+                        {phase.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.reg_phase && validation.errors.reg_phase ? (
                   <FormFeedback type="invalid">
@@ -585,21 +680,23 @@ const AddLcoModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Registration End Date</Label>
                 <Input
-                  name="enddate"
+                  name="reg_enddate"
                   type="date"
                   placeholder="Select End Date"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.enddate || ""}
+                  value={validation.values.reg_enddate || ""}
                   invalid={
-                    validation.touched.enddate && validation.errors.enddate
+                    validation.touched.reg_enddate &&
+                    validation.errors.reg_enddate
                       ? true
                       : false
                   }
                 />
-                {validation.touched.enddate && validation.errors.enddate ? (
+                {validation.touched.reg_enddate &&
+                validation.errors.reg_enddate ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.enddate}
+                    {validation.errors.reg_enddate}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -705,6 +802,57 @@ const AddLcoModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
+                <Label className="form-label">Billed By</Label>
+                <Input
+                  name="billed_by"
+                  type="select"
+                  placeholder="Select Billed by"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.billed_by || ""}
+                >
+                  <option value="">Select Billed By</option>
+                  {lcoBilledby &&
+                    lcoBilledby.map((billedby) => (
+                      <option key={billedby.id} value={billedby.id}>
+                        {billedby.name}
+                      </option>
+                    ))}
+                </Input>
+                {validation.touched.billed_by && validation.errors.billed_by ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.billed_by}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">Enable Customer Collection</Label>
+                <Input
+                  name="collection_enabled"
+                  type="select"
+                  placeholder="Select enable Customer Collection"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.collection_enabled || ""}
+                >
+                  <option value="">Select Enable Customer Collection</option>
+                  <option value="0">Yes</option>
+                  <option value="1">No</option>
+                </Input>
+                {validation.touched.collection_enabled &&
+                validation.errors.collection_enabled ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.collection_enabled}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
                 <Label className="form-label">Credit Limit</Label>
                 <Input
                   name="credit_limit"
@@ -728,6 +876,8 @@ const AddLcoModal = (props) => {
                 ) : null}
               </div>
             </Col>
+          </Row>
+          <Row>
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Area ID</Label>
@@ -747,6 +897,57 @@ const AddLcoModal = (props) => {
                 {validation.touched.area_id && validation.errors.area_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.area_id}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">Customer Portal Config</Label>
+                <Input
+                  name="customer_portal_config"
+                  type="select"
+                  placeholder="Select Customer Portal Config"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.customer_portal_config || ""}
+                >
+                  <option value="">Select Customer Portal Config</option>
+                  {lcoCustomerPortal &&
+                    lcoCustomerPortal.map((customerportal) => (
+                      <option key={customerportal.id} value={customerportal.id}>
+                        {customerportal.name}
+                      </option>
+                    ))}
+                </Input>
+                {validation.touched.customer_portal_config &&
+                validation.errors.customer_portal_config ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.customer_portal_config}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">UID</Label>
+                <Input
+                  name="uid"
+                  type="text"
+                  placeholder="Enter UID"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.uid || ""}
+                  invalid={
+                    validation.touched.uid && validation.errors.uid
+                      ? true
+                      : false
+                  }
+                />
+                {validation.touched.uid && validation.errors.uid ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.uid}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -777,27 +978,28 @@ const AddLcoModal = (props) => {
             }}
           >
             <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">Upload</Label>
-                <Input
+              <div
+                className="mb-3"
+                style={{ display: "flex", flexDirection: "column" }}
+              >
+                <Label className="form-label">Agreement Upload</Label>
+                <input
                   name="upload"
-                  label="Upload"
                   type="file"
-                  placeholder="Upload"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.upload || ""}
-                  invalid={
-                    validation.touched.upload && validation.errors.upload
-                      ? true
-                      : false
-                  }
-                />
+                  onChange={handleChangeUploadFile}
+                ></input>
                 {validation.touched.upload && validation.errors.upload ? (
                   <FormFeedback type="invalid">
                     {validation.errors.upload}
                   </FormFeedback>
                 ) : null}
+                <button
+                  type="button"
+                  className="btn btn-primary "
+                  style={{ marginTop: "10px", width: "50%" }}
+                >
+                  Upload File
+                </button>
               </div>
             </Col>
             <Col lg={4}>
@@ -857,22 +1059,22 @@ const AddLcoModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Login ID</Label>
                 <Input
-                  name="loginid"
+                  name="username"
                   label="Login ID"
                   type="text"
                   placeholder="Login ID"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.loginid || ""}
+                  value={validation.values.username || ""}
                   invalid={
-                    validation.touched.loginid && validation.errors.loginid
+                    validation.touched.username && validation.errors.username
                       ? true
                       : false
                   }
                 />
-                {validation.touched.loginid && validation.errors.loginid ? (
+                {validation.touched.username && validation.errors.username ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.loginid}
+                    {validation.errors.username}
                   </FormFeedback>
                 ) : null}
               </div>

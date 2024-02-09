@@ -599,6 +599,12 @@ export const getLco = async (currentPage, perPage = 20) => {
 };
 export const addNewLco = (lco) => post(url.ADD_NEW_LCO, lco);
 export const updateLco = (lco) => put(url.UPDATE_LCO, lco);
+export const getLcoBilledby = () => get(url.GET_LCO_BILLEDBY);
+export const getLcoStatus = () => get(url.GET_LCO_STATUS);
+export const getLcoPhase = () => get(url.GET_LCO_PHASE);
+export const getLcoStates = () => get(url.GET_LCO_STATES);
+export const getLcoCustomerPortal = () => get(url.GET_LCO_CUSTOMERPORTAL);
+export const getLcoParentDistributor = () => get(url.GET_LCO_PARENTDISTRIBUTOR);
 
 export const getAppAdBanner = () => get(url.GET_APPADBANNER);
 export const addAppAdBanner = (appadbanner) =>
