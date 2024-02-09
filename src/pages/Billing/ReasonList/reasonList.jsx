@@ -166,9 +166,6 @@ const ReasonList = (props) => {
     dispatch(onGetReason());
   };
 
-  const resetSelection = () => {
-    setViewUser({});
-  };
 
   const toggleAddModal = () => {
     setShowAddNewReasonList(!showAddNewReasonList);
@@ -182,6 +179,10 @@ const ReasonList = (props) => {
   const toggleViewModal = (row) => {
     setShowReasonList(!showViewReasonList);
     setViewReasonList(row);
+  };
+
+  const resetSelection = () => {
+    setViewReasonList({});
   };
 
   const keyField = "id";

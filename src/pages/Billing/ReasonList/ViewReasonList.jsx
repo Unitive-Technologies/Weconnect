@@ -23,7 +23,7 @@ const ViewReason = (props) => {
   const { isOpen, resetSelection,
     toggleViewModal, reason, reasonStatus, reasonReasonType } =
     props;
-  // console.log("View Reasonlist modal:" + JSON.stringify(reason));
+  console.log("View Reasonlist modal:" + JSON.stringify(reason));
   const dispatch = useDispatch();
   const [showEditReason, setShowEditReason] = useState(false);
 
@@ -35,14 +35,14 @@ const ViewReason = (props) => {
       id: (reason && reason.id) || "",
       name: (reason && reason.name) || "",
       status: (reason && reason.status) || "",
-      type_display_lbl: (reason && reason.type_display_lbl) || "",
-      type: (reason && reason.type) || "",
+      type_display_lbl: (reason && reason.type_display_lbl) || [],
+      // type: (reason && reason.type) || [],
       applicableon: (reason && reason.applicableon) || "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required(""),
       status: Yup.string().required("Select Status"),
-      type: Yup.array().min(1, "Select at least one Reason Type"),
+      // type: Yup.array().min(1, "Select at least one Reason Type"),
       applicableon: Yup.array().required(
         ""
       ),
@@ -58,7 +58,7 @@ const ViewReason = (props) => {
         name: values.name,
         status: values.status,
         type_display_lbl: values.type_display_lbl,
-        type: values.type,
+        // type: parseInt(values.type),
         applicableon: applicableonIntegers,
       };
 
@@ -144,6 +144,7 @@ const ViewReason = (props) => {
                   ) : null}
                 </div>
               </Col>
+
               <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">
@@ -175,34 +176,35 @@ const ViewReason = (props) => {
               <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">Reason Type</Label>
-                  <Input
-                    name="applicableon"
-                    type="select"
-                    placeholder="Select at least one Reason Type"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.applicableon || []}
-                    multiple
-                    disabled={!showEditReason}
-                  >
-                    {reasonReasonType.map((applicableon) => (
-                      <option key={applicableon.id} value={applicableon.id}>
-                        {applicableon.name}
-                      </option>
-                    ))}
-                    {/* {reasonReasonType.map((type) => (
-                      <option key={type.id} value={type.id}>
-                        {type.name}
-                      </option>
-                    ))} */}
-                  </Input>
-                  {validation.touched.applicableon && validation.errors.applicableon ? (
+                  <div className="d-flex align-items-center">
+                    <Input
+                      name="type_display_lbl"
+                      placeholder="Select at least one Reason Type"
+                      onChange={e => {
+                        const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
+                        validation.setFieldValue("type_display_lbl", selectedOptions);
+                      }}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.type_display_lbl || []}
+                      multiple
+                      disabled={!showEditReason}
+                    >
+                      {reasonReasonType.map((type_display_lbl) => (
+                        <option key={type_display_lbl.id} value={type_display_lbl.name}>
+                          {type_display_lbl.name}
+                        </option>
+                      ))}
+                    </Input>
+                  </div>
+                  {validation.touched.type_display_lbl && validation.errors.type_display_lbl ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.applicableon}
+                      {validation.errors.type_display_lbl}
                     </FormFeedback>
                   ) : null}
                 </div>
               </Col>
+
+
             </Row>
             {showEditReason && (
               <Row>

@@ -77,6 +77,7 @@ const Reason = (state = INIT_STATE, action) => {
       };
 
     case UPDATE_REASON_SUCCESS:
+      console.log("Reason Update Reason data in reducer:", action.payload);
       return {
         ...state,
         loading: false,

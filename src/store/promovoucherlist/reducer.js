@@ -8,6 +8,7 @@ import {
 import {
   GET_PROMOVOUCHER,
   GET_PROMOVOUCHER_SUCCESS, GET_PROMOVOUCHER_FAIL,
+  ADD_NEW_PROMOVOUCHER,
   ADD_PROMOVOUCHER_SUCCESS,
   ADD_PROMOVOUCHER_FAIL,
   GET_PROMOVOUCHER_LCO_FAIL,
@@ -19,6 +20,9 @@ import {
   GET_PROMOVOUCHER_BOUQUET_FAIL,
   GET_PROMOVOUCHER_BOUQUET_SUCCESS,
   UPDATE_PROMOVOUCHER_CURRENT_PAGE,
+  // UPDATE_PROMOVOUCHER,
+  // UPDATE_PROMOVOUCHER_SUCCESS,
+  // UPDATE_PROMOVOUCHER_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -69,6 +73,33 @@ const PromoVoucher = (state = INIT_STATE, action) => {
         pagination: {},
         loading: false,
       };
+
+    // case UPDATE_PROMOVOUCHER:
+    //   return {
+    //     ...state,
+    //     loading: true,
+    //   };
+
+    // case UPDATE_PROMOVOUCHER_SUCCESS:
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     promovoucher: state.promovoucher.map((promovoucher) =>
+    //       promovoucher.id === action.payload.id ? { ...promovoucher, ...action.payload } : tax
+    //     ),
+    //     // tax: state.tax.map((tax) =>
+    //     //   tax.id.toString() === action.payload.id.toString()
+    //     //     ? { tax, ...action.payload }
+    //     //     : tax
+    //     // ),
+    //   };
+
+    // case UPDATE_PROMOVOUCHER_FAIL:
+    //   return {
+    //     ...state,
+    //     error: action.payload,
+    //     loading: false,
+    //   };
 
     case GET_PROMOVOUCHER_LCO_SUCCESS:
       console.log("LCO data in reducer:", action.payload);
@@ -124,6 +155,12 @@ const PromoVoucher = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+
+    case ADD_NEW_PROMOVOUCHER:
+      return {
+        ...state,
+        loading: true,
       };
 
     case ADD_PROMOVOUCHER_SUCCESS:

@@ -10,6 +10,7 @@ import {
 } from "./actionTypes";
 
 import {
+  getPromoVoucher as fetchpromovouchers,
   getPromoVoucherSuccess,
   getPromoVoucherFail,
   getPromoVoucherLCOFail,
@@ -98,6 +99,7 @@ function* onAddNewPromoVoucher({ payload: promovoucher }) {
     const response = yield call(addNewPromoVoucher, promovoucher);
     console.log("response in saga:" + JSON.stringify(response));
     yield put(addPromoVoucherSuccess(response));
+    yield put(fetchpromovouchers());
     // toast.success("Promo Voucher Added Successfully", { autoClose: 2000 });
   } catch (error) {
     yield put(addPromoVoucherFail(error));

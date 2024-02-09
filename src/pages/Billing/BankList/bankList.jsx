@@ -56,6 +56,7 @@ const BankList = (props) => {
     setShowViewBankList(!showViewBankList);
     setViewBankListData(bankData);
   };
+
   // const reversedData = banks.slice().reverse();
   const columns = useMemo(
     () => [
