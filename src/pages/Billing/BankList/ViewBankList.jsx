@@ -70,14 +70,14 @@ const ViewBankList = (props) => {
       // dispatch(onGetBank());
       validation.resetForm();
       toggleViewModal();
-      setShowEditUser(false);
+      setShowEditBank(false);
       // resetSelection();
 
     },
   });
 
   const handleCancel = () => {
-    setShowEditBank(!showEditBank);
+    setShowEditBank(false);
     // resetSelection();
     toggleViewModal();
   };
