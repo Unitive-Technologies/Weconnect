@@ -58,7 +58,7 @@ function* fetchLanguageList() {
 
     const response = yield call(getlanguageList, currentPage, pageSize);
     console.log("Response from API -", response);
-    // debugger;
+    debugger;
     yield put(getLanguageListSuccess(response));
   } catch (error) {
     console.error("Error fetching Language List:", error);
@@ -69,13 +69,16 @@ function* fetchLanguageList() {
 function* onUpdateLanguageList({ payload: languageList }) {
   console.log("Language List in onUpdate:" + JSON.stringify(languageList));
   try {
+    // debugger;
     const response = yield call(
       updateLanguageList,
-      languageList.id,
-      languageList
+      languageList,
+      languageList.id
     );
+
     yield put(updateLanguageListSuccess(response));
     console.log("update response:" + JSON.stringify(response));
+
     // toast.success("CustomerUser Updated Successfully", { autoClose: 2000 });
     yield put(fetchlanguagelists());
   } catch (error) {
