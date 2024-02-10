@@ -22,6 +22,8 @@ const ViewBankList = (props) => {
   const { isOpen, toggleViewModal, banks, bankStatus } = props;
   console.log("view Bank in view modal:" + JSON.stringify(banks));
 
+  const [showAccountNo, setShowAccountNo] = useState(false);
+
   const dispatch = useDispatch();
   const [showEditBank, setShowEditBank] = useState(false);
 
@@ -37,6 +39,7 @@ const ViewBankList = (props) => {
       branch: (banks && banks.branch) || "",
       address: (banks && banks.address) || "",
       ismso: (banks && banks.ismso) || "",
+      account_no: (banks && banks.account_no) || "",
       status_lbl: (banks && banks.status_lbl) || "",
       created_at: (banks && banks.created_at) || "",
       created_by: (banks && banks.created_by) || "my mso(mso)",
@@ -57,6 +60,7 @@ const ViewBankList = (props) => {
         branch: values["branch"],
         status_lbl: parseInt(values["status_lbl"]),
         address: values["address"],
+        account_no: values["account_no"],
         ismso: values["ismso"],
         created_at: new Date(),
         created_by: values["created_by"],
@@ -251,28 +255,49 @@ const ViewBankList = (props) => {
                   name="ismso"
                   type="select"
                   placeholder="Select for mso"
-                  onChange={validation.handleChange}
+                  onChange={(e) => {
+                    validation.handleChange(e);
+                    setShowAccountNo(e.target.value === '11'); // Set showAccountNo based on the selected value
+                  }}
                   onBlur={validation.handleBlur}
                   value={validation.values.ismso || ""}
-                  invalid={
-                    validation.touched.ismso &&
-                      validation.errors.ismso
-                      ? true
-                      : false
-                  }
+                  invalid={validation.touched.ismso && validation.errors.ismso ? true : false}
                   disabled={!showEditBank}
                 >
-                  <option value="10"></option>
+                  <option value=""></option>
                   <option value="11">Yes</option>
                   <option value="22">No</option>
                 </Input>
-                {validation.touched.ismso &&
-                  validation.errors.ismso ? (
+                {validation.touched.ismso && validation.errors.ismso ? (
                   <FormFeedback type="invalid">
                     {validation.errors.ismso}
                   </FormFeedback>
                 ) : null}
               </div>
+
+              {/* Conditionally render Account No field based on showAccountNo state */}
+              {showAccountNo && (
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Account No
+                  </Label>
+                  <Input
+                    name="account_no"
+                    type="text"
+                    placeholder="Enter Account No"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.account_no || ""}
+                    invalid={validation.touched.account_no && validation.errors.account_no ? true : false}
+                    disabled={!showEditBank}
+                  />
+                  {validation.touched.account_no && validation.errors.account_no ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.account_no}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              )}
             </Col>
           </Row>
           {showEditBank && (
