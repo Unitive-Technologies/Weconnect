@@ -29,7 +29,6 @@ import UploadBankList from "./UploadBankList";
 import ViewBankList from "./ViewBankList";
 import TableContainerX from "../../../components/Common/TableContainerX";
 
-
 const BankList = (props) => {
   //meta title
   document.title = "Banks | VDigital";
@@ -37,6 +36,7 @@ const BankList = (props) => {
   const dispatch = useDispatch();
 
   const selectBankState = (state) => state.bank;
+
   const BankProperties = createSelector(selectBankState, (bank) => ({
     banks: bank.bank,
     loading: bank.loading,
@@ -68,7 +68,7 @@ const BankList = (props) => {
   const goToPage = (toPage) => {
     console.log("[GOTO PAGE] Trigger to page - ", toPage);
     dispatch(onGoToPage(toPage));
-    dispatch(onGetTax());
+    dispatch(onGetBank());
   };
 
   // const reversedData = banks.slice().reverse();
@@ -279,26 +279,22 @@ const BankList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console
-                      .log
-                      // "BBBBBBBBBBanks reverse:" + JSON.stringify(reversedData)
-                      ()}
                     <TableContainerX
-                      isPagination={true}
                       columns={columns}
                       data={banks}
-                      isGlobalFilter={true}
                       isShowTableActionButtons={true}
-                      isShowingPageLength={true}
-                      tableActions={getTableActions()}
-                      customPageSize={8}
-                      handleRowClick={(row) => {
-                        toggleViewModal(row);
-                      }}
+                      isLoading={loading}
+                      isPagination={true}
                       totalCount={Number(totalCount)}
                       pageSize={Number(pageSize)}
                       currentPage={Number(currentPage)}
                       totalPage={Number(totalPage)}
+                      isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      tableActions={getTableActions()}
+                      handleRowClick={(row) => {
+                        toggleViewModal(row);
+                      }}
                       goToPage={goToPage}
                     />
                   </CardBody>

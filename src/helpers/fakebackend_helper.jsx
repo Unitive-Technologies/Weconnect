@@ -334,6 +334,12 @@ export const getReason = async (currentPage, perPage = 20) => {
   return await getCompleteResponse(url.getReasonUrl(currentPage, perPage));
 };
 
+export const getBank = async (currentPage, perPage = 20) => {
+  console.log("Bank - Current Page in fakebackend: ", currentPage);
+  console.log("Bank - Per Page: ", perPage);
+  return await getCompleteResponse(url.getBankUrl(currentPage, perPage));
+};
+
 export const getPromoVoucher = async (currentPage, perPage = 20) => {
   console.log("Users - Current Page in fakebackend: ", currentPage);
   console.log("Users - Per Page: ", perPage);
@@ -706,7 +712,7 @@ export const addNewReason = (reasons) => post(url.ADD_NEW_REASON, reasons);
 export const updateReason = (id, reasons) =>
   put(url.UPDATE_REASON(id), reasons);
 
-export const getBank = () => get(url.GET_BANK);
+// export const getBank = () => get(url.GET_BANK);
 export const getBankStatus = () => get(url.GET_BANK_STATUS);
 export const addNewBank = (banks) => post(url.ADD_NEW_BANK, banks);
 export const updateBank = (id, banks) => put(url.UPDATE_BANK(id), banks);
