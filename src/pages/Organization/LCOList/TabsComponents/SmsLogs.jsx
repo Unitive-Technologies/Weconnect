@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const AllottedScheme = ({ allottedSchemeData }) => {
+const SmsLogs = ({ smsLogsData }) => {
   //meta title
   document.title = "Regional Offices | VDigital";
 
@@ -168,7 +168,7 @@ const AllottedScheme = ({ allottedSchemeData }) => {
               <TableContainer
                 isPagination={true}
                 columns={columns}
-                data={allottedSchemeData}
+                data={smsLogsData}
                 isGlobalFilter={true}
                 isAddRegionalOffice={true}
                 isShowingPageLength={true}
@@ -187,4 +187,4 @@ const AllottedScheme = ({ allottedSchemeData }) => {
   );
 };
 
-export default AllottedScheme;
+export default SmsLogs;

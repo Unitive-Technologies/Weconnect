@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import TableContainer from "../../../../components/Common/TableContainer";
 import Spinners from "../../../../components/Common/Spinner";
@@ -14,11 +15,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const AllottedBouquet = (props) => {
+const AllottedBouquet = ({ allottedBouquetData }) => {
   //meta title
   document.title = "Regional Offices | VDigital";
-
-  const operatorAccount = [];
 
   const columns = useMemo(
     () => [
@@ -51,18 +50,17 @@ const AllottedBouquet = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleViewRegionalOffice(userData);
+                style={{
+                  maxWidth: 200,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
                 }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
               </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
             </>
           );
         },
@@ -83,7 +81,9 @@ const AllottedBouquet = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.addr}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.commision}
+            </p>
           );
         },
       },
@@ -94,7 +94,7 @@ const AllottedBouquet = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.contact_person}
+              {cellProps.row.original.boxtype_lbl}
             </p>
           );
         },
@@ -105,9 +105,7 @@ const AllottedBouquet = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.mobile_no}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.type_lbl}</p>
           );
         },
       },
@@ -118,7 +116,7 @@ const AllottedBouquet = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.state_lbl}
+              {cellProps.row.original.status_lbl}
             </p>
           );
         },
@@ -130,7 +128,7 @@ const AllottedBouquet = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.district_lbl}
+              {cellProps.row.original.is_refundable === 1 ? "Yes" : "No"}
             </p>
           );
         },
@@ -141,17 +139,15 @@ const AllottedBouquet = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.city_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by_lbl}
+            </p>
           );
         },
       },
     ],
     []
   );
-
-  var node = useRef();
-
-  const keyField = "id";
 
   const getTableActions = () => {
     return [
@@ -170,10 +166,13 @@ const AllottedBouquet = (props) => {
         <Col lg="12">
           <Card>
             <CardBody>
+              {console.log(
+                "bouquet details:" + JSON.stringify(allottedBouquetData)
+              )}
               <TableContainer
                 isPagination={true}
                 columns={columns}
-                data={operatorAccount}
+                data={allottedBouquetData}
                 isGlobalFilter={true}
                 isAddRegionalOffice={true}
                 isShowingPageLength={true}

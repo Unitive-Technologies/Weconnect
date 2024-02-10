@@ -15,15 +15,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const OperatorAccountDetails = ({ selectedRowId }) => {
+const OperatorAccountDetails = ({ accountDetails, selectedRowId }) => {
   //meta title
   document.title = "Regional Offices | VDigital";
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
-  const [accountDetails, setAccountDetails] = useState([]);
+
   const currentDate = new Date().toISOString().split("T")[0];
   const [fromDate, setFromDate] = useState(currentDate);
   const [toDate, setToDate] = useState(currentDate);
-  // const operatorAccount = [];
 
   const columns = useMemo(
     () => [
@@ -259,32 +258,6 @@ const OperatorAccountDetails = ({ selectedRowId }) => {
     ];
   };
 
-  const getOperatorAccountDetails = async (e) => {
-    e.preventDefault();
-    console.log("Form submitted");
-    try {
-      const token = "Bearer " + localStorage.getItem("temptoken");
-      console.log("Dates: " + fromDate, toDate);
-      const response = await axios.get(
-        `${API_URL}/operator-account?expand=created_by_lbl,type_lbl,cr_operator_lbl,dr_operator_lbl,credited_by,igst,cgst,sgst,name,balance,credit,debit,balance_h,credit_h,debit_h&filter[operator_id]=${selectedRowId}&filter[wallet_type]=2&filter[FRM_created_at]=${fromDate}&filter[TO_created_at]=${toDate}&page=1&per-page=50&vr=web1.0`,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
-      setAccountDetails(response.data.data);
-      console.log("response in useEffect:" + JSON.stringify(response));
-    } catch (error) {
-      console.error("Error fetching bouquet data:", error);
-    }
-  };
-  useEffect(() => {
-    if (selectedRowId) {
-      getOperatorAccountDetails();
-    }
-  }, [selectedRowId]);
-
   return (
     <React.Fragment>
       <Form
@@ -327,7 +300,7 @@ const OperatorAccountDetails = ({ selectedRowId }) => {
           </Col>
         </Row>
       </Form>
-      <form onSubmit={getOperatorAccountDetails}>
+      <form>
         <input
           type="date"
           value={fromDate}
