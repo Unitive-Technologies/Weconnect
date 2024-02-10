@@ -80,6 +80,7 @@ const GenreList = (state = INIT_STATE, action) => {
         genreList: state.genreList.map((genreList) =>
           genreList.id === action.payload.id ? { ...genreList, ...action.payload } : genreList
         ),
+
       };
 
     case UPDATE_GENRELIST_FAIL:

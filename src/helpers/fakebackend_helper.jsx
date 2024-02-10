@@ -279,7 +279,7 @@ export const updateCustomerUser = (customerUser, id) =>
 export const getCustomerUsersSettings = () =>
   get(url.GET_CUSTOMERUSERS_SETTINGS);
 
-export const getLanguageList = async (currentPage, perPage = 20) => {
+export const getlanguageList = async (currentPage, perPage = 20) => {
   console.log("Language List - Current Page in fakebackend: ", currentPage);
   console.log("Language List - Per Page: ", perPage);
   return await getCompleteResponse(

@@ -9,10 +9,12 @@ import {
   GET_LANGUAGELIST,
   GET_LANGUAGELIST_SUCCESS,
   GET_LANGUAGELIST_FAIL,
+  UPDATE_LANGUAGELIST,
   UPDATE_LANGUAGELIST_SUCCESS,
   UPDATE_LANGUAGELIST_FAIL,
   GET_LANGUAGELIST_STATUS_SUCCESS,
   GET_LANGUAGELIST_STATUS_FAIL,
+  ADD_NEW_LANGUAGELIST,
   ADD_LANGUAGELIST_SUCCESS,
   ADD_LANGUAGELIST_FAIL,
   UPDATE_LANGUAGELIST_CURRENT_PAGE,
@@ -35,9 +37,9 @@ const LanguageList = (state = INIT_STATE, action) => {
     case UPDATE_LANGUAGELIST_CURRENT_PAGE:
       return Number(action.payload) <= state.totalPages
         ? {
-            ...state,
-            currentPage: action.payload,
-          }
+          ...state,
+          currentPage: action.payload,
+        }
         : state;
     case GET_LANGUAGELIST:
       return {
@@ -65,13 +67,18 @@ const LanguageList = (state = INIT_STATE, action) => {
         loading: false,
       };
 
+    case UPDATE_LANGUAGELIST:
+      return {
+        ...state,
+        loading: true,
+      };
+
     case UPDATE_LANGUAGELIST_SUCCESS:
       return {
         ...state,
+        loading: false,
         languageList: state.languageList.map((languageList) =>
-          languageList.id.toString() === action.payload.id.toString()
-            ? { languageList, ...action.payload }
-            : languageList
+          languageList.id === action.payload.id ? { ...languageList, ...action.payload } : languageList
         ),
       };
 
@@ -79,6 +86,7 @@ const LanguageList = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     case GET_LANGUAGELIST_STATUS_SUCCESS:
@@ -95,16 +103,24 @@ const LanguageList = (state = INIT_STATE, action) => {
         error: action.payload,
       };
 
+    case ADD_NEW_LANGUAGELIST:
+      return {
+        ...state,
+        loading: true,
+      };
+
     case ADD_LANGUAGELIST_SUCCESS:
       return {
         ...state,
         languageList: [...state.languageList, action.payload],
+        loading: false,
       };
 
     case ADD_LANGUAGELIST_FAIL:
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     default:

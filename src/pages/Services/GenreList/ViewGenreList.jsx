@@ -24,7 +24,7 @@ import { updateGenreList as onUpdateGenreList } from "/src/store/genre/actions";
 
 const ViewGenreList = (props) => {
     const { isOpen, handleViewGenreList, genre, genrelistStatus } = props;
-    console.log("user in view Genre List modal:" + JSON.stringify(genre));
+    // console.log("user in view Genre List modal:" + JSON.stringify(genre));
     const dispatch = useDispatch();
     const [showEditGenreList, setShowEditGenreList] = useState(false);
 
@@ -42,12 +42,12 @@ const ViewGenreList = (props) => {
 
         initialValues: {
             id: (genre && genre.id) || "",
-            title: (genre && genre.name) || "",
+            name: (genre && genre.name) || "",
             status: (genre && genre.status) || "",
             description: (genre && genre.description) || "",
         },
         validationSchema: Yup.object({
-            title: Yup.string().required("Please Enter Title"),
+            name: Yup.string().required("Please Enter Title"),
             status: Yup.string().required("Please Enter status"),
             description: Yup.string().required("Please Enter description"),
         }),
@@ -55,7 +55,7 @@ const ViewGenreList = (props) => {
             const updateGenreList = {
                 id: genre.id,
                 status: parseInt(values.status),
-                title: values.title,
+                name: values.name,
                 description: values.description,
             };
             // update user
@@ -116,22 +116,22 @@ const ViewGenreList = (props) => {
                             <div className="mb-3">
                                 <Label className="form-label">Title<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
-                                    name="title"
+                                    name="name"
                                     type="text"
                                     placeholder="Enter title"
                                     disabled={!showEditGenreList}
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.title || ""}
+                                    value={validation.values.name || ""}
                                     invalid={
-                                        validation.touched.title && validation.errors.title
+                                        validation.touched.name && validation.errors.name
                                             ? true
                                             : false
                                     }
                                 />
-                                {validation.touched.title && validation.errors.title ? (
+                                {validation.touched.name && validation.errors.name ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.title}
+                                        {validation.errors.name}
                                     </FormFeedback>
                                 ) : null}
                             </div>

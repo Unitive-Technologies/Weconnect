@@ -84,15 +84,14 @@ function* onUpdateBroadCasters({ payload: broadCasters }) {
   try {
     const response = yield call(
       updateBroadCasters,
+      broadCasters.id,
       broadCasters,
-      broadCasters.id
     );
     yield put(updateBroadCasterSuccess(response));
     console.log("update response:" + JSON.stringify(response));
-    // toast.success("CustomerUser Updated Successfully", { autoClose: 2000 });
+    yield put(fetchbroadcasters());
   } catch (error) {
     yield put(updateBroadCasterFail(error));
-    toast.error("Broad Caster Updated Failed", { autoClose: 2000 });
   }
 }
 

@@ -8,6 +8,7 @@ import {
 } from "./actionTypes";
 
 import {
+  getlanguageList as fetchlanguagelists,
   getLanguageListSuccess,
   getLanguageListFail,
   updateLanguageListSuccess,
@@ -20,7 +21,7 @@ import {
 
 //Include Both Helper File with needed methods
 import {
-  getLanguageList,
+  getlanguageList,
   updateLanguageList,
   getLanguageListStatus,
   addNewLanguageList,
@@ -46,16 +47,16 @@ import {
 //   });
 // };
 
-export const getLanguageListStore = (state) => state.languageList;
+export const getlanguageListStore = (state) => state.languageList;
 
 function* fetchLanguageList() {
   try {
-    let languageListStore = yield select(getLanguageListStore);
+    let languageListStore = yield select(getlanguageListStore);
 
     const pageSize = languageListStore.pageSize;
     const currentPage = languageListStore.currentPage;
 
-    const response = yield call(getLanguageList, currentPage, pageSize);
+    const response = yield call(getlanguageList, currentPage, pageSize);
     console.log("Response from API -", response);
     // debugger;
     yield put(getLanguageListSuccess(response));
@@ -70,12 +71,13 @@ function* onUpdateLanguageList({ payload: languageList }) {
   try {
     const response = yield call(
       updateLanguageList,
-      languageList,
-      languageList.id
+      languageList.id,
+      languageList
     );
     yield put(updateLanguageListSuccess(response));
     console.log("update response:" + JSON.stringify(response));
     // toast.success("CustomerUser Updated Successfully", { autoClose: 2000 });
+    yield put(fetchlanguagelists());
   } catch (error) {
     yield put(updateLanguageListFail(error));
     // toast.error("LanguageList Updated Failed", { autoClose: 2000 });
@@ -95,8 +97,8 @@ function* fetchLanguageListStatus() {
 function* onAddNewLanguageList({ payload: LanguageList }) {
   try {
     const response = yield call(addNewLanguageList, LanguageList);
-
     yield put(addLanguageListSuccess(response));
+    yield put(fetchlanguagelists());
   } catch (error) {
     yield put(addLanguageListFail(error));
   }

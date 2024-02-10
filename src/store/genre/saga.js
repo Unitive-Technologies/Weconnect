@@ -70,9 +70,10 @@ function* fetchGenreList() {
 function* onUpdateGenreList({ payload: genreList }) {
   console.log("Genre List in onUpdate:" + JSON.stringify(genreList));
   try {
-    const response = yield call(updateGenreList, genreList, genreList.id);
+    const response = yield call(updateGenreList, genreList.id, genreList);
     yield put(updateGenreListSuccess(response));
     console.log("update response:" + JSON.stringify(response));
+    yield put(fetchgenrelists());
   } catch (error) {
     yield put(updateGenreListFail(error));
   }
