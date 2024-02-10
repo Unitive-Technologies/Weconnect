@@ -54,23 +54,6 @@ const BankList = (props) => {
 
   // const [isLoading, setLoading] = useState(loading);
 
-  const [showAddNewBankList, setShowAddNewBankList] = useState(false);
-  const [showUploadBankList, setShowUploadBankList] = useState(false);
-  const [showViewBankList, setShowViewBankList] = useState(false);
-  const [viewBankListData, setViewBankListData] = useState({});
-
-  const toggleViewModal = (bankData) => {
-    console.log("User Data: ", bankData);
-    setShowViewBankList(!showViewBankList);
-    setViewBankListData(bankData);
-  };
-
-  const goToPage = (toPage) => {
-    console.log("[GOTO PAGE] Trigger to page - ", toPage);
-    dispatch(onGoToPage(toPage));
-    dispatch(onGetBank());
-  };
-
   // const reversedData = banks.slice().reverse();
   const columns = useMemo(
     () => [
@@ -202,6 +185,24 @@ const BankList = (props) => {
     ],
     []
   );
+
+  const [showAddNewBankList, setShowAddNewBankList] = useState(false);
+  const [showUploadBankList, setShowUploadBankList] = useState(false);
+  const [showViewBankList, setShowViewBankList] = useState(false);
+  const [viewBankListData, setViewBankListData] = useState({});
+
+  const toggleViewModal = (bankData) => {
+    console.log("User Data: ", bankData);
+    setShowViewBankList(!showViewBankList);
+    setViewBankListData(bankData);
+  };
+
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetBank());
+  };
+
 
   useEffect(() => {
     if (banks && !banks.length) {

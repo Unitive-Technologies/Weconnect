@@ -20,7 +20,7 @@ import { getBank as onGetBank, updateBank as onUpdateBank } from "/src/store/ban
 
 const ViewBankList = (props) => {
   const { isOpen, toggleViewModal, banks, bankStatus } = props;
-  console.log("view Bank in view modal:" + JSON.stringify(banks));
+  // console.log("view Bank in view modal:" + JSON.stringify(banks));
 
   const [showAccountNo, setShowAccountNo] = useState(false);
 
@@ -67,18 +67,18 @@ const ViewBankList = (props) => {
       };
       // console.log("Update Brand:" + JSON.stringify(updateBank));
       dispatch(onUpdateBank(updateBank));
-      dispatch(onGetBank());
+      // dispatch(onGetBank());
       validation.resetForm();
       toggleViewModal();
       // setShowEditUser(false);
-      resetSelection();
+      // resetSelection();
 
     },
   });
 
   const handleCancel = () => {
     setShowEditBank(false);
-    resetSelection();
+    // resetSelection();
     toggleViewModal();
   };
 
