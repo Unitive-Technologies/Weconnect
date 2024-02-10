@@ -185,7 +185,7 @@ const AllottedPairing = ({ allottedPairingData }) => {
                 isPagination={true}
                 columns={columns}
                 data={allottedPairingData}
-                isGlobalFilter={true}
+                // isGlobalFilter={true}
                 isAddRegionalOffice={true}
                 isShowingPageLength={true}
                 tableActions={getTableActions()}

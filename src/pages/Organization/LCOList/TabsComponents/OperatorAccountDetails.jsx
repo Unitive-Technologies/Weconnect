@@ -247,13 +247,19 @@ const OperatorAccountDetails = ({ accountDetails, selectedRowId }) => {
         name: "Pay Online",
         // action: setShowRegionalOffice,
         type: "normal",
-        icon: "create",
+        // icon: "create",
       },
       {
         name: "Add Credit",
         // action: setShowUploadRegionalOffice,
         type: "normal",
         icon: "create",
+      },
+      {
+        name: "Setoff Amount",
+        // action: setShowUploadRegionalOffice,
+        type: "normal",
+        // icon: "create",
       },
     ];
   };
@@ -324,6 +330,7 @@ const OperatorAccountDetails = ({ accountDetails, selectedRowId }) => {
                 data={accountDetails}
                 isTransactionDate={true}
                 // isGlobalFilter={true}
+                isShowTableActionButtons={true}
                 isAddRegionalOffice={true}
                 isShowingPageLength={true}
                 tableActions={getTableActions()}

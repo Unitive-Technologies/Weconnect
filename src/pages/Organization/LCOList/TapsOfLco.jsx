@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
   Card,
@@ -177,6 +177,11 @@ const TapsOfLco = ({ selectedRowId }) => {
     }
   };
 
+  // useEffect(() => {
+  //   if (selectedRowId) {
+  //     getOperatorAccountDetails();
+  //   }
+  // }, [selectedRowId]);
   return (
     <div>
       <Nav tabs className="nav-tabs-custom nav-justified">
