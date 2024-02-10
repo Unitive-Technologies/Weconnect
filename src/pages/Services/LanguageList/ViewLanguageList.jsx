@@ -43,13 +43,13 @@ const ViewLanguageList = (props) => {
 
         initialValues: {
             id: (language && language.id) || "",
-            name: (language && language.name) || "",
+            language: (language && language.name) || "",
             code: (language && language.code) || "",
             status: (language && language.status) || "",
             description: (language && language.description) || "",
         },
         validationSchema: Yup.object({
-            name: Yup.string().required("Please Enter Language"),
+            language: Yup.string().required("Please Enter Language"),
             code: Yup.string().required("Please Enter Code"),
             status: Yup.string().required("Please Enter status"),
             description: Yup.string().required("Please Enter description"),
@@ -57,7 +57,7 @@ const ViewLanguageList = (props) => {
         onSubmit: (values) => {
             const updateLanguageList = {
                 id: language.id,
-                name: values.language,
+                language: values.language,
                 code: values.code,
                 status: parseInt(values.status),
                 description: values.description,
@@ -120,22 +120,22 @@ const ViewLanguageList = (props) => {
                             <div className="mb-3">
                                 <Label className="form-label">Language<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
-                                    name="name"
+                                    name="language"
                                     type="text"
                                     placeholder="Enter Language"
                                     disabled={!showEditLanguageList}
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.name || ""}
+                                    value={validation.values.language || ""}
                                     invalid={
-                                        validation.touched.name && validation.errors.name
+                                        validation.touched.language && validation.errors.language
                                             ? true
                                             : false
                                     }
                                 />
-                                {validation.touched.name && validation.errors.name ? (
+                                {validation.touched.language && validation.errors.language ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.name}
+                                        {validation.errors.language}
                                     </FormFeedback>
                                 ) : null}
                             </div>
