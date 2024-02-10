@@ -61,6 +61,7 @@ const ViewGenreList = (props) => {
             // update user
             dispatch(onUpdateGenreList(updateGenreList));
             validation.resetForm();
+            setShowEditGenreList(false);
             handleViewGenreList();
         },
     });

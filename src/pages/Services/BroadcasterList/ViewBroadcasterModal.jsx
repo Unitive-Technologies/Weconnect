@@ -87,6 +87,7 @@ const ViewBroadcasterModal = (props) => {
       dispatch(onUpdateBroadCaster(updateBroadCaster));
       dispatch(onGetBroadCasters());
       validation.resetForm();
+      setShowEditViewBroadCaster(false);
       toggleViewBroadcaster();
     },
   });

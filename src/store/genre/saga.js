@@ -8,6 +8,7 @@ import {
 } from "./actionTypes";
 
 import {
+  getGenreList as fetchgenrelists,
   getGenreListSuccess,
   getGenreListFail,
   updateGenreListSuccess,
@@ -92,10 +93,9 @@ function* onAddNewGenreList({ payload: GenreList }) {
     const response = yield call(addNewGenreList, GenreList);
 
     yield put(addGenreListSuccess(response));
-    toast.success("GenreList Added Successfully", { autoClose: 2000 });
+    yield put(fetchgenrelists());
   } catch (error) {
     yield put(addGenreListFail(error));
-    toast.error("GenreList Added Failed", { autoClose: 2000 });
   }
 }
 

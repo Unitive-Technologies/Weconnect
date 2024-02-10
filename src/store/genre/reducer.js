@@ -9,10 +9,12 @@ import {
   GET_GENRELIST,
   GET_GENRELIST_SUCCESS,
   GET_GENRELIST_FAIL,
+  UPDATE_GENRELIST,
   UPDATE_GENRELIST_SUCCESS,
   UPDATE_GENRELIST_FAIL,
   GET_GENRELIST_STATUS_SUCCESS,
   GET_GENRELIST_STATUS_FAIL,
+  ADD_NEW_GENRELIST,
   ADD_GENRELIST_SUCCESS,
   ADD_GENRELIST_FAIL,
   UPDATE_GENRELIST_CURRENT_PAGE,
@@ -35,9 +37,9 @@ const GenreList = (state = INIT_STATE, action) => {
     case UPDATE_GENRELIST_CURRENT_PAGE:
       return Number(action.payload) <= state.totalPages
         ? {
-            ...state,
-            currentPage: action.payload,
-          }
+          ...state,
+          currentPage: action.payload,
+        }
         : state;
     case GET_GENRELIST:
       return {
@@ -65,13 +67,18 @@ const GenreList = (state = INIT_STATE, action) => {
         loading: false,
       };
 
+    case UPDATE_GENRELIST:
+      return {
+        ...state,
+        loading: true,
+      };
+
     case UPDATE_GENRELIST_SUCCESS:
       return {
         ...state,
+        loading: false,
         genreList: state.genreList.map((genreList) =>
-          genreList.id.toString() === action.payload.id.toString()
-            ? { genreList, ...action.payload }
-            : genreList
+          genreList.id === action.payload.id ? { ...genreList, ...action.payload } : genreList
         ),
       };
 
@@ -79,6 +86,7 @@ const GenreList = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     case GET_GENRELIST_STATUS_SUCCESS:
@@ -95,16 +103,24 @@ const GenreList = (state = INIT_STATE, action) => {
         error: action.payload,
       };
 
+    case ADD_NEW_GENRELIST:
+      return {
+        ...state,
+        loading: true,
+      };
+
     case ADD_GENRELIST_SUCCESS:
       return {
         ...state,
         genreList: [...state.genreList, action.payload],
+        loading: false,
       };
 
     case ADD_GENRELIST_FAIL:
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     default:

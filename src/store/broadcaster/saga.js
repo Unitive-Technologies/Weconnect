@@ -3,6 +3,7 @@ import { call, put, select, takeEvery } from "redux-saga/effects";
 import { GET_BROADCASTER, UPDATE_BROADCASTER, GET_BROADCASTER_STATUS, ADD_NEW_BROADCASTER } from "./actionTypes";
 
 import {
+  getBroadCaster as fetchbroadcasters,
   getBroadCasterSuccess,
   getBroadCasterFail,
   updateBroadCasterSuccess,
@@ -109,6 +110,7 @@ function* onAddNewBroadCaster({ payload: broadCaster }) {
   try {
     const response = yield call(addNewBroadCaster, broadCaster);
     yield put(addBroadCasterSuccess(response));
+    yield put(fetchbroadcasters());
   } catch (error) {
     yield put(addBroadCasterFail(error));
   }
