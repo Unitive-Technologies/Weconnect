@@ -529,6 +529,11 @@ export const UPDATE_STOCKSTB_MARKFAULTY = "/stb/faulty?vr=web1.0";
 export const UPDATE_STOCKSTB_BLACKLIST = "/stb/blacklist?vr=web1.0";
 export const ADD_STOCKATB_ACTIONUPDATION =
   "/stb/bulk-change-stbdetail?vr=web1.0";
+export const GET_STOCKPAIRING_INVENTORYSTATE =
+  "/inventory-state/list?fields=id,name&filter[status]=1&filter[state_type]=3&vr=web1.0";
+export const UPDATE_STOCKPAIRING_MARKFAULTY = "/pairing/faulty?vr=web1.0";
+export const UPDATE_STOCKPAIRING_BLACKLIST = "/pairing/blacklist?vr=web1.0";
+export const DELETE_STOCKPAIRING = "/pairing/0/delpairing?vr=web1.0";
 
 export const GET_INVENTORYFAULTY_SMARTCARD =
   "/smartcard?expand=po_date,po_number,invoice_no,invoice_date,created_by_lbl,cas_lbl,status_lbl,brand_lbl,warehouse_lbl,state_lbl,inv_state_lbl&filter[status]=3&filter[stb_id]=0&page=1&per-page=50&vr=web1.0";

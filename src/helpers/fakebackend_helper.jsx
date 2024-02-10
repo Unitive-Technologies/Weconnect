@@ -757,6 +757,13 @@ export const updateStockStbBlacklist = (stockstb) =>
   put(url.UPDATE_STOCKSTB_BLACKLIST, stockstb);
 export const addStockStbActionupdation = (stockstb) =>
   post(url.ADD_STOCKATB_ACTIONUPDATION, stockstb);
+export const getStockPairingInventoryState = () =>
+  get(url.GET_STOCKPAIRING_INVENTORYSTATE);
+export const updateStockPairingMarkfaulty = (stockpairing) =>
+  put(url.UPDATE_STOCKPAIRING_MARKFAULTY, stockpairing);
+export const updateStockpairingBlacklist = (stockpairing) =>
+  put(url.UPDATE_STOCKPAIRING_BLACKLIST, stockpairing);
+export const deleteStockPairing = () => del(url.DELETE_STOCKPAIRING);
 
 export const getInventoryFaultySmartcard = () =>
   get(url.GET_INVENTORYFAULTY_SMARTCARD);
