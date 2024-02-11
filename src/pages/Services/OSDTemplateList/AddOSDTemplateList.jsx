@@ -25,6 +25,7 @@ import { getOSDTemplate as onGetOSDTemplate } from "/src/store/actions";
 const AddNewOSDTemplateList = (props) => {
     const { isOpen, toggle, handleAddOSDTemplateList, osdTempOSD, osdTempStatus, osdTempTemplateFor } = props;
 
+    console.log("Add OSD Templatee List of osdTempTemplateFor" + JSON.stringify(osdTempTemplateFor))
     const dispatch = useDispatch();
     const [user, setUser] = useState();
 
@@ -37,9 +38,9 @@ const AddNewOSDTemplateList = (props) => {
             name: "",
             title: "",
             template_for: "",
-            template: { template_message: "" },
+            template: { template_message: "", template_title: "" },
             showcontent: "",
-            template_config_id: "",
+            template_config_id: [],
             // template_config_id: [{ "id": "", "name": "", "cas_code": "" }],
             casconfig: "",
             // template_config_id: "",
@@ -51,33 +52,48 @@ const AddNewOSDTemplateList = (props) => {
         },
         validationSchema: Yup.object({
             name: Yup.string().required("Enter name"),
-            template_for: Yup.string().required("Select template for"),
-            template_message: Yup.string().required("Select template for"),
-            showcontent: Yup.string().required("Select template for"),
+            // template_for: Yup.string().required("Select template for"),
+            // template_message: Yup.string().required("Select template for"),
+            // showcontent: Yup.string().required("Select template for"),
             // casconfig: Yup.string().required("Select template for"),
-            bmailtitle: Yup.string().required("Select template for"),
-            content: Yup.string().required("Select template for"),
+            // bmailtitle: Yup.string().required("Select template for"),
+            // content: Yup.string().required("Select template for"),
             status: Yup.string().required("Select status"),
         }),
         onSubmit: (values) => {
-            const OSDvaluesArray = values["template_config_id"] || [];
-            const OSDvaluesIntegers = OSDvaluesArray.map((option) =>
-                parseInt(option, 10)
-            ); // Specify the radix
+            // const OSDvaluesArray = values["template_config_id"] || [];
+            // const OSDvaluesIntegers = OSDvaluesArray.map((option) =>
+            //     parseInt(option, 10)
+            // ); // Specify the radix
+
+            let template = {};
+            if (values.template_for === "1") {
+                template = {
+                    template_message: values.template.template_message,
+                    // No need to include template_title for SMS
+                };
+            } else if (values.template_for === "3") {
+                template = {
+                    template_message: values.template.template_message, // Assuming content goes to template_message
+                    template_title: values.template.template_title,
+                };
+            }
+
 
             const newOSDTemplate = {
                 id: Math.floor(Math.random() * (30 - 20)) + 20,
                 name: values["name"],
                 template_for: values["template_for"],
-                template: values["template_message"],
+                template: template,
                 // template_config_id: values["template_config_id"] || [],
-                template_config_id: OSDvaluesIntegers,
+                // template_config_id: OSDvaluesIntegers,
                 // template_config_id: values["template_config_id"],
                 showcontent: values["showcontent"],
                 // casconfig: values["casconfig"],
                 bmailtitle: values["bmailtitle"],
                 content: values["content"],
                 status: values["status"],
+                template_config_id: values.template_config_id.map(option => option.id),
                 created_at: new Date(),
                 created_by: values["created_by"],
             };
