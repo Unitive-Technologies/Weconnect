@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
-// import TableContainer from "../../../components/Common/TableContainer";
-// import Spinners from "../../../components/Common/Spinner";
 import {
   Card,
   CardBody,
@@ -58,6 +56,8 @@ const BrandList = (props) => {
       brandCharacters: brandlist.brandlistCharacters,
       brandStatus: brandlist.brandlistStatus,
       loading: brandlist.loading,
+      totalPage: brandlist.totalPages,
+      totalCount: brandlist.totalCount,
       pageSize: brandlist.perPage,
       currentPage: brandlist.currentPage,
     })

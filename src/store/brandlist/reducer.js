@@ -62,6 +62,7 @@ const BrandList = (state = INIT_STATE, action) => {
       };
 
     case GET_BRANDLIST_SUCCESS:
+      console.log("Brand list data in reducer:", action.payload);
       return {
         ...state,
         brandlist: action.payload.data.data,

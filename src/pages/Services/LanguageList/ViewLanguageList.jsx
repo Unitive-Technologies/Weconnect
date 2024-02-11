@@ -43,13 +43,13 @@ const ViewLanguageList = (props) => {
 
         initialValues: {
             id: (language && language.id) || "",
-            language: (language && language.name) || "",
+            name: (language && language.name) || "",
             code: (language && language.code) || "",
             status: (language && language.status) || "",
             description: (language && language.description) || "",
         },
         validationSchema: Yup.object({
-            language: Yup.string().required("Please Enter Language"),
+            name: Yup.string().required("Please Enter Language"),
             code: Yup.string().required("Please Enter Code"),
             status: Yup.string().required("Please Enter status"),
             description: Yup.string().required("Please Enter description"),
@@ -57,7 +57,7 @@ const ViewLanguageList = (props) => {
         onSubmit: (values) => {
             const updateLanguageList = {
                 id: language.id,
-                language: values.language,
+                name: values.name,
                 code: values.code,
                 status: parseInt(values.status),
                 description: values.description,
@@ -66,6 +66,7 @@ const ViewLanguageList = (props) => {
             // update user
             dispatch(onUpdateLanguageList(updateLanguageList));
             validation.resetForm();
+            setShowEditLanguageList(false);
             handleViewLanguageList();
         },
     });
@@ -120,22 +121,22 @@ const ViewLanguageList = (props) => {
                             <div className="mb-3">
                                 <Label className="form-label">Language<span style={{ color: 'red' }}>*</span></Label>
                                 <Input
-                                    name="language"
+                                    name="name"
                                     type="text"
                                     placeholder="Enter Language"
                                     disabled={!showEditLanguageList}
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
-                                    value={validation.values.language || ""}
+                                    value={validation.values.name || ""}
                                     invalid={
-                                        validation.touched.language && validation.errors.language
+                                        validation.touched.name && validation.errors.name
                                             ? true
                                             : false
                                     }
                                 />
-                                {validation.touched.language && validation.errors.language ? (
+                                {validation.touched.name && validation.errors.name ? (
                                     <FormFeedback type="invalid">
-                                        {validation.errors.language}
+                                        {validation.errors.name}
                                     </FormFeedback>
                                 ) : null}
                             </div>
