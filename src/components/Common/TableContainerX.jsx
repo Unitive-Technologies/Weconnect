@@ -93,6 +93,7 @@ const TableContainerX = ({
   goToPage,
   subTableEnabled,
   getRenderedSubTable,
+  isSubTableContentExists,
 }) => {
   const [navigationPage, setNavigationPage] = React.useState(currentPage);
   const [open, setOpen] = React.useState(false);
@@ -231,27 +232,29 @@ const TableContainerX = ({
                         onClick={
                           subTableEnabled
                             ? () => toggleRowOpen(row.id)
-                            : handleRowClick
+                            : () => handleRowClick(row.original)
                         }
                         style={{ cursor: "pointer" }}
                       >
                         {subTableEnabled && (
                           <td>
-                            <span
-                              id={row.id}
-                              onClick={() => toggleRowOpen(row.id)}
-                            >
-                              <FontAwesomeIcon
-                                icon={open === row.id ? faMinus : faPlus}
-                                style={{
-                                  cursor: "pointer",
-                                  border: "solid 1px",
-                                  padding: "4px",
-                                  background: "#151b1e",
-                                  color: "white",
-                                }}
-                              />
-                            </span>
+                            {isSubTableContentExists(row.original) && (
+                              <span
+                                id={row.id}
+                                onClick={() => toggleRowOpen(row.id)}
+                              >
+                                <FontAwesomeIcon
+                                  icon={open === row.id ? faMinus : faPlus}
+                                  style={{
+                                    cursor: "pointer",
+                                    border: "solid 1px",
+                                    padding: "4px",
+                                    background: "#151b1e",
+                                    color: "white",
+                                  }}
+                                />
+                              </span>
+                            )}
                           </td>
                         )}
                         {row.cells.map((cell) => {
@@ -470,6 +473,7 @@ TableContainerX.propTypes = {
   goToPage: PropTypes.func,
   subTableEnabled: PropTypes.bool,
   getRenderedSubTable: PropTypes.func,
+  isSubTableContentExists: PropTypes.func,
 };
 
 export default TableContainerX;

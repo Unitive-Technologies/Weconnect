@@ -14,6 +14,8 @@ import { Link } from "react-router-dom";
 import JobListGlobalFilter from "./GlobalSearchFilter";
 import TableActionButtons from "./TableActionButtons";
 import Loader from "./Loader";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 // Define a default UI for filtering
 function GlobalFilter({
@@ -79,7 +81,19 @@ const TableContainer = ({
   iscustomPageSizeOptions,
   theadClass,
   isJobListGlobalFilter,
+  subTableEnabled,
+  getRenderedSubTable,
+  isSubTableContentExists,
 }) => {
+  const [open, setOpen] = React.useState(false);
+  const toggleRowOpen = (id) => {
+    if (open === id) {
+      setOpen(false);
+    } else {
+      setOpen(id);
+    }
+  };
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -198,6 +212,7 @@ const TableContainer = ({
             <thead className={theadClass}>
               {headerGroups.map((headerGroup) => (
                 <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
+                  {subTableEnabled && <th> </th>}
                   {headerGroup.headers.map((column) => (
                     <th
                       key={column.id}
@@ -220,9 +235,34 @@ const TableContainer = ({
                 return (
                   <Fragment key={row.getRowProps().key}>
                     <tr
-                      onClick={() => handleRowClick(row.original)}
+                      onClick={
+                        subTableEnabled
+                          ? () => toggleRowOpen(row.id)
+                          : () => handleRowClick(row.original)
+                      }
                       style={{ cursor: "pointer" }}
                     >
+                      {subTableEnabled && (
+                        <td>
+                          {isSubTableContentExists(row.original) && (
+                            <span
+                              id={row.id}
+                              onClick={() => toggleRowOpen(row.id)}
+                            >
+                              <FontAwesomeIcon
+                                icon={open === row.id ? faMinus : faPlus}
+                                style={{
+                                  cursor: "pointer",
+                                  border: "solid 1px",
+                                  padding: "4px",
+                                  background: "#151b1e",
+                                  color: "white",
+                                }}
+                              />
+                            </span>
+                          )}
+                        </td>
+                      )}
                       {row.cells.map((cell) => {
                         return (
                           <td
@@ -236,6 +276,13 @@ const TableContainer = ({
                         );
                       })}
                     </tr>
+                    {subTableEnabled && open === row.id && (
+                      <tr>
+                        <td colSpan={row.cells.length + 1}>
+                          {getRenderedSubTable(row.original)}
+                        </td>
+                      </tr>
+                    )}
                   </Fragment>
                 );
               })}
@@ -299,12 +346,16 @@ const TableContainer = ({
 TableContainer.defaultProps = {
   data: [],
   handleRowClick: () => {},
+  subTableEnabled: false,
 };
 
 TableContainer.propTypes = {
   preGlobalFilteredRows: PropTypes.any,
   data: PropTypes.array,
   handleRowClick: PropTypes.func,
+  subTableEnabled: PropTypes.bool,
+  getRenderedSubTable: PropTypes.func,
+  isSubTableContentExists: PropTypes.func,
 };
 
 export default TableContainer;

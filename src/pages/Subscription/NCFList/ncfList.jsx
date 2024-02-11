@@ -9,6 +9,7 @@ import {
   Col,
   Container,
   Row,
+  Table,
   Toast,
   ToastBody,
   ToastHeader,
@@ -107,6 +108,67 @@ const NCFList = (props) => {
 
   const handleWarning = () => {
     setShowWarning(!showWarning);
+  };
+
+  const additionalRateTableSchema = {
+    subTableArrayKeyName: "additional_rates",
+    keyColumn: "_id",
+    columns: [
+      {
+        header: "Name",
+        accessor: (rowData) => rowData.name,
+      },
+      {
+        header: "MRP",
+        accessor: (rowData) => rowData.mrp,
+      },
+      {
+        header: "LCO Discount(%)",
+        accessor: (rowData) => rowData.lmo_discount,
+      },
+      {
+        header: "LCO Rate",
+        accessor: (rowData) => rowData.lmo_rate,
+      },
+      {
+        header: "Per Channel",
+        accessor: (rowData) =>
+          rowData.calculate_per_channel == 0 ? "NO" : "YES",
+      },
+      {
+        header: "Is Refundable",
+        accessor: (rowData) => (rowData.is_refundable == 0 ? "NO" : "YES"),
+      },
+    ],
+  };
+
+  const getAdditionalRateListRendered = (rowData) => {
+    return (
+      <Table className="table mb-0">
+        <thead>
+          <tr>
+            {additionalRateTableSchema.columns.map((column) => {
+              return <th key={column.header}>{column.header}</th>;
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {rowData[additionalRateTableSchema.subTableArrayKeyName].map(
+            (object) => {
+              return (
+                <tr key={object.id}>
+                  {additionalRateTableSchema.columns.map((column) => {
+                    return (
+                      <td key={column.header}>{column.accessor(object)}</td>
+                    );
+                  })}
+                </tr>
+              );
+            }
+          )}
+        </tbody>
+      </Table>
+    );
   };
 
   const columns = useMemo(
@@ -410,6 +472,11 @@ const NCFList = (props) => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
+                      subTableEnabled={true}
+                      getRenderedSubTable={getAdditionalRateListRendered}
+                      isSubTableContentExists={(rowData) =>
+                        rowData.additional_rates.length > 0
+                      }
                     />
                   </CardBody>
                 </Card>
