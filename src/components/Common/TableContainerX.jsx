@@ -139,7 +139,8 @@ const TableContainerX = ({
     setPageSize(Number(event.target.value));
   };
 
-  const toggleRowOpen = (id) => {
+  const toggleRowOpen = (e, id) => {
+    e.preventDefault();
     if (open === id) {
       setOpen(false);
     } else {
@@ -229,12 +230,7 @@ const TableContainerX = ({
                     <Fragment key={row.getRowProps().key}>
                       {console.log("Row: ", row.original)}
                       <tr
-                        onClick={
-                          subTableEnabled &&
-                          isSubTableContentExists(row.original)
-                            ? () => toggleRowOpen(row.id)
-                            : () => handleRowClick(row.original)
-                        }
+                        onClick={() => handleRowClick(row.original)}
                         style={{ cursor: "pointer" }}
                       >
                         {subTableEnabled && (
@@ -242,7 +238,7 @@ const TableContainerX = ({
                             {isSubTableContentExists(row.original) && (
                               <span
                                 id={row.id}
-                                onClick={() => toggleRowOpen(row.id)}
+                                onClick={(e) => toggleRowOpen(e, row.id)}
                               >
                                 <FontAwesomeIcon
                                   icon={open === row.id ? faMinus : faPlus}

@@ -87,7 +87,6 @@ const TableContainer = ({
 }) => {
   const [open, setOpen] = React.useState(false);
   const toggleRowOpen = (e, id) => {
-    debugger;
     e.preventDefault();
     if (open === id) {
       setOpen(false);
