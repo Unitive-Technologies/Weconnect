@@ -296,18 +296,18 @@ const AddNewOSDTemplateList = (props) => {
                                         <div className="mb-3">
                                             <Label className="form-label">Title<span style={{ color: 'red' }}>*</span></Label>
                                             <Input
-                                                name="bmailtitle"
+                                                name="template_title"
                                                 type="text"
                                                 placeholder="Enter title"
                                                 // className="form-select"
                                                 onChange={validation.handleChange}
                                                 onBlur={validation.handleBlur}
-                                                value={validation.values.bmailtitle || ""}
+                                                value={validation.values.template_title || ""}
                                             >
                                             </Input>
-                                            {validation.touched.bmailtitle && validation.errors.bmailtitle ? (
+                                            {validation.touched.template_title && validation.errors.template_title ? (
                                                 <FormFeedback type="invalid">
-                                                    {validation.errors.bmailtitle}
+                                                    {validation.errors.template_title}
                                                 </FormFeedback>
                                             ) : null}
                                         </div>
@@ -316,19 +316,19 @@ const AddNewOSDTemplateList = (props) => {
                                         <div className="mb-3">
                                             <Label className="form-label">Content<span style={{ color: 'red' }}>*</span></Label>
                                             <Input
-                                                name="content"
+                                                name="template_message"
                                                 type="textarea"
                                                 placeholder="Enter content"
                                                 // className="form-select"
                                                 onChange={validation.handleChange}
                                                 onBlur={validation.handleBlur}
-                                                value={validation.values.content || ""}
+                                                value={validation.values.template_message || ""}
                                                 row="3"
                                             >
                                             </Input>
-                                            {validation.touched.content && validation.errors.content ? (
+                                            {validation.touched.template_message && validation.errors.template_message ? (
                                                 <FormFeedback type="invalid">
-                                                    {validation.errors.content}
+                                                    {validation.errors.template_message}
                                                 </FormFeedback>
                                             ) : null}
                                         </div>
