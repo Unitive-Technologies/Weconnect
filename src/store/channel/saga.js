@@ -89,7 +89,7 @@ function* onAddNewChannelList({ payload: channelList }) {
   try {
     const response = yield call(addNewChannelList, channelList);
     yield put(addChannelListSuccess(response));
-    // toast.success("ChannelList Added Successfully", { autoClose: 2000 });
+    toast.success("ChannelList Added Successfully", { autoClose: 2000 });
     yield put(fetchchannellists());
   } catch (error) {
     yield put(addChannelListFail(error));
