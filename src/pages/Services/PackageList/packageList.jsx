@@ -9,6 +9,7 @@ import {
   Col,
   Container,
   Row,
+  Table,
   UncontrolledTooltip,
 } from "reactstrap";
 
@@ -271,6 +272,41 @@ const PackageList = (props) => {
 
   const keyField = "id";
 
+  const renderChannelBBQTable = (row) => {
+    const { channels, brdBouques } = row;
+    const channelLength = channels.length;
+    const bbqLength = brdBouques.length;
+    const higherLength = channelLength > bbqLength ? channelLength : bbqLength;
+    const mergedData = Array.from({ length: higherLength }, (_, index) => {
+      return {
+        index: index,
+        channel: channelLength > index ? channels[index].name : "",
+        bbq: bbqLength > index ? brdBouques[index].name : "",
+      };
+    });
+    return (
+      <Table className="table mb-0">
+        <thead>
+          <tr>
+            {["Channels", "BBQ"].map((columnHeader) => {
+              return <th key={columnHeader}>{columnHeader}</th>;
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {mergedData.map((object) => {
+            return (
+              <tr key={object.index}>
+                <td key={object.channel}>{object.channel}</td>
+                <td key={object.bbq}>{object.bbq}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+    );
+  };
+
   const getTableActions = () => {
     return [
       {
@@ -392,6 +428,8 @@ const PackageList = (props) => {
                         setShowBulkUpdateCasCodePackageList(true)
                       }
                       goToPage={goToPage}
+                      subTableEnabled={true}
+                      getRenderedSubTable={renderChannelBBQTable}
                     />
                   </CardBody>
                 </Card>

@@ -92,7 +92,7 @@ const TableContainerX = ({
   tableClass,
   goToPage,
   subTableEnabled,
-  subTableSchema, // subTableSchema = {subTableArrayKeyName, keyColumn, columns}
+  getRenderedSubTable,
 }) => {
   const [navigationPage, setNavigationPage] = React.useState(currentPage);
   const [open, setOpen] = React.useState(false);
@@ -139,7 +139,6 @@ const TableContainerX = ({
   };
 
   const toggleRowOpen = (id) => {
-    debugger;
     if (open === id) {
       setOpen(false);
     } else {
@@ -271,36 +270,7 @@ const TableContainerX = ({
                       {subTableEnabled && open === row.id && (
                         <tr>
                           <td colSpan={row.cells.length + 1}>
-                            <Table className="table mb-0">
-                              <thead>
-                                <tr>
-                                  {subTableSchema.columns.map((column) => {
-                                    return (
-                                      <th key={column.accessor}>
-                                        {column.header}
-                                      </th>
-                                    );
-                                  })}
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {row.original[
-                                  subTableSchema.subTableArrayKeyName
-                                ].map((object) => {
-                                  return (
-                                    <tr key={object[subTableSchema.keyColumn]}>
-                                      {subTableSchema.columns.map((column) => {
-                                        return (
-                                          <td key={column.accessor}>
-                                            {object[column.accessor]}
-                                          </td>
-                                        );
-                                      })}
-                                    </tr>
-                                  );
-                                })}
-                              </tbody>
-                            </Table>
+                            {getRenderedSubTable(row.original)}
                           </td>
                         </tr>
                       )}
@@ -499,7 +469,7 @@ TableContainerX.propTypes = {
   totalPage: PropTypes.number,
   goToPage: PropTypes.func,
   subTableEnabled: PropTypes.bool,
-  subTableSchema: PropTypes.object,
+  getRenderedSubTable: PropTypes.func,
 };
 
 export default TableContainerX;

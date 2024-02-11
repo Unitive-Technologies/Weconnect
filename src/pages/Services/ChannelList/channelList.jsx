@@ -83,25 +83,6 @@ const ChannelList = (props) => {
     })
   );
 
-  const subTableSchema = {
-    subTableArrayKeyName: "casCodes",
-    keyColumn: "cas_id",
-    columns: [
-      {
-        header: "CAS",
-        accessor: "cas_lbl",
-      },
-      {
-        header: "CAS ID",
-        accessor: "cascode",
-      },
-      {
-        header: "SERVICE ID",
-        accessor: "serviceid",
-      },
-    ],
-  };
-
   useEffect(() => {
     dispatch(onGetChannelListCascode());
   }, [dispatch]);
@@ -355,6 +336,52 @@ const ChannelList = (props) => {
   };
   const keyField = "id";
 
+  const casTableSchema = {
+    subTableArrayKeyName: "casCodes",
+    keyColumn: "cas_id",
+    columns: [
+      {
+        header: "CAS",
+        accessor: "cas_lbl",
+      },
+      {
+        header: "CAS ID",
+        accessor: "cascode",
+      },
+      {
+        header: "SERVICE ID",
+        accessor: "serviceid",
+      },
+    ],
+  };
+
+  const renderCASTable = (row) => {
+    return (
+      <Table className="table mb-0">
+        <thead>
+          <tr>
+            {casTableSchema.columns.map((column) => {
+              return <th key={column.accessor}>{column.header}</th>;
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {row[casTableSchema.subTableArrayKeyName].map((object) => {
+            return (
+              <tr key={object[casTableSchema.keyColumn]}>
+                {casTableSchema.columns.map((column) => {
+                  return (
+                    <td key={column.accessor}>{object[column.accessor]}</td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+    );
+  };
+
   const getTableActions = () => {
     return [
       {
@@ -490,7 +517,7 @@ const ChannelList = (props) => {
                         setShowBulkUpdateChannelList(true)
                       }
                       subTableEnabled={true}
-                      subTableSchema={subTableSchema}
+                      getRenderedSubTable={renderCASTable}
                     />
                   </CardBody>
                 </Card>
