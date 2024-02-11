@@ -9,6 +9,7 @@ import {
   Col,
   Container,
   Row,
+  Table,
   UncontrolledTooltip,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -69,6 +70,54 @@ const ConnectionSchemeList = (props) => {
 
   const toggleBulkRemoval = () => {
     setShowBulkRemoval(!showBulkRemoval);
+  };
+
+  const stbBrandTableSchema = {
+    subTableArrayKeyName: "stbbrands",
+    keyColumn: "id",
+    columns: [
+      {
+        header: "Brand Name",
+        accessor: (rowData) => rowData.name,
+      },
+      {
+        header: "Box Type",
+        accessor: (rowData) => rowData.box_type_lbl,
+      },
+      {
+        header: "CAS",
+        accessor: (rowData) => rowData.cas_lbl,
+      },
+      {
+        header: "Type",
+        accessor: (rowData) => rowData.type_lbl,
+      },
+    ],
+  };
+
+  const getStbBrandListRendered = (rowData) => {
+    return (
+      <Table className="table mb-0">
+        <thead>
+          <tr>
+            {stbBrandTableSchema.columns.map((column) => {
+              return <th key={column.header}>{column.header}</th>;
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {rowData[stbBrandTableSchema.subTableArrayKeyName].map((object) => {
+            return (
+              <tr key={object.id}>
+                {stbBrandTableSchema.columns.map((column) => {
+                  return <td key={column.header}>{column.accessor(object)}</td>;
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+    );
   };
 
   const columns = useMemo(
@@ -361,6 +410,11 @@ const ConnectionSchemeList = (props) => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
+                      subTableEnabled={true}
+                      getRenderedSubTable={getStbBrandListRendered}
+                      isSubTableContentExists={(rowData) =>
+                        rowData.stbbrands.length > 0
+                      }
                     />
                   </CardBody>
                 </Card>

@@ -236,7 +236,7 @@ const TableContainer = ({
                   <Fragment key={row.getRowProps().key}>
                     <tr
                       onClick={
-                        subTableEnabled
+                        subTableEnabled && isSubTableContentExists(row.original)
                           ? () => toggleRowOpen(row.id)
                           : () => handleRowClick(row.original)
                       }

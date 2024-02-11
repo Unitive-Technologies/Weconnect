@@ -230,7 +230,8 @@ const TableContainerX = ({
                       {console.log("Row: ", row.original)}
                       <tr
                         onClick={
-                          subTableEnabled
+                          subTableEnabled &&
+                          isSubTableContentExists(row.original)
                             ? () => toggleRowOpen(row.id)
                             : () => handleRowClick(row.original)
                         }

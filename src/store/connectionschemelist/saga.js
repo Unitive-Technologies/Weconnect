@@ -38,7 +38,9 @@ const convertConnectionSchemeListObject = (connectionschemeList) => {
 function* fetchConnectionScheme() {
   try {
     const response = yield call(getConnectionScheme);
-    const connectionSchemeList = convertConnectionSchemeListObject(response);
+    const connectionSchemeList = convertConnectionSchemeListObject(
+      response.data
+    );
     yield put(getConnectionSchemeSuccess(connectionSchemeList));
   } catch (error) {
     console.error("Error fetching connection scheme list:", error);

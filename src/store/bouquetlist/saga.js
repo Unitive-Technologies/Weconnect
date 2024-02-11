@@ -57,7 +57,6 @@ function* fetchBouquet() {
 
     const response = yield call(getBouquet, currentPage, pageSize);
     console.log("Response from API -", response);
-    debugger;
     yield put(getBouquetSuccess(response));
   } catch (error) {
     console.error("Error fetching Bouquet list:", error);

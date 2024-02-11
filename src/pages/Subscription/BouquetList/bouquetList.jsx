@@ -9,6 +9,7 @@ import {
   Col,
   Container,
   Row,
+  Table,
   UncontrolledTooltip,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -113,6 +114,70 @@ const BouquetList = () => {
 
   const toggleBulkSettings = () => {
     setShowBulkSettings(!showBulkSettings);
+  };
+
+  const rateTableSchema = {
+    subTableArrayKeyName: "rate",
+    keyColumn: "id",
+    columns: [
+      {
+        header: "Period",
+        accessor: (rowData) => rowData.name,
+      },
+      {
+        header: "Price",
+        accessor: (rowData) => rowData.price,
+      },
+      {
+        header: "Rent/NCF",
+        accessor: (rowData) => rowData.rental,
+      },
+      {
+        header: "Tax",
+        accessor: (rowData) => rowData.tax_amount,
+      },
+      {
+        header: "Total",
+        accessor: (rowData) => rowData.amount,
+      },
+      {
+        header: "Refundable",
+        accessor: (rowData) => (rowData.is_refundable == 0 ? "NO" : "YES"),
+      },
+      {
+        header: "Free Days",
+        accessor: (rowData) => rowData.free_days,
+      },
+      {
+        header: "MRP(Tax Incl.)",
+        accessor: (rowData) => rowData.mrp,
+      },
+    ],
+  };
+
+  const getRateTableRendered = (rowData) => {
+    return (
+      <Table className="table mb-0">
+        <thead>
+          <tr>
+            {rateTableSchema.columns.map((column) => {
+              return <th key={column.header}>{column.header}</th>;
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {rowData[rateTableSchema.subTableArrayKeyName].map((object) => {
+            return (
+              <tr key={object.id}>
+                {rateTableSchema.columns.map((column) => {
+                  return <td key={column.header}>{column.accessor(object)}</td>;
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+    );
   };
 
   const columns = useMemo(
@@ -403,6 +468,11 @@ const BouquetList = () => {
                       //   handleViewUser(row);
                       // }}
                       goToPage={goToPage}
+                      subTableEnabled={true}
+                      getRenderedSubTable={getRateTableRendered}
+                      isSubTableContentExists={(rowData) =>
+                        rowData.rate.length > 0
+                      }
                     />
                   </CardBody>
                 </Card>
