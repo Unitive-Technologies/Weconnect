@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { size, map } from "lodash";
+import { UncontrolledTooltip } from "reactstrap";
 
 const Name = (cell) => {
   return cell.value ? cell.value : "";
@@ -41,13 +42,35 @@ const CasCodes = (cell) => {
 };
 
 const BBQ = (cell) => {
-  return cell.value.map((bbq) => {
-    return <p key={bbq.cas_id}>{bbq.name}</p>;
-  });
+  const bbq = cell.value.map((bbq) => bbq.name).join(", ");
+  return (
+    <p
+      style={{
+        maxWidth: 250,
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+      }}
+    >
+      {bbq}
+    </p>
+  );
 };
 
 const Channels = (cell) => {
-  return cell.value.map((channel) => channel.name).join(", ");
+  const channels = cell.value.map((channel) => channel.name).join(", ");
+  return (
+    <p
+      style={{
+        maxWidth: 200,
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+      }}
+    >
+      {channels}
+    </p>
+  );
 };
 
 const Rate = (cell) => {

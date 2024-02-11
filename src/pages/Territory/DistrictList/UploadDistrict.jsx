@@ -65,7 +65,7 @@ const UploadDistrict = (props) => {
 
     // axios call to POST endpoint with request body
     initiateSampleDownload_District(requestBody).then((response) => {
-      debugger;
+      // debugger;
       console.log(response);
       const data = [response.data.fields];
       setUploadInitatedId(response.data.token);

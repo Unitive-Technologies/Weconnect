@@ -179,6 +179,7 @@ const PackageList = (props) => {
         Header: "CHANNELS",
         accessor: "channels",
         filterable: true,
+        maxWidth: 20,
 
         Cell: (cellProps) => {
           return <Channels {...cellProps} />;
@@ -285,25 +286,31 @@ const PackageList = (props) => {
       };
     });
     return (
-      <Table className="table mb-0">
-        <thead>
-          <tr>
-            {["Channels", "BBQ"].map((columnHeader) => {
-              return <th key={columnHeader}>{columnHeader}</th>;
+      <div>
+        <Table responsive className="table mb-0">
+          <thead>
+            <tr>
+              {["Channels", "BBQ"].map((columnHeader) => {
+                return <th key={columnHeader}>{columnHeader}</th>;
+              })}
+            </tr>
+          </thead>
+          <tbody
+            style={{
+              maxHeight: 200,
+            }}
+          >
+            {mergedData.map((object) => {
+              return (
+                <tr key={object.index}>
+                  <td key={object.channel}>{object.channel}</td>
+                  <td key={object.bbq}>{object.bbq}</td>
+                </tr>
+              );
             })}
-          </tr>
-        </thead>
-        <tbody>
-          {mergedData.map((object) => {
-            return (
-              <tr key={object.index}>
-                <td key={object.channel}>{object.channel}</td>
-                <td key={object.bbq}>{object.bbq}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
+          </tbody>
+        </Table>
+      </div>
     );
   };
 

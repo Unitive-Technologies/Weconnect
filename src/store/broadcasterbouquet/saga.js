@@ -1,7 +1,11 @@
 import { call, put, select, takeEvery } from "redux-saga/effects";
 
 import {
-  GET_BROADCASTERBOUQUETLIST, GET_BROADCASTERBOUQUETLIST_STATUS, GET_BROADCASTERBOUQUETLIST_TYPE, GET_BROADCASTERBOUQUETLIST_BROADCASTER, GET_BROADCASTERBOUQUETLIST_ADDCHANNELS,
+  GET_BROADCASTERBOUQUETLIST,
+  GET_BROADCASTERBOUQUETLIST_STATUS,
+  GET_BROADCASTERBOUQUETLIST_TYPE,
+  GET_BROADCASTERBOUQUETLIST_BROADCASTER,
+  GET_BROADCASTERBOUQUETLIST_ADDCHANNELS,
   GET_BROADCASTERBOUQUETLIST_DEFINITION,
   UPDATE_BROADCASTERBOUQUETLIST,
   ADD_NEW_BROADCASTERBOUQUETLIST,
@@ -29,23 +33,34 @@ import {
 
 //Include Both Helper File with needed methods
 import {
-  getBroadcasterBouquetList, getBroadcasterBouquetStatus, getBroadcasterBouquetType, getBroadcasterBouquetBroadcaster, getBroadcasterBouquetAddchannels, getBroadcasterBouquetDefinition,
+  getBroadcasterBouquetList,
+  getBroadcasterBouquetStatus,
+  getBroadcasterBouquetType,
+  getBroadcasterBouquetBroadcaster,
+  getBroadcasterBouquetAddchannels,
+  getBroadcasterBouquetDefinition,
   updateBroadcasterBouquet,
-  addNewBroadcasterBouquetList
+  addNewBroadcasterBouquetList,
 } from "../../helpers/fakebackend_helper";
 
-export const getBroadcasterBouquetListStore = (state) => state.broadcasterBouquetList;
+export const getBroadcasterBouquetListStore = (state) =>
+  state.broadcasterBouquetList;
 
 function* fetchBroadcasterBouquetList() {
   try {
-    let BroadcasterBouquetListStore = yield select(getBroadcasterBouquetListStore);
+    let BroadcasterBouquetListStore = yield select(
+      getBroadcasterBouquetListStore
+    );
 
     const pageSize = BroadcasterBouquetListStore.pageSize;
     const currentPage = BroadcasterBouquetListStore.currentPage;
 
-    const response = yield call(getBroadcasterBouquetList, currentPage, pageSize);
+    const response = yield call(
+      getBroadcasterBouquetList,
+      currentPage,
+      pageSize
+    );
     console.log("Response from API -", response);
-    debugger;
     yield put(getBroadcasterBouquetListSuccess(response));
   } catch (error) {
     console.error("Error fetching Broadcaster Bouquet List :", error);
@@ -55,7 +70,10 @@ function* fetchBroadcasterBouquetList() {
 
 function* onAddNewBroadcasterBouquetList({ payload: broadcasterBouquetList }) {
   try {
-    const response = yield call(addNewBroadcasterBouquetList, broadcasterBouquetList);
+    const response = yield call(
+      addNewBroadcasterBouquetList,
+      broadcasterBouquetList
+    );
     yield put(addBroadcasterBouquetListSuccess(response));
     yield put(fetchbroadcasterbouquetLists());
   } catch (error) {
@@ -65,7 +83,10 @@ function* onAddNewBroadcasterBouquetList({ payload: broadcasterBouquetList }) {
 
 function* onUpdateBroadcasterBouquet({ payload: broadcasterBouquetList }) {
   try {
-    const response = yield call(updateBroadcasterBouquet, broadcasterBouquetList);
+    const response = yield call(
+      updateBroadcasterBouquet,
+      broadcasterBouquetList
+    );
     yield put(updateBroadcasterBouquetSuccess(response));
     yield put(fetchbroadcasterbouquetLists());
   } catch (error) {
@@ -112,24 +133,37 @@ function* fetchBroadcasterBouquetAddchannel() {
 function* fetchBroadcasterBouquetStatus() {
   try {
     const response = yield call(getBroadcasterBouquetStatus);
-    console.log("Broadcaster Bouquets Saga Status" + JSON.stringify(response))
+    console.log("Broadcaster Bouquets Saga Status" + JSON.stringify(response));
     yield put(getBroadcasterBouquetStatusSuccess(response.data));
   } catch (error) {
     yield put(getBroadcasterBouquetStatusFail(error));
   }
 }
 
-
 function* broadcasterBouquetListSaga() {
   yield takeEvery(GET_BROADCASTERBOUQUETLIST, fetchBroadcasterBouquetList);
-  yield takeEvery(ADD_NEW_BROADCASTERBOUQUETLIST, onAddNewBroadcasterBouquetList);
+  yield takeEvery(
+    ADD_NEW_BROADCASTERBOUQUETLIST,
+    onAddNewBroadcasterBouquetList
+  );
   yield takeEvery(UPDATE_BROADCASTERBOUQUETLIST, onUpdateBroadcasterBouquet);
-  yield takeEvery(GET_BROADCASTERBOUQUETLIST_ADDCHANNELS, fetchBroadcasterBouquetAddchannel);
-  yield takeEvery(GET_BROADCASTERBOUQUETLIST_BROADCASTER, fetchBroadcasterBouquetBroadcaster);
-  yield takeEvery(GET_BROADCASTERBOUQUETLIST_DEFINITION, fetchBroadcasterBouquetDefinition);
-  yield takeEvery(GET_BROADCASTERBOUQUETLIST_STATUS, fetchBroadcasterBouquetStatus);
+  yield takeEvery(
+    GET_BROADCASTERBOUQUETLIST_ADDCHANNELS,
+    fetchBroadcasterBouquetAddchannel
+  );
+  yield takeEvery(
+    GET_BROADCASTERBOUQUETLIST_BROADCASTER,
+    fetchBroadcasterBouquetBroadcaster
+  );
+  yield takeEvery(
+    GET_BROADCASTERBOUQUETLIST_DEFINITION,
+    fetchBroadcasterBouquetDefinition
+  );
+  yield takeEvery(
+    GET_BROADCASTERBOUQUETLIST_STATUS,
+    fetchBroadcasterBouquetStatus
+  );
   yield takeEvery(GET_BROADCASTERBOUQUETLIST_TYPE, fetchBroadcasterBouquetType);
-
 }
 
 export default broadcasterBouquetListSaga;

@@ -8,6 +8,7 @@ import {
   Container,
   Row,
   Spinner,
+  Table,
   UncontrolledTooltip,
 } from "reactstrap";
 
@@ -62,8 +63,7 @@ const BroadcasterBouquetList = (props) => {
       brodcastbouquetType: broadcasterBouquetList.broadbouquetType,
       brodcastbouquetAddchannels:
         broadcasterBouquetList.broadbouquetAddchannels,
-      brodcastbouquetDefinition:
-        broadcasterBouquetList.broadbouquetDefinition,
+      brodcastbouquetDefinition: broadcasterBouquetList.broadbouquetDefinition,
       brodcastbouquetBroadcaster:
         broadcasterBouquetList.broadbouquetBroadcaster,
       loading: broadcasterBouquetList.loading,
@@ -108,28 +108,64 @@ const BroadcasterBouquetList = (props) => {
     return <span>{formattedRate}</span>;
   };
 
+  const channelTableSchema = {
+    subTableArrayKeyName: "channels",
+    keyColumn: "id",
+    columns: [
+      {
+        header: "Channel Name",
+        accessor: (rowData) => rowData.name,
+      },
+      {
+        header: "Broadcaster",
+        accessor: (rowData) => rowData.broadcaster_lbl,
+      },
+      {
+        header: "Type",
+        accessor: (rowData) => rowData.channel_type_lbl,
+      },
+      {
+        header: "Alacarte",
+        accessor: (rowData) => rowData.isAlacarte_lbl,
+      },
+      {
+        header: "FTA",
+        accessor: (rowData) => (rowData.isFTA == 0 ? "FTA" : "Pay Channel"),
+      },
+      {
+        header: "Rate",
+        accessor: (rowData) => parseFloat(rowData.broadcasterRate).toFixed(2),
+      },
+    ],
+  };
+
+  const getChannelListRendered = (rowData) => {
+    return (
+      <Table className="table mb-0">
+        <thead>
+          <tr>
+            {channelTableSchema.columns.map((column) => {
+              return <th key={column.header}>{column.header}</th>;
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {rowData[channelTableSchema.subTableArrayKeyName].map((object) => {
+            return (
+              <tr key={object.id}>
+                {channelTableSchema.columns.map((column) => {
+                  return <td key={column.header}>{column.accessor(object)}</td>;
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+    );
+  };
+
   const columns = useMemo(
     () => [
-      {
-        Header: "    ",
-        disableFilters: true,
-        filterable: true,
-        Cell: (cellProps) => (
-          <div>
-            <FontAwesomeIcon
-              icon={faPlus}
-              style={{
-                cursor: "pointer",
-                border: "solid 1px",
-                padding: "4px",
-                background: "#151b1e",
-                color: "white",
-              }}
-            // onClick={handlePlusClick}
-            />
-          </div>
-        ),
-      },
       {
         Header: "#",
         disableFilters: true,
@@ -158,10 +194,10 @@ const BroadcasterBouquetList = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-              // onClick={() => {
-              //   const broadData = cellProps.row.original;
-              //   toggleViewModal(broadData);
-              // }}
+                // onClick={() => {
+                //   const broadData = cellProps.row.original;
+                //   toggleViewModal(broadData);
+                // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -395,6 +431,8 @@ const BroadcasterBouquetList = (props) => {
                         setShowAddNewBroadcasterBouquetList(true)
                       }
                       goToPage={goToPage}
+                      subTableEnabled={true}
+                      getRenderedSubTable={getChannelListRendered}
                     />
                   </CardBody>
                 </Card>
