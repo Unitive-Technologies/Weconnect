@@ -86,7 +86,9 @@ const TableContainer = ({
   isSubTableContentExists,
 }) => {
   const [open, setOpen] = React.useState(false);
-  const toggleRowOpen = (id) => {
+  const toggleRowOpen = (e, id) => {
+    debugger;
+    e.preventDefault();
     if (open === id) {
       setOpen(false);
     } else {
@@ -235,11 +237,7 @@ const TableContainer = ({
                 return (
                   <Fragment key={row.getRowProps().key}>
                     <tr
-                      onClick={
-                        subTableEnabled && isSubTableContentExists(row.original)
-                          ? () => toggleRowOpen(row.id)
-                          : () => handleRowClick(row.original)
-                      }
+                      onClick={() => handleRowClick(row.original)}
                       style={{ cursor: "pointer" }}
                     >
                       {subTableEnabled && (
@@ -247,7 +245,7 @@ const TableContainer = ({
                           {isSubTableContentExists(row.original) && (
                             <span
                               id={row.id}
-                              onClick={() => toggleRowOpen(row.id)}
+                              onClick={(e) => toggleRowOpen(e, row.id)}
                             >
                               <FontAwesomeIcon
                                 icon={open === row.id ? faMinus : faPlus}
