@@ -83,6 +83,25 @@ const ChannelList = (props) => {
     })
   );
 
+  const subTableSchema = {
+    subTableArrayKeyName: "casCodes",
+    keyColumn: "cas_id",
+    columns: [
+      {
+        header: "CAS",
+        accessor: "cas_lbl",
+      },
+      {
+        header: "CAS ID",
+        accessor: "cascode",
+      },
+      {
+        header: "SERVICE ID",
+        accessor: "serviceid",
+      },
+    ],
+  };
+
   useEffect(() => {
     dispatch(onGetChannelListCascode());
   }, [dispatch]);
@@ -117,13 +136,13 @@ const ChannelList = (props) => {
     setShowBulkUpdateCasCodeChannelList,
   ] = useState(false);
 
-  const [isTableVisible, setIsTableVisible] = useState(false);
+  // const [isTableVisible, setIsTableVisible] = useState(false);
   const [data, setData] = useState([]); // Assuming you have data state
   const [selectedData, setSelectedData] = useState(null);
 
   const handlePlusClick = () => {
     console.log("button clicked" + handlePlusClick);
-    setIsTableVisible(true);
+    // setIsTableVisible(true);
     // if (data.length > 0) {
     //   // Show details of the first item
     //   setSelectedData(data[0]);
@@ -132,26 +151,6 @@ const ChannelList = (props) => {
   console.log("Channel Lists:" + JSON.stringify(channel));
   const columns = useMemo(
     () => [
-      {
-        Header: "    ",
-        disableFilters: true,
-        filterable: true,
-        Cell: (cellProps) => (
-          <div>
-            <FontAwesomeIcon
-              icon={faPlus}
-              style={{
-                cursor: "pointer",
-                border: "solid 1px",
-                padding: "4px",
-                background: "#151b1e",
-                color: "white",
-              }}
-              onClick={handlePlusClick}
-            />
-          </div>
-        ),
-      },
       {
         Header: "#",
         disableFilters: true,
@@ -194,27 +193,6 @@ const ChannelList = (props) => {
               <p className="text-muted mb-0">
                 {cellProps.row.original.designation}
               </p>
-              {isTableVisible && (
-                <Table className="table mb-0">
-                  <thead>
-                    <tr>
-                      <th>CAS</th>
-                      <th>CAS CODE</th>
-                      <th>SERVICE ID</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data.map((item, index) => (
-                      <tr key={index}>
-                        {/* <th scope="row">1{selectedData.cas_id}</th> */}
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
-              )}
             </>
           );
         },
@@ -511,6 +489,8 @@ const ChannelList = (props) => {
                       toggleUpdateModal={() =>
                         setShowBulkUpdateChannelList(true)
                       }
+                      subTableEnabled={true}
+                      subTableSchema={subTableSchema}
                     />
                   </CardBody>
                 </Card>

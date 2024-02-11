@@ -13,6 +13,8 @@ import { Filter, DefaultColumnFilter } from "./filters";
 import { Link } from "react-router-dom";
 import JobListGlobalFilter from "./GlobalSearchFilter";
 import TableActionButtons from "./TableActionButtons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 // Define a default UI for filtering
 function GlobalFilter({
@@ -21,7 +23,7 @@ function GlobalFilter({
   setGlobalFilter,
   isJobListGlobalFilter,
 }) {
-  const count = preGlobalFilteredRows.length;
+  // const count = preGlobalFilteredRows.length;
   const [value, setValue] = React.useState(globalFilter);
   const onChange = (value) => {
     setGlobalFilter(value || undefined);
@@ -89,14 +91,19 @@ const TableContainerX = ({
   theadClass,
   tableClass,
   goToPage,
+  subTableEnabled,
+  subTableSchema, // subTableSchema = {subTableArrayKeyName, keyColumn, columns}
 }) => {
   const [navigationPage, setNavigationPage] = React.useState(currentPage);
+  const [open, setOpen] = React.useState(false);
+
   // console.log("[Table ContainerX] Page Size: ", pageSize);
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     page,
+    rows,
     prepareRow,
     state,
     preGlobalFilteredRows,
@@ -129,6 +136,15 @@ const TableContainerX = ({
 
   const onChangeInSelect = (event) => {
     setPageSize(Number(event.target.value));
+  };
+
+  const toggleRowOpen = (id) => {
+    debugger;
+    if (open === id) {
+      setOpen(false);
+    } else {
+      setOpen(id);
+    }
   };
 
   return (
@@ -189,6 +205,7 @@ const TableContainerX = ({
                     key={headerGroup.id}
                     {...headerGroup.getHeaderGroupProps()}
                   >
+                    {subTableEnabled && <th> </th>}
                     {headerGroup.headers.map((column) => (
                       <th
                         key={column.id}
@@ -210,10 +227,34 @@ const TableContainerX = ({
                   prepareRow(row);
                   return (
                     <Fragment key={row.getRowProps().key}>
+                      {console.log("Row: ", row.original)}
                       <tr
-                        onClick={() => handleRowClick(row.original)}
+                        onClick={
+                          subTableEnabled
+                            ? () => toggleRowOpen(row.id)
+                            : handleRowClick
+                        }
                         style={{ cursor: "pointer" }}
                       >
+                        {subTableEnabled && (
+                          <td>
+                            <span
+                              id={row.id}
+                              onClick={() => toggleRowOpen(row.id)}
+                            >
+                              <FontAwesomeIcon
+                                icon={open === row.id ? faMinus : faPlus}
+                                style={{
+                                  cursor: "pointer",
+                                  border: "solid 1px",
+                                  padding: "4px",
+                                  background: "#151b1e",
+                                  color: "white",
+                                }}
+                              />
+                            </span>
+                          </td>
+                        )}
                         {row.cells.map((cell) => {
                           return (
                             <td
@@ -227,6 +268,42 @@ const TableContainerX = ({
                           );
                         })}
                       </tr>
+                      {subTableEnabled && open === row.id && (
+                        <tr>
+                          <td colSpan={row.cells.length + 1}>
+                            <Table className="table mb-0">
+                              <thead>
+                                <tr>
+                                  {subTableSchema.columns.map((column) => {
+                                    return (
+                                      <th key={column.accessor}>
+                                        {column.header}
+                                      </th>
+                                    );
+                                  })}
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {row.original[
+                                  subTableSchema.subTableArrayKeyName
+                                ].map((object) => {
+                                  return (
+                                    <tr key={object[subTableSchema.keyColumn]}>
+                                      {subTableSchema.columns.map((column) => {
+                                        return (
+                                          <td key={column.accessor}>
+                                            {object[column.accessor]}
+                                          </td>
+                                        );
+                                      })}
+                                    </tr>
+                                  );
+                                })}
+                              </tbody>
+                            </Table>
+                          </td>
+                        </tr>
+                      )}
                     </Fragment>
                   );
                 })}
@@ -397,6 +474,7 @@ TableContainerX.defaultProps = {
   pageSize: 30,
   totalPage: 0,
   handleRowClick: () => {},
+  subTableEnabled: false,
 };
 
 TableContainerX.propTypes = {
@@ -420,6 +498,8 @@ TableContainerX.propTypes = {
   pageSize: PropTypes.number,
   totalPage: PropTypes.number,
   goToPage: PropTypes.func,
+  subTableEnabled: PropTypes.bool,
+  subTableSchema: PropTypes.object,
 };
 
 export default TableContainerX;
