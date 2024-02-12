@@ -22,6 +22,10 @@ import {
   UPDATE_STOCKSTB_MARKFAULTY,
   UPDATE_STOCKSTB_BLACKLIST,
   ADD_STOCKSTB_ACTIONUPDATION,
+  GET_STOCKPAIRING_INVENTORYSTATE,
+  UPDATE_STOCKPAIRING_MARKFAULTY,
+  UPDATE_STOCKPAIRING_BLACKLIST,
+  DELETE_STOCKPAIRING,
 } from "./actionTypes";
 import {
   getInventoryStockStb as onGetInventoryStockStb,
@@ -71,6 +75,14 @@ import {
   updateStockStbBlacklistFail,
   addStockStbActionupdationSuccess,
   addStockStbActionupdationFail,
+  updateStockPairingMarkfaultySuccess,
+  updateStockPairingMarkfaultyFail,
+  updateStockPairingBlacklistSuccess,
+  updateStockPairingBlacklistFail,
+  getStockPairingInventorystateSuccess,
+  getStockPairingInventorystateFail,
+  deleteStockPairingSuccess,
+  deleteStockPairingFail,
 } from "./actions";
 import {
   getInventoryStockSmartcard,
@@ -95,6 +107,10 @@ import {
   updateStockStbMarkfaulty,
   updateStockStbBlacklist,
   addStockStbActionupdation,
+  getStockPairingInventoryState,
+  updateStockPairingMarkfaulty,
+  updateStockpairingBlacklist,
+  deleteStockPairing,
 } from "../../helpers/fakebackend_helper";
 
 export const getStockPairingStore = (state) => state.stockpairing;
@@ -323,6 +339,44 @@ function* onAddStockStbActionupdation({ payload: stockstb }) {
   }
 }
 
+function* fetchStockPairingInventorystate() {
+  try {
+    const response = yield call(getStockPairingInventoryState);
+    yield put(getStockPairingInventorystateSuccess(response.data));
+  } catch (error) {
+    yield put(getStockPairingInventorystateFail(error));
+  }
+}
+
+function* onUpdateStockPairingMarkfaulty({ payload: stockpairing }) {
+  try {
+    const response = yield call(updateStockPairingMarkfaulty, stockpairing);
+    yield put(updateStockPairingMarkfaultySuccess(response.data));
+    yield put(onGetInventoryStockPairing());
+  } catch (error) {
+    yield put(updateStockPairingMarkfaultyFail(error));
+  }
+}
+
+function* onUpdateStockPairingBlacklist({ payload: stockpairing }) {
+  try {
+    const response = yield call(updateStockPairingBlacklist, stockpairing);
+    yield put(updateStockPairingBlacklistSuccess(response.data));
+    yield put(onGetInventoryStockPairing());
+  } catch (error) {
+    yield put(updateStockPairingBlacklistFail(error));
+  }
+}
+
+function* OnDeleteStockPairing({ payload: stockpairing }) {
+  try {
+    const response = yield call(deleteStockPairing, stockpairing);
+    yield put(deleteStockPairingSuccess(response));
+  } catch (error) {
+    yield put(deleteStockPairingFail(error));
+  }
+}
+
 function* inventorystockSaga() {
   yield takeEvery(GET_INVENTORYSTOCK_SMARTCARD, fetchInventoryStockSmartcard);
   yield takeEvery(GET_INVENTORYSTOCK_STB, fetchInventoryStockStb);
@@ -367,6 +421,16 @@ function* inventorystockSaga() {
   yield takeEvery(UPDATE_STOCKSTB_MARKFAULTY, onUpdateStockStbMarkfaulty);
   yield takeEvery(UPDATE_STOCKSTB_BLACKLIST, onUpdateStockStbBlacklist);
   yield takeEvery(ADD_STOCKSTB_ACTIONUPDATION, onAddStockStbActionupdation);
+  yield takeEvery(
+    GET_STOCKPAIRING_INVENTORYSTATE,
+    fetchStockPairingInventorystate
+  );
+  yield takeEvery(
+    UPDATE_STOCKPAIRING_MARKFAULTY,
+    onUpdateStockPairingMarkfaulty
+  );
+  yield takeEvery(UPDATE_STOCKPAIRING_BLACKLIST, onUpdateStockPairingBlacklist);
+  yield takeEvery(DELETE_STOCKPAIRING, OnDeleteStockPairing);
 }
 
 export default inventorystockSaga;
