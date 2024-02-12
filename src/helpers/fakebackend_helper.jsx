@@ -578,7 +578,8 @@ export const getOSDTemplateOSD = () => get(url.GET_OSDTEMPLATE_OSD);
 export const getOSDTemplateStatus = () => get(url.GET_OSDTEMPLATE_STATUS);
 export const addNewOSDTemplate = (osdtem) =>
   post(url.ADD_NEW_OSDTEMPLATE, osdtem);
-export const updateOSDTemplate = (id, osdtem) => put(url.UPDATE_OSDTEMPLATE(id), osdtem);
+export const updateOSDTemplate = (id, osdtem) =>
+  put(url.UPDATE_OSDTEMPLATE(id), osdtem);
 export const getOSDTemplate = async (currentPage, perPage = 20) => {
   console.log("Tax - Current Page in fakebackend: ", currentPage);
   console.log("Tax - Per Page: ", perPage);
@@ -768,7 +769,8 @@ export const updateStockPairingMarkfaulty = (stockpairing) =>
   put(url.UPDATE_STOCKPAIRING_MARKFAULTY, stockpairing);
 export const updateStockpairingBlacklist = (stockpairing) =>
   put(url.UPDATE_STOCKPAIRING_BLACKLIST, stockpairing);
-export const deleteStockPairing = () => post(url.DELETE_STOCKPAIRING);
+export const deleteStockPairing = (stockpairing) =>
+  post(url.DELETE_STOCKPAIRING, stockpairing);
 
 export const getInventoryFaultySmartcard = () =>
   get(url.GET_INVENTORYFAULTY_SMARTCARD);
