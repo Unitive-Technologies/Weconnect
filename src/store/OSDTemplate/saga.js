@@ -43,7 +43,7 @@ import { getOSDTemplate, getOSDTemplateStatus, getOSDTemplateOSD, getOSDTemplate
 //   });
 // };
 
-export const getOSDTemplateStore = (state) => state.OSDTemplate;
+export const getOSDTemplateStore = (state) => state.osdTemplate;
 
 
 function* fetchOSDTemplate() {
@@ -58,10 +58,11 @@ function* fetchOSDTemplate() {
     // debugger;
     yield put(getOSDTemplateSuccess(response));
   } catch (error) {
-    console.error("Error fetching Tax list:", error);
+    console.error("Error fetching OSD Template list:", error);
     yield put(getOSDTemplateFail(error));
   }
 }
+
 
 function* onUpdateOSDTemplate({ payload: OSDTemplate }) {
   console.log("OSDTemplate in onUpdate:" + JSON.stringify(OSDTemplate));

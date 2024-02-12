@@ -19,7 +19,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getOSDTemplate as onGetOSDTemplate } from "/src/store/actions";
 
 const AddNewOSDTemplateList = (props) => {
-    const { isOpen, toggle, toggleAddModal, osdTempOSD, osdTempStatus, osdTempTemplateFor } = props;
+    const { isOpen, toggleAddModal, osdTempOSD, osdTempStatus, osdTempTemplateFor } = props;
 
     console.log("Add OSD Templatee List of osdTempTemplateFor" + JSON.stringify(osdTempTemplateFor))
     const dispatch = useDispatch();
