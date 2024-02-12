@@ -339,52 +339,6 @@ const ViewOSDTemplateList = (props) => {
                             </div>
                         </Row>
 
-                        <Row>
-                            <Col sm="4">
-                                <div className="mb-3">
-                                    <Label className="form-label">OSD Show Content<span style={{ color: 'red' }}>*</span></Label>
-                                    <Input
-                                        name="operator_count"
-                                        type="textarea"
-                                        row="3"
-                                        placeholder=""
-                                        // className="form-select"
-                                        onChange={validation.handleChange}
-                                        onBlur={validation.handleBlur}
-                                        value={validation.values.operator_count || ""}
-                                        disabled={!showEditosdTemplate}
-                                    >
-                                    </Input>
-                                    {validation.touched.operator_count && validation.errors.operator_count ? (
-                                        <FormFeedback type="invalid">
-                                            {validation.errors.operator_count}
-                                        </FormFeedback>
-                                    ) : null}
-                                </div>
-                            </Col>
-                            <Col sm="4">
-                                <div className="mb-3">
-                                    <Label className="form-label">CAS Config (Select only 1 config per CAS)<span style={{ color: 'red' }}>*</span></Label>
-                                    <Input
-                                        name="casconfig"
-                                        type="select"
-                                        placeholder="Select Status"
-                                        className="form-select"
-                                        onChange={validation.handleChange}
-                                        onBlur={validation.handleBlur}
-                                        value={validation.values.casconfig || ""}
-                                        disabled={!showEditosdTemplate}
-                                    >
-                                    </Input>
-                                    {validation.touched.casconfig && validation.errors.casconfig ? (
-                                        <FormFeedback type="invalid">
-                                            {validation.errors.casconfig}
-                                        </FormFeedback>
-                                    ) : null}
-                                </div>
-                            </Col>
-                            <Col sm="4"></Col>
-                        </Row>
                         {showEditosdTemplate && (
                             <Row>
                                 <Col>
