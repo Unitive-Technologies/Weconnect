@@ -1,10 +1,7 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import {
-    Card,
-    CardBody,
     Col,
-    Container,
     Row,
     Modal,
     ModalHeader,
@@ -12,7 +9,6 @@ import {
     ModalFooter,
     Label,
     FormFeedback,
-    UncontrolledTooltip,
     Input,
     Form,
 } from "reactstrap";
@@ -23,7 +19,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getOSDTemplate as onGetOSDTemplate } from "/src/store/actions";
 
 const AddNewOSDTemplateList = (props) => {
-    const { isOpen, toggle, handleAddOSDTemplateList, osdTempOSD, osdTempStatus, osdTempTemplateFor } = props;
+    const { isOpen, toggle, toggleAddModal, osdTempOSD, osdTempStatus, osdTempTemplateFor } = props;
 
     console.log("Add OSD Templatee List of osdTempTemplateFor" + JSON.stringify(osdTempTemplateFor))
     const dispatch = useDispatch();
@@ -110,7 +106,7 @@ const AddNewOSDTemplateList = (props) => {
             );
             dispatch(onGetOSDTemplate());
             validation.resetForm();
-            handleAddOSDTemplateList();
+            toggleAddModal();
         },
         onReset: (values) => {
             validation.setValues(validation.initialValues);
@@ -126,9 +122,9 @@ const AddNewOSDTemplateList = (props) => {
             className="exampleModal"
             tabIndex="-1"
             size="xl"
-            toggle={handleAddOSDTemplateList}
+            toggle={toggleAddModal}
         >
-            <ModalHeader tag="h4" toggle={handleAddOSDTemplateList}>Add New OSD Template</ModalHeader>
+            <ModalHeader tag="h4" toggle={toggleAddModal}>Add New OSD Template</ModalHeader>
             <ModalBody>
                 <Form
                     onSubmit={(e) => {
@@ -360,7 +356,7 @@ const AddNewOSDTemplateList = (props) => {
                                     className="btn btn-outline-danger"
                                     onClick={() => {
                                         validation.resetForm();
-                                        handleAddOSDTemplateList();
+                                        toggleAddModal();
                                     }}
                                 >
                                     Cancel

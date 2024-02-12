@@ -571,14 +571,19 @@ export const getOSDConfigurationStatus = () =>
 export const addNewOSDConfiguration = (osdconfig) =>
   post(url.ADD_NEW_OSDCONFIGURATIONLIST, osdconfig);
 
-export const getOSDTemplate = () => get(url.GET_OSDTEMPLATE);
+// export const getOSDTemplate = () => get(url.GET_OSDTEMPLATE);
 export const getOSDTemplateTemplateFor = () =>
   get(url.GET_OSDTEMPLATE_TEMPLATEFOR);
 export const getOSDTemplateOSD = () => get(url.GET_OSDTEMPLATE_OSD);
 export const getOSDTemplateStatus = () => get(url.GET_OSDTEMPLATE_STATUS);
-
 export const addNewOSDTemplate = (osdtem) =>
   post(url.ADD_NEW_OSDTEMPLATE, osdtem);
+export const updateOSDTemplate = (id, osdtem) => put(url.UPDATE_OSDTEMPLATE(id), osdtem);
+export const getOSDTemplate = async (currentPage, perPage = 20) => {
+  console.log("Tax - Current Page in fakebackend: ", currentPage);
+  console.log("Tax - Per Page: ", perPage);
+  return await getCompleteResponse(url.getOSDTemplateUrl(currentPage, perPage));
+};
 
 export const getLocalChannelNumber = () => get(url.GET_LOCALCHANNELNUMBER);
 export const getDocumentUploadPolicy = () => get(url.GET_DOCUMENTUPLOADPOLICY);

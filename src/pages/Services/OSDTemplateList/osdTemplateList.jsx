@@ -1,46 +1,32 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
-import TableContainer from "../../../components/Common/TableContainer";
-import Spinners from "../../../components/Common/Spinner";
+// import TableContainer from "../../../components/Common/TableContainer";
+// import Spinners from "../../../components/Common/Spinner";
 import {
   Card,
   CardBody,
   Col,
   Container,
   Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   Toast,
   ToastHeader,
   ToastBody,
-  UncontrolledTooltip,
-  Input,
-  Form,
+  Spinner,
 } from "reactstrap";
 import * as Yup from "yup";
-import { useFormik } from "formik";
-import { Email, Tags, Projects } from "./osdTemplateListCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
 
 import {
+  goToPage as onGoToPage,
   getOSDTemplate as onGetOSDTemplate,
   getOSDTemplateOSD as onGetOSDTemplateOSD,
   getOSDTemplateStatus as onGetOSDTemplateStatus,
   getOSDTemplateTemplateFor as onGetOSDTemplateTemplateFor,
 } from "/src/store/OSDTemplate/actions";
 
-import { isEmpty } from "lodash";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -48,6 +34,7 @@ import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddNewOSDTemplate from "./AddOSDTemplateList";
 import ViewOSDTemplateList from "./ViewOSDTemplateList";
+import TableContainerX from "../../../components/Common/TableContainerX";
 
 const OSDTemplateList = (props) => {
   //meta title
@@ -58,18 +45,26 @@ const OSDTemplateList = (props) => {
   const [toast, setToast] = useState(false);
 
   const selectOSDTemplateState = (state) => state.osdTemplate;
+
   const osdTemplateProperties = createSelector(
     selectOSDTemplateState,
     (osdTemplate) => ({
       osdTemp: osdTemplate.osdTemplate,
+      loading: osdTemplate.loading,
       osdTempTemplateFor: osdTemplate.osdTemplateTemplateFor,
       osdTempOSD: osdTemplate.osdTemplateOSD,
       osdTempStatus: osdTemplate.osdTemplateStatus,
-      loading: osdTemplate.loading,
+      totalPage: osdTemplate.totalPages,
+      totalCount: osdTemplate.totalCount,
+      pageSize: osdTemplate.perPage,
+      currentPage: osdTemplate.currentPage,
     })
   );
 
-  const { osdTemp, osdTempOSD, osdTempTemplateFor, osdTempStatus, loading } =
+  const { osdTemp, osdTempOSD, osdTempTemplateFor, osdTempStatus, loading, totalPage,
+    totalCount,
+    pageSize,
+    currentPage } =
     useSelector(osdTemplateProperties);
 
   useEffect(() => {
@@ -92,14 +87,14 @@ const OSDTemplateList = (props) => {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
 
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -114,19 +109,11 @@ const OSDTemplateList = (props) => {
           return (
             <>
               <h5
-                className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleViewOSDTemplateList(userData);
-                }}
-              >
+                className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
               </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
             </>
           );
         },
@@ -204,68 +191,26 @@ const OSDTemplateList = (props) => {
     }
   }, [dispatch, osdTemp]);
 
-  const handleAddOSDTemplateList = () => {
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetOSDTemplate());
+  };
+
+  const toggleAddModal = () => {
     setShowAddOSDTemplateList(!showAddOSDTemplateList);
   };
 
   const [viewOSDTemplateList, setViewOSDTemplateList] = useState({});
 
-  const handleViewOSDTemplateList = (userOSDTemplateData) => {
+  const toggleViewModal = (userOSDTemplateData) => {
     setShowViewOSDTemplateList(!showViewOSDTemplateList);
     setViewOSDTemplateList(userOSDTemplateData);
     // toggle();
   };
 
-  const handleUserClick = (arg) => {
-    const user = arg;
-
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-    setIsEdit(true);
-
-    toggle();
-  };
-
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
-
-  //delete customer
-  const [deleteModal, setDeleteModal] = useState(false);
-
-  const onClickDelete = (users) => {
-    setContact(users);
-    setDeleteModal(true);
-  };
-
-  const handleDeleteUser = () => {
-    if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
-    }
-    setContact("");
-    onPaginationPageChange(1);
-    setDeleteModal(false);
-  };
-
-  const handleUserClicks = () => {
-    setUserList("");
-    setIsEdit(false);
-    toggle();
+  const resetSelection = () => {
+    setViewOSDTemplateList({});
   };
 
   const toggleToast = () => {
@@ -302,12 +247,16 @@ const OSDTemplateList = (props) => {
     <React.Fragment>
       <ViewOSDTemplateList
         isOpen={showViewOSDTemplateList}
-        toggle={handleViewOSDTemplateList}
+        toggleViewModal={toggleViewModal}
         osdTemplate={viewOSDTemplateList}
+        osdTempOSD={osdTempOSD}
+        osdTempStatus={osdTempStatus}
+        osdTempTemplateFor={osdTempTemplateFor}
+        resetSelection={resetSelection}
       />
       <AddNewOSDTemplate
         isOpen={showAddOSDTemplateList}
-        handleAddOSDTemplateList={handleAddOSDTemplateList}
+        toggleAddModal={toggleAddModal}
         osdTempOSD={osdTempOSD}
         osdTempStatus={osdTempStatus}
         osdTempTemplateFor={osdTempTemplateFor}
@@ -316,9 +265,14 @@ const OSDTemplateList = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Services" breadcrumbItem="OSD Template List" />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
+          <Breadcrumbs title="Service" breadcrumbItem="OSD TEMPLATE LIST" />
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">
@@ -343,7 +297,7 @@ const OSDTemplateList = (props) => {
 
                   <CardBody>
                     {console.log("OSDTemp:" + JSON.stringify(osdTemp))}
-                    <TableContainer
+                    {/* <TableContainer
                       isPagination={true}
                       columns={columns}
                       isGlobalFilter={true}
@@ -360,6 +314,27 @@ const OSDTemplateList = (props) => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
+                    /> */}
+                    <TableContainerX
+                      columns={columns}
+                      data={osdTemp}
+                      isShowTableActionButtons={true}
+                      isLoading={loading}
+                      isPagination={true}
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      totalPage={Number(totalPage)}
+                      isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      tableActions={getTableActions()}
+                      handleAddOSDTemplateList={() =>
+                        setShowAddOSDTemplateList(true)
+                      }
+                      handleRowClick={(row) => {
+                        toggleViewModal(row);
+                      }}
+                      goToPage={goToPage}
                     />
                   </CardBody>
                 </Card>

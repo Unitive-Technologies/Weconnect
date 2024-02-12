@@ -300,6 +300,11 @@ export const GET_OSDTEMPLATE_STATUS = "/list/status?fields=id,name&vr=web1.0";
 export const GET_OSDTEMPLATE_OSD =
   "/mtc/list?fields=id,name,cas_code&vr=web1.0";
 export const ADD_NEW_OSDTEMPLATE = "/message-template?vr=web1.0";
+export const getOSDTemplateUrl = (currPage, perPage) => {
+  console.log("current page in users url - ", currPage, perPage);
+  return `/message-template?expand=created_by_lbl,status_lbl,template_for_lbl,operator_count&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+};
+export const UPDATE_OSDTEMPLATE = (id) => `/message-template/${id}?vr=web1.0`;
 
 export const GET_NCF =
   "/ncf-rates?expand=status_lbl,created_by_lbl,type_lbl&page=1&per-page=50&vr=web1.0";
@@ -416,7 +421,6 @@ export const getTaxUrl = (currPage, perPage) => {
   console.log("current page in users url - ", currPage, perPage);
   return `/tax?expand=valuetype_lbl,parent_lbl,created_by_lbl,status_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
-
 export const ADD_NEW_TAXLIST = "/tax?vr=web1.0";
 export const UPDATE_TAX = (id) => `/tax/${id}?vr=web1.0`;
 
