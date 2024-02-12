@@ -763,7 +763,7 @@ export const updateStockPairingMarkfaulty = (stockpairing) =>
   put(url.UPDATE_STOCKPAIRING_MARKFAULTY, stockpairing);
 export const updateStockpairingBlacklist = (stockpairing) =>
   put(url.UPDATE_STOCKPAIRING_BLACKLIST, stockpairing);
-export const deleteStockPairing = () => del(url.DELETE_STOCKPAIRING);
+export const deleteStockPairing = () => post(url.DELETE_STOCKPAIRING);
 
 export const getInventoryFaultySmartcard = () =>
   get(url.GET_INVENTORYFAULTY_SMARTCARD);

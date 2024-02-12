@@ -89,6 +89,7 @@ const InventoryStock = (props) => {
     useState(false);
   const [showStockPairingBlacklist, setShowStockPairingBlacklist] =
     useState(false);
+  const [showDeleteStockPairing, setShowDeleteStockPairing] = useState(false)
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -808,6 +809,10 @@ const InventoryStock = (props) => {
             type: "dot",
             icon: "action",
             dropdownName: "",
+            action:
+              Object.keys(selectedPairings).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowDeleteStockPairing(true),
           },
         ];
         return actions;
@@ -1185,6 +1190,8 @@ const InventoryStock = (props) => {
                               handleSelectedPairings={handleSelectedPairings}
                               selectedPairings={selectedPairings}
                               pairinginventorystate={pairinginventorystate}
+                              showDeleteStockPairing={showDeleteStockPairing}
+                              setShowDeleteStockPairing={setShowDeleteStockPairing}
                             />
                           </Col>
                         </Row>

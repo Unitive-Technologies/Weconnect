@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import CreatePairing from "./CreatePairing";
 import StockPairingMarkfaulty from "./StockPairingMarkfaulty";
 import StockPairingBlacklist from "./StockPairingBlacklist";
+import DeleteStockPairing from "./DeleteStockPairing";
 
 const StockPairing = (props) => {
   const {
@@ -29,6 +30,8 @@ const StockPairing = (props) => {
     handleSelectedPairings,
     selectedPairings,
     pairinginventorystate,
+    showDeleteStockPairing,
+    setShowDeleteStockPairing,
   } = props;
 
   if (
@@ -53,6 +56,10 @@ const StockPairing = (props) => {
 
   const handleStockPairingBlacklist = () => {
     setShowStockPairingBlacklist(!showStockPairingBlacklist);
+  };
+
+  const handleDeleteStockPairing = () => {
+    setShowDeleteStockPairing(!showDeleteStockPairing);
   };
 
   const columns = useMemo(
@@ -243,6 +250,11 @@ const StockPairing = (props) => {
         toggle={handleStockPairingBlacklist}
         selectedPairings={selectedPairings}
       />
+      <DeleteStockPairing
+        isOpen={showDeleteStockPairing}
+        toggle={handleDeleteStockPairing}
+        selectedPairings={selectedPairings}
+      />
       <Row>
         <Col lg="12">
           <Card>
@@ -293,6 +305,8 @@ StockPairing.propTypes = {
   handleSelectedPairings: PropTypes.func,
   selectedPairings: PropTypes.array,
   pairinginventorystate: PropTypes.array,
+  showDeleteStockPairing: PropTypes.bool,
+  setShowDeleteStockPairing: PropTypes.func,
 };
 
 export default StockPairing;
