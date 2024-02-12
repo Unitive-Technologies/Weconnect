@@ -556,17 +556,24 @@ const InventoryStock = (state = INIT_STATE, action) => {
         error: action.payload,
       };
 
+    case DELETE_STOCKPAIRING:
+      return {
+        ...state,
+        loading: true,
+      };
+
     case DELETE_STOCKPAIRING_SUCCESS:
       return {
         ...state,
-        stockpairing: state.stockpairing.filter(
-          (pairing) => pairing.id.toString() !== action.payload.toString()
-        ),
+        stockpairing: [...state.stockpairing, action.payload],
+        loading: false,
       };
+
     case DELETE_STOCKPAIRING_FAIL:
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     default:
