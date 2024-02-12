@@ -16,7 +16,7 @@ import { ToastContainer } from "react-toastify";
 
 const AllottedNCF = ({ allottedNcfData }) => {
   //meta title
-  document.title = "Regional Offices | VDigital";
+  document.title = "LCO | VDigital";
 
   const operatorAccount = [];
 

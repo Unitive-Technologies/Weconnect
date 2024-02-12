@@ -17,7 +17,7 @@ import { ToastContainer } from "react-toastify";
 
 const SmsLogs = ({ smsLogsData }) => {
   //meta title
-  document.title = "Regional Offices | VDigital";
+  document.title = "LCO | VDigital";
 
   const columns = useMemo(
     () => [

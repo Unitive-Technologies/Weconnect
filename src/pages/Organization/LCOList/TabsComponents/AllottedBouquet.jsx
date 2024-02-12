@@ -17,10 +17,24 @@ import { ToastContainer } from "react-toastify";
 
 const AllottedBouquet = ({ allottedBouquetData }) => {
   //meta title
-  document.title = "Regional Offices | VDigital";
+  document.title = "LCO | VDigital";
 
   const columns = useMemo(
     () => [
+      {
+        Header: "*",
+        disableFilters: true,
+        filterable: true,
+
+        Cell: (cellProps) => {
+          return (
+            <input
+              type="checkbox"
+              // onClick={handleRowSelection(cellProps.row.original)}
+            />
+          );
+        },
+      },
       {
         Header: "#",
         // accessor: "name",
@@ -153,7 +167,7 @@ const AllottedBouquet = ({ allottedBouquetData }) => {
     return [
       {
         name: "Remove",
-        // action: setShowRegionalOffice,
+        // action: handleRemoveRows,
         type: "normal",
         icon: "create",
       },
@@ -177,6 +191,7 @@ const AllottedBouquet = ({ allottedBouquetData }) => {
                 isAddRegionalOffice={true}
                 isShowingPageLength={true}
                 tableActions={getTableActions()}
+                handleRowClick={(row) => handleRowSelection(row)}
                 isShowTableActionButtons={true}
                 customPageSize={50}
                 tableClass="table align-middle table-nowrap table-hover"

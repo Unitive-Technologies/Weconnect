@@ -14,15 +14,39 @@ import { getRegionalOffice as onGetRegionalOffice } from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import AddCreditModal from "./AddCreditModal";
+import {
+  getRegionalCreditList as onGetRegionalCreditList,
+  getRegionalBankList as onGetRegionalBankList,
+} from "/src/store/regionaloffice/actions";
 
-const OperatorAccountDetails = ({ accountDetails, selectedRowId }) => {
+const OperatorAccountDetails = ({
+  accountDetails,
+  setAccountDetails,
+  selectedRowId,
+  selectedRowData,
+}) => {
   //meta title
-  document.title = "Regional Offices | VDigital";
+  document.title = "LCO | VDigital";
+  const dispatch = useDispatch();
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
-
+  const [showAddCreditModal, setShowAddCreditModal] = useState(false);
   const currentDate = new Date().toISOString().split("T")[0];
   const [fromDate, setFromDate] = useState(currentDate);
   const [toDate, setToDate] = useState(currentDate);
+
+  const selectRegionalOfficeState = (state) => state.regionaloffice;
+
+  const RegionalOfficeProperties = createSelector(
+    selectRegionalOfficeState,
+    (regionalOfficesState) => ({
+      regionalCreditList: regionalOfficesState.regionalCreditList,
+      regionalBankList: regionalOfficesState.regionalBankList,
+    })
+  );
+  const { regionalCreditList, regionalBankList } = useSelector(
+    RegionalOfficeProperties
+  );
 
   const columns = useMemo(
     () => [
@@ -241,6 +265,14 @@ const OperatorAccountDetails = ({ accountDetails, selectedRowId }) => {
     []
   );
 
+  const toggleAddCreditModal = () => {
+    setShowAddCreditModal(!showAddCreditModal);
+  };
+  useEffect(() => {
+    dispatch(onGetRegionalCreditList());
+    dispatch(onGetRegionalBankList());
+  }, [dispatch]);
+
   const getTableActions = () => {
     return [
       {
@@ -251,7 +283,7 @@ const OperatorAccountDetails = ({ accountDetails, selectedRowId }) => {
       },
       {
         name: "Add Credit",
-        // action: setShowUploadRegionalOffice,
+        action: setShowAddCreditModal,
         type: "normal",
         icon: "create",
       },
@@ -266,59 +298,16 @@ const OperatorAccountDetails = ({ accountDetails, selectedRowId }) => {
 
   return (
     <React.Fragment>
-      <Form
-        // onSubmit={handleSearch}
-        onSubmit={(e) => {
-          e.preventDefault();
-          validation.handleSubmit();
-          return false;
-        }}
-      >
-        <Row>
-          <Col lg={2} className="mt-2">
-            <p>Transaction Date:</p>
-          </Col>
-          <Col lg={2}>
-            <Input
-              value={fromDate}
-              onChange={(e) => setFromDate(e.target.value)}
-              type="date"
-              // onChange={validation.handleChange}
-              // onBlur={validation.handleBlur}
-              // value={validation.values.fromDate || ""}
-            />
-          </Col>
-          <Col lg={2}>
-            <Input
-              value={toDate}
-              onChange={(e) => setToDate(e.target.value)}
-              type="date"
-              // onChange={validation.handleChange}
-              // onBlur={validation.handleBlur}
-              // value={validation.values.toDate || ""}
-            />
-          </Col>
-          <Col lg={2}>
-            <button type="submit" className="btn btn-success save-user">
-              {" "}
-              Search
-            </button>
-          </Col>
-        </Row>
-      </Form>
-      <form>
-        <input
-          type="date"
-          value={fromDate}
-          onChange={(e) => setFromDate(e.target.value)}
-        />
-        <input
-          type="date"
-          value={toDate}
-          onChange={(e) => setToDate(e.target.value)}
-        />
-        <button type="submit">Search</button>
-      </form>
+      <AddCreditModal
+        isOpen={showAddCreditModal}
+        toggleAddModal={toggleAddCreditModal}
+        selectedRowId={selectedRowId}
+        selectedRowData={selectedRowData}
+        regionalCreditList={regionalCreditList}
+        regionalBankList={regionalBankList}
+        setAccountDetails={setAccountDetails}
+      />
+
       <Row>
         <Col lg="12">
           <Card>

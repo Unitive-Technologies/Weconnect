@@ -17,6 +17,7 @@ import {
 } from "reactstrap";
 import TableContainer from "../../../../components/Common/TableContainer";
 import UploadDocsFile from "./UploadDocsFile";
+import { update } from "lodash";
 
 const UploadDocuments = ({ uploadDocsData }) => {
   const [uploadDocsList, setUploadDocsList] = useState([]);
@@ -372,6 +373,36 @@ const UploadDocuments = ({ uploadDocsData }) => {
         >
           Upload
         </Button>
+        <div
+          style={{
+            // margin: "20px 0px",
+            marginTop: "20px",
+            marginBottom: "18px",
+            zIndex: 12000,
+            backgroundColor: "#fff",
+            width: "fit-content",
+            marginLeft: "40%",
+            position: "absolute",
+            padding: "0px 10px",
+          }}
+        >
+          <h5 style={{}}>Upload Documents</h5>
+        </div>
+        <Row
+          style={{
+            position: "relative",
+            border: "1px solid #ced4da",
+            padding: "20px 0px",
+            margin: "30px 0px",
+          }}
+        >
+          <Col sm="12">
+            <UploadDocsFile
+              data={uploadDocsList}
+              updateList={setUploadDocsList}
+            />
+          </Col>
+        </Row>
       </Form>
     </div>
   );

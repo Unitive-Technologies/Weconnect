@@ -71,12 +71,13 @@ const OperatorAccountDetails = (props) => {
     }),
     onSubmit: async (values) => {
       try {
+        debugger;
         const newCredit = {
           fromDate: values["fromDate"],
           toDate: parseInt(values["toDate"]),
         };
         console.log("newCredit:" + newCredit);
-
+        debugger;
         const token = "Bearer " + localStorage.getItem("temptoken");
 
         const response = await axios.get(
@@ -376,6 +377,7 @@ const OperatorAccountDetails = (props) => {
         // onSubmit={handleSearch}
         onSubmit={(e) => {
           e.preventDefault();
+          debugger;
           validation.handleSubmit();
           return false;
         }}
@@ -411,6 +413,18 @@ const OperatorAccountDetails = (props) => {
           </Col>
         </Row>
       </Form>
+      <form>
+        <button
+          onClick={() => {
+            console.log("before click");
+            debugger;
+            console.log("after click");
+            console.log("Form submit");
+          }}
+        >
+          Search
+        </button>
+      </form>
       <Row>
         <Col lg="12">
           <Card>

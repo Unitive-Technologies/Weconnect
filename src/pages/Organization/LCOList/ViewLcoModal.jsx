@@ -45,6 +45,10 @@ const ViewLcoModal = (props) => {
   const [showEditLco, setShowEditLco] = useState(false);
   const [showOperatorDetails, setShowOperatorDetails] = useState(true);
   const [selectedRowData, setSelectedRowData] = useState({});
+  const [accountDetails, setAccountDetails] = useState([]);
+  const currentDate = new Date().toISOString().split("T")[0];
+  const [fromDate, setFromDate] = useState(currentDate);
+  const [toDate, setToDate] = useState(currentDate);
   // const selectLcoState = (state) => state.lco;
   // const LcoProperties = createSelector(selectLcoState, (lco) => ({
   //   lco: lco.lco,
@@ -58,13 +62,16 @@ const ViewLcoModal = (props) => {
 
     initialValues: {
       id: (lcoData && lcoData.id) || "",
-      name: lcoData.name,
+      name: (lcoData && lcoData.name) || "",
       code: lcoData.code,
-      addr1: lcoData.addr1,
+      addr: lcoData.addr,
       addr2: lcoData.addr2,
       addr3: lcoData.addr3,
       contact_person: lcoData.contact_person,
       mobile_no: lcoData.mobile_no,
+      mso_lbl: (lcoData && lcoData.mso_lbl) || "",
+      branch_lbl: (lcoData && lcoData.branch_lbl) || "",
+      distributor_lbl: (lcoData && lcoData.distributor_lbl) || "",
       phone_no: lcoData.phone_no,
       fax_no: lcoData.fax_no,
       state_lbl: lcoData.state_lbl,
@@ -178,10 +185,30 @@ const ViewLcoModal = (props) => {
       console.error("Error fetching bouquet data:", error);
     }
   };
+  const getOperatorAccountDetails = async (e) => {
+    // e.preventDefault();
+    // console.log("Form submitted");
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+      // console.log("Dates: " + fromDate, toDate);
+      const response = await axios.get(
+        `${API_URL}/operator-account?expand=created_by_lbl,type_lbl,cr_operator_lbl,dr_operator_lbl,credited_by,igst,cgst,sgst,name,balance,credit,debit,balance_h,credit_h,debit_h&filter[operator_id]=${lcoData.id}&filter[wallet_type]=2&filter[FRM_created_at]=${fromDate}&filter[TO_created_at]=${toDate}&page=1&per-page=50&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setAccountDetails(response.data.data);
+      console.log("response in useEffect:" + JSON.stringify(response));
+    } catch (error) {
+      console.error("Error fetching bouquet data:", error);
+    }
+  };
   useEffect(() => {
     if (lcoData) {
       getSelectedRowDetails();
-      // dispatch(onGetSingleLco());
+      getOperatorAccountDetails();
     }
   }, [lcoData]);
 
@@ -292,7 +319,7 @@ const ViewLcoModal = (props) => {
                             disabled
                             onChange={validation.handleChange}
                             onBlur={validation.handleBlur}
-                            value={validation.values.upload || ""}
+                            value={validation.values.name || ""}
                             invalid={
                               validation.touched.name && validation.errors.name
                                 ? true
@@ -389,52 +416,104 @@ const ViewLcoModal = (props) => {
                         <div className="mb-3">
                           <Label className="form-label">Address</Label>
                           <Input
-                            name="address"
+                            name="addr"
                             label="Address"
                             type="text"
                             placeholder="Enter Address"
                             disabled
                             onChange={validation.handleChange}
                             onBlur={validation.handleBlur}
-                            value={validation.values.address || ""}
+                            value={validation.values.addr || ""}
                             invalid={
-                              validation.touched.address &&
-                              validation.errors.address
+                              validation.touched.addr && validation.errors.addr
                                 ? true
                                 : false
                             }
                           />
-                          {validation.touched.address &&
-                          validation.errors.address ? (
+                          {validation.touched.addr && validation.errors.addr ? (
                             <FormFeedback type="invalid">
-                              {validation.errors.address}
+                              {validation.errors.addr}
                             </FormFeedback>
                           ) : null}
                         </div>
                       </Col>
-                      <Col lg={12}>
+                      <Col lg={4}>
                         <div className="mb-3">
-                          <Label className="form-label">Parent</Label>
+                          <Label className="form-label">MSO</Label>
                           <Input
-                            name="parent"
+                            name="mso_lbl"
+                            label="Parent"
+                            type="text"
+                            placeholder="Enter MSO"
+                            disabled
+                            onChange={validation.handleChange}
+                            onBlur={validation.handleBlur}
+                            value={validation.values.mso_lbl || ""}
+                            invalid={
+                              validation.touched.mso_lbl &&
+                              validation.errors.mso_lbl
+                                ? true
+                                : false
+                            }
+                          />
+                          {validation.touched.mso_lbl &&
+                          validation.errors.mso_lbl ? (
+                            <FormFeedback type="invalid">
+                              {validation.errors.mso_lbl}
+                            </FormFeedback>
+                          ) : null}
+                        </div>
+                      </Col>
+                      <Col lg={4}>
+                        <div className="mb-3">
+                          <Label className="form-label">Regional Office</Label>
+                          <Input
+                            name="branch_lbl"
+                            label="Parent"
+                            type="text"
+                            placeholder="Enter Regional Office"
+                            disabled
+                            onChange={validation.handleChange}
+                            onBlur={validation.handleBlur}
+                            value={validation.values.branch_lbl || ""}
+                            invalid={
+                              validation.touched.branch_lbl &&
+                              validation.errors.branch_lbl
+                                ? true
+                                : false
+                            }
+                          />
+                          {validation.touched.branch_lbl &&
+                          validation.errors.branch_lbl ? (
+                            <FormFeedback type="invalid">
+                              {validation.errors.branch_lbl}
+                            </FormFeedback>
+                          ) : null}
+                        </div>
+                      </Col>
+                      <Col lg={4}>
+                        <div className="mb-3">
+                          <Label className="form-label">Distributor</Label>
+                          <Input
+                            name="distributor_lbl"
                             label="Parent"
                             type="text"
                             placeholder="Enter Parent"
                             disabled
                             onChange={validation.handleChange}
                             onBlur={validation.handleBlur}
-                            value={validation.values.parent || ""}
+                            value={validation.values.distributor_lbl || ""}
                             invalid={
-                              validation.touched.parent &&
-                              validation.errors.parent
+                              validation.touched.distributor_lbl &&
+                              validation.errors.distributor_lbl
                                 ? true
                                 : false
                             }
                           />
-                          {validation.touched.parent &&
-                          validation.errors.parent ? (
+                          {validation.touched.distributor_lbl &&
+                          validation.errors.distributor_lbl ? (
                             <FormFeedback type="invalid">
-                              {validation.errors.parent}
+                              {validation.errors.distributor_lbl}
                             </FormFeedback>
                           ) : null}
                         </div>
@@ -446,7 +525,16 @@ const ViewLcoModal = (props) => {
                 )}
                 <Row>
                   <Col lg={12}>
-                    <TapsOfLco selectedRowId={selectedRowData.id} />
+                    <TapsOfLco
+                      selectedRowId={selectedRowData.id}
+                      accountDetails={accountDetails}
+                      setAccountDetails={setAccountDetails}
+                      setFromDate={setFromDate}
+                      setToDate={setToDate}
+                      fromDate={fromDate}
+                      toDate={toDate}
+                      selectedRowData={selectedRowData}
+                    />
                   </Col>
                 </Row>
               </Form>
