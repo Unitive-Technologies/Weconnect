@@ -4,6 +4,7 @@ import { Card, CardBody, Col, Row } from "reactstrap";
 import TableContainerX from "../../components/Common/TableContainerX";
 import PropTypes from "prop-types";
 import CreatePairing from "./CreatePairing";
+import StockPairingMarkfaulty from "./StockPairingMarkfaulty";
 
 const StockPairing = (props) => {
   const {
@@ -20,6 +21,13 @@ const StockPairing = (props) => {
     smartcardlist,
     stblist,
     stocksccastype,
+    showStockPairingMarkfaulty,
+    setShowStockPairingMarkfaulty,
+    showStockPairingBlacklist,
+    setShowStockPairingBlacklist,
+    handleSelectedPairings,
+    selectedPairings,
+    pairinginventorystate,
   } = props;
 
   if (
@@ -38,8 +46,28 @@ const StockPairing = (props) => {
     );
   }
 
+  const handleStockPairingMarkfaulty = () => {
+    setShowStockPairingMarkfaulty(!showStockPairingMarkfaulty);
+  };
+
+  const handleStockPairingBlacklist = () => {
+    setShowStockPairingBlacklist(!showStockPairingBlacklist);
+  };
+
   const columns = useMemo(
     () => [
+      {
+        Header: "*",
+        disableFilters: true,
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <>
+              <input type="checkbox" />
+            </>
+          );
+        },
+      },
       {
         Header: "#",
         disableFilters: true,
@@ -203,6 +231,12 @@ const StockPairing = (props) => {
         stblist={stblist}
         stocksccastype={stocksccastype}
       />
+      <StockPairingMarkfaulty
+        isOpen={showStockPairingMarkfaulty}
+        toggle={handleStockPairingMarkfaulty}
+        selectedPairings={selectedPairings}
+        pairinginventorystate={pairinginventorystate}
+      />
       <Row>
         <Col lg="12">
           <Card>
@@ -220,6 +254,9 @@ const StockPairing = (props) => {
                 isShowingPageLength={true}
                 tableActions={tableActions}
                 goToPage={goToPage}
+                handleRowClick={(row) => {
+                  handleSelectedPairings(row);
+                }}
               />
             </CardBody>
           </Card>
@@ -243,6 +280,13 @@ StockPairing.propTypes = {
   isOpen: PropTypes.bool,
   toggle: PropTypes.func,
   stocksccastype: PropTypes.array,
+  showStockPairingMarkfaulty: PropTypes.bool,
+  setShowStockPairingMarkfaulty: PropTypes.func,
+  showStockPairingBlacklist: PropTypes.bool,
+  setShowStockPairingBlacklist: PropTypes.func,
+  handleSelectedPairings: PropTypes.func,
+  selectedPairings: PropTypes.array,
+  pairinginventorystate: PropTypes.array,
 };
 
 export default StockPairing;

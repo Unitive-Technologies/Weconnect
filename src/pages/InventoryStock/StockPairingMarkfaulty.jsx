@@ -25,7 +25,7 @@ import {
 import { getInventoryFaultyPairing as onGetInventoryFaultyPairing } from "/src/store/inventoryfaulty/actions";
 
 function StockPairingMarkfaulty(props) {
-  const { isOpen, toggle, selectedPairings } = props;
+  const { isOpen, toggle, selectedPairings, pairinginventorystate } = props;
   const [isChecked, setIsChecked] = useState(true);
 
   const dispatch = useDispatch();
@@ -37,15 +37,17 @@ function StockPairingMarkfaulty(props) {
     initialValues: {
       remark: "",
       faulty: [],
+      invt_state: "",
     },
     validationSchema: Yup.object({
       remark: Yup.string().required("Enter remark"),
     }),
     onSubmit: (values) => {
       const newMarkfaulty = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
+        // id: Math.floor(Math.random() * (30 - 20)) + 20,
         remark: values["remark"],
         faulty: selectedPairings.map((row) => row.id),
+        invt_state: values["invt_state"],
       };
       console.log("mark faulty: " + JSON.stringify(newMarkfaulty));
       dispatch(onUpdateStockPairingMarkfaulty(newMarkfaulty));
@@ -161,6 +163,42 @@ function StockPairingMarkfaulty(props) {
             </Col>
           </Row>
           <Row>
+            <Col lg={3}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Inentory state<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="invt_state"
+                  type="select"
+                  placeholder="Select inventory state"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.invt_state || ""}
+                  invalid={
+                    validation.touched.state && validation.errors.invt_state
+                      ? true
+                      : false
+                  }
+                >
+                  <option value="">Select inventory state</option>
+                  {pairinginventorystate.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
+                </Input>
+                {validation.touched.invt_state &&
+                validation.errors.invt_state ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.invt_state}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col>
+          </Row>
+          <Row>
             <Col lg="6">
               <Label>
                 Remark (atleast 4 characters)
@@ -206,6 +244,7 @@ StockPairingMarkfaulty.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
   selectedPairings: PropTypes.array,
+  pairinginventorystate: PropTypes.array,
 };
 
 export default StockPairingMarkfaulty;

@@ -38,6 +38,7 @@ import {
   getPairingSmartcardList as onGetPairingSmartcardList,
   getPairingStbList as onGetPairingStbList,
   getStockActionInventorystate as onGetStockActionInventorystate,
+  getStockPairingInventorystate as onGetStockPairingInventoryState,
 } from "/src/store/inventorystock/actions";
 import {
   getInventoryFaultySmartcard as onGetInventoryFaultySmartcard,
@@ -83,6 +84,11 @@ const InventoryStock = (props) => {
   const [showStockStbMarkfaulty, setShowStockStbMarkfaulty] = useState(false);
   const [showStockStbBlacklist, setShowStockStbBlacklist] = useState(false);
   const [showStbActionupdated, setShowStbActionupdated] = useState(false);
+  const [selectedPairings, setSelectedPairings] = useState([]);
+  const [showStockPairingMarkfaulty, setShowStockPairingMarkfaulty] =
+    useState(false);
+  const [showStockPairingBlacklist, setShowStockPairingBlacklist] =
+    useState(false);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -105,6 +111,7 @@ const InventoryStock = (props) => {
       smartcardlist: stockpairing.smartcardlist,
       stblist: stockpairing.stblist,
       actioninventorystate: stockpairing.actioninventorystate,
+      pairinginventorystate: stockpairing.pairinginventorystate,
     })
   );
 
@@ -126,6 +133,7 @@ const InventoryStock = (props) => {
     smartcardlist,
     stblist,
     actioninventorystate,
+    pairinginventorystate,
   } = useSelector(inventorystockProperties);
 
   useEffect(() => {
@@ -142,6 +150,7 @@ const InventoryStock = (props) => {
       dispatch(onGetPairingSmartcardList());
       dispatch(onGetPairingStbList());
       dispatch(onGetStockActionInventorystate());
+      dispatch(onGetStockPairingInventoryState());
     }
   }, [dispatch, stockpairing]);
 
@@ -367,8 +376,8 @@ const InventoryStock = (props) => {
   };
 
   useEffect(() => {
-    console.log("Selected stbs: ", selectedStbs);
-  }, [selectedStbs]);
+    console.log("Selected pairings: ", selectedPairings);
+  }, [selectedPairings]);
 
   const handleSelectedRows = (row) => {
     // Check if the row is already selected
@@ -403,6 +412,24 @@ const InventoryStock = (props) => {
     } else {
       // If the row is not selected, add it to the selected rows array
       setSelectedStbs([...selectedStbs, row]);
+    }
+  };
+
+  const handleSelectedPairings = (row) => {
+    // Check if the row is already selected
+    const isSelected = selectedPairings.some(
+      (selectedPairing) => selectedPairing.id === row.id
+    );
+
+    // If the row is selected, remove it from the selected rows array
+    if (isSelected) {
+      const updatedSelectedPairings = selectedPairings.filter(
+        (selectedPairing) => selectedPairing.id !== row.id
+      );
+      setSelectedPairings(updatedSelectedPairings);
+    } else {
+      // If the row is not selected, add it to the selected rows array
+      setSelectedPairings([...selectedPairings, row]);
     }
   };
 
@@ -761,6 +788,10 @@ const InventoryStock = (props) => {
             type: "dot",
             icon: "action",
             dropdownName: "",
+            action:
+              Object.keys(selectedPairings).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowStockPairingMarkfaulty(true),
           },
           {
             name: "Blacklist",
@@ -1135,6 +1166,21 @@ const InventoryStock = (props) => {
                               smartcardlist={smartcardlist}
                               stblist={stblist}
                               stocksccastype={stocksccastype}
+                              showStockPairingMarkfaulty={
+                                showStockPairingMarkfaulty
+                              }
+                              setShowStockPairingMarkfaulty={
+                                setShowStockPairingMarkfaulty
+                              }
+                              showStockPairingBlacklist={
+                                showStockPairingBlacklist
+                              }
+                              setShowStockPairingBlacklist={
+                                setShowStockPairingBlacklist
+                              }
+                              handleSelectedPairings={handleSelectedPairings}
+                              selectedPairings={selectedPairings}
+                              pairinginventorystate={pairinginventorystate}
                             />
                           </Col>
                         </Row>
