@@ -72,13 +72,17 @@ const AddNewOSDTemplateList = (props) => {
                     template_message: values.template.template_message,
                     // No need to include template_title for SMS
                 };
+            } else if (values.template_for === "2") {
+                template = {
+                    template_message: values.template_message,
+                    // No need to include template_title for SMS
+                };
             } else if (values.template_for === "3") {
                 template = {
-                    template_message: values.template.template_message, // Assuming content goes to template_message
-                    template_title: values.template.template_title,
+                    template_message: values.template_message, // Assuming content goes to template_message
+                    template_title: values.template_title,
                 };
             }
-
 
             const newOSDTemplate = {
                 id: Math.floor(Math.random() * (30 - 20)) + 20,
@@ -240,19 +244,19 @@ const AddNewOSDTemplateList = (props) => {
                                         <div className="mb-3">
                                             <Label className="form-label">OSD Show Content<span style={{ color: 'red' }}>*</span></Label>
                                             <Input
-                                                name="showcontent"
+                                                name="template_message"
                                                 type="textarea"
                                                 placeholder="Enter SMS template"
                                                 // className="form-select"
                                                 onChange={validation.handleChange}
                                                 onBlur={validation.handleBlur}
-                                                value={validation.values.showcontent || ""}
+                                                value={validation.values.template_message || ""}
                                                 row="3"
                                             >
                                             </Input>
-                                            {validation.touched.showcontent && validation.errors.showcontent ? (
+                                            {validation.touched.template_message && validation.errors.template_message ? (
                                                 <FormFeedback type="invalid">
-                                                    {validation.errors.showcontent}
+                                                    {validation.errors.template_message}
                                                 </FormFeedback>
                                             ) : null}
                                         </div>
