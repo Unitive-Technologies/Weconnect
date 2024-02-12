@@ -134,7 +134,7 @@ function StockPairingMarkfaulty(props) {
       tabIndex="-1"
       toggle={toggle}
     >
-      <ModalHeader toggle={toggle}>Mark Faulty STB</ModalHeader>
+      <ModalHeader toggle={toggle}>Mark Faulty Pairing</ModalHeader>
       <Form
         onSubmit={(e) => {
           e.preventDefault();
