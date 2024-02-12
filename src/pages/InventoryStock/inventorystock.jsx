@@ -65,6 +65,7 @@ import UploadSmartcard from "./UploadSmartcaed";
 import StockScMarkfaulty from "./StockScMarkfaulty";
 import StockScBlacklist from "./StockScBlacklist";
 import StockActionUpdation from "./StockActionUpdation";
+import BulkUpdateSmartcard from "./BulkUpdateSmartcard";
 
 const InventoryStock = (props) => {
   document.title = "Inventory | VDigital";
@@ -89,7 +90,8 @@ const InventoryStock = (props) => {
     useState(false);
   const [showStockPairingBlacklist, setShowStockPairingBlacklist] =
     useState(false);
-  const [showDeleteStockPairing, setShowDeleteStockPairing] = useState(false)
+  const [showDeleteStockPairing, setShowDeleteStockPairing] = useState(false);
+  const [showBulkUpdateSmartcard, setShowBulkUpdateSmartcard] = useState(false);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -646,6 +648,10 @@ const InventoryStock = (props) => {
     setShowUploadSmartcard(!showUploadSmartcard);
   };
 
+  const handleBulkUpdateSmartcard = () => {
+    setShowBulkUpdateSmartcard(!showBulkUpdateSmartcard);
+  };
+
   const handleStockScMarkfaulty = () => {
     setShowStockScMarkfaulty(!showStockScMarkfaulty);
   };
@@ -683,6 +689,7 @@ const InventoryStock = (props) => {
             name: "Update",
             type: "dropdown",
             dropdownName: "Bulk",
+            action: setShowBulkUpdateSmartcard,
           },
           {
             name: "Mark Faulty",
@@ -988,6 +995,10 @@ const InventoryStock = (props) => {
         brand1={brand1}
         brand2={brand2}
       />
+      <BulkUpdateSmartcard
+        isOpen={showBulkUpdateSmartcard}
+        toggle={handleBulkUpdateSmartcard}
+      />
       <StockScMarkfaulty
         isOpen={showStockScMarkfaulty}
         toggle={handleStockScMarkfaulty}
@@ -1191,7 +1202,9 @@ const InventoryStock = (props) => {
                               selectedPairings={selectedPairings}
                               pairinginventorystate={pairinginventorystate}
                               showDeleteStockPairing={showDeleteStockPairing}
-                              setShowDeleteStockPairing={setShowDeleteStockPairing}
+                              setShowDeleteStockPairing={
+                                setShowDeleteStockPairing
+                              }
                             />
                           </Col>
                         </Row>
