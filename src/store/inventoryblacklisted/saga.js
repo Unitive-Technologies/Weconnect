@@ -18,6 +18,8 @@ import {
   getInventoryBlacklistedPairing,
 } from "../../helpers/fakebackend_helper";
 
+export const getBlacklistedPairingStore = (state) => state.blacklistedpairing;
+
 function* fetchInventoryBlacklistedSmartcard() {
   try {
     const response = yield call(getInventoryBlacklistedSmartcard);
@@ -40,9 +42,17 @@ function* fetchInventoryBlacklistedStb() {
 
 function* fetchInventoryBlacklistedPairing() {
   try {
-    const response = yield call(getInventoryBlacklistedPairing);
-    // console.log("response:" + JSON.stringify(response.data));
-    yield put(getInventoryBlacklistedPairingSuccess(response.data));
+    let blacklistedpairingStore = yield select(getBlacklistedPairingStore);
+
+    const pageSize = blacklistedpairingStore.pageSize;
+    const currentPage = blacklistedpairingStore.currentPage;
+
+    const response = yield call(
+      getInventoryBlacklistedPairing,
+      currentPage,
+      pageSize
+    );
+    yield put(getInventoryBlacklistedPairingSuccess(response));
   } catch (error) {
     yield put(getInventoryBlacklistedPairingFail(error));
   }

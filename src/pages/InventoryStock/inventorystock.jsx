@@ -50,6 +50,7 @@ import {
   getInventoryBlacklistedSmartcard as onGetInventoryBlacklistedSmartcard,
   getInventoryBlacklistedStb as onGetInventoryBlacklistedStb,
   getInventoryBlacklistedPairing as onGetInventoryBlacklistedPairing,
+  goToPage as onGoToPage3,
 } from "/src/store/inventoryblacklisted/actions";
 import {
   getInventoryAllottedSmartcard as onGetInventoryAllottedSmartcard,
@@ -228,11 +229,22 @@ const InventoryStock = (props) => {
       blacklistedsmartcard: blaclistedsmartcard.blacklistedsmartcard,
       blacklistedstb: blaclistedsmartcard.blacklistedstb,
       blacklistedpairing: blaclistedsmartcard.blacklistedpairing,
+      blacklistedtotalPage: blaclistedsmartcard.totalPages,
+      blacklistedtotalCount: blaclistedsmartcard.totalCount,
+      blacklistedpageSize: blaclistedsmartcard.perPage,
+      blacklistedcurrentPage: blaclistedsmartcard.currentPage,
     })
   );
 
-  const { blacklistedsmartcard, blacklistedstb, blacklistedpairing } =
-    useSelector(inventoryblacklistedProperties);
+  const {
+    blacklistedsmartcard,
+    blacklistedstb,
+    blacklistedpairing,
+    blacklistedcurrentPage,
+    blacklistedpageSize,
+    blacklistedtotalCount,
+    blacklistedtotalPage,
+  } = useSelector(inventoryblacklistedProperties);
 
   useEffect(() => {
     dispatch(onGetInventoryBlacklistedSmartcard());
@@ -253,6 +265,11 @@ const InventoryStock = (props) => {
   const goToPage2 = (toPage) => {
     dispatch(onGoToPage2(toPage));
     dispatch(onGetInventoryAllottedPairing());
+  };
+
+  const goToPage3 = (toPage) => {
+    dispatch(onGoToPage3(toPage));
+    dispatch(onGetInventoryBlacklistedPairing());
   };
 
   const toggleTab = (tab) => {
@@ -311,6 +328,10 @@ const InventoryStock = (props) => {
       if (activeTab === "3") {
         return allottedtotalPage;
       }
+    } else if (selectedOption === "Blacklisted") {
+      if (activeTab === "3") {
+        return blacklistedtotalPage;
+      }
     }
   };
 
@@ -326,6 +347,10 @@ const InventoryStock = (props) => {
     } else if (selectedOption === "Allotted") {
       if (activeTab === "3") {
         return allottedtotalCount;
+      }
+    } else if (selectedOption === "Blacklisted") {
+      if (activeTab === "3") {
+        return blacklistedtotalCount;
       }
     }
   };
@@ -343,6 +368,10 @@ const InventoryStock = (props) => {
       if (activeTab === "3") {
         return allottedpageSize;
       }
+    } else if (selectedOption === "Blacklisted") {
+      if (activeTab === "3") {
+        return blacklistedpageSize;
+      }
     }
   };
 
@@ -359,6 +388,10 @@ const InventoryStock = (props) => {
       if (activeTab === "3") {
         return allottedcurrentPage;
       }
+    } else if (selectedOption === "Blacklisted") {
+      if (activeTab === "3") {
+        return blacklistedcurrentPage;
+      }
     }
   };
 
@@ -374,6 +407,10 @@ const InventoryStock = (props) => {
     } else if (selectedOption === "Allotted") {
       if (activeTab === "3") {
         return goToPage2;
+      }
+    } else if (selectedOption === "Blacklisted") {
+      if (activeTab === "3") {
+        return goToPage3;
       }
     }
   };
@@ -853,21 +890,6 @@ const InventoryStock = (props) => {
       if (activeTab === "1") {
         actions = [
           {
-            name: "Create",
-            type: "normal",
-            icon: "create",
-          },
-          {
-            name: "Upload",
-            type: "dropdown",
-            dropdownName: "Bulk",
-          },
-          {
-            name: "Update",
-            type: "dropdown",
-            dropdownName: "Bulk",
-          },
-          {
             name: "Send to Smartcard Stock",
             type: "dot",
             icon: "action",
@@ -883,21 +905,6 @@ const InventoryStock = (props) => {
         return actions;
       } else if (activeTab === "2") {
         actions = [
-          {
-            name: "Create",
-            type: "normal",
-            icon: "create",
-          },
-          {
-            name: "Upload",
-            type: "dropdown",
-            dropdownName: "Bulk",
-          },
-          {
-            name: "Update",
-            type: "dropdown",
-            dropdownName: "Bulk",
-          },
           {
             name: "Send to STB Stock",
             type: "dot",
@@ -915,21 +922,6 @@ const InventoryStock = (props) => {
       } else if (activeTab === "3") {
         actions = [
           {
-            name: "Create",
-            type: "normal",
-            icon: "create",
-          },
-          {
-            name: "Upload",
-            type: "dropdown",
-            dropdownName: "Bulk",
-          },
-          {
-            name: "Update",
-            type: "dropdown",
-            dropdownName: "Bulk",
-          },
-          {
             name: "Send to Pairing Stock",
             type: "dot",
             icon: "action",
@@ -946,27 +938,27 @@ const InventoryStock = (props) => {
       }
     } else if (selectedOption === "Blacklisted") {
       actions = [
-        {
-          name: "Create",
-          type: "normal",
-          icon: "create",
-        },
-        {
-          name: "Upload",
-          type: "dropdown",
-          dropdownName: "Bulk",
-        },
-        {
-          name: "Update",
-          type: "dropdown",
-          dropdownName: "Bulk",
-        },
-        {
-          name: "",
-          type: "dot",
-          icon: "action",
-          dropdownName: "",
-        },
+        // {
+        //   name: "Create",
+        //   type: "normal",
+        //   icon: "create",
+        // },
+        // {
+        //   name: "Upload",
+        //   type: "dropdown",
+        //   dropdownName: "Bulk",
+        // },
+        // {
+        //   name: "Update",
+        //   type: "dropdown",
+        //   dropdownName: "Bulk",
+        // },
+        // {
+        //   name: "",
+        //   type: "dot",
+        //   icon: "action",
+        //   dropdownName: "",
+        // },
       ];
       return actions;
     }

@@ -783,8 +783,16 @@ export const getInventoryBlacklistedSmartcard = () =>
   get(url.GET_INVENTORYBLACKLISTED_SMARTCARD);
 export const getInventoryBlacklistedStb = () =>
   get(url.GET_INVENTORYBLACKLISTED_STB);
-export const getInventoryBlacklistedPairing = () =>
-  get(url.GET_INVENTORYBLACKLISTED_PAIRING);
+// export const getInventoryBlacklistedPairing = () =>
+//   get(url.GET_INVENTORYBLACKLISTED_PAIRING);
+export const getInventoryBlacklistedPairing = async (
+  currentPage,
+  perPage = 20
+) => {
+  return await getCompleteResponse(
+    url.getBlacklistedPairingUrl(currentPage, perPage)
+  );
+};
 
 export const getInventoryAllottedSmartcard = () =>
   get(url.GET_INVENTORYALLOTTED_SMARTCARD);
