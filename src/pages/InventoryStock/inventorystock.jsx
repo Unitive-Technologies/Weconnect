@@ -864,17 +864,12 @@ const InventoryStock = (props) => {
     } else if (selectedOption === "Allotted") {
       actions = [
         {
-          name: "Create",
+          name: "Allot",
           type: "normal",
           icon: "create",
         },
         {
           name: "Upload",
-          type: "dropdown",
-          dropdownName: "Bulk",
-        },
-        {
-          name: "Update",
           type: "dropdown",
           dropdownName: "Bulk",
         },
@@ -937,29 +932,7 @@ const InventoryStock = (props) => {
         return actions;
       }
     } else if (selectedOption === "Blacklisted") {
-      actions = [
-        // {
-        //   name: "Create",
-        //   type: "normal",
-        //   icon: "create",
-        // },
-        // {
-        //   name: "Upload",
-        //   type: "dropdown",
-        //   dropdownName: "Bulk",
-        // },
-        // {
-        //   name: "Update",
-        //   type: "dropdown",
-        //   dropdownName: "Bulk",
-        // },
-        // {
-        //   name: "",
-        //   type: "dot",
-        //   icon: "action",
-        //   dropdownName: "",
-        // },
-      ];
+      actions = [];
       return actions;
     }
     return [];

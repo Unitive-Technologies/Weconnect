@@ -542,6 +542,9 @@ export const DELETE_STOCKPAIRING = "/pairing/0/delpairing?vr=web1.0";
 
 export const GET_INVENTORYFAULTY_SMARTCARD =
   "/smartcard?expand=po_date,po_number,invoice_no,invoice_date,created_by_lbl,cas_lbl,status_lbl,brand_lbl,warehouse_lbl,state_lbl,inv_state_lbl&filter[status]=3&filter[stb_id]=0&page=1&per-page=50&vr=web1.0";
+export const UPDATE_FAULTYSMARTCARD_SENDSC = "/smartcard/stock?vr=web1.0";
+export const UPDATE_FAULTYSMARTCARD_BLACKLIST =
+  "/smartcard/blacklist?filter[status]=3&vr=web1.0";
 export const GET_INVENTORYFAULTY_STB =
   "stb?expand=po_date,po_number,invoice_no,invoice_date,created_by_lbl,status_lbl,brand_lbl,boxtype_lbl,cas_lbl,warehouse_lbl,state_lbl,inv_state_lbl&filter[status]=3&filter[sc_id]=0&filter[track]=1&page=1&per-page=50&vr=web1.0";
 export const GET_INVENTORYFAULTY_PAIRING =
