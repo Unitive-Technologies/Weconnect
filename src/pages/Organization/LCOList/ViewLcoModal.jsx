@@ -238,7 +238,9 @@ const ViewLcoModal = (props) => {
         {!showEditLco ? (
           <>
             <ModalHeader toggle={toggleViewLco} tag="h4">
-              <h4>View - {lcoData.name}</h4>
+              <h4>
+                View - {lcoData.name}, Balance: {selectedRowData.balance}
+              </h4>
             </ModalHeader>
             <Link
               style={{

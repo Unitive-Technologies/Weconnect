@@ -19,6 +19,7 @@ import {
   getRegionalCreditList as onGetRegionalCreditList,
   getRegionalBankList as onGetRegionalBankList,
 } from "/src/store/regionaloffice/actions";
+import SetOffAmountModal from "./SetOffAmountModal";
 
 const OperatorAccountDetails = ({
   accountDetails,
@@ -31,9 +32,7 @@ const OperatorAccountDetails = ({
   const dispatch = useDispatch();
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [showAddCreditModal, setShowAddCreditModal] = useState(false);
-  const currentDate = new Date().toISOString().split("T")[0];
-  const [fromDate, setFromDate] = useState(currentDate);
-  const [toDate, setToDate] = useState(currentDate);
+  const [showSetOffAmountModal, setShowSetOffAmountModal] = useState(false);
 
   const selectRegionalOfficeState = (state) => state.regionaloffice;
 
@@ -72,144 +71,161 @@ const OperatorAccountDetails = ({
       },
       {
         Header: "Transaction Date",
-        accessor: "name",
+        accessor: "created_at",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <>
               <h5
                 className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleViewRegionalOffice(userData);
-                }}
+                // onClick={() => {
+                //   const userData = cellProps.row.original;
+                //   handleViewRegionalOffice(userData);
+                // }}
               >
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.name}
+                  {cellProps.row.original.created_at}
                 </Link>
               </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
             </>
           );
         },
       },
       {
         Header: "Receipt No.",
-        accessor: "code",
+        accessor: "reciept_no",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.code}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.reciept_no}
+            </p>
           );
         },
       },
       {
         Header: "Amount",
-        accessor: "addr",
+        accessor: "amount",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.addr}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.amount}</p>
           );
         },
       },
       {
         Header: "SGST",
-        accessor: "contact_person",
+        // accessor: "contact_person",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.contact_person}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.sgst}</p>
           );
         },
       },
       {
         Header: "CGST",
-        accessor: "mobile_no",
+        // accessor: "mobile_no",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.mobile_no}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.cgst}</p>
           );
         },
       },
       {
         Header: "IGST",
-        accessor: "state_lbl",
+        // accessor: "state_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.state_lbl}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.igst}</p>
+          );
+        },
+      },
+      {
+        Header: "TDS",
+        // accessor: "state_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.tds}</p>
+          );
+        },
+      },
+      {
+        Header: "MRP",
+        // accessor: "state_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.mrp}</p>
           );
         },
       },
       {
         Header: "Total Tax",
-        accessor: "District_lbl",
+        // accessor: "District_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.district_lbl}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.tax}</p>
           );
         },
       },
       {
         Header: "Total Amount",
-        accessor: "city_lbl",
+        // accessor: "city_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.city_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.total_amount}
+            </p>
           );
         },
       },
       {
         Header: "Debit Amount",
-        accessor: "gstno",
+        // accessor: "gstno",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.gstno}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.debit_amount}
+            </p>
           );
         },
       },
       {
         Header: "Credit Amount",
-        accessor: "panno",
+        // accessor: "panno",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.panno}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.credit_amount}
+            </p>
           );
         },
       },
       {
         Header: "Type",
-        accessor: "username",
+        // accessor: "username",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.username}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.type_lbl}</p>
           );
         },
       },
       {
         Header: "Remark",
-        accessor: "status",
+        // accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.status}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.remark}</p>
           );
         },
       },
@@ -221,46 +237,11 @@ const OperatorAccountDetails = ({
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.created_by}
+              {cellProps.row.original.created_by_lbl}
             </p>
           );
         },
       },
-      // {
-      //   Header: "Action",
-      //   Cell: (cellProps) => {
-      //     return (
-      //       <div className="d-flex gap-3">
-      //         <Link
-      //           to="#"
-      //           className="text-success"
-      //           onClick={() => {
-      //             const userData = cellProps.row.original;
-      //             handleUserClick(userData);
-      //           }}
-      //         >
-      //           <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-      //           <UncontrolledTooltip placement="top" target="edittooltip">
-      //             Edit
-      //           </UncontrolledTooltip>
-      //         </Link>
-      //         <Link
-      //           to="#"
-      //           className="text-danger"
-      //           onClick={() => {
-      //             const userData = cellProps.row.original;
-      //             onClickDelete(userData);
-      //           }}
-      //         >
-      //           <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-      //           <UncontrolledTooltip placement="top" target="deletetooltip">
-      //             Delete
-      //           </UncontrolledTooltip>
-      //         </Link>
-      //       </div>
-      //     );
-      //   },
-      // },
     ],
     []
   );
@@ -268,6 +249,11 @@ const OperatorAccountDetails = ({
   const toggleAddCreditModal = () => {
     setShowAddCreditModal(!showAddCreditModal);
   };
+
+  const toggleSetOffModal = () => {
+    setShowSetOffAmountModal(!showSetOffAmountModal);
+  };
+
   useEffect(() => {
     dispatch(onGetRegionalCreditList());
     dispatch(onGetRegionalBankList());
@@ -289,7 +275,7 @@ const OperatorAccountDetails = ({
       },
       {
         name: "Setoff Amount",
-        // action: setShowUploadRegionalOffice,
+        action: setShowSetOffAmountModal,
         type: "normal",
         // icon: "create",
       },
@@ -307,6 +293,11 @@ const OperatorAccountDetails = ({
         regionalBankList={regionalBankList}
         setAccountDetails={setAccountDetails}
       />
+      <SetOffAmountModal
+        isOpen={showSetOffAmountModal}
+        toggleSetOffModal={toggleSetOffModal}
+        selectedRowData={selectedRowData}
+      />
 
       <Row>
         <Col lg="12">
@@ -316,7 +307,7 @@ const OperatorAccountDetails = ({
               <TableContainer
                 isPagination={true}
                 columns={columns}
-                data={accountDetails}
+                data={accountDetails && accountDetails}
                 isTransactionDate={true}
                 // isGlobalFilter={true}
                 isShowTableActionButtons={true}
