@@ -5,6 +5,7 @@ import TableContainerX from "../../components/Common/TableContainerX";
 import PropTypes from "prop-types";
 import CreatePairing from "./CreatePairing";
 import StockPairingMarkfaulty from "./StockPairingMarkfaulty";
+import StockPairingBlacklist from "./StockPairingBlacklist";
 
 const StockPairing = (props) => {
   const {
@@ -236,6 +237,11 @@ const StockPairing = (props) => {
         toggle={handleStockPairingMarkfaulty}
         selectedPairings={selectedPairings}
         pairinginventorystate={pairinginventorystate}
+      />
+      <StockPairingBlacklist
+        isOpen={showStockPairingBlacklist}
+        toggle={handleStockPairingBlacklist}
+        selectedPairings={selectedPairings}
       />
       <Row>
         <Col lg="12">

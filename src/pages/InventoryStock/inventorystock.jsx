@@ -798,6 +798,10 @@ const InventoryStock = (props) => {
             type: "dot",
             icon: "action",
             dropdownName: "",
+            action:
+              Object.keys(selectedPairings).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowStockPairingBlacklist(true),
           },
           {
             name: "Delete pairing",
