@@ -18,11 +18,11 @@ import TableContainer from "../../components/Common/TableContainer";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import {
-  updateStockSmartcardBlacklist as onUpdateStockSmartcardBlacklist,
-  getInventoryStockSmartcard as onGetInventoryStockSmartcard,
-} from "/src/store/inventorystock/actions";
 import { getInventoryBlacklistedSmartcard as onGetInventoryBlacklistedSmartcard } from "/src/store/inventoryblacklisted/actions";
+import {
+  updateFaultySmartcardBlacklist as onUpdateFaultySmartcardBlacklist,
+  getInventoryFaultySmartcard as onGetInventoryFaultySmartcard,
+} from "/src/store/inventoryfaulty/actions";
 
 function FaultySmartcardBlacklist(props) {
   const { isOpen, toggle, selectedFaultyScs } = props;
@@ -56,8 +56,8 @@ function FaultySmartcardBlacklist(props) {
         docs: selectedFileDetails,
       };
       console.log("Blacklist: " + JSON.stringify(newBlacklist));
-      dispatch(onUpdateStockSmartcardBlacklist(newBlacklist));
-      dispatch(onGetInventoryStockSmartcard());
+      dispatch(onUpdateFaultySmartcardBlacklist(newBlacklist));
+      dispatch(onGetInventoryFaultySmartcard());
       dispatch(onGetInventoryBlacklistedSmartcard());
       validation.resetForm();
       toggle();
