@@ -100,6 +100,9 @@ const InventoryStock = (props) => {
     useState(false);
   const [showFaultySmartcardBlacklist, setShowFaultySmartcardBlacklist] =
     useState(false);
+  const [selectedFaultyStbs, setSelectedFaultyStbs] = useState([]);
+  const [showFaultyStbSendstb, setShowFaultyStbSendstb] = useState(false);
+  const [showFaultyStbBlacklist, setShowFaultyStbBlacklist] = useState(false);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -423,8 +426,8 @@ const InventoryStock = (props) => {
   };
 
   useEffect(() => {
-    console.log("Selected pairings: ", selectedPairings);
-  }, [selectedPairings]);
+    console.log("Selected faulty stbs: ", selectedFaultyStbs);
+  }, [selectedFaultyStbs]);
 
   const handleSelectedRows = (row) => {
     // Check if the row is already selected
@@ -495,6 +498,24 @@ const InventoryStock = (props) => {
     } else {
       // If the row is not selected, add it to the selected rows array
       setSelectedFaultyScs([...selectedFaultyScs, row]);
+    }
+  };
+
+  const handleSelectedFaultyStb = (row) => {
+    // Check if the row is already selected
+    const isSelected = selectedFaultyStbs.some(
+      (selectedFaultyStb) => selectedFaultyStb.id === row.id
+    );
+
+    // If the row is selected, remove it from the selected rows array
+    if (isSelected) {
+      const updatedSelectedFaultyStbs = selectedFaultyStbs.filter(
+        (selectedFaultyStb) => selectedFaultyStb.id !== row.id
+      );
+      setSelectedFaultyStbs(updatedSelectedFaultyStbs);
+    } else {
+      // If the row is not selected, add it to the selected rows array
+      setSelectedFaultyStbs([...selectedFaultyStbs, row]);
     }
   };
 
@@ -945,13 +966,21 @@ const InventoryStock = (props) => {
             name: "Send to STB Stock",
             type: "dot",
             icon: "action",
-            dropdownName: "",
+            dropdownName: "Action",
+            action:
+              Object.keys(selectedFaultyStbs).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowFaultyStbSendstb(true),
           },
           {
             name: "Blacklist",
             type: "dot",
             icon: "action",
-            dropdownName: "",
+            dropdownName: "Action",
+            action:
+              Object.keys(selectedFaultyStbs).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowFaultyStbBlacklist(true),
           },
         ];
         return actions;
@@ -1196,6 +1225,16 @@ const InventoryStock = (props) => {
                               handleSelectedStbs={handleSelectedStbs}
                               selectedStbs={selectedStbs}
                               actioninventorystate={actioninventorystate}
+                              selectedFaultyStbs={selectedFaultyStbs}
+                              showFaultyStbSendstb={showFaultyStbSendstb}
+                              setShowFaultyStbSendstb={setShowFaultyStbSendstb}
+                              showFaultyStbBlacklist={showFaultyStbBlacklist}
+                              setShowFaultyStbBlacklist={
+                                setShowFaultyStbBlacklist
+                              }
+                              handleSelectedFaultyStb={handleSelectedFaultyStb}
+                              selectedOption={selectedOption}
+                              activeTab={activeTab}
                             />
                           </Col>
                         </Row>
