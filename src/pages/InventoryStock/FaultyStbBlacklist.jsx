@@ -18,15 +18,21 @@ import TableContainer from "../../components/Common/TableContainer";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { getInventoryStockSmartcard as onGetInventoryStockSmartcard } from "/src/store/inventorystock/actions";
+import { getInventoryBlacklistedSmartcard as onGetInventoryBlacklistedSmartcard } from "/src/store/inventoryblacklisted/actions";
 import {
+  updateFaultyStbBlacklist as onUpdateFaultyStbBlacklist,
   getInventoryFaultyStb as onGetInventoryFaultyStb,
-  updateFaultyStbSendstb as onUpdateFaultyStbSendstb,
 } from "/src/store/inventoryfaulty/actions";
 
-function FaultySendToStb(props) {
+function FaultyStbBlacklist(props) {
   const { isOpen, toggle, selectedFaultyStbs } = props;
   const [isChecked, setIsChecked] = useState(true);
+  const [selectedFileDetails, setSelectedFileDetails] = useState({
+    name: "",
+    type: "",
+    ext: "",
+    data: "",
+  });
 
   const dispatch = useDispatch();
 
@@ -37,20 +43,22 @@ function FaultySendToStb(props) {
     initialValues: {
       remark: "",
       blacklist: [],
+      docs: { name: "", type: "", ext: "", data: "" },
     },
     validationSchema: Yup.object({
       remark: Yup.string().required("Enter remark"),
     }),
     onSubmit: (values) => {
-      const sendToStb = {
+      const newBlacklist = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         remark: values["remark"],
         blacklist: selectedFaultyStbs.map((row) => row.id),
+        docs: selectedFileDetails,
       };
-      console.log("Send to stb: " + JSON.stringify(sendToStb));
-      dispatch(onUpdateFaultyStbSendstb(sendToStb));
+      console.log("Blacklist: " + JSON.stringify(newBlacklist));
+      dispatch(onUpdateFaultyStbBlacklist(newBlacklist));
       dispatch(onGetInventoryFaultyStb());
-      dispatch(onGetInventoryStockSmartcard());
+      dispatch(onGetInventoryBlacklistedSmartcard());
       validation.resetForm();
       toggle();
     },
@@ -117,7 +125,7 @@ function FaultySendToStb(props) {
       tabIndex="-1"
       toggle={toggle}
     >
-      <ModalHeader toggle={toggle}>Send to STB Stock</ModalHeader>
+      <ModalHeader toggle={toggle}>Blacklist STB</ModalHeader>
       <Form
         onSubmit={(e) => {
           e.preventDefault();
@@ -146,7 +154,7 @@ function FaultySendToStb(props) {
             </Col>
           </Row>
           <Row>
-            <Col lg="6">
+            <Col lg="4">
               <Label>
                 Remark (atleast 4 characters)
                 <span style={{ color: "red" }}>*</span>
@@ -171,13 +179,35 @@ function FaultySendToStb(props) {
                 </FormFeedback>
               ) : null}
             </Col>
+            <Col lg="4">
+              <Label>
+                Select Blacklisting reason file (MAX 2Mb)
+                <span style={{ color: "red" }}>*</span>
+              </Label>
+              <div className="mt-4 mt-md-0">
+                <Input
+                  type="file"
+                  className="form-control"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    const fileExtension = file.name.split(".").pop();
+                    setSelectedFileDetails({
+                      name: file.name,
+                      type: file.type,
+                      ext: fileExtension,
+                      data: "file", // Store the entire file object if needed
+                    });
+                  }}
+                />
+              </div>
+            </Col>
           </Row>
         </ModalBody>
         <Row>
           <Col>
             <ModalFooter>
               <button type="submit" className="btn btn-success save-user">
-                Send to stock
+                Blacklist
               </button>
             </ModalFooter>
           </Col>
@@ -187,10 +217,10 @@ function FaultySendToStb(props) {
   );
 }
 
-FaultySendToStb.propTypes = {
+FaultyStbBlacklist.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
   selectedFaultyStbs: PropTypes.array,
 };
 
-export default FaultySendToStb;
+export default FaultyStbBlacklist;

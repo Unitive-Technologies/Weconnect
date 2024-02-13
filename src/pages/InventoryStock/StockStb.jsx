@@ -9,6 +9,7 @@ import StockStbMarkfaulty from "./StockStbMarkfaulty";
 import StockStbBlacklist from "./StockStbBlacklist";
 import StbActionUpdation from "./StbActionUpdation";
 import FaultySendToStb from "./FaultySentToStb";
+import FaultyStbBlacklist from "./FaultyStbBlacklist";
 
 const StockStb = (props) => {
   const {
@@ -62,6 +63,10 @@ const StockStb = (props) => {
 
   const handleFaultyStbSendStb = () => {
     setShowFaultyStbSendstb(!showFaultyStbSendstb);
+  };
+
+  const handleFaultyStbBlacklist = () => {
+    setShowFaultyStbBlacklist(!showFaultyStbBlacklist);
   };
 
   const getFilteredHandleRowClicks = (Row) => {
@@ -281,6 +286,11 @@ const StockStb = (props) => {
       <FaultySendToStb
         isOpen={showFaultyStbSendstb}
         toggle={handleFaultyStbSendStb}
+        selectedFaultyStbs={selectedFaultyStbs}
+      />
+      <FaultyStbBlacklist
+        isOpen={showFaultyStbBlacklist}
+        toggle={handleFaultyStbBlacklist}
         selectedFaultyStbs={selectedFaultyStbs}
       />
       <Row>
