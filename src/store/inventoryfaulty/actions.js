@@ -21,6 +21,12 @@ import {
   UPDATE_FAULTYSTB_BLACKLIST,
   UPDATE_FAULTYSTB_BLACKLIST_SUCCESS,
   UPDATE_FAULTYSTB_BLACKLIST_FAIL,
+  UPDATE_FAULTYPAIRING_SENDPAIR,
+  UPDATE_FAULTYPAIRING_SENDPAIR_SUCCESS,
+  UPDATE_FAULTYPAIRING_SENDPAIR_FAIL,
+  UPDATE_FAULTYPAIRING_BLACKLIST,
+  UPDATE_FAULTYPAIRING_BLACKLIST_SUCCESS,
+  UPDATE_FAULTYPAIRING_BLACKLIST_FAIL,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -70,14 +76,14 @@ export const getInventoryFaultyPairingFail = (error) => ({
   payload: error,
 });
 
-export const updateFaultySmartcardSendsc = (faultypairing) => ({
+export const updateFaultySmartcardSendsc = (faultysmartcard) => ({
   type: UPDATE_FAULTYSMARTCARD_SENDSC,
-  payload: faultypairing,
+  payload: faultysmartcard,
 });
 
-export const updateFaultySmartcardSendscSuccess = (faultypairing) => ({
+export const updateFaultySmartcardSendscSuccess = (faultysmartcard) => ({
   type: UPDATE_FAULTYSMARTCARD_SENDSC_SUCCESS,
-  payload: faultypairing,
+  payload: faultysmartcard,
 });
 
 export const updateFaultySmartcardSendscFail = (error) => ({
@@ -85,14 +91,14 @@ export const updateFaultySmartcardSendscFail = (error) => ({
   payload: error,
 });
 
-export const updateFaultySmartcardBlacklist = (faultypairing) => ({
+export const updateFaultySmartcardBlacklist = (faultysmartcard) => ({
   type: UPDATE_FAULTYSMARTCARD_BLACKLIST,
-  payload: faultypairing,
+  payload: faultysmartcard,
 });
 
-export const updateFaultySmartcardBlacklistSuccess = (faultypairing) => ({
+export const updateFaultySmartcardBlacklistSuccess = (faultysmartcard) => ({
   type: UPDATE_FAULTYSMARTCARD_BLACKLIST_SUCCESS,
-  payload: faultypairing,
+  payload: faultysmartcard,
 });
 
 export const updateFaultySmartcardBlacklistFail = (error) => ({
@@ -126,6 +132,36 @@ export const updateFaultyStbBlacklistSuccess = (faultystb) => ({
 });
 
 export const updateFaultyStbBlacklistFail = (error) => ({
+  type: UPDATE_FAULTYSTB_BLACKLIST_FAIL,
+  payload: error,
+});
+
+export const updateFaultyPairingSendpair = (faultypairing) => ({
+  type: UPDATE_FAULTYSTB_SENDSTB,
+  payload: faultypairing,
+});
+
+export const updateFaultyPairingSendpairSuccess = (faultypairing) => ({
+  type: UPDATE_FAULTYSTB_SENDSTB_SUCCESS,
+  payload: faultypairing,
+});
+
+export const updateFaultyPairingSendpairFail = (error) => ({
+  type: UPDATE_FAULTYSTB_SENDSTB_FAIL,
+  payload: error,
+});
+
+export const updateFaultyPairingBlacklist = (faultypairing) => ({
+  type: UPDATE_FAULTYSTB_BLACKLIST,
+  payload: faultypairing,
+});
+
+export const updateFaultyPairingBlacklistSuccess = (faultypairing) => ({
+  type: UPDATE_FAULTYSTB_BLACKLIST_SUCCESS,
+  payload: faultypairing,
+});
+
+export const updateFaultyPairingBlacklistFail = (error) => ({
   type: UPDATE_FAULTYSTB_BLACKLIST_FAIL,
   payload: error,
 });

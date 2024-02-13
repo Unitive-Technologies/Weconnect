@@ -25,6 +25,12 @@ import {
   UPDATE_FAULTYSTB_BLACKLIST,
   UPDATE_FAULTYSTB_BLACKLIST_SUCCESS,
   UPDATE_FAULTYSTB_BLACKLIST_FAIL,
+  UPDATE_FAULTYPAIRING_SENDPAIR,
+  UPDATE_FAULTYPAIRING_SENDPAIR_SUCCESS,
+  UPDATE_FAULTYPAIRING_SENDPAIR_FAIL,
+  UPDATE_FAULTYPAIRING_BLACKLIST,
+  UPDATE_FAULTYPAIRING_BLACKLIST_SUCCESS,
+  UPDATE_FAULTYPAIRING_BLACKLIST_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -187,6 +193,54 @@ const InventoryFaulty = (state = INIT_STATE, action) => {
       };
 
     case UPDATE_FAULTYSTB_BLACKLIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+    case UPDATE_FAULTYPAIRING_SENDPAIR:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_FAULTYPAIRING_SENDPAIR_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        faultypairing: state.faultypairing.map((pairing) =>
+          pairing.id === action.payload.id
+            ? { ...pairing, ...action.payload }
+            : pairing
+        ),
+      };
+
+    case UPDATE_FAULTYPAIRING_SENDPAIR_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+    case UPDATE_FAULTYPAIRING_BLACKLIST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_FAULTYPAIRING_BLACKLIST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        faultypairing: state.faultypairing.map((pairing) =>
+          pairing.id === action.payload.id
+            ? { ...pairing, ...action.payload }
+            : pairing
+        ),
+      };
+
+    case UPDATE_FAULTYPAIRING_BLACKLIST_FAIL:
       return {
         ...state,
         error: action.payload,

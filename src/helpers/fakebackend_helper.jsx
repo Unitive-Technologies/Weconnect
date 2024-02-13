@@ -786,6 +786,10 @@ export const updateFaultyStbBlacklist = (faultystb) =>
 export const getInventoryFaultyPairing = async (currentPage, perPage = 20) => {
   return await getCompleteResponse(url.getFaultyPairingUrl(currentPage, 20));
 };
+export const updateFaultyPairingSendpair = (faultypairing) =>
+  put(url.UPDATE_FAULTYPAIRING_SENDPAIR, faultypairing);
+export const updateFaultyPairingBlacklist = (faultypairing) =>
+  put(url.UPDATE_FAULTYPAIRING_BLACKLIST, faultypairing);
 
 export const getInventoryBlacklistedSmartcard = () =>
   get(url.GET_INVENTORYBLACKLISTED_SMARTCARD);

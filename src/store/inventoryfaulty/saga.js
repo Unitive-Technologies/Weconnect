@@ -7,9 +7,13 @@ import {
   UPDATE_FAULTYSMARTCARD_BLACKLIST,
   UPDATE_FAULTYSTB_SENDSTB,
   UPDATE_FAULTYSTB_BLACKLIST,
+  UPDATE_FAULTYPAIRING_SENDPAIR,
+  UPDATE_FAULTYPAIRING_BLACKLIST,
 } from "./actionTypes";
 import {
   getInventoryFaultySmartcard as onGetInventoryFaultySmartcard,
+  getInventoryFaultyStb as onGetInventoryFaultyStb,
+  getInventoryFaultyPairing as onGetInventoryFaultyPairing,
   getInventoryFaultySmartcardSuccess,
   getInventoryFaultySmartcardFail,
   getInventoryFaultyStbSuccess,
@@ -24,6 +28,10 @@ import {
   updateFaultyStbSendstbFail,
   updateFaultyStbBlacklistSuccess,
   updateFaultyStbBlacklistFail,
+  updateFaultyPairingSendpairSuccess,
+  updateFaultyPairingSendpairFail,
+  updateFaultyPairingBlacklistSuccess,
+  updateFaultyPairingBlacklistFail,
 } from "./actions";
 import {
   getInventoryFaultySmartcard,
@@ -33,6 +41,8 @@ import {
   updateFaultySmartcardBlacklist,
   updateFaultyStbSendstb,
   updateFaultyStbBlacklist,
+  updateFaultyPairingSendpair,
+  updateFaultyPairingBlacklist,
 } from "../../helpers/fakebackend_helper";
 
 export const getFaultyPairingStore = (state) => state.faultypairing;
@@ -102,19 +112,39 @@ function* onUpdateFaultyStbSendstb({ payload: faultystb }) {
   try {
     const response = yield call(updateFaultyStbSendstb, faultystb);
     yield put(updateFaultyStbSendstbSuccess(response.data));
-    yield put(onGetInventoryFaultySmartcard());
+    yield put(onGetInventoryFaultyStb());
   } catch (error) {
     yield put(updateFaultyStbSendstbFail(error));
   }
 }
 
-function* onUpdateFaultyStbBlacklist({ payload: faultysmartcard }) {
+function* onUpdateFaultyStbBlacklist({ payload: faultystb }) {
   try {
-    const response = yield call(updateFaultyStbBlacklist, faultysmartcard);
+    const response = yield call(updateFaultyStbBlacklist, faultystb);
     yield put(updateFaultyStbBlacklistSuccess(response.data));
-    yield put(onGetInventoryFaultySmartcard());
+    yield put(onGetInventoryFaultyStb());
   } catch (error) {
     yield put(updateFaultyStbBlacklistFail(error));
+  }
+}
+
+function* onUpdateFaultyPairingSendpair({ payload: faultypairing }) {
+  try {
+    const response = yield call(updateFaultyPairingSendpair, faultypairing);
+    yield put(updateFaultyPairingSendpairSuccess(response.data));
+    yield put(onGetInventoryFaultyPairing());
+  } catch (error) {
+    yield put(updateFaultyPairingSendpairFail(error));
+  }
+}
+
+function* onUpdateFaultyPairingBlacklist({ payload: faultypairing }) {
+  try {
+    const response = yield call(updateFaultyPairingBlacklist, faultypairing);
+    yield put(updateFaultyPairingBlacklistSuccess(response.data));
+    yield put(onGetInventoryFaultyPairing());
+  } catch (error) {
+    yield put(updateFaultyPairingBlacklistFail(error));
   }
 }
 
@@ -127,8 +157,13 @@ function* inventoryfaultySaga() {
     UPDATE_FAULTYSMARTCARD_BLACKLIST,
     onUpdateFaultySmartcardBlacklist
   );
-
   yield takeEvery(UPDATE_FAULTYSTB_SENDSTB, onUpdateFaultyStbSendstb);
+  yield takeEvery(UPDATE_FAULTYSTB_BLACKLIST, onUpdateFaultyStbBlacklist);
+  yield takeEvery(UPDATE_FAULTYPAIRING_SENDPAIR, onUpdateFaultyPairingSendpair);
+  yield takeEvery(
+    UPDATE_FAULTYPAIRING_BLACKLIST,
+    onUpdateFaultyPairingBlacklist
+  );
 }
 
 export default inventoryfaultySaga;
