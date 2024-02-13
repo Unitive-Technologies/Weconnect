@@ -24,9 +24,32 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const AllottedBouquet = ({ allottedBouquetData }) => {
+const AllottedBouquet = ({ allottedBouquetData, selectedRowId }) => {
   //meta title
   document.title = "LCO | VDigital";
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
+  const [selectedRows, setSelectedRows] = useState([]);
+
+  // const handleRowSelection = (row) => {
+  //   const selectedId = row.original.id;
+  //   const isSelected = selectedRows.includes(selectedId);
+  //   if (isSelected) {
+  //     setSelectedRows(selectedRows.filter((id) => id !== selectedId));
+  //   } else {
+  //     setSelectedRows([...selectedRows, selectedId]);
+  //   }
+  // };
+  const handleRowSelection = (row) => {
+    console.log("Row clicked:", row.original);
+
+    const selectedRowIds = selectedRows.map((r) => r.id);
+    if (selectedRowIds.includes(row.original.id)) {
+      setSelectedRows(selectedRows.filter((r) => r.id !== row.original.id));
+    } else {
+      setSelectedRows([...selectedRows, row.original.id]);
+    }
+    console.log("Selected rows:", JSON.stringify(selectedRows));
+  };
 
   const columns = useMemo(
     () => [
@@ -34,15 +57,15 @@ const AllottedBouquet = ({ allottedBouquetData }) => {
         Header: "*",
         disableFilters: true,
         filterable: true,
-
-        Cell: (cellProps) => {
-          return (
-            <input
-              type="checkbox"
-              // onClick={handleRowSelection(cellProps.row.original)}
-            />
-          );
-        },
+        Cell: (cellProps) => (
+          <input
+            type="checkbox"
+            onClick={() => handleRowSelection(cellProps.row)}
+            checked={selectedRows.some(
+              (r) => r.id === cellProps.row.original.id
+            )}
+          />
+        ),
       },
       {
         Header: "#",
@@ -172,11 +195,42 @@ const AllottedBouquet = ({ allottedBouquetData }) => {
     []
   );
 
+  const handleRemoveRows = async (e) => {
+    e.preventDefault();
+
+    console.log("remove btn clicked");
+    console.log("selectedRows:" + JSON.stringify(selectedRows));
+
+    try {
+      const selectedRowsToBeRemove = {
+        operator_id: selectedRowId,
+        bouque_ids: selectedRows,
+      };
+
+      console.log("newUpload:", JSON.stringify(selectedRowsToBeRemove));
+
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.put(
+        `${API_URL}/operator-bouque/${selectedRowId}?vr=web1.0`,
+        selectedRowsToBeRemove,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      console.log("response after submitting remove form:", response.data);
+    } catch (error) {
+      console.error("Error submitting remove form:", error);
+    }
+  };
   const getTableActions = () => {
     return [
       {
         name: "Remove",
-        // action: handleRemoveRows,
+        action: selectedRows.length ? handleRemoveRows : showWarning,
         type: "normal",
         icon: "create",
       },
@@ -203,9 +257,9 @@ const AllottedBouquet = ({ allottedBouquetData }) => {
         <Col lg="12">
           <Card>
             <CardBody>
-              {console.log(
+              {/* {console.log(
                 "bouquet details:" + JSON.stringify(allottedBouquetData)
-              )}
+              )} */}
 
               <TableContainer
                 isPagination={true}

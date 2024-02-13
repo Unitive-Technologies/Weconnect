@@ -412,7 +412,10 @@ const TapsOfLco = ({
         <TabPane tabId="2">
           <Row>
             <Col sm="12">
-              <AllottedBouquet allottedBouquetData={allottedBouquetData} />
+              <AllottedBouquet
+                allottedBouquetData={allottedBouquetData}
+                selectedRowId={selectedRowId}
+              />
             </Col>
           </Row>
         </TabPane>

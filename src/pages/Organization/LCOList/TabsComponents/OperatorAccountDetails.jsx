@@ -3,7 +3,16 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import TableContainer from "../../../../components/Common/TableContainer";
 import Spinners from "../../../../components/Common/Spinner";
-import { Card, CardBody, Col, Container, Row, Form, Input } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  Col,
+  Container,
+  Row,
+  Form,
+  Input,
+  Table,
+} from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -20,6 +29,7 @@ import {
   getRegionalBankList as onGetRegionalBankList,
 } from "/src/store/regionaloffice/actions";
 import SetOffAmountModal from "./SetOffAmountModal";
+import TableContainerX from "../../../../components/Common/TableContainerX";
 
 const OperatorAccountDetails = ({
   accountDetails,
@@ -259,6 +269,55 @@ const OperatorAccountDetails = ({
     dispatch(onGetRegionalBankList());
   }, [dispatch]);
 
+  const paymentTableSchema = {
+    subTableArrayKeyName: "payment_details",
+    keyColumn: "mode",
+    columns: [
+      {
+        header: "Payment Mode",
+        accessor: "mode",
+      },
+      {
+        header: "Bank Name",
+        accessor: "bankname",
+      },
+      {
+        header: "Cheque/Instrument No.",
+        accessor: "chequeno",
+      },
+      {
+        header: "Cheque/Instrument Date",
+        accessor: "chequedate",
+      },
+    ],
+  };
+
+  const renderPaymentTable = (row) => {
+    return (
+      <Table className="table mb-0">
+        <thead>
+          <tr>
+            {paymentTableSchema.columns.map((column) => {
+              return <th key={column.accessor}>{column.header}</th>;
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {row[paymentTableSchema.subTableArrayKeyName].map((object) => {
+            return (
+              <tr key={object[paymentTableSchema.keyColumn]}>
+                {paymentTableSchema.columns.map((column) => {
+                  return (
+                    <td key={column.accessor}>{object[column.accessor]}</td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+    );
+  };
   const getTableActions = () => {
     return [
       {
@@ -319,6 +378,9 @@ const OperatorAccountDetails = ({
                 theadClass="table-light"
                 paginationDiv="col-sm-12 col-md-7"
                 pagination="pagination pagination-rounded justify-content-end mt-4"
+                // subTableEnabled={true}
+                // getRenderedSubTable={renderPaymentTable}
+                // isSubTableContentExists={(rowData) => rowData.rate.length > 0}
               />
             </CardBody>
           </Card>
