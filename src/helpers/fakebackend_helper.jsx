@@ -779,6 +779,10 @@ export const updateFaultySmartcardSendsc = (faultypairing) =>
 export const updateFaultySmartcardBlacklist = (faultypairing) =>
   put(url.UPDATE_FAULTYSMARTCARD_BLACKLIST, faultypairing);
 export const getInventoryFaultyStb = () => get(url.GET_INVENTORYFAULTY_STB);
+export const updateFaultyStbSendstb = (faultystb) =>
+  put(url.UPDATE_FAULTYSTB_SENDSTB, faultystb);
+export const updateFaultyStbBlacklist = (faultystb) =>
+  put(url.UPDATE_FAULTYSTB_BLACKLIST, faultystb);
 export const getInventoryFaultyPairing = async (currentPage, perPage = 20) => {
   return await getCompleteResponse(url.getFaultyPairingUrl(currentPage, 20));
 };
