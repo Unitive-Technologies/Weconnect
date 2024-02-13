@@ -14,6 +14,8 @@ import {
   Form,
 
 } from "reactstrap";
+import Select from "react-select";
+
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
@@ -173,7 +175,7 @@ const ViewReason = (props) => {
                   ) : null}
                 </div>
               </Col>
-              <Col sm="4">
+              {/* <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">Reason Type</Label>
                   <div className="d-flex align-items-center">
@@ -184,9 +186,10 @@ const ViewReason = (props) => {
                         const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
                         validation.setFieldValue("type_display_lbl", selectedOptions);
                       }}
+                      classNamePrefix="select2-selection"
                       onBlur={validation.handleBlur}
                       value={validation.values.type_display_lbl || []}
-                      multiple
+                      isMulti
                       disabled={!showEditReason}
                     >
                       {reasonReasonType.map((type_display_lbl) => (
@@ -195,6 +198,47 @@ const ViewReason = (props) => {
                         </option>
                       ))}
                     </Input>
+                  </div>
+                  {validation.touched.type_display_lbl && validation.errors.type_display_lbl ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.type_display_lbl}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col> */}
+              {/* <div className="mb-3">
+                <Label className="control-label">Features</Label>
+                <Select
+                  classNamePrefix="select2-selection"
+                  placeholder="Choose..."
+                  title="Country"
+                  value={validation.values.type_display_lbl || []}
+                  isMulti
+                />
+              </div> */}
+
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">Reason Type</Label>
+                  <div className="d-flex align-items-center">
+                    <Select
+                      name="type_display_lbl"
+                      placeholder="Select at least one Reason Type"
+                      onChange={e => {
+                        const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
+                        validation.setFieldValue("type_display_lbl", selectedOptions);
+                      }}
+                      classNamePrefix="select2-selection"
+                      onBlur={validation.handleBlur}
+                      value={validation.values.type_display_lbl || []} // Set default values here
+                      options={reasonReasonType.map((type_display_lbl) => ({
+                        value: type_display_lbl.id,
+                        label: type_display_lbl.name,
+                      }))}
+
+                      isMulti
+                      isDisabled={!showEditReason}
+                    />
                   </div>
                   {validation.touched.type_display_lbl && validation.errors.type_display_lbl ? (
                     <FormFeedback type="invalid">

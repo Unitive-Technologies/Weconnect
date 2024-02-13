@@ -87,7 +87,7 @@ const ViewOSDTemplateList = (props) => {
         toggleViewModal();
     };
 
-    console.log("View OSD Template Data" + validation.values.template_for)
+    console.log("View OSD Template Data" + typeof validation.values.template_for)
 
     return (
         <>
@@ -207,9 +207,139 @@ const ViewOSDTemplateList = (props) => {
                             </Col>
 
                             <div>
+                                {validation.values.template_for === 1 && (
+                                    < Col sm="4">
+                                        <div className="mb-3">
+                                            <Label className="form-label">SMS Template (max 140 characters)<span style={{ color: 'red' }}>*</span></Label>
+                                            <Input
+                                                name="template_message"
+                                                type="textarea"
+                                                placeholder="Enter SMS template"
+                                                // className="form-select"
+                                                onChange={validation.handleChange}
+                                                onBlur={validation.handleBlur}
+                                                value={validation.values.template_message || ""}
+                                                row="3"
+                                                disabled={!showEditosdTemplate}
+                                            >
+                                            </Input>
+                                            {validation.touched.template_message && validation.errors.template_message ? (
+                                                <FormFeedback type="invalid">
+                                                    {validation.errors.template_message}
+                                                </FormFeedback>
+                                            ) : null}
+                                        </div>
+                                    </Col>
+                                )}
+                            </div>
+                            <div>
+                                {validation.values.template_for === 2 && (
+                                    <Row>
+                                        <Col sm="4">
+                                            <div className="mb-3">
+                                                <Label className="form-label">OSD Show Content<span style={{ color: 'red' }}>*</span></Label>
+                                                <Input
+                                                    name="template_message"
+                                                    type="textarea"
+                                                    placeholder="Enter SMS template"
+                                                    // className="form-select"
+                                                    onChange={validation.handleChange}
+                                                    onBlur={validation.handleBlur}
+                                                    value={validation.values.template_message || ""}
+                                                    row="3"
+                                                >
+                                                </Input>
+                                                {validation.touched.template_message && validation.errors.template_message ? (
+                                                    <FormFeedback type="invalid">
+                                                        {validation.errors.template_message}
+                                                    </FormFeedback>
+                                                ) : null}
+                                            </div>
+                                        </Col>
+                                        <Col sm="4">
+                                            <div className="mb-3">
+                                                <Label className="form-label">CAS Config (Select only 1 config per CAS)<span style={{ color: 'red' }}>*</span></Label>
+                                                <Input
+                                                    name="template_config_id"
+                                                    type="select"
+                                                    placeholder="Select Status"
+                                                    className="form-select"
+                                                    onChange={validation.handleChange}
+                                                    onBlur={validation.handleBlur}
+                                                    value={validation.values.template_config_id || []}
+                                                    multiple
+                                                >
+                                                    <option value="">Select cas config</option>
+                                                    {osdTempOSD &&
+                                                        osdTempOSD.map((template_config_id) => (
+                                                            <option key={template_config_id.id} value={template_config_id.id}>
+                                                                {template_config_id.name},{template_config_id.cas_code}
+                                                            </option>
+                                                        ))}
+                                                </Input>
+                                                {validation.touched.template_config_id && validation.errors.template_config_id ? (
+                                                    <FormFeedback type="invalid">
+                                                        {validation.errors.template_config_id}
+                                                    </FormFeedback>
+                                                ) : null}
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                )}
+                            </div>
+
+                            <div>
+                                {validation.values.template_for === 3 && (
+                                    <>
+                                        <Col sm="8">
+                                            <div className="mb-3">
+                                                <Label className="form-label">Title<span style={{ color: 'red' }}>*</span></Label>
+                                                <Input
+                                                    name="template_title"
+                                                    type="text"
+                                                    placeholder="Enter title"
+                                                    // className="form-select"
+                                                    onChange={validation.handleChange}
+                                                    onBlur={validation.handleBlur}
+                                                    value={validation.values.template_title || ""}
+                                                >
+                                                </Input>
+                                                {validation.touched.template_title && validation.errors.template_title ? (
+                                                    <FormFeedback type="invalid">
+                                                        {validation.errors.template_title}
+                                                    </FormFeedback>
+                                                ) : null}
+                                            </div>
+                                        </Col>
+                                        <Col sm="12">
+                                            <div className="mb-3">
+                                                <Label className="form-label">Content<span style={{ color: 'red' }}>*</span></Label>
+                                                <Input
+                                                    name="template_message"
+                                                    type="textarea"
+                                                    placeholder="Enter content"
+                                                    // className="form-select"
+                                                    onChange={validation.handleChange}
+                                                    onBlur={validation.handleBlur}
+                                                    value={validation.values.template_message || ""}
+                                                    row="3"
+                                                >
+                                                </Input>
+                                                {validation.touched.template_message && validation.errors.template_message ? (
+                                                    <FormFeedback type="invalid">
+                                                        {validation.errors.template_message}
+                                                    </FormFeedback>
+                                                ) : null}
+                                            </div>
+                                        </Col>
+                                    </>
+                                )}
+                            </div>
+
+                            {/* <div>
                                 {!showEditosdTemplate ?
                                     <>
-                                        {validation.values.template_for === 1 && (
+                                        {validation.values.template_for === "1" && (
                                             <Col sm="4">
                                                 <div className="mb-3">
                                                     <Label className="form-label">SMS Template (max 140 characters)<span style={{ color: 'red' }}>*</span></Label>
@@ -260,10 +390,10 @@ const ViewOSDTemplateList = (props) => {
                                         )}
                                     </>
                                 }
-                            </div>
+                            </div> */}
 
 
-                            <div>
+                            {/* <div>
                                 {!showEditosdTemplate ?
                                     <>
                                         {validation.values.template_for === 2 && (
@@ -379,9 +509,9 @@ const ViewOSDTemplateList = (props) => {
                                         )}
                                     </>
                                 }
-                            </div>
+                            </div> */}
 
-                            <div>
+                            {/* <div>
                                 {!showEditosdTemplate ?
                                     <>
                                         {validation.values.template_for === 3 && (
@@ -482,7 +612,7 @@ const ViewOSDTemplateList = (props) => {
                                         )}
                                     </>
                                 }
-                            </div>
+                            </div> */}
                         </Row>
 
                         {showEditosdTemplate && (
