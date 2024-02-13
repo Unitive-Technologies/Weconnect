@@ -67,6 +67,7 @@ import StockScMarkfaulty from "./StockScMarkfaulty";
 import StockScBlacklist from "./StockScBlacklist";
 import StockActionUpdation from "./StockActionUpdation";
 import BulkUpdateSmartcard from "./BulkUpdateSmartcard";
+import FaultySendToStock from "./FaultySendToStock";
 
 const InventoryStock = (props) => {
   document.title = "Inventory | VDigital";
@@ -716,6 +717,10 @@ const InventoryStock = (props) => {
     setShowStockScMarkfaulty(!showStockScMarkfaulty);
   };
 
+  const handleFaultySmartcardSendSc = () => {
+    setShowFaultySmartcardSendsc(!showFaultySmartcardSendsc);
+  };
+
   const handleWarning = () => {
     setShowWarning(!showWarning);
   };
@@ -969,6 +974,18 @@ const InventoryStock = (props) => {
     return [];
   };
 
+  const getFilteredHandleRowClicks = (Row) => {
+    if (selectedOption === "In-stock") {
+      if (activeTab === "1") {
+        return handleSelectedRows(Row);
+      }
+    } else if (selectedOption === "Faulty") {
+      if (activeTab === "1") {
+        return handleSelectedFaultySc(Row);
+      }
+    }
+  };
+
   return (
     <React.Fragment>
       <AddStockSmartcard
@@ -1012,6 +1029,11 @@ const InventoryStock = (props) => {
         brand2={brand2}
         stockscwarehouse={stockscwarehouse}
         actioninventorystate={actioninventorystate}
+      />
+      <FaultySendToStock
+        isOpen={showFaultySmartcardSendsc}
+        toggle={handleFaultySmartcardSendSc}
+        selectedFaultyScs={selectedFaultyScs}
       />
       <div
         className="position-fixed top-0 end-0 p-3"
@@ -1127,8 +1149,11 @@ const InventoryStock = (props) => {
                               theadClass="table-light"
                               paginationDiv="col-sm-12 col-md-7"
                               pagination="pagination pagination-rounded justify-content-end mt-4"
+                              // handleRowClick={(row) => {
+                              //   getFilteredHandleRowClicks(row);
+                              // }}
                               handleRowClick={(row) => {
-                                handleSelectedRows(row);
+                                getFilteredHandleRowClicks(row);
                               }}
                             />
                           </Col>
@@ -1201,6 +1226,7 @@ const InventoryStock = (props) => {
                               setShowDeleteStockPairing={
                                 setShowDeleteStockPairing
                               }
+                              // getFilteredHandleRowClicks={getFilteredHandleRowClicks()}
                             />
                           </Col>
                         </Row>

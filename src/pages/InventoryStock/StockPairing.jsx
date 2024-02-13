@@ -32,6 +32,7 @@ const StockPairing = (props) => {
     pairinginventorystate,
     showDeleteStockPairing,
     setShowDeleteStockPairing,
+    getFilteredHandleRowClicks,
   } = props;
 
   if (
@@ -275,6 +276,9 @@ const StockPairing = (props) => {
                 handleRowClick={(row) => {
                   handleSelectedPairings(row);
                 }}
+                // handleRowClick={(row) => {
+                //   getFilteredHandleRowClicks(row);
+                // }}
               />
             </CardBody>
           </Card>
