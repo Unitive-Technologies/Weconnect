@@ -18,21 +18,47 @@ import { Link } from "react-router-dom";
 import { createSelector } from "reselect";
 import { useSelector, useDispatch } from "react-redux";
 
-const UploadDocsFile = ({ data, updateList }) => {
-  console.log("Cas List Data" + JSON.stringify(data));
+const UploadDocsFile = ({ data, updateList, selectedRowId }) => {
+  console.log("upload List Data" + JSON.stringify(data));
+  const [docType, setDocType] = useState("");
+  const [file, setFile] = useState(null);
 
-  const updateCasList = () => {
+  const handleChangeUploadFile = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      const { name, type } = selectedFile;
+      const ext = name.split(".").pop();
+      const reader = new FileReader();
+      reader.readAsDataURL(selectedFile);
+      reader.onload = () => {
+        const data = reader.result;
+
+        // Set the file object directly in state
+        setFile({
+          name,
+          type,
+          ext,
+          data,
+        });
+      };
+    }
+  };
+  const updateUploadFiles = () => {
     if (!docType) {
       return;
     }
 
     const newItem = {
-      model_id: data.length + 1,
       doctype: docType,
-      //   cascode: casCode,
-      //   serviceid: serviceId,
+      document: {
+        name: file.name,
+        type: file.type,
+        ext: file.ext,
+        data: file.data,
+      },
+      model_id: selectedRowId,
     };
-
+    console.log("New upload Data:" + newItem);
     const updatedData = [...data, newItem];
     console.log("Updated Data:" + updatedData);
     updateList(updatedData);
@@ -41,10 +67,6 @@ const UploadDocsFile = ({ data, updateList }) => {
     // setCasCode("");
     // setServiceId("");
   };
-
-  const [docType, setDocType] = useState("");
-  //   const [casCode, setCasCode] = useState("");
-  //   const [serviceId, setServiceId] = useState("");
 
   const deleteCasList = (index) => {
     const list = [...data];
@@ -61,7 +83,7 @@ const UploadDocsFile = ({ data, updateList }) => {
           flexWrap: "wrap",
         }}
       >
-        <Col lg={12}>
+        <Col lg={5}>
           <div className="mb-3">
             <Input
               name="doctype"
@@ -74,15 +96,39 @@ const UploadDocsFile = ({ data, updateList }) => {
               //   disabled={!data}
             >
               <option value="">Select Document Type</option>
-              <option value="">Post Office_Registration</option>
-              <option value="">Hand Over and take over letter</option>
-              <option value="">PAN Card</option>
-              <option value="">GST Registration</option>
-              <option value="">Aadhar Card</option>
-              <option value="">Address Proof</option>
-              <option value="">Agreement</option>
-              <option value="">Others</option>
+              <option value="Post Office_Registration">
+                Post Office_Registration
+              </option>
+              <option value="Hand Over and take over letter">
+                Hand Over and take over letter
+              </option>
+              <option value="PAN Card">PAN Card</option>
+              <option value="GST Registration">GST Registration</option>
+              <option value="Aadhar Card">Aadhar Card</option>
+              <option value="Address Proof">Address Proof</option>
+              <option value="Agreement">Agreement</option>
+              <option value="Others">Others</option>
             </Input>
+          </div>
+        </Col>
+        <Col lg={5}>
+          <div
+            className="mb-3"
+            style={{ display: "flex", flexDirection: "column" }}
+          >
+            <Label className="form-label">File Upload</Label>
+            <input name="file" type="file" onChange={handleChangeUploadFile} />
+          </div>
+        </Col>
+        <Col lg={2}>
+          <div className="mb-3">
+            <button
+              type="button"
+              className="btn btn-primary "
+              onClick={updateUploadFiles}
+            >
+              <i className="bx bx-right-arrow-alt" style={{ fontSize: 20 }}></i>
+            </button>
           </div>
         </Col>
       </Col>
@@ -103,13 +149,14 @@ const UploadDocsFile = ({ data, updateList }) => {
                   </tr>
                 </thead>
                 <tbody>
+                  {console.log("data:" + JSON.stringify(data))}
                   {data &&
                     data.map((item, index) => (
                       <tr key={index}>
                         <th scope="row">{item.model_id}</th>
                         <td>{item.doctype}</td>
-                        {/* <td>{item.cascode}</td>
-                        <td>{item.serviceid}</td> */}
+                        <td>{item.document.name}</td>
+                        <td>{item.document.type}</td>
                         <td>
                           <h5>
                             <Link

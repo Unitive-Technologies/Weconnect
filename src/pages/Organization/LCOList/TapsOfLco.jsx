@@ -104,6 +104,7 @@ const TapsOfLco = ({
 
       const response = await axios.get(
         `${API_URL}/operator-scheme?expand=boxtype_lbl,status_lbl,created_by_lbl&filter[operator_id]=${selectedRowId}&vr=web1.0`,
+
         {
           headers: {
             Authorization: token,
@@ -263,8 +264,8 @@ const TapsOfLco = ({
             })}
             onClick={() => {
               toggleCustom("3");
-              // getAllottedSchemeDetails();
-              getCopyOfPairing();
+              getAllottedSchemeDetails();
+              // getCopyOfPairing();
             }}
           >
             <span className="d-block d-sm-none">
@@ -391,6 +392,7 @@ const TapsOfLco = ({
                         alignItems: "center",
                         justifyContent: "center",
                         borderRadius: "50%",
+                        cursor: "pointer",
                       }}
                       className="fas fa-search"
                       onClick={getOperatorAccountDetails}
@@ -439,7 +441,10 @@ const TapsOfLco = ({
         <TabPane tabId="6">
           <Row>
             <Col sm="12">
-              <UploadDocuments uploadDocsData={uploadDocsData} />
+              <UploadDocuments
+                uploadDocsData={uploadDocsData}
+                selectedRowId={selectedRowId}
+              />
             </Col>
           </Row>
         </TabPane>

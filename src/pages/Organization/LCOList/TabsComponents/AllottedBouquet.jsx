@@ -3,7 +3,16 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import TableContainer from "../../../../components/Common/TableContainer";
 import Spinners from "../../../../components/Common/Spinner";
-import { Card, CardBody, Col, Container, Row } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  Col,
+  Container,
+  Row,
+  Toast,
+  ToastHeader,
+  ToastBody,
+} from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -173,9 +182,23 @@ const AllottedBouquet = ({ allottedBouquetData }) => {
       },
     ];
   };
-
+  const [showWarning, setShowWarning] = useState(false);
+  const handleWarning = () => {
+    setShowWarning(!showWarning);
+  };
   return (
     <React.Fragment>
+      <div
+        className="position-fixed top-0 end-0 p-3"
+        style={{ zIndex: "1005" }}
+      >
+        <Toast isOpen={showWarning}>
+          <ToastHeader toggle={handleWarning}>
+            <i className="mdi mdi-alert-outline me-2"></i> Warning
+          </ToastHeader>
+          <ToastBody>Cannot select atleast one Bouquet</ToastBody>
+        </Toast>
+      </div>
       <Row>
         <Col lg="12">
           <Card>
@@ -183,6 +206,7 @@ const AllottedBouquet = ({ allottedBouquetData }) => {
               {console.log(
                 "bouquet details:" + JSON.stringify(allottedBouquetData)
               )}
+
               <TableContainer
                 isPagination={true}
                 columns={columns}
