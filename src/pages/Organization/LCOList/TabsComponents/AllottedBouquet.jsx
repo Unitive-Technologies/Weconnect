@@ -30,26 +30,32 @@ const AllottedBouquet = ({ allottedBouquetData, selectedRowId }) => {
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [selectedRows, setSelectedRows] = useState([]);
 
-  // const handleRowSelection = (row) => {
-  //   const selectedId = row.original.id;
-  //   const isSelected = selectedRows.includes(selectedId);
-  //   if (isSelected) {
-  //     setSelectedRows(selectedRows.filter((id) => id !== selectedId));
-  //   } else {
-  //     setSelectedRows([...selectedRows, selectedId]);
-  //   }
-  // };
   const handleRowSelection = (row) => {
     console.log("Row clicked:", row.original);
-
-    const selectedRowIds = selectedRows.map((r) => r.id);
-    if (selectedRowIds.includes(row.original.id)) {
-      setSelectedRows(selectedRows.filter((r) => r.id !== row.original.id));
-    } else {
-      setSelectedRows([...selectedRows, row.original.id]);
-    }
-    console.log("Selected rows:", JSON.stringify(selectedRows));
+    const selectedId = row.original.id;
+    console.log("selectedId:", selectedId);
+    setSelectedRows((prevSelectedRows) => {
+      const isSelected = prevSelectedRows.includes(selectedId);
+      if (isSelected) {
+        return prevSelectedRows.filter((id) => id !== selectedId);
+      } else {
+        return [...prevSelectedRows, selectedId];
+      }
+    });
+    console.log("selectedRows:", JSON.stringify(selectedRows));
   };
+
+  // const handleRowSelection = (row) => {
+  //   console.log("Row clicked:", row.original);
+
+  //   const selectedRowIds = selectedRows.map((r) => r.id);
+  //   if (selectedRowIds.includes(row.original.id)) {
+  //     setSelectedRows(selectedRows.filter((r) => r.id !== row.original.id));
+  //   } else {
+  //     setSelectedRows([...selectedRows, row.original.id]);
+  //   }
+  //   console.log("Selected rows:", JSON.stringify(selectedRows));
+  // };
 
   const columns = useMemo(
     () => [
@@ -230,7 +236,7 @@ const AllottedBouquet = ({ allottedBouquetData, selectedRowId }) => {
     return [
       {
         name: "Remove",
-        action: selectedRows.length ? handleRemoveRows : showWarning,
+        action: selectedRows.length ? handleRemoveRows : handleWarning,
         type: "normal",
         icon: "create",
       },
