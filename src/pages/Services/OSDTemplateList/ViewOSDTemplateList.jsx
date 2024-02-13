@@ -247,6 +247,7 @@ const ViewOSDTemplateList = (props) => {
                                                     onBlur={validation.handleBlur}
                                                     value={validation.values.template_message || ""}
                                                     row="3"
+                                                    disabled={!showEditosdTemplate}
                                                 >
                                                 </Input>
                                                 {validation.touched.template_message && validation.errors.template_message ? (
@@ -268,6 +269,7 @@ const ViewOSDTemplateList = (props) => {
                                                     onBlur={validation.handleBlur}
                                                     value={validation.values.template_config_id || []}
                                                     multiple
+                                                    disabled={!showEditosdTemplate}
                                                 >
                                                     <option value="">Select cas config</option>
                                                     {osdTempOSD &&
@@ -302,6 +304,7 @@ const ViewOSDTemplateList = (props) => {
                                                     onChange={validation.handleChange}
                                                     onBlur={validation.handleBlur}
                                                     value={validation.values.template_title || ""}
+                                                    disabled={!showEditosdTemplate}
                                                 >
                                                 </Input>
                                                 {validation.touched.template_title && validation.errors.template_title ? (
@@ -323,6 +326,7 @@ const ViewOSDTemplateList = (props) => {
                                                     onBlur={validation.handleBlur}
                                                     value={validation.values.template_message || ""}
                                                     row="3"
+                                                    disabled={!showEditosdTemplate}
                                                 >
                                                 </Input>
                                                 {validation.touched.template_message && validation.errors.template_message ? (
