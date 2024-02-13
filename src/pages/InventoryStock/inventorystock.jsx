@@ -68,6 +68,7 @@ import StockScBlacklist from "./StockScBlacklist";
 import StockActionUpdation from "./StockActionUpdation";
 import BulkUpdateSmartcard from "./BulkUpdateSmartcard";
 import FaultySendToStock from "./FaultySendToStock";
+import FaultySmartcardBlacklist from "./FaultySmartcardBlacklist";
 
 const InventoryStock = (props) => {
   document.title = "Inventory | VDigital";
@@ -721,6 +722,10 @@ const InventoryStock = (props) => {
     setShowFaultySmartcardSendsc(!showFaultySmartcardSendsc);
   };
 
+  const handleFaultySmartcardBlacklist = () => {
+    setShowFaultySmartcardBlacklist(!showFaultySmartcardBlacklist);
+  };
+
   const handleWarning = () => {
     setShowWarning(!showWarning);
   };
@@ -1033,6 +1038,11 @@ const InventoryStock = (props) => {
       <FaultySendToStock
         isOpen={showFaultySmartcardSendsc}
         toggle={handleFaultySmartcardSendSc}
+        selectedFaultyScs={selectedFaultyScs}
+      />
+      <FaultySmartcardBlacklist
+        isOpen={showFaultySmartcardBlacklist}
+        toggle={handleFaultySmartcardBlacklist}
         selectedFaultyScs={selectedFaultyScs}
       />
       <div

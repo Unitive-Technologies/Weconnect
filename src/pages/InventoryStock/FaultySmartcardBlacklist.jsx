@@ -25,7 +25,7 @@ import {
 import { getInventoryBlacklistedSmartcard as onGetInventoryBlacklistedSmartcard } from "/src/store/inventoryblacklisted/actions";
 
 function FaultySmartcardBlacklist(props) {
-  const { isOpen, toggle, selectedRows } = props;
+  const { isOpen, toggle, selectedFaultyScs } = props;
   const [isChecked, setIsChecked] = useState(true);
   const [selectedFileDetails, setSelectedFileDetails] = useState({
     name: "",
@@ -52,7 +52,7 @@ function FaultySmartcardBlacklist(props) {
       const newBlacklist = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         remark: values["remark"],
-        blacklist: selectedRows.map((row) => row.id),
+        blacklist: selectedFaultyScs.map((row) => row.id),
         docs: selectedFileDetails,
       };
       console.log("Blacklist: " + JSON.stringify(newBlacklist));
@@ -141,7 +141,7 @@ function FaultySmartcardBlacklist(props) {
                   <TableContainer
                     isPagination={true}
                     columns={columns}
-                    data={selectedRows}
+                    data={selectedFaultyScs}
                     isShowingPageLength={true}
                     customPageSize={50}
                     tableClass="table align-middle table-nowrap table-hover"
@@ -220,7 +220,7 @@ function FaultySmartcardBlacklist(props) {
 FaultySmartcardBlacklist.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
-  selectedRows: PropTypes.array,
+  selectedFaultyScs: PropTypes.array,
 };
 
 export default FaultySmartcardBlacklist;
