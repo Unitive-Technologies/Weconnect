@@ -19,6 +19,12 @@ import {
   UPDATE_FAULTYSMARTCARD_BLACKLIST,
   UPDATE_FAULTYSMARTCARD_BLACKLIST_SUCCESS,
   UPDATE_FAULTYSMARTCARD_BLACKLIST_FAIL,
+  UPDATE_FAULTYSTB_SENDSTB,
+  UPDATE_FAULTYSTB_SENDSTB_SUCCESS,
+  UPDATE_FAULTYSTB_SENDSTB_FAIL,
+  UPDATE_FAULTYSTB_BLACKLIST,
+  UPDATE_FAULTYSTB_BLACKLIST_SUCCESS,
+  UPDATE_FAULTYSTB_BLACKLIST_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -137,6 +143,50 @@ const InventoryFaulty = (state = INIT_STATE, action) => {
       };
 
     case UPDATE_FAULTYSMARTCARD_BLACKLIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+    case UPDATE_FAULTYSTB_SENDSTB:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_FAULTYSTB_SENDSTB_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        faultystb: state.faultystb.map((stb) =>
+          stb.id === action.payload.id ? { ...stb, ...action.payload } : stb
+        ),
+      };
+
+    case UPDATE_FAULTYSTB_SENDSTB_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+    case UPDATE_FAULTYSTB_BLACKLIST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_FAULTYSTB_BLACKLIST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        faultystb: state.faultystb.map((stb) =>
+          stb.id === action.payload.id ? { ...stb, ...action.payload } : stb
+        ),
+      };
+
+    case UPDATE_FAULTYSTB_BLACKLIST_FAIL:
       return {
         ...state,
         error: action.payload,

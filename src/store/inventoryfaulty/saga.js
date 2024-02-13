@@ -5,6 +5,8 @@ import {
   GET_INVENTORYFAULTY_PAIRING,
   UPDATE_FAULTYSMARTCARD_SENDSC,
   UPDATE_FAULTYSMARTCARD_BLACKLIST,
+  UPDATE_FAULTYSTB_SENDSTB,
+  UPDATE_FAULTYSTB_BLACKLIST,
 } from "./actionTypes";
 import {
   getInventoryFaultySmartcard as onGetInventoryFaultySmartcard,
@@ -18,6 +20,10 @@ import {
   updateFaultySmartcardSendscFail,
   updateFaultySmartcardBlacklistSuccess,
   updateFaultySmartcardBlacklistFail,
+  updateFaultyStbSendstbSuccess,
+  updateFaultyStbSendstbFail,
+  updateFaultyStbBlacklistSuccess,
+  updateFaultyStbBlacklistFail,
 } from "./actions";
 import {
   getInventoryFaultySmartcard,
@@ -25,6 +31,8 @@ import {
   getInventoryFaultyPairing,
   updateFaultySmartcardSendsc,
   updateFaultySmartcardBlacklist,
+  updateFaultyStbSendstb,
+  updateFaultyStbBlacklist,
 } from "../../helpers/fakebackend_helper";
 
 export const getFaultyPairingStore = (state) => state.faultypairing;
@@ -90,6 +98,26 @@ function* onUpdateFaultySmartcardBlacklist({ payload: faultysmartcard }) {
   }
 }
 
+function* onUpdateFaultyStbSendstb({ payload: faultystb }) {
+  try {
+    const response = yield call(updateFaultyStbSendstb, faultystb);
+    yield put(updateFaultyStbSendstbSuccess(response.data));
+    yield put(onGetInventoryFaultySmartcard());
+  } catch (error) {
+    yield put(updateFaultyStbSendstbFail(error));
+  }
+}
+
+function* onUpdateFaultyStbBlacklist({ payload: faultysmartcard }) {
+  try {
+    const response = yield call(updateFaultyStbBlacklist, faultysmartcard);
+    yield put(updateFaultyStbBlacklistSuccess(response.data));
+    yield put(onGetInventoryFaultySmartcard());
+  } catch (error) {
+    yield put(updateFaultyStbBlacklistFail(error));
+  }
+}
+
 function* inventoryfaultySaga() {
   yield takeEvery(GET_INVENTORYFAULTY_SMARTCARD, fetchInventoryFaultySmartcard);
   yield takeEvery(GET_INVENTORYFAULTY_STB, fetchInventoryFaultyStb);
@@ -99,6 +127,8 @@ function* inventoryfaultySaga() {
     UPDATE_FAULTYSMARTCARD_BLACKLIST,
     onUpdateFaultySmartcardBlacklist
   );
+
+  yield takeEvery(UPDATE_FAULTYSTB_SENDSTB, onUpdateFaultyStbSendstb);
 }
 
 export default inventoryfaultySaga;

@@ -15,6 +15,12 @@ import {
   UPDATE_FAULTYSMARTCARD_BLACKLIST,
   UPDATE_FAULTYSMARTCARD_BLACKLIST_SUCCESS,
   UPDATE_FAULTYSMARTCARD_BLACKLIST_FAIL,
+  UPDATE_FAULTYSTB_SENDSTB,
+  UPDATE_FAULTYSTB_SENDSTB_SUCCESS,
+  UPDATE_FAULTYSTB_SENDSTB_FAIL,
+  UPDATE_FAULTYSTB_BLACKLIST,
+  UPDATE_FAULTYSTB_BLACKLIST_SUCCESS,
+  UPDATE_FAULTYSTB_BLACKLIST_FAIL,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -91,5 +97,35 @@ export const updateFaultySmartcardBlacklistSuccess = (faultypairing) => ({
 
 export const updateFaultySmartcardBlacklistFail = (error) => ({
   type: UPDATE_FAULTYSMARTCARD_BLACKLIST_FAIL,
+  payload: error,
+});
+
+export const updateFaultyStbSendstb = (faultystb) => ({
+  type: UPDATE_FAULTYSTB_SENDSTB,
+  payload: faultystb,
+});
+
+export const updateFaultyStbSendstbSuccess = (faultystb) => ({
+  type: UPDATE_FAULTYSTB_SENDSTB_SUCCESS,
+  payload: faultystb,
+});
+
+export const updateFaultyStbSendstbFail = (error) => ({
+  type: UPDATE_FAULTYSTB_SENDSTB_FAIL,
+  payload: error,
+});
+
+export const updateFaultyStbBlacklist = (faultystb) => ({
+  type: UPDATE_FAULTYSTB_BLACKLIST,
+  payload: faultystb,
+});
+
+export const updateFaultyStbBlacklistSuccess = (faultystb) => ({
+  type: UPDATE_FAULTYSTB_BLACKLIST_SUCCESS,
+  payload: faultystb,
+});
+
+export const updateFaultyStbBlacklistFail = (error) => ({
+  type: UPDATE_FAULTYSTB_BLACKLIST_FAIL,
   payload: error,
 });
