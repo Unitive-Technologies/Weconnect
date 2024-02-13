@@ -79,6 +79,7 @@ const ViewReason = (props) => {
     toggleViewModal();
   };
 
+  console.log("View Reason List Reason Type Values" + validation.values.type_display_lbl)
   return (
     <>
       <Modal
@@ -175,32 +176,33 @@ const ViewReason = (props) => {
                   ) : null}
                 </div>
               </Col>
+              {console.log("View Reason List type_lbl" + validation.values.type_display_lbl)}
               <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">Reason Type</Label>
-                  <div className="d-flex align-items-center">
-                    <Select
-                      name="type_display_lbl"
-                      placeholder="Select at least one Reason Type"
-                      onChange={(selectedOptions) => {
-                        validation.setFieldValue("type_display_lbl", selectedOptions);
-                      }}
-                      onBlur={validation.handleBlur}
-                      value={validation.values.type_display_lbl || []}
-                      options={reasonReasonType.map((type_display_lbl) => ({
-                        value: type_display_lbl.name,
-                        label: type_display_lbl.name,
-                      }))}
-                      isMulti
-                      isDisabled={!showEditReason}
-                    />
-                  </div>
-                  {validation.touched.type_display_lbl && validation.errors.type_display_lbl ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.type_display_lbl}
-                    </FormFeedback>
-                  ) : null}
+                  {/* <div className="d-flex align-items-center"> */}
+                  <Select
+                    name="type_display_lbl"
+                    placeholder="Select at least one Reason Type"
+                    onChange={(selectedOptions) => {
+                      validation.setFieldValue("type_display_lbl", selectedOptions);
+                    }}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.type_display_lbl}
+                    options={reasonReasonType.map((type_display_lbl) => ({
+                      value: type_display_lbl.name,
+                      label: type_display_lbl.name,
+                    }))}
+                    isMulti
+                    isDisabled={!showEditReason}
+                  />
                 </div>
+                {validation.touched.type_display_lbl && validation.errors.type_display_lbl ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.type_display_lbl}
+                  </FormFeedback>
+                ) : null}
+                {/* </div> */}
               </Col>
 
               {/* <div className="mb-3">
