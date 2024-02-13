@@ -93,6 +93,11 @@ const InventoryStock = (props) => {
     useState(false);
   const [showDeleteStockPairing, setShowDeleteStockPairing] = useState(false);
   const [showBulkUpdateSmartcard, setShowBulkUpdateSmartcard] = useState(false);
+  const [selectedFaultyScs, setSelectedFaultyScs] = useState([]);
+  const [showFaultySmartcardSendsc, setShowFaultySmartcardSendsc] =
+    useState(false);
+  const [showFaultySmartcardBlacklist, setShowFaultySmartcardBlacklist] =
+    useState(false);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -470,6 +475,24 @@ const InventoryStock = (props) => {
     } else {
       // If the row is not selected, add it to the selected rows array
       setSelectedPairings([...selectedPairings, row]);
+    }
+  };
+
+  const handleSelectedFaultySc = (row) => {
+    // Check if the row is already selected
+    const isSelected = selectedFaultyScs.some(
+      (selectedFaultySc) => selectedFaultySc.id === row.id
+    );
+
+    // If the row is selected, remove it from the selected rows array
+    if (isSelected) {
+      const updatedSelectedFaultyScs = selectedFaultyScs.filter(
+        (selectedFaultySc) => selectedFaultySc.id !== row.id
+      );
+      setSelectedFaultyScs(updatedSelectedFaultyScs);
+    } else {
+      // If the row is not selected, add it to the selected rows array
+      setSelectedFaultyScs([...selectedFaultyScs, row]);
     }
   };
 
@@ -888,13 +911,21 @@ const InventoryStock = (props) => {
             name: "Send to Smartcard Stock",
             type: "dot",
             icon: "action",
-            dropdownName: "",
+            dropdownName: "Action",
+            action:
+              Object.keys(selectedFaultyScs).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowFaultySmartcardSendsc(true),
           },
           {
             name: "Blacklist",
             type: "dot",
             icon: "action",
-            dropdownName: "",
+            dropdownName: "Action",
+            action:
+              Object.keys(selectedFaultyScs).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowFaultySmartcardBlacklist(true),
           },
         ];
         return actions;
