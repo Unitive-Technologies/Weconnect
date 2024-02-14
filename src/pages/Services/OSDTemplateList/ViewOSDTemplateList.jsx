@@ -86,7 +86,7 @@ const ViewOSDTemplateList = (props) => {
       dispatch(onUpdateOSDTemplate(updateOSDTemplate));
       dispatch(onGetOSDTemplate());
       validation.resetForm();
-      toggleViewModal();
+      handleCancel();
       resetSelection();
     },
   });
