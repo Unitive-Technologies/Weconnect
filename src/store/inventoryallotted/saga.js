@@ -10,6 +10,7 @@ import {
   DEALLOT_SMARTCARD,
 } from "./actionTypes";
 import {
+  getInventoryAllottedSmartcard as onGetInventoryAllottedSmartcard,
   getInventoryAllottedSmartcardSuccess,
   getInventoryAllottedSmartcardFail,
   getInventoryAllottedStbSuccess,
@@ -87,6 +88,43 @@ function* fetchInventoryAllottedSmartcardlist() {
   }
 }
 
+function* fetchInventoryAllottedOperatorlist() {
+  try {
+    const response = yield call(getInventoryAllottedOperatorlist);
+    yield put(getInventoryAllottedOperatorlistSuccess(response.data));
+  } catch (error) {
+    yield put(getInventoryAllottedOperatorlistFail(error));
+  }
+}
+
+function* fetchInventoryAllottedUsertype() {
+  try {
+    const response = yield call(getInventoryAllottedUsertype);
+    yield put(getInventoryAllottedUsertypeSuccess(response.data));
+    yield put(onGetInventoryAllottedSmartcard());
+  } catch (error) {
+    yield put(getInventoryAllottedUsertypeFail(error));
+  }
+}
+
+function* onAllotSmartcard({ payload: allottedsmartcard }) {
+  try {
+    const response = yield call(allotSmartcard, allottedsmartcard);
+    yield put(allotSmartcardSuccess(response));
+  } catch (error) {
+    yield put(allotSmartcardFail(error));
+  }
+}
+
+function* onDeallotSmartcard({ payload: allottedsmartcard }) {
+  try {
+    const response = yield call(deallotSmartcard, allottedsmartcard);
+    yield put(deallotSmartcardSuccess(response));
+  } catch (error) {
+    yield put(deallotSmartcardFail(error));
+  }
+}
+
 function* inventoryallottedSaga() {
   yield takeEvery(
     GET_INVENTORYALLOTTED_SMARTCARD,
@@ -94,6 +132,20 @@ function* inventoryallottedSaga() {
   );
   yield takeEvery(GET_INVENTORYALLOTTED_STB, fetchInventoryAllottedStb);
   yield takeEvery(GET_INVENTORYALLOTTED_PAIRING, fetchInventoryAllottedPairing);
+  yield takeEvery(
+    GET_INVENTORYALLOTTED_OPERATORLIST,
+    fetchInventoryAllottedOperatorlist
+  );
+  yield takeEvery(
+    GET_INVENTORYALLOTTED_SMARTCARDLIST,
+    fetchInventoryAllottedSmartcardlist
+  );
+  yield takeEvery(
+    GET_INVENTORYALLOTTED_USERTYPE,
+    fetchInventoryAllottedUsertype
+  );
+  yield takeEvery(ALLOT_SMARTCARD, onAllotSmartcard);
+  yield takeEvery(DEALLOT_SMARTCARD, onDeallotSmartcard);
 }
 
 export default inventoryallottedSaga;
