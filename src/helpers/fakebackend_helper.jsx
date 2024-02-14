@@ -808,6 +808,16 @@ export const getInventoryBlacklistedPairing = async (
 
 export const getInventoryAllottedSmartcard = () =>
   get(url.GET_INVENTORYALLOTTED_SMARTCARD);
+export const getInventoryAllottedUsertype = () =>
+  get(url.GET_INVENTORYALLOTTED_USERTYPE);
+export const getInventoryAllottedSmartcardlist = () =>
+  get(url.GET_INVENTORYALLOTTED_SMARTCARDLIST);
+export const getInventoryAllottedOperatorlist = () =>
+  get(url.GET_INVENTORYALLOTTED_OPERATORLIST);
+export const allotSmartcard = (allottedsmartcard) =>
+  post(url.ALLOT_SMARTCARD, allottedsmartcard);
+export const deallotSmartcard = (allottedsmartcard) =>
+  put(url.DEALLOT_SMARTCARD, allottedsmartcard);
 export const getInventoryAllottedStb = () => get(url.GET_INVENTORYALLOTTED_STB);
 export const getInventoryAllottedPairing = async (
   currentPage,
