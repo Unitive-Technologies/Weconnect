@@ -137,31 +137,31 @@ export const updateFaultyStbBlacklistFail = (error) => ({
 });
 
 export const updateFaultyPairingSendpair = (faultypairing) => ({
-  type: UPDATE_FAULTYSTB_SENDSTB,
+  type: UPDATE_FAULTYPAIRING_SENDPAIR,
   payload: faultypairing,
 });
 
 export const updateFaultyPairingSendpairSuccess = (faultypairing) => ({
-  type: UPDATE_FAULTYSTB_SENDSTB_SUCCESS,
+  type: UPDATE_FAULTYPAIRING_SENDPAIR_SUCCESS,
   payload: faultypairing,
 });
 
 export const updateFaultyPairingSendpairFail = (error) => ({
-  type: UPDATE_FAULTYSTB_SENDSTB_FAIL,
+  type: UPDATE_FAULTYPAIRING_SENDPAIR_FAIL,
   payload: error,
 });
 
 export const updateFaultyPairingBlacklist = (faultypairing) => ({
-  type: UPDATE_FAULTYSTB_BLACKLIST,
+  type: UPDATE_FAULTYPAIRING_BLACKLIST,
   payload: faultypairing,
 });
 
 export const updateFaultyPairingBlacklistSuccess = (faultypairing) => ({
-  type: UPDATE_FAULTYSTB_BLACKLIST_SUCCESS,
+  type: UPDATE_FAULTYPAIRING_BLACKLIST_SUCCESS,
   payload: faultypairing,
 });
 
 export const updateFaultyPairingBlacklistFail = (error) => ({
-  type: UPDATE_FAULTYSTB_BLACKLIST_FAIL,
+  type: UPDATE_FAULTYPAIRING_BLACKLIST_FAIL,
   payload: error,
 });

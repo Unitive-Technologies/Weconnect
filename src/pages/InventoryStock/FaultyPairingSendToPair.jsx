@@ -24,7 +24,8 @@ import {
 } from "/src/store/inventoryfaulty/actions";
 
 function FaultyPairingSendToPair(props) {
-  const { isOpen, toggle, selectedFaultyPairings } = props;
+  const { isOpen, toggle, selectedFaultyPairings, stockscinventorystate } =
+    props;
   const [isChecked, setIsChecked] = useState(true);
 
   const dispatch = useDispatch();
@@ -35,7 +36,8 @@ function FaultyPairingSendToPair(props) {
 
     initialValues: {
       remark: "",
-      blacklist: [],
+      stock: [],
+      state: "",
     },
     validationSchema: Yup.object({
       remark: Yup.string().required("Enter remark"),
@@ -43,7 +45,8 @@ function FaultyPairingSendToPair(props) {
     onSubmit: (values) => {
       const sendToPairing = {
         remark: values["remark"],
-        blacklist: selectedFaultyPairings.map((row) => row.id),
+        stock: selectedFaultyPairings.map((row) => row.id),
+        state: values["state"],
       };
       console.log("Send to stb: " + JSON.stringify(sendToPairing));
       dispatch(onUpdateFaultyPairingSendpair(sendToPairing));
@@ -128,7 +131,7 @@ function FaultyPairingSendToPair(props) {
       tabIndex="-1"
       toggle={toggle}
     >
-      <ModalHeader toggle={toggle}>Send to STB Stock</ModalHeader>
+      <ModalHeader toggle={toggle}>Send to pairing stock</ModalHeader>
       <Form
         onSubmit={(e) => {
           e.preventDefault();
@@ -154,6 +157,41 @@ function FaultyPairingSendToPair(props) {
                   />
                 </CardBody>
               </Card>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Inentory state<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="state"
+                  type="select"
+                  placeholder="Select inventory state"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.state || ""}
+                  invalid={
+                    validation.touched.state && validation.errors.state
+                      ? true
+                      : false
+                  }
+                >
+                  <option value="">Select inventory state</option>
+                  {stockscinventorystate.map((options) => (
+                    <option key={options.id} value={options.id}>
+                      {options.name}
+                    </option>
+                  ))}
+                </Input>
+                {validation.touched.state && validation.errors.state ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.state}
+                  </FormFeedback>
+                ) : null}
+              </div>
             </Col>
           </Row>
           <Row>
@@ -202,6 +240,7 @@ FaultyPairingSendToPair.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
   selectedFaultyPairings: PropTypes.array,
+  stockscinventorystate: PropTypes.array,
 };
 
 export default FaultyPairingSendToPair;

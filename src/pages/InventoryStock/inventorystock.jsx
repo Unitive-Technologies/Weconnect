@@ -431,8 +431,8 @@ const InventoryStock = (props) => {
   };
 
   useEffect(() => {
-    console.log("Selected faulty stbs: ", selectedFaultyStbs);
-  }, [selectedFaultyStbs]);
+    console.log("Selected faulty pairings: ", selectedFaultyPairings);
+  }, [selectedFaultyPairings]);
 
   const handleSelectedRows = (row) => {
     // Check if the row is already selected
@@ -1013,13 +1013,21 @@ const InventoryStock = (props) => {
             name: "Send to Pairing Stock",
             type: "dot",
             icon: "action",
-            dropdownName: "",
+            dropdownName: "Action",
+            action:
+              Object.keys(selectedFaultyPairings).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowFaultyPairingSendpair(true),
           },
           {
             name: "Blacklist",
             type: "dot",
             icon: "action",
-            dropdownName: "",
+            dropdownName: "Action",
+            action:
+              Object.keys(selectedFaultyPairings).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowFaultyPairingBlacklist(true),
           },
         ];
         return actions;
@@ -1298,7 +1306,25 @@ const InventoryStock = (props) => {
                               setShowDeleteStockPairing={
                                 setShowDeleteStockPairing
                               }
-                              // getFilteredHandleRowClicks={getFilteredHandleRowClicks()}
+                              selectedFaultyPairings={selectedFaultyPairings}
+                              showFaultyPairingSendpair={
+                                showFaultyPairingSendpair
+                              }
+                              setShowFaultyPairingSendpair={
+                                setShowFaultyPairingSendpair
+                              }
+                              showFaultyPairingBlacklist={
+                                showFaultyPairingBlacklist
+                              }
+                              setShowFaultyPairingBlacklist={
+                                setShowFaultyPairingBlacklist
+                              }
+                              handleSelectedFaultyPairing={
+                                handleSelectedFaultyPairing
+                              }
+                              selectedOption={selectedOption}
+                              activeTab={activeTab}
+                              stockscinventorystate={stockscinventorystate}
                             />
                           </Col>
                         </Row>
