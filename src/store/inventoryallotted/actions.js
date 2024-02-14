@@ -72,3 +72,79 @@ export const getInventoryAllottedPairingFail = (error) => ({
   type: GET_INVENTORYALLOTTED_PAIRING_FAIL,
   payload: error,
 });
+
+export const getInventoryAllottedSmartcardlist = () => ({
+  type: GET_INVENTORYALLOTTED_SMARTCARDLIST,
+});
+
+export const getInventoryAllottedSmartcardlistSuccess = (
+  allottedsmartcardlist
+) => ({
+  type: GET_INVENTORYALLOTTED_SMARTCARDLIST_SUCCESS,
+  payload: allottedsmartcardlist,
+});
+
+export const getInventoryAllottedSmartcardlistFail = (error) => ({
+  type: GET_INVENTORYALLOTTED_SMARTCARDLIST_FAIL,
+  payload: error,
+});
+
+export const getInventoryAllottedUsertype = () => ({
+  type: GET_INVENTORYALLOTTED_USERTYPE,
+});
+
+export const getInventoryAllottedUsertypeSuccess = (allottedusertype) => ({
+  type: GET_INVENTORYALLOTTED_USERTYPE_SUCCESS,
+  payload: allottedusertype,
+});
+
+export const getInventoryAllottedUsertypeFail = (error) => ({
+  type: GET_INVENTORYALLOTTED_USERTYPE_FAIL,
+  payload: error,
+});
+
+export const getInventoryAllottedOperatorlist = () => ({
+  type: GET_INVENTORYALLOTTED_OPERATORLIST,
+});
+
+export const getInventoryAllottedOperatorlistSuccess = (
+  allottedoperatorlist
+) => ({
+  type: GET_INVENTORYALLOTTED_OPERATORLIST_SUCCESS,
+  payload: allottedoperatorlist,
+});
+
+export const getInventoryAllottedOperatorlistFail = (error) => ({
+  type: GET_INVENTORYALLOTTED_OPERATORLIST_FAIL,
+  payload: error,
+});
+
+export const allotSmartcard = (allottedsmartcard) => ({
+  type: ALLOT_SMARTCARD,
+  payload: allottedsmartcard,
+});
+
+export const allotSmartcardSuccess = (allottedsmartcard) => ({
+  type: ALLOT_SMARTCARD_SUCCESS,
+  payload: allottedsmartcard,
+});
+
+export const allotSmartcardFail = (error) => ({
+  type: ALLOT_SMARTCARD_FAIL,
+  payload: error,
+});
+
+export const deallotSmartcard = (allottedsmartcard) => ({
+  type: DEALLOT_SMARTCARD,
+  payload: allottedsmartcard,
+});
+
+export const deallotSmartcardSuccess = (allottedsmartcard) => ({
+  type: DEALLOT_SMARTCARD_SUCCESS,
+  payload: allottedsmartcard,
+});
+
+export const deallotSmartcardFail = (error) => ({
+  type: DEALLOT_SMARTCARD_FAIL,
+  payload: error,
+});

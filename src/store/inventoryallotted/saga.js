@@ -3,6 +3,11 @@ import {
   GET_INVENTORYALLOTTED_SMARTCARD,
   GET_INVENTORYALLOTTED_STB,
   GET_INVENTORYALLOTTED_PAIRING,
+  GET_INVENTORYALLOTTED_USERTYPE,
+  GET_INVENTORYALLOTTED_SMARTCARDLIST,
+  GET_INVENTORYALLOTTED_OPERATORLIST,
+  ALLOT_SMARTCARD,
+  DEALLOT_SMARTCARD,
 } from "./actionTypes";
 import {
   getInventoryAllottedSmartcardSuccess,
@@ -11,11 +16,26 @@ import {
   getInventoryAllottedStbFail,
   getInventoryAllottedPairingSuccess,
   getInventoryAllottedPairingFail,
+  getInventoryAllottedSmartcardlistSuccess,
+  getInventoryAllottedSmartcardlistFail,
+  getInventoryAllottedUsertypeSuccess,
+  getInventoryAllottedUsertypeFail,
+  getInventoryAllottedOperatorlistSuccess,
+  getInventoryAllottedOperatorlistFail,
+  allotSmartcardSuccess,
+  allotSmartcardFail,
+  deallotSmartcardSuccess,
+  deallotSmartcardFail,
 } from "./actions";
 import {
   getInventoryAllottedSmartcard,
   getInventoryAllottedStb,
   getInventoryAllottedPairing,
+  getInventoryAllottedUsertype,
+  getInventoryAllottedSmartcardlist,
+  getInventoryAllottedOperatorlist,
+  allotSmartcard,
+  deallotSmartcard,
 } from "../../helpers/fakebackend_helper";
 
 export const getAllottedPairingStore = (state) => state.allottedpairing;
@@ -55,6 +75,15 @@ function* fetchInventoryAllottedPairing() {
     yield put(getInventoryAllottedPairingSuccess(response));
   } catch (error) {
     yield put(getInventoryAllottedPairingFail(error));
+  }
+}
+
+function* fetchInventoryAllottedSmartcardlist() {
+  try {
+    const response = yield call(getInventoryAllottedSmartcardlist);
+    yield put(getInventoryAllottedSmartcardlistSuccess(response.data));
+  } catch (error) {
+    yield put(getInventoryAllottedSmartcardlistFail(error));
   }
 }
 
