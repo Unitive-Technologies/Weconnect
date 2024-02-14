@@ -103,6 +103,11 @@ const InventoryStock = (props) => {
   const [selectedFaultyStbs, setSelectedFaultyStbs] = useState([]);
   const [showFaultyStbSendstb, setShowFaultyStbSendstb] = useState(false);
   const [showFaultyStbBlacklist, setShowFaultyStbBlacklist] = useState(false);
+  const [selectedFaultyPairings, setSelectedFaultyPairings] = useState([]);
+  const [showFaultyPairingSendpair, setShowFaultyPairingSendpair] =
+    useState(false);
+  const [showFaultyPairingBlacklist, setShowFaultyPairingBlacklist] =
+    useState(false);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -516,6 +521,24 @@ const InventoryStock = (props) => {
     } else {
       // If the row is not selected, add it to the selected rows array
       setSelectedFaultyStbs([...selectedFaultyStbs, row]);
+    }
+  };
+
+  const handleSelectedFaultyPairing = (row) => {
+    // Check if the row is already selected
+    const isSelected = selectedFaultyPairings.some(
+      (selectedFaultyPairing) => selectedFaultyPairing.id === row.id
+    );
+
+    // If the row is selected, remove it from the selected rows array
+    if (isSelected) {
+      const updatedSelectedFaultyPairings = selectedFaultyPairings.filter(
+        (selectedFaultyPairing) => selectedFaultyPairing.id !== row.id
+      );
+      setSelectedFaultyPairings(updatedSelectedFaultyPairings);
+    } else {
+      // If the row is not selected, add it to the selected rows array
+      setSelectedFaultyPairings([...selectedFaultyPairings, row]);
     }
   };
 
