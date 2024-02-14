@@ -57,6 +57,9 @@ import {
   getInventoryAllottedStb as onGetInventoryAllottedStb,
   getInventoryAllottedPairing as onGetInventoryAllottedPairing,
   goToPage as onGoToPage2,
+  getInventoryAllottedSmartcardlist as onGetInventoryAllottedSmartcardlist,
+  getInventoryAllottedUsertype as onGetInventoryAllottedUsertype,
+  getInventoryAllottedOperatorlist as onGetInventoryAllottedOperatorlist,
 } from "/src/store/inventoryallotted/actions";
 import StockStb from "./StockStb";
 import StockPairing from "./StockPairing";
@@ -216,6 +219,9 @@ const InventoryStock = (props) => {
       allottedtotalCount: allottedpairing.totalCount,
       allottedpageSize: allottedpairing.perPage,
       allottedcurrentPage: allottedpairing.currentPage,
+      allottedsmartcardlist: allottedpairing.allottedsmartcardlist,
+      allottedusertype: allottedpairing.allottedusertype,
+      allottedoperatorlist: allottedpairing.allottedoperatorlist,
     })
   );
 
@@ -227,6 +233,9 @@ const InventoryStock = (props) => {
     allottedpageSize,
     allottedtotalCount,
     allottedtotalPage,
+    allottedsmartcardlist,
+    allottedusertype,
+    allottedoperatorlist,
   } = useSelector(inventoryallottedProperties);
 
   useEffect(() => {
@@ -234,6 +243,9 @@ const InventoryStock = (props) => {
       dispatch(onGetInventoryAllottedSmartcard());
       dispatch(onGetInventoryAllottedStb());
       dispatch(onGetInventoryAllottedPairing());
+      dispatch(onGetInventoryAllottedOperatorlist());
+      dispatch(onGetInventoryAllottedSmartcardlist());
+      dispatch(onGetInventoryAllottedUsertype());
     }
   }, [dispatch, allottedpairing]);
 
