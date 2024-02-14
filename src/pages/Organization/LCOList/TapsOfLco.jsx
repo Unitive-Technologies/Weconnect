@@ -55,8 +55,6 @@ const TapsOfLco = ({
   };
 
   const getOperatorAccountDetails = async (e) => {
-    // e.preventDefault();
-    // console.log("Form submitted");
     try {
       const token = "Bearer " + localStorage.getItem("temptoken");
       // console.log("Dates: " + fromDate, toDate);
@@ -119,24 +117,24 @@ const TapsOfLco = ({
     }
   };
 
-  const getCopyOfPairing = async (e) => {
-    try {
-      const token = "Bearer " + localStorage.getItem("temptoken");
+  // const getCopyOfPairing = async (e) => {
+  //   try {
+  //     const token = "Bearer " + localStorage.getItem("temptoken");
 
-      const response = await axios.get(
-        `${API_URL}/operator-scheme?filter[operator_id]=1996&vr=web1.0`,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
-      setAllottedPairingData(response.data.data);
-      console.log("response in useEffect:" + JSON.stringify(response));
-    } catch (error) {
-      console.error("Error fetching pairing data:", error);
-    }
-  };
+  //     const response = await axios.get(
+  //       `${API_URL}/operator-scheme?filter[operator_id]=1996&vr=web1.0`,
+  //       {
+  //         headers: {
+  //           Authorization: token,
+  //         },
+  //       }
+  //     );
+  //     setAllottedPairingData(response.data.data);
+  //     console.log("response in useEffect:" + JSON.stringify(response));
+  //   } catch (error) {
+  //     console.error("Error fetching pairing data:", error);
+  //   }
+  // };
 
   const getAllottedPairingDetails = async (e) => {
     try {

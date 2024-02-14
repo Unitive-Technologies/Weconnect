@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import TableContainer from "../../../../components/Common/TableContainer";
 import Spinners from "../../../../components/Common/Spinner";
@@ -14,11 +15,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const AllottedNCF = ({ allottedNcfData }) => {
+const AllottedPairing = ({ allottedPairingData }) => {
   //meta title
-  document.title = "LCO | VDigital";
-
-  const operatorAccount = [];
+  document.title = "Regional Offices | VDigital";
 
   const columns = useMemo(
     () => [
@@ -43,119 +42,117 @@ const AllottedNCF = ({ allottedNcfData }) => {
         },
       },
       {
-        Header: "Name",
-        accessor: "name",
+        Header: "Smartcard No.",
+        // accessor: "name",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <>
               <h5
                 className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleViewRegionalOffice(userData);
+                style={{
+                  maxWidth: 200,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
                 }}
               >
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.name}
+                  {cellProps.row.original.smartcardno}
                 </Link>
               </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
             </>
           );
         },
       },
       {
-        Header: "Code",
-        accessor: "code",
+        Header: "STB No.",
+        // accessor: "code",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.code}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.stbno}</p>
           );
         },
       },
       {
-        Header: "From",
-        accessor: "addr",
+        Header: "Box Type",
+        // accessor: "addr",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.from_channel_no}
+              {cellProps.row.original.boxtype_lbl}
             </p>
           );
         },
       },
       {
-        Header: "To",
-        accessor: "contact_person",
+        Header: "CAS",
+        // accessor: "contact_person",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.cas_lbl}</p>
+          );
+        },
+      },
+      {
+        Header: "IsEmbedded",
+        // accessor: "mobile_no",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.to_channel_no}
+              {cellProps.row.original.is_embeded_lbl}
             </p>
           );
         },
       },
       {
-        Header: "MRP",
-        accessor: "mobile_no",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">{cellProps.row.original.mrp}</p>
-          );
-        },
-      },
-      {
-        Header: "LCO Discount(%)",
-        accessor: "state_lbl",
+        Header: "Status",
+        // accessor: "state_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.lmo_discount}
+              {cellProps.row.original.status_lbl}
             </p>
           );
         },
       },
       {
-        Header: "LCO Rate",
-        accessor: "District_lbl",
+        Header: "Assigned To(Name)",
+        // accessor: "District_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.lmo_rate}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.is_refundable === 1 ? "Yes" : "No"}
+            </p>
           );
         },
       },
       {
-        Header: "Per Channel",
+        Header: "Created At",
         // accessor: "city_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.calculate_per_channel === 1
-                ? "Yes"
-                : "No"}
+              {cellProps.row.original.created_at}
             </p>
           );
         },
       },
       {
-        Header: "Is Refundable",
-        accessor: "city_lbl",
+        Header: "Created By",
+        // accessor: "city_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {" "}
-              {cellProps.row.original.is_refundable === 1 ? "Yes" : "No"}
+              {cellProps.row.original.created_by_lbl}
             </p>
           );
         },
@@ -163,10 +160,6 @@ const AllottedNCF = ({ allottedNcfData }) => {
     ],
     []
   );
-
-  var node = useRef();
-
-  const keyField = "id";
 
   const getTableActions = () => {
     return [
@@ -186,16 +179,16 @@ const AllottedNCF = ({ allottedNcfData }) => {
           <Card>
             <CardBody>
               {console.log(
-                "allottedNcfData:" + JSON.stringify(allottedNcfData)
+                "pairing details:" + JSON.stringify(allottedPairingData)
               )}
               <TableContainer
                 isPagination={true}
                 columns={columns}
-                data={allottedNcfData}
+                data={allottedPairingData}
                 // isGlobalFilter={true}
-                // isAddRegionalOffice={true}
+                isAddRegionalOffice={true}
                 isShowingPageLength={true}
-                // tableActions={getTableActions()}
+                tableActions={getTableActions()}
                 customPageSize={50}
                 tableClass="table align-middle table-nowrap table-hover"
                 theadClass="table-light"
@@ -210,4 +203,4 @@ const AllottedNCF = ({ allottedNcfData }) => {
   );
 };
 
-export default AllottedNCF;
+export default AllottedPairing;

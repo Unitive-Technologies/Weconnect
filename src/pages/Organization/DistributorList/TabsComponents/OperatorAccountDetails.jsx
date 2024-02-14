@@ -1,8 +1,18 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import TableContainer from "../../../../components/Common/TableContainer";
 import Spinners from "../../../../components/Common/Spinner";
-import { Card, CardBody, Col, Container, Row } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  Col,
+  Container,
+  Row,
+  Form,
+  Input,
+  Table,
+} from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -13,12 +23,39 @@ import { getRegionalOffice as onGetRegionalOffice } from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import AddCreditModal from "./AddCreditModal";
+import {
+  getRegionalCreditList as onGetRegionalCreditList,
+  getRegionalBankList as onGetRegionalBankList,
+} from "/src/store/regionaloffice/actions";
+import SetOffAmountModal from "./SetOffAmountModal";
+import TableContainerX from "../../../../components/Common/TableContainerX";
 
-const OperatorAccountDetails = (props) => {
+const OperatorAccountDetails = ({
+  accountDetails,
+  setAccountDetails,
+  selectedRowId,
+  selectedRowData,
+}) => {
   //meta title
-  document.title = "Regional Offices | VDigital";
+  document.title = "Distributors | VDigital";
+  const dispatch = useDispatch();
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
+  const [showAddCreditModal, setShowAddCreditModal] = useState(false);
+  const [showSetOffAmountModal, setShowSetOffAmountModal] = useState(false);
 
-  const operatorAccount = [];
+  const selectRegionalOfficeState = (state) => state.regionaloffice;
+
+  const RegionalOfficeProperties = createSelector(
+    selectRegionalOfficeState,
+    (regionalOfficesState) => ({
+      regionalCreditList: regionalOfficesState.regionalCreditList,
+      regionalBankList: regionalOfficesState.regionalBankList,
+    })
+  );
+  const { regionalCreditList, regionalBankList } = useSelector(
+    RegionalOfficeProperties
+  );
 
   const columns = useMemo(
     () => [
@@ -44,144 +81,161 @@ const OperatorAccountDetails = (props) => {
       },
       {
         Header: "Transaction Date",
-        accessor: "name",
+        accessor: "created_at",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <>
               <h5
                 className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleViewRegionalOffice(userData);
-                }}
+                // onClick={() => {
+                //   const userData = cellProps.row.original;
+                //   handleViewRegionalOffice(userData);
+                // }}
               >
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.name}
+                  {cellProps.row.original.created_at}
                 </Link>
               </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
             </>
           );
         },
       },
       {
         Header: "Receipt No.",
-        accessor: "code",
+        accessor: "reciept_no",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.code}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.reciept_no}
+            </p>
           );
         },
       },
       {
         Header: "Amount",
-        accessor: "addr",
+        accessor: "amount",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.addr}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.amount}</p>
           );
         },
       },
       {
         Header: "SGST",
-        accessor: "contact_person",
+        // accessor: "contact_person",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.contact_person}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.sgst}</p>
           );
         },
       },
       {
         Header: "CGST",
-        accessor: "mobile_no",
+        // accessor: "mobile_no",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.mobile_no}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.cgst}</p>
           );
         },
       },
       {
         Header: "IGST",
-        accessor: "state_lbl",
+        // accessor: "state_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.state_lbl}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.igst}</p>
+          );
+        },
+      },
+      {
+        Header: "TDS",
+        // accessor: "state_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.tds}</p>
+          );
+        },
+      },
+      {
+        Header: "MRP",
+        // accessor: "state_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.mrp}</p>
           );
         },
       },
       {
         Header: "Total Tax",
-        accessor: "District_lbl",
+        // accessor: "District_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.district_lbl}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.tax}</p>
           );
         },
       },
       {
         Header: "Total Amount",
-        accessor: "city_lbl",
+        // accessor: "city_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.city_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.total_amount}
+            </p>
           );
         },
       },
       {
         Header: "Debit Amount",
-        accessor: "gstno",
+        // accessor: "gstno",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.gstno}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.debit_amount}
+            </p>
           );
         },
       },
       {
         Header: "Credit Amount",
-        accessor: "panno",
+        // accessor: "panno",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.panno}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.credit_amount}
+            </p>
           );
         },
       },
       {
         Header: "Type",
-        accessor: "username",
+        // accessor: "username",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.username}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.type_lbl}</p>
           );
         },
       },
       {
         Header: "Remark",
-        accessor: "status",
+        // accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.status}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.remark}</p>
           );
         },
       },
@@ -193,83 +247,129 @@ const OperatorAccountDetails = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.created_by}
+              {cellProps.row.original.created_by_lbl}
             </p>
           );
         },
       },
-      // {
-      //   Header: "Action",
-      //   Cell: (cellProps) => {
-      //     return (
-      //       <div className="d-flex gap-3">
-      //         <Link
-      //           to="#"
-      //           className="text-success"
-      //           onClick={() => {
-      //             const userData = cellProps.row.original;
-      //             handleUserClick(userData);
-      //           }}
-      //         >
-      //           <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-      //           <UncontrolledTooltip placement="top" target="edittooltip">
-      //             Edit
-      //           </UncontrolledTooltip>
-      //         </Link>
-      //         <Link
-      //           to="#"
-      //           className="text-danger"
-      //           onClick={() => {
-      //             const userData = cellProps.row.original;
-      //             onClickDelete(userData);
-      //           }}
-      //         >
-      //           <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-      //           <UncontrolledTooltip placement="top" target="deletetooltip">
-      //             Delete
-      //           </UncontrolledTooltip>
-      //         </Link>
-      //       </div>
-      //     );
-      //   },
-      // },
     ],
     []
   );
 
-  var node = useRef();
+  const toggleAddCreditModal = () => {
+    setShowAddCreditModal(!showAddCreditModal);
+  };
 
-  const keyField = "id";
+  const toggleSetOffModal = () => {
+    setShowSetOffAmountModal(!showSetOffAmountModal);
+  };
 
+  useEffect(() => {
+    dispatch(onGetRegionalCreditList());
+    dispatch(onGetRegionalBankList());
+  }, [dispatch]);
+
+  const paymentTableSchema = {
+    subTableArrayKeyName: "payment_details",
+    keyColumn: "mode",
+    columns: [
+      {
+        header: "Payment Mode",
+        accessor: "mode",
+      },
+      {
+        header: "Bank Name",
+        accessor: "bankname",
+      },
+      {
+        header: "Cheque/Instrument No.",
+        accessor: "chequeno",
+      },
+      {
+        header: "Cheque/Instrument Date",
+        accessor: "chequedate",
+      },
+    ],
+  };
+
+  const renderPaymentTable = (row) => {
+    return (
+      <Table className="table mb-0">
+        <thead>
+          <tr>
+            {paymentTableSchema.columns.map((column) => {
+              return <th key={column.accessor}>{column.header}</th>;
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {row[paymentTableSchema.subTableArrayKeyName].map((object) => {
+            return (
+              <tr key={object[paymentTableSchema.keyColumn]}>
+                {paymentTableSchema.columns.map((column) => {
+                  return (
+                    <td key={column.accessor}>{object[column.accessor]}</td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+    );
+  };
   const getTableActions = () => {
     return [
       {
         name: "Pay Online",
         // action: setShowRegionalOffice,
         type: "normal",
-        icon: "create",
+        // icon: "create",
       },
       {
         name: "Add Credit",
-        // action: setShowUploadRegionalOffice,
+        action: setShowAddCreditModal,
         type: "normal",
         icon: "create",
+      },
+      {
+        name: "Setoff Amount",
+        action: setShowSetOffAmountModal,
+        type: "normal",
+        // icon: "create",
       },
     ];
   };
 
   return (
     <React.Fragment>
+      <AddCreditModal
+        isOpen={showAddCreditModal}
+        toggleAddModal={toggleAddCreditModal}
+        selectedRowId={selectedRowId}
+        selectedRowData={selectedRowData}
+        regionalCreditList={regionalCreditList}
+        regionalBankList={regionalBankList}
+        setAccountDetails={setAccountDetails}
+      />
+      <SetOffAmountModal
+        isOpen={showSetOffAmountModal}
+        toggleSetOffModal={toggleSetOffModal}
+        selectedRowData={selectedRowData}
+      />
+
       <Row>
         <Col lg="12">
           <Card>
             <CardBody>
+              {console.log("Account Details:" + JSON.stringify(accountDetails))}
               <TableContainer
                 isPagination={true}
                 columns={columns}
-                data={operatorAccount}
+                data={accountDetails && accountDetails}
                 isTransactionDate={true}
                 // isGlobalFilter={true}
+                isShowTableActionButtons={true}
                 isAddRegionalOffice={true}
                 isShowingPageLength={true}
                 tableActions={getTableActions()}
@@ -278,6 +378,9 @@ const OperatorAccountDetails = (props) => {
                 theadClass="table-light"
                 paginationDiv="col-sm-12 col-md-7"
                 pagination="pagination pagination-rounded justify-content-end mt-4"
+                // subTableEnabled={true}
+                // getRenderedSubTable={renderPaymentTable}
+                // isSubTableContentExists={(rowData) => rowData.rate.length > 0}
               />
             </CardBody>
           </Card>

@@ -217,6 +217,13 @@ const ViewLcoModal = (props) => {
     setShowEditLco(false);
   };
   console.log("selectedRowData:" + JSON.stringify(selectedRowData));
+  console.log(
+    "ParentId of selectedRowData:" + selectedRowData.parent_id,
+    selectedRowData.city_id,
+    selectedRowData.district_id,
+    selectedRowData.distributor_id
+  );
+
   return (
     <>
       {/* <EditRegionalOfficeModal
