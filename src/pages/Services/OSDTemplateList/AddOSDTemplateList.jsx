@@ -31,7 +31,7 @@ const AddNewOSDTemplateList = (props) => {
             name: "",
             template_for: "",
             template: { template_message: "", template_title: "" },
-            template_config_id: [],
+            template_config_id: { id: "", name: "", cas_code: "NSTV" },
             status: "", // Assuming status can be empty initially
             created_at: "",
             created_by: "Admin",
@@ -58,7 +58,7 @@ const AddNewOSDTemplateList = (props) => {
                 template_for: values.template_for,
                 template: template,
                 status: parseInt(values.status),
-                template_config_id: values.template_config_id.map(option => option.id),
+                template_config_id: [values.id, values.name, values.cas_code]
             };
 
             console.log("newOSDTemplate:", newOSDTemplate);
