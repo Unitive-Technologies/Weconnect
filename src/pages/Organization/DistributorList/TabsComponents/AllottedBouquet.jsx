@@ -23,16 +23,19 @@ import { getRegionalOffice as onGetRegionalOffice } from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
+import AddOrUpdateCommission from "./AddOrUpdateCommission";
 
 const AllottedBouquet = ({ allottedBouquetData, selectedRowId }) => {
   //meta title
   document.title = "LCO | VDigital";
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [selectedRows, setSelectedRows] = useState([]);
-
+  const [showAddOrUpdateModal, setShowAddOrUpdateModal] = useState(false);
+  const [selectedWholeRows, setSelectedWholeRows] = useState([]);
   const handleRowSelection = (row) => {
     console.log("Row clicked:", row.original);
     const selectedId = row.original.id;
+    const selectedRowFullDetails = row.original;
     console.log("selectedId:", selectedId);
     setSelectedRows((prevSelectedRows) => {
       const isSelected = prevSelectedRows.includes(selectedId);
@@ -40,6 +43,14 @@ const AllottedBouquet = ({ allottedBouquetData, selectedRowId }) => {
         return prevSelectedRows.filter((id) => id !== selectedId);
       } else {
         return [...prevSelectedRows, selectedId];
+      }
+    });
+    setSelectedWholeRows((prevSelectedRows) => {
+      const isSelected = prevSelectedRows.includes(selectedRowFullDetails);
+      if (isSelected) {
+        return prevSelectedRows.filter((id) => id !== selectedId);
+      } else {
+        return [...prevSelectedRows, selectedRowFullDetails];
       }
     });
     console.log("selectedRows:", JSON.stringify(selectedRows));
@@ -233,14 +244,45 @@ const AllottedBouquet = ({ allottedBouquetData, selectedRowId }) => {
     }
   };
 
-  const handleAddOrUpdate = () => {
-    console.log("Add/Update btn clicked");
+  const toggleAddOrUpdateModal = () => {
+    setShowAddOrUpdateModal(!showAddOrUpdateModal);
   };
+  // const handleAddOrUpdate = async (e) => {
+  //   e.preventDefault();
+
+  //   console.log("selectedRows:" + JSON.stringify(selectedRows));
+
+  //   try {
+  //     const selectedRowsToAddOrUpdate = {
+  //       operator_id: selectedRowId,
+  //       bouque_ids: selectedRows,
+  //       commision: 0,
+  //     };
+
+  //     console.log("newUpload:", JSON.stringify(selectedRowsToAddOrUpdate));
+
+  //     const token = "Bearer " + localStorage.getItem("temptoken");
+
+  //     const response = await axios.post(
+  //       `${API_URL}/operator-bouque?vr=web1.0`,
+  //       selectedRowsToAddOrUpdate,
+  //       {
+  //         headers: {
+  //           Authorization: token,
+  //         },
+  //       }
+  //     );
+
+  //     console.log("response after submitting remove form:", response.data);
+  //   } catch (error) {
+  //     console.error("Error submitting remove form:", error);
+  //   }
+  // };
   const getTableActions = () => {
     return [
       {
         name: "Add/Update Commission",
-        action: selectedRows.length ? handleAddOrUpdate : handleWarning,
+        action: selectedRows.length ? toggleAddOrUpdateModal : handleWarning,
         type: "normal",
         icon: "create",
       },
@@ -258,6 +300,12 @@ const AllottedBouquet = ({ allottedBouquetData, selectedRowId }) => {
   };
   return (
     <React.Fragment>
+      <AddOrUpdateCommission
+        selectedRows={selectedWholeRows}
+        selectedRowId={selectedRowId}
+        isOpen={showAddOrUpdateModal}
+        toggleAddOrUpdateModal={toggleAddOrUpdateModal}
+      />
       <div
         className="position-fixed top-0 end-0 p-3"
         style={{ zIndex: "1005" }}
