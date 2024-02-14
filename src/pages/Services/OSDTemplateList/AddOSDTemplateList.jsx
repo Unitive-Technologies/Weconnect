@@ -32,40 +32,23 @@ const AddNewOSDTemplateList = (props) => {
         initialValues: {
             //BroadCaster: "",
             name: "",
-            title: "",
             template_for: "",
             template: { template_message: "", template_title: "" },
-            showcontent: "",
             template_config_id: [],
-            // template_config_id: [{ "id": "", "name": "", "cas_code": "" }],
-            casconfig: "",
-            // template_config_id: "",
-            bmailtitle: "",
-            content: "",
             status: "",
             created_at: "",
             created_by: "Admin",
         },
         validationSchema: Yup.object({
             name: Yup.string().required("Enter name"),
-            // template_for: Yup.string().required("Select template for"),
-            // template_message: Yup.string().required("Select template for"),
-            // showcontent: Yup.string().required("Select template for"),
-            // casconfig: Yup.string().required("Select template for"),
-            // bmailtitle: Yup.string().required("Select template for"),
-            // content: Yup.string().required("Select template for"),
             status: Yup.string().required("Select status"),
         }),
         onSubmit: (values) => {
-            // const OSDvaluesArray = values["template_config_id"] || [];
-            // const OSDvaluesIntegers = OSDvaluesArray.map((option) =>
-            //     parseInt(option, 10)
-            // ); // Specify the radix
 
             let template = {};
             if (values.template_for === "1") {
                 template = {
-                    template_message: values.template.template_message,
+                    template_message: values.template_message,
                     // No need to include template_title for SMS
                 };
             } else if (values.template_for === "2") {
@@ -81,29 +64,19 @@ const AddNewOSDTemplateList = (props) => {
             }
 
             const newOSDTemplate = {
-                id: Math.floor(Math.random() * (30 - 20)) + 20,
                 name: values["name"],
                 template_for: values["template_for"],
                 template: template,
-                // template_config_id: values["template_config_id"] || [],
-                // template_config_id: OSDvaluesIntegers,
-                // template_config_id: values["template_config_id"],
-                showcontent: values["showcontent"],
-                // casconfig: values["casconfig"],
-                bmailtitle: values["bmailtitle"],
-                content: values["content"],
-                status: values["status"],
-                template_config_id: values.template_config_id.map(option => option.id),
-                created_at: new Date(),
-                created_by: values["created_by"],
+                status: parseInt(values[status]), // Replace statusIndex with the index of the status in the array
+                // template_config_id: values["template_config_id"]
+                template_config_id: values.template_config_id.map(option => option.id, name, cas_code),
             };
             console.log(
                 "newOSDTemplate:" + newOSDTemplate
             );
             // save new user
             dispatch(
-                onAddNewOSDTemplate(newOSDTemplate)
-            );
+                onAddNewOSDTemplate(newOSDTemplate));
             dispatch(onGetOSDTemplate());
             validation.resetForm();
             toggleAddModal();

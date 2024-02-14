@@ -272,7 +272,7 @@ const ViewOSDTemplateList = (props) => {
                           // className="form-select"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
-                          value={validation.values.template.template_message || ""}
+                          value={validation.values.template_message || ""}
                           row="3"
                           disabled={!showEditosdTemplate}
                         ></Input>
