@@ -297,24 +297,6 @@ const OSDTemplateList = (props) => {
 
                   <CardBody>
                     {console.log("OSDTemp:" + JSON.stringify(osdTemp))}
-                    {/* <TableContainer
-                      isPagination={true}
-                      columns={columns}
-                      isGlobalFilter={true}
-                      data={osdTemp}
-                      isShowTableActionButtons={true}
-                      isShowingPageLength={true}
-                      tableActions={getTableActions()}
-                      handleAddOSDTemplateList={() =>
-                        setShowAddOSDTemplateList(true)
-                      }
-                      handleUserClick={handleUserClicks}
-                      customPageSize={8}
-                      tableClass="table align-middle table-nowrap table-hover"
-                      theadClass="table-light"
-                      paginationDiv="col-sm-12 col-md-7"
-                      pagination="pagination pagination-rounded justify-content-end mt-4"
-                    /> */}
                     <TableContainerX
                       columns={columns}
                       data={osdTemp}
