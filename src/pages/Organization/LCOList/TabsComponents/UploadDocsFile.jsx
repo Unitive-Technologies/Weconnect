@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../../components/Common/TableContainer";
+import { docsTypeList } from "./docsTypeList";
 import {
   Card,
   CardBody,
@@ -26,23 +27,25 @@ const UploadDocsFile = ({ data, updateList, selectedRowId }) => {
   const handleChangeUploadFile = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
-      const { name, type } = selectedFile;
+      const { name, type, size } = selectedFile; // Access size property
       const ext = name.split(".").pop();
       const reader = new FileReader();
       reader.readAsDataURL(selectedFile);
       reader.onload = () => {
         const data = reader.result;
 
-        // Set the file object directly in state
+        // Set the file object along with its size in state
         setFile({
           name,
           type,
           ext,
           data,
+          size, // Add size to the file object
         });
       };
     }
   };
+
   const updateUploadFiles = () => {
     if (!docType) {
       return;
@@ -83,7 +86,7 @@ const UploadDocsFile = ({ data, updateList, selectedRowId }) => {
           flexWrap: "wrap",
         }}
       >
-        <Col lg={5}>
+        <Col lg={8}>
           <div className="mb-3">
             <Input
               name="doctype"
@@ -91,12 +94,10 @@ const UploadDocsFile = ({ data, updateList, selectedRowId }) => {
               placeholder="Select Document Type"
               className="form-select"
               value={docType}
-              // onChange={(e) => setCasSelection(e.target.value)}
               onChange={(e) => setDocType(e.target.value)}
-              //   disabled={!data}
             >
               <option value="">Select Document Type</option>
-              <option value="Post Office_Registration">
+              {/* <option value="Post Office_Registration">
                 Post Office_Registration
               </option>
               <option value="Hand Over and take over letter">
@@ -107,11 +108,16 @@ const UploadDocsFile = ({ data, updateList, selectedRowId }) => {
               <option value="Aadhar Card">Aadhar Card</option>
               <option value="Address Proof">Address Proof</option>
               <option value="Agreement">Agreement</option>
-              <option value="Others">Others</option>
+              <option value="Others">Others</option> */}
+              {docsTypeList.map((type) => (
+                <option key={type.id} value={type.value}>
+                  {type.type}
+                </option>
+              ))}
             </Input>
           </div>
         </Col>
-        <Col lg={5}>
+        <Col lg={8}>
           <div
             className="mb-3"
             style={{ display: "flex", flexDirection: "column" }}
@@ -120,6 +126,7 @@ const UploadDocsFile = ({ data, updateList, selectedRowId }) => {
             <input name="file" type="file" onChange={handleChangeUploadFile} />
           </div>
         </Col>
+        <Col lg={2}></Col>
         <Col lg={2}>
           <div className="mb-3">
             <button
@@ -153,10 +160,14 @@ const UploadDocsFile = ({ data, updateList, selectedRowId }) => {
                   {data &&
                     data.map((item, index) => (
                       <tr key={index}>
-                        <th scope="row">{item.model_id}</th>
+                        <th scope="row">{index + 1}</th>
                         <td>{item.doctype}</td>
                         <td>{item.document.name}</td>
                         <td>{item.document.type}</td>
+                        <td>{item.document.size}</td>
+                        <td>
+                          <Link>Download</Link>
+                        </td>
                         <td>
                           <h5>
                             <Link

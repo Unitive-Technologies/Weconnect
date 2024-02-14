@@ -17,6 +17,7 @@ import {
   Input,
   Form,
 } from "reactstrap";
+import { docsTypeList } from "./docsTypeList";
 import TableContainer from "../../../../components/Common/TableContainer";
 import UploadDocsFile from "./UploadDocsFile";
 import { update } from "lodash";
@@ -25,6 +26,7 @@ import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 
 const UploadDocuments = ({ uploadDocsData, selectedRowId }) => {
+  console.log("uploadDocsData:" + JSON.stringify(uploadDocsData));
   const [uploadDocsList, setUploadDocsList] = useState([]);
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
 
@@ -176,15 +178,87 @@ const UploadDocuments = ({ uploadDocsData, selectedRowId }) => {
                     <th>Uploaded</th>
                   </tr>
                 </thead>
+                {/* <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Others</td>
+                    <td>
+                      {uploadDocsData.doctype === "Others" ? "Yes" : "No"}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>PAN Card</td>
+                    <td>
+                      {uploadDocsData.doctype === "PAN Card" ? "Yes" : "No"}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Agreement</td>
+                    <td>
+                      {uploadDocsData.doctype === "Agreement" ? "Yes" : "No"}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">4</th>
+                    <td>Aadhar Card</td>
+                    <td>
+                      {uploadDocsData.doctype === "Aadhar Card" ? "Yes" : "No"}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">5</th>
+                    <td>Address Proof</td>
+                    <td>
+                      {uploadDocsData.doctype === "Address Proof"
+                        ? "Yes"
+                        : "No"}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">6</th>
+                    <td>GST Registration</td>
+                    <td>
+                      {uploadDocsData.doctype === "GST Registration"
+                        ? "Yes"
+                        : "No"}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">7</th>
+                    <td>Post Office_registration</td>
+                    <td>
+                      {uploadDocsData.doctype === "Post Office_registration"
+                        ? "Yes"
+                        : "No"}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">8</th>
+                    <td> Hand Over And Take Over Letter</td>
+                    <td>
+                      {uploadDocsData.doctype ===
+                      "	Hand Over And Take Over Letter"
+                        ? "Yes"
+                        : "No"}
+                    </td>
+                  </tr>
+                </tbody> */}
                 <tbody>
-                  {uploadDocsData &&
-                    uploadDocsData.map((item, index) => (
-                      <tr key={index}>
-                        <th scope="row">{index + 1}</th>
-                        <td>{item.doctype}</td>
-                        <td>{item.uploaded ? "Yes" : "No"}</td>
-                      </tr>
-                    ))}
+                  {docsTypeList.map((single, idx) => (
+                    <tr key={single.id}>
+                      <th scope="row">{idx + 1}</th>
+                      <td>{single.value}</td>
+                      <td>
+                        {uploadDocsData.some(
+                          (item) => item.doctype === single.type
+                        )
+                          ? "Yes"
+                          : "No"}
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </Table>
             </CardBody>
@@ -194,7 +268,7 @@ const UploadDocuments = ({ uploadDocsData, selectedRowId }) => {
       <div
         style={{
           // margin: "20px 0px",
-          marginTop: "20px",
+          marginTop: "-10px",
           marginBottom: "-18px",
           zIndex: 12000,
           backgroundColor: "#fff",
@@ -250,8 +324,8 @@ const UploadDocuments = ({ uploadDocsData, selectedRowId }) => {
       <div
         style={{
           // margin: "20px 0px",
-          marginTop: "20px",
-          marginBottom: "-18px",
+          marginTop: "-10px",
+          marginBottom: "18px",
           zIndex: 12000,
           backgroundColor: "#fff",
           width: "fit-content",
@@ -260,7 +334,7 @@ const UploadDocuments = ({ uploadDocsData, selectedRowId }) => {
           padding: "0px 10px",
         }}
       >
-        <h5 style={{}}>Upload Documents</h5>
+        <h5>Documents Upload</h5>
       </div>
       <Row
         style={{
@@ -277,8 +351,22 @@ const UploadDocuments = ({ uploadDocsData, selectedRowId }) => {
             updateList={setUploadDocsList}
             selectedRowId={selectedRowId}
           />
-
-          <Button type="button" onClick={handleUploadDocs}>
+        </Col>
+        <Col
+          lg={12}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Button
+            style={{
+              width: "20%",
+            }}
+            type="button"
+            onClick={handleUploadDocs}
+          >
             Upload
           </Button>
           {/* </form> */}
