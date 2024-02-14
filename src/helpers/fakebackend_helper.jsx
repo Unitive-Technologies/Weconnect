@@ -600,8 +600,8 @@ export const getDistributorsPhase = () => get(url.GET_DISTRIBUTORS_PHASE);
 export const getDistributorsStatus = () => get(url.GET_DISTRIBUTORS_STATUS);
 export const addNewDistributor = (distributor) =>
   post(url.ADD_NEW_DISTRIBUTOR, distributor);
-export const updateDistributor = (distributors) =>
-  put(url.UPDATE_DISTRIBUTOR, distributors);
+export const updateDistributor = (distributors, id) =>
+  put(url.UPDATE_DISTRIBUTOR(id), distributors);
 
 // export const getLco = () => get(url.GET_LCO);
 export const getLco = async (currentPage, perPage = 20) => {
