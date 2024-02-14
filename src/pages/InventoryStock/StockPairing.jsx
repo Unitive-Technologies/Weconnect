@@ -8,6 +8,7 @@ import StockPairingMarkfaulty from "./StockPairingMarkfaulty";
 import StockPairingBlacklist from "./StockPairingBlacklist";
 import DeleteStockPairing from "./DeleteStockPairing";
 import FaultyPairingSendToPair from "./FaultyPairingSendToPair";
+import FaultyPairingBlacklist from "./FaultyPairingBlacklist";
 
 const StockPairing = (props) => {
   const {
@@ -290,6 +291,11 @@ const StockPairing = (props) => {
         toggle={handleFaultyPairingSendpair}
         selectedFaultyPairings={selectedFaultyPairings}
         stockscinventorystate={stockscinventorystate}
+      />
+      <FaultyPairingBlacklist
+        isOpen={showFaultyPairingBlacklist}
+        toggle={handleFaultyPairingBlacklist}
+        selectedFaultyPairings={selectedFaultyPairings}
       />
       <Row>
         <Col lg="12">

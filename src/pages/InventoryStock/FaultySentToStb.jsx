@@ -90,7 +90,7 @@ function FaultySendToStb(props) {
         },
       },
       {
-        Header: "Smartcard No.",
+        Header: "STB No.",
         accessor: "stbno",
         filterable: true,
         Cell: (cellProps) => {

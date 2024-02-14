@@ -98,7 +98,7 @@ function FaultyStbBlacklist(props) {
         },
       },
       {
-        Header: "Smartcard No.",
+        Header: "STBNo.",
         accessor: "stbno",
         filterable: true,
         Cell: (cellProps) => {
