@@ -571,6 +571,15 @@ export const getBlacklistedPairingUrl = (currPage, perPage) => {
 
 export const GET_INVENTORYALLOTTED_SMARTCARD =
   "/smartcard-allotment?expand=created_by_lbl,status_lbl,cas_lbl,brand_lbl,is_embeded_lbl,operator_lbl,warehouse_lbl,inv_state_lbl&filter[status]=1&filter[account_id]=0&page=1&per-page=50&vr=web1.0";
+export const GET_INVENTORYALLOTTED_USERTYPE =
+  "/list/usertype?fields=id,name&vr=web1.0";
+export const GET_INVENTORYALLOTTED_SMARTCARDLIST =
+  "/smartcard?fields=id,smartcardno,status&expand=is_embeded_lbl,cas_lbl,brand_lbl,operator_lbl,status_lbl&filter[status]=1&filter[stb_id]=0&page=1&per-page=500&vr=web1.0";
+export const GET_INVENTORYALLOTTED_OPERATORLIST =
+  "operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[mso_id]=1&filter[type]=1&vr=web1.0";
+export const ALLOT_SMARTCARDPAIRING = "/smartcard-allotment?vr=web1.0";
+export const DEALLOT_SMARTCARD = "/smartcard-allotment/0?vr=web1.0";
+
 export const GET_INVENTORYALLOTTED_STB =
   "/stb-allotment?expand=created_by_lbl,status_lbl,boxtype_lbl,cas_lbl,brand_lbl,is_embeded_lbl,operator_lbl,warehouse_lbl,inv_state_lbl&filter[status]=1&filter[account_id]=0&page=1&per-page=50&vr=web1.0";
 export const GET_INVENTORYALLOTTED_PAIRING =
