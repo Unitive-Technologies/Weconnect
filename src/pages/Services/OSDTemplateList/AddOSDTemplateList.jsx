@@ -35,130 +35,10 @@ const AddNewOSDTemplateList = (props) => {
     const dispatch = useDispatch();
     const [user, setUser] = useState();
 
-    // const templateConfigMappings = {
-    //     "1": { name: "Template 1", cas_code: "T1" },
-    //     "2": { name: "Template 2", cas_code: "T2" },
-    //     "3": { name: "Template 3", cas_code: "T3" },
-    // };
-
-    // const templateConfigMappings = osdTempOSD.map((item, index) => ({
-    //     [`${index + 1}`]: { name: item.name, cas_code: item.cas_code }
-    // }));
-
-    // console.log("templateConfigMappings Added" + JSON.stringify(templateConfigMappings));
-
-    // const validation = useFormik({
-    //     enableReinitialize: true,
-    //     initialValues: {
-    //         name: "",
-    //         template_for: "",
-    //         template: { template_message: "", template_title: "" },
-    //         template_config_id: { id: "", name: "", cas_code: "NSTV" },
-    //         status: "", // Assuming status can be empty initially
-    //         created_at: "",
-    //         created_by: "Admin",
-    //     },
-    //     validationSchema: Yup.object({
-    //         name: Yup.string().required("Enter name"),
-    //         status: Yup.string().required("Select status"),
-    //     }),
-    //     onSubmit: (values) => {
-    //         let template = {};
-    //         if (values.template_for === "1" || values.template_for === "2") {
-    //             template = {
-    //                 template_message: values.template_message,
-    //             };
-    //         } else if (values.template_for === "3") {
-    //             template = {
-    //                 template_message: values.template_message,
-    //                 template_title: values.template_title,
-    //             };
-    //         }
-
-    //         const selectedTemplateConfig = templateConfigMappings[values.template_for];
-
-    //         console.log("osdTempOSD Add" + selectedTemplateConfig)
-
-    //         const newOSDTemplate = {
-    //             name: values.name,
-    //             template_for: values.template_for,
-    //             template: template,
-    //             status: parseInt(values.status),
-    //             template_config_id: [
-    //                 { id: values.template_for, name: selectedTemplateConfig.name, cas_code: selectedTemplateConfig.cas_code },
-    //             ],
-    //             // template_config_id: values.template_config_id
-    //         };
-
-    //         console.log("newOSDTemplate:", newOSDTemplate);
-
-    //         dispatch(onAddNewOSDTemplate(newOSDTemplate));
-    //         dispatch(onGetOSDTemplate());
-    //         validation.resetForm();
-    //         toggleAddModal();
-    //     },
-    //     onReset: (values) => {
-    //         validation.setValues(validation.initialValues);
-    //     },
-    // });
-
-
-    // const validation = useFormik({
-    //     enableReinitialize: true,
-    //     initialValues: {
-    //         name: "",
-    //         template_for: "",
-    //         template: { template_message: "", template_title: "" },
-    //         template_config_id: { id: "", name: "", cas_code: "NSTV" },
-    //         status: "", // Assuming status can be empty initially
-    //         created_at: "",
-    //         created_by: "Admin",
-    //     },
-    //     validationSchema: Yup.object({
-    //         name: Yup.string().required("Enter name"),
-    //         status: Yup.string().required("Select status"),
-    //     }),
-    //     onSubmit: (values) => {
-    //         let template = {};
-    //         if (values.template_for === "1" || values.template_for === "2") {
-    //             template = {
-    //                 template_message: values.template_message,
-    //             };
-    //         } else if (values.template_for === "3") {
-    //             template = {
-    //                 template_message: values.template_message,
-    //                 template_title: values.template_title,
-    //             };
-    //         }
-
-    //         const newOSDTemplate = {
-    //             name: values.name,
-    //             template_for: values.template_for,
-    //             template: template,
-    //             status: parseInt(values.status),
-    //             template_config_id: [
-    //                 { id: values.template_for, name: "NSTV", cas_code: "NSTV" },
-    //             ],
-    //         };
-
-    //         console.log("newOSDTemplate:", newOSDTemplate);
-
-    //         dispatch(onAddNewOSDTemplate(newOSDTemplate));
-    //         dispatch(onGetOSDTemplate());
-    //         validation.resetForm();
-    //         toggleAddModal();
-    //     },
-    //     onReset: (values) => {
-    //         validation.setValues(validation.initialValues);
-    //     },
-    // });
 
     const validation = useFormik({
-        // enableReinitialize : use this flag when initial values needs to be changed
         enableReinitialize: true,
-
         initialValues: {
-            //BroadCaster: "",
             name: "",
             template_for: "",
             template: { template_message: "", template_title: "" },
@@ -172,38 +52,30 @@ const AddNewOSDTemplateList = (props) => {
             status: Yup.string().required("Select status"),
         }),
         onSubmit: (values) => {
-
             let template = {};
-            if (values.template_for === "1") {
+            if (values.template_for === "1" || values.template_for === "2") {
                 template = {
                     template_message: values.template_message,
-                    // No need to include template_title for SMS
-                };
-            } else if (values.template_for === "2") {
-                template = {
-                    template_message: values.template_message,
-                    // No need to include template_title for SMS
                 };
             } else if (values.template_for === "3") {
                 template = {
-                    template_message: values.template_message, // Assuming content goes to template_message
+                    template_message: values.template_message,
                     template_title: values.template_title,
                 };
             }
 
+
             const newOSDTemplate = {
-                name: values["name"],
-                template_for: values["template_for"],
+                name: values.name,
+                template_for: values.template_for,
                 template: template,
                 status: parseInt(values.status),
                 template_config_id: values.template_config_id.map(option => option.id),
             };
-            console.log(
-                "newOSDTemplate:" + newOSDTemplate
-            );
-            // save new user
-            dispatch(
-                onAddNewOSDTemplate(newOSDTemplate));
+
+            console.log("newOSDTemplate:", newOSDTemplate);
+
+            dispatch(onAddNewOSDTemplate(newOSDTemplate));
             dispatch(onGetOSDTemplate());
             validation.resetForm();
             toggleAddModal();
@@ -212,6 +84,7 @@ const AddNewOSDTemplateList = (props) => {
             validation.setValues(validation.initialValues);
         },
     });
+
 
     return (
         <Modal
