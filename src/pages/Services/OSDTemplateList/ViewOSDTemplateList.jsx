@@ -16,7 +16,10 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
-import { updateOSDTemplate as onUpdateOSDTemplate, getOSDTemplate as onGetOSDTemplate } from "/src/store/OSDTemplate/actions";
+import {
+  updateOSDTemplate as onUpdateOSDTemplate,
+  getOSDTemplate as onGetOSDTemplate,
+} from "/src/store/OSDTemplate/actions";
 
 const ViewOSDTemplateList = (props) => {
   const {
@@ -28,7 +31,7 @@ const ViewOSDTemplateList = (props) => {
     osdTempStatus,
     osdTempTemplateFor,
   } = props;
-  //   console.log("user in viewuser modal:" + JSON.stringify(user));
+  console.log("OOOOOOOOOOOOOOOOOOOOsd in view:" + JSON.stringify(osdTemplate));
   const dispatch = useDispatch();
   const [showEditosdTemplate, setShowEditosdTemplate] = useState(false);
 
@@ -41,11 +44,13 @@ const ViewOSDTemplateList = (props) => {
       name: (osdTemplate && osdTemplate.name) || "",
       title: (osdTemplate && osdTemplate.title) || "",
       template_for: (osdTemplate && osdTemplate.template_for) || "",
-      template: (osdTemplate && osdTemplate.template) || {
-        template_message: "",
-        template_title: "",
-      },
-      template_config_id: (osdTemplate && osdTemplate.template_config_id) || [],
+      // template:
+      //   (osdTemplate && {
+      //     template_message: osdTemplate.template.template_message || "",
+      //     template_title: osdTemplate.template.template_title || "",
+      //   }) ||
+      //   {},
+      // template_config_id: (osdTemplate && osdTemplate.template_config_id) || [],
       status: (osdTemplate && osdTemplate.status) || "",
     },
     validationSchema: Yup.object({
@@ -185,7 +190,7 @@ const ViewOSDTemplateList = (props) => {
                       ))}
                   </Input>
                   {validation.touched.template_for &&
-                    validation.errors.template_for ? (
+                  validation.errors.template_for ? (
                     <FormFeedback type="invalid">
                       {validation.errors.template_for}
                     </FormFeedback>
@@ -247,7 +252,7 @@ const ViewOSDTemplateList = (props) => {
                         disabled={!showEditosdTemplate}
                       ></Input>
                       {validation.touched.template_message &&
-                        validation.errors.template_message ? (
+                      validation.errors.template_message ? (
                         <FormFeedback type="invalid">
                           {validation.errors.template_message}
                         </FormFeedback>
@@ -277,7 +282,7 @@ const ViewOSDTemplateList = (props) => {
                           disabled={!showEditosdTemplate}
                         ></Input>
                         {validation.touched.template_message &&
-                          validation.errors.template_message ? (
+                        validation.errors.template_message ? (
                           <FormFeedback type="invalid">
                             {validation.errors.template_message}
                           </FormFeedback>
@@ -314,7 +319,7 @@ const ViewOSDTemplateList = (props) => {
                             ))}
                         </Input>
                         {validation.touched.template_config_id &&
-                          validation.errors.template_config_id ? (
+                        validation.errors.template_config_id ? (
                           <FormFeedback type="invalid">
                             {validation.errors.template_config_id}
                           </FormFeedback>
@@ -344,7 +349,7 @@ const ViewOSDTemplateList = (props) => {
                           disabled={!showEditosdTemplate}
                         ></Input>
                         {validation.touched.template_title &&
-                          validation.errors.template_title ? (
+                        validation.errors.template_title ? (
                           <FormFeedback type="invalid">
                             {validation.errors.template_title}
                           </FormFeedback>
@@ -368,7 +373,7 @@ const ViewOSDTemplateList = (props) => {
                           disabled={!showEditosdTemplate}
                         ></Input>
                         {validation.touched.template_message &&
-                          validation.errors.template_message ? (
+                        validation.errors.template_message ? (
                           <FormFeedback type="invalid">
                             {validation.errors.template_message}
                           </FormFeedback>
