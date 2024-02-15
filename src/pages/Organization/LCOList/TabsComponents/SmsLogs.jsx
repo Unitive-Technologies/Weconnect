@@ -226,7 +226,7 @@ const SmsLogs = ({ smsLogsData }) => {
                 isPagination={true}
                 columns={columns}
                 data={smsLogsData}
-                isGlobalFilter={true}
+                // isGlobalFilter={true}
                 isAddRegionalOffice={true}
                 isShowingPageLength={true}
                 tableActions={getTableActions()}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import TableContainer from "../../../../components/Common/TableContainer";
 import Spinners from "../../../../components/Common/Spinner";
@@ -14,11 +15,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const SmsLogs = (props) => {
-  const { smsLogs } = props;
+const SmsLogs = ({ smsLogsData }) => {
   //meta title
-  document.title = "Regional Offices | VDigital";
-  console.log("smsLogs:" + JSON.stringify(smsLogs));
+  document.title = "LCO | VDigital";
 
   const columns = useMemo(
     () => [
@@ -82,7 +81,17 @@ const SmsLogs = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.response}</p>
+            <p
+              style={{
+                maxWidth: 200,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+              className="text-muted mb-0"
+            >
+              {cellProps.row.original.response}
+            </p>
           );
         },
       },
@@ -151,7 +160,7 @@ const SmsLogs = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {/* {cellProps.row.original.created_by_lbl} */}
+              {cellProps.row.original.distributor_lbl}
             </p>
           );
         },
@@ -163,7 +172,7 @@ const SmsLogs = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {/* {cellProps.row.original.created_by_lbl} */}
+              {cellProps.row.original.distributor_code_lbl}
             </p>
           );
         },
@@ -175,7 +184,7 @@ const SmsLogs = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {/* {cellProps.row.original.created_by_lbl} */}
+              {cellProps.row.original.branch_lbl}
             </p>
           );
         },
@@ -187,7 +196,7 @@ const SmsLogs = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {/* {cellProps.row.original.created_by_lbl} */}
+              {cellProps.row.original.branch_code_lbl}
             </p>
           );
         },
@@ -195,6 +204,17 @@ const SmsLogs = (props) => {
     ],
     []
   );
+
+  const getTableActions = () => {
+    return [
+      {
+        name: "Remove",
+        // action: setShowRegionalOffice,
+        type: "normal",
+        icon: "create",
+      },
+    ];
+  };
 
   return (
     <React.Fragment>
@@ -205,12 +225,12 @@ const SmsLogs = (props) => {
               <TableContainer
                 isPagination={true}
                 columns={columns}
-                data={smsLogs}
+                data={smsLogsData}
                 // isGlobalFilter={true}
+                isAddRegionalOffice={true}
                 isShowingPageLength={true}
-                // tableActions={getTableActions()}
-                // isShowTableActionButtons={true}
-                customPageSize={5}
+                tableActions={getTableActions()}
+                customPageSize={50}
                 tableClass="table align-middle table-nowrap table-hover"
                 theadClass="table-light"
                 paginationDiv="col-sm-12 col-md-7"

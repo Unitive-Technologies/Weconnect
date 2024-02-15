@@ -110,6 +110,25 @@ const UploadDocuments = ({ uploadDocsData, selectedRowId }) => {
     []
   );
 
+  const getUploadDocsDetails = async (e) => {
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/operator/view-upload-doc?filter[model_id]=${selectedRowId}&expand=data&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setUploadDocsData(response.data.data);
+      console.log("response in useEffect:" + JSON.stringify(response));
+    } catch (error) {
+      console.error("Error fetching Upload data:", error);
+    }
+  };
+
   const handleUploadDocs = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
 
@@ -136,10 +155,17 @@ const UploadDocuments = ({ uploadDocsData, selectedRowId }) => {
       );
 
       console.log("response after submitting upload form:", response.data);
+      // setUploadDocsList([]);
     } catch (error) {
       console.error("Error submitting upload form:", error);
     }
   };
+
+  // useEffect(() => {
+  //   if (uploadDocsList) {
+  //     getUploadDocsDetails();
+  //   }
+  // }, [uploadDocsList]);
 
   return (
     <div>
@@ -178,88 +204,25 @@ const UploadDocuments = ({ uploadDocsData, selectedRowId }) => {
                     <th>Uploaded</th>
                   </tr>
                 </thead>
-                {/* <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Others</td>
-                    <td>
-                      {uploadDocsData.doctype === "Others" ? "Yes" : "No"}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>PAN Card</td>
-                    <td>
-                      {uploadDocsData.doctype === "PAN Card" ? "Yes" : "No"}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Agreement</td>
-                    <td>
-                      {uploadDocsData.doctype === "Agreement" ? "Yes" : "No"}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">4</th>
-                    <td>Aadhar Card</td>
-                    <td>
-                      {uploadDocsData.doctype === "Aadhar Card" ? "Yes" : "No"}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">5</th>
-                    <td>Address Proof</td>
-                    <td>
-                      {uploadDocsData.doctype === "Address Proof"
-                        ? "Yes"
-                        : "No"}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">6</th>
-                    <td>GST Registration</td>
-                    <td>
-                      {uploadDocsData.doctype === "GST Registration"
-                        ? "Yes"
-                        : "No"}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">7</th>
-                    <td>Post Office_registration</td>
-                    <td>
-                      {uploadDocsData.doctype === "Post Office_registration"
-                        ? "Yes"
-                        : "No"}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">8</th>
-                    <td> Hand Over And Take Over Letter</td>
-                    <td>
-                      {uploadDocsData.doctype ===
-                      "	Hand Over And Take Over Letter"
-                        ? "Yes"
-                        : "No"}
-                    </td>
-                  </tr>
-                </tbody> */}
-                <tbody>
-                  {docsTypeList.map((single, idx) => (
-                    <tr key={single.id}>
-                      <th scope="row">{idx + 1}</th>
-                      <td>{single.value}</td>
-                      <td>
-                        {uploadDocsData.some(
-                          (item) => item.doctype === single.type
-                        )
-                          ? "Yes"
-                          : "No"}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
+                {uploadDocsData.length ? (
+                  <tbody>
+                    {docsTypeList.map((single, idx) => (
+                      <tr key={single.id}>
+                        <th scope="row">{idx + 1}</th>
+                        <td>{single.value}</td>
+                        <td>
+                          {uploadDocsData.some(
+                            (item) => item.doctype === single.type
+                          )
+                            ? "Yes"
+                            : "No"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                ) : (
+                  <tbody></tbody>
+                )}
               </Table>
             </CardBody>
           </Card>

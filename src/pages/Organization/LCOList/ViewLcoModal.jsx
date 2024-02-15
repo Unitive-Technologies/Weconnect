@@ -49,13 +49,7 @@ const ViewLcoModal = (props) => {
   const currentDate = new Date().toISOString().split("T")[0];
   const [fromDate, setFromDate] = useState(currentDate);
   const [toDate, setToDate] = useState(currentDate);
-  // const selectLcoState = (state) => state.lco;
-  // const LcoProperties = createSelector(selectLcoState, (lco) => ({
-  //   lco: lco.lco,
-  // }));
 
-  // const { lco } = useSelector(LcoProperties);
-  // console.log("single Lco000000000:" + JSON.stringify(lco));
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -151,22 +145,7 @@ const ViewLcoModal = (props) => {
   const handleEditRegionalOffice = () => {
     setShowEditLco(!showEditLco);
   };
-  // const getTableActions = () => {
-  //   return [
-  //     {
-  //       name: "Create",
-  //       // action: setShowRegionalOffice,
-  //       type: "normal",
-  //       icon: "create",
-  //     },
-  //     {
-  //       name: "Upload",
-  //       // action: setShowUploadRegionalOffice,
-  //       type: "normal",
-  //       icon: "upload",
-  //     },
-  //   ];
-  // };
+
   const getSelectedRowDetails = async (e) => {
     try {
       const token = "Bearer " + localStorage.getItem("temptoken");
@@ -536,13 +515,21 @@ const ViewLcoModal = (props) => {
                   <Col lg={12}>
                     <TapsOfLco
                       selectedRowId={selectedRowData.id}
-                      accountDetails={accountDetails}
-                      setAccountDetails={setAccountDetails}
-                      setFromDate={setFromDate}
-                      setToDate={setToDate}
+                      selectedRowData={selectedRowData}
                       fromDate={fromDate}
                       toDate={toDate}
-                      selectedRowData={selectedRowData}
+                      setFromDate={setFromDate}
+                      setToDate={setToDate}
+                      // handleSearch={handleSearch}
+                      accountDetails={accountDetails}
+                      setAccountDetails={setAccountDetails}
+                      // allottedBouquets={allottedBouquets}
+                      // allottedScheme={allottedScheme}
+                      // allottedPairing={allottedPairing}
+                      // allottedNCF={allottedNCF}
+                      // uploadDocuments={uploadDocuments}
+                      // smsLogs={smsLogs}
+                      // regionalOffData={regionalOffData}
                     />
                   </Col>
                 </Row>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import TableContainer from "../../../../components/Common/TableContainer";
 import Spinners from "../../../../components/Common/Spinner";
@@ -14,12 +15,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const AllottedPairing = (props) => {
-  const { allottedPairing } = props;
+const AllottedPairing = ({ allottedPairingData }) => {
   //meta title
   document.title = "Regional Offices | VDigital";
-
-  const operatorAccount = [];
 
   const columns = useMemo(
     () => [
@@ -44,55 +42,42 @@ const AllottedPairing = (props) => {
         },
       },
       {
-        Header: "Name",
-        accessor: "name",
+        Header: "Smartcard No.",
+        // accessor: "name",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <>
               <h5
                 className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleViewRegionalOffice(userData);
+                style={{
+                  maxWidth: 200,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
                 }}
               >
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.name}
+                  {cellProps.row.original.smartcardno}
                 </Link>
               </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
             </>
           );
         },
       },
       {
-        Header: "Code",
-        accessor: "code",
+        Header: "STB No.",
+        // accessor: "code",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.code}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.stbno}</p>
           );
         },
       },
       {
-        Header: "Commission(%)",
-        accessor: "commision",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.commision}
-            </p>
-          );
-        },
-      },
-      {
-        Header: "Type",
-        accessor: "boxtype_lbl",
+        Header: "Box Type",
+        // accessor: "addr",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -103,18 +88,30 @@ const AllottedPairing = (props) => {
         },
       },
       {
-        Header: "Bouquet Type",
-        accessor: "type_lbl",
+        Header: "CAS",
+        // accessor: "contact_person",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.type_lbl}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.cas_lbl}</p>
+          );
+        },
+      },
+      {
+        Header: "IsEmbedded",
+        // accessor: "mobile_no",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.is_embeded_lbl}
+            </p>
           );
         },
       },
       {
         Header: "Status",
-        accessor: "status_lbl",
+        // accessor: "state_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -125,20 +122,32 @@ const AllottedPairing = (props) => {
         },
       },
       {
-        Header: "Is Refundable",
-        accessor: "is_refundable",
+        Header: "Assigned To(Name)",
+        // accessor: "District_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.is_refundable}
+              {cellProps.row.original.is_refundable === 1 ? "Yes" : "No"}
             </p>
           );
         },
       },
       {
-        Header: "Allotted By",
-        accessor: "created_by_lbl",
+        Header: "Created At",
+        // accessor: "city_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_at}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Created By",
+        // accessor: "city_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -151,10 +160,6 @@ const AllottedPairing = (props) => {
     ],
     []
   );
-
-  var node = useRef();
-
-  const keyField = "id";
 
   const getTableActions = () => {
     return [
@@ -173,16 +178,18 @@ const AllottedPairing = (props) => {
         <Col lg="12">
           <Card>
             <CardBody>
+              {console.log(
+                "pairing details:" + JSON.stringify(allottedPairingData)
+              )}
               <TableContainer
                 isPagination={true}
                 columns={columns}
-                data={allottedPairing}
-                isGlobalFilter={true}
+                data={allottedPairingData}
+                // isGlobalFilter={true}
                 isAddRegionalOffice={true}
                 isShowingPageLength={true}
                 tableActions={getTableActions()}
-                isShowTableActionButtons={true}
-                customPageSize={5}
+                customPageSize={50}
                 tableClass="table align-middle table-nowrap table-hover"
                 theadClass="table-light"
                 paginationDiv="col-sm-12 col-md-7"

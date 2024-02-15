@@ -29,19 +29,15 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import {
-  addNewUser as onAddNewUser,
-  getUsers as onGetUsers,
-} from "/src/store/users/actions";
 
 const AddCreditModal = (props) => {
   const {
     isOpen,
     toggleAddModal,
-    regionalCreditList,
-    regionalOffData,
-    regionalBankList,
     selectedRowData,
+    regionalCreditList,
+    regionalBankList,
+    setAccountDetails,
   } = props;
   // console.log(
   //   "selected Row in Add CreditModal:" + JSON.stringify(regionalOffData)
@@ -53,7 +49,6 @@ const AddCreditModal = (props) => {
   const [completeDetails, setCompleteDetails] = useState([]);
 
   const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
@@ -73,7 +68,7 @@ const AddCreditModal = (props) => {
           amount: values["amount"],
           mode: parseInt(values["mode"]),
           remark: values["remark"],
-          operator_id: completeDetails.id,
+          operator_id: selectedRowData.id,
           wallet_type: 0,
           bankname: values["bankname"],
           chequedate: values["chequedate"],
@@ -92,44 +87,19 @@ const AddCreditModal = (props) => {
             },
           }
         );
+        setAccountDetails(response.data.data);
         console.log("response after submit credit:" + JSON.stringify(response));
-        // validation.resetForm();
+
         toggleAddModal();
       } catch (error) {
         console.error("Error in onSubmit:", error);
       }
     },
-    // onReset: (values) => {
-    //   validation.setValues(validation.initialValues);
-    // },
+    onReset: (values) => {
+      validation.setValues(validation.initialValues);
+    },
   });
-  useEffect(() => {
-    const getSelectedRowDetails = async (e) => {
-      try {
-        const token = "Bearer " + localStorage.getItem("temptoken");
 
-        const response = await axios.get(
-          `${API_URL}/operator-account/${regionalOffData.id}?expand=logo,type_lbl,mso_lbl,branch_lbl,distributor_lbl,igst,cgst,sgst,name,balance,credit,debit,balance_h,credit_h,debit_h&vr=web1.0`,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
-        setCompleteDetails(response.data.data);
-        console.log("response in useEffect:" + JSON.stringify(response));
-      } catch (error) {
-        console.error("Error fetching bouquet data:", error);
-      }
-    };
-    // setSelectedCreditDetails(selectedRowData.credit);
-    // setSelectedDebitDetails(selectedRowData.debit);
-    // setSelectedBalance(selectedRowData.balance);
-    getSelectedRowDetails();
-  }, [regionalOffData]);
-  console.log(
-    "complete details @@@@@@@@@@: " + JSON.stringify(completeDetails)
-  );
   return (
     <Modal
       isOpen={isOpen}
@@ -287,7 +257,7 @@ const AddCreditModal = (props) => {
                   >
                     <option value="">Select Bank</option>
                     {regionalBankList.map((bank) => (
-                      <option key={bank.id} value={bank.id}>
+                      <option key={bank.id} value={bank.name}>
                         {bank.name}
                       </option>
                     ))}
@@ -388,13 +358,7 @@ const AddCreditModal = (props) => {
           <Row>
             <Col>
               <ModalFooter>
-                <button
-                  type="submit"
-                  className="btn btn-success save-user"
-                  onClick={() => {
-                    validation.handleSubmit();
-                  }}
-                >
+                <button type="submit" className="btn btn-success save-user">
                   Credit
                 </button>
 

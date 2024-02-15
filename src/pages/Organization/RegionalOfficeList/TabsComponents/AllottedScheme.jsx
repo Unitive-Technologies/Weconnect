@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import TableContainer from "../../../../components/Common/TableContainer";
 import Spinners from "../../../../components/Common/Spinner";
@@ -14,12 +15,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const AllottedScheme = (props) => {
-  const { allottedScheme } = props;
+const AllottedScheme = ({ allottedSchemeData }) => {
   //meta title
-  document.title = "Regional Offices | VDigital";
-
-  const operatorAccount = [];
+  document.title = "LCO | VDigital";
 
   const columns = useMemo(
     () => [
@@ -90,11 +88,13 @@ const AllottedScheme = (props) => {
       },
       {
         Header: "Type",
-        accessor: "type",
+        accessor: "contact_person",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.type}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.contact_person}
+            </p>
           );
         },
       },
@@ -148,10 +148,6 @@ const AllottedScheme = (props) => {
     []
   );
 
-  var node = useRef();
-
-  const keyField = "id";
-
   const getTableActions = () => {
     return [
       {
@@ -172,7 +168,7 @@ const AllottedScheme = (props) => {
               <TableContainer
                 isPagination={true}
                 columns={columns}
-                data={allottedScheme}
+                data={allottedSchemeData}
                 isGlobalFilter={true}
                 isAddRegionalOffice={true}
                 isShowingPageLength={true}
