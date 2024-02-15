@@ -579,6 +579,8 @@ export const GET_INVENTORYALLOTTED_OPERATORLIST =
   "operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[mso_id]=1&filter[type]=1&vr=web1.0";
 export const ALLOT_SMARTCARD = "/smartcard-allotment?vr=web1.0";
 export const DEALLOT_SMARTCARD = "/smartcard-allotment/0?vr=web1.0";
+export const GET_INVENTORYALLOTTED_DISTRIBUTOR =
+  "/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=2013&filter[type]=2&vr=web1.0";
 
 export const GET_INVENTORYALLOTTED_STB =
   "/stb-allotment?expand=created_by_lbl,status_lbl,boxtype_lbl,cas_lbl,brand_lbl,is_embeded_lbl,operator_lbl,warehouse_lbl,inv_state_lbl&filter[status]=1&filter[account_id]=0&page=1&per-page=50&vr=web1.0";
