@@ -21,56 +21,47 @@ import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
-  addInventoryStockPairing as onAddInventoryStockPairing,
-  getInventoryStockPairing as onGetInventoryStockPairing,
-} from "/src/store/inventorystock/actions";
+  allotSmartcard as onAllotSmartcard,
+  getInventoryAllottedPairing as onGetInventoryAllottedPairing,
+} from "/src/store/inventoryAllotted/actions";
 
 function AllottedSmrtcard(props) {
   const { isOpen, toggle, allottedsmartcardlist, allottedusertype } = props;
 
-  const handleSmartcardSelection = (smartcard) => {
-    setSelectedSmartcard(smartcard);
-    setIsCheckedSC(true);
-  };
+  //   const handleSmartcardSelection = (smartcard) => {
+  //     setSelectedSmartcard(smartcard);
+  //     setIsCheckedSC(true);
+  //   };
 
-  const handleStbSelection = (stb) => {
-    setSelectedStb(stb);
-    setIsCheckedStb(true);
-  };
+  //   const handleHandshake = () => {
+  //     if (selectedSmartcard && selectedStb) {
+  //       setSelectedPairs([
+  //         ...selectedPairs,
+  //         { smartcard: selectedSmartcard, stb: selectedStb },
+  //       ]);
+  //       // Remove selected smartcard and STB from lists
+  //       const updatedSmartcardList = smartcardData.filter(
+  //         (item) => item.id !== selectedSmartcard.id
+  //       );
+  //       const updatedStbList = stbData.filter(
+  //         (item) => item.id !== selectedStb.id
+  //       );
+  //       setSelectedSmartcard(null);
+  //       setSelectedStb(null);
+  //       setSmartcardData(updatedSmartcardList);
+  //       setStbData(updatedStbList);
+  //       setIsCheckedStb(false);
+  //       setIsCheckedSC(false);
+  //     }
+  //   };
 
-  useEffect(() => {
-    setIsPairingEnabled(isCheckedSc && isCheckedStb);
-  }, [isCheckedSc, isCheckedStb]);
-
-  const handleHandshake = () => {
-    if (selectedSmartcard && selectedStb) {
-      setSelectedPairs([
-        ...selectedPairs,
-        { smartcard: selectedSmartcard, stb: selectedStb },
-      ]);
-      // Remove selected smartcard and STB from lists
-      const updatedSmartcardList = smartcardData.filter(
-        (item) => item.id !== selectedSmartcard.id
-      );
-      const updatedStbList = stbData.filter(
-        (item) => item.id !== selectedStb.id
-      );
-      setSelectedSmartcard(null);
-      setSelectedStb(null);
-      setSmartcardData(updatedSmartcardList);
-      setStbData(updatedStbList);
-      setIsCheckedStb(false);
-      setIsCheckedSC(false);
-    }
-  };
-
-  const handleDeletePair = (index) => {
-    const pairToRemove = selectedPairs[index];
-    const updatedSelectedPairs = selectedPairs.filter((pair, i) => i !== index);
-    setSelectedPairs(updatedSelectedPairs);
-    setSmartcardData([...smartcardData, pairToRemove.smartcard]);
-    setStbData([...stbData, pairToRemove.stb]);
-  };
+  //   const handleDeletePair = (index) => {
+  //     const pairToRemove = selectedPairs[index];
+  //     const updatedSelectedPairs = selectedPairs.filter((pair, i) => i !== index);
+  //     setSelectedPairs(updatedSelectedPairs);
+  //     setSmartcardData([...smartcardData, pairToRemove.smartcard]);
+  //     setStbData([...stbData, pairToRemove.stb]);
+  //   };
 
   // console.log("Selected pairs: ", selectedPairs);
 
@@ -119,12 +110,13 @@ function AllottedSmrtcard(props) {
         Header: ".",
         disableFilters: true,
         filterable: true,
-        Cell: (cellProps) => (
-          <input
-            type="checkbox"
-            onChange={() => handleSmartcardSelection(cellProps.row.original)}
-          />
-        ),
+        Cell: (cellProps) => {
+          return (
+            <>
+              <input type="checkbox" />
+            </>
+          );
+        },
       },
       {
         Header: "#",
@@ -152,12 +144,20 @@ function AllottedSmrtcard(props) {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.smartcardno}
-                </Link>
-              </h5>
+              <p className="font-size-14 mb-1">
+                {cellProps.row.original.smartcardno}
+              </p>
             </>
+          );
+        },
+      },
+      {
+        Header: "CAS",
+        accessor: "cas_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.cas_lbl}</p>
           );
         },
       },
@@ -169,6 +169,54 @@ function AllottedSmrtcard(props) {
           return (
             <p className="text-muted mb-0">
               {cellProps.row.original.brand_lbl}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Stock Type",
+        accessor: "state_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.state_lbl}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Inventory State",
+        accessor: "inv_state_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.inv_state_lbl}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Warehouse",
+        accessor: "warehouse_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.warehouse_lbl}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Status",
+        accessor: "status_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.status_lbl}
             </p>
           );
         },
@@ -244,7 +292,7 @@ function AllottedSmrtcard(props) {
                   <TableContainer
                     isPagination={true}
                     columns={smartcardColumns}
-                    data={cas_id !== "" ? smartcardData : []}
+                    data={allottedsmartcardlist}
                     isShowingPageLength={true}
                     customPageSize={50}
                     tableClass="table align-middle table-nowrap table-hover"
@@ -257,19 +305,6 @@ function AllottedSmrtcard(props) {
             </Col>
           </Row>
           <Row>
-            <Col lg="6"></Col>
-            <Col>
-              <button
-                type="button"
-                onClick={handleHandshake}
-                disabled={!isPairingEnabled}
-              >
-                <i className="mdi mdi-handshake-outline"></i>
-                {/* Create Pairing */}
-              </button>
-            </Col>
-          </Row>
-          <Row>
             <Col>
               <Card>
                 <CardBody>
@@ -279,11 +314,10 @@ function AllottedSmrtcard(props) {
                         <tr>
                           <th>#</th>
                           <th>Smartcard No.</th>
-                          <th>STB No.</th>
                           <th>$</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      {/* <tbody>
                         {selectedPairs.map((pair, index) => (
                           <tr key={index}>
                             <td>{index + 1}</td>
@@ -299,7 +333,7 @@ function AllottedSmrtcard(props) {
                             </td>
                           </tr>
                         ))}
-                      </tbody>
+                      </tbody> */}
                     </Table>
                   </div>
                 </CardBody>

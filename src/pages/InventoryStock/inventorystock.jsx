@@ -72,6 +72,7 @@ import StockActionUpdation from "./StockActionUpdation";
 import BulkUpdateSmartcard from "./BulkUpdateSmartcard";
 import FaultySendToStock from "./FaultySendToStock";
 import FaultySmartcardBlacklist from "./FaultySmartcardBlacklist";
+import AllottedSmrtcard from "./AllottedSmartcard";
 
 const InventoryStock = (props) => {
   document.title = "Inventory | VDigital";
@@ -111,6 +112,7 @@ const InventoryStock = (props) => {
     useState(false);
   const [showFaultyPairingBlacklist, setShowFaultyPairingBlacklist] =
     useState(false);
+  const [showAllottedSmartcard, setShowAllottedSmartcard] = useState(false);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -794,6 +796,10 @@ const InventoryStock = (props) => {
     setShowStockActionupdated(!showStockActionupdated);
   };
 
+  const handleAllottedSmartcard = () => {
+    setShowAllottedSmartcard(!showAllottedSmartcard);
+  };
+
   const getFilteredTableActions = () => {
     let actions = [];
     if (selectedOption === "In-stock") {
@@ -951,25 +957,68 @@ const InventoryStock = (props) => {
         return actions;
       }
     } else if (selectedOption === "Allotted") {
-      actions = [
-        {
-          name: "Allot",
-          type: "normal",
-          icon: "create",
-        },
-        {
-          name: "Upload",
-          type: "dropdown",
-          dropdownName: "Bulk",
-        },
-        {
-          name: "De-Allot",
-          type: "dot",
-          icon: "action",
-          dropdownName: "",
-        },
-      ];
-      return actions;
+      if (activeTab === "1") {
+        actions = [
+          {
+            name: "Allot",
+            type: "normal",
+            icon: "create",
+            action: setShowAllottedSmartcard,
+          },
+          {
+            name: "Upload",
+            type: "dropdown",
+            dropdownName: "Bulk",
+          },
+          {
+            name: "De-Allot",
+            type: "dot",
+            icon: "action",
+            dropdownName: "",
+          },
+        ];
+        return actions;
+      } else if (activeTab === "2") {
+        actions = [
+          {
+            name: "Allot",
+            type: "normal",
+            icon: "create",
+          },
+          {
+            name: "Upload",
+            type: "dropdown",
+            dropdownName: "Bulk",
+          },
+          {
+            name: "De-Allot",
+            type: "dot",
+            icon: "action",
+            dropdownName: "",
+          },
+        ];
+        return actions;
+      } else if (activeTab === "3") {
+        actions = [
+          {
+            name: "Allot",
+            type: "normal",
+            icon: "create",
+          },
+          {
+            name: "Upload",
+            type: "dropdown",
+            dropdownName: "Bulk",
+          },
+          {
+            name: "De-Allot",
+            type: "dot",
+            icon: "action",
+            dropdownName: "",
+          },
+        ];
+        return actions;
+      }
     } else if (selectedOption === "Faulty") {
       if (activeTab === "1") {
         actions = [
@@ -1116,6 +1165,13 @@ const InventoryStock = (props) => {
         isOpen={showFaultySmartcardBlacklist}
         toggle={handleFaultySmartcardBlacklist}
         selectedFaultyScs={selectedFaultyScs}
+      />
+      <AllottedSmrtcard
+        isOpen={showAllottedSmartcard}
+        toggle={handleAllottedSmartcard}
+        allottedsmartcardlist={allottedsmartcardlist}
+        allottedoperatorlist={allottedoperatorlist}
+        allottedusertype={allottedusertype}
       />
       <div
         className="position-fixed top-0 end-0 p-3"
