@@ -26,44 +26,58 @@ import {
 } from "/src/store/inventoryAllotted/actions";
 
 function AllottedSmrtcard(props) {
-  const { isOpen, toggle, allottedsmartcardlist, allottedusertype } = props;
+  const {
+    isOpen,
+    toggle,
+    allottedsmartcardlist,
+    allottedusertype,
+    allottedoperatorlist,
+  } = props;
+  const [usertype, setUsertype] = useState("");
+  const [selectedSmartcardlist, setSelectedSmartcardlist] = useState([]);
+  const [isCheckedSc, setIsCheckedSc] = useState(false);
 
   //   const handleSmartcardSelection = (smartcard) => {
-  //     setSelectedSmartcard(smartcard);
-  //     setIsCheckedSC(true);
-  //   };
+  //     // Check if the smartcard is already selected
+  //     const isSelected = selectedSmartcardlist.some(
+  //       (item) => item.smartcardno === smartcard.smartcardno
+  //     );
 
-  //   const handleHandshake = () => {
-  //     if (selectedSmartcard && selectedStb) {
-  //       setSelectedPairs([
-  //         ...selectedPairs,
-  //         { smartcard: selectedSmartcard, stb: selectedStb },
-  //       ]);
-  //       // Remove selected smartcard and STB from lists
-  //       const updatedSmartcardList = smartcardData.filter(
-  //         (item) => item.id !== selectedSmartcard.id
-  //       );
-  //       const updatedStbList = stbData.filter(
-  //         (item) => item.id !== selectedStb.id
-  //       );
-  //       setSelectedSmartcard(null);
-  //       setSelectedStb(null);
-  //       setSmartcardData(updatedSmartcardList);
-  //       setStbData(updatedStbList);
-  //       setIsCheckedStb(false);
-  //       setIsCheckedSC(false);
+  //     if (!isSelected) {
+  //       // If not already selected, add it to the list
+  //       setSelectedSmartcardlist([...selectedSmartcardlist, smartcard]);
+  //       setIsCheckedSc(true);
   //     }
   //   };
 
-  //   const handleDeletePair = (index) => {
-  //     const pairToRemove = selectedPairs[index];
-  //     const updatedSelectedPairs = selectedPairs.filter((pair, i) => i !== index);
-  //     setSelectedPairs(updatedSelectedPairs);
-  //     setSmartcardData([...smartcardData, pairToRemove.smartcard]);
-  //     setStbData([...stbData, pairToRemove.stb]);
-  //   };
+  const handleSmartcardSelection = (row) => {
+    // Check if the row is already selected
+    const isSelected = selectedSmartcardlist.some(
+      (selectedSmartcard) => selectedSmartcard.id === row.id
+    );
 
-  // console.log("Selected pairs: ", selectedPairs);
+    // If the row is selected, remove it from the selected rows array
+    if (isSelected) {
+      const updatedSelectedSmartcardlist = selectedSmartcardlist.filter(
+        (selectedSmartcard) => selectedSmartcard.id !== row.id
+      );
+      setSelectedSmartcardlist(updatedSelectedSmartcardlist);
+    } else {
+      // If the row is not selected, add it to the selected rows array
+      setSelectedSmartcardlist([...selectedSmartcardlist, row]);
+    }
+  };
+
+  useEffect(() => {
+    console.log("Selected Smartcardlist: ", selectedSmartcardlist);
+  }, [selectedSmartcardlist]);
+
+  const handleDeleteSmartcard = (index) => {
+    const updatedSelectedSmartcardlist = selectedSmartcardlist.filter(
+      (pair, i) => i !== index
+    );
+    setSelectedSmartcardlist(updatedSelectedSmartcardlist);
+  };
 
   const dispatch = useDispatch();
 
@@ -72,32 +86,23 @@ function AllottedSmrtcard(props) {
     enableReinitialize: true,
 
     initialValues: {
-      cas_id: "",
-      smartcardno: "",
-      stbno: "",
+      operator_id: "",
+      smartcard_ids: [],
     },
     validationSchema: Yup.object({
-      cas_id: Yup.string().required("Select CAS Type"),
+      usertype: Yup.string().required("Select user Type"),
     }),
     onSubmit: (values) => {
-      const newPairing = {
+      const newAllotted = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
-        // cas_id: values["cas_id"],
-        pairing: selectedPairs.map((pair) => ({
-          sc_id: pair.smartcard.id,
-          stb_id: pair.stb.id,
-        })),
+        operator_id: values.operator_id,
+        // smartcard_ids: selectedFaultyPairings.map((row) => row.id),
       };
-      console.log("New pairing: " + JSON.stringify(newPairing));
-      dispatch(onAddInventoryStockPairing(newPairing));
-      dispatch(onGetInventoryStockPairing());
+      console.log("New allotted smartcard: " + JSON.stringify(newAllotted));
+      dispatch(onAllotSmartcard(newAllotted));
+      dispatch(onGetInventoryAllottedPairing());
       validation.resetForm();
       toggle();
-      setSelectedPairs([]);
-      setSelectedSmartcard(null);
-      setSelectedStb(null);
-      setIsCheckedStb(false);
-      setIsCheckedSC(false);
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -113,7 +118,12 @@ function AllottedSmrtcard(props) {
         Cell: (cellProps) => {
           return (
             <>
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                onChange={() =>
+                  handleSmartcardSelection(cellProps.row.original)
+                }
+              />
             </>
           );
         },
@@ -174,42 +184,6 @@ function AllottedSmrtcard(props) {
         },
       },
       {
-        Header: "Stock Type",
-        accessor: "state_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.state_lbl}
-            </p>
-          );
-        },
-      },
-      {
-        Header: "Inventory State",
-        accessor: "inv_state_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.inv_state_lbl}
-            </p>
-          );
-        },
-      },
-      {
-        Header: "Warehouse",
-        accessor: "warehouse_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.warehouse_lbl}
-            </p>
-          );
-        },
-      },
-      {
         Header: "Status",
         accessor: "status_lbl",
         filterable: true,
@@ -217,6 +191,18 @@ function AllottedSmrtcard(props) {
           return (
             <p className="text-muted mb-0">
               {cellProps.row.original.status_lbl}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Alloted to",
+        accessor: "operator_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.operator_lbl}
             </p>
           );
         },
@@ -237,7 +223,7 @@ function AllottedSmrtcard(props) {
       toggle={toggle}
     >
       <ModalHeader tag="h4" toggle={toggle}>
-        Create New Pairing
+        Allot Smartcards to Operator
       </ModalHeader>
       <ModalBody>
         <Form
@@ -251,38 +237,75 @@ function AllottedSmrtcard(props) {
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
-                  Selected User type<span style={{ color: "red" }}>*</span>
+                  User Type<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="cas_id"
+                  name="usertype"
                   type="select"
                   placeholder="Select CAS Type"
                   onChange={(e) => {
                     validation.handleChange(e);
-                    setCas_id(e.target.value);
+                    setUsertype(e.target.value);
                   }}
                   onBlur={validation.handleBlur}
-                  value={validation.values.cas_id || ""}
+                  value={validation.values.usertype || ""}
                   invalid={
-                    validation.touched.cas_id && validation.errors.cas_id
+                    validation.touched.usertype && validation.errors.usertype
                       ? true
                       : false
                   }
                 >
-                  <option value="">Select CAS Type</option>
-                  {allottedusertype.map((castype) => (
-                    <option key={castype.id} value={castype.id}>
-                      {castype.name}
+                  <option value="">Select user Type</option>
+                  {allottedusertype.map((usertype) => (
+                    <option key={usertype.id} value={usertype.id}>
+                      {usertype.name}
                     </option>
                   ))}
                 </Input>
-                {validation.touched.cas_id && validation.errors.cas_id ? (
+                {validation.touched.usertype && validation.errors.usertype ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.cas_id}
+                    {validation.errors.usertype}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
+            {usertype !== "" ? (
+              <Col lg={4}>
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Select REGIONAL OFFICE
+                    <span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="operator_id"
+                    type="select"
+                    placeholder="Select CAS Type"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.operator_id || ""}
+                    invalid={
+                      validation.touched.operator_id &&
+                      validation.errors.operator_id
+                        ? true
+                        : false
+                    }
+                  >
+                    <option value="">Select Reginal office</option>
+                    {allottedoperatorlist.map((operatorlist) => (
+                      <option key={operatorlist.id} value={operatorlist.id}>
+                        {operatorlist.name}
+                      </option>
+                    ))}
+                  </Input>
+                  {validation.touched.operator_id &&
+                  validation.errors.operator_id ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.operator_id}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+            ) : null}
           </Row>
           <Row>
             <Col lg={12}>
@@ -317,23 +340,22 @@ function AllottedSmrtcard(props) {
                           <th>$</th>
                         </tr>
                       </thead>
-                      {/* <tbody>
-                        {selectedPairs.map((pair, index) => (
+                      <tbody>
+                        {selectedSmartcardlist.map((pair, index) => (
                           <tr key={index}>
                             <td>{index + 1}</td>
-                            <td>{pair.smartcard.smartcardno}</td>
-                            <td>{pair.stb.stbno}</td>
+                            <td>{pair.smartcardno}</td>
                             <td>
                               <button
                                 type="button"
-                                onClick={() => handleDeletePair(index)}
+                                onClick={() => handleDeleteSmartcard(index)}
                               >
                                 <i className="mdi mdi-delete"></i>{" "}
                               </button>
                             </td>
                           </tr>
                         ))}
-                      </tbody> */}
+                      </tbody>
                     </Table>
                   </div>
                 </CardBody>
@@ -378,6 +400,7 @@ AllottedSmrtcard.propTypes = {
   isOpen: PropTypes.bool,
   toggle: PropTypes.func,
   allottedusertype: PropTypes.array,
+  allottedoperatorlist: PropTypes.array,
 };
 
 export default AllottedSmrtcard;
