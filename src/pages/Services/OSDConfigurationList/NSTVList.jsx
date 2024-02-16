@@ -359,7 +359,7 @@ const NSTVList = (props) => {
                                         </div>
                                     </Col>
                                     {/* {console.log("Interval:", validation.values.interval)} */}
-                                    <Col sm="4">
+                                    {/* <Col sm="4">
                                         <div>
                                             <Label htmlFor="customRange1" className="form-label">
                                                 Repetition
@@ -390,7 +390,7 @@ const NSTVList = (props) => {
                                                 ) : null}
                                             </div>
                                         </div>
-                                    </Col>
+                                    </Col> */}
                                     {/* {console.log("Repetition:", validation.values.repetition)} */}
 
                                     <Col sm="4">

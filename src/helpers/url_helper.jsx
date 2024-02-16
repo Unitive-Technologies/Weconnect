@@ -285,7 +285,7 @@ export const GET_OSDCONFIGURATIONLIST_BACKGROUNDAREA =
 export const GET_OSDCONFIGURATIONLIST_STATUS =
   "/list/status?fields=id,name&vr=web1.0";
 export const ADD_NEW_OSDCONFIGURATIONLIST =
-  "/message-template/template-for?vr=web1.0";
+  "/mtc?vr=web1.0";
 
 export const GET_LOCALCHANNELNUMBER = "/localchannelnumberlist";
 
