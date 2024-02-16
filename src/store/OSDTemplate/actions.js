@@ -15,7 +15,8 @@ import {
   ADD_OSDTEMPLATE_SUCCESS,
   ADD_OSDTEMPLATE_FAIL,
   UPDATE_OSDTEMPLATE,
-  UPDATE_OSDTEMPLATE_FAIL, UPDATE_OSDTEMPLATE_SUCCESS,
+  UPDATE_OSDTEMPLATE_FAIL,
+  UPDATE_OSDTEMPLATE_SUCCESS,
   UPDATE_OSDTEMPLATE_CURRENT_PAGE,
 } from "./actionTypes";
 
@@ -31,7 +32,7 @@ export const updateOSDTemplate = (osdTemplate) => ({
 
 export const updateOSDTemplateSuccess = (osdTemplate) => ({
   type: UPDATE_OSDTEMPLATE_SUCCESS,
-  payload: tax,
+  payload: osdTemplate,
 });
 
 export const updateOSDTemplateFail = (error) => ({
