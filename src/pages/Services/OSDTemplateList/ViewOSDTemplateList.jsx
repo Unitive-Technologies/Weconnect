@@ -74,46 +74,51 @@ const ViewOSDTemplateList = (props) => {
 
     onSubmit: (values) => {
       let template = {};
-      if (parseInt(values.template_for) === 1) {
-        template = {
-          template_message: values.template.template_message,
-          // No need to include template_title for SMS
-        };
-      } else if (parseInt(values.template_for) === 2) {
+      if (
+        parseInt(values.template_for) === 1 ||
+        parseInt(values.template_for) === 2
+      ) {
         template = {
           template_message: values.template_message,
-          // No need to include template_title for SMS
         };
       } else if (parseInt(values.template_for) === 3) {
         template = {
-          template_message: values.template_message, // Assuming content goes to template_message
+          template_message: values.template_message,
           template_title: values.template_title,
         };
       }
 
-      const updateOSDTemplate = {
+      const updatedOSDTemplate = {
         id: osdTemplate.id,
         name: values.name,
         template_for: parseInt(values.template_for),
         template: template,
         status: parseInt(values.status),
-        template_config_id: values.template_config_id.map(
-          (option) => option.id
-        ),
+        template_config_id: osdTempOSD
+          .filter(
+            (template_config) =>
+              template_config.id === parseInt(values.template_config_id)
+          )
+          .map((selectedConfig) => ({
+            id: selectedConfig.id,
+            name: selectedConfig.name,
+            cas_code: selectedConfig.cas_code,
+          })),
       };
+
+      console.log("updatedOSDTemplate:", updatedOSDTemplate);
       // update user
-      dispatch(onUpdateOSDTemplate(updateOSDTemplate));
+      dispatch(onUpdateOSDTemplate(updatedOSDTemplate));
       dispatch(onGetOSDTemplate());
       validation.resetForm();
       handleCancel();
-      resetSelection();
     },
   });
 
   const handleCancel = () => {
     setShowEditosdTemplate(false);
-    resetSelection();
     toggleViewModal();
+    resetSelection();
   };
 
   console.log("View OSD Template Data" + typeof validation.values.template_for);
