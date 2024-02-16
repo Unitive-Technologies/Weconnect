@@ -736,16 +736,23 @@ export const addNewPromoVoucher = (provoucher) =>
 export const addNewSMSMessageTempList = (smsmsg) =>
   post(url.ADD_NEW_SMSMESSAGETEMPLIST, smsmsg);
 
-export const updateSMSMessageTempList = (id, smsmsg) => put(url.UPDATE_SMSMESSAGETEMPLIST(id), smsmsg);
-export const getSMSMessageTempListStatus = () => get(url.GET_SMSMESSAGETEMPLIST_STATUS);
-export const getSMSMessageTempListSubcategory = () => get(url.GET_SMSMESSAGETEMPLIST_SUBCATEGORY);
-export const getSMSMessageTempListCategory = () => get(url.GET_SMSMESSAGETEMPLIST_CATEGORY);
-export const getSMSMessageTempListSender = () => get(url.GET_SMSMESSAGETEMPLIST_SENDER);
+export const updateSMSMessageTempList = (id, smsmsg) =>
+  put(url.UPDATE_SMSMESSAGETEMPLIST(id), smsmsg);
+export const getSMSMessageTempListStatus = () =>
+  get(url.GET_SMSMESSAGETEMPLIST_STATUS);
+export const getSMSMessageTempListSubcategory = () =>
+  get(url.GET_SMSMESSAGETEMPLIST_SUBCATEGORY);
+export const getSMSMessageTempListCategory = () =>
+  get(url.GET_SMSMESSAGETEMPLIST_CATEGORY);
+export const getSMSMessageTempListSender = () =>
+  get(url.GET_SMSMESSAGETEMPLIST_SENDER);
 
 export const getSMSMessageTempList = async (currentPage, perPage = 20) => {
   console.log("Tax - Current Page in fakebackend: ", currentPage);
   console.log("Tax - Per Page: ", perPage);
-  return await getCompleteResponse(url.getSMSMessageTempListUrl(currentPage, perPage));
+  return await getCompleteResponse(
+    url.getSMSMessageTempListUrl(currentPage, perPage)
+  );
 };
 
 export const getInventoryStockSmartcard = () =>
@@ -831,7 +838,16 @@ export const allotSmartcard = (allottedsmartcard) =>
   post(url.ALLOT_SMARTCARD, allottedsmartcard);
 export const deallotSmartcard = (allottedsmartcard) =>
   put(url.DEALLOT_SMARTCARD, allottedsmartcard);
+export const getInventoryAllottedDistributor = (brand_id) =>
+  get(url.GET_INVENTORYALLOTTED_DISTRIBUTOR(brand_id));
+export const getInventoryAllottedLco = (brand_id, distributor_id) =>
+  get(url.GET_INVENTORYALLOTTED_LCO(brand_id, distributor_id));
+
 export const getInventoryAllottedStb = () => get(url.GET_INVENTORYALLOTTED_STB);
+export const getInventoryAllottedStblist = () =>
+  get(url.GET_INVENTORYALLOTTED_STBLIST);
+export const allotStb = (allottedstb) => post(url.ALLOT_STB, allottedstb);
+export const deallotStb = (allottedstb) => put(url.DEALLOT_STB, allottedstb);
 export const getInventoryAllottedPairing = async (
   currentPage,
   perPage = 20
