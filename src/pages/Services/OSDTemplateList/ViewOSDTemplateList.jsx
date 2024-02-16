@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import Select from "react-select";
 import {
   Col,
   Row,
@@ -34,6 +35,10 @@ const ViewOSDTemplateList = (props) => {
   console.log("OOOOOOOOOOOOOOOOOOOOsd in view:" + JSON.stringify(osdTemplate));
   const dispatch = useDispatch();
   const [showEditosdTemplate, setShowEditosdTemplate] = useState(false);
+  const options = osdTempOSD.map((template_config_id) => ({
+    value: template_config_id.id,
+    label: `${template_config_id.name}, ${template_config_id.cas_code}`,
+  }));
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -55,11 +60,11 @@ const ViewOSDTemplateList = (props) => {
           osdTemplate.template &&
           osdTemplate.template.template_title) ||
         "",
-      // template_config_id:
-      //   (osdTemplate &&
-      //     osdTemplate.template_config_id &&
-      //     osdTemplate.template_config_id[0].id) ||
-      //   [],
+      template_config_id:
+        (osdTemplate &&
+          osdTemplate.template_config_id &&
+          osdTemplate.template_config_id[0]) ||
+        [],
     },
 
     validationSchema: Yup.object({
@@ -307,6 +312,40 @@ const ViewOSDTemplateList = (props) => {
                         <Input
                           name="template_config_id"
                           type="select"
+                          placeholder="Select CAS Config"
+                          className="form-select"
+                          onChange={validation.handleChange}
+                          onBlur={validation.handleBlur}
+                          value={validation.values.template_config_id || ""}
+                          disabled={!showEditosdTemplate}
+                        >
+                          {/* <option value="">Select Status</option> */}
+                          {osdTempOSD &&
+                            osdTempOSD.map((template_config_id) => (
+                              <option
+                                key={template_config_id.id}
+                                value={template_config_id.id}
+                              >
+                                {template_config_id.name},
+                                {template_config_id.cas_code}
+                              </option>
+                            ))}
+                        </Input>
+                        {validation.touched.template_config_id &&
+                        validation.errors.template_config_id ? (
+                          <FormFeedback type="invalid">
+                            {validation.errors.template_config_id}
+                          </FormFeedback>
+                        ) : null}
+                      </div>
+                      {/* <div className="mb-3">
+                        <Label className="form-label">
+                          CAS Config (Select only 1 config per CAS)
+                          <span style={{ color: "red" }}>*</span>
+                        </Label>
+                        <Input
+                          name="template_config_id"
+                          type="select"
                           placeholder="Select Status"
                           className="form-select"
                           onChange={validation.handleChange}
@@ -334,6 +373,15 @@ const ViewOSDTemplateList = (props) => {
                           </FormFeedback>
                         ) : null}
                       </div>
+                      <div className="mb-3">
+                        <Label className="control-label">Features</Label>
+                        <Select
+                          classNamePrefix="select2-selection"
+                          placeholder="Choose..."
+                          title="Country"
+                          options={options}
+                        />
+                      </div> */}
                     </Col>
                   </Row>
                 )}
