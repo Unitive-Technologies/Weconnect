@@ -19,12 +19,12 @@ import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
-  deallotSmartcard as onDeallotSmartcard,
-  getInventoryAllottedSmartcard as onGetInventoryAllottedSmartcard,
+  deallotStb as onDeallotStb,
+  getInventoryAllottedStb as onGetInventoryAllottedStb,
 } from "/src/store/inventoryallotted/actions";
 
-function DeallotSmartcard(props) {
-  const { isOpen, toggle, selectedAllottedSmartcards } = props;
+function DeallotStb(props) {
+  const { isOpen, toggle, selectedAllottedStbs } = props;
   const [isChecked, setIsChecked] = useState(false);
 
   const dispatch = useDispatch();
@@ -43,11 +43,11 @@ function DeallotSmartcard(props) {
     onSubmit: (values) => {
       const newDeallot = {
         remark: values["remark"],
-        smartcard_ids: selectedAllottedSmartcards.map((row) => row.id),
+        smartcard_ids: selectedAllottedStbs.map((row) => row.id),
       };
       console.log("Deallot: " + JSON.stringify(newDeallot));
-      dispatch(onDeallotSmartcard(newDeallot));
-      dispatch(onGetInventoryAllottedSmartcard());
+      dispatch(onDeallotStb(newDeallot));
+      dispatch(onGetInventoryAllottedStb());
       validation.resetForm();
       toggle();
     },
@@ -87,14 +87,14 @@ function DeallotSmartcard(props) {
         },
       },
       {
-        Header: "Smartcard No.",
-        accessor: "smartcardno",
+        Header: "STB No.",
+        accessor: "stbno",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <>
               <h5 className="font-size-14 mb-1">
-                {cellProps.row.original.smartcardno}
+                {cellProps.row.original.stbno}
               </h5>
             </>
           );
@@ -128,7 +128,7 @@ function DeallotSmartcard(props) {
       tabIndex="-1"
       toggle={toggle}
     >
-      <ModalHeader toggle={toggle}>Allot Smartcards to Operator</ModalHeader>
+      <ModalHeader toggle={toggle}>Allot STBs to Operator</ModalHeader>
       <Form
         onSubmit={(e) => {
           e.preventDefault();
@@ -144,7 +144,7 @@ function DeallotSmartcard(props) {
                   <TableContainer
                     isPagination={true}
                     columns={columns}
-                    data={selectedAllottedSmartcards}
+                    data={selectedAllottedStbs}
                     isShowingPageLength={true}
                     customPageSize={50}
                     tableClass="table align-middle table-nowrap table-hover"
@@ -161,7 +161,7 @@ function DeallotSmartcard(props) {
           <Col>
             <ModalFooter>
               <button type="submit" className="btn btn-success save-user">
-                DE-ALLOT SMARTCARD
+                DE-ALLOT STB
               </button>
             </ModalFooter>
           </Col>
@@ -171,10 +171,10 @@ function DeallotSmartcard(props) {
   );
 }
 
-DeallotSmartcard.propTypes = {
+DeallotStb.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
-  selectedAllottedSmartcards: PropTypes.array,
+  selectedAllottedStbs: PropTypes.array,
 };
 
-export default DeallotSmartcard;
+export default DeallotStb;
