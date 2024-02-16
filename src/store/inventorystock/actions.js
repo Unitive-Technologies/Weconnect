@@ -66,6 +66,18 @@ import {
   ADD_STOCKSTB_ACTIONUPDATION,
   ADD_STOCKSTB_ACTIONUPDATION_SUCCESS,
   ADD_STOCKSTB_ACTIONUPDATION_FAIL,
+  GET_STOCKPAIRING_INVENTORYSTATE,
+  GET_STOCKPAIRING_INVENTORYSTATE_SUCCESS,
+  GET_STOCKPAIRING_INVENTORYSTATE_FAIL,
+  UPDATE_STOCKPAIRING_MARKFAULTY,
+  UPDATE_STOCKPAIRING_MARKFAULTY_SUCCESS,
+  UPDATE_STOCKPAIRING_MARKFAULTY_FAIL,
+  UPDATE_STOCKPAIRING_BLACKLIST,
+  UPDATE_STOCKPAIRING_BLACKLIST_SUCCESS,
+  UPDATE_STOCKPAIRING_BLACKLIST_FAIL,
+  DELETE_STOCKPAIRING,
+  DELETE_STOCKPAIRING_SUCCESS,
+  DELETE_STOCKPAIRING_FAIL,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -390,5 +402,66 @@ export const addStockStbActionupdationSuccess = (stockstb) => ({
 
 export const addStockStbActionupdationFail = (error) => ({
   type: ADD_STOCKSTB_ACTIONUPDATION_FAIL,
+  payload: error,
+});
+
+export const getStockPairingInventorystate = () => ({
+  type: GET_STOCKPAIRING_INVENTORYSTATE,
+});
+
+export const getStockPairingInventorystateSuccess = (
+  pairinginventorystate
+) => ({
+  type: GET_STOCKPAIRING_INVENTORYSTATE_SUCCESS,
+  payload: pairinginventorystate,
+});
+
+export const getStockPairingInventorystateFail = (error) => ({
+  type: GET_STOCKPAIRING_INVENTORYSTATE_FAIL,
+  payload: error,
+});
+
+export const updateStockPairingMarkfaulty = (stockpairing) => ({
+  type: UPDATE_STOCKPAIRING_MARKFAULTY,
+  payload: stockpairing,
+});
+
+export const updateStockPairingMarkfaultySuccess = (stockpairing) => ({
+  type: UPDATE_STOCKPAIRING_MARKFAULTY_SUCCESS,
+  payload: stockpairing,
+});
+
+export const updateStockPairingMarkfaultyFail = (error) => ({
+  type: UPDATE_STOCKPAIRING_MARKFAULTY_FAIL,
+  payload: error,
+});
+
+export const updateStockPairingBlacklist = (stockpairing) => ({
+  type: UPDATE_STOCKPAIRING_BLACKLIST,
+  payload: stockpairing,
+});
+
+export const updateStockPairingBlacklistSuccess = (stockpairing) => ({
+  type: UPDATE_STOCKPAIRING_BLACKLIST_SUCCESS,
+  payload: stockpairing,
+});
+
+export const updateStockPairingBlacklistFail = (error) => ({
+  type: UPDATE_STOCKPAIRING_BLACKLIST_FAIL,
+  payload: error,
+});
+
+export const deleteStockPairing = (stockpairing) => ({
+  type: DELETE_STOCKPAIRING,
+  payload: stockpairing,
+});
+
+export const deleteStockPairingSuccess = (stockpairing) => ({
+  type: DELETE_STOCKPAIRING_SUCCESS,
+  payload: stockpairing,
+});
+
+export const deleteStockPairingFail = (error) => ({
+  type: DELETE_STOCKPAIRING_FAIL,
   payload: error,
 });

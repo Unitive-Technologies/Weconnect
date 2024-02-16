@@ -4,6 +4,11 @@ import { Card, CardBody, Col, Row } from "reactstrap";
 import TableContainerX from "../../components/Common/TableContainerX";
 import PropTypes from "prop-types";
 import CreatePairing from "./CreatePairing";
+import StockPairingMarkfaulty from "./StockPairingMarkfaulty";
+import StockPairingBlacklist from "./StockPairingBlacklist";
+import DeleteStockPairing from "./DeleteStockPairing";
+import FaultyPairingSendToPair from "./FaultyPairingSendToPair";
+import FaultyPairingBlacklist from "./FaultyPairingBlacklist";
 
 const StockPairing = (props) => {
   const {
@@ -20,6 +25,24 @@ const StockPairing = (props) => {
     smartcardlist,
     stblist,
     stocksccastype,
+    showStockPairingMarkfaulty,
+    setShowStockPairingMarkfaulty,
+    showStockPairingBlacklist,
+    setShowStockPairingBlacklist,
+    handleSelectedPairings,
+    selectedPairings,
+    pairinginventorystate,
+    showDeleteStockPairing,
+    setShowDeleteStockPairing,
+    selectedFaultyPairings,
+    showFaultyPairingSendpair,
+    setShowFaultyPairingSendpair,
+    showFaultyPairingBlacklist,
+    setShowFaultyPairingBlacklist,
+    handleSelectedFaultyPairing,
+    selectedOption,
+    activeTab,
+    stockscinventorystate,
   } = props;
 
   if (
@@ -38,8 +61,52 @@ const StockPairing = (props) => {
     );
   }
 
+  const handleStockPairingMarkfaulty = () => {
+    setShowStockPairingMarkfaulty(!showStockPairingMarkfaulty);
+  };
+
+  const handleStockPairingBlacklist = () => {
+    setShowStockPairingBlacklist(!showStockPairingBlacklist);
+  };
+
+  const handleDeleteStockPairing = () => {
+    setShowDeleteStockPairing(!showDeleteStockPairing);
+  };
+
+  const handleFaultyPairingSendpair = () => {
+    setShowFaultyPairingSendpair(!showFaultyPairingSendpair);
+  };
+
+  const handleFaultyPairingBlacklist = () => {
+    setShowFaultyPairingBlacklist(!showFaultyPairingBlacklist);
+  };
+
+  const getFilteredHandleRowClicks = (Row) => {
+    if (selectedOption === "In-stock") {
+      if (activeTab === "3") {
+        return handleSelectedPairings(Row);
+      }
+    } else if (selectedOption === "Faulty") {
+      if (activeTab === "3") {
+        return handleSelectedFaultyPairing(Row);
+      }
+    }
+  };
+
   const columns = useMemo(
     () => [
+      {
+        Header: "*",
+        disableFilters: true,
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <>
+              <input type="checkbox" />
+            </>
+          );
+        },
+      },
       {
         Header: "#",
         disableFilters: true,
@@ -203,6 +270,33 @@ const StockPairing = (props) => {
         stblist={stblist}
         stocksccastype={stocksccastype}
       />
+      <StockPairingMarkfaulty
+        isOpen={showStockPairingMarkfaulty}
+        toggle={handleStockPairingMarkfaulty}
+        selectedPairings={selectedPairings}
+        pairinginventorystate={pairinginventorystate}
+      />
+      <StockPairingBlacklist
+        isOpen={showStockPairingBlacklist}
+        toggle={handleStockPairingBlacklist}
+        selectedPairings={selectedPairings}
+      />
+      <DeleteStockPairing
+        isOpen={showDeleteStockPairing}
+        toggle={handleDeleteStockPairing}
+        selectedPairings={selectedPairings}
+      />
+      <FaultyPairingSendToPair
+        isOpen={showFaultyPairingSendpair}
+        toggle={handleFaultyPairingSendpair}
+        selectedFaultyPairings={selectedFaultyPairings}
+        stockscinventorystate={stockscinventorystate}
+      />
+      <FaultyPairingBlacklist
+        isOpen={showFaultyPairingBlacklist}
+        toggle={handleFaultyPairingBlacklist}
+        selectedFaultyPairings={selectedFaultyPairings}
+      />
       <Row>
         <Col lg="12">
           <Card>
@@ -220,6 +314,12 @@ const StockPairing = (props) => {
                 isShowingPageLength={true}
                 tableActions={tableActions}
                 goToPage={goToPage}
+                // handleRowClick={(row) => {
+                //   handleSelectedPairings(row);
+                // }}
+                handleRowClick={(row) => {
+                  getFilteredHandleRowClicks(row);
+                }}
               />
             </CardBody>
           </Card>
@@ -237,12 +337,30 @@ StockPairing.propTypes = {
   totalCount: PropTypes.number,
   totalPage: PropTypes.number,
   pageSize: PropTypes.number,
-  currentPage: PropTypes.number,
+  currentPage: PropTypes.string,
   goToPage: PropTypes.func,
   loading: PropTypes.bool,
   isOpen: PropTypes.bool,
   toggle: PropTypes.func,
   stocksccastype: PropTypes.array,
+  showStockPairingMarkfaulty: PropTypes.bool,
+  setShowStockPairingMarkfaulty: PropTypes.func,
+  showStockPairingBlacklist: PropTypes.bool,
+  setShowStockPairingBlacklist: PropTypes.func,
+  handleSelectedPairings: PropTypes.func,
+  selectedPairings: PropTypes.array,
+  pairinginventorystate: PropTypes.array,
+  showDeleteStockPairing: PropTypes.bool,
+  setShowDeleteStockPairing: PropTypes.func,
+  selectedFaultyPairings: PropTypes.array,
+  showFaultyPairingSendpair: PropTypes.bool,
+  setShowFaultyPairingSendpair: PropTypes.func,
+  showFaultyPairingBlacklist: PropTypes.bool,
+  setShowFaultyPairingBlacklist: PropTypes.func,
+  handleSelectedFaultyPairing: PropTypes.func,
+  activeTab: PropTypes.string,
+  selectedOption: PropTypes.string,
+  stockscinventorystate: PropTypes.array,
 };
 
 export default StockPairing;

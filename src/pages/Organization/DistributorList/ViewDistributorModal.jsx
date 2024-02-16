@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
@@ -30,9 +31,16 @@ const ViewDistributorModal = (props) => {
   } = props;
   // console.log("distributor in viewuser modal:" + JSON.stringify(distributor));
   const dispatch = useDispatch();
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [showEditDistributor, setShowEditDistributor] = useState(false);
 
   const [showOperatorDetails, setShowOperatorDetails] = useState(true);
+  const [selectedRowData, setSelectedRowData] = useState({});
+  const [accountDetails, setAccountDetails] = useState([]);
+  const currentDate = new Date().toISOString().split("T")[0];
+  const [fromDate, setFromDate] = useState(currentDate);
+  const [toDate, setToDate] = useState(currentDate);
+
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -124,6 +132,62 @@ const ViewDistributorModal = (props) => {
     },
   });
 
+  const getSelectedRowDetails = async (e) => {
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/operator-account/${distributor.id}?expand=logo,type_lbl,mso_lbl,branch_lbl,distributor_lbl,igst,cgst,sgst,name,balance,credit,debit,balance_h,credit_h,debit_h&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setSelectedRowData(response.data.data);
+      console.log("response in useEffect:" + JSON.stringify(response));
+    } catch (error) {
+      console.error("Error fetching bouquet data:", error);
+    }
+  };
+  const getOperatorAccountDetails = async (e) => {
+    // e.preventDefault();
+    // console.log("Form submitted");
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+      // console.log("Dates: " + fromDate, toDate);
+      const response = await axios.get(
+        `${API_URL}/operator-account?expand=created_by_lbl,type_lbl,cr_operator_lbl,dr_operator_lbl,credited_by,igst,cgst,sgst,name,balance,credit,debit,balance_h,credit_h,debit_h&filter[operator_id]=${distributor.id}&filter[wallet_type]=2&filter[FRM_created_at]=${fromDate}&filter[TO_created_at]=${toDate}&page=1&per-page=50&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setAccountDetails(response.data.data);
+      console.log("response in useEffect:" + JSON.stringify(response));
+    } catch (error) {
+      console.error("Error fetching bouquet data:", error);
+    }
+  };
+  useEffect(() => {
+    if (distributor) {
+      getSelectedRowDetails();
+      getOperatorAccountDetails();
+    }
+  }, [distributor]);
+
+  const handleClose = () => {
+    setViewDistributor(false);
+    setShowEditDistributor(false);
+  };
+  console.log("selectedRowData:" + JSON.stringify(selectedRowData));
+  console.log(
+    "ParentId of selectedRowData:" + selectedRowData.parent_id,
+    selectedRowData.city_id,
+    selectedRowData.district_id,
+    selectedRowData.distributor_id
+  );
   return (
     <Modal
       isOpen={isOpen}
@@ -138,7 +202,10 @@ const ViewDistributorModal = (props) => {
       {!showEditDistributor ? (
         <>
           <ModalHeader toggle={toggleViewModal} tag="h4" position="relative">
-            <h4>View - {distributor.name}</h4>
+            <h4>
+              View - {distributor.name}, Balance: {selectedRowData.balance},
+              Credit Limit: {selectedRowData.credit_limit}
+            </h4>
           </ModalHeader>
           <Link
             style={{
@@ -371,7 +438,16 @@ const ViewDistributorModal = (props) => {
               )}
               <Row>
                 <Col lg={12}>
-                  <TapsOfViewDistributor />
+                  <TapsOfViewDistributor
+                    selectedRowId={selectedRowData.id}
+                    accountDetails={accountDetails}
+                    setAccountDetails={setAccountDetails}
+                    setFromDate={setFromDate}
+                    setToDate={setToDate}
+                    fromDate={fromDate}
+                    toDate={toDate}
+                    selectedRowData={selectedRowData}
+                  />
                 </Col>
               </Row>
             </Form>
@@ -380,8 +456,7 @@ const ViewDistributorModal = (props) => {
       ) : (
         <EditDistributorModal
           distributor={distributor}
-          closeViewModal={() => setViewDistributor(false)}
-          closeEditModal={() => setShowEditDistributor(false)}
+          toggleCloseModal={handleClose}
           distributorsPhase={distributorsPhase}
           distributorsStatus={distributorsStatus}
         />
@@ -391,7 +466,7 @@ const ViewDistributorModal = (props) => {
 };
 
 ViewDistributorModal.propTypes = {
-  toggle: PropTypes.func,
+  toggleViewModal: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 

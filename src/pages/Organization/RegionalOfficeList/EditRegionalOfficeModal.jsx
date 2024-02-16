@@ -1115,7 +1115,7 @@ const EditRegionalOfficeModal = (props) => {
             <Col>
               <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
-                  Create
+                  Save
                 </button>
                 <button
                   type="reset"

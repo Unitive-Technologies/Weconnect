@@ -61,6 +61,17 @@ import {
   ADD_STOCKSTB_ACTIONUPDATION,
   ADD_STOCKSTB_ACTIONUPDATION_SUCCESS,
   ADD_STOCKSTB_ACTIONUPDATION_FAIL,
+  GET_STOCKPAIRING_INVENTORYSTATE_SUCCESS,
+  GET_STOCKPAIRING_INVENTORYSTATE_FAIL,
+  UPDATE_STOCKPAIRING_MARKFAULTY,
+  UPDATE_STOCKPAIRING_MARKFAULTY_SUCCESS,
+  UPDATE_STOCKPAIRING_MARKFAULTY_FAIL,
+  UPDATE_STOCKPAIRING_BLACKLIST,
+  UPDATE_STOCKPAIRING_BLACKLIST_SUCCESS,
+  UPDATE_STOCKPAIRING_BLACKLIST_FAIL,
+  DELETE_STOCKPAIRING,
+  DELETE_STOCKPAIRING_SUCCESS,
+  DELETE_STOCKPAIRING_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -76,6 +87,7 @@ const INIT_STATE = {
   actioninventorystate: [],
   smartcardlist: [],
   stblist: [],
+  pairinginventorystate: [],
   pagination: {},
   error: {},
   loading: false,
@@ -482,6 +494,88 @@ const InventoryStock = (state = INIT_STATE, action) => {
         error: action.payload,
         loading: false,
       };
+
+    case UPDATE_STOCKPAIRING_MARKFAULTY:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_STOCKPAIRING_MARKFAULTY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        stockpairing: state.stockpairing.map((pairing) =>
+          pairing.id === action.payload.id
+            ? { ...pairing, ...action.payload }
+            : pairing
+        ),
+      };
+
+    case UPDATE_STOCKPAIRING_MARKFAULTY_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+    case UPDATE_STOCKPAIRING_BLACKLIST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_STOCKPAIRING_BLACKLIST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        stockpairing: state.stockpairing.map((pairing) =>
+          pairing.id === action.payload.id
+            ? { ...pairing, ...action.payload }
+            : pairing
+        ),
+      };
+
+    case UPDATE_STOCKPAIRING_BLACKLIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+    case GET_STOCKPAIRING_INVENTORYSTATE_SUCCESS:
+      return {
+        ...state,
+        pairinginventorystate: action.payload,
+        loading: false,
+      };
+
+    case GET_STOCKPAIRING_INVENTORYSTATE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case DELETE_STOCKPAIRING:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case DELETE_STOCKPAIRING_SUCCESS:
+      return {
+        ...state,
+        stockpairing: [...state.stockpairing, action.payload],
+        loading: false,
+      };
+
+    case DELETE_STOCKPAIRING_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
     default:
       return state;
   }

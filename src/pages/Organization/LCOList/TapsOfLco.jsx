@@ -8,6 +8,9 @@ import {
   Col,
   Collapse,
   Container,
+  Form,
+  Input,
+  Button,
   Nav,
   NavItem,
   NavLink,
@@ -25,10 +28,19 @@ import UploadDocuments from "./TabsComponents/UploadDocuments";
 import AllottedPairing from "./TabsComponents/AllottedPairing";
 import SmsLogs from "./TabsComponents/SmsLogs";
 
-const TapsOfLco = ({ selectedRowId }) => {
+const TapsOfLco = ({
+  selectedRowId,
+  accountDetails,
+  setAccountDetails,
+  fromDate,
+  toDate,
+  setFromDate,
+  setToDate,
+  selectedRowData,
+}) => {
   const [customActiveTab, setcustomActiveTab] = useState("1");
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
-  const [accountDetails, setAccountDetails] = useState([]);
+
   const [allottedBouquetData, setAllottedBouquetData] = useState([]);
   const [allottedSchemeData, setAllottedSchemeData] = useState([]);
   const [allottedPairingData, setAllottedPairingData] = useState([]);
@@ -43,8 +55,6 @@ const TapsOfLco = ({ selectedRowId }) => {
   };
 
   const getOperatorAccountDetails = async (e) => {
-    // e.preventDefault();
-    // console.log("Form submitted");
     try {
       const token = "Bearer " + localStorage.getItem("temptoken");
       // console.log("Dates: " + fromDate, toDate);
@@ -64,21 +74,25 @@ const TapsOfLco = ({ selectedRowId }) => {
   };
 
   const getAllottedBouquetDetails = async (e) => {
-    try {
-      const token = "Bearer " + localStorage.getItem("temptoken");
+    if (selectedRowId) {
+      try {
+        const token = "Bearer " + localStorage.getItem("temptoken");
 
-      const response = await axios.get(
-        `${API_URL}/operator-bouque?expand=boxtype_lbl,type_lbl,status_lbl,created_by_lbl&filter[operator_id]=${selectedRowId}&vr=web1.0`,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
-      setAllottedBouquetData(response.data.data);
-      console.log("response in useEffect:" + JSON.stringify(response));
-    } catch (error) {
-      console.error("Error fetching bouquet data:", error);
+        const response = await axios.get(
+          `${API_URL}/operator-bouque?expand=boxtype_lbl,type_lbl,status_lbl,created_by_lbl&filter[operator_id]=${parseInt(
+            selectedRowId
+          )}&vr=web1.0`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        setAllottedBouquetData(response.data.data);
+        console.log("response in useEffect:" + JSON.stringify(response));
+      } catch (error) {
+        console.error("Error fetching bouquet data:", error);
+      }
     }
   };
 
@@ -88,18 +102,39 @@ const TapsOfLco = ({ selectedRowId }) => {
 
       const response = await axios.get(
         `${API_URL}/operator-scheme?expand=boxtype_lbl,status_lbl,created_by_lbl&filter[operator_id]=${selectedRowId}&vr=web1.0`,
+
         {
           headers: {
             Authorization: token,
+            "content-type": "application/json",
           },
         }
       );
       setAllottedSchemeData(response.data.data);
       console.log("response in useEffect:" + JSON.stringify(response));
     } catch (error) {
-      console.error("Error fetching bouquet data:", error);
+      console.error("Error fetching scheme data:", error);
     }
   };
+
+  // const getCopyOfPairing = async (e) => {
+  //   try {
+  //     const token = "Bearer " + localStorage.getItem("temptoken");
+
+  //     const response = await axios.get(
+  //       `${API_URL}/operator-scheme?filter[operator_id]=1996&vr=web1.0`,
+  //       {
+  //         headers: {
+  //           Authorization: token,
+  //         },
+  //       }
+  //     );
+  //     setAllottedPairingData(response.data.data);
+  //     console.log("response in useEffect:" + JSON.stringify(response));
+  //   } catch (error) {
+  //     console.error("Error fetching pairing data:", error);
+  //   }
+  // };
 
   const getAllottedPairingDetails = async (e) => {
     try {
@@ -135,7 +170,7 @@ const TapsOfLco = ({ selectedRowId }) => {
       setAllottedNcfData(response.data.data);
       console.log("response in useEffect:" + JSON.stringify(response));
     } catch (error) {
-      console.error("Error fetching bouquet data:", error);
+      console.error("Error fetching NCF data:", error);
     }
   };
 
@@ -154,7 +189,7 @@ const TapsOfLco = ({ selectedRowId }) => {
       setUploadDocsData(response.data.data);
       console.log("response in useEffect:" + JSON.stringify(response));
     } catch (error) {
-      console.error("Error fetching bouquet data:", error);
+      console.error("Error fetching Upload data:", error);
     }
   };
 
@@ -173,7 +208,7 @@ const TapsOfLco = ({ selectedRowId }) => {
       setSmsLogsData(response.data.data);
       console.log("response in useEffect:" + JSON.stringify(response));
     } catch (error) {
-      console.error("Error fetching bouquet data:", error);
+      console.error("Error fetching smsLogs data:", error);
     }
   };
 
@@ -228,6 +263,7 @@ const TapsOfLco = ({ selectedRowId }) => {
             onClick={() => {
               toggleCustom("3");
               getAllottedSchemeDetails();
+              // getCopyOfPairing();
             }}
           >
             <span className="d-block d-sm-none">
@@ -310,9 +346,63 @@ const TapsOfLco = ({ selectedRowId }) => {
         <TabPane tabId="1">
           <Row>
             <Col sm="12">
+              <Form
+                // onSubmit={handleSearch}
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  // validation.handleSubmit();
+                  // return false;
+                  console.log("search btn clicked", fromDate, toDate);
+                }}
+              >
+                <Row>
+                  <Col lg={2} className="mt-2">
+                    <p>Transaction Date:</p>
+                  </Col>
+                  <Col lg={2}>
+                    <Input
+                      value={fromDate}
+                      onChange={(e) => setFromDate(e.target.value)}
+                      type="date"
+                      // onChange={validation.handleChange}
+                      // onBlur={validation.handleBlur}
+                      // value={validation.values.fromDate || ""}
+                    />
+                  </Col>
+                  <Col lg={2}>
+                    <Input
+                      value={toDate}
+                      onChange={(e) => setToDate(e.target.value)}
+                      type="date"
+                      // onChange={validation.handleChange}
+                      // onBlur={validation.handleBlur}
+                      // value={validation.values.toDate || ""}
+                    />
+                  </Col>
+                  <Col lg={2} className="mt-1">
+                    <i
+                      style={{
+                        background: "#556ee6",
+                        color: "#fff",
+                        width: "25px",
+                        height: "25px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        borderRadius: "50%",
+                        cursor: "pointer",
+                      }}
+                      className="fas fa-search"
+                      onClick={getOperatorAccountDetails}
+                    ></i>
+                  </Col>
+                </Row>
+              </Form>
               <OperatorAccountDetails
                 selectedRowId={selectedRowId}
                 accountDetails={accountDetails}
+                setAccountDetails={setAccountDetails}
+                selectedRowData={selectedRowData}
               />
             </Col>
           </Row>
@@ -320,7 +410,10 @@ const TapsOfLco = ({ selectedRowId }) => {
         <TabPane tabId="2">
           <Row>
             <Col sm="12">
-              <AllottedBouquet allottedBouquetData={allottedBouquetData} />
+              <AllottedBouquet
+                allottedBouquetData={allottedBouquetData}
+                selectedRowId={selectedRowId}
+              />
             </Col>
           </Row>
         </TabPane>
@@ -349,7 +442,10 @@ const TapsOfLco = ({ selectedRowId }) => {
         <TabPane tabId="6">
           <Row>
             <Col sm="12">
-              <UploadDocuments uploadDocsData={uploadDocsData} />
+              <UploadDocuments
+                uploadDocsData={uploadDocsData}
+                selectedRowId={selectedRowId}
+              />
             </Col>
           </Row>
         </TabPane>

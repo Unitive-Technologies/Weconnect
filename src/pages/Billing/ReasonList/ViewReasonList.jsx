@@ -14,6 +14,8 @@ import {
   Form,
 
 } from "reactstrap";
+import Select from "react-select";
+
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
@@ -77,6 +79,7 @@ const ViewReason = (props) => {
     toggleViewModal();
   };
 
+  console.log("View Reason List Reason Type Values" + validation.values.type_display_lbl)
   return (
     <>
       <Modal
@@ -173,37 +176,45 @@ const ViewReason = (props) => {
                   ) : null}
                 </div>
               </Col>
+              {console.log("View Reason List type_lbl" + validation.values.type_display_lbl)}
               <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">Reason Type</Label>
-                  <div className="d-flex align-items-center">
-                    <Input
-                      name="type_display_lbl"
-                      placeholder="Select at least one Reason Type"
-                      onChange={e => {
-                        const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
-                        validation.setFieldValue("type_display_lbl", selectedOptions);
-                      }}
-                      onBlur={validation.handleBlur}
-                      value={validation.values.type_display_lbl || []}
-                      multiple
-                      disabled={!showEditReason}
-                    >
-                      {reasonReasonType.map((type_display_lbl) => (
-                        <option key={type_display_lbl.id} value={type_display_lbl.name}>
-                          {type_display_lbl.name}
-                        </option>
-                      ))}
-                    </Input>
-                  </div>
-                  {validation.touched.type_display_lbl && validation.errors.type_display_lbl ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.type_display_lbl}
-                    </FormFeedback>
-                  ) : null}
+                  {/* <div className="d-flex align-items-center"> */}
+                  <Select
+                    name="type_display_lbl"
+                    placeholder="Select at least one Reason Type"
+                    onChange={(selectedOptions) => {
+                      validation.setFieldValue("type_display_lbl", selectedOptions);
+                    }}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.type_display_lbl}
+                    options={reasonReasonType.map((type_display_lbl) => ({
+                      value: type_display_lbl.name,
+                      label: type_display_lbl.name,
+                    }))}
+                    isMulti
+                    isDisabled={!showEditReason}
+                  />
                 </div>
+                {validation.touched.type_display_lbl && validation.errors.type_display_lbl ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.type_display_lbl}
+                  </FormFeedback>
+                ) : null}
+                {/* </div> */}
               </Col>
 
+              {/* <div className="mb-3">
+                <Label className="control-label">Features</Label>
+                <Select
+                  classNamePrefix="select2-selection"
+                  placeholder="Choose..."
+                  title="Country"
+                  value={validation.values.type_display_lbl || []}
+                  isMulti
+                />
+              </div> */}
 
             </Row>
             {showEditReason && (

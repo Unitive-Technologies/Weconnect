@@ -8,6 +8,8 @@ import AddStockStb from "./AddStockStb";
 import StockStbMarkfaulty from "./StockStbMarkfaulty";
 import StockStbBlacklist from "./StockStbBlacklist";
 import StbActionUpdation from "./StbActionUpdation";
+import FaultySendToStb from "./FaultySentToStb";
+import FaultyStbBlacklist from "./FaultyStbBlacklist";
 
 const StockStb = (props) => {
   const {
@@ -30,6 +32,14 @@ const StockStb = (props) => {
     handleSelectedStbs,
     selectedStbs,
     actioninventorystate,
+    selectedFaultyStbs,
+    showFaultyStbSendstb,
+    setShowFaultyStbSendstb,
+    showFaultyStbBlacklist,
+    setShowFaultyStbBlacklist,
+    handleSelectedFaultyStb,
+    selectedOption,
+    activeTab,
   } = props;
   const [showEditStb, setShowEditStb] = useState(false);
   const [editStbData, setEditStbData] = useState({});
@@ -49,6 +59,26 @@ const StockStb = (props) => {
 
   const handleStbActionUpdated = () => {
     setShowStbActionupdated(!showStbActionupdated);
+  };
+
+  const handleFaultyStbSendStb = () => {
+    setShowFaultyStbSendstb(!showFaultyStbSendstb);
+  };
+
+  const handleFaultyStbBlacklist = () => {
+    setShowFaultyStbBlacklist(!showFaultyStbBlacklist);
+  };
+
+  const getFilteredHandleRowClicks = (Row) => {
+    if (selectedOption === "In-stock") {
+      if (activeTab === "2") {
+        return handleSelectedStbs(Row);
+      }
+    } else if (selectedOption === "Faulty") {
+      if (activeTab === "2") {
+        return handleSelectedFaultyStb(Row);
+      }
+    }
   };
 
   const columns = useMemo(
@@ -253,6 +283,16 @@ const StockStb = (props) => {
         stockscwarehouse={stockscwarehouse}
         actioninventorystate={actioninventorystate}
       />
+      <FaultySendToStb
+        isOpen={showFaultyStbSendstb}
+        toggle={handleFaultyStbSendStb}
+        selectedFaultyStbs={selectedFaultyStbs}
+      />
+      <FaultyStbBlacklist
+        isOpen={showFaultyStbBlacklist}
+        toggle={handleFaultyStbBlacklist}
+        selectedFaultyStbs={selectedFaultyStbs}
+      />
       <Row>
         <Col lg="12">
           <Card>
@@ -275,7 +315,7 @@ const StockStb = (props) => {
                 //   toggleEditStb(row);
                 // }}
                 handleRowClick={(row) => {
-                  handleSelectedStbs(row);
+                  getFilteredHandleRowClicks(row);
                 }}
               />
             </CardBody>
@@ -306,6 +346,14 @@ StockStb.propTypes = {
   handleSelectedStbs: PropTypes.func,
   selectedStbs: PropTypes.array,
   actioninventorystate: PropTypes.array,
+  selectedFaultyStbs: PropTypes.array,
+  showFaultyStbSendstb: PropTypes.bool,
+  setShowFaultyStbSendstb: PropTypes.func,
+  showFaultyStbBlacklist: PropTypes.bool,
+  setShowFaultyStbBlacklist: PropTypes.func,
+  handleSelectedFaultyStb: PropTypes.func,
+  activeTab: PropTypes.string,
+  selectedOption: PropTypes.string,
 };
 
 export default StockStb;

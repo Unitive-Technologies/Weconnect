@@ -17,7 +17,7 @@ import { ToastContainer } from "react-toastify";
 
 const SmsLogs = ({ smsLogsData }) => {
   //meta title
-  document.title = "Regional Offices | VDigital";
+  document.title = "LCO | VDigital";
 
   const columns = useMemo(
     () => [
@@ -42,105 +42,162 @@ const SmsLogs = ({ smsLogsData }) => {
         },
       },
       {
-        Header: "Name",
-        accessor: "name",
+        Header: "Mobile No.",
+        // accessor: "name",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <>
-              <h5
-                className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleViewRegionalOffice(userData);
-                }}
-              >
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.name}
-                </Link>
-              </h5>
               <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
+                {cellProps.row.original.mobileno}
               </p>
             </>
           );
         },
       },
       {
-        Header: "Code",
-        accessor: "code",
+        Header: "Message",
+        // accessor: "code",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.code}</p>
+            <p
+              style={{
+                maxWidth: 200,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+              className="text-muted mb-0"
+            >
+              {cellProps.row.original.message}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Response",
+        // accessor: "commision",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p
+              style={{
+                maxWidth: 200,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+              className="text-muted mb-0"
+            >
+              {cellProps.row.original.response}
+            </p>
           );
         },
       },
       {
         Header: "Type",
-        accessor: "addr",
+        // accessor: "boxtype_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.addr}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.type}</p>
           );
         },
       },
       {
-        Header: "Type",
-        accessor: "contact_person",
+        Header: "Created On",
+        // accessor: "type_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.contact_person}
+              {cellProps.row.original.created_on_lbl}
             </p>
           );
         },
       },
       {
-        Header: "Hardware Charge",
-        accessor: "mobile_no",
+        Header: "Created By",
+        // accessor: "status_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.mobile_no}
+              {cellProps.row.original.created_by_lbl}
             </p>
           );
         },
       },
       {
-        Header: "Installation Charge",
-        accessor: "state_lbl",
+        Header: "LCO",
+        // accessor: "is_refundable",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.state_lbl}
+              {cellProps.row.original.operator_lbl}
             </p>
           );
         },
       },
       {
-        Header: "Status",
-        accessor: "District_lbl",
+        Header: "LCO Code",
+        // accessor: "created_by_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.district_lbl}
+              {cellProps.row.original.operator_code_lbl}
             </p>
           );
         },
       },
       {
-        Header: "Allotted By",
-        accessor: "city_lbl",
+        Header: "Distributor",
+        // accessor: "created_by_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.city_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.distributor_lbl}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Distributor Code",
+        // accessor: "created_by_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.distributor_code_lbl}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Regional Office",
+        // accessor: "created_by_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.branch_lbl}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Regional Office Code",
+        // accessor: "created_by_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.branch_code_lbl}
+            </p>
           );
         },
       },
@@ -169,7 +226,7 @@ const SmsLogs = ({ smsLogsData }) => {
                 isPagination={true}
                 columns={columns}
                 data={smsLogsData}
-                isGlobalFilter={true}
+                // isGlobalFilter={true}
                 isAddRegionalOffice={true}
                 isShowingPageLength={true}
                 tableActions={getTableActions()}

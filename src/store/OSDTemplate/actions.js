@@ -14,7 +14,30 @@ import {
   ADD_NEW_OSDTEMPLATE,
   ADD_OSDTEMPLATE_SUCCESS,
   ADD_OSDTEMPLATE_FAIL,
+  UPDATE_OSDTEMPLATE,
+  UPDATE_OSDTEMPLATE_FAIL, UPDATE_OSDTEMPLATE_SUCCESS,
+  UPDATE_OSDTEMPLATE_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_OSDTEMPLATE_CURRENT_PAGE,
+  payload: Number(toPage),
+});
+
+export const updateOSDTemplate = (osdTemplate) => ({
+  type: UPDATE_OSDTEMPLATE,
+  payload: osdTemplate,
+});
+
+export const updateOSDTemplateSuccess = (osdTemplate) => ({
+  type: UPDATE_OSDTEMPLATE_SUCCESS,
+  payload: tax,
+});
+
+export const updateOSDTemplateFail = (error) => ({
+  type: UPDATE_OSDTEMPLATE_FAIL,
+  payload: error,
+});
 
 export const getOSDTemplate = () => ({
   type: GET_OSDTEMPLATE,

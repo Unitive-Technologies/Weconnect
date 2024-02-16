@@ -14,9 +14,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const AllottedNCF = (props) => {
+const AllottedNCF = ({ allottedNcfData }) => {
   //meta title
-  document.title = "Regional Offices | VDigital";
+  document.title = "LCO | VDigital";
 
   const operatorAccount = [];
 
@@ -83,7 +83,9 @@ const AllottedNCF = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.addr}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.from_channel_no}
+            </p>
           );
         },
       },
@@ -94,7 +96,7 @@ const AllottedNCF = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.contact_person}
+              {cellProps.row.original.to_channel_no}
             </p>
           );
         },
@@ -105,9 +107,7 @@ const AllottedNCF = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.mobile_no}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.mrp}</p>
           );
         },
       },
@@ -118,7 +118,7 @@ const AllottedNCF = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.state_lbl}
+              {cellProps.row.original.lmo_discount}
             </p>
           );
         },
@@ -129,9 +129,7 @@ const AllottedNCF = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.district_lbl}
-            </p>
+            <p className="text-muted mb-0">{cellProps.row.original.lmo_rate}</p>
           );
         },
       },
@@ -141,7 +139,11 @@ const AllottedNCF = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.city_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.calculate_per_channel === 1
+                ? "Yes"
+                : "No"}
+            </p>
           );
         },
       },
@@ -151,7 +153,10 @@ const AllottedNCF = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.city_lbl}</p>
+            <p className="text-muted mb-0">
+              {" "}
+              {cellProps.row.original.is_refundable === 1 ? "Yes" : "No"}
+            </p>
           );
         },
       },
@@ -180,10 +185,13 @@ const AllottedNCF = (props) => {
         <Col lg="12">
           <Card>
             <CardBody>
+              {console.log(
+                "allottedNcfData:" + JSON.stringify(allottedNcfData)
+              )}
               <TableContainer
                 isPagination={true}
                 columns={columns}
-                data={operatorAccount}
+                data={allottedNcfData}
                 // isGlobalFilter={true}
                 // isAddRegionalOffice={true}
                 isShowingPageLength={true}

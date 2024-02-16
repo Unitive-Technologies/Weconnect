@@ -3,7 +3,16 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import TableContainer from "../../../../components/Common/TableContainer";
 import Spinners from "../../../../components/Common/Spinner";
-import { Card, CardBody, Col, Container, Row } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  Col,
+  Container,
+  Row,
+  Toast,
+  ToastHeader,
+  ToastBody,
+} from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -15,12 +24,55 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const AllottedBouquet = ({ allottedBouquetData }) => {
+const AllottedBouquet = ({ allottedBouquetData, selectedRowId }) => {
   //meta title
-  document.title = "Regional Offices | VDigital";
+  document.title = "LCO | VDigital";
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
+  const [selectedRows, setSelectedRows] = useState([]);
+
+  const handleRowSelection = (row) => {
+    console.log("Row clicked:", row.original);
+    const selectedId = row.original.id;
+    console.log("selectedId:", selectedId);
+    setSelectedRows((prevSelectedRows) => {
+      const isSelected = prevSelectedRows.includes(selectedId);
+      if (isSelected) {
+        return prevSelectedRows.filter((id) => id !== selectedId);
+      } else {
+        return [...prevSelectedRows, selectedId];
+      }
+    });
+    console.log("selectedRows:", JSON.stringify(selectedRows));
+  };
+
+  // const handleRowSelection = (row) => {
+  //   console.log("Row clicked:", row.original);
+
+  //   const selectedRowIds = selectedRows.map((r) => r.id);
+  //   if (selectedRowIds.includes(row.original.id)) {
+  //     setSelectedRows(selectedRows.filter((r) => r.id !== row.original.id));
+  //   } else {
+  //     setSelectedRows([...selectedRows, row.original.id]);
+  //   }
+  //   console.log("Selected rows:", JSON.stringify(selectedRows));
+  // };
 
   const columns = useMemo(
     () => [
+      {
+        Header: "*",
+        disableFilters: true,
+        filterable: true,
+        Cell: (cellProps) => (
+          <input
+            type="checkbox"
+            onClick={() => handleRowSelection(cellProps.row)}
+            // checked={selectedRows.some(
+            //   (r) => r.id === cellProps.row.original.id
+            // )}
+          />
+        ),
+      },
       {
         Header: "#",
         // accessor: "name",
@@ -149,26 +201,72 @@ const AllottedBouquet = ({ allottedBouquetData }) => {
     []
   );
 
+  const handleRemoveRows = async (e) => {
+    e.preventDefault();
+
+    console.log("remove btn clicked");
+    console.log("selectedRows:" + JSON.stringify(selectedRows));
+
+    try {
+      const selectedRowsToBeRemove = {
+        operator_id: selectedRowId,
+        bouque_ids: selectedRows,
+      };
+
+      console.log("newUpload:", JSON.stringify(selectedRowsToBeRemove));
+
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.put(
+        `${API_URL}/operator-bouque/${selectedRowId}?vr=web1.0`,
+        selectedRowsToBeRemove,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      console.log("response after submitting remove form:", response.data);
+    } catch (error) {
+      console.error("Error submitting remove form:", error);
+    }
+  };
   const getTableActions = () => {
     return [
       {
         name: "Remove",
-        // action: setShowRegionalOffice,
+        action: selectedRows.length ? handleRemoveRows : handleWarning,
         type: "normal",
         icon: "create",
       },
     ];
   };
-
+  const [showWarning, setShowWarning] = useState(false);
+  const handleWarning = () => {
+    setShowWarning(!showWarning);
+  };
   return (
     <React.Fragment>
+      <div
+        className="position-fixed top-0 end-0 p-3"
+        style={{ zIndex: "1005" }}
+      >
+        <Toast isOpen={showWarning}>
+          <ToastHeader toggle={handleWarning}>
+            <i className="mdi mdi-alert-outline me-2"></i> Warning
+          </ToastHeader>
+          <ToastBody>Cannot select atleast one Bouquet</ToastBody>
+        </Toast>
+      </div>
       <Row>
         <Col lg="12">
           <Card>
             <CardBody>
-              {console.log(
+              {/* {console.log(
                 "bouquet details:" + JSON.stringify(allottedBouquetData)
-              )}
+              )} */}
+
               <TableContainer
                 isPagination={true}
                 columns={columns}
@@ -177,6 +275,7 @@ const AllottedBouquet = ({ allottedBouquetData }) => {
                 isAddRegionalOffice={true}
                 isShowingPageLength={true}
                 tableActions={getTableActions()}
+                handleRowClick={(row) => handleRowSelection(row)}
                 isShowTableActionButtons={true}
                 customPageSize={50}
                 tableClass="table align-middle table-nowrap table-hover"

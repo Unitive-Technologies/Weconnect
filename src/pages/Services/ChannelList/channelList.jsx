@@ -518,6 +518,9 @@ const ChannelList = (props) => {
                       }
                       subTableEnabled={true}
                       getRenderedSubTable={renderCASTable}
+                      isSubTableContentExists={(rowData) =>
+                        rowData.casCodes.length > 0
+                      }
                     />
                   </CardBody>
                 </Card>

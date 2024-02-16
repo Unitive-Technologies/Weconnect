@@ -16,7 +16,10 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import { updateRegionalOffice as onUpdateRegionalOffice } from "/src/store/regionaloffice/actions";
-import { updateDistributors as onUpdateDistributor } from "/src/store/distributor/actions";
+import {
+  updateDistributors as onUpdateDistributor,
+  getDistributors as onGetDistributors,
+} from "/src/store/distributor/actions";
 import { getStateUsers as onGetStateUsers } from "../../../store/stateusers/actions";
 import { createSelector } from "reselect";
 
@@ -29,7 +32,7 @@ const EditDistributorModal = (props) => {
     distributorsPhase,
     distributorsStatus,
   } = props;
-  console.log("distributor in edit modal:" + JSON.stringify(distributor));
+  // console.log("distributor in edit modal:" + JSON.stringify(distributor));
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const dispatch = useDispatch();
 
@@ -188,17 +191,17 @@ const EditDistributorModal = (props) => {
           id: distributor.id,
           name: values["name"],
           code: values["code"],
-          agreement_data: {
-            name: "",
-            type: "",
-            ext: "",
-            start_date: values["agreestart"],
-            end_date: values["agreeend"],
-            data: "",
-          },
+          // agreement_data: {
+          //   name: "",
+          //   type: "",
+          //   ext: "",
+          //   start_date: values["agreestart"],
+          //   end_date: values["agreeend"],
+          //   data: "",
+          // },
           parent_id: parseInt(values["parent_lbl"]),
           addr: values["addr1"],
-          addr1: values["addr1"],
+          // addr1: values["addr1"],
           addr2: values["addr2"],
           addr3: values["addr2"],
           contact_person: values["contact_person"],
@@ -236,9 +239,9 @@ const EditDistributorModal = (props) => {
         //   }
         // );
 
-        // console.log("Axios Response:", response);
+        console.log("Axios Response:", updateDistributor);
         dispatch(onUpdateDistributor(updateDistributor));
-
+        dispatch(onGetDistributors());
         validation.resetForm();
         closeEditModal();
       } catch (error) {
@@ -553,7 +556,7 @@ const EditDistributorModal = (props) => {
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.city || ""}
+                  value={validation.values.city_lbl || ""}
                 >
                   <option value="">Select City</option>
                   {cityList.map((city) => (

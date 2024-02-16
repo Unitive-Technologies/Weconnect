@@ -38,6 +38,7 @@ import {
   getPairingSmartcardList as onGetPairingSmartcardList,
   getPairingStbList as onGetPairingStbList,
   getStockActionInventorystate as onGetStockActionInventorystate,
+  getStockPairingInventorystate as onGetStockPairingInventoryState,
 } from "/src/store/inventorystock/actions";
 import {
   getInventoryFaultySmartcard as onGetInventoryFaultySmartcard,
@@ -49,12 +50,16 @@ import {
   getInventoryBlacklistedSmartcard as onGetInventoryBlacklistedSmartcard,
   getInventoryBlacklistedStb as onGetInventoryBlacklistedStb,
   getInventoryBlacklistedPairing as onGetInventoryBlacklistedPairing,
+  goToPage as onGoToPage3,
 } from "/src/store/inventoryblacklisted/actions";
 import {
   getInventoryAllottedSmartcard as onGetInventoryAllottedSmartcard,
   getInventoryAllottedStb as onGetInventoryAllottedStb,
   getInventoryAllottedPairing as onGetInventoryAllottedPairing,
   goToPage as onGoToPage2,
+  getInventoryAllottedSmartcardlist as onGetInventoryAllottedSmartcardlist,
+  getInventoryAllottedUsertype as onGetInventoryAllottedUsertype,
+  getInventoryAllottedOperatorlist as onGetInventoryAllottedOperatorlist,
 } from "/src/store/inventoryallotted/actions";
 import StockStb from "./StockStb";
 import StockPairing from "./StockPairing";
@@ -64,6 +69,11 @@ import UploadSmartcard from "./UploadSmartcaed";
 import StockScMarkfaulty from "./StockScMarkfaulty";
 import StockScBlacklist from "./StockScBlacklist";
 import StockActionUpdation from "./StockActionUpdation";
+import BulkUpdateSmartcard from "./BulkUpdateSmartcard";
+import FaultySendToStock from "./FaultySendToStock";
+import FaultySmartcardBlacklist from "./FaultySmartcardBlacklist";
+import AllottedSmrtcard from "./AllottedSmartcard";
+import DeallotSmartcard from "./DeallotSmartcard";
 
 const InventoryStock = (props) => {
   document.title = "Inventory | VDigital";
@@ -83,6 +93,31 @@ const InventoryStock = (props) => {
   const [showStockStbMarkfaulty, setShowStockStbMarkfaulty] = useState(false);
   const [showStockStbBlacklist, setShowStockStbBlacklist] = useState(false);
   const [showStbActionupdated, setShowStbActionupdated] = useState(false);
+  const [selectedPairings, setSelectedPairings] = useState([]);
+  const [showStockPairingMarkfaulty, setShowStockPairingMarkfaulty] =
+    useState(false);
+  const [showStockPairingBlacklist, setShowStockPairingBlacklist] =
+    useState(false);
+  const [showDeleteStockPairing, setShowDeleteStockPairing] = useState(false);
+  const [showBulkUpdateSmartcard, setShowBulkUpdateSmartcard] = useState(false);
+  const [selectedFaultyScs, setSelectedFaultyScs] = useState([]);
+  const [showFaultySmartcardSendsc, setShowFaultySmartcardSendsc] =
+    useState(false);
+  const [showFaultySmartcardBlacklist, setShowFaultySmartcardBlacklist] =
+    useState(false);
+  const [selectedFaultyStbs, setSelectedFaultyStbs] = useState([]);
+  const [showFaultyStbSendstb, setShowFaultyStbSendstb] = useState(false);
+  const [showFaultyStbBlacklist, setShowFaultyStbBlacklist] = useState(false);
+  const [selectedFaultyPairings, setSelectedFaultyPairings] = useState([]);
+  const [showFaultyPairingSendpair, setShowFaultyPairingSendpair] =
+    useState(false);
+  const [showFaultyPairingBlacklist, setShowFaultyPairingBlacklist] =
+    useState(false);
+  const [showAllottedSmartcard, setShowAllottedSmartcard] = useState(false);
+  const [selectedAllottedSmartcards, setSelectedAllottedSmartcards] = useState(
+    []
+  );
+  const [showDeallotSmartcard, setShowDeallotSmartcard] = useState(false);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -105,6 +140,7 @@ const InventoryStock = (props) => {
       smartcardlist: stockpairing.smartcardlist,
       stblist: stockpairing.stblist,
       actioninventorystate: stockpairing.actioninventorystate,
+      pairinginventorystate: stockpairing.pairinginventorystate,
     })
   );
 
@@ -126,6 +162,7 @@ const InventoryStock = (props) => {
     smartcardlist,
     stblist,
     actioninventorystate,
+    pairinginventorystate,
   } = useSelector(inventorystockProperties);
 
   useEffect(() => {
@@ -142,6 +179,7 @@ const InventoryStock = (props) => {
       dispatch(onGetPairingSmartcardList());
       dispatch(onGetPairingStbList());
       dispatch(onGetStockActionInventorystate());
+      dispatch(onGetStockPairingInventoryState());
     }
   }, [dispatch, stockpairing]);
 
@@ -188,6 +226,9 @@ const InventoryStock = (props) => {
       allottedtotalCount: allottedpairing.totalCount,
       allottedpageSize: allottedpairing.perPage,
       allottedcurrentPage: allottedpairing.currentPage,
+      allottedsmartcardlist: allottedpairing.allottedsmartcardlist,
+      allottedusertype: allottedpairing.allottedusertype,
+      allottedoperatorlist: allottedpairing.allottedoperatorlist,
     })
   );
 
@@ -199,6 +240,9 @@ const InventoryStock = (props) => {
     allottedpageSize,
     allottedtotalCount,
     allottedtotalPage,
+    allottedsmartcardlist,
+    allottedusertype,
+    allottedoperatorlist,
   } = useSelector(inventoryallottedProperties);
 
   useEffect(() => {
@@ -206,6 +250,9 @@ const InventoryStock = (props) => {
       dispatch(onGetInventoryAllottedSmartcard());
       dispatch(onGetInventoryAllottedStb());
       dispatch(onGetInventoryAllottedPairing());
+      dispatch(onGetInventoryAllottedOperatorlist());
+      dispatch(onGetInventoryAllottedSmartcardlist());
+      dispatch(onGetInventoryAllottedUsertype());
     }
   }, [dispatch, allottedpairing]);
 
@@ -216,11 +263,22 @@ const InventoryStock = (props) => {
       blacklistedsmartcard: blaclistedsmartcard.blacklistedsmartcard,
       blacklistedstb: blaclistedsmartcard.blacklistedstb,
       blacklistedpairing: blaclistedsmartcard.blacklistedpairing,
+      blacklistedtotalPage: blaclistedsmartcard.totalPages,
+      blacklistedtotalCount: blaclistedsmartcard.totalCount,
+      blacklistedpageSize: blaclistedsmartcard.perPage,
+      blacklistedcurrentPage: blaclistedsmartcard.currentPage,
     })
   );
 
-  const { blacklistedsmartcard, blacklistedstb, blacklistedpairing } =
-    useSelector(inventoryblacklistedProperties);
+  const {
+    blacklistedsmartcard,
+    blacklistedstb,
+    blacklistedpairing,
+    blacklistedcurrentPage,
+    blacklistedpageSize,
+    blacklistedtotalCount,
+    blacklistedtotalPage,
+  } = useSelector(inventoryblacklistedProperties);
 
   useEffect(() => {
     dispatch(onGetInventoryBlacklistedSmartcard());
@@ -241,6 +299,11 @@ const InventoryStock = (props) => {
   const goToPage2 = (toPage) => {
     dispatch(onGoToPage2(toPage));
     dispatch(onGetInventoryAllottedPairing());
+  };
+
+  const goToPage3 = (toPage) => {
+    dispatch(onGoToPage3(toPage));
+    dispatch(onGetInventoryBlacklistedPairing());
   };
 
   const toggleTab = (tab) => {
@@ -299,6 +362,10 @@ const InventoryStock = (props) => {
       if (activeTab === "3") {
         return allottedtotalPage;
       }
+    } else if (selectedOption === "Blacklisted") {
+      if (activeTab === "3") {
+        return blacklistedtotalPage;
+      }
     }
   };
 
@@ -314,6 +381,10 @@ const InventoryStock = (props) => {
     } else if (selectedOption === "Allotted") {
       if (activeTab === "3") {
         return allottedtotalCount;
+      }
+    } else if (selectedOption === "Blacklisted") {
+      if (activeTab === "3") {
+        return blacklistedtotalCount;
       }
     }
   };
@@ -331,6 +402,10 @@ const InventoryStock = (props) => {
       if (activeTab === "3") {
         return allottedpageSize;
       }
+    } else if (selectedOption === "Blacklisted") {
+      if (activeTab === "3") {
+        return blacklistedpageSize;
+      }
     }
   };
 
@@ -346,6 +421,10 @@ const InventoryStock = (props) => {
     } else if (selectedOption === "Allotted") {
       if (activeTab === "3") {
         return allottedcurrentPage;
+      }
+    } else if (selectedOption === "Blacklisted") {
+      if (activeTab === "3") {
+        return blacklistedcurrentPage;
       }
     }
   };
@@ -363,12 +442,16 @@ const InventoryStock = (props) => {
       if (activeTab === "3") {
         return goToPage2;
       }
+    } else if (selectedOption === "Blacklisted") {
+      if (activeTab === "3") {
+        return goToPage3;
+      }
     }
   };
 
   useEffect(() => {
-    console.log("Selected stbs: ", selectedStbs);
-  }, [selectedStbs]);
+    console.log("Selected Allotted smartcard: ", selectedAllottedSmartcards);
+  }, [selectedAllottedSmartcards]);
 
   const handleSelectedRows = (row) => {
     // Check if the row is already selected
@@ -403,6 +486,97 @@ const InventoryStock = (props) => {
     } else {
       // If the row is not selected, add it to the selected rows array
       setSelectedStbs([...selectedStbs, row]);
+    }
+  };
+
+  const handleSelectedPairings = (row) => {
+    // Check if the row is already selected
+    const isSelected = selectedPairings.some(
+      (selectedPairing) => selectedPairing.id === row.id
+    );
+
+    // If the row is selected, remove it from the selected rows array
+    if (isSelected) {
+      const updatedSelectedPairings = selectedPairings.filter(
+        (selectedPairing) => selectedPairing.id !== row.id
+      );
+      setSelectedPairings(updatedSelectedPairings);
+    } else {
+      // If the row is not selected, add it to the selected rows array
+      setSelectedPairings([...selectedPairings, row]);
+    }
+  };
+
+  const handleSelectedFaultySc = (row) => {
+    // Check if the row is already selected
+    const isSelected = selectedFaultyScs.some(
+      (selectedFaultySc) => selectedFaultySc.id === row.id
+    );
+
+    // If the row is selected, remove it from the selected rows array
+    if (isSelected) {
+      const updatedSelectedFaultyScs = selectedFaultyScs.filter(
+        (selectedFaultySc) => selectedFaultySc.id !== row.id
+      );
+      setSelectedFaultyScs(updatedSelectedFaultyScs);
+    } else {
+      // If the row is not selected, add it to the selected rows array
+      setSelectedFaultyScs([...selectedFaultyScs, row]);
+    }
+  };
+
+  const handleSelectedFaultyStb = (row) => {
+    // Check if the row is already selected
+    const isSelected = selectedFaultyStbs.some(
+      (selectedFaultyStb) => selectedFaultyStb.id === row.id
+    );
+
+    // If the row is selected, remove it from the selected rows array
+    if (isSelected) {
+      const updatedSelectedFaultyStbs = selectedFaultyStbs.filter(
+        (selectedFaultyStb) => selectedFaultyStb.id !== row.id
+      );
+      setSelectedFaultyStbs(updatedSelectedFaultyStbs);
+    } else {
+      // If the row is not selected, add it to the selected rows array
+      setSelectedFaultyStbs([...selectedFaultyStbs, row]);
+    }
+  };
+
+  const handleSelectedFaultyPairing = (row) => {
+    // Check if the row is already selected
+    const isSelected = selectedFaultyPairings.some(
+      (selectedFaultyPairing) => selectedFaultyPairing.id === row.id
+    );
+
+    // If the row is selected, remove it from the selected rows array
+    if (isSelected) {
+      const updatedSelectedFaultyPairings = selectedFaultyPairings.filter(
+        (selectedFaultyPairing) => selectedFaultyPairing.id !== row.id
+      );
+      setSelectedFaultyPairings(updatedSelectedFaultyPairings);
+    } else {
+      // If the row is not selected, add it to the selected rows array
+      setSelectedFaultyPairings([...selectedFaultyPairings, row]);
+    }
+  };
+
+  const handleSelectedAllottedSmartcards = (row) => {
+    // Check if the row is already selected
+    const isSelected = selectedAllottedSmartcards.some(
+      (selectedAllottedSmartcard) => selectedAllottedSmartcard.id === row.id
+    );
+
+    // If the row is selected, remove it from the selected rows array
+    if (isSelected) {
+      const updatedSelectedAllottedSmartcards =
+        selectedAllottedSmartcards.filter(
+          (selectedAllottedSmartcard) => selectedAllottedSmartcard.id !== row.id
+        );
+      setSelectedAllottedSmartcards(updatedSelectedAllottedSmartcards);
+    } else {
+      // If the row is not selected, add it to the selected rows array
+      setSelectedAllottedSmartcards([...selectedAllottedSmartcards, row]);
     }
   };
 
@@ -618,8 +792,20 @@ const InventoryStock = (props) => {
     setShowUploadSmartcard(!showUploadSmartcard);
   };
 
+  const handleBulkUpdateSmartcard = () => {
+    setShowBulkUpdateSmartcard(!showBulkUpdateSmartcard);
+  };
+
   const handleStockScMarkfaulty = () => {
     setShowStockScMarkfaulty(!showStockScMarkfaulty);
+  };
+
+  const handleFaultySmartcardSendSc = () => {
+    setShowFaultySmartcardSendsc(!showFaultySmartcardSendsc);
+  };
+
+  const handleFaultySmartcardBlacklist = () => {
+    setShowFaultySmartcardBlacklist(!showFaultySmartcardBlacklist);
   };
 
   const handleWarning = () => {
@@ -632,6 +818,14 @@ const InventoryStock = (props) => {
 
   const handleStockScActionUpdated = () => {
     setShowStockActionupdated(!showStockActionupdated);
+  };
+
+  const handleAllottedSmartcard = () => {
+    setShowAllottedSmartcard(!showAllottedSmartcard);
+  };
+
+  const handleDeallottedSmartcard = () => {
+    setShowDeallotSmartcard(!showDeallotSmartcard);
   };
 
   const getFilteredTableActions = () => {
@@ -655,6 +849,7 @@ const InventoryStock = (props) => {
             name: "Update",
             type: "dropdown",
             dropdownName: "Bulk",
+            action: setShowBulkUpdateSmartcard,
           },
           {
             name: "Mark Faulty",
@@ -761,54 +956,42 @@ const InventoryStock = (props) => {
             type: "dot",
             icon: "action",
             dropdownName: "",
+            action:
+              Object.keys(selectedPairings).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowStockPairingMarkfaulty(true),
           },
           {
             name: "Blacklist",
             type: "dot",
             icon: "action",
             dropdownName: "",
+            action:
+              Object.keys(selectedPairings).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowStockPairingBlacklist(true),
           },
           {
             name: "Delete pairing",
             type: "dot",
             icon: "action",
             dropdownName: "",
+            action:
+              Object.keys(selectedPairings).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowDeleteStockPairing(true),
           },
         ];
         return actions;
       }
     } else if (selectedOption === "Allotted") {
-      actions = [
-        {
-          name: "Create",
-          type: "normal",
-          icon: "create",
-        },
-        {
-          name: "Upload",
-          type: "dropdown",
-          dropdownName: "Bulk",
-        },
-        {
-          name: "Update",
-          type: "dropdown",
-          dropdownName: "Bulk",
-        },
-        {
-          name: "De-Allot",
-          type: "dot",
-          icon: "action",
-          dropdownName: "",
-        },
-      ];
-      return actions;
-    } else if (selectedOption === "Faulty") {
       if (activeTab === "1") {
         actions = [
           {
-            name: "Create",
+            name: "Allot",
             type: "normal",
             icon: "create",
+            action: setShowAllottedSmartcard,
           },
           {
             name: "Upload",
@@ -816,28 +999,19 @@ const InventoryStock = (props) => {
             dropdownName: "Bulk",
           },
           {
-            name: "Update",
-            type: "dropdown",
-            dropdownName: "Bulk",
-          },
-          {
-            name: "Send to Smartcard Stock",
-            type: "dot",
-            icon: "action",
-            dropdownName: "",
-          },
-          {
-            name: "Blacklist",
-            type: "dot",
-            icon: "action",
-            dropdownName: "",
+            name: "De-Allot",
+            type: "normal",
+            action:
+              Object.keys(selectedAllottedSmartcards).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowDeallotSmartcard(true),
           },
         ];
         return actions;
       } else if (activeTab === "2") {
         actions = [
           {
-            name: "Create",
+            name: "Allot",
             type: "normal",
             icon: "create",
           },
@@ -847,18 +1021,7 @@ const InventoryStock = (props) => {
             dropdownName: "Bulk",
           },
           {
-            name: "Update",
-            type: "dropdown",
-            dropdownName: "Bulk",
-          },
-          {
-            name: "Send to STB Stock",
-            type: "dot",
-            icon: "action",
-            dropdownName: "",
-          },
-          {
-            name: "Blacklist",
+            name: "De-Allot",
             type: "dot",
             icon: "action",
             dropdownName: "",
@@ -868,7 +1031,7 @@ const InventoryStock = (props) => {
       } else if (activeTab === "3") {
         actions = [
           {
-            name: "Create",
+            name: "Allot",
             type: "normal",
             icon: "create",
           },
@@ -878,18 +1041,7 @@ const InventoryStock = (props) => {
             dropdownName: "Bulk",
           },
           {
-            name: "Update",
-            type: "dropdown",
-            dropdownName: "Bulk",
-          },
-          {
-            name: "Send to Pairing Stock",
-            type: "dot",
-            icon: "action",
-            dropdownName: "",
-          },
-          {
-            name: "Blacklist",
+            name: "De-Allot",
             type: "dot",
             icon: "action",
             dropdownName: "",
@@ -897,33 +1049,101 @@ const InventoryStock = (props) => {
         ];
         return actions;
       }
+    } else if (selectedOption === "Faulty") {
+      if (activeTab === "1") {
+        actions = [
+          {
+            name: "Send to Smartcard Stock",
+            type: "dot",
+            icon: "action",
+            dropdownName: "Action",
+            action:
+              Object.keys(selectedFaultyScs).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowFaultySmartcardSendsc(true),
+          },
+          {
+            name: "Blacklist",
+            type: "dot",
+            icon: "action",
+            dropdownName: "Action",
+            action:
+              Object.keys(selectedFaultyScs).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowFaultySmartcardBlacklist(true),
+          },
+        ];
+        return actions;
+      } else if (activeTab === "2") {
+        actions = [
+          {
+            name: "Send to STB Stock",
+            type: "dot",
+            icon: "action",
+            dropdownName: "Action",
+            action:
+              Object.keys(selectedFaultyStbs).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowFaultyStbSendstb(true),
+          },
+          {
+            name: "Blacklist",
+            type: "dot",
+            icon: "action",
+            dropdownName: "Action",
+            action:
+              Object.keys(selectedFaultyStbs).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowFaultyStbBlacklist(true),
+          },
+        ];
+        return actions;
+      } else if (activeTab === "3") {
+        actions = [
+          {
+            name: "Send to Pairing Stock",
+            type: "dot",
+            icon: "action",
+            dropdownName: "Action",
+            action:
+              Object.keys(selectedFaultyPairings).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowFaultyPairingSendpair(true),
+          },
+          {
+            name: "Blacklist",
+            type: "dot",
+            icon: "action",
+            dropdownName: "Action",
+            action:
+              Object.keys(selectedFaultyPairings).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowFaultyPairingBlacklist(true),
+          },
+        ];
+        return actions;
+      }
     } else if (selectedOption === "Blacklisted") {
-      actions = [
-        {
-          name: "Create",
-          type: "normal",
-          icon: "create",
-        },
-        {
-          name: "Upload",
-          type: "dropdown",
-          dropdownName: "Bulk",
-        },
-        {
-          name: "Update",
-          type: "dropdown",
-          dropdownName: "Bulk",
-        },
-        {
-          name: "",
-          type: "dot",
-          icon: "action",
-          dropdownName: "",
-        },
-      ];
+      actions = [];
       return actions;
     }
     return [];
+  };
+
+  const getFilteredHandleRowClicks = (Row) => {
+    if (selectedOption === "In-stock") {
+      if (activeTab === "1") {
+        return handleSelectedRows(Row);
+      }
+    } else if (selectedOption === "Faulty") {
+      if (activeTab === "1") {
+        return handleSelectedFaultySc(Row);
+      }
+    } else if (selectedOption === "Allotted") {
+      if (activeTab === "1") {
+        return handleSelectedAllottedSmartcards(Row);
+      }
+    }
   };
 
   return (
@@ -948,6 +1168,10 @@ const InventoryStock = (props) => {
         brand1={brand1}
         brand2={brand2}
       />
+      <BulkUpdateSmartcard
+        isOpen={showBulkUpdateSmartcard}
+        toggle={handleBulkUpdateSmartcard}
+      />
       <StockScMarkfaulty
         isOpen={showStockScMarkfaulty}
         toggle={handleStockScMarkfaulty}
@@ -965,6 +1189,28 @@ const InventoryStock = (props) => {
         brand2={brand2}
         stockscwarehouse={stockscwarehouse}
         actioninventorystate={actioninventorystate}
+      />
+      <FaultySendToStock
+        isOpen={showFaultySmartcardSendsc}
+        toggle={handleFaultySmartcardSendSc}
+        selectedFaultyScs={selectedFaultyScs}
+      />
+      <FaultySmartcardBlacklist
+        isOpen={showFaultySmartcardBlacklist}
+        toggle={handleFaultySmartcardBlacklist}
+        selectedFaultyScs={selectedFaultyScs}
+      />
+      <AllottedSmrtcard
+        isOpen={showAllottedSmartcard}
+        toggle={handleAllottedSmartcard}
+        allottedsmartcardlist={allottedsmartcardlist}
+        allottedoperatorlist={allottedoperatorlist}
+        allottedusertype={allottedusertype}
+      />
+      <DeallotSmartcard
+        isOpen={showDeallotSmartcard}
+        toggle={handleDeallottedSmartcard}
+        selectedAllottedSmartcards={selectedAllottedSmartcards}
       />
       <div
         className="position-fixed top-0 end-0 p-3"
@@ -1080,8 +1326,11 @@ const InventoryStock = (props) => {
                               theadClass="table-light"
                               paginationDiv="col-sm-12 col-md-7"
                               pagination="pagination pagination-rounded justify-content-end mt-4"
+                              // handleRowClick={(row) => {
+                              //   getFilteredHandleRowClicks(row);
+                              // }}
                               handleRowClick={(row) => {
-                                handleSelectedRows(row);
+                                getFilteredHandleRowClicks(row);
                               }}
                             />
                           </Col>
@@ -1114,6 +1363,16 @@ const InventoryStock = (props) => {
                               handleSelectedStbs={handleSelectedStbs}
                               selectedStbs={selectedStbs}
                               actioninventorystate={actioninventorystate}
+                              selectedFaultyStbs={selectedFaultyStbs}
+                              showFaultyStbSendstb={showFaultyStbSendstb}
+                              setShowFaultyStbSendstb={setShowFaultyStbSendstb}
+                              showFaultyStbBlacklist={showFaultyStbBlacklist}
+                              setShowFaultyStbBlacklist={
+                                setShowFaultyStbBlacklist
+                              }
+                              handleSelectedFaultyStb={handleSelectedFaultyStb}
+                              selectedOption={selectedOption}
+                              activeTab={activeTab}
                             />
                           </Col>
                         </Row>
@@ -1135,6 +1394,44 @@ const InventoryStock = (props) => {
                               smartcardlist={smartcardlist}
                               stblist={stblist}
                               stocksccastype={stocksccastype}
+                              showStockPairingMarkfaulty={
+                                showStockPairingMarkfaulty
+                              }
+                              setShowStockPairingMarkfaulty={
+                                setShowStockPairingMarkfaulty
+                              }
+                              showStockPairingBlacklist={
+                                showStockPairingBlacklist
+                              }
+                              setShowStockPairingBlacklist={
+                                setShowStockPairingBlacklist
+                              }
+                              handleSelectedPairings={handleSelectedPairings}
+                              selectedPairings={selectedPairings}
+                              pairinginventorystate={pairinginventorystate}
+                              showDeleteStockPairing={showDeleteStockPairing}
+                              setShowDeleteStockPairing={
+                                setShowDeleteStockPairing
+                              }
+                              selectedFaultyPairings={selectedFaultyPairings}
+                              showFaultyPairingSendpair={
+                                showFaultyPairingSendpair
+                              }
+                              setShowFaultyPairingSendpair={
+                                setShowFaultyPairingSendpair
+                              }
+                              showFaultyPairingBlacklist={
+                                showFaultyPairingBlacklist
+                              }
+                              setShowFaultyPairingBlacklist={
+                                setShowFaultyPairingBlacklist
+                              }
+                              handleSelectedFaultyPairing={
+                                handleSelectedFaultyPairing
+                              }
+                              selectedOption={selectedOption}
+                              activeTab={activeTab}
+                              stockscinventorystate={stockscinventorystate}
                             />
                           </Col>
                         </Row>

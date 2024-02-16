@@ -228,7 +228,7 @@ const TableContainerX = ({
                   prepareRow(row);
                   return (
                     <Fragment key={row.getRowProps().key}>
-                      {console.log("Row: ", row.original)}
+                      {/* {console.log("Row: ", row.original)} */}
                       <tr
                         onClick={() => handleRowClick(row.original)}
                         style={{ cursor: "pointer" }}

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   Card,
   CardBody,
@@ -7,6 +8,9 @@ import {
   Col,
   Collapse,
   Container,
+  Form,
+  Input,
+  Button,
   Nav,
   NavItem,
   NavLink,
@@ -25,30 +29,180 @@ import AllottedPairing from "./TabsComponents/AllottedPairing";
 import SmsLogs from "./TabsComponents/SmsLogs";
 
 const TapsOfViewRegionalOffice = ({
+  selectedRowId,
   accountDetails,
-  setFromDate,
-  setToDate,
+  setAccountDetails,
   fromDate,
   toDate,
-  handleSearch,
-  allottedBouquets,
-  allottedScheme,
-  allottedPairing,
-  allottedNCF,
-  uploadDocuments,
-  smsLogs,
-  regionalOffData,
+  setFromDate,
+  setToDate,
   selectedRowData,
 }) => {
-  // console.log("allotted:" + JSON.stringify(smsLogs));
   const [customActiveTab, setcustomActiveTab] = useState("1");
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
 
-  const handleTab = (tab) => {
+  const [allottedBouquetData, setAllottedBouquetData] = useState([]);
+  const [allottedSchemeData, setAllottedSchemeData] = useState([]);
+  const [allottedPairingData, setAllottedPairingData] = useState([]);
+  const [allottedNcfData, setAllottedNcfData] = useState([]);
+  const [uploadDocsData, setUploadDocsData] = useState([]);
+  const [smsLogsData, setSmsLogsData] = useState([]);
+
+  const toggleCustom = (tab) => {
     if (customActiveTab !== tab) {
       setcustomActiveTab(tab);
     }
   };
 
+  const getOperatorAccountDetails = async (e) => {
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+      // console.log("Dates: " + fromDate, toDate);
+      const response = await axios.get(
+        `${API_URL}/operator-account?expand=created_by_lbl,type_lbl,cr_operator_lbl,dr_operator_lbl,credited_by,igst,cgst,sgst,name,balance,credit,debit,balance_h,credit_h,debit_h&filter[operator_id]=${parseInt(
+          selectedRowId
+        )}&filter[wallet_type]=2&filter[FRM_created_at]=${fromDate}&filter[TO_created_at]=${toDate}&page=1&per-page=50&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setAccountDetails(response.data.data);
+      console.log("response in useEffect:" + JSON.stringify(response));
+    } catch (error) {
+      console.error("Error fetching bouquet data:", error);
+    }
+  };
+
+  const getAllottedBouquetDetails = async (e) => {
+    if (selectedRowId) {
+      try {
+        const token = "Bearer " + localStorage.getItem("temptoken");
+
+        const response = await axios.get(
+          `${API_URL}/operator-bouque?expand=boxtype_lbl,type_lbl,status_lbl,created_by_lbl&filter[operator_id]=${parseInt(
+            selectedRowId
+          )}&vr=web1.0`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        setAllottedBouquetData(response.data.data);
+        console.log("response in useEffect:" + JSON.stringify(response));
+      } catch (error) {
+        console.error("Error fetching bouquet data:", error);
+      }
+    }
+  };
+
+  const getAllottedSchemeDetails = async (e) => {
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/operator-scheme?expand=boxtype_lbl,status_lbl,created_by_lbl&filter[operator_id]=${parseInt(
+          selectedRowId
+        )}&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+            "content-type": "application/json",
+          },
+        }
+      );
+      setAllottedSchemeData(response.data.data);
+      console.log("response in useEffect:" + JSON.stringify(response));
+    } catch (error) {
+      console.error("Error fetching scheme data:", error);
+    }
+  };
+
+  const getAllottedPairingDetails = async (e) => {
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/pairing?expand=created_by_lbl,status_lbl,cas_lbl,brand_lbl,boxtype_lbl,is_embeded_lbl,account_detail&filter[track]=1&filter[operator_id]=${parseInt(
+          selectedRowId
+        )}&page=1&per-page=50&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setAllottedPairingData(response.data.data);
+      console.log("response in useEffect:" + JSON.stringify(response));
+    } catch (error) {
+      console.error("Error fetching pairing data:", error);
+    }
+  };
+
+  const getAllottedNcfDetails = async (e) => {
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/ncf-rates?filter[status]=1&filter[operator_id]=${selectedRowId}&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setAllottedNcfData(response.data.data);
+      console.log("response in useEffect:" + JSON.stringify(response));
+    } catch (error) {
+      console.error("Error fetching NCF data:", error);
+    }
+  };
+
+  const getUploadDocsDetails = async (e) => {
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/operator/view-upload-doc?filter[model_id]=${selectedRowId}&expand=data&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setUploadDocsData(response.data.data);
+      console.log("response in useEffect:" + JSON.stringify(response));
+    } catch (error) {
+      console.error("Error fetching Upload data:", error);
+    }
+  };
+
+  const getSmsLogsDetails = async (e) => {
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/smslog?expand=created_by_lbl,created_on_lbl&filter[is_operator]=1&filter[id]=${selectedRowId}&page=1&per-page=50&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setSmsLogsData(response.data.data);
+      console.log("response in useEffect:" + JSON.stringify(response));
+    } catch (error) {
+      console.error("Error fetching smsLogs data:", error);
+    }
+  };
+
+  // useEffect(() => {
+  //   if (selectedRowId) {
+  //     getOperatorAccountDetails();
+  //   }
+  // }, [selectedRowId]);
   return (
     <div>
       <Nav tabs className="nav-tabs-custom nav-justified">
@@ -59,7 +213,8 @@ const TapsOfViewRegionalOffice = ({
               active: customActiveTab === "1",
             })}
             onClick={() => {
-              handleTab("1");
+              toggleCustom("1");
+              getOperatorAccountDetails();
             }}
           >
             <span className="d-block d-sm-none">
@@ -75,7 +230,8 @@ const TapsOfViewRegionalOffice = ({
               active: customActiveTab === "2",
             })}
             onClick={() => {
-              handleTab("2");
+              toggleCustom("2");
+              getAllottedBouquetDetails();
             }}
           >
             <span className="d-block d-sm-none">
@@ -91,7 +247,9 @@ const TapsOfViewRegionalOffice = ({
               active: customActiveTab === "3",
             })}
             onClick={() => {
-              handleTab("3");
+              toggleCustom("3");
+              getAllottedSchemeDetails();
+              // getCopyOfPairing();
             }}
           >
             <span className="d-block d-sm-none">
@@ -107,7 +265,8 @@ const TapsOfViewRegionalOffice = ({
               active: customActiveTab === "4",
             })}
             onClick={() => {
-              handleTab("4");
+              toggleCustom("4");
+              getAllottedPairingDetails();
             }}
           >
             <span className="d-block d-sm-none">
@@ -123,7 +282,8 @@ const TapsOfViewRegionalOffice = ({
               active: customActiveTab === "5",
             })}
             onClick={() => {
-              handleTab("5");
+              toggleCustom("5");
+              getAllottedNcfDetails();
             }}
           >
             <span className="d-block d-sm-none">
@@ -139,7 +299,8 @@ const TapsOfViewRegionalOffice = ({
               active: customActiveTab === "6",
             })}
             onClick={() => {
-              handleTab("6");
+              toggleCustom("6");
+              getUploadDocsDetails();
             }}
           >
             <span className="d-block d-sm-none">
@@ -155,7 +316,8 @@ const TapsOfViewRegionalOffice = ({
               active: customActiveTab === "7",
             })}
             onClick={() => {
-              handleTab("7");
+              toggleCustom("7");
+              getSmsLogsDetails();
             }}
           >
             <span className="d-block d-sm-none">
@@ -170,14 +332,62 @@ const TapsOfViewRegionalOffice = ({
         <TabPane tabId="1">
           <Row>
             <Col sm="12">
+              <Form
+                // onSubmit={handleSearch}
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  // validation.handleSubmit();
+                  // return false;
+                  console.log("search btn clicked", fromDate, toDate);
+                }}
+              >
+                <Row>
+                  <Col lg={2} className="mt-2">
+                    <p>Transaction Date:</p>
+                  </Col>
+                  <Col lg={2}>
+                    <Input
+                      value={fromDate}
+                      onChange={(e) => setFromDate(e.target.value)}
+                      type="date"
+                      // onChange={validation.handleChange}
+                      // onBlur={validation.handleBlur}
+                      // value={validation.values.fromDate || ""}
+                    />
+                  </Col>
+                  <Col lg={2}>
+                    <Input
+                      value={toDate}
+                      onChange={(e) => setToDate(e.target.value)}
+                      type="date"
+                      // onChange={validation.handleChange}
+                      // onBlur={validation.handleBlur}
+                      // value={validation.values.toDate || ""}
+                    />
+                  </Col>
+                  <Col lg={2} className="mt-1">
+                    <i
+                      style={{
+                        background: "#556ee6",
+                        color: "#fff",
+                        width: "25px",
+                        height: "25px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        borderRadius: "50%",
+                        cursor: "pointer",
+                      }}
+                      className="fas fa-search"
+                      onClick={getOperatorAccountDetails}
+                    ></i>
+                  </Col>
+                </Row>
+              </Form>
               <OperatorAccountDetails
+                selectedRowId={selectedRowId}
                 accountDetails={accountDetails}
-                handleSearch={handleSearch}
-                fromDate={fromDate}
-                toDate={toDate}
-                setFromDate={setFromDate}
-                setToDate={setToDate}
-                regionalOffData={regionalOffData}
+                setAccountDetails={setAccountDetails}
                 selectedRowData={selectedRowData}
               />
             </Col>
@@ -186,50 +396,50 @@ const TapsOfViewRegionalOffice = ({
         <TabPane tabId="2">
           <Row>
             <Col sm="12">
-              <AllottedBouquet allottedBouquets={allottedBouquets} />
+              <AllottedBouquet
+                allottedBouquetData={allottedBouquetData}
+                selectedRowId={selectedRowId}
+              />
             </Col>
           </Row>
         </TabPane>
         <TabPane tabId="3">
           <Row>
             <Col sm="12">
-              <AllottedScheme allottedScheme={allottedScheme} />
+              <AllottedScheme allottedSchemeData={allottedSchemeData} />
             </Col>
           </Row>
         </TabPane>
         <TabPane tabId="4">
           <Row>
             <Col sm="12">
-              {allottedPairing.length > 0 ? (
-                <AllottedPairing />
-              ) : (
-                <CardText className="mb-0">No Data</CardText>
-              )}
+              <AllottedPairing allottedPairingData={allottedPairingData} />
+              {/* <CardText className="mb-0">No Data</CardText> */}
             </Col>
           </Row>
         </TabPane>
         <TabPane tabId="5">
           <Row>
             <Col sm="12">
-              <AllottedNCF allottedNCF={allottedNCF} />
+              <AllottedNCF allottedNcfData={allottedNcfData} />
             </Col>
           </Row>
         </TabPane>
         <TabPane tabId="6">
           <Row>
             <Col sm="12">
-              <UploadDocuments uploadDocuments={uploadDocuments} />
+              <UploadDocuments
+                uploadDocsData={uploadDocsData}
+                selectedRowId={selectedRowId}
+              />
             </Col>
           </Row>
         </TabPane>
         <TabPane tabId="7">
           <Row>
             <Col sm="12">
-              {smsLogs.length > 0 ? (
-                <SmsLogs smsLogs={smsLogs} />
-              ) : (
-                <CardText className="mb-0">No Data</CardText>
-              )}
+              <SmsLogs smsLogsData={smsLogsData} />
+              {/* <CardText className="mb-0">No Data</CardText> */}
             </Col>
           </Row>
         </TabPane>

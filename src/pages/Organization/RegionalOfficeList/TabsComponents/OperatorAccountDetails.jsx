@@ -1,48 +1,48 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import TableContainer from "../../../../components/Common/TableContainer";
 import Spinners from "../../../../components/Common/Spinner";
 import {
-  Button,
   Card,
   CardBody,
   Col,
   Container,
+  Row,
   Form,
   Input,
-  Row,
+  Table,
 } from "reactstrap";
-import { createSelector } from "reselect";
+
+//Import Breadcrumb
+import Breadcrumbs from "/src/components/Common/Breadcrumb";
+
+import { getRegionalOffice as onGetRegionalOffice } from "/src/store/actions";
+
+//redux
 import { useSelector, useDispatch } from "react-redux";
+import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddCreditModal from "./AddCreditModal";
 import {
   getRegionalCreditList as onGetRegionalCreditList,
   getRegionalBankList as onGetRegionalBankList,
 } from "/src/store/regionaloffice/actions";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-const OperatorAccountDetails = (props) => {
-  const {
-    accountDetails,
-    setFromDate,
-    setToDate,
-    fromDate,
-    toDate,
-    handleSearch,
-    regionalOffData,
-    selectedRowData,
-  } = props;
-  // console.log(
-  //   "data in operatoraccountdetails:" + JSON.stringify(regionalOffData)
-  // );
+import SetOffAmountModal from "./SetOffAmountModal";
+import TableContainerX from "../../../../components/Common/TableContainerX";
+
+const OperatorAccountDetails = ({
+  accountDetails,
+  setAccountDetails,
+  selectedRowId,
+  selectedRowData,
+}) => {
+  //meta title
   document.title = "Regional Offices | VDigital";
-  const [showAddCreditModal, setShowAddCreditModal] = useState(false);
-  // const [accountsData, setAccountsData] = useState([]);
-  // const currentDate = new Date().toISOString().split("T")[0];
-  // const [fromDate, setFromDate] = useState(currentDate);
-  // const [toDate, setToDate] = useState(currentDate);
   const dispatch = useDispatch();
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
+  const [showAddCreditModal, setShowAddCreditModal] = useState(false);
+  const [showSetOffAmountModal, setShowSetOffAmountModal] = useState(false);
 
   const selectRegionalOfficeState = (state) => state.regionaloffice;
 
@@ -56,48 +56,7 @@ const OperatorAccountDetails = (props) => {
   const { regionalCreditList, regionalBankList } = useSelector(
     RegionalOfficeProperties
   );
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
 
-    initialValues: {
-      fromDate: "",
-      toDate: "",
-    },
-
-    validationSchema: Yup.object({
-      // amount: Yup.string().required("Please Enter Amount"),
-      // mode: Yup.string().required("Select Payment Mode"),
-    }),
-    onSubmit: async (values) => {
-      try {
-        const newCredit = {
-          fromDate: values["fromDate"],
-          toDate: parseInt(values["toDate"]),
-        };
-        console.log("newCredit:" + newCredit);
-
-        const token = "Bearer " + localStorage.getItem("temptoken");
-
-        const response = await axios.get(
-          `${API_URL}/operator-account?expand=created_by_lbl,type_lbl,cr_operator_lbl,dr_operator_lbl,credited_by,igst,cgst,sgst,name,balance,credit,debit,balance_h,credit_h,debit_h&filter[operator_id]=${regionalOffData.id}&filter[wallet_type]=2&filter[FRM_created_at]=${fromDate}&filter[TO_created_at]=${toDate}&page=1&per-page=50&vr=web1.0`,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
-        setAccountsData(response.data.data);
-        console.log("response in useEffect:" + JSON.stringify(response));
-        validation.resetForm();
-      } catch (error) {
-        console.error("Error fetching bouquet data:", error);
-      }
-    },
-    onReset: (values) => {
-      validation.setValues(validation.initialValues);
-    },
-  });
   const columns = useMemo(
     () => [
       {
@@ -293,51 +252,71 @@ const OperatorAccountDetails = (props) => {
           );
         },
       },
-      // {
-      //   Header: "Action",
-      //   Cell: (cellProps) => {
-      //     return (
-      //       <div className="d-flex gap-3">
-      //         <Link
-      //           to="#"
-      //           className="text-success"
-      //           onClick={() => {
-      //             const userData = cellProps.row.original;
-      //             handleUserClick(userData);
-      //           }}
-      //         >
-      //           <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-      //           <UncontrolledTooltip placement="top" target="edittooltip">
-      //             Edit
-      //           </UncontrolledTooltip>
-      //         </Link>
-      //         <Link
-      //           to="#"
-      //           className="text-danger"
-      //           onClick={() => {
-      //             const userData = cellProps.row.original;
-      //             onClickDelete(userData);
-      //           }}
-      //         >
-      //           <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-      //           <UncontrolledTooltip placement="top" target="deletetooltip">
-      //             Delete
-      //           </UncontrolledTooltip>
-      //         </Link>
-      //       </div>
-      //     );
-      //   },
-      // },
     ],
     []
   );
+
+  const toggleAddCreditModal = () => {
+    setShowAddCreditModal(!showAddCreditModal);
+  };
+
+  const toggleSetOffModal = () => {
+    setShowSetOffAmountModal(!showSetOffAmountModal);
+  };
+
   useEffect(() => {
     dispatch(onGetRegionalCreditList());
     dispatch(onGetRegionalBankList());
   }, [dispatch]);
 
-  const toggleAddCreditModal = () => {
-    setShowAddCreditModal(!showAddCreditModal);
+  const paymentTableSchema = {
+    subTableArrayKeyName: "payment_details",
+    keyColumn: "mode",
+    columns: [
+      {
+        header: "Payment Mode",
+        accessor: "mode",
+      },
+      {
+        header: "Bank Name",
+        accessor: "bankname",
+      },
+      {
+        header: "Cheque/Instrument No.",
+        accessor: "chequeno",
+      },
+      {
+        header: "Cheque/Instrument Date",
+        accessor: "chequedate",
+      },
+    ],
+  };
+
+  const renderPaymentTable = (row) => {
+    return (
+      <Table className="table mb-0">
+        <thead>
+          <tr>
+            {paymentTableSchema.columns.map((column) => {
+              return <th key={column.accessor}>{column.header}</th>;
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {row[paymentTableSchema.subTableArrayKeyName].map((object) => {
+            return (
+              <tr key={object[paymentTableSchema.keyColumn]}>
+                {paymentTableSchema.columns.map((column) => {
+                  return (
+                    <td key={column.accessor}>{object[column.accessor]}</td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+    );
   };
   const getTableActions = () => {
     return [
@@ -345,7 +324,7 @@ const OperatorAccountDetails = (props) => {
         name: "Pay Online",
         // action: setShowRegionalOffice,
         type: "normal",
-        icon: "create",
+        // icon: "create",
       },
       {
         name: "Add Credit",
@@ -354,10 +333,10 @@ const OperatorAccountDetails = (props) => {
         icon: "create",
       },
       {
-        name: "Setoff Account",
-        // action: setShowUploadRegionalOffice,
+        name: "Setoff Amount",
+        action: setShowSetOffAmountModal,
         type: "normal",
-        icon: "create",
+        // icon: "create",
       },
     ];
   };
@@ -367,61 +346,30 @@ const OperatorAccountDetails = (props) => {
       <AddCreditModal
         isOpen={showAddCreditModal}
         toggleAddModal={toggleAddCreditModal}
+        selectedRowId={selectedRowId}
+        selectedRowData={selectedRowData}
         regionalCreditList={regionalCreditList}
         regionalBankList={regionalBankList}
-        regionalOffData={regionalOffData}
+        setAccountDetails={setAccountDetails}
+      />
+      <SetOffAmountModal
+        isOpen={showSetOffAmountModal}
+        toggleSetOffModal={toggleSetOffModal}
         selectedRowData={selectedRowData}
       />
-      <Form
-        // onSubmit={handleSearch}
-        onSubmit={(e) => {
-          e.preventDefault();
-          validation.handleSubmit();
-          return false;
-        }}
-      >
-        <Row>
-          <Col lg={2} className="mt-2">
-            <p>Transaction Date:</p>
-          </Col>
-          <Col lg={2}>
-            <Input
-              value={fromDate}
-              onChange={(e) => setFromDate(e.target.value)}
-              type="date"
-              // onChange={validation.handleChange}
-              // onBlur={validation.handleBlur}
-              // value={validation.values.fromDate || ""}
-            />
-          </Col>
-          <Col lg={2}>
-            <Input
-              value={toDate}
-              onChange={(e) => setToDate(e.target.value)}
-              type="date"
-              // onChange={validation.handleChange}
-              // onBlur={validation.handleBlur}
-              // value={validation.values.toDate || ""}
-            />
-          </Col>
-          <Col lg={2}>
-            <button type="submit" className="btn btn-success save-user">
-              Search
-            </button>
-          </Col>
-        </Row>
-      </Form>
+
       <Row>
         <Col lg="12">
           <Card>
             <CardBody>
+              {console.log("Account Details:" + JSON.stringify(accountDetails))}
               <TableContainer
                 isPagination={true}
                 columns={columns}
-                data={accountDetails}
+                data={accountDetails && accountDetails}
                 isTransactionDate={true}
-                isShowTableActionButtons={true}
                 // isGlobalFilter={true}
+                isShowTableActionButtons={true}
                 isAddRegionalOffice={true}
                 isShowingPageLength={true}
                 tableActions={getTableActions()}
@@ -430,6 +378,9 @@ const OperatorAccountDetails = (props) => {
                 theadClass="table-light"
                 paginationDiv="col-sm-12 col-md-7"
                 pagination="pagination pagination-rounded justify-content-end mt-4"
+                // subTableEnabled={true}
+                // getRenderedSubTable={renderPaymentTable}
+                // isSubTableContentExists={(rowData) => rowData.rate.length > 0}
               />
             </CardBody>
           </Card>

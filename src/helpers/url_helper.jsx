@@ -285,7 +285,7 @@ export const GET_OSDCONFIGURATIONLIST_BACKGROUNDAREA =
 export const GET_OSDCONFIGURATIONLIST_STATUS =
   "/list/status?fields=id,name&vr=web1.0";
 export const ADD_NEW_OSDCONFIGURATIONLIST =
-  "/message-template/template-for?vr=web1.0";
+  "/mtc?vr=web1.0";
 
 export const GET_LOCALCHANNELNUMBER = "/localchannelnumberlist";
 
@@ -300,6 +300,11 @@ export const GET_OSDTEMPLATE_STATUS = "/list/status?fields=id,name&vr=web1.0";
 export const GET_OSDTEMPLATE_OSD =
   "/mtc/list?fields=id,name,cas_code&vr=web1.0";
 export const ADD_NEW_OSDTEMPLATE = "/message-template?vr=web1.0";
+export const getOSDTemplateUrl = (currPage, perPage) => {
+  console.log("current page in users url - ", currPage, perPage);
+  return `/message-template?expand=created_by_lbl,status_lbl,template_for_lbl,operator_count&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+};
+export const UPDATE_OSDTEMPLATE = (id) => `/message-template/${id}?vr=web1.0`;
 
 export const GET_NCF =
   "/ncf-rates?expand=status_lbl,created_by_lbl,type_lbl&page=1&per-page=50&vr=web1.0";
@@ -416,7 +421,6 @@ export const getTaxUrl = (currPage, perPage) => {
   console.log("current page in users url - ", currPage, perPage);
   return `/tax?expand=valuetype_lbl,parent_lbl,created_by_lbl,status_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
-
 export const ADD_NEW_TAXLIST = "/tax?vr=web1.0";
 export const UPDATE_TAX = (id) => `/tax/${id}?vr=web1.0`;
 
@@ -538,10 +542,17 @@ export const DELETE_STOCKPAIRING = "/pairing/0/delpairing?vr=web1.0";
 
 export const GET_INVENTORYFAULTY_SMARTCARD =
   "/smartcard?expand=po_date,po_number,invoice_no,invoice_date,created_by_lbl,cas_lbl,status_lbl,brand_lbl,warehouse_lbl,state_lbl,inv_state_lbl&filter[status]=3&filter[stb_id]=0&page=1&per-page=50&vr=web1.0";
+export const UPDATE_FAULTYSMARTCARD_SENDSC = "/smartcard/stock?vr=web1.0";
+export const UPDATE_FAULTYSMARTCARD_BLACKLIST =
+  "/smartcard/blacklist?filter[status]=3&vr=web1.0";
 export const GET_INVENTORYFAULTY_STB =
   "stb?expand=po_date,po_number,invoice_no,invoice_date,created_by_lbl,status_lbl,brand_lbl,boxtype_lbl,cas_lbl,warehouse_lbl,state_lbl,inv_state_lbl&filter[status]=3&filter[sc_id]=0&filter[track]=1&page=1&per-page=50&vr=web1.0";
+export const UPDATE_FAULTYSTB_SENDSTB = "/stb/stock?vr=web1.0";
+export const UPDATE_FAULTYSTB_BLACKLIST = "/stb/blacklist?vr=web1.0";
 export const GET_INVENTORYFAULTY_PAIRING =
   "/pairing?expand=created_by_lbl,status_lbl,cas_lbl,brand_lbl,boxtype_lbl,is_embeded_lbl,warehouse_lbl,state_lbl,inv_state_lbl,other_id_lbl&filter[status]=3&page=1&per-page=50&vr=web1.0";
+export const UPDATE_FAULTYPAIRING_SENDPAIR = "/pairing/stock?vr=web1.0";
+export const UPDATE_FAULTYPAIRING_BLACKLIST = "/pairing/blacklist?vr=web1.0";
 
 export const getFaultyPairingUrl = (currPage, perPage) => {
   // console.log("current page in users url - ", currPage, perPage);
@@ -554,9 +565,23 @@ export const GET_INVENTORYBLACKLISTED_STB =
   "/stb?expand=po_date,po_number,invoice_no,invoice_date,created_by_lbl,status_lbl,brand_lbl,boxtype_lbl,cas_lbl,warehouse_lbl,state_lbl,inv_state_lbl&filter[status]=4&filter[sc_id]=0&filter[track]=1&page=1&per-page=50&vr=web1.0";
 export const GET_INVENTORYBLACKLISTED_PAIRING =
   "pairing?expand=created_by_lbl,status_lbl,cas_lbl,brand_lbl,boxtype_lbl,is_embeded_lbl,warehouse_lbl,state_lbl,inv_state_lbl,other_id_lbl&filter[status]=4&filter[track]=1&page=1&per-page=50&vr=web1.0";
+export const getBlacklistedPairingUrl = (currPage, perPage) => {
+  return `pairing?expand=created_by_lbl,status_lbl,cas_lbl,brand_lbl,boxtype_lbl,is_embeded_lbl,warehouse_lbl,state_lbl,inv_state_lbl,other_id_lbl&filter[status]=4&filter[track]=1&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+};
 
 export const GET_INVENTORYALLOTTED_SMARTCARD =
   "/smartcard-allotment?expand=created_by_lbl,status_lbl,cas_lbl,brand_lbl,is_embeded_lbl,operator_lbl,warehouse_lbl,inv_state_lbl&filter[status]=1&filter[account_id]=0&page=1&per-page=50&vr=web1.0";
+export const GET_INVENTORYALLOTTED_USERTYPE =
+  "/list/usertype?fields=id,name&vr=web1.0";
+export const GET_INVENTORYALLOTTED_SMARTCARDLIST =
+  "/smartcard?fields=id,smartcardno,status&expand=is_embeded_lbl,cas_lbl,brand_lbl,operator_lbl,status_lbl&filter[status]=1&filter[stb_id]=0&page=1&per-page=500&vr=web1.0";
+export const GET_INVENTORYALLOTTED_OPERATORLIST =
+  "operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[mso_id]=1&filter[type]=1&vr=web1.0";
+export const ALLOT_SMARTCARD = "/smartcard-allotment?vr=web1.0";
+export const DEALLOT_SMARTCARD = "/smartcard-allotment/0?vr=web1.0";
+export const GET_INVENTORYALLOTTED_DISTRIBUTOR =
+  "/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=2013&filter[type]=2&vr=web1.0";
+
 export const GET_INVENTORYALLOTTED_STB =
   "/stb-allotment?expand=created_by_lbl,status_lbl,boxtype_lbl,cas_lbl,brand_lbl,is_embeded_lbl,operator_lbl,warehouse_lbl,inv_state_lbl&filter[status]=1&filter[account_id]=0&page=1&per-page=50&vr=web1.0";
 export const GET_INVENTORYALLOTTED_PAIRING =

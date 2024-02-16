@@ -13,6 +13,24 @@ import {
   GET_INVENTORYFAULTY_PAIRING_SUCCESS,
   GET_INVENTORYFAULTY_PAIRING_FAIL,
   UPDATE_FAULTYPAIRING_CURRENT_PAGE,
+  UPDATE_FAULTYSMARTCARD_SENDSC,
+  UPDATE_FAULTYSMARTCARD_SENDSC_SUCCESS,
+  UPDATE_FAULTYSMARTCARD_SENDSC_FAIL,
+  UPDATE_FAULTYSMARTCARD_BLACKLIST,
+  UPDATE_FAULTYSMARTCARD_BLACKLIST_SUCCESS,
+  UPDATE_FAULTYSMARTCARD_BLACKLIST_FAIL,
+  UPDATE_FAULTYSTB_SENDSTB,
+  UPDATE_FAULTYSTB_SENDSTB_SUCCESS,
+  UPDATE_FAULTYSTB_SENDSTB_FAIL,
+  UPDATE_FAULTYSTB_BLACKLIST,
+  UPDATE_FAULTYSTB_BLACKLIST_SUCCESS,
+  UPDATE_FAULTYSTB_BLACKLIST_FAIL,
+  UPDATE_FAULTYPAIRING_SENDPAIR,
+  UPDATE_FAULTYPAIRING_SENDPAIR_SUCCESS,
+  UPDATE_FAULTYPAIRING_SENDPAIR_FAIL,
+  UPDATE_FAULTYPAIRING_BLACKLIST,
+  UPDATE_FAULTYPAIRING_BLACKLIST_SUCCESS,
+  UPDATE_FAULTYPAIRING_BLACKLIST_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -86,6 +104,146 @@ const InventoryFaulty = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
         pagination: {},
+        loading: false,
+      };
+
+    case UPDATE_FAULTYSMARTCARD_SENDSC:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_FAULTYSMARTCARD_SENDSC_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        faultysmartcard: state.faultysmartcard.map((smartcard) =>
+          smartcard.id === action.payload.id
+            ? { ...smartcard, ...action.payload }
+            : smartcard
+        ),
+      };
+
+    case UPDATE_FAULTYSMARTCARD_SENDSC_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+    case UPDATE_FAULTYSMARTCARD_BLACKLIST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_FAULTYSMARTCARD_BLACKLIST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        faultysmartcard: state.faultysmartcard.map((smartcard) =>
+          smartcard.id === action.payload.id
+            ? { ...smartcard, ...action.payload }
+            : smartcard
+        ),
+      };
+
+    case UPDATE_FAULTYSMARTCARD_BLACKLIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+    case UPDATE_FAULTYSTB_SENDSTB:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_FAULTYSTB_SENDSTB_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        faultystb: state.faultystb.map((stb) =>
+          stb.id === action.payload.id ? { ...stb, ...action.payload } : stb
+        ),
+      };
+
+    case UPDATE_FAULTYSTB_SENDSTB_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+    case UPDATE_FAULTYSTB_BLACKLIST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_FAULTYSTB_BLACKLIST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        faultystb: state.faultystb.map((stb) =>
+          stb.id === action.payload.id ? { ...stb, ...action.payload } : stb
+        ),
+      };
+
+    case UPDATE_FAULTYSTB_BLACKLIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+    case UPDATE_FAULTYPAIRING_SENDPAIR:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_FAULTYPAIRING_SENDPAIR_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        faultypairing: state.faultypairing.map((pairing) =>
+          pairing.id === action.payload.id
+            ? { ...pairing, ...action.payload }
+            : pairing
+        ),
+      };
+
+    case UPDATE_FAULTYPAIRING_SENDPAIR_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+    case UPDATE_FAULTYPAIRING_BLACKLIST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_FAULTYPAIRING_BLACKLIST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        faultypairing: state.faultypairing.map((pairing) =>
+          pairing.id === action.payload.id
+            ? { ...pairing, ...action.payload }
+            : pairing
+        ),
+      };
+
+    case UPDATE_FAULTYPAIRING_BLACKLIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
         loading: false,
       };
 

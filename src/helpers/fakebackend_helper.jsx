@@ -571,14 +571,20 @@ export const getOSDConfigurationStatus = () =>
 export const addNewOSDConfiguration = (osdconfig) =>
   post(url.ADD_NEW_OSDCONFIGURATIONLIST, osdconfig);
 
-export const getOSDTemplate = () => get(url.GET_OSDTEMPLATE);
+// export const getOSDTemplate = () => get(url.GET_OSDTEMPLATE);
 export const getOSDTemplateTemplateFor = () =>
   get(url.GET_OSDTEMPLATE_TEMPLATEFOR);
 export const getOSDTemplateOSD = () => get(url.GET_OSDTEMPLATE_OSD);
 export const getOSDTemplateStatus = () => get(url.GET_OSDTEMPLATE_STATUS);
-
 export const addNewOSDTemplate = (osdtem) =>
   post(url.ADD_NEW_OSDTEMPLATE, osdtem);
+export const updateOSDTemplate = (id, osdtem) =>
+  put(url.UPDATE_OSDTEMPLATE(id), osdtem);
+export const getOSDTemplate = async (currentPage, perPage = 20) => {
+  console.log("Tax - Current Page in fakebackend: ", currentPage);
+  console.log("Tax - Per Page: ", perPage);
+  return await getCompleteResponse(url.getOSDTemplateUrl(currentPage, perPage));
+};
 
 export const getLocalChannelNumber = () => get(url.GET_LOCALCHANNELNUMBER);
 export const getDocumentUploadPolicy = () => get(url.GET_DOCUMENTUPLOADPOLICY);
@@ -594,8 +600,8 @@ export const getDistributorsPhase = () => get(url.GET_DISTRIBUTORS_PHASE);
 export const getDistributorsStatus = () => get(url.GET_DISTRIBUTORS_STATUS);
 export const addNewDistributor = (distributor) =>
   post(url.ADD_NEW_DISTRIBUTOR, distributor);
-export const updateDistributor = (distributors) =>
-  put(url.UPDATE_DISTRIBUTOR, distributors);
+export const updateDistributor = (distributors, id) =>
+  put(url.UPDATE_DISTRIBUTOR(id), distributors);
 
 // export const getLco = () => get(url.GET_LCO);
 export const getLco = async (currentPage, perPage = 20) => {
@@ -763,24 +769,55 @@ export const updateStockPairingMarkfaulty = (stockpairing) =>
   put(url.UPDATE_STOCKPAIRING_MARKFAULTY, stockpairing);
 export const updateStockpairingBlacklist = (stockpairing) =>
   put(url.UPDATE_STOCKPAIRING_BLACKLIST, stockpairing);
-export const deleteStockPairing = () => del(url.DELETE_STOCKPAIRING);
+export const deleteStockPairing = (stockpairing) =>
+  post(url.DELETE_STOCKPAIRING, stockpairing);
 
 export const getInventoryFaultySmartcard = () =>
   get(url.GET_INVENTORYFAULTY_SMARTCARD);
+export const updateFaultySmartcardSendsc = (faultypairing) =>
+  put(url.UPDATE_FAULTYSMARTCARD_SENDSC, faultypairing);
+export const updateFaultySmartcardBlacklist = (faultypairing) =>
+  put(url.UPDATE_FAULTYSMARTCARD_BLACKLIST, faultypairing);
 export const getInventoryFaultyStb = () => get(url.GET_INVENTORYFAULTY_STB);
+export const updateFaultyStbSendstb = (faultystb) =>
+  put(url.UPDATE_FAULTYSTB_SENDSTB, faultystb);
+export const updateFaultyStbBlacklist = (faultystb) =>
+  put(url.UPDATE_FAULTYSTB_BLACKLIST, faultystb);
 export const getInventoryFaultyPairing = async (currentPage, perPage = 20) => {
   return await getCompleteResponse(url.getFaultyPairingUrl(currentPage, 20));
 };
+export const updateFaultyPairingSendpair = (faultypairing) =>
+  put(url.UPDATE_FAULTYPAIRING_SENDPAIR, faultypairing);
+export const updateFaultyPairingBlacklist = (faultypairing) =>
+  put(url.UPDATE_FAULTYPAIRING_BLACKLIST, faultypairing);
 
 export const getInventoryBlacklistedSmartcard = () =>
   get(url.GET_INVENTORYBLACKLISTED_SMARTCARD);
 export const getInventoryBlacklistedStb = () =>
   get(url.GET_INVENTORYBLACKLISTED_STB);
-export const getInventoryBlacklistedPairing = () =>
-  get(url.GET_INVENTORYBLACKLISTED_PAIRING);
+// export const getInventoryBlacklistedPairing = () =>
+//   get(url.GET_INVENTORYBLACKLISTED_PAIRING);
+export const getInventoryBlacklistedPairing = async (
+  currentPage,
+  perPage = 20
+) => {
+  return await getCompleteResponse(
+    url.getBlacklistedPairingUrl(currentPage, perPage)
+  );
+};
 
 export const getInventoryAllottedSmartcard = () =>
   get(url.GET_INVENTORYALLOTTED_SMARTCARD);
+export const getInventoryAllottedUsertype = () =>
+  get(url.GET_INVENTORYALLOTTED_USERTYPE);
+export const getInventoryAllottedSmartcardlist = () =>
+  get(url.GET_INVENTORYALLOTTED_SMARTCARDLIST);
+export const getInventoryAllottedOperatorlist = () =>
+  get(url.GET_INVENTORYALLOTTED_OPERATORLIST);
+export const allotSmartcard = (allottedsmartcard) =>
+  post(url.ALLOT_SMARTCARD, allottedsmartcard);
+export const deallotSmartcard = (allottedsmartcard) =>
+  put(url.DEALLOT_SMARTCARD, allottedsmartcard);
 export const getInventoryAllottedStb = () => get(url.GET_INVENTORYALLOTTED_STB);
 export const getInventoryAllottedPairing = async (
   currentPage,

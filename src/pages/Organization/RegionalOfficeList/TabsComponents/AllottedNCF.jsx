@@ -14,10 +14,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 
-const AllottedNCF = ({ allottedNCF }) => {
+const AllottedNCF = ({ allottedNcfData }) => {
   //meta title
-  document.title = "Regional Offices | VDigital";
-  // console.log("allottedNCF:" + JSON.stringify(allottedNCF));
+  document.title = "LCO | VDigital";
+
+  const operatorAccount = [];
 
   const columns = useMemo(
     () => [
@@ -78,7 +79,7 @@ const AllottedNCF = ({ allottedNCF }) => {
       },
       {
         Header: "From",
-        accessor: "from_channel_no",
+        accessor: "addr",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -90,7 +91,7 @@ const AllottedNCF = ({ allottedNCF }) => {
       },
       {
         Header: "To",
-        accessor: "to_channel_no",
+        accessor: "contact_person",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -102,7 +103,7 @@ const AllottedNCF = ({ allottedNCF }) => {
       },
       {
         Header: "MRP",
-        accessor: "mrp",
+        accessor: "mobile_no",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -112,7 +113,7 @@ const AllottedNCF = ({ allottedNCF }) => {
       },
       {
         Header: "LCO Discount(%)",
-        accessor: "lmo_discount",
+        accessor: "state_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -124,7 +125,7 @@ const AllottedNCF = ({ allottedNCF }) => {
       },
       {
         Header: "LCO Rate",
-        accessor: "lmo_rate",
+        accessor: "District_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -134,7 +135,7 @@ const AllottedNCF = ({ allottedNCF }) => {
       },
       {
         Header: "Per Channel",
-        accessor: "calculate_per_channel",
+        // accessor: "city_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -148,11 +149,12 @@ const AllottedNCF = ({ allottedNCF }) => {
       },
       {
         Header: "Is Refundable",
-        accessor: "is_refundable",
+        accessor: "city_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
+              {" "}
               {cellProps.row.original.is_refundable === 1 ? "Yes" : "No"}
             </p>
           );
@@ -183,10 +185,13 @@ const AllottedNCF = ({ allottedNCF }) => {
         <Col lg="12">
           <Card>
             <CardBody>
+              {console.log(
+                "allottedNcfData:" + JSON.stringify(allottedNcfData)
+              )}
               <TableContainer
                 isPagination={true}
                 columns={columns}
-                data={allottedNCF}
+                data={allottedNcfData}
                 // isGlobalFilter={true}
                 // isAddRegionalOffice={true}
                 isShowingPageLength={true}

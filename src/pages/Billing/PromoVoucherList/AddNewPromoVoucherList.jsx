@@ -12,6 +12,7 @@ import {
   Input,
   Form,
 } from "reactstrap";
+import Select from "react-select";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewPromoVoucher as onAddNewPromoVoucher } from "/src/store/promovoucherlist/actions";
@@ -34,17 +35,14 @@ const AddNewPromoVoucher = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      //BroadCaster: "",
       operator: "",
       operator_code: "",
       amount: "",
       mrp: "",
       expiry_date: "",
-      bouquets_ids: "",
+      bouquets_ids: [],
       applied_on: "",
       recharge_period: "",
-      // created_at: "",
-      // created_by: "Admin",
     },
     validationSchema: Yup.object({
       operator: Yup.string().required("Select Ico"),
@@ -57,14 +55,12 @@ const AddNewPromoVoucher = (props) => {
       recharge_period: Yup.string().required("Select recharge periods"),
     }),
     onSubmit: (values) => {
-      // const LCOArray = values["operator"] || [];
-      // const LCOIntegers = LCOArray.map((option) =>
-      //   parseInt(option)
-      // );
-
       const BouquetArray = values["bouquets_ids"] || [];
       const BouquetIntegers = BouquetArray.map((option) => parseInt(option));
       console.log("bourquet:" + BouquetIntegers);
+
+      const selectedBouquets = validation.values.bouquets_ids || [];
+
 
       const newPromoVoucher = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
@@ -73,7 +69,7 @@ const AddNewPromoVoucher = (props) => {
         amount: values["amount"],
         mrp: values["mrp"],
         // bouque_ids: promovoucherBouquet.map((single) => parseInt(single.id)),
-        bouque_ids: BouquetIntegers,
+        bouque_ids: values["bouquets_ids"],
         expiry_date: values["expiry_date"],
         apply_on: parseInt(values["applied_on"]),
         rperiod_id: parseInt(values["recharge_period"]),
@@ -91,6 +87,7 @@ const AddNewPromoVoucher = (props) => {
       validation.setValues(validation.initialValues);
     },
   });
+
 
   return (
     <Modal
@@ -249,36 +246,37 @@ const AddNewPromoVoucher = (props) => {
                 <Label className="form-label">
                   Bouquet List<span style={{ color: "red" }}>*</span>
                 </Label>
-                <Input
+                <Select
                   name="bouquets_ids"
-                  type="select"
                   placeholder="Select bouquet"
-                  // className="form-select"
-                  onChange={validation.handleChange}
+                  onChange={(selectedOptions) => {
+                    validation.setFieldValue(
+                      "bouquets_ids",
+                      selectedOptions.map((option) => option.value)
+                    );
+                  }}
                   onBlur={validation.handleBlur}
-                  value={validation.values.bouquets_ids || []}
-                  multiple
-                >
-                  <option value=""></option>
-                  {promovoucherBouquet &&
-                    promovoucherBouquet.map((bouquets_ids) => (
-                      <option key={bouquets_ids.id} value={bouquets_ids.id}>
-                        {bouquets_ids.name}
-                      </option>
-                    ))}
-                </Input>
+                  value={promovoucherBouquet.filter((bouquet) =>
+                    validation.values.bouquets_ids.includes(bouquet.id)
+                  ).map((bouquet) => ({
+                    value: bouquet.id,
+                    label: bouquet.name
+                  }))}
+                  isMulti
+                  options={promovoucherBouquet.map((bouquet) => ({
+                    value: bouquet.id,
+                    label: bouquet.name
+                  }))}
+                />
                 {validation.touched.bouquets_ids &&
-                  validation.errors.bouquets_ids ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.bouquets_ids}
-                  </FormFeedback>
-                ) : null}
+                  validation.errors.bouquets_ids && (
+                    <FormFeedback type="invalid">
+                      {validation.errors.bouquets_ids}
+                    </FormFeedback>
+                  )}
               </div>
-              {console.log("bouquet: " + validation.values.bouquets_ids)}
-              {console.log(
-                "bouquet-type: " + typeof validation.values.bouquets_ids
-              )}
             </Col>
+
             <Col sm="3">
               <div className="mb-3">
                 <Label className="form-label">

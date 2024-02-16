@@ -24,7 +24,10 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import { getDistributors as onGetDistributors } from "/src/store/distributor/actions";
-import { updateLco as onUpdateLco } from "/src/store/lcolist/actions";
+import {
+  updateLco as onUpdateLco,
+  getLco as onGetLco,
+} from "/src/store/lcolist/actions";
 
 const EditLcoModal = (props) => {
   const {

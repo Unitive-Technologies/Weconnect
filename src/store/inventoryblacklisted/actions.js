@@ -8,7 +8,13 @@ import {
   GET_INVENTORYBLACKLISTED_PAIRING,
   GET_INVENTORYBLACKLISTED_PAIRING_SUCCESS,
   GET_INVENTORYBLACKLISTED_PAIRING_FAIL,
+  UPDATE_BLACKLISTEDPAIRING_CURRENT_PAGE,
 } from "./actionTypes";
+
+export const goToPage = (toPage) => ({
+  type: UPDATE_BLACKLISTEDPAIRING_CURRENT_PAGE,
+  payload: Number(toPage),
+});
 
 export const getInventoryBlacklistedSmartcard = () => ({
   type: GET_INVENTORYBLACKLISTED_SMARTCARD,
