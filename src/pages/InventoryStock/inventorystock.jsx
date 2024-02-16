@@ -73,6 +73,7 @@ import BulkUpdateSmartcard from "./BulkUpdateSmartcard";
 import FaultySendToStock from "./FaultySendToStock";
 import FaultySmartcardBlacklist from "./FaultySmartcardBlacklist";
 import AllottedSmrtcard from "./AllottedSmartcard";
+import DeallotSmartcard from "./DeallotSmartcard";
 
 const InventoryStock = (props) => {
   document.title = "Inventory | VDigital";
@@ -113,6 +114,10 @@ const InventoryStock = (props) => {
   const [showFaultyPairingBlacklist, setShowFaultyPairingBlacklist] =
     useState(false);
   const [showAllottedSmartcard, setShowAllottedSmartcard] = useState(false);
+  const [selectedAllottedSmartcards, setSelectedAllottedSmartcards] = useState(
+    []
+  );
+  const [showDeallotSmartcard, setShowDeallotSmartcard] = useState(false);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -445,8 +450,8 @@ const InventoryStock = (props) => {
   };
 
   useEffect(() => {
-    console.log("Selected faulty pairings: ", selectedFaultyPairings);
-  }, [selectedFaultyPairings]);
+    console.log("Selected Allotted smartcard: ", selectedAllottedSmartcards);
+  }, [selectedAllottedSmartcards]);
 
   const handleSelectedRows = (row) => {
     // Check if the row is already selected
@@ -553,6 +558,25 @@ const InventoryStock = (props) => {
     } else {
       // If the row is not selected, add it to the selected rows array
       setSelectedFaultyPairings([...selectedFaultyPairings, row]);
+    }
+  };
+
+  const handleSelectedAllottedSmartcards = (row) => {
+    // Check if the row is already selected
+    const isSelected = selectedAllottedSmartcards.some(
+      (selectedAllottedSmartcard) => selectedAllottedSmartcard.id === row.id
+    );
+
+    // If the row is selected, remove it from the selected rows array
+    if (isSelected) {
+      const updatedSelectedAllottedSmartcards =
+        selectedAllottedSmartcards.filter(
+          (selectedAllottedSmartcard) => selectedAllottedSmartcard.id !== row.id
+        );
+      setSelectedAllottedSmartcards(updatedSelectedAllottedSmartcards);
+    } else {
+      // If the row is not selected, add it to the selected rows array
+      setSelectedAllottedSmartcards([...selectedAllottedSmartcards, row]);
     }
   };
 
@@ -800,6 +824,10 @@ const InventoryStock = (props) => {
     setShowAllottedSmartcard(!showAllottedSmartcard);
   };
 
+  const handleDeallottedSmartcard = () => {
+    setShowDeallotSmartcard(!showDeallotSmartcard);
+  };
+
   const getFilteredTableActions = () => {
     let actions = [];
     if (selectedOption === "In-stock") {
@@ -972,9 +1000,11 @@ const InventoryStock = (props) => {
           },
           {
             name: "De-Allot",
-            type: "dot",
-            icon: "action",
-            dropdownName: "",
+            type: "normal",
+            action:
+              Object.keys(selectedAllottedSmartcards).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowDeallotSmartcard(true),
           },
         ];
         return actions;
@@ -1109,6 +1139,10 @@ const InventoryStock = (props) => {
       if (activeTab === "1") {
         return handleSelectedFaultySc(Row);
       }
+    } else if (selectedOption === "Allotted") {
+      if (activeTab === "1") {
+        return handleSelectedAllottedSmartcards(Row);
+      }
     }
   };
 
@@ -1172,6 +1206,11 @@ const InventoryStock = (props) => {
         allottedsmartcardlist={allottedsmartcardlist}
         allottedoperatorlist={allottedoperatorlist}
         allottedusertype={allottedusertype}
+      />
+      <DeallotSmartcard
+        isOpen={showDeallotSmartcard}
+        toggle={handleDeallottedSmartcard}
+        selectedAllottedSmartcards={selectedAllottedSmartcards}
       />
       <div
         className="position-fixed top-0 end-0 p-3"

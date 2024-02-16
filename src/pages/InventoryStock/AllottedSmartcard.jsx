@@ -96,13 +96,15 @@ function AllottedSmrtcard(props) {
       const newAllotted = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         operator_id: values.operator_id,
-        // smartcard_ids: selectedFaultyPairings.map((row) => row.id),
+        smartcard_ids: selectedSmartcardlist.map((row) => row.id),
       };
       console.log("New allotted smartcard: " + JSON.stringify(newAllotted));
       dispatch(onAllotSmartcard(newAllotted));
       dispatch(onGetInventoryAllottedPairing());
       validation.resetForm();
       toggle();
+      setUsertype("");
+      setSelectedSmartcardlist([]);
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
