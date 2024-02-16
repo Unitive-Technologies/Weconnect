@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-// import RevenueShare from "./RevenueShare";
 import {
   Col,
   Row,
@@ -16,20 +15,24 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addNewSMSMessageTempList as onAddNewSMSMessageTempList } from "/src/store/smsmessage/actions";
+import { updateSMSMessageTempList as onUpdateSMSMessageTempList } from "/src/store/smsmessage/actions";
 import { useDispatch } from "react-redux";
 import ViewMetaData from "./ViewMetaData"
 
 const ViewSMSMessageTemplateList = (props) => {
-  const { isOpen, toggle, SMSMsgTemp } = props;
+  const { isOpen, resetSelection, toggleViewModal, SMSMsgTemp, smsmessagetempSubcategory, smsmessagetempCategory, smsmessagetempStatus, smsmessagetempSender } = props;
+
+  console.log("View in  SMS Message Template List :" + JSON.stringify(SMSMsgTemp));
   const dispatch = useDispatch();
-  const [showEditChannel, setShowEditChannel] = useState(false);
+
+  const [showEditSMS, setShowEditSMS] = useState(false);
+
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
-      code: (SMSMsgTemp && SMSMsgTemp.name) || "",
+      code: (SMSMsgTemp && SMSMsgTemp.code) || "",
       name: (SMSMsgTemp && SMSMsgTemp.name) || "",
       template: (SMSMsgTemp && SMSMsgTemp.template) || "",
       template_id: (SMSMsgTemp && SMSMsgTemp.template_id) || "",
@@ -49,38 +52,35 @@ const ViewSMSMessageTemplateList = (props) => {
       sub_cat_id: Yup.string().required("Enter subcategory id"),
       status_lbl: Yup.string().required("Enter status"),
       sender_id: Yup.string().required("Enter sender"),
-
-      // serviceid: Yup.string().required("serviceid"),
     }),
     onSubmit: (values) => {
-      const newSMSMessageTemplateList = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
-        code: values["code"],
-        name: values["name"],
-        template: values["template"],
-        template_id: values["template_id"],
+      const updateSMSMessageTemplateList = {
+        id: SMSMsgTemp.id,
+        code: values.code,
+        name: values.name,
+        template: values.template,
+        template_id: values.template_id,
         cat_id: Yup.string().required("cat_id"),
         sub_cat_id: Yup.string().required("sub_cat_id"),
-        status_lbl: values["status_lbl"],
+        status_lbl: values.status_lbl,
         sender_id: Yup.string().required("sender_id"),
         // serviceid: values["serviceid"],
         created_at: new Date(),
         created_by: values["created_by"],
       };
-      console.log("newSMSMessageTemplateList:" + newSMSMessageTemplateList);
+      console.log("newSMSMessageTemplateList:" + updateSMSMessageTemplateList);
       // save new user
-      dispatch(onAddNewSMSMessageTempList(newSMSMessageTemplateList));
+      dispatch(onUpdateSMSMessageTempList(updateSMSMessageTemplateList));
       validation.resetForm();
-      toggle();
-    },
-    onReset: (values) => {
-      validation.setValues(validation.initialValues);
+      toggleViewModal();
+      resetSelection();
     },
   });
 
   const handleCancel = () => {
-    setShowEditChannel(false);
-    toggle();
+    setShowEditSMS(false);
+    resetSelection();
+    toggleViewModal();
   };
 
   return (
@@ -95,11 +95,11 @@ const ViewSMSMessageTemplateList = (props) => {
       size="xl"
     >
       <ModalHeader toggle={handleCancel} tag="h4">
-        {!showEditChannel
-          ? `View `
-          : `Edit `}
+        {!showEditSMS
+          ? `View ${(SMSMsgTemp && SMSMsgTemp.name) || ""}`
+          : `Edit ${(SMSMsgTemp && SMSMsgTemp.name) || ""}`}
       </ModalHeader>
-      {!showEditChannel && (
+      {!showEditSMS && (
         <Link
           style={{
             position: "absolute",
@@ -108,7 +108,7 @@ const ViewSMSMessageTemplateList = (props) => {
           }}
           to="#!"
           className="btn btn-light me-1"
-          onClick={() => setShowEditChannel(true)}
+          onClick={() => setShowEditSMS(true)}
         >
           <i className="mdi mdi-pencil-outline"></i>
         </Link>
@@ -128,7 +128,7 @@ const ViewSMSMessageTemplateList = (props) => {
                 <Input
                   name="Template"
                   type="text"
-                  disabled={!showEditChannel}
+                  disabled={!showEditSMS}
                   placeholder="Enter template"
                   // className="form-select"
                   onChange={validation.handleChange}
@@ -154,7 +154,7 @@ const ViewSMSMessageTemplateList = (props) => {
                   name="Template ID"
                   type="text"
                   placeholder="Enter template ID"
-                  disabled={!showEditChannel}
+                  disabled={!showEditSMS}
                   // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
@@ -175,16 +175,18 @@ const ViewSMSMessageTemplateList = (props) => {
                 <Input
                   name="Category"
                   type="select"
-                  disabled={!showEditChannel}
+                  disabled={!showEditSMS}
                   placeholder="Select Definition"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.cat_id || ""}
                 >
-                  <option value="101">Select channel definition</option>
-                  <option value="102">Standard Definition(SD)</option>
-                  <option value="103">High Definition(HD)</option>
+                  {smsmessagetempCategory.map((cat_id) => (
+                    <option key={cat_id.id} value={cat_id.id}>
+                      {cat_id.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.cat_id &&
                   validation.errors.cat_id ? (
@@ -203,7 +205,7 @@ const ViewSMSMessageTemplateList = (props) => {
                   name="Sub-Category"
                   type="select"
                   placeholder="Enter sub category"
-                  disabled={!showEditChannel}
+                  disabled={!showEditSMS}
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.sub_cat_id || ""}
@@ -213,7 +215,13 @@ const ViewSMSMessageTemplateList = (props) => {
                       ? true
                       : false
                   }
-                />
+                >
+                  {smsmessagetempSubcategory && smsmessagetempSubcategory.map((sub_cat_id) => (
+                    <option key={sub_cat_id.id} value={sub_cat_id.id}>
+                      {sub_cat_id.name}
+                    </option>
+                  ))}
+                </Input>
                 {validation.touched.sub_cat_id &&
                   validation.errors.sub_cat_id ? (
                   <FormFeedback type="invalid">
@@ -234,14 +242,16 @@ const ViewSMSMessageTemplateList = (props) => {
                   type="select"
                   placeholder="Select Sender"
                   className="form-select"
-                  disabled={!showEditChannel}
+                  disabled={!showEditSMS}
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.sender_id || ""}
                 >
-                  <option value="104">Select channel type</option>
-                  <option value="105">Pay Channel</option>
-                  <option value="106">FTA</option>
+                  {smsmessagetempSender.map((sender_id) => (
+                    <option key={sender_id.id} value={sender_id.id}>
+                      {sender_id.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.sender_id && validation.errors.sender_id ? (
                   <FormFeedback type="invalid">
@@ -260,14 +270,16 @@ const ViewSMSMessageTemplateList = (props) => {
                   type="select"
                   placeholder="Select Status"
                   className="form-select"
-                  disabled={!showEditChannel}
+                  disabled={!showEditSMS}
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status_lbl || ""}
                 >
-                  <option value="101">Select Status</option>
-                  <option value="102">Active</option>
-                  <option value="103">In-Active</option>
+                  {smsmessagetempStatus.map((status_lbl) => (
+                    <option key={status_lbl.id} value={status_lbl.id}>
+                      {status_lbl.name}
+                    </option>
+                  ))}
                 </Input>
                 {validation.touched.status_lbl && validation.errors.status_lbl ? (
                   <FormFeedback type="invalid">
@@ -307,36 +319,35 @@ const ViewSMSMessageTemplateList = (props) => {
             </Col>
           </Row>
 
+          {!showEditSMS && (
+            <Row>
+              <Col>
+                <ModalFooter>
+                  <button type="submit" className="btn btn-success save-user">
+                    Save
+                  </button>
+                  <button
+                    type="reset"
+                    className="btn btn-warning"
+                    onClick={() => validation.resetForm()}
+                  >
+                    Reset
+                  </button>
 
-          {/* {!showEditChannel && ( */}
-          <Row>
-            <Col>
-              <ModalFooter>
-                <button type="submit" className="btn btn-success save-user">
-                  Save
-                </button>
-                <button
-                  type="reset"
-                  className="btn btn-warning"
-                  onClick={() => validation.resetForm()}
-                >
-                  Reset
-                </button>
-
-                <button
-                  type="button"
-                  className="btn btn-outline-danger"
-                  onClick={() => {
-                    validation.resetForm();
-                    handleCancel();
-                  }}
-                >
-                  Cancel
-                </button>
-              </ModalFooter>
-            </Col>
-          </Row>
-          {/* )} */}
+                  <button
+                    type="button"
+                    className="btn btn-outline-danger"
+                    onClick={() => {
+                      validation.resetForm();
+                      handleCancel();
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </ModalFooter>
+              </Col>
+            </Row>
+          )}
         </Form>
       </ModalBody>
     </Modal>
@@ -344,8 +355,15 @@ const ViewSMSMessageTemplateList = (props) => {
 };
 
 ViewSMSMessageTemplateList.propTypes = {
-  toggle: PropTypes.func,
+  toggleViewModal: PropTypes.func,
+  resetSelection: PropTypes.func,
   isOpen: PropTypes.bool,
+
+  SMSMsgTemp: PropTypes.object,
+  smsmessagetempCategory: PropTypes.array,
+  smsmessagetempSubCategory: PropTypes.array,
+  smsmessagetempSender: PropTypes.array,
+  smsmessagetempStatus: PropTypes.array,
 };
 
 export default ViewSMSMessageTemplateList;

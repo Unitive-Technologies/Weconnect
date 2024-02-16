@@ -1,133 +1,64 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
-import TableContainer from "../../../components/Common/TableContainer";
-import Spinners from "../../../components/Common/Spinner";
 import {
   Card,
   CardBody,
   Col,
   Container,
   Row,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Label,
-  FormFeedback,
-  UncontrolledTooltip,
-  Input,
-  Form,
+  Spinner,
 } from "reactstrap";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-
-import {
-  Name,
-  Template,
-  Category,
-  SubCategory,
-  Status,
-  Sender,
-  CreatedAt,
-  CreatedBy,
-} from "./SMSMessageTemplateListCol";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import DeleteModal from "/src/components/Common/DeleteModal";
 
 import {
+  goToPage as onGoToPage,
   getSMSMessageTempList as onGetSMSMessageTemplate,
-  // addNewUser as onAddNewUser,
-  // updateUser as onUpdateUser,
-  // deleteUser as onDeleteUser,
+  getSMSMessageTempListStatus as onGetSMSMessageTempListStatus,
+  getSMSMessageTempListSender as onGetSMSMessageTempListSender,
+  getSMSMessageTempListSubcategory as onGetSMSMessageTempListSubcategory,
+  getSMSMessageTempListCategory as onGetSMSMessageTempListCategory,
 } from "/src/store/smsmessage/actions";
-import { isEmpty } from "lodash";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import ViewSMSMessageTemplateList from "./ViewSMSMessageTemplateList";
+import TableContainerX from "../../../components/Common/TableContainerX";
+
 
 const SMSMessageTemplateList = (props) => {
   //meta title
   document.title = "SMS Message Template List | VDigital";
 
   const dispatch = useDispatch();
-  // const [contact, setContact] = useState();
-  // validation
-  // const validation = useFormik({
-  //   // enableReinitialize : use this flag when initial values needs to be changed
-  //   enableReinitialize: true,
-
-  //   initialValues: {
-  //     name: (contact && contact.name) || "",
-  //     designation: (contact && contact.designation) || "",
-  //     tags: (contact && contact.tags) || "",
-  //     email: (contact && contact.email) || "",
-  //     projects: (contact && contact.projects) || "",
-  //   },
-  //   validationSchema: Yup.object({
-  //     name: Yup.string().required("Please Enter Your Name"),
-  //     designation: Yup.string().required("Please Enter Your Designation"),
-  //     tags: Yup.array().required("Please Enter Tag"),
-  //     email: Yup.string()
-  //       .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-  //       .required("Please Enter Your Email"),
-  //     projects: Yup.string().required("Please Enter Your Project"),
-  //   }),
-  //   onSubmit: (values) => {
-  //     if (isEdit) {
-  //       const updateUser = {
-  //         id: contact.id,
-  //         name: values.name,
-  //         designation: values.designation,
-  //         tags: values.tags,
-  //         email: values.email,
-  //         projects: values.projects,
-  //       };
-
-  //       // update user
-  //       dispatch(onUpdateUser(updateUser));
-  //       validation.resetForm();
-  //       setIsEdit(false);
-  //     } else {
-  //       const newUser = {
-  //         id: Math.floor(Math.random() * (30 - 20)) + 20,
-  //         name: values["name"],
-  //         designation: values["designation"],
-  //         email: values["email"],
-  //         tags: values["tags"],
-  //         projects: values["projects"],
-  //       };
-  //       // save new user
-  //       dispatch(onAddNewUser(newUser));
-  //       validation.resetForm();
-  //     }
-  //     toggle();
-  //   },
-  // });
 
   const selectSMSMessageState = (state) => state.smsmessagetemp;
+
   const SMSMessageProperties = createSelector(
     selectSMSMessageState,
     (smsmessagetemp) => ({
       SMSMsgTemp: smsmessagetemp.smsmessagetemp,
       loading: smsmessagetemp.loading,
+      smsmessagetempStatus: smsmessagetemp.smsmessagetempStatus,
+      smsmessagetempSender: smsmessagetemp.smsmessagetempSender,
+      smsmessagetempSubcategory: smsmessagetemp.smsmessagetempSubcategory,
+      smsmessagetempCategory: smsmessagetemp.smsmessagetempCategory,
+      totalPage: smsmessagetemp.totalPages,
+      totalCount: smsmessagetemp.totalCount,
+      pageSize: smsmessagetemp.perPage,
+      currentPage: smsmessagetemp.currentPage,
     })
   );
 
-  const { SMSMsgTemp, loading } = useSelector(SMSMessageProperties);
+  const { SMSMsgTemp, loading, smsmessagetempCategory, smsmessagetempSender, smsmessagetempSubCategory, smsmessagetempStatus, totalPage,
+    totalCount,
+    pageSize,
+    currentPage } = useSelector(SMSMessageProperties);
 
-  useEffect(() => {
-    console.log("SMS MsgTemp data in component:", SMSMsgTemp);
-  }, [SMSMsgTemp]);
-  const [isLoading, setLoading] = useState(loading);
-
-  const [userList, setUserList] = useState([]);
-  const [modal, setModal] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
 
   const columns = useMemo(
     () => [
@@ -136,14 +67,14 @@ const SMSMessageTemplateList = (props) => {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
 
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -158,25 +89,12 @@ const SMSMessageTemplateList = (props) => {
           return (
             <>
               <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
                 className="font-size-14 mb-1"
-                onClick={() => {
-                  const SMSData = cellProps.row.original;
-                  handleViewSMSMessageTamplateList(SMSData);
-                }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.template}
                 </Link>
               </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
             </>
           );
         },
@@ -186,7 +104,9 @@ const SMSMessageTemplateList = (props) => {
         accessor: "template_id",
         filterable: true,
         Cell: (cellProps) => {
-          return <Template {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.template_id}</p>
+          );
         },
       },
       {
@@ -194,7 +114,9 @@ const SMSMessageTemplateList = (props) => {
         accessor: "cat_id",
         filterable: true,
         Cell: (cellProps) => {
-          return <Category {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.cat_id}</p>
+          );
         },
       },
       {
@@ -202,7 +124,9 @@ const SMSMessageTemplateList = (props) => {
         accessor: "sub_cat_id",
         filterable: true,
         Cell: (cellProps) => {
-          return <SubCategory {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.sub_cat_id}</p>
+          );
         },
       },
       {
@@ -210,7 +134,9 @@ const SMSMessageTemplateList = (props) => {
         accessor: "sender_id_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          return <Sender {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.sender_id_lbl}</p>
+          );
         },
       },
       {
@@ -218,7 +144,9 @@ const SMSMessageTemplateList = (props) => {
         accessor: "status_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          return <Status {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.status_lbl}</p>
+          );
         },
       },
       {
@@ -226,7 +154,9 @@ const SMSMessageTemplateList = (props) => {
         accessor: "created_at",
         filterable: true,
         Cell: (cellProps) => {
-          return <CreatedAt {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.created_at}</p>
+          );
         },
       },
       {
@@ -234,7 +164,9 @@ const SMSMessageTemplateList = (props) => {
         accessor: "created_by_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          return <CreatedBy {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.created_by_lbl}</p>
+          );
         },
       },
     ],
@@ -244,96 +176,54 @@ const SMSMessageTemplateList = (props) => {
   useEffect(() => {
     if (SMSMsgTemp && !SMSMsgTemp.length) {
       dispatch(onGetSMSMessageTemplate());
-      setIsEdit(false);
+      dispatch(onGetSMSMessageTempListCategory());
+      dispatch(onGetSMSMessageTempListSubcategory());
+      dispatch(onGetSMSMessageTempListSender());
+      dispatch(onGetSMSMessageTempListStatus());
     }
   }, [dispatch, SMSMsgTemp]);
 
-  // useEffect(() => {
-  //   setContact(SMSMsgTemp);
-  //   setIsEdit(false);
-  // }, [SMSMsgTemp]);
-
-  // useEffect(() => {
-  //   if (!isEmpty(SMSMsgTemp) && !!isEdit) {
-  //     setContact(SMSMsgTemp);
-  //     setIsEdit(false);
-  //   }
-  // }, [SMSMsgTemp]);
-
-  // const toggle = () => {
-  //   setModal(!modal);
-  // };
-
-  // const handleUserClick = (arg) => {
-  //   const user = arg;
-
-  //   setContact({
-  //     id: user.id,
-  //     name: user.name,
-  //     designation: user.designation,
-  //     email: user.email,
-  //     tags: user.tags,
-  //     projects: user.projects,
-  //   });
-  //   setIsEdit(true);
-
-  //   toggle();
-  // };
-
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetSMSMessageTemplate());
   };
-
-  //delete customer
-  // const [deleteModal, setDeleteModal] = useState(false);
-
-  // const onClickDelete = (users) => {
-  //   setContact(users);
-  //   setDeleteModal(true);
-  // };
-
-  // const handleDeleteUser = () => {
-  //   if (contact && contact.id) {
-  //     dispatch(onDeleteUser(contact.id));
-  //   }
-  //   setContact("");
-  //   onPaginationPageChange(1);
-  //   setDeleteModal(false);
-  // };
-
-  // const handleUserClicks = () => {
-  //   setUserList("");
-  //   setIsEdit(false);
-  //   toggle();
-  // };
 
   const [showViewSMSMessageTamplateList, setShowSMSMessageTamplateList] =
     useState(false);
 
   const [viewSMSData, setViewSMSData] = useState({});
 
-  const handleViewSMSMessageTamplateList = (SMSData) => {
+  const toggleViewModal = (SMSData) => {
     setShowSMSMessageTamplateList(!showViewSMSMessageTamplateList);
     setViewSMSData(SMSData);
   };
 
+  const resetSelection = () => {
+    setViewTaxList({});
+  };
+
   const keyField = "id";
+
+  const getTableActions = () => {
+    return [
+      {
+      },
+    ];
+  };
 
   return (
     <React.Fragment>
       <ViewSMSMessageTemplateList
         isOpen={showViewSMSMessageTamplateList}
-        toggle={handleViewSMSMessageTamplateList}
+        toggleViewModal={toggleViewModal}
         SMSMsgTemp={viewSMSData}
+        smsmessagetempCategory={smsmessagetempCategory}
+        smsmessagetempSubCategory={smsmessagetempSubCategory}
+        smsmessagetempSender={smsmessagetempSender}
+        smsmessagetempStatus={smsmessagetempStatus}
+        resetSelection={resetSelection}
+
       />
       <div className="page-content">
         <Container fluid>
@@ -341,8 +231,13 @@ const SMSMessageTemplateList = (props) => {
             title="Services"
             breadcrumbItem="SMS Message Template List"
           />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">
@@ -351,7 +246,7 @@ const SMSMessageTemplateList = (props) => {
                     {console.log(
                       "SMS Msg Template:" + JSON.stringify(SMSMsgTemp)
                     )}
-                    <TableContainer
+                    {/* <TableContainer
                       isPagination={true}
                       columns={columns}
                       data={SMSMsgTemp}
@@ -365,169 +260,25 @@ const SMSMessageTemplateList = (props) => {
                       theadClass="table-light"
                       paginationDiv="col-sm-12 col-md-7"
                       pagination="pagination pagination-rounded justify-content-end mt-4"
+                    /> */}
+
+                    <TableContainerX
+                      columns={columns}
+                      data={SMSMsgTemp}
+                      isLoading={loading}
+                      isPagination={true}
+                      totalCount={Number(totalCount)}
+                      pageSize={Number(pageSize)}
+                      currentPage={Number(currentPage)}
+                      tableActions={getTableActions()}
+                      totalPage={Number(totalPage)}
+                      isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      handleRowClick={(row) => {
+                        toggleViewModal(row);
+                      }}
+                      goToPage={goToPage}
                     />
-                    {/* <Modal isOpen={modal} toggle={toggle}>
-                      <ModalHeader toggle={toggle} tag="h4">
-                        {!!isEdit ? "Edit User" : "Add User"}
-                      </ModalHeader>
-                      <ModalBody>
-                        <Form
-                          onSubmit={(e) => {
-                            e.preventDefault();
-                            validation.handleSubmit();
-                            return false;
-                          }}
-                        >
-                          <Row>
-                            <Col xs={12}>
-                              <div className="mb-3">
-                                <Label className="form-label">Name</Label>
-                                <Input
-                                  name="name"
-                                  type="text"
-                                  placeholder="Insert Name"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.name || ""}
-                                  invalid={
-                                    validation.touched.name &&
-                                    validation.errors.name
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.name &&
-                                validation.errors.name ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.name}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">
-                                  Designation
-                                </Label>
-                                <Input
-                                  name="designation"
-                                  label="Designation"
-                                  placeholder="Insert Designation"
-                                  type="text"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.designation || ""}
-                                  invalid={
-                                    validation.touched.designation &&
-                                    validation.errors.designation
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.designation &&
-                                validation.errors.designation ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.designation}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">Email</Label>
-                                <Input
-                                  name="email"
-                                  label="Email"
-                                  type="email"
-                                  placeholder="Insert Email"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.email || ""}
-                                  invalid={
-                                    validation.touched.email &&
-                                    validation.errors.email
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.email &&
-                                validation.errors.email ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.email}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">Option</Label>
-                                <Input
-                                  type="select"
-                                  name="tags"
-                                  className="form-select"
-                                  multiple={true}
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.tags || []}
-                                  invalid={
-                                    validation.touched.tags &&
-                                    validation.errors.tags
-                                      ? true
-                                      : false
-                                  }
-                                >
-                                  <option>Photoshop</option>
-                                  <option>illustrator</option>
-                                  <option>Html</option>
-                                  <option>Php</option>
-                                  <option>Java</option>
-                                  <option>Python</option>
-                                  <option>UI/UX Designer</option>
-                                  <option>Ruby</option>
-                                  <option>Css</option>
-                                </Input>
-                                {validation.touched.tags &&
-                                validation.errors.tags ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.tags}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                              <div className="mb-3">
-                                <Label className="form-label">Projects</Label>
-                                <Input
-                                  name="projects"
-                                  label="Projects"
-                                  type="text"
-                                  placeholder="Insert Projects"
-                                  onChange={validation.handleChange}
-                                  onBlur={validation.handleBlur}
-                                  value={validation.values.projects || ""}
-                                  invalid={
-                                    validation.touched.projects &&
-                                    validation.errors.projects
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                {validation.touched.projects &&
-                                validation.errors.projects ? (
-                                  <FormFeedback type="invalid">
-                                    {validation.errors.projects}
-                                  </FormFeedback>
-                                ) : null}
-                              </div>
-                            </Col>
-                          </Row>
-                          <Row>
-                            <Col>
-                              <div className="text-end">
-                                <button
-                                  type="submit"
-                                  className="btn btn-success save-user"
-                                >
-                                  Save
-                                </button>
-                              </div>
-                            </Col>
-                          </Row>
-                        </Form>
-                      </ModalBody>
-                    </Modal> */}
                   </CardBody>
                 </Card>
               </Col>
