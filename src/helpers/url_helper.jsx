@@ -284,8 +284,7 @@ export const GET_OSDCONFIGURATIONLIST_BACKGROUNDAREA =
   "/nstv/list/osdbackgroundarea?vr=web1.0";
 export const GET_OSDCONFIGURATIONLIST_STATUS =
   "/list/status?fields=id,name&vr=web1.0";
-export const ADD_NEW_OSDCONFIGURATIONLIST =
-  "/mtc?vr=web1.0";
+export const ADD_NEW_OSDCONFIGURATIONLIST = "/mtc?vr=web1.0";
 
 export const GET_LOCALCHANNELNUMBER = "/localchannelnumberlist";
 
@@ -590,11 +589,17 @@ export const GET_INVENTORYALLOTTED_OPERATORLIST =
   "operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[mso_id]=1&filter[type]=1&vr=web1.0";
 export const ALLOT_SMARTCARD = "/smartcard-allotment?vr=web1.0";
 export const DEALLOT_SMARTCARD = "/smartcard-allotment/0?vr=web1.0";
-export const GET_INVENTORYALLOTTED_DISTRIBUTOR =
-  "/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=2013&filter[type]=2&vr=web1.0";
+export const GET_INVENTORYALLOTTED_DISTRIBUTOR = (id) =>
+  `/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=${id}&filter[type]=2&vr=web1.0`;
+export const GET_INVENTORYALLOTTED_LCO = (branch_id, distributor_id) =>
+  `operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=${branch_id}&filter[distributor_id]=${distributor_id}&filter[type]=3&vr=web1.0`;
 
 export const GET_INVENTORYALLOTTED_STB =
   "/stb-allotment?expand=created_by_lbl,status_lbl,boxtype_lbl,cas_lbl,brand_lbl,is_embeded_lbl,operator_lbl,warehouse_lbl,inv_state_lbl&filter[status]=1&filter[account_id]=0&page=1&per-page=50&vr=web1.0";
+export const ALLOT_STB = "/stb-allotment?vr=web1.0";
+export const DEALLOT_STB = "/stb-allotment/0?vr=web1.0";
+export const GET_INVENTORYALLOTTED_STBLIST =
+  "/stb?fields=id,stbno,status&expand=is_embeded_lbl,boxtype_lbl,cas_lbl,brand_lbl,operator_lbl,status_lbl&filter[status]=1&filter[sc_id]=0&page=1&per-page=500&vr=web1.0";
 export const GET_INVENTORYALLOTTED_PAIRING =
   "/pairing-allotment?expand=created_by_lbl,status_lbl,cas_lbl,brand_lbl,boxtype_lbl,is_embeded_lbl,operator_lbl,warehouse_lbl,inv_state_lbl,other_id_lbl,rsd_startdate&filter[status]=1&filter[account_id]=0&page=1&per-page=50&vr=web1.0";
 
