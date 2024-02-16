@@ -433,6 +433,9 @@ const BroadcasterBouquetList = (props) => {
                       goToPage={goToPage}
                       subTableEnabled={true}
                       getRenderedSubTable={getChannelListRendered}
+                      isSubTableContentExists={(rowData) =>
+                        rowData.channels.length > 0
+                      }
                     />
                   </CardBody>
                 </Card>

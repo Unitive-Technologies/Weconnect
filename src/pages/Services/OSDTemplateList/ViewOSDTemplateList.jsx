@@ -42,17 +42,26 @@ const ViewOSDTemplateList = (props) => {
     initialValues: {
       id: (osdTemplate && osdTemplate.id) || "",
       name: (osdTemplate && osdTemplate.name) || "",
+      status: (osdTemplate && osdTemplate.status) || "",
       title: (osdTemplate && osdTemplate.title) || "",
       template_for: (osdTemplate && osdTemplate.template_for) || "",
-      // template:
-      //   (osdTemplate && {
-      //     template_message: osdTemplate.template.template_message || "",
-      //     template_title: osdTemplate.template.template_title || "",
-      //   }) ||
-      //   {},
-      // template_config_id: (osdTemplate && osdTemplate.template_config_id) || [],
-      status: (osdTemplate && osdTemplate.status) || "",
+      template_message:
+        (osdTemplate &&
+          osdTemplate.template &&
+          osdTemplate.template.template_message) ||
+        "",
+      template_title:
+        (osdTemplate &&
+          osdTemplate.template &&
+          osdTemplate.template.template_title) ||
+        "",
+      // template_config_id:
+      //   (osdTemplate &&
+      //     osdTemplate.template_config_id &&
+      //     osdTemplate.template_config_id[0].id) ||
+      //   [],
     },
+
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
       // status: Yup.string().required("Select status"),
