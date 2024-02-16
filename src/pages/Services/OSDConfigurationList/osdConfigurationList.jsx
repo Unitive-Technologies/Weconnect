@@ -17,6 +17,7 @@ import {
   UncontrolledTooltip,
   Input,
   Form,
+  Spinner,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -91,8 +92,6 @@ const OSDConfigurationList = (props) => {
 
   const [isLoading, setLoading] = useState(loading);
 
-  const [userList, setUserList] = useState([]);
-  const [isEdit, setIsEdit] = useState(false);
   const [showNSTV, setShowNSTV] = useState(false);
   const [showViewNSTVList, setShowViewNSTVList] = useState(false);
 
@@ -238,7 +237,7 @@ const OSDConfigurationList = (props) => {
   );
 
   useEffect(() => {
-    if (osdConfig && !osdConfig.osdConfig) {
+    if (osdConfig && !osdConfig.length) {
       dispatch(onGetOSDConfiguration());
       dispatch(onGetOSDConfigurationBackgroundArea());
       dispatch(onGetOSDConfigurationBackgroundColor());
@@ -248,7 +247,6 @@ const OSDConfigurationList = (props) => {
       dispatch(onGetOSDConfigurationFontSize());
       dispatch(onGetOSDConfigurationForcedDisplay());
       dispatch(onGetOSDConfigurationStatus());
-      setIsEdit(false);
     }
   }, [dispatch, osdConfig]);
 
@@ -261,62 +259,7 @@ const OSDConfigurationList = (props) => {
   const handleViewNSTVList = (userNSTVData) => {
     setShowViewNSTVList(!showViewNSTVList);
     setViewNSTVList(userNSTVData);
-    // toggle();
   };
-
-  const handleUserClick = (arg) => {
-    const user = arg;
-
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-    setIsEdit(true);
-
-    toggle();
-  };
-
-  var node = useRef();
-  const onPaginationPageChange = (page) => {
-    if (
-      node &&
-      node.current &&
-      node.current.props &&
-      node.current.props.pagination &&
-      node.current.props.pagination.options
-    ) {
-      node.current.props.pagination.options.onPageChange(page);
-    }
-  };
-
-  //delete customer
-  const [deleteModal, setDeleteModal] = useState(false);
-
-  const onClickDelete = (users) => {
-    setContact(users);
-    setDeleteModal(true);
-  };
-
-  const handleDeleteUser = () => {
-    if (contact && contact.id) {
-      dispatch(onDeleteUser(contact.id));
-    }
-    setContact("");
-    onPaginationPageChange(1);
-    setDeleteModal(false);
-  };
-
-  const handleUserClicks = () => {
-    setUserList("");
-    setIsEdit(false);
-    toggle();
-  };
-
-  const keyField = "id";
 
   const getTableActions = () => {
     return [
@@ -361,8 +304,13 @@ const OSDConfigurationList = (props) => {
             title="Services"
             breadcrumbItem="OSD Configuration List"
           />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">
@@ -378,7 +326,6 @@ const OSDConfigurationList = (props) => {
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       handleNSTV={() => setShowNSTV(true)}
-                      handleUserClick={handleUserClicks}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
