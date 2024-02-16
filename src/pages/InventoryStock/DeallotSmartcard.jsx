@@ -42,7 +42,6 @@ function DeallotSmartcard(props) {
     }),
     onSubmit: (values) => {
       const newDeallot = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
         remark: values["remark"],
         smartcard_ids: selectedAllottedSmartcards.map((row) => row.id),
       };
@@ -103,13 +102,13 @@ function DeallotSmartcard(props) {
       },
       {
         Header: "Allotted to",
-        accessor: "created_by_lbl",
+        accessor: "operator_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <>
               <h5 className="font-size-14 mb-1">
-                {cellProps.row.original.created_by_lbl}
+                {cellProps.row.original.operator_lbl}
               </h5>
             </>
           );

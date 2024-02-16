@@ -580,7 +580,7 @@ const InventoryStock = (props) => {
     }
   };
 
-  const columns = useMemo(
+  const commonColumns = useMemo(
     () => [
       {
         Header: "*",
@@ -773,8 +773,234 @@ const InventoryStock = (props) => {
         },
       },
     ],
-    []
+    [selectedOption]
   );
+
+  // const columns = useMemo(() => {
+  //   // Create a copy of common columns
+  //   const columnsCopy = [...commonColumns];
+
+  //   // Conditionally add the "Allotted To" column if the selected option is "Allotted"
+  //   if (selectedOption === "Allotted") {
+  //     columnsCopy.push({
+  //       Header: "Allotted To",
+  //       accessor: "operator_lbl",
+  //       filterable: true,
+  //       Cell: (cellProps) => {
+  //         return (
+  //           <p className="text-muted mb-0">
+  //             {cellProps.row.original.operator_lbl}
+  //           </p>
+  //         );
+  //       },
+  //     });
+  //   }
+  //   return columnsCopy;
+  // }, [selectedOption]);
+
+  const columns = useMemo(() => {
+    const commonColumns = [
+      {
+        Header: "#",
+        disableFilters: true,
+        filterable: true,
+        Cell: (cellProps) => {
+          const totalRows = cellProps.rows.length;
+          const reverseIndex = totalRows - cellProps.row.index;
+
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {reverseIndex}
+                </Link>
+              </h5>
+            </>
+          );
+        },
+      },
+      {
+        Header: "Smartcard No.",
+        accessor: "smartcardno",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <>
+              <p className="font-size-14 mb-1">
+                {cellProps.row.original.smartcardno}
+              </p>
+            </>
+          );
+        },
+      },
+      {
+        Header: "CAS",
+        accessor: "cas_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.cas_lbl}</p>
+          );
+        },
+      },
+      {
+        Header: "Brand",
+        accessor: "brand_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.brand_lbl}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Stock Type",
+        accessor: "state_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.state_lbl}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Inventory State",
+        accessor: "inv_state_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.inv_state_lbl}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Warehouse",
+        accessor: "warehouse_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.warehouse_lbl}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Status",
+        accessor: "status_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.status_lbl}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Created At",
+        accessor: "created_at",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_at}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Created By",
+        accessor: "created_by_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by_lbl}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Action",
+        accessor: "action",
+        disableFilters: true,
+        Cell: (cellProps) => {
+          return (
+            <ul className="list-unstyled hstack gap-1 mb-0">
+              <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
+                <Link to="/job-details" className="btn btn-sm btn-soft-primary">
+                  <i className="mdi mdi-eye-outline" id="viewtooltip"></i>
+                </Link>
+              </li>
+              <UncontrolledTooltip placement="top" target="viewtooltip">
+                View
+              </UncontrolledTooltip>
+
+              <li>
+                <Link
+                  to="#"
+                  className="btn btn-sm btn-soft-info"
+                  onClick={() => {
+                    const jobData = cellProps.row.original;
+                    handleJobClick(jobData);
+                  }}
+                >
+                  <i className="mdi mdi-pencil-outline" id="edittooltip" />
+                  <UncontrolledTooltip placement="top" target="edittooltip">
+                    Edit
+                  </UncontrolledTooltip>
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  to="#"
+                  className="btn btn-sm btn-soft-danger"
+                  onClick={() => {
+                    const jobData = cellProps.row.original;
+                    onClickDelete(jobData);
+                  }}
+                >
+                  <i className="mdi mdi-delete-outline" id="deletetooltip" />
+                  <UncontrolledTooltip placement="top" target="deletetooltip">
+                    Delete
+                  </UncontrolledTooltip>
+                </Link>
+              </li>
+            </ul>
+          );
+        },
+      },
+    ];
+
+    const columnsWithAllottedTo = [
+      ...commonColumns,
+      {
+        Header: "Allotted To",
+        accessor: "operator_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.operator_lbl}
+            </p>
+          );
+        },
+      },
+    ];
+
+    // Return columns based on selectedOption
+    return selectedOption === "Allotted"
+      ? columnsWithAllottedTo
+      : commonColumns;
+  }, [selectedOption]);
 
   const handleAddStockSmartcard = () => {
     setShowAddStockSmartcard(!showAddStockSmartcard);
