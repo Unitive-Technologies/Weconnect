@@ -25,6 +25,18 @@ import {
   DEALLOT_SMARTCARD,
   DEALLOT_SMARTCARD_SUCCESS,
   DEALLOT_SMARTCARD_FAIL,
+  GET_INVENTORYALLOTTED_DISTRIBUTOR_SUCCESS,
+  GET_INVENTORYALLOTTED_DISTRIBUTOR_FAIL,
+  GET_INVENTORYALLOTTED_LCO_SUCCESS,
+  GET_INVENTORYALLOTTED_LCO_FAIL,
+  GET_INVENTORYALLOTTED_STBLIST_SUCCESS,
+  GET_INVENTORYALLOTTED_STBLIST_FAIL,
+  ALLOT_STB,
+  ALLOT_STB_SUCCESS,
+  ALLOT_STB_FAIL,
+  DEALLOT_STB,
+  DEALLOT_STB_SUCCESS,
+  DEALLOT_STB_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -34,6 +46,9 @@ const INIT_STATE = {
   allottedsmartcardlist: [],
   allottedusertype: [],
   allottedoperatorlist: [],
+  allottedstblist: [],
+  allottedsistributor: [],
+  aTBco: [],
   pagination: {},
   error: {},
   loading: false,
@@ -182,6 +197,87 @@ const InventoryAllotted = (state = INIT_STATE, action) => {
       };
 
     case DEALLOT_SMARTCARD_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+    case GET_INVENTORYALLOTTED_DISTRIBUTOR_SUCCESS:
+      return {
+        ...state,
+        allotteddistributor: action.payload,
+        loading: false,
+      };
+
+    case GET_INVENTORYALLOTTED_DISTRIBUTOR_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_INVENTORYALLOTTED_LCO_SUCCESS:
+      return {
+        ...state,
+        allottedlco: action.payload,
+        loading: false,
+      };
+
+    case GET_INVENTORYALLOTTED_LCO_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_INVENTORYALLOTTED_STBLIST_SUCCESS:
+      return {
+        ...state,
+        allottedstblist: action.payload,
+        loading: false,
+      };
+
+    case GET_INVENTORYALLOTTED_STBLIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ALLOT_STB:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case ALLOT_STB_SUCCESS:
+      return {
+        ...state,
+        allottedstb: [...state.allottedstb, action.payload],
+        loading: false,
+      };
+
+    case ALLOT_STB_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+    case DEALLOT_STB:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case DEALLOT_STB_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        allottedstb: state.allottedstb.map((stb) =>
+          stb.id === action.payload.id ? { ...stb, ...action.payload } : stb
+        ),
+      };
+
+    case DEALLOT_STB_FAIL:
       return {
         ...state,
         error: action.payload,

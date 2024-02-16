@@ -163,3 +163,77 @@ export const deallotSmartcardFail = (error) => ({
   type: DEALLOT_SMARTCARD_FAIL,
   payload: error,
 });
+
+export const getInventoryAllottedStblist = () => ({
+  type: GET_INVENTORYALLOTTED_STB,
+});
+
+export const getInventoryAllottedStblistSuccess = (allottedstblist) => ({
+  type: GET_INVENTORYALLOTTED_STB_SUCCESS,
+  payload: allottedstblist,
+});
+
+export const getInventoryAllottedStblistFail = (error) => ({
+  type: GET_INVENTORYALLOTTED_STB_FAIL,
+  payload: error,
+});
+
+export const getInventoryAllottedDistributor = () => ({
+  type: GET_INVENTORYALLOTTED_DISTRIBUTOR,
+});
+
+export const getInventoryAllottedDistributorSuccess = (
+  allotteddistributor
+) => ({
+  type: GET_INVENTORYALLOTTED_DISTRIBUTOR_SUCCESS,
+  payload: allotteddistributor,
+});
+
+export const getInventoryAllottedDistributorFail = (error) => ({
+  type: GET_INVENTORYALLOTTED_DISTRIBUTOR_FAIL,
+  payload: error,
+});
+
+export const getInventoryAllottedLco = () => ({
+  type: GET_INVENTORYALLOTTED_LCO,
+});
+
+export const getInventoryAllottedLcoSuccess = (allottedlco) => ({
+  type: GET_INVENTORYALLOTTED_LCO_SUCCESS,
+  payload: allottedlco,
+});
+
+export const getInventoryAllottedLcoFail = (error) => ({
+  type: GET_INVENTORYALLOTTED_LCO_FAIL,
+  payload: error,
+});
+
+export const allotStb = (allottedstb) => ({
+  type: ALLOT_STB,
+  payload: allottedstb,
+});
+
+export const allotStbSuccess = (allottedstb) => ({
+  type: ALLOT_STB_SUCCESS,
+  payload: allottedstb,
+});
+
+export const allotStbFail = (error) => ({
+  type: ALLOT_STB_FAIL,
+  payload: error,
+});
+
+export const deallotStb = (allottedstb) => ({
+  type: DEALLOT_STB,
+  payload: allottedstb,
+});
+
+export const deallotStbSuccess = (allottedstb) => ({
+  type: DEALLOT_STB_SUCCESS,
+  payload: allottedstb,
+});
+
+export const deallotStbFail = (error) => ({
+  type: DEALLOT_STB_FAIL,
+  payload: error,
+});

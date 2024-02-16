@@ -8,9 +8,15 @@ import {
   GET_INVENTORYALLOTTED_OPERATORLIST,
   ALLOT_SMARTCARD,
   DEALLOT_SMARTCARD,
+  GET_INVENTORYALLOTTED_DISTRIBUTOR,
+  GET_INVENTORYALLOTTED_STBLIST,
+  GET_INVENTORYALLOTTED_LCO,
+  ALLOT_STB,
+  DEALLOT_STB,
 } from "./actionTypes";
 import {
   getInventoryAllottedSmartcard as onGetInventoryAllottedSmartcard,
+  getInventoryAllottedStb as onGetInventoryAllottedStb,
   getInventoryAllottedSmartcardSuccess,
   getInventoryAllottedSmartcardFail,
   getInventoryAllottedStbSuccess,
@@ -27,6 +33,16 @@ import {
   allotSmartcardFail,
   deallotSmartcardSuccess,
   deallotSmartcardFail,
+  getInventoryAllottedStblistSuccess,
+  getInventoryAllottedStblistFail,
+  getInventoryAllottedDistributorSuccess,
+  getInventoryAllottedDistributorFail,
+  getInventoryAllottedLcoSuccess,
+  getInventoryAllottedLcoFail,
+  allotStbSuccess,
+  allotStbFail,
+  deallotStbSuccess,
+  deallotStbFail,
 } from "./actions";
 import {
   getInventoryAllottedSmartcard,
@@ -37,6 +53,11 @@ import {
   getInventoryAllottedOperatorlist,
   allotSmartcard,
   deallotSmartcard,
+  getInventoryAllottedDistributor,
+  getInventoryAllottedStblist,
+  getInventoryAllottedLco,
+  allotStb,
+  deallotStb,
 } from "../../helpers/fakebackend_helper";
 
 export const getAllottedPairingStore = (state) => state.allottedpairing;
@@ -125,6 +146,52 @@ function* onDeallotSmartcard({ payload: allottedsmartcard }) {
   }
 }
 
+function* fetchInventoryAllottedStblist() {
+  try {
+    const response = yield call(getInventoryAllottedStblist);
+    yield put(getInventoryAllottedStblistSuccess(response.data));
+  } catch (error) {
+    yield put(getInventoryAllottedStblistFail(error));
+  }
+}
+
+function* fetchInventoryAllottedDistributor() {
+  try {
+    const response = yield call(getInventoryAllottedDistributor);
+    yield put(getInventoryAllottedDistributorSuccess(response.data));
+  } catch (error) {
+    yield put(getInventoryAllottedDistributorFail(error));
+  }
+}
+
+function* fetchInventoryAllottedLco() {
+  try {
+    const response = yield call(getInventoryAllottedLco);
+    yield put(getInventoryAllottedLcoSuccess(response.data));
+    yield put(onGetInventoryAllottedStb());
+  } catch (error) {
+    yield put(getInventoryAllottedLcoFail(error));
+  }
+}
+
+function* onAllotStb({ payload: allottedstb }) {
+  try {
+    const response = yield call(allotStb, allottedstb);
+    yield put(allotStbSuccess(response));
+  } catch (error) {
+    yield put(allotStbFail(error));
+  }
+}
+
+function* onDeallotStb({ payload: allottedstb }) {
+  try {
+    const response = yield call(deallotStb, allottedstb);
+    yield put(deallotStbSuccess(response));
+  } catch (error) {
+    yield put(deallotStbFail(error));
+  }
+}
+
 function* inventoryallottedSaga() {
   yield takeEvery(
     GET_INVENTORYALLOTTED_SMARTCARD,
@@ -146,6 +213,14 @@ function* inventoryallottedSaga() {
   );
   yield takeEvery(ALLOT_SMARTCARD, onAllotSmartcard);
   yield takeEvery(DEALLOT_SMARTCARD, onDeallotSmartcard);
+  yield takeEvery(
+    GET_INVENTORYALLOTTED_DISTRIBUTOR,
+    fetchInventoryAllottedDistributor
+  );
+  yield takeEvery(GET_INVENTORYALLOTTED_LCO, fetchInventoryAllottedLco);
+  yield takeEvery(GET_INVENTORYALLOTTED_STBLIST, fetchInventoryAllottedStblist);
+  yield takeEvery(ALLOT_STB, onAllotStb);
+  yield takeEvery(DEALLOT_STB, onDeallotStb);
 }
 
 export default inventoryallottedSaga;
