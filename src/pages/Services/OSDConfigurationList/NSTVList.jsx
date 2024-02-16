@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
-import moment from "moment";
+
 import {
   Card,
   CardBody,
@@ -19,13 +19,15 @@ import {
 } from "reactstrap";
 import "flatpickr/dist/themes/material_blue.css";
 import Flatpickr from "react-flatpickr";
-
 import "flatpickr/dist/flatpickr.min.css";
+import moment from "moment";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addNewOSDConfiguration as onAddNewOSDConfiguration } from "/src/store/OSDConfiguration/actions";
+import {
+  getOSDConfiguration as onGetOSDConfiguration,
+  addNewOSDConfiguration as onAddNewOSDConfiguration,
+} from "/src/store/OSDConfiguration/actions";
 import { useSelector, useDispatch } from "react-redux";
-import { getOSDConfiguration as onGetOSDConfiguration } from "/src/store/actions";
 
 const NSTVList = (props) => {
   const {
@@ -308,7 +310,7 @@ const NSTVList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.enable || ""}
                 >
-                  <option value=""></option>
+                  {/* <option value=""></option> */}
                   {osdConfigEnable &&
                     osdConfigEnable.map((enable) => (
                       <option key={enable.id} value={enable.id}>
@@ -641,6 +643,7 @@ const NSTVList = (props) => {
               )}
             </div>
           </Row>
+
           <Row>
             <Col>
               <ModalFooter>

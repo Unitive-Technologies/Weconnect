@@ -1,4 +1,5 @@
 import {
+  GET_OSDCONFIGURATION,
   GET_OSDCONFIGURATION_SUCCESS,
   GET_OSDCONFIGURATION_FAIL,
   GET_OSDCONFIGURATION_ENABLE_SUCCESS,
@@ -17,8 +18,12 @@ import {
   GET_OSDCONFIGURATION_BACKGROUNDAREA_FAIL,
   GET_OSDCONFIGURATION_STATUS_SUCCESS,
   GET_OSDCONFIGURATION_STATUS_FAIL,
+  ADD_NEW_OSDCONFIGURATION,
   ADD_OSDCONFIGURATION_SUCCESS,
   ADD_OSDCONFIGURATION_FAIL,
+  UPDATE_OSDCONFIGURATION,
+  UPDATE_OSDCONFIGURATION_SUCCESS,
+  UPDATE_OSDCONFIGURATION_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -32,11 +37,17 @@ const INIT_STATE = {
   osdConfigurationBackgroundArea: [],
   osdConfigurationStatus: [],
   error: {},
-  loading: true,
+  loading: false,
 };
 
 const OSDConfiguration = (state = INIT_STATE, action) => {
   switch (action.type) {
+    case GET_OSDCONFIGURATION:
+      return {
+        ...state,
+        loading: true,
+      };
+
     case GET_OSDCONFIGURATION_SUCCESS:
       // console.log("OSD Configuration data in reducer:", action.payload);
       return {
@@ -49,6 +60,7 @@ const OSDConfiguration = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     case GET_OSDCONFIGURATION_ENABLE_SUCCESS:
@@ -163,21 +175,47 @@ const OSDConfiguration = (state = INIT_STATE, action) => {
         error: action.payload,
       };
 
-
-
+    case ADD_NEW_OSDCONFIGURATION:
+      return {
+        ...state,
+        loading: true,
+      };
     case ADD_OSDCONFIGURATION_SUCCESS:
       return {
         ...state,
-        osdConfiguration: [
-          ...state.osdConfiguration,
-          action.payload,
-        ],
+        osdConfiguration: [...state.osdConfiguration, action.payload],
+        loading: false,
       };
 
     case ADD_OSDCONFIGURATION_FAIL:
       return {
         ...state,
         error: action.payload,
+        loading: false,
+      };
+
+    case UPDATE_OSDCONFIGURATION:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_OSDCONFIGURATION_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        osdConfiguration: state.osdConfiguration.map((osdConfiguration) =>
+          osdConfiguration.id === action.payload.id
+            ? { ...osdConfiguration, ...action.payload }
+            : osdConfiguration
+        ),
+      };
+
+    case UPDATE_OSDCONFIGURATION_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
       };
 
     default:

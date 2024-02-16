@@ -320,9 +320,9 @@ const BulkUserSettings = (props) => {
 
           return (
             <div>
-              <p>Bulk Limit: {settingsObject["Bulk Limit"]}</p>
+              {/* <p>Bulk Limit: {settingsObject["Bulk Limit"]}</p>
               <p>Allowed Client IPs: {settingsObject["Allowed Client IPs"]}</p>
-              <p>Pay mode Allowed: {settingsObject["Pay mode Allowed"]}</p>
+              <p>Pay mode Allowed: {settingsObject["Pay mode Allowed"]}</p> */}
               {/* Add more properties as needed */}
             </div>
           );

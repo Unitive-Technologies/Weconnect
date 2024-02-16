@@ -51,7 +51,7 @@ import ViewNSTVList from "./ViewNSTVList";
 
 const OSDConfigurationList = (props) => {
   //meta title
-  document.title = "OSD Configuration List | VDigital";
+  document.title = "OSD Configurations | VDigital";
 
   const dispatch = useDispatch();
 
@@ -128,7 +128,7 @@ const OSDConfigurationList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  handleViewNSTVList(userData);
+                  toggleViewNSTVList(userData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -250,17 +250,20 @@ const OSDConfigurationList = (props) => {
     }
   }, [dispatch, osdConfig]);
 
-  const toggle = () => {
+  const toggleAddNSTV = () => {
     setShowNSTV(!showNSTV);
   };
 
   const [viewNSTVList, setViewNSTVList] = useState({});
 
-  const handleViewNSTVList = (userNSTVData) => {
+  const toggleViewNSTVList = (userNSTVData) => {
     setShowViewNSTVList(!showViewNSTVList);
     setViewNSTVList(userNSTVData);
   };
 
+  const resetSelection = () => {
+    setViewNSTVList({});
+  };
   const getTableActions = () => {
     return [
       {
@@ -283,12 +286,21 @@ const OSDConfigurationList = (props) => {
     <React.Fragment>
       <ViewNSTVList
         isOpen={showViewNSTVList}
-        toggle={handleViewNSTVList}
+        toggle={toggleViewNSTVList}
         osdConfiguration={viewNSTVList}
+        osdConfigBackgroundArea={osdConfigBackgroundArea}
+        osdConfigBackgroundColor={osdConfigBackgroundColor}
+        osdConfigDisplay={osdConfigDisplay}
+        osdConfigEnable={osdConfigEnable}
+        osdConfigFontColor={osdConfigFontColor}
+        osdConfigFontSize={osdConfigFontSize}
+        osdConfigForcedDisplay={osdConfigForcedDisplay}
+        osdConfigStatus={osdConfigStatus}
+        resetSelection={resetSelection}
       />
       <NSTVList
         isOpen={showNSTV}
-        toggle={toggle}
+        toggle={toggleAddNSTV}
         osdConfigBackgroundArea={osdConfigBackgroundArea}
         osdConfigBackgroundColor={osdConfigBackgroundColor}
         osdConfigDisplay={osdConfigDisplay}

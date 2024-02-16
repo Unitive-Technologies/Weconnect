@@ -9,26 +9,50 @@ import {
   GET_OSDCONFIGURATION_BACKGROUNDCOLOR,
   GET_OSDCONFIGURATION_FONTSIZE,
   GET_OSDCONFIGURATION_BACKGROUNDAREA,
-  GET_OSDCONFIGURATION_STATUS, ADD_NEW_OSDCONFIGURATION
+  GET_OSDCONFIGURATION_STATUS,
+  ADD_NEW_OSDCONFIGURATION,
+  UPDATE_OSDCONFIGURATION,
 } from "./actionTypes";
 
 import {
-  getOSDConfigurationSuccess, getOSDConfigurationFail,
-  getOSDConfigurationEnableSuccess, getOSDConfigurationEnableFail,
-  getOSDConfigurationForcedDisplaySuccess, getOSDConfigurationForcedDisplayFail,
-  getOSDConfigurationDisplaySuccess, getOSDConfigurationDisplayFail,
-  getOSDConfigurationFontColorSuccess, getOSDConfigurationFontColorFail,
-  getOSDConfigurationBackgroundColorSuccess, getOSDConfigurationBackgroundColorFail,
-  getOSDConfigurationFontSizeSuccess, getOSDConfigurationFontSizeFail,
-  getOSDConfigurationBackgroundAreaSuccess, getOSDConfigurationBackgroundAreaFail,
-  getOSDConfigurationStatusSuccess, getOSDConfigurationStatusFail,
-  addOSDConfigurationSuccess, addOSDConfigurationFail
+  getOSDConfiguration as fetchAllOSDConfiguration,
+  getOSDConfigurationSuccess,
+  getOSDConfigurationFail,
+  getOSDConfigurationEnableSuccess,
+  getOSDConfigurationEnableFail,
+  getOSDConfigurationForcedDisplaySuccess,
+  getOSDConfigurationForcedDisplayFail,
+  getOSDConfigurationDisplaySuccess,
+  getOSDConfigurationDisplayFail,
+  getOSDConfigurationFontColorSuccess,
+  getOSDConfigurationFontColorFail,
+  getOSDConfigurationBackgroundColorSuccess,
+  getOSDConfigurationBackgroundColorFail,
+  getOSDConfigurationFontSizeSuccess,
+  getOSDConfigurationFontSizeFail,
+  getOSDConfigurationBackgroundAreaSuccess,
+  getOSDConfigurationBackgroundAreaFail,
+  getOSDConfigurationStatusSuccess,
+  getOSDConfigurationStatusFail,
+  addOSDConfigurationSuccess,
+  addOSDConfigurationFail,
+  updateOSDConfigurationSuccess,
+  updateOSDConfigurationFail,
 } from "./actions";
 
 //Include Both Helper File with needed methods
 import {
-  getOSDConfiguration, getOSDConfigurationEnable, getOSDConfigurationDisplay, getOSDConfigurationForcedDisplay, getOSDConfigurationFontSize, getOSDConfigurationFontColor, getOSDConfigurationBackgroundArea, getOSDConfigurationBackgroundColor, getOSDConfigurationStatus,
-  addNewOSDConfiguration
+  getOSDConfiguration,
+  getOSDConfigurationEnable,
+  getOSDConfigurationDisplay,
+  getOSDConfigurationForcedDisplay,
+  getOSDConfigurationFontSize,
+  getOSDConfigurationFontColor,
+  getOSDConfigurationBackgroundArea,
+  getOSDConfigurationBackgroundColor,
+  getOSDConfigurationStatus,
+  addNewOSDConfiguration,
+  updateOSDConfiguration,
 } from "../../helpers/fakebackend_helper";
 
 const convertOSDConfigurationListObject = (osdConfigurationList) => {
@@ -43,8 +67,8 @@ const convertOSDConfigurationListObject = (osdConfigurationList) => {
         osdConfiguration.status === 1
           ? "ACTIVE"
           : osdConfiguration.status_lbl === 0
-            ? "INACTIVE"
-            : "BLOCKED",
+          ? "INACTIVE"
+          : "BLOCKED",
       is_reserved_lbl: osdConfiguration.is_reserved_lbl,
       type_lbl: osdConfiguration.type_lbl,
       start_time: osdConfiguration.start_time,
@@ -97,7 +121,6 @@ function* fetchOSDConfigurationDisplay() {
     yield put(getOSDConfigurationDisplayFail(error));
   }
 }
-
 
 function* fetchOSDConfigurationFontColor() {
   try {
@@ -153,22 +176,52 @@ function* onAddNewOSDConfiguration({ payload: osdConfiguration }) {
   try {
     const response = yield call(addNewOSDConfiguration, osdConfiguration);
     yield put(addOSDConfigurationSuccess(response));
+    yield put(fetchAllOSDConfiguration());
   } catch (error) {
     yield put(addOSDConfigurationFail(error));
+  }
+}
+
+function* onUpdateOSDConfiguration({ payload: OSDConfiguration }) {
+  console.log("OSDTemplate in onUpdate:" + JSON.stringify(OSDConfiguration));
+  try {
+    const response = yield call(
+      updateOSDConfiguration,
+      OSDConfiguration.id,
+      OSDConfiguration
+    );
+    yield put(updateOSDConfigurationSuccess(response));
+    console.log("update response:" + JSON.stringify(response));
+    yield put(fetchAllOSDConfiguration());
+  } catch (error) {
+    yield put(updateOSDConfigurationFail(error));
   }
 }
 
 function* osdConfigurationSaga() {
   yield takeEvery(GET_OSDCONFIGURATION, fetchOSDConfiguration);
   yield takeEvery(GET_OSDCONFIGURATION_ENABLE, fetchOSDConfigurationEnable);
-  yield takeEvery(GET_OSDCONFIGURATION_FORCESDDISPLAY, fetchOSDConfigurationForcedDisplay);
+  yield takeEvery(
+    GET_OSDCONFIGURATION_FORCESDDISPLAY,
+    fetchOSDConfigurationForcedDisplay
+  );
   yield takeEvery(GET_OSDCONFIGURATION_DISPLAY, fetchOSDConfigurationDisplay);
-  yield takeEvery(GET_OSDCONFIGURATION_FONTCOLOR, fetchOSDConfigurationFontColor);
-  yield takeEvery(GET_OSDCONFIGURATION_BACKGROUNDCOLOR, fetchOSDConfigurationBackgroundColor);
+  yield takeEvery(
+    GET_OSDCONFIGURATION_FONTCOLOR,
+    fetchOSDConfigurationFontColor
+  );
+  yield takeEvery(
+    GET_OSDCONFIGURATION_BACKGROUNDCOLOR,
+    fetchOSDConfigurationBackgroundColor
+  );
   yield takeEvery(GET_OSDCONFIGURATION_FONTSIZE, fetchOSDConfigurationFontSize);
-  yield takeEvery(GET_OSDCONFIGURATION_BACKGROUNDAREA, fetchOSDConfigurationBackgroundArea);
+  yield takeEvery(
+    GET_OSDCONFIGURATION_BACKGROUNDAREA,
+    fetchOSDConfigurationBackgroundArea
+  );
   yield takeEvery(GET_OSDCONFIGURATION_STATUS, fetchOSDConfigurationStatus);
   yield takeEvery(ADD_NEW_OSDCONFIGURATION, onAddNewOSDConfiguration);
+  yield takeEvery(UPDATE_OSDCONFIGURATION, onUpdateOSDConfiguration);
 }
 
 export default osdConfigurationSaga;

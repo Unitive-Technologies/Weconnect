@@ -1,499 +1,763 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
+import "flatpickr/dist/themes/material_blue.css";
+import Flatpickr from "react-flatpickr";
+import "flatpickr/dist/flatpickr.min.css";
+import moment from "moment";
+import { Link } from "react-router-dom";
 import {
-    Card,
-    CardBody,
-    Col,
-    Container,
-    Row,
-    Modal,
-    ModalFooter,
-    ModalHeader,
-    ModalBody,
-    Label,
-    FormFeedback,
-    UncontrolledTooltip,
-    Input,
-    Form,
+  Card,
+  CardBody,
+  Col,
+  Container,
+  Row,
+  Modal,
+  ModalFooter,
+  ModalHeader,
+  ModalBody,
+  Label,
+  FormFeedback,
+  UncontrolledTooltip,
+  Input,
+  Form,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUser as onUpdateUser } from "/src/store/users/actions";
+import {
+  getOSDConfiguration as onGetOSDConfiguration,
+  updateOSDConfiguration as onUpdateOSDConfiguration,
+} from "/src/store/OSDConfiguration/actions";
 
 const ViewNSTVList = (props) => {
-    const { isOpen, toggle, osdConfiguration } = props;
-    //   console.log("user in viewuser modal:" + JSON.stringify(user));
-    const dispatch = useDispatch();
-    const [showEditosdConfiguration, setShowosdConfiguration] = useState(false);
+  const {
+    isOpen,
+    toggle,
+    resetSelection,
+    osdConfiguration,
+    osdConfigBackgroundArea,
+    osdConfigBackgroundColor,
+    osdConfigDisplay,
+    osdConfigEnable,
+    osdConfigFontColor,
+    osdConfigFontSize,
+    osdConfigForcedDisplay,
+    osdConfigStatus,
+  } = props;
+  //   console.log("user in viewuser modal:" + JSON.stringify(user));
+  const dispatch = useDispatch();
+  const [showEditosdConfiguration, setShowosdConfiguration] = useState(false);
 
-    const validation = useFormik({
-        // enableReinitialize : use this flag when initial values needs to be changed
-        enableReinitialize: true,
+  const validation = useFormik({
+    // enableReinitialize : use this flag when initial values needs to be changed
+    enableReinitialize: true,
 
-        initialValues: {
-            id: (osdConfiguration && osdConfiguration.id) || "",
-            name: (osdConfiguration && osdConfiguration.name) || "",
-            status_lbl: (osdConfiguration && osdConfiguration.status_lbl) || "",
-            start_time: (osdConfiguration && osdConfiguration.start_time) || "",
-            end_time: (osdConfiguration && osdConfiguration.end_time) || "",
-            enable: (osdConfiguration && osdConfiguration.enable) || "",
-            forced: (osdConfiguration && osdConfiguration.forced) || "",
-            type: (osdConfiguration && osdConfiguration.type) || "",
-            duration: (osdConfiguration && osdConfiguration.duration) || "",
-            interval: (osdConfiguration && osdConfiguration.interval) || "",
-            repetition: (osdConfiguration && osdConfiguration.repetition) || "",
-            fontsize: (osdConfiguration && osdConfiguration.fontsize) || "",
-            fontcolor: (osdConfiguration && osdConfiguration.fontcolor) || "",
-            backgroundcolor: (osdConfiguration && osdConfiguration.backgroundcolor) || "",
-            backgroundarea: (osdConfiguration && osdConfiguration.backgroundarea) || "",
+    initialValues: {
+      id: (osdConfiguration && osdConfiguration.id) || "",
+      name: (osdConfiguration && osdConfiguration.name) || "",
+      status: (osdConfiguration && osdConfiguration.status) || "",
+      start_time: (osdConfiguration && osdConfiguration.start_time) || "",
+      cas_code: (osdConfiguration && osdConfiguration.cas_code) || "",
+      end_time: (osdConfiguration && osdConfiguration.end_time) || "",
+      enable:
+        (osdConfiguration &&
+          osdConfiguration.config &&
+          osdConfiguration.config.enable) ||
+        "",
+      forceddisplay:
+        (osdConfiguration &&
+          osdConfiguration.config &&
+          osdConfiguration.config.forceddisplay) ||
+        "",
+      displaytype:
+        (osdConfiguration &&
+          osdConfiguration.config &&
+          osdConfiguration.config.displaytype) ||
+        "",
+      duration:
+        (osdConfiguration &&
+          osdConfiguration.config &&
+          osdConfiguration.config.duration) ||
+        "",
+      interval:
+        (osdConfiguration &&
+          osdConfiguration.config &&
+          osdConfiguration.config.interval) ||
+        "",
+      repetition:
+        (osdConfiguration &&
+          osdConfiguration.config &&
+          osdConfiguration.config.repetition) ||
+        "",
+      fontSize:
+        (osdConfiguration &&
+          osdConfiguration.config &&
+          osdConfiguration.config.fontSize) ||
+        "",
+      fontcolor:
+        (osdConfiguration &&
+          osdConfiguration.config &&
+          osdConfiguration.config.fontcolor) ||
+        "",
+      backgroundColor:
+        (osdConfiguration &&
+          osdConfiguration.config &&
+          osdConfiguration.config.backgroundColor) ||
+        "",
+      backgroundarea:
+        (osdConfiguration &&
+          osdConfiguration.config &&
+          osdConfiguration.config.backgroundarea) ||
+        "",
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required(""),
+      //   status_lbl: Yup.string().required(""),
+      //   start_time: Yup.string().required(""),
+      //   end_time: Yup.string().required(""),
+      //   enable: Yup.string().required(""),
+      //   forced: Yup.string().required(""),
+      //   type: Yup.string().required(""),
+      //   duration: Yup.string().required(""),
+      //   interval: Yup.string().required(""),
+      //   repetition: Yup.string().required(""),
+      //   fontsize: Yup.string().required(""),
+      //   fontcolor: Yup.string().required(""),
+      //   backgroundcolor: Yup.string().required(""),
+      //   backgroundarea: Yup.string().required(""),
+    }),
+    onSubmit: (values) => {
+      const updateNSTV = {
+        id: osdConfiguration.id,
+        name: values["name"],
+        status: parseInt(values["status"]),
+        start_time: values["start_time"],
+        end_time: values["end_time"],
+        cas_code: values["cas_code"],
+        config: {
+          enable: values["enable"],
+          forceddisplay: parseInt(values["forceddisplay"]),
+          displaytype: parseInt(values["displaytype"]),
+          duration: parseInt(values["duration"]),
+          interval: parseInt(values["interval"]),
+          repetition: parseInt(values["repetition"]),
+          fontSize: parseInt(values["fontSize"]),
+          fontcolor: parseInt(values["fontcolor"]),
+          backgroundarea: parseInt(values["backgroundarea"]),
+          backgroundColor: parseInt(values["backgroundColor"]),
         },
-        validationSchema: Yup.object({
-            name: Yup.string().required(""),
-            status_lbl: Yup.string().required(""),
-            start_time: Yup.string().required(""),
-            end_time: Yup.string().required(""),
-            enable: Yup.string().required(""),
-            forced: Yup.string().required(""),
-            type: Yup.string().required(""),
-            duration: Yup.string().required(""),
-            interval: Yup.string().required(""),
-            repetition: Yup.string().required(""),
-            fontsize: Yup.string().required(""),
-            fontcolor: Yup.string().required(""),
-            backgroundcolor: Yup.string().required(""),
-            backgroundarea: Yup.string().required(""),
-        }),
-        onSubmit: (values) => {
-            const updateUser = {
-                id: osdConfiguration.id,
-                name: values.name,
-                status_lbl: values.status_lbl,
-                start_time: values.start_time,
-                end_time: values.end_time,
-                enable: values.enable,
-                forced: values.forced,
-                type: values.type,
-                duration: values.duration,
-                interval: values.interval,
-                repetition: values.repetition,
-                fontsize: values.fontsize,
-                fontcolor: values.fontcolor,
-                backgroundcolor: values.backgroundcolor,
-                backgroundarea: values.backgroundarea,
-            };
+      };
+      // update user
+      dispatch(onUpdateOSDConfiguration(updateNSTV));
+      dispatch(onGetOSDConfiguration());
+      validation.resetForm();
+      toggle();
+    },
+  });
 
-            // update user
-            dispatch(onUpdateUser(updateUser));
-            validation.resetForm();
-            toggle();
-        },
-    });
+  const [rangeValue, setRangeValue] = useState(1);
 
-    const [rangeValue, setRangeValue] = useState(1);
+  const handleCancel = () => {
+    setShowosdConfiguration(false);
+    toggle();
+    resetSelection();
+  };
 
-    const handleRangeChange = (event) => {
-        setRangeValue(parseInt(event.target.value, 10));
-    };
+  return (
+    <>
+      <Modal
+        isOpen={isOpen}
+        role="dialog"
+        size="xl"
+        autoFocus={true}
+        centered={true}
+        className="exampleModal"
+        tabIndex="-1"
+        toggle={handleCancel}
+      >
+        <ModalHeader toggle={handleCancel} tag="h4">
+          {!showEditosdConfiguration
+            ? `View ${(osdConfiguration && osdConfiguration.name) || ""}`
+            : `Edit ${(osdConfiguration && osdConfiguration.name) || ""}`}
+        </ModalHeader>
+        {!showEditosdConfiguration && (
+          <Link
+            style={{
+              position: "absolute",
+              marginLeft: "92%",
+              marginTop: "1%",
+            }}
+            to="#!"
+            className="btn btn-light me-1"
+            onClick={() => setShowosdConfiguration(true)}
+          >
+            <i className="mdi mdi-pencil-outline"></i>
+          </Link>
+        )}
+        <ModalBody>
+          <Form
+            onSubmit={(e) => {
+              e.preventDefault();
+              validation.handleSubmit();
+              return false;
+            }}
+          >
+            <Row>
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Name<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="name"
+                    type="text"
+                    placeholder="Enter name"
+                    // className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.name || ""}
+                    disabled={!showEditosdConfiguration}
+                  ></Input>
+                  {validation.touched.name && validation.errors.name ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.name}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              {/* {console.log("Name:", validation.values.name)} */}
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Status<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="status"
+                    type="select"
+                    placeholder="Select Status"
+                    className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.status || ""}
+                    disabled={!showEditosdConfiguration}
+                  >
+                    {/* <option value="">Select Status</option> */}
+                    {osdConfigStatus &&
+                      osdConfigStatus.map((status) => (
+                        <option key={status.id} value={status.id}>
+                          {status.name}
+                        </option>
+                      ))}
+                  </Input>
+                  {validation.touched.status && validation.errors.status ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.status}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              {/* {console.log("Status:", validation.values.status)} */}
+              <Col sm="4">
+                <div className="form-group mb-0">
+                  <label>Start Time</label>
+                  <div className="input-group">
+                    <Flatpickr
+                      className="form-control d-block"
+                      placeholder="Select time"
+                      options={{
+                        enableTime: true,
+                        noCalendar: true,
+                        dateFormat: "H:i:S",
+                        time_24hr: true,
+                      }}
+                      onChange={(selectedDates) => {
+                        const startTime = moment(selectedDates[0]).format(
+                          "HH:mm:ss"
+                        );
+                        validation.setFieldValue("start_time", startTime); // Update the field value
+                      }}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.start_time || ""}
+                      name="start_time"
+                      disabled={!showEditosdConfiguration}
+                    />
+                    <div className="input-group-append">
+                      <span className="input-group-text">
+                        <i className="mdi mdi-clock-outline" />
+                      </span>
+                    </div>
+                  </div>
+                </div>
 
-    const handleRangeClick = () => {
-        // Increment the range value by 1 when clicked
-        setRangeValue((prevValue) => prevValue + 1);
-    };
+                {/* <div className="mb-3">
+                <Label className="form-label">
+                  Start Time<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="start_time"
+                  type="time"
+                  // placeholder="Enter channel code"
+                  // className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.start_time || ""}
+                ></Input>
+                {validation.touched.start_time &&
+                validation.errors.start_time ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.start_time}
+                  </FormFeedback>
+                ) : null}
+              </div> */}
+              </Col>
+              {/* {console.log("Start time:", validation.values.start_time)} */}
+              <Col sm="4">
+                <div className="form-group mb-0">
+                  <label>End Time</label>
+                  <div className="input-group">
+                    <Flatpickr
+                      className="form-control d-block"
+                      placeholder="Select time"
+                      options={{
+                        enableTime: true,
+                        noCalendar: true,
+                        dateFormat: "H:i:S",
+                        time_24hr: true,
+                      }}
+                      onChange={(selectedDates) => {
+                        const endTime = moment(selectedDates[0]).format(
+                          "HH:mm:ss"
+                        );
+                        validation.setFieldValue("end_time", endTime); // Update the field value
+                      }}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.end_time || ""}
+                      name="end_time"
+                      disabled={!showEditosdConfiguration}
+                    />
+                    <div className="input-group-append">
+                      <span className="input-group-text">
+                        <i className="mdi mdi-clock-outline" />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                {/* <div className="mb-3">
+                <Label className="form-label">
+                  End Time<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="end_time"
+                  type="time"
+                  // placeholder="Enter name"
+                  // className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.end_time || ""}
+                ></Input>
+                {validation.touched.end_time && validation.errors.end_time ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.end_time}
+                  </FormFeedback>
+                ) : null}
+              </div> */}
+              </Col>
+              {console.log("endeeeeeeeeeee time", validation.values.end_time)}
+              {console.log("startsssssssss time", validation.values.start_time)}
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Enable<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="enable"
+                    type="select"
+                    placeholder="Send OSD"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.enable || ""}
+                    disabled={!showEditosdConfiguration}
+                  >
+                    {/* <option value=""></option> */}
+                    {osdConfigEnable &&
+                      osdConfigEnable.map((enable) => (
+                        <option key={enable.id} value={enable.id}>
+                          {enable.name}
+                        </option>
+                      ))}
+                  </Input>
+                  {validation.touched.enable && validation.errors.enable ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.enable}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              {/* {console.log("Enable:", validation.values.enable)} */}
+              <div>
+                {validation.values.enable === "00" && (
+                  <Row>
+                    <Col sm="4">
+                      <div className="mb-3">
+                        <Label className="form-label">
+                          Forced Display<span style={{ color: "red" }}>*</span>
+                        </Label>
+                        <Input
+                          name="forceddisplay"
+                          type="select"
+                          placeholder="Select forced display"
+                          className="form-select"
+                          onChange={validation.handleChange}
+                          onBlur={validation.handleBlur}
+                          value={validation.values.forceddisplay || ""}
+                          disabled={!showEditosdConfiguration}
+                        >
+                          {/* <option value="">Select forced display</option> */}
+                          {osdConfigForcedDisplay &&
+                            osdConfigForcedDisplay.map((forceddisplay) => (
+                              <option
+                                key={forceddisplay.id}
+                                value={forceddisplay.id}
+                              >
+                                {forceddisplay.name}
+                              </option>
+                            ))}
+                        </Input>
+                        {validation.touched.forceddisplay &&
+                        validation.errors.forceddisplay ? (
+                          <FormFeedback type="invalid">
+                            {validation.errors.forceddisplay}
+                          </FormFeedback>
+                        ) : null}
+                      </div>
+                    </Col>
 
-    return (
-        <>
-            <Modal
-                isOpen={isOpen}
-                role="dialog"
-                size="xl"
-                autoFocus={true}
-                centered={true}
-                className="exampleModal"
-                tabIndex="-1"
-                toggle={toggle}
-            >
-                {!showEditosdConfiguration
-                    ? (
-                        <ModalHeader toggle={toggle} tag="h4">
-                            View {osdConfiguration.name}
-                            <i
-                                className="bx bx bxs-edit"
-                                style={{ marginLeft: "20px", cursor: "pointer" }}
-                                onClick={() => setShowosdConfiguration(true)}
-                            ></i>
-                        </ModalHeader>
-                    ) : (
-                        <ModalHeader toggle={toggle} tag="h4">
-                            Edit {osdConfiguration.name}
-                        </ModalHeader>
+                    {/* {console.log("ForcedDisplay:", validation.values.forceddisplay)}
+                        {console.log("forced display: " + validation.values.forceddisplay)}
+                        {console.log(
+                            "forced display: " + typeof validation.values.forceddisplay)} */}
+                    <Col sm="4">
+                      <div className="mb-3">
+                        <Label className="form-label">
+                          Display Type<span style={{ color: "red" }}>*</span>
+                        </Label>
+                        <Input
+                          name="displaytype"
+                          type="select"
+                          placeholder="Select display type"
+                          className="form-select"
+                          onChange={validation.handleChange}
+                          onBlur={validation.handleBlur}
+                          value={validation.values.displaytype || ""}
+                          disabled={!showEditosdConfiguration}
+                        >
+                          {/* <option value="">Select Display Type</option> */}
+                          {osdConfigDisplay &&
+                            osdConfigDisplay.map((displaytype) => (
+                              <option
+                                key={displaytype.id}
+                                value={displaytype.id}
+                              >
+                                {displaytype.name}
+                              </option>
+                            ))}
+                        </Input>
+                        {validation.touched.displaytype &&
+                        validation.errors.displaytype ? (
+                          <FormFeedback type="invalid">
+                            {validation.errors.displaytype}
+                          </FormFeedback>
+                        ) : null}
+                      </div>
+                    </Col>
+                    {/* {console.log("Display Type:", validation.values.displaytype)} */}
+
+                    <Col sm="4">
+                      <div className="mb-3">
+                        <Label className="form-label">Duration</Label>
+                        <Input
+                          name="duration"
+                          type="number"
+                          placeholder="1"
+                          // className="form-select"
+                          onChange={validation.handleChange}
+                          onBlur={validation.handleBlur}
+                          value={validation.values.duration || ""}
+                          disabled={!showEditosdConfiguration}
+                        ></Input>
+                        {validation.touched.duration &&
+                        validation.errors.duration ? (
+                          <FormFeedback type="invalid">
+                            {validation.errors.duration}
+                          </FormFeedback>
+                        ) : null}
+                      </div>
+                    </Col>
+                    {/* {console.log("Duration:", validation.values.duration)} */}
+                    <Col sm="4">
+                      <div className="mb-3">
+                        <Label className="form-label">
+                          Interval (in seconds) (should be greater than
+                          duration)
+                        </Label>
+                        <Input
+                          name="interval"
+                          type="number"
+                          placeholder="1"
+                          // className="form-select"
+                          onChange={validation.handleChange}
+                          onBlur={validation.handleBlur}
+                          value={validation.values.interval || ""}
+                          disabled={!showEditosdConfiguration}
+                        ></Input>
+                        {validation.touched.interval &&
+                        validation.errors.interval ? (
+                          <FormFeedback type="invalid">
+                            {validation.errors.interval}
+                          </FormFeedback>
+                        ) : null}
+                      </div>
+                    </Col>
+                    {/* {console.log("Interval:", validation.values.interval)} */}
+                    <Col sm="4">
+                      <div>
+                        <Label htmlFor="customRange1" className="form-label">
+                          Repetition
+                        </Label>
+                        <Input
+                          type="range"
+                          className="form-range"
+                          id="customRange1"
+                          name="repetition"
+                          value={rangeValue}
+                          onChange={(event) => {
+                            setRangeValue(parseInt(event.target.value));
+                            validation.handleChange(event); // Update Formik state
+                          }}
+                          onBlur={validation.handleBlur} // Handle onBlur event
+                          min={1}
+                          max={10}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            border: `solid 3px ${
+                              rangeValue === validation.values.repetition
+                                ? "green"
+                                : "blue"
+                            }`,
+                            cursor: "pointer",
+                            borderRadius: "5px",
+                          }}
+                          disabled={!showEditosdConfiguration}
+                        />
+                        <div style={{ marginTop: "10px" }}>
+                          Value: {rangeValue}
+                        </div>
+                        <div>
+                          {validation.touched.repetition &&
+                          validation.errors.repetition ? (
+                            <FormFeedback type="invalid">
+                              {validation.errors.repetition}
+                            </FormFeedback>
+                          ) : null}
+                        </div>
+                      </div>
+                    </Col>
+
+                    {console.log(
+                      "Repetition value:RRRRRRRRRR",
+                      validation.values.repetition
                     )}
-                <ModalBody>
-                    <Form
-                        // style={{ textAlign: "center" }}
-                        onSubmit={(e) => {
-                            e.preventDefault();
-                            validation.handleSubmit();
-                            return false;
-                        }}
+
+                    <Col sm="4">
+                      <div className="mb-3">
+                        <Label className="form-label">
+                          Font Size<span style={{ color: "red" }}>*</span>
+                        </Label>
+                        <Input
+                          name="fontSize"
+                          type="select"
+                          placeholder="Select font size"
+                          className="form-select"
+                          onChange={validation.handleChange}
+                          onBlur={validation.handleBlur}
+                          value={validation.values.fontSize || ""}
+                          disabled={!showEditosdConfiguration}
+                        >
+                          {/* <option value="">Select Font Size</option> */}
+                          {osdConfigFontSize &&
+                            osdConfigFontSize.map((fontSize) => (
+                              <option key={fontSize.id} value={fontSize.id}>
+                                {fontSize.name}
+                              </option>
+                            ))}
+                        </Input>
+                        {validation.touched.fontSize &&
+                        validation.errors.fontSize ? (
+                          <FormFeedback type="invalid">
+                            {validation.errors.fontSize}
+                          </FormFeedback>
+                        ) : null}
+                      </div>
+                    </Col>
+                    {/* {console.log("Font Size:", validation.values.fontSize)}
+                        {console.log("font size: " + validation.values.fontSize)}
+                        {console.log(
+                            "font size: " + typeof validation.values.fontSize
+                        )} */}
+                    <Col sm="4">
+                      <div className="mb-3">
+                        <Label className="form-label">
+                          Font Color<span style={{ color: "red" }}>*</span>
+                        </Label>
+                        <Input
+                          name="fontcolor"
+                          type="select"
+                          placeholder="Select font color"
+                          className="form-select"
+                          onChange={validation.handleChange}
+                          onBlur={validation.handleBlur}
+                          value={validation.values.fontcolor || ""}
+                          disabled={!showEditosdConfiguration}
+                        >
+                          {/* <option value="">Select Font Color</option> */}
+                          {osdConfigFontColor &&
+                            osdConfigFontColor.map((fontcolor) => (
+                              <option key={fontcolor.id} value={fontcolor.id}>
+                                {fontcolor.name}
+                              </option>
+                            ))}
+                        </Input>
+                        {validation.touched.fontcolor &&
+                        validation.errors.fontcolor ? (
+                          <FormFeedback type="invalid">
+                            {validation.errors.fontcolor}
+                          </FormFeedback>
+                        ) : null}
+                      </div>
+                    </Col>
+                    {/* {console.log("Font Color:", validation.values.fontcolor)}
+                        {console.log("font color: " + validation.values.fontcolor)}
+                        {console.log(
+                            "font color: " + typeof validation.values.fontcolor
+                        )} */}
+
+                    <Col sm="4">
+                      <div className="mb-3">
+                        <Label className="form-label">
+                          Background Color
+                          <span style={{ color: "red" }}>*</span>
+                        </Label>
+                        <Input
+                          name="backgroundColor"
+                          type="select"
+                          placeholder="Select background color"
+                          className="form-select"
+                          onChange={validation.handleChange}
+                          onBlur={validation.handleBlur}
+                          value={validation.values.backgroundColor || ""}
+                          disabled={!showEditosdConfiguration}
+                        >
+                          {/* <option value="">Select back color</option> */}
+                          {osdConfigBackgroundColor &&
+                            osdConfigBackgroundColor.map((backgroundColor) => (
+                              <option
+                                key={backgroundColor.id}
+                                value={backgroundColor.id}
+                              >
+                                {backgroundColor.name}
+                              </option>
+                            ))}
+                        </Input>
+                        {validation.touched.backgroundColor &&
+                        validation.errors.backgroundColor ? (
+                          <FormFeedback type="invalid">
+                            {validation.errors.backgroundColor}
+                          </FormFeedback>
+                        ) : null}
+                      </div>
+                    </Col>
+                    {/* {console.log("Background Color:", validation.values.backgroundColor)}
+                        {console.log("back color: " + validation.values.backgroundColor)}
+                        {console.log(
+                            "back color type: " + typeof validation.values.backgroundColor
+                        )} */}
+                    <Col sm="4">
+                      <div className="mb-3">
+                        <Label className="form-label">
+                          Background Area<span style={{ color: "red" }}>*</span>
+                        </Label>
+                        <Input
+                          name="backgroundarea"
+                          type="select"
+                          placeholder="backgroundarea"
+                          className="form-select"
+                          onChange={validation.handleChange}
+                          onBlur={validation.handleBlur}
+                          value={validation.values.backgroundarea || ""}
+                          disabled={!showEditosdConfiguration}
+                        >
+                          {/* <option value="">Select background area</option> */}
+                          {osdConfigBackgroundArea &&
+                            osdConfigBackgroundArea.map((backgroundarea) => (
+                              <option
+                                key={backgroundarea.id}
+                                value={backgroundarea.id}
+                              >
+                                {backgroundarea.name}
+                              </option>
+                            ))}
+                        </Input>
+                        {validation.touched.backgroundarea &&
+                        validation.errors.backgroundarea ? (
+                          <FormFeedback type="invalid">
+                            {validation.errors.backgroundarea}
+                          </FormFeedback>
+                        ) : null}
+                      </div>
+                    </Col>
+                    {/* {console.log("Background Area:", validation.values.backgroundarea)}
+                        {console.log("background area: " + validation.values.backgroundarea)}
+                        {console.log(
+                            "background area: " + typeof validation.values.backgroundarea
+                        )} */}
+                  </Row>
+                )}
+              </div>
+            </Row>
+            {showEditosdConfiguration && (
+              <Row>
+                <Col>
+                  <ModalFooter>
+                    <button type="submit" className="btn btn-success save-user">
+                      Save
+                    </button>
+
+                    <button
+                      type="button"
+                      className="btn btn-outline-danger"
+                      onClick={() => {
+                        validation.resetForm();
+                        handleCancel();
+                      }}
                     >
-                        <Row>
-                            <Col sm="4">
-                                <div className="mb-3">
-                                    <Label className="form-label">Name<span style={{ color: 'red' }}>*</span></Label>
-                                    <Input
-                                        name="name"
-                                        type="text"
-                                        placeholder="Enter name"
-                                        // className="form-select"
-                                        onChange={validation.handleChange}
-                                        onBlur={validation.handleBlur}
-                                        value={validation.values.name || ""}
-                                    ></Input>
-                                    {validation.touched.name && validation.errors.name ? (
-                                        <FormFeedback type="invalid">
-                                            {validation.errors.name}
-                                        </FormFeedback>
-                                    ) : null}
-                                </div>
-                            </Col>
-
-                            <Col sm="4">
-                                <div className="mb-3">
-                                    <Label className="form-label">Status<span style={{ color: 'red' }}>*</span></Label>
-                                    <Input
-                                        name="status"
-                                        type="select"
-                                        placeholder="Select Status"
-                                        className="form-select"
-                                        onChange={validation.handleChange}
-                                        onBlur={validation.handleBlur}
-                                        value={validation.values.status || ""}
-                                    >
-                                        <option value="101">Select Status</option>
-                                        <option value="102">Active</option>
-                                        <option value="103">In-Active</option>
-                                    </Input>
-                                    {validation.touched.status && validation.errors.status ? (
-                                        <FormFeedback type="invalid">
-                                            {validation.errors.status}
-                                        </FormFeedback>
-                                    ) : null}
-                                </div>
-                            </Col>
-
-                            <Col sm="4">
-                                <div className="mb-3">
-                                    <Label className="form-label">Start Time<span style={{ color: 'red' }}>*</span></Label>
-                                    <Input
-                                        name="starttime"
-                                        type="time"
-                                        // placeholder="Enter channel code"
-                                        // className="form-select"
-                                        onChange={validation.handleChange}
-                                        onBlur={validation.handleBlur}
-                                        value={validation.values.starttime || ""}
-                                    ></Input>
-                                    {validation.touched.starttime && validation.errors.starttime ? (
-                                        <FormFeedback type="invalid">
-                                            {validation.errors.starttime}
-                                        </FormFeedback>
-                                    ) : null}
-                                </div>
-                            </Col>
-                            <Col sm="4">
-                                <div className="mb-3">
-                                    <Label className="form-label">End Time<span style={{ color: 'red' }}>*</span></Label>
-                                    <Input
-                                        name="endtime"
-                                        type="time"
-                                        // placeholder="Enter name"
-                                        // className="form-select"
-                                        onChange={validation.handleChange}
-                                        onBlur={validation.handleBlur}
-                                        value={validation.values.endtime || ""}
-                                    ></Input>
-                                    {validation.touched.endtime && validation.errors.endtime ? (
-                                        <FormFeedback type="invalid">
-                                            {validation.errors.endtime}
-                                        </FormFeedback>
-                                    ) : null}
-                                </div>
-                            </Col>
-                            <Col sm="4">
-                                <div className="mb-3">
-                                    <Label className="form-label">Enable<span style={{ color: 'red' }}>*</span></Label>
-                                    <Input
-                                        name="enable"
-                                        type="select"
-                                        placeholder="Send OSD"
-                                        onChange={validation.handleChange}
-                                        onBlur={validation.handleBlur}
-                                        value={validation.values.enable || ""}
-                                    >
-                                        <option value="101">Send OSD</option>
-                                        <option value="102">Send OSD</option>
-                                        <option value="103">Cancel OSD</option>
-                                    </Input>
-                                    {validation.touched.enable &&
-                                        validation.errors.enable ? (
-                                        <FormFeedback type="invalid">
-                                            {validation.errors.enable}
-                                        </FormFeedback>
-                                    ) : null}
-                                </div>
-                            </Col>
-                            <Col sm="4">
-                                <div className="mb-3">
-                                    <Label className="form-label">Forced Display<span style={{ color: 'red' }}>*</span></Label>
-                                    <Input
-                                        name="forced"
-                                        type="select"
-                                        placeholder="Select forced display"
-                                        className="form-select"
-                                        onChange={validation.handleChange}
-                                        onBlur={validation.handleBlur}
-                                        value={validation.values.forced || ""}
-                                    >
-                                        <option value="101">Select forced display</option>
-                                        <option value="102">Not Forced</option>
-                                        <option value="103">Forced</option>
-                                    </Input>
-                                    {validation.touched.forced && validation.errors.forced ? (
-                                        <FormFeedback type="invalid">
-                                            {validation.errors.forced}
-                                        </FormFeedback>
-                                    ) : null}
-                                </div>
-                            </Col>
-                            <Col sm="4">
-                                <div className="mb-3">
-                                    <Label className="form-label">Display Type<span style={{ color: 'red' }}>*</span></Label>
-                                    <Input
-                                        name="type"
-                                        type="select"
-                                        placeholder="Select type"
-                                        className="form-select"
-                                        onChange={validation.handleChange}
-                                        onBlur={validation.handleBlur}
-                                        value={validation.values.type || ""}
-                                    >
-                                        <option value="104">Select display type</option>
-                                        <option value="105">Central Display</option>
-                                        <option value="106">Top Scroll</option>
-                                        <option value="106">Bottom Scroll</option>
-                                        <option value="106">Central Display With FP</option>
-                                    </Input>
-                                    {validation.touched.type && validation.errors.type ? (
-                                        <FormFeedback type="invalid">
-                                            {validation.errors.type}
-                                        </FormFeedback>
-                                    ) : null}
-                                </div>
-                            </Col>
-                            <Col sm="4">
-                                <div className="mb-3">
-                                    <Label className="form-label">Duration</Label>
-                                    <Input
-                                        name="duration"
-                                        type="number"
-                                        placeholder="1"
-                                        // className="form-select"
-                                        onChange={validation.handleChange}
-                                        onBlur={validation.handleBlur}
-                                        value={validation.values.duration || ""}
-                                    >
-                                    </Input>
-                                    {validation.touched.duration && validation.errors.duration ? (
-                                        <FormFeedback type="invalid">
-                                            {validation.errors.duration}
-                                        </FormFeedback>
-                                    ) : null}
-                                </div>
-                            </Col>
-                            <Col sm="4">
-                                <div className="mb-3">
-                                    <Label className="form-label">Interval (in seconds) (should be greater than duration)</Label>
-                                    <Input
-                                        name="" interval
-                                        type="number"
-                                        placeholder="1"
-                                        // className="form-select"
-                                        onChange={validation.handleChange}
-                                        onBlur={validation.handleBlur}
-                                        value={validation.values.interval || ""}
-                                    >
-                                    </Input>
-                                    {validation.touched.interval && validation.errors.interval ? (
-                                        <FormFeedback type="invalid">
-                                            {validation.errors.interval}
-                                        </FormFeedback>
-                                    ) : null}
-                                </div>
-                            </Col>
-                            <Col sm="4">
-                                <div>
-                                    <Label htmlFor="customRange1" className="form-label">
-                                        Repetition
-                                    </Label>
-                                    <Input
-                                        type="range"
-                                        className="form-range"
-                                        id="customRange1"
-                                        value={rangeValue}
-                                        onChange={handleRangeChange}
-                                        onClick={handleRangeClick}
-                                        style={{
-                                            width: '100%',
-                                            height: '100%',
-                                            border: 'solid 3px blue',
-                                            cursor: 'pointer',
-                                            borderRadius: '5px',
-                                        }}
-                                    />
-                                    <div style={{ marginTop: '10px' }}>Value: {rangeValue}</div>
-                                </div>
-                            </Col>
-
-                            <Col sm="4">
-                                <div className="mb-3">
-                                    <Label className="form-label">Font Size<span style={{ color: 'red' }}>*</span></Label>
-                                    <Input
-                                        name="fontsize"
-                                        type="select"
-                                        placeholder="Select font size"
-                                        className="form-select"
-                                        onChange={validation.handleChange}
-                                        onBlur={validation.handleBlur}
-                                        value={validation.values.fontsize || ""}
-                                    >
-                                        <option value="201">Default</option>
-                                        <option value="202">Large</option>
-                                        <option value="202">Small</option>
-                                    </Input>
-                                    {validation.touched.fontsize && validation.errors.fontsize ? (
-                                        <FormFeedback type="invalid">
-                                            {validation.errors.fontsize}
-                                        </FormFeedback>
-                                    ) : null}
-                                </div>
-                            </Col>
-                            <Col sm="4">
-                                <div className="mb-3">
-                                    <Label className="form-label">Font Color<span style={{ color: 'red' }}>*</span></Label>
-                                    <Input
-                                        name="fontcolor"
-                                        type="select"
-                                        placeholder="Select font color"
-                                        className="form-select"
-                                        onChange={validation.handleChange}
-                                        onBlur={validation.handleBlur}
-                                        value={validation.values.fontcolor || ""}
-                                    >
-                                        <option value="301">Black</option>
-                                        <option value="302">Navy Blue</option>
-                                        <option value="303">Blue</option>
-                                        <option value="304">Green</option>
-                                        <option value="305">Teal Green</option>
-                                        <option value="306">Lime</option>
-                                    </Input>
-                                    {validation.touched.fontcolor && validation.errors.fontcolor ? (
-                                        <FormFeedback type="invalid">
-                                            {validation.errors.fontcolor}
-                                        </FormFeedback>
-                                    ) : null}
-                                </div>
-                            </Col>
-
-                            <Col sm="4">
-                                <div className="mb-3">
-                                    <Label className="form-label">Background Color<span style={{ color: 'red' }}>*</span></Label>
-                                    <Input
-                                        name="backgroundcolor"
-                                        type="select"
-                                        placeholder="Select background color"
-                                        className="form-select"
-                                        onChange={validation.handleChange}
-                                        onBlur={validation.handleBlur}
-                                        value={validation.values.backgroundcolor || ""}
-                                    >
-                                        <option value="11">Black</option>
-                                        <option value="12">Navy Blue</option>
-                                        <option value="13">Blue</option>
-                                        <option value="14">Green</option>
-                                        <option value="15">Teal Green</option>
-                                        <option value="16">Lime</option>
-                                    </Input>
-                                    {validation.touched.backgroundcolor && validation.errors.backgroundcolor ? (
-                                        <FormFeedback type="invalid">
-                                            {validation.errors.backgroundcolor}
-                                        </FormFeedback>
-                                    ) : null}
-                                </div>
-                            </Col>
-                            <Col sm="4">
-                                <div className="mb-3">
-                                    <Label className="form-label">Background Area<span style={{ color: 'red' }}>*</span></Label>
-                                    <Input
-                                        name="backgroundarea"
-                                        type="select"
-                                        placeholder="backgroundarea"
-                                        className="form-select"
-                                        onChange={validation.handleChange}
-                                        onBlur={validation.handleBlur}
-                                        value={validation.values.backgroundarea || ""}
-                                    >
-                                        <option value="21">20</option>
-                                        <option value="22">30</option>
-                                        <option value="23">40</option>
-                                        <option value="24">50</option>
-                                        <option value="25">60</option>
-                                        <option value="26">70</option>
-                                        <option value="27">80</option>
-                                        <option value="28">90</option>
-                                        <option value="29">100</option>
-                                    </Input>
-                                    {validation.touched.backgroundcolor && validation.errors.backgroundcolor ? (
-                                        <FormFeedback type="invalid">
-                                            {validation.errors.backgroundcolor}
-                                        </FormFeedback>
-                                    ) : null}
-                                </div>
-                            </Col>
-                        </Row>
-
-
-                        <Row>
-                            <Col>
-                                <ModalFooter>
-                                    <button type="submit" className="btn btn-success save-user">
-                                        Save
-                                    </button>
-
-                                    {/* <button
-                                        type="button"
-                                        className="btn btn-outline-danger"
-                                        onClick={() => {
-                                            validation.resetForm();
-                                            toggle();
-                                        }}
-                                    >
-                                        Cancel
-                                    </button> */}
-                                </ModalFooter>
-                            </Col>
-                        </Row>
-                    </Form>
-                </ModalBody>
-                {/* </Modal> */}
-            </Modal >
-        </>
-    );
+                      Cancel
+                    </button>
+                  </ModalFooter>
+                </Col>
+              </Row>
+            )}
+          </Form>
+        </ModalBody>
+        {/* </Modal> */}
+      </Modal>
+    </>
+  );
 };
 
 ViewNSTVList.propTypes = {
-    toggle: PropTypes.func,
-    isOpen: PropTypes.bool,
+  toggle: PropTypes.func,
+  isOpen: PropTypes.bool,
 };
 
 export default ViewNSTVList;

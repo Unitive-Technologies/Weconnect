@@ -570,7 +570,8 @@ export const getOSDConfigurationStatus = () =>
 
 export const addNewOSDConfiguration = (osdconfig) =>
   post(url.ADD_NEW_OSDCONFIGURATIONLIST, osdconfig);
-
+export const updateOSDConfiguration = (id, osdConfig) =>
+  put(url.UPDATE_OSDCONFIGURATION(id), osdConfig);
 // export const getOSDTemplate = () => get(url.GET_OSDTEMPLATE);
 export const getOSDTemplateTemplateFor = () =>
   get(url.GET_OSDTEMPLATE_TEMPLATEFOR);

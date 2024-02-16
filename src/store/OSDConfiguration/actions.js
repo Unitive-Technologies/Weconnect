@@ -29,6 +29,9 @@ import {
   ADD_NEW_OSDCONFIGURATION,
   ADD_OSDCONFIGURATION_SUCCESS,
   ADD_OSDCONFIGURATION_FAIL,
+  UPDATE_OSDCONFIGURATION,
+  UPDATE_OSDCONFIGURATION_FAIL,
+  UPDATE_OSDCONFIGURATION_SUCCESS,
 } from "./actionTypes";
 
 export const getOSDConfiguration = () => ({
@@ -48,16 +51,12 @@ export const getOSDConfigurationFail = (error) => ({
   payload: error,
 });
 
-export const addNewOSDConfiguration = (
-  osdConfiguration
-) => ({
+export const addNewOSDConfiguration = (osdConfiguration) => ({
   type: ADD_NEW_OSDCONFIGURATION,
   payload: osdConfiguration,
 });
 
-export const addOSDConfigurationSuccess = (
-  osdConfiguration
-) => ({
+export const addOSDConfigurationSuccess = (osdConfiguration) => ({
   type: ADD_OSDCONFIGURATION_SUCCESS,
   payload: osdConfiguration,
 });
@@ -87,7 +86,9 @@ export const getOSDConfigurationForcedDisplay = () => ({
   type: GET_OSDCONFIGURATION_FORCESDDISPLAY,
 });
 
-export const getOSDConfigurationForcedDisplaySuccess = (osdConfigurationForcedDisplay) => {
+export const getOSDConfigurationForcedDisplaySuccess = (
+  osdConfigurationForcedDisplay
+) => {
   return {
     type: GET_OSDCONFIGURATION_FORCESDDISPLAY_SUCCESS,
     payload: osdConfigurationForcedDisplay,
@@ -119,7 +120,9 @@ export const getOSDConfigurationFontColor = () => ({
   type: GET_OSDCONFIGURATION_FONTCOLOR,
 });
 
-export const getOSDConfigurationFontColorSuccess = (osdConfigurationFontColor) => {
+export const getOSDConfigurationFontColorSuccess = (
+  osdConfigurationFontColor
+) => {
   return {
     type: GET_OSDCONFIGURATION_FONTCOLOR_SUCCESS,
     payload: osdConfigurationFontColor,
@@ -135,7 +138,9 @@ export const getOSDConfigurationBackgroundColor = () => ({
   type: GET_OSDCONFIGURATION_BACKGROUNDCOLOR,
 });
 
-export const getOSDConfigurationBackgroundColorSuccess = (osdConfigurationBackgroundColor) => {
+export const getOSDConfigurationBackgroundColorSuccess = (
+  osdConfigurationBackgroundColor
+) => {
   return {
     type: GET_OSDCONFIGURATION_BACKGROUNDCOLOR_SUCCESS,
     payload: osdConfigurationBackgroundColor,
@@ -151,7 +156,9 @@ export const getOSDConfigurationFontSize = () => ({
   type: GET_OSDCONFIGURATION_FONTSIZE,
 });
 
-export const getOSDConfigurationFontSizeSuccess = (osdConfigurationFontSize) => {
+export const getOSDConfigurationFontSizeSuccess = (
+  osdConfigurationFontSize
+) => {
   return {
     type: GET_OSDCONFIGURATION_FONTSIZE_SUCCESS,
     payload: osdConfigurationFontSize,
@@ -167,7 +174,9 @@ export const getOSDConfigurationBackgroundArea = () => ({
   type: GET_OSDCONFIGURATION_BACKGROUNDAREA,
 });
 
-export const getOSDConfigurationBackgroundAreaSuccess = (osdConfigurationBackgroundArea) => {
+export const getOSDConfigurationBackgroundAreaSuccess = (
+  osdConfigurationBackgroundArea
+) => {
   return {
     type: GET_OSDCONFIGURATION_BACKGROUNDAREA_SUCCESS,
     payload: osdConfigurationBackgroundArea,
@@ -195,4 +204,17 @@ export const getOSDConfigurationStatusFail = (error) => ({
   payload: error,
 });
 
+export const updateOSDConfiguration = (osdConfiguration) => ({
+  type: UPDATE_OSDCONFIGURATION,
+  payload: osdConfiguration,
+});
 
+export const updateOSDConfigurationSuccess = (osdConfiguration) => ({
+  type: UPDATE_OSDCONFIGURATION_SUCCESS,
+  payload: osdConfiguration,
+});
+
+export const updateOSDConfigurationFail = (error) => ({
+  type: UPDATE_OSDCONFIGURATION_FAIL,
+  payload: error,
+});
