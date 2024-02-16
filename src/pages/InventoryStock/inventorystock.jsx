@@ -60,6 +60,9 @@ import {
   getInventoryAllottedSmartcardlist as onGetInventoryAllottedSmartcardlist,
   getInventoryAllottedUsertype as onGetInventoryAllottedUsertype,
   getInventoryAllottedOperatorlist as onGetInventoryAllottedOperatorlist,
+  getInventoryAllottedStblist as onGetInventoryAllottedStblist,
+  getInventoryAllottedDistributor as onGetInventoryAllottedDistributor,
+  getInventoryAllottedLco as onGetInventoryAllottedLco,
 } from "/src/store/inventoryallotted/actions";
 import StockStb from "./StockStb";
 import StockPairing from "./StockPairing";
@@ -118,6 +121,9 @@ const InventoryStock = (props) => {
     []
   );
   const [showDeallotSmartcard, setShowDeallotSmartcard] = useState(false);
+  const [showDeallotStb, setShowDeallotStb] = useState(false);
+  const [showAllottedStb, setShowAllottedStb] = useState(false);
+  const [selectedAllottedStbs, setSelectedAllottedStbs] = useState([]);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -229,6 +235,9 @@ const InventoryStock = (props) => {
       allottedsmartcardlist: allottedpairing.allottedsmartcardlist,
       allottedusertype: allottedpairing.allottedusertype,
       allottedoperatorlist: allottedpairing.allottedoperatorlist,
+      allotteddistributor: allottedpairing.allotteddistributor,
+      allottedstblist: allottedpairing.allottedstblist,
+      allottedlco: allottedpairing.allottedlco,
     })
   );
 
@@ -243,6 +252,9 @@ const InventoryStock = (props) => {
     allottedsmartcardlist,
     allottedusertype,
     allottedoperatorlist,
+    allotteddistributor,
+    allottedlco,
+    allottedstblist,
   } = useSelector(inventoryallottedProperties);
 
   useEffect(() => {
@@ -253,6 +265,9 @@ const InventoryStock = (props) => {
       dispatch(onGetInventoryAllottedOperatorlist());
       dispatch(onGetInventoryAllottedSmartcardlist());
       dispatch(onGetInventoryAllottedUsertype());
+      dispatch(onGetInventoryAllottedDistributor());
+      dispatch(onGetInventoryAllottedLco());
+      dispatch(onGetInventoryAllottedStblist());
     }
   }, [dispatch, allottedpairing]);
 
