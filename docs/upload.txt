@@ -5,10 +5,41 @@ Handle upload of the files
 2. Upload the completed file
 3. Schedule the creation of the entity
 
+User
+-> https://sms.unitch.in/api/index.php/v1/user-bulk/upload-q?vr=web1.0
+Type: POST
+{"meta_data":{"action_type":"add"},"url":""}
+
+Response:
+{
+    "success": true,
+    "status": 201,
+    "data": {
+        "_id": 2894,
+        "token": "ULK9ByqEdA",
+        "fields": [
+            "username",
+            "name",
+            "mobile_no",
+            "email",
+            "password",
+            "role_name",
+            "status",
+            "operator_type_name",
+            "operator_code",
+            "designation_code",
+            "block_message"
+        ],
+        "type": "User",
+        "sample-file": "https://sms.unitch.in/api/download.php?uploadq-sample=user"
+    }
+}
+
 Download sample file
 ->  url: https://sms.unitch.in/api/index.php/v1/administrative-division/upload-q?vr=web1.0
     type: POST
-    Request Body: {"meta_data":{"type":2},"url":""}
+    Request Body: 
+    {"meta_data":{"type":2},"url":""}
     Response Body: 
     {
         "success": true,

@@ -23,6 +23,41 @@ const UploadUserModal = (props) => {
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
 
+  // downloadTemplate = () => {
+  //   axios({
+  //     url: 'http://api-url.com/download-template', // replace with your API endpoint
+  //     method: 'GET',
+  //     responseType: 'blob', // important
+  //   }).then((response) => {
+  //     const url = window.URL.createObjectURL(new Blob([response.data]));
+  //     const link = document.createElement('a');
+  //     link.href = url;
+  //     link.setAttribute('download', 'template.csv'); // or any other extension
+  //     document.body.appendChild(link);
+  //     link.click();
+  //   });
+  // }
+
+  // uploadFile = (event) => {
+  //   const formData = new FormData();
+  //   formData.append('file', event.target.files[0]); // appending file
+  //   axios.post('http://api-url.com/upload-file', formData)
+  //     .then((res) => {
+  //       alert("File upload success");
+  //     }).catch((err) => {
+  //       alert("File upload error");
+  //     });
+  // }
+
+  // render() {
+  //   return (
+  //     <div>
+  //       <button onClick={this.downloadTemplate}>Download Template</button>
+  //       <input type="file" onChange={this.uploadFile} />
+  //     </div>
+  //   );
+  // }
+
   const [selectedFiles, setSelectedFiles] = useState([]);
 
   function handleAcceptedFiles(files) {
