@@ -731,9 +731,22 @@ export const getPromoVoucherBouquet = () => get(url.GET_PROMOVOUCHER_BOUQUET);
 
 export const addNewPromoVoucher = (provoucher) =>
   post(url.ADD_NEW_PROMOVOUCHER, provoucher);
-export const getSMSMessageTempList = () => get(url.GET_SMSMESSAGETEMPLIST);
+
+// export const getSMSMessageTempList = () => get(url.GET_SMSMESSAGETEMPLIST);
 export const addNewSMSMessageTempList = (smsmsg) =>
   post(url.ADD_NEW_SMSMESSAGETEMPLIST, smsmsg);
+
+export const updateSMSMessageTempList = (id, smsmsg) => put(url.UPDATE_SMSMESSAGETEMPLIST(id), smsmsg);
+export const getSMSMessageTempListStatus = () => get(url.GET_SMSMESSAGETEMPLIST_STATUS);
+export const getSMSMessageTempListSubcategory = () => get(url.GET_SMSMESSAGETEMPLIST_SUBCATEGORY);
+export const getSMSMessageTempListCategory = () => get(url.GET_SMSMESSAGETEMPLIST_CATEGORY);
+export const getSMSMessageTempListSender = () => get(url.GET_SMSMESSAGETEMPLIST_SENDER);
+
+export const getSMSMessageTempList = async (currentPage, perPage = 20) => {
+  console.log("Tax - Current Page in fakebackend: ", currentPage);
+  console.log("Tax - Per Page: ", perPage);
+  return await getCompleteResponse(url.getSMSMessageTempListUrl(currentPage, perPage));
+};
 
 export const getInventoryStockSmartcard = () =>
   get(url.GET_INVENTORYSTOCK_SMARTCARD);

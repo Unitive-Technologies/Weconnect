@@ -27,7 +27,6 @@ function* fetchTax() {
   }
 }
 
-
 function* onUpdateTax({ payload: tax }) {
   console.log("Tax in onUpdate:" + JSON.stringify(tax));
   try {

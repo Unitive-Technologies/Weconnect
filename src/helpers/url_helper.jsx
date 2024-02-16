@@ -353,6 +353,17 @@ export const ADD_INVENTORYSTATELIST = "/add/inventorystatelist";
 export const GET_SMSMESSAGETEMPLIST =
   "/sms-message-template?expand=created_by_lbl,status_lbl,sender_id_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_SMSMESSAGETEMPLIST = "/add/SMSMessageTemplate";
+export const UPDATE_SMSMESSAGETEMPLIST = (id) => `/sms-message-template/${id}?vr=web1.0`;
+export const GET_SMSMESSAGETEMPLIST_SUBCATEGORY = "/list/SmsSubCategory?fields=id,name&category=otp&vr=web1.0";
+export const GET_SMSMESSAGETEMPLIST_CATEGORY = "/list/SmsCategory?fields=id,name&vr=web1.0";
+export const GET_SMSMESSAGETEMPLIST_SENDER = "/config-master/list?fields=id,name,attribute&filter[name]=SMS_GATEWAY&vr=web1.0";
+export const GET_SMSMESSAGETEMPLIST_STATUS = "/list/status?fields=id,name&vr=web1.0";
+export const getSMSMessageTempListUrl = (currPage, perPage) => {
+  console.log("current page in users url - ", currPage, perPage);
+  return `/sms-message-template?expand=created_by_lbl,status_lbl,sender_id_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+};
+
+
 
 export const GET_BOUQUET =
   "/bouque?expand=setting,created_by_lbl,lco_rate,type_lbl,status_lbl,boxtype_lbl,rate,category_lbl,is_exclusive_lbl,is_promotional_lbl,additional_rates,is_online_app_lbl&page=1&per-page=50&vr=web1.0";

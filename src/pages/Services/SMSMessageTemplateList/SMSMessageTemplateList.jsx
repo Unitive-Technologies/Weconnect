@@ -207,7 +207,7 @@ const SMSMessageTemplateList = (props) => {
       },
       {
         Header: "Sender",
-        accessor: "sender_id",
+        accessor: "sender_id_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return <Sender {...cellProps} />;
@@ -359,7 +359,7 @@ const SMSMessageTemplateList = (props) => {
                       // isAddUserList={true}
                       isShowingPageLength={true}
                       // iscustomPageSizeOptions={true}
-                      handleUserClick={() => {}}
+                      handleUserClick={() => { }}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"
