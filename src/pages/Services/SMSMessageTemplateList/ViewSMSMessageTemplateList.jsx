@@ -22,7 +22,8 @@ import ViewMetaData from "./ViewMetaData"
 const ViewSMSMessageTemplateList = (props) => {
   const { isOpen, resetSelection, toggleViewModal, SMSMsgTemp, smsmessagetempSubcategory, smsmessagetempCategory, smsmessagetempStatus, smsmessagetempSender } = props;
 
-  console.log("View in  SMS Message Template List :" + smsmessagetempSubcategory);
+  console.log("View in  SMS Message Template List :" + JSON.stringify(SMSMsgTemp));
+  console.log("View in  SMS Message Template List :" + JSON.stringify(smsmessagetempSubcategory));
   const dispatch = useDispatch();
 
   const [showEditSMS, setShowEditSMS] = useState(false);
@@ -61,10 +62,10 @@ const ViewSMSMessageTemplateList = (props) => {
         name: values.name,
         template: values.template,
         template_id: values.template_id,
-        cat_id: Yup.string().required("cat_id"),
-        sub_cat_id: Yup.string().required("sub_cat_id"),
+        cat_id: values.cat_id,
+        sub_cat_id: values.sub_cat_id,
         status_lbl: values.status_lbl,
-        sender_id: Yup.string().required("sender_id"),
+        sender_id: values.sender_id,
         // serviceid: values["serviceid"],
         status: values.status,
         created_at: new Date(),
@@ -198,6 +199,7 @@ const ViewSMSMessageTemplateList = (props) => {
                 ) : null}
               </div>
             </Col>
+            {console.log("SMS Messgage Temp Status" + smsmessagetempSubcategory)}
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
@@ -256,7 +258,7 @@ const ViewSMSMessageTemplateList = (props) => {
                 ) : null}
               </div>
             </Col>
-            {console.log("SMS Messgage Temp Status" + JSON.stringify(smsmessagetempSubcategory))}
+
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
