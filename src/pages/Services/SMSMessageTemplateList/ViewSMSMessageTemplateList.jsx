@@ -38,7 +38,7 @@ const ViewSMSMessageTemplateList = (props) => {
       template_id: (SMSMsgTemp && SMSMsgTemp.template_id) || "",
       cat_id: (SMSMsgTemp && SMSMsgTemp.cat_id) || "",
       sub_cat_id: (SMSMsgTemp && SMSMsgTemp.sub_cat_id) || "",
-      status_lbl: (SMSMsgTemp && SMSMsgTemp.status_lbl) || "",
+      status_lbl: (SMSMsgTemp && SMSMsgTemp.status) || "",
       sender_id: (SMSMsgTemp && SMSMsgTemp.sender_id) || "",
       created_at: (SMSMsgTemp && SMSMsgTemp.created_at) || "",
       created_by: (SMSMsgTemp && SMSMsgTemp.created_by) || "my mso(mso)",
@@ -46,12 +46,12 @@ const ViewSMSMessageTemplateList = (props) => {
     validationSchema: Yup.object({
       code: Yup.string().required("Enter template Code"),
       name: Yup.string().required("Enter template name"),
-      template: Yup.string().required("Enter template"),
-      template_id: Yup.string().required("Enter template id"),
-      cat_id: Yup.string().required("Enter category id"),
-      sub_cat_id: Yup.string().required("Enter subcategory id"),
-      status_lbl: Yup.string().required("Enter status"),
-      sender_id: Yup.string().required("Enter sender"),
+      // template: Yup.string().required("Enter template"),
+      // template_id: Yup.string().required("Enter template id"),
+      // cat_id: Yup.string().required("Enter category id"),
+      // sub_cat_id: Yup.string().required("Enter subcategory id"),
+      status: Yup.string().required("Enter status"),
+      // sender_id: Yup.string().required("Enter sender"),
     }),
     onSubmit: (values) => {
       const updateSMSMessageTemplateList = {
@@ -62,7 +62,7 @@ const ViewSMSMessageTemplateList = (props) => {
         template_id: values.template_id,
         cat_id: Yup.string().required("cat_id"),
         sub_cat_id: Yup.string().required("sub_cat_id"),
-        status_lbl: values.status_lbl,
+        status_lbl: parseInt(values.status_lbl),
         sender_id: Yup.string().required("sender_id"),
         // serviceid: values["serviceid"],
         created_at: new Date(),
@@ -249,7 +249,7 @@ const ViewSMSMessageTemplateList = (props) => {
                 >
                   {smsmessagetempSender.map((sender_id) => (
                     <option key={sender_id.id} value={sender_id.id}>
-                      {sender_id.name}
+                      {sender_id.attribute}
                     </option>
                   ))}
                 </Input>
@@ -266,7 +266,7 @@ const ViewSMSMessageTemplateList = (props) => {
                   Status<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="status"
+                  name="status_lbl"
                   type="select"
                   placeholder="Select Status"
                   className="form-select"

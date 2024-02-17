@@ -200,7 +200,7 @@ const SMSMessageTemplateList = (props) => {
   };
 
   const resetSelection = () => {
-    setViewTaxList({});
+    setViewSMSData({});
   };
 
   const keyField = "id";
