@@ -25,9 +25,9 @@ import { getStateUsers as onGetStateUsers } from "../../../store/stateusers/acti
 
 const EditRegionalOfficeModal = (props) => {
   const {
-    closeViewModal,
+    toggleCloseModal,
     regionalOffData,
-    closeEditModal,
+    // closeEditModal,
     phaseList,
     statusList,
   } = props;
@@ -39,7 +39,9 @@ const EditRegionalOfficeModal = (props) => {
   const [selectedState, setSelectedState] = useState("");
   const [cityList, setCityList] = useState([]);
   const [selectedDistrict, setSelectedDistrict] = useState("");
-
+  console.log("state value:" + selectedState);
+  console.log("district value:" + selectedDistrict);
+  // console.log("city value:" + validation.values.city_lbl);
   const selectStatesState = (state) => state.stateUsers;
 
   const StatesProperties = createSelector(selectStatesState, (states) => ({
@@ -48,8 +50,8 @@ const EditRegionalOfficeModal = (props) => {
 
   const { statesList } = useSelector(StatesProperties);
   const handleCancel = () => {
-    closeViewModal();
-    closeEditModal();
+    toggleCloseModal();
+    // closeEditModal();
   };
 
   useEffect(() => {
@@ -152,7 +154,7 @@ const EditRegionalOfficeModal = (props) => {
       contact_person: (regionalOffData && regionalOffData.contact_person) || "",
       mobile_no: (regionalOffData && regionalOffData.mobile_no) || "",
       phone_no: (regionalOffData && regionalOffData.phone_no) || "",
-      faxno: (regionalOffData && regionalOffData.faxno) || "",
+      fax_no: (regionalOffData && regionalOffData.fax_no) || "",
       state_lbl: (regionalOffData && regionalOffData.state_id) || "",
       district_lbl: (regionalOffData && regionalOffData.district_id) || "",
       city_lbl: (regionalOffData && regionalOffData.city_id) || "",
@@ -160,7 +162,7 @@ const EditRegionalOfficeModal = (props) => {
       panno: (regionalOffData && regionalOffData.panno) || "",
       status_lbl: (regionalOffData && regionalOffData.status) || "",
       email: (regionalOffData && regionalOffData.email) || "",
-      pincode: (regionalOffData && regionalOffData.pincode) || "",
+      pincode: (regionalOffData && regionalOffData.pincodef) || "",
       por_number: (regionalOffData && regionalOffData.por_number) || "",
       reg_phase: (regionalOffData && regionalOffData.reg_phase) || "",
       reg_startdate: (regionalOffData && regionalOffData.reg_startdate) || "",
@@ -168,11 +170,24 @@ const EditRegionalOfficeModal = (props) => {
       gst_date: (regionalOffData && regionalOffData.gst_date) || "",
       credit_limit: (regionalOffData && regionalOffData.credit_limit) || "",
       area_id: (regionalOffData && regionalOffData.area_id) || "",
-      // agreement_data: [],
-      username: (regionalOffData && regionalOffData.username) || "",
-      password: (regionalOffData && regionalOffData.password) || "",
-      confirmpassword:
-        (regionalOffData && regionalOffData.confirmpassword) || "",
+      // agreement_data: {
+      //   name: values["upload"].name,
+      //   type: values["upload"].type,
+      //   ext: values["upload"].ext,
+      //   data: values["upload"].data,
+      //   start_date: values["agreestart"],
+      //   end_date: values["agreeend"],
+      // },
+      agreestart:
+        (regionalOffData &&
+          regionalOffData.agreement_data &&
+          regionalOffData.agreement_data.start_date) ||
+        "",
+      agreeend:
+        (regionalOffData &&
+          regionalOffData.agreement_data &&
+          regionalOffData.agreement_data.end_date) ||
+        "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
@@ -193,8 +208,7 @@ const EditRegionalOfficeModal = (props) => {
     }),
     onSubmit: (values) => {
       // debugger;
-      const updateRegionalOffice = {
-        id: regionalOffData.id,
+      const updatedRegionalOffice = {
         name: values["name"],
         addr: `${values["addr1"]}, ${values["addr2"]}, ${values["addr3"]}`,
         addr1: values["addr1"],
@@ -233,10 +247,10 @@ const EditRegionalOfficeModal = (props) => {
         reg_phase: values["reg_phase"],
         type: 1,
       };
-      console.log("newRO:" + updateRegionalOffice);
+      console.log("updatedRO:" + updatedRegionalOffice);
 
       // save new user
-      dispatch(onUpdateRegionalOffice(updateRegionalOffice));
+      dispatch(onUpdateRegionalOffice(updatedRegionalOffice));
       dispatch(onGetRegionalOffice());
       validation.resetForm();
       resetSection();
@@ -246,6 +260,62 @@ const EditRegionalOfficeModal = (props) => {
     //   validation.setValues(validation.initialValues);
     // },
   });
+  const getDistrictValue = async (e) => {
+    try {
+      // Assuming you have a token stored in localStorage
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${selectedState}&filter[type]=2&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token, // Include your token here
+          },
+        }
+      );
+
+      console.log(
+        "districtlist after selection : " + JSON.stringify(response.data.data)
+      );
+      setDistrictsList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching policy data:", error);
+      // Handle error if necessary
+    }
+    // };
+  };
+
+  const getCityValue = async (e) => {
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${selectedState}&filter[district_id]=${selectedDistrict}&filter[type]=3&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      console.log(
+        "cityList after selection : " + JSON.stringify(response.data.data)
+      );
+      setCityList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching policy data:", error);
+      // Handle error if necessary
+    }
+    // };
+  };
+  useEffect(() => {
+    if (regionalOffData && regionalOffData.state_id) {
+      setSelectedState(regionalOffData.state_id);
+      setSelectedDistrict(regionalOffData.district_id);
+    }
+    getDistrictValue();
+    getCityValue();
+  }, [regionalOffData]);
   return (
     <>
       <ModalHeader tag="h4" toggle={handleCancel}>
@@ -389,7 +459,7 @@ const EditRegionalOfficeModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.status_lbl || ""}
                 >
-                  <option value="">Select Status</option>
+                  {/* <option value="">Select Status</option> */}
                   {statusList &&
                     statusList.map((status) => (
                       <option key={status.id} value={status.id}>
@@ -497,7 +567,7 @@ const EditRegionalOfficeModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={selectedState}
                 >
-                  <option value="">Select State</option>
+                  {/* <option value="">Select State</option> */}
                   {statesList.map((state) => (
                     <option key={state.id} value={state.id}>
                       {state.name}
@@ -525,7 +595,7 @@ const EditRegionalOfficeModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={selectedDistrict}
                 >
-                  <option value="">Select District</option>
+                  {/* <option value="">Select District</option> */}
                   {districtsList.map((district) => (
                     <option key={district.id} value={district.id}>
                       {district.name}
@@ -554,7 +624,7 @@ const EditRegionalOfficeModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.city_lbl || ""}
                 >
-                  <option value="">Select City</option>
+                  {/* <option value="">Select City</option> */}
                   {cityList.map((city) => (
                     <option key={city.id} value={city.id}>
                       {city.name}
@@ -712,7 +782,7 @@ const EditRegionalOfficeModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.reg_phase || ""}
                 >
-                  <option value="">Select Phase</option>
+                  {/* <option value="">Select Phase</option> */}
                   {phaseList &&
                     phaseList.map((phase) => (
                       <option key={phase.id} value={phase.id}>
@@ -1033,84 +1103,6 @@ const EditRegionalOfficeModal = (props) => {
             </Col>
           </Row>
 
-          <Row>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">
-                  Login ID<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="username"
-                  label="Login ID"
-                  type="text"
-                  placeholder="Login ID"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.username || ""}
-                  invalid={
-                    validation.touched.username && validation.errors.username
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.username && validation.errors.username ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.username}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">Password</Label>
-                <Input
-                  name="password"
-                  label="Password"
-                  type="text"
-                  placeholder="Password"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.password || ""}
-                  invalid={
-                    validation.touched.password && validation.errors.password
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.password && validation.errors.password ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.password}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">Confirm-Password</Label>
-                <Input
-                  name="confirmpassword"
-                  label="Confirm Password"
-                  type="text"
-                  placeholder="Retype Password"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.confirmpassword || ""}
-                  invalid={
-                    validation.touched.confirmpassword &&
-                    validation.errors.confirmpassword
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.confirmpassword &&
-                validation.errors.confirmpassword ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.confirmpassword}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-          </Row>
           <Row>
             <Col>
               <ModalFooter>
