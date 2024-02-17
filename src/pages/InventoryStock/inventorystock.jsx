@@ -469,120 +469,93 @@ const InventoryStock = (props) => {
   }, [selectedAllottedSmartcards]);
 
   const handleSelectedRows = (row) => {
-    // Check if the row is already selected
     const isSelected = selectedRows.some(
       (selectedRow) => selectedRow.id === row.id
     );
-
-    // If the row is selected, remove it from the selected rows array
     if (isSelected) {
       const updatedSelectedRows = selectedRows.filter(
         (selectedRow) => selectedRow.id !== row.id
       );
       setSelectedRows(updatedSelectedRows);
     } else {
-      // If the row is not selected, add it to the selected rows array
       setSelectedRows([...selectedRows, row]);
     }
   };
 
   const handleSelectedStbs = (row) => {
-    // Check if the row is already selected
     const isSelected = selectedStbs.some(
       (selectedStb) => selectedStb.id === row.id
     );
-
-    // If the row is selected, remove it from the selected rows array
     if (isSelected) {
       const updatedSelectedStbs = selectedStbs.filter(
         (selectedStb) => selectedStb.id !== row.id
       );
       setSelectedStbs(updatedSelectedStbs);
     } else {
-      // If the row is not selected, add it to the selected rows array
       setSelectedStbs([...selectedStbs, row]);
     }
   };
 
   const handleSelectedPairings = (row) => {
-    // Check if the row is already selected
     const isSelected = selectedPairings.some(
       (selectedPairing) => selectedPairing.id === row.id
     );
-
-    // If the row is selected, remove it from the selected rows array
     if (isSelected) {
       const updatedSelectedPairings = selectedPairings.filter(
         (selectedPairing) => selectedPairing.id !== row.id
       );
       setSelectedPairings(updatedSelectedPairings);
     } else {
-      // If the row is not selected, add it to the selected rows array
       setSelectedPairings([...selectedPairings, row]);
     }
   };
 
   const handleSelectedFaultySc = (row) => {
-    // Check if the row is already selected
     const isSelected = selectedFaultyScs.some(
       (selectedFaultySc) => selectedFaultySc.id === row.id
     );
-
-    // If the row is selected, remove it from the selected rows array
     if (isSelected) {
       const updatedSelectedFaultyScs = selectedFaultyScs.filter(
         (selectedFaultySc) => selectedFaultySc.id !== row.id
       );
       setSelectedFaultyScs(updatedSelectedFaultyScs);
     } else {
-      // If the row is not selected, add it to the selected rows array
       setSelectedFaultyScs([...selectedFaultyScs, row]);
     }
   };
 
   const handleSelectedFaultyStb = (row) => {
-    // Check if the row is already selected
     const isSelected = selectedFaultyStbs.some(
       (selectedFaultyStb) => selectedFaultyStb.id === row.id
     );
-
-    // If the row is selected, remove it from the selected rows array
     if (isSelected) {
       const updatedSelectedFaultyStbs = selectedFaultyStbs.filter(
         (selectedFaultyStb) => selectedFaultyStb.id !== row.id
       );
       setSelectedFaultyStbs(updatedSelectedFaultyStbs);
     } else {
-      // If the row is not selected, add it to the selected rows array
       setSelectedFaultyStbs([...selectedFaultyStbs, row]);
     }
   };
 
   const handleSelectedFaultyPairing = (row) => {
-    // Check if the row is already selected
     const isSelected = selectedFaultyPairings.some(
       (selectedFaultyPairing) => selectedFaultyPairing.id === row.id
     );
-
-    // If the row is selected, remove it from the selected rows array
     if (isSelected) {
       const updatedSelectedFaultyPairings = selectedFaultyPairings.filter(
         (selectedFaultyPairing) => selectedFaultyPairing.id !== row.id
       );
       setSelectedFaultyPairings(updatedSelectedFaultyPairings);
     } else {
-      // If the row is not selected, add it to the selected rows array
       setSelectedFaultyPairings([...selectedFaultyPairings, row]);
     }
   };
 
   const handleSelectedAllottedSmartcards = (row) => {
-    // Check if the row is already selected
     const isSelected = selectedAllottedSmartcards.some(
       (selectedAllottedSmartcard) => selectedAllottedSmartcard.id === row.id
     );
-
-    // If the row is selected, remove it from the selected rows array
     if (isSelected) {
       const updatedSelectedAllottedSmartcards =
         selectedAllottedSmartcards.filter(
@@ -590,13 +563,12 @@ const InventoryStock = (props) => {
         );
       setSelectedAllottedSmartcards(updatedSelectedAllottedSmartcards);
     } else {
-      // If the row is not selected, add it to the selected rows array
       setSelectedAllottedSmartcards([...selectedAllottedSmartcards, row]);
     }
   };
 
-  const commonColumns = useMemo(
-    () => [
+  const columns = useMemo(() => {
+    const commonColumns = [
       {
         Header: "*",
         disableFilters: true,
@@ -787,34 +759,21 @@ const InventoryStock = (props) => {
           );
         },
       },
-    ],
-    [selectedOption]
-  );
+    ];
 
-  // const columns = useMemo(() => {
-  //   // Create a copy of common columns
-  //   const columnsCopy = [...commonColumns];
-
-  //   // Conditionally add the "Allotted To" column if the selected option is "Allotted"
-  //   if (selectedOption === "Allotted") {
-  //     columnsCopy.push({
-  //       Header: "Allotted To",
-  //       accessor: "operator_lbl",
-  //       filterable: true,
-  //       Cell: (cellProps) => {
-  //         return (
-  //           <p className="text-muted mb-0">
-  //             {cellProps.row.original.operator_lbl}
-  //           </p>
-  //         );
-  //       },
-  //     });
-  //   }
-  //   return columnsCopy;
-  // }, [selectedOption]);
-
-  const columns = useMemo(() => {
-    const commonColumns = [
+    const columnsWithAllottedTo = [
+      {
+        Header: "*",
+        disableFilters: true,
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <>
+              <input type="checkbox" />
+            </>
+          );
+        },
+      },
       {
         Header: "#",
         disableFilters: true,
@@ -845,6 +804,18 @@ const InventoryStock = (props) => {
                 {cellProps.row.original.smartcardno}
               </p>
             </>
+          );
+        },
+      },
+      {
+        Header: "Allotted To",
+        accessor: "operator_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.operator_lbl}
+            </p>
           );
         },
       },
@@ -995,23 +966,6 @@ const InventoryStock = (props) => {
       },
     ];
 
-    const columnsWithAllottedTo = [
-      ...commonColumns,
-      {
-        Header: "Allotted To",
-        accessor: "operator_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.operator_lbl}
-            </p>
-          );
-        },
-      },
-    ];
-
-    // Return columns based on selectedOption
     return selectedOption === "Allotted"
       ? columnsWithAllottedTo
       : commonColumns;
