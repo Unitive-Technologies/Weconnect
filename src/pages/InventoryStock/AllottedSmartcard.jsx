@@ -236,7 +236,7 @@ function AllottedSmrtcard(props) {
           }}
         >
           <Row>
-            <Col lg={4}>
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">
                   User Type<span style={{ color: "red" }}>*</span>
@@ -272,7 +272,7 @@ function AllottedSmrtcard(props) {
               </div>
             </Col>
             {usertype !== "" ? (
-              <Col lg={4}>
+              <Col lg={3}>
                 <div className="mb-3">
                   <Label className="form-label">
                     Select REGIONAL OFFICE
@@ -281,7 +281,7 @@ function AllottedSmrtcard(props) {
                   <Input
                     name="operator_id"
                     type="select"
-                    placeholder="Select CAS Type"
+                    placeholder="Select Reginal office"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.operator_id || ""}
@@ -308,12 +308,48 @@ function AllottedSmrtcard(props) {
                 </div>
               </Col>
             ) : null}
+            {validation.values.operator_id !== "" ? (
+              <Col lg={3}>
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Select DISTRIBUTOR
+                    <span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="distributor_id"
+                    type="select"
+                    placeholder="Select Distributor"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.distributor_id || ""}
+                    invalid={
+                      validation.touched.distributor_id &&
+                      validation.errors.distributor_id
+                        ? true
+                        : false
+                    }
+                  >
+                    <option value="">Select Distributor</option>
+                    {allottedoperatorlist.map((operatorlist) => (
+                      <option key={operatorlist.id} value={operatorlist.id}>
+                        {operatorlist.name}
+                      </option>
+                    ))}
+                  </Input>
+                  {validation.touched.distributor_id &&
+                  validation.errors.distributor_id ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.distributor_id}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+            ) : null}
           </Row>
           <Row>
             <Col lg={12}>
               <Card>
                 <CardBody>
-                  {/* {console.log("Smartcard data: ", smartcardData)} */}
                   <TableContainer
                     isPagination={true}
                     columns={smartcardColumns}
