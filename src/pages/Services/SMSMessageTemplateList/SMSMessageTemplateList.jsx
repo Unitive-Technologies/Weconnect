@@ -1,14 +1,7 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
-import {
-  Card,
-  CardBody,
-  Col,
-  Container,
-  Row,
-  Spinner,
-} from "reactstrap";
+import { Card, CardBody, Col, Container, Row, Spinner } from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -28,7 +21,6 @@ import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import ViewSMSMessageTemplateList from "./ViewSMSMessageTemplateList";
 import TableContainerX from "../../../components/Common/TableContainerX";
-
 
 const SMSMessageTemplateList = (props) => {
   //meta title
@@ -54,11 +46,18 @@ const SMSMessageTemplateList = (props) => {
     })
   );
 
-  const { SMSMsgTemp, loading, smsmessagetempCategory, smsmessagetempSender, smsmessagetempSubCategory, smsmessagetempStatus, totalPage,
+  const {
+    SMSMsgTemp,
+    loading,
+    smsmessagetempCategory,
+    smsmessagetempSender,
+    smsmessagetempSubcategory,
+    smsmessagetempStatus,
+    totalPage,
     totalCount,
     pageSize,
-    currentPage } = useSelector(SMSMessageProperties);
-
+    currentPage,
+  } = useSelector(SMSMessageProperties);
 
   const columns = useMemo(
     () => [
@@ -88,9 +87,7 @@ const SMSMessageTemplateList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5
-                className="font-size-14 mb-1"
-              >
+              <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.template}
                 </Link>
@@ -105,7 +102,9 @@ const SMSMessageTemplateList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.template_id}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.template_id}
+            </p>
           );
         },
       },
@@ -125,7 +124,9 @@ const SMSMessageTemplateList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.sub_cat_id}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.sub_cat_id}
+            </p>
           );
         },
       },
@@ -135,7 +136,9 @@ const SMSMessageTemplateList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.sender_id_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.sender_id_lbl}
+            </p>
           );
         },
       },
@@ -145,7 +148,9 @@ const SMSMessageTemplateList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.status_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.status_lbl}
+            </p>
           );
         },
       },
@@ -155,7 +160,9 @@ const SMSMessageTemplateList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.created_at}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_at}
+            </p>
           );
         },
       },
@@ -165,7 +172,9 @@ const SMSMessageTemplateList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.created_by_lbl}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.created_by_lbl}
+            </p>
           );
         },
       },
@@ -206,13 +215,12 @@ const SMSMessageTemplateList = (props) => {
   const keyField = "id";
 
   const getTableActions = () => {
-    return [
-      {
-      },
-    ];
+    return [{}];
   };
 
-  console.log("SMS Messgage Temp Sub" + JSON.stringify(smsmessagetempSubCategory))
+  console.log(
+    "SMS Messgage Temp Sub" + JSON.stringify(smsmessagetempSubcategory)
+  );
   return (
     <React.Fragment>
       <ViewSMSMessageTemplateList
@@ -220,7 +228,7 @@ const SMSMessageTemplateList = (props) => {
         toggleViewModal={toggleViewModal}
         SMSMsgTemp={viewSMSData}
         smsmessagetempCategory={smsmessagetempCategory}
-        smsmessagetempSubCategory={smsmessagetempSubCategory}
+        smsmessagetempSubCategory={smsmessagetempSubcategory}
         smsmessagetempSender={smsmessagetempSender}
         smsmessagetempStatus={smsmessagetempStatus}
         resetSelection={resetSelection}

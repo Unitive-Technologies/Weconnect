@@ -17,13 +17,27 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { updateSMSMessageTempList as onUpdateSMSMessageTempList } from "/src/store/smsmessage/actions";
 import { useDispatch } from "react-redux";
-import ViewMetaData from "./ViewMetaData"
+import ViewMetaData from "./ViewMetaData";
 
 const ViewSMSMessageTemplateList = (props) => {
-  const { isOpen, resetSelection, toggleViewModal, SMSMsgTemp, smsmessagetempSubcategory, smsmessagetempCategory, smsmessagetempStatus, smsmessagetempSender } = props;
+  const {
+    isOpen,
+    resetSelection,
+    toggleViewModal,
+    SMSMsgTemp,
+    smsmessagetempSubCategory,
+    smsmessagetempCategory,
+    smsmessagetempStatus,
+    smsmessagetempSender,
+  } = props;
 
-  console.log("View in  SMS Message Template List :" + JSON.stringify(SMSMsgTemp));
-  console.log("View in  SMS Message Template List :" + JSON.stringify(smsmessagetempSubcategory));
+  console.log(
+    "View in  SMS Message Template List :" + JSON.stringify(SMSMsgTemp)
+  );
+  console.log(
+    "View in  SMS Message Template List :" +
+      JSON.stringify(smsmessagetempSubCategory)
+  );
   const dispatch = useDispatch();
 
   const [showEditSMS, setShowEditSMS] = useState(false);
@@ -145,7 +159,6 @@ const ViewSMSMessageTemplateList = (props) => {
                 ) : null}
               </div>
             </Col>
-
           </Row>
           <Row>
             <Col sm="4">
@@ -163,7 +176,8 @@ const ViewSMSMessageTemplateList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.template_id || ""}
                 ></Input>
-                {validation.touched.template_id && validation.errors.template_id ? (
+                {validation.touched.template_id &&
+                validation.errors.template_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.template_id}
                   </FormFeedback>
@@ -191,15 +205,16 @@ const ViewSMSMessageTemplateList = (props) => {
                     </option>
                   ))}
                 </Input>
-                {validation.touched.cat_id &&
-                  validation.errors.cat_id ? (
+                {validation.touched.cat_id && validation.errors.cat_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.cat_id}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
-            {console.log("SMS Messgage Temp Status" + smsmessagetempSubcategory)}
+            {console.log(
+              "SMS Messgage Temp Status" + smsmessagetempSubCategory
+            )}
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
@@ -214,14 +229,15 @@ const ViewSMSMessageTemplateList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.sub_cat_id || ""}
                 >
-                  {smsmessagetempSubcategory && smsmessagetempSubcategory.map((sub_cat_id) => (
-                    <option key={sub_cat_id.id} value={sub_cat_id.id}>
-                      {sub_cat_id.name}
-                    </option>
-                  ))}
+                  {smsmessagetempSubCategory &&
+                    smsmessagetempSubCategory.map((sub_cat_id) => (
+                      <option key={sub_cat_id.id} value={sub_cat_id.id}>
+                        {sub_cat_id.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.sub_cat_id &&
-                  validation.errors.sub_cat_id ? (
+                validation.errors.sub_cat_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.sub_cat_id}
                   </FormFeedback>
