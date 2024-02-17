@@ -10,6 +10,8 @@ import StockStbBlacklist from "./StockStbBlacklist";
 import StbActionUpdation from "./StbActionUpdation";
 import FaultySendToStb from "./FaultySentToStb";
 import FaultyStbBlacklist from "./FaultyStbBlacklist";
+import AllottedStb from "./AllottedStb";
+import DeallotStb from "./DeallottedStb";
 
 const StockStb = (props) => {
   const {
@@ -40,6 +42,17 @@ const StockStb = (props) => {
     handleSelectedFaultyStb,
     selectedOption,
     activeTab,
+    showDeallotStb,
+    setShowDeallotStb,
+    showAllottedStb,
+    setShowAllottedStb,
+    selectedAllottedStbs,
+    handleSelectedAllottedStbs,
+    allottedoperatorlist,
+    allottedstblist,
+    allottedusertype,
+    allotteddistributor,
+    allottedlco,
   } = props;
   const [showEditStb, setShowEditStb] = useState(false);
   const [editStbData, setEditStbData] = useState({});
@@ -69,6 +82,14 @@ const StockStb = (props) => {
     setShowFaultyStbBlacklist(!showFaultyStbBlacklist);
   };
 
+  const handleAllottedStb = () => {
+    setShowAllottedStb(!showAllottedStb);
+  };
+
+  const handleDeallottedStb = () => {
+    setShowDeallotStb(!showDeallotStb);
+  };
+
   const getFilteredHandleRowClicks = (Row) => {
     if (selectedOption === "In-stock") {
       if (activeTab === "2") {
@@ -77,6 +98,10 @@ const StockStb = (props) => {
     } else if (selectedOption === "Faulty") {
       if (activeTab === "2") {
         return handleSelectedFaultyStb(Row);
+      }
+    } else if (selectedOption === "Allotted") {
+      if (activeTab === "2") {
+        return handleSelectedAllottedStbs(Row);
       }
     }
   };
@@ -293,6 +318,21 @@ const StockStb = (props) => {
         toggle={handleFaultyStbBlacklist}
         selectedFaultyStbs={selectedFaultyStbs}
       />
+      <AllottedStb
+        isOpen={showAllottedStb}
+        toggle={handleAllottedStb}
+        selectedAllottedStbs={selectedAllottedStbs}
+        allottedstblist={allottedstblist}
+        allottedusertype={allottedusertype}
+        allotteddistributor={allotteddistributor}
+        allottedoperatorlist={allottedoperatorlist}
+        allottedlco={allottedlco}
+      />
+      <DeallotStb
+        isOpen={showDeallotStb}
+        toggle={handleDeallottedStb}
+        selectedAllottedStbs={selectedAllottedStbs}
+      />
       <Row>
         <Col lg="12">
           <Card>
@@ -354,6 +394,17 @@ StockStb.propTypes = {
   handleSelectedFaultyStb: PropTypes.func,
   activeTab: PropTypes.string,
   selectedOption: PropTypes.string,
+  showDeallotStb: PropTypes.bool,
+  setShowDeallotStb: PropTypes.func,
+  showAllottedStb: PropTypes.bool,
+  setShowAllottedStb: PropTypes.func,
+  selectedAllottedStbs: PropTypes.array,
+  handleSelectedAllottedStbs: PropTypes.func,
+  allottedoperatorlist: PropTypes.array,
+  allottedstblist: PropTypes.array,
+  allottedusertype: PropTypes.array,
+  allotteddistributor: PropTypes.array,
+  allottedlco: PropTypes.array,
 };
 
 export default StockStb;

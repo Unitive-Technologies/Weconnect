@@ -465,8 +465,10 @@ const InventoryStock = (props) => {
   };
 
   useEffect(() => {
-    console.log("Selected Allotted smartcard: ", selectedAllottedSmartcards);
-  }, [selectedAllottedSmartcards]);
+    // console.log("Selected Allotted smartcard: ", selectedAllottedSmartcards);
+    console.log("Allotted stb list: ", allottedstblist);
+    // }, [selectedAllottedSmartcards]);
+  }, []);
 
   const handleSelectedRows = (row) => {
     const isSelected = selectedRows.some(
@@ -564,6 +566,20 @@ const InventoryStock = (props) => {
       setSelectedAllottedSmartcards(updatedSelectedAllottedSmartcards);
     } else {
       setSelectedAllottedSmartcards([...selectedAllottedSmartcards, row]);
+    }
+  };
+
+  const handleSelectedAllottedStbs = (row) => {
+    const isSelected = selectedAllottedStbs.some(
+      (selectedAllottedStb) => selectedAllottedStb.id === row.id
+    );
+    if (isSelected) {
+      const updatedSelectedAllottedStbs = selectedAllottedStbs.filter(
+        (selectedAllottedStb) => selectedAllottedStb.id !== row.id
+      );
+      setSelectedAllottedStbs(updatedSelectedAllottedStbs);
+    } else {
+      setSelectedAllottedStbs([...selectedAllottedStbs, row]);
     }
   };
 
@@ -1209,6 +1225,7 @@ const InventoryStock = (props) => {
             name: "Allot",
             type: "normal",
             icon: "create",
+            action: setShowAllottedStb,
           },
           {
             name: "Upload",
@@ -1220,6 +1237,10 @@ const InventoryStock = (props) => {
             type: "dot",
             icon: "action",
             dropdownName: "",
+            action:
+              Object.keys(selectedAllottedStbs).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowDeallotStb(true),
           },
         ];
         return actions;
@@ -1568,6 +1589,19 @@ const InventoryStock = (props) => {
                               handleSelectedFaultyStb={handleSelectedFaultyStb}
                               selectedOption={selectedOption}
                               activeTab={activeTab}
+                              showDeallotStb={showDeallotStb}
+                              setShowDeallotStb={setShowAllottedStb}
+                              showAllottedStb={showAllottedStb}
+                              setShowAllottedStb={showAllottedStb}
+                              selectedAllottedStbs={selectedAllottedStbs}
+                              handleSelectedAllottedStbs={
+                                handleSelectedAllottedStbs
+                              }
+                              allottedstblist={allottedstblist}
+                              allottedusertype={allottedusertype}
+                              allotteddistributor={allotteddistributor}
+                              allottedoperatorlist={allottedoperatorlist}
+                              allottedlco={allottedlco}
                             />
                           </Col>
                         </Row>

@@ -32,6 +32,8 @@ function AllottedStb(props) {
     allottedstblist,
     allottedusertype,
     allottedoperatorlist,
+    allotteddistributor,
+    allottedlco,
   } = props;
   const [usertype, setUsertype] = useState("");
   const [selectedStblist, setSelectedStblist] = useState([]);
@@ -223,7 +225,7 @@ function AllottedStb(props) {
       toggle={toggle}
     >
       <ModalHeader tag="h4" toggle={toggle}>
-        Allot Smartcards to Operator
+        Allot STBs to Operator
       </ModalHeader>
       <ModalBody>
         <Form
@@ -401,6 +403,8 @@ AllottedStb.propTypes = {
   toggle: PropTypes.func,
   allottedusertype: PropTypes.array,
   allottedoperatorlist: PropTypes.array,
+  allotteddistributor: PropTypes.array,
+  allottedlco: PropTypes.array,
 };
 
 export default AllottedStb;
