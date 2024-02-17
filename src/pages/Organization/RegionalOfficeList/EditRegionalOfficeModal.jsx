@@ -170,13 +170,37 @@ const EditRegionalOfficeModal = (props) => {
       gst_date: (regionalOffData && regionalOffData.gst_date) || "",
       credit_limit: (regionalOffData && regionalOffData.credit_limit) || "",
       area_id: (regionalOffData && regionalOffData.area_id) || "",
-      // agreement_data: {
-      //   name: values["upload"].name,
-      //   type: values["upload"].type,
-      //   ext: values["upload"].ext,
-      //   data: values["upload"].data,
-      //   start_date: values["agreestart"],
-      //   end_date: values["agreeend"],
+      // upload: {
+      //   name:
+      //     (regionalOffData &&
+      //       regionalOffData.agreement_data &&
+      //       regionalOffData.agreement_data.name) ||
+      //     "",
+      //   type:
+      //     (regionalOffData &&
+      //       regionalOffData.agreement_data &&
+      //       regionalOffData.agreement_data.type) ||
+      //     "",
+      //   ext:
+      //     (regionalOffData &&
+      //       regionalOffData.agreement_data &&
+      //       regionalOffData.agreement_data.ext) ||
+      //     "",
+      //   data:
+      //     (regionalOffData &&
+      //       regionalOffData.agreement_data &&
+      //       regionalOffData.agreement_data.data) ||
+      //     "",
+      //   // agreestart:
+      //   //   (regionalOffData &&
+      //   //     regionalOffData.agreement_data &&
+      //   //     regionalOffData.agreement_data.start_date) ||
+      //   //   "",
+      //   // agreeend:
+      //   //   (regionalOffData &&
+      //   //     regionalOffData.agreement_data &&
+      //   //     regionalOffData.agreement_data.end_date) ||
+      //   //   "",
       // },
       agreestart:
         (regionalOffData &&
@@ -209,16 +233,17 @@ const EditRegionalOfficeModal = (props) => {
     onSubmit: (values) => {
       // debugger;
       const updatedRegionalOffice = {
+        id: regionalOffData.id,
         name: values["name"],
         addr: `${values["addr1"]}, ${values["addr2"]}, ${values["addr3"]}`,
         addr1: values["addr1"],
         addr2: values["addr2"],
         addr3: values["addr3"],
         agreement_data: {
-          name: values["upload"].name,
-          type: values["upload"].type,
-          ext: values["upload"].ext,
-          data: values["upload"].data,
+          name: values["upload"] ? values["upload"].name : "", // Handle undefined case
+          type: values["upload"] ? values["upload"].type : "",
+          ext: values["upload"] ? values["upload"].ext : "",
+          data: values["upload"] ? values["upload"].data : "",
           start_date: values["agreestart"],
           end_date: values["agreeend"],
         },
@@ -1042,13 +1067,13 @@ const EditRegionalOfficeModal = (props) => {
                     {validation.errors.upload}
                   </FormFeedback>
                 ) : null}
-                <button
+                {/* <button
                   type="button"
                   className="btn btn-primary "
                   style={{ marginTop: "10px" }}
                 >
                   Upload File
-                </button>
+                </button> */}
               </div>
             </Col>
             <Col lg={4}>
