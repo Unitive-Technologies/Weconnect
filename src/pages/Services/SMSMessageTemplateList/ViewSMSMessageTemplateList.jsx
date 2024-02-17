@@ -38,7 +38,7 @@ const ViewSMSMessageTemplateList = (props) => {
       template_id: (SMSMsgTemp && SMSMsgTemp.template_id) || "",
       cat_id: (SMSMsgTemp && SMSMsgTemp.cat_id) || "",
       sub_cat_id: (SMSMsgTemp && SMSMsgTemp.sub_cat_id) || "",
-      status_lbl: (SMSMsgTemp && SMSMsgTemp.status) || "",
+      status_lbl: (SMSMsgTemp && SMSMsgTemp.status_lbl) || "",
       sender_id: (SMSMsgTemp && SMSMsgTemp.sender_id) || "",
       created_at: (SMSMsgTemp && SMSMsgTemp.created_at) || "",
       created_by: (SMSMsgTemp && SMSMsgTemp.created_by) || "my mso(mso)",
@@ -209,12 +209,6 @@ const ViewSMSMessageTemplateList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.sub_cat_id || ""}
-                  invalid={
-                    validation.touched.sub_cat_id &&
-                      validation.errors.sub_cat_id
-                      ? true
-                      : false
-                  }
                 >
                   {smsmessagetempSubcategory && smsmessagetempSubcategory.map((sub_cat_id) => (
                     <option key={sub_cat_id.id} value={sub_cat_id.id}>
@@ -266,7 +260,7 @@ const ViewSMSMessageTemplateList = (props) => {
                   Status<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="status_lbl"
+                  name="Status"
                   type="select"
                   placeholder="Select Status"
                   className="form-select"
@@ -289,7 +283,6 @@ const ViewSMSMessageTemplateList = (props) => {
               </div>
             </Col>
           </Row>
-
 
           <div
             style={{
@@ -361,7 +354,7 @@ ViewSMSMessageTemplateList.propTypes = {
 
   SMSMsgTemp: PropTypes.object,
   smsmessagetempCategory: PropTypes.array,
-  smsmessagetempSubCategory: PropTypes.array,
+  smsmessagetempSubcategory: PropTypes.array,
   smsmessagetempSender: PropTypes.array,
   smsmessagetempStatus: PropTypes.array,
 };
