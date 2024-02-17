@@ -149,24 +149,28 @@ function* onDeallotSmartcard({ payload: allottedsmartcard }) {
 function* fetchInventoryAllottedStblist() {
   try {
     const response = yield call(getInventoryAllottedStblist);
+    console.log("Stb list in allotted: ", response.data);
     yield put(getInventoryAllottedStblistSuccess(response.data));
   } catch (error) {
+    console.log("stb error: ", error);
     yield put(getInventoryAllottedStblistFail(error));
   }
 }
 
-function* fetchInventoryAllottedDistributor() {
+function* fetchInventoryAllottedDistributor({ payload: brand_id }) {
   try {
-    const response = yield call(getInventoryAllottedDistributor);
+    const response = yield call(getInventoryAllottedDistributor(brand_id));
     yield put(getInventoryAllottedDistributorSuccess(response.data));
   } catch (error) {
     yield put(getInventoryAllottedDistributorFail(error));
   }
 }
 
-function* fetchInventoryAllottedLco() {
+function* fetchInventoryAllottedLco({ payload: brand_id, distributor_id }) {
   try {
-    const response = yield call(getInventoryAllottedLco);
+    const response = yield call(
+      getInventoryAllottedLco(brand_id, distributor_id)
+    );
     yield put(getInventoryAllottedLcoSuccess(response.data));
     yield put(onGetInventoryAllottedStb());
   } catch (error) {

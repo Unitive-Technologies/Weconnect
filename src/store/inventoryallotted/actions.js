@@ -165,21 +165,22 @@ export const deallotSmartcardFail = (error) => ({
 });
 
 export const getInventoryAllottedStblist = () => ({
-  type: GET_INVENTORYALLOTTED_STB,
+  type: GET_INVENTORYALLOTTED_STBLIST,
 });
 
 export const getInventoryAllottedStblistSuccess = (allottedstblist) => ({
-  type: GET_INVENTORYALLOTTED_STB_SUCCESS,
+  type: GET_INVENTORYALLOTTED_STBLIST_SUCCESS,
   payload: allottedstblist,
 });
 
 export const getInventoryAllottedStblistFail = (error) => ({
-  type: GET_INVENTORYALLOTTED_STB_FAIL,
+  type: GET_INVENTORYALLOTTED_STBLIST_FAIL,
   payload: error,
 });
 
-export const getInventoryAllottedDistributor = () => ({
+export const getInventoryAllottedDistributor = (brand_id) => ({
   type: GET_INVENTORYALLOTTED_DISTRIBUTOR,
+  payload: brand_id,
 });
 
 export const getInventoryAllottedDistributorSuccess = (

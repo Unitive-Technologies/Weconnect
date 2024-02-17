@@ -35,7 +35,7 @@ function DeallotStb(props) {
 
     initialValues: {
       remark: "",
-      smartcard_ids: [],
+      stb_ids: [],
     },
     validationSchema: Yup.object({
       //   remark: Yup.string().required("Enter remark"),
@@ -43,7 +43,7 @@ function DeallotStb(props) {
     onSubmit: (values) => {
       const newDeallot = {
         remark: values["remark"],
-        smartcard_ids: selectedAllottedStbs.map((row) => row.id),
+        stb_ids: selectedAllottedStbs.map((row) => row.id),
       };
       console.log("Deallot: " + JSON.stringify(newDeallot));
       dispatch(onDeallotStb(newDeallot));

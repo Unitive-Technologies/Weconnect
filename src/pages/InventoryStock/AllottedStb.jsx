@@ -21,8 +21,8 @@ import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
-  allotSmartcard as onAllotSmartcard,
-  getInventoryAllottedPairing as onGetInventoryAllottedPairing,
+  allotStb as onAllotStb,
+  getInventoryAllottedStb as onGetInventoryAllottedStb,
 } from "/src/store/inventoryAllotted/actions";
 
 function AllottedStb(props) {
@@ -89,7 +89,7 @@ function AllottedStb(props) {
 
     initialValues: {
       operator_id: "",
-      smartcard_ids: [],
+      stb_ids: [],
     },
     validationSchema: Yup.object({
       usertype: Yup.string().required("Select user Type"),
@@ -98,11 +98,11 @@ function AllottedStb(props) {
       const newAllotted = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         operator_id: values.operator_id,
-        smartcard_ids: selectedStblist.map((row) => row.id),
+        stb_ids: selectedStblist.map((row) => row.id),
       };
       console.log("New allotted smartcard: " + JSON.stringify(newAllotted));
-      dispatch(onAllotSmartcard(newAllotted));
-      dispatch(onGetInventoryAllottedPairing());
+      dispatch(onAllotStb(newAllotted));
+      dispatch(onGetInventoryAllottedStb());
       validation.resetForm();
       toggle();
       setUsertype("");
@@ -113,7 +113,7 @@ function AllottedStb(props) {
     },
   });
 
-  const smartcardColumns = useMemo(
+  const stbColumns = useMemo(
     () => [
       {
         Header: ".",
@@ -150,14 +150,14 @@ function AllottedStb(props) {
         },
       },
       {
-        Header: "Smartcard No.",
-        accessor: "smartcardno",
+        Header: "STB No.",
+        accessor: "stbno",
         filterable: true,
         Cell: (cellProps) => {
           return (
             <>
               <p className="font-size-14 mb-1">
-                {cellProps.row.original.smartcardno}
+                {cellProps.row.original.stbno}
               </p>
             </>
           );
@@ -316,7 +316,7 @@ function AllottedStb(props) {
                   {/* {console.log("Smartcard data: ", smartcardData)} */}
                   <TableContainer
                     isPagination={true}
-                    columns={smartcardColumns}
+                    columns={stbColumns}
                     data={allottedstblist}
                     isShowingPageLength={true}
                     customPageSize={50}
@@ -338,7 +338,7 @@ function AllottedStb(props) {
                       <thead>
                         <tr>
                           <th>#</th>
-                          <th>Smartcard No.</th>
+                          <th>STB No.</th>
                           <th>$</th>
                         </tr>
                       </thead>
@@ -346,7 +346,7 @@ function AllottedStb(props) {
                         {selectedStblist.map((pair, index) => (
                           <tr key={index}>
                             <td>{index + 1}</td>
-                            <td>{pair.smartcardno}</td>
+                            <td>{pair.stbno}</td>
                             <td>
                               <button
                                 type="button"

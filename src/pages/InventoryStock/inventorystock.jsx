@@ -1590,9 +1590,9 @@ const InventoryStock = (props) => {
                               selectedOption={selectedOption}
                               activeTab={activeTab}
                               showDeallotStb={showDeallotStb}
-                              setShowDeallotStb={setShowAllottedStb}
+                              setShowDeallotStb={setShowDeallotStb}
                               showAllottedStb={showAllottedStb}
-                              setShowAllottedStb={showAllottedStb}
+                              setShowAllottedStb={setShowAllottedStb}
                               selectedAllottedStbs={selectedAllottedStbs}
                               handleSelectedAllottedStbs={
                                 handleSelectedAllottedStbs
