@@ -486,12 +486,16 @@ const ContactsList = (props) => {
         // userDistributor={userDistributor}
       />
       <UploadUserModal
+        title="Upload User"
         isOpen={showUploadUser}
         toggleUploadModal={toggleUploadModal}
+        actiontype={"add"}
       />
-      <BulkUpdateUserModal
+      <UploadUserModal
+        title="Bulk Update User"
         isOpen={showBulkUpdateUser}
-        handleBulkUpdateUser={handleBulkUpdateUser}
+        toggleUploadModal={handleBulkUpdateUser}
+        actiontype={"update"}
       />
       <BulkInactiveUserModal
         isOpen={showInactivateUser}

@@ -24,7 +24,7 @@ import {
 
 const UploadUserModal = (props) => {
   const [uploadTrigger, setUploadTrigger] = useState({});
-  const { isOpen, toggleUploadModal } = props;
+  const { title, isOpen, toggleUploadModal, actiontype } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
 
@@ -43,7 +43,7 @@ const UploadUserModal = (props) => {
   }
 
   const userDownloadTemplatePayload = {
-    meta_data: { action_type: "add" },
+    meta_data: { action_type: actiontype },
     url: "",
   };
 
@@ -106,7 +106,7 @@ const UploadUserModal = (props) => {
         toggleUploadModal();
       })
       .catch((error) => {
-        console.log("error in uploadUserFile:" + error);
+        console.log("error in " + title + ":" + error);
       });
   };
 
@@ -117,12 +117,12 @@ const UploadUserModal = (props) => {
       role="dialog"
       autoFocus={true}
       centered={true}
-      className="exampleModal"
+      className={title}
       tabIndex="-1"
       toggle={toggleUploadModal}
     >
       <ModalHeader toggle={toggleUploadModal} tag="h4">
-        Upload User
+        {title}
       </ModalHeader>
       <ModalBody>
         <Card>
@@ -232,8 +232,10 @@ const UploadUserModal = (props) => {
 };
 
 UploadUserModal.propTypes = {
+  title: PropTypes.string,
   isOpen: PropTypes.bool,
   toggleUploadModal: PropTypes.func,
+  actiontype: PropTypes.string,
 };
 
 export default UploadUserModal;
