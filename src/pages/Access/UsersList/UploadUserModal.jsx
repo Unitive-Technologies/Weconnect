@@ -15,145 +15,99 @@ import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
 
 import { useDispatch } from "react-redux";
-import { updateUser as onUpdateUser } from "/src/store/users/actions";
 import { addNewUser as onAddNewUser } from "/src/store/users/actions";
+import {
+  downloadUserUploadTemplate,
+  updateUserUploadByToken,
+  uploadUserFileForInitiatedUserUpload,
+} from "../../../helpers/fakebackend_helper";
 
 const UploadUserModal = (props) => {
+  const [uploadTrigger, setUploadTrigger] = useState({});
   const { isOpen, toggleUploadModal } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
 
-  // downloadTemplate = () => {
-  //   axios({
-  //     url: 'http://api-url.com/download-template', // replace with your API endpoint
-  //     method: 'GET',
-  //     responseType: 'blob', // important
-  //   }).then((response) => {
-  //     const url = window.URL.createObjectURL(new Blob([response.data]));
-  //     const link = document.createElement('a');
-  //     link.href = url;
-  //     link.setAttribute('download', 'template.csv'); // or any other extension
-  //     document.body.appendChild(link);
-  //     link.click();
-  //   });
-  // }
-
-  // uploadFile = (event) => {
-  //   const formData = new FormData();
-  //   formData.append('file', event.target.files[0]); // appending file
-  //   axios.post('http://api-url.com/upload-file', formData)
-  //     .then((res) => {
-  //       alert("File upload success");
-  //     }).catch((err) => {
-  //       alert("File upload error");
-  //     });
-  // }
-
-  // render() {
-  //   return (
-  //     <div>
-  //       <button onClick={this.downloadTemplate}>Download Template</button>
-  //       <input type="file" onChange={this.uploadFile} />
-  //     </div>
-  //   );
-  // }
-
   const [selectedFiles, setSelectedFiles] = useState([]);
 
   function handleAcceptedFiles(files) {
-    files.map((file) =>
-      Object.assign(file, {
-        preview: URL.createObjectURL(file),
-        formattedSize: formatBytes(file.size),
-      })
-    );
     setSelectedFiles(files);
+
+    updateUserUploadByToken(uploadTrigger.token, userDownloadTemplatePayload)
+      .then((res) => {
+        console.log("res in updateUserUploadByToken:" + JSON.stringify(res));
+      })
+      .catch((error) => {
+        console.log("error in updateUserUploadByToken:" + error);
+      });
   }
 
-  function formatBytes(bytes, decimals = 2) {
-    if (bytes === 0) return "0 Bytes";
-    const k = 1024;
-    const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
-
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
-  }
+  const userDownloadTemplatePayload = {
+    meta_data: { action_type: "add" },
+    url: "",
+  };
 
   const handleDownloadSampleFile = () => {
-    // Create a sample CSV file with headers
-    // field to be get from api as prop
-    const headers = [
-      "username",
-      "name",
-      "mobile_no",
-      "email",
-      "password",
-      "role_name",
-      "status",
-      "operator_type_name",
-      "operator_code",
-      "designation_code",
-      "block_message",
-    ];
-    const data = [headers];
+    // Send a POST request to the server, from the json request convert data.fields array of strings as headers in a csv file
+    downloadUserUploadTemplate(userDownloadTemplatePayload)
+      .then((res) => {
+        debugger;
+        const fileName = res.data.data.type;
+        const fieldStringArray = res.data.data.fields;
+        //combine fieldStringArray contents into a single string seperated by commas
+        const headers = fieldStringArray.join(",");
+        // const csvContent = data.map((row) => row.join(",")).join("\n");
+        const blob = new Blob([headers], {
+          type: "text/csv;charset=utf-8;",
+        });
 
-    // Convert the data to CSV format
-    const csvContent = data.map((row) => row.join(",")).join("\n");
+        setUploadTrigger(res.data.data);
+        // Create a download link
+        const link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = fileName + ".csv";
 
-    // Create a Blob containing the data in CSV format
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-
-    // Create a download link
-    const link = document.createElement("a");
-    link.href = window.URL.createObjectURL(blob);
-    link.download = "sample_upload_user_file.csv";
-
-    // Trigger a click on the link to start the download
-    link.click();
+        // Trigger a click on the link to start the download
+        link.click();
+      })
+      .catch((error) => {
+        console.log("error in downloadUserUploadTemplate:" + error);
+      });
   };
 
   const handleUploadFile = () => {
     if (selectedFiles.length === 0) {
+      console.log("No files selected to upload, handle accordingly");
       // No files selected, handle accordingly
       return;
     }
 
-    const file = selectedFiles[0];
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const csvContent = e.target.result;
-
-      // Process the CSV content (you can use a library like papaparse)
-      // For simplicity, let's just log the parsed data
-      const parsedData = parseCSV(csvContent);
-      console.log("Parsed CSV Data:", parsedData);
-    };
-
-    reader.readAsText(file);
-  };
-
-  const parseCSV = (csvContent) => {
-    // Use a CSV parsing library (e.g., papaparse)
-    // For simplicity, we'll split lines and split fields by commas
-    const lines = csvContent.split("\n");
-    const headers = lines[0].split(",");
-    const data = [];
-
-    for (let i = 1; i < lines.length; i++) {
-      const fields = lines[i].split(",");
-      const rowData = {};
-      for (let j = 0; j < headers.length; j++) {
-        rowData[headers[j]] = fields[j];
-      }
-      data.push(rowData);
+    if (!uploadTrigger || !uploadTrigger.token) {
+      console.log("No upload trigger found, handle accordingly");
+      // No upload trigger found, handle accordingly
+      return;
     }
+    const formData = new FormData();
+    formData.append("qFile", selectedFiles[0]); // appending file
 
-    // Move dispatch line above the return statement
-    dispatch(onAddNewUser(data));
-    toggleUploadModal();
-    return data;
+    uploadUserFileForInitiatedUserUpload(uploadTrigger.token, formData)
+      .then((res) => {
+        debugger;
+
+        console.log(
+          "res in uploadUserFileForInitiatedUserUpload:" + JSON.stringify(res)
+        );
+
+        setUploadTrigger({});
+        setSelectedFiles([]);
+
+        console.log("cleared the selected files and upload trigger");
+        dispatch(onAddNewUser(data));
+        toggleUploadModal();
+      })
+      .catch((error) => {
+        console.log("error in uploadUserFile:" + error);
+      });
   };
 
   return (
@@ -182,13 +136,17 @@ const UploadUserModal = (props) => {
                 Download Sample Upload File
               </button>
             </div>
-
+            {uploadTrigger && uploadTrigger._id && (
+              <div>
+                <p>Token ID: {uploadTrigger.token}</p>
+                <p>Fields: {uploadTrigger.fields.join(", ")}</p>
+              </div>
+            )}
             <CardSubtitle className="mb-3"> Select File to Upload</CardSubtitle>
             <Form>
               <Dropzone
-                onDrop={(acceptedFiles) => {
-                  setSelectedFiles(acceptedFiles);
-                }}
+                maxFiles={1}
+                onDrop={(acceptedFiles) => handleAcceptedFiles(acceptedFiles)}
               >
                 {({ getRootProps, getInputProps }) => (
                   <div className="dropzone">
@@ -274,8 +232,8 @@ const UploadUserModal = (props) => {
 };
 
 UploadUserModal.propTypes = {
-  handleUploadUser: PropTypes.func,
   isOpen: PropTypes.bool,
+  toggleUploadModal: PropTypes.func,
 };
 
 export default UploadUserModal;

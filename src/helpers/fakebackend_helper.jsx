@@ -1,5 +1,12 @@
 import axios from "axios";
-import { del, get, getCompleteResponse, post, put } from "./api_helper";
+import {
+  del,
+  get,
+  getCompleteResponse,
+  post,
+  postCompleteResponse,
+  put,
+} from "./api_helper";
 import * as url from "./url_helper";
 
 // Gets the logged in user data from local session
@@ -420,6 +427,23 @@ export const getStateUsers = async (currentPage, perPage = 20) => {
   return await getCompleteResponse(url.getStateUsersUrl(currentPage, perPage));
 };
 
+export const downloadUserUploadTemplate = async (data) => {
+  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_USERS, data);
+};
+
+export const updateUserUploadByToken = async (token, data) => {
+  return put(url.updateUserUpload(token), data);
+};
+
+export const uploadUserFileForInitiatedUserUpload = async (
+  initiatedToken,
+  formData
+) => {
+  return await postCompleteResponse(
+    url.uploadUserFileForInitiatedUserUpload(initiatedToken),
+    formData
+  );
+};
 // export const getDistrict = () => get(url.GET_DISTRICT);
 export const addDistrict = (district) => post(url.ADD_DISTRICT, district);
 export const getDistrictStateList = () => get(url.GET_DISTRICT_STATELIST);

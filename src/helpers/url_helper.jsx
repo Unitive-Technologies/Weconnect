@@ -635,3 +635,11 @@ export const GET_PAIRING_STBLIST =
   "/stb/list?fields=id,stbno&expand=brand_lbl,boxtype_lbl&per-page=100&filter[cas_id]=1&vr=web1.0";
 export const GET_STOCKACTION_INVENTORYSTATE =
   "/inventory-state/list?fields=id,name&filter[status]=1&vr=web1.0";
+
+export const DOWNLOAD_SAMPLE_USERS = "/user-bulk/upload-q?vr=web1.0";
+export const updateUserUpload = (token) => {
+  return `/user-bulk/upload-q/${token}?vr=web1.0`;
+};
+export const uploadUserFileForInitiatedUserUpload = (token) => {
+  return `/user-bulk/upload-q/${token}`;
+};
