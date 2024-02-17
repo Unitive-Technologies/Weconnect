@@ -38,6 +38,8 @@ import ncf from "./ncflist/reducer";
 import bouquet from "./bouquetlist/reducer";
 import documentUploadPolicy from "./documentuploadpolicy/reducer";
 import smsmessagetemp from "./smsmessage/reducer";
+import smsmessagetempStatus from "./smsmessage/reducer";
+import smsmessagetempSubcategory from "./smsmessage/reducer";
 import connectionscheme from "./connectionschemelist/reducer";
 import companylist from "./companylist/reducer";
 import brandlist from "./brandlist/reducer";
@@ -105,6 +107,8 @@ const rootReducer = combineReducers({
   localChannelNumber,
   ncf,
   bouquet,
+  smsmessagetempStatus,
+  smsmessagetempSubcategory,
   documentUploadPolicy,
   smsmessagetemp,
   connectionscheme,

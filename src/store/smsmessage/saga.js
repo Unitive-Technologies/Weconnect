@@ -111,8 +111,10 @@ function* fetchSMSMessageTempListSubcategory() {
     console.log("SMSMessageTempList Subcategory response:" + JSON.stringify(response));
     yield put(getSMSMessageTempListSubcategorySuccess(response.data));
   } catch (error) {
+    console.log("SMS Message Temp List Error" + error)
     yield put(getSMSMessageTempListSubcategoryFail(error));
   }
+
 }
 
 function* fetchSMSMessageTempListCategory() {

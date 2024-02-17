@@ -212,6 +212,7 @@ const SMSMessageTemplateList = (props) => {
     ];
   };
 
+  console.log("SMS Messgage Temp Sub" + JSON.stringify(smsmessagetempSubCategory))
   return (
     <React.Fragment>
       <ViewSMSMessageTemplateList
@@ -223,7 +224,6 @@ const SMSMessageTemplateList = (props) => {
         smsmessagetempSender={smsmessagetempSender}
         smsmessagetempStatus={smsmessagetempStatus}
         resetSelection={resetSelection}
-
       />
       <div className="page-content">
         <Container fluid>
@@ -243,9 +243,9 @@ const SMSMessageTemplateList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log(
+                    {/* {console.log(
                       "SMS Msg Template:" + JSON.stringify(SMSMsgTemp)
-                    )}
+                    )} */}
                     {/* <TableContainer
                       isPagination={true}
                       columns={columns}

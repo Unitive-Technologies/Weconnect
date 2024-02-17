@@ -22,7 +22,7 @@ import ViewMetaData from "./ViewMetaData"
 const ViewSMSMessageTemplateList = (props) => {
   const { isOpen, resetSelection, toggleViewModal, SMSMsgTemp, smsmessagetempSubcategory, smsmessagetempCategory, smsmessagetempStatus, smsmessagetempSender } = props;
 
-  console.log("View in  SMS Message Template List :" + JSON.stringify(SMSMsgTemp));
+  console.log("View in  SMS Message Template List :" + smsmessagetempSubcategory);
   const dispatch = useDispatch();
 
   const [showEditSMS, setShowEditSMS] = useState(false);
@@ -42,6 +42,7 @@ const ViewSMSMessageTemplateList = (props) => {
       sender_id: (SMSMsgTemp && SMSMsgTemp.sender_id) || "",
       created_at: (SMSMsgTemp && SMSMsgTemp.created_at) || "",
       created_by: (SMSMsgTemp && SMSMsgTemp.created_by) || "my mso(mso)",
+      status: (SMSMsgTemp && SMSMsgTemp.status) || "",
     },
     validationSchema: Yup.object({
       code: Yup.string().required("Enter template Code"),
@@ -62,9 +63,10 @@ const ViewSMSMessageTemplateList = (props) => {
         template_id: values.template_id,
         cat_id: Yup.string().required("cat_id"),
         sub_cat_id: Yup.string().required("sub_cat_id"),
-        status_lbl: parseInt(values.status_lbl),
+        status_lbl: values.status_lbl,
         sender_id: Yup.string().required("sender_id"),
         // serviceid: values["serviceid"],
+        status: values.status,
         created_at: new Date(),
         created_by: values["created_by"],
       };
@@ -202,7 +204,7 @@ const ViewSMSMessageTemplateList = (props) => {
                   Sub-Category<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="Sub-Category"
+                  name="sub_cat_id"
                   type="select"
                   placeholder="Enter sub category"
                   disabled={!showEditSMS}
@@ -254,20 +256,21 @@ const ViewSMSMessageTemplateList = (props) => {
                 ) : null}
               </div>
             </Col>
+            {console.log("SMS Messgage Temp Status" + JSON.stringify(smsmessagetempSubcategory))}
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Status<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="Status"
+                  name="status"
                   type="select"
                   placeholder="Select Status"
                   className="form-select"
                   disabled={!showEditSMS}
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.status_lbl || ""}
+                  value={validation.values.status || ""}
                 >
                   {smsmessagetempStatus.map((status_lbl) => (
                     <option key={status_lbl.id} value={status_lbl.id}>
@@ -275,9 +278,9 @@ const ViewSMSMessageTemplateList = (props) => {
                     </option>
                   ))}
                 </Input>
-                {validation.touched.status_lbl && validation.errors.status_lbl ? (
+                {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.status_lbl}
+                    {validation.errors.status}
                   </FormFeedback>
                 ) : null}
               </div>

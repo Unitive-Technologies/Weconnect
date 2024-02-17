@@ -86,7 +86,7 @@ export const getSMSMessageTempListStatus = () => ({
 });
 
 export const getSMSMessageTempListStatusSuccess = (smsmessagetempStatus) => {
-  console.log("Received SMS message temp status:", taxStatus);
+  console.log("Received SMS message temp status:", smsmessagetempStatus);
   return {
     type: GET_SMSMESSAGETEMPLIST_STATUS_SUCCESS,
     payload: smsmessagetempStatus,
