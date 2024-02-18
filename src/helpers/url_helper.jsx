@@ -615,6 +615,7 @@ export const GET_INVENTORYALLOTTED_PAIRING =
 export const GET_INVENTORYBLACKLISTED_PAIRINGLIST =
   "/pairing?fields=id,smartcardno,stbno,status&expand=is_embeded_lbl,boxtype_lbl,cas_lbl,brand_lbl,operator_lbl,status_lbl&filter[status]=1&page=1&per-page=500&vr=web1.0";
 export const ALLOT_PAIRING = "/pairing-allotment?vr=web1.0";
+export const DEALLOT_PAIRING = "/pairing-allotment/0?vr=web1.0";
 
 export const getAllottedPairingUrl = (currPage, perPage) => {
   // console.log("current page in Allotted url - ", currPage, perPage);

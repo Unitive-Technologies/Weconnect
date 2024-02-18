@@ -884,7 +884,12 @@ export const getInventoryAllottedPairing = async (
     url.getAllottedPairingUrl(currentPage, perPage)
   );
 };
-
+export const getInventoryAllottedPairinglist = () =>
+  get(url.GET_INVENTORYALLOTTED_PAIRINGLIST);
+export const allotPairing = (allottedpairing) =>
+  post(url.ALLOT_PAIRING, allottedpairing);
+export const deallotPairing = (allottedpairing) =>
+  put(url.DEALLOT_PAIRING, allottedpairing);
 export const getInventoryTrack = async (currentPage, perPage = 20) => {
   return await getCompleteResponse(
     url.getInventoryTrackUrl(currentPage, perPage)

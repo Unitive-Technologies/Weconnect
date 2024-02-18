@@ -39,6 +39,15 @@ import {
   DEALLOT_STB,
   DEALLOT_STB_SUCCESS,
   DEALLOT_STB_FAIL,
+  GET_INVENTORYALLOTTED_PAIRINGLIST,
+  GET_INVENTORYALLOTTED_PAIRINGLIST_SUCCESS,
+  GET_INVENTORYALLOTTED_PAIRINGLIST_FAIL,
+  ALLOT_PAIRING,
+  ALLOT_PAIRING_SUCCESS,
+  ALLOT_PAIRING_FAIL,
+  DEALLOT_PAIRING,
+  DEALLOT_PAIRING_SUCCESS,
+  DEALLOT_PAIRING_FAIL,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -236,5 +245,51 @@ export const deallotStbSuccess = (allottedstb) => ({
 
 export const deallotStbFail = (error) => ({
   type: DEALLOT_STB_FAIL,
+  payload: error,
+});
+
+export const getInventoryAllottedPairinglist = () => ({
+  type: GET_INVENTORYALLOTTED_PAIRINGLIST,
+});
+
+export const getInventoryAllottedPairinglistSuccess = (
+  allottedpairinglist
+) => ({
+  type: GET_INVENTORYALLOTTED_PAIRINGLIST_SUCCESS,
+  payload: allottedpairinglist,
+});
+
+export const getInventoryAllottedPairinglistFail = (error) => ({
+  type: GET_INVENTORYALLOTTED_PAIRINGLIST_FAIL,
+  payload: error,
+});
+
+export const allotPairing = (allottedpairing) => ({
+  type: ALLOT_PAIRING,
+  payload: allottedpairing,
+});
+
+export const allotPairingSuccess = (allottedpairing) => ({
+  type: ALLOT_PAIRING_SUCCESS,
+  payload: allottedpairing,
+});
+
+export const allotPairingFail = (error) => ({
+  type: ALLOT_PAIRING_FAIL,
+  payload: error,
+});
+
+export const deallotPairing = (allottedpairing) => ({
+  type: DEALLOT_PAIRING,
+  payload: allottedpairing,
+});
+
+export const deallotPairingSuccess = (allottedpairing) => ({
+  type: DEALLOT_PAIRING_SUCCESS,
+  payload: allottedpairing,
+});
+
+export const deallotPairingFail = (error) => ({
+  type: DEALLOT_PAIRING_FAIL,
   payload: error,
 });

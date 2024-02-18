@@ -13,6 +13,9 @@ import {
   GET_INVENTORYALLOTTED_LCO,
   ALLOT_STB,
   DEALLOT_STB,
+  GET_INVENTORYALLOTTED_PAIRINGLIST,
+  ALLOT_PAIRING,
+  DEALLOT_PAIRING,
 } from "./actionTypes";
 import {
   getInventoryAllottedSmartcard as onGetInventoryAllottedSmartcard,
@@ -43,6 +46,12 @@ import {
   allotStbFail,
   deallotStbSuccess,
   deallotStbFail,
+  getInventoryAllottedPairinglistSuccess,
+  getInventoryAllottedPairinglistFail,
+  allotPairingSuccess,
+  allotPairingFail,
+  deallotPairingSuccess,
+  deallotPairingFail,
 } from "./actions";
 import {
   getInventoryAllottedSmartcard,
@@ -58,6 +67,9 @@ import {
   getInventoryAllottedLco,
   allotStb,
   deallotStb,
+  getInventoryAllottedPairinglist,
+  allotPairing,
+  deallotPairing,
 } from "../../helpers/fakebackend_helper";
 
 export const getAllottedPairingStore = (state) => state.allottedpairing;

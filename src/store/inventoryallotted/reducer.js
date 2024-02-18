@@ -37,6 +37,14 @@ import {
   DEALLOT_STB,
   DEALLOT_STB_SUCCESS,
   DEALLOT_STB_FAIL,
+  GET_INVENTORYALLOTTED_PAIRINGLIST_SUCCESS,
+  GET_INVENTORYALLOTTED_PAIRINGLIST_FAIL,
+  ALLOT_PAIRING,
+  ALLOT_PAIRING_SUCCESS,
+  ALLOT_PAIRING_FAIL,
+  DEALLOT_PAIRING,
+  DEALLOT_PAIRING_SUCCESS,
+  DEALLOT_PAIRING_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -48,7 +56,8 @@ const INIT_STATE = {
   allottedoperatorlist: [],
   allottedstblist: [],
   allottedsistributor: [],
-  aTBco: [],
+  allottedlco: [],
+  allottedpairinglist: [],
   pagination: {},
   error: {},
   loading: false,
@@ -278,6 +287,63 @@ const InventoryAllotted = (state = INIT_STATE, action) => {
       };
 
     case DEALLOT_STB_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+    case GET_INVENTORYALLOTTED_PAIRINGLIST_SUCCESS:
+      return {
+        ...state,
+        allottedpairinglist: action.payload,
+        loading: false,
+      };
+
+    case GET_INVENTORYALLOTTED_PAIRINGLIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case ALLOT_PAIRING:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case ALLOT_PAIRING_SUCCESS:
+      return {
+        ...state,
+        allottedpairing: [...state.allottedpairing, action.payload],
+        loading: false,
+      };
+
+    case ALLOT_PAIRING_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+    case DEALLOT_PAIRING:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case DEALLOT_PAIRING_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        allottedpairing: state.allottedpairing.map((pairing) =>
+          pairing.id === action.payload.id
+            ? { ...pairing, ...action.payload }
+            : pairing
+        ),
+      };
+
+    case DEALLOT_PAIRING_FAIL:
       return {
         ...state,
         error: action.payload,
