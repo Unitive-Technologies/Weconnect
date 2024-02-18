@@ -27,6 +27,7 @@ import {
   getInventoryAllottedDistributor as onGetInventoryAllottedDistributor,
   getInventoryAllottedLco as onGetInventoryAllottedLco,
 } from "/src/store/inventoryAllotted/actions";
+import axios from "axios";
 
 function AllottedSmrtcard(props) {
   const {
@@ -39,41 +40,86 @@ function AllottedSmrtcard(props) {
   const [usertype, setUsertype] = useState("");
   const [selectedSmartcardlist, setSelectedSmartcardlist] = useState([]);
   const [isCheckedSc, setIsCheckedSc] = useState(false);
-  const [brand_id, setBrand_id] = useState("");
+  const [branch_id, setBranch_id] = useState("");
   const [distributor_id, setDistributor_id] = useState("");
   const [operator, setOperator] = useState("");
+  const [allotteddistributor, setAllotteddistributor] = useState([]);
+  const [allottedlco, setAllottedlco] = useState([]);
 
+  const baseUrl = "https://sms.unitch.in/api/index.php/v1";
   const dispatch = useDispatch();
 
-  const selectInventoryAllottedState = (state) => state.allotteddistributor;
-  const inventoryallottedProperties = createSelector(
-    selectInventoryAllottedState,
-    (allotteddistributor) => ({
-      allotteddistributor: allotteddistributor.allotteddistributor,
-      allottedlco: allotteddistributor.allottedlco,
-    })
-  );
+  // const selectInventoryAllottedState = (state) => state.allotteddistributor;
+  // const inventoryallottedProperties = createSelector(
+  //   selectInventoryAllottedState,
+  //   (allotteddistributor) => ({
+  //     allotteddistributor: allotteddistributor.allotteddistributor,
+  //     allottedlco: allotteddistributor.allottedlco,
+  //   })
+  // );
 
-  const { allotteddistributor, allottedlco } = useSelector(
-    inventoryallottedProperties
-  );
-
-  useEffect(() => {
-    // if (allotteddistributor && !allotteddistributor.length) {
-    dispatch(onGetInventoryAllottedDistributor(brand_id));
-    // dispatch(onGetInventoryAllottedLco(brand_id, distributor_id));
-    // }
-    console.log("Selected brand id: ", brand_id);
-  }, [brand_id]);
+  // const { allotteddistributor, allottedlco } = useSelector(
+  //   inventoryallottedProperties
+  // );
 
   useEffect(() => {
-    // if (allotteddistributor && !allotteddistributor.length) {
-    // dispatch(onGetInventoryAllottedDistributor(brand_id));
-    dispatch(onGetInventoryAllottedLco(brand_id, distributor_id));
-    // }
-  }, [distributor_id]);
+    console.log("Selected branch id: ", branch_id);
+    // const token = "Bearer " + localStorage.getItem("temptoken");
+    // const response = axios.get(
+    //   `${baseUrl}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=${branch_id}&filter[type]=2&vr=web1.0`,
+    //   {
+    //     headers: {
+    //       Authorization: token, // Include your token here
+    //     },
+    //   }
+    // );
+    // console.log("response data: ", response);
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+      const response = axios.get(
+        `${baseUrl}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=${parseInt(
+          branch_id
+        )}&filter[type]=2&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      console.log("response data: ", response);
+      // setAllotteddistributor(response);
+    } catch (error) {
+      console.error("Error fetching distributor data:", error);
+    }
+  }, [branch_id]);
 
-  // console.log("Selected brand id: ", brand_id);
+  // const handleBranchSelection = async (e) => {
+  //   try {
+  //     const id = e.target.value;
+  //     setBranch_id(id);
+  //     {
+  //       console.log("Selected branch id: ", id);
+  //     }
+  //     validation.handleChange(e);
+  //     const token = "Bearer " + localStorage.getItem("temptoken");
+  //     const response = await axios.get(
+  //       `${baseUrl}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=${parseInt(
+  //         id
+  //       )}&filter[type]=2&vr=web1.0`,
+  //       {
+  //         headers: {
+  //           Authorization: token,
+  //         },
+  //       }
+  //     );
+  //     {
+  //       console.log("response data: ", response);
+  //     }
+  //     setAllotteddistributor(response);
+  //   } catch (error) {
+  //     console.error("Error fetching distributor data:", error);
+  //   }
+  // };
 
   const handleSmartcardSelection = (row) => {
     const isSelected = selectedSmartcardlist.some(
@@ -301,17 +347,20 @@ function AllottedSmrtcard(props) {
                     name="brand_id"
                     type="select"
                     placeholder="Select Reginal office"
-                    onChange={(e) => {
-                      validation.handleChange(e);
-                      setBrand_id(e.target.value);
-                    }}
+                    // onChange={(e) => {
+                    //   validation.handleChange(e);
+                    //   setBranch_id(e.target.value);
+                    // }}
+                    onChange={(e) => setBranch_id(e.target.value)}
+                    // onChange={handleBranchSelection}
                     onBlur={validation.handleBlur}
-                    value={validation.values.brand_id || ""}
-                    invalid={
-                      validation.touched.brand_id && validation.errors.brand_id
-                        ? true
-                        : false
-                    }
+                    // value={validation.values.branch_id || ""}
+                    value={branch_id}
+                    // invalid={
+                    //   validation.touched.brand_id && validation.errors.branch_id
+                    //     ? true
+                    //     : false
+                    // }
                   >
                     <option value="">Select Reginal office</option>
                     {allottedoperatorlist.map((operatorlist) => (
@@ -320,11 +369,12 @@ function AllottedSmrtcard(props) {
                       </option>
                     ))}
                   </Input>
-                  {validation.touched.brand_id && validation.errors.brand_id ? (
+                  {/* {validation.touched.branch_id &&
+                  validation.errors.branch_id ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.brand_id}
+                      {validation.errors.branch_id}
                     </FormFeedback>
-                  ) : null}
+                  ) : null} */}
                 </div>
               </Col>
             ) : null}
@@ -342,7 +392,7 @@ function AllottedSmrtcard(props) {
                       placeholder="Select Reginal office"
                       onChange={(e) => {
                         validation.handleChange(e);
-                        setBrand_id(e.target.value);
+                        setBranch_id(e.target.value);
                       }}
                       onBlur={validation.handleBlur}
                       value={validation.values.brand_id || ""}
@@ -368,7 +418,7 @@ function AllottedSmrtcard(props) {
                     ) : null}
                   </div>
                 </Col>
-                {brand_id !== "" ? (
+                {branch_id !== "" ? (
                   <Col lg={3}>
                     <div className="mb-3">
                       <Label className="form-label">
