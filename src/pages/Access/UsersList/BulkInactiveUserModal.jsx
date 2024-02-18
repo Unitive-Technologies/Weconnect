@@ -597,6 +597,24 @@ const BulkInactiveUserModal = (props) => {
                 </Col>
               </Row>
               {/* {console.log("tableList: " + JSON.stringify(tableList))} */}
+              {/* <TableContainerX
+                columns={columns}
+                data={users}
+                isShowTableActionButtons={true}
+                isLoading={loading}
+                isPagination={true}
+                totalCount={Number(totalCount)}
+                pageSize={Number(pageSize)}
+                currentPage={Number(currentPage)}
+                totalPage={Number(totalPage)}
+                isGlobalFilter={true}
+                isShowingPageLength={true}
+                tableActions={getTableActions()}
+                handleRowClick={(row) => {
+                  toggleViewModal(row);
+                }}
+                goToPage={goToPage}
+              /> */}
               <TableContainer
                 isPagination={true}
                 columns={columns}
@@ -615,7 +633,6 @@ const BulkInactiveUserModal = (props) => {
               />
               <div
                 style={{
-                  // margin: "20px 0px",
                   marginTop: "20px",
                   marginBottom: "-18px",
                   zIndex: 12000,

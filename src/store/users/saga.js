@@ -74,7 +74,7 @@ import {
   getUserLco,
   getUserBulkSettings,
   updateUserSettings,
-} from "../../helpers/fakebackend_helper";
+} from "../../helpers/backend_helper";
 import { toast } from "react-toastify";
 
 export const getUsersStore = (state) => state.users;

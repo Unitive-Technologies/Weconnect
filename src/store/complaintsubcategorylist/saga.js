@@ -33,7 +33,7 @@ import {
   getComplaintSubCategoryStatus,
   addNewComplaintSubCategory,
   updateComplaintSubCategory,
-} from "../../helpers/fakebackend_helper";
+} from "../../helpers/backend_helper";
 
 const convertComplaintSubCategoryListObject = (complaintSubCategoryList) => {
   // Notification Template has more data than what we need, we need to convert each of the Notification Template user object in the list with needed colums of the table

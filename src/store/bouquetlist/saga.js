@@ -44,7 +44,7 @@ import {
   getBouquex,
   getRechargePeriod,
   getOperatorForBouquet,
-} from "../../helpers/fakebackend_helper";
+} from "../../helpers/backend_helper";
 
 export const getBouquetStore = (state) => state.bouquet;
 

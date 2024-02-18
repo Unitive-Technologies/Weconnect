@@ -85,7 +85,7 @@ const BulkUserSettings = (props) => {
     }));
   };
 
-  const isRowChecked = (rowId) => checkedRows[rowId];
+  const isRowChecked = (rowId) => Boolean(checkedRows[rowId]);
   console.log("checkedRows:" + JSON.stringify(checkedRows));
   const handleSetting = (row) => {
     console.log("setting row : " + JSON.stringify(row));

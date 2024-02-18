@@ -16,7 +16,7 @@ import {
   getInventoryBlacklistedSmartcard,
   getInventoryBlacklistedStb,
   getInventoryBlacklistedPairing,
-} from "../../helpers/fakebackend_helper";
+} from "../../helpers/backend_helper";
 
 export const getBlacklistedPairingStore = (state) => state.blacklistedpairing;
 

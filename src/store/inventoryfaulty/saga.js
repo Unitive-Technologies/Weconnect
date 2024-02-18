@@ -43,7 +43,7 @@ import {
   updateFaultyStbBlacklist,
   updateFaultyPairingSendpair,
   updateFaultyPairingBlacklist,
-} from "../../helpers/fakebackend_helper";
+} from "../../helpers/backend_helper";
 
 export const getFaultyPairingStore = (state) => state.faultypairing;
 

@@ -1,18 +1,39 @@
 import { call, put, select, takeEvery } from "redux-saga/effects";
 
-import { GET_OSDTEMPLATE, UPDATE_OSDTEMPLATE, GET_OSDTEMPLATE_STATUS, GET_OSDTEMPLATE_OSD, GET_OSDTEMPLATE_TEMPLATEFOR, ADD_NEW_OSDTEMPLATE } from "./actionTypes";
+import {
+  GET_OSDTEMPLATE,
+  UPDATE_OSDTEMPLATE,
+  GET_OSDTEMPLATE_STATUS,
+  GET_OSDTEMPLATE_OSD,
+  GET_OSDTEMPLATE_TEMPLATEFOR,
+  ADD_NEW_OSDTEMPLATE,
+} from "./actionTypes";
 
 import {
   getOSDTemplate as fetchOSDTemplates,
-  getOSDTemplateSuccess, getOSDTemplateFail,
+  getOSDTemplateSuccess,
+  getOSDTemplateFail,
   addOSDTemplateSuccess,
   addOSDTemplateFail,
-  getOSDTemplateStatusSuccess, getOSDTemplateStatusFail, getOSDTemplateOSDSuccess, getOSDTemplateOSDFail, getOSDTemplateTemplateForSuccess, getOSDTemplateTemplateForFail,
-  updateOSDTemplateSuccess, updateOSDTemplateFail,
+  getOSDTemplateStatusSuccess,
+  getOSDTemplateStatusFail,
+  getOSDTemplateOSDSuccess,
+  getOSDTemplateOSDFail,
+  getOSDTemplateTemplateForSuccess,
+  getOSDTemplateTemplateForFail,
+  updateOSDTemplateSuccess,
+  updateOSDTemplateFail,
 } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getOSDTemplate, getOSDTemplateStatus, getOSDTemplateOSD, getOSDTemplateTemplateFor, addNewOSDTemplate, updateOSDTemplate } from "../../helpers/fakebackend_helper";
+import {
+  getOSDTemplate,
+  getOSDTemplateStatus,
+  getOSDTemplateOSD,
+  getOSDTemplateTemplateFor,
+  addNewOSDTemplate,
+  updateOSDTemplate,
+} from "../../helpers/backend_helper";
 
 // const convertOSDTemplateListObject = (osdTemplate) => {
 //   return osdTemplate.map((osdTemp) => {
@@ -45,7 +66,6 @@ import { getOSDTemplate, getOSDTemplateStatus, getOSDTemplateOSD, getOSDTemplate
 
 export const getOSDTemplateStore = (state) => state.osdTemplate;
 
-
 function* fetchOSDTemplate() {
   try {
     let OSDTemplateStore = yield select(getOSDTemplateStore);
@@ -63,15 +83,10 @@ function* fetchOSDTemplate() {
   }
 }
 
-
 function* onUpdateOSDTemplate({ payload: OSDTemplate }) {
   console.log("OSDTemplate in onUpdate:" + JSON.stringify(OSDTemplate));
   try {
-    const response = yield call(
-      updateOSDTemplate,
-      OSDTemplate.id,
-      OSDTemplate,
-    );
+    const response = yield call(updateOSDTemplate, OSDTemplate.id, OSDTemplate);
     yield put(updateOSDTemplateSuccess(response));
     console.log("update response:" + JSON.stringify(response));
     yield put(fetchOSDTemplates());

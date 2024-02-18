@@ -54,7 +54,7 @@ import {
   updateChannelList,
   addNewChannelList,
   // getCASSourceList,
-} from "../../helpers/fakebackend_helper";
+} from "../../helpers/backend_helper";
 
 export const getChannelListStore = (state) => state.channelList;
 

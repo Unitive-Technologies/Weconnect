@@ -25,7 +25,7 @@ import {
   updateLanguageList,
   getLanguageListStatus,
   addNewLanguageList,
-} from "../../helpers/fakebackend_helper";
+} from "../../helpers/backend_helper";
 
 // const convertLanguageListObject = (languageList) => {
 //   return languageList.map((langlist) => {

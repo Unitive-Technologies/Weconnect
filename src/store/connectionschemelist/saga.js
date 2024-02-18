@@ -9,7 +9,7 @@ import {
 import {
   getConnectionScheme,
   addConnectionScheme,
-} from "../../helpers/fakebackend_helper";
+} from "../../helpers/backend_helper";
 
 const convertConnectionSchemeListObject = (connectionschemeList) => {
   return connectionschemeList.map((connectionscheme) => {

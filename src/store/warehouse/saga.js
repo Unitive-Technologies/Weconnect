@@ -29,7 +29,7 @@ import {
   getWarehouseListOperator,
   addWareHouseList,
   updateWarehouseList,
-} from "../../helpers/fakebackend_helper";
+} from "../../helpers/backend_helper";
 
 export const getWarehouseListStore = (state) => state.warehouselist;
 

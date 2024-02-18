@@ -1,5 +1,14 @@
 import { call, put, select, takeEvery } from "redux-saga/effects";
-import { GET_BRANDLIST, UPDATE_BRANDLIST, GET_BRANDLIST_BOXTYPE, GET_BRANDLIST_BRANDTYPE, GET_BRANDLIST_CASTYPE, GET_BRANDLIST_CHARACTERS, GET_BRANDLIST_STATUS, ADD_BRANDLIST } from "./actionTypes";
+import {
+  GET_BRANDLIST,
+  UPDATE_BRANDLIST,
+  GET_BRANDLIST_BOXTYPE,
+  GET_BRANDLIST_BRANDTYPE,
+  GET_BRANDLIST_CASTYPE,
+  GET_BRANDLIST_CHARACTERS,
+  GET_BRANDLIST_STATUS,
+  ADD_BRANDLIST,
+} from "./actionTypes";
 import {
   getBrandList as fetchbrandlists,
   getBrandListSuccess,
@@ -19,10 +28,18 @@ import {
   updateBrandListSuccess,
   updateBrandListFail,
 } from "./actions";
-import { getBrandList, updateBrandList, getBrandListBoxType, getBrandListCasType, getBrandListBrandType, getBrandListCharacters, getBrandListStatus, addBrandList } from "../../helpers/fakebackend_helper";
+import {
+  getBrandList,
+  updateBrandList,
+  getBrandListBoxType,
+  getBrandListCasType,
+  getBrandListBrandType,
+  getBrandListCharacters,
+  getBrandListStatus,
+  addBrandList,
+} from "../../helpers/backend_helper";
 
 export const getBrandListStore = (state) => state.brandlist;
-
 
 function* fetchBrandListSaga() {
   try {
@@ -42,13 +59,9 @@ function* fetchBrandListSaga() {
 
 function* onUpdateBrandList({ payload: brandlist }) {
   console.log("Brand List in onUpdate:" + JSON.stringify(brandlist));
-  console.log("Updated Id" + brandlist.id)
+  console.log("Updated Id" + brandlist.id);
   try {
-    const response = yield call(
-      updateBrandList,
-      brandlist.id,
-      brandlist,
-    );
+    const response = yield call(updateBrandList, brandlist.id, brandlist);
     yield put(updateBrandListSuccess(response));
     console.log("update response:" + JSON.stringify(response));
     yield put(fetchbrandlists());

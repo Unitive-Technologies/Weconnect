@@ -1,6 +1,11 @@
 import { call, put, select, takeEvery } from "redux-saga/effects";
 
-import { GET_BANK, UPDATE_BANK, GET_BANK_STATUS, ADD_NEW_BANK } from "./actionTypes";
+import {
+  GET_BANK,
+  UPDATE_BANK,
+  GET_BANK_STATUS,
+  ADD_NEW_BANK,
+} from "./actionTypes";
 
 import {
   getBank as fetchbanks,
@@ -20,7 +25,7 @@ import {
   updateBank,
   getBankStatus,
   addNewBank,
-} from "../../helpers/fakebackend_helper";
+} from "../../helpers/backend_helper";
 
 export const getBankStore = (state) => state.bank;
 
@@ -43,11 +48,7 @@ function* fetchBank() {
 function* onUpdateBank({ payload: bank }) {
   console.log("Bank in onUpdate:" + JSON.stringify(bank));
   try {
-    const response = yield call(
-      updateBank,
-      bank.id,
-      bank
-    );
+    const response = yield call(updateBank, bank.id, bank);
     yield put(updateBankSuccess(response));
     console.log("update response:" + JSON.stringify(response));
     yield put(fetchbanks());

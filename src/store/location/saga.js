@@ -25,7 +25,7 @@ import {
   updateLocation,
   getLcoOnLocation,
   // getSingleLocation,
-} from "../../helpers/fakebackend_helper";
+} from "../../helpers/backend_helper";
 import { toast } from "react-toastify";
 
 export const getLocationStore = (state) => state.location;

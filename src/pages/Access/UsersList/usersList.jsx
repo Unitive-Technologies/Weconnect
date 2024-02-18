@@ -29,7 +29,6 @@ import { ToastContainer } from "react-toastify";
 import ViewUserModal from "./ViewUserModal";
 import AddUserModal from "./AddUserModal";
 import UploadUserModal from "./UploadUserModal";
-import BulkUpdateUserModal from "./BulkUpdateUserModal";
 import BulkInactiveUserModal from "./BulkInactiveUserModal";
 import BulkUserSettings from "./BulkUserSettings";
 import TableContainerX from "../../../components/Common/TableContainerX";
@@ -531,25 +530,6 @@ const ContactsList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {/* <TableContainer
-                      isPagination={true}
-                      columns={columns}
-                      data={users}
-                      isGlobalFilter={true}
-                      isShowTableActionButtons={true}
-                      tableActions={getTableActions()}
-                      handleRowClick={(row) => {
-                        // console.log("row:" + JSON.stringify(row));
-                        handleViewUser(row);
-                      }}
-                      isShowingPageLength={true}
-                      // iscustomPageSizeOptions={true}
-                      customPageSize={10}
-                      tableClass="table align-middle table-nowrap table-hover"
-                      theadClass="table-light"
-                      paginationDiv="col-sm-12 col-md-7"
-                      pagination="pagination pagination-rounded justify-content-end mt-4"
-                    /> */}
                     <TableContainerX
                       columns={columns}
                       data={users}

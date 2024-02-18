@@ -6,10 +6,7 @@ import { apiError, loginSuccess, logoutUserSuccess } from "./actions";
 
 //Include Both Helper File with needed methods
 import { getFirebaseBackend } from "../../../helpers/firebase_helper";
-import {
-  postFakeLogin,
-  postJwtLogin,
-} from "../../../helpers/fakebackend_helper";
+import { postFakeLogin, postJwtLogin } from "../../../helpers/backend_helper";
 
 const fireBaseBackend = getFirebaseBackend();
 
@@ -22,16 +19,15 @@ function* loginUser({ payload: { logindata, history } }) {
       console.log("jwt login...");
       console.log(logindata);
       response = yield call(postJwtLogin, {
-        "LoginForm": {
-            "username": logindata.username,
-            "password": logindata.password
-        }
-    });
+        LoginForm: {
+          username: logindata.username,
+          password: logindata.password,
+        },
+      });
     }
 
     // Include loginTime in the response before saving to localStorage
-    if (response.status == 200)
-    {
+    if (response.status == 200) {
       let responseData = response.data;
       responseData.loginTime = currentTime.toISOString();
 

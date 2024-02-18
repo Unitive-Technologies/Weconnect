@@ -1,6 +1,11 @@
 import { call, put, select, takeEvery } from "redux-saga/effects";
 
-import { GET_BROADCASTER, UPDATE_BROADCASTER, GET_BROADCASTER_STATUS, ADD_NEW_BROADCASTER } from "./actionTypes";
+import {
+  GET_BROADCASTER,
+  UPDATE_BROADCASTER,
+  GET_BROADCASTER_STATUS,
+  ADD_NEW_BROADCASTER,
+} from "./actionTypes";
 
 import {
   getBroadCaster as fetchbroadcasters,
@@ -20,7 +25,7 @@ import {
   updateBroadCasters,
   getBroadCastersStatus,
   addNewBroadCaster,
-} from "../../helpers/fakebackend_helper";
+} from "../../helpers/backend_helper";
 import { toast } from "react-toastify";
 
 // const convertBroadCasterListObject = (broadCasterList) => {
@@ -85,7 +90,7 @@ function* onUpdateBroadCasters({ payload: broadCasters }) {
     const response = yield call(
       updateBroadCasters,
       broadCasters.id,
-      broadCasters,
+      broadCasters
     );
     yield put(updateBroadCasterSuccess(response));
     console.log("update response:" + JSON.stringify(response));

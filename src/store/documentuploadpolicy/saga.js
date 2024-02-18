@@ -1,17 +1,25 @@
 import { call, put, select, takeEvery } from "redux-saga/effects";
 
-import { GET_DOCUMENTUPLOADPOLICY, ADD_NEW_DOCUMENTUPLOADPOLICY } from "./actionTypes";
+import {
+  GET_DOCUMENTUPLOADPOLICY,
+  ADD_NEW_DOCUMENTUPLOADPOLICY,
+} from "./actionTypes";
 
 import {
   getDocumentUploadPolicySuccess,
   getDocumentUploadPolicyFail,
-  addDocumentUploadPolicySuccess, addDocumentUploadPolicyFail
+  addDocumentUploadPolicySuccess,
+  addDocumentUploadPolicyFail,
 } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getDocumentUploadPolicy, addNewDocumentUploadPolicy } from "../../helpers/fakebackend_helper";
+import {
+  getDocumentUploadPolicy,
+  addNewDocumentUploadPolicy,
+} from "../../helpers/backend_helper";
 
-export const getDocumentUploadPolicyStore = (state) => state.documentUploadPolicy;
+export const getDocumentUploadPolicyStore = (state) =>
+  state.documentUploadPolicy;
 
 function* fetchDocumentUploadPolicy() {
   try {
@@ -32,9 +40,14 @@ function* fetchDocumentUploadPolicy() {
 
 function* onAddNewDocumentUploadPolicy({ payload: documentUploadPolicy }) {
   try {
-    const response = yield call(addNewDocumentUploadPolicy, documentUploadPolicy);
+    const response = yield call(
+      addNewDocumentUploadPolicy,
+      documentUploadPolicy
+    );
     yield put(addDocumentUploadPolicySuccess(response));
-    toast.success("DocumentUploadPolicy Added Successfully", { autoClose: 2000 });
+    toast.success("DocumentUploadPolicy Added Successfully", {
+      autoClose: 2000,
+    });
   } catch (error) {
     yield put(addDocumentUploadPolicyFail(error));
     toast.error("DocumentUploadPolicy Added Failed", { autoClose: 2000 });

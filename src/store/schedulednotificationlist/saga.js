@@ -8,7 +8,7 @@ import {
 } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getScheduledNotification } from "../../helpers/fakebackend_helper";
+import { getScheduledNotification } from "../../helpers/backend_helper";
 
 const convertScheduledNotificationListObject = (ScheduledNotificationList) => {
   // Notification Template has more data than what we need, we need to convert each of the Notification Template user object in the list with needed colums of the table

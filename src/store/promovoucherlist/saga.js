@@ -33,7 +33,7 @@ import {
   getPromoVoucherBouquet,
   getPromoVoucherRecharge,
   addNewPromoVoucher,
-} from "../../helpers/fakebackend_helper";
+} from "../../helpers/backend_helper";
 
 export const getPromoVoucherStore = (state) => state.promovoucher;
 

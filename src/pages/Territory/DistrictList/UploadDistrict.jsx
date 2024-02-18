@@ -19,7 +19,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
-import { initiateSampleDownload_District } from "../../../helpers/fakebackend_helper";
+import { initiateSampleDownload_District } from "../../../helpers/backend_helper";
 
 import axios from "axios";
 

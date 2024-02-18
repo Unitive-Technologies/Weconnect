@@ -1,25 +1,43 @@
 import { call, put, select, takeEvery } from "redux-saga/effects";
 
-import { GET_SMSMESSAGETEMPLIST, GET_SMSMESSAGETEMPLIST_STATUS, GET_SMSMESSAGETEMPLIST_SENDER, GET_SMSMESSAGETEMPLIST_SUBCATEGORY, GET_SMSMESSAGETEMPLIST_CATEGORY, ADD_NEW_SMSMESSAGETEMPLIST, UPDATE_SMSMESSAGETEMPLIST, } from "./actionTypes";
+import {
+  GET_SMSMESSAGETEMPLIST,
+  GET_SMSMESSAGETEMPLIST_STATUS,
+  GET_SMSMESSAGETEMPLIST_SENDER,
+  GET_SMSMESSAGETEMPLIST_SUBCATEGORY,
+  GET_SMSMESSAGETEMPLIST_CATEGORY,
+  ADD_NEW_SMSMESSAGETEMPLIST,
+  UPDATE_SMSMESSAGETEMPLIST,
+} from "./actionTypes";
 
 import {
   getSMSMessageTempList as fetchSMSMessageTemp,
   getSMSMessageTempListSuccess,
   getSMSMessageTempListFail,
-  addSMSMessageTempListSuccess, addSMSMessageTempListFail,
-  getSMSMessageTempListStatusSuccess, getSMSMessageTempListStatusFail,
-  getSMSMessageTempListSubcategorySuccess, getSMSMessageTempListSubcategoryFail,
-  getSMSMessageTempListCategorySuccess, getSMSMessageTempListCategoryFail,
-  getSMSMessageTempListSenderSuccess, getSMSMessageTempListSenderFail,
+  addSMSMessageTempListSuccess,
+  addSMSMessageTempListFail,
+  getSMSMessageTempListStatusSuccess,
+  getSMSMessageTempListStatusFail,
+  getSMSMessageTempListSubcategorySuccess,
+  getSMSMessageTempListSubcategoryFail,
+  getSMSMessageTempListCategorySuccess,
+  getSMSMessageTempListCategoryFail,
+  getSMSMessageTempListSenderSuccess,
+  getSMSMessageTempListSenderFail,
   updateSMSMessageTempListSuccess,
   updateSMSMessageTempListFail,
 } from "./actions";
 
 //Include Both Helper File with needed methods
 import {
-  getSMSMessageTempList, addNewSMSMessageTempList,
-  updateSMSMessageTempList, getSMSMessageTempListStatus, getSMSMessageTempListCategory, getSMSMessageTempListSubcategory, getSMSMessageTempListSender
-} from "../../helpers/fakebackend_helper";
+  getSMSMessageTempList,
+  addNewSMSMessageTempList,
+  updateSMSMessageTempList,
+  getSMSMessageTempListStatus,
+  getSMSMessageTempListCategory,
+  getSMSMessageTempListSubcategory,
+  getSMSMessageTempListSender,
+} from "../../helpers/backend_helper";
 
 // const convertSMSMessageTempListObject = (smsmessagetemp) => {
 //   return smsmessagetemp.map((smsmsgtemp) => {
@@ -40,7 +58,6 @@ import {
 // };
 
 export const getSMSMessageTempListStore = (state) => state.smsmessagetemp;
-
 
 function* fetchSMSMsgTempList() {
   try {
@@ -75,7 +92,7 @@ function* onUpdateSMSMessageTempList({ payload: smsmessagetemp }) {
     const response = yield call(
       updateSMSMessageTempList,
       smsmessagetemp.id,
-      smsmessagetemp,
+      smsmessagetemp
     );
     yield put(updateSMSMessageTempListSuccess(response));
     console.log("update response:" + JSON.stringify(response));
@@ -88,7 +105,9 @@ function* onUpdateSMSMessageTempList({ payload: smsmessagetemp }) {
 function* fetchSMSMessageTempListStatus() {
   try {
     const response = yield call(getSMSMessageTempListStatus);
-    console.log("SMSMessageTempList status response:" + JSON.stringify(response));
+    console.log(
+      "SMSMessageTempList status response:" + JSON.stringify(response)
+    );
     yield put(getSMSMessageTempListStatusSuccess(response.data));
   } catch (error) {
     yield put(getSMSMessageTempListStatusFail(error));
@@ -98,7 +117,9 @@ function* fetchSMSMessageTempListStatus() {
 function* fetchSMSMessageTempListSender() {
   try {
     const response = yield call(getSMSMessageTempListSender);
-    console.log("SMSMessageTempList Sender response:" + JSON.stringify(response));
+    console.log(
+      "SMSMessageTempList Sender response:" + JSON.stringify(response)
+    );
     yield put(getSMSMessageTempListSenderSuccess(response.data));
   } catch (error) {
     yield put(getSMSMessageTempListSenderFail(error));
@@ -108,19 +129,22 @@ function* fetchSMSMessageTempListSender() {
 function* fetchSMSMessageTempListSubcategory() {
   try {
     const response = yield call(getSMSMessageTempListSubcategory);
-    console.log("SMSMessageTempList Subcategory response:" + JSON.stringify(response));
+    console.log(
+      "SMSMessageTempList Subcategory response:" + JSON.stringify(response)
+    );
     yield put(getSMSMessageTempListSubcategorySuccess(response.data));
   } catch (error) {
-    console.log("SMS Message Temp List Error" + error)
+    console.log("SMS Message Temp List Error" + error);
     yield put(getSMSMessageTempListSubcategoryFail(error));
   }
-
 }
 
 function* fetchSMSMessageTempListCategory() {
   try {
     const response = yield call(getSMSMessageTempListCategory);
-    console.log("SMSMessageTempList Category response:" + JSON.stringify(response));
+    console.log(
+      "SMSMessageTempList Category response:" + JSON.stringify(response)
+    );
     yield put(getSMSMessageTempListCategorySuccess(response.data));
   } catch (error) {
     yield put(getSMSMessageTempListCategoryFail(error));
@@ -130,12 +154,17 @@ function* fetchSMSMessageTempListCategory() {
 function* smsMessageTempListSaga() {
   yield takeEvery(GET_SMSMESSAGETEMPLIST, fetchSMSMsgTempList);
   yield takeEvery(ADD_NEW_SMSMESSAGETEMPLIST, onAddNewSMSMessageTempList);
-  yield takeEvery(GET_SMSMESSAGETEMPLIST_CATEGORY, fetchSMSMessageTempListCategory);
+  yield takeEvery(
+    GET_SMSMESSAGETEMPLIST_CATEGORY,
+    fetchSMSMessageTempListCategory
+  );
   yield takeEvery(GET_SMSMESSAGETEMPLIST_SENDER, fetchSMSMessageTempListSender);
   yield takeEvery(GET_SMSMESSAGETEMPLIST_STATUS, fetchSMSMessageTempListStatus);
-  yield takeEvery(GET_SMSMESSAGETEMPLIST_SUBCATEGORY, fetchSMSMessageTempListSubcategory);
+  yield takeEvery(
+    GET_SMSMESSAGETEMPLIST_SUBCATEGORY,
+    fetchSMSMessageTempListSubcategory
+  );
   yield takeEvery(UPDATE_SMSMESSAGETEMPLIST, onUpdateSMSMessageTempList);
-
 }
 
 export default smsMessageTempListSaga;

@@ -70,7 +70,7 @@ import {
   getInventoryAllottedPairinglist,
   allotPairing,
   deallotPairing,
-} from "../../helpers/fakebackend_helper";
+} from "../../helpers/backend_helper";
 
 export const getAllottedPairingStore = (state) => state.allottedpairing;
 

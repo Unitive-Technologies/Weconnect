@@ -33,7 +33,7 @@ import {
   getDesignationType,
   getDesignationParent,
   updateDesignation,
-} from "../../helpers/fakebackend_helper";
+} from "../../helpers/backend_helper";
 import { toast } from "react-toastify";
 
 const convertDesignationListObject = (designationList) => {

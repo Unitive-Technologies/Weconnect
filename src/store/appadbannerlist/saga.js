@@ -10,10 +10,7 @@ import {
 } from "./actions";
 
 //Include Both Helper File with needed methods
-import {
-  getAppAdBanner,
-  addAppAdBanner,
-} from "../../helpers/fakebackend_helper";
+import { getAppAdBanner, addAppAdBanner } from "../../helpers/backend_helper";
 import { toast } from "react-toastify";
 
 const convertAppAdBannerListObject = (appAdBannerList) => {

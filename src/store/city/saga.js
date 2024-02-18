@@ -25,7 +25,7 @@ import {
   addCity,
   getDistrictByStateid,
   updateCity,
-} from "../../helpers/fakebackend_helper";
+} from "../../helpers/backend_helper";
 import { toast } from "react-toastify";
 
 export const getCityStore = (state) => state.city;

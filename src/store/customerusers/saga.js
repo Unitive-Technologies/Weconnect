@@ -21,7 +21,7 @@ import {
   getCustomerUsers,
   updateCustomerUser,
   getCustomerUsersSettings,
-} from "../../helpers/fakebackend_helper";
+} from "../../helpers/backend_helper";
 
 const convertCustomerUsersListObject = (customerUserList) => {
   // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table

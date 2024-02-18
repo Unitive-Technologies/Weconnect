@@ -8,7 +8,7 @@ import {
 } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getLocalChannelNumber } from "../../helpers/fakebackend_helper";
+import { getLocalChannelNumber } from "../../helpers/backend_helper";
 
 const convertLocalChannelNumberListObject = (localChannelNumberList) => {
   // customer user list has more data than what we need, we need to convert each of the customer user object in the list with needed colums of the table

@@ -38,7 +38,7 @@ import {
   getDistributorsOperator,
   addNewDistributor,
   updateDistributor,
-} from "../../helpers/fakebackend_helper";
+} from "../../helpers/backend_helper";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 

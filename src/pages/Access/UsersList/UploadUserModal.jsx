@@ -20,7 +20,7 @@ import {
   downloadUserUploadTemplate,
   updateUserUploadByToken,
   uploadUserFileForInitiatedUserUpload,
-} from "../../../helpers/fakebackend_helper";
+} from "../../../helpers/backend_helper";
 
 const UploadUserModal = (props) => {
   const [uploadTrigger, setUploadTrigger] = useState({});

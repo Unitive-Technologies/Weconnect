@@ -20,7 +20,7 @@ import {
   addNcf,
   getOperatorForBulkAssign,
   addBulkAssignNcf,
-} from "../../helpers/fakebackend_helper";
+} from "../../helpers/backend_helper";
 
 const convertNcfListObject = (ncflist) => {
   return ncflist.map((ncf) => {

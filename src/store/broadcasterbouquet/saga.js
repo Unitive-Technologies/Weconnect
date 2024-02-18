@@ -41,7 +41,7 @@ import {
   getBroadcasterBouquetDefinition,
   updateBroadcasterBouquet,
   addNewBroadcasterBouquetList,
-} from "../../helpers/fakebackend_helper";
+} from "../../helpers/backend_helper";
 
 export const getBroadcasterBouquetListStore = (state) =>
   state.broadcasterBouquetList;

@@ -1,14 +1,45 @@
 import { call, put, select, takeEvery } from "redux-saga/effects";
 
-import { GET_TAX, UPDATE_TAX, GET_TAX_STATUS, GET_TAX_APPLY, GET_TAX_VALUES, GET_TAX_TAXONTAX, ADD_TAXLIST } from "./actionTypes";
+import {
+  GET_TAX,
+  UPDATE_TAX,
+  GET_TAX_STATUS,
+  GET_TAX_APPLY,
+  GET_TAX_VALUES,
+  GET_TAX_TAXONTAX,
+  ADD_TAXLIST,
+} from "./actionTypes";
 
-import { getTax as fetchtaxes, getTaxSuccess, getTaxFail, updateTaxSuccess, updateTaxFail, getTaxStatusSuccess, getTaxStatusFail, getTaxValuesSuccess, getTaxValuesFail, getTaxApplySuccess, getTaxApplyFail, getTaxTaxOnTaxSuccess, getTaxTaxOnTaxFail, addTaxListSuccess, addTaxListFail } from "./actions";
+import {
+  getTax as fetchtaxes,
+  getTaxSuccess,
+  getTaxFail,
+  updateTaxSuccess,
+  updateTaxFail,
+  getTaxStatusSuccess,
+  getTaxStatusFail,
+  getTaxValuesSuccess,
+  getTaxValuesFail,
+  getTaxApplySuccess,
+  getTaxApplyFail,
+  getTaxTaxOnTaxSuccess,
+  getTaxTaxOnTaxFail,
+  addTaxListSuccess,
+  addTaxListFail,
+} from "./actions";
 
 //Include Both Helper File with needed methods
-import { getTax, updateTax, getTaxStatus, getTaxApply, getTaxTaxOnTax, getTaxValues, addNewTaxList } from "../../helpers/fakebackend_helper";
+import {
+  getTax,
+  updateTax,
+  getTaxStatus,
+  getTaxApply,
+  getTaxTaxOnTax,
+  getTaxValues,
+  addNewTaxList,
+} from "../../helpers/backend_helper";
 
 export const getTaxStore = (state) => state.tax;
-
 
 function* fetchTax() {
   try {
@@ -30,11 +61,7 @@ function* fetchTax() {
 function* onUpdateTax({ payload: tax }) {
   console.log("Tax in onUpdate:" + JSON.stringify(tax));
   try {
-    const response = yield call(
-      updateTax,
-      tax.id,
-      tax,
-    );
+    const response = yield call(updateTax, tax.id, tax);
     yield put(updateTaxSuccess(response));
     console.log("update response:" + JSON.stringify(response));
     yield put(fetchtaxes());

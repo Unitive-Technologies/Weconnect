@@ -8,18 +8,25 @@ import {
 } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getConfigurationUploadLogs } from "../../helpers/fakebackend_helper";
+import { getConfigurationUploadLogs } from "../../helpers/backend_helper";
 
-export const getConfigurationUploadLogsStore = (state) => state.configurationuploadlogs;
+export const getConfigurationUploadLogsStore = (state) =>
+  state.configurationuploadlogs;
 
 function* fetchConfigurationUploadLogs() {
   try {
-    let ConfigurationUploadLogsStore = yield select(getConfigurationUploadLogsStore);
+    let ConfigurationUploadLogsStore = yield select(
+      getConfigurationUploadLogsStore
+    );
 
     const pageSize = ConfigurationUploadLogsStore.pageSize;
     const currentPage = ConfigurationUploadLogsStore.currentPage;
 
-    const response = yield call(getConfigurationUploadLogs, currentPage, pageSize);
+    const response = yield call(
+      getConfigurationUploadLogs,
+      currentPage,
+      pageSize
+    );
     console.log("Response from API -", response);
     // debugger;
     yield put(getConfigurationUploadLogsSuccess(response));

@@ -27,7 +27,7 @@ import {
   getDistrictStateList,
   getAdministrativeDivisionStatus,
   updateDistrict,
-} from "../../helpers/fakebackend_helper";
+} from "../../helpers/backend_helper";
 
 export const getDistrictStore = (state) => state.district;
 

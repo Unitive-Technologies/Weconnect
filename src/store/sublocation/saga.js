@@ -21,7 +21,7 @@ import {
   addSublocation,
   updateSublocation,
   getLocationOnSublocation,
-} from "../../helpers/fakebackend_helper";
+} from "../../helpers/backend_helper";
 
 export const getSublocationStore = (state) => state.sublocation;
 

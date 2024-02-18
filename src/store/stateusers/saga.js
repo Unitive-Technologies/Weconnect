@@ -5,7 +5,7 @@ import { GET_STATEUSERS } from "./actionTypes";
 import { getStateUsersSuccess, getStateUsersFail } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getStateUsers } from "../../helpers/fakebackend_helper";
+import { getStateUsers } from "../../helpers/backend_helper";
 
 export const getStateUsersStore = (state) => state.stateUsers;
 

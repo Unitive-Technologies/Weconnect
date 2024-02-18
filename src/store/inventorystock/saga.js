@@ -111,7 +111,7 @@ import {
   updateStockPairingMarkfaulty,
   updateStockpairingBlacklist,
   deleteStockPairing,
-} from "../../helpers/fakebackend_helper";
+} from "../../helpers/backend_helper";
 
 export const getStockPairingStore = (state) => state.stockpairing;
 
