@@ -21,7 +21,7 @@ import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const BulkUserSettings = (props) => {
-  const { isOpen, handleUserSettings, users, userBulkSettings } = props;
+  const { isOpen, toggleUserSettings, users, userBulkSettings } = props;
   console.log("settings in bulkuser modal:" + JSON.stringify(userBulkSettings));
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [tableList, setTableList] = useState([]);
@@ -34,6 +34,7 @@ const BulkUserSettings = (props) => {
     enabled_pay_modes: "",
   });
   const handleChangeSettingValue = (e) => {
+    debugger;
     console.log("handleChangeSettingValue called");
     const { name, value } = e.target;
     console.log(`Setting ${name} to ${value}`);
@@ -636,9 +637,9 @@ const BulkUserSettings = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleUserSettings}
+      toggle={toggleUserSettings}
     >
-      <ModalHeader toggle={handleUserSettings} tag="h4">
+      <ModalHeader toggle={toggleUserSettings} tag="h4">
         Bulk User Settings
       </ModalHeader>
       <ModalBody>
@@ -742,6 +743,10 @@ const BulkUserSettings = (props) => {
                       </tr>
                     </thead>
                     <tbody>
+                      {console.log(
+                        "...................settingTable:" +
+                          JSON.stringify(settingTable)
+                      )}
                       {settingTable.map((row, i) => (
                         <tr key={i}>
                           <td>
@@ -816,7 +821,7 @@ const BulkUserSettings = (props) => {
                   <button
                     type="button"
                     className="btn btn-primary "
-                    onClick={handleUserSettings}
+                    onClick={toggleUserSettings}
                   >
                     Cancel
                   </button>
