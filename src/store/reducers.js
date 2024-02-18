@@ -70,6 +70,8 @@ import allottedpairing from "./inventoryallotted/reducer";
 import inventorytrack from "./inventorytrack/reducer";
 import inventorytrackaction from "./inventorytrack/reducer";
 import channellistType from "./channel/reducer";
+import allotteddistributor from "./inventoryallotted/reducer";
+import allottedlco from "./inventoryallotted/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -140,6 +142,8 @@ const rootReducer = combineReducers({
   allottedpairing,
   inventorytrack,
   inventorytrackaction,
+  allotteddistributor,
+  allottedlco,
 });
 
 export default rootReducer;
