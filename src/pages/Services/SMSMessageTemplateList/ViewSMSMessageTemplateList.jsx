@@ -36,11 +36,13 @@ const ViewSMSMessageTemplateList = (props) => {
   );
   console.log(
     "View in  SMS Message Template List :" +
-      JSON.stringify(smsmessagetempSubCategory)
+    JSON.stringify(smsmessagetempSubCategory)
   );
   const dispatch = useDispatch();
 
   const [showEditSMS, setShowEditSMS] = useState(false);
+
+  const [metaData, setMetaData] = useState([]);
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -80,6 +82,7 @@ const ViewSMSMessageTemplateList = (props) => {
         sub_cat_id: values.sub_cat_id,
         status_lbl: values.status_lbl,
         sender_id: values.sender_id,
+        meta_Data: values.metaData,
         // serviceid: values["serviceid"],
         status: values.status,
         created_at: new Date(),
@@ -177,7 +180,7 @@ const ViewSMSMessageTemplateList = (props) => {
                   value={validation.values.template_id || ""}
                 ></Input>
                 {validation.touched.template_id &&
-                validation.errors.template_id ? (
+                  validation.errors.template_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.template_id}
                   </FormFeedback>
@@ -237,7 +240,7 @@ const ViewSMSMessageTemplateList = (props) => {
                     ))}
                 </Input>
                 {validation.touched.sub_cat_id &&
-                validation.errors.sub_cat_id ? (
+                  validation.errors.sub_cat_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.sub_cat_id}
                   </FormFeedback>
@@ -329,7 +332,10 @@ const ViewSMSMessageTemplateList = (props) => {
             }}
           >
             <Col sm="12">
-              <ViewMetaData />
+              <ViewMetaData
+                disabled={!showEditSMS}
+                showEditSMS={setMetaData}
+                data={SMSMsgTemp && SMSMsgTemp.metaData} />
             </Col>
           </Row>
 

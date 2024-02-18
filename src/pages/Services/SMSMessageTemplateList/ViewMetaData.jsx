@@ -14,11 +14,13 @@ import {
 import * as Yup from "yup";
 
 import { useFormik } from "formik";
-import { addNewSMSMessageTempList as onAddNewSMSMessageTempList } from "/src/store/smsmessage/actions";
 import { Link } from "react-router-dom";
 
 const ViewMetaData = (props) => {
   const { showEditChannel } = props;
+
+  const [casData, setCasData] = useState([]); // State to hold fetched data
+
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -43,8 +45,6 @@ const ViewMetaData = (props) => {
         type: values["type"],
         field: values["field"],
         label: values["label"],
-        created_at: new Date(),
-        created_by: values["created_by"],
       };
       console.log("newSMSMessageTempList:" + newSMSMessageTemplateList);
       // save new user
