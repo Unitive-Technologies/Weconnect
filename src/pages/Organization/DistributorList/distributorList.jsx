@@ -11,6 +11,8 @@ import {
   getDistributors as onGetDistributors,
   getDistributorsPhase as onGetDistributorsPhase,
   getDistributorsStatus as onGetDistributorsStatus,
+  getDistributorsSettings as onGetDistributorsSettings,
+  getDistributorsOperator as onGetDistributorsOperator,
 } from "../../../store/distributor/actions";
 
 //redux
@@ -42,6 +44,8 @@ const DistributorList = (props) => {
       distributor: distributors.distributors,
       distributorsPhase: distributors.distributorsPhase,
       distributorsStatus: distributors.distributorsStatus,
+      distributorsSettings: distributors.distributorsSettings,
+      distributorsOperator: distributors.distributorsOperator,
       loading: distributors.loading,
       totalPage: distributors.totalPages,
       totalCount: distributors.totalCount,
@@ -59,6 +63,8 @@ const DistributorList = (props) => {
     totalPage,
     distributorsPhase,
     distributorsStatus,
+    distributorsSettings,
+    distributorsOperator,
   } = useSelector(DistributorsProperties);
 
   console.log("DistributorsPhase", distributorsPhase);
@@ -307,6 +313,8 @@ const DistributorList = (props) => {
       dispatch(onGetDistributors());
       dispatch(onGetDistributorsPhase());
       dispatch(onGetDistributorsStatus());
+      dispatch(onGetDistributorsSettings());
+      dispatch(onGetDistributorsOperator());
     }
   }, [distributor]);
 
@@ -387,6 +395,8 @@ const DistributorList = (props) => {
       <SettingModal
         isOpen={showSetting}
         handleShowSetting={() => setShowSetting(false)}
+        distributorsSettings={distributorsSettings}
+        distributorsOperator={distributorsOperator}
       />
       <div className="page-content">
         <Container fluid>

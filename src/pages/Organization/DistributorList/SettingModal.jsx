@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
 import {
@@ -14,9 +14,59 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 const SettingModal = (props) => {
-  const { isOpen, handleShowSetting } = props;
+  const {
+    isOpen,
+    handleShowSetting,
+    distributorsSettings,
+    distributorsOperator,
+  } = props;
 
+  console.log(
+    "distributorsSettings in settings modal:" +
+      JSON.stringify(distributorsSettings)
+  );
+  console.log(
+    "distributorsOperator in settings modal:" +
+      JSON.stringify(distributorsOperator)
+  );
+  const [selectedOperators, setSelectedOperators] = useState([]);
+  const [tableList, setTableList] = useState([]);
   const distributor = [];
+  const handleActive = (row) => {
+    const isRowSelected = selectedOperators.some(
+      (opertor) => opertor.id === row.id
+    );
+    setTableList((prevTableList) =>
+      prevTableList.filter((operator) => operator.id !== row.id)
+    );
+    if (isRowSelected) {
+      setSelectedOperators((prevSelectedUsers) =>
+        prevSelectedUsers.filter((operator) => operator.id !== row.id)
+      );
+    } else {
+      setSelectedOperators((prevSelectedUsers) => [...prevSelectedUsers, row]);
+    }
+    // Ensure that row.original exists before accessing its properties
+    if (row.original) {
+      row.original.isSelected = !isRowSelected;
+    }
+  };
+
+  const handleRemove = (row) => {
+    if (selectedOperators) {
+      setSelectedOperators((prevSelectedUsers) =>
+        prevSelectedUsers.filter((operator) => operator.id !== row.id)
+      );
+      setTableList((prevTableList) =>
+        prevTableList.map((operator) => {
+          if (operator.id === row.id && operator.original) {
+            operator.original.isSelected = false;
+          }
+          return operator;
+        })
+      );
+    }
+  };
   const columns = useMemo(
     () => [
       {
@@ -76,7 +126,7 @@ const SettingModal = (props) => {
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.username}
+                  {cellProps.row.original.code}
                 </Link>
               </h5>
             </>
@@ -92,7 +142,7 @@ const SettingModal = (props) => {
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.status}
+                  {cellProps.row.original.type_lbl}
                 </Link>
               </h5>
             </>
@@ -108,7 +158,7 @@ const SettingModal = (props) => {
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.status}
+                  {cellProps.row.original.username}
                 </Link>
               </h5>
             </>
@@ -124,7 +174,7 @@ const SettingModal = (props) => {
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.balance}
+                  {cellProps.row.original.status_lbl}
                 </Link>
               </h5>
             </>
@@ -140,7 +190,10 @@ const SettingModal = (props) => {
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.balance}
+                  CUSTOMER BILLED BY: AREA ID: ENABLE CUSTOMER COLLECTION:
+                  CUSTOMER PORTAL CONFIG: BILLED BY: MINIMUM ONLINE TOPUP
+                  AMOUNT:
+                  {/* {cellProps.row.original.setting.Customer Billed By} */}
                 </Link>
               </h5>
             </>
@@ -210,7 +263,7 @@ const SettingModal = (props) => {
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.username}
+                  {cellProps.row.original.code}
                 </Link>
               </h5>
             </>
@@ -226,7 +279,7 @@ const SettingModal = (props) => {
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.status}
+                  {cellProps.row.original.type_lbl}
                 </Link>
               </h5>
             </>
@@ -242,7 +295,9 @@ const SettingModal = (props) => {
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.status}
+                  CUSTOMER BILLED BY: AREA ID: ENABLE CUSTOMER COLLECTION:
+                  CUSTOMER PORTAL CONFIG: BILLED BY: MINIMUM ONLINE TOPUP
+                  AMOUNT:
                 </Link>
               </h5>
             </>
@@ -370,6 +425,12 @@ const SettingModal = (props) => {
     ],
     []
   );
+
+  useEffect(() => {
+    if (distributorsOperator) {
+      setTableList(distributorsOperator);
+    }
+  }, []);
   return (
     <Modal
       isOpen={isOpen}
@@ -392,8 +453,11 @@ const SettingModal = (props) => {
             <TableContainer
               isPagination={true}
               columns={columns}
-              data={distributor}
+              data={tableList}
               //   isGlobalFilter={true}
+              handleRowClick={(row) => {
+                handleActive(row);
+              }}
               isShowingPageLength={true}
               customPageSize={50}
               tableClass="table align-middle table-nowrap table-hover"
@@ -429,7 +493,7 @@ const SettingModal = (props) => {
                 <TableContainer
                   isPagination={true}
                   columns={selOperColumn}
-                  data={distributor}
+                  data={selectedOperators}
                   //   isGlobalFilter={true}
                   isShowingPageLength={true}
                   customPageSize={50}
