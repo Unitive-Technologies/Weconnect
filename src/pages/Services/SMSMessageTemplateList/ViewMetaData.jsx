@@ -21,7 +21,6 @@ const ViewMetaData = (props) => {
 
   const [casData, setCasData] = useState([]); // State to hold fetched data
 
-
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -179,7 +178,7 @@ const ViewMetaData = (props) => {
     []
   );
 
-  const casData = [];
+  // const casData = [];
   return (
     <Card>
       <CardBody>
@@ -209,7 +208,7 @@ const ViewMetaData = (props) => {
           <Col lg={3}>
             <div className="mb-3">
               <Input
-                s name="field"
+                name="field"
                 type="text"
                 placeholder="Enter field"
                 // className="form-select"
