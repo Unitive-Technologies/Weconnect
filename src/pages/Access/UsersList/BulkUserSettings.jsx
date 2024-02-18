@@ -12,6 +12,7 @@ import {
   ModalBody,
   Input,
   Form,
+  Table,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
@@ -79,6 +80,7 @@ const BulkUserSettings = (props) => {
   const [checkedRows, setCheckedRows] = useState({});
 
   const handleCheckboxChange = (rowId) => {
+    console.log("rowId:" + rowId);
     setCheckedRows((prevCheckedRows) => ({
       ...prevCheckedRows,
       [rowId]: !prevCheckedRows[rowId],
@@ -463,27 +465,27 @@ const BulkUserSettings = (props) => {
 
   const userSettingColumn = useMemo(
     () => [
-      {
-        Header: "#",
-        disableFilters: true,
-        filterable: true,
-        disableSortBy: true, // Disable sorting for this column
-        Cell: (cellProps) => {
-          const totalRows = settingTable.length;
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {totalRows - cellProps.row.id}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
+      // {
+      //   Header: "#",
+      //   disableFilters: true,
+      //   filterable: true,
+      //   disableSortBy: true, // Disable sorting for this column
+      //   Cell: (cellProps) => {
+      //     const totalRows = settingTable.length;
+      //     return (
+      //       <>
+      //         <h5 className="font-size-14 mb-1">
+      //           <Link className="text-dark" to="#">
+      //             {totalRows - cellProps.row.id}
+      //           </Link>
+      //         </h5>
+      //       </>
+      //     );
+      //   },
+      // },
 
       {
-        Header: "Enabled",
+        Header: "#",
         // accessor: "name",
         filterable: true,
         Cell: (cellProps) => {
@@ -491,8 +493,12 @@ const BulkUserSettings = (props) => {
             <>
               <input
                 type="checkbox"
-                onChange={() => handleCheckboxChange(cellProps.row.id)}
-                checked={isRowChecked(cellProps.row.id)}
+                onChange={() => {
+                  debugger;
+                  console.log("Clicked the checkbox");
+                  handleCheckboxChange(cellProps.row.original.id);
+                }}
+                checked={isRowChecked(cellProps.row.original.id)}
               />
             </>
           );
@@ -725,20 +731,74 @@ const BulkUserSettings = (props) => {
                 }}
               >
                 <Col lg={12}>
-                  <TableContainer
-                    isPagination={true}
-                    columns={userSettingColumn}
-                    data={settingTable && settingTable}
-                    isShowingPageLength={true}
-                    customPageSize={5}
-                    handleRowClick={(row) => {
-                      handleSetting(row);
-                    }}
-                    tableClass="table align-middle table-nowrap table-hover"
-                    theadClass="table-light"
-                    paginationDiv="col-sm-12 col-md-7"
-                    pagination="pagination pagination-rounded justify-content-end mt-4"
-                  />
+                  <Table>
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Setting Name</th>
+                        <th>Description</th>
+                        <th>Note</th>
+                        <th>Data</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {settingTable.map((row, i) => (
+                        <tr key={i}>
+                          <td>
+                            <input
+                              type="checkbox"
+                              onChange={() => {
+                                debugger;
+                                console.log("Clicked the checkbox");
+                                handleCheckboxChange(row.id);
+                              }}
+                              checked={isRowChecked(row.id)}
+                            />
+                          </td>
+                          <td>{row.value.label}</td>
+                          <td>{row.value.description}</td>
+                          <td>{row.value.comment}</td>
+                          <td>
+                            {row.key === "bulkLimit" ? (
+                              <Input
+                                type="text"
+                                name="bulk_limit"
+                                placeholder={row.placeholder}
+                                onChange={handleChangeSettingValue}
+                                value={settings.bulk_limit}
+                              />
+                            ) : row.key === "allowedIps" ? (
+                              <Input
+                                type="text"
+                                name="allowed_ips"
+                                placeholder={row.placeholder}
+                                onChange={handleChangeSettingValue}
+                                value={settings.allowed_ips}
+                              />
+                            ) : (
+                              <Input
+                                name="enabled_pay_modes"
+                                type="select"
+                                placeholder={row.placeholder}
+                                className="form-select"
+                                onChange={handleChangeSettingValue}
+                                value={settings.enabled_pay_modes}
+                              >
+                                <option value="">
+                                  Select Pay Mode Allowed
+                                </option>
+                                {row.value.data.map((paymode) => (
+                                  <option key={paymode.id} value={paymode.id}>
+                                    {paymode.name}
+                                  </option>
+                                ))}
+                              </Input>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
                 </Col>
               </Row>
               <div className="text-center mt-4 ">
