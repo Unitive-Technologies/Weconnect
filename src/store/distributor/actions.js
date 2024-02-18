@@ -8,6 +8,12 @@ import {
   GET_DISTRIBUTORS_STATUS,
   GET_DISTRIBUTORS_STATUS_FAIL,
   GET_DISTRIBUTORS_STATUS_SUCCESS,
+  GET_DISTRIBUTORS_SETTINGS,
+  GET_DISTRIBUTORS_SETTINGS_FAIL,
+  GET_DISTRIBUTORS_SETTINGS_SUCCESS,
+  GET_DISTRIBUTORS_OPERATOR,
+  GET_DISTRIBUTORS_OPERATOR_FAIL,
+  GET_DISTRIBUTORS_OPERATOR_SUCCESS,
   ADD_NEW_DISTRIBUTOR,
   ADD_DISTRIBUTORS_SUCCESS,
   ADD_DISTRIBUTORS_FAIL,
@@ -70,6 +76,40 @@ export const getDistributorsStatusSuccess = (distributorsStatus) => {
 
 export const getDistributorsStatusFail = (error) => ({
   type: GET_DISTRIBUTORS_STATUS_FAIL,
+  payload: error,
+});
+
+export const getDistributorsSettings = () => ({
+  type: GET_DISTRIBUTORS_SETTINGS,
+});
+
+export const getDistributorsSettingsSuccess = (distributorsSettings) => {
+  console.log("Received DistributorsStatus.. :", distributorsSettings);
+  return {
+    type: GET_DISTRIBUTORS_SETTINGS_SUCCESS,
+    payload: distributorsSettings,
+  };
+};
+
+export const getDistributorsSettingsFail = (error) => ({
+  type: GET_DISTRIBUTORS_SETTINGS_FAIL,
+  payload: error,
+});
+
+export const getDistributorsOperator = () => ({
+  type: GET_DISTRIBUTORS_OPERATOR,
+});
+
+export const getDistributorsOperatorSuccess = (distributorsOperator) => {
+
+  return {
+    type: GET_DISTRIBUTORS_OPERATOR_SUCCESS,
+    payload: distributorsOperator,
+  };
+};
+
+export const getDistributorsOperatorFail = (error) => ({
+  type: GET_DISTRIBUTORS_OPERATOR_FAIL,
   payload: error,
 });
 

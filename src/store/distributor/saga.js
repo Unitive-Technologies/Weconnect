@@ -7,6 +7,8 @@ import {
   UPDATE_DISTRIBUTOR_CURRENT_PAGE,
   GET_DISTRIBUTORS_PHASE,
   GET_DISTRIBUTORS_STATUS,
+  GET_DISTRIBUTORS_SETTINGS,
+  GET_DISTRIBUTORS_OPERATOR,
 } from "./actionTypes";
 
 import {
@@ -21,6 +23,10 @@ import {
   getDistributorsPhaseSuccess,
   getDistributorsStatusFail,
   getDistributorsStatusSuccess,
+  getDistributorsSettingsFail,
+  getDistributorsSettingsSuccess,
+  getDistributorsOperatorFail,
+  getDistributorsOperatorSuccess,
 } from "./actions";
 
 //Include Both Helper File with needed methods
@@ -28,6 +34,8 @@ import {
   getDistributors,
   getDistributorsPhase,
   getDistributorsStatus,
+  getDistributorsSettings,
+  getDistributorsOperator,
   addNewDistributor,
   updateDistributor,
 } from "../../helpers/fakebackend_helper";
@@ -106,6 +114,30 @@ function* fetchDistributorsStatus() {
   }
 }
 
+function* fetchDistributorsSettings() {
+  try {
+    const response = yield call(getDistributorsSettings);
+    console.log(
+      "dddddddddd dissettings response:" + JSON.stringify(response.data)
+    );
+    yield put(getDistributorsSettingsSuccess(response.data));
+  } catch (error) {
+    yield put(getDistributorsSettingsFail(error));
+  }
+}
+
+function* fetchDistributorsOperator() {
+  try {
+    const response = yield call(getDistributorsOperator);
+    console.log(
+      "dddddddddd disOperator response:" + JSON.stringify(response.data)
+    );
+    yield put(getDistributorsOperatorSuccess(response.data));
+  } catch (error) {
+    yield put(getDistributorsOperatorFail(error));
+  }
+}
+
 function* onAddNewDistributor({ payload: distributors }) {
   try {
     const response = yield call(addNewDistributor, distributors);
@@ -149,6 +181,8 @@ function* distributorsSaga() {
   yield takeEvery(UPDATE_DISTRIBUTOR, onUpdateDistributor);
   yield takeEvery(GET_DISTRIBUTORS_PHASE, fetchDistributorsPhase);
   yield takeEvery(GET_DISTRIBUTORS_STATUS, fetchDistributorsStatus);
+  yield takeEvery(GET_DISTRIBUTORS_SETTINGS, fetchDistributorsSettings);
+  yield takeEvery(GET_DISTRIBUTORS_OPERATOR, fetchDistributorsOperator);
 }
 
 export default distributorsSaga;

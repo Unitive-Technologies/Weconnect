@@ -623,6 +623,9 @@ export const getDistributors = async (currentPage, perPage = 20) => {
 };
 export const getDistributorsPhase = () => get(url.GET_DISTRIBUTORS_PHASE);
 export const getDistributorsStatus = () => get(url.GET_DISTRIBUTORS_STATUS);
+export const getDistributorsSettings = () => get(url.GET_DISTRIBUTORS_SETTINGS);
+export const getDistributorsOperator = () => get(url.GET_DISTRIBUTORS_OPERATOR);
+
 export const addNewDistributor = (distributor) =>
   post(url.ADD_NEW_DISTRIBUTOR, distributor);
 export const updateDistributor = (distributors, id) =>
