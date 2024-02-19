@@ -1227,9 +1227,7 @@ const InventoryStock = (props) => {
           },
           {
             name: "De-Allot",
-            type: "dot",
-            icon: "action",
-            dropdownName: "",
+            type: "normal",
             action:
               Object.keys(selectedAllottedStbs).length === 0
                 ? () => setShowWarning(true)
