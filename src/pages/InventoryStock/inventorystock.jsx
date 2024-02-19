@@ -1428,6 +1428,7 @@ const InventoryStock = (props) => {
         isOpen={showDeallotSmartcard}
         toggle={handleDeallottedSmartcard}
         selectedAllottedSmartcards={selectedAllottedSmartcards}
+        setSelectedAllottedSmartcards={setSelectedAllottedSmartcards}
       />
       <div
         className="position-fixed top-0 end-0 p-3"

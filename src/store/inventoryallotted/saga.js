@@ -144,6 +144,7 @@ function* onAllotSmartcard({ payload: allottedsmartcard }) {
   try {
     const response = yield call(allotSmartcard, allottedsmartcard);
     yield put(allotSmartcardSuccess(response));
+    yield put(onGetInventoryAllottedSmartcard());
   } catch (error) {
     yield put(allotSmartcardFail(error));
   }
@@ -153,6 +154,7 @@ function* onDeallotSmartcard({ payload: allottedsmartcard }) {
   try {
     const response = yield call(deallotSmartcard, allottedsmartcard);
     yield put(deallotSmartcardSuccess(response));
+    yield put(onGetInventoryAllottedSmartcard());
   } catch (error) {
     yield put(deallotSmartcardFail(error));
   }
@@ -194,6 +196,7 @@ function* onAllotStb({ payload: allottedstb }) {
   try {
     const response = yield call(allotStb, allottedstb);
     yield put(allotStbSuccess(response));
+    yield put(onGetInventoryAllottedStb());
   } catch (error) {
     yield put(allotStbFail(error));
   }
@@ -203,6 +206,7 @@ function* onDeallotStb({ payload: allottedstb }) {
   try {
     const response = yield call(deallotStb, allottedstb);
     yield put(deallotStbSuccess(response));
+    yield put(onGetInventoryAllottedStb());
   } catch (error) {
     yield put(deallotStbFail(error));
   }

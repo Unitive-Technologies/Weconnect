@@ -24,7 +24,12 @@ import {
 } from "/src/store/inventoryallotted/actions";
 
 function DeallotSmartcard(props) {
-  const { isOpen, toggle, selectedAllottedSmartcards } = props;
+  const {
+    isOpen,
+    toggle,
+    selectedAllottedSmartcards,
+    setSelectedAllottedSmartcards,
+  } = props;
   const [isChecked, setIsChecked] = useState(false);
 
   const dispatch = useDispatch();
@@ -49,6 +54,7 @@ function DeallotSmartcard(props) {
       dispatch(onDeallotSmartcard(newDeallot));
       dispatch(onGetInventoryAllottedSmartcard());
       validation.resetForm();
+      setSelectedAllottedSmartcards([]);
       toggle();
     },
     onReset: (values) => {
@@ -175,6 +181,7 @@ DeallotSmartcard.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
   selectedAllottedSmartcards: PropTypes.array,
+  setSelectedAllottedSmartcards: PropTypes.func,
 };
 
 export default DeallotSmartcard;
