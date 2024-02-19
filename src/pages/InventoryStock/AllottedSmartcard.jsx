@@ -70,6 +70,28 @@ function AllottedSmrtcard(props) {
     fetchData();
   }, [branch_id]);
 
+  useEffect(() => {
+    console.log("Selected distributor id: ", distributor_id);
+    const fetchData = async () => {
+      try {
+        const token = "Bearer " + localStorage.getItem("temptoken");
+        const response = await axios.get(
+          `${baseUrl}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=${branch_id}&filter[distributor_id]=${distributor_id}&filter[type]=3&vr=web1.0`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        console.log("response data: ", response.data.data);
+        setAllottedlco(response.data.data);
+      } catch (error) {
+        console.error("Error fetching distributor data:", error);
+      }
+    };
+    fetchData();
+  }, [distributor_id]);
+
   const handleSmartcardSelection = (row) => {
     const isSelected = selectedSmartcardlist.some(
       (selectedSmartcard) => selectedSmartcard.id === row.id
@@ -135,6 +157,8 @@ function AllottedSmrtcard(props) {
       setBranch_id("");
       setDistributor_id("");
       setOperator("");
+      setAllotteddistributor([]);
+      setAllottedlco([]);
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -419,43 +443,120 @@ function AllottedSmrtcard(props) {
                 ) : null}
               </>
             ) : null}
-            {usertype === "3" && distributor_id !== "" ? (
-              <Col lg={3}>
-                <div className="mb-3">
-                  <Label className="form-label">
-                    Select Lco
-                    <span style={{ color: "red" }}>*</span>
-                  </Label>
-                  <Input
-                    name="operator"
-                    type="select"
-                    placeholder="Select Distributor"
-                    onChange={(e) => {
-                      validation.handleChange(e);
-                      setOperator(e.target.value);
-                    }}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.operator || ""}
-                    invalid={
-                      validation.touched.operator && validation.errors.operator
-                        ? true
-                        : false
-                    }
-                  >
-                    <option value="">Select Distributor</option>
-                    {allottedlco.map((operatorlist) => (
-                      <option key={operatorlist.id} value={operatorlist.id}>
-                        {operatorlist.name}
-                      </option>
-                    ))}
-                  </Input>
-                  {validation.touched.operator && validation.errors.operator ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.operator}
-                    </FormFeedback>
-                  ) : null}
-                </div>
-              </Col>
+            {usertype === "3" ? (
+              <>
+                <Col lg={3}>
+                  <div className="mb-3">
+                    <Label className="form-label">
+                      Select REGIONAL OFFICE
+                      <span style={{ color: "red" }}>*</span>
+                    </Label>
+                    <Input
+                      name="brand_id"
+                      type="select"
+                      placeholder="Select Reginal office"
+                      onChange={(e) => {
+                        validation.handleChange(e);
+                        setBranch_id(e.target.value);
+                      }}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.brand_id || ""}
+                      invalid={
+                        validation.touched.brand_id &&
+                        validation.errors.brand_id
+                          ? true
+                          : false
+                      }
+                    >
+                      <option value="">Select Reginal office</option>
+                      {allottedoperatorlist.map((operatorlist) => (
+                        <option key={operatorlist.id} value={operatorlist.id}>
+                          {operatorlist.name}
+                        </option>
+                      ))}
+                    </Input>
+                    {validation.touched.brand_id &&
+                    validation.errors.brand_id ? (
+                      <FormFeedback type="invalid">
+                        {validation.errors.brand_id}
+                      </FormFeedback>
+                    ) : null}
+                  </div>
+                </Col>
+                {branch_id !== "" ? (
+                  <Col lg={3}>
+                    <div className="mb-3">
+                      <Label className="form-label">
+                        Select DISTRIBUTOR
+                        <span style={{ color: "red" }}>*</span>
+                      </Label>
+                      <Input
+                        name="distributor_id"
+                        type="select"
+                        placeholder="Select Distributor"
+                        onChange={(e) => setDistributor_id(e.target.value)}
+                        value={distributor_id}
+                        // invalid={
+                        //   validation.touched.distributor_id &&
+                        //   validation.errors.distributor_id
+                        //     ? true
+                        //     : false
+                        // }
+                      >
+                        <option value="">Select Distributor</option>
+                        {allotteddistributor.map((operatorlist) => (
+                          <option key={operatorlist.id} value={operatorlist.id}>
+                            {operatorlist.name}
+                          </option>
+                        ))}
+                      </Input>
+                      {/* {validation.touched.distributor_id &&
+                      validation.errors.distributor_id ? (
+                        <FormFeedback type="invalid">
+                          {validation.errors.distributor_id}
+                        </FormFeedback>
+                      ) : null} */}
+                    </div>
+                  </Col>
+                ) : null}
+                {distributor_id !== "" ? (
+                  <Col lg={3}>
+                    <div className="mb-3">
+                      <Label className="form-label">
+                        Select Lco
+                        <span style={{ color: "red" }}>*</span>
+                      </Label>
+                      <Input
+                        name="operator"
+                        type="select"
+                        placeholder="Select Lco"
+                        onChange={(e) => setOperator(e.target.value)}
+                        onBlur={validation.handleBlur}
+                        value={operator}
+                        // invalid={
+                        //   validation.touched.operator &&
+                        //   validation.errors.operator
+                        //     ? true
+                        //     : false
+                        // }
+                      >
+                        <option value="">Select Distributor</option>
+                        {allottedlco.map((operatorlist) => (
+                          <option key={operatorlist.id} value={operatorlist.id}>
+                            {operatorlist.name}
+                          </option>
+                        ))}
+                      </Input>
+                      {/* {validation.touched.operator &&
+                      validation.errors.operator ? (
+                        <FormFeedback type="invalid">
+                          {validation.errors.operator}
+                        </FormFeedback>
+                      ) : null} */}
+                    </div>
+                  </Col>
+                ) : null}
+              </>
             ) : null}
           </Row>
           <Row>
