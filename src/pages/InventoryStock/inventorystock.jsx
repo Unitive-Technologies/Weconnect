@@ -61,8 +61,6 @@ import {
   getInventoryAllottedUsertype as onGetInventoryAllottedUsertype,
   getInventoryAllottedOperatorlist as onGetInventoryAllottedOperatorlist,
   getInventoryAllottedStblist as onGetInventoryAllottedStblist,
-  // getInventoryAllottedDistributor as onGetInventoryAllottedDistributor,
-  // getInventoryAllottedLco as onGetInventoryAllottedLco,
 } from "/src/store/inventoryallotted/actions";
 import StockStb from "./StockStb";
 import StockPairing from "./StockPairing";
@@ -235,9 +233,7 @@ const InventoryStock = (props) => {
       allottedsmartcardlist: allottedpairing.allottedsmartcardlist,
       allottedusertype: allottedpairing.allottedusertype,
       allottedoperatorlist: allottedpairing.allottedoperatorlist,
-      // allotteddistributor: allottedpairing.allotteddistributor,
       allottedstblist: allottedpairing.allottedstblist,
-      // allottedlco: allottedpairing.allottedlco,
     })
   );
 
@@ -252,8 +248,6 @@ const InventoryStock = (props) => {
     allottedsmartcardlist,
     allottedusertype,
     allottedoperatorlist,
-    // allotteddistributor,
-    // allottedlco,
     allottedstblist,
   } = useSelector(inventoryallottedProperties);
 
@@ -265,8 +259,6 @@ const InventoryStock = (props) => {
       dispatch(onGetInventoryAllottedOperatorlist());
       dispatch(onGetInventoryAllottedSmartcardlist());
       dispatch(onGetInventoryAllottedUsertype());
-      // dispatch(onGetInventoryAllottedDistributor());
-      // dispatch(onGetInventoryAllottedLco());
       dispatch(onGetInventoryAllottedStblist());
     }
   }, [dispatch, allottedpairing]);
@@ -1601,9 +1593,7 @@ const InventoryStock = (props) => {
                               }
                               allottedstblist={allottedstblist}
                               allottedusertype={allottedusertype}
-                              // allotteddistributor={allotteddistributor}
                               allottedoperatorlist={allottedoperatorlist}
-                              // allottedlco={allottedlco}
                             />
                           </Col>
                         </Row>

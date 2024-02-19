@@ -24,6 +24,7 @@ import {
   allotStb as onAllotStb,
   getInventoryAllottedStb as onGetInventoryAllottedStb,
 } from "/src/store/inventoryAllotted/actions";
+import axios from "axios";
 
 function AllottedStb(props) {
   const {
@@ -32,40 +33,74 @@ function AllottedStb(props) {
     allottedstblist,
     allottedusertype,
     allottedoperatorlist,
-    allotteddistributor,
-    allottedlco,
   } = props;
   const [usertype, setUsertype] = useState("");
   const [selectedStblist, setSelectedStblist] = useState([]);
   const [isCheckedSc, setIsCheckedSc] = useState(false);
+  const [branch_id, setBranch_id] = useState("");
+  const [distributor_id, setDistributor_id] = useState("");
+  const [operator, setOperator] = useState("");
+  const [allotteddistributor, setAllotteddistributor] = useState([]);
+  const [allottedlco, setAllottedlco] = useState([]);
 
-  //   const handleSmartcardSelection = (smartcard) => {
-  //     // Check if the smartcard is already selected
-  //     const isSelected = selectedSmartcardlist.some(
-  //       (item) => item.smartcardno === smartcard.smartcardno
-  //     );
+  const baseUrl = "https://sms.unitch.in/api/index.php/v1";
 
-  //     if (!isSelected) {
-  //       // If not already selected, add it to the list
-  //       setSelectedSmartcardlist([...selectedSmartcardlist, smartcard]);
-  //       setIsCheckedSc(true);
-  //     }
-  //   };
+  useEffect(() => {
+    console.log("Selected branch id: ", branch_id);
+    const fetchData = async () => {
+      try {
+        const token = "Bearer " + localStorage.getItem("temptoken");
+        const response = await axios.get(
+          `${baseUrl}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=${parseInt(
+            branch_id
+          )}&filter[type]=2&vr=web1.0`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        console.log("response data: ", response.data.data);
+        setAllotteddistributor(response.data.data);
+      } catch (error) {
+        console.error("Error fetching distributor data:", error);
+      }
+    };
+    fetchData();
+  }, [branch_id]);
+
+  useEffect(() => {
+    console.log("Selected distributor id: ", distributor_id);
+    const fetchData = async () => {
+      try {
+        const token = "Bearer " + localStorage.getItem("temptoken");
+        const response = await axios.get(
+          `${baseUrl}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=${branch_id}&filter[distributor_id]=${distributor_id}&filter[type]=3&vr=web1.0`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        console.log("response data: ", response.data.data);
+        setAllottedlco(response.data.data);
+      } catch (error) {
+        console.error("Error fetching distributor data:", error);
+      }
+    };
+    fetchData();
+  }, [distributor_id]);
 
   const handleStbSelection = (row) => {
-    // Check if the row is already selected
     const isSelected = selectedStblist.some(
       (selectedStb) => selectedStb.id === row.id
     );
-
-    // If the row is selected, remove it from the selected rows array
     if (isSelected) {
       const updatedSelectedStblist = selectedStblist.filter(
         (selectedStb) => selectedStb.id !== row.id
       );
       setSelectedStblist(updatedSelectedStblist);
     } else {
-      // If the row is not selected, add it to the selected rows array
       setSelectedStblist([...selectedStblist, row]);
     }
   };
@@ -95,18 +130,32 @@ function AllottedStb(props) {
       usertype: Yup.string().required("Select user Type"),
     }),
     onSubmit: (values) => {
+      let id = {};
+      if (usertype === "1") {
+        id = branch_id;
+      } else if (usertype === "2") {
+        id = distributor_id;
+      } else if (usertype === "3") {
+        id = operator;
+      }
+
       const newAllotted = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
-        operator_id: values.operator_id,
+        operator_id: id,
         stb_ids: selectedStblist.map((row) => row.id),
       };
-      console.log("New allotted smartcard: " + JSON.stringify(newAllotted));
+      console.log("New allotted stb: " + JSON.stringify(newAllotted));
       dispatch(onAllotStb(newAllotted));
       dispatch(onGetInventoryAllottedStb());
       validation.resetForm();
-      toggle();
       setUsertype("");
       setSelectedStblist([]);
+      setBranch_id("");
+      setDistributor_id("");
+      setOperator("");
+      setAllotteddistributor([]);
+      setAllottedlco([]);
+      toggle();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -244,7 +293,7 @@ function AllottedStb(props) {
                 <Input
                   name="usertype"
                   type="select"
-                  placeholder="Select CAS Type"
+                  placeholder="Select User Type"
                   onChange={(e) => {
                     validation.handleChange(e);
                     setUsertype(e.target.value);
@@ -271,26 +320,20 @@ function AllottedStb(props) {
                 ) : null}
               </div>
             </Col>
-            {usertype !== "" ? (
-              <Col lg={4}>
+            {usertype === "1" ? (
+              <Col lg={3}>
                 <div className="mb-3">
                   <Label className="form-label">
                     Select REGIONAL OFFICE
                     <span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="operator_id"
+                    name="brand_id"
                     type="select"
-                    placeholder="Select CAS Type"
-                    onChange={validation.handleChange}
+                    placeholder="Select Reginal office"
+                    onChange={(e) => setBranch_id(e.target.value)}
                     onBlur={validation.handleBlur}
-                    value={validation.values.operator_id || ""}
-                    invalid={
-                      validation.touched.operator_id &&
-                      validation.errors.operator_id
-                        ? true
-                        : false
-                    }
+                    value={branch_id}
                   >
                     <option value="">Select Reginal office</option>
                     {allottedoperatorlist.map((operatorlist) => (
@@ -299,21 +342,187 @@ function AllottedStb(props) {
                       </option>
                     ))}
                   </Input>
-                  {validation.touched.operator_id &&
-                  validation.errors.operator_id ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.operator_id}
-                    </FormFeedback>
-                  ) : null}
                 </div>
               </Col>
+            ) : null}
+            {usertype === "2" ? (
+              <>
+                <Col lg={3}>
+                  <div className="mb-3">
+                    <Label className="form-label">
+                      Select REGIONAL OFFICE
+                      <span style={{ color: "red" }}>*</span>
+                    </Label>
+                    <Input
+                      name="brand_id"
+                      type="select"
+                      placeholder="Select Reginal office"
+                      onChange={(e) => {
+                        validation.handleChange(e);
+                        setBranch_id(e.target.value);
+                      }}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.brand_id || ""}
+                      invalid={
+                        validation.touched.brand_id &&
+                        validation.errors.brand_id
+                          ? true
+                          : false
+                      }
+                    >
+                      <option value="">Select Reginal office</option>
+                      {allottedoperatorlist.map((operatorlist) => (
+                        <option key={operatorlist.id} value={operatorlist.id}>
+                          {operatorlist.name}
+                        </option>
+                      ))}
+                    </Input>
+                    {validation.touched.brand_id &&
+                    validation.errors.brand_id ? (
+                      <FormFeedback type="invalid">
+                        {validation.errors.brand_id}
+                      </FormFeedback>
+                    ) : null}
+                  </div>
+                </Col>
+                {branch_id !== "" ? (
+                  <Col lg={3}>
+                    <div className="mb-3">
+                      <Label className="form-label">
+                        Select DISTRIBUTOR
+                        <span style={{ color: "red" }}>*</span>
+                      </Label>
+                      <Input
+                        name="distributor_id"
+                        type="select"
+                        placeholder="Select Distributor"
+                        onChange={(e) => {
+                          validation.handleChange(e);
+                          setDistributor_id(e.target.value);
+                        }}
+                        onBlur={validation.handleBlur}
+                        value={validation.values.distributor_id || ""}
+                        invalid={
+                          validation.touched.distributor_id &&
+                          validation.errors.distributor_id
+                            ? true
+                            : false
+                        }
+                      >
+                        <option value="">Select Distributor</option>
+                        {allotteddistributor.map((operatorlist) => (
+                          <option key={operatorlist.id} value={operatorlist.id}>
+                            {operatorlist.name}
+                          </option>
+                        ))}
+                      </Input>
+                      {validation.touched.distributor_id &&
+                      validation.errors.distributor_id ? (
+                        <FormFeedback type="invalid">
+                          {validation.errors.distributor_id}
+                        </FormFeedback>
+                      ) : null}
+                    </div>
+                  </Col>
+                ) : null}
+              </>
+            ) : null}
+            {usertype === "3" ? (
+              <>
+                <Col lg={3}>
+                  <div className="mb-3">
+                    <Label className="form-label">
+                      Select REGIONAL OFFICE
+                      <span style={{ color: "red" }}>*</span>
+                    </Label>
+                    <Input
+                      name="brand_id"
+                      type="select"
+                      placeholder="Select Reginal office"
+                      onChange={(e) => {
+                        validation.handleChange(e);
+                        setBranch_id(e.target.value);
+                      }}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.brand_id || ""}
+                      invalid={
+                        validation.touched.brand_id &&
+                        validation.errors.brand_id
+                          ? true
+                          : false
+                      }
+                    >
+                      <option value="">Select Reginal office</option>
+                      {allottedoperatorlist.map((operatorlist) => (
+                        <option key={operatorlist.id} value={operatorlist.id}>
+                          {operatorlist.name}
+                        </option>
+                      ))}
+                    </Input>
+                    {validation.touched.brand_id &&
+                    validation.errors.brand_id ? (
+                      <FormFeedback type="invalid">
+                        {validation.errors.brand_id}
+                      </FormFeedback>
+                    ) : null}
+                  </div>
+                </Col>
+                {branch_id !== "" ? (
+                  <Col lg={3}>
+                    <div className="mb-3">
+                      <Label className="form-label">
+                        Select DISTRIBUTOR
+                        <span style={{ color: "red" }}>*</span>
+                      </Label>
+                      <Input
+                        name="distributor_id"
+                        type="select"
+                        placeholder="Select Distributor"
+                        onChange={(e) => setDistributor_id(e.target.value)}
+                        value={distributor_id}
+                      >
+                        <option value="">Select Distributor</option>
+                        {allotteddistributor.map((operatorlist) => (
+                          <option key={operatorlist.id} value={operatorlist.id}>
+                            {operatorlist.name}
+                          </option>
+                        ))}
+                      </Input>
+                    </div>
+                  </Col>
+                ) : null}
+                {distributor_id !== "" ? (
+                  <Col lg={3}>
+                    <div className="mb-3">
+                      <Label className="form-label">
+                        Select Lco
+                        <span style={{ color: "red" }}>*</span>
+                      </Label>
+                      <Input
+                        name="operator"
+                        type="select"
+                        placeholder="Select Lco"
+                        onChange={(e) => setOperator(e.target.value)}
+                        onBlur={validation.handleBlur}
+                        value={operator}
+                      >
+                        <option value="">Select Distributor</option>
+                        {allottedlco.map((operatorlist) => (
+                          <option key={operatorlist.id} value={operatorlist.id}>
+                            {operatorlist.name}
+                          </option>
+                        ))}
+                      </Input>
+                    </div>
+                  </Col>
+                ) : null}
+              </>
             ) : null}
           </Row>
           <Row>
             <Col lg={12}>
               <Card>
                 <CardBody>
-                  {/* {console.log("Smartcard data: ", smartcardData)} */}
                   <TableContainer
                     isPagination={true}
                     columns={stbColumns}
@@ -403,8 +612,6 @@ AllottedStb.propTypes = {
   toggle: PropTypes.func,
   allottedusertype: PropTypes.array,
   allottedoperatorlist: PropTypes.array,
-  allotteddistributor: PropTypes.array,
-  allottedlco: PropTypes.array,
 };
 
 export default AllottedStb;

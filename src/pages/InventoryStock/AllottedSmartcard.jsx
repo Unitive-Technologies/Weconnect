@@ -298,7 +298,7 @@ function AllottedSmrtcard(props) {
                 <Input
                   name="usertype"
                   type="select"
-                  placeholder="Select CAS Type"
+                  placeholder="Select User Type"
                   onChange={(e) => {
                     validation.handleChange(e);
                     setUsertype(e.target.value);

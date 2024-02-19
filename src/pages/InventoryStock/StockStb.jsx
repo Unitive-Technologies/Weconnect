@@ -51,8 +51,6 @@ const StockStb = (props) => {
     allottedoperatorlist,
     allottedstblist,
     allottedusertype,
-    allotteddistributor,
-    allottedlco,
   } = props;
   const [showEditStb, setShowEditStb] = useState(false);
   const [editStbData, setEditStbData] = useState({});
@@ -324,9 +322,7 @@ const StockStb = (props) => {
         selectedAllottedStbs={selectedAllottedStbs}
         allottedstblist={allottedstblist}
         allottedusertype={allottedusertype}
-        allotteddistributor={allotteddistributor}
         allottedoperatorlist={allottedoperatorlist}
-        allottedlco={allottedlco}
       />
       <DeallotStb
         isOpen={showDeallotStb}
@@ -403,8 +399,6 @@ StockStb.propTypes = {
   allottedoperatorlist: PropTypes.array,
   allottedstblist: PropTypes.array,
   allottedusertype: PropTypes.array,
-  allotteddistributor: PropTypes.array,
-  allottedlco: PropTypes.array,
 };
 
 export default StockStb;
