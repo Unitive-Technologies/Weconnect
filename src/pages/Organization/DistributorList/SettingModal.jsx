@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
+import axios from "axios";
 import {
   Card,
   CardBody,
@@ -11,9 +12,13 @@ import {
   ModalBody,
   Table,
   Input,
+  Form,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import * as Yup from "yup";
+import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
+import { getDistributors as onGetDistributors } from "../../../store/distributor/actions";
 
 const SettingModal = (props) => {
   const {
@@ -31,18 +36,26 @@ const SettingModal = (props) => {
     "distributorsOperator in settings modal:" +
       JSON.stringify(distributorsOperator)
   );
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [selectedOperators, setSelectedOperators] = useState([]);
   const [tableList, setTableList] = useState([]);
   const [settingTable, setSettingTable] = useState([]);
-  const distributor = [];
+  const dispatch = useDispatch();
   const [checkedRows, setCheckedRows] = useState({});
   const [settings, setSettings] = useState({
     area_id: "",
     stop_cheque_payment: "",
     min_recharge_amt: "",
+    collection_enabled: "",
+    customer_portal_config: "",
+    billed_by: "",
+    enable_customer_billing: "",
+    credit_limit: "",
+    customer_billed_by: "",
   });
+  console.log("settings:" + JSON.stringify(settings));
   const handleChangeSettingValue = (e) => {
-    debugger;
+    // debugger;
     console.log("handleChangeSettingValue called");
     const { name, value } = e.target;
     console.log(`Setting ${name} to ${value}`);
@@ -52,6 +65,12 @@ const SettingModal = (props) => {
     }));
   };
 
+  const handleSelectRow = (row) => {
+    const isRowSelected = selectedOperators.some(
+      (opertor) => opertor.id === row.id
+    );
+    // console.log("iiiiiiiiiiiiiiiiiiiiiiiiiii:" + isRowSelected);
+  };
   const handleCheckboxChange = (rowId) => {
     console.log("rowId:" + rowId);
     setCheckedRows((prevCheckedRows) => ({
@@ -61,6 +80,7 @@ const SettingModal = (props) => {
   };
   const isRowChecked = (rowId) => Boolean(checkedRows[rowId]);
   console.log("checkedRows:" + JSON.stringify(checkedRows));
+
   const handleActive = (row) => {
     const isRowSelected = selectedOperators.some(
       (opertor) => opertor.id === row.id
@@ -68,12 +88,16 @@ const SettingModal = (props) => {
     setTableList((prevTableList) =>
       prevTableList.filter((operator) => operator.id !== row.id)
     );
+    console.log("isRowSelected::::::" + isRowSelected);
     if (isRowSelected) {
-      setSelectedOperators((prevSelectedUsers) =>
-        prevSelectedUsers.filter((operator) => operator.id !== row.id)
+      setSelectedOperators((prevSelectedOperators) =>
+        prevSelectedOperators.filter((operator) => operator.id !== row.id)
       );
     } else {
-      setSelectedOperators((prevSelectedUsers) => [...prevSelectedUsers, row]);
+      setSelectedOperators((prevSelectedOperators) => [
+        ...prevSelectedOperators,
+        row,
+      ]);
     }
     // Ensure that row.original exists before accessing its properties
     if (row.original) {
@@ -83,8 +107,8 @@ const SettingModal = (props) => {
 
   const handleRemove = (row) => {
     if (selectedOperators) {
-      setSelectedOperators((prevSelectedUsers) =>
-        prevSelectedUsers.filter((operator) => operator.id !== row.id)
+      setSelectedOperators((prevSelectedDistributors) =>
+        prevSelectedDistributors.filter((operator) => operator.id !== row.id)
       );
       setTableList((prevTableList) =>
         prevTableList.map((operator) => {
@@ -133,10 +157,10 @@ const SettingModal = (props) => {
                   whiteSpace: "nowrap",
                 }}
                 className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  toggleViewModal(userData);
-                }}
+                // onClick={() => {
+                //   const userData = cellProps.row.original;
+                //   toggleViewModal(userData);
+                // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -455,6 +479,62 @@ const SettingModal = (props) => {
     []
   );
 
+  const validation = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      settings: settings,
+    },
+    validationSchema: Yup.object({}),
+
+    onSubmit: async (values) => {
+      try {
+        console.log(
+          "selectedOperators in onsubmit:" + JSON.stringify(selectedOperators)
+        );
+
+        // Filter out the empty settings
+        const nonEmptySettings = Object.entries(values.settings).reduce(
+          (acc, [key, value]) => {
+            if (value !== "") {
+              acc[key] = value;
+            }
+            return acc;
+          },
+          {}
+        );
+
+        const newSetting = {
+          ids: selectedOperators.map((operator) => operator.id),
+          setting: nonEmptySettings,
+        };
+
+        console.log("newSetting:", JSON.stringify(newSetting));
+        const token = "Bearer " + localStorage.getItem("temptoken");
+
+        const response = await axios.put(
+          `${API_URL}/operator/setting?vr=web1.0`,
+          newSetting,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+
+        console.log("Axios Response:", response);
+        toggleShowSetting();
+        dispatch(onGetDistributors());
+        validation.resetForm();
+      } catch (error) {
+        console.error("Error in onSubmit:", error);
+      }
+    },
+
+    onReset: () => {
+      validation.setValues(validation.initialValues);
+    },
+  });
+
   useEffect(() => {
     if (distributorsOperator) {
       setTableList(distributorsOperator);
@@ -512,13 +592,15 @@ const SettingModal = (props) => {
   }, [distributorsSettings, distributorsOperator]);
   return (
     <Modal
+      // onClick={() => console.log("modal clicked")}
       isOpen={isOpen}
       size="xl"
       role="dialog"
       autoFocus={true}
       centered={true}
+      // trapFocus={true}
       className="exampleModal"
-      tabIndex="-1"
+      // tabIndex="-1"
       toggle={toggleShowSetting}
     >
       <ModalHeader toggle={toggleShowSetting} tag="h4">
@@ -527,293 +609,308 @@ const SettingModal = (props) => {
       <ModalBody>
         <Card>
           <CardBody>
-            {/* {console.log("user in bulk:" + JSON.stringify(lco))} */}
-
-            <TableContainer
-              isPagination={true}
-              columns={columns}
-              data={tableList}
-              //   isGlobalFilter={true}
-              handleRowClick={(row) => {
-                handleActive(row);
-              }}
-              isShowingPageLength={true}
-              customPageSize={5}
-              tableClass="table align-middle table-nowrap table-hover"
-              theadClass="table-light"
-              paginationDiv="col-sm-12 col-md-7"
-              pagination="pagination pagination-rounded justify-content-end mt-4"
-            />
-            <div
-              style={{
-                // margin: "20px 0px",
-                marginTop: "20px",
-                marginBottom: "-18px",
-                zIndex: 12000,
-                backgroundColor: "#fff",
-                width: "fit-content",
-                marginLeft: "40%",
-                position: "absolute",
-                padding: "0px 10px",
+            <Form
+              onSubmit={(e) => {
+                e.preventDefault();
+                validation.handleSubmit();
+                return false;
               }}
             >
-              {" "}
-              <h5 style={{}}>Selected Operators</h5>
-            </div>
-            <Row
-              style={{
-                position: "relative",
-                border: "1px solid #ced4da",
-                padding: "20px 0px",
-                margin: "30px 0px",
-              }}
-            >
-              <Col lg={12}>
-                <TableContainer
-                  isPagination={true}
-                  columns={selOperColumn}
-                  data={selectedOperators}
-                  //   isGlobalFilter={true}
-                  isShowingPageLength={true}
-                  customPageSize={50}
-                  tableClass="table align-middle table-nowrap table-hover"
-                  theadClass="table-light"
-                  paginationDiv="col-sm-12 col-md-7"
-                  pagination="pagination pagination-rounded justify-content-end mt-4"
-                />
-              </Col>
-            </Row>
-            <div
-              style={{
-                // margin: "20px 0px",
-                marginTop: "-10px",
-                marginBottom: "-18px",
-                zIndex: 12000,
-                backgroundColor: "#fff",
-                width: "fit-content",
-                marginLeft: "40%",
-                position: "absolute",
-                padding: "0px 10px",
-              }}
-            >
-              {" "}
-              <h5 style={{}}>Operator Settings</h5>
-            </div>
-            <Row
-              style={{
-                position: "relative",
-                border: "1px solid #ced4da",
-                padding: "20px 0px",
-                margin: "30px 0px",
-              }}
-            >
-              <Col lg={12}>
-                {/* <TableContainer
-                  isPagination={true}
-                  columns={operSettingColumn}
-                  data={distributorsSettings}
-                  //   isGlobalFilter={true}
-                  isShowingPageLength={true}
-                  customPageSize={50}
-                  tableClass="table align-middle table-nowrap table-hover"
-                  theadClass="table-light"
-                  paginationDiv="col-sm-12 col-md-7"
-                  pagination="pagination pagination-rounded justify-content-end mt-4"
-                /> */}
-                <Table>
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Enabled</th>
-                      <th>Setting Name</th>
-                      <th>Description</th>
-                      <th>Note</th>
-                      <th>Set Data</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {console.log(
-                      "...................settingTable:" +
-                        JSON.stringify(settingTable)
-                    )}
-                    {settingTable.map((row, i) => (
-                      <tr key={i}>
-                        <td>{i + 1}</td>
-                        <td>
-                          <input
-                            type="checkbox"
-                            onChange={() => {
-                              debugger;
-                              console.log("Clicked the checkbox");
-                              handleCheckboxChange(row.id);
-                            }}
-                            checked={isRowChecked(row.id)}
-                          />
-                        </td>
-                        <td>{row.value.label}</td>
-                        <td>{row.value.description}</td>
-                        <td>{row.value.comment}</td>
-                        <td>
-                          {row.key === "area_id" ? (
-                            <Input
-                              type="text"
-                              name="area_id"
-                              placeholder={row.placeholder}
-                              onChange={handleChangeSettingValue}
-                              value={settings.area_id}
-                            />
-                          ) : row.key === "stop_cheque_payment" ? (
-                            <Input
-                              name="stop_cheque_payment"
-                              type="select"
-                              placeholder={row.placeholder}
-                              className="form-select"
-                              onChange={handleChangeSettingValue}
-                              value={settings.stop_cheque_payment}
-                            >
-                              <option value="">
-                                Select Stop Cheque Payment
-                              </option>
-                              {row.value.data.map((paymode) => (
-                                <option key={paymode.id} value={paymode.id}>
-                                  {paymode.name}
-                                </option>
-                              ))}
-                            </Input>
-                          ) : row.key === "min_recharge_amt" ? (
-                            <Input
-                              type="text"
-                              name="min_recharge_amt"
-                              placeholder={row.placeholder}
-                              onChange={handleChangeSettingValue}
-                              value={settings.min_recharge_amt}
-                            />
-                          ) : row.key === "collection_enabled" ? (
-                            <Input
-                              name="collection_enabled"
-                              type="select"
-                              placeholder={row.placeholder}
-                              className="form-select"
-                              onChange={handleChangeSettingValue}
-                              value={settings.collection_enabled}
-                            >
-                              <option value="">
-                                Select Enable Customer Collection
-                              </option>
-                              {row.value.data.map((paymode) => (
-                                <option key={paymode.id} value={paymode.id}>
-                                  {paymode.name}
-                                </option>
-                              ))}
-                            </Input>
-                          ) : row.key === "customer_portal_config" ? (
-                            <Input
-                              name="customer_portal_configt"
-                              type="select"
-                              placeholder={row.placeholder}
-                              className="form-select"
-                              onChange={handleChangeSettingValue}
-                              value={settings.customer_portal_config}
-                            >
-                              <option value="">
-                                Select Customer Portal Config
-                              </option>
-                              {row.value.data.map((paymode) => (
-                                <option key={paymode.id} value={paymode.id}>
-                                  {paymode.name}
-                                </option>
-                              ))}
-                            </Input>
-                          ) : row.key === "billed_by" ? (
-                            <Input
-                              name="billed_by"
-                              type="select"
-                              placeholder={row.placeholder}
-                              className="form-select"
-                              onChange={handleChangeSettingValue}
-                              value={settings.billed_by}
-                            >
-                              <option value="">Select Billed By</option>
-                              {row.value.data.map((paymode) => (
-                                <option key={paymode.id} value={paymode.id}>
-                                  {paymode.name}
-                                </option>
-                              ))}
-                            </Input>
-                          ) : row.key === "enable_customer_billing" ? (
-                            <Input
-                              name="enable_customer_billing"
-                              type="select"
-                              placeholder={row.placeholder}
-                              className="form-select"
-                              onChange={handleChangeSettingValue}
-                              value={settings.enable_customer_billing}
-                            >
-                              <option value="">
-                                Select Enable Customer Billing
-                              </option>
-                              {row.value.data.map((paymode) => (
-                                <option key={paymode.id} value={paymode.id}>
-                                  {paymode.name}
-                                </option>
-                              ))}
-                            </Input>
-                          ) : row.key === "credit_limit" ? (
-                            <Input
-                              type="text"
-                              name="credit_limit"
-                              placeholder={row.placeholder}
-                              onChange={handleChangeSettingValue}
-                              value={settings.credit_limit}
-                            />
-                          ) : (
-                            // row.key === "enable_customer_billing" ? (
-                            <Input
-                              name="customer_billed_by"
-                              type="select"
-                              placeholder={row.placeholder}
-                              className="form-select"
-                              onChange={handleChangeSettingValue}
-                              value={settings.customer_billed_by}
-                            >
-                              <option value="">
-                                Select Customer Billed By
-                              </option>
-                              {row.value.data.map((paymode) => (
-                                <option key={paymode.id} value={paymode.id}>
-                                  {paymode.name}
-                                </option>
-                              ))}
-                            </Input>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
-              </Col>
-            </Row>
-            <div className="text-center mt-4 ">
+              <TableContainer
+                isPagination={true}
+                columns={columns}
+                data={tableList}
+                //   isGlobalFilter={true}
+                handleRowClick={(row) => {
+                  handleActive(row);
+                }}
+                isShowingPageLength={true}
+                customPageSize={5}
+                tableClass="table align-middle table-nowrap table-hover"
+                theadClass="table-light"
+                paginationDiv="col-sm-12 col-md-7"
+                pagination="pagination pagination-rounded justify-content-end mt-4"
+              />
               <div
                 style={{
-                  display: "flex",
-                  gap: 5,
-                  textAlign: "center",
-                  justifyContent: "center",
+                  // margin: "20px 0px",
+                  marginTop: "20px",
+                  marginBottom: "-18px",
+                  zIndex: 12000,
+                  backgroundColor: "#fff",
+                  width: "fit-content",
+                  marginLeft: "40%",
+                  position: "absolute",
+                  padding: "0px 10px",
                 }}
               >
-                <button type="button" className="btn btn-primary ml-2 ">
-                  Save
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-primary "
-                  onClick={toggleShowSetting}
-                >
-                  Cancel
-                </button>
+                {" "}
+                <h5 style={{}}>Selected Operators</h5>
               </div>
-            </div>
+              <Row
+                style={{
+                  position: "relative",
+                  border: "1px solid #ced4da",
+                  padding: "20px 0px",
+                  margin: "30px 0px",
+                }}
+              >
+                <Col lg={12}>
+                  <TableContainer
+                    isPagination={true}
+                    columns={selOperColumn}
+                    data={selectedOperators}
+                    //   isGlobalFilter={true}
+                    isShowingPageLength={true}
+                    customPageSize={50}
+                    tableClass="table align-middle table-nowrap table-hover"
+                    theadClass="table-light"
+                    paginationDiv="col-sm-12 col-md-7"
+                    pagination="pagination pagination-rounded justify-content-end mt-4"
+                  />
+                </Col>
+              </Row>
+              <div
+                style={{
+                  // margin: "20px 0px",
+                  marginTop: "-10px",
+                  marginBottom: "-18px",
+                  zIndex: 12000,
+                  backgroundColor: "#fff",
+                  width: "fit-content",
+                  marginLeft: "40%",
+                  position: "absolute",
+                  padding: "0px 10px",
+                }}
+              >
+                {" "}
+                <h5 style={{}}>Operator Settings</h5>
+              </div>
+              <Row
+                style={{
+                  position: "relative",
+                  border: "1px solid #ced4da",
+                  padding: "20px 0px",
+                  margin: "30px 0px",
+                }}
+              >
+                <Col lg={12}>
+                  <Table>
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        {/* <th>Enabled</th> */}
+                        <th>Setting Name</th>
+                        <th>Description</th>
+                        <th>Note</th>
+                        <th>Set Data</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {console.log(
+                        "...................settingTable:" +
+                          JSON.stringify(settingTable)
+                      )}
+                      {settingTable &&
+                        settingTable.map((row, i) => (
+                          <tr key={i}>
+                            <td>{i + 1}</td>
+                            {/* <td>
+                              <input
+                                type="checkbox"
+                                onClick={handleSelectRow(row)}
+                                onChange={() => {
+
+                                  console.log("Clicked the checkbox");
+                                  handleCheckboxChange(row.id);
+                                }}
+                                checked={isRowChecked(row.id)}
+                              />
+                            </td> */}
+                            <td>{row.value && row.value.label}</td>
+                            <td>{row.value && row.value.description}</td>
+                            <td>{row.value && row.value.comment}</td>
+                            <td>
+                              {row.key === "area_id" ? (
+                                <Input
+                                  type="text"
+                                  name="area_id"
+                                  placeholder={row.placeholder}
+                                  onChange={handleChangeSettingValue}
+                                  value={validation.values.settings.area_id}
+                                />
+                              ) : row.key === "stop_cheque_payment" ? (
+                                <Input
+                                  name="stop_cheque_payment"
+                                  type="select"
+                                  placeholder={row.placeholder}
+                                  className="form-select"
+                                  onChange={handleChangeSettingValue}
+                                  value={
+                                    validation.values.settings
+                                      .stop_cheque_payment
+                                  }
+                                >
+                                  <option value="">
+                                    Select Stop Cheque Payment
+                                  </option>
+                                  {row.value.data.map((paymode) => (
+                                    <option key={paymode.id} value={paymode.id}>
+                                      {paymode.name}
+                                    </option>
+                                  ))}
+                                </Input>
+                              ) : row.key === "min_recharge_amt" ? (
+                                <Input
+                                  type="text"
+                                  name="min_recharge_amt"
+                                  placeholder={row.placeholder}
+                                  onChange={handleChangeSettingValue}
+                                  value={
+                                    validation.values.settings.min_recharge_amt
+                                  }
+                                />
+                              ) : row.key === "collection_enabled" ? (
+                                <Input
+                                  name="collection_enabled"
+                                  type="select"
+                                  placeholder={row.placeholder}
+                                  className="form-select"
+                                  onChange={handleChangeSettingValue}
+                                  value={
+                                    validation.values.settings
+                                      .collection_enabled
+                                  }
+                                >
+                                  <option value="">
+                                    Select Enable Customer Collection
+                                  </option>
+                                  {row.value.data.map((paymode) => (
+                                    <option key={paymode.id} value={paymode.id}>
+                                      {paymode.name}
+                                    </option>
+                                  ))}
+                                </Input>
+                              ) : row.key === "customer_portal_config" ? (
+                                <Input
+                                  name="customer_portal_config"
+                                  type="select"
+                                  placeholder={row.placeholder}
+                                  className="form-select"
+                                  onChange={handleChangeSettingValue}
+                                  value={
+                                    validation.values.settings
+                                      .customer_portal_config
+                                  }
+                                >
+                                  <option value="">
+                                    Select Customer Portal Config
+                                  </option>
+                                  {row.value.data.map((paymode) => (
+                                    <option key={paymode.id} value={paymode.id}>
+                                      {paymode.name}
+                                    </option>
+                                  ))}
+                                </Input>
+                              ) : row.key === "billed_by" ? (
+                                <Input
+                                  name="billed_by"
+                                  type="select"
+                                  placeholder={row.placeholder}
+                                  className="form-select"
+                                  onChange={handleChangeSettingValue}
+                                  value={validation.values.settings.billed_by}
+                                >
+                                  <option value="">Select Billed By</option>
+                                  {row.value.data.map((paymode) => (
+                                    <option key={paymode.id} value={paymode.id}>
+                                      {paymode.name}
+                                    </option>
+                                  ))}
+                                </Input>
+                              ) : row.key === "enable_customer_billing" ? (
+                                <Input
+                                  name="enable_customer_billing"
+                                  type="select"
+                                  placeholder={row.placeholder}
+                                  className="form-select"
+                                  onChange={handleChangeSettingValue}
+                                  value={
+                                    validation.values.settings
+                                      .enable_customer_billing
+                                  }
+                                >
+                                  <option value="">
+                                    Select Enable Customer Billing
+                                  </option>
+                                  {row.value.data.map((paymode) => (
+                                    <option key={paymode.id} value={paymode.id}>
+                                      {paymode.name}
+                                    </option>
+                                  ))}
+                                </Input>
+                              ) : row.key === "credit_limit" ? (
+                                <Input
+                                  type="text"
+                                  name="credit_limit"
+                                  placeholder={row.placeholder}
+                                  onChange={handleChangeSettingValue}
+                                  value={
+                                    validation.values.settings.credit_limit
+                                  }
+                                />
+                              ) : (
+                                // row.key === "enable_customer_billing" ? (
+                                <Input
+                                  name="customer_billed_by"
+                                  type="select"
+                                  placeholder={row.placeholder}
+                                  className="form-select"
+                                  onChange={handleChangeSettingValue}
+                                  value={
+                                    validation.values.settings
+                                      .customer_billed_by
+                                  }
+                                >
+                                  <option value="">
+                                    Select Customer Billed By
+                                  </option>
+                                  {row.value.data.map((paymode) => (
+                                    <option key={paymode.id} value={paymode.id}>
+                                      {paymode.name}
+                                    </option>
+                                  ))}
+                                </Input>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </Table>
+                </Col>
+              </Row>
+              <div className="text-center mt-4 ">
+                <div
+                  style={{
+                    display: "flex",
+                    gap: 5,
+                    textAlign: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <button type="submit" className="btn btn-success save-user">
+                    Save
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary "
+                    onClick={toggleShowSetting}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </Form>
           </CardBody>
         </Card>
       </ModalBody>

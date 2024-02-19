@@ -377,30 +377,38 @@ const DistributorList = (props) => {
 
   return (
     <React.Fragment>
-      <ViewDistributorModal
-        isOpen={viewDistributor}
-        toggleViewModal={toggleViewModal}
-        distributor={selectedDistributor}
-        setViewDistributor={setViewDistributor}
-        distributorsPhase={distributorsPhase}
-        distributorsStatus={distributorsStatus}
-      />
-      <AddDistributorModal
-        isOpen={Boolean(showDistributor)}
-        toggleAddDistributor={toggleAddDistributor}
-        distributorsPhase={distributorsPhase}
-        distributorsStatus={distributorsStatus}
-      />
-      <UploadDistributorModal
-        isOpen={showUploadDistributor}
-        handleUploadDistributor={handleUploadDistributor}
-      />
-      <SettingModal
-        isOpen={Boolean(showSetting)}
-        toggleShowSetting={toggleShowSetting}
-        distributorsSettings={distributorsSettings}
-        distributorsOperator={distributorsOperator}
-      />
+      {viewDistributor && (
+        <ViewDistributorModal
+          isOpen={viewDistributor}
+          toggleViewModal={toggleViewModal}
+          distributor={selectedDistributor}
+          setViewDistributor={setViewDistributor}
+          distributorsPhase={distributorsPhase}
+          distributorsStatus={distributorsStatus}
+        />
+      )}
+      {showDistributor && (
+        <AddDistributorModal
+          isOpen={Boolean(showDistributor)}
+          toggleAddDistributor={toggleAddDistributor}
+          distributorsPhase={distributorsPhase}
+          distributorsStatus={distributorsStatus}
+        />
+      )}
+      {showUploadDistributor && (
+        <UploadDistributorModal
+          isOpen={showUploadDistributor}
+          handleUploadDistributor={handleUploadDistributor}
+        />
+      )}
+      {showSetting && (
+        <SettingModal
+          isOpen={Boolean(showSetting)}
+          toggleShowSetting={toggleShowSetting}
+          distributorsSettings={distributorsSettings}
+          distributorsOperator={distributorsOperator}
+        />
+      )}
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}

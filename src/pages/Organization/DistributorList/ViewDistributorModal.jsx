@@ -171,7 +171,9 @@ const ViewDistributorModal = (props) => {
     }
   };
   useEffect(() => {
+    // if (Object.keys(distributor).length === 0) {
     if (distributor) {
+      // debugger;
       getSelectedRowDetails();
       getOperatorAccountDetails();
     }
@@ -181,13 +183,13 @@ const ViewDistributorModal = (props) => {
     setViewDistributor(false);
     setShowEditDistributor(false);
   };
-  console.log("selectedRowData:" + JSON.stringify(selectedRowData));
-  console.log(
-    "ParentId of selectedRowData:" + selectedRowData.parent_id,
-    selectedRowData.city_id,
-    selectedRowData.district_id,
-    selectedRowData.distributor_id
-  );
+  // console.log("selectedRowData:" + JSON.stringify(selectedRowData));
+  // console.log(
+  //   "ParentId of selectedRowData:" + selectedRowData.parent_id,
+  //   selectedRowData.city_id,
+  //   selectedRowData.district_id,
+  //   selectedRowData.distributor_id
+  // );
   return (
     <Modal
       isOpen={isOpen}
