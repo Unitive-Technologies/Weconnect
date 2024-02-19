@@ -19,13 +19,10 @@ import { Link } from "react-router-dom";
 import TableContainer from "../../components/Common/TableContainer";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useSelector, useDispatch } from "react-redux";
-import { createSelector } from "reselect";
+import { useDispatch } from "react-redux";
 import {
   allotSmartcard as onAllotSmartcard,
-  getInventoryAllottedPairing as onGetInventoryAllottedPairing,
-  getInventoryAllottedDistributor as onGetInventoryAllottedDistributor,
-  getInventoryAllottedLco as onGetInventoryAllottedLco,
+  getInventoryAllottedSmartcard as onGetInventoryAllottedSmartcard,
 } from "/src/store/inventoryAllotted/actions";
 import axios from "axios";
 
@@ -49,77 +46,29 @@ function AllottedSmrtcard(props) {
   const baseUrl = "https://sms.unitch.in/api/index.php/v1";
   const dispatch = useDispatch();
 
-  // const selectInventoryAllottedState = (state) => state.allotteddistributor;
-  // const inventoryallottedProperties = createSelector(
-  //   selectInventoryAllottedState,
-  //   (allotteddistributor) => ({
-  //     allotteddistributor: allotteddistributor.allotteddistributor,
-  //     allottedlco: allotteddistributor.allottedlco,
-  //   })
-  // );
-
-  // const { allotteddistributor, allottedlco } = useSelector(
-  //   inventoryallottedProperties
-  // );
-
   useEffect(() => {
     console.log("Selected branch id: ", branch_id);
-    // const token = "Bearer " + localStorage.getItem("temptoken");
-    // const response = axios.get(
-    //   `${baseUrl}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=${branch_id}&filter[type]=2&vr=web1.0`,
-    //   {
-    //     headers: {
-    //       Authorization: token, // Include your token here
-    //     },
-    //   }
-    // );
-    // console.log("response data: ", response);
-    try {
-      const token = "Bearer " + localStorage.getItem("temptoken");
-      const response = axios.get(
-        `${baseUrl}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=${parseInt(
-          branch_id
-        )}&filter[type]=2&vr=web1.0`,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
-      console.log("response data: ", response);
-      // setAllotteddistributor(response);
-    } catch (error) {
-      console.error("Error fetching distributor data:", error);
-    }
+    const fetchData = async () => {
+      try {
+        const token = "Bearer " + localStorage.getItem("temptoken");
+        const response = await axios.get(
+          `${baseUrl}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=${parseInt(
+            branch_id
+          )}&filter[type]=2&vr=web1.0`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        console.log("response data: ", response.data.data);
+        setAllotteddistributor(response.data.data);
+      } catch (error) {
+        console.error("Error fetching distributor data:", error);
+      }
+    };
+    fetchData();
   }, [branch_id]);
-
-  // const handleBranchSelection = async (e) => {
-  //   try {
-  //     const id = e.target.value;
-  //     setBranch_id(id);
-  //     {
-  //       console.log("Selected branch id: ", id);
-  //     }
-  //     validation.handleChange(e);
-  //     const token = "Bearer " + localStorage.getItem("temptoken");
-  //     const response = await axios.get(
-  //       `${baseUrl}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=${parseInt(
-  //         id
-  //       )}&filter[type]=2&vr=web1.0`,
-  //       {
-  //         headers: {
-  //           Authorization: token,
-  //         },
-  //       }
-  //     );
-  //     {
-  //       console.log("response data: ", response);
-  //     }
-  //     setAllotteddistributor(response);
-  //   } catch (error) {
-  //     console.error("Error fetching distributor data:", error);
-  //   }
-  // };
 
   const handleSmartcardSelection = (row) => {
     const isSelected = selectedSmartcardlist.some(
@@ -156,20 +105,36 @@ function AllottedSmrtcard(props) {
     },
     validationSchema: Yup.object({
       usertype: Yup.string().required("Select user Type"),
+      // branch_id: Yup.string().required("Select Reginal office"),
+      // distributor_id: Yup.string().required("Select distributor"),
+      // operator: Yup.string().required("Select lco"),
     }),
+
     onSubmit: (values) => {
+      let id = {};
+      if (usertype === "1") {
+        id = branch_id;
+      } else if (usertype === "2") {
+        id = distributor_id;
+      } else if (usertype === "3") {
+        id = operator;
+      }
+
       const newAllotted = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
-        operator_id: values.operator_id,
+        operator_id: id,
         smartcard_ids: selectedSmartcardlist.map((row) => row.id),
       };
       console.log("New allotted smartcard: " + JSON.stringify(newAllotted));
       dispatch(onAllotSmartcard(newAllotted));
-      dispatch(onGetInventoryAllottedPairing());
+      dispatch(onGetInventoryAllottedSmartcard());
       validation.resetForm();
       toggle();
       setUsertype("");
       setSelectedSmartcardlist([]);
+      setBranch_id("");
+      setDistributor_id("");
+      setOperator("");
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -347,14 +312,8 @@ function AllottedSmrtcard(props) {
                     name="brand_id"
                     type="select"
                     placeholder="Select Reginal office"
-                    // onChange={(e) => {
-                    //   validation.handleChange(e);
-                    //   setBranch_id(e.target.value);
-                    // }}
                     onChange={(e) => setBranch_id(e.target.value)}
-                    // onChange={handleBranchSelection}
                     onBlur={validation.handleBlur}
-                    // value={validation.values.branch_id || ""}
                     value={branch_id}
                     // invalid={
                     //   validation.touched.brand_id && validation.errors.branch_id
