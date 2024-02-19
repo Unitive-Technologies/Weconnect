@@ -20,6 +20,7 @@ import {
 import {
   getInventoryAllottedSmartcard as onGetInventoryAllottedSmartcard,
   getInventoryAllottedStb as onGetInventoryAllottedStb,
+  getInventoryAllottedPairing as onGetInventoryAllottedPairing,
   getInventoryAllottedSmartcardSuccess,
   getInventoryAllottedSmartcardFail,
   getInventoryAllottedStbSuccess,
@@ -212,6 +213,37 @@ function* onDeallotStb({ payload: allottedstb }) {
   }
 }
 
+function* fetchInventoryAllottedPairinglist() {
+  try {
+    const response = yield call(getInventoryAllottedPairinglist);
+    console.log("pairing list in allotted: ", response.data);
+    yield put(getInventoryAllottedPairinglistSuccess(response.data));
+  } catch (error) {
+    console.log("Pairing error: ", error);
+    yield put(getInventoryAllottedPairinglistFail(error));
+  }
+}
+
+function* onAllotPairing({ payload: allottedpairing }) {
+  try {
+    const response = yield call(allotPairing, allottedpairing);
+    yield put(allotPairingSuccess(response));
+    yield put(onGetInventoryAllottedPairing());
+  } catch (error) {
+    yield put(allotPairingFail(error));
+  }
+}
+
+function* onDeallotPairing({ payload: allottedpairing }) {
+  try {
+    const response = yield call(deallotPairing, allottedpairing);
+    yield put(deallotPairingSuccess(response));
+    yield put(onGetInventoryAllottedPairing());
+  } catch (error) {
+    yield put(deallotPairingFail(error));
+  }
+}
+
 function* inventoryallottedSaga() {
   yield takeEvery(
     GET_INVENTORYALLOTTED_SMARTCARD,
@@ -241,6 +273,12 @@ function* inventoryallottedSaga() {
   yield takeEvery(GET_INVENTORYALLOTTED_STBLIST, fetchInventoryAllottedStblist);
   yield takeEvery(ALLOT_STB, onAllotStb);
   yield takeEvery(DEALLOT_STB, onDeallotStb);
+  yield takeEvery(
+    GET_INVENTORYALLOTTED_PAIRINGLIST,
+    fetchInventoryAllottedPairinglist
+  );
+  yield takeEvery(ALLOT_PAIRING, onAllotPairing);
+  yield takeEvery(DEALLOT_PAIRING, onDeallotPairing);
 }
 
 export default inventoryallottedSaga;
