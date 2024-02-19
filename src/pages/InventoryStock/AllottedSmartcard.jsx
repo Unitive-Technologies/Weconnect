@@ -151,7 +151,6 @@ function AllottedSmrtcard(props) {
       dispatch(onAllotSmartcard(newAllotted));
       dispatch(onGetInventoryAllottedSmartcard());
       validation.resetForm();
-      toggle();
       setUsertype("");
       setSelectedSmartcardlist([]);
       setBranch_id("");
@@ -159,6 +158,7 @@ function AllottedSmrtcard(props) {
       setOperator("");
       setAllotteddistributor([]);
       setAllottedlco([]);
+      toggle();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);

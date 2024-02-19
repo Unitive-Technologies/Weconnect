@@ -1037,6 +1037,7 @@ const InventoryStock = (props) => {
 
   const handleDeallottedSmartcard = () => {
     setShowDeallotSmartcard(!showDeallotSmartcard);
+    setSelectedAllottedSmartcards([]);
   };
 
   const getFilteredTableActions = () => {
