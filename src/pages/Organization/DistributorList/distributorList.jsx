@@ -347,6 +347,9 @@ const DistributorList = (props) => {
     setSelectedDistributor(userData);
   };
 
+  const toggleShowSetting = () => {
+    setShowSetting(!showSetting);
+  };
   const getTableActions = () => {
     return [
       {
@@ -393,8 +396,8 @@ const DistributorList = (props) => {
         handleUploadDistributor={handleUploadDistributor}
       />
       <SettingModal
-        isOpen={showSetting}
-        handleShowSetting={() => setShowSetting(false)}
+        isOpen={Boolean(showSetting)}
+        toggleShowSetting={toggleShowSetting}
         distributorsSettings={distributorsSettings}
         distributorsOperator={distributorsOperator}
       />

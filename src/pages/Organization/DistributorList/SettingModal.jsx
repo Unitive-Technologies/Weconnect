@@ -9,6 +9,8 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
+  Table,
+  Input,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -16,7 +18,7 @@ import { useDispatch } from "react-redux";
 const SettingModal = (props) => {
   const {
     isOpen,
-    handleShowSetting,
+    toggleShowSetting,
     distributorsSettings,
     distributorsOperator,
   } = props;
@@ -31,7 +33,34 @@ const SettingModal = (props) => {
   );
   const [selectedOperators, setSelectedOperators] = useState([]);
   const [tableList, setTableList] = useState([]);
+  const [settingTable, setSettingTable] = useState([]);
   const distributor = [];
+  const [checkedRows, setCheckedRows] = useState({});
+  const [settings, setSettings] = useState({
+    area_id: "",
+    stop_cheque_payment: "",
+    min_recharge_amt: "",
+  });
+  const handleChangeSettingValue = (e) => {
+    debugger;
+    console.log("handleChangeSettingValue called");
+    const { name, value } = e.target;
+    console.log(`Setting ${name} to ${value}`);
+    setSettings((prevSettings) => ({
+      ...prevSettings,
+      [name]: value,
+    }));
+  };
+
+  const handleCheckboxChange = (rowId) => {
+    console.log("rowId:" + rowId);
+    setCheckedRows((prevCheckedRows) => ({
+      ...prevCheckedRows,
+      [rowId]: !prevCheckedRows[rowId],
+    }));
+  };
+  const isRowChecked = (rowId) => Boolean(checkedRows[rowId]);
+  console.log("checkedRows:" + JSON.stringify(checkedRows));
   const handleActive = (row) => {
     const isRowSelected = selectedOperators.some(
       (opertor) => opertor.id === row.id
@@ -430,7 +459,57 @@ const SettingModal = (props) => {
     if (distributorsOperator) {
       setTableList(distributorsOperator);
     }
-  }, []);
+    if (distributorsSettings) {
+      const bulkArray = [
+        {
+          key: "area_id",
+          value: distributorsSettings.area_id,
+          placeholder: "Enter Area ID",
+        },
+        {
+          key: "stop_cheque_payment",
+          value: distributorsSettings.stop_cheque_payment,
+          placeholder: "Select Stop Cheque Payment",
+        },
+        {
+          key: "min_recharge_amt",
+          value: distributorsSettings.min_recharge_amt,
+          placeholder: "Enter Minimum Online Topup Amount",
+        },
+        {
+          key: "collection_enabled",
+          value: distributorsSettings.collection_enabled,
+          placeholder: "Select enable Customer Collection",
+        },
+        {
+          key: "customer_portal_config",
+          value: distributorsSettings.customer_portal_config,
+          placeholder: "Select Customer Portal Config",
+        },
+        {
+          key: "billed_by",
+          value: distributorsSettings.billed_by,
+          placeholder: "Select Billed By",
+        },
+        {
+          key: "enable_customer_billing",
+          value: distributorsSettings.enable_customer_billing,
+          placeholder: "Select enable Customer Billing",
+        },
+        {
+          key: "credit_limit",
+          value: distributorsSettings.credit_limit,
+          placeholder: "Enter Credit Limit",
+        },
+        {
+          key: "customer_billed_by",
+          value: distributorsSettings.customer_billed_by,
+          placeholder: "Select Customer Billed By",
+        },
+      ];
+      setSettingTable(bulkArray);
+    }
+  }, [distributorsSettings, distributorsOperator]);
   return (
     <Modal
       isOpen={isOpen}
@@ -440,9 +519,9 @@ const SettingModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleShowSetting}
+      toggle={toggleShowSetting}
     >
-      <ModalHeader toggle={handleShowSetting} tag="h4">
+      <ModalHeader toggle={toggleShowSetting} tag="h4">
         Bulk Operator Settings
       </ModalHeader>
       <ModalBody>
@@ -459,7 +538,7 @@ const SettingModal = (props) => {
                 handleActive(row);
               }}
               isShowingPageLength={true}
-              customPageSize={50}
+              customPageSize={5}
               tableClass="table align-middle table-nowrap table-hover"
               theadClass="table-light"
               paginationDiv="col-sm-12 col-md-7"
@@ -529,10 +608,10 @@ const SettingModal = (props) => {
               }}
             >
               <Col lg={12}>
-                <TableContainer
+                {/* <TableContainer
                   isPagination={true}
                   columns={operSettingColumn}
-                  data={distributor}
+                  data={distributorsSettings}
                   //   isGlobalFilter={true}
                   isShowingPageLength={true}
                   customPageSize={50}
@@ -540,7 +619,178 @@ const SettingModal = (props) => {
                   theadClass="table-light"
                   paginationDiv="col-sm-12 col-md-7"
                   pagination="pagination pagination-rounded justify-content-end mt-4"
-                />
+                /> */}
+                <Table>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Enabled</th>
+                      <th>Setting Name</th>
+                      <th>Description</th>
+                      <th>Note</th>
+                      <th>Set Data</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {console.log(
+                      "...................settingTable:" +
+                        JSON.stringify(settingTable)
+                    )}
+                    {settingTable.map((row, i) => (
+                      <tr key={i}>
+                        <td>{i + 1}</td>
+                        <td>
+                          <input
+                            type="checkbox"
+                            onChange={() => {
+                              debugger;
+                              console.log("Clicked the checkbox");
+                              handleCheckboxChange(row.id);
+                            }}
+                            checked={isRowChecked(row.id)}
+                          />
+                        </td>
+                        <td>{row.value.label}</td>
+                        <td>{row.value.description}</td>
+                        <td>{row.value.comment}</td>
+                        <td>
+                          {row.key === "area_id" ? (
+                            <Input
+                              type="text"
+                              name="area_id"
+                              placeholder={row.placeholder}
+                              onChange={handleChangeSettingValue}
+                              value={settings.area_id}
+                            />
+                          ) : row.key === "stop_cheque_payment" ? (
+                            <Input
+                              name="stop_cheque_payment"
+                              type="select"
+                              placeholder={row.placeholder}
+                              className="form-select"
+                              onChange={handleChangeSettingValue}
+                              value={settings.stop_cheque_payment}
+                            >
+                              <option value="">
+                                Select Stop Cheque Payment
+                              </option>
+                              {row.value.data.map((paymode) => (
+                                <option key={paymode.id} value={paymode.id}>
+                                  {paymode.name}
+                                </option>
+                              ))}
+                            </Input>
+                          ) : row.key === "min_recharge_amt" ? (
+                            <Input
+                              type="text"
+                              name="min_recharge_amt"
+                              placeholder={row.placeholder}
+                              onChange={handleChangeSettingValue}
+                              value={settings.min_recharge_amt}
+                            />
+                          ) : row.key === "collection_enabled" ? (
+                            <Input
+                              name="collection_enabled"
+                              type="select"
+                              placeholder={row.placeholder}
+                              className="form-select"
+                              onChange={handleChangeSettingValue}
+                              value={settings.collection_enabled}
+                            >
+                              <option value="">
+                                Select Enable Customer Collection
+                              </option>
+                              {row.value.data.map((paymode) => (
+                                <option key={paymode.id} value={paymode.id}>
+                                  {paymode.name}
+                                </option>
+                              ))}
+                            </Input>
+                          ) : row.key === "customer_portal_config" ? (
+                            <Input
+                              name="customer_portal_configt"
+                              type="select"
+                              placeholder={row.placeholder}
+                              className="form-select"
+                              onChange={handleChangeSettingValue}
+                              value={settings.customer_portal_config}
+                            >
+                              <option value="">
+                                Select Customer Portal Config
+                              </option>
+                              {row.value.data.map((paymode) => (
+                                <option key={paymode.id} value={paymode.id}>
+                                  {paymode.name}
+                                </option>
+                              ))}
+                            </Input>
+                          ) : row.key === "billed_by" ? (
+                            <Input
+                              name="billed_by"
+                              type="select"
+                              placeholder={row.placeholder}
+                              className="form-select"
+                              onChange={handleChangeSettingValue}
+                              value={settings.billed_by}
+                            >
+                              <option value="">Select Billed By</option>
+                              {row.value.data.map((paymode) => (
+                                <option key={paymode.id} value={paymode.id}>
+                                  {paymode.name}
+                                </option>
+                              ))}
+                            </Input>
+                          ) : row.key === "enable_customer_billing" ? (
+                            <Input
+                              name="enable_customer_billing"
+                              type="select"
+                              placeholder={row.placeholder}
+                              className="form-select"
+                              onChange={handleChangeSettingValue}
+                              value={settings.enable_customer_billing}
+                            >
+                              <option value="">
+                                Select Enable Customer Billing
+                              </option>
+                              {row.value.data.map((paymode) => (
+                                <option key={paymode.id} value={paymode.id}>
+                                  {paymode.name}
+                                </option>
+                              ))}
+                            </Input>
+                          ) : row.key === "credit_limit" ? (
+                            <Input
+                              type="text"
+                              name="credit_limit"
+                              placeholder={row.placeholder}
+                              onChange={handleChangeSettingValue}
+                              value={settings.credit_limit}
+                            />
+                          ) : (
+                            // row.key === "enable_customer_billing" ? (
+                            <Input
+                              name="customer_billed_by"
+                              type="select"
+                              placeholder={row.placeholder}
+                              className="form-select"
+                              onChange={handleChangeSettingValue}
+                              value={settings.customer_billed_by}
+                            >
+                              <option value="">
+                                Select Customer Billed By
+                              </option>
+                              {row.value.data.map((paymode) => (
+                                <option key={paymode.id} value={paymode.id}>
+                                  {paymode.name}
+                                </option>
+                              ))}
+                            </Input>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
               </Col>
             </Row>
             <div className="text-center mt-4 ">
@@ -558,7 +808,7 @@ const SettingModal = (props) => {
                 <button
                   type="button"
                   className="btn btn-primary "
-                  onClick={handleShowSetting}
+                  onClick={toggleShowSetting}
                 >
                   Cancel
                 </button>
@@ -572,7 +822,7 @@ const SettingModal = (props) => {
 };
 
 SettingModal.propTypes = {
-  toggle: PropTypes.func,
+  toggleShowSetting: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
