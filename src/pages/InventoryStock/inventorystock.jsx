@@ -61,6 +61,7 @@ import {
   getInventoryAllottedUsertype as onGetInventoryAllottedUsertype,
   getInventoryAllottedOperatorlist as onGetInventoryAllottedOperatorlist,
   getInventoryAllottedStblist as onGetInventoryAllottedStblist,
+  getInventoryAllottedPairinglist as onGetInventoryAllottedPairinglist,
 } from "/src/store/inventoryallotted/actions";
 import StockStb from "./StockStb";
 import StockPairing from "./StockPairing";
@@ -122,6 +123,9 @@ const InventoryStock = (props) => {
   const [showDeallotStb, setShowDeallotStb] = useState(false);
   const [showAllottedStb, setShowAllottedStb] = useState(false);
   const [selectedAllottedStbs, setSelectedAllottedStbs] = useState([]);
+  const [showDeallotPairing, setShowDeallotPairing] = useState(false);
+  const [showAllottedPairing, setShowAllottedPairing] = useState(false);
+  const [selectedAllottedPairings, setSelectedAllottedPairings] = useState([]);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -234,6 +238,7 @@ const InventoryStock = (props) => {
       allottedusertype: allottedpairing.allottedusertype,
       allottedoperatorlist: allottedpairing.allottedoperatorlist,
       allottedstblist: allottedpairing.allottedstblist,
+      allottedpairinglist: allottedpairing.allottedpairinglist,
     })
   );
 
@@ -249,6 +254,7 @@ const InventoryStock = (props) => {
     allottedusertype,
     allottedoperatorlist,
     allottedstblist,
+    allottedpairinglist,
   } = useSelector(inventoryallottedProperties);
 
   useEffect(() => {
@@ -260,6 +266,7 @@ const InventoryStock = (props) => {
       dispatch(onGetInventoryAllottedSmartcardlist());
       dispatch(onGetInventoryAllottedUsertype());
       dispatch(onGetInventoryAllottedStblist());
+      dispatch(onGetInventoryAllottedPairinglist());
     }
   }, [dispatch, allottedpairing]);
 
@@ -456,12 +463,6 @@ const InventoryStock = (props) => {
     }
   };
 
-  useEffect(() => {
-    // console.log("Selected Allotted smartcard: ", selectedAllottedSmartcards);
-    console.log("Allotted stb list: ", allottedstblist);
-    // }, [selectedAllottedSmartcards]);
-  }, []);
-
   const handleSelectedRows = (row) => {
     const isSelected = selectedRows.some(
       (selectedRow) => selectedRow.id === row.id
@@ -572,6 +573,20 @@ const InventoryStock = (props) => {
       setSelectedAllottedStbs(updatedSelectedAllottedStbs);
     } else {
       setSelectedAllottedStbs([...selectedAllottedStbs, row]);
+    }
+  };
+
+  const handleSelectedAllottedPairings = (row) => {
+    const isSelected = selectedAllottedPairings.some(
+      (selectedAllottedPairing) => selectedAllottedPairing.id === row.id
+    );
+    if (isSelected) {
+      const updatedSelectedAllottedPairings = selectedAllottedPairings.filter(
+        (selectedAllottedPairing) => selectedAllottedPairing.id !== row.id
+      );
+      setSelectedAllottedPairings(updatedSelectedAllottedPairings);
+    } else {
+      setSelectedAllottedPairings([...selectedAllottedPairings, row]);
     }
   };
 
@@ -1241,6 +1256,7 @@ const InventoryStock = (props) => {
             name: "Allot",
             type: "normal",
             icon: "create",
+            action: setShowAllottedPairing,
           },
           {
             name: "Upload",
@@ -1249,9 +1265,11 @@ const InventoryStock = (props) => {
           },
           {
             name: "De-Allot",
-            type: "dot",
-            icon: "action",
-            dropdownName: "",
+            type: "normal",
+            action:
+              Object.keys(selectedAllottedPairings).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowDeallotPairing(true),
           },
         ];
         return actions;
