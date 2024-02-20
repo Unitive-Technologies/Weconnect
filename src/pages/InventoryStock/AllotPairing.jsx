@@ -175,6 +175,20 @@ function AllottedPairing(props) {
         },
       },
       {
+        Header: "Smartcard No.",
+        accessor: "smartcardno",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <>
+              <p className="font-size-14 mb-1">
+                {cellProps.row.original.smartcardno}
+              </p>
+            </>
+          );
+        },
+      },
+      {
         Header: "STB No.",
         accessor: "stbno",
         filterable: true,
@@ -238,6 +252,25 @@ function AllottedPairing(props) {
     []
   );
 
+  useEffect(() => {
+    setBranch_id("");
+    setDistributor_id("");
+    setOperator("");
+    setAllotteddistributor([]);
+    setAllottedlco([]);
+  }, [usertype]);
+
+  const handleModalToggle = () => {
+    toggle();
+    setUsertype("");
+    // setSelectedSmartcardlist([]);
+    setBranch_id("");
+    setDistributor_id("");
+    setOperator("");
+    setAllotteddistributor([]);
+    setAllottedlco([]);
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -247,9 +280,9 @@ function AllottedPairing(props) {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleModalToggle}
     >
-      <ModalHeader tag="h4" toggle={toggle}>
+      <ModalHeader tag="h4" toggle={handleModalToggle}>
         Allot Pairings to Operator
       </ModalHeader>
       <ModalBody>
