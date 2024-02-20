@@ -341,12 +341,15 @@ const DistributorList = (props) => {
   };
 
   const [selectedDistributor, setSelectedDistributor] = useState({});
-
+  const [selectedRowId, setSelectedRowId] = useState("");
   const toggleViewModal = (userData) => {
     setViewDistributor(!viewDistributor);
     setSelectedDistributor(userData);
+    setSelectedRowId(userData.id);
   };
-
+  const resetSelection = () => {
+    setSelectedDistributor({});
+  };
   const toggleShowSetting = () => {
     setShowSetting(!showSetting);
   };
@@ -381,8 +384,10 @@ const DistributorList = (props) => {
         <ViewDistributorModal
           isOpen={viewDistributor}
           toggleViewModal={toggleViewModal}
+          resetSelection={resetSelection}
           distributor={selectedDistributor}
           setViewDistributor={setViewDistributor}
+          selectedRowId={selectedRowId}
           distributorsPhase={distributorsPhase}
           distributorsStatus={distributorsStatus}
         />
