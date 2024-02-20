@@ -77,6 +77,7 @@ function AllottedSmrtcard(props) {
   }, [usertype]);
 
   const handleSmartcardSelection = (row) => {
+    setIsCheckedSc(true);
     const isSelected = selectedSmartcardlist.some(
       (selectedSmartcard) => selectedSmartcard.id === row.id
     );
@@ -160,9 +161,9 @@ function AllottedSmrtcard(props) {
             <>
               <input
                 type="checkbox"
-                onChange={() =>
-                  handleSmartcardSelection(cellProps.row.original)
-                }
+                // onChange={() =>
+                //   handleSmartcardSelection(cellProps.row.original)
+                // }
               />
             </>
           );
@@ -261,6 +262,10 @@ function AllottedSmrtcard(props) {
     setAllotteddistributor([]);
     setAllottedlco([]);
   };
+
+  useEffect(() => {
+    console.log("Selected smartcard list", selectedSmartcardlist);
+  }, [selectedSmartcardlist]);
 
   return (
     <Modal
@@ -568,6 +573,7 @@ function AllottedSmrtcard(props) {
                     theadClass="table-light"
                     paginationDiv="col-sm-12 col-md-7"
                     pagination="pagination pagination-rounded justify-content-end mt-4"
+                    handleRowClick={(row) => handleSmartcardSelection(row)}
                   />
                 </CardBody>
               </Card>

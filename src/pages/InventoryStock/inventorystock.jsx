@@ -1390,6 +1390,8 @@ const InventoryStock = (props) => {
     }
   };
 
+  // console.log("Allotted pairing list: ", allottedpairinglist);
+
   return (
     <React.Fragment>
       <AddStockSmartcard
