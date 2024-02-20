@@ -238,6 +238,26 @@ function AllottedStb(props) {
     []
   );
 
+  useEffect(() => {
+    setBranch_id("");
+    setDistributor_id("");
+    setOperator("");
+    setAllotteddistributor([]);
+    setAllottedlco([]);
+  }, [usertype]);
+
+
+  const handleModalToggle = () => {
+    toggle();
+    setUsertype("");
+    setSelectedStblist([]);
+    setBranch_id("");
+    setDistributor_id("");
+    setOperator("");
+    setAllotteddistributor([]);
+    setAllottedlco([]);
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -247,9 +267,9 @@ function AllottedStb(props) {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleModalToggle}
     >
-      <ModalHeader tag="h4" toggle={toggle}>
+      <ModalHeader tag="h4" toggle={handleModalToggle}>
         Allot STBs to Operator
       </ModalHeader>
       <ModalBody>

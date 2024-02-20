@@ -9,6 +9,7 @@ import StockPairingBlacklist from "./StockPairingBlacklist";
 import DeleteStockPairing from "./DeleteStockPairing";
 import FaultyPairingSendToPair from "./FaultyPairingSendToPair";
 import FaultyPairingBlacklist from "./FaultyPairingBlacklist";
+import AllottedPairing from "./AllotPairing";
 
 const StockPairing = (props) => {
   const {
@@ -93,6 +94,14 @@ const StockPairing = (props) => {
     setShowFaultyPairingBlacklist(!showFaultyPairingBlacklist);
   };
 
+  const handleAllottedPairing = () => {
+    setShowAllottedPairing(!showAllottedPairing);
+  };
+
+  const handleDeallottedPairing = () => {
+    setShowDeallotPairing(!showDeallotPairing);
+  };
+
   const getFilteredHandleRowClicks = (Row) => {
     if (selectedOption === "In-stock") {
       if (activeTab === "3") {
@@ -101,6 +110,10 @@ const StockPairing = (props) => {
     } else if (selectedOption === "Faulty") {
       if (activeTab === "3") {
         return handleSelectedFaultyPairing(Row);
+      }
+    } else if (selectedOption === "Allotted") {
+      if (activeTab === "3") {
+        return handleSelectedAllottedPairings(Row);
       }
     }
   };
@@ -486,6 +499,13 @@ const StockPairing = (props) => {
         isOpen={showFaultyPairingBlacklist}
         toggle={handleFaultyPairingBlacklist}
         selectedFaultyPairings={selectedFaultyPairings}
+      />
+      <AllottedPairing
+        isOpen={showAllottedPairing}
+        toggle={handleAllottedPairing}
+        allottedpairinglist={allottedpairinglist}
+        allottedusertype={allottedusertype}
+        allottedoperatorlist={allottedoperatorlist}
       />
       <Row>
         <Col lg="12">

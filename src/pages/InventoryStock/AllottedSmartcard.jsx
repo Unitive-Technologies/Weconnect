@@ -68,6 +68,14 @@ function AllottedSmrtcard(props) {
     });
   }, [distributor_id]);
 
+  useEffect(() => {
+    setBranch_id("");
+    setDistributor_id("");
+    setOperator("");
+    setAllotteddistributor([]);
+    setAllottedlco([]);
+  }, [usertype]);
+
   const handleSmartcardSelection = (row) => {
     const isSelected = selectedSmartcardlist.some(
       (selectedSmartcard) => selectedSmartcard.id === row.id
@@ -243,6 +251,17 @@ function AllottedSmrtcard(props) {
     []
   );
 
+  const handleModalToggle = () => {
+    toggle();
+    setUsertype("");
+    setSelectedSmartcardlist([]);
+    setBranch_id("");
+    setDistributor_id("");
+    setOperator("");
+    setAllotteddistributor([]);
+    setAllottedlco([]);
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -252,9 +271,9 @@ function AllottedSmrtcard(props) {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleModalToggle}
     >
-      <ModalHeader tag="h4" toggle={toggle}>
+      <ModalHeader tag="h4" toggle={handleModalToggle}>
         Allot Smartcards to Operator
       </ModalHeader>
       <ModalBody>
