@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
 import {
@@ -9,183 +9,118 @@ import {
   Label,
   Input,
   Form,
+  CardTitle,
+  Table,
   FormFeedback,
 } from "reactstrap";
-import * as Yup from "yup";
-
-import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 
-const ViewMetaData = (props) => {
-  const { showEditChannel } = props;
+import { createSelector } from "reselect";
+import { useSelector, useDispatch } from "react-redux";
 
-  const [casData, setCasData] = useState([]); // State to hold fetched data
+const ViewMetaData = ({
+  data,
+  updateList,
+  handleUpdateCasList,
+  channelListCascode,
+  showEditChannel,
+}) => {
+  console.log("Cas List Data" + JSON.stringify(data));
 
+<<<<<<< Updated upstream
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
+=======
+  const updateCasList = () => {
+    if (!casSelection || !casCode || !serviceId) {
+      return;
+    }
 
-    initialValues: {
-      //BroadCaster: "",
-      type: "",
-      field: "",
-      label: "",
-      created_by: "Admin",
-    },
-    validationSchema: Yup.object({
-      type: Yup.string().required("Enter Select type"),
-      field: Yup.string().required("Enter Select field"),
-      label: Yup.string().required("Enter Select label"),
-      // serviceid: Yup.string().required("serviceid"),
-    }),
-    onSubmit: (values) => {
-      const newSMSMessageTemplateList = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
-        type: values["type"],
-        field: values["field"],
-        label: values["label"],
-      };
-      console.log("newSMSMessageTempList:" + newSMSMessageTemplateList);
-      // save new user
-      dispatch(onAddNewSMSMessageTempList(newSMSMessageTemplateList));
-      validation.resetForm();
-      toggle();
-    },
-    onReset: (values) => {
-      validation.setValues(validation.initialValues);
-    },
-  });
+    const newItem = {
+      cas_id: data.length + 1,
+      cas_lbl: casSelection,
+      cascode: casCode,
+      serviceid: serviceId,
+    };
+>>>>>>> Stashed changes
 
-  const columns = useMemo(
-    () => [
-      {
-        Header: "#",
-        disableFilters: true,
-        filterable: true,
-        Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+    const updatedData = [...data, newItem];
+    console.log("Updated Data in CasList" + updatedData);
+    updateList(updatedData);
 
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {reverseIndex}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
+    setCasSelection("");
+    setCasCode("");
+    setServiceId("");
+  };
 
-      {
-        Header: "Type",
-        accessor: "cas",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"Type"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Field",
-        accessor: "field",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"Field"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Label",
-        accessor: "cascode",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"Label"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "$",
-        // accessor: "type",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"$"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-    ],
-    []
+  const selectChannelState = (state) => state.channelList;
+  const ChannelProperties = createSelector(
+    selectChannelState,
+    (channelList) => ({
+      casSource: channelList.casSource,
+    })
   );
 
+<<<<<<< Updated upstream
   // const casData = [];
+=======
+  const { casSource } = useSelector(ChannelProperties);
+
+  const [casSelection, setCasSelection] = useState("");
+  const [casCode, setCasCode] = useState("");
+  const [serviceId, setServiceId] = useState("");
+
+  const deleteCasList = (index) => {
+    const list = [...data];
+    list.splice(index, 1);
+    updateList(list);
+  };
+
+>>>>>>> Stashed changes
   return (
-    <Card>
-      <CardBody>
-        <Row>
-          <Col lg={3}>
+    <Row>
+      <Col
+        lg={6}
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+        }}
+      >
+        <Col lg={12}>
+          <div className="mb-3">
+            <Input
+              name="casSelection"
+              type="select"
+              placeholder="Select CAS"
+              className="form-select"
+              value={casSelection}
+              // onChange={(e) => setCasSelection(e.target.value)}
+              onChange={(e) => setCasSelection(e.target.value)}
+              disabled={!data}
+            >
+              <option value="">Select cascode</option>
+              {channelListCascode &&
+                channelListCascode.map((options) => (
+                  <option key={options.id} value={options.name}>
+                    {options.name}
+                  </option>
+                ))}
+            </Input>
+          </div>
+        </Col>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Col lg={5} style={{ marginRight: "20px" }}>
             <div className="mb-3">
+              {/* <TODO>Add handlechange and update cascode</TODO> */}
               <Input
+<<<<<<< Updated upstream
                 name="type"
                 type="select"
                 placeholder="Select type"
@@ -209,45 +144,34 @@ const ViewMetaData = (props) => {
             <div className="mb-3">
               <Input
                 name="field"
+=======
+                name="casCode"
+>>>>>>> Stashed changes
                 type="text"
-                placeholder="Enter field"
-                // className="form-select"
-                disabled={!showEditChannel}
-                onChange={validation.handleChange}
-                onBlur={validation.handleBlur}
-                value={validation.values.field || ""}
-              >
-                <option value="104">Select CAS</option>
-                <option value="105">FTA</option>
-              </Input>
-              {validation.touched.field && validation.errors.field ? (
-                <FormFeedback type="invalid">
-                  {validation.errors.field}
-                </FormFeedback>
-              ) : null}
+                placeholder="CAS Code"
+                value={casCode}
+                onChange={(e) => setCasCode(e.target.value)}
+              />
             </div>
           </Col>
-          <Col lg={3}>
+          <Col lg={5} style={{ marginRight: "20px" }}>
             <div className="mb-3">
               <Input
-                name="label"
+                name="serviceId"
                 type="text"
-                placeholder="Enter label"
-                // className="form-select"
-                onChange={validation.handleChange}
-                onBlur={validation.handleBlur}
-                value={validation.values.label || ""}
-              ></Input>
-              {validation.touched.label && validation.errors.label ? (
-                <FormFeedback type="invalid">
-                  {validation.errors.label}
-                </FormFeedback>
-              ) : null}
+                placeholder="service id"
+                value={serviceId}
+                onChange={(e) => setServiceId(e.target.value)}
+              />
             </div>
           </Col>
-          <Col lg={3}>
+          <Col lg={2}>
             <div className="mb-3">
-              <button type="submit" className="btn btn-primary ">
+              <button
+                type="button"
+                className="btn btn-primary "
+                onClick={updateCasList}
+              >
                 <i
                   className="bx bx-right-arrow-alt"
                   style={{ fontSize: 20 }}
@@ -255,31 +179,61 @@ const ViewMetaData = (props) => {
               </button>
             </div>
           </Col>
-        </Row>
-        <Row>
-          <Col lg={12}>
-            <TableContainer
-              isPagination={true}
-              columns={columns}
-              data={casData}
-              // isGlobalFilter={true}
-              // isShowingPageLength={true}
-              // customPageSize={50}
-              tableClass="table align-middle table-nowrap table-hover"
-              theadClass="table-light"
-              paginationDiv="col-sm-12 col-md-7"
-              pagination="pagination pagination-rounded justify-content-end mt-4"
-            />
-          </Col>
-        </Row>
-      </CardBody>
-    </Card>
+        </div>
+      </Col>
+      <Col xl={6}>
+        <Card>
+          <CardBody>
+            <div className="table-responsive">
+              <Table className="table mb-0">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>CAS</th>
+                    <th>CAS CODE</th>
+                    <th>SERVICE ID</th>
+                    <th>$</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data &&
+                    data.map((item, index) => (
+                      <tr key={index}>
+                        <th scope="row">{item.cas_id}</th>
+                        <td>{item.cas_lbl}</td>
+                        <td>{item.cascode}</td>
+                        <td>{item.serviceid}</td>
+                        <td>
+                          <h5>
+                            <Link
+                              className="text-dark"
+                              to="#"
+                              onClick={() => deleteCasList(index)}
+                            >
+                              <i
+                                className="mdi mdi-delete font-size-18"
+                                id="deletetooltip"
+                              />
+                            </Link>
+                          </h5>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </Table>
+            </div>
+          </CardBody>
+        </Card>
+      </Col>
+    </Row>
   );
 };
 
 ViewMetaData.propTypes = {
-  toggle: PropTypes.func,
+  handleUpdateCasList: PropTypes.func,
   isOpen: PropTypes.bool,
+  channelListCascode: PropTypes.array,
+  data: PropTypes.array,
 };
 
 export default ViewMetaData;
