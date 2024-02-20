@@ -180,19 +180,19 @@ const EditDistributorModal = (props) => {
       gst_date: (distributor && distributor.gst_date) || "",
       credit_limit: (distributor && distributor.credit_limit) || "",
       area_id: (distributor && distributor.area_id) || "",
-      agreestart:
-        (distributor &&
-          distributor.agreement_data &&
-          distributor.agreement_data.start_date) ||
-        "",
-      agreeend:
-        (distributor &&
-          distributor.agreement_data &&
-          distributor.agreement_data.end_date) ||
-        "",
+      // agreestart:
+      //   (distributor &&
+      //     distributor.agreement_data &&
+      //     distributor.agreement_data.start_date) ||
+      //   "",
+      // agreeend:
+      //   (distributor &&
+      //     distributor.agreement_data &&
+      //     distributor.agreement_data.end_date) ||
+      //   "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
+      // name: Yup.string().required("Please Enter Your Name"),
       // email: Yup.string()
       // .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
       // .required("Please Enter Your Email"),
@@ -215,20 +215,20 @@ const EditDistributorModal = (props) => {
           id: distributor.id,
           name: values["name"],
           code: values["code"],
-          agreement_data: {
-            name: values["upload"] ? values["upload"].name : "", // Handle undefined case
-            type: values["upload"] ? values["upload"].type : "",
-            ext: values["upload"] ? values["upload"].ext : "",
-            data: values["upload"] ? values["upload"].data : "",
-            start_date: values["agreestart"],
-            end_date: values["agreeend"],
-          },
+          // agreement_data: {
+          //   name: values["upload"] ? values["upload"].name : "",
+          //   type: values["upload"] ? values["upload"].type : "",
+          //   ext: values["upload"] ? values["upload"].ext : "",
+          //   data: values["upload"] ? values["upload"].data : "",
+          //   start_date: values["agreestart"],
+          //   end_date: values["agreeend"],
+          // },
 
-          parent_id: parseInt(values["parent_lbl"]),
+          parent_id: parseInt(values["branch_lbl"]),
           addr: values["addr1"],
           // addr1: values["addr1"],
           addr2: values["addr2"],
-          addr3: values["addr2"],
+          addr3: values["addr3"],
           contact_person: values["contact_person"],
           status: parseInt(values["status_lbl"]),
           mobile_no: values["mobile_no"],
@@ -239,28 +239,16 @@ const EditDistributorModal = (props) => {
           city_id: parseInt(values["city_lbl"]),
           gstno: values["gstno"],
           panno: values["panno"],
-          pincode: values["pincode"],
+          // pincode: values["pincode"],
           por_number: values["por_number"],
-          reg_phase: values["reg_phase"],
-          reg_startdate: values["reg_startdate"],
-          reg_enddate: values["reg_enddate"],
-          gst_date: values["gst_date"],
-          credit_limit: values["credit_limit"],
-          area_id: values["area_id"],
+          // reg_phase: values["reg_phase"],
+          // reg_startdate: values["reg_startdate"],
+          // reg_enddate: values["reg_enddate"],
+          // gst_date: values["gst_date"],
+          credit_limit: parseInt(values["credit_limit"]),
+          area_id: parseInt(values["area_id"]),
           type: 2,
         };
-
-        // const token = "Bearer " + localStorage.getItem("temptoken");
-
-        // const response = await axios.put(
-        //   `${API_URL}/operator/${distributor.id}?vr=web1.0`,
-        //   updateDistributor,
-        //   {
-        //     headers: {
-        //       Authorization: token,
-        //     },
-        //   }
-        // );
 
         console.log("Axios Response:", updateDistributor);
         dispatch(onUpdateDistributor(updateDistributor));
@@ -363,6 +351,7 @@ const EditDistributorModal = (props) => {
                       ? true
                       : false
                   }
+                  disabled
                 />
                 {validation.touched.code && validation.errors.code ? (
                   <FormFeedback type="invalid">
@@ -391,7 +380,9 @@ const EditDistributorModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Name</Label>
+                <Label className="form-label">
+                  Name<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="name"
                   label="Regional Office Name"
@@ -416,7 +407,9 @@ const EditDistributorModal = (props) => {
             {console.log("name validationvalue:" + validation.values.name)}
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Contact Person</Label>
+                <Label className="form-label">
+                  Contact Person<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="contact_person"
                   label="Contact Person"
@@ -440,9 +433,15 @@ const EditDistributorModal = (props) => {
                 ) : null}
               </div>
             </Col>
+            {console.log(
+              "contact person validationvalue:" +
+                validation.values.contact_person
+            )}
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Parent Regional Office</Label>
+                <Label className="form-label">
+                  Parent Regional Office<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="branch_lbl"
                   type="select"
@@ -451,9 +450,10 @@ const EditDistributorModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.branch_lbl || ""}
+                  disabled
                 >
                   {/* <option value="">{validation.values.branch_lbl}</option> */}
-                  {console.log("regoff:" + JSON.stringify(regOff))}
+                  {/* {console.log("regoff:" + JSON.stringify(regOff))} */}
                   {regOff.map((item) => (
                     <option key={item.id} value={item.code}>
                       {item.name}
@@ -468,6 +468,9 @@ const EditDistributorModal = (props) => {
                 ) : null}
               </div>
             </Col>
+            {console.log(
+              "branch validationvalue:" + validation.values.branch_lbl
+            )}
           </Row>
           <Row>
             <Col lg={4}>
@@ -494,6 +497,9 @@ const EditDistributorModal = (props) => {
                 ) : null}
               </div>
             </Col>
+            {console.log(
+              "mobileno validationvalue:" + validation.values.mobile_no
+            )}
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Phone No.</Label>
@@ -518,6 +524,9 @@ const EditDistributorModal = (props) => {
                 ) : null}
               </div>
             </Col>
+            {console.log(
+              "phoneno validationvalue:" + validation.values.phone_no
+            )}
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Email Address</Label>
@@ -542,11 +551,14 @@ const EditDistributorModal = (props) => {
                 ) : null}
               </div>
             </Col>
+            {console.log("email validationvalue:" + validation.values.email)}
           </Row>
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Status</Label>
+                <Label className="form-label">
+                  Status<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="status_lbl"
                   type="select"
@@ -556,7 +568,7 @@ const EditDistributorModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.status_lbl || ""}
                 >
-                  <option value="">Select Status</option>
+                  {/* <option value="">Select Status</option> */}
                   {distributorsStatus &&
                     distributorsStatus.map((status) => (
                       <option key={status.id} value={status.id}>
@@ -572,11 +584,16 @@ const EditDistributorModal = (props) => {
                 ) : null}
               </div>
             </Col>
+            {console.log(
+              "status validationvalue:" + validation.values.status_lbl
+            )}
           </Row>
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">State</Label>
+                <Label className="form-label">
+                  State<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="state_lbl"
                   type="select"
@@ -603,7 +620,9 @@ const EditDistributorModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">District</Label>
+                <Label className="form-label">
+                  District<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="district_lbl"
                   type="select"
@@ -630,7 +649,9 @@ const EditDistributorModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">City</Label>
+                <Label className="form-label">
+                  City<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="city_lbl"
                   type="select"
@@ -658,7 +679,9 @@ const EditDistributorModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Address1</Label>
+                <Label className="form-label">
+                  Address1<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="addr1"
                   label="Address1"
@@ -938,7 +961,9 @@ const EditDistributorModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Credit Limit</Label>
+                <Label className="form-label">
+                  Credit Limit<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="credit_limit"
                   type="text"
@@ -960,12 +985,17 @@ const EditDistributorModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+              {console.log(
+                "creditlimit validationvalue:" + validation.values.credit_limit
+              )}
             </Col>
           </Row>
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Area ID</Label>
+                <Label className="form-label">
+                  Area ID<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="area_id"
                   type="text"
@@ -985,6 +1015,9 @@ const EditDistributorModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
+              {console.log(
+                "areaID validationvalue:" + validation.values.area_id
+              )}
             </Col>
           </Row>
           <div

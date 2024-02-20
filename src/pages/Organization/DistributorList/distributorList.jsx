@@ -345,7 +345,7 @@ const DistributorList = (props) => {
   const toggleViewModal = (userData) => {
     setViewDistributor(!viewDistributor);
     setSelectedDistributor(userData);
-    setSelectedRowId(userData.id);
+    // setSelectedRowId(userData.id);
   };
   const resetSelection = () => {
     setSelectedDistributor({});
@@ -387,7 +387,7 @@ const DistributorList = (props) => {
           resetSelection={resetSelection}
           distributor={selectedDistributor}
           setViewDistributor={setViewDistributor}
-          selectedRowId={selectedRowId}
+          selectedRowId={selectedDistributor.id}
           distributorsPhase={distributorsPhase}
           distributorsStatus={distributorsStatus}
         />

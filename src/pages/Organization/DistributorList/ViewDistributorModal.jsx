@@ -236,11 +236,11 @@ const ViewDistributorModal = (props) => {
       {!showEditDistributor ? (
         <>
           <ModalHeader toggle={handleCancel} tag="h4" position="relative">
-            <h4>
-              View - {distributor && distributor.name}, Balance:{" "}
-              {selectedRowData.balance}, Credit Limit:{" "}
-              {selectedRowData.credit_limit}
-            </h4>
+            {/* <h4> */}
+            View - {distributor && distributor.name}, Balance:{" "}
+            {selectedRowData.balance}, Credit Limit:{" "}
+            {selectedRowData.credit_limit}
+            {/* </h4> */}
           </ModalHeader>
           <Link
             style={{
