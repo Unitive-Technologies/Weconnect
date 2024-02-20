@@ -140,7 +140,17 @@ const RegionalOfficeList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.addr}</p>
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 200,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {cellProps.row.original.addr}
+            </p>
           );
         },
       },

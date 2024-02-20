@@ -46,7 +46,7 @@ const ViewRegionalOfficeModal = (props) => {
   const [toDate, setToDate] = useState(currentDate);
   const [showEditRegionalOffice, setShowEditRegionalOffice] = useState(false);
   const [showOperatorDetails, setShowOperatorDetails] = useState(true);
-
+  const [showHistory, setShowHistory] = useState(false);
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -254,6 +254,18 @@ const ViewRegionalOfficeModal = (props) => {
               <i className="mdi mdi-pencil-outline"></i>
             </Link>
 
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "86%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowHistory(true)}
+            >
+              <i className="dripicons-briefcase" />
+            </Link>
             <ModalBody>
               <Form
                 onSubmit={(e) => {
