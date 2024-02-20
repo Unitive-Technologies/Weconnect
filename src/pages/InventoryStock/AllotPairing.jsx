@@ -285,7 +285,7 @@ function AllottedPairing(props) {
           }}
         >
           <Row>
-            <Col lg={4}>
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">
                   User Type<span style={{ color: "red" }}>*</span>

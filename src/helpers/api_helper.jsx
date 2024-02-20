@@ -29,6 +29,18 @@ export async function getCompleteResponse(url, config = {}) {
   });
 }
 
+export async function getResponse(url, config = {}) {
+  axiosApi.defaults.headers.common["Authorization"] =
+    "Bearer " + localStorage.getItem("temptoken");
+
+  return await axiosApi.get(url, { ...config }).then((response) => {
+    return {
+      data: response.data,
+      headers: response.headers,
+    };
+  });
+}
+
 export async function postCompleteResponse(url, data, config = {}) {
   axiosApi.defaults.headers.common["Authorization"] =
     "Bearer " + localStorage.getItem("temptoken");
