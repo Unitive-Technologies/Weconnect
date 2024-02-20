@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { Card, CardBody, Col, Row } from "reactstrap";
+import { Card, CardBody, Col, Row, Spinner } from "reactstrap";
 import TableContainerX from "../../components/Common/TableContainerX";
 import PropTypes from "prop-types";
 import CreatePairing from "./CreatePairing";
@@ -43,6 +43,15 @@ const StockPairing = (props) => {
     selectedOption,
     activeTab,
     stockscinventorystate,
+    showDeallotPairing,
+    setShowDeallotPairing,
+    showAllottedPairing,
+    setShowAllottedPairing,
+    selectedAllottedPairings,
+    handleSelectedAllottedPairings,
+    allottedpairinglist,
+    allottedusertype,
+    allottedoperatorlist,
   } = props;
 
   if (
@@ -55,9 +64,12 @@ const StockPairing = (props) => {
     loading === undefined
   ) {
     return (
-      <div>
-        <i className="mdi mdi-spin mdi-loading"></i>Loading...
-      </div>
+      <React.Fragment>
+        <Spinner
+          color="primary"
+          className="position-absolute top-50 start-50"
+        />
+      </React.Fragment>
     );
   }
 
@@ -539,6 +551,15 @@ StockPairing.propTypes = {
   activeTab: PropTypes.string,
   selectedOption: PropTypes.string,
   stockscinventorystate: PropTypes.array,
+  showDeallotPairing: PropTypes.bool,
+  setShowDeallotPairing: PropTypes.func,
+  showAllottedPairing: PropTypes.bool,
+  setShowAllottedPairing: PropTypes.func,
+  selectedAllottedPairings: PropTypes.func,
+  handleSelectedAllottedPairings: PropTypes.func,
+  allottedpairinglist: PropTypes.array,
+  allottedusertype: PropTypes.array,
+  allottedoperatorlist: PropTypes.array,
 };
 
 export default StockPairing;

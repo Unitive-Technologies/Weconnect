@@ -12,6 +12,7 @@ import {
   NavItem,
   NavLink,
   Row,
+  Spinner,
   TabContent,
   TabPane,
   Toast,
@@ -132,7 +133,7 @@ const InventoryStock = (props) => {
     selectInventoryStockState,
     (stockpairing) => ({
       stocksmartcard: stockpairing.inventorystock,
-      loading: stockpairing.loading,
+      stockloading: stockpairing.loading,
       stockstb: stockpairing.stockstb,
       stockpairing: stockpairing.stockpairing,
       stocktotalPage: stockpairing.totalPages,
@@ -154,7 +155,7 @@ const InventoryStock = (props) => {
 
   const {
     stocksmartcard,
-    loading,
+    stockloading,
     stockstb,
     stockpairing,
     stocktotalPage,
@@ -202,6 +203,7 @@ const InventoryStock = (props) => {
       faultytotalCount: faultysmartcard.totalCount,
       faultypageSize: faultysmartcard.perPage,
       faultycurrentPage: faultysmartcard.currentPage,
+      faultyloading: faultysmartcard.loading,
     })
   );
 
@@ -213,6 +215,7 @@ const InventoryStock = (props) => {
     faultypageSize,
     faultytotalCount,
     faultytotalPage,
+    faultyloading,
   } = useSelector(inventoryfaultyProperties);
 
   useEffect(() => {
@@ -239,6 +242,7 @@ const InventoryStock = (props) => {
       allottedoperatorlist: allottedpairing.allottedoperatorlist,
       allottedstblist: allottedpairing.allottedstblist,
       allottedpairinglist: allottedpairing.allottedpairinglist,
+      allottedloading: allottedpairing.loading,
     })
   );
 
@@ -255,6 +259,7 @@ const InventoryStock = (props) => {
     allottedoperatorlist,
     allottedstblist,
     allottedpairinglist,
+    allottedloading,
   } = useSelector(inventoryallottedProperties);
 
   useEffect(() => {
@@ -281,6 +286,7 @@ const InventoryStock = (props) => {
       blacklistedtotalCount: blaclistedsmartcard.totalCount,
       blacklistedpageSize: blaclistedsmartcard.perPage,
       blacklistedcurrentPage: blaclistedsmartcard.currentPage,
+      blacklistedloading: blaclistedsmartcard.loading,
     })
   );
 
@@ -292,6 +298,7 @@ const InventoryStock = (props) => {
     blacklistedpageSize,
     blacklistedtotalCount,
     blacklistedtotalPage,
+    blacklistedloading,
   } = useSelector(inventoryblacklistedProperties);
 
   useEffect(() => {
@@ -1371,6 +1378,18 @@ const InventoryStock = (props) => {
     }
   };
 
+  const getFilteredLoading = () => {
+    if (selectedOption === "In-stock") {
+      return stockloading;
+    } else if (selectedOption === "Faulty") {
+      return faultyloading;
+    } else if (selectedOption === "Allotted") {
+      return allottedloading;
+    } else if (selectedOption === "blacklisted") {
+      return blacklistedloading;
+    }
+  };
+
   return (
     <React.Fragment>
       <AddStockSmartcard
@@ -1537,35 +1556,45 @@ const InventoryStock = (props) => {
                       className="p-3 text-muted"
                     >
                       <TabPane tabId="1">
-                        <Row>
-                          <Col sm="12">
-                            <TableContainer
-                              isPagination={true}
-                              columns={columns}
-                              data={getFilteredData()}
-                              isGlobalFilter={true}
-                              isShowTableActionButtons={true}
-                              isShowingPageLength={true}
-                              tableActions={getFilteredTableActions()}
-                              customPageSize={100}
-                              tableClass="table align-middle table-nowrap table-hover"
-                              theadClass="table-light"
-                              paginationDiv="col-sm-12 col-md-7"
-                              pagination="pagination pagination-rounded justify-content-end mt-4"
-                              // handleRowClick={(row) => {
-                              //   getFilteredHandleRowClicks(row);
-                              // }}
-                              handleRowClick={(row) => {
-                                getFilteredHandleRowClicks(row);
-                              }}
+                        {stockloading ? (
+                          <React.Fragment>
+                            <Spinner
+                              color="primary"
+                              className="position-absolute top-50 start-50"
                             />
-                          </Col>
-                        </Row>
+                          </React.Fragment>
+                        ) : (
+                          <Row>
+                            <Col sm="12">
+                              <TableContainer
+                                isPagination={true}
+                                columns={columns}
+                                data={getFilteredData()}
+                                isGlobalFilter={true}
+                                isShowTableActionButtons={true}
+                                isShowingPageLength={true}
+                                tableActions={getFilteredTableActions()}
+                                customPageSize={100}
+                                tableClass="table align-middle table-nowrap table-hover"
+                                theadClass="table-light"
+                                paginationDiv="col-sm-12 col-md-7"
+                                pagination="pagination pagination-rounded justify-content-end mt-4"
+                                // handleRowClick={(row) => {
+                                //   getFilteredHandleRowClicks(row);
+                                // }}
+                                handleRowClick={(row) => {
+                                  getFilteredHandleRowClicks(row);
+                                }}
+                              />
+                            </Col>
+                          </Row>
+                        )}
                       </TabPane>
                       <TabPane tabId="2">
                         <Row>
                           <Col sm="12">
                             <StockStb
+                              loading={getFilteredLoading()}
                               stockstb={getFilteredData()}
                               tableActions={getFilteredTableActions()}
                               stocksccastype={stocksccastype}
@@ -1624,7 +1653,7 @@ const InventoryStock = (props) => {
                               pageSize={getFilteredPageSize()}
                               currentPage={getFilteredCurrentPage()}
                               totalPage={getFilteredTotalPage()}
-                              loading={loading}
+                              loading={getFilteredLoading()}
                               tableActions={getFilteredTableActions()}
                               isOpen={showCreatePairing}
                               toggle={handleCreatePairing}
@@ -1669,6 +1698,19 @@ const InventoryStock = (props) => {
                               selectedOption={selectedOption}
                               activeTab={activeTab}
                               stockscinventorystate={stockscinventorystate}
+                              showDeallotPairing={showDeallotPairing}
+                              setShowDeallotPairing={setShowDeallotPairing}
+                              showAllottedPairing={showAllottedPairing}
+                              setShowAllottedPairing={setShowAllottedPairing}
+                              selectedAllottedPairings={
+                                selectedAllottedPairings
+                              }
+                              handleSelectedAllottedPairings={
+                                handleSelectedAllottedPairings
+                              }
+                              allottedpairinglist={allottedpairinglist}
+                              allottedusertype={allottedusertype}
+                              allottedoperatorlist={allottedoperatorlist}
                             />
                           </Col>
                         </Row>
