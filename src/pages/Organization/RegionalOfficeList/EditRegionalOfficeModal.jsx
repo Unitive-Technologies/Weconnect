@@ -24,13 +24,7 @@ import { resetSection } from "redux-form";
 import { getStateUsers as onGetStateUsers } from "../../../store/stateusers/actions";
 
 const EditRegionalOfficeModal = (props) => {
-  const {
-    toggleCloseModal,
-    regionalOffData,
-    // closeEditModal,
-    phaseList,
-    statusList,
-  } = props;
+  const { toggleCloseModal, regionalOffData, phaseList, statusList } = props;
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
@@ -260,9 +254,6 @@ const EditRegionalOfficeModal = (props) => {
         phone_no: values["phone_no"],
         faxno: values["faxno"],
         panno: values["panno"],
-
-        username: values["username"],
-        password: values["password"],
         reg_startdate: values["reg_startdate"],
         reg_enddate: values["reg_enddate"],
         state_id: parseInt(values["state_lbl"]),
@@ -854,21 +845,23 @@ const EditRegionalOfficeModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Registration End Date</Label>
                 <Input
-                  name="enddate"
+                  name="reg_enddate"
                   type="date"
                   placeholder="Select End Date"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.enddate || ""}
+                  value={validation.values.reg_enddate || ""}
                   invalid={
-                    validation.touched.enddate && validation.errors.enddate
+                    validation.touched.reg_enddate &&
+                    validation.errors.reg_enddate
                       ? true
                       : false
                   }
                 />
-                {validation.touched.enddate && validation.errors.enddate ? (
+                {validation.touched.reg_enddate &&
+                validation.errors.reg_enddate ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.enddate}
+                    {validation.errors.reg_enddate}
                   </FormFeedback>
                 ) : null}
               </div>

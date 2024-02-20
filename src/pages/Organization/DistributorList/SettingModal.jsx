@@ -65,22 +65,6 @@ const SettingModal = (props) => {
     }));
   };
 
-  const handleSelectRow = (row) => {
-    const isRowSelected = selectedOperators.some(
-      (opertor) => opertor.id === row.id
-    );
-    // console.log("iiiiiiiiiiiiiiiiiiiiiiiiiii:" + isRowSelected);
-  };
-  const handleCheckboxChange = (rowId) => {
-    console.log("rowId:" + rowId);
-    setCheckedRows((prevCheckedRows) => ({
-      ...prevCheckedRows,
-      [rowId]: !prevCheckedRows[rowId],
-    }));
-  };
-  const isRowChecked = (rowId) => Boolean(checkedRows[rowId]);
-  console.log("checkedRows:" + JSON.stringify(checkedRows));
-
   const handleActive = (row) => {
     const isRowSelected = selectedOperators.some(
       (opertor) => opertor.id === row.id
@@ -241,13 +225,20 @@ const SettingModal = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  CUSTOMER BILLED BY: AREA ID: ENABLE CUSTOMER COLLECTION:
-                  CUSTOMER PORTAL CONFIG: BILLED BY: MINIMUM ONLINE TOPUP
-                  AMOUNT:
-                  {/* {cellProps.row.original.setting.Customer Billed By} */}
-                </Link>
+              <h5
+                className="font-size-14 mb-1"
+                style={{
+                  maxWidth: 200,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {/* <Link className="text-dark" to="#"> */}
+                CUSTOMER BILLED BY: AREA ID: ENABLE CUSTOMER COLLECTION:
+                CUSTOMER PORTAL CONFIG: BILLED BY: MINIMUM ONLINE TOPUP AMOUNT:
+                {/* {cellProps.row.original.setting.Customer Billed By} */}
+                {/* </Link> */}
               </h5>
             </>
           );
@@ -346,132 +337,32 @@ const SettingModal = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  CUSTOMER BILLED BY: AREA ID: ENABLE CUSTOMER COLLECTION:
-                  CUSTOMER PORTAL CONFIG: BILLED BY: MINIMUM ONLINE TOPUP
-                  AMOUNT:
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-    ],
-    []
-  );
-
-  const operSettingColumn = useMemo(
-    () => [
-      {
-        Header: "#",
-        disableFilters: true,
-        filterable: true,
-        Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
-
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {reverseIndex}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-
-      {
-        Header: "Enabled",
-        // accessor: "name",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
               <h5
+                className="font-size-14 mb-1"
                 style={{
                   maxWidth: 200,
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
                 }}
-                className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  toggleViewModal(userData);
-                }}
               >
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.name}
-                </Link>
+                {/* <Link className="text-dark" to="#"> */}
+                CUSTOMER BILLED BY: AREA ID: ENABLE CUSTOMER COLLECTION:
+                CUSTOMER PORTAL CONFIG: BILLED BY: MINIMUM ONLINE TOPUP AMOUNT:
+                {/* </Link> */}
               </h5>
             </>
           );
         },
       },
       {
-        Header: "Setting Name",
-        // accessor: "login",
-        filterable: true,
+        Header: "..",
         Cell: (cellProps) => {
           return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.username}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Description",
-        // accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.status}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Note",
-        // accessor: "type",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.status}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "SetData",
-        // accessor: "type",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.status}
-                </Link>
-              </h5>
-            </>
+            <i
+              className="dripicons-tag-delete"
+              onClick={() => handleRemove(cellProps.row.original)}
+            />
           );
         },
       },
@@ -655,6 +546,10 @@ const SettingModal = (props) => {
                   margin: "30px 0px",
                 }}
               >
+                {console.log(
+                  "selectedOperators after select from 1st table: " +
+                    JSON.stringify(selectedOperators)
+                )}
                 <Col lg={12}>
                   <TableContainer
                     isPagination={true}

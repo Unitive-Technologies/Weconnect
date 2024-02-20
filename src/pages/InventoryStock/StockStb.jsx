@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { Card, CardBody, Col, Row } from "reactstrap";
+import { Card, CardBody, Col, Row, Spinner } from "reactstrap";
 import TableContainer from "../../components/Common/TableContainer";
 import EditStb from "./EditStb";
 import AddStockStb from "./AddStockStb";
@@ -16,6 +16,7 @@ import DeallotStb from "./DeallottedStb";
 const StockStb = (props) => {
   const {
     stockstb,
+    loading,
     tableActions,
     stocksccastype,
     stockscwarehouse,
@@ -507,41 +508,51 @@ const StockStb = (props) => {
         toggle={handleDeallottedStb}
         selectedAllottedStbs={selectedAllottedStbs}
       />
-      <Row>
-        <Col lg="12">
-          <Card>
-            <CardBody>
-              <TableContainer
-                isPagination={true}
-                columns={columns}
-                data={stockstb}
-                isGlobalFilter={true}
-                isAddRegionalOffice={true}
-                isShowTableActionButtons={true}
-                isShowingPageLength={true}
-                tableActions={tableActions}
-                customPageSize={50}
-                tableClass="table align-middle table-nowrap table-hover"
-                theadClass="table-light"
-                paginationDiv="col-sm-12 col-md-7"
-                pagination="pagination pagination-rounded justify-content-end mt-4"
-                // handleRowClick={(row) => {
-                //   toggleEditStb(row);
-                // }}
-                handleRowClick={(row) => {
-                  getFilteredHandleRowClicks(row);
-                }}
-              />
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
+      {loading ? (
+        <React.Fragment>
+          <Spinner
+            color="primary"
+            className="position-absolute top-50 start-50"
+          />
+        </React.Fragment>
+      ) : (
+        <Row>
+          <Col lg="12">
+            <Card>
+              <CardBody>
+                <TableContainer
+                  isPagination={true}
+                  columns={columns}
+                  data={stockstb}
+                  isGlobalFilter={true}
+                  isAddRegionalOffice={true}
+                  isShowTableActionButtons={true}
+                  isShowingPageLength={true}
+                  tableActions={tableActions}
+                  customPageSize={50}
+                  tableClass="table align-middle table-nowrap table-hover"
+                  theadClass="table-light"
+                  paginationDiv="col-sm-12 col-md-7"
+                  pagination="pagination pagination-rounded justify-content-end mt-4"
+                  // handleRowClick={(row) => {
+                  //   toggleEditStb(row);
+                  // }}
+                  handleRowClick={(row) => {
+                    getFilteredHandleRowClicks(row);
+                  }}
+                />
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      )}
     </React.Fragment>
   );
 };
 
 StockStb.propTypes = {
   stockstb: PropTypes.array,
+  loading: PropTypes.bool,
   tableActions: PropTypes.array,
   stocksccastype: PropTypes.array,
   stockscwarehouse: PropTypes.array,

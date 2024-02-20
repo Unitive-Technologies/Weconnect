@@ -24,7 +24,7 @@ import {
   allotPairing as onAllotPairing,
   getInventoryAllottedPairing as onGetInventoryAllottedParing,
 } from "/src/store/inventoryAllotted/actions";
-import axios from "axios";
+import { getResponse } from "../../helpers/api_helper";
 
 function AllottedPairing(props) {
   const {
@@ -47,48 +47,24 @@ function AllottedPairing(props) {
 
   useEffect(() => {
     console.log("Selected branch id: ", branch_id);
-    const fetchData = async () => {
-      try {
-        const token = "Bearer " + localStorage.getItem("temptoken");
-        const response = await axios.get(
-          `${baseUrl}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=${parseInt(
-            branch_id
-          )}&filter[type]=2&vr=web1.0`,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
-        console.log("response data: ", response.data.data);
-        setAllotteddistributor(response.data.data);
-      } catch (error) {
-        console.error("Error fetching distributor data:", error);
-      }
-    };
-    fetchData();
+    getResponse(
+      `${baseUrl}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=${parseInt(
+        branch_id
+      )}&filter[type]=2&vr=web1.0`
+    ).then((response) => {
+      console.log("distributor response data: ", response.data);
+      setAllotteddistributor(response.data.data);
+    });
   }, [branch_id]);
 
   useEffect(() => {
     console.log("Selected distributor id: ", distributor_id);
-    const fetchData = async () => {
-      try {
-        const token = "Bearer " + localStorage.getItem("temptoken");
-        const response = await axios.get(
-          `${baseUrl}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=${branch_id}&filter[distributor_id]=${distributor_id}&filter[type]=3&vr=web1.0`,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
-        console.log("response data: ", response.data.data);
-        setAllottedlco(response.data.data);
-      } catch (error) {
-        console.error("Error fetching distributor data:", error);
-      }
-    };
-    fetchData();
+    getResponse(
+      `${baseUrl}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=${branch_id}&filter[distributor_id]=${distributor_id}&filter[type]=3&vr=web1.0`
+    ).then((response) => {
+      console.log("lco response data: ", response.data.data);
+      setAllottedlco(response.data.data);
+    });
   }, [distributor_id]);
 
   const handlePairingSelection = (row) => {
@@ -285,7 +261,7 @@ function AllottedPairing(props) {
           }}
         >
           <Row>
-            <Col lg={4}>
+            <Col lg={3}>
               <div className="mb-3">
                 <Label className="form-label">
                   User Type<span style={{ color: "red" }}>*</span>

@@ -324,26 +324,32 @@ const RegionalOfficeList = (props) => {
 
   return (
     <React.Fragment>
-      <ViewRegionalOfficeModal
-        isOpen={viewRegionalOffice}
-        toggleViewRegionalOffice={toggleViewRegionalOffice}
-        resetSelection={resetSelection}
-        regionalOffData={regOffData}
-        setViewRegionalOffice={setViewRegionalOffice}
-        selectedRowId={selectedRowId}
-        phaseList={phaseList}
-        statusList={statusList}
-      />
-      <AddRegionalOfficeModal
-        isOpen={showRegionalOffice}
-        toggleAddRegionalOffice={toggleAddRegionalOffice}
-        phaseList={phaseList}
-        statusList={statusList}
-      />
-      <UploadRegionalOfficeModal
-        isOpen={showUploadRegionalOffice}
-        handleUploadRegionalOffice={handleUploadRegionalOffice}
-      />
+      {viewRegionalOffice && (
+        <ViewRegionalOfficeModal
+          isOpen={viewRegionalOffice}
+          toggleViewRegionalOffice={toggleViewRegionalOffice}
+          resetSelection={resetSelection}
+          regionalOffData={regOffData}
+          setViewRegionalOffice={setViewRegionalOffice}
+          selectedRowId={selectedRowId}
+          phaseList={phaseList}
+          statusList={statusList}
+        />
+      )}
+      {showRegionalOffice && (
+        <AddRegionalOfficeModal
+          isOpen={showRegionalOffice}
+          toggleAddRegionalOffice={toggleAddRegionalOffice}
+          phaseList={phaseList}
+          statusList={statusList}
+        />
+      )}
+      {showUploadRegionalOffice && (
+        <UploadRegionalOfficeModal
+          isOpen={showUploadRegionalOffice}
+          handleUploadRegionalOffice={handleUploadRegionalOffice}
+        />
+      )}
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}

@@ -28,6 +28,8 @@ const ViewDistributorModal = (props) => {
     setViewDistributor,
     distributorsPhase,
     distributorsStatus,
+    resetSelection,
+    selectedRowId,
   } = props;
   // console.log("distributor in viewuser modal:" + JSON.stringify(distributor));
   const dispatch = useDispatch();
@@ -46,7 +48,7 @@ const ViewDistributorModal = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      id: (distributor && distributor.id) || "",
+      // id: (distributor && distributor.id) || "",
       name: (distributor && distributor.name) || "",
       code: (distributor && distributor.code) || "",
       addr: (distributor && distributor.addr) || "",
@@ -137,7 +139,7 @@ const ViewDistributorModal = (props) => {
       const token = "Bearer " + localStorage.getItem("temptoken");
 
       const response = await axios.get(
-        `${API_URL}/operator-account/${distributor.id}?expand=logo,type_lbl,mso_lbl,branch_lbl,distributor_lbl,igst,cgst,sgst,name,balance,credit,debit,balance_h,credit_h,debit_h&vr=web1.0`,
+        `${API_URL}/operator-account/${selectedRowId}?expand=logo,type_lbl,mso_lbl,branch_lbl,distributor_lbl,igst,cgst,sgst,name,balance,credit,debit,balance_h,credit_h,debit_h&vr=web1.0`,
         {
           headers: {
             Authorization: token,
@@ -157,7 +159,9 @@ const ViewDistributorModal = (props) => {
       const token = "Bearer " + localStorage.getItem("temptoken");
       // console.log("Dates: " + fromDate, toDate);
       const response = await axios.get(
-        `${API_URL}/operator-account?expand=created_by_lbl,type_lbl,cr_operator_lbl,dr_operator_lbl,credited_by,igst,cgst,sgst,name,balance,credit,debit,balance_h,credit_h,debit_h&filter[operator_id]=${distributor.id}&filter[wallet_type]=2&filter[FRM_created_at]=${fromDate}&filter[TO_created_at]=${toDate}&page=1&per-page=50&vr=web1.0`,
+        `${API_URL}/operator-account?expand=created_by_lbl,type_lbl,cr_operator_lbl,dr_operator_lbl,credited_by,igst,cgst,sgst,name,balance,credit,debit,balance_h,credit_h,debit_h&filter[operator_id]=${parseInt(
+          selectedRowId
+        )}&filter[wallet_type]=2&filter[FRM_created_at]=${fromDate}&filter[TO_created_at]=${toDate}&page=1&per-page=50&vr=web1.0`,
         {
           headers: {
             Authorization: token,
@@ -179,9 +183,37 @@ const ViewDistributorModal = (props) => {
     }
   }, [distributor]);
 
+  const handleCancel = () => {
+    setShowEditDistributor(false);
+    resetSelection();
+    toggleViewModal();
+  };
+
   const handleClose = () => {
     setViewDistributor(false);
     setShowEditDistributor(false);
+  };
+
+  const handleSearch = async (e) => {
+    // e.preventDefault();
+    // console.log("From Date:", fromDate);
+    // console.log("To Date:", toDate);
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/operator-account?expand=created_by_lbl,type_lbl,cr_operator_lbl,dr_operator_lbl,credited_by,igst,cgst,sgst,name,balance,credit,debit,balance_h,credit_h,debit_h&filter[operator_id]=${selectedRowId}&filter[wallet_type]=2&filter[FRM_created_at]=${fromDate}&filter[TO_created_at]=${toDate}&page=1&per-page=50&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setAccountDetails(response.data.data);
+      console.log("response in useEffect:" + JSON.stringify(response));
+    } catch (error) {
+      console.error("Error fetching bouquet data:", error);
+    }
   };
   // console.log("selectedRowData:" + JSON.stringify(selectedRowData));
   // console.log(
@@ -199,15 +231,16 @@ const ViewDistributorModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggleViewModal}
+      toggle={handleCancel}
     >
       {!showEditDistributor ? (
         <>
-          <ModalHeader toggle={toggleViewModal} tag="h4" position="relative">
-            <h4>
-              View - {distributor.name}, Balance: {selectedRowData.balance},
-              Credit Limit: {selectedRowData.credit_limit}
-            </h4>
+          <ModalHeader toggle={handleCancel} tag="h4" position="relative">
+            {/* <h4> */}
+            View - {distributor && distributor.name}, Balance:{" "}
+            {selectedRowData.balance}, Credit Limit:{" "}
+            {selectedRowData.credit_limit}
+            {/* </h4> */}
           </ModalHeader>
           <Link
             style={{
@@ -448,7 +481,9 @@ const ViewDistributorModal = (props) => {
                     setToDate={setToDate}
                     fromDate={fromDate}
                     toDate={toDate}
+                    distributor={distributor}
                     selectedRowData={selectedRowData}
+                    handleSearch={handleSearch}
                   />
                 </Col>
               </Row>
@@ -470,6 +505,10 @@ const ViewDistributorModal = (props) => {
 ViewDistributorModal.propTypes = {
   toggleViewModal: PropTypes.func,
   isOpen: PropTypes.bool,
+
+  resetSelection: PropTypes.func,
+  distributor: PropTypes.object,
+  setViewDistributor: PropTypes.func,
 };
 
 export default ViewDistributorModal;

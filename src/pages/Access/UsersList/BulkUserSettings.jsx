@@ -31,16 +31,26 @@ const BulkUserSettings = (props) => {
   const [settings, setSettings] = useState({
     bulk_limit: "",
     allowed_ips: "",
-    enabled_pay_modes: "",
+    enabled_pay_modes: [],
   });
-  const handleChangeSettingValue = (e) => {
-    debugger;
-    console.log("handleChangeSettingValue called");
-    const { name, value } = e.target;
-    console.log(`Setting ${name} to ${value}`);
+  const handleChangeSettingValue = (event) => {
+    const { name, value } = event.target;
+    let updatedValue;
+
+    if (name === "enabled_pay_modes") {
+      // Convert the selected options to an array of IDs
+      const selectedOptions = Array.from(
+        event.target.selectedOptions,
+        (option) => parseInt(option.value)
+      );
+      updatedValue = selectedOptions;
+    } else {
+      updatedValue = value;
+    }
+
     setSettings((prevSettings) => ({
       ...prevSettings,
-      [name]: value,
+      [name]: updatedValue,
     }));
   };
 
@@ -90,17 +100,11 @@ const BulkUserSettings = (props) => {
 
   const isRowChecked = (rowId) => Boolean(checkedRows[rowId]);
   console.log("checkedRows:" + JSON.stringify(checkedRows));
-  const handleSetting = (row) => {
-    console.log("setting row : " + JSON.stringify(row));
-  };
+
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
-      setting: {
-        bulk_limit: "",
-        allowed_ips: "",
-        enabled_pay_modes: [],
-      },
+      settings: settings,
     },
     validationSchema: Yup.object({
       // setting: Yup.object({
@@ -114,12 +118,22 @@ const BulkUserSettings = (props) => {
 
     onSubmit: async (values) => {
       try {
+        const nonEmptySettings = Object.entries(values.settings).reduce(
+          (acc, [key, value]) => {
+            if (value !== "") {
+              acc[key] = value;
+            }
+            return acc;
+          },
+          {}
+        );
+
         const newSetting = {
           ids: selectedUsers.map((user) => user.id),
-          setting: settings,
+          setting: nonEmptySettings,
         };
 
-        console.log("newStatus:", JSON.stringify(newSetting));
+        console.log("newSetting:", JSON.stringify(newSetting));
         const token = "Bearer " + localStorage.getItem("temptoken");
 
         const response = await axios.put(
@@ -133,10 +147,10 @@ const BulkUserSettings = (props) => {
         );
 
         console.log("Axios Response:", response);
+        toggleUserSettings();
         dispatch(onGetUsers());
 
         validation.resetForm();
-        handleBulkInactiveUser();
       } catch (error) {
         console.error("Error in onSubmit:", error);
       }
@@ -148,20 +162,20 @@ const BulkUserSettings = (props) => {
 
   const columns = useMemo(
     () => [
-      {
-        Header: ".",
-        disableFilters: true,
-        filterable: true,
+      // {
+      //   Header: ".",
+      //   disableFilters: true,
+      //   filterable: true,
 
-        Cell: (cellProps) => (
-          <input
-            type="checkbox"
-            disabled
-            checked
-            // onClick={() => handleActive(cellProps.row.original)}
-          />
-        ),
-      },
+      //   Cell: (cellProps) => (
+      //     <input
+      //       type="checkbox"
+      //       disabled
+      //       checked
+      //       // onClick={() => handleActive(cellProps.row.original)}
+      //     />
+      //   ),
+      // },
       {
         Header: "#",
         disableFilters: true,
@@ -441,7 +455,14 @@ const BulkUserSettings = (props) => {
           const settingsObject = cellProps.row.original.setting;
 
           return (
-            <div>
+            <div
+              style={{
+                maxWidth: 200,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               <p>Bulk Limit: {settingsObject["Bulk Limit"]}</p>
               <p>Allowed Client IPs: {settingsObject["Allowed Client IPs"]}</p>
               <p>Pay mode Allowed: {settingsObject["Pay mode Allowed"]}</p>
@@ -462,143 +483,6 @@ const BulkUserSettings = (props) => {
       },
     ],
     []
-  );
-
-  const userSettingColumn = useMemo(
-    () => [
-      // {
-      //   Header: "#",
-      //   disableFilters: true,
-      //   filterable: true,
-      //   disableSortBy: true, // Disable sorting for this column
-      //   Cell: (cellProps) => {
-      //     const totalRows = settingTable.length;
-      //     return (
-      //       <>
-      //         <h5 className="font-size-14 mb-1">
-      //           <Link className="text-dark" to="#">
-      //             {totalRows - cellProps.row.id}
-      //           </Link>
-      //         </h5>
-      //       </>
-      //     );
-      //   },
-      // },
-
-      {
-        Header: "#",
-        // accessor: "name",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <input
-                type="checkbox"
-                onChange={() => {
-                  debugger;
-                  console.log("Clicked the checkbox");
-                  handleCheckboxChange(cellProps.row.original.id);
-                }}
-                checked={isRowChecked(cellProps.row.original.id)}
-              />
-            </>
-          );
-        },
-      },
-      {
-        Header: "Setting Name",
-        // accessor: "login",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.value.label}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Description",
-        // accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.value.description}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Note",
-        // accessor: "type",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.value.comment}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-
-      {
-        Header: "SetData",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              {cellProps.row.original.key === "bulkLimit" ? (
-                <Input
-                  type="text"
-                  name="bulk_limit"
-                  placeholder={cellProps.row.original.placeholder}
-                  onChange={handleChangeSettingValue}
-                  value={settings.bulk_limit}
-                />
-              ) : cellProps.row.original.key === "allowedIps" ? (
-                <Input
-                  type="text"
-                  name="allowed_ips"
-                  placeholder={cellProps.row.original.placeholder}
-                  onChange={handleChangeSettingValue}
-                  value={settings.allowed_ips}
-                />
-              ) : (
-                <Input
-                  name="enabled_pay_modes"
-                  type="select"
-                  placeholder={cellProps.row.original.placeholder}
-                  className="form-select"
-                  onChange={handleChangeSettingValue}
-                  value={settings.enabled_pay_modes}
-                >
-                  <option value="">Select Pay Mode Allowed</option>
-                  {cellProps.row.original.value.data.map((paymode) => (
-                    <option key={paymode.id} value={paymode.id}>
-                      {paymode.name}
-                    </option>
-                  ))}
-                </Input>
-              )}
-            </>
-          );
-        },
-      },
-    ],
-    [settingTable, validation]
   );
 
   useEffect(() => {
@@ -660,7 +544,7 @@ const BulkUserSettings = (props) => {
                 handleRowClick={(row) => {
                   handleActive(row);
                 }}
-                isGlobalFilter={true}
+                // isGlobalFilter={true}
                 isShowingPageLength={true}
                 customPageSize={5}
                 tableClass="table align-middle table-nowrap table-hover"
@@ -697,7 +581,7 @@ const BulkUserSettings = (props) => {
                     isPagination={true}
                     columns={selOperColumn}
                     data={selectedUsers}
-                    isGlobalFilter={selectedUsers ? true : false}
+                    // isGlobalFilter={selectedUsers ? true : false}
                     isShowingPageLength={true}
                     customPageSize={50}
                     tableClass="table align-middle table-nowrap table-hover"
@@ -747,9 +631,11 @@ const BulkUserSettings = (props) => {
                         "...................settingTable:" +
                           JSON.stringify(settingTable)
                       )}
-                      {settingTable.map((row, i) => (
-                        <tr key={i}>
-                          <td>
+                      {settingTable &&
+                        settingTable.map((row, i) => (
+                          <tr key={i}>
+                            <td>{i + 1}</td>
+                            {/* <td>
                             <input
                               type="checkbox"
                               onChange={() => {
@@ -759,49 +645,54 @@ const BulkUserSettings = (props) => {
                               }}
                               checked={isRowChecked(row.id)}
                             />
-                          </td>
-                          <td>{row.value.label}</td>
-                          <td>{row.value.description}</td>
-                          <td>{row.value.comment}</td>
-                          <td>
-                            {row.key === "bulkLimit" ? (
-                              <Input
-                                type="text"
-                                name="bulk_limit"
-                                placeholder={row.placeholder}
-                                onChange={handleChangeSettingValue}
-                                value={settings.bulk_limit}
-                              />
-                            ) : row.key === "allowedIps" ? (
-                              <Input
-                                type="text"
-                                name="allowed_ips"
-                                placeholder={row.placeholder}
-                                onChange={handleChangeSettingValue}
-                                value={settings.allowed_ips}
-                              />
-                            ) : (
-                              <Input
-                                name="enabled_pay_modes"
-                                type="select"
-                                placeholder={row.placeholder}
-                                className="form-select"
-                                onChange={handleChangeSettingValue}
-                                value={settings.enabled_pay_modes}
-                              >
-                                <option value="">
-                                  Select Pay Mode Allowed
-                                </option>
-                                {row.value.data.map((paymode) => (
-                                  <option key={paymode.id} value={paymode.id}>
-                                    {paymode.name}
+                          </td> */}
+                            <td>{row.value && row.value.label}</td>
+                            <td>{row.value && row.value.description}</td>
+                            <td>{row.value && row.value.comment}</td>
+                            <td>
+                              {row.key === "bulkLimit" ? (
+                                <Input
+                                  type="text"
+                                  name="bulk_limit"
+                                  placeholder={row.placeholder}
+                                  onChange={handleChangeSettingValue}
+                                  value={settings.bulk_limit}
+                                />
+                              ) : row.key === "allowedIps" ? (
+                                <Input
+                                  type="text"
+                                  name="allowed_ips"
+                                  placeholder={row.placeholder}
+                                  onChange={handleChangeSettingValue}
+                                  value={settings.allowed_ips}
+                                />
+                              ) : (
+                                <Input
+                                  name="enabled_pay_modes"
+                                  type="select"
+                                  placeholder={row.placeholder}
+                                  className="form-select"
+                                  onChange={handleChangeSettingValue}
+                                  value={settings.enabled_pay_modes}
+                                  multiple
+                                >
+                                  <option value="">
+                                    Select Pay Mode Allowed
                                   </option>
-                                ))}
-                              </Input>
-                            )}
-                          </td>
-                        </tr>
-                      ))}
+                                  {row.value &&
+                                    row.value.data.map((paymode) => (
+                                      <option
+                                        key={paymode.id}
+                                        value={paymode.id}
+                                      >
+                                        {paymode.name}
+                                      </option>
+                                    ))}
+                                </Input>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
                     </tbody>
                   </Table>
                 </Col>
