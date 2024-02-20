@@ -15,7 +15,7 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
-import { updateRegionalOffice as onUpdateRegionalOffice } from "/src/store/regionaloffice/actions";
+import { getRegionalOffice as onGetRegionalOffices } from "/src/store/regionaloffice/actions";
 import {
   updateDistributors as onUpdateDistributor,
   getDistributors as onGetDistributors,
@@ -60,11 +60,9 @@ const EditDistributorModal = (props) => {
   const { statesList } = useSelector(StatesProperties);
 
   useEffect(() => {
-    if (regOff && !regOff.length) {
-      dispatch(onUpdateRegionalOffice());
-      dispatch(onGetStateUsers());
-    }
-  }, [dispatch, regOff]);
+    dispatch(onGetStateUsers());
+    dispatch(onGetRegionalOffices());
+  }, [dispatch]);
 
   const handleChangeUploadFile = (e) => {
     const file = e.target.files[0];
@@ -158,7 +156,7 @@ const EditDistributorModal = (props) => {
       // id: (distributor && distributor.id) || "",
       name: (distributor && distributor.name) || "",
       code: (distributor && distributor.code) || "",
-      branch_lbl: (distributor && distributor.branch_lbl) || "",
+      branch_lbl: (distributor && distributor.branch_id) || "",
       addr1: (distributor && distributor.addr1) || "",
       addr2: (distributor && distributor.addr2) || "",
       addr3: (distributor && distributor.addr3) || "",
@@ -212,6 +210,7 @@ const EditDistributorModal = (props) => {
     }),
     onSubmit: async (values) => {
       try {
+        console.log("name in initially:" + values.name);
         const updateDistributor = {
           id: distributor.id,
           name: values["name"],
@@ -414,6 +413,7 @@ const EditDistributorModal = (props) => {
                 ) : null}
               </div>
             </Col>
+            {console.log("name validationvalue:" + validation.values.name)}
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Contact Person</Label>
@@ -452,8 +452,8 @@ const EditDistributorModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.branch_lbl || ""}
                 >
-                  <option value="">{validation.values.branch_lbl}</option>
-
+                  {/* <option value="">{validation.values.branch_lbl}</option> */}
+                  {console.log("regoff:" + JSON.stringify(regOff))}
                   {regOff.map((item) => (
                     <option key={item.id} value={item.code}>
                       {item.name}
