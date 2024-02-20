@@ -241,13 +241,20 @@ const SettingModal = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  CUSTOMER BILLED BY: AREA ID: ENABLE CUSTOMER COLLECTION:
-                  CUSTOMER PORTAL CONFIG: BILLED BY: MINIMUM ONLINE TOPUP
-                  AMOUNT:
-                  {/* {cellProps.row.original.setting.Customer Billed By} */}
-                </Link>
+              <h5
+                className="font-size-14 mb-1"
+                style={{
+                  maxWidth: 200,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {/* <Link className="text-dark" to="#"> */}
+                CUSTOMER BILLED BY: AREA ID: ENABLE CUSTOMER COLLECTION:
+                CUSTOMER PORTAL CONFIG: BILLED BY: MINIMUM ONLINE TOPUP AMOUNT:
+                {/* {cellProps.row.original.setting.Customer Billed By} */}
+                {/* </Link> */}
               </h5>
             </>
           );
@@ -346,14 +353,32 @@ const SettingModal = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  CUSTOMER BILLED BY: AREA ID: ENABLE CUSTOMER COLLECTION:
-                  CUSTOMER PORTAL CONFIG: BILLED BY: MINIMUM ONLINE TOPUP
-                  AMOUNT:
-                </Link>
+              <h5
+                className="font-size-14 mb-1"
+                style={{
+                  maxWidth: 200,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {/* <Link className="text-dark" to="#"> */}
+                CUSTOMER BILLED BY: AREA ID: ENABLE CUSTOMER COLLECTION:
+                CUSTOMER PORTAL CONFIG: BILLED BY: MINIMUM ONLINE TOPUP AMOUNT:
+                {/* </Link> */}
               </h5>
             </>
+          );
+        },
+      },
+      {
+        Header: "..",
+        Cell: (cellProps) => {
+          return (
+            <i
+              className="dripicons-tag-delete"
+              onClick={() => handleRemove(cellProps.row.original)}
+            />
           );
         },
       },
@@ -655,6 +680,10 @@ const SettingModal = (props) => {
                   margin: "30px 0px",
                 }}
               >
+                {console.log(
+                  "selectedOperators after select from 1st table: " +
+                    JSON.stringify(selectedOperators)
+                )}
                 <Col lg={12}>
                   <TableContainer
                     isPagination={true}
