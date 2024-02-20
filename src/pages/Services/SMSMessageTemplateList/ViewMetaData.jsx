@@ -21,38 +21,31 @@ import { useSelector, useDispatch } from "react-redux";
 const ViewMetaData = ({
   data,
   updateList,
-  handleUpdateCasList,
-  channelListCascode,
-  showEditChannel,
+  showEditSMS
 }) => {
   console.log("Cas List Data" + JSON.stringify(data));
 
-<<<<<<< Updated upstream
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
-=======
-  const updateCasList = () => {
-    if (!casSelection || !casCode || !serviceId) {
+  const updateMetaData = () => {
+    if (!type || !field || !label) {
       return;
     }
 
     const newItem = {
-      cas_id: data.length + 1,
-      cas_lbl: casSelection,
-      cascode: casCode,
-      serviceid: serviceId,
+      id: data.length + 1,
+      type: type, // Assign the selected type
+      field: field, // Assign the entered field
+      label: label, // Assign the entered label
     };
->>>>>>> Stashed changes
 
     const updatedData = [...data, newItem];
     console.log("Updated Data in CasList" + updatedData);
     updateList(updatedData);
 
-    setCasSelection("");
-    setCasCode("");
-    setServiceId("");
+    setType("");
+    setField("");
+    setLabel("");
   };
+
 
   const selectChannelState = (state) => state.channelList;
   const ChannelProperties = createSelector(
@@ -62,14 +55,11 @@ const ViewMetaData = ({
     })
   );
 
-<<<<<<< Updated upstream
-  // const casData = [];
-=======
   const { casSource } = useSelector(ChannelProperties);
 
-  const [casSelection, setCasSelection] = useState("");
-  const [casCode, setCasCode] = useState("");
-  const [serviceId, setServiceId] = useState("");
+  const [type, setType] = useState("");
+  const [field, setField] = useState("");
+  const [label, setLabel] = useState("");
 
   const deleteCasList = (index) => {
     const list = [...data];
@@ -77,7 +67,6 @@ const ViewMetaData = ({
     updateList(list);
   };
 
->>>>>>> Stashed changes
   return (
     <Row>
       <Col
@@ -92,20 +81,16 @@ const ViewMetaData = ({
             <Input
               name="casSelection"
               type="select"
-              placeholder="Select CAS"
+              placeholder="Select type"
               className="form-select"
-              value={casSelection}
+              value={type}
               // onChange={(e) => setCasSelection(e.target.value)}
-              onChange={(e) => setCasSelection(e.target.value)}
-              disabled={!data}
+              onChange={(e) => setType(e.target.value)}
+              disabled={!showEditSMS}
             >
-              <option value="">Select cascode</option>
-              {channelListCascode &&
-                channelListCascode.map((options) => (
-                  <option key={options.id} value={options.name}>
-                    {options.name}
-                  </option>
-                ))}
+              <option value="">Select type</option>
+              <option value="int">INTEGER</option>
+              <option value="str">STRING</option>
             </Input>
           </div>
         </Col>
@@ -120,48 +105,24 @@ const ViewMetaData = ({
             <div className="mb-3">
               {/* <TODO>Add handlechange and update cascode</TODO> */}
               <Input
-<<<<<<< Updated upstream
-                name="type"
-                type="select"
-                placeholder="Select type"
-                className="form-select"
-                // disabled={!showEditChannel}
-                onChange={validation.handleChange}
-                onBlur={validation.handleBlur}
-                value={validation.values.type || ""}
-              >
-                <option value="104">Select CAS</option>
-                <option value="105">FTA</option>
-              </Input>
-              {validation.touched.type && validation.errors.type ? (
-                <FormFeedback type="invalid">
-                  {validation.errors.type}
-                </FormFeedback>
-              ) : null}
-            </div>
-          </Col>
-          <Col lg={3}>
-            <div className="mb-3">
-              <Input
-                name="field"
-=======
-                name="casCode"
->>>>>>> Stashed changes
+                name="Enter field"
                 type="text"
-                placeholder="CAS Code"
-                value={casCode}
-                onChange={(e) => setCasCode(e.target.value)}
+                placeholder="Enter field"
+                value={field}
+                onChange={(e) => setField(e.target.value)}
+                disabled={!showEditSMS}
               />
             </div>
           </Col>
           <Col lg={5} style={{ marginRight: "20px" }}>
             <div className="mb-3">
               <Input
-                name="serviceId"
+                name="Enter label"
                 type="text"
-                placeholder="service id"
-                value={serviceId}
-                onChange={(e) => setServiceId(e.target.value)}
+                placeholder="Enter label"
+                value={label}
+                disabled={!showEditSMS}
+                onChange={(e) => setLabel(e.target.value)}
               />
             </div>
           </Col>
@@ -170,7 +131,7 @@ const ViewMetaData = ({
               <button
                 type="button"
                 className="btn btn-primary "
-                onClick={updateCasList}
+                onClick={updateMetaData}
               >
                 <i
                   className="bx bx-right-arrow-alt"
@@ -189,9 +150,9 @@ const ViewMetaData = ({
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>CAS</th>
-                    <th>CAS CODE</th>
-                    <th>SERVICE ID</th>
+                    <th>Type</th>
+                    <th>Field</th>
+                    <th>Label</th>
                     <th>$</th>
                   </tr>
                 </thead>
@@ -199,10 +160,10 @@ const ViewMetaData = ({
                   {data &&
                     data.map((item, index) => (
                       <tr key={index}>
-                        <th scope="row">{item.cas_id}</th>
-                        <td>{item.cas_lbl}</td>
-                        <td>{item.cascode}</td>
-                        <td>{item.serviceid}</td>
+                        <th scope="row">{item.id}</th>
+                        <td>{item.type}</td>
+                        <td>{item.field}</td>
+                        <td>{item.label}</td>
                         <td>
                           <h5>
                             <Link
