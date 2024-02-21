@@ -62,7 +62,7 @@ function AllottedPairing(props) {
     getResponse(
       `${baseUrl}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=${branch_id}&filter[distributor_id]=${distributor_id}&filter[type]=3&vr=web1.0`
     ).then((response) => {
-      console.log("lco response data: ", response.data.data);
+      // console.log("lco response data: ", response.data.data);
       setAllottedlco(response.data.data);
     });
   }, [distributor_id]);

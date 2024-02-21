@@ -23,6 +23,8 @@ import {
 import ViewMatrix from "./ViewMatrix";
 import AddNewMatrix from "./AddNewMatrix";
 import { resetSection } from "redux-form";
+import ShowHistoryModal from "./ShowHistoryModal";
+
 
 const ViewSubCategoryList = (props) => {
   const {
@@ -38,6 +40,13 @@ const ViewSubCategoryList = (props) => {
   const [timeArray, setTimeArray] = useState([]);
   const dispatch = useDispatch();
   const [showEditSubCategory, setShowEditSubCategory] = useState(false);
+
+  const [showHistory, setShowHistory] = useState(false);
+
+  const toggleHistoryModal = () => {
+    setShowHistory(!showHistory);
+  };
+
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -91,6 +100,13 @@ const ViewSubCategoryList = (props) => {
 
   return (
     <>
+      {showHistory && (
+        <ShowHistoryModal
+          isOpen={showHistory}
+          toggleHistoryModal={toggleHistoryModal}
+          complaintsubcategory={complaintsubcategory}
+        />
+      )}
       <Modal
         isOpen={isOpen}
         role="dialog"
@@ -103,26 +119,38 @@ const ViewSubCategoryList = (props) => {
       >
         <ModalHeader toggle={handleCancel} tag="h4">
           {!showEditSubCategory
-            ? `View ${
-                (complaintsubcategory && complaintsubcategory.name) || ""
-              }`
-            : `Edit ${
-                (complaintsubcategory && complaintsubcategory.name) || ""
-              }`}
+            ? `View ${(complaintsubcategory && complaintsubcategory.name) || ""
+            }`
+            : `Edit ${(complaintsubcategory && complaintsubcategory.name) || ""
+            }`}
         </ModalHeader>
         {!showEditSubCategory && (
-          <Link
-            style={{
-              position: "absolute",
-              marginLeft: "92%",
-              marginTop: "1%",
-            }}
-            to="#!"
-            className="btn btn-light me-1"
-            onClick={() => setShowEditSubCategory(true)}
-          >
-            <i className="mdi mdi-pencil-outline"></i>
-          </Link>
+          <>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "92%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowHistory(true)}
+            >
+              <i className="dripicons-briefcase" />
+            </Link>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "87%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowEditSubCategory(true)}
+            >
+              <i className="mdi mdi-pencil-outline"></i>
+            </Link>
+          </>
         )}
         <ModalBody>
           <Form
@@ -241,7 +269,7 @@ const ViewSubCategoryList = (props) => {
                     )} */}
                   </Input>
                   {validation.touched.showonweb &&
-                  validation.errors.showonweb ? (
+                    validation.errors.showonweb ? (
                     <FormFeedback type="invalid">
                       {validation.errors.showonweb}
                     </FormFeedback>
@@ -263,14 +291,14 @@ const ViewSubCategoryList = (props) => {
                     value={validation.values.description || ""}
                     invalid={
                       validation.touched.description &&
-                      validation.errors.description
+                        validation.errors.description
                         ? true
                         : false
                     }
                     disabled={!showEditSubCategory}
                   />
                   {validation.touched.description &&
-                  validation.errors.description ? (
+                    validation.errors.description ? (
                     <FormFeedback type="invalid">
                       {validation.errors.description}
                     </FormFeedback>

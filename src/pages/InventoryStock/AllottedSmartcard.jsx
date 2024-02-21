@@ -35,8 +35,6 @@ function AllottedSmrtcard(props) {
     allottedoperatorlist,
   } = props;
   const [usertype, setUsertype] = useState("");
-  const [selectedSmartcardlist, setSelectedSmartcardlist] = useState([]);
-  const [isCheckedSc, setIsCheckedSc] = useState(false);
   const [branch_id, setBranch_id] = useState(""); //Regional office id
   const [distributor_id, setDistributor_id] = useState(""); //Distributor id
   const [operator, setOperator] = useState(""); //Lco id
@@ -63,7 +61,7 @@ function AllottedSmrtcard(props) {
     getResponse(
       `${baseUrl}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=${branch_id}&filter[distributor_id]=${distributor_id}&filter[type]=3&vr=web1.0`
     ).then((response) => {
-      console.log("lco response data: ", response.data.data);
+      // console.log("lco response data: ", response.data.data);
       setAllottedlco(response.data.data);
     });
   }, [distributor_id]);
@@ -76,31 +74,12 @@ function AllottedSmrtcard(props) {
     setAllottedlco([]);
   }, [usertype]);
 
-  const handleSmartcardSelection = (row) => {
-    setIsCheckedSc(true);
-    const isSelected = selectedSmartcardlist.some(
-      (selectedSmartcard) => selectedSmartcard.id === row.id
-    );
-    if (isSelected) {
-      const updatedSelectedSmartcardlist = selectedSmartcardlist.filter(
-        (selectedSmartcard) => selectedSmartcard.id !== row.id
-      );
-      setSelectedSmartcardlist(updatedSelectedSmartcardlist);
-    } else {
-      setSelectedSmartcardlist([...selectedSmartcardlist, row]);
-    }
-  };
-
-  useEffect(() => {
-    console.log("Selected Smartcardlist: ", selectedSmartcardlist);
-  }, [selectedSmartcardlist]);
-
-  const handleDeleteSmartcard = (index) => {
-    const updatedSelectedSmartcardlist = selectedSmartcardlist.filter(
-      (pair, i) => i !== index
-    );
-    setSelectedSmartcardlist(updatedSelectedSmartcardlist);
-  };
+  // const handleDeleteSmartcard = (index) => {
+  //   const updatedSelectedSmartcardlist = selectedSmartcardlist.filter(
+  //     (pair, i) => i !== index
+  //   );
+  //   setSelectedSmartcardlist(updatedSelectedSmartcardlist);
+  // };
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -112,9 +91,6 @@ function AllottedSmrtcard(props) {
     },
     validationSchema: Yup.object({
       usertype: Yup.string().required("Select user Type"),
-      // branch_id: Yup.string().required("Select Regional office"),
-      // distributor_id: Yup.string().required("Select distributor"),
-      // operator: Yup.string().required("Select lco"),
     }),
 
     onSubmit: (values) => {
@@ -130,14 +106,13 @@ function AllottedSmrtcard(props) {
       const newAllotted = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         operator_id: id,
-        smartcard_ids: selectedSmartcardlist.map((row) => row.id),
+        smartcard_ids: allottedsmartcardlist.map((row) => row.id),
       };
       console.log("New allotted smartcard: " + JSON.stringify(newAllotted));
       dispatch(onAllotSmartcard(newAllotted));
       dispatch(onGetInventoryAllottedSmartcard());
       validation.resetForm();
       setUsertype("");
-      setSelectedSmartcardlist([]);
       setBranch_id("");
       setDistributor_id("");
       setOperator("");
@@ -159,12 +134,7 @@ function AllottedSmrtcard(props) {
         Cell: (cellProps) => {
           return (
             <>
-              <input
-                type="checkbox"
-                // onChange={() =>
-                //   handleSmartcardSelection(cellProps.row.original)
-                // }
-              />
+              <input type="checkbox" />
             </>
           );
         },
@@ -203,40 +173,6 @@ function AllottedSmrtcard(props) {
         },
       },
       {
-        Header: "CAS",
-        accessor: "cas_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">{cellProps.row.original.cas_lbl}</p>
-          );
-        },
-      },
-      {
-        Header: "Brand",
-        accessor: "brand_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.brand_lbl}
-            </p>
-          );
-        },
-      },
-      {
-        Header: "Status",
-        accessor: "status_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.status_lbl}
-            </p>
-          );
-        },
-      },
-      {
         Header: "Alloted to",
         accessor: "operator_lbl",
         filterable: true,
@@ -255,17 +191,12 @@ function AllottedSmrtcard(props) {
   const handleModalToggle = () => {
     toggle();
     setUsertype("");
-    setSelectedSmartcardlist([]);
     setBranch_id("");
     setDistributor_id("");
     setOperator("");
     setAllotteddistributor([]);
     setAllottedlco([]);
   };
-
-  useEffect(() => {
-    console.log("Selected smartcard list", selectedSmartcardlist);
-  }, [selectedSmartcardlist]);
 
   return (
     <Modal
@@ -575,41 +506,6 @@ function AllottedSmrtcard(props) {
                     pagination="pagination pagination-rounded justify-content-end mt-4"
                     handleRowClick={(row) => handleSmartcardSelection(row)}
                   />
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Card>
-                <CardBody>
-                  <div className="table-responsive">
-                    <Table className="table mb-0">
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>Smartcard No.</th>
-                          <th>$</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {selectedSmartcardlist.map((pair, index) => (
-                          <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{pair.smartcardno}</td>
-                            <td>
-                              <button
-                                type="button"
-                                onClick={() => handleDeleteSmartcard(index)}
-                              >
-                                <i className="mdi mdi-delete"></i>{" "}
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </Table>
-                  </div>
                 </CardBody>
               </Card>
             </Col>

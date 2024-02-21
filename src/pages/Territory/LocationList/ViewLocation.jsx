@@ -22,6 +22,7 @@ import {
   getLocation as onGetLocation,
   // getSingleLocation as onGetSingleLocation,
 } from "/src/store/actions";
+import ShowHistoryModal from "./ShowHistoryModal";
 
 const ViewLocation = (props) => {
   const {
@@ -34,6 +35,12 @@ const ViewLocation = (props) => {
   } = props;
   const dispatch = useDispatch();
   const [showEditLocation, setShowEditLocation] = useState(false);
+
+  const [showHistory, setShowHistory] = useState(false);
+
+  const toggleHistoryModal = () => {
+    setShowHistory(!showHistory);
+  };
 
   console.log("Single location: ", JSON.stringify(location));
   const options = lcoonlocation.map((option) => ({
@@ -95,158 +102,181 @@ const ViewLocation = (props) => {
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      role="dialog"
-      autoFocus={true}
-      centered={true}
-      className="exampleModal"
-      tabIndex="-1"
-      toggle={handleCancel}
-      size="xl"
-    >
-      <ModalHeader toggle={handleCancel} tag="h4">
-        {!showEditLocation
-          ? `View ${(location && location.name) || ""}`
-          : `Edit ${(location && location.name) || ""}`}
-      </ModalHeader>
-      {!showEditLocation && (
-        <Link
-          style={{
-            position: "absolute",
-            marginLeft: "92%",
-            marginTop: "1%",
-          }}
-          to="#!"
-          className="btn btn-light me-1"
-          onClick={() => setShowEditLocation(true)}
-        >
-          <i className="mdi mdi-pencil-outline"></i>
-        </Link>
+    <>
+      {showHistory && (
+        <ShowHistoryModal
+          isOpen={showHistory}
+          toggleHistoryModal={toggleHistoryModal}
+          location={location}
+        />
       )}
-      <ModalBody>
-        <Form
-          onSubmit={(e) => {
-            e.preventDefault();
-            validation.handleSubmit();
-            return false;
-          }}
-        >
-          <Row>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">Location Name</Label>
-                <Input
-                  name="name"
-                  type="text"
-                  placeholder="Enter location name"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.name || ""}
-                  disabled={!showEditLocation}
-                  invalid={
-                    validation.touched.name && validation.errors.name
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.name && validation.errors.name ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.name}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">Select LCO</Label>
-
-                <Input
-                  name="operator_id"
-                  type="select"
-                  placeholder="Select lco"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.operator_id || ""}
-                  disabled={!showEditLocation}
-                >
-                  <option value="">Select lco</option>
-                  {lcoonlocation.map((options) => (
-                    <option key={options.id} value={options.id}>
-                      {options.name}
-                    </option>
-                  ))}
-                </Input>
-                {validation.touched.operator_id &&
-                validation.errors.operator_id ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.operator_id}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">Status</Label>
-                <Input
-                  name="status"
-                  type="select"
-                  placeholder="Select Status"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.status || ""}
-                  disabled={!showEditLocation}
-                >
-                  <option value="">Select Status</option>
-                  {status.map((options) => (
-                    <option key={options.id} value={options.id}>
-                      {options.name}
-                    </option>
-                  ))}
-                </Input>
-                {validation.touched.status && validation.errors.status ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.status}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-          </Row>
-          {showEditLocation && (
+      <Modal
+        isOpen={isOpen}
+        role="dialog"
+        autoFocus={true}
+        centered={true}
+        className="exampleModal"
+        tabIndex="-1"
+        toggle={handleCancel}
+        size="xl"
+      >
+        <ModalHeader toggle={handleCancel} tag="h4">
+          {!showEditLocation
+            ? `View ${(location && location.name) || ""}`
+            : `Edit ${(location && location.name) || ""}`}
+        </ModalHeader>
+        {!showEditLocation && (
+          <>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "92%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowHistory(true)}
+            >
+              <i className="dripicons-briefcase" />
+            </Link>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "87%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowEditLocation(true)}
+            >
+              <i className="mdi mdi-pencil-outline"></i>
+            </Link>
+          </>
+        )}
+        <ModalBody>
+          <Form
+            onSubmit={(e) => {
+              e.preventDefault();
+              validation.handleSubmit();
+              return false;
+            }}
+          >
             <Row>
-              <Col>
-                <ModalFooter>
-                  <button type="submit" className="btn btn-success save-user">
-                    Save
-                  </button>
-                  <button
-                    type="reset"
-                    className="btn btn-warning"
-                    onClick={() => validation.resetForm()}
-                  >
-                    Reset
-                  </button>
+              <Col lg={4}>
+                <div className="mb-3">
+                  <Label className="form-label">Location Name</Label>
+                  <Input
+                    name="name"
+                    type="text"
+                    placeholder="Enter location name"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.name || ""}
+                    disabled={!showEditLocation}
+                    invalid={
+                      validation.touched.name && validation.errors.name
+                        ? true
+                        : false
+                    }
+                  />
+                  {validation.touched.name && validation.errors.name ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.name}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              <Col lg={4}>
+                <div className="mb-3">
+                  <Label className="form-label">Select LCO</Label>
 
-                  <button
-                    type="button"
-                    className="btn btn-outline-danger"
-                    onClick={() => {
-                      validation.resetForm();
-                      handleCancel();
-                    }}
+                  <Input
+                    name="operator_id"
+                    type="select"
+                    placeholder="Select lco"
+                    className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.operator_id || ""}
+                    disabled={!showEditLocation}
                   >
-                    Cancel
-                  </button>
-                </ModalFooter>
+                    <option value="">Select lco</option>
+                    {lcoonlocation.map((options) => (
+                      <option key={options.id} value={options.id}>
+                        {options.name}
+                      </option>
+                    ))}
+                  </Input>
+                  {validation.touched.operator_id &&
+                    validation.errors.operator_id ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.operator_id}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              <Col lg={4}>
+                <div className="mb-3">
+                  <Label className="form-label">Status</Label>
+                  <Input
+                    name="status"
+                    type="select"
+                    placeholder="Select Status"
+                    className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.status || ""}
+                    disabled={!showEditLocation}
+                  >
+                    <option value="">Select Status</option>
+                    {status.map((options) => (
+                      <option key={options.id} value={options.id}>
+                        {options.name}
+                      </option>
+                    ))}
+                  </Input>
+                  {validation.touched.status && validation.errors.status ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.status}
+                    </FormFeedback>
+                  ) : null}
+                </div>
               </Col>
             </Row>
-          )}
-        </Form>
-      </ModalBody>
-      {/* </Modal> */}
-    </Modal>
+            {showEditLocation && (
+              <Row>
+                <Col>
+                  <ModalFooter>
+                    <button type="submit" className="btn btn-success save-user">
+                      Save
+                    </button>
+                    <button
+                      type="reset"
+                      className="btn btn-warning"
+                      onClick={() => validation.resetForm()}
+                    >
+                      Reset
+                    </button>
+
+                    <button
+                      type="button"
+                      className="btn btn-outline-danger"
+                      onClick={() => {
+                        validation.resetForm();
+                        handleCancel();
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </ModalFooter>
+                </Col>
+              </Row>
+            )}
+          </Form>
+        </ModalBody>
+        {/* </Modal> */}
+      </Modal>
+    </>
   );
 };
 

@@ -20,6 +20,8 @@ import {
   updateComplaintCategory as onUpdateComplaintCategory,
   getComplaintCategory as onGetComplaintCategory,
 } from "/src/store/complaintcategorylist/actions";
+import ShowHistoryModal from "./ShowHistoryModal";
+
 
 const ViewComplaintCategoryList = (props) => {
   const {
@@ -36,6 +38,12 @@ const ViewComplaintCategoryList = (props) => {
   const dispatch = useDispatch();
   const [showEditComplaintCategory, setShowEditComplaintCategory] =
     useState(false);
+
+  const [showHistory, setShowHistory] = useState(false);
+
+  const toggleHistoryModal = () => {
+    setShowHistory(!showHistory);
+  };
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -80,6 +88,13 @@ const ViewComplaintCategoryList = (props) => {
   };
   return (
     <>
+      {showHistory && (
+        <ShowHistoryModal
+          isOpen={showHistory}
+          toggleHistoryModal={toggleHistoryModal}
+          complaintcategory={complaintcategory}
+        />
+      )}
       <Modal
         isOpen={isOpen}
         size="xl"
@@ -96,18 +111,32 @@ const ViewComplaintCategoryList = (props) => {
             : `Edit ${(complaintcategory && complaintcategory.name) || ""}`}
         </ModalHeader>
         {!showEditComplaintCategory && (
-          <Link
-            style={{
-              position: "absolute",
-              marginLeft: "92%",
-              marginTop: "1%",
-            }}
-            to="#!"
-            className="btn btn-light me-1"
-            onClick={() => setShowEditComplaintCategory(true)}
-          >
-            <i className="mdi mdi-pencil-outline"></i>
-          </Link>
+          <>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "92%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowHistory(true)}
+            >
+              <i className="dripicons-briefcase" />
+            </Link>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "87%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowEditComplaintCategory(true)}
+            >
+              <i className="mdi mdi-pencil-outline"></i>
+            </Link>
+          </>
         )}
         <ModalBody>
           <Form
@@ -190,7 +219,7 @@ const ViewComplaintCategoryList = (props) => {
                     <option value="2">In-Active</option>
                   </Input>
                   {validation.touched.showonweb_lbl &&
-                  validation.errors.showonweb_lbl ? (
+                    validation.errors.showonweb_lbl ? (
                     <FormFeedback type="invalid">
                       {validation.errors.showonweb_lbl}
                     </FormFeedback>
@@ -213,13 +242,13 @@ const ViewComplaintCategoryList = (props) => {
                     value={validation.values.description || ""}
                     invalid={
                       validation.touched.description &&
-                      validation.errors.description
+                        validation.errors.description
                         ? true
                         : false
                     }
                   />
                   {validation.touched.description &&
-                  validation.errors.description ? (
+                    validation.errors.description ? (
                     <FormFeedback type="invalid">
                       {validation.errors.description}
                     </FormFeedback>
