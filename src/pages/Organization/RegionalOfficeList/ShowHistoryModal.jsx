@@ -110,6 +110,7 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, regionalOffData }) => {
     ],
     []
   );
+
   const getHistoryDetails = async (e) => {
     try {
       const token = "Bearer " + localStorage.getItem("temptoken");
@@ -137,6 +138,7 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, regionalOffData }) => {
       getHistoryDetails();
     }
   }, [regionalOffData, year]);
+
   return (
     <Modal
       isOpen={isOpen}

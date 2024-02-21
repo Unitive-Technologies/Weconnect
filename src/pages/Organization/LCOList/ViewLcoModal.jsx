@@ -540,8 +540,6 @@ const ViewLcoModal = (props) => {
           <EditLcoModal
             lcoData={lcoData}
             toggleCloseModal={handleClose}
-            // closeViewModal={() => setViewLco(false)}
-            // closeEditModal={() => setShowEditLco(false)}
             lcoBilledby={lcoBilledby}
             lcoStatus={lcoStatus}
             lcoPhase={lcoPhase}

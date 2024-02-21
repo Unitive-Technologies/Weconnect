@@ -23,7 +23,6 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
-import { getDistributors as onGetDistributors } from "/src/store/distributor/actions";
 import {
   updateLco as onUpdateLco,
   getLco as onGetLco,
@@ -162,6 +161,7 @@ const EditLcoModal = (props) => {
     }
     // };
   };
+
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -176,9 +176,9 @@ const EditLcoModal = (props) => {
       mobile_no: (lcoData && lcoData.mobile_no) || "",
       phone_no: (lcoData && lcoData.phone_no) || "",
       fax_no: (lcoData && lcoData.fax_no) || "",
-      state: (lcoData && lcoData.state_lbl) || "",
-      district: (lcoData && lcoData.district_lbl) || "",
-      city: (lcoData && lcoData.city_lbl) || "",
+      state: (lcoData && lcoData.state_id) || "",
+      district: (lcoData && lcoData.district_id) || "",
+      city: (lcoData && lcoData.city_id) || "",
       gstno: (lcoData && lcoData.gstno) || "",
       panno: (lcoData && lcoData.panno) || "",
       username: (lcoData && lcoData.username) || "",
@@ -197,7 +197,7 @@ const EditLcoModal = (props) => {
       customer_portal_config: (lcoData && lcoData.customer_portal_config) || "",
       enable_customer_billing:
         (lcoData && lcoData.enable_customer_billing) || "",
-      parent_id: (lcoData && lcoData.parent_id) || "",
+      parent_id: (lcoData && lcoData.branch_id) || "",
       password: (lcoData && lcoData.password) || "",
       uid: (lcoData && lcoData.uid) || "",
     },
@@ -280,23 +280,64 @@ const EditLcoModal = (props) => {
     },
   });
 
-  const selectDistributorsState = (state) => state.distributors;
-  const DistributorsProperties = createSelector(
-    selectDistributorsState,
-    (distributors) => ({
-      distributor: distributors.distributors,
-      // loading: distributors.loading,
-    })
-  );
+  const getDistrictValue = async (e) => {
+    try {
+      // Assuming you have a token stored in localStorage
+      const token = "Bearer " + localStorage.getItem("temptoken");
 
-  const { distributor } = useSelector(DistributorsProperties);
-  useEffect(() => {
-    if (distributor && !distributor.length) {
-      dispatch(onGetDistributors());
+      const response = await axios.get(
+        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${selectedState}&filter[type]=2&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token, // Include your token here
+          },
+        }
+      );
+
+      console.log(
+        "districtlist after selection : " + JSON.stringify(response.data.data)
+      );
+      setDistrictsList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching policy data:", error);
+      // Handle error if necessary
     }
-  }, [dispatch, distributor]);
+    // };
+  };
 
-  console.log("distributor in edit lco: " + JSON.stringify(distributor));
+  const getCityValue = async (e) => {
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${selectedState}&filter[district_id]=${selectedDistrict}&filter[type]=3&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      console.log(
+        "cityList after selection : " + JSON.stringify(response.data.data)
+      );
+      setCityList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching policy data:", error);
+      // Handle error if necessary
+    }
+    // };
+  };
+
+  useEffect(() => {
+    if (lcoData && lcoData.state_id) {
+      setSelectedState(lcoData.state_id);
+      setSelectedDistrict(lcoData.district_id);
+    }
+    getDistrictValue();
+    getCityValue();
+  }, [lcoData]);
+
   return (
     // <Modal
     //   isOpen={isOpen}
@@ -403,13 +444,13 @@ const EditLcoModal = (props) => {
                     {validation.errors.logo}
                   </FormFeedback>
                 ) : null}
-                <button
+                {/* <button
                   type="button"
                   className="btn btn-primary "
                   style={{ marginTop: "10px", width: "50%" }}
                 >
                   Upload Logo
-                </button>
+                </button> */}
               </div>
             </Col>
             {console.log("logo:" + JSON.stringify(validation.values.logo))}
@@ -476,7 +517,7 @@ const EditLcoModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.parent_id || ""}
                 >
-                  <option value="">Select Parent Distributor</option>
+                  {/* <option value="">Select Parent Distributor</option> */}
                   {lcoParentDistributor &&
                     lcoParentDistributor.map((parent) => (
                       <option key={parent.id} value={parent.id}>
@@ -492,7 +533,9 @@ const EditLcoModal = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Status</Label>
+                <Label className="form-label">
+                  Status<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="status"
                   type="select"
@@ -522,7 +565,9 @@ const EditLcoModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Mobile No.</Label>
+                <Label className="form-label">
+                  Mobile No.<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="mobile_no"
                   label="Mobile No."
@@ -570,7 +615,9 @@ const EditLcoModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Email Address</Label>
+                <Label className="form-label">
+                  Email Address<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="email"
                   label="Email Address"
@@ -596,7 +643,9 @@ const EditLcoModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">State</Label>
+                <Label className="form-label">
+                  State<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="state"
                   type="select"
@@ -623,7 +672,9 @@ const EditLcoModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">District</Label>
+                <Label className="form-label">
+                  District<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="district"
                   type="select"
@@ -649,7 +700,9 @@ const EditLcoModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">City</Label>
+                <Label className="form-label">
+                  City<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="city"
                   type="select"
@@ -677,7 +730,9 @@ const EditLcoModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Address1</Label>
+                <Label className="form-label">
+                  Address1<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="addr1"
                   label="Address1"
@@ -984,7 +1039,9 @@ const EditLcoModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Billed By</Label>
+                <Label className="form-label">
+                  Billed By<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="billed_by"
                   type="select"
@@ -1035,7 +1092,9 @@ const EditLcoModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Credit Limit</Label>
+                <Label className="form-label">
+                  Credit Limit<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="credit_limit"
                   type="text"
@@ -1062,7 +1121,9 @@ const EditLcoModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Area ID</Label>
+                <Label className="form-label">
+                  Area ID<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="area_id"
                   type="text"
@@ -1236,82 +1297,6 @@ const EditLcoModal = (props) => {
             </Col>
           </Row>
 
-          <Row>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">Login ID</Label>
-                <Input
-                  name="username"
-                  label="Login ID"
-                  type="text"
-                  placeholder="Login ID"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.username || ""}
-                  invalid={
-                    validation.touched.username && validation.errors.username
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.username && validation.errors.username ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.username}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">Password</Label>
-                <Input
-                  name="password"
-                  label="Password"
-                  type="text"
-                  placeholder="Password"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.password || ""}
-                  invalid={
-                    validation.touched.password && validation.errors.password
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.password && validation.errors.password ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.password}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">Confirm-Password</Label>
-                <Input
-                  name="confirmpassword"
-                  label="Confirm Password"
-                  type="text"
-                  placeholder="Retype Password"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.confirmpassword || ""}
-                  invalid={
-                    validation.touched.confirmpassword &&
-                    validation.errors.confirmpassword
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.confirmpassword &&
-                validation.errors.confirmpassword ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.confirmpassword}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-          </Row>
           <Row>
             <Col>
               <ModalFooter>
