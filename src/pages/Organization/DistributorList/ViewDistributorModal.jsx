@@ -19,6 +19,7 @@ import { useDispatch } from "react-redux";
 
 import TapsOfViewDistributor from "./TapsOfViewDistributor";
 import EditDistributorModal from "./EditDistributorModal";
+import ShowHistoryModal from "../RegionalOfficeList/ShowHistoryModal";
 
 const ViewDistributorModal = (props) => {
   const {
@@ -35,13 +36,17 @@ const ViewDistributorModal = (props) => {
   const dispatch = useDispatch();
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [showEditDistributor, setShowEditDistributor] = useState(false);
-
+  const [showHistory, setShowHistory] = useState(false);
   const [showOperatorDetails, setShowOperatorDetails] = useState(true);
   const [selectedRowData, setSelectedRowData] = useState({});
   const [accountDetails, setAccountDetails] = useState([]);
   const currentDate = new Date().toISOString().split("T")[0];
   const [fromDate, setFromDate] = useState(currentDate);
   const [toDate, setToDate] = useState(currentDate);
+
+  const toggleHistoryModal = () => {
+    setShowHistory(!showHistory);
+  };
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -223,282 +228,303 @@ const ViewDistributorModal = (props) => {
   //   selectedRowData.distributor_id
   // );
   return (
-    <Modal
-      isOpen={isOpen}
-      role="dialog"
-      size="xl"
-      autoFocus={true}
-      centered={true}
-      className="exampleModal"
-      tabIndex="-1"
-      toggle={handleCancel}
-    >
-      {!showEditDistributor ? (
-        <>
-          <ModalHeader toggle={handleCancel} tag="h4" position="relative">
-            {/* <h4> */}
-            View - {distributor && distributor.name}, Balance:{" "}
-            {selectedRowData.balance}, Credit Limit:{" "}
-            {selectedRowData.credit_limit}
-            {/* </h4> */}
-          </ModalHeader>
-          <Link
-            style={{
-              position: "absolute",
-              marginLeft: "92%",
-              marginTop: "1%",
-            }}
-            to="#!"
-            className="btn btn-light me-1"
-            onClick={() => setShowEditDistributor(true)}
-          >
-            <i className="mdi mdi-pencil-outline"></i>
-          </Link>
-
-          <ModalBody>
-            <Form
-              onSubmit={(e) => {
-                e.preventDefault();
-                validation.handleSubmit();
-                return false;
-              }}
-            >
-              <Row>
-                <Col lg={2}>
-                  <div className="form-check form-switch form-switch-lg mb-3">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      id="customSwitchsizelg"
-                      defaultChecked
-                      onClick={() =>
-                        setShowOperatorDetails(!showOperatorDetails)
-                      }
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="customSwitchsizelg"
-                    >
-                      View Details
-                    </label>
-                  </div>
-                </Col>
-              </Row>
-              {showOperatorDetails ? (
-                <>
-                  <div
-                    style={{
-                      // margin: "20px 0px",
-                      marginTop: "20px",
-                      marginBottom: "-18px",
-                      zIndex: 12000,
-                      backgroundColor: "#fff",
-                      width: "fit-content",
-                      marginLeft: "40%",
-                      position: "absolute",
-                      padding: "0px 10px",
-                    }}
-                  >
-                    {" "}
-                    <h5 style={{}}>Operator Information</h5>
-                  </div>
-                  <Row
-                    style={{
-                      position: "relative",
-                      border: "1px solid #ced4da",
-                      padding: "20px 0px",
-                      margin: "30px 0px",
-                    }}
-                  >
-                    <Col lg={3}>
-                      <div className="mb-3">
-                        <Label className="form-label">Name</Label>
-                        <Input
-                          name="name"
-                          label="Name"
-                          type="text"
-                          placeholder="Name"
-                          disabled
-                          onChange={validation.handleChange}
-                          onBlur={validation.handleBlur}
-                          value={validation.values.name || ""}
-                          invalid={
-                            validation.touched.name && validation.errors.name
-                              ? true
-                              : false
-                          }
-                        />
-                        {validation.touched.name && validation.errors.name ? (
-                          <FormFeedback type="invalid">
-                            {validation.errors.name}
-                          </FormFeedback>
-                        ) : null}
-                      </div>
-                    </Col>
-                    <Col lg={3}>
-                      <div className="mb-3">
-                        <Label className="form-label">Contact Person</Label>
-                        <Input
-                          name="contact_person"
-                          label="Contact Person"
-                          type="text"
-                          placeholder="Contact Person"
-                          disabled
-                          onChange={validation.handleChange}
-                          onBlur={validation.handleBlur}
-                          value={validation.values.contact_person || ""}
-                          invalid={
-                            validation.touched.contact_person &&
-                            validation.errors.contact_person
-                              ? true
-                              : false
-                          }
-                        />
-                        {validation.touched.contact_person &&
-                        validation.errors.contact_person ? (
-                          <FormFeedback type="invalid">
-                            {validation.errors.contact_person}
-                          </FormFeedback>
-                        ) : null}
-                      </div>
-                    </Col>
-                    <Col lg={3}>
-                      <div className="mb-3">
-                        <Label className="form-label">Mobil No.</Label>
-                        <Input
-                          name="mobile_no"
-                          label="Mobile No."
-                          type="text"
-                          placeholder="Mobile No."
-                          disabled
-                          onChange={validation.handleChange}
-                          onBlur={validation.handleBlur}
-                          value={validation.values.mobile_no || ""}
-                          invalid={
-                            validation.touched.mobile_no &&
-                            validation.errors.mobile_no
-                              ? true
-                              : false
-                          }
-                        />
-                        {validation.touched.mobile_no &&
-                        validation.errors.mobile_no ? (
-                          <FormFeedback type="invalid">
-                            {validation.errors.mobile_no}
-                          </FormFeedback>
-                        ) : null}
-                      </div>
-                    </Col>
-                    <Col lg={3}>
-                      <div className="mb-3">
-                        <Label className="form-label">Code</Label>
-                        <Input
-                          name="code"
-                          label="Code"
-                          type="text"
-                          placeholder="Code"
-                          disabled
-                          onChange={validation.handleChange}
-                          onBlur={validation.handleBlur}
-                          value={validation.values.code || ""}
-                          invalid={
-                            validation.touched.code && validation.errors.code
-                              ? true
-                              : false
-                          }
-                        />
-                        {validation.touched.code && validation.errors.code ? (
-                          <FormFeedback type="invalid">
-                            {validation.errors.code}
-                          </FormFeedback>
-                        ) : null}
-                      </div>
-                    </Col>
-                    <Col lg={12}>
-                      <div className="mb-3">
-                        <Label className="form-label">Address</Label>
-                        <Input
-                          name="addr"
-                          label="Address"
-                          type="text"
-                          placeholder="Enter Address"
-                          disabled
-                          onChange={validation.handleChange}
-                          onBlur={validation.handleBlur}
-                          value={validation.values.addr || ""}
-                          invalid={
-                            validation.touched.addr && validation.errors.addr
-                              ? true
-                              : false
-                          }
-                        />
-                        {validation.touched.addr && validation.errors.addr ? (
-                          <FormFeedback type="invalid">
-                            {validation.errors.addr}
-                          </FormFeedback>
-                        ) : null}
-                      </div>
-                    </Col>
-                    <Col lg={12}>
-                      <div className="mb-3">
-                        <Label className="form-label">Parent</Label>
-                        <Input
-                          name="branch_lbl"
-                          label="Parent"
-                          type="text"
-                          placeholder="Enter Parent"
-                          disabled
-                          onChange={validation.handleChange}
-                          onBlur={validation.handleBlur}
-                          value={validation.values.branch_lbl || ""}
-                          invalid={
-                            validation.touched.branch_lbl &&
-                            validation.errors.branch_lbl
-                              ? true
-                              : false
-                          }
-                        />
-                        {validation.touched.branch_lbl &&
-                        validation.errors.branch_lbl ? (
-                          <FormFeedback type="invalid">
-                            {validation.errors.branch_lbl}
-                          </FormFeedback>
-                        ) : null}
-                      </div>
-                    </Col>
-                  </Row>
-                </>
-              ) : (
-                <></>
-              )}
-              <Row>
-                <Col lg={12}>
-                  <TapsOfViewDistributor
-                    selectedRowId={selectedRowData.id}
-                    accountDetails={accountDetails}
-                    setAccountDetails={setAccountDetails}
-                    setFromDate={setFromDate}
-                    setToDate={setToDate}
-                    fromDate={fromDate}
-                    toDate={toDate}
-                    distributor={distributor}
-                    selectedRowData={selectedRowData}
-                    handleSearch={handleSearch}
-                  />
-                </Col>
-              </Row>
-            </Form>
-          </ModalBody>
-        </>
-      ) : (
-        <EditDistributorModal
+    <>
+      {showHistory && (
+        <ShowHistoryModal
+          isOpen={showHistory}
+          toggleHistoryModal={toggleHistoryModal}
           distributor={distributor}
-          toggleCloseModal={handleClose}
-          distributorsPhase={distributorsPhase}
-          distributorsStatus={distributorsStatus}
         />
       )}
-    </Modal>
+      <Modal
+        isOpen={isOpen}
+        role="dialog"
+        size="xl"
+        autoFocus={true}
+        centered={true}
+        className="exampleModal"
+        tabIndex="-1"
+        toggle={handleCancel}
+      >
+        {!showEditDistributor ? (
+          <>
+            <ModalHeader toggle={handleCancel} tag="h4" position="relative">
+              {/* <h4> */}
+              View - {distributor && distributor.name}, Balance:{" "}
+              {selectedRowData.balance}, Credit Limit:{" "}
+              {selectedRowData.credit_limit}
+              {/* </h4> */}
+            </ModalHeader>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "92%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowHistory(true)}
+            >
+              <i className="dripicons-briefcase" />
+            </Link>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "87%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowEditDistributor(true)}
+            >
+              <i className="mdi mdi-pencil-outline"></i>
+            </Link>
+
+            <ModalBody>
+              <Form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  validation.handleSubmit();
+                  return false;
+                }}
+              >
+                <Row>
+                  <Col lg={2}>
+                    <div className="form-check form-switch form-switch-lg mb-3">
+                      <input
+                        type="checkbox"
+                        className="form-check-input"
+                        id="customSwitchsizelg"
+                        defaultChecked
+                        onClick={() =>
+                          setShowOperatorDetails(!showOperatorDetails)
+                        }
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="customSwitchsizelg"
+                      >
+                        View Details
+                      </label>
+                    </div>
+                  </Col>
+                </Row>
+                {showOperatorDetails ? (
+                  <>
+                    <div
+                      style={{
+                        // margin: "20px 0px",
+                        marginTop: "20px",
+                        marginBottom: "-18px",
+                        zIndex: 12000,
+                        backgroundColor: "#fff",
+                        width: "fit-content",
+                        marginLeft: "40%",
+                        position: "absolute",
+                        padding: "0px 10px",
+                      }}
+                    >
+                      {" "}
+                      <h5 style={{}}>Operator Information</h5>
+                    </div>
+                    <Row
+                      style={{
+                        position: "relative",
+                        border: "1px solid #ced4da",
+                        padding: "20px 0px",
+                        margin: "30px 0px",
+                      }}
+                    >
+                      <Col lg={3}>
+                        <div className="mb-3">
+                          <Label className="form-label">Name</Label>
+                          <Input
+                            name="name"
+                            label="Name"
+                            type="text"
+                            placeholder="Name"
+                            disabled
+                            onChange={validation.handleChange}
+                            onBlur={validation.handleBlur}
+                            value={validation.values.name || ""}
+                            invalid={
+                              validation.touched.name && validation.errors.name
+                                ? true
+                                : false
+                            }
+                          />
+                          {validation.touched.name && validation.errors.name ? (
+                            <FormFeedback type="invalid">
+                              {validation.errors.name}
+                            </FormFeedback>
+                          ) : null}
+                        </div>
+                      </Col>
+                      <Col lg={3}>
+                        <div className="mb-3">
+                          <Label className="form-label">Contact Person</Label>
+                          <Input
+                            name="contact_person"
+                            label="Contact Person"
+                            type="text"
+                            placeholder="Contact Person"
+                            disabled
+                            onChange={validation.handleChange}
+                            onBlur={validation.handleBlur}
+                            value={validation.values.contact_person || ""}
+                            invalid={
+                              validation.touched.contact_person &&
+                              validation.errors.contact_person
+                                ? true
+                                : false
+                            }
+                          />
+                          {validation.touched.contact_person &&
+                          validation.errors.contact_person ? (
+                            <FormFeedback type="invalid">
+                              {validation.errors.contact_person}
+                            </FormFeedback>
+                          ) : null}
+                        </div>
+                      </Col>
+                      <Col lg={3}>
+                        <div className="mb-3">
+                          <Label className="form-label">Mobil No.</Label>
+                          <Input
+                            name="mobile_no"
+                            label="Mobile No."
+                            type="text"
+                            placeholder="Mobile No."
+                            disabled
+                            onChange={validation.handleChange}
+                            onBlur={validation.handleBlur}
+                            value={validation.values.mobile_no || ""}
+                            invalid={
+                              validation.touched.mobile_no &&
+                              validation.errors.mobile_no
+                                ? true
+                                : false
+                            }
+                          />
+                          {validation.touched.mobile_no &&
+                          validation.errors.mobile_no ? (
+                            <FormFeedback type="invalid">
+                              {validation.errors.mobile_no}
+                            </FormFeedback>
+                          ) : null}
+                        </div>
+                      </Col>
+                      <Col lg={3}>
+                        <div className="mb-3">
+                          <Label className="form-label">Code</Label>
+                          <Input
+                            name="code"
+                            label="Code"
+                            type="text"
+                            placeholder="Code"
+                            disabled
+                            onChange={validation.handleChange}
+                            onBlur={validation.handleBlur}
+                            value={validation.values.code || ""}
+                            invalid={
+                              validation.touched.code && validation.errors.code
+                                ? true
+                                : false
+                            }
+                          />
+                          {validation.touched.code && validation.errors.code ? (
+                            <FormFeedback type="invalid">
+                              {validation.errors.code}
+                            </FormFeedback>
+                          ) : null}
+                        </div>
+                      </Col>
+                      <Col lg={12}>
+                        <div className="mb-3">
+                          <Label className="form-label">Address</Label>
+                          <Input
+                            name="addr"
+                            label="Address"
+                            type="text"
+                            placeholder="Enter Address"
+                            disabled
+                            onChange={validation.handleChange}
+                            onBlur={validation.handleBlur}
+                            value={validation.values.addr || ""}
+                            invalid={
+                              validation.touched.addr && validation.errors.addr
+                                ? true
+                                : false
+                            }
+                          />
+                          {validation.touched.addr && validation.errors.addr ? (
+                            <FormFeedback type="invalid">
+                              {validation.errors.addr}
+                            </FormFeedback>
+                          ) : null}
+                        </div>
+                      </Col>
+                      <Col lg={12}>
+                        <div className="mb-3">
+                          <Label className="form-label">Parent</Label>
+                          <Input
+                            name="branch_lbl"
+                            label="Parent"
+                            type="text"
+                            placeholder="Enter Parent"
+                            disabled
+                            onChange={validation.handleChange}
+                            onBlur={validation.handleBlur}
+                            value={validation.values.branch_lbl || ""}
+                            invalid={
+                              validation.touched.branch_lbl &&
+                              validation.errors.branch_lbl
+                                ? true
+                                : false
+                            }
+                          />
+                          {validation.touched.branch_lbl &&
+                          validation.errors.branch_lbl ? (
+                            <FormFeedback type="invalid">
+                              {validation.errors.branch_lbl}
+                            </FormFeedback>
+                          ) : null}
+                        </div>
+                      </Col>
+                    </Row>
+                  </>
+                ) : (
+                  <></>
+                )}
+                <Row>
+                  <Col lg={12}>
+                    <TapsOfViewDistributor
+                      selectedRowId={selectedRowData.id}
+                      accountDetails={accountDetails}
+                      setAccountDetails={setAccountDetails}
+                      setFromDate={setFromDate}
+                      setToDate={setToDate}
+                      fromDate={fromDate}
+                      toDate={toDate}
+                      distributor={distributor}
+                      selectedRowData={selectedRowData}
+                      handleSearch={handleSearch}
+                    />
+                  </Col>
+                </Row>
+              </Form>
+            </ModalBody>
+          </>
+        ) : (
+          <EditDistributorModal
+            distributor={distributor}
+            toggleCloseModal={handleClose}
+            distributorsPhase={distributorsPhase}
+            distributorsStatus={distributorsStatus}
+          />
+        )}
+      </Modal>
+    </>
   );
 };
 
