@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
@@ -14,10 +14,12 @@ import {
   Form,
 } from "reactstrap";
 import * as Yup from "yup";
+import { useSelector, useDispatch } from "react-redux";
+import { createSelector } from "reselect";
 import { useFormik } from "formik";
-import { updateSMSMessageTempList as onUpdateSMSMessageTempList } from "/src/store/smsmessage/actions";
-import { useDispatch } from "react-redux";
+import { updateSMSMessageTempList as onUpdateSMSMessageTempList, getSMSMessageTempListSubcategory as onGetSMSMessageTempListSubcategory, } from "/src/store/smsmessage/actions";
 import ViewMetaData from "./ViewMetaData";
+
 
 const ViewSMSMessageTemplateList = (props) => {
   const {
@@ -25,7 +27,6 @@ const ViewSMSMessageTemplateList = (props) => {
     resetSelection,
     toggleViewModal,
     SMSMsgTemp,
-    smsmessagetempSubCategory,
     smsmessagetempCategory,
     smsmessagetempStatus,
     smsmessagetempSender,
@@ -34,10 +35,10 @@ const ViewSMSMessageTemplateList = (props) => {
   console.log(
     "View in  SMS Message Template List :" + JSON.stringify(SMSMsgTemp)
   );
-  console.log(
-    "View in  SMS Message Template List :" +
-    JSON.stringify(smsmessagetempSubCategory)
-  );
+  // console.log(
+  //   "View in  SMS Message Template List :" +
+  //   JSON.stringify(smsmessagetempSubCategory)
+  // );
   const dispatch = useDispatch();
 
   const [showEditSMS, setShowEditSMS] = useState(false);
@@ -92,6 +93,23 @@ const ViewSMSMessageTemplateList = (props) => {
       resetSelection();
     },
   });
+
+  const selectSMSMessageSubcategory = (state) => state.smsmessagetemp;
+
+  const SMSMessageSubcategoryProperties = createSelector(
+    selectSMSMessageSubcategory,
+    (smsmessagetemp) => ({
+      smsmessagetempSubcategory: smsmessagetemp.smsmessagetempSubcategory,
+    })
+  );
+
+  const {
+    smsmessagetempSubcategory,
+  } = useSelector(SMSMessageSubcategoryProperties);
+
+  useEffect(() => {
+    dispatch(onGetSMSMessageTempListSubcategory(validation.values.cat_id))
+  }, [dispatch, validation.values.cat_id])
 
   const handleCancel = () => {
     setShowEditSMS(false);
@@ -216,7 +234,7 @@ const ViewSMSMessageTemplateList = (props) => {
               </div>
             </Col>
             {console.log(
-              "SMS Messgage Temp Status" + smsmessagetempSubCategory
+              "SMS Messgage Temp Status" + smsmessagetempSubcategory
             )}
             <Col sm="4">
               <div className="mb-3">
@@ -232,8 +250,8 @@ const ViewSMSMessageTemplateList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.sub_cat_id || ""}
                 >
-                  {smsmessagetempSubCategory &&
-                    smsmessagetempSubCategory.map((sub_cat_id) => (
+                  {smsmessagetempSubcategory &&
+                    smsmessagetempSubcategory.map((sub_cat_id) => (
                       <option key={sub_cat_id.id} value={sub_cat_id.id}>
                         {sub_cat_id.name}
                       </option>
@@ -340,7 +358,7 @@ const ViewSMSMessageTemplateList = (props) => {
             </Col>
           </Row>
 
-          {!showEditSMS && (
+          {showEditSMS && (
             <Row>
               <Col>
                 <ModalFooter>

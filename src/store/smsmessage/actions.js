@@ -98,8 +98,9 @@ export const getSMSMessageTempListStatusFail = (error) => ({
   payload: error,
 });
 
-export const getSMSMessageTempListSubcategory = () => ({
+export const getSMSMessageTempListSubcategory = (cat_id) => ({
   type: GET_SMSMESSAGETEMPLIST_SUBCATEGORY,
+  payload: cat_id,
 });
 
 export const getSMSMessageTempListSubcategorySuccess = (smsmessagetempSubcategory) => {
