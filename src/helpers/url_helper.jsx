@@ -360,10 +360,10 @@ export const GET_SMSMESSAGETEMPLIST =
 export const ADD_NEW_SMSMESSAGETEMPLIST = "/add/SMSMessageTemplate";
 export const UPDATE_SMSMESSAGETEMPLIST = (id) =>
   `/sms-message-template/${id}?vr=web1.0`;
-// export const GET_SMSMESSAGETEMPLIST_SUBCATEGORY =
-//   "/list/SmsSubCategory?fields=id,name&category=otp&vr=web1.0";
-export const GET_SMSMESSAGETEMPLIST_SUBCATEGORY = (cat_id) =>
-  `/list/SmsSubCategory?fields=id,name&category=${cat_id}&vr=web1.0`;
+export const GET_SMSMESSAGETEMPLIST_SUBCATEGORY =
+  "/list/SmsSubCategory?fields=id,name&category=otp&vr=web1.0";
+// export const GET_SMSMESSAGETEMPLIST_SUBCATEGORY = (cat_id) =>
+//   `/list/SmsSubCategory?fields=id,name&category=${cat_id}&vr=web1.0`;
 
 export const GET_SMSMESSAGETEMPLIST_CATEGORY =
   "/list/SmsCategory?fields=id,name&vr=web1.0";

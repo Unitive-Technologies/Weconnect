@@ -27,6 +27,7 @@ const ViewSMSMessageTemplateList = (props) => {
     resetSelection,
     toggleViewModal,
     SMSMsgTemp,
+    smsmessagetempSubCategory,
     smsmessagetempCategory,
     smsmessagetempStatus,
     smsmessagetempSender,
@@ -44,6 +45,28 @@ const ViewSMSMessageTemplateList = (props) => {
   const [showEditSMS, setShowEditSMS] = useState(false);
 
   const [metaData, setMetaData] = useState([]);
+
+  // const category = SMSMsgTemp.cat_id
+
+  // const selectSMSMessageSubCategory = (state) => state.smsmessagetemp;
+
+  // const SMSMessageSubCategoryProperties = createSelector(
+  //   selectSMSMessageSubCategory,
+  //   (smsmessagetemp) => ({
+  //     smsmessagetempSubCategory: smsmessagetemp.smsmessagetempSubcategory,
+  //   })
+  // );
+
+  // const {
+  //   smsmessagetempSubcategory,
+  // } = useSelector(SMSMessageSubCategoryProperties);
+
+  // console.log("cat id values" + category)
+  // useEffect(() => {
+  //   dispatch(onGetSMSMessageTempListSubcategory(category))
+
+  // }, [dispatch, category])
+
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -94,22 +117,10 @@ const ViewSMSMessageTemplateList = (props) => {
     },
   });
 
-  const selectSMSMessageSubcategory = (state) => state.smsmessagetemp;
+  // useEffect(() => {
+  //   dispatch(onGetSMSMessageTempListSubcategory(validation.values.cat_id))
+  // }, [dispatch, validation.values.cat_id])
 
-  const SMSMessageSubcategoryProperties = createSelector(
-    selectSMSMessageSubcategory,
-    (smsmessagetemp) => ({
-      smsmessagetempSubcategory: smsmessagetemp.smsmessagetempSubcategory,
-    })
-  );
-
-  const {
-    smsmessagetempSubcategory,
-  } = useSelector(SMSMessageSubcategoryProperties);
-
-  useEffect(() => {
-    dispatch(onGetSMSMessageTempListSubcategory(validation.values.cat_id))
-  }, [dispatch, validation.values.cat_id])
 
   const handleCancel = () => {
     setShowEditSMS(false);
@@ -234,7 +245,7 @@ const ViewSMSMessageTemplateList = (props) => {
               </div>
             </Col>
             {console.log(
-              "SMS Messgage Temp Status" + smsmessagetempSubcategory
+              "SMS Messgage Temp Status" + smsmessagetempSubCategory
             )}
             <Col sm="4">
               <div className="mb-3">
@@ -250,8 +261,8 @@ const ViewSMSMessageTemplateList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.sub_cat_id || ""}
                 >
-                  {smsmessagetempSubcategory &&
-                    smsmessagetempSubcategory.map((sub_cat_id) => (
+                  {smsmessagetempSubCategory &&
+                    smsmessagetempSubCategory.map((sub_cat_id) => (
                       <option key={sub_cat_id.id} value={sub_cat_id.id}>
                         {sub_cat_id.name}
                       </option>
@@ -400,7 +411,7 @@ ViewSMSMessageTemplateList.propTypes = {
 
   SMSMsgTemp: PropTypes.object,
   smsmessagetempCategory: PropTypes.array,
-  smsmessagetempSubcategory: PropTypes.array,
+  smsmessagetempSubCategory: PropTypes.array,
   smsmessagetempSender: PropTypes.array,
   smsmessagetempStatus: PropTypes.array,
 };
