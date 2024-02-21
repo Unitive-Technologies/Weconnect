@@ -40,7 +40,7 @@ const EditLcoModal = (props) => {
     lcoCustomerPortal,
     lcoParentDistributor,
   } = props;
-  console.log("lcoData in editmodal:" + JSON.stringify(lcoData));
+  console.log("lcoData in editmodal:" + JSON.stringify(lcoParentDistributor));
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [toggleSwitch, settoggleSwitch] = useState(true);
   const dispatch = useDispatch();
@@ -205,6 +205,16 @@ const EditLcoModal = (props) => {
       parent_id: (lcoData && lcoData.branch_id) || "",
 
       uid: (lcoData && lcoData.uid) || "",
+      agreestart:
+        (lcoData &&
+          lcoData.agreement_data &&
+          lcoData.agreement_data.start_date) ||
+        "",
+      agreeend:
+        (lcoData &&
+          lcoData.agreement_data &&
+          lcoData.agreement_data.end_date) ||
+        "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
@@ -237,14 +247,14 @@ const EditLcoModal = (props) => {
         // addr1: values["addr1"],
         addr2: values["addr2"],
         addr3: values["addr3"],
-        // agreement_data: {
-        //   name: values["upload"].name,
-        //   type: values["upload"].type,
-        //   ext: values["upload"].ext,
-        //   data: values["upload"].data,
-        //   start_date: values["agreestart"],
-        //   end_date: values["agreeend"],
-        // },
+        agreement_data: {
+          name: values["upload"] ? values["upload"].name : "", // Handle undefined case
+          type: values["upload"] ? values["upload"].type : "",
+          ext: values["upload"] ? values["upload"].ext : "",
+          data: values["upload"] ? values["upload"].data : "",
+          start_date: values["agreestart"],
+          end_date: values["agreeend"],
+        },
         area_id: parseInt(values["area_id"]),
         billed_by: parseInt(values["billed_by"]),
         city_id: parseInt(values["city"]),
