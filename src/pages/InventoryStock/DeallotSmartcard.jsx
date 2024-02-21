@@ -134,7 +134,7 @@ function DeallotSmartcard(props) {
       tabIndex="-1"
       toggle={toggle}
     >
-      <ModalHeader toggle={toggle}>Allot Smartcards to Operator</ModalHeader>
+      <ModalHeader toggle={toggle}>De-Allot Smartcards to Operator</ModalHeader>
       <Form
         onSubmit={(e) => {
           e.preventDefault();

@@ -128,6 +128,7 @@ const InventoryStock = (props) => {
   const [showAllottedPairing, setShowAllottedPairing] = useState(false);
   const [selectedAllottedPairings, setSelectedAllottedPairings] = useState([]);
   const [filteredSmartcards, setFilteredSmartcards] = useState([]);
+  const [filterWithoutMso, setFilterWithoutMso] = useState([]);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -607,14 +608,19 @@ const InventoryStock = (props) => {
     if (hasMymsoOperatorLbl) {
       setFilteredSmartcards(hasMymsoOperatorLbl);
       console.log("Operator with mso: ", hasMymsoOperatorLbl);
-    } else {
-      console.log("None of the elements have operator_lbl equal to mymso");
+      // } else {
+      //   setFilterWithoutMso(hasMymsoOperatorLbl);
+      //   console.log("Operator with out mso: ", hasMymsoOperatorLbl);
+    }
+    const hasOtherOperatorLbl = selectedAllottedSmartcards.filter(
+      (smartcard) => smartcard.operator_lbl !== "my mso"
+    );
+
+    if (hasOtherOperatorLbl) {
+      setFilterWithoutMso(hasOtherOperatorLbl);
+      console.log("Operator with out mso: ", hasOtherOperatorLbl);
     }
   }, [selectedAllottedSmartcards]);
-
-  // useEffect(() => {
-  //   console.log("Filtered data: ", filteredSmartcards);
-  // }, [filteredSmartcards]);
 
   const columns = useMemo(() => {
     const commonColumns = [
@@ -1236,7 +1242,10 @@ const InventoryStock = (props) => {
             name: "Allot",
             type: "normal",
             icon: "create",
-            action: setShowAllottedSmartcard,
+            action:
+              Object.keys(filteredSmartcards).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowAllottedSmartcard(true),
           },
           {
             name: "Upload",
@@ -1247,7 +1256,7 @@ const InventoryStock = (props) => {
             name: "De-Allot",
             type: "normal",
             action:
-              Object.keys(selectedAllottedSmartcards).length === 0
+              Object.keys(filterWithoutMso).length === 0
                 ? () => setShowWarning(true)
                 : () => setShowDeallotSmartcard(true),
           },
@@ -1469,14 +1478,14 @@ const InventoryStock = (props) => {
       <AllottedSmrtcard
         isOpen={showAllottedSmartcard}
         toggle={handleAllottedSmartcard}
-        allottedsmartcardlist={selectedAllottedSmartcards}
+        allottedsmartcardlist={filteredSmartcards}
         allottedoperatorlist={allottedoperatorlist}
         allottedusertype={allottedusertype}
       />
       <DeallotSmartcard
         isOpen={showDeallotSmartcard}
         toggle={handleDeallottedSmartcard}
-        selectedAllottedSmartcards={selectedAllottedSmartcards}
+        selectedAllottedSmartcards={filterWithoutMso}
         setSelectedAllottedSmartcards={setSelectedAllottedSmartcards}
       />
       <div
