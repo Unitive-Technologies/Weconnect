@@ -126,9 +126,9 @@ function* fetchSMSMessageTempListSender() {
   }
 }
 
-function* fetchSMSMessageTempListSubcategory() {
+function* fetchSMSMessageTempListSubcategory({ payload: cat_id }) {
   try {
-    const response = yield call(getSMSMessageTempListSubcategory);
+    const response = yield call(getSMSMessageTempListSubcategory(cat_id));
     console.log(
       "SMSMessageTempList Subcategory response:" + JSON.stringify(response)
     );

@@ -11,7 +11,7 @@ import {
   getSMSMessageTempList as onGetSMSMessageTemplate,
   getSMSMessageTempListStatus as onGetSMSMessageTempListStatus,
   getSMSMessageTempListSender as onGetSMSMessageTempListSender,
-  getSMSMessageTempListSubcategory as onGetSMSMessageTempListSubcategory,
+  // getSMSMessageTempListSubcategory as onGetSMSMessageTempListSubcategory,
   getSMSMessageTempListCategory as onGetSMSMessageTempListCategory,
 } from "/src/store/smsmessage/actions";
 
@@ -37,7 +37,7 @@ const SMSMessageTemplateList = (props) => {
       loading: smsmessagetemp.loading,
       smsmessagetempStatus: smsmessagetemp.smsmessagetempStatus,
       smsmessagetempSender: smsmessagetemp.smsmessagetempSender,
-      smsmessagetempSubcategory: smsmessagetemp.smsmessagetempSubcategory,
+      // smsmessagetempSubcategory: smsmessagetemp.smsmessagetempSubcategory,
       smsmessagetempCategory: smsmessagetemp.smsmessagetempCategory,
       totalPage: smsmessagetemp.totalPages,
       totalCount: smsmessagetemp.totalCount,
@@ -51,7 +51,7 @@ const SMSMessageTemplateList = (props) => {
     loading,
     smsmessagetempCategory,
     smsmessagetempSender,
-    smsmessagetempSubcategory,
+    // smsmessagetempSubcategory,
     smsmessagetempStatus,
     totalPage,
     totalCount,
@@ -186,7 +186,7 @@ const SMSMessageTemplateList = (props) => {
     if (SMSMsgTemp && !SMSMsgTemp.length) {
       dispatch(onGetSMSMessageTemplate());
       dispatch(onGetSMSMessageTempListCategory());
-      dispatch(onGetSMSMessageTempListSubcategory());
+      // dispatch(onGetSMSMessageTempListSubcategory());
       dispatch(onGetSMSMessageTempListSender());
       dispatch(onGetSMSMessageTempListStatus());
     }
@@ -218,9 +218,9 @@ const SMSMessageTemplateList = (props) => {
     return [{}];
   };
 
-  console.log(
-    "SMS Messgage Temp Sub" + JSON.stringify(smsmessagetempSubcategory)
-  );
+  // console.log(
+  //   "SMS Messgage Temp Sub" + JSON.stringify(smsmessagetempSubcategory)
+  // );
   return (
     <React.Fragment>
       <ViewSMSMessageTemplateList
@@ -228,7 +228,7 @@ const SMSMessageTemplateList = (props) => {
         toggleViewModal={toggleViewModal}
         SMSMsgTemp={viewSMSData}
         smsmessagetempCategory={smsmessagetempCategory}
-        smsmessagetempSubCategory={smsmessagetempSubcategory}
+        // smsmessagetempSubCategory={smsmessagetempSubcategory}
         smsmessagetempSender={smsmessagetempSender}
         smsmessagetempStatus={smsmessagetempStatus}
         resetSelection={resetSelection}
