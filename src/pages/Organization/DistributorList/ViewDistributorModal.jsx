@@ -19,7 +19,7 @@ import { useDispatch } from "react-redux";
 
 import TapsOfViewDistributor from "./TapsOfViewDistributor";
 import EditDistributorModal from "./EditDistributorModal";
-import ShowHistoryModal from "../RegionalOfficeList/ShowHistoryModal";
+import ShowHistoryModal from "./ShowHistoryModal";
 
 const ViewDistributorModal = (props) => {
   const {

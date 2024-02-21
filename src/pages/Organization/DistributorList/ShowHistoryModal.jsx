@@ -5,6 +5,7 @@ import { Modal, ModalBody, ModalHeader, Row, Col, Input } from "reactstrap";
 import TableContainer from "../../../components/Common/TableContainer";
 
 const ShowHistoryModal = ({ isOpen, toggleHistoryModal, distributor }) => {
+  console.log("distributor in history modal:" + JSON.stringify(distributor));
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [historyData, setHistoryData] = useState([]);
   const [year, setYear] = useState("2024");
@@ -151,8 +152,7 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, distributor }) => {
       toggle={toggleHistoryModal}
     >
       <ModalHeader toggle={toggleHistoryModal} tag="h4" position="relative">
-        Regional Office History
-        {/* ({distributor && distributor.name}) */}
+        Regional Office History ({distributor && distributor.name})
       </ModalHeader>
       <ModalBody>
         <div
