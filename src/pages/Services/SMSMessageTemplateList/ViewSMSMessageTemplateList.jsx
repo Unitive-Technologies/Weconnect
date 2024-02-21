@@ -60,16 +60,12 @@ const ViewSMSMessageTemplateList = (props) => {
       created_at: (SMSMsgTemp && SMSMsgTemp.created_at) || "",
       created_by: (SMSMsgTemp && SMSMsgTemp.created_by) || "my mso(mso)",
       status: (SMSMsgTemp && SMSMsgTemp.status) || "",
+      meta_data: (SMSMsgTemp && SMSMsgTemp.meta_data) || "",
     },
     validationSchema: Yup.object({
       code: Yup.string().required("Enter template Code"),
       name: Yup.string().required("Enter template name"),
-      // template: Yup.string().required("Enter template"),
-      // template_id: Yup.string().required("Enter template id"),
-      // cat_id: Yup.string().required("Enter category id"),
-      // sub_cat_id: Yup.string().required("Enter subcategory id"),
       status: Yup.string().required("Enter status"),
-      // sender_id: Yup.string().required("Enter sender"),
     }),
     onSubmit: (values) => {
       const updateSMSMessageTemplateList = {
@@ -82,7 +78,7 @@ const ViewSMSMessageTemplateList = (props) => {
         sub_cat_id: values.sub_cat_id,
         status_lbl: values.status_lbl,
         sender_id: values.sender_id,
-        meta_Data: values.metaData,
+        meta_Data: values.meta_data,
         // serviceid: values["serviceid"],
         status: values.status,
         created_at: new Date(),
@@ -335,7 +331,7 @@ const ViewSMSMessageTemplateList = (props) => {
               <ViewMetaData
                 disabled={!showEditSMS}
                 showEditSMS={setMetaData}
-                data={SMSMsgTemp && SMSMsgTemp.metaData} />
+                data={SMSMsgTemp && SMSMsgTemp.meta_data} />
             </Col>
           </Row>
 

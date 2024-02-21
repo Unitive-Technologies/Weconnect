@@ -21,9 +21,10 @@ import { useSelector, useDispatch } from "react-redux";
 const ViewMetaData = ({
   data,
   updateList,
-  showEditSMS
+  showEditSMS,
+  setMetaData
 }) => {
-  console.log("Cas List Data" + JSON.stringify(data));
+  console.log("SMS Message Data" + JSON.stringify(data));
 
   const updateMetaData = () => {
     if (!type || !field || !label) {
@@ -38,7 +39,7 @@ const ViewMetaData = ({
     };
 
     const updatedData = [...data, newItem];
-    console.log("Updated Data in CasList" + updatedData);
+    console.log("Updated Data in SMS Message" + JSON.stringify(updatedData));
     updateList(updatedData);
 
     setType("");
@@ -47,15 +48,16 @@ const ViewMetaData = ({
   };
 
 
-  const selectChannelState = (state) => state.channelList;
-  const ChannelProperties = createSelector(
-    selectChannelState,
-    (channelList) => ({
-      casSource: channelList.casSource,
-    })
-  );
+  // const selectChannelState = (state) => state.channelList;
 
-  const { casSource } = useSelector(ChannelProperties);
+  // const ChannelProperties = createSelector(
+  //   selectChannelState,
+  //   (channelList) => ({
+  //     casSource: channelList.casSource,
+  //   })
+  // );
+
+  // const { casSource } = useSelector(ChannelProperties);
 
   const [type, setType] = useState("");
   const [field, setField] = useState("");
