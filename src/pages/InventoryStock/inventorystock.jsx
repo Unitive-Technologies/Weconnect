@@ -127,6 +127,7 @@ const InventoryStock = (props) => {
   const [showDeallotPairing, setShowDeallotPairing] = useState(false);
   const [showAllottedPairing, setShowAllottedPairing] = useState(false);
   const [selectedAllottedPairings, setSelectedAllottedPairings] = useState([]);
+  const [filteredSmartcards, setFilteredSmartcards] = useState([]);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -596,6 +597,24 @@ const InventoryStock = (props) => {
       setSelectedAllottedPairings([...selectedAllottedPairings, row]);
     }
   };
+
+  useEffect(() => {
+    console.log("Selected filtered smartcards: ", selectedAllottedSmartcards);
+    const hasMymsoOperatorLbl = selectedAllottedSmartcards.filter(
+      (smartcard) => smartcard.operator_lbl === "my mso"
+    );
+
+    if (hasMymsoOperatorLbl) {
+      setFilteredSmartcards(hasMymsoOperatorLbl);
+      console.log("Operator with mso: ", hasMymsoOperatorLbl);
+    } else {
+      console.log("None of the elements have operator_lbl equal to mymso");
+    }
+  }, [selectedAllottedSmartcards]);
+
+  // useEffect(() => {
+  //   console.log("Filtered data: ", filteredSmartcards);
+  // }, [filteredSmartcards]);
 
   const columns = useMemo(() => {
     const commonColumns = [
@@ -1263,7 +1282,10 @@ const InventoryStock = (props) => {
             name: "Allot",
             type: "normal",
             icon: "create",
-            action: setShowAllottedPairing,
+            action:
+              Object.keys(selectedAllottedPairings).length === 0
+                ? () => setShowWarning(true)
+                : () => setShowAllottedPairing(true),
           },
           {
             name: "Upload",
@@ -1390,8 +1412,6 @@ const InventoryStock = (props) => {
     }
   };
 
-  // console.log("Allotted pairing list: ", allottedpairinglist);
-
   return (
     <React.Fragment>
       <AddStockSmartcard
@@ -1449,7 +1469,7 @@ const InventoryStock = (props) => {
       <AllottedSmrtcard
         isOpen={showAllottedSmartcard}
         toggle={handleAllottedSmartcard}
-        allottedsmartcardlist={allottedsmartcardlist}
+        allottedsmartcardlist={selectedAllottedSmartcards}
         allottedoperatorlist={allottedoperatorlist}
         allottedusertype={allottedusertype}
       />
