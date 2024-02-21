@@ -25,6 +25,7 @@ import { getSingleLco as onGetSingleLco } from "/src/store/lcolist/actions";
 import TapsOfLco from "./TapsOfLco";
 import EditLcoModal from "./EditLcoModal";
 import { createSelector } from "reselect";
+import ShowHistoryModal from "./ShowHistoryModal";
 
 const ViewLcoModal = (props) => {
   const {
@@ -49,6 +50,11 @@ const ViewLcoModal = (props) => {
   const currentDate = new Date().toISOString().split("T")[0];
   const [fromDate, setFromDate] = useState(currentDate);
   const [toDate, setToDate] = useState(currentDate);
+  const [showHistory, setShowHistory] = useState(false);
+
+  const toggleHistoryModal = () => {
+    setShowHistory(!showHistory);
+  };
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -205,11 +211,13 @@ const ViewLcoModal = (props) => {
 
   return (
     <>
-      {/* <EditRegionalOfficeModal
-        isOpen={showEditRegionalOffice}
-        togglelink={handleEditRegionalOffice}
-        regionalOffData={regionalOffData}
-      /> */}
+      {showHistory && (
+        <ShowHistoryModal
+          isOpen={showHistory}
+          toggleHistoryModal={toggleHistoryModal}
+          lcoData={lcoData}
+        />
+      )}
 
       <Modal
         isOpen={isOpen}
@@ -232,6 +240,18 @@ const ViewLcoModal = (props) => {
               style={{
                 position: "absolute",
                 marginLeft: "92%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowHistory(true)}
+            >
+              <i className="dripicons-briefcase" />
+            </Link>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "87%",
                 marginTop: "1%",
               }}
               to="#!"
