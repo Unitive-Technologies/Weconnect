@@ -22,7 +22,7 @@ const ViewMetaData = ({
   data,
   updateList,
   showEditSMS,
-  setMetaData
+  isOpen,
 }) => {
   console.log("SMS Message Data" + JSON.stringify(data));
 

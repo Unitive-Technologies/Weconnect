@@ -78,7 +78,7 @@ const ViewSMSMessageTemplateList = (props) => {
         sub_cat_id: values.sub_cat_id,
         status_lbl: values.status_lbl,
         sender_id: values.sender_id,
-        meta_Data: values.meta_data,
+        meta_data: values.meta_data,
         // serviceid: values["serviceid"],
         status: values.status,
         created_at: new Date(),
@@ -97,6 +97,10 @@ const ViewSMSMessageTemplateList = (props) => {
     setShowEditSMS(false);
     resetSelection();
     toggleViewModal();
+  };
+
+  const handleUpdateMetaData = (metaData) => {
+    setMetaData(metaData);
   };
 
   return (
@@ -329,9 +333,10 @@ const ViewSMSMessageTemplateList = (props) => {
           >
             <Col sm="12">
               <ViewMetaData
-                disabled={!showEditSMS}
-                showEditSMS={setMetaData}
-                data={SMSMsgTemp && SMSMsgTemp.meta_data} />
+                isOpen={Boolean(handleUpdateMetaData)}
+                updateList={setMetaData}
+                data={metaData}
+                showEditSMS={showEditSMS} />
             </Col>
           </Row>
 

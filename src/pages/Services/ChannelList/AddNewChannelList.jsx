@@ -378,13 +378,13 @@ const AddNewChannelList = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -415,7 +415,7 @@ const AddNewChannelList = (props) => {
                     ))}
                 </Input>
                 {validation.touched.definition &&
-                validation.errors.definition ? (
+                  validation.errors.definition ? (
                   <FormFeedback type="invalid">
                     {validation.errors.definition}
                   </FormFeedback>
@@ -476,7 +476,7 @@ const AddNewChannelList = (props) => {
                     ))}
                 </Input>
                 {validation.touched.broadcaster &&
-                validation.errors.broadcaster ? (
+                  validation.errors.broadcaster ? (
                   <FormFeedback type="invalid">
                     {validation.errors.broadcaster}
                   </FormFeedback>
@@ -527,8 +527,8 @@ const AddNewChannelList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.language || []}
-                  // onChange={handleChangeLanguages}
-                  // value={selectedLanguages}
+                // onChange={handleChangeLanguages}
+                // value={selectedLanguages}
                 >
                   <option value="">Select Language</option>
                   {channelListLanguage &&
@@ -564,7 +564,7 @@ const AddNewChannelList = (props) => {
                   <option value="0">No</option>
                 </Input>
                 {validation.touched.isalacarte &&
-                validation.errors.isalacarte ? (
+                  validation.errors.isalacarte ? (
                   <FormFeedback type="invalid">
                     {validation.errors.isalacarte}
                   </FormFeedback>
