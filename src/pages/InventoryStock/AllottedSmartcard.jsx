@@ -37,9 +37,9 @@ function AllottedSmrtcard(props) {
   const [usertype, setUsertype] = useState("");
   const [selectedSmartcardlist, setSelectedSmartcardlist] = useState([]);
   const [isCheckedSc, setIsCheckedSc] = useState(false);
-  const [branch_id, setBranch_id] = useState("");
-  const [distributor_id, setDistributor_id] = useState("");
-  const [operator, setOperator] = useState("");
+  const [branch_id, setBranch_id] = useState(""); //Regional office id
+  const [distributor_id, setDistributor_id] = useState(""); //Distributor id
+  const [operator, setOperator] = useState(""); //Lco id
   const [allotteddistributor, setAllotteddistributor] = useState([]);
   const [allottedlco, setAllottedlco] = useState([]);
 
@@ -112,7 +112,7 @@ function AllottedSmrtcard(props) {
     },
     validationSchema: Yup.object({
       usertype: Yup.string().required("Select user Type"),
-      // branch_id: Yup.string().required("Select Reginal office"),
+      // branch_id: Yup.string().required("Select Regional office"),
       // distributor_id: Yup.string().required("Select distributor"),
       // operator: Yup.string().required("Select lco"),
     }),
