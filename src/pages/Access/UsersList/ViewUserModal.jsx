@@ -28,6 +28,7 @@ import {
   getUserLco as onGetUserLco,
 } from "/src/store/users/actions";
 import axios from "axios";
+import ShowHistoryModal from "./ShowHistoryModal";
 
 const ViewUserModal = (props) => {
   const {
@@ -54,6 +55,12 @@ const ViewUserModal = (props) => {
   const [lcoList, setLcoList] = useState([]);
   const [showGroupPolicy, setShowGroupPolicy] = useState(false);
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
+
+  const [showHistory, setShowHistory] = useState(false);
+
+  const toggleHistoryModal = () => {
+    setShowHistory(!showHistory);
+  };
 
   const selectContactsState = (state) => state.users;
   const ContactsProperties = createSelector(selectContactsState, (Users) => ({
@@ -287,6 +294,13 @@ const ViewUserModal = (props) => {
   }, [dispatch, user]);
   return (
     <>
+      {showHistory && (
+        <ShowHistoryModal
+          isOpen={showHistory}
+          toggleHistoryModal={toggleHistoryModal}
+          user={user}
+        />
+      )}
       <Modal
         isOpen={isOpen}
         size="xl"
@@ -303,18 +317,32 @@ const ViewUserModal = (props) => {
             : `Edit ${(user && user.name) || ""}`}
         </ModalHeader>
         {!showEditUser && (
-          <Link
-            style={{
-              position: "absolute",
-              marginLeft: "92%",
-              marginTop: "1%",
-            }}
-            to="#!"
-            className="btn btn-light me-1"
-            onClick={() => setShowEditUser(true)}
-          >
-            <i className="mdi mdi-pencil-outline"></i>
-          </Link>
+          <>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "92%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowHistory(true)}
+            >
+              <i className="dripicons-briefcase" />
+            </Link>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "87%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowEditUser(true)}
+            >
+              <i className="mdi mdi-pencil-outline"></i>
+            </Link>
+          </>
         )}
         <ModalBody>
           <Form
