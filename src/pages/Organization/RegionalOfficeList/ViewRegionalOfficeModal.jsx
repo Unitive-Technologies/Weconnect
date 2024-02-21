@@ -24,6 +24,7 @@ import {
 } from "../../../store/regionaloffice/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
+import ShowHistoryModal from "./ShowHistoryModal";
 
 const ViewRegionalOfficeModal = (props) => {
   const {
@@ -47,6 +48,10 @@ const ViewRegionalOfficeModal = (props) => {
   const [showEditRegionalOffice, setShowEditRegionalOffice] = useState(false);
   const [showOperatorDetails, setShowOperatorDetails] = useState(true);
   const [showHistory, setShowHistory] = useState(false);
+
+  const toggleHistoryModal = () => {
+    setShowHistory(!showHistory);
+  };
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -223,6 +228,13 @@ const ViewRegionalOfficeModal = (props) => {
   // console.log("allotted:" + JSON.stringify(allottedScheme));
   return (
     <>
+      {showHistory && (
+        <ShowHistoryModal
+          isOpen={showHistory}
+          toggleHistoryModal={toggleHistoryModal}
+          regionalOffData={regionalOffData}
+        />
+      )}
       <Modal
         isOpen={isOpen}
         role="dialog"
