@@ -140,7 +140,6 @@ const ViewReason = (props) => {
 
             <ModalBody>
               <Form
-                // style={{ textAlign: "center" }}
                 onSubmit={(e) => {
                   e.preventDefault();
                   validation.handleSubmit();
