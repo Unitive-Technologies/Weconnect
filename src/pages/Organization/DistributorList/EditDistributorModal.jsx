@@ -180,17 +180,18 @@ const EditDistributorModal = (props) => {
       gst_date: (distributor && distributor.gst_date) || "",
       credit_limit: (distributor && distributor.credit_limit) || "",
       area_id: (distributor && distributor.area_id) || "",
-      // agreestart:
-      //   (distributor &&
-      //     distributor.agreement_data &&
-      //     distributor.agreement_data.start_date) ||
-      //   "",
-      // agreeend:
-      //   (distributor &&
-      //     distributor.agreement_data &&
-      //     distributor.agreement_data.end_date) ||
-      //   "",
+      agreestart:
+        (distributor &&
+          distributor.agreement_data &&
+          distributor.agreement_data.start_date) ||
+        "",
+      agreeend:
+        (distributor &&
+          distributor.agreement_data &&
+          distributor.agreement_data.end_date) ||
+        "",
     },
+
     validationSchema: Yup.object({
       // name: Yup.string().required("Please Enter Your Name"),
       // email: Yup.string()
@@ -215,38 +216,39 @@ const EditDistributorModal = (props) => {
           id: distributor.id,
           name: values["name"],
           code: values["code"],
-          // agreement_data: {
-          //   name: values["upload"] ? values["upload"].name : "",
-          //   type: values["upload"] ? values["upload"].type : "",
-          //   ext: values["upload"] ? values["upload"].ext : "",
-          //   data: values["upload"] ? values["upload"].data : "",
-          //   start_date: values["agreestart"],
-          //   end_date: values["agreeend"],
-          // },
-
-          parent_id: parseInt(values["branch_lbl"]),
           addr: values["addr1"],
           // addr1: values["addr1"],
           addr2: values["addr2"],
           addr3: values["addr3"],
+          agreement_data: {
+            name: values["upload"] ? values["upload"].name : "",
+            type: values["upload"] ? values["upload"].type : "",
+            ext: values["upload"] ? values["upload"].ext : "",
+            data: values["upload"] ? values["upload"].data : "",
+            start_date: values["agreestart"],
+            end_date: values["agreeend"],
+          },
+          area_id: parseInt(values["area_id"]),
+          state_id: parseInt(values["state_lbl"]),
+          district_id: parseInt(values["district_lbl"]),
+          city_id: parseInt(values["city_lbl"]),
+
           contact_person: values["contact_person"],
+          credit_limit: values["credit_limit"],
           status: parseInt(values["status_lbl"]),
           mobile_no: values["mobile_no"],
           phone_no: values["phone_no"],
           email: values["email"],
-          state_id: parseInt(values["state_lbl"]),
-          district_id: parseInt(values["district_lbl"]),
-          city_id: parseInt(values["city_lbl"]),
+          parent_id: parseInt(values["branch_lbl"]),
           gstno: values["gstno"],
+          gst_date: values["gst_date"],
           panno: values["panno"],
-          // pincode: values["pincode"],
+          pincode: values["pincode"],
           por_number: values["por_number"],
           // reg_phase: values["reg_phase"],
           // reg_startdate: values["reg_startdate"],
           // reg_enddate: values["reg_enddate"],
-          // gst_date: values["gst_date"],
-          credit_limit: parseInt(values["credit_limit"]),
-          area_id: parseInt(values["area_id"]),
+
           type: 2,
         };
 
@@ -331,6 +333,7 @@ const EditDistributorModal = (props) => {
         <Form
           onSubmit={(e) => {
             e.preventDefault();
+            // debugger;
             validation.handleSubmit();
             return false;
           }}
@@ -1115,31 +1118,35 @@ const EditDistributorModal = (props) => {
               </div>
             </Col>
           </Row>
+          <Row>
+            <Col>
+              <ModalFooter>
+                <button type="submit" className="btn btn-success save-user">
+                  Save
+                </button>
+                <button
+                  type="reset"
+                  className="btn btn-warning"
+                  onClick={() => validation.resetForm()}
+                >
+                  Reset
+                </button>
+
+                <button
+                  type="button"
+                  className="btn btn-outline-danger"
+                  onClick={() => {
+                    validation.resetForm();
+                    handleCancel();
+                  }}
+                >
+                  Cancel
+                </button>
+              </ModalFooter>
+            </Col>
+          </Row>
         </Form>
       </ModalBody>
-      <ModalFooter>
-        <button type="submit" className="btn btn-success save-user">
-          Save
-        </button>
-        <button
-          type="reset"
-          className="btn btn-warning"
-          onClick={() => validation.resetForm()}
-        >
-          Reset
-        </button>
-
-        <button
-          type="button"
-          className="btn btn-outline-danger"
-          onClick={() => {
-            validation.resetForm();
-            handleCancel();
-          }}
-        >
-          Cancel
-        </button>
-      </ModalFooter>
     </>
   );
 };
