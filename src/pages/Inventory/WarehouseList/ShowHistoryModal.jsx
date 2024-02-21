@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { Modal, ModalBody, ModalHeader, Row, Col, Input } from "reactstrap";
 import TableContainer from "../../../components/Common/TableContainer";
 
-const ShowHistoryModal = ({ isOpen, toggleHistoryModal, reason }) => {
-  console.log("Show History Modal in ReasonList" + reason)
+const ShowHistoryModal = ({ isOpen, toggleHistoryModal, warehouse }) => {
+  console.log("Show History Modal in ReasonList" + warehouse)
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [historyData, setHistoryData] = useState([]);
   const [year, setYear] = useState("2024");
@@ -112,7 +112,7 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, reason }) => {
       const token = "Bearer " + localStorage.getItem("temptoken");
 
       const response = await axios.get(
-        `${API_URL}/reason/${reason.id
+        `${API_URL}/warehouse/${warehouse.id
         }/audit?fields=id,name,_metadata,model,_remark&expand=nData&page=1&per-page=50&filter[year]=${parseInt(
           year
         )}&vr=web1.0`,
@@ -129,10 +129,10 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, reason }) => {
     }
   };
   useEffect(() => {
-    if (reason) {
+    if (warehouse) {
       getHistoryDetails();
     }
-  }, [reason, year]);
+  }, [warehouse, year]);
   return (
     <Modal
       isOpen={isOpen}
@@ -145,7 +145,7 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, reason }) => {
       toggle={toggleHistoryModal}
     >
       <ModalHeader toggle={toggleHistoryModal} tag="h4" position="relative">
-        <h4>Regional Office History ({reason.name})</h4>
+        <h4>Regional Office History ({warehouse.name})</h4>
       </ModalHeader>
       <ModalBody>
         <div
