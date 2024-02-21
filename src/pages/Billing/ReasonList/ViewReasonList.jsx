@@ -12,20 +12,26 @@ import {
   FormFeedback,
   Input,
   Form,
-
 } from "reactstrap";
 import Select from "react-select";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { updateReason as onUpdateReason, getReason as onGetReason, } from "/src/store/reasonlist/actions";
+import {
+  updateReason as onUpdateReason,
+  getReason as onGetReason,
+} from "/src/store/reasonlist/actions";
 import ShowHistoryModal from "./ShowHistoryModal";
 
-
 const ViewReason = (props) => {
-  const { isOpen, resetSelection,
-    toggleViewModal, reason, reasonStatus, reasonReasonType } =
-    props;
+  const {
+    isOpen,
+    resetSelection,
+    toggleViewModal,
+    reason,
+    reasonStatus,
+    reasonReasonType,
+  } = props;
   console.log("View Reasonlist modal:" + JSON.stringify(reason));
   const dispatch = useDispatch();
   const [showEditReason, setShowEditReason] = useState(false);
@@ -51,9 +57,7 @@ const ViewReason = (props) => {
       name: Yup.string().required(""),
       status: Yup.string().required("Select Status"),
       // type: Yup.array().min(1, "Select at least one Reason Type"),
-      applicableon: Yup.array().required(
-        ""
-      ),
+      applicableon: Yup.array().required(""),
     }),
     onSubmit: (values) => {
       const applicableonArray = values["applicableon"] || [];
@@ -85,7 +89,9 @@ const ViewReason = (props) => {
     toggleViewModal();
   };
 
-  console.log("View Reason List Reason Type Values" + validation.values.type_display_lbl)
+  console.log(
+    "View Reason List Reason Type Values" + validation.values.type_display_lbl
+  );
   return (
     <>
       {showHistory && (
@@ -105,14 +111,14 @@ const ViewReason = (props) => {
         tabIndex="-1"
         toggle={handleCancel}
       >
-        {!showEditReason ? (
+        {console.log("showEditReason :" + showEditReason)}
+        <ModalHeader toggle={handleCancel} tag="h4">
+          {!showEditReason
+            ? `View ${(reason && reason.name) || ""}`
+            : `Edit ${(reason && reason.name) || ""}`}
+        </ModalHeader>
+        {!showEditReason && (
           <>
-            <ModalHeader toggle={handleCancel} tag="h4" position="relative">
-              <h4>
-                View - {reason && reason.name}
-              </h4>
-            </ModalHeader>
-
             <Link
               style={{
                 position: "absolute",
@@ -137,135 +143,140 @@ const ViewReason = (props) => {
             >
               <i className="mdi mdi-pencil-outline"></i>
             </Link>
-
-            <ModalBody>
-              <Form
-                // style={{ textAlign: "center" }}
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  validation.handleSubmit();
-                  return false;
-                }}
-              >
-                <Row>
-                  <Col sm="4">
-                    <div className="mb-3">
-                      <Label className="form-label">
-                        Reason<span style={{ color: "red" }}>*</span>
-                      </Label>
-                      <Input
-                        name="name"
-                        type="text"
-                        placeholder=""
-                        disabled={!showEditReason}
-                        onChange={validation.handleChange}
-                        onBlur={validation.handleBlur}
-                        value={validation.values.name || ""}
-                        invalid={
-                          validation.touched.name && validation.errors.name
-                            ? true
-                            : false
-                        }
-                      />
-                      {validation.touched.name && validation.errors.name ? (
-                        <FormFeedback type="invalid">
-                          {validation.errors.name}
-                        </FormFeedback>
-                      ) : null}
-                    </div>
-                  </Col>
-
-                  <Col sm="4">
-                    <div className="mb-3">
-                      <Label className="form-label">
-                        Status<span style={{ color: "red" }}>*</span>
-                      </Label>
-                      <Input
-                        name="status"
-                        type="select"
-                        placeholder="Select Status"
-                        className="form-select"
-                        disabled={!showEditReason}
-                        onChange={validation.handleChange}
-                        onBlur={validation.handleBlur}
-                        value={validation.values.status || ""}
-                      >
-                        {reasonStatus.map((status) => (
-                          <option key={status.id} value={status.id}>
-                            {status.name}
-                          </option>
-                        ))}
-                      </Input>
-                      {validation.touched.status && validation.errors.status ? (
-                        <FormFeedback type="invalid">
-                          {validation.errors.status}
-                        </FormFeedback>
-                      ) : null}
-                    </div>
-                  </Col>
-                  {console.log("View Reason List type_lbl" + validation.values.type_display_lbl)}
-                  <Col sm="4">
-                    <div className="mb-3">
-                      <Label className="form-label">Reason Type</Label>
-                      {/* <div className="d-flex align-items-center"> */}
-                      <Select
-                        name="type_display_lbl"
-                        placeholder="Select at least one Reason Type"
-                        onChange={(selectedOptions) => {
-                          validation.setFieldValue("type_display_lbl", selectedOptions);
-                        }}
-                        onBlur={validation.handleBlur}
-                        value={validation.values.type_display_lbl}
-                        options={reasonReasonType.map((type_display_lbl) => ({
-                          value: type_display_lbl.name,
-                          label: type_display_lbl.name,
-                        }))}
-                        isMulti
-                        isDisabled={!showEditReason}
-                      />
-                    </div>
-                    {validation.touched.type_display_lbl && validation.errors.type_display_lbl ? (
-                      <FormFeedback type="invalid">
-                        {validation.errors.type_display_lbl}
-                      </FormFeedback>
-                    ) : null}
-                    {/* </div> */}
-                  </Col>
-                </Row>
-
-                {showEditReason && (
-                  <Row>
-                    <Col>
-                      <ModalFooter>
-                        <button type="submit" className="btn btn-success save-user">
-                          Save
-                        </button>
-                        <button
-                          type="reset"
-                          className="btn btn-warning"
-                          onClick={() => validation.resetForm()}
-                        >
-                          Reset
-                        </button>
-
-                        <button
-                          type="button"
-                          className="btn btn-outline-danger"
-                          onClick={() => {
-                            validation.resetForm();
-                            handleCancel();
-                          }}
-                        >
-                          Cancel
-                        </button>
-                      </ModalFooter>
-                    </Col>
-                  </Row>
-                )}
-              </Form>
-            </ModalBody>
           </>
-        ) : null}
+        )}
+        <ModalBody>
+          <Form
+            // style={{ textAlign: "center" }}
+            onSubmit={(e) => {
+              e.preventDefault();
+              validation.handleSubmit();
+              return false;
+            }}
+          >
+            <Row>
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Reason<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="name"
+                    type="text"
+                    placeholder=""
+                    disabled={!showEditReason}
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.name || ""}
+                    invalid={
+                      validation.touched.name && validation.errors.name
+                        ? true
+                        : false
+                    }
+                  />
+                  {validation.touched.name && validation.errors.name ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.name}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Status<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="status"
+                    type="select"
+                    placeholder="Select Status"
+                    className="form-select"
+                    disabled={!showEditReason}
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.status || ""}
+                  >
+                    {reasonStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
+                  </Input>
+                  {validation.touched.status && validation.errors.status ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.status}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              {console.log(
+                "View Reason List type_lbl" + validation.values.type_display_lbl
+              )}
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">Reason Type</Label>
+                  {/* <div className="d-flex align-items-center"> */}
+                  <Select
+                    name="type_display_lbl"
+                    placeholder="Select at least one Reason Type"
+                    onChange={(selectedOptions) => {
+                      validation.setFieldValue(
+                        "type_display_lbl",
+                        selectedOptions
+                      );
+                    }}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.type_display_lbl}
+                    options={reasonReasonType.map((type_display_lbl) => ({
+                      value: type_display_lbl.name,
+                      label: type_display_lbl.name,
+                    }))}
+                    isMulti
+                    isDisabled={!showEditReason}
+                  />
+                </div>
+                {validation.touched.type_display_lbl &&
+                validation.errors.type_display_lbl ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.type_display_lbl}
+                  </FormFeedback>
+                ) : null}
+                {/* </div> */}
+              </Col>
+            </Row>
+
+            {showEditReason && (
+              <Row>
+                <Col>
+                  <ModalFooter>
+                    <button type="submit" className="btn btn-success save-user">
+                      Save
+                    </button>
+                    <button
+                      type="reset"
+                      className="btn btn-warning"
+                      onClick={() => validation.resetForm()}
+                    >
+                      Reset
+                    </button>
+
+                    <button
+                      type="button"
+                      className="btn btn-outline-danger"
+                      onClick={() => {
+                        validation.resetForm();
+                        handleCancel();
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </ModalFooter>
+                </Col>
+              </Row>
+            )}
+          </Form>
+        </ModalBody>
       </Modal>
     </>
   );

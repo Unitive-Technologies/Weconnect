@@ -40,6 +40,7 @@ const EditLcoModal = (props) => {
     lcoCustomerPortal,
     lcoParentDistributor,
   } = props;
+  console.log("lcoData in editmodal:" + JSON.stringify(lcoData));
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [toggleSwitch, settoggleSwitch] = useState(true);
   const dispatch = useDispatch();
@@ -478,7 +479,9 @@ const EditLcoModal = (props) => {
             <Col lg={4}> */}
 
               <div className="mb-3">
-                <Label className="form-label">Contact Person</Label>
+                <Label className="form-label">
+                  Contact Person<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="contact_person"
                   label="Contact Person"
