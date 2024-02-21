@@ -236,7 +236,7 @@ const ViewReason = (props) => {
                   />
                 </div>
                 {validation.touched.type_display_lbl &&
-                validation.errors.type_display_lbl ? (
+                  validation.errors.type_display_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.type_display_lbl}
                   </FormFeedback>
