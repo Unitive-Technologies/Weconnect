@@ -5,6 +5,7 @@ import { Modal, ModalBody, ModalHeader, Row, Col, Input } from "reactstrap";
 import TableContainer from "../../../components/Common/TableContainer";
 
 const ShowHistoryModal = ({ isOpen, toggleHistoryModal, reason }) => {
+  console.log("Show History Modal in ReasonList" + reason)
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [historyData, setHistoryData] = useState([]);
   const [year, setYear] = useState("2024");
