@@ -261,23 +261,23 @@ const ViewRegionalOfficeModal = (props) => {
               }}
               to="#!"
               className="btn btn-light me-1"
+              onClick={() => setShowHistory(true)}
+            >
+              <i className="dripicons-briefcase" />
+            </Link>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "87%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
               onClick={() => setShowEditRegionalOffice(true)}
             >
               <i className="mdi mdi-pencil-outline"></i>
             </Link>
 
-            <Link
-              style={{
-                position: "absolute",
-                marginLeft: "86%",
-                marginTop: "1%",
-              }}
-              to="#!"
-              className="btn btn-light me-1"
-              onClick={() => setShowHistory(true)}
-            >
-              <i className="dripicons-briefcase" />
-            </Link>
             <ModalBody>
               <Form
                 onSubmit={(e) => {
