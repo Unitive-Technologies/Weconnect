@@ -98,8 +98,8 @@ const BulkAddCreditModal = (props) => {
         console.log("newSetting:", JSON.stringify(newCredit));
         const token = "Bearer " + localStorage.getItem("temptoken");
 
-        const response = await axios.put(
-          `${API_URL}/bulk-balance?vr=web1.0`,
+        const response = await axios.post(
+          `${API_URL}/operator-account/bulk-balance?vr=web1.0`,
           newCredit,
           {
             headers: {
