@@ -145,7 +145,7 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, sublocation }) => {
       toggle={toggleHistoryModal}
     >
       <ModalHeader toggle={toggleHistoryModal} tag="h4" position="relative">
-        <h4>Regional Office History ({sublocation.name})</h4>
+        <h4>Sublocation History ({sublocation.name})</h4>
       </ModalHeader>
       <ModalBody>
         <div

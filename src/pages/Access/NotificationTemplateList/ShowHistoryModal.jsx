@@ -148,7 +148,7 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, notiTemplate }) => {
       toggle={toggleHistoryModal}
     >
       <ModalHeader toggle={toggleHistoryModal} tag="h4" position="relative">
-        <h4>Regional Office History ({notiTemplate.msg_head})</h4>
+        <h4>Notification Template History ({notiTemplate.msg_head})</h4>
       </ModalHeader>
       <ModalBody>
         <div

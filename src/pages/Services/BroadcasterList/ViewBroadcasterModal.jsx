@@ -2,10 +2,7 @@ import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
-  Card,
-  CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
@@ -13,7 +10,6 @@ import {
   Label,
   FormFeedback,
   ModalFooter,
-  UncontrolledTooltip,
   Input,
   Form,
 } from "reactstrap";
@@ -23,12 +19,19 @@ import {
   getBroadCaster as onGetBroadCasters, updateBroadCaster as onUpdateBroadCaster
 } from "/src/store/broadcaster/actions";
 import { useSelector, useDispatch } from "react-redux";
+import ShowHistoryModal from "./ShowHistoryModal";
 
 const ViewBroadcasterModal = (props) => {
   const { isOpen, toggleViewBroadcaster, brodcastStatus, viewBroadcaster, } = props;
   console.log("Broad Caster modal:" + JSON.stringify(viewBroadcaster));
   const dispatch = useDispatch();
   const [showEditViewBroadCaster, setShowEditViewBroadCaster] = useState(false);
+
+  const [showHistory, setShowHistory] = useState(false);
+
+  const toggleHistoryModal = () => {
+    setShowHistory(!showHistory);
+  };
 
   const [selectedStatus, setSelectedStatus] = useState("");
 
@@ -103,6 +106,13 @@ const ViewBroadcasterModal = (props) => {
         isOpen={showEditUser}
         // onClose={() => setShowEditUser(false)}
       /> */}
+      {showHistory && (
+        <ShowHistoryModal
+          isOpen={showHistory}
+          toggleHistoryModal={toggleHistoryModal}
+          viewBroadcaster={viewBroadcaster}
+        />
+      )}
       <Modal
         isOpen={isOpen}
         size="xl"
@@ -119,18 +129,32 @@ const ViewBroadcasterModal = (props) => {
             : `Edit ${(viewBroadcaster && viewBroadcaster.name) || ""}`}
         </ModalHeader>
         {!showEditViewBroadCaster && (
-          <Link
-            style={{
-              position: "absolute",
-              marginLeft: "92%",
-              marginTop: "1%",
-            }}
-            to="#!"
-            className="btn btn-light me-1"
-            onClick={() => setShowEditViewBroadCaster(true)}
-          >
-            <i className="mdi mdi-pencil-outline"></i>
-          </Link>
+          <>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "92%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowHistory(true)}
+            >
+              <i className="dripicons-briefcase" />
+            </Link>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "87%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowEditViewBroadCaster(true)}
+            >
+              <i className="mdi mdi-pencil-outline"></i>
+            </Link>
+          </>
         )}
         <ModalBody>
           <Form

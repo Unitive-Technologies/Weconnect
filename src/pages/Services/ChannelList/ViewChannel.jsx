@@ -23,6 +23,7 @@ import { updateChannelList as onUpdateChannelList } from "/src/store/channel/act
 import { useDispatch } from "react-redux";
 import CasList from "./CasList";
 import PieChart from "./PieChart";
+import ShowHistoryModal from "./ShowHistoryModal";
 
 const ViewChannel = (props) => {
   const {
@@ -46,6 +47,11 @@ const ViewChannel = (props) => {
   const [broadPercent, setBroadPercent] = useState();
   const [msoPercent, setMsoPercent] = useState();
   const [discountPercent, setDiscountPercent] = useState();
+  const [showHistory, setShowHistory] = useState(false);
+
+  const toggleHistoryModal = () => {
+    setShowHistory(!showHistory);
+  };
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -148,448 +154,470 @@ const ViewChannel = (props) => {
   }, [revenueData]);
 
   return (
-    <Modal
-      isOpen={isOpen}
-      role="dialog"
-      autoFocus={true}
-      centered={true}
-      className="exampleModal"
-      tabIndex="-1"
-      toggle={handleCancel}
-      size="xl"
-    >
-      <ModalHeader toggle={handleCancel} tag="h4">
-        {!showEditChannel
-          ? `View ${(channel && channel.name) || ""}`
-          : `Edit ${(channel && channel.name) || ""}`}
-      </ModalHeader>
-      {!showEditChannel && (
-        <Link
-          style={{
-            position: "absolute",
-            marginLeft: "92%",
-            marginTop: "1%",
-          }}
-          to="#!"
-          className="btn btn-light me-1"
-          onClick={() => setShowEditChannel(true)}
-        >
-          <i className="mdi mdi-pencil-outline"></i>
-        </Link>
+    <>
+      {showHistory && (
+        <ShowHistoryModal
+          isOpen={showHistory}
+          toggleHistoryModal={toggleHistoryModal}
+          channel={channel}
+        />
       )}
-      <ModalBody>
-        <Form
-          onSubmit={(e) => {
-            e.preventDefault();
-            validation.handleSubmit();
-            return false;
-          }}
-        >
-          <Row>
-            <Col sm="4">
-              <div className="mb-3">
-                <Label className="form-label">Code</Label>
-                <Input
-                  name="code"
-                  type="text"
-                  disabled={!showEditChannel}
-                  placeholder="Enter code"
-                  // className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.code || ""}
-                ></Input>
-                {validation.touched.code && validation.errors.code ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.code}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
+      <Modal
+        isOpen={isOpen}
+        role="dialog"
+        autoFocus={true}
+        centered={true}
+        className="exampleModal"
+        tabIndex="-1"
+        toggle={handleCancel}
+        size="xl"
+      >
+        <ModalHeader toggle={handleCancel} tag="h4">
+          {!showEditChannel
+            ? `View ${(channel && channel.name) || ""}`
+            : `Edit ${(channel && channel.name) || ""}`}
+        </ModalHeader>
+        {!showEditChannel && (
+          <>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "92%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowHistory(true)}
+            >
+              <i className="dripicons-briefcase" />
+            </Link>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "87%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowEditChannel(true)}
+            >
+              <i className="mdi mdi-pencil-outline"></i>
+            </Link>
+          </>
+        )}
+        <ModalBody>
+          <Form
+            onSubmit={(e) => {
+              e.preventDefault();
+              validation.handleSubmit();
+              return false;
+            }}
+          >
+            <Row>
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">Code</Label>
+                  <Input
+                    name="code"
+                    type="text"
+                    disabled={!showEditChannel}
+                    placeholder="Enter code"
+                    // className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.code || ""}
+                  ></Input>
+                  {validation.touched.code && validation.errors.code ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.code}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
 
-            <Col lg={2}>
-              <div className="form-check form-switch form-switch-lg mb-3">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitchsizelg"
-                  defaultChecked
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="customSwitchsizelg"
-                >
-                  Custom / Auto
-                </label>
-              </div>
-            </Col>
+              <Col lg={2}>
+                <div className="form-check form-switch form-switch-lg mb-3">
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                    id="customSwitchsizelg"
+                    defaultChecked
+                  />
+                  <label
+                    className="form-check-label"
+                    htmlFor="customSwitchsizelg"
+                  >
+                    Custom / Auto
+                  </label>
+                </div>
+              </Col>
 
-            <Col lg={2}>
-              <div className="form-check form-switch form-switch-lg mb-3">
-                NCF:
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitchsizelg"
-                  defaultChecked
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="customSwitchsizelg"
-                >
-                  No / Yes
-                </label>
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col lg={2}>
-              <div className="mb-3">
-                <Label className="form-label">Logo</Label>
-                <Input
-                  style={{
-                    width: "170px",
-                    height: "150px",
-                    borderRadius: "10px",
-                  }}
-                  name="logo"
-                  type="text"
-                  disabled={!showEditChannel}
-                  // placeholder="Enter channel code"
-                  // className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.logo || ""}
-                ></Input>
-                {validation.touched.logo && validation.errors.logo ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.logo}
-                  </FormFeedback>
-                ) : null}
-                <button
-                  type="button"
-                  className="btn btn-primary "
-                  style={{ marginTop: "10px" }}
-                >
-                  Upload Logo
-                </button>
-              </div>
-              {/* <div className="mb-3">
+              <Col lg={2}>
+                <div className="form-check form-switch form-switch-lg mb-3">
+                  NCF:
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                    id="customSwitchsizelg"
+                    defaultChecked
+                  />
+                  <label
+                    className="form-check-label"
+                    htmlFor="customSwitchsizelg"
+                  >
+                    No / Yes
+                  </label>
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col lg={2}>
+                <div className="mb-3">
+                  <Label className="form-label">Logo</Label>
+                  <Input
+                    style={{
+                      width: "170px",
+                      height: "150px",
+                      borderRadius: "10px",
+                    }}
+                    name="logo"
+                    type="text"
+                    disabled={!showEditChannel}
+                    // placeholder="Enter channel code"
+                    // className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.logo || ""}
+                  ></Input>
+                  {validation.touched.logo && validation.errors.logo ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.logo}
+                    </FormFeedback>
+                  ) : null}
+                  <button
+                    type="button"
+                    className="btn btn-primary "
+                    style={{ marginTop: "10px" }}
+                  >
+                    Upload Logo
+                  </button>
+                </div>
+                {/* <div className="mb-3">
                 <img
                   src={`data:${logo.type};base64,${logo.data}`}
                   alt={logo.name}
                 />
               </div> */}
-            </Col>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">
-                  Name<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="name"
-                  type="text"
-                  placeholder="Enter name"
-                  disabled={!showEditChannel}
-                  // className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.name || ""}
-                ></Input>
-                {validation.touched.name && validation.errors.name ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.name}
-                  </FormFeedback>
-                ) : null}
-              </div>
-              {/* </Col>
+              </Col>
+              <Col lg={4}>
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Name<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="name"
+                    type="text"
+                    placeholder="Enter name"
+                    disabled={!showEditChannel}
+                    // className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.name || ""}
+                  ></Input>
+                  {validation.touched.name && validation.errors.name ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.name}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+                {/* </Col>
             <Col lg={4}> */}
-              <div className="mb-3">
-                <Label className="form-label">
-                  Description<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="description"
-                  type="textarea"
-                  placeholder="Enter Description"
-                  disabled={!showEditChannel}
-                  rows="3"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.description || ""}
-                  invalid={
-                    validation.touched.description &&
-                      validation.errors.description
-                      ? true
-                      : false
-                  }
-                />
-                {validation.touched.description &&
-                  validation.errors.description ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.description}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Description<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="description"
+                    type="textarea"
+                    placeholder="Enter Description"
+                    disabled={!showEditChannel}
+                    rows="3"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.description || ""}
+                    invalid={
+                      validation.touched.description &&
+                        validation.errors.description
+                        ? true
+                        : false
+                    }
+                  />
+                  {validation.touched.description &&
+                    validation.errors.description ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.description}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
 
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">
-                  Definition<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="definition"
-                  type="select"
-                  placeholder="Select Definition"
-                  disabled={!showEditChannel}
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.definition || ""}
-                >
-                  {channelListDefinition.map((definition) => (
-                    <option key={definition.id} value={definition.id}>
-                      {definition.name}
-                    </option>
-                  ))}
-                </Input>
-                {validation.touched.definition &&
-                  validation.errors.definition ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.definition}
-                  </FormFeedback>
-                ) : null}
-              </div>
-              {/* </Col>
-            <Col sm="4"> */}
-              <div className="mb-3">
-                <Label className="form-label">
-                  Type<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="type"
-                  type="select"
-                  placeholder="Select type"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.channel_type_lbl || ""}
-                  disabled={!showEditChannel}
-                >
-                  {channelListType &&
-                    channelListType.map((channel_type_lbl) => (
-                      <option
-                        key={channel_type_lbl.id}
-                        value={channel_type_lbl.id}
-                      >
-                        {channel_type_lbl.name}
+              <Col lg={4}>
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Definition<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="definition"
+                    type="select"
+                    placeholder="Select Definition"
+                    disabled={!showEditChannel}
+                    className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.definition || ""}
+                  >
+                    {channelListDefinition.map((definition) => (
+                      <option key={definition.id} value={definition.id}>
+                        {definition.name}
                       </option>
                     ))}
-                </Input>
-                {validation.touched.channel_type_lbl &&
-                  validation.errors.channel_type_lbl ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.channel_type_lbl}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col sm="4">
-              <div className="mb-3">
-                <Label className="form-label">
-                  Broadcaster<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="broadcaster"
-                  type="select"
-                  placeholder="Select broadcaster"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.broadcaster || ""}
-                  disabled={!showEditChannel}
-                >
-                  {channelListBroadcaster.map((broadcaster) => (
-                    <option key={broadcaster.id} value={broadcaster.id}>
-                      {broadcaster.name}
-                    </option>
-                  ))}
-                </Input>
-                {validation.touched.broadcaster &&
-                  validation.errors.broadcaster ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.broadcaster}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col sm="4">
-              <div className="mb-3">
-                <Label className="form-label">
-                  Genre<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="genre"
-                  type="select"
-                  placeholder="Select genre"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.genre || ""}
-                  disabled={!showEditChannel}
-                >
-                  {channelListGenre.map((genre) => (
-                    <option key={genre.id} value={genre.id}>
-                      {genre.name}
-                    </option>
-                  ))}
-                </Input>
-                {validation.touched.genre && validation.errors.genre ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.genre}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col sm="4">
-              <div className="mb-3">
-                <Label className="form-label">
-                  Language<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="language"
-                  type="text"
-                  placeholder="Select language"
-                  // className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.language || ""}
-                  disabled={!showEditChannel}
-                >
-                  {channelListLanguage.map((language) => (
-                    <option key={language.id} value={language.id}>
-                      {language.name}
-                    </option>
-                  ))}
-                </Input>
-                {validation.touched.language && validation.errors.language ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.language}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col sm="4">
-              <div className="mb-3">
-                <Label className="form-label">IsAlacarte</Label>
-                <Input
-                  name="isalacarte"
-                  type="select"
-                  // placeholder="Enter channel code"
-                  // className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.isalacarte || ""}
-                  disabled={!showEditChannel}
-                >
-                  <option value="201">Yes</option>
-                  <option value="202">No</option>
-                </Input>
-                {validation.touched.isalacarte &&
-                  validation.errors.isalacarte ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.isalacarte}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col sm="4">
-              <div className="mb-3">
-                <Label className="form-label">MRP Rate(INR)</Label>
-                <Input
-                  name="rate"
-                  type="number"
-                  // placeholder="Enter channel code"
-                  // className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.rate || ""}
-                  disabled={!showEditChannel}
-                ></Input>
-                {validation.touched.rate && validation.errors.rate ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.rate}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            <Col sm="4">
-              <div className="mb-3">
-                <Label className="form-label">
-                  Status<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="status"
-                  type="select"
-                  placeholder="Select Status"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.status || ""}
-                  disabled={!showEditChannel}
-                >
-                  {channelListStatus.map((status) => (
-                    <option key={status.id} value={status.id}>
-                      {status.name}
-                    </option>
-                  ))}
-                </Input>
-                {validation.touched.status && validation.errors.status ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.status}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-          </Row>
-          <div
-            style={{
-              // margin: "20px 0px",
-              marginTop: "20px",
-              marginBottom: "18px",
-              zIndex: 12000,
-              backgroundColor: "#fff",
-              width: "fit-content",
-              marginLeft: "40%",
-              position: "absolute",
-              padding: "0px 10px",
-            }}
-          >
-            <h5 style={{}}>MRP Revenue Share</h5>
-          </div>
-          <Row
-            style={{
-              position: "relative",
-              border: "1px solid #ced4da",
-              padding: "20px 0px",
-              margin: "30px 0px",
-            }}
-          >
-            <Col lg={6}>
-              <RevenueShare
-                broadPercent={broadPercent}
-                msoPercent={msoPercent}
-                discountPercent={discountPercent}
-                setBroadPercent={setBroadPercent}
-                setMsoPercent={setMsoPercent}
-                setDiscountPercent={setDiscountPercent}
-                showEditChannel={showEditChannel}
-              />
-            </Col>
-            {/* {console.log(
+                  </Input>
+                  {validation.touched.definition &&
+                    validation.errors.definition ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.definition}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+                {/* </Col>
+            <Col sm="4"> */}
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Type<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="type"
+                    type="select"
+                    placeholder="Select type"
+                    className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.channel_type_lbl || ""}
+                    disabled={!showEditChannel}
+                  >
+                    {channelListType &&
+                      channelListType.map((channel_type_lbl) => (
+                        <option
+                          key={channel_type_lbl.id}
+                          value={channel_type_lbl.id}
+                        >
+                          {channel_type_lbl.name}
+                        </option>
+                      ))}
+                  </Input>
+                  {validation.touched.channel_type_lbl &&
+                    validation.errors.channel_type_lbl ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.channel_type_lbl}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Broadcaster<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="broadcaster"
+                    type="select"
+                    placeholder="Select broadcaster"
+                    className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.broadcaster || ""}
+                    disabled={!showEditChannel}
+                  >
+                    {channelListBroadcaster.map((broadcaster) => (
+                      <option key={broadcaster.id} value={broadcaster.id}>
+                        {broadcaster.name}
+                      </option>
+                    ))}
+                  </Input>
+                  {validation.touched.broadcaster &&
+                    validation.errors.broadcaster ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.broadcaster}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Genre<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="genre"
+                    type="select"
+                    placeholder="Select genre"
+                    className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.genre || ""}
+                    disabled={!showEditChannel}
+                  >
+                    {channelListGenre.map((genre) => (
+                      <option key={genre.id} value={genre.id}>
+                        {genre.name}
+                      </option>
+                    ))}
+                  </Input>
+                  {validation.touched.genre && validation.errors.genre ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.genre}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Language<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="language"
+                    type="text"
+                    placeholder="Select language"
+                    // className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.language || ""}
+                    disabled={!showEditChannel}
+                  >
+                    {channelListLanguage.map((language) => (
+                      <option key={language.id} value={language.id}>
+                        {language.name}
+                      </option>
+                    ))}
+                  </Input>
+                  {validation.touched.language && validation.errors.language ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.language}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">IsAlacarte</Label>
+                  <Input
+                    name="isalacarte"
+                    type="select"
+                    // placeholder="Enter channel code"
+                    // className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.isalacarte || ""}
+                    disabled={!showEditChannel}
+                  >
+                    <option value="201">Yes</option>
+                    <option value="202">No</option>
+                  </Input>
+                  {validation.touched.isalacarte &&
+                    validation.errors.isalacarte ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.isalacarte}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">MRP Rate(INR)</Label>
+                  <Input
+                    name="rate"
+                    type="number"
+                    // placeholder="Enter channel code"
+                    // className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.rate || ""}
+                    disabled={!showEditChannel}
+                  ></Input>
+                  {validation.touched.rate && validation.errors.rate ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.rate}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Status<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="status"
+                    type="select"
+                    placeholder="Select Status"
+                    className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.status || ""}
+                    disabled={!showEditChannel}
+                  >
+                    {channelListStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
+                  </Input>
+                  {validation.touched.status && validation.errors.status ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.status}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+            </Row>
+            <div
+              style={{
+                // margin: "20px 0px",
+                marginTop: "20px",
+                marginBottom: "18px",
+                zIndex: 12000,
+                backgroundColor: "#fff",
+                width: "fit-content",
+                marginLeft: "40%",
+                position: "absolute",
+                padding: "0px 10px",
+              }}
+            >
+              <h5 style={{}}>MRP Revenue Share</h5>
+            </div>
+            <Row
+              style={{
+                position: "relative",
+                border: "1px solid #ced4da",
+                padding: "20px 0px",
+                margin: "30px 0px",
+              }}
+            >
+              <Col lg={6}>
+                <RevenueShare
+                  broadPercent={broadPercent}
+                  msoPercent={msoPercent}
+                  discountPercent={discountPercent}
+                  setBroadPercent={setBroadPercent}
+                  setMsoPercent={setMsoPercent}
+                  setDiscountPercent={setDiscountPercent}
+                  showEditChannel={showEditChannel}
+                />
+              </Col>
+              {/* {console.log(
               "XXXXXXXX:" + channel.isFta,
               channel.broadcasterRate,
               channel.mso_discount
@@ -598,94 +626,95 @@ const ViewChannel = (props) => {
               "XXXTYPE:" + typeof channel.isFta,
               typeof parseInt(channel.broadcasterRate)
             )} */}
-            {channel &&
-              channel.isFta === 0 &&
-              parseInt(channel.broadcasterRate) !== "" ? (
-              <Col lg={6}>
-                <Card>
-                  <CardBody>
-                    <span>Graphical representation of SHARE</span>
-                    <CardTitle className="mb-4">
-                      (MRP: {channel.broadcasterRate}){" "}
-                    </CardTitle>
-                    <PieChart
-                      broadPercent={broadPercent}
-                      msoPercent={msoPercent}
-                      discountPercent={discountPercent}
-                      selectedRate={parseInt(channel.broadcasterRate)}
-                      dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
-                    />
-                  </CardBody>
-                </Card>
-              </Col>
-            ) : (
-              <></>
-            )}
-          </Row>
+              {channel &&
+                channel.isFta === 0 &&
+                parseInt(channel.broadcasterRate) !== "" ? (
+                <Col lg={6}>
+                  <Card>
+                    <CardBody>
+                      <span>Graphical representation of SHARE</span>
+                      <CardTitle className="mb-4">
+                        (MRP: {channel.broadcasterRate}){" "}
+                      </CardTitle>
+                      <PieChart
+                        broadPercent={broadPercent}
+                        msoPercent={msoPercent}
+                        discountPercent={discountPercent}
+                        selectedRate={parseInt(channel.broadcasterRate)}
+                        dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
+                      />
+                    </CardBody>
+                  </Card>
+                </Col>
+              ) : (
+                <></>
+              )}
+            </Row>
 
-          <div
-            style={{
-              // margin: "20px 0px",
-              marginTop: "-10px",
-              marginBottom: "18px",
-              zIndex: 12000,
-              backgroundColor: "#fff",
-              width: "fit-content",
-              marginLeft: "40%",
-              position: "absolute",
-              padding: "0px 10px",
-            }}
-          >
-            <h5>CAS LIST</h5>
-          </div>
-          <Row
-            style={{
-              position: "relative",
-              border: "1px solid #ced4da",
-              padding: "20px 0px",
-              margin: "30px 0px",
-            }}
-          >
-            <Col sm="12">
-              <CasList
-                showEditChannel={showEditChannel}
-                data={channel && channel.casCodes}
-              />
-            </Col>
-          </Row>
-          {console.log("" + showEditChannel)}
-          {!showEditChannel && (
-            <Row>
-              <Col>
-                <ModalFooter>
-                  <button type="submit" className="btn btn-success save-user">
-                    Save
-                  </button>
-                  <button
-                    type="reset"
-                    className="btn btn-warning"
-                    onClick={() => validation.resetForm()}
-                  >
-                    Reset
-                  </button>
-
-                  <button
-                    type="button"
-                    className="btn btn-outline-danger"
-                    onClick={() => {
-                      validation.resetForm();
-                      handleCancel();
-                    }}
-                  >
-                    Cancel
-                  </button>
-                </ModalFooter>
+            <div
+              style={{
+                // margin: "20px 0px",
+                marginTop: "-10px",
+                marginBottom: "18px",
+                zIndex: 12000,
+                backgroundColor: "#fff",
+                width: "fit-content",
+                marginLeft: "40%",
+                position: "absolute",
+                padding: "0px 10px",
+              }}
+            >
+              <h5>CAS LIST</h5>
+            </div>
+            <Row
+              style={{
+                position: "relative",
+                border: "1px solid #ced4da",
+                padding: "20px 0px",
+                margin: "30px 0px",
+              }}
+            >
+              <Col sm="12">
+                <CasList
+                  showEditChannel={showEditChannel}
+                  data={channel && channel.casCodes}
+                />
               </Col>
             </Row>
-          )}
-        </Form>
-      </ModalBody>
-    </Modal>
+            {console.log("" + showEditChannel)}
+            {!showEditChannel && (
+              <Row>
+                <Col>
+                  <ModalFooter>
+                    <button type="submit" className="btn btn-success save-user">
+                      Save
+                    </button>
+                    <button
+                      type="reset"
+                      className="btn btn-warning"
+                      onClick={() => validation.resetForm()}
+                    >
+                      Reset
+                    </button>
+
+                    <button
+                      type="button"
+                      className="btn btn-outline-danger"
+                      onClick={() => {
+                        validation.resetForm();
+                        handleCancel();
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </ModalFooter>
+                </Col>
+              </Row>
+            )}
+          </Form>
+        </ModalBody>
+      </Modal>
+    </>
   );
 };
 

@@ -145,7 +145,7 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, complaintsubcategory }) 
       toggle={toggleHistoryModal}
     >
       <ModalHeader toggle={toggleHistoryModal} tag="h4" position="relative">
-        <h4>Regional Office History ({complaintsubcategory.name})</h4>
+        <h4>ComplaintSubcategory History ({complaintsubcategory.name})</h4>
       </ModalHeader>
       <ModalBody>
         <div

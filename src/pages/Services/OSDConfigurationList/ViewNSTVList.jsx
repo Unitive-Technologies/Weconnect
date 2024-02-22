@@ -28,6 +28,7 @@ import {
   getOSDConfiguration as onGetOSDConfiguration,
   updateOSDConfiguration as onUpdateOSDConfiguration,
 } from "/src/store/OSDConfiguration/actions";
+import ShowHistoryModal from "./ShowHistoryModal";
 
 const ViewNSTVList = (props) => {
   const {
@@ -47,6 +48,12 @@ const ViewNSTVList = (props) => {
   //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
   const [showEditosdConfiguration, setShowosdConfiguration] = useState(false);
+
+  const [showHistory, setShowHistory] = useState(false);
+
+  const toggleHistoryModal = () => {
+    setShowHistory(!showHistory);
+  };
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -165,6 +172,13 @@ const ViewNSTVList = (props) => {
 
   return (
     <>
+      {showHistory && (
+        <ShowHistoryModal
+          isOpen={showHistory}
+          toggleHistoryModal={toggleHistoryModal}
+          osdConfiguration={osdConfiguration}
+        />
+      )}
       <Modal
         isOpen={isOpen}
         role="dialog"
@@ -181,18 +195,32 @@ const ViewNSTVList = (props) => {
             : `Edit ${(osdConfiguration && osdConfiguration.name) || ""}`}
         </ModalHeader>
         {!showEditosdConfiguration && (
-          <Link
-            style={{
-              position: "absolute",
-              marginLeft: "92%",
-              marginTop: "1%",
-            }}
-            to="#!"
-            className="btn btn-light me-1"
-            onClick={() => setShowosdConfiguration(true)}
-          >
-            <i className="mdi mdi-pencil-outline"></i>
-          </Link>
+          <>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "92%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowHistory(true)}
+            >
+              <i className="dripicons-briefcase" />
+            </Link>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "87%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowosdConfiguration(true)}
+            >
+              <i className="mdi mdi-pencil-outline"></i>
+            </Link>
+          </>
         )}
         <ModalBody>
           <Form
@@ -424,7 +452,7 @@ const ViewNSTVList = (props) => {
                             ))}
                         </Input>
                         {validation.touched.forceddisplay &&
-                        validation.errors.forceddisplay ? (
+                          validation.errors.forceddisplay ? (
                           <FormFeedback type="invalid">
                             {validation.errors.forceddisplay}
                           </FormFeedback>
@@ -463,7 +491,7 @@ const ViewNSTVList = (props) => {
                             ))}
                         </Input>
                         {validation.touched.displaytype &&
-                        validation.errors.displaytype ? (
+                          validation.errors.displaytype ? (
                           <FormFeedback type="invalid">
                             {validation.errors.displaytype}
                           </FormFeedback>
@@ -486,7 +514,7 @@ const ViewNSTVList = (props) => {
                           disabled={!showEditosdConfiguration}
                         ></Input>
                         {validation.touched.duration &&
-                        validation.errors.duration ? (
+                          validation.errors.duration ? (
                           <FormFeedback type="invalid">
                             {validation.errors.duration}
                           </FormFeedback>
@@ -511,7 +539,7 @@ const ViewNSTVList = (props) => {
                           disabled={!showEditosdConfiguration}
                         ></Input>
                         {validation.touched.interval &&
-                        validation.errors.interval ? (
+                          validation.errors.interval ? (
                           <FormFeedback type="invalid">
                             {validation.errors.interval}
                           </FormFeedback>
@@ -540,11 +568,10 @@ const ViewNSTVList = (props) => {
                           style={{
                             width: "100%",
                             height: "100%",
-                            border: `solid 3px ${
-                              rangeValue === validation.values.repetition
-                                ? "green"
-                                : "blue"
-                            }`,
+                            border: `solid 3px ${rangeValue === validation.values.repetition
+                              ? "green"
+                              : "blue"
+                              }`,
                             cursor: "pointer",
                             borderRadius: "5px",
                           }}
@@ -555,7 +582,7 @@ const ViewNSTVList = (props) => {
                         </div>
                         <div>
                           {validation.touched.repetition &&
-                          validation.errors.repetition ? (
+                            validation.errors.repetition ? (
                             <FormFeedback type="invalid">
                               {validation.errors.repetition}
                             </FormFeedback>
@@ -593,7 +620,7 @@ const ViewNSTVList = (props) => {
                             ))}
                         </Input>
                         {validation.touched.fontSize &&
-                        validation.errors.fontSize ? (
+                          validation.errors.fontSize ? (
                           <FormFeedback type="invalid">
                             {validation.errors.fontSize}
                           </FormFeedback>
@@ -629,7 +656,7 @@ const ViewNSTVList = (props) => {
                             ))}
                         </Input>
                         {validation.touched.fontcolor &&
-                        validation.errors.fontcolor ? (
+                          validation.errors.fontcolor ? (
                           <FormFeedback type="invalid">
                             {validation.errors.fontcolor}
                           </FormFeedback>
@@ -670,7 +697,7 @@ const ViewNSTVList = (props) => {
                             ))}
                         </Input>
                         {validation.touched.backgroundColor &&
-                        validation.errors.backgroundColor ? (
+                          validation.errors.backgroundColor ? (
                           <FormFeedback type="invalid">
                             {validation.errors.backgroundColor}
                           </FormFeedback>
@@ -709,7 +736,7 @@ const ViewNSTVList = (props) => {
                             ))}
                         </Input>
                         {validation.touched.backgroundarea &&
-                        validation.errors.backgroundarea ? (
+                          validation.errors.backgroundarea ? (
                           <FormFeedback type="invalid">
                             {validation.errors.backgroundarea}
                           </FormFeedback>
