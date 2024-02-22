@@ -252,11 +252,11 @@ const ViewSMSMessageTemplateList = (props) => {
                     Category<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="Category"
+                    name="cat_id"
                     type="select"
                     disabled={!showEditSMS}
                     placeholder="Select Definition"
-                    className="form-select"
+                    // className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.cat_id || ""}
