@@ -10,6 +10,7 @@ import DeleteStockPairing from "./DeleteStockPairing";
 import FaultyPairingSendToPair from "./FaultyPairingSendToPair";
 import FaultyPairingBlacklist from "./FaultyPairingBlacklist";
 import AllottedPairing from "./AllotPairing";
+import DeallotPairing from "./DeAllotPairing";
 
 const StockPairing = (props) => {
   const {
@@ -514,6 +515,11 @@ const StockPairing = (props) => {
         allottedpairinglist={allottedpairinglist}
         allottedusertype={allottedusertype}
         allottedoperatorlist={allottedoperatorlist}
+      />
+      <DeallotPairing
+        isOpen={showDeallotPairing}
+        toggle={handleDeallottedPairing}
+        selectedAllottedPairings={selectedAllottedPairings}
       />
       <Row>
         <Col lg="12">

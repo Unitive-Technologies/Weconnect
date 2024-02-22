@@ -1789,7 +1789,7 @@ const InventoryStock = (props) => {
                               showAllottedPairing={showAllottedPairing}
                               setShowAllottedPairing={setShowAllottedPairing}
                               selectedAllottedPairings={
-                                selectedAllottedPairings
+                                filteredPairingWithoutMso
                               }
                               handleSelectedAllottedPairings={
                                 handleSelectedAllottedPairings
