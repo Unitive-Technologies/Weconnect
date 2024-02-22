@@ -131,6 +131,10 @@ const InventoryStock = (props) => {
   const [deallotWarning, setDeallotWarning] = useState(false);
   const [filteredStbs, setFilteredStbs] = useState([]);
   const [filteredStbWithoutMso, setFilteredStbWithoutMso] = useState([]);
+  const [filteredPairings, setFilteredPairings] = useState([]);
+  const [filteredPairingWithoutMso, setFilteredPairingWithoutMso] = useState(
+    []
+  );
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -639,6 +643,25 @@ const InventoryStock = (props) => {
       console.log("Operator with out mso: ", hasOtherOperatorLbl);
     }
   }, [selectedAllottedStbs]);
+
+  useEffect(() => {
+    const hasMymsoOperatorLbl = selectedAllottedPairings.filter(
+      (pairing) => pairing.operator_lbl === "my mso"
+    );
+
+    if (hasMymsoOperatorLbl) {
+      setFilteredPairings(hasMymsoOperatorLbl);
+      console.log("Operator with mso: ", hasMymsoOperatorLbl);
+    }
+    const hasOtherOperatorLbl = selectedAllottedPairings.filter(
+      (pairing) => pairing.operator_lbl !== "my mso"
+    );
+
+    if (hasOtherOperatorLbl) {
+      setFilteredPairingWithoutMso(hasOtherOperatorLbl);
+      console.log("Operator with out mso: ", hasOtherOperatorLbl);
+    }
+  }, [selectedAllottedPairings]);
 
   const columns = useMemo(() => {
     const commonColumns = [
@@ -1329,8 +1352,8 @@ const InventoryStock = (props) => {
             type: "normal",
             icon: "create",
             action:
-              Object.keys(selectedAllottedPairings).length === 0
-                ? () => setShowWarning(true)
+              Object.keys(filteredPairings).length === 0
+                ? () => setAllotWarning(true)
                 : () => setShowAllottedPairing(true),
           },
           {
@@ -1342,7 +1365,7 @@ const InventoryStock = (props) => {
             name: "De-Allot",
             type: "normal",
             action:
-              Object.keys(selectedAllottedPairings).length === 0
+              Object.keys(filteredPairingWithoutMso).length === 0
                 ? () => setDeallotWarning(true)
                 : () => setShowDeallotPairing(true),
           },
