@@ -74,13 +74,6 @@ function AllottedSmrtcard(props) {
     setAllottedlco([]);
   }, [usertype]);
 
-  // const handleDeleteSmartcard = (index) => {
-  //   const updatedSelectedSmartcardlist = selectedSmartcardlist.filter(
-  //     (pair, i) => i !== index
-  //   );
-  //   setSelectedSmartcardlist(updatedSelectedSmartcardlist);
-  // };
-
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -270,11 +263,6 @@ function AllottedSmrtcard(props) {
                     onChange={(e) => setBranch_id(e.target.value)}
                     onBlur={validation.handleBlur}
                     value={branch_id}
-                    // invalid={
-                    //   validation.touched.brand_id && validation.errors.branch_id
-                    //     ? true
-                    //     : false
-                    // }
                   >
                     <option value="">Select Reginal office</option>
                     {allottedoperatorlist.map((operatorlist) => (
@@ -283,12 +271,6 @@ function AllottedSmrtcard(props) {
                       </option>
                     ))}
                   </Input>
-                  {/* {validation.touched.branch_id &&
-                  validation.errors.branch_id ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.branch_id}
-                    </FormFeedback>
-                  ) : null} */}
                 </div>
               </Col>
             ) : null}
@@ -427,12 +409,6 @@ function AllottedSmrtcard(props) {
                         placeholder="Select Distributor"
                         onChange={(e) => setDistributor_id(e.target.value)}
                         value={distributor_id}
-                        // invalid={
-                        //   validation.touched.distributor_id &&
-                        //   validation.errors.distributor_id
-                        //     ? true
-                        //     : false
-                        // }
                       >
                         <option value="">Select Distributor</option>
                         {allotteddistributor.map((operatorlist) => (
@@ -441,12 +417,6 @@ function AllottedSmrtcard(props) {
                           </option>
                         ))}
                       </Input>
-                      {/* {validation.touched.distributor_id &&
-                      validation.errors.distributor_id ? (
-                        <FormFeedback type="invalid">
-                          {validation.errors.distributor_id}
-                        </FormFeedback>
-                      ) : null} */}
                     </div>
                   </Col>
                 ) : null}
@@ -464,12 +434,6 @@ function AllottedSmrtcard(props) {
                         onChange={(e) => setOperator(e.target.value)}
                         onBlur={validation.handleBlur}
                         value={operator}
-                        // invalid={
-                        //   validation.touched.operator &&
-                        //   validation.errors.operator
-                        //     ? true
-                        //     : false
-                        // }
                       >
                         <option value="">Select Distributor</option>
                         {allottedlco.map((operatorlist) => (
@@ -478,12 +442,6 @@ function AllottedSmrtcard(props) {
                           </option>
                         ))}
                       </Input>
-                      {/* {validation.touched.operator &&
-                      validation.errors.operator ? (
-                        <FormFeedback type="invalid">
-                          {validation.errors.operator}
-                        </FormFeedback>
-                      ) : null} */}
                     </div>
                   </Col>
                 ) : null}

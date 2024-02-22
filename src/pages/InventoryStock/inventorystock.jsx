@@ -15,9 +15,6 @@ import {
   Spinner,
   TabContent,
   TabPane,
-  Toast,
-  ToastBody,
-  ToastHeader,
   UncontrolledTooltip,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -77,7 +74,7 @@ import FaultySendToStock from "./FaultySendToStock";
 import FaultySmartcardBlacklist from "./FaultySmartcardBlacklist";
 import AllottedSmrtcard from "./AllottedSmartcard";
 import DeallotSmartcard from "./DeallotSmartcard";
-import ToastFunction, { AllotToast } from "./ToastFunction";
+import ToastFunction, { AllotToast, DeallotToast } from "./ToastFunction";
 
 const InventoryStock = (props) => {
   document.title = "Inventory | VDigital";
@@ -131,6 +128,7 @@ const InventoryStock = (props) => {
   const [filteredSmartcards, setFilteredSmartcards] = useState([]);
   const [filterWithoutMso, setFilterWithoutMso] = useState([]);
   const [allotWarning, setAllotWarning] = useState(false);
+  const [deallotWarning, setDeallotWarning] = useState(false);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -610,9 +608,6 @@ const InventoryStock = (props) => {
     if (hasMymsoOperatorLbl) {
       setFilteredSmartcards(hasMymsoOperatorLbl);
       console.log("Operator with mso: ", hasMymsoOperatorLbl);
-      // } else {
-      //   setFilterWithoutMso(hasMymsoOperatorLbl);
-      //   console.log("Operator with out mso: ", hasMymsoOperatorLbl);
     }
     const hasOtherOperatorLbl = selectedAllottedSmartcards.filter(
       (smartcard) => smartcard.operator_lbl !== "my mso"
@@ -1068,6 +1063,10 @@ const InventoryStock = (props) => {
     setAllotWarning(!allotWarning);
   };
 
+  const handleDeallotWarning = () => {
+    setDeallotWarning(!deallotWarning);
+  };
+
   const handleStockScBlacklist = () => {
     setShowStockScBlacklist(!showStockScBlacklist);
   };
@@ -1263,7 +1262,7 @@ const InventoryStock = (props) => {
             type: "normal",
             action:
               Object.keys(filterWithoutMso).length === 0
-                ? () => setShowWarning(true)
+                ? () => setDeallotWarning(true)
                 : () => setShowDeallotSmartcard(true),
           },
         ];
@@ -1312,7 +1311,7 @@ const InventoryStock = (props) => {
             type: "normal",
             action:
               Object.keys(selectedAllottedPairings).length === 0
-                ? () => setShowWarning(true)
+                ? () => setDeallotWarning(true)
                 : () => setShowDeallotPairing(true),
           },
         ];
@@ -1499,6 +1498,10 @@ const InventoryStock = (props) => {
         allotWarning={allotWarning}
         handleAllotWarning={handleAllotWarning}
       />
+      <DeallotToast
+        deallotWarning={deallotWarning}
+        handleDeallotWarning={handleDeallotWarning}
+      />
       <div className="page-content">
         <Container fluid>
           <Breadcrumbs breadcrumbItem="Inventory" />
@@ -1610,9 +1613,6 @@ const InventoryStock = (props) => {
                                 theadClass="table-light"
                                 paginationDiv="col-sm-12 col-md-7"
                                 pagination="pagination pagination-rounded justify-content-end mt-4"
-                                // handleRowClick={(row) => {
-                                //   getFilteredHandleRowClicks(row);
-                                // }}
                                 handleRowClick={(row) => {
                                   getFilteredHandleRowClicks(row);
                                 }}
