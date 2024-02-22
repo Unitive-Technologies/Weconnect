@@ -364,12 +364,13 @@ const NCFList = (props) => {
   useEffect(() => {
     if (ncfl && !ncfl.length) {
       dispatch(onGetNcf());
+      dispatch(onGetAdministrativeDivisionStatus());
     }
   }, [dispatch, ncfl]);
 
-  useEffect(() => {
-    dispatch(onGetAdministrativeDivisionStatus());
-  }, [dispatch, status]);
+  // useEffect(() => {
+  //   dispatch(onGetAdministrativeDivisionStatus());
+  // }, [dispatch, status]);
 
   const toggle = () => {
     setModal(!modal);
@@ -424,7 +425,11 @@ const NCFList = (props) => {
   return (
     <React.Fragment>
       <ViewNcf isOpen={showViewNcf} toggle={toggleViewNcf} ncf={viewNcfData} />
-      <AddNewNcf isOpen={showAddNcf} toggleAddNewNcf={toggleAddNcf} status={status} />
+      <AddNewNcf
+        isOpen={showAddNcf}
+        toggleAddNewNcf={toggleAddNcf}
+        status={status}
+      />
       <BulkAssigntoOperator
         isOpen={showBulkAssign}
         toggle={toggleBulkAssign}

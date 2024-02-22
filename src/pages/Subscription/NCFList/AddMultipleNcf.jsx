@@ -8,6 +8,7 @@ import {
   Col,
   Input,
   Label,
+  Table,
   FormFeedback,
   Form,
 } from "reactstrap";
@@ -218,40 +219,6 @@ const AddMultipleNcf = ({ setAdditionalRates, additionalRates, mrp }) => {
   console.log("additionalRates:" + JSON.stringify(additionalRates));
   console.log("mrpppppppppppppp:" + mrp);
 
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
-
-    initialValues: {
-      name: "",
-      mrp: mrp,
-      lmo_discount: 0,
-      lmo_rate: 0,
-      calculate_per_channel: 0,
-      is_refundable: 1,
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Enter name"),
-    }),
-    onSubmit: (values) => {
-      const newNcf = {
-        id: index + 1,
-        name: values["name"],
-        mrp: values["mrp"],
-        lmo_discount: values["lmo_discount"],
-        lmo_rate: values["lmo_rate"],
-        calculate_per_channel: values["calculate_per_channel"],
-        is_refundable: values["is_refundable"],
-      };
-      console.log("New NCF:" + JSON.stringify(newNcf));
-      const updatedData = [...data, newNcf];
-      setAdditionalRates(updatedData);
-      validation.resetForm();
-    },
-    onReset: (values) => {
-      validation.setValues(validation.initialValues);
-    },
-  });
   const [name, setName] = useState("");
   const [discount, setDiscount] = useState(0);
   const [rate, setRate] = useState(0);
@@ -420,18 +387,52 @@ const AddMultipleNcf = ({ setAdditionalRates, additionalRates, mrp }) => {
       <Row>
         <Card>
           <CardBody>
-            <TableContainer
-              isPagination={true}
-              columns={columns}
-              data={additionalRates && additionalRates}
-              // isGlobalFilter={true}
-              isShowingPageLength={true}
-              // customPageSize={50}
-              tableClass="table align-middle table-nowrap table-hover"
-              theadClass="table-light"
-              paginationDiv="col-sm-12 col-md-7"
-              pagination="pagination pagination-rounded justify-content-end mt-4"
-            />
+            <div className="table-responsive">
+              <Table className="table mb-0">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>MRP</th>
+                    <th>LCO Discount(%)</th>
+                    <th>LCO Rate</th>
+                    <th>Calcuate Per Channel</th>
+                    <th>Is Refundable</th>
+                    <th>$</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {additionalRates &&
+                    additionalRates.map((item, index) => (
+                      <tr key={index}>
+                        <th scope="row">{index + 1}</th>
+                        <td>{item.name}</td>
+                        <td>{item.mrp}</td>
+                        <td>{item.lmo_discount}</td>
+                        <td>{item.lmo_rate}</td>
+                        <td>
+                          {item.calculate_per_channel === "1" ? "Yes" : "No"}
+                        </td>
+                        <td>{item.is_refundable === "1" ? "Yes" : "No"}</td>
+                        <td>
+                          <h5>
+                            <Link
+                              className="text-dark"
+                              to="#"
+                              onClick={() => deleteMultipleNcf(index)}
+                            >
+                              <i
+                                className="mdi mdi-delete font-size-18"
+                                id="deletetooltip"
+                              />
+                            </Link>
+                          </h5>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </Table>
+            </div>
           </CardBody>
         </Card>
       </Row>

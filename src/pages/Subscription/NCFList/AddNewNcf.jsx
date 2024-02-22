@@ -22,6 +22,24 @@ const AddNewNcf = (props) => {
   const { isOpen, toggleAddNewNcf, status } = props;
   const dispatch = useDispatch();
   const [additionalRates, setAdditionalRates] = useState([]);
+  const [discount, setDiscount] = useState([]);
+  const [rate, setRate] = useState([]);
+  console.log("discount, rate :" + discount.rate);
+  const handleChangeDiscount = (e) => {
+    const discountValue = e.target.value;
+    setDiscount(discountValue);
+    validation.handleChange(e);
+    const calculatedRate = (mrp * discountValue) / 100;
+    setRate(calculatedRate);
+  };
+
+  const handleChangeRate = (e) => {
+    const rateValue = e.target.value;
+    setRate(rateValue);
+    validation.handleChange(e);
+    const revisedDiscount = (rateValue * 100) / mrp;
+    setDiscount(revisedDiscount);
+  };
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -35,46 +53,39 @@ const AddNewNcf = (props) => {
       from_channel_no: "",
       to_channel_no: "",
       is_refundable: "",
-      mrp: "",
-      lmo_discount: "",
-      lmo_rate: "",
-      created_at: "",
-      created_by: "my mso(mso)",
-      _id: "",
-      ncf_id: "",
-      operator_id: [],
+      mrp: 0,
+      lmo_discount: discount,
+      lmo_rate: rate,
+      type: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
-      code: Yup.string().required("Enter code"),
-      status: Yup.string().required("Select status"),
-      calculate_per_channel: Yup.string().required(
-        "Select calculate per channel"
-      ),
-      from_channel_no: Yup.string().required("Enter from channel"),
-      to_channel_no: Yup.string().required("Enter to channel"),
-      is_refundable: Yup.string().required("Select refundable"),
-      mrp: Yup.string(),
-      lmo_discount: Yup.string(),
-      lmo_rate: Yup.string(),
+      // code: Yup.string().required("Enter code"),
+      // status: Yup.string().required("Select status"),
+      // calculate_per_channel: Yup.string().required(
+      //   "Select calculate per channel"
+      // ),
+      // from_channel_no: Yup.string().required("Enter from channel"),
+      // to_channel_no: Yup.string().required("Enter to channel"),
+      // is_refundable: Yup.string().required("Select refundable"),
+      // mrp: Yup.string(),
+      // lmo_discount: Yup.string(),
+      // lmo_rate: Yup.string(),
     }),
     onSubmit: (values) => {
       const newNcf = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
-        name: values["name"],
+        addition_rates: additionalRates,
+        calculate_per_channel: parseInt(values["calculate_per_channel"]),
         code: values["code"],
-        status: values["status"],
-        calculate_per_channel: values["calculate_per_channel"],
         from_channel_no: values["from_channel_no"],
+        is_refundable: parseInt(values["is_refundable"]),
+        lmo_discount: parseInt(values["lmo_discount"]),
+        lmo_rate: parseInt(values["lmo_rate"]),
+        mrp: parseInt(values["mrp"]),
+        name: values["name"],
+        status: parseInt(values["status"]),
         to_channel_no: values["to_channel_no"],
-        is_refundable: values["is_refundable"],
-        mrp: values["mrp"],
-        lmo_discount: values["lmo_discount"],
-        lmo_rate: values["lmo_rate"],
-        created_at: new Date(),
-        created_by: values["created_by"],
-        ncf_id: values["id"],
-        operator_id: values["operator_id"],
+        type: 0,
       };
       console.log("New NCF:" + JSON.stringify(newNcf));
       dispatch(onAddNcf(newNcf));
@@ -253,8 +264,8 @@ const AddNewNcf = (props) => {
                   value={validation.values.is_refundable || ""}
                 >
                   <option value="">Select refundable</option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
+                  <option value="1">Yes</option>
+                  <option value="0">No</option>
                 </Input>
                 {validation.touched.is_refundable &&
                 validation.errors.is_refundable ? (
@@ -279,13 +290,36 @@ const AddNewNcf = (props) => {
                   value={validation.values.calculate_per_channel || ""}
                 >
                   <option value="">Select calculate per channel</option>
-                  <option value="0">Yes</option>
-                  <option value="1">No</option>
+                  <option value="1">Yes</option>
+                  <option value="0">No</option>
                 </Input>
                 {validation.touched.calculate_per_channel &&
                 validation.errors.calculate_per_channel ? (
                   <FormFeedback type="invalid">
                     {validation.errors.calculate_per_channel}
+                  </FormFeedback>
+                ) : null}
+              </div>
+              <div className="mb-3">
+                <Label className="form-label">
+                  NCF Type<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Input
+                  name="type"
+                  type="select"
+                  placeholder="Select NCF Type"
+                  className="form-select"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.type || ""}
+                >
+                  <option value="">Select NCF Type</option>
+                  <option value="1">Primary</option>
+                  <option value="0">Secondary</option>
+                </Input>
+                {validation.touched.type && validation.errors.type ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.type}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -349,9 +383,11 @@ const AddNewNcf = (props) => {
                     name="lmo_discount"
                     type="number"
                     placeholder="0"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.lmo_discount || ""}
+                    value={discount}
+                    onChange={handleChangeDiscount}
+                    // onChange={validation.handleChange}
+                    // onBlur={validation.handleBlur}
+                    // value={validation.values.lmo_discount || ""}
                     invalid={
                       validation.touched.lmo_discount &&
                       validation.errors.lmo_discount
@@ -376,9 +412,11 @@ const AddNewNcf = (props) => {
                     name="lmo_rate"
                     type="number"
                     placeholder="0"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.lmo_rate || ""}
+                    value={rate}
+                    onChange={handleChangeRate}
+                    // onChange={validation.handleChange}
+                    // onBlur={validation.handleBlur}
+                    // value={validation.values.lmo_rate || ""}
                     invalid={
                       validation.touched.lmo_rate && validation.errors.lmo_rate
                         ? true
@@ -452,7 +490,7 @@ const AddNewNcf = (props) => {
 };
 
 AddNewNcf.propTypes = {
-  toggle: PropTypes.func,
+  toggleAddNewNcf: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
