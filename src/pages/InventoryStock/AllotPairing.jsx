@@ -203,40 +203,6 @@ function AllottedPairing(props) {
         },
       },
       {
-        Header: "CAS",
-        accessor: "cas_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">{cellProps.row.original.cas_lbl}</p>
-          );
-        },
-      },
-      {
-        Header: "Brand",
-        accessor: "brand_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.brand_lbl}
-            </p>
-          );
-        },
-      },
-      {
-        Header: "Status",
-        accessor: "status_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.status_lbl}
-            </p>
-          );
-        },
-      },
-      {
         Header: "Alloted to",
         accessor: "operator_lbl",
         filterable: true,
