@@ -646,7 +646,7 @@ const InventoryStock = (props) => {
 
   useEffect(() => {
     const hasMymsoOperatorLbl = selectedAllottedPairings.filter(
-      (pairing) => pairing.operator_lbl === "my mso"
+      (pairing) => pairing.operator_lbl === "my mso(MSO)"
     );
 
     if (hasMymsoOperatorLbl) {
@@ -654,7 +654,7 @@ const InventoryStock = (props) => {
       console.log("Operator with mso: ", hasMymsoOperatorLbl);
     }
     const hasOtherOperatorLbl = selectedAllottedPairings.filter(
-      (pairing) => pairing.operator_lbl !== "my mso"
+      (pairing) => pairing.operator_lbl !== "my mso(MSO)"
     );
 
     if (hasOtherOperatorLbl) {
@@ -1794,7 +1794,7 @@ const InventoryStock = (props) => {
                               handleSelectedAllottedPairings={
                                 handleSelectedAllottedPairings
                               }
-                              allottedpairinglist={allottedpairinglist}
+                              allottedpairinglist={filteredPairings}
                               allottedusertype={allottedusertype}
                               allottedoperatorlist={allottedoperatorlist}
                             />

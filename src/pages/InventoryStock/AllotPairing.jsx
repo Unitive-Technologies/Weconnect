@@ -118,7 +118,7 @@ function AllottedPairing(props) {
       const newAllotted = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         operator_id: id,
-        pairing_ids: selectedPairinglist.map((row) => row.id),
+        pairing_ids: allottedpairinglist.map((row) => row.id),
       };
       console.log("New allotted stb: " + JSON.stringify(newAllotted));
       dispatch(onAllotPairing(newAllotted));
@@ -509,43 +509,6 @@ function AllottedPairing(props) {
                     paginationDiv="col-sm-12 col-md-7"
                     pagination="pagination pagination-rounded justify-content-end mt-4"
                   />
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Card>
-                <CardBody>
-                  <div className="table-responsive">
-                    <Table className="table mb-0">
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>Smartcard No.</th>
-                          <th>STB No.</th>
-                          <th>$</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {selectedPairinglist.map((pair, index) => (
-                          <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{pair.smartcardno}</td>
-                            <td>{pair.stbno}</td>
-                            <td>
-                              <button
-                                type="button"
-                                onClick={() => handleDeletePairing(index)}
-                              >
-                                <i className="mdi mdi-delete"></i>{" "}
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </Table>
-                  </div>
                 </CardBody>
               </Card>
             </Col>
