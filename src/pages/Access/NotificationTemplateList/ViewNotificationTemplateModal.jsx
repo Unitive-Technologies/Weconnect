@@ -23,6 +23,7 @@ import {
   getNotificationTemplate as onGetNotificationTemplate,
   updateNotificationTemplate as onUpdateNotificationTemplate,
 } from "/src/store/actions";
+import ShowHistoryModal from "./ShowHistoryModal";
 
 const ViewNotificationTemplateModal = (props) => {
   const {
@@ -38,6 +39,12 @@ const ViewNotificationTemplateModal = (props) => {
   const FontSize = Array.from({ length: 93 }, (_, index) => index + 8);
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [showColorPicker1, setShowColorPicker1] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
+
+  const toggleHistoryModal = () => {
+    setShowHistory(!showHistory);
+  };
+
   const toggleColorPicker = () => {
     setShowColorPicker(!showColorPicker);
   };
@@ -108,6 +115,13 @@ const ViewNotificationTemplateModal = (props) => {
         handlePreview={() => setShowPreview(false)}
         message={(notiTemplate && notiTemplate.msg_content) || ""}
       />
+      {showHistory && (
+        <ShowHistoryModal
+          isOpen={showHistory}
+          toggleHistoryModal={toggleHistoryModal}
+          notiTemplate={notiTemplate}
+        />
+      )}
       <Modal
         isOpen={isOpen}
         role="dialog"
@@ -124,18 +138,32 @@ const ViewNotificationTemplateModal = (props) => {
             : `Edit ${(notiTemplate && notiTemplate.msg_head) || ""}`}
         </ModalHeader>
         {!showEditNotificationTemp && (
-          <Link
-            style={{
-              position: "absolute",
-              marginLeft: "92%",
-              marginTop: "1%",
-            }}
-            to="#!"
-            className="btn btn-light me-1"
-            onClick={() => setShowEditNotificationTemp(true)}
-          >
-            <i className="mdi mdi-pencil-outline"></i>
-          </Link>
+          <>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "92%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowHistory(true)}
+            >
+              <i className="dripicons-briefcase" />
+            </Link>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "87%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowEditNotificationTemp(true)}
+            >
+              <i className="mdi mdi-pencil-outline"></i>
+            </Link>
+          </>
         )}
         <ModalBody>
           <Form
@@ -281,7 +309,7 @@ const ViewNotificationTemplateModal = (props) => {
                   <p>Value: {validation.values.fontcolor}</p>
 
                   {validation.touched.fontcolor &&
-                  validation.errors.fontcolor ? (
+                    validation.errors.fontcolor ? (
                     <FormFeedback type="invalid">
                       {validation.errors.fontcolor}
                     </FormFeedback>
@@ -319,7 +347,7 @@ const ViewNotificationTemplateModal = (props) => {
                   </div>
                   <p>Value: {validation.values.fontbgcolor}</p>
                   {validation.touched.fontbgcolor &&
-                  validation.errors.fontbgcolor ? (
+                    validation.errors.fontbgcolor ? (
                     <FormFeedback type="invalid">
                       {validation.errors.fontbgcolor}
                     </FormFeedback>
@@ -346,7 +374,7 @@ const ViewNotificationTemplateModal = (props) => {
                     ))}
                   </Input>
                   {validation.touched.fontfamily &&
-                  validation.errors.fontfamily ? (
+                    validation.errors.fontfamily ? (
                     <FormFeedback type="invalid">
                       {validation.errors.fontfamily}
                     </FormFeedback>

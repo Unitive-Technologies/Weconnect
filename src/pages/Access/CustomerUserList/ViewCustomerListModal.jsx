@@ -88,7 +88,7 @@ const ViewCustomerUserModal = (props) => {
         <ShowHistoryModal
           isOpen={showHistory}
           toggleHistoryModal={toggleHistoryModal}
-          user={user}
+          customeruser={customeruser}
         />
       )}
       <Modal
@@ -107,18 +107,32 @@ const ViewCustomerUserModal = (props) => {
             : `Edit ${(customeruser && customeruser.name) || ""}`}
         </ModalHeader>
         {!showEditCustomerUser && (
-          <Link
-            style={{
-              position: "absolute",
-              marginLeft: "92%",
-              marginTop: "1%",
-            }}
-            to="#!"
-            className="btn btn-light me-1"
-            onClick={() => setShowEditCustomerUser(true)}
-          >
-            <i className="mdi mdi-pencil-outline"></i>
-          </Link>
+          <>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "92%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowHistory(true)}
+            >
+              <i className="dripicons-briefcase" />
+            </Link>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "87%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowEditCustomerUser(true)}
+            >
+              <i className="mdi mdi-pencil-outline"></i>
+            </Link>
+          </>
         )}
         <ModalBody>
           <Form
