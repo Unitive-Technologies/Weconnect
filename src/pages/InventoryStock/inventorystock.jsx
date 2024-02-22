@@ -77,6 +77,7 @@ import FaultySendToStock from "./FaultySendToStock";
 import FaultySmartcardBlacklist from "./FaultySmartcardBlacklist";
 import AllottedSmrtcard from "./AllottedSmartcard";
 import DeallotSmartcard from "./DeallotSmartcard";
+import ToastFunction, { AllotToast } from "./ToastFunction";
 
 const InventoryStock = (props) => {
   document.title = "Inventory | VDigital";
@@ -129,6 +130,7 @@ const InventoryStock = (props) => {
   const [selectedAllottedPairings, setSelectedAllottedPairings] = useState([]);
   const [filteredSmartcards, setFilteredSmartcards] = useState([]);
   const [filterWithoutMso, setFilterWithoutMso] = useState([]);
+  const [allotWarning, setAllotWarning] = useState(false);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -1062,6 +1064,10 @@ const InventoryStock = (props) => {
     setShowWarning(!showWarning);
   };
 
+  const handleAllotWarning = () => {
+    setAllotWarning(!allotWarning);
+  };
+
   const handleStockScBlacklist = () => {
     setShowStockScBlacklist(!showStockScBlacklist);
   };
@@ -1244,7 +1250,7 @@ const InventoryStock = (props) => {
             icon: "create",
             action:
               Object.keys(filteredSmartcards).length === 0
-                ? () => setShowWarning(true)
+                ? () => setAllotWarning(true)
                 : () => setShowAllottedSmartcard(true),
           },
           {
@@ -1488,17 +1494,11 @@ const InventoryStock = (props) => {
         selectedAllottedSmartcards={filterWithoutMso}
         setSelectedAllottedSmartcards={setSelectedAllottedSmartcards}
       />
-      <div
-        className="position-fixed top-0 end-0 p-3"
-        style={{ zIndex: "1005" }}
-      >
-        <Toast isOpen={showWarning}>
-          <ToastHeader toggle={handleWarning}>
-            <i className="mdi mdi-alert-outline me-2"></i> Warning
-          </ToastHeader>
-          <ToastBody>Please select atleast one Data</ToastBody>
-        </Toast>
-      </div>
+      <ToastFunction showWarning={showWarning} handleWarning={handleWarning} />
+      <AllotToast
+        allotWarning={allotWarning}
+        handleAllotWarning={handleAllotWarning}
+      />
       <div className="page-content">
         <Container fluid>
           <Breadcrumbs breadcrumbItem="Inventory" />
