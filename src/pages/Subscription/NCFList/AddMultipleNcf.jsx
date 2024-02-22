@@ -378,7 +378,7 @@ const AddMultipleNcf = ({ setAdditionalRates, additionalRates, mrp }) => {
             className="btn btn-primary "
             onClick={addMultipleNcf}
           >
-            <i className="bx bx-right-arrow-alt" style={{ fontSize: 20 }}></i>
+            <i className="bx bx-plus" style={{ fontSize: 20 }}></i>
           </button>
         </Col>
         {/* </Form> */}
@@ -411,9 +411,13 @@ const AddMultipleNcf = ({ setAdditionalRates, additionalRates, mrp }) => {
                         <td>{item.lmo_discount}</td>
                         <td>{item.lmo_rate}</td>
                         <td>
-                          {item.calculate_per_channel === "1" ? "Yes" : "No"}
+                          {parseInt(item.calculate_per_channel) === 1
+                            ? "Yes"
+                            : "No"}
                         </td>
-                        <td>{item.is_refundable === "1" ? "Yes" : "No"}</td>
+                        <td>
+                          {parseInt(item.is_refundable) === 1 ? "Yes" : "No"}
+                        </td>
                         <td>
                           <h5>
                             <Link

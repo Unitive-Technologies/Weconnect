@@ -26,7 +26,8 @@ const AddNewNcf = (props) => {
   const [rate, setRate] = useState([]);
   console.log("discount, rate :" + discount.rate);
   const handleChangeDiscount = (e) => {
-    const discountValue = e.target.value;
+    const discountValue = parseFloat(e.target.value);
+    const mrp = validation.values.mrp;
     setDiscount(discountValue);
     validation.handleChange(e);
     const calculatedRate = (mrp * discountValue) / 100;
@@ -34,7 +35,8 @@ const AddNewNcf = (props) => {
   };
 
   const handleChangeRate = (e) => {
-    const rateValue = e.target.value;
+    const rateValue = parseFloat(e.target.value);
+    const mrp = validation.values.mrp;
     setRate(rateValue);
     validation.handleChange(e);
     const revisedDiscount = (rateValue * 100) / mrp;
@@ -54,13 +56,13 @@ const AddNewNcf = (props) => {
       to_channel_no: "",
       is_refundable: "",
       mrp: 0,
-      lmo_discount: discount,
-      lmo_rate: rate,
+      lmo_discount: 0,
+      lmo_rate: 0,
       type: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
-      // code: Yup.string().required("Enter code"),
+      code: Yup.string().required("Enter code"),
       // status: Yup.string().required("Select status"),
       // calculate_per_channel: Yup.string().required(
       //   "Select calculate per channel"
@@ -85,7 +87,7 @@ const AddNewNcf = (props) => {
         name: values["name"],
         status: parseInt(values["status"]),
         to_channel_no: values["to_channel_no"],
-        type: 0,
+        type: parseInt(values["type"]),
       };
       console.log("New NCF:" + JSON.stringify(newNcf));
       dispatch(onAddNcf(newNcf));
