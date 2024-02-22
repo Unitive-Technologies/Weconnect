@@ -768,8 +768,8 @@ export const updateSMSMessageTempList = (id, smsmsg) =>
   put(url.UPDATE_SMSMESSAGETEMPLIST(id), smsmsg);
 export const getSMSMessageTempListStatus = () =>
   get(url.GET_SMSMESSAGETEMPLIST_STATUS);
-export const getSMSMessageTempListSubcategory = (cat_id) =>
-  get(url.GET_SMSMESSAGETEMPLIST_SUBCATEGORY(cat_id));
+export const getSMSMessageTempListSubcategory = () =>
+  get(url.GET_SMSMESSAGETEMPLIST_SUBCATEGORY);
 export const getSMSMessageTempListCategory = () =>
   get(url.GET_SMSMESSAGETEMPLIST_CATEGORY);
 export const getSMSMessageTempListSender = () =>
