@@ -10,6 +10,9 @@ import {
   FormFeedback,
   Input,
   Form,
+  Card,
+  CardBody,
+  Table,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -18,9 +21,13 @@ import AddMultipleNcf from "./AddMultipleNcf";
 
 const ViewNcf = (props) => {
   const { isOpen, toggle, ncf } = props;
+  console.log("ncf:" + JSON.stringify(ncf));
   const dispatch = useDispatch();
   const [showEditNcf, setShowEditNcf] = useState(false);
-
+  const [additionalRates, setAdditionalRates] = useState(
+    (ncf && ncf.additional_rates) || []
+  );
+  console.log("additionalRates in view :" + JSON.stringify(additionalRates));
   const editToggle = () => {
     setShowEditNcf(false);
     toggle();
@@ -41,8 +48,6 @@ const ViewNcf = (props) => {
       mrp: (ncf && ncf.mrp) || "",
       lmo_discount: (ncf && ncf.lmo_discount) || "",
       lmo_rate: (ncf && ncf.lmo_rate) || "",
-      created_at: (ncf && ncf.created_at) || "",
-      created_by: (ncf && ncf.created_by) || "my mso(mso)",
       status_lbl: (ncf && ncf.status_lbl) || "",
     },
     validationSchema: Yup.object({
@@ -432,176 +437,90 @@ const ViewNcf = (props) => {
             >
               <p style={{ fontWeight: "bold" }}>Add Mutiple NCF Rates</p>
             </div>
-            <Row
-              style={{
-                position: "relative",
-                border: "1px solid #ced4da",
-                padding: "20px 0px",
-                margin: "30px 0px",
-              }}
-            >
-              <Col sm="2">
-                <div className="mb-3">
-                  <Label className="form-label">
-                    Name<span style={{ color: "red" }}>*</span>
-                  </Label>
-                  <Input
-                    name="name"
-                    type="text"
-                    placeholder="Enter name"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.name || ""}
-                    invalid={
-                      validation.touched.name && validation.errors.name
-                        ? true
-                        : false
-                    }
-                    disabled={!showEditNcf}
-                  />
-                  {validation.touched.name && validation.errors.name ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.name}
-                    </FormFeedback>
-                  ) : null}
-                </div>
-              </Col>
-              <Col sm="2">
-                <div className="mb-3">
-                  <Label className="form-label">
-                    MRP (INR)<span style={{ color: "red" }}>*</span>
-                  </Label>
-                  <Input
-                    name="mrp"
-                    type="number"
-                    placeholder="0"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.mrp || ""}
-                    invalid={
-                      validation.touched.mrp && validation.errors.mrp
-                        ? true
-                        : false
-                    }
-                    disabled={!showEditNcf}
-                  />
-                  {validation.touched.mrp && validation.errors.mrp ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.mrp}
-                    </FormFeedback>
-                  ) : null}
-                </div>
-              </Col>
-              <Col sm="2">
-                <div className="mb-3">
-                  <Label className="form-label">
-                    LCO Discount (%)<span style={{ color: "red" }}>*</span>
-                  </Label>
-                  <Input
-                    name="lmo_discount"
-                    type="number"
-                    placeholder="0"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.lmo_discount || ""}
-                    invalid={
-                      validation.touched.lmo_discount &&
-                      validation.errors.lmo_discount
-                        ? true
-                        : false
-                    }
-                    disabled={!showEditNcf}
-                  />
-                  {validation.touched.lmo_discount &&
-                  validation.errors.lmo_discount ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.lmo_discount}
-                    </FormFeedback>
-                  ) : null}
-                </div>
-              </Col>
-              <Col sm="2">
-                <div className="mb-3">
-                  <Label className="form-label">
-                    LCO Rate<span style={{ color: "red" }}>*</span>
-                  </Label>
-                  <Input
-                    name="lmo_rate"
-                    type="number"
-                    placeholder="0"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.lmo_rate || ""}
-                    invalid={
-                      validation.touched.lmo_rate && validation.errors.lmo_rate
-                        ? true
-                        : false
-                    }
-                    disabled={!showEditNcf}
-                  />
-                  {validation.touched.lmo_rate && validation.errors.lmo_rate ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.lmo_rate}
-                    </FormFeedback>
-                  ) : null}
-                </div>
-              </Col>
-              <Col sm="2">
-                <div className="mb-3">
-                  <Label className="form-label">
-                    Calculate per channel<span style={{ color: "red" }}>*</span>
-                  </Label>
-                  <Input
-                    name="calculate_per_channel"
-                    type="select"
-                    placeholder="Select calculate per channel"
-                    className="form-select"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.calculate_per_channel || ""}
-                    disabled={!showEditNcf}
-                  >
-                    <option value="">Select calculate per channel</option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                  </Input>
-                  {validation.touched.calculate_per_channel &&
-                  validation.errors.calculate_per_channel ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.calculate_per_channel}
-                    </FormFeedback>
-                  ) : null}
-                </div>
-              </Col>
-              <Col sm="2">
-                <div className="mb-3">
-                  <Label className="form-label">
-                    Is Refundable<span style={{ color: "red" }}>*</span>
-                  </Label>
-                  <Input
-                    name="is_refundable"
-                    type="select"
-                    placeholder="Select refundable"
-                    className="form-select"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.is_refundable || ""}
-                    disabled={!showEditNcf}
-                  >
-                    <option value="">Select refundable</option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                  </Input>
-                  {validation.touched.is_refundable &&
-                  validation.errors.is_refundable ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.is_refundable}
-                    </FormFeedback>
-                  ) : null}
-                </div>
-              </Col>
-              <AddMultipleNcf />
-            </Row>
+            {!showEditNcf ? (
+              <Row
+                style={{
+                  position: "relative",
+                  border: "1px solid #ced4da",
+                  padding: "20px 0px",
+                  margin: "30px 0px",
+                }}
+              >
+                <Card>
+                  <CardBody>
+                    <div className="table-responsive">
+                      <Table className="table mb-0">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>MRP</th>
+                            <th>LCO Discount(%)</th>
+                            <th>LCO Rate</th>
+                            <th>Calcuate Per Channel</th>
+                            <th>Is Refundable</th>
+                            <th>$</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {additionalRates &&
+                            additionalRates.map((item, index) => (
+                              <tr key={index}>
+                                <th scope="row">{index + 1}</th>
+                                <td>{item.name}</td>
+                                <td>{item.mrp}</td>
+                                <td>{item.lmo_discount}</td>
+                                <td>{item.lmo_rate}</td>
+                                <td>
+                                  {parseInt(item.calculate_per_channel) === 1
+                                    ? "Yes"
+                                    : "No"}
+                                </td>
+                                <td>
+                                  {parseInt(item.is_refundable) === 1
+                                    ? "Yes"
+                                    : "No"}
+                                </td>
+                                {/* <td>
+                                  <h5>
+                                    <Link
+                                      className="text-dark"
+                                      to="#"
+                                      onClick={() => deleteMultipleNcf(index)}
+                                    >
+                                      <i
+                                        className="mdi mdi-delete font-size-18"
+                                        id="deletetooltip"
+                                      />
+                                    </Link>
+                                  </h5>
+                                </td> */}
+                              </tr>
+                            ))}
+                        </tbody>
+                      </Table>
+                    </div>
+                  </CardBody>
+                </Card>
+              </Row>
+            ) : (
+              <Row
+                style={{
+                  position: "relative",
+                  border: "1px solid #ced4da",
+                  padding: "20px 0px",
+                  margin: "30px 0px",
+                }}
+              >
+                {console.log("showEditNcf before:" + showEditNcf)}
+                <AddMultipleNcf
+                  additionalRates={additionalRates}
+                  setAdditionalRates={setAdditionalRates}
+                  mrp={validation.values.mrp}
+                  showEditNcf={showEditNcf}
+                />
+              </Row>
+            )}
           </Row>
           <Row>
             <Col>

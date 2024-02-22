@@ -16,7 +16,12 @@ import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-const AddMultipleNcf = ({ setAdditionalRates, additionalRates, mrp }) => {
+const AddMultipleNcf = ({
+  showEditNcf,
+  setAdditionalRates,
+  additionalRates,
+  mrp,
+}) => {
   const columns = useMemo(
     () => [
       {
@@ -272,6 +277,7 @@ const AddMultipleNcf = ({ setAdditionalRates, additionalRates, mrp }) => {
   };
   return (
     <>
+      {/* {showEditNcf && ( */}
       <Row
         style={{
           position: "relative",
@@ -383,7 +389,7 @@ const AddMultipleNcf = ({ setAdditionalRates, additionalRates, mrp }) => {
         </Col>
         {/* </Form> */}
       </Row>
-
+      {/* )} */}
       <Row>
         <Card>
           <CardBody>
