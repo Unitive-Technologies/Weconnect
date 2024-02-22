@@ -118,7 +118,7 @@ function AllottedStb(props) {
       const newAllotted = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         operator_id: id,
-        stb_ids: selectedStblist.map((row) => row.id),
+        stb_ids: allottedstblist.map((row) => row.id),
       };
       console.log("New allotted stb: " + JSON.stringify(newAllotted));
       dispatch(onAllotStb(newAllotted));
@@ -185,40 +185,6 @@ function AllottedStb(props) {
                 {cellProps.row.original.stbno}
               </p>
             </>
-          );
-        },
-      },
-      {
-        Header: "CAS",
-        accessor: "cas_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">{cellProps.row.original.cas_lbl}</p>
-          );
-        },
-      },
-      {
-        Header: "Brand",
-        accessor: "brand_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.brand_lbl}
-            </p>
-          );
-        },
-      },
-      {
-        Header: "Status",
-        accessor: "status_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.status_lbl}
-            </p>
           );
         },
       },
@@ -529,41 +495,6 @@ function AllottedStb(props) {
                     paginationDiv="col-sm-12 col-md-7"
                     pagination="pagination pagination-rounded justify-content-end mt-4"
                   />
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Card>
-                <CardBody>
-                  <div className="table-responsive">
-                    <Table className="table mb-0">
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>STB No.</th>
-                          <th>$</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {selectedStblist.map((pair, index) => (
-                          <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{pair.stbno}</td>
-                            <td>
-                              <button
-                                type="button"
-                                onClick={() => handleDeleteStb(index)}
-                              >
-                                <i className="mdi mdi-delete"></i>{" "}
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </Table>
-                  </div>
                 </CardBody>
               </Card>
             </Col>

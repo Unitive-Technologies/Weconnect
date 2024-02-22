@@ -129,6 +129,8 @@ const InventoryStock = (props) => {
   const [filterWithoutMso, setFilterWithoutMso] = useState([]);
   const [allotWarning, setAllotWarning] = useState(false);
   const [deallotWarning, setDeallotWarning] = useState(false);
+  const [filteredStbs, setFilteredStbs] = useState([]);
+  const [filteredStbWithoutMso, setFilteredStbWithoutMso] = useState([]);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -618,6 +620,25 @@ const InventoryStock = (props) => {
       console.log("Operator with out mso: ", hasOtherOperatorLbl);
     }
   }, [selectedAllottedSmartcards]);
+
+  useEffect(() => {
+    const hasMymsoOperatorLbl = selectedAllottedStbs.filter(
+      (stb) => stb.operator_lbl === "my mso"
+    );
+
+    if (hasMymsoOperatorLbl) {
+      setFilteredStbs(hasMymsoOperatorLbl);
+      console.log("Operator with mso: ", hasMymsoOperatorLbl);
+    }
+    const hasOtherOperatorLbl = selectedAllottedStbs.filter(
+      (stb) => stb.operator_lbl !== "my mso"
+    );
+
+    if (hasOtherOperatorLbl) {
+      setFilteredStbWithoutMso(hasOtherOperatorLbl);
+      console.log("Operator with out mso: ", hasOtherOperatorLbl);
+    }
+  }, [selectedAllottedStbs]);
 
   const columns = useMemo(() => {
     const commonColumns = [
@@ -1273,7 +1294,10 @@ const InventoryStock = (props) => {
             name: "Allot",
             type: "normal",
             icon: "create",
-            action: setShowAllottedStb,
+            action:
+              Object.keys(filteredStbs).length === 0
+                ? () => setAllotWarning(true)
+                : () => setShowAllottedStb(true),
           },
           {
             name: "Upload",
@@ -1284,8 +1308,8 @@ const InventoryStock = (props) => {
             name: "De-Allot",
             type: "normal",
             action:
-              Object.keys(selectedAllottedStbs).length === 0
-                ? () => setShowWarning(true)
+              Object.keys(filteredStbWithoutMso).length === 0
+                ? () => setDeallotWarning(true)
                 : () => setShowDeallotStb(true),
           },
         ];
@@ -1663,11 +1687,11 @@ const InventoryStock = (props) => {
                               setShowDeallotStb={setShowDeallotStb}
                               showAllottedStb={showAllottedStb}
                               setShowAllottedStb={setShowAllottedStb}
-                              selectedAllottedStbs={selectedAllottedStbs}
+                              selectedAllottedStbs={filteredStbWithoutMso}
                               handleSelectedAllottedStbs={
                                 handleSelectedAllottedStbs
                               }
-                              allottedstblist={allottedstblist}
+                              allottedstblist={filteredStbs}
                               allottedusertype={allottedusertype}
                               allottedoperatorlist={allottedoperatorlist}
                             />

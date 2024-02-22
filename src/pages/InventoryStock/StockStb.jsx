@@ -498,7 +498,7 @@ const StockStb = (props) => {
       <AllottedStb
         isOpen={showAllottedStb}
         toggle={handleAllottedStb}
-        selectedAllottedStbs={selectedAllottedStbs}
+        // selectedAllottedStbs={selectedAllottedStbs}
         allottedstblist={allottedstblist}
         allottedusertype={allottedusertype}
         allottedoperatorlist={allottedoperatorlist}
