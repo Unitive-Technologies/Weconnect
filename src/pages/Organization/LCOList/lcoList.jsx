@@ -60,6 +60,10 @@ const LCOList = (props) => {
 
   const dispatch = useDispatch();
   const [contact, setContact] = useState();
+
+  const toggleAddCreditModal = () => {
+    setShowBulkCredit(!showBulkCredit);
+  };
   // validation
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -522,7 +526,7 @@ const LCOList = (props) => {
       />
       <BulkAddCreditModal
         isOpen={showBulkCredit}
-        handleBulkCredit={() => setShowBulkCredit(false)}
+        toggleAddCreditModal={toggleAddCreditModal}
         lco={lcoData}
       />
       <UploadModal
