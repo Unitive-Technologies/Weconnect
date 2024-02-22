@@ -4,9 +4,7 @@ import { Link } from "react-router-dom";
 import { Modal, ModalBody, ModalHeader, Row, Col, Input } from "reactstrap";
 import TableContainer from "../../../components/Common/TableContainer";
 
-const ShowHistoryModal = ({ isOpen, toggleHistoryModal, language }) => {
-  console.log("Show History Modal in ReasonList" + language)
-
+const ShowHistoryModal = ({ isOpen, toggleHistoryModal, ncf }) => {
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [historyData, setHistoryData] = useState([]);
   const [year, setYear] = useState("2024");
@@ -48,6 +46,10 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, language }) => {
                   whiteSpace: "nowrap",
                 }}
                 className="font-size-14 mb-1"
+                // onClick={() => {
+                //   const userData = cellProps.row.original;
+                //   toggleViewModal(userData);
+                // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -114,7 +116,8 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, language }) => {
       const token = "Bearer " + localStorage.getItem("temptoken");
 
       const response = await axios.get(
-        `${API_URL}/language/${language.id
+        `${API_URL}/operator/${
+          ncf.id
         }/audit?fields=id,name,_metadata,model,_remark&expand=nData&page=1&per-page=50&filter[year]=${parseInt(
           year
         )}&vr=web1.0`,
@@ -131,10 +134,10 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, language }) => {
     }
   };
   useEffect(() => {
-    if (language) {
+    if (ncf) {
       getHistoryDetails();
     }
-  }, [language, year]);
+  }, [ncf, year]);
 
   return (
     <Modal
@@ -148,7 +151,7 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, language }) => {
       toggle={toggleHistoryModal}
     >
       <ModalHeader toggle={toggleHistoryModal} tag="h4" position="relative">
-        <h4>Language History ({language.name})</h4>
+        <h4>Regional Office History ({ncf.name})</h4>
       </ModalHeader>
       <ModalBody>
         <div

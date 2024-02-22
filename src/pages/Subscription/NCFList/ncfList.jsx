@@ -424,7 +424,11 @@ const NCFList = (props) => {
 
   return (
     <React.Fragment>
-      <ViewNcf isOpen={showViewNcf} toggle={toggleViewNcf} ncf={viewNcfData} />
+      <ViewNcf
+        isOpen={showViewNcf}
+        toggleViewModal={toggleViewNcf}
+        ncf={viewNcfData}
+      />
       <AddNewNcf
         isOpen={showAddNcf}
         toggleAddNewNcf={toggleAddNcf}
