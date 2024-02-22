@@ -2,10 +2,12 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import {
   GET_NCF,
   ADD_NCF,
+  UPDATE_NCF,
   GET_OPERATOR_FORBULKASSIGN,
   ADD_BULKASSIGN_NCF,
 } from "./actionTypes";
 import {
+  getNcf as fetchAllNcf,
   getNcfSuccess,
   getNcfFail,
   addNcfSuccess,
@@ -14,12 +16,15 @@ import {
   getOperatorForBulkAssignFail,
   addBulkAssignNcfSuccess,
   addBulkAssignNcfFail,
+  updateNcfFail,
+  updateNcfSuccess,
 } from "./actions";
 import {
   getNcf,
   addNcf,
   getOperatorForBulkAssign,
   addBulkAssignNcf,
+  updateNcf,
 } from "../../helpers/backend_helper";
 
 const convertNcfListObject = (ncflist) => {
@@ -66,8 +71,8 @@ const convertOperatorForAssignListObject = (operatorforassign) => {
 function* fetchNcf() {
   try {
     const response = yield call(getNcf);
-    const ncfList = convertNcfListObject(response.data);
-    yield put(getNcfSuccess(ncfList));
+    // const ncfList = convertNcfListObject(response.data);
+    yield put(getNcfSuccess(response.data));
   } catch (error) {
     yield put(getNcfFail(error));
   }
@@ -77,6 +82,7 @@ function* onAddNcf({ payload: ncf }) {
   try {
     const response = yield call(addNcf, ncf);
     yield put(addNcfSuccess(response));
+    yield put(fetchAllNcf());
   } catch (error) {
     yield put(addNcfFail(error));
   }
@@ -104,11 +110,26 @@ function* onAddBulkAssignNcf({ payload: bulkassign }) {
   }
 }
 
+function* onUpdateNcf({ payload: ncf }) {
+  console.log("ncf in onUpdate:" + JSON.stringify(ncf));
+  try {
+    const response = yield call(updateNcf, ncf, ncf.id);
+    yield put(updateNcfSuccess(response));
+    yield put(fetchAllNcf());
+    console.log("update response:" + JSON.stringify(response));
+    // toast.success("Designation Updated Successfully", { autoClose: 2000 });
+  } catch (error) {
+    yield put(updateNcfFail(error));
+    // toast.error("Designation Updated Failed", { autoClose: 2000 });
+  }
+}
+
 function* ncfSaga() {
   yield takeEvery(GET_NCF, fetchNcf);
   yield takeEvery(ADD_NCF, onAddNcf);
   yield takeEvery(GET_OPERATOR_FORBULKASSIGN, fetchOperatorForBulkAssign);
   yield takeEvery(ADD_BULKASSIGN_NCF, onAddBulkAssignNcf);
+  yield takeEvery(UPDATE_NCF, onUpdateNcf);
 }
 
 export default ncfSaga;

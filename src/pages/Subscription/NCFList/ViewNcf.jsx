@@ -20,9 +20,13 @@ import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import AddMultipleNcf from "./AddMultipleNcf";
 import ShowHistoryModal from "./ShowHistoryModal";
+import {
+  getNcf as onGetNcf,
+  updateNcf as onUpdateNcf,
+} from "/src/store/ncflist/actions";
 
 const ViewNcf = (props) => {
-  const { isOpen, toggleViewModal, ncf } = props;
+  const { isOpen, toggleViewModal, ncf, status } = props;
   console.log("ncf:" + JSON.stringify(ncf));
   const dispatch = useDispatch();
   const [showEditNcf, setShowEditNcf] = useState(false);
@@ -57,41 +61,43 @@ const ViewNcf = (props) => {
       lmo_discount: (ncf && ncf.lmo_discount) || "",
       lmo_rate: (ncf && ncf.lmo_rate) || "",
       status_lbl: (ncf && ncf.status_lbl) || "",
+      type: (ncf && ncf.type) || "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
       code: Yup.string().required("Enter code"),
-      status: Yup.string().required("Select status"),
-      calculate_per_channel: Yup.string().required(
-        "Select calculate per channel"
-      ),
-      from_channel_no: Yup.string().required("Enter from channel"),
-      to_channel_no: Yup.string().required("Enter to channel"),
-      is_refundable: Yup.string().required("Select refundable"),
-      mrp: Yup.string(),
-      lmo_discount: Yup.string(),
-      lmo_rate: Yup.string(),
+      // status: Yup.string().required("Select status"),
+      // calculate_per_channel: Yup.string().required(
+      //   "Select calculate per channel"
+      // ),
+      // from_channel_no: Yup.string().required("Enter from channel"),
+      // to_channel_no: Yup.string().required("Enter to channel"),
+      // is_refundable: Yup.string().required("Select refundable"),
+      // mrp: Yup.string(),
+      // lmo_discount: Yup.string(),
+      // lmo_rate: Yup.string(),
     }),
     onSubmit: (values) => {
       const updateNcf = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
-        name: values["name"],
+        id: ncf.id,
+        addition_rates: additionalRates,
+        calculate_per_channel: parseInt(values["calculate_per_channel"]),
         code: values["code"],
-        status: values["status"],
-        calculate_per_channel: values["calculate_per_channel"],
         from_channel_no: values["from_channel_no"],
+        is_refundable: parseInt(values["is_refundable"]),
+        lmo_discount: parseInt(values["lmo_discount"]),
+        lmo_rate: parseInt(values["lmo_rate"]),
+        mrp: parseInt(values["mrp"]),
+        name: values["name"],
+        status: parseInt(values["status"]),
         to_channel_no: values["to_channel_no"],
-        is_refundable: values["is_refundable"],
-        mrp: values["mrp"],
-        lmo_discount: values["lmo_discount"],
-        lmo_rate: values["lmo_rate"],
-        created_at: new Date(),
-        created_by: values["created_by"],
+        type: parseInt(values["type"]),
       };
       console.log("Update NCF:" + JSON.stringify(updateNcf));
-      dispatch(onAddNcf(updateNcf));
+      dispatch(onUpdateNcf(updateNcf));
+      dispatch(onGetNcf());
       validation.resetForm();
-      toggleViewModal();
+      handleCancel();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -206,7 +212,8 @@ const ViewNcf = (props) => {
                         ? true
                         : false
                     }
-                    disabled={!showEditNcf}
+                    // disabled={!showEditNcf}
+                    disabled
                   />
                   {validation.touched.from_channel_no &&
                   validation.errors.from_channel_no ? (
@@ -233,7 +240,8 @@ const ViewNcf = (props) => {
                         ? true
                         : false
                     }
-                    disabled={!showEditNcf}
+                    // disabled={!showEditNcf}
+                    disabled
                   />
                   {validation.touched.code && validation.errors.code ? (
                     <FormFeedback type="invalid">
@@ -259,7 +267,8 @@ const ViewNcf = (props) => {
                         ? true
                         : false
                     }
-                    disabled={!showEditNcf}
+                    // disabled={!showEditNcf}
+                    disabled
                   />
                   {validation.touched.to_channel_no &&
                   validation.errors.to_channel_no ? (
@@ -284,9 +293,12 @@ const ViewNcf = (props) => {
                     value={validation.values.status || ""}
                     disabled={!showEditNcf}
                   >
-                    <option value="">Select status</option>
-                    <option value="Active">Active</option>
-                    <option value="In_active">In-Active</option>
+                    {/* <option value="">Select status</option> */}
+                    {status.map((options) => (
+                      <option key={options.id} value={options.id}>
+                        {options.name}
+                      </option>
+                    ))}
                   </Input>
                   {validation.touched.status && validation.errors.status ? (
                     <FormFeedback type="invalid">
@@ -309,9 +321,9 @@ const ViewNcf = (props) => {
                     value={validation.values.is_refundable || ""}
                     disabled={!showEditNcf}
                   >
-                    <option value="">Select refundable</option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
+                    {/* <option value="">Select refundable</option> */}
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
                   </Input>
                   {validation.touched.is_refundable &&
                   validation.errors.is_refundable ? (
@@ -336,14 +348,40 @@ const ViewNcf = (props) => {
                     value={validation.values.calculate_per_channel || ""}
                     disabled={!showEditNcf}
                   >
-                    <option value="">Select calculate per channel</option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
+                    {/* <option value="">Select calculate per channel</option> */}
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
                   </Input>
                   {validation.touched.calculate_per_channel &&
                   validation.errors.calculate_per_channel ? (
                     <FormFeedback type="invalid">
                       {validation.errors.calculate_per_channel}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              <Col sm="3">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    NCF Type<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="type"
+                    type="select"
+                    placeholder="Select NCF Type"
+                    className="form-select"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.type || ""}
+                    disabled
+                  >
+                    <option value="">Select NCF Type</option>
+                    <option value="1">Primary</option>
+                    <option value="0">Secondary</option>
+                  </Input>
+                  {validation.touched.type && validation.errors.type ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.type}
                     </FormFeedback>
                   ) : null}
                 </div>

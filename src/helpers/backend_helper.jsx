@@ -661,7 +661,7 @@ export const getOperatorForBulkAssign = (id) =>
   get(url.GET_OPERATOR_FORBULKASSIGN(id));
 export const addBulkAssignNcf = (assignncf) =>
   post(url.ADD_BULKASSIGN_NCF, assignncf);
-
+export const updateNcf = (ncf, id) => put(url.UPDATE_NCF(id), ncf);
 // export const getBouquet = () => get(url.GET_BOUQUET);
 export const addBouquet = (bouquet) => post(url.ADD_BOUQUET, bouquet);
 export const getBouquetBoxtype = () => get(url.GET_BOUQUET_BOXTYPE);

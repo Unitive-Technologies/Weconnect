@@ -428,6 +428,7 @@ const NCFList = (props) => {
         isOpen={showViewNcf}
         toggleViewModal={toggleViewNcf}
         ncf={viewNcfData}
+        status={status}
       />
       <AddNewNcf
         isOpen={showAddNcf}

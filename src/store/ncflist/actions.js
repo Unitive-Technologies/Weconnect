@@ -11,6 +11,9 @@ import {
   ADD_BULKASSIGN_NCF,
   ADD_BULKASSIGN_NCF_SUCCESS,
   ADD_BULKASSIGN_NCF_FAIL,
+  UPDATE_NCF,
+  UPDATE_NCF_FAIL,
+  UPDATE_NCF_SUCCESS,
 } from "./actionTypes";
 
 export const getNcf = () => ({
@@ -71,5 +74,20 @@ export const addBulkAssignNcfSuccess = (bulkassign) => ({
 
 export const addBulkAssignNcfFail = (error) => ({
   type: ADD_BULKASSIGN_NCF_FAIL,
+  payload: error,
+});
+
+export const updateNcf = (ncf) => ({
+  type: UPDATE_NCF,
+  payload: ncf,
+});
+
+export const updateNcfSuccess = (ncf) => ({
+  type: UPDATE_NCF_SUCCESS,
+  payload: ncf,
+});
+
+export const updateNcfFail = (error) => ({
+  type: UPDATE_NCF_FAIL,
   payload: error,
 });
