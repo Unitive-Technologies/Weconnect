@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import {
   Col,
@@ -28,7 +29,6 @@ const ViewSMSMessageTemplateList = (props) => {
     resetSelection,
     toggleViewModal,
     SMSMsgTemp,
-    smsmessagetempSubCategory,
     smsmessagetempCategory,
     smsmessagetempStatus,
     smsmessagetempSender,
@@ -41,6 +41,8 @@ const ViewSMSMessageTemplateList = (props) => {
   //   "View in  SMS Message Template List :" +
   //   JSON.stringify(smsmessagetempSubCategory)
   // );
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
+
   const dispatch = useDispatch();
 
   const [showEditSMS, setShowEditSMS] = useState(false);
@@ -129,6 +131,43 @@ const ViewSMSMessageTemplateList = (props) => {
   //   dispatch(onGetSMSMessageTempListSubcategory(validation.values.cat_id))
   // }, [dispatch, validation.values.cat_id])
 
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [subCategory, setSubCategory] = useState([]);
+
+
+  const handleCategoryChange = async (e) => {
+    try {
+      const categoryName = e.target.value;
+      setSelectedCategory(categoryName);
+
+      validation.handleChange(e);
+      {
+        console.log("sssssssssssssssssssssssssssssselected Category:" + selectedCategory);
+      }
+
+      // Assuming you have a token stored in localStorage
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/list/SmsSubCategory?fields=id,name&category=${selectedCategory}&vr=web1.0`,
+        // `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${selectedCategory}&filter[type]=2&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token, // Include your token here
+          },
+        }
+      );
+
+      console.log(
+        "districtlist after selection : " + JSON.stringify(response.data.data)
+      );
+      setSubCategory(response.data.data);
+    } catch (error) {
+      console.error("Error fetching policy data:", error);
+      // Handle error if necessary
+    }
+    // };
+  };
 
   const handleCancel = () => {
     setShowEditSMS(false);
@@ -139,6 +178,39 @@ const ViewSMSMessageTemplateList = (props) => {
   const handleUpdateMetaData = (metaData) => {
     setMetaData(metaData);
   };
+
+  const getSubCategoryInitial = async (e) => {
+    try {
+      // Assuming you have a token stored in localStorage
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/list/SmsSubCategory?fields=id,name&category=${SMSMsgTemp.cat_id}&vr=web1.0`,
+        // `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${selectedCategory}&filter[type]=2&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token, // Include your token here
+          },
+        }
+      );
+
+      console.log(
+        "subcategory initial values : " + JSON.stringify(response)
+      );
+      setSubCategory(response.data.data);
+    } catch (error) {
+      console.error("Error fetching policy data:", error);
+      // Handle error if necessary
+    }
+    // };
+  };
+
+  useEffect(() => {
+    if (SMSMsgTemp) {
+      getSubCategoryInitial();
+    }
+  }, [SMSMsgTemp]);
+
 
   return (
     <>
@@ -205,7 +277,7 @@ const ViewSMSMessageTemplateList = (props) => {
                 <div className="mb-3">
                   <Label className="form-label">Template</Label>
                   <Input
-                    name="Template"
+                    name="template"
                     type="text"
                     disabled={!showEditSMS}
                     placeholder="Enter template"
@@ -257,9 +329,11 @@ const ViewSMSMessageTemplateList = (props) => {
                     disabled={!showEditSMS}
                     placeholder="Select Definition"
                     // className="form-select"
-                    onChange={validation.handleChange}
+                    onChange={handleCategoryChange}
+                    // onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.cat_id || ""}
+                    value={selectedCategory}
+                  // value={validation.values.cat_id || ""}
                   >
                     {smsmessagetempCategory.map((cat_id) => (
                       <option key={cat_id.id} value={cat_id.id}>
@@ -275,7 +349,10 @@ const ViewSMSMessageTemplateList = (props) => {
                 </div>
               </Col>
               {console.log(
-                "SMS Messgage Temp Status" + smsmessagetempSubCategory
+                "VVVVVVVVVVVVVvvvvvv  Category" + validation.values.cat_id, selectedCategory
+              )}
+              {console.log(
+                "SMS Messgage SubCategory" + subCategory
               )}
               <Col sm="4">
                 <div className="mb-3">
@@ -291,8 +368,8 @@ const ViewSMSMessageTemplateList = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.sub_cat_id || ""}
                   >
-                    {smsmessagetempSubCategory &&
-                      smsmessagetempSubCategory.map((sub_cat_id) => (
+                    {subCategory &&
+                      subCategory.map((sub_cat_id) => (
                         <option key={sub_cat_id.id} value={sub_cat_id.id}>
                           {sub_cat_id.name}
                         </option>

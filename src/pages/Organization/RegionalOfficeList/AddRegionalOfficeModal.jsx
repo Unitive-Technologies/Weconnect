@@ -58,6 +58,7 @@ const AddRegionalOfficeModal = (props) => {
       };
     }
   };
+
   const handleStateChange = async (e) => {
     try {
       const stateName = e.target.value;
@@ -347,13 +348,13 @@ const AddRegionalOfficeModal = (props) => {
                   value={validation.values.contact_person || ""}
                   invalid={
                     validation.touched.contact_person &&
-                    validation.errors.contact_person
+                      validation.errors.contact_person
                       ? true
                       : false
                   }
                 />
                 {validation.touched.contact_person &&
-                validation.errors.contact_person ? (
+                  validation.errors.contact_person ? (
                   <FormFeedback type="invalid">
                     {validation.errors.contact_person}
                   </FormFeedback>
@@ -383,7 +384,7 @@ const AddRegionalOfficeModal = (props) => {
                     ))}
                 </Input>
                 {validation.touched.status_lbl &&
-                validation.errors.status_lbl ? (
+                  validation.errors.status_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.status_lbl}
                   </FormFeedback>
@@ -518,7 +519,7 @@ const AddRegionalOfficeModal = (props) => {
                   ))}
                 </Input>
                 {validation.touched.district_lbl &&
-                validation.errors.district_lbl ? (
+                  validation.errors.district_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.district_lbl}
                   </FormFeedback>
@@ -672,13 +673,13 @@ const AddRegionalOfficeModal = (props) => {
                   value={validation.values.por_number || ""}
                   invalid={
                     validation.touched.por_number &&
-                    validation.errors.por_number
+                      validation.errors.por_number
                       ? true
                       : false
                   }
                 />
                 {validation.touched.por_number &&
-                validation.errors.por_number ? (
+                  validation.errors.por_number ? (
                   <FormFeedback type="invalid">
                     {validation.errors.por_number}
                   </FormFeedback>
@@ -726,13 +727,13 @@ const AddRegionalOfficeModal = (props) => {
                   value={validation.values.reg_startdate || ""}
                   invalid={
                     validation.touched.reg_startdate &&
-                    validation.errors.reg_startdate
+                      validation.errors.reg_startdate
                       ? true
                       : false
                   }
                 />
                 {validation.touched.reg_startdate &&
-                validation.errors.reg_startdate ? (
+                  validation.errors.reg_startdate ? (
                   <FormFeedback type="invalid">
                     {validation.errors.reg_startdate}
                   </FormFeedback>
@@ -876,13 +877,13 @@ const AddRegionalOfficeModal = (props) => {
                   value={validation.values.credit_limit || ""}
                   invalid={
                     validation.touched.credit_limit &&
-                    validation.errors.credit_limit
+                      validation.errors.credit_limit
                       ? true
                       : false
                   }
                 />
                 {validation.touched.credit_limit &&
-                validation.errors.credit_limit ? (
+                  validation.errors.credit_limit ? (
                   <FormFeedback type="invalid">
                     {validation.errors.credit_limit}
                   </FormFeedback>
@@ -979,13 +980,13 @@ const AddRegionalOfficeModal = (props) => {
                   value={validation.values.agreestart || ""}
                   invalid={
                     validation.touched.agreestart &&
-                    validation.errors.agreestart
+                      validation.errors.agreestart
                       ? true
                       : false
                   }
                 />
                 {validation.touched.agreestart &&
-                validation.errors.agreestart ? (
+                  validation.errors.agreestart ? (
                   <FormFeedback type="invalid">
                     {validation.errors.agreestart}
                   </FormFeedback>
@@ -1082,13 +1083,13 @@ const AddRegionalOfficeModal = (props) => {
                   value={validation.values.confirmpassword || ""}
                   invalid={
                     validation.touched.confirmpassword &&
-                    validation.errors.confirmpassword
+                      validation.errors.confirmpassword
                       ? true
                       : false
                   }
                 />
                 {validation.touched.confirmpassword &&
-                validation.errors.confirmpassword ? (
+                  validation.errors.confirmpassword ? (
                   <FormFeedback type="invalid">
                     {validation.errors.confirmpassword}
                   </FormFeedback>
