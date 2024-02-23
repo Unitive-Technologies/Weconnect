@@ -5,8 +5,10 @@ import {
   RESPONSE_HEADER_PER_PAGE,
 } from "../../constants/strings";
 import {
+  GET_INVENTORYALLOTTED_SMARTCARD,
   GET_INVENTORYALLOTTED_SMARTCARD_SUCCESS,
   GET_INVENTORYALLOTTED_SMARTCARD_FAIL,
+  GET_INVENTORYALLOTTED_STB,
   GET_INVENTORYALLOTTED_STB_SUCCESS,
   GET_INVENTORYALLOTTED_STB_FAIL,
   GET_INVENTORYALLOTTED_PAIRING,
@@ -78,6 +80,18 @@ const InventoryAllotted = (state = INIT_STATE, action) => {
         : state;
 
     case GET_INVENTORYALLOTTED_PAIRING:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case GET_INVENTORYALLOTTED_SMARTCARD:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case GET_INVENTORYALLOTTED_STB:
       return {
         ...state,
         loading: true,

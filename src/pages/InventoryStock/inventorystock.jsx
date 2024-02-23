@@ -135,6 +135,7 @@ const InventoryStock = (props) => {
   const [filteredPairingWithoutMso, setFilteredPairingWithoutMso] = useState(
     []
   );
+  const [isLoading, setIsLoading] = useState(false);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -282,6 +283,18 @@ const InventoryStock = (props) => {
       dispatch(onGetInventoryAllottedPairinglist());
     }
   }, [dispatch, allottedpairing]);
+
+  const SelectAllottedLoadingSmartcard = (state) => state.allottedsmartcard;
+  const loadingSmartcardProperties = createSelector(
+    SelectAllottedLoadingSmartcard,
+    (allottedsmartcard) => ({
+      smartcardLoading: allottedsmartcard.loading,
+    })
+  );
+
+  const { smartcardLoading } = useSelector(loadingSmartcardProperties);
+
+  // console.log("smartcard loading: ", smartcardLoading);
 
   const selectInventoryBlacklistedState = (state) => state.blacklistedsmartcard;
   const inventoryblacklistedProperties = createSelector(
@@ -1475,7 +1488,11 @@ const InventoryStock = (props) => {
     } else if (selectedOption === "Faulty") {
       return faultyloading;
     } else if (selectedOption === "Allotted") {
-      return allottedloading;
+      if (activeTab === "1") {
+        return smartcardLoading;
+      } else if (activeTab === "3") {
+        return allottedloading;
+      }
     } else if (selectedOption === "blacklisted") {
       return blacklistedloading;
     }
@@ -1645,7 +1662,7 @@ const InventoryStock = (props) => {
                       className="p-3 text-muted"
                     >
                       <TabPane tabId="1">
-                        {stockloading ? (
+                        {getFilteredLoading() ? (
                           <React.Fragment>
                             <Spinner
                               color="primary"

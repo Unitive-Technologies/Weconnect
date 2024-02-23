@@ -23,6 +23,7 @@ import { useDispatch } from "react-redux";
 import {
   allotSmartcard as onAllotSmartcard,
   getInventoryAllottedSmartcard as onGetInventoryAllottedSmartcard,
+  getInventoryAllottedPairing as onGetInventoryAllottedPairing,
 } from "/src/store/inventoryAllotted/actions";
 import { getResponse } from "../../helpers/api_helper";
 
@@ -103,6 +104,7 @@ function AllottedSmrtcard(props) {
       };
       console.log("New allotted smartcard: " + JSON.stringify(newAllotted));
       dispatch(onAllotSmartcard(newAllotted));
+      // dispatch(onGetInventoryAllottedPairing());
       dispatch(onGetInventoryAllottedSmartcard());
       validation.resetForm();
       setUsertype("");
