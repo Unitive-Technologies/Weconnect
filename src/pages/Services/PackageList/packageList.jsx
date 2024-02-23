@@ -437,6 +437,10 @@ const PackageList = (props) => {
                       goToPage={goToPage}
                       subTableEnabled={true}
                       getRenderedSubTable={renderChannelBBQTable}
+                      isSubTableContentExists={(rowData) =>
+                        rowData.channels.length > 0 ||
+                        rowData.brdBouques.length > 0
+                      }
                     />
                   </CardBody>
                 </Card>
