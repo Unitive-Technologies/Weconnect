@@ -87,7 +87,7 @@ function* onAddNewSMSMessageTempList({ payload: smsmessagetemp }) {
 }
 
 function* onUpdateSMSMessageTempList({ payload: smsmessagetemp }) {
-  console.log("SMS in onUpdate:" + JSON.stringify(tax));
+  // console.log("SMS in onUpdate:" + JSON.stringify(tax));
   try {
     const response = yield call(
       updateSMSMessageTempList,

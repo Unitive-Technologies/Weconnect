@@ -73,11 +73,10 @@ const ViewSMSMessageTemplateList = (props) => {
     enableReinitialize: true,
     initialValues,
     validationSchema: Yup.object({
-      code: Yup.string().required("Enter template Code"),
-      name: Yup.string().required("Enter template name"),
       status: Yup.string().required("Enter status"),
     }),
     onSubmit: (values) => {
+      console.log("ViewSMS Valuessssssssssssss" + values)
       const updateSMSMessageTemplateList = {
         id: SMSMsgTemp.id,
         template: values.template,
@@ -92,7 +91,6 @@ const ViewSMSMessageTemplateList = (props) => {
         created_by: values["created_by"],
       };
       console.log("newSMSMessageTemplateList:", updateSMSMessageTemplateList);
-      // save new user
       dispatch(onUpdateSMSMessageTempList(updateSMSMessageTemplateList));
       validation.resetForm();
       toggleViewModal();
@@ -241,6 +239,7 @@ const ViewSMSMessageTemplateList = (props) => {
         <ModalBody>
           <Form
             onSubmit={(e) => {
+              console.log("button clicked")
               e.preventDefault();
               validation.handleSubmit();
               return false;
