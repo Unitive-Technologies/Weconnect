@@ -340,24 +340,28 @@ const ConnectionSchemeList = (props) => {
 
   return (
     <React.Fragment>
-      <ViewConnectionScheme
-        isOpen={showViewConnectionScheme}
-        toggle={toggleViewConnectionScheme}
-        Connectionscheme={viewConnectionSchemeData}
-      />
-      <CreateConnectionScheme
-        isOpen={showCreateConnectionScheme}
-        toggle={toggleCreateConnectionScheme}
-        connectboxtype={connectboxtype}
-        connectstatus={connectstatus}
-      />
+      {showViewConnectionScheme && (
+        <ViewConnectionScheme
+          isOpen={showViewConnectionScheme}
+          toggle={toggleViewConnectionScheme}
+          Connectionscheme={viewConnectionSchemeData}
+        />
+      )}
+      {showCreateConnectionScheme && (
+        <CreateConnectionScheme
+          isOpen={showCreateConnectionScheme}
+          toggle={toggleCreateConnectionScheme}
+          connectboxtype={connectboxtype}
+          connectstatus={connectstatus}
+        />
+      )}
       <BulkAssign isOpen={showBulkAssign} toggle={toggleBulkAssign} />
       <BulkRemoval isOpen={showBulkRemoval} toggle={toggleBulkRemoval} />
       <div className="page-content">
         <Container fluid>
           <Breadcrumbs
             title="Subscription"
-            breadcrumbItem="Connection Scheme List"
+            breadcrumbItem="Connection Schemes"
           />
           {loading ? (
             <React.Fragment>

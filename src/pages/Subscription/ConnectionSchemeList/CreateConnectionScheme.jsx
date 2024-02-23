@@ -52,14 +52,14 @@ const CreateConnectionScheme = (props) => {
       console.log("Post values: ", values);
       const newConnectionScheme = {
         name: values["name"],
-        isHD: values["isHD"],
-        status: values["status"],
+        isHD: parseInt(values["isHD"]),
+        status: parseInt(values["status"]),
         hardware_charge: values["hardware_charge"],
         installation_charge: values["installation_charge"],
         description: values["description"],
-        stbbrands: brands,
+        stbbrands: brands.map((single) => single.id),
       };
-      console.log("newConnectionScheme:" + newConnectionScheme);
+      console.log("newConnectionScheme:" + JSON.stringify(newConnectionScheme));
       dispatch(onAddConnectionScheme(newConnectionScheme));
       dispatch(onGetConnectionScheme());
       validation.resetForm();
