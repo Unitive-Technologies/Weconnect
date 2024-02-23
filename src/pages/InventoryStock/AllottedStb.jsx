@@ -81,10 +81,6 @@ function AllottedStb(props) {
     }
   };
 
-  useEffect(() => {
-    console.log("Selected Stblist: ", selectedStblist);
-  }, [selectedStblist]);
-
   const handleDeleteStb = (index) => {
     const updatedSelectedStblist = selectedStblist.filter(
       (pair, i) => i !== index
@@ -140,21 +136,21 @@ function AllottedStb(props) {
 
   const stbColumns = useMemo(
     () => [
-      {
-        Header: ".",
-        disableFilters: true,
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <input
-                type="checkbox"
-                onChange={() => handleStbSelection(cellProps.row.original)}
-              />
-            </>
-          );
-        },
-      },
+      // {
+      //   Header: ".",
+      //   disableFilters: true,
+      //   filterable: true,
+      //   Cell: (cellProps) => {
+      //     return (
+      //       <>
+      //         <input
+      //           type="checkbox"
+      //           onChange={() => handleStbSelection(cellProps.row.original)}
+      //         />
+      //       </>
+      //     );
+      //   },
+      // },
       {
         Header: "#",
         disableFilters: true,

@@ -47,7 +47,7 @@ function DeallotStb(props) {
       };
       console.log("Deallot: " + JSON.stringify(newDeallot));
       dispatch(onDeallotStb(newDeallot));
-      dispatch(onGetInventoryAllottedStb());
+      // dispatch(onGetInventoryAllottedStb());
       validation.resetForm();
       toggle();
     },
@@ -58,20 +58,20 @@ function DeallotStb(props) {
 
   const columns = useMemo(
     () => [
-      {
-        Header: "*",
-        disableFilters: true,
-        filterable: true,
-        Cell: () => {
-          return (
-            <input
-              type="checkbox"
-              checked={isChecked}
-              onClick={() => setIsChecked(!isChecked)}
-            />
-          );
-        },
-      },
+      // {
+      //   Header: "*",
+      //   disableFilters: true,
+      //   filterable: true,
+      //   Cell: () => {
+      //     return (
+      //       <input
+      //         type="checkbox"
+      //         checked={isChecked}
+      //         onClick={() => setIsChecked(!isChecked)}
+      //       />
+      //     );
+      //   },
+      // },
       {
         Header: "#",
         disableFilters: true,

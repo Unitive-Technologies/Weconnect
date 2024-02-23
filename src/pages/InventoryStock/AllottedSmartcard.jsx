@@ -105,7 +105,7 @@ function AllottedSmrtcard(props) {
       console.log("New allotted smartcard: " + JSON.stringify(newAllotted));
       dispatch(onAllotSmartcard(newAllotted));
       // dispatch(onGetInventoryAllottedPairing());
-      dispatch(onGetInventoryAllottedSmartcard());
+      // dispatch(onGetInventoryAllottedSmartcard());
       validation.resetForm();
       setUsertype("");
       setBranch_id("");
