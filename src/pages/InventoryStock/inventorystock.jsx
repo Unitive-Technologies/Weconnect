@@ -294,7 +294,15 @@ const InventoryStock = (props) => {
 
   const { smartcardLoading } = useSelector(loadingSmartcardProperties);
 
-  // console.log("smartcard loading: ", smartcardLoading);
+  const SelectAllottedLoadingStb = (state) => state.allottedstb;
+  const loadingStbProperties = createSelector(
+    SelectAllottedLoadingStb,
+    (allottedstb) => ({
+      stbLoading: allottedstb.loading,
+    })
+  );
+
+  const { stbLoading } = useSelector(loadingStbProperties);
 
   const selectInventoryBlacklistedState = (state) => state.blacklistedsmartcard;
   const inventoryblacklistedProperties = createSelector(
@@ -1492,6 +1500,8 @@ const InventoryStock = (props) => {
         return smartcardLoading;
       } else if (activeTab === "3") {
         return allottedloading;
+      } else if (activeTab === "2") {
+        return stbLoading;
       }
     } else if (selectedOption === "blacklisted") {
       return blacklistedloading;
