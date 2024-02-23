@@ -56,46 +56,22 @@ const ViewSMSMessageTemplateList = (props) => {
   };
 
 
-  // const category = SMSMsgTemp.cat_id
-
-  // const selectSMSMessageSubCategory = (state) => state.smsmessagetemp;
-
-  // const SMSMessageSubCategoryProperties = createSelector(
-  //   selectSMSMessageSubCategory,
-  //   (smsmessagetemp) => ({
-  //     smsmessagetempSubCategory: smsmessagetemp.smsmessagetempSubcategory,
-  //   })
-  // );
-
-  // const {
-  //   smsmessagetempSubcategory,
-  // } = useSelector(SMSMessageSubCategoryProperties);
-
-  // console.log("cat id values" + category)
-  // useEffect(() => {
-  //   dispatch(onGetSMSMessageTempListSubcategory(category))
-
-  // }, [dispatch, category])
-
+  const initialValues = {
+    template: (SMSMsgTemp && SMSMsgTemp.template) || "",
+    template_id: (SMSMsgTemp && SMSMsgTemp.template_id) || "",
+    cat_id: (SMSMsgTemp && SMSMsgTemp.cat_id) || "",
+    sub_cat_id: (SMSMsgTemp && SMSMsgTemp.sub_cat_id) || "",
+    status_lbl: (SMSMsgTemp && SMSMsgTemp.status_lbl) || "",
+    sender_id: (SMSMsgTemp && SMSMsgTemp.sender_id) || "",
+    created_at: (SMSMsgTemp && SMSMsgTemp.created_at) || "",
+    created_by: (SMSMsgTemp && SMSMsgTemp.created_by) || "my mso(mso)",
+    status: (SMSMsgTemp && SMSMsgTemp.status) || "",
+    meta_data: (SMSMsgTemp && SMSMsgTemp.meta_data) || "",
+  };
 
   const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
-
-    initialValues: {
-      code: (SMSMsgTemp && SMSMsgTemp.code) || "",
-      name: (SMSMsgTemp && SMSMsgTemp.name) || "",
-      template: (SMSMsgTemp && SMSMsgTemp.template) || "",
-      template_id: (SMSMsgTemp && SMSMsgTemp.template_id) || "",
-      cat_id: (SMSMsgTemp && SMSMsgTemp.cat_id) || "",
-      sub_cat_id: (SMSMsgTemp && SMSMsgTemp.sub_cat_id) || "",
-      status_lbl: (SMSMsgTemp && SMSMsgTemp.status_lbl) || "",
-      sender_id: (SMSMsgTemp && SMSMsgTemp.sender_id) || "",
-      created_at: (SMSMsgTemp && SMSMsgTemp.created_at) || "",
-      created_by: (SMSMsgTemp && SMSMsgTemp.created_by) || "my mso(mso)",
-      status: (SMSMsgTemp && SMSMsgTemp.status) || "",
-      meta_data: (SMSMsgTemp && SMSMsgTemp.meta_data) || "",
-    },
+    initialValues,
     validationSchema: Yup.object({
       code: Yup.string().required("Enter template Code"),
       name: Yup.string().required("Enter template name"),
@@ -104,8 +80,6 @@ const ViewSMSMessageTemplateList = (props) => {
     onSubmit: (values) => {
       const updateSMSMessageTemplateList = {
         id: SMSMsgTemp.id,
-        code: values.code,
-        name: values.name,
         template: values.template,
         template_id: values.template_id,
         cat_id: values.cat_id,
@@ -113,12 +87,11 @@ const ViewSMSMessageTemplateList = (props) => {
         status_lbl: values.status_lbl,
         sender_id: values.sender_id,
         meta_data: values.meta_data,
-        // serviceid: values["serviceid"],
         status: values.status,
         created_at: new Date(),
         created_by: values["created_by"],
       };
-      console.log("newSMSMessageTemplateList:" + updateSMSMessageTemplateList);
+      console.log("newSMSMessageTemplateList:", updateSMSMessageTemplateList);
       // save new user
       dispatch(onUpdateSMSMessageTempList(updateSMSMessageTemplateList));
       validation.resetForm();
@@ -126,6 +99,7 @@ const ViewSMSMessageTemplateList = (props) => {
       resetSelection();
     },
   });
+
 
   // useEffect(() => {
   //   dispatch(onGetSMSMessageTempListSubcategory(validation.values.cat_id))
