@@ -52,7 +52,7 @@ function DeallotSmartcard(props) {
       };
       console.log("Deallot: " + JSON.stringify(newDeallot));
       dispatch(onDeallotSmartcard(newDeallot));
-      dispatch(onGetInventoryAllottedSmartcard());
+      // dispatch(onGetInventoryAllottedSmartcard());
       validation.resetForm();
       setSelectedAllottedSmartcards([]);
       toggle();
