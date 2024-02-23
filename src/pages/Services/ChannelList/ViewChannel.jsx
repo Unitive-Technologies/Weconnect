@@ -75,20 +75,20 @@ const ViewChannel = (props) => {
     },
     validationSchema: Yup.object({
       code: Yup.string().required("Enter Channel Code"),
-      logo: Yup.string().required("upload logo"),
+      // logo: Yup.string().required("upload logo"),
       name: Yup.string().required("Enter channel name"),
-      description: Yup.string().required("Enter description"),
-      definition: Yup.string().required("Enter channel definition"),
-      type: Yup.string().required("Enter channel type"),
-      broadcaster: Yup.string().required("select broadcaster"),
-      genre: Yup.string().required("Enter genre"),
-      language: Yup.string().required("Select language"),
-      isalacarte: Yup.string().required(""),
-      rate: Yup.string().required(""),
+      // description: Yup.string().required("Enter description"),
+      // definition: Yup.string().required("Enter channel definition"),
+      // type: Yup.string().required("Enter channel type"),
+      // broadcaster: Yup.string().required("select broadcaster"),
+      // genre: Yup.string().required("Enter genre"),
+      // language: Yup.string().required("Select language"),
+      // isalacarte: Yup.string().required(""),
+      // rate: Yup.string().required(""),
       status: Yup.string().required("Enter status"),
-      cas: Yup.string().required("Enter cas"),
-      cascode: Yup.string().required("cascode"),
-      serviceid: Yup.string().required("serviceid"),
+      // cas: Yup.string().required("Enter cas"),
+      // cascode: Yup.string().required("cascode"),
+      // serviceid: Yup.string().required("serviceid"),
     }),
     onSubmit: (values) => {
       const updateChannelList = {
@@ -98,7 +98,7 @@ const ViewChannel = (props) => {
         name: values.name,
         description: values.description,
         definition: values.definition,
-        type: values.type,
+        // type: values.type,
         broadcaster: values.broadcaster,
         genre: values.genre,
         language: values.language,
@@ -682,7 +682,7 @@ const ViewChannel = (props) => {
               </Col>
             </Row>
             {console.log("" + showEditChannel)}
-            {!showEditChannel && (
+            {showEditChannel && (
               <Row>
                 <Col>
                   <ModalFooter>
