@@ -342,7 +342,49 @@ const InventoryTrack = (props) => {
   //     "inv_state_lbl": "Release"
   // },
 
-  const tableSchema = {
+  const renderStatusTable = (row) => {
+    const { scCurrentStatus, stbCurrentStatus } = row;
+
+    const tableData = Array.from((_, index) => {
+      return {
+        index: index,
+        smartcardstatus: scCurrentStatus,
+        stbstatus: stbCurrentStatus,
+      };
+    });
+    console.log("Table data: ", tableData);
+    return (
+      <div>
+        <Table responsive className="table mb-0">
+          <thead>
+            <tr>
+              {["Smartcard Current Status", "STB Current Status"].map(
+                (columnHeader) => {
+                  return <th key={columnHeader}>{columnHeader}</th>;
+                }
+              )}
+            </tr>
+          </thead>
+          <tbody
+            style={{
+              maxHeight: 200,
+            }}
+          >
+            {tableData.map((data) => {
+              return (
+                <tr key={data.index}>
+                  <td key={data[0]}>{data[0]}</td>
+                  <td key={data[1]}>{data[1]}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      </div>
+    );
+  };
+
+  const statusTableSchema = {
     // subTableArrayKeyName: "smartcard_details",
     // keyColumn: "_id",
     columns: [
@@ -362,16 +404,16 @@ const InventoryTrack = (props) => {
       <Table className="table mb-0">
         <thead>
           <tr>
-            {tableSchema.columns.map((column) => {
+            {statusTableSchema.columns.map((column) => {
               return <th key={column.header}>{column.header}</th>;
             })}
           </tr>
         </thead>
         <tbody>
-          {rowData[tableSchema.subTableArrayKeyName].map((object) => {
+          {rowData[statusTableSchema.subTableArrayKeyName].map((object) => {
             return (
               <tr key={object.id}>
-                {tableSchema.columns.map((column) => {
+                {statusTableSchema.columns.map((column) => {
                   return <td key={column.header}>{column.accessor(object)}</td>;
                 })}
               </tr>
@@ -401,11 +443,12 @@ const InventoryTrack = (props) => {
                 isShowingPageLength={true}
                 tableActions={[]}
                 goToPage={goToPage}
-                // subTableEnabled={true}
-                // getRenderedSubTable={getTrackListRendered}
-                // isSubTableContentExists={(rowData) =>
-                //   rowData.smartcard_details.length > 0
-                // }
+                subTableEnabled={true}
+                getRenderedSubTable={renderStatusTable}
+                isSubTableContentExists={(rowData) =>
+                  rowData.scCurrentStatus !== "" ||
+                  rowData.stbCurrentStatus !== ""
+                }
               />
             </CardBody>
           </Card>
