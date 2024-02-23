@@ -1600,6 +1600,7 @@ const InventoryStock = (props) => {
                           onChange={(e) => {
                             setSelectedOption(e.target.value);
                           }}
+                          disabled={activeTab === "4"}
                         >
                           <option value="In-stock">In-stock</option>
                           <option value="Blacklisted">Blacklisted</option>
