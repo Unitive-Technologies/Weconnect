@@ -345,6 +345,8 @@ const ConnectionSchemeList = (props) => {
           isOpen={showViewConnectionScheme}
           toggle={toggleViewConnectionScheme}
           Connectionscheme={viewConnectionSchemeData}
+          connectboxtype={connectboxtype}
+          connectstatus={connectstatus}
         />
       )}
       {showCreateConnectionScheme && (

@@ -19,11 +19,17 @@ import { useDispatch } from "react-redux";
 import AddBrands from "../BouquetList/AddBrands";
 
 const ViewConnectionScheme = (props) => {
-  const { isOpen, toggle, Connectionscheme } = props;
+  const { isOpen, toggle, Connectionscheme, connectboxtype, connectstatus } =
+    props;
+  console.log(
+    "Connectionscheme in view modal:" + JSON.stringify(Connectionscheme)
+  );
   const dispatch = useDispatch();
   const [showEditConnectionScheme, setShowEditConnectionScheme] =
     useState(false);
-
+  const [brands, setBrands] = useState(
+    (Connectionscheme && Connectionscheme.stbbrands) || []
+  );
   const editToggle = () => {
     setShowEditConnectionScheme(false);
     toggle();
@@ -35,39 +41,34 @@ const ViewConnectionScheme = (props) => {
 
     initialValues: {
       name: (Connectionscheme && Connectionscheme.name) || "",
-      code: (Connectionscheme && Connectionscheme.code) || "",
-      boxtype_lbl: (Connectionscheme && Connectionscheme.boxtype_lbl) || "",
+      isHD: (Connectionscheme && Connectionscheme.boxtype_lbl) || "",
       hardware_charge:
         (Connectionscheme && Connectionscheme.hardware_charge) || "",
       installation_charge:
         (Connectionscheme && Connectionscheme.installation_charge) || "",
       description: (Connectionscheme && Connectionscheme.description) || "",
       status: (Connectionscheme && Connectionscheme.status) || "",
-      created_at: (Connectionscheme && Connectionscheme.created_at) || "",
-      created_by: (Connectionscheme && Connectionscheme.created_by) || "Admin",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
-      code: Yup.string().required("Enter code"),
-      boxtype_lbl: Yup.string().required("Select scheme type"),
-      hardware_charge: Yup.string().required("Enter hardware charge"),
-      installation_charge: Yup.string().required("Enter installation charge"),
-      description: Yup.string().required("Enter description"),
-      status: Yup.string().required("select status"),
+      // code: Yup.string().required("Enter code"),
+      // boxtype_lbl: Yup.string().required("Select scheme type"),
+      // hardware_charge: Yup.string().required("Enter hardware charge"),
+      // installation_charge: Yup.string().required("Enter installation charge"),
+      // description: Yup.string().required("Enter description"),
+      // status: Yup.string().required("select status"),
     }),
     onSubmit: (values) => {
       console.log("Post values: ", values);
       const newConnectionScheme = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
+        id: Connectionscheme.id,
         name: values["name"],
-        code: values["code"],
-        boxtype_lbl: values["boxtype_lbl"],
+        isHD: parseInt(values["isHD"]),
+        status: parseInt(values["status"]),
         hardware_charge: values["hardware_charge"],
         installation_charge: values["installation_charge"],
         description: values["description"],
-        status: values["status"],
-        created_at: new Date(),
-        created_by: values["created_by"],
+        stbbrands: brands.map((single) => single.id),
       };
       console.log("newConnectionScheme:" + newConnectionScheme);
       dispatch(onAddConnectionscheme(newConnectionScheme));
@@ -132,6 +133,7 @@ const ViewConnectionScheme = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}
+                  disabled={!showEditConnectionScheme}
                 ></Input>
                 {validation.touched.name && validation.errors.name ? (
                   <FormFeedback type="invalid">
@@ -146,22 +148,25 @@ const ViewConnectionScheme = (props) => {
                   Type<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="boxtype_lbl"
+                  name="isHD"
                   type="select"
                   placeholder="Enter code"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.boxtype_lbl || ""}
+                  value={validation.values.isHD || ""}
+                  disabled={!showEditConnectionScheme}
                 >
-                  <option value="">Select Scheme type</option>
-                  <option value="SD">Standard Definition(SD)</option>
-                  <option value="HD">High Definition(HD)</option>
+                  {connectboxtype &&
+                    connectboxtype.map((type) => (
+                      <option key={type.id} value={type.id}>
+                        {type.name}
+                      </option>
+                    ))}
                 </Input>
-                {validation.touched.boxtype_lbl &&
-                validation.errors.boxtype_lbl ? (
+                {validation.touched.isHD && validation.errors.isHD ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.boxtype_lbl}
+                    {validation.errors.isHD}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -179,10 +184,14 @@ const ViewConnectionScheme = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  disabled={!showEditConnectionScheme}
                 >
-                  <option value="">Select Status</option>
-                  <option value="ACTIVE">Active</option>
-                  <option value="INACTIVE">In-Active</option>
+                  {connectstatus &&
+                    connectstatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
@@ -206,6 +215,7 @@ const ViewConnectionScheme = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.hardware_charge || ""}
+                  disabled={!showEditConnectionScheme}
                 ></Input>
                 {validation.touched.hardware_charge &&
                 validation.errors.hardware_charge ? (
@@ -228,6 +238,7 @@ const ViewConnectionScheme = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.installation_charge || ""}
+                  disabled={!showEditConnectionScheme}
                 ></Input>
                 {validation.touched.installation_charge &&
                 validation.errors.installation_charge ? (
@@ -252,6 +263,7 @@ const ViewConnectionScheme = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.description || ""}
+                  disabled={!showEditConnectionScheme}
                   invalid={
                     validation.touched.description &&
                     validation.errors.description
@@ -270,17 +282,19 @@ const ViewConnectionScheme = (props) => {
           </Row>
           <div
             style={{
+              // margin: "20px 0px",
               marginTop: "20px",
               marginBottom: "18px",
               zIndex: 12000,
               backgroundColor: "#fff",
               width: "fit-content",
-              marginLeft: "40%",
+              marginLeft: "42%",
+
               position: "absolute",
               padding: "0px 10px",
             }}
           >
-            <p style={{ fontWeight: "bold" }}>Add Brands</p>
+            <h5 style={{}}>Add Brands</h5>
           </div>
           <Row
             style={{
@@ -290,7 +304,13 @@ const ViewConnectionScheme = (props) => {
               margin: "30px 0px",
             }}
           >
-            <AddBrands />
+            <Col sm="12">
+              <AddBrands
+                brands={brands}
+                setBrands={setBrands}
+                isHD={validation.values.isHD}
+              />
+            </Col>
             <p>
               *If no brand selected, this bouquet will be available for all STB
               brands
