@@ -149,7 +149,7 @@ const ViewSMSMessageTemplateList = (props) => {
       const token = "Bearer " + localStorage.getItem("temptoken");
 
       const response = await axios.get(
-        `${API_URL}/list/SmsSubCategory?fields=id,name&category=${selectedCategory}&vr=web1.0`,
+        `${API_URL}/list/SmsSubCategory?fields=id,name&category=${categoryName}&vr=web1.0`,
         // `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${selectedCategory}&filter[type]=2&vr=web1.0`,
         {
           headers: {
