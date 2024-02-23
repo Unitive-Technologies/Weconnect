@@ -14,13 +14,18 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addConnectionscheme as onAddConnectionscheme } from "/src/store/connectionschemelist/actions";
+import {
+  addConnectionscheme as onAddConnectionScheme,
+  getConnectionScheme as onGetConnectionScheme,
+} from "/src/store/connectionschemelist/actions";
 import { useDispatch } from "react-redux";
-import AddBrands from "../BouquetList/AddBrands";
+import AddBrands from "./AddBrands";
 
 const CreateConnectionScheme = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, toggle, connectboxtype, connectstatus } = props;
+  console.log("status in create modal:" + JSON.stringify(connectstatus));
   const dispatch = useDispatch();
+  const [brands, setBrands] = useState([]);
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -28,40 +33,35 @@ const CreateConnectionScheme = (props) => {
 
     initialValues: {
       name: "",
-      code: "",
-      boxtype_lbl: "",
+      isHD: "",
+      status: "",
       hardware_charge: "",
       installation_charge: "",
       description: "",
-      status: "",
-      created_at: "",
-      created_by: "Admin",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
-      code: Yup.string().required("Enter code"),
-      boxtype_lbl: Yup.string().required("Select scheme type"),
-      hardware_charge: Yup.string().required("Enter hardware charge"),
-      installation_charge: Yup.string().required("Enter installation charge"),
-      description: Yup.string().required("Enter description"),
-      status: Yup.string().required("select status"),
+      // code: Yup.string().required("Enter code"),
+      // boxtype_lbl: Yup.string().required("Select scheme type"),
+      // hardware_charge: Yup.string().required("Enter hardware charge"),
+      // installation_charge: Yup.string().required("Enter installation charge"),
+      // description: Yup.string().required("Enter description"),
+      // status: Yup.string().required("select status"),
     }),
     onSubmit: (values) => {
       console.log("Post values: ", values);
       const newConnectionScheme = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
-        code: values["code"],
-        boxtype_lbl: values["boxtype_lbl"],
+        isHD: values["isHD"],
+        status: values["status"],
         hardware_charge: values["hardware_charge"],
         installation_charge: values["installation_charge"],
         description: values["description"],
-        status: values["status"],
-        created_at: new Date(),
-        created_by: values["created_by"],
+        stbbrands: brands,
       };
       console.log("newConnectionScheme:" + newConnectionScheme);
-      dispatch(onAddConnectionscheme(newConnectionScheme));
+      dispatch(onAddConnectionScheme(newConnectionScheme));
+      dispatch(onGetConnectionScheme());
       validation.resetForm();
       toggle();
     },
@@ -121,22 +121,25 @@ const CreateConnectionScheme = (props) => {
                   Type<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="boxtype_lbl"
+                  name="isHD"
                   type="select"
-                  placeholder="Enter code"
+                  placeholder="Select Scheme Type"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.boxtype_lbl || ""}
+                  value={validation.values.isHD || ""}
                 >
-                  <option value="11">Select Scheme type</option>
-                  <option value="12">Standard Definition(SD)</option>
-                  <option value="13">High Definition(HD)</option>
+                  <option value="">Select Scheme type</option>
+                  {connectboxtype &&
+                    connectboxtype.map((type) => (
+                      <option key={type.id} value={type.id}>
+                        {type.name}
+                      </option>
+                    ))}
                 </Input>
-                {validation.touched.boxtype_lbl &&
-                validation.errors.boxtype_lbl ? (
+                {validation.touched.isHD && validation.errors.isHD ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.boxtype_lbl}
+                    {validation.errors.isHD}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -156,8 +159,12 @@ const CreateConnectionScheme = (props) => {
                   value={validation.values.status || ""}
                 >
                   <option value="">Select Status</option>
-                  <option value="1">Active</option>
-                  <option value="2">In-Active</option>
+                  {connectstatus &&
+                    connectstatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
@@ -245,20 +252,19 @@ const CreateConnectionScheme = (props) => {
           </Row>
           <div
             style={{
+              // margin: "20px 0px",
               marginTop: "20px",
               marginBottom: "18px",
               zIndex: 12000,
               backgroundColor: "#fff",
               width: "fit-content",
-              marginLeft: "40%",
+              marginLeft: "42%",
+
               position: "absolute",
               padding: "0px 10px",
             }}
           >
-            <p style={{ fontWeight: "bold" }}>
-              Add Brands
-              <span style={{ color: "red" }}>*</span>
-            </p>
+            <h5 style={{}}>Add Brands</h5>
           </div>
           <Row
             style={{
@@ -268,12 +274,19 @@ const CreateConnectionScheme = (props) => {
               margin: "30px 0px",
             }}
           >
-            <AddBrands />
+            <Col sm="12">
+              <AddBrands
+                brands={brands}
+                setBrands={setBrands}
+                isHD={validation.values.isHD}
+              />
+            </Col>
             <p>
               *If no brand selected, this bouquet will be available for all STB
               brands
             </p>
           </Row>
+
           <Row>
             <Col>
               <ModalFooter>

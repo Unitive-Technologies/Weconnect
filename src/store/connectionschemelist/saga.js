@@ -1,14 +1,26 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { GET_CONNECTIONSCHEME, ADD_CONNECTIONSCHEME } from "./actionTypes";
 import {
+  GET_CONNECTIONSCHEME,
+  ADD_CONNECTIONSCHEME,
+  GET_CONNECTIONSCHEME_BOXTYPE,
+  GET_CONNECTIONSCHEME_STATUS,
+} from "./actionTypes";
+import {
+  getConnectionScheme as fetchAllConnectionSchemes,
   getConnectionSchemeSuccess,
   getConnectionSchemeFail,
   addConnectionSchemeSuccess,
   addConnectionSchemeFail,
+  getConnectionSchemeBoxTypeSuccess,
+  getConnectionSchemeBoxTypeFail,
+  getConnectionSchemeStatusFail,
+  getConnectionSchemeStatusSuccess,
 } from "./actions";
 import {
   getConnectionScheme,
   addConnectionScheme,
+  getConnectionSchemeBoxType,
+  getConnectionSchemeStatus,
 } from "../../helpers/backend_helper";
 
 const convertConnectionSchemeListObject = (connectionschemeList) => {
@@ -38,10 +50,10 @@ const convertConnectionSchemeListObject = (connectionschemeList) => {
 function* fetchConnectionScheme() {
   try {
     const response = yield call(getConnectionScheme);
-    const connectionSchemeList = convertConnectionSchemeListObject(
-      response.data
-    );
-    yield put(getConnectionSchemeSuccess(connectionSchemeList));
+    // const connectionSchemeList = convertConnectionSchemeListObject(
+    //   response.data
+    // );
+    yield put(getConnectionSchemeSuccess(response.data));
   } catch (error) {
     console.error("Error fetching connection scheme list:", error);
     yield put(getConnectionSchemeFail(error));
@@ -62,14 +74,37 @@ function* onAddNewConnectionScheme({ payload: connectionscheme }) {
     const response = yield call(addConnectionScheme, connectionscheme);
     console.log("Post response in saga: ", response);
     yield put(addConnectionSchemeSuccess(response));
+    yield put(fetchAllConnectionSchemes());
   } catch (error) {
     yield put(addConnectionSchemeFail(error));
+  }
+}
+
+function* fetchConnectionSchemeBoxType() {
+  try {
+    const response = yield call(getConnectionSchemeBoxType);
+    yield put(getConnectionSchemeBoxTypeSuccess(response.data));
+  } catch (error) {
+    console.error("Error fetching connection scheme boxtype:", error);
+    yield put(getConnectionSchemeBoxTypeFail(error));
+  }
+}
+
+function* fetchConnectionSchemeStatus() {
+  try {
+    const response = yield call(getConnectionSchemeStatus);
+    yield put(getConnectionSchemeStatusSuccess(response.data));
+  } catch (error) {
+    console.error("Error fetching connection scheme status:", error);
+    yield put(getConnectionSchemeStatusFail(error));
   }
 }
 
 function* connectionSchemeSaga() {
   yield takeEvery(GET_CONNECTIONSCHEME, fetchConnectionScheme);
   yield takeEvery(ADD_CONNECTIONSCHEME, onAddNewConnectionScheme);
+  yield takeEvery(GET_CONNECTIONSCHEME_BOXTYPE, fetchConnectionSchemeBoxType);
+  yield takeEvery(GET_CONNECTIONSCHEME_STATUS, fetchConnectionSchemeStatus);
 }
 
 export default connectionSchemeSaga;

@@ -398,7 +398,11 @@ export const getBouquetUrl = (currPage, perPage) => {
 
 export const GET_CONNECTIONSCHEME =
   "/scheme?expand=created_by_lbl,boxtype_lbl,status_lbl,stock_type_lbl&vr=web1.0";
-export const ADD_CONNECTIONSCHEME = "/add/connectionscheme";
+export const ADD_CONNECTIONSCHEME = "/scheme?vr=web1.0";
+export const GET_CONNECTIONSCHEME_BOXTYPE =
+  "/list/boxtype?fields=id,name&vr=web1.0";
+export const GET_CONNECTIONSCHEME_STATUS =
+  "/list/status?fields=id,name&vr=web1.0";
 
 export const GET_COMPLAINTCATEGORY =
   "/complaint-category?expand=created_by_lbl,status_lbl,showonweb_lbl&page=1&per-page=50&vr=web1.0";

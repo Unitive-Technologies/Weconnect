@@ -677,6 +677,10 @@ export const getOperatorForBouquet = (id) =>
 export const getConnectionScheme = () => get(url.GET_CONNECTIONSCHEME);
 export const addConnectionScheme = (connectionscheme) =>
   post(url.ADD_CONNECTIONSCHEME, connectionscheme);
+export const getConnectionSchemeBoxType = () =>
+  get(url.GET_CONNECTIONSCHEME_BOXTYPE);
+export const getConnectionSchemeStatus = () =>
+  get(url.GET_CONNECTIONSCHEME_STATUS);
 
 export const getComplaintCategory = () => get(url.GET_COMPLAINTCATEGORY);
 export const getComplaintCategoryStatus = () =>

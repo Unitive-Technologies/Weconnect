@@ -11,10 +11,15 @@ import {
   Row,
   Table,
   UncontrolledTooltip,
+  Spinner,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
-import { getConnectionScheme as onGetConnectionScheme } from "/src/store/actions";
+import {
+  getConnectionScheme as onGetConnectionScheme,
+  getConnectionSchemeBoxType as onGetConnectionBoxType,
+  getConnectionSchemeStatus as onGetConnectionStatus,
+} from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
@@ -25,7 +30,7 @@ import BulkRemoval from "./BulkRemoval";
 
 const ConnectionSchemeList = (props) => {
   //meta title
-  document.title = "Connection Scheme List | VDigital";
+  document.title = "Connection Schemes | VDigital";
 
   const dispatch = useDispatch();
 
@@ -34,20 +39,20 @@ const ConnectionSchemeList = (props) => {
     selectConnectionSchemeState,
     (connectionscheme) => ({
       connectscheme: connectionscheme.connectionscheme,
+      connectboxtype: connectionscheme.connectionBoxType,
+      connectstatus: connectionscheme.connectionStatus,
       loading: connectionscheme.loading,
     })
   );
 
-  const { connectscheme, loading } = useSelector(ConnectionSchemeProperties);
+  const { connectscheme, connectboxtype, connectstatus, loading } = useSelector(
+    ConnectionSchemeProperties
+  );
 
-  useEffect(() => {
-    // console.log("connectionscheme data in component:", connectscheme);
-  }, [connectscheme]);
-  const [isLoading, setLoading] = useState(loading);
   const [modal, setModal] = useState(false);
   const [showCreateConnectionScheme, setShowCreateConnectionScheme] =
     useState(false);
-  const [isEdit, setIsEdit] = useState(false);
+
   const [showBulkAssign, setShowBulkAssign] = useState(false);
   const [showViewConnectionScheme, setShowViewConnectionScheme] =
     useState(false);
@@ -270,41 +275,6 @@ const ConnectionSchemeList = (props) => {
           );
         },
       },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link
-                to="#"
-                className="text-success"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  handleUserClick(userData);
-                }}
-              >
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link
-                to="#"
-                className="text-danger"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  onClickDelete(userData);
-                }}
-              >
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
-          );
-        },
-      },
     ],
     []
   );
@@ -312,7 +282,8 @@ const ConnectionSchemeList = (props) => {
   useEffect(() => {
     if (connectscheme && !connectscheme.length) {
       dispatch(onGetConnectionScheme());
-      setIsEdit(false);
+      dispatch(onGetConnectionBoxType());
+      dispatch(onGetConnectionStatus());
     }
   }, [dispatch, connectscheme]);
 
@@ -377,6 +348,8 @@ const ConnectionSchemeList = (props) => {
       <CreateConnectionScheme
         isOpen={showCreateConnectionScheme}
         toggle={toggleCreateConnectionScheme}
+        connectboxtype={connectboxtype}
+        connectstatus={connectstatus}
       />
       <BulkAssign isOpen={showBulkAssign} toggle={toggleBulkAssign} />
       <BulkRemoval isOpen={showBulkRemoval} toggle={toggleBulkRemoval} />
@@ -386,8 +359,13 @@ const ConnectionSchemeList = (props) => {
             title="Subscription"
             breadcrumbItem="Connection Scheme List"
           />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">
