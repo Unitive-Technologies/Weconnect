@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import ViewRevenueShare from "./ViewRevenueShare";
+import Select from "react-select";
 import {
   Col,
   Card,
@@ -503,7 +504,7 @@ const ViewChannel = (props) => {
                   ) : null}
                 </div>
               </Col>
-              <Col sm="4">
+              {/* <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">
                     Language<span style={{ color: "red" }}>*</span>
@@ -530,6 +531,36 @@ const ViewChannel = (props) => {
                     </FormFeedback>
                   ) : null}
                 </div>
+              </Col> */}
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">Language<span style={{ color: "red" }}>*</span></Label>
+                  <Select
+                    name="language"
+                    placeholder="Select at least one Reason Type"
+                    onChange={(selectedOptions) => {
+                      validation.setFieldValue(
+                        "language",
+                        selectedOptions
+                      );
+                    }}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.language}
+                    options={channelListLanguage.map((language) => ({
+                      value: language.name,
+                      label: language.name,
+                    }))}
+                    isMulti
+                    isDisabled={!showEditChannel}
+                  />
+                </div>
+                {validation.touched.language &&
+                  validation.errors.language ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.language}
+                  </FormFeedback>
+                ) : null}
+                {/* </div> */}
               </Col>
               <Col sm="4">
                 <div className="mb-3">
@@ -562,12 +593,18 @@ const ViewChannel = (props) => {
                     name="rate"
                     type="number"
                     step="0.01"
+                    // placeholder="Enter channel code"
+                    // className="form-select"
+                    // onChange={validation.handleChange}
+                    // onBlur={validation.handleBlur}
+                    // value={validation.values.rate || ""}
                     onChange={handleInputChange}
                     onKeyDown={handleArrowKeyPress}
                     placeholder="0"
                     disabled={!showEditChannel || selectedType === "1"}
                     value={selectedRate}
-                  />
+                  // disabled={!showEditChannel}
+                  ></Input>
                   {validation.touched.rate && validation.errors.rate ? (
                     <FormFeedback type="invalid">
                       {validation.errors.rate}
@@ -575,7 +612,6 @@ const ViewChannel = (props) => {
                   ) : null}
                 </div>
               </Col>
-
               <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">
@@ -663,6 +699,30 @@ const ViewChannel = (props) => {
                         msoPercent={msoPercent}
                         discountPercent={discountPercent}
                         selectedRate={parseInt(channel.broadcasterRate)}
+                        dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
+                      />
+                    </CardBody>
+                  </Card>
+                </Col>
+              ) : (
+                <></>
+              )} */}
+              {/* {channel &&
+                channel.isFta === 0 &&
+                parseInt(channel.broadcasterRate) !== "" ? (
+                // <Row>
+                <Col lg={6}>
+                  <Card>
+                    <CardBody>
+                      <span>Graphical representation of SHARE</span>
+                      <CardTitle className="mb-4">
+                        (MRP: {selectedRate}){" "}
+                      </CardTitle>
+                      <ViewPieChart
+                        broadPercent={broadPercent}
+                        msoPercent={msoPercent}
+                        discountPercent={discountPercent}
+                        selectedRate={selectedRate}
                         dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
                       />
                     </CardBody>
