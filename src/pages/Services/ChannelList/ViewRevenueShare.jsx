@@ -55,7 +55,7 @@ const RevenueShare = ({
               max={100}
               orientation="horizontal"
               onChange={(newValue) =>
-                handleBroadCastShare(newValue)
+                showEditChannel && handleBroadCastShare(newValue)
               }
               disabled={!showEditChannel}
             />
@@ -70,7 +70,7 @@ const RevenueShare = ({
               max={35}
               orientation="horizontal"
               onChange={(newValue) =>
-                handleMsoShare(newValue)
+                showEditChannel && handleMsoShare(newValue)
               }
               disabled={!showEditChannel}
             />
@@ -85,7 +85,7 @@ const RevenueShare = ({
               max={15}
               orientation="horizontal"
               onChange={(newValue) =>
-                handleDiscount(newValue)
+                showEditChannel && handleDiscount(newValue)
               }
               disabled={!showEditChannel}
             />
