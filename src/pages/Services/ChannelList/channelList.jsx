@@ -516,11 +516,11 @@ const ChannelList = (props) => {
                       toggleUpdateModal={() =>
                         setShowBulkUpdateChannelList(true)
                       }
-                      subTableEnabled={true}
-                      getRenderedSubTable={renderCASTable}
-                      isSubTableContentExists={(rowData) =>
-                        rowData.casCodes.length > 0
-                      }
+                    // subTableEnabled={true}
+                    // getRenderedSubTable={renderCASTable}
+                    // isSubTableContentExists={(rowData) =>
+                    //   rowData.casCodes.length > 0
+                    // }
                     />
                   </CardBody>
                 </Card>
