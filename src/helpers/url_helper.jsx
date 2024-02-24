@@ -403,6 +403,8 @@ export const GET_CONNECTIONSCHEME_BOXTYPE =
   "/list/boxtype?fields=id,name&vr=web1.0";
 export const GET_CONNECTIONSCHEME_STATUS =
   "/list/status?fields=id,name&vr=web1.0";
+export const UPDATE_CONNECTIONSCHEME = (id) =>
+  `/complaint-category/${id}?vr=web1.0`;
 
 export const GET_COMPLAINTCATEGORY =
   "/complaint-category?expand=created_by_lbl,status_lbl,showonweb_lbl&page=1&per-page=50&vr=web1.0";
@@ -659,4 +661,14 @@ export const updateUserUpload = (token) => {
 };
 export const uploadUserFileForInitiatedUserUpload = (token) => {
   return `/user-bulk/upload-q/${token}`;
+};
+
+export const DOWNLOAD_SAMPLE_REGIONALOFFICE = "/operator/upload-q?vr=web1.0";
+
+export const fileUploadRegionalOffice = (token) => {
+  return `/operator/upload-q/${token}?vr=web1.0`;
+};
+
+export const uploadRegionalOfficeSubmit = (token) => {
+  return `/operator/upload-q/${token}`;
 };

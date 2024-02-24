@@ -27,9 +27,7 @@ const ViewConnectionScheme = (props) => {
   const dispatch = useDispatch();
   const [showEditConnectionScheme, setShowEditConnectionScheme] =
     useState(false);
-  const [brands, setBrands] = useState(
-    (Connectionscheme && Connectionscheme.stbbrands) || []
-  );
+  const [brands, setBrands] = useState();
   const editToggle = () => {
     setShowEditConnectionScheme(false);
     toggle();
@@ -48,6 +46,7 @@ const ViewConnectionScheme = (props) => {
         (Connectionscheme && Connectionscheme.installation_charge) || "",
       description: (Connectionscheme && Connectionscheme.description) || "",
       status: (Connectionscheme && Connectionscheme.status) || "",
+      brands: (Connectionscheme && Connectionscheme.stbbrands) || [],
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
@@ -60,7 +59,7 @@ const ViewConnectionScheme = (props) => {
     }),
     onSubmit: (values) => {
       console.log("Post values: ", values);
-      const newConnectionScheme = {
+      const updateConnectionScheme = {
         id: Connectionscheme.id,
         name: values["name"],
         isHD: parseInt(values["isHD"]),
@@ -70,8 +69,9 @@ const ViewConnectionScheme = (props) => {
         description: values["description"],
         stbbrands: brands.map((single) => single.id),
       };
-      console.log("newConnectionScheme:" + newConnectionScheme);
-      dispatch(onAddConnectionscheme(newConnectionScheme));
+      
+      console.log("newConnectionScheme:" + updateConnectionScheme);
+      dispatch(onAddConnectionscheme(updateConnectionScheme));
       validation.resetForm();
       toggle();
     },

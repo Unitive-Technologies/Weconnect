@@ -5,6 +5,9 @@ import {
   ADD_CONNECTIONSCHEME,
   ADD_CONNECTIONSCHEME_SUCCESS,
   ADD_CONNECTIONSCHEME_FAIL,
+  UPDATE_CONNECTIONSCHEME,
+  UPDATE_CONNECTIONSCHEME_SUCCESS,
+  UPDATE_CONNECTIONSCHEME_FAIL,
   GET_CONNECTIONSCHEME_BOXTYPE,
   GET_CONNECTIONSCHEME_BOXTYPE_FAIL,
   GET_CONNECTIONSCHEME_BOXTYPE_SUCCESS,
@@ -78,5 +81,20 @@ export const getConnectionSchemeStatusSuccess = (connectionscheme) => {
 
 export const getConnectionSchemeStatusFail = (error) => ({
   type: GET_CONNECTIONSCHEME_STATUS_FAIL,
+  payload: error,
+});
+
+export const updateConnectionScheme = (connectionscheme) => ({
+  type: UPDATE_CONNECTIONSCHEME,
+  payload: connectionscheme,
+});
+
+export const updateConnectionSchemeSuccess = (connectionscheme) => ({
+  type: UPDATE_CONNECTIONSCHEME_SUCCESS,
+  payload: connectionscheme,
+});
+
+export const updateConnectionSchemeFail = (error) => ({
+  type: UPDATE_CONNECTIONSCHEME_FAIL,
   payload: error,
 });

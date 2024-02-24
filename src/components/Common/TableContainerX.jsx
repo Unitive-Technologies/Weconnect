@@ -96,7 +96,7 @@ const TableContainerX = ({
   isSubTableContentExists,
 }) => {
   const [navigationPage, setNavigationPage] = React.useState(currentPage);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(-1);
 
   // console.log("[Table ContainerX] Page Size: ", pageSize);
   const {
@@ -140,9 +140,10 @@ const TableContainerX = ({
   };
 
   const toggleRowOpen = (e, id) => {
+    debugger;
     e.preventDefault();
     if (open === id) {
-      setOpen(false);
+      setOpen(-1);
     } else {
       setOpen(id);
     }
@@ -238,7 +239,10 @@ const TableContainerX = ({
                             {isSubTableContentExists(row.original) && (
                               <span
                                 id={row.id}
-                                onClick={(e) => toggleRowOpen(e, row.id)}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  toggleRowOpen(e, row.id);
+                                }}
                               >
                                 <FontAwesomeIcon
                                   icon={open === row.id ? faMinus : faPlus}

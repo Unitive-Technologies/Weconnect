@@ -9,6 +9,9 @@ import {
   GET_CONNECTIONSCHEME_BOXTYPE_FAIL,
   GET_CONNECTIONSCHEME_STATUS_SUCCESS,
   GET_CONNECTIONSCHEME_STATUS_FAIL,
+  UPDATE_CONNECTIONSCHEME,
+  UPDATE_CONNECTIONSCHEME_FAIL,
+  UPDATE_CONNECTIONSCHEME_SUCCESS,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -84,6 +87,30 @@ const ConnectionScheme = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+
+    case UPDATE_CONNECTIONSCHEME:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_CONNECTIONSCHEME_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        connectionscheme: state.connectionscheme.map((connsche) =>
+          connsche.id === action.payload.id
+            ? { ...connsche, ...action.payload }
+            : connsche
+        ),
+      };
+
+    case UPDATE_CONNECTIONSCHEME_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
       };
 
     default:

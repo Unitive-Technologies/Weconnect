@@ -2,6 +2,7 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import {
   GET_CONNECTIONSCHEME,
   ADD_CONNECTIONSCHEME,
+  UPDATE_CONNECTIONSCHEME,
   GET_CONNECTIONSCHEME_BOXTYPE,
   GET_CONNECTIONSCHEME_STATUS,
 } from "./actionTypes";
@@ -11,6 +12,8 @@ import {
   getConnectionSchemeFail,
   addConnectionSchemeSuccess,
   addConnectionSchemeFail,
+  updateConnectionSchemeSuccess,
+  updateConnectionSchemeFail,
   getConnectionSchemeBoxTypeSuccess,
   getConnectionSchemeBoxTypeFail,
   getConnectionSchemeStatusFail,
@@ -21,6 +24,7 @@ import {
   addConnectionScheme,
   getConnectionSchemeBoxType,
   getConnectionSchemeStatus,
+  updateConnectionScheme,
 } from "../../helpers/backend_helper";
 
 const convertConnectionSchemeListObject = (connectionschemeList) => {
@@ -100,11 +104,30 @@ function* fetchConnectionSchemeStatus() {
   }
 }
 
+function* onUpdateConnectionScheme({ payload: connectionscheme }) {
+  console.log(
+    "connectionscheme in onUpdate:" + JSON.stringify(connectionscheme)
+  );
+  try {
+    const response = yield call(
+      updateConnectionScheme,
+      connectionscheme,
+      connectionscheme.id
+    );
+    yield put(updateConnectionSchemeSuccess(response));
+    console.log("update response:" + JSON.stringify(response));
+    yield put(fetchAllConnectionSchemes());
+  } catch (error) {
+    yield put(updateConnectionSchemeFail(error));
+  }
+}
+
 function* connectionSchemeSaga() {
   yield takeEvery(GET_CONNECTIONSCHEME, fetchConnectionScheme);
   yield takeEvery(ADD_CONNECTIONSCHEME, onAddNewConnectionScheme);
   yield takeEvery(GET_CONNECTIONSCHEME_BOXTYPE, fetchConnectionSchemeBoxType);
   yield takeEvery(GET_CONNECTIONSCHEME_STATUS, fetchConnectionSchemeStatus);
+  yield takeEvery(UPDATE_CONNECTIONSCHEME, onUpdateConnectionScheme);
 }
 
 export default connectionSchemeSaga;

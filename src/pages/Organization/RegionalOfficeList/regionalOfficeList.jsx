@@ -299,7 +299,7 @@ const RegionalOfficeList = (props) => {
   const toggleAddRegionalOffice = () => {
     setShowRegionalOffice(!showRegionalOffice);
   };
-  const handleUploadRegionalOffice = () => {
+  const toggleUploadRegionalOffice = () => {
     setShowUploadRegionalOffice(!showUploadRegionalOffice);
   };
 
@@ -357,7 +357,9 @@ const RegionalOfficeList = (props) => {
       {showUploadRegionalOffice && (
         <UploadRegionalOfficeModal
           isOpen={showUploadRegionalOffice}
-          handleUploadRegionalOffice={handleUploadRegionalOffice}
+          toggleUploadRegionalOffice={toggleUploadRegionalOffice}
+          statusList={statusList}
+          actiontype={"add"}
         />
       )}
       <div className="page-content">

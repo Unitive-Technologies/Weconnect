@@ -444,6 +444,21 @@ export const uploadUserFileForInitiatedUserUpload = async (
     formData
   );
 };
+
+export const downloadRegOffUploadTemplate = async (data) => {
+  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_REGIONALOFFICE, data);
+};
+
+export const updateRegOffUploadByToken = async (token, data) => {
+  return put(url.fileUploadRegionalOffice(token), data);
+};
+
+export const uploadRegionalOfficeSubmit = async (initiatedToken, formData) => {
+  return await postCompleteResponse(
+    url.uploadRegionalOfficeSubmit(initiatedToken),
+    formData
+  );
+};
 // export const getDistrict = () => get(url.GET_DISTRICT);
 export const addDistrict = (district) => post(url.ADD_DISTRICT, district);
 export const getDistrictStateList = () => get(url.GET_DISTRICT_STATELIST);
@@ -681,6 +696,8 @@ export const getConnectionSchemeBoxType = () =>
   get(url.GET_CONNECTIONSCHEME_BOXTYPE);
 export const getConnectionSchemeStatus = () =>
   get(url.GET_CONNECTIONSCHEME_STATUS);
+export const updateConnectionScheme = (connectionscheme, id) =>
+  put(url.UPDATE_CONNECTIONSCHEME(id), connectionscheme);
 
 export const getComplaintCategory = () => get(url.GET_COMPLAINTCATEGORY);
 export const getComplaintCategoryStatus = () =>
