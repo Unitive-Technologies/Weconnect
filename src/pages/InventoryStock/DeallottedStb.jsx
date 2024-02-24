@@ -24,8 +24,8 @@ import {
 } from "/src/store/inventoryallotted/actions";
 
 function DeallotStb(props) {
-  const { isOpen, toggle, selectedAllottedStbs } = props;
-  const [isChecked, setIsChecked] = useState(false);
+  const { isOpen, toggle, selectedAllottedStbs, setSelectedAllottedStbs } =
+    props;
 
   const dispatch = useDispatch();
 
@@ -50,6 +50,7 @@ function DeallotStb(props) {
       // dispatch(onGetInventoryAllottedStb());
       validation.resetForm();
       toggle();
+      setSelectedAllottedStbs([]);
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -175,6 +176,7 @@ DeallotStb.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
   selectedAllottedStbs: PropTypes.array,
+  setSelectedAllottedStbs: PropTypes.func,
 };
 
 export default DeallotStb;

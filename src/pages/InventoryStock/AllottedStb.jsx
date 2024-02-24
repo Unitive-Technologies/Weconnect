@@ -33,6 +33,7 @@ function AllottedStb(props) {
     allottedstblist,
     allottedusertype,
     allottedoperatorlist,
+    setSelectedAllottedStbs,
   } = props;
   const [usertype, setUsertype] = useState("");
   const [selectedStblist, setSelectedStblist] = useState([]);
@@ -120,6 +121,7 @@ function AllottedStb(props) {
       dispatch(onAllotStb(newAllotted));
       dispatch(onGetInventoryAllottedStb());
       validation.resetForm();
+      setSelectedAllottedStbs([]);
       setUsertype("");
       setSelectedStblist([]);
       setBranch_id("");
@@ -210,6 +212,7 @@ function AllottedStb(props) {
 
   const handleModalToggle = () => {
     toggle();
+    setSelectedAllottedStbs([]);
     setUsertype("");
     setSelectedStblist([]);
     setBranch_id("");
@@ -534,6 +537,7 @@ AllottedStb.propTypes = {
   toggle: PropTypes.func,
   allottedusertype: PropTypes.array,
   allottedoperatorlist: PropTypes.array,
+  setSelectedAllottedStbs: PropTypes.func,
 };
 
 export default AllottedStb;

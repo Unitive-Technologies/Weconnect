@@ -343,13 +343,13 @@ const InventoryTrack = (props) => {
   // },
 
   const renderStatusTable = (row) => {
-    const { scCurrentStatus, stbCurrentStatus } = row;
-
+    // const { scCurrentStatus, stbCurrentStatus } = row;
+    console.log("Row Data: ", row);
     const tableData = Array.from((_, index) => {
       return {
         index: index,
-        smartcardstatus: scCurrentStatus,
-        stbstatus: stbCurrentStatus,
+        smartcardstatus: row.scCurrentStatus,
+        stbstatus: row.stbCurrentStatus,
       };
     });
     console.log("Table data: ", tableData);

@@ -52,6 +52,7 @@ const StockStb = (props) => {
     allottedoperatorlist,
     allottedstblist,
     allottedusertype,
+    setSelectedAllottedStbs,
   } = props;
   const [showEditStb, setShowEditStb] = useState(false);
   const [editStbData, setEditStbData] = useState({});
@@ -506,7 +507,7 @@ const StockStb = (props) => {
       <AllottedStb
         isOpen={showAllottedStb}
         toggle={handleAllottedStb}
-        // selectedAllottedStbs={selectedAllottedStbs}
+        setSelectedAllottedStbs={setSelectedAllottedStbs}
         allottedstblist={allottedstblist}
         allottedusertype={allottedusertype}
         allottedoperatorlist={allottedoperatorlist}
@@ -515,6 +516,7 @@ const StockStb = (props) => {
         isOpen={showDeallotStb}
         toggle={handleDeallottedStb}
         selectedAllottedStbs={selectedAllottedStbs}
+        setSelectedAllottedStbs={setSelectedAllottedStbs}
       />
       {loading ? (
         <React.Fragment>
@@ -596,6 +598,7 @@ StockStb.propTypes = {
   allottedoperatorlist: PropTypes.array,
   allottedstblist: PropTypes.array,
   allottedusertype: PropTypes.array,
+  setSelectedAllottedStbs: PropTypes.func,
 };
 
 export default StockStb;

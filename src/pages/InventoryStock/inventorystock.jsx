@@ -612,6 +612,10 @@ const InventoryStock = (props) => {
     }
   };
 
+  // if (stbLoading) {
+  //   setSelectedAllottedStbs([]);
+  // }
+
   const handleSelectedAllottedPairings = (row) => {
     const isSelected = selectedAllottedPairings.some(
       (selectedAllottedPairing) => selectedAllottedPairing.id === row.id
@@ -1753,6 +1757,7 @@ const InventoryStock = (props) => {
                               allottedstblist={filteredStbs}
                               allottedusertype={allottedusertype}
                               allottedoperatorlist={allottedoperatorlist}
+                              setSelectedAllottedStbs={setSelectedAllottedStbs}
                             />
                           </Col>
                         </Row>
