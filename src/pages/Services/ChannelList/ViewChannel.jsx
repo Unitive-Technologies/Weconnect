@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import RevenueShare from "./RevenueShare";
+import ViewRevenueShare from "./ViewRevenueShare";
 import {
   Col,
   Card,
@@ -22,7 +22,7 @@ import { useFormik } from "formik";
 import { updateChannelList as onUpdateChannelList } from "/src/store/channel/actions";
 import { useDispatch } from "react-redux";
 import CasList from "./CasList";
-import PieChart from "./PieChart";
+import ViewPieChart from "./ViewPieChart";
 import ShowHistoryModal from "./ShowHistoryModal";
 
 const ViewChannel = (props) => {
@@ -607,7 +607,7 @@ const ViewChannel = (props) => {
               }}
             >
               <Col lg={6}>
-                <RevenueShare
+                <ViewRevenueShare
                   broadPercent={broadPercent}
                   msoPercent={msoPercent}
                   discountPercent={discountPercent}
@@ -636,7 +636,7 @@ const ViewChannel = (props) => {
                       <CardTitle className="mb-4">
                         (MRP: {channel.broadcasterRate}){" "}
                       </CardTitle>
-                      <PieChart
+                      <ViewPieChart
                         broadPercent={broadPercent}
                         msoPercent={msoPercent}
                         discountPercent={discountPercent}
