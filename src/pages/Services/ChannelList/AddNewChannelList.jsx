@@ -112,19 +112,19 @@ const AddNewChannelList = (props) => {
       isNCF: "",
       broadcaster: "",
       genre: "",
-      language: [],
+      language_id: [],
       isalacarte: "",
       rate: "",
       status: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter channel name"),
-      description: Yup.string().required("Enter description"),
-      definition: Yup.string().required("Enter channel definition"),
-      isFta: Yup.string().required("Enter channel type"),
-      broadcaster: Yup.string().required("select broadcaster"),
-      genre: Yup.string().required("Enter genre"),
-      language: Yup.array().min(1, "Select language"),
+      // description: Yup.string().required("Enter description"),
+      // definition: Yup.string().required("Enter channel definition"),
+      // isFta: Yup.string().required("Enter channel type"),
+      // broadcaster: Yup.string().required("select broadcaster"),
+      // genre: Yup.string().required("Enter genre"),
+      // language: Yup.array().min(1, "Select language"),
       status: Yup.string().required("Enter status"),
     }),
     onSubmit: (values) => {
@@ -145,7 +145,7 @@ const AddNewChannelList = (props) => {
         isFta: values["isFta"],
         isHD: parseInt(values["definition"]),
         isNCF: values["isNCF"],
-        language_id: values["language"],
+        language_id: values["language_id"],
         // language_id: selectedLanguages,
         // logo: { name: "", type: "", ext: "", data: "" },
         logo: values["logo"],
@@ -518,7 +518,7 @@ const AddNewChannelList = (props) => {
                   Language<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="language"
+                  name="language_id"
                   type="select"
                   multiple
                   placeholder="Select language"
@@ -526,27 +526,27 @@ const AddNewChannelList = (props) => {
                   aria-label="multiple select example"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.language || []}
+                  value={validation.values.language_id || []}
                 // onChange={handleChangeLanguages}
                 // value={selectedLanguages}
                 >
                   <option value="">Select Language</option>
                   {channelListLanguage &&
-                    channelListLanguage.map((language) => (
-                      <option key={language.id} value={language.id}>
-                        {language.name}
+                    channelListLanguage.map((language_id) => (
+                      <option key={language_id.id} value={language_id.id}>
+                        {language_id.name}
                       </option>
                     ))}
                 </Input>
-                {validation.touched.language && validation.errors.language ? (
+                {validation.touched.language_id && validation.errors.language_id ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.language}
+                    {validation.errors.language_id}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
             {console.log(
-              "languages: " + JSON.stringify(validation.values.language)
+              "languages: " + JSON.stringify(validation.values.language_id)
             )}
             <Col sm="4">
               <div className="mb-3">
