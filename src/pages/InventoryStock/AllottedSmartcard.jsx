@@ -24,7 +24,7 @@ import {
   allotSmartcard as onAllotSmartcard,
   getInventoryAllottedSmartcard as onGetInventoryAllottedSmartcard,
   getInventoryAllottedPairing as onGetInventoryAllottedPairing,
-} from "/src/store/inventoryAllotted/actions";
+} from "../../store/inventoryallotted/actions";
 import { getResponse } from "../../helpers/api_helper";
 
 function AllottedSmrtcard(props) {
