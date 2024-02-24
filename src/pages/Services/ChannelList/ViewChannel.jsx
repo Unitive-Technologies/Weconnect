@@ -48,10 +48,31 @@ const ViewChannel = (props) => {
   const [msoPercent, setMsoPercent] = useState();
   const [discountPercent, setDiscountPercent] = useState();
   const [showHistory, setShowHistory] = useState(false);
+  const [selectedRate, setSelectedRate] = useState("");
+  const [selectedType, setSelectedType] = useState("");
+
 
   const toggleHistoryModal = () => {
     setShowHistory(!showHistory);
   };
+
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value;
+    setSelectedRate(inputValue >= 0 ? inputValue : 0);
+  };
+
+  const handleArrowKeyPress = (e) => {
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+      e.preventDefault(); // Prevent the default behavior of arrow keys in number input
+
+      const increment = e.key === "ArrowUp" ? 1 : -1;
+      const currentRate = parseFloat(selectedRate) || 0;
+      const newRate = Math.max(0, currentRate + increment * 0.01);
+
+      setSelectedRate(newRate.toFixed(2));
+    }
+  };
+
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -540,13 +561,13 @@ const ViewChannel = (props) => {
                   <Input
                     name="rate"
                     type="number"
-                    // placeholder="Enter channel code"
-                    // className="form-select"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.rate || ""}
-                    disabled={!showEditChannel}
-                  ></Input>
+                    step="0.01"
+                    onChange={handleInputChange}
+                    onKeyDown={handleArrowKeyPress}
+                    placeholder="0"
+                    disabled={!showEditChannel || selectedType === "1"}
+                    value={selectedRate}
+                  />
                   {validation.touched.rate && validation.errors.rate ? (
                     <FormFeedback type="invalid">
                       {validation.errors.rate}
@@ -554,6 +575,7 @@ const ViewChannel = (props) => {
                   ) : null}
                 </div>
               </Col>
+
               <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">
@@ -626,7 +648,7 @@ const ViewChannel = (props) => {
               "XXXTYPE:" + typeof channel.isFta,
               typeof parseInt(channel.broadcasterRate)
             )} */}
-              {channel &&
+              {/* {channel &&
                 channel.isFta === 0 &&
                 parseInt(channel.broadcasterRate) !== "" ? (
                 <Col lg={6}>
@@ -641,6 +663,30 @@ const ViewChannel = (props) => {
                         msoPercent={msoPercent}
                         discountPercent={discountPercent}
                         selectedRate={parseInt(channel.broadcasterRate)}
+                        dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
+                      />
+                    </CardBody>
+                  </Card>
+                </Col>
+              ) : (
+                <></>
+              )} */}
+              {channel &&
+                channel.isFta === 0 &&
+                parseInt(channel.broadcasterRate) !== "" ? (
+                // <Row>
+                <Col lg={6}>
+                  <Card>
+                    <CardBody>
+                      <span>Graphical representation of SHARE</span>
+                      <CardTitle className="mb-4">
+                        (MRP: {selectedRate}){" "}
+                      </CardTitle>
+                      <ViewPieChart
+                        broadPercent={broadPercent}
+                        msoPercent={msoPercent}
+                        discountPercent={discountPercent}
+                        selectedRate={selectedRate}
                         dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
                       />
                     </CardBody>

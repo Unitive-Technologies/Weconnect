@@ -85,6 +85,7 @@ const AddNewChannelList = (props) => {
     setSelectedLanguages(selectedOptions);
   };
   console.log("lang handle:" + selectedLanguages);
+
   const handleArrowKeyPress = (e) => {
     if (e.key === "ArrowUp" || e.key === "ArrowDown") {
       e.preventDefault(); // Prevent the default behavior of arrow keys in number input
