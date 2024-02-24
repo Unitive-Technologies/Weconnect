@@ -52,6 +52,25 @@ const ViewChannel = (props) => {
   const [selectedRate, setSelectedRate] = useState("");
   const [selectedType, setSelectedType] = useState("");
 
+  const handleChangeLogo = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const { name, type } = file;
+      const ext = name.split(".").pop();
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const data = reader.result;
+
+        validation.setFieldValue("logo", {
+          name,
+          type,
+          ext,
+          data,
+        });
+      };
+    }
+  };
 
   const toggleHistoryModal = () => {
     setShowHistory(!showHistory);
@@ -87,9 +106,9 @@ const ViewChannel = (props) => {
       description: (channel && channel.description) || "",
       definition: (channel && channel.isHD) || "",
       type: (channel && channel.isFta) || "",
-      broadcaster: (channel && channel.broadcaster) || "",
-      genre: (channel && channel.genre) || "",
-      language: (channel && channel.language_lbl) || "",
+      broadcaster_id: (channel && channel.broadcaster_id) || "",
+      genre_id: (channel && channel.genre_id) || "",
+      language_id: (channel && channel.language_id) || "",
       isalacarte: (channel && channel.isalacarte) || "",
       rate: (channel && channel.broadcasterRate) || "",
       status: (channel && channel.status) || "",
@@ -116,14 +135,14 @@ const ViewChannel = (props) => {
       const updateChannelList = {
         id: values.id,
         code: values.code,
-        // logo: values.logo,
+        logo: values.logo,
         name: values.name,
         description: values.description,
         definition: values.definition,
         // type: values.type,
-        broadcaster: values.broadcaster,
-        genre: values.genre,
-        language: values.language,
+        broadcaster_id: values.broadcaster_id,
+        genre_id: values.genre_id,
+        language_id: values.language_id,
         isalacarte: values.isalacarte,
         rate: values.rate,
         status: values.status,
@@ -293,7 +312,7 @@ const ViewChannel = (props) => {
               </Col>
             </Row>
             <Row>
-              <Col lg={2}>
+              {/* <Col lg={2}>
                 <div className="mb-3">
                   <Label className="form-label">Logo</Label>
                   <Input
@@ -324,12 +343,33 @@ const ViewChannel = (props) => {
                     Upload Logo
                   </button>
                 </div>
-                {/* <div className="mb-3">
-                <img
-                  src={`data:${logo.type};base64,${logo.data}`}
-                  alt={logo.name}
-                />
-              </div> */}
+              </Col> */}
+              <Col lg={2}>
+                <div className="mb-3">
+                  <Label className="form-label">Logo</Label>
+                  <input
+                    style={{
+                      width: "170px",
+                      height: "150px",
+                      borderRadius: "10px",
+                    }}
+                    name="logo"
+                    type="file"
+                    onChange={handleChangeLogo}
+                  ></input>
+                  {validation.touched.logo && validation.errors.logo ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.logo}
+                    </FormFeedback>
+                  ) : null}
+                  <button
+                    type="button"
+                    className="btn btn-primary "
+                    style={{ marginTop: "10px" }}
+                  >
+                    Upload Logo
+                  </button>
+                </div>
               </Col>
               <Col lg={4}>
                 <div className="mb-3">
@@ -453,25 +493,25 @@ const ViewChannel = (props) => {
                     Broadcaster<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="broadcaster"
+                    name="broadcaster_id"
                     type="select"
                     placeholder="Select broadcaster"
                     className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.broadcaster || ""}
+                    value={validation.values.broadcaster_id || ""}
                     disabled={!showEditChannel}
                   >
-                    {channelListBroadcaster.map((broadcaster) => (
-                      <option key={broadcaster.id} value={broadcaster.id}>
-                        {broadcaster.name}
+                    {channelListBroadcaster.map((broadcaster_id) => (
+                      <option key={broadcaster_id.id} value={broadcaster_id.id}>
+                        {broadcaster_id.name}
                       </option>
                     ))}
                   </Input>
-                  {validation.touched.broadcaster &&
-                    validation.errors.broadcaster ? (
+                  {validation.touched.broadcaster_id &&
+                    validation.errors.broadcaster_id ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.broadcaster}
+                      {validation.errors.broadcaster_id}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -482,24 +522,24 @@ const ViewChannel = (props) => {
                     Genre<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="genre"
+                    name="genre_id"
                     type="select"
                     placeholder="Select genre"
                     className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.genre || ""}
+                    value={validation.values.genre_id || ""}
                     disabled={!showEditChannel}
                   >
-                    {channelListGenre.map((genre) => (
-                      <option key={genre.id} value={genre.id}>
-                        {genre.name}
+                    {channelListGenre.map((genre_id) => (
+                      <option key={genre_id.id} value={genre_id.id}>
+                        {genre_id.name}
                       </option>
                     ))}
                   </Input>
-                  {validation.touched.genre && validation.errors.genre ? (
+                  {validation.touched.genre_id && validation.errors.genre_id ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.genre}
+                      {validation.errors.genre_id}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -536,28 +576,28 @@ const ViewChannel = (props) => {
                 <div className="mb-3">
                   <Label className="form-label">Language<span style={{ color: "red" }}>*</span></Label>
                   <Select
-                    name="language"
+                    name="language_id"
                     placeholder="Select at least one Reason Type"
                     onChange={(selectedOptions) => {
                       validation.setFieldValue(
-                        "language",
+                        "language_id",
                         selectedOptions
                       );
                     }}
                     onBlur={validation.handleBlur}
-                    value={validation.values.language}
-                    options={channelListLanguage.map((language) => ({
-                      value: language.name,
-                      label: language.name,
+                    value={validation.values.language_id}
+                    options={channelListLanguage.map((language_id) => ({
+                      value: language_id.name,
+                      label: language_id.name,
                     }))}
                     isMulti
                     isDisabled={!showEditChannel}
                   />
                 </div>
-                {validation.touched.language &&
-                  validation.errors.language ? (
+                {validation.touched.language_id &&
+                  validation.errors.language_id ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.language}
+                    {validation.errors.language_id}
                   </FormFeedback>
                 ) : null}
                 {/* </div> */}
