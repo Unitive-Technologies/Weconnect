@@ -223,6 +223,8 @@ const ReasonList = (props) => {
       <UploadReasonList
         isOpen={showUploadReasonList}
         toggleUploadModal={toggleUploadModal}
+        actiontype={"add"}
+        reasonStatus={reasonStatus}
       />
       <div className="page-content">
         <Container fluid>

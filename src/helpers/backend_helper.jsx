@@ -459,6 +459,8 @@ export const uploadRegionalOfficeSubmit = async (initiatedToken, formData) => {
     formData
   );
 };
+
+
 // export const getDistrict = () => get(url.GET_DISTRICT);
 export const addDistrict = (district) => post(url.ADD_DISTRICT, district);
 export const getDistrictStateList = () => get(url.GET_DISTRICT_STATELIST);
@@ -766,6 +768,21 @@ export const getReasonReasonType = () => get(url.GET_REASON_REASONTYPE);
 export const addNewReason = (reasons) => post(url.ADD_NEW_REASON, reasons);
 export const updateReason = (id, reasons) =>
   put(url.UPDATE_REASON(id), reasons);
+export const downloadReasonUploadTemplate = async (data) => {
+  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_REASON, data);
+};
+
+export const updateReasonUploadByToken = async (token, data) => {
+  return put(url.fileUploadReason(token), data);
+};
+
+export const uploadReasonSubmit = async (initiatedToken, formData) => {
+  return await postCompleteResponse(
+    url.uploadReasonSubmit(initiatedToken),
+    formData
+  );
+};
+
 
 // export const getBank = () => get(url.GET_BANK);
 export const getBankStatus = () => get(url.GET_BANK_STATUS);

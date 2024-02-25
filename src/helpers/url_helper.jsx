@@ -464,6 +464,16 @@ export const getReasonUrl = (currPage, perPage) => {
   return `/reason?expand=created_by_lbl,status_lbl,type_display_lbl,created_at_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
 
+export const DOWNLOAD_SAMPLE_REASON = "/reason/upload-q?vr=web1.0";
+
+export const fileUploadReason = (token) => {
+  return `/reason/upload-q/${token}?vr=web1.0`;
+};
+
+export const uploadReasonSubmit = (token) => {
+  return `/reason/upload-q/${token}`;
+};
+
 export const GET_BANK =
   "/bank?expand=created_by_lbl,status_lbl,ismso_lbl&page=1&per-page=50&vr=web1.0";
 export const GET_BANK_STATUS = "/list/status?fields=id,name&vr=web1.0";
