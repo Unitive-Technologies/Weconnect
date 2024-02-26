@@ -23,7 +23,7 @@ import * as Yup from "yup";
 import {
   allotStb as onAllotStb,
   getInventoryAllottedStb as onGetInventoryAllottedStb,
-} from "/src/store/inventoryAllotted/actions";
+} from "/src/store/inventoryallotted/actions";
 import { getResponse } from "../../helpers/api_helper";
 
 function AllottedStb(props) {

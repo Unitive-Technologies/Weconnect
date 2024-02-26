@@ -23,7 +23,7 @@ import * as Yup from "yup";
 import {
   allotPairing as onAllotPairing,
   getInventoryAllottedPairing as onGetInventoryAllottedParing,
-} from "/src/store/inventoryAllotted/actions";
+} from "/src/store/inventoryallotted/actions";
 import { getResponse } from "../../helpers/api_helper";
 
 function AllottedPairing(props) {
