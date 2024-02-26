@@ -18,6 +18,7 @@ import {
   getBouquet as onGetBouquet,
   getAlacarteChannels as onGetAlacarteChannels,
   getBouquetBoxtype as onGetBouquetBoxtype,
+  getBouquetStatus as onGetBouquetStatus,
   getBouquetPackages as onGetBouquetPackages,
   getBouquetTaxlist as onGetBouquetTaxlist,
   getBouquetType as onGetBouquetType,
@@ -36,7 +37,7 @@ import TableContainerX from "../../../components/Common/TableContainerX";
 
 const BouquetList = () => {
   //meta title
-  document.title = "Bouquet List | VDigital";
+  document.title = "Bouquets | VDigital";
 
   const dispatch = useDispatch();
 
@@ -45,6 +46,7 @@ const BouquetList = () => {
     bouquets: bouquet.bouquet,
     loading: bouquet.loading,
     alacartechannels: bouquet.alacartechannels,
+    bouquetstatus: bouquet.bouquetstatus,
     bouquetboxtype: bouquet.bouquetboxtype,
     bouquetpackages: bouquet.bouquetpackages,
     bouquettaxlist: bouquet.bouquettaxlist,
@@ -62,6 +64,7 @@ const BouquetList = () => {
     loading,
     alacartechannels,
     bouquetboxtype,
+    bouquetstatus,
     bouquetpackages,
     bouquettaxlist,
     bouquettype,
@@ -360,6 +363,7 @@ const BouquetList = () => {
       dispatch(onGetBouquetTaxlist());
       dispatch(onGetBouquex());
       dispatch(onGetBouquetType());
+      dispatch(onGetBouquetStatus());
       dispatch(onGetRechargePeriod());
     }
   }, [dispatch, bouquets]);
@@ -410,6 +414,7 @@ const BouquetList = () => {
         isOpen={showCreateBouquet}
         toggle={toggleCreateBouquet}
         alacartechannels={alacartechannels}
+        bouquetstatus={bouquetstatus}
         bouquetboxtype={bouquetboxtype}
         bouquetpackages={bouquetpackages}
         bouquettaxlist={bouquettaxlist}

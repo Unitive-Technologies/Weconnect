@@ -30,6 +30,7 @@ const CreateBouquet = (props) => {
     toggle,
     alacartechannels,
     bouquetboxtype,
+    bouquetstatus,
     bouquetpackages,
     bouquettaxlist,
     bouquettype,
@@ -37,6 +38,7 @@ const CreateBouquet = (props) => {
     rechargeperiod,
     selectedRow,
   } = props;
+  console.log("alacartechannels:" + JSON.stringify(alacartechannels));
   const dispatch = useDispatch();
   const [toggleSwitch, settoggleSwitch] = useState(true);
   const [toggleNcfSwitch, setToggleNcfSwitch] = useState(true);
@@ -48,39 +50,39 @@ const CreateBouquet = (props) => {
     initialValues: {
       code: "",
       name: "",
-      type_lbl: "",
-      boxtype_lbl: "",
+      type: "",
+      isHD: "",
       type: "",
       status: "",
       description: "",
       is_promotional: "",
       ifFixNCF: "",
       max_ncf_channels: "",
-      showon_portal: "",
-      category_lbl: "",
+      is_online_app: "",
+      sort_by: "",
       created_by: "Admin",
     },
     validationSchema: Yup.object({
       code: Yup.string().required("Enter Channel Code"),
       name: Yup.string().required("Enter channel name"),
-      type_lbl: Yup.string().required("Enter bouquet type"),
-      boxtype_lbl: Yup.string().required("Enter box type"),
+      type: Yup.string().required("Enter bouquet type"),
+      isHD: Yup.string().required("Enter box type"),
       type: Yup.string().required("Enter channel type"),
       status: Yup.string().required("Enter status"),
       description: Yup.string().required("Enter description"),
       is_promotional: Yup.string(),
       ifFixNCF: Yup.string(),
       max_ncf_channels: Yup.string(),
-      showon_portal: Yup.string(),
-      category_lbl: Yup.string(),
+      is_online_app: Yup.string(),
+      sort_by: Yup.string(),
     }),
     onSubmit: (values) => {
       const newbouquet = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         code: values["code"],
         name: values["name"],
-        type_lbl: values["type_lbl"],
-        boxtype_lbl: values["boxtype_lbl"],
+        type: values["type"],
+        isHD: values["isHD"],
         type: values["type"],
         status: values["status"],
         description: values["description"],
@@ -89,8 +91,8 @@ const CreateBouquet = (props) => {
         max_ncf_channels: values["max_ncf_channels"],
         created_at: new Date(),
         created_by: values["created_by"],
-        showon_portal: values["showon_portal"],
-        category_lbl: values["category_lbl"],
+        is_online_app: values["is_online_app"],
+        sort_by: values["sort_by"],
       };
       console.log("New Bouquet List:" + newbouquet);
       dispatch(onAddBouquet(newbouquet));
@@ -202,25 +204,25 @@ const CreateBouquet = (props) => {
                   Box Type<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="boxtype_lbl"
+                  name="isHD"
                   type="select"
-                  placeholder="Select boxtype_lbl"
+                  placeholder="Select BoxType"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.boxtype_lbl || ""}
+                  value={validation.values.isHD || ""}
                 >
-                  <option value="">Select box type</option>
-                  {bouquetboxtype.map((options) => (
-                    <option key={options.id} value={options.id}>
-                      {options.name}
-                    </option>
-                  ))}
+                  <option value="">Select Box type</option>
+                  {bouquetboxtype &&
+                    bouquetboxtype.map((options) => (
+                      <option key={options.id} value={options.id}>
+                        {options.name}
+                      </option>
+                    ))}
                 </Input>
-                {validation.touched.boxtype_lbl &&
-                validation.errors.boxtype_lbl ? (
+                {validation.touched.isHD && validation.errors.isHD ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.boxtype_lbl}
+                    {validation.errors.isHD}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -231,30 +233,31 @@ const CreateBouquet = (props) => {
                   Bouquet Type<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="type_lbl"
+                  name="type"
                   type="select"
-                  placeholder="Select bouquet type"
+                  placeholder="Select Bouquet type"
                   rows="3"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.type_lbl || ""}
+                  value={validation.values.type || ""}
                   invalid={
-                    validation.touched.type_lbl && validation.errors.type_lbl
+                    validation.touched.type && validation.errors.type
                       ? true
                       : false
                   }
                 >
                   <option value="">Select bouquet type</option>
-                  {bouquettype.map((options) => (
-                    <option key={options.id} value={options.id}>
-                      {options.name}
-                    </option>
-                  ))}
+                  {bouquettype &&
+                    bouquettype.map((options) => (
+                      <option key={options.id} value={options.id}>
+                        {options.name}
+                      </option>
+                    ))}
                 </Input>
-                {validation.touched.type_lbl && validation.errors.type_lbl ? (
+                {validation.touched.type && validation.errors.type ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.type_lbl}
+                    {validation.errors.type}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -267,7 +270,7 @@ const CreateBouquet = (props) => {
                 <Input
                   name="status"
                   type="select"
-                  placeholder="select status"
+                  placeholder="Select Status"
                   rows="3"
                   className="form-select"
                   onChange={validation.handleChange}
@@ -280,8 +283,12 @@ const CreateBouquet = (props) => {
                   }
                 >
                   <option value="">Select status</option>
-                  <option value="1">Active</option>
-                  <option value="0">In-active</option>
+                  {bouquetstatus &&
+                    bouquetstatus.map((options) => (
+                      <option key={options.id} value={options.id}>
+                        {options.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
@@ -327,13 +334,13 @@ const CreateBouquet = (props) => {
                   <i className="mdi mdi-information"></i>
                 </Label>
                 <Input
-                  name="is_exclusive_lbl"
+                  name="is_exclusive"
                   type="select"
-                  placeholder="Select Status"
+                  placeholder="Select Is Exclusive"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.is_exclusive_lbl || ""}
+                  value={validation.values.is_exclusive || ""}
                 >
                   {bouquex.map((options) => (
                     <option key={options.id} value={options.id}>
@@ -341,10 +348,10 @@ const CreateBouquet = (props) => {
                     </option>
                   ))}
                 </Input>
-                {validation.touched.is_exclusive_lbl &&
-                validation.errors.is_exclusive_lbl ? (
+                {validation.touched.is_exclusive &&
+                validation.errors.is_exclusive ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.is_exclusive_lbl}
+                    {validation.errors.is_exclusive}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -358,15 +365,15 @@ const CreateBouquet = (props) => {
                 <Input
                   name="is_promotional"
                   type="select"
-                  placeholder="Select Status"
+                  placeholder="Select Is Promotional"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.is_promotional || ""}
                   disabled
                 >
-                  <option value="1">No</option>
-                  <option value="0">Yes</option>
+                  <option value="1">Yes</option>
+                  <option value="0">No</option>
                 </Input>
                 {validation.touched.is_promotional &&
                 validation.errors.is_promotional ? (
@@ -447,21 +454,21 @@ const CreateBouquet = (props) => {
                   Show On Portal<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="showon_portal"
+                  name="is_online_app"
                   type="select"
-                  placeholder="Select Status"
+                  placeholder="Select Show On Portal"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.showon_portal || ""}
+                  value={validation.values.is_online_app || ""}
                 >
-                  <option value="No">No</option>
-                  <option value="Yes">Yes</option>
+                  <option value="1">Yes</option>
+                  <option value="0">No</option>
                 </Input>
-                {validation.touched.showon_portal &&
-                validation.errors.showon_portal ? (
+                {validation.touched.is_online_app &&
+                validation.errors.is_online_app ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.showon_portal}
+                    {validation.errors.is_online_app}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -472,23 +479,20 @@ const CreateBouquet = (props) => {
                   Bouquet Category<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="category_lbl"
+                  name="sort_by"
                   type="select"
                   placeholder="Select Status"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.category_lbl || ""}
+                  value={validation.values.sort_by || ""}
                 >
-                  <option value="MSO Bouquet">MSO Bouquet</option>
-                  <option value="Broadcaster Bouquet">
-                    Broadcaster Bouquet
-                  </option>
+                  <option value="1">MSO Bouquet</option>
+                  <option value="2">Broadcaster Bouquet</option>
                 </Input>
-                {validation.touched.category_lbl &&
-                validation.errors.category_lbl ? (
+                {validation.touched.sort_by && validation.errors.sort_by ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.category_lbl}
+                    {validation.errors.sort_by}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -500,21 +504,20 @@ const CreateBouquet = (props) => {
                   <span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="showon_portal"
+                  name="is_loner"
                   type="select"
-                  placeholder="Select Status"
+                  placeholder="Select Stop Other"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.showon_portal || ""}
+                  value={validation.values.is_loner || ""}
                 >
-                  <option value="No">No</option>
-                  <option value="Yes">Yes</option>
+                  <option value="0">No</option>
+                  <option value="1">Yes</option>
                 </Input>
-                {validation.touched.showon_portal &&
-                validation.errors.showon_portal ? (
+                {validation.touched.is_loner && validation.errors.is_loner ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.showon_portal}
+                    {validation.errors.is_loner}
                   </FormFeedback>
                 ) : null}
               </div>

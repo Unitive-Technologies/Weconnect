@@ -460,7 +460,6 @@ export const uploadRegionalOfficeSubmit = async (initiatedToken, formData) => {
   );
 };
 
-
 // export const getDistrict = () => get(url.GET_DISTRICT);
 export const addDistrict = (district) => post(url.ADD_DISTRICT, district);
 export const getDistrictStateList = () => get(url.GET_DISTRICT_STATELIST);
@@ -681,6 +680,7 @@ export const addBulkAssignNcf = (assignncf) =>
 export const updateNcf = (ncf, id) => put(url.UPDATE_NCF(id), ncf);
 // export const getBouquet = () => get(url.GET_BOUQUET);
 export const addBouquet = (bouquet) => post(url.ADD_BOUQUET, bouquet);
+export const getBouquetStatus = () => get(url.GET_BOUQUET_STATUS);
 export const getBouquetBoxtype = () => get(url.GET_BOUQUET_BOXTYPE);
 export const getBouquetType = () => get(url.GET_BOUQUETTYPE);
 export const getBouquex = () => get(url.GET_BOUQUEX);
@@ -782,7 +782,6 @@ export const uploadReasonSubmit = async (initiatedToken, formData) => {
     formData
   );
 };
-
 
 // export const getBank = () => get(url.GET_BANK);
 export const getBankStatus = () => get(url.GET_BANK_STATUS);

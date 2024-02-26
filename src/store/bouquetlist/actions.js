@@ -8,6 +8,9 @@ import {
   GET_BOUQUETTYPE,
   GET_BOUQUETTYPE_SUCCESS,
   GET_BOUQUETTYPE_FAIL,
+  GET_BOUQUET_STATUS,
+  GET_BOUQUET_STATUS_SUCCESS,
+  GET_BOUQUET_STATUS_FAIL,
   GET_BOUQUET_BOXTYPE,
   GET_BOUQUET_BOXTYPE_SUCCESS,
   GET_BOUQUET_BOXTYPE_FAIL,
@@ -79,6 +82,20 @@ export const getBouquetTypeSuccess = (bouquettype) => ({
 
 export const getBouquetTypeFail = (error) => ({
   type: GET_BOUQUETTYPE_FAIL,
+  payload: error,
+});
+
+export const getBouquetStatus = () => ({
+  type: GET_BOUQUET_STATUS,
+});
+
+export const getBouquetStatusSuccess = (bouquetstatus) => ({
+  type: GET_BOUQUET_STATUS_SUCCESS,
+  payload: bouquetstatus,
+});
+
+export const getBouquetStatusFail = (error) => ({
+  type: GET_BOUQUET_STATUS_FAIL,
   payload: error,
 });
 

@@ -3,6 +3,7 @@ import {
   GET_BOUQUET,
   ADD_BOUQUET,
   GET_BOUQUETTYPE,
+  GET_BOUQUET_STATUS,
   GET_BOUQUET_BOXTYPE,
   GET_BOUQUEX,
   GET_ALACARTECHANNELS,
@@ -32,6 +33,8 @@ import {
   getBouquexFail,
   getOperatorForBouquetSuccess,
   getOperatorForBouquetFail,
+  getBouquetStatusSuccess,
+  getBouquetStatusFail,
 } from "./actions";
 import {
   getBouquet,
@@ -41,6 +44,7 @@ import {
   getBouquetPackages,
   getBouquetTaxlist,
   getBouquetType,
+  getBouquetStatus,
   getBouquex,
   getRechargePeriod,
   getOperatorForBouquet,
@@ -91,6 +95,16 @@ function* fetchBouquetType() {
   } catch (error) {
     console.error("Error fetching bouquet type list: ", error);
     yield put(getBouquetTypeFail(error));
+  }
+}
+
+function* fetchBouquetStatus() {
+  try {
+    const response = yield call(getBouquetStatus);
+    yield put(getBouquetStatusSuccess(response.data));
+  } catch (error) {
+    console.error("Error fetching bouquet status list: ", error);
+    yield put(getBouquetStatusFail(error));
   }
 }
 
@@ -175,6 +189,7 @@ function* bouquetSaga() {
   yield takeEvery(GET_BOUQUEX, fetchBouquex);
   yield takeEvery(GET_ALACARTECHANNELS, fetchAlacarteChannels);
   yield takeEvery(GET_OPERATOR_FORBOUQUET, fetchOperatorForBouquet);
+  yield takeEvery(GET_BOUQUET_STATUS, fetchBouquetStatus);
 }
 
 export default bouquetSaga;

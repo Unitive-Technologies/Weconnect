@@ -12,6 +12,8 @@ import {
   ADD_BOUQUET_FAIL,
   GET_BOUQUETTYPE_SUCCESS,
   GET_BOUQUETTYPE_FAIL,
+  GET_BOUQUET_STATUS_SUCCESS,
+  GET_BOUQUET_STATUS_FAIL,
   GET_BOUQUET_BOXTYPE_SUCCESS,
   GET_BOUQUET_BOXTYPE_FAIL,
   GET_BOUQUEX_SUCCESS,
@@ -32,6 +34,7 @@ import {
 const INIT_STATE = {
   bouquet: [],
   bouquettype: [],
+  bouquetstatus: [],
   bouquetboxtype: [],
   bouquex: [],
   bouquettaxlist: [],
@@ -53,9 +56,9 @@ const Bouquet = (state = INIT_STATE, action) => {
     case UPDATE_BOUQUET_CURRENT_PAGE:
       return Number(action.payload) <= state.totalPages
         ? {
-          ...state,
-          currentPage: action.payload,
-        }
+            ...state,
+            currentPage: action.payload,
+          }
         : state;
     case GET_BOUQUET:
       return {
@@ -100,6 +103,19 @@ const Bouquet = (state = INIT_STATE, action) => {
       };
 
     case GET_BOUQUETTYPE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_BOUQUET_STATUS_SUCCESS:
+      return {
+        ...state,
+        bouquetstatus: action.payload,
+        loading: false,
+      };
+
+    case GET_BOUQUET_STATUS_FAIL:
       return {
         ...state,
         error: action.payload,

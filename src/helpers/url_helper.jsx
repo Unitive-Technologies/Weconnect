@@ -379,6 +379,7 @@ export const getSMSMessageTempListUrl = (currPage, perPage) => {
 export const GET_BOUQUET =
   "/bouque?expand=setting,created_by_lbl,lco_rate,type_lbl,status_lbl,boxtype_lbl,rate,category_lbl,is_exclusive_lbl,is_promotional_lbl,additional_rates,is_online_app_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_BOUQUET = "/bouque?vr=web1.0";
+export const GET_BOUQUET_STATUS = "/list/status?fields=id,name&vr=web1.0";
 export const GET_BOUQUET_BOXTYPE = "/list/boxtype?fields=id,name&vr=web1.0";
 export const GET_BOUQUETTYPE = "/list/bouquetype?fields=id,name&vr=web1.0";
 export const GET_BOUQUEX = "/list/bouquex?fields=id,name&vr=web1.0";
