@@ -82,8 +82,6 @@ function CreatePairing(props) {
     setStbData([...stbData, pairToRemove.stb]);
   };
 
-  // console.log("Selected pairs: ", selectedPairs);
-
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -263,6 +261,16 @@ function CreatePairing(props) {
     []
   );
 
+  const handleToggle = () => {
+    validation.resetForm();
+    toggle();
+    setSelectedPairs([]);
+    setSelectedSmartcard(null);
+    setSelectedStb(null);
+    setIsCheckedStb(false);
+    setIsCheckedSC(false);
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -272,9 +280,9 @@ function CreatePairing(props) {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleToggle}
     >
-      <ModalHeader tag="h4" toggle={toggle}>
+      <ModalHeader tag="h4" toggle={handleToggle}>
         Create New Pairing
       </ModalHeader>
       <ModalBody>

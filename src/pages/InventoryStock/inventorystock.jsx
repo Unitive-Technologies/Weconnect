@@ -135,7 +135,6 @@ const InventoryStock = (props) => {
   const [filteredPairingWithoutMso, setFilteredPairingWithoutMso] = useState(
     []
   );
-  const [isLoading, setIsLoading] = useState(false);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -329,6 +328,16 @@ const InventoryStock = (props) => {
     blacklistedtotalPage,
     blacklistedloading,
   } = useSelector(inventoryblacklistedProperties);
+
+  const SelectBlacklistedLoadingPairing = (state) => state.blacklistedpairing;
+  const loadingPairingProperties = createSelector(
+    SelectBlacklistedLoadingPairing,
+    (blacklistedpairing) => ({
+      pairingLoading: blacklistedpairing.loading,
+    })
+  );
+
+  const { pairingLoading } = useSelector(loadingPairingProperties);
 
   useEffect(() => {
     dispatch(onGetInventoryBlacklistedSmartcard());
@@ -611,10 +620,6 @@ const InventoryStock = (props) => {
       setSelectedAllottedStbs([...selectedAllottedStbs, row]);
     }
   };
-
-  // if (stbLoading) {
-  //   setSelectedAllottedStbs([]);
-  // }
 
   const handleSelectedAllottedPairings = (row) => {
     const isSelected = selectedAllottedPairings.some(
@@ -1507,7 +1512,10 @@ const InventoryStock = (props) => {
       } else if (activeTab === "2") {
         return stbLoading;
       }
-    } else if (selectedOption === "blacklisted") {
+    } else if (selectedOption === "Blacklisted") {
+      if (activeTab === "3") {
+        return pairingLoading;
+      }
       return blacklistedloading;
     }
   };
