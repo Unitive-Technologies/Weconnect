@@ -119,6 +119,11 @@ const AddStockStb = (props) => {
     },
   });
 
+  const handleToggle = () => {
+    toggle();
+    validation.resetForm();
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -128,9 +133,9 @@ const AddStockStb = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleToggle}
     >
-      <ModalHeader tag="h4" toggle={toggle}>
+      <ModalHeader tag="h4" toggle={handleToggle}>
         Add New STB
       </ModalHeader>
       <ModalBody>

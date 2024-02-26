@@ -113,6 +113,11 @@ const AddStockSmartcard = (props) => {
     },
   });
 
+  const handleToggle = () => {
+    toggle();
+    validation.resetForm();
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -122,9 +127,9 @@ const AddStockSmartcard = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleToggle}
     >
-      <ModalHeader tag="h4" toggle={toggle}>
+      <ModalHeader tag="h4" toggle={handleToggle}>
         Add New Smartcard
       </ModalHeader>
       <ModalBody>
