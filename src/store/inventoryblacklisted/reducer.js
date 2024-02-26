@@ -5,6 +5,7 @@ import {
   RESPONSE_HEADER_PER_PAGE,
 } from "../../constants/strings";
 import {
+  GET_INVENTORYBLACKLISTED_SMARTCARD,
   GET_INVENTORYBLACKLISTED_SMARTCARD_SUCCESS,
   GET_INVENTORYBLACKLISTED_SMARTCARD_FAIL,
   GET_INVENTORYBLACKLISTED_STB_SUCCESS,
@@ -39,6 +40,12 @@ const InventoryBlacklisted = (state = INIT_STATE, action) => {
         : state;
 
     case GET_INVENTORYBLACKLISTED_PAIRING:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case GET_INVENTORYBLACKLISTED_SMARTCARD:
       return {
         ...state,
         loading: true,
