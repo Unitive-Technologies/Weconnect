@@ -343,15 +343,9 @@ const InventoryTrack = (props) => {
   // },
 
   const renderStatusTable = (row) => {
-    // const { scCurrentStatus, stbCurrentStatus } = row;
+    const { scCurrentStatus, stbCurrentStatus } = row;
     console.log("Row Data: ", row);
-    const tableData = Array.from((_, index) => {
-      return {
-        index: index,
-        smartcardstatus: row.scCurrentStatus,
-        stbstatus: row.stbCurrentStatus,
-      };
-    });
+    const tableData = [{ smartcard: scCurrentStatus, stb: stbCurrentStatus }];
     console.log("Table data: ", tableData);
     return (
       <div>
@@ -373,8 +367,8 @@ const InventoryTrack = (props) => {
             {tableData.map((data) => {
               return (
                 <tr key={data.index}>
-                  <td key={data[0]}>{data[0]}</td>
-                  <td key={data[1]}>{data[1]}</td>
+                  <td key={data.smartcard}>{data.smartcard}</td>
+                  <td key={data.stb}>{data.stb}</td>
                 </tr>
               );
             })}

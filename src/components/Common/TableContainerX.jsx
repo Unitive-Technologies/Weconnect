@@ -140,7 +140,7 @@ const TableContainerX = ({
   };
 
   const toggleRowOpen = (e, id) => {
-    debugger;
+    // debugger;
     e.preventDefault();
     if (open === id) {
       setOpen(-1);
