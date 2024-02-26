@@ -274,7 +274,10 @@ const AddStockStb = (props) => {
                 );
                 console.log("Brand1 Array:", brand1);
                 // const brandId = Number(validation.values.stbbrand_id);
-                const selectedBrand = brand1.find((brand) => brand.id === 7);
+                const selectedBrand = brand1.find(
+                  (brand) =>
+                    brand.id === parseInt(validation.values.stbbrand_id)
+                );
                 console.log("Selected Brand:", selectedBrand);
                 if (!selectedBrand) {
                   console.log(
@@ -359,6 +362,30 @@ const AddStockStb = (props) => {
                   ) : null}
                 </div>
               </Col>
+              {validation.values.brand_id !== "" &&
+                (() => {
+                  const selectedBrand = brand2.find(
+                    (brand) => brand.id === parseInt(validation.values.brand_id)
+                  );
+                  if (!selectedBrand) {
+                    console.log(
+                      "No brand found with the specified ID:",
+                      validation.values.brand_id
+                    );
+                  }
+                  if (selectedBrand) {
+                    return (
+                      <Col lg={3}>
+                        <Label></Label>
+                        <p style={{ color: "green" }}>
+                          Number to be length {selectedBrand.length} and only{" "}
+                          {selectedBrand.char_allowed_lbl} is allowed
+                        </p>
+                      </Col>
+                    );
+                  }
+                  return null;
+                })()}
             </Row>
           ) : null}
           <Row>
