@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
@@ -260,15 +260,30 @@ const AddStockSmartcard = (props) => {
                 ) : null}
               </div>
             </Col>
-            {validation.values.brand_id !== "" ? (
-              <Col lg={3}>
-                <Label></Label>
-                <p style={{ color: "green" }}>
-                  Number to be length {brand2[0].length} and only{" "}
-                  {brand2[0].char_allowed_lbl} is allowed
-                </p>
-              </Col>
-            ) : null}
+            {validation.values.brand_id !== "" &&
+              (() => {
+                const selectedBrand = brand2.find(
+                  (brand) => brand.id === parseInt(validation.values.brand_id)
+                );
+                if (!selectedBrand) {
+                  console.log(
+                    "No brand found with the specified ID:",
+                    validation.values.brand_id
+                  );
+                }
+                if (selectedBrand) {
+                  return (
+                    <Col lg={3}>
+                      <Label></Label>
+                      <p style={{ color: "green" }}>
+                        Number to be length {selectedBrand.length} and only{" "}
+                        {selectedBrand.char_allowed_lbl} is allowed
+                      </p>
+                    </Col>
+                  );
+                }
+                return null;
+              })()}
           </Row>
           {validation.values.is_embeded ? (
             <Row>
@@ -335,6 +350,31 @@ const AddStockSmartcard = (props) => {
                   ) : null}
                 </div>
               </Col>
+              {validation.values.stbbrand_id !== "" &&
+                (() => {
+                  const selectedBrand = brand1.find(
+                    (brand) =>
+                      brand.id === parseInt(validation.values.stbbrand_id)
+                  );
+                  if (!selectedBrand) {
+                    console.log(
+                      "No brand found with the specified ID:",
+                      validation.values.stbbrand_id
+                    );
+                  }
+                  if (selectedBrand) {
+                    return (
+                      <Col lg={3}>
+                        <Label></Label>
+                        <p style={{ color: "green" }}>
+                          Number to be length {selectedBrand.length} and only{" "}
+                          {selectedBrand.char_allowed_lbl} is allowed
+                        </p>
+                      </Col>
+                    );
+                  }
+                  return null;
+                })()}
             </Row>
           ) : null}
           <Row>
