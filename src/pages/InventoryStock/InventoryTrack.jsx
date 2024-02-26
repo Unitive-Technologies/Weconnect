@@ -49,13 +49,6 @@ const InventoryTrack = (props) => {
 
   const columns = useMemo(
     () => [
-      //   {
-      //     Header: "",
-      //     filterable: true,
-      //     Cell: (cellProps) => {
-      //       return <p>+</p>;
-      //     },
-      //   },
       {
         Header: "#",
         disableFilters: true,
@@ -136,7 +129,15 @@ const InventoryTrack = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 50,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.brand_lbl}
             </p>
           );
@@ -148,7 +149,15 @@ const InventoryTrack = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 50,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.state_lbl}
             </p>
           );
@@ -160,7 +169,15 @@ const InventoryTrack = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 50,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.status_lbl}
             </p>
           );
@@ -172,7 +189,17 @@ const InventoryTrack = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.cas_lbl}</p>
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 50,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {cellProps.row.original.cas_lbl}
+            </p>
           );
         },
       },
@@ -182,7 +209,15 @@ const InventoryTrack = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 50,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.inv_state_lbl}
             </p>
           );
@@ -194,7 +229,15 @@ const InventoryTrack = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 50,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.doc_number}
             </p>
           );
@@ -206,7 +249,15 @@ const InventoryTrack = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 50,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.customer_id}
             </p>
           );
@@ -218,7 +269,15 @@ const InventoryTrack = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 50,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.operator_name}
             </p>
           );
@@ -230,7 +289,15 @@ const InventoryTrack = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 50,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.operator_code}
             </p>
           );
@@ -242,7 +309,17 @@ const InventoryTrack = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.remark}</p>
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 50,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {cellProps.row.original.remark}
+            </p>
           );
         },
       },
@@ -252,7 +329,15 @@ const InventoryTrack = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 50,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.from_operator}
             </p>
           );
@@ -264,7 +349,15 @@ const InventoryTrack = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 50,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.to_operator}
             </p>
           );
@@ -276,7 +369,15 @@ const InventoryTrack = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 50,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.action_date}
             </p>
           );
@@ -286,62 +387,6 @@ const InventoryTrack = (props) => {
     []
   );
 
-  //   {
-  //     "_id": "65d88c6c628cd62e90058c74",
-  //     "action": "SmartcardDealloted",
-  //     "object_class": "app\\models\\inventory\\Smartcard",
-  //     "object_id": 323340,
-  //     "insert_by": "mso",
-  //     "insert_ts": 1708690540,
-  //     "object_status": 1,
-  //     "smartcardno": "a123456789098678",
-  //     "operator_id": 2020,
-  //     "cas_id": 1,
-  //     "smartcard_details": {
-  //         "smartcardno": "a123456789098678",
-  //         "is_embeded": 0,
-  //         "cas_id": 1,
-  //         "po_id": 46,
-  //         "po_number": "aasdfe",
-  //         "po_code": "PO/23-24/20240125131806001",
-  //         "po_date": "2024-01-24",
-  //         "invoice_no": "aswwee",
-  //         "invoice_date": "2024-01-25"
-  //     },
-  //     "state": 1,
-  //     "invent_state": 1,
-  //     "lmo_name": "New Regional AAgree",
-  //     "lmo_code": "C000025",
-  //     "action_text": "Smartcard a123456789098678 DeAlloted from New Regional AAgree by mso on 2024-02-23 17:45:40",
-  //     "remark": "Smartcardno a123456789098678 Alloted to RO:New Regional AAgree",
-  //     "action_detail": "Smartcard a123456789098678 DeAlloted from New Regional AAgree by mso on 2024-02-23 17:45:40",
-  //     "model": "smartcard",
-  //     "model_id": 323340,
-  //     "stbno": null,
-  //     "old_stbno": null,
-  //     "old_smartcardno": null,
-  //     "ishd": "",
-  //     "old_ishd": "",
-  //     "status": 1,
-  //     "status_lbl": "Active",
-  //     "casName": "NSTV",
-  //     "action_date": "2024-02-23 17:45:40",
-  //     "action_by": "mso",
-  //     "subscriber_name": null,
-  //     "customer_id": null,
-  //     "operator_name": "New Regional AAgree",
-  //     "operator_code": "C000025",
-  //     "doc_number": null,
-  //     "return_doc_number": null,
-  //     "from_operator": null,
-  //     "to_operator": null,
-  //     "stbCurrentStatus": "Not Found",
-  //     "scCurrentStatus": "In Stock",
-  //     "stb_brand_lbl": null,
-  //     "state_lbl": "New",
-  //     "inv_state_lbl": "Release"
-  // },
-
   const renderStatusTable = (row) => {
     const { scCurrentStatus, stbCurrentStatus } = row;
     console.log("Row Data: ", row);
@@ -349,7 +394,7 @@ const InventoryTrack = (props) => {
     console.log("Table data: ", tableData);
     return (
       <div>
-        <Table responsive className="table mb-0">
+        <Table className="table mb-0">
           <thead>
             <tr>
               {["Smartcard Current Status", "STB Current Status"].map(
@@ -375,46 +420,6 @@ const InventoryTrack = (props) => {
           </tbody>
         </Table>
       </div>
-    );
-  };
-
-  const statusTableSchema = {
-    // subTableArrayKeyName: "smartcard_details",
-    // keyColumn: "_id",
-    columns: [
-      {
-        header: "Smartcard Current Status",
-        accessor: "scCurrentStatus",
-      },
-      {
-        header: "STB Current Status",
-        accessor: "stbCurrentStatus",
-      },
-    ],
-  };
-
-  const getTrackListRendered = (rowData) => {
-    return (
-      <Table className="table mb-0">
-        <thead>
-          <tr>
-            {statusTableSchema.columns.map((column) => {
-              return <th key={column.header}>{column.header}</th>;
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {rowData[statusTableSchema.subTableArrayKeyName].map((object) => {
-            return (
-              <tr key={object.id}>
-                {statusTableSchema.columns.map((column) => {
-                  return <td key={column.header}>{column.accessor(object)}</td>;
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
     );
   };
 
