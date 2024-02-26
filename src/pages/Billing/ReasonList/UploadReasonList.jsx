@@ -222,12 +222,13 @@ import {
 } from "../../../helpers/backend_helper";
 
 const UploadReasonListModal = (props) => {
-  const { isOpen, toggleUploadModal, reasonStatus, actiontype } = props;
+  const { isOpen, toggleUploadModal, reasonStatus, reasonReasonType, actiontype } = props;
 
   const dispatch = useDispatch();
   const [uploadTrigger, setUploadTrigger] = useState({});
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [status, setStatus] = useState("");
+  const [type, setType] = useState("");
   const [successMsg, setSuccessMsg] = useState(false);
 
   const toggleSuccessMsg = () => {
@@ -363,6 +364,29 @@ const UploadReasonListModal = (props) => {
                   <p>Fields: {uploadTrigger.fields.join(", ")}</p>
                 </div>
               )}
+              <div className="mb-3">
+                <Label className="form-label">Type</Label>
+                <Input
+                  name="type"
+                  type="select"
+                  placeholder="Select Reason Type"
+                  className="form-select"
+                  value={type}
+                  onChange={(e) => setType(e.target.value)}
+                  multiple
+                // onChange={validation.handleChange}
+                // onBlur={validation.handleBlur}
+                // value={validation.values.grouppolicy || ""}
+                >
+                  <option value="">Select Type</option>
+                  {reasonReasonType &&
+                    reasonReasonType.map((type) => (
+                      <option key={type.id} value={type.id}>
+                        {type.name}
+                      </option>
+                    ))}
+                </Input>
+              </div>
               <div className="mb-3">
                 <Label className="form-label">Status</Label>
                 <Input

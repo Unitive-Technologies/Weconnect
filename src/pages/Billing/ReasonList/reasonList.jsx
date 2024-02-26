@@ -223,6 +223,7 @@ const ReasonList = (props) => {
       <UploadReasonList
         isOpen={showUploadReasonList}
         toggleUploadModal={toggleUploadModal}
+        reasonReasonType={reasonReasonType}
         actiontype={"add"}
         reasonStatus={reasonStatus}
       />
