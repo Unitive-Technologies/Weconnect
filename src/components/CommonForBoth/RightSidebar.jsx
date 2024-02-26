@@ -20,16 +20,16 @@ import SimpleBar from "simplebar-react";
 
 import { Link } from "react-router-dom";
 
-import "/src/components/CommonForBoth/rightbar.scss";
+import "../../components/CommonForBoth/rightbar.scss";
 
 //Import images
-import bgimg1 from "/src/assets/images/sidebar/img1.jpg";
-import bgimg2 from "/src/assets/images/sidebar/img2.jpg";
-import bgimg3 from "/src/assets/images/sidebar/img3.jpg";
-import bgimg4 from "/src/assets/images/sidebar/img4.jpg";
-import layout1 from "/src/assets/images/layouts/layout-1.jpg";
-import layout2 from "/src/assets/images/layouts/layout-2.jpg";
-import layout3 from "/src/assets/images/layouts/layout-3.jpg";
+import bgimg1 from "../../assets/images/sidebar/img1.jpg";
+import bgimg2 from "../../assets/images/sidebar/img2.jpg";
+import bgimg3 from "../../assets/images/sidebar/img3.jpg";
+import bgimg4 from "../../assets/images/sidebar/img4.jpg";
+import layout1 from "../../assets/images/layouts/layout-1.jpg";
+import layout2 from "../../assets/images/layouts/layout-2.jpg";
+import layout3 from "../../assets/images/layouts/layout-3.jpg";
 
 //constants
 import {

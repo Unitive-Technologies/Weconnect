@@ -1,23 +1,11 @@
-// import { defineConfig } from 'vite'
-// import react from '@vitejs/plugin-react'
-
-// // https://vitejs.dev/config/
-// export default defineConfig({
-//   plugins: [react()],
-//   esbuild: {
-//     jsxFactory: 'h',
-//     jsxFragment: 'Fragment',
-//   }
-// })
-
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  resolve: {
-    alias: {
-      "/src": "/src",
-    },
+  esbuild: {
+    jsxFactory: "h",
+    jsxFragment: "Fragment",
   },
 });
