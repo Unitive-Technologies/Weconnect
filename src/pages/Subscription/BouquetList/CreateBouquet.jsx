@@ -42,7 +42,20 @@ const CreateBouquet = (props) => {
   const dispatch = useDispatch();
   const [toggleSwitch, settoggleSwitch] = useState(true);
   const [toggleNcfSwitch, setToggleNcfSwitch] = useState(true);
+  const [selectedType, setSelectedType] = useState("");
+  const [selectedIsHD, setSelectedIsHD] = useState("");
+  const [alacarteData, setAlacarteData] = useState([]);
+  const [packagesData, setPackagesData] = useState([]);
 
+  const handleIsHDChange = async (e) => {
+    const selectValue = e.target.value;
+    setSelectedIsHD(selectValue);
+  };
+
+  const handleTypeChange = async (e) => {
+    const selectValue = e.target.value;
+    setSelectedType(selectValue);
+  };
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -208,9 +221,11 @@ const CreateBouquet = (props) => {
                   type="select"
                   placeholder="Select BoxType"
                   className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.isHD || ""}
+                  // onChange={validation.handleChange}
+                  // onBlur={validation.handleBlur}
+                  // value={validation.values.isHD || ""}
+                  onChange={handleIsHDChange}
+                  value={selectedIsHD}
                 >
                   <option value="">Select Box type</option>
                   {bouquetboxtype &&
@@ -238,14 +253,16 @@ const CreateBouquet = (props) => {
                   placeholder="Select Bouquet type"
                   rows="3"
                   className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.type || ""}
+                  // onChange={validation.handleChange}
+                  // onBlur={validation.handleBlur}
+                  // value={validation.values.type || ""}
                   invalid={
                     validation.touched.type && validation.errors.type
                       ? true
                       : false
                   }
+                  onChange={handleTypeChange}
+                  value={selectedType}
                 >
                   <option value="">Select bouquet type</option>
                   {bouquettype &&
@@ -370,7 +387,7 @@ const CreateBouquet = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.is_promotional || ""}
-                  disabled
+                  // disabled
                 >
                   <option value="1">Yes</option>
                   <option value="0">No</option>
@@ -579,7 +596,12 @@ const CreateBouquet = (props) => {
               }}
             >
               <Col sm="12" style={{ width: "500px" }}>
-                <AddAlacarte alacartechannels={alacartechannels} />
+                <AddAlacarte
+                  alacarteData={alacarteData}
+                  setAlacarteData={setAlacarteData}
+                  selectedType={selectedType}
+                  selectedIsHD={selectedIsHD}
+                />
                 <Count />
               </Col>
             </Row>
@@ -608,7 +630,12 @@ const CreateBouquet = (props) => {
               }}
             >
               <Col sm="8" style={{ width: "500px" }}>
-                <AddPackages bouquetpackages={bouquetpackages} />
+                <AddPackages
+                  packagesData={packagesData}
+                  selectedType={selectedType}
+                  selectedIsHD={selectedIsHD}
+                  setPackagesData={setPackagesData}
+                />
                 <Count />
               </Col>
             </Row>

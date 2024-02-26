@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import AddbouquetPackages from "./BouquetPackages";
 
 const AddPackages = (props) => {
-  const { bouquetpackages } = props;
+  const { packagesData, selectedType, selectedIsHD, setPackagesData } = props;
   const [AddPackagesBtn, setAddPackagesBtn] = useState(false);
 
   const AddPackagesToggle = () => {
