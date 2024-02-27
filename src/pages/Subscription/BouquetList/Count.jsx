@@ -18,7 +18,7 @@ function Count({
         </div>
       </div>
       <div>
-        <div>Total: {totalRate}</div>
+        <div>Total: {parseFloat(totalRate).toFixed(2)}</div>
       </div>
     </div>
   );

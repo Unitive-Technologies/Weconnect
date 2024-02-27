@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import TableContainer from "../../../components/Common/TableContainer";
@@ -14,6 +14,7 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import AddPackagesTableList from "./AddPackagesTableList";
+import Count from "./Count";
 
 const AddPackages = ({
   packagesData,
@@ -25,6 +26,11 @@ const AddPackages = ({
   const [addPackageList, setAddPackageList] = useState([]);
   const [showAddPackagePlus, setShowAddPackagePlus] = useState(false);
   const [showPackageTableList, setShowPackageTableList] = useState(false);
+  const [ftaCount, setFtaCount] = useState(0);
+  const [paychannelCount, setPaychannelCount] = useState(0);
+  const [ncfCount, setNcfCount] = useState(0);
+  const [totalChannel, setTotalChannel] = useState(0);
+  const [totalRate, setTotalRate] = useState(0);
   {
     console.log("showPackageTableList: " + showPackageTableList);
   }
@@ -58,6 +64,52 @@ const AddPackages = ({
     list.splice(index, 1);
     setPackagesData(list);
   };
+
+  useEffect(() => {
+    if (packagesData) {
+      let totalNcf = 0;
+      let totalPaychannel = 0;
+      let totalFta = 0;
+      let totalRate = 0;
+      let totalChannel = 0;
+
+      packagesData.forEach((item) => {
+        if (item.isFta_lbl === "FTA") {
+          const count = parseFloat(item.totalChannelCount);
+          if (!isNaN(count)) {
+            totalFta += count;
+          }
+        } else {
+          const count = parseFloat(item.totalChannelCount);
+          if (!isNaN(count)) {
+            totalPaychannel += count;
+          }
+        }
+
+        const count = parseFloat(item.ncfChannelCount);
+        if (!isNaN(count)) {
+          totalNcf += count;
+        }
+
+        const channel = parseFloat(item.totalChannelCount);
+        if (!isNaN(channel)) {
+          totalChannel += channel;
+        }
+
+        const rate = parseFloat(item.broadcasterRate);
+        if (!isNaN(rate)) {
+          totalRate += rate;
+        }
+      });
+
+      setTotalChannel(totalChannel);
+      setTotalRate(totalRate);
+      setNcfCount(totalNcf);
+      setFtaCount(totalFta);
+      setPaychannelCount(totalPaychannel);
+    }
+  }, [packagesData]);
+
   return (
     <React.Fragment>
       {showPackageTableList && (
@@ -141,7 +193,7 @@ const AddPackages = ({
               </tr>
             </thead>
             {/* {console.log(
-              "alacarteData after add:" + JSON.stringify(alacarteData)
+              "packagesData after add:" + JSON.stringify(packagesData)
             )} */}
             <tbody>
               {packagesData &&
@@ -157,7 +209,7 @@ const AddPackages = ({
                     </th>
                     <td
                       style={{
-                        maxWidth: 100,
+                        maxWidth: 50,
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap",
@@ -175,9 +227,12 @@ const AddPackages = ({
                     >
                       {item.code}
                     </td>
-                    <td>{item.broadcaster_lbl}</td>
-                    <td>{item.type_lbl}</td>
+                    <td>{item.package_type_lbl}</td>
                     <td>{item.isFta_lbl}</td>
+                    <td>{item.channelIds.length}</td>
+                    <td>{item.brdBouqueIds.length}</td>
+                    <td>{item.ncfChannelCount}</td>
+                    <td>{item.totalChannelCount}</td>
                     <td
                       style={{
                         maxWidth: 50,
@@ -186,8 +241,7 @@ const AddPackages = ({
                         whiteSpace: "nowrap",
                       }}
                     >
-                      {" "}
-                      {/* <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td> */}
+                      <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td>
                     </td>
                     <td>
                       <h5>
@@ -207,6 +261,13 @@ const AddPackages = ({
                 ))}
             </tbody>
           </Table>
+          <Count
+            ftaCount={ftaCount}
+            paychannelCount={paychannelCount}
+            ncfCount={ncfCount}
+            totalChannel={totalChannel}
+            totalRate={totalRate}
+          />
         </CardBody>
         {/* <CardFooter className="fixed">
           <div style={{ display: "flex" }}>

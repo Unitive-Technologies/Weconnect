@@ -209,9 +209,27 @@ const AddAlacarte = ({
                     >
                       {item.code}
                     </td>
-                    <td>{item.broadcaster_lbl}</td>
+                    <td
+                      style={{
+                        maxWidth: 40,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {item.broadcaster_lbl}
+                    </td>
                     <td>{item.channel_type_lbl}</td>
-                    <td>{item.isFta_lbl === "Yes" ? "FTA" : "Pay Channel"}</td>
+                    <td
+                      style={{
+                        maxWidth: 50,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {item.isFta_lbl === "Yes" ? "FTA" : "Pay Channel"}
+                    </td>
                     <td>{item.isNCF_lbl}</td>
                     <td
                       style={{
@@ -221,8 +239,8 @@ const AddAlacarte = ({
                         whiteSpace: "nowrap",
                       }}
                     >
-                      <td>{item.broadcasterRate}</td>
-                      {/* <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td> */}
+                      {/* <td>{item.broadcasterRate}</td> */}
+                      <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td>
                     </td>
                     <td>
                       <h5>

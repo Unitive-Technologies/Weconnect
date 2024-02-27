@@ -633,7 +633,7 @@ const CreateBouquet = (props) => {
                   selectedIsHD={selectedIsHD}
                   setPackagesData={setPackagesData}
                 />
-                <Count />
+                {/* <Count /> */}
               </Col>
             </Row>
           </div>
