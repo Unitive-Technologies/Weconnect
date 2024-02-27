@@ -1838,6 +1838,9 @@ const InventoryStock = (props) => {
                               allottedpairinglist={filteredPairings}
                               allottedusertype={allottedusertype}
                               allottedoperatorlist={allottedoperatorlist}
+                              setSelectedAllottedPairings={
+                                setSelectedAllottedPairings
+                              }
                             />
                           </Col>
                         </Row>

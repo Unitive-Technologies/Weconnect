@@ -56,6 +56,11 @@ function DeallotPairing(props) {
     },
   });
 
+  const handleToggle = () => {
+    toggle();
+    validation.resetForm();
+  };
+
   const columns = useMemo(
     () => [
       {
@@ -140,9 +145,9 @@ function DeallotPairing(props) {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={handleToggle}
     >
-      <ModalHeader toggle={toggle}>Allot STBs to Operator</ModalHeader>
+      <ModalHeader toggle={handleToggle}>Allot STBs to Operator</ModalHeader>
       <Form
         onSubmit={(e) => {
           e.preventDefault();

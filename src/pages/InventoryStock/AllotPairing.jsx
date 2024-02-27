@@ -36,7 +36,6 @@ function AllottedPairing(props) {
   } = props;
   const [usertype, setUsertype] = useState("");
   const [selectedPairinglist, setSelectedPairinglist] = useState([]);
-  const [isCheckedSc, setIsCheckedSc] = useState(false);
   const [branch_id, setBranch_id] = useState("");
   const [distributor_id, setDistributor_id] = useState("");
   const [operator, setOperator] = useState("");
@@ -45,6 +44,7 @@ function AllottedPairing(props) {
 
   const baseUrl = "https://sms.unitch.in/api/index.php/v1";
 
+  // usertype &&
   useEffect(() => {
     console.log("Selected branch id: ", branch_id);
     getResponse(
@@ -57,6 +57,7 @@ function AllottedPairing(props) {
     });
   }, [branch_id]);
 
+  // usertype &&
   useEffect(() => {
     console.log("Selected distributor id: ", distributor_id);
     getResponse(
@@ -79,17 +80,6 @@ function AllottedPairing(props) {
     } else {
       setSelectedPairinglist([...selectedPairinglist, row]);
     }
-  };
-
-  useEffect(() => {
-    console.log("Selected pairing list: ", selectedPairinglist);
-  }, [selectedPairinglist]);
-
-  const handleDeletePairing = (index) => {
-    const updatedSelectedPairinglist = selectedPairinglist.filter(
-      (pair, i) => i !== index
-    );
-    setSelectedPairinglist(updatedSelectedPairinglist);
   };
 
   const dispatch = useDispatch();
@@ -229,7 +219,6 @@ function AllottedPairing(props) {
   const handleModalToggle = () => {
     toggle();
     setUsertype("");
-    // setSelectedSmartcardlist([]);
     setBranch_id("");
     setDistributor_id("");
     setOperator("");

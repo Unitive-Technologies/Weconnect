@@ -54,6 +54,7 @@ const StockPairing = (props) => {
     allottedpairinglist,
     allottedusertype,
     allottedoperatorlist,
+    setSelectedAllottedPairings,
   } = props;
 
   if (
@@ -101,6 +102,7 @@ const StockPairing = (props) => {
 
   const handleDeallottedPairing = () => {
     setShowDeallotPairing(!showDeallotPairing);
+    setSelectedAllottedPairings([]);
   };
 
   const getFilteredHandleRowClicks = (Row) => {
@@ -594,6 +596,7 @@ StockPairing.propTypes = {
   allottedpairinglist: PropTypes.array,
   allottedusertype: PropTypes.array,
   allottedoperatorlist: PropTypes.array,
+  setSelectedAllottedPairings: PropTypes.func,
 };
 
 export default StockPairing;
