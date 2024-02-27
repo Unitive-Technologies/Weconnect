@@ -460,20 +460,20 @@ export const uploadRegionalOfficeSubmit = async (initiatedToken, formData) => {
   );
 };
 
-// export const downloadRegOffUploadTemplate = async (data) => {
-//   return await postCompleteResponse(url.DOWNLOAD_SAMPLE_REGIONALOFFICE, data);
-// };
+export const downloadBrandUploadTemplate = async (data) => {
+  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_BRAND, data);
+};
 
-// export const updateRegOffUploadByToken = async (token, data) => {
-//   return put(url.fileUploadRegionalOffice(token), data);
-// };
+export const updateBrandUploadByToken = async (token, data) => {
+  return put(url.fileUploadBrand(token), data);
+};
 
-// export const uploadRegionalOfficeSubmit = async (initiatedToken, formData) => {
-//   return await postCompleteResponse(
-//     url.uploadRegionalOfficeSubmit(initiatedToken),
-//     formData
-//   );
-// };
+export const uploadBrandSubmit = async (initiatedToken, formData) => {
+  return await postCompleteResponse(
+    url.uploadBrandSubmit(initiatedToken),
+    formData
+  );
+};
 
 
 // export const getDistrict = () => get(url.GET_DISTRICT);

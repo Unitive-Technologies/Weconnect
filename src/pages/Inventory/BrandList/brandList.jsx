@@ -85,7 +85,7 @@ const BrandList = (props) => {
     setShowAddBrand(!showAddBrand);
   };
 
-  const handleUploadBrand = () => {
+  const toggleUploadBrand = () => {
     setShowUploadBrand(!showUploadBrand);
   };
 
@@ -271,7 +271,9 @@ const BrandList = (props) => {
       />
       <UploadBrandList
         isOpen={showUploadBrand}
-        handleUploadBrand={handleUploadBrand}
+        toggleUploadBrand={toggleUploadBrand}
+        brandStatus={brandStatus}
+        actiontype={"add"}
       />
       <div className="page-content">
         <Container fluid>

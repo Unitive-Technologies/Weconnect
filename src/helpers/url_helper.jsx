@@ -683,3 +683,13 @@ export const fileUploadRegionalOffice = (token) => {
 export const uploadRegionalOfficeSubmit = (token) => {
   return `/operator/upload-q/${token}`;
 };
+
+export const DOWNLOAD_SAMPLE_BRAND = "/brand/upload-q?vr=web1.0";
+
+export const fileUploadBrand = (token) => {
+  return `/brand/upload-q/${token}?vr=web1.0`;
+};
+
+export const uploadBrandSubmit = (token) => {
+  return `/brand/upload-q/${token}`;
+};
