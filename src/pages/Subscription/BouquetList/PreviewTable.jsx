@@ -101,7 +101,7 @@ const PreviewTable = (props) => {
   return (
     <Card>
       <CardBody>
-        {console.log("recharge period: ", rechargeperiod)}
+        {/* {console.log("recharge period: ", rechargeperiod)} */}
         <TableContainer
           isPagination={true}
           columns={columns}

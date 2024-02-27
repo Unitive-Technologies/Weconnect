@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
 import TableContainer from "../../../components/Common/TableContainer";
 import {
   Card,
@@ -12,247 +13,76 @@ import {
   ToastBody,
 } from "reactstrap";
 import { Link } from "react-router-dom";
-import AddAlacarteChannels from "./AddAlacarteChannels";
+import AddAlacarteTableList from "./AddAlacarteTableList";
 
 const AddAlacarte = ({
-  alacartechannels,
   alacarteData,
   setAlacarteData,
   selectedType,
   selectedIsHD,
 }) => {
-  const [AddAlacarteBtn, setAddAlacarteBtn] = useState(false);
-
-  console.log("Alacarte channels in add alacarte:", alacartechannels);
-
-  const AddAlacarteToggle = () => {
-    setAddAlacarteBtn(!AddAlacarteBtn);
-  };
-  const columns = useMemo(
-    () => [
-      {
-        Header: "#",
-        disableFilters: true,
-        filterable: true,
-        Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
-
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {reverseIndex}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-
-      {
-        Header: "Name",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"Name"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Code",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"code"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Broadcaster",
-        // accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"braodcaster"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Type",
-        // accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"type"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "FTA",
-        // accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"FTA"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "NCF",
-        // accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"NCF"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Rate**",
-        // accessor: "type",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"rate"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-    ],
-    []
-  );
-
-  const getTableActions = () => {
-    return [
-      {
-        name: "",
-        action: setAddAlacarteBtn,
-        type: "normal",
-        icon: "create",
-      },
-    ];
+  // console.log("Alacarte channels in add alacarte:", alacartechannels);
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
+  const [addAlacarteList, setAddAlacarteList] = useState([]);
+  const [showAddAlacartePlus, setShowAddAlacartePlus] = useState(false);
+  const [showAlacarteTableList, setShowAlacarteTableList] = useState(false);
+  {
+    console.log("showAlacarteTableList: " + showAlacarteTableList);
+  }
+  const handleAddAlacarteWarning = () => {
+    setShowAddAlacartePlus(!showAddAlacartePlus);
   };
 
-  const AlacarteData = [];
+  const handleAddAlacarteTable = async (e) => {
+    try {
+      setShowAlacarteTableList(true); // Ensure modal is set to open before API call
+      const token = "Bearer " + localStorage.getItem("temptoken");
+      const type = parseInt(selectedType);
+
+      const response = await axios.get(
+        `${API_URL}/channel/list?fields=id,name,code,broadcasterRate&expand=broadcaster_lbl,channel_type_lbl,isFta_lbl,isNCF_lbl&filter[isAlacarte]=1&sort=name&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      console.log("response :" + JSON.stringify(response));
+      setAddAlacarteList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching addChannels data:", error);
+    }
+  };
+
+  const deleteAlacarte = (index) => {
+    const list = [...alacarteData];
+    list.splice(index, 1);
+    setAlacarteData(list);
+  };
   return (
     <React.Fragment>
-      <AddAlacarteChannels
-        isOpen={AddAlacarteBtn}
-        toggle={AddAlacarteToggle}
-        setAlacarteData={setAddAlacarteBtn}
-        selectedIsHD={selectedIsHD}
-        selectedType={selectedType}
-      />
+      {showAlacarteTableList && (
+        <AddAlacarteTableList
+          isOpen={Boolean(showAlacarteTableList)}
+          data={addAlacarteList}
+          toggleClose={() => setShowAlacarteTableList(!showAlacarteTableList)}
+          setAlacarteData={setAlacarteData}
+          selectedIsHD={selectedIsHD}
+          selectedType={selectedType}
+        />
+      )}
       <div
         className="position-fixed top-0 end-0 p-3"
         style={{ zIndex: "1005" }}
       >
-        <Toast isOpen={showAddChannelsPlus}>
-          <ToastHeader toggle={handleAddChannelsWarning}>
+        <Toast isOpen={showAddAlacartePlus}>
+          <ToastHeader toggle={handleAddAlacarteWarning}>
             <i className="mdi mdi-alert-outline me-2"></i> Warning
           </ToastHeader>
           <ToastBody>
-            {!definition
-              ? "Please select Package Definition"
-              : "Please select Package Type"}{" "}
+            {!selectedType
+              ? "Please select Box Type"
+              : "Please select Bouquet Type"}
           </ToastBody>
         </Toast>
       </div>
@@ -262,29 +92,24 @@ const AddAlacarte = ({
           <Row>
             <Col lg={8}></Col>
             <Col lg={4}>
-              <div className="mb-3  d-flex justify-content-end">
+              <div className="mb-3 d-flex justify-content-end">
+                {console.log("selectedIsHD: " + selectedIsHD)}
+                {console.log("selectedType: " + selectedType)}
                 <button
                   onClick={
-                    selectedType
-                      ? handleAddChannelsTable
-                      : handleAddChannelsWarning
+                    !selectedType
+                      ? handleAddAlacarteWarning
+                      : handleAddAlacarteTable
                   }
                   type="button"
                   className="btn btn-primary"
                 >
-                  Add Channels
-                  {/* <i className="mdi mdi-plus ms-1" style={{ fontSize: 20 }}></i> */}
+                  Add Alacarte
                 </button>
               </div>
             </Col>
           </Row>
 
-          {/* <TableContainer
-            columns={columns}
-            data={channels && channels}
-            tableClass="table align-middle table-nowrap table-hover"
-            theadClass="table-light"
-          /> */}
           <Table
             className="table mb-0"
             style={{
@@ -303,75 +128,80 @@ const AddAlacarte = ({
                   #
                 </th>
                 <th>Name</th>
+                <th>Code</th>
                 <th>BroadCaster</th>
                 <th>Type</th>
-                <th>Alacarte</th>
                 <th>FTA</th>
-                <th>Rate</th>
+                <th>NCF</th>
+                <th>Rate**</th>
                 <th>$</th>
               </tr>
             </thead>
+            {/* {console.log(
+              "alacarteData after add:" + JSON.stringify(alacarteData)
+            )} */}
             <tbody>
-              {channels.map((item, index) => (
-                <tr key={index}>
-                  <th
-                    scope="row"
-                    style={{
-                      maxWidth: 10,
-                    }}
-                  >
-                    {index + 1}
-                  </th>
-                  <td
-                    style={{
-                      maxWidth: 100,
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {item.name}
-                  </td>
-                  <td
-                    style={{
-                      maxWidth: 50,
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {item.broadcaster_lbl}
-                  </td>
-                  <td>{item.channel_type_lbl}</td>
-                  <td>{item.isAlacarte_lbl}</td>
-                  <td>{item.isFta_lbl}</td>
-                  <td
-                    style={{
-                      maxWidth: 50,
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {" "}
-                    <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td>
-                  </td>
-                  <td>
-                    <h5>
-                      <Link
-                        className="text-dark"
-                        to="#"
-                        onClick={() => deleteChannel(index)}
-                      >
-                        <i
-                          className="mdi mdi-delete font-size-18"
-                          id="deletetooltip"
-                        />
-                      </Link>
-                    </h5>
-                  </td>
-                </tr>
-              ))}
+              {alacarteData &&
+                alacarteData.map((item, index) => (
+                  <tr key={index}>
+                    <th
+                      scope="row"
+                      style={{
+                        maxWidth: 10,
+                      }}
+                    >
+                      {index + 1}
+                    </th>
+                    <td
+                      style={{
+                        maxWidth: 100,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {item.name}
+                    </td>
+                    <td
+                      style={{
+                        maxWidth: 50,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {item.code}
+                    </td>
+                    <td>{item.broadcaster_lbl}</td>
+                    <td>{item.type_lbl}</td>
+                    <td>{item.isFta_lbl}</td>
+                    <td
+                      style={{
+                        maxWidth: 50,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {" "}
+                      {/* <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td> */}
+                    </td>
+                    <td>
+                      <h5>
+                        <Link
+                          className="text-dark"
+                          to="#"
+                          onClick={() => deleteAlacarte(index)}
+                        >
+                          <i
+                            className="mdi mdi-delete font-size-18"
+                            id="deletetooltip"
+                          />
+                        </Link>
+                      </h5>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </Table>
         </CardBody>

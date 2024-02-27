@@ -27,18 +27,17 @@ import AddBrands from "./AddBrands";
 const CreateBouquet = (props) => {
   const {
     isOpen,
-    toggle,
-    alacartechannels,
+    toggleCreateBouquet,
+    // alacartechannels,
     bouquetboxtype,
     bouquetstatus,
-    bouquetpackages,
+    // bouquetpackages,
     bouquettaxlist,
     bouquettype,
     bouquex,
     rechargeperiod,
-    selectedRow,
   } = props;
-  console.log("alacartechannels:" + JSON.stringify(alacartechannels));
+  // console.log("bouquettaxlist in create:" + JSON.stringify(bouquettaxlist));
   const dispatch = useDispatch();
   const [toggleSwitch, settoggleSwitch] = useState(true);
   const [toggleNcfSwitch, setToggleNcfSwitch] = useState(true);
@@ -65,52 +64,50 @@ const CreateBouquet = (props) => {
       name: "",
       type: "",
       isHD: "",
-      type: "",
       status: "",
       description: "",
       is_promotional: "",
-      ifFixNCF: "",
+      // ifFixNCF: "",
       max_ncf_channels: "",
       is_online_app: "",
       sort_by: "",
-      created_by: "Admin",
     },
     validationSchema: Yup.object({
-      code: Yup.string().required("Enter Channel Code"),
-      name: Yup.string().required("Enter channel name"),
-      type: Yup.string().required("Enter bouquet type"),
-      isHD: Yup.string().required("Enter box type"),
-      type: Yup.string().required("Enter channel type"),
-      status: Yup.string().required("Enter status"),
-      description: Yup.string().required("Enter description"),
-      is_promotional: Yup.string(),
-      ifFixNCF: Yup.string(),
-      max_ncf_channels: Yup.string(),
-      is_online_app: Yup.string(),
-      sort_by: Yup.string(),
+      // code: Yup.string().required("Enter Channel Code"),
+      // name: Yup.string().required("Enter channel name"),
+      // type: Yup.string().required("Enter bouquet type"),
+      // isHD: Yup.string().required("Enter box type"),
+      // type: Yup.string().required("Enter channel type"),
+      // status: Yup.string().required("Enter status"),
+      // description: Yup.string().required("Enter description"),
+      // is_promotional: Yup.string(),
+      // ifFixNCF: Yup.string(),
+      // max_ncf_channels: Yup.string(),
+      // is_online_app: Yup.string(),
+      // sort_by: Yup.string(),
     }),
     onSubmit: (values) => {
       const newbouquet = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
-        code: values["code"],
-        name: values["name"],
-        type: values["type"],
-        isHD: values["isHD"],
-        type: values["type"],
-        status: values["status"],
-        description: values["description"],
-        is_promotional: values["is_promotional"],
-        ifFixNCF: values["ifFixNCF"],
-        max_ncf_channels: values["max_ncf_channels"],
-        created_at: new Date(),
-        created_by: values["created_by"],
-        is_online_app: values["is_online_app"],
-        sort_by: values["sort_by"],
+        // id: Math.floor(Math.random() * (30 - 20)) + 20,
+        // code: values["code"],
+        // name: values["name"],
+        // type: values["type"],
+        // isHD: values["isHD"],
+        // type: values["type"],
+        // status: values["status"],
+        // description: values["description"],
+        // is_promotional: values["is_promotional"],
+        // ifFixNCF: values["ifFixNCF"],
+        // max_ncf_channels: values["max_ncf_channels"],
+        // created_at: new Date(),
+        // created_by: values["created_by"],
+        // is_online_app: values["is_online_app"],
+        // sort_by: values["sort_by"],
       };
       console.log("New Bouquet List:" + newbouquet);
       dispatch(onAddBouquet(newbouquet));
       validation.resetForm();
-      toggle();
+      toggleCreateBouquet();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -125,10 +122,10 @@ const CreateBouquet = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={toggleCreateBouquet}
       size="xl"
     >
-      <ModalHeader tag="h4" toggle={toggle}>
+      <ModalHeader tag="h4" toggle={toggleCreateBouquet}>
         Add New Bouquet
       </ModalHeader>
       <ModalBody>
@@ -826,7 +823,7 @@ const CreateBouquet = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    toggle();
+                    toggleCreateBouquet();
                   }}
                 >
                   Cancel
@@ -841,8 +838,13 @@ const CreateBouquet = (props) => {
 };
 
 CreateBouquet.propTypes = {
-  toggle: PropTypes.func,
+  toggleCreateBouquet: PropTypes.func,
   isOpen: PropTypes.bool,
+
+  bouquetboxtype: PropTypes.array,
+  bouquetstatus: PropTypes.array,
+  bouquettype: PropTypes.array,
+  bouquex: PropTypes.array,
 };
 
 export default CreateBouquet;

@@ -410,18 +410,20 @@ const BouquetList = () => {
         toggle={toggleViewBouquet}
         bouquet={viewBouquetData}
       />
-      <CreateBouquet
-        isOpen={showCreateBouquet}
-        toggle={toggleCreateBouquet}
-        alacartechannels={alacartechannels}
-        bouquetstatus={bouquetstatus}
-        bouquetboxtype={bouquetboxtype}
-        bouquetpackages={bouquetpackages}
-        bouquettaxlist={bouquettaxlist}
-        bouquettype={bouquettype}
-        bouquex={bouquex}
-        rechargeperiod={rechargeperiod}
-      />
+      {showCreateBouquet && (
+        <CreateBouquet
+          isOpen={Boolean(showCreateBouquet)}
+          toggleCreateBouquet={toggleCreateBouquet}
+          alacartechannels={alacartechannels}
+          bouquetstatus={bouquetstatus}
+          bouquetboxtype={bouquetboxtype}
+          bouquetpackages={bouquetpackages}
+          bouquettaxlist={bouquettaxlist}
+          bouquettype={bouquettype}
+          bouquex={bouquex}
+          rechargeperiod={rechargeperiod}
+        />
+      )}
       <BulkAssign
         isOpen={showBulkAssign}
         toggle={toggleBulkAssign}
