@@ -758,3 +758,13 @@ export const fileUploadLanguage = (token) => {
 export const uploadLanguageSubmit = (token) => {
   return `/language/upload-q/${token}`;
 };
+
+export const DOWNLOAD_SAMPLE_BANK = "/bank/upload-q?vr=web1.0";
+
+export const fileUploadBank = (token) => {
+  return `/bank/upload-q/${token}?vr=web1.0`;
+};
+
+export const uploadBankSubmit = (token) => {
+  return `/bank/upload-q/${token}`;
+};

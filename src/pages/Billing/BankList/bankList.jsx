@@ -258,6 +258,7 @@ const BankList = (props) => {
       />
       <UploadBankList
         isOpen={showUploadBankList}
+        actiontype={"add"}
         toggleUploadModal={toggleUploadModal}
       />
 
