@@ -1,14 +1,24 @@
 import React from "react";
 
-function Count() {
+function Count({
+  ftaCount,
+  paychannelCount,
+  ncfCount,
+  totalChannel,
+  totalRate,
+}) {
   return (
     <div style={{ display: "flex", justifyContent: "space-around" }}>
       <div style={{ borderRight: "1px solid grey", paddingRight: "20px" }}>
-        <div>FTA Count: 0 | Pay Channel Count: 0</div>
-        <div>NCF Channels: 0 | Total Channels: 0</div>
+        <div>
+          FTA Count: {ftaCount} | Pay Channel Count: {paychannelCount}
+        </div>
+        <div>
+          NCF Channels: {ncfCount} | Total Channels: {totalChannel}
+        </div>
       </div>
       <div>
-        <div>Total: 0</div>
+        <div>Total: {totalRate}</div>
       </div>
     </div>
   );

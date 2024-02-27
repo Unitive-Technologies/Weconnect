@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import TableContainer from "../../../components/Common/TableContainer";
@@ -14,6 +14,7 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import AddAlacarteTableList from "./AddAlacarteTableList";
+import Count from "./Count";
 
 const AddAlacarte = ({
   alacarteData,
@@ -26,6 +27,11 @@ const AddAlacarte = ({
   const [addAlacarteList, setAddAlacarteList] = useState([]);
   const [showAddAlacartePlus, setShowAddAlacartePlus] = useState(false);
   const [showAlacarteTableList, setShowAlacarteTableList] = useState(false);
+  const [ftaCount, setFtaCount] = useState(0);
+  const [paychannelCount, setPaychannelCount] = useState(0);
+  const [ncfCount, setNcfCount] = useState(0);
+  const [totalChannel, setTotalChannel] = useState(0);
+  const [totalRate, setTotalRate] = useState(0);
   {
     console.log("showAlacarteTableList: " + showAlacarteTableList);
   }
@@ -59,6 +65,37 @@ const AddAlacarte = ({
     list.splice(index, 1);
     setAlacarteData(list);
   };
+  useEffect(() => {
+    if (alacarteData) {
+      let ftaCount = 0;
+      let paychannelCount = 0;
+      let ncfCount = 0;
+      let totalRate = 0;
+
+      alacarteData.forEach((item) => {
+        if (item.isFta_lbl === "Yes") {
+          ftaCount++;
+        } else {
+          paychannelCount++;
+        }
+        if (item.isNCF_lbl === "Yes") {
+          ncfCount++;
+        }
+        const rate = parseFloat(item.broadcasterRate);
+
+        if (!isNaN(rate)) {
+          totalRate += rate;
+        }
+      });
+
+      setTotalChannel(alacarteData.length || 0);
+      setFtaCount(ftaCount);
+      setNcfCount(ncfCount);
+      setPaychannelCount(paychannelCount);
+      setTotalRate(totalRate);
+    }
+  }, [alacarteData]);
+
   return (
     <React.Fragment>
       {showAlacarteTableList && (
@@ -154,7 +191,7 @@ const AddAlacarte = ({
                     </th>
                     <td
                       style={{
-                        maxWidth: 100,
+                        maxWidth: 50,
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap",
@@ -173,8 +210,9 @@ const AddAlacarte = ({
                       {item.code}
                     </td>
                     <td>{item.broadcaster_lbl}</td>
-                    <td>{item.type_lbl}</td>
-                    <td>{item.isFta_lbl}</td>
+                    <td>{item.channel_type_lbl}</td>
+                    <td>{item.isFta_lbl === "Yes" ? "FTA" : "Pay Channel"}</td>
+                    <td>{item.isNCF_lbl}</td>
                     <td
                       style={{
                         maxWidth: 50,
@@ -183,7 +221,7 @@ const AddAlacarte = ({
                         whiteSpace: "nowrap",
                       }}
                     >
-                      {" "}
+                      <td>{item.broadcasterRate}</td>
                       {/* <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td> */}
                     </td>
                     <td>
@@ -204,6 +242,14 @@ const AddAlacarte = ({
                 ))}
             </tbody>
           </Table>
+
+          <Count
+            ftaCount={ftaCount}
+            paychannelCount={paychannelCount}
+            ncfCount={ncfCount}
+            totalChannel={totalChannel}
+            totalRate={totalRate}
+          />
         </CardBody>
         {/* <CardFooter className="fixed">
           <div style={{ display: "flex" }}>

@@ -599,7 +599,7 @@ const CreateBouquet = (props) => {
                   selectedType={selectedType}
                   selectedIsHD={selectedIsHD}
                 />
-                <Count />
+                {/* <Count /> */}
               </Col>
             </Row>
             <div
