@@ -490,7 +490,6 @@ export const uploadWarehouseSubmit = async (initiatedToken, formData) => {
   );
 };
 
-
 // export const getDistrict = () => get(url.GET_DISTRICT);
 export const addDistrict = (district) => post(url.ADD_DISTRICT, district);
 export const getDistrictStateList = () => get(url.GET_DISTRICT_STATELIST);
@@ -859,6 +858,37 @@ export const getInventoryStockPairing = async (currentPage, perPage = 20) => {
     url.getStockPairingUrl(currentPage, perPage)
   );
 };
+
+export const downloadSmartcardUploadTemplate = async (data) => {
+  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_SMARTCARD, data);
+};
+
+export const updateSmartcardUploadByToken = async (token, data) => {
+  return put(url.fileUploadSmartcard(token), data);
+};
+
+export const uploadSmartcardSubmit = async (initiatedToken, formData) => {
+  return await postCompleteResponse(
+    url.uploadBulkSmartcardSubmit(initiatedToken),
+    formData
+  );
+};
+
+export const downloadSmartcardBulkUpdateTemplate = async (data) => {
+  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_SMARTCARD_UPDATE, data);
+};
+
+export const updateSmartcardBulkUpdateByToken = async (token, data) => {
+  return put(url.fileUploadSmartcardUpdate(token), data);
+};
+
+export const bulkUpdateSmartcardSubmit = async (initiatedToken, formData) => {
+  return await postCompleteResponse(
+    url.uploadBulkUpdateSmartcardSubmit(initiatedToken),
+    formData
+  );
+};
+
 export const updateInventoryStockStb = (id, stockstb) =>
   put(url.UPDATE_INVENTORYSTOCK_STB(id), stockstb);
 export const addInventoryStockSmartcard = (stocksmartcard) =>

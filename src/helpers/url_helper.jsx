@@ -667,19 +667,19 @@ export const GET_STOCKACTION_INVENTORYSTATE =
   "/inventory-state/list?fields=id,name&filter[status]=1&vr=web1.0";
 
 export const DOWNLOAD_SAMPLE_SMARTCARD = "/smartcard/upload-q?vr=web1.0";
-export const updateSmartcardUpload = (token) => {
+export const fileUploadSmartcard = (token) => {
   return `/smartcard/upload-q/${token}?vr=web1.0`;
 };
-export const uploadSmartcard = (token) => {
+export const uploadBulkSmartcardSubmit = (token) => {
   return `/smartcard/upload-q/${token}`;
 };
 
 export const DOWNLOAD_SAMPLE_SMARTCARD_UPDATE =
   "/smartcard-update/upload-q?vr=web1.0";
-export const bulkUpdateSmartcardUpload = (token) => {
+export const fileUploadSmartcardUpdate = (token) => {
   return `/smartcard-update/upload-q/${token}?vr=web1.0`;
 };
-export const uploadBulkUpdateSmartcard = (token) => {
+export const uploadBulkUpdateSmartcardSubmit = (token) => {
   return `/smartcard-update/upload-q/${token}`;
 };
 
