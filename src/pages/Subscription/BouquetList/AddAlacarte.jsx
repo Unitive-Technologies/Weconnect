@@ -21,17 +21,23 @@ const AddAlacarte = ({
   setAlacarteData,
   selectedType,
   selectedIsHD,
+  ftaCount,
+  paychannelCount,
+  ncfCount,
+  totalChannel,
+  totalRate,
+  setFtaCount,
+  setPaychannelCount,
+  setNcfCount,
+  setTotalChannel,
+  setTotalRate,
 }) => {
   // console.log("Alacarte channels in add alacarte:", alacartechannels);
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [addAlacarteList, setAddAlacarteList] = useState([]);
   const [showAddAlacartePlus, setShowAddAlacartePlus] = useState(false);
   const [showAlacarteTableList, setShowAlacarteTableList] = useState(false);
-  const [ftaCount, setFtaCount] = useState(0);
-  const [paychannelCount, setPaychannelCount] = useState(0);
-  const [ncfCount, setNcfCount] = useState(0);
-  const [totalChannel, setTotalChannel] = useState(0);
-  const [totalRate, setTotalRate] = useState(0);
+
   {
     console.log("showAlacarteTableList: " + showAlacarteTableList);
   }
@@ -261,13 +267,13 @@ const AddAlacarte = ({
             </tbody>
           </Table>
 
-          <Count
+          {/* <Count
             ftaCount={ftaCount}
             paychannelCount={paychannelCount}
             ncfCount={ncfCount}
             totalChannel={totalChannel}
             totalRate={totalRate}
-          />
+          /> */}
         </CardBody>
         {/* <CardFooter className="fixed">
           <div style={{ display: "flex" }}>

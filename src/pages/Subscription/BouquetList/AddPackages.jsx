@@ -21,16 +21,26 @@ const AddPackages = ({
   setPackagesData,
   selectedType,
   selectedIsHD,
+  ftaCount,
+  paychannelCount,
+  ncfCount,
+  totalChannel,
+  totalRate,
+  setFtaCount,
+  setPaychannelCount,
+  setNcfCount,
+  setTotalChannel,
+  setTotalRate,
 }) => {
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [addPackageList, setAddPackageList] = useState([]);
   const [showAddPackagePlus, setShowAddPackagePlus] = useState(false);
   const [showPackageTableList, setShowPackageTableList] = useState(false);
-  const [ftaCount, setFtaCount] = useState(0);
-  const [paychannelCount, setPaychannelCount] = useState(0);
-  const [ncfCount, setNcfCount] = useState(0);
-  const [totalChannel, setTotalChannel] = useState(0);
-  const [totalRate, setTotalRate] = useState(0);
+  // const [ftaCount, setFtaCount] = useState(0);
+  // const [paychannelCount, setPaychannelCount] = useState(0);
+  // const [ncfCount, setNcfCount] = useState(0);
+  // const [totalChannel, setTotalChannel] = useState(0);
+  // const [totalRate, setTotalRate] = useState(0);
   {
     console.log("showPackageTableList: " + showPackageTableList);
   }
@@ -261,13 +271,13 @@ const AddPackages = ({
                 ))}
             </tbody>
           </Table>
-          <Count
+          {/* <Count
             ftaCount={ftaCount}
             paychannelCount={paychannelCount}
             ncfCount={ncfCount}
             totalChannel={totalChannel}
             totalRate={totalRate}
-          />
+          /> */}
         </CardBody>
         {/* <CardFooter className="fixed">
           <div style={{ display: "flex" }}>

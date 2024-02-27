@@ -45,6 +45,16 @@ const CreateBouquet = (props) => {
   const [selectedIsHD, setSelectedIsHD] = useState("");
   const [alacarteData, setAlacarteData] = useState([]);
   const [packagesData, setPackagesData] = useState([]);
+  const [ftaCountAlacar, setFtaCountAlacar] = useState(0);
+  const [paychannelCountAlacar, setPaychannelCountAlacar] = useState(0);
+  const [ncfCountAlacar, setNcfCountAlacar] = useState(0);
+  const [totalChannelAlacar, setTotalChannelAlacar] = useState(0);
+  const [totalRateAlacar, setTotalRateAlacar] = useState(0);
+  const [ftaCountPackage, setFtaCountPackage] = useState(0);
+  const [paychannelCountPackage, setPaychannelCountPackage] = useState(0);
+  const [ncfCountPackage, setNcfCountPackage] = useState(0);
+  const [totalChannelPackage, setTotalChannelPackage] = useState(0);
+  const [totalRatePackage, setTotalRatePackage] = useState(0);
 
   const handleIsHDChange = async (e) => {
     const selectValue = e.target.value;
@@ -598,8 +608,24 @@ const CreateBouquet = (props) => {
                   setAlacarteData={setAlacarteData}
                   selectedType={selectedType}
                   selectedIsHD={selectedIsHD}
+                  ftaCount={ftaCountAlacar}
+                  paychannelCount={paychannelCountAlacar}
+                  ncfCount={ncfCountAlacar}
+                  totalChannel={totalChannelAlacar}
+                  totalRate={totalRateAlacar}
+                  setFtaCount={setFtaCountAlacar}
+                  setPaychannelCount={setPaychannelCountAlacar}
+                  setNcfCount={setNcfCountAlacar}
+                  setTotalChannel={setTotalChannelAlacar}
+                  setTotalRate={setTotalRateAlacar}
                 />
-                {/* <Count /> */}
+                <Count
+                  ftaCount={ftaCountAlacar}
+                  paychannelCount={paychannelCountAlacar}
+                  ncfCount={ncfCountAlacar}
+                  totalChannel={totalChannelAlacar}
+                  totalRate={totalRateAlacar}
+                />
               </Col>
             </Row>
             <div
@@ -632,8 +658,24 @@ const CreateBouquet = (props) => {
                   selectedType={selectedType}
                   selectedIsHD={selectedIsHD}
                   setPackagesData={setPackagesData}
+                  ftaCount={ftaCountPackage}
+                  paychannelCount={paychannelCountPackage}
+                  ncfCount={ncfCountPackage}
+                  totalChannel={totalChannelPackage}
+                  totalRate={totalRatePackage}
+                  setFtaCount={setFtaCountPackage}
+                  setPaychannelCount={setPaychannelCountPackage}
+                  setNcfCount={setNcfCountPackage}
+                  setTotalChannel={setTotalChannelPackage}
+                  setTotalRate={setTotalRatePackage}
                 />
-                {/* <Count /> */}
+                <Count
+                  ftaCount={ftaCountPackage}
+                  paychannelCount={paychannelCountPackage}
+                  ncfCount={ncfCountPackage}
+                  totalChannel={totalChannelPackage}
+                  totalRate={totalRatePackage}
+                />
               </Col>
             </Row>
           </div>
@@ -676,11 +718,20 @@ const CreateBouquet = (props) => {
               <div
                 style={{ borderRight: "1px solid grey", paddingRight: "20px" }}
               >
-                <div>Total FTA Count: 0 | Total Pay Channel Count: 0</div>
-                <div>Total NCF Channels: 0 | Total Channels: 0</div>
+                <div>
+                  Total FTA Count: {ftaCountAlacar + ftaCountPackage} | Total
+                  Pay Channel Count:
+                  {paychannelCountAlacar + paychannelCountPackage}
+                </div>
+                <div>
+                  Total NCF Channels: {ncfCountAlacar + ncfCountPackage} | Total
+                  Channels: {totalChannelAlacar + totalChannelPackage}
+                </div>
               </div>
               <div>
-                <div style={{ marginLeft: "20px" }}>Overall Total: 0**</div>
+                <div style={{ marginLeft: "20px" }}>
+                  Overall Total: {totalRateAlacar + totalRatePackage}
+                </div>
               </div>
             </div>
             <Row>
