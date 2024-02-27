@@ -55,7 +55,7 @@ const UploadDistrict = (props) => {
   }
 
   const districtSavedTemplatePayload = {
-    meta_data: { type: 1, status: parseInt(status), state_id: parseInt(state_id) },
+    meta_data: { type: 1, status: parseInt(status), state: parseInt(stateList) },
     url: "",
   };
 
