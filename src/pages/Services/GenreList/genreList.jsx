@@ -187,7 +187,7 @@ const GenreList = (props) => {
     setShowAddNewGenreList(!showAddNewGenreList);
   };
 
-  const toggle1 = () => {
+  const toggleUploadGenre = () => {
     setShowUploadGenreList(!showUploadGenreList);
   };
 
@@ -244,7 +244,11 @@ const GenreList = (props) => {
         handleAddGenreList={handleAddGenreList}
         genreListStatus={genrelistStatus}
       />
-      <UploadGenreList isOpen={showUploadGenreList} toggle={toggle1} />
+      <UploadGenreList
+        isOpen={showUploadGenreList}
+        actiontype={"add"}
+        genreListStatus={genrelistStatus}
+        toggleUploadGenre={toggleUploadGenre} />
 
       <div className="page-content">
         <Container fluid>

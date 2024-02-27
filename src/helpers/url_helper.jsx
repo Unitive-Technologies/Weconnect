@@ -731,3 +731,13 @@ export const fileUploadBroadcaster = (token) => {
 export const uploadBroadcasterSubmit = (token) => {
   return `/broadcaster/upload-q/${token}`;
 };
+
+export const DOWNLOAD_SAMPLE_GENRE = "/genre/upload-q?vr=web1.0";
+
+export const fileUploadGenre = (token) => {
+  return `/genre/upload-q/${token}?vr=web1.0`;
+};
+
+export const uploadGenreSubmit = (token) => {
+  return `/genre/upload-q/${token}`;
+};
