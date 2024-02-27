@@ -490,7 +490,6 @@ export const uploadWarehouseSubmit = async (initiatedToken, formData) => {
   );
 };
 
-
 export const downloadBroadcasterUploadTemplate = async (data) => {
   return await postCompleteResponse(url.DOWNLOAD_SAMPLE_BROADCASTER, data);
 };
@@ -931,6 +930,21 @@ export const updateSmartcardBulkUpdateByToken = async (token, data) => {
 export const bulkUpdateSmartcardSubmit = async (initiatedToken, formData) => {
   return await postCompleteResponse(
     url.uploadBulkUpdateSmartcardSubmit(initiatedToken),
+    formData
+  );
+};
+
+export const downloadStbBulkUpdateTemplate = async (data) => {
+  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_STB_UPDATE, data);
+};
+
+export const updateStbBulkUpdateByToken = async (token, data) => {
+  return put(url.fileUploadStbUpdate(token), data);
+};
+
+export const bulkUpdateStbSubmit = async (initiatedToken, formData) => {
+  return await postCompleteResponse(
+    url.uploadBulkUpdateStbSubmit(initiatedToken),
     formData
   );
 };

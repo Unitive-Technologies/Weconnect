@@ -683,6 +683,14 @@ export const uploadBulkUpdateSmartcardSubmit = (token) => {
   return `/smartcard-update/upload-q/${token}`;
 };
 
+export const DOWNLOAD_SAMPLE_STB_UPDATE = "/stb-update/upload-q?vr=web1.0";
+export const fileUploadStbUpdate = (token) => {
+  return `/stb-update/upload-q/${token}?vr=web1.0`;
+};
+export const uploadBulkUpdateStbSubmit = (token) => {
+  return `/stb-update/upload-q/${token}`;
+};
+
 export const DOWNLOAD_SAMPLE_USERS = "/user-bulk/upload-q?vr=web1.0";
 export const updateUserUpload = (token) => {
   return `/user-bulk/upload-q/${token}?vr=web1.0`;
@@ -720,7 +728,6 @@ export const fileUploadWarehouse = (token) => {
 export const uploadWarehouseSubmit = (token) => {
   return `/warehouse/upload-q/${token}`;
 };
-
 
 export const DOWNLOAD_SAMPLE_BROADCASTER = "/broadcaster/upload-q?vr=web1.0";
 
