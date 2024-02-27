@@ -490,6 +490,37 @@ export const uploadWarehouseSubmit = async (initiatedToken, formData) => {
   );
 };
 
+
+export const downloadBroadcasterUploadTemplate = async (data) => {
+  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_BROADCASTER, data);
+};
+
+export const updateBroadcasterUploadByToken = async (token, data) => {
+  return put(url.fileUploadBroadcaster(token), data);
+};
+
+export const uploadBroadcasterSubmit = async (initiatedToken, formData) => {
+  return await postCompleteResponse(
+    url.uploadBroadcasterSubmit(initiatedToken),
+    formData
+  );
+};
+
+export const downloadGenreUploadTemplate = async (data) => {
+  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_GENRE, data);
+};
+
+export const updateGenreUploadByToken = async (token, data) => {
+  return put(url.fileUploadGenre(token), data);
+};
+
+export const uploadGenreSubmit = async (initiatedToken, formData) => {
+  return await postCompleteResponse(
+    url.uploadGenreSubmit(initiatedToken),
+    formData
+  );
+};
+
 // export const getDistrict = () => get(url.GET_DISTRICT);
 export const addDistrict = (district) => post(url.ADD_DISTRICT, district);
 export const getDistrictStateList = () => get(url.GET_DISTRICT_STATELIST);

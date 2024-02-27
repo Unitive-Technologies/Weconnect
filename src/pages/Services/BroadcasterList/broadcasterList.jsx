@@ -121,10 +121,10 @@ const BroadcasterList = (props) => {
                 whiteSpace: "nowrap",
               }}
               className="font-size-14 mb-1"
-              // onClick={() => {
-              //   const userData = cellProps.row.original;
-              //   toggleViewBroadcaster(userData);
-              // }}
+            // onClick={() => {
+            //   const userData = cellProps.row.original;
+            //   toggleViewBroadcaster(userData);
+            // }}
             >
               <Link className="text-dark" to="#">
                 {cellProps.row.original.name}
@@ -219,7 +219,7 @@ const BroadcasterList = (props) => {
     setShowAddNewBroadCaster(!showAddNewBroadCaster);
   };
 
-  const toggle1 = () => {
+  const toggleUploadBroadcaster = () => {
     setShowUploadBroadCaster(!showUploadBroadCaster);
   };
 
@@ -279,7 +279,11 @@ const BroadcasterList = (props) => {
         toggle={toggle}
         brodcastStatus={brodcastStatus}
       />
-      <UploadBroadCaster isOpen={showUploadBroadCaster} toggle={toggle1} />
+      <UploadBroadCaster
+        isOpen={showUploadBroadCaster}
+        brodcastStatus={brodcastStatus}
+        actiontype={"add"}
+        toggleUploadBroadcaster={toggleUploadBroadcaster} />
 
       <div className="page-content">
         <Container fluid>
