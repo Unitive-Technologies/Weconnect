@@ -693,3 +693,13 @@ export const fileUploadBrand = (token) => {
 export const uploadBrandSubmit = (token) => {
   return `/brand/upload-q/${token}`;
 };
+
+export const DOWNLOAD_SAMPLE_WAREHOUSE = "/warehouse/upload-q?vr=web1.0";
+
+export const fileUploadWarehouse = (token) => {
+  return `/warehouse/upload-q/${token}?vr=web1.0`;
+};
+
+export const uploadWarehouseSubmit = (token) => {
+  return `/warehouse/upload-q/${token}`;
+};

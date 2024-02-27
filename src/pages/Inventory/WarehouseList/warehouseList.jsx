@@ -77,7 +77,7 @@ const WarehouseList = (props) => {
     setShowAddWareHouse(!showAddWareHouse);
   };
 
-  const handleUploadWarehouse = () => {
+  const toggleUploadWarehouse = () => {
     setShowUploadWareHouse(!showUploadWareHouse);
   };
 
@@ -272,7 +272,9 @@ const WarehouseList = (props) => {
       />
       <UploadWareHouse
         isOpen={showUploadWareHouse}
-        handleUploadWarehouse={handleUploadWarehouse}
+        toggleUploadWarehouse={toggleUploadWarehouse}
+        warehouseStatus={warehouseStatus}
+        actiontype={"add"}
       />
       <div className="page-content">
         <Container fluid>

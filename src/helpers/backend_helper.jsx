@@ -475,6 +475,21 @@ export const uploadBrandSubmit = async (initiatedToken, formData) => {
   );
 };
 
+export const downloadWarehouseUploadTemplate = async (data) => {
+  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_WAREHOUSE, data);
+};
+
+export const updateWarehouseUploadByToken = async (token, data) => {
+  return put(url.fileUploadWarehouse(token), data);
+};
+
+export const uploadWarehouseSubmit = async (initiatedToken, formData) => {
+  return await postCompleteResponse(
+    url.uploadWarehouseSubmit(initiatedToken),
+    formData
+  );
+};
+
 
 // export const getDistrict = () => get(url.GET_DISTRICT);
 export const addDistrict = (district) => post(url.ADD_DISTRICT, district);
