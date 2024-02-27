@@ -51,12 +51,12 @@ const BulkUpdateSmartcard = (props) => {
   }
 
   const smartcardBulkUpdateSavedTemplatePayload = {
-    meta_data: { type: 1, status: parseInt(status) },
+    meta_data: { type: null },
     url: "",
   };
 
   const smartcardBulkUpdateDownloadTemplatePayload = {
-    meta_data: { type: 1 },
+    meta_data: { type: null },
     url: "",
   };
 

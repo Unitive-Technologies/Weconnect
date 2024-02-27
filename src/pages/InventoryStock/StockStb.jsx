@@ -12,6 +12,7 @@ import FaultySendToStb from "./FaultySentToStb";
 import FaultyStbBlacklist from "./FaultyStbBlacklist";
 import AllottedStb from "./AllottedStb";
 import DeallotStb from "./DeallottedStb";
+import BulkUpdateStb from "./BulkUpdateStb";
 
 const StockStb = (props) => {
   const {
@@ -53,6 +54,8 @@ const StockStb = (props) => {
     allottedstblist,
     allottedusertype,
     setSelectedAllottedStbs,
+    showBulkUpdateStb,
+    setShowBulkUpdateStb,
   } = props;
   const [showEditStb, setShowEditStb] = useState(false);
   const [editStbData, setEditStbData] = useState({});
@@ -88,6 +91,10 @@ const StockStb = (props) => {
 
   const handleDeallottedStb = () => {
     setShowDeallotStb(!showDeallotStb);
+  };
+
+  const handleShowBulkUpdateStb = () => {
+    setShowBulkUpdateStb(!showBulkUpdateStb);
   };
 
   const getFilteredHandleRowClicks = (Row) => {
@@ -518,6 +525,10 @@ const StockStb = (props) => {
         selectedAllottedStbs={selectedAllottedStbs}
         setSelectedAllottedStbs={setSelectedAllottedStbs}
       />
+      <BulkUpdateStb
+        isOpen={showBulkUpdateStb}
+        toggle={handleShowBulkUpdateStb}
+      />
       {loading ? (
         <React.Fragment>
           <Spinner
@@ -599,6 +610,8 @@ StockStb.propTypes = {
   allottedstblist: PropTypes.array,
   allottedusertype: PropTypes.array,
   setSelectedAllottedStbs: PropTypes.func,
+  showBulkUpdateStb: PropTypes.bool,
+  setShowBulkUpdateStb: PropTypes.func,
 };
 
 export default StockStb;

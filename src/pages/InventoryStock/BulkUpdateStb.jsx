@@ -27,7 +27,6 @@ const BulkUpdateStb = (props) => {
 
   const [uploadTrigger, setUploadTrigger] = useState({});
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [status, setStatus] = useState("");
   const [successMsg, setSuccessMsg] = useState(false);
 
   const toggleSuccessMsg = () => {
@@ -51,12 +50,12 @@ const BulkUpdateStb = (props) => {
   }
 
   const stbBulkUpdateSavedTemplatePayload = {
-    meta_data: { type: 1, status: parseInt(status) },
+    meta_data: { type: null },
     url: "",
   };
 
   const stbBulkUpdateDownloadTemplatePayload = {
-    meta_data: { type: 1 },
+    meta_data: { type: null },
     url: "",
   };
 

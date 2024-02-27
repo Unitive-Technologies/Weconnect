@@ -135,6 +135,7 @@ const InventoryStock = (props) => {
   const [filteredPairingWithoutMso, setFilteredPairingWithoutMso] = useState(
     []
   );
+  const [showBulkUpdateStb, setShowBulkUpdateStb] = useState(false);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -1238,6 +1239,7 @@ const InventoryStock = (props) => {
             name: "Update",
             type: "dropdown",
             dropdownName: "Bulk",
+            action: setShowBulkUpdateStb,
           },
           {
             name: "Mark Faulty",
@@ -1766,6 +1768,8 @@ const InventoryStock = (props) => {
                               allottedusertype={allottedusertype}
                               allottedoperatorlist={allottedoperatorlist}
                               setSelectedAllottedStbs={setSelectedAllottedStbs}
+                              showBulkUpdateStb={showBulkUpdateStb}
+                              setShowBulkUpdateStb={setShowBulkUpdateStb}
                             />
                           </Col>
                         </Row>
