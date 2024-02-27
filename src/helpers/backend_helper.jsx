@@ -521,6 +521,21 @@ export const uploadGenreSubmit = async (initiatedToken, formData) => {
   );
 };
 
+export const downloadLanguageUploadTemplate = async (data) => {
+  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_LANGUAGE, data);
+};
+
+export const updateLanguageUploadByToken = async (token, data) => {
+  return put(url.fileUploadLanguage(token), data);
+};
+
+export const uploadLanguageSubmit = async (initiatedToken, formData) => {
+  return await postCompleteResponse(
+    url.uploadLanguageSubmit(initiatedToken),
+    formData
+  );
+};
+
 // export const getDistrict = () => get(url.GET_DISTRICT);
 export const addDistrict = (district) => post(url.ADD_DISTRICT, district);
 export const getDistrictStateList = () => get(url.GET_DISTRICT_STATELIST);

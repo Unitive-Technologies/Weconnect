@@ -741,3 +741,13 @@ export const fileUploadGenre = (token) => {
 export const uploadGenreSubmit = (token) => {
   return `/genre/upload-q/${token}`;
 };
+
+export const DOWNLOAD_SAMPLE_LANGUAGE = "/language/upload-q?vr=web1.0";
+
+export const fileUploadLanguage = (token) => {
+  return `/language/upload-q/${token}?vr=web1.0`;
+};
+
+export const uploadLanguageSubmit = (token) => {
+  return `/language/upload-q/${token}`;
+};

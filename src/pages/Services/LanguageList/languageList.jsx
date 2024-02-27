@@ -189,7 +189,7 @@ const LanguageList = (props) => {
     setShowAddNewLanguageList(!showAddNewLanguageList);
   };
 
-  const toggle1 = () => {
+  const toggleUploadLanguage = () => {
     setShowUploadLanguageList(!showUploadLanguageList);
   };
 
@@ -269,7 +269,10 @@ const LanguageList = (props) => {
         handleAddNewLanguage={handleAddNewLanguage}
         langlistStatus={langlistStatus}
       />
-      <UploadLanguageList isOpen={showUploadLanguageList} toggle={toggle1} />
+      <UploadLanguageList isOpen={showUploadLanguageList}
+        actiontype={"add"}
+        langlistStatus={langlistStatus}
+        toggleUploadLanguage={toggleUploadLanguage} />
 
       <div className="page-content">
         <Container fluid>
