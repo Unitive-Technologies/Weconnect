@@ -51,7 +51,7 @@ const UploadUserModal = (props) => {
     // Send a POST request to the server, from the json request convert data.fields array of strings as headers in a csv file
     downloadUserUploadTemplate(userDownloadTemplatePayload)
       .then((res) => {
-        debugger;
+        // debugger;
         const fileName = res.data.data.type;
         const fieldStringArray = res.data.data.fields;
         //combine fieldStringArray contents into a single string seperated by commas
@@ -92,7 +92,7 @@ const UploadUserModal = (props) => {
 
     uploadUserFileForInitiatedUserUpload(uploadTrigger.token, formData)
       .then((res) => {
-        debugger;
+        // debugger;
 
         console.log(
           "res in uploadUserFileForInitiatedUserUpload:" + JSON.stringify(res)

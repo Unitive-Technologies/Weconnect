@@ -460,6 +460,25 @@ export const uploadRegionalOfficeSubmit = async (initiatedToken, formData) => {
   );
 };
 
+<<<<<<< Updated upstream
+=======
+// export const downloadRegOffUploadTemplate = async (data) => {
+//   return await postCompleteResponse(url.DOWNLOAD_SAMPLE_REGIONALOFFICE, data);
+// };
+
+// export const updateRegOffUploadByToken = async (token, data) => {
+//   return put(url.fileUploadRegionalOffice(token), data);
+// };
+
+// export const uploadRegionalOfficeSubmit = async (initiatedToken, formData) => {
+//   return await postCompleteResponse(
+//     url.uploadRegionalOfficeSubmit(initiatedToken),
+//     formData
+//   );
+// };
+
+
+>>>>>>> Stashed changes
 // export const getDistrict = () => get(url.GET_DISTRICT);
 export const addDistrict = (district) => post(url.ADD_DISTRICT, district);
 export const getDistrictStateList = () => get(url.GET_DISTRICT_STATELIST);
