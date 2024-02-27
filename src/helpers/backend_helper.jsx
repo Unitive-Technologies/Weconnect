@@ -550,6 +550,21 @@ export const uploadBankSubmit = async (initiatedToken, formData) => {
   );
 };
 
+export const downloadDistrictUploadTemplate = async (data) => {
+  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_DISTRICT, data);
+};
+
+export const updateDistrictUploadByToken = async (token, data) => {
+  return put(url.fileUploadDistrict(token), data);
+};
+
+export const uploadDistrictSubmit = async (initiatedToken, formData) => {
+  return await postCompleteResponse(
+    url.uploadDistrictSubmit(initiatedToken),
+    formData
+  );
+};
+
 // export const getDistrict = () => get(url.GET_DISTRICT);
 export const addDistrict = (district) => post(url.ADD_DISTRICT, district);
 export const getDistrictStateList = () => get(url.GET_DISTRICT_STATELIST);

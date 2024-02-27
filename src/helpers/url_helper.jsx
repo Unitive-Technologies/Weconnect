@@ -768,3 +768,13 @@ export const fileUploadBank = (token) => {
 export const uploadBankSubmit = (token) => {
   return `/bank/upload-q/${token}`;
 };
+
+export const DOWNLOAD_SAMPLE_DISTRICT = "/administrative-division/upload-q?vr=web1.0";
+
+export const fileUploadDistrict = (token) => {
+  return `/administrative-division/upload-q/${token}?vr=web1.0`;
+};
+
+export const uploadDistrictSubmit = (token) => {
+  return `/administrative-division/upload-q/${token}`;
+};

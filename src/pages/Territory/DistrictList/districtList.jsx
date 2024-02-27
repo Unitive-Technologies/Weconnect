@@ -276,8 +276,10 @@ const DistrictList = (props) => {
       )}
       {showUploadDistrict && (
         <UploadDistrict
+          isOpen={showUploadDistrict}
           toggleUploadModal={toggleUploadModal}
           status={status}
+          actiontype={"add"}
           statelist={statelist}
         />
       )}
