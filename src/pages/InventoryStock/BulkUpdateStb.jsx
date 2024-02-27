@@ -1,0 +1,258 @@
+import React, { useEffect, useState, useRef, useMemo } from "react";
+import PropTypes from "prop-types";
+import {
+  Card,
+  CardBody,
+  Col,
+  Row,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Form,
+  CardSubtitle,
+} from "reactstrap";
+import { Link } from "react-router-dom";
+import Dropzone from "react-dropzone";
+import { useDispatch } from "react-redux";
+import { addInventoryStockStb as onAddInventoryStockStb } from "/src/store/inventorystock/actions";
+import {
+  downloadStbBulkUpdateTemplate,
+  updateStbBulkUpdateByToken,
+  bulkUpdateStbSubmit,
+} from "../../helpers/backend_helper";
+
+const BulkUpdateStb = (props) => {
+  const { isOpen, toggle } = props;
+  const dispatch = useDispatch();
+
+  const [uploadTrigger, setUploadTrigger] = useState({});
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [status, setStatus] = useState("");
+  const [successMsg, setSuccessMsg] = useState(false);
+
+  const toggleSuccessMsg = () => {
+    setSuccessMsg(!successMsg);
+  };
+
+  function handleAcceptedFiles(files) {
+    setSelectedFiles(files);
+    updateStbBulkUpdateByToken(
+      uploadTrigger.token,
+      stbBulkUpdateSavedTemplatePayload
+    )
+      .then((res) => {
+        console.log(
+          "res in updateStbBulkUpdateByToken: " + JSON.stringify(res)
+        );
+      })
+      .catch((error) => {
+        console.log("error in updateStbBulkUpdateByToken: " + error);
+      });
+  }
+
+  const stbBulkUpdateSavedTemplatePayload = {
+    meta_data: { type: 1, status: parseInt(status) },
+    url: "",
+  };
+
+  const stbBulkUpdateDownloadTemplatePayload = {
+    meta_data: { type: 1 },
+    url: "",
+  };
+
+  const handleDownloadSampleFile = () => {
+    // Send a POST request to the server, from the json request convert data.fields array of strings as headers in a csv file
+    downloadStbBulkUpdateTemplate(stbBulkUpdateDownloadTemplatePayload)
+      .then((res) => {
+        debugger;
+        const fileName = res.data.data.type;
+        const fieldStringArray = res.data.data.fields;
+        //combine fieldStringArray contents into a single string seperated by commas
+        const headers = fieldStringArray.join(",");
+        // const csvContent = data.map((row) => row.join(",")).join("\n");
+        const blob = new Blob([headers], {
+          type: "text/csv;charset=utf-8;",
+        });
+
+        setUploadTrigger(res.data.data);
+        // Create a download link
+        const link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = fileName + ".csv";
+
+        // Trigger a click on the link to start the download
+        link.click();
+      })
+      .catch((error) => {
+        console.log("error in downloadBrandUploadTemplate:" + error);
+      });
+  };
+
+  const handleUploadFile = () => {
+    if (selectedFiles.length === 0) {
+      console.log("No files selected to upload, handle accordingly");
+      // No files selected, handle accordingly
+      return;
+    }
+
+    if (!uploadTrigger || !uploadTrigger.token) {
+      console.log("No upload trigger found, handle accordingly");
+      // No upload trigger found, handle accordingly
+      return;
+    }
+    const formData = new FormData();
+    formData.append("qFile", selectedFiles[0]); // appending file
+
+    bulkUpdateStbSubmit(uploadTrigger.token, formData)
+      .then((res) => {
+        // debugger;
+        toggleSuccessMsg();
+        console.log(
+          "res in uploadBrandFileForInitiatedUserUpload:" + JSON.stringify(res)
+        );
+
+        setUploadTrigger({});
+        setSelectedFiles([]);
+
+        console.log("cleared the selected files and upload trigger");
+        dispatch(onAddInventoryStockStb(res.data.data));
+        toggle();
+      })
+      .catch((error) => {
+        console.log("error in upload:" + error);
+      });
+  };
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      size="xl"
+      role="dialog"
+      autoFocus={true}
+      centered={true}
+      className="exampleModal"
+      tabIndex="-1"
+      toggle={toggle}
+    >
+      <ModalHeader toggle={toggle} tag="h4">
+        Bulk Update STBs
+      </ModalHeader>
+      <ModalBody>
+        <Card>
+          <CardBody>
+            <div className="text-left mb-4 r-0" style={{ marginLeft: "78%" }}>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleDownloadSampleFile}
+              >
+                Download Sample Upload File
+              </button>
+            </div>
+            <Form>
+              <Row>
+                <Col lg={4}>
+                  <CardSubtitle className="mb-3">
+                    {" "}
+                    Select File to Upload
+                  </CardSubtitle>
+                  <Dropzone
+                    maxFiles={1}
+                    onDrop={(acceptedFiles) => {
+                      handleAcceptedFiles(acceptedFiles);
+                    }}
+                  >
+                    {({ getRootProps, getInputProps }) => (
+                      <div className="dropzone">
+                        <div
+                          className="dz-message needsclick mt-2"
+                          {...getRootProps()}
+                        >
+                          <input {...getInputProps()} />
+                          <div className="mb-3">
+                            <i className="display-4 text-muted bx bxs-cloud-upload" />
+                          </div>
+                          <h4>Drop files here or click to upload.</h4>
+                        </div>
+                      </div>
+                    )}
+                  </Dropzone>
+                  <div className="dropzone-previews mt-3" id="file-previews">
+                    {selectedFiles.map((f, i) => {
+                      return (
+                        <Card
+                          className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete"
+                          key={i + "-file"}
+                        >
+                          <div className="p-2">
+                            <Row className="align-items-center">
+                              <Col className="col-auto">
+                                <img
+                                  data-dz-thumbnail=""
+                                  height="80"
+                                  className="avatar-sm rounded bg-light"
+                                  alt={f.name}
+                                  src={f.preview}
+                                />
+                              </Col>
+                              <Col>
+                                <Link
+                                  to="#"
+                                  className="text-muted font-weight-bold"
+                                >
+                                  {f.name}
+                                </Link>
+                                <p className="mb-0">
+                                  <strong>{f.formattedSize}</strong>
+                                </p>
+                              </Col>
+                            </Row>
+                          </div>
+                        </Card>
+                      );
+                    })}
+                  </div>
+                </Col>
+              </Row>
+            </Form>
+            <div className="text-center mt-4 ">
+              <div
+                style={{
+                  display: "flex",
+                  gap: 5,
+                  textAlign: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <button
+                  type="button"
+                  className="btn btn-primary mr-2 "
+                  onClick={handleUploadFile}
+                >
+                  Upload File
+                </button>
+                <button type="button" className="btn btn-primary ml-2 ">
+                  Reset
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => toggle()}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </CardBody>
+        </Card>
+      </ModalBody>
+    </Modal>
+  );
+};
+
+BulkUpdateStb.propTypes = {
+  toggle: PropTypes.func,
+  isOpen: PropTypes.bool,
+};
+
+export default BulkUpdateStb;
