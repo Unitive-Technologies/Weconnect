@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   Col,
@@ -45,6 +45,7 @@ const CreateBouquet = (props) => {
   const [selectedIsHD, setSelectedIsHD] = useState("");
   const [alacarteData, setAlacarteData] = useState([]);
   const [packagesData, setPackagesData] = useState([]);
+  const [stbbrands, setStbbrands] = useState([]);
   const [ftaCountAlacar, setFtaCountAlacar] = useState(0);
   const [paychannelCountAlacar, setPaychannelCountAlacar] = useState(0);
   const [ncfCountAlacar, setNcfCountAlacar] = useState(0);
@@ -55,7 +56,17 @@ const CreateBouquet = (props) => {
   const [ncfCountPackage, setNcfCountPackage] = useState(0);
   const [totalChannelPackage, setTotalChannelPackage] = useState(0);
   const [totalRatePackage, setTotalRatePackage] = useState(0);
+  const [mrp, setMrp] = useState(0);
+  const [drp, setDrp] = useState(0);
 
+  const [lcoDiscount, setLcoDiscount] = useState(20);
+  const [lcoRate, setLcoRate] = useState(0);
+  console.log(
+    "mrp, drp, lcoDiscount, lcoRate:" + mrp,
+    drp,
+    lcoDiscount,
+    lcoRate
+  );
   const handleIsHDChange = async (e) => {
     const selectValue = e.target.value;
     setSelectedIsHD(selectValue);
@@ -123,6 +134,20 @@ const CreateBouquet = (props) => {
       validation.setValues(validation.initialValues);
     },
   });
+
+  useEffect(() => {
+    if (totalRateAlacar || totalRatePackage) {
+      const mrpTotal = totalRateAlacar + totalRatePackage;
+      setMrp(mrpTotal);
+      setDrp(mrpTotal);
+    }
+  }, [totalRateAlacar, totalRatePackage]);
+
+  useEffect(() => {
+    const totalLcoRate = (drp * lcoDiscount) / 100;
+
+    setLcoRate(drp - totalLcoRate);
+  }, [drp, lcoDiscount]);
 
   return (
     <Modal
@@ -737,19 +762,19 @@ const CreateBouquet = (props) => {
             <Row>
               <Col sm="3">
                 <Label>MRP**</Label>
-                <Input disabled defaultValue={0} />
+                <Input disabled defaultValue={0} value={mrp} />
               </Col>
               <Col sm="3">
                 <Label>DRP**</Label>
-                <Input type="number" defaultValue={0} />
+                <Input type="number" defaultValue={0} value={drp} />
               </Col>
               <Col sm="3">
                 <Label>LCO Discount(%)</Label>
-                <Input type="number" defaultValue="20" />
+                <Input type="number" defaultValue="20" value={lcoDiscount} />
               </Col>
               <Col sm="3">
                 <Label>LCO Rate**</Label>
-                <Input type="number" defaultValue={0} />
+                <Input type="number" defaultValue={0} value={lcoRate} />
               </Col>
             </Row>
             <Row>
@@ -849,7 +874,11 @@ const CreateBouquet = (props) => {
               margin: "30px 0px",
             }}
           >
-            <AddBrands />
+            <AddBrands
+              stbbrands={stbbrands}
+              setStbbrands={setStbbrands}
+              selectedType={selectedType}
+            />
             <p>
               *If no brand selected, this bouquet will be available for all STB
               brands

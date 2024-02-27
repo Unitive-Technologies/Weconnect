@@ -8,19 +8,19 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 
 const PreviewTable = (props) => {
-  // const { rechargeperiod } = props;
+  const { rechargeperiod } = props;
   const dispatch = useDispatch();
-  const selectBouquetState = (state) => state.bouquet;
-  const BouquetProperties = createSelector(selectBouquetState, (bouquet) => ({
-    rechargeperiod: bouquet.rechargeperiod,
-  }));
+  // const selectBouquetState = (state) => state.bouquet;
+  // const BouquetProperties = createSelector(selectBouquetState, (bouquet) => ({
+  //   rechargeperiod: bouquet.rechargeperiod,
+  // }));
 
-  const { rechargeperiod } = useSelector(BouquetProperties);
-  useEffect(() => {
-    if (rechargeperiod && !rechargeperiod.length) {
-      dispatch(onGetRechargePeriod());
-    }
-  }, [dispatch, rechargeperiod]);
+  // const { rechargeperiod } = useSelector(BouquetProperties);
+  // useEffect(() => {
+  //   if (rechargeperiod && !rechargeperiod.length) {
+  //     dispatch(onGetRechargePeriod());
+  //   }
+  // }, [dispatch, rechargeperiod]);
 
   const columns = useMemo(
     () => [
@@ -80,6 +80,14 @@ const PreviewTable = (props) => {
         },
       },
       {
+        Header: "Free Days",
+        // accessor: "status",
+        filterable: true,
+        Cell: (cellProps) => {
+          return <Input type="number" />;
+        },
+      },
+      {
         Header: "Action",
         Cell: (cellProps) => {
           return (
@@ -101,7 +109,7 @@ const PreviewTable = (props) => {
   return (
     <Card>
       <CardBody>
-        {/* {console.log("recharge period: ", rechargeperiod)} */}
+        {console.log("recharge period: ", JSON.stringify(rechargeperiod))}
         <TableContainer
           isPagination={true}
           columns={columns}
