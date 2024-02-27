@@ -10,126 +10,120 @@ import {
   ModalBody,
   Form,
   CardSubtitle,
-  FormFeedback,
-  Input,
-  Label,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import { useDispatch } from "react-redux";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+import { addInventoryStockSmartcard as onAddInventoryStockSmartcard } from "/src/store/inventorystock/actions";
+import {
+  downloadSmartcardBulkUpdateTemplate,
+  updateSmartcardBulkUpdateByToken,
+  bulkUpdateSmartcardSubmit,
+} from "../../helpers/backend_helper";
 
 const BulkUpdateSmartcard = (props) => {
   const { isOpen, toggle } = props;
   const dispatch = useDispatch();
 
+  const [uploadTrigger, setUploadTrigger] = useState({});
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [status, setStatus] = useState("");
+  const [successMsg, setSuccessMsg] = useState(false);
+
+  const toggleSuccessMsg = () => {
+    setSuccessMsg(!successMsg);
+  };
 
   function handleAcceptedFiles(files) {
-    files.map((file) =>
-      Object.assign(file, {
-        preview: URL.createObjectURL(file),
-        formattedSize: formatBytes(file.size),
-      })
-    );
     setSelectedFiles(files);
+    updateSmartcardBulkUpdateByToken(
+      uploadTrigger.token,
+      smartcardBulkUpdateSavedTemplatePayload
+    )
+      .then((res) => {
+        console.log(
+          "res in updateSmartcardBulkUpdateByToken: " + JSON.stringify(res)
+        );
+      })
+      .catch((error) => {
+        console.log("error in updateSmartcardBulkUpdateByToken: " + error);
+      });
   }
 
-  function formatBytes(bytes, decimals = 2) {
-    if (bytes === 0) return "0 Bytes";
-    const k = 1024;
-    const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+  const smartcardBulkUpdateSavedTemplatePayload = {
+    meta_data: { type: 1, status: parseInt(status) },
+    url: "",
+  };
 
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
-  }
+  const smartcardBulkUpdateDownloadTemplatePayload = {
+    meta_data: { type: 1 },
+    url: "",
+  };
 
   const handleDownloadSampleFile = () => {
-    // Create a sample CSV file with headers
-    // field to be get from api as prop
-    const headers = ["smartcardno", "state", "inv_state_code", "brand_code"];
-    const data = [headers];
+    // Send a POST request to the server, from the json request convert data.fields array of strings as headers in a csv file
+    downloadSmartcardBulkUpdateTemplate(
+      smartcardBulkUpdateDownloadTemplatePayload
+    )
+      .then((res) => {
+        debugger;
+        const fileName = res.data.data.type;
+        const fieldStringArray = res.data.data.fields;
+        //combine fieldStringArray contents into a single string seperated by commas
+        const headers = fieldStringArray.join(",");
+        // const csvContent = data.map((row) => row.join(",")).join("\n");
+        const blob = new Blob([headers], {
+          type: "text/csv;charset=utf-8;",
+        });
 
-    // Convert the data to CSV format
-    const csvContent = data.map((row) => row.join(",")).join("\n");
+        setUploadTrigger(res.data.data);
+        // Create a download link
+        const link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = fileName + ".csv";
 
-    // Create a Blob containing the data in CSV format
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-
-    // Create a download link
-    const link = document.createElement("a");
-    link.href = window.URL.createObjectURL(blob);
-    link.download = "SmartcardUpdate.csv";
-
-    // Trigger a click on the link to start the download
-    link.click();
+        // Trigger a click on the link to start the download
+        link.click();
+      })
+      .catch((error) => {
+        console.log("error in downloadBrandUploadTemplate:" + error);
+      });
   };
 
   const handleUploadFile = () => {
     if (selectedFiles.length === 0) {
+      console.log("No files selected to upload, handle accordingly");
       // No files selected, handle accordingly
       return;
     }
 
-    const file = selectedFiles[0];
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const csvContent = e.target.result;
-
-      // Process the CSV content (you can use a library like papaparse)
-      // For simplicity, let's just log the parsed data
-      const parsedData = parseCSV(csvContent);
-      console.log("Parsed CSV Data:", parsedData);
-    };
-
-    reader.readAsText(file);
-  };
-
-  const parseCSV = (csvContent) => {
-    // Use a CSV parsing library (e.g., papaparse)
-    // For simplicity, we'll split lines and split fields by commas
-    const lines = csvContent.split("\n");
-    const headers = lines[0].split(",");
-    const data = [];
-
-    for (let i = 1; i < lines.length; i++) {
-      const fields = lines[i].split(",");
-      const rowData = {};
-      for (let j = 0; j < headers.length; j++) {
-        rowData[headers[j]] = fields[j];
-      }
-      data.push(rowData);
+    if (!uploadTrigger || !uploadTrigger.token) {
+      console.log("No upload trigger found, handle accordingly");
+      // No upload trigger found, handle accordingly
+      return;
     }
+    const formData = new FormData();
+    formData.append("qFile", selectedFiles[0]); // appending file
 
-    // Move dispatch line above the return statement
-    // dispatch(onAddNewUser(data));
-    toggle();
-    return data;
+    bulkUpdateSmartcardSubmit(uploadTrigger.token, formData)
+      .then((res) => {
+        // debugger;
+        toggleSuccessMsg();
+        console.log(
+          "res in uploadBrandFileForInitiatedUserUpload:" + JSON.stringify(res)
+        );
+
+        setUploadTrigger({});
+        setSelectedFiles([]);
+
+        console.log("cleared the selected files and upload trigger");
+        dispatch(onAddInventoryStockSmartcard(res.data.data));
+        toggle();
+      })
+      .catch((error) => {
+        console.log("error in upload:" + error);
+      });
   };
-
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
-
-    initialValues: {},
-    validationSchema: Yup.object({}),
-    onSubmit: (values) => {
-      const newSmartcard = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
-      };
-      console.log("New smartcard: " + JSON.stringify(newSmartcard));
-      //   dispatch(onAddInventoryStockSmartcard(newSmartcard));
-      //   dispatch(onGetInventoryStockSmartcard());
-      validation.resetForm();
-      toggle();
-    },
-    onReset: (values) => {
-      validation.setValues(validation.initialValues);
-    },
-  });
 
   return (
     <Modal
