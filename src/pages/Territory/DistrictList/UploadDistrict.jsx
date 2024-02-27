@@ -19,7 +19,7 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
-import { addDistrict as onAddDistrict } from "/src/store/genre/actions";
+import { addDistrict as onAddDistrict } from "/src/store/district/actions";
 
 import { useDispatch } from "react-redux";
 import {
@@ -28,13 +28,13 @@ import {
   uploadDistrictSubmit,
 } from "../../../helpers/backend_helper";
 
-const UploadDistrict = (props) => 
+const UploadDistrict = (props) => {
   const { isOpen, toggleUploadModal, status, statelist, actiontype } = props;
 
   const dispatch = useDispatch();
   const [uploadTrigger, setUploadTrigger] = useState({});
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [status, setStatus] = useState("");
+  const [districtStatus, setDistrictStatus] = useState("");
   const [stateList, setStateList] = useState("");
   const [successMsg, setSuccessMsg] = useState(false);
 
@@ -178,7 +178,7 @@ const UploadDistrict = (props) =>
                   type="select"
                   placeholder="Select State"
                   className="form-select"
-                  value={statelist}
+                  value={stateList}
                   onChange={(e) => setStateList(e.target.value)}
                 >
                   <option value="">Select State</option>
@@ -197,7 +197,7 @@ const UploadDistrict = (props) =>
                   type="select"
                   placeholder="Select status"
                   className="form-select"
-                  value={status}
+                  value={districtStatus}
                   onChange={(e) => setStatus(e.target.value)}
                 >
                   <option value="">Select Status</option>
