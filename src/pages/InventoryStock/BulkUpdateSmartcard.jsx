@@ -159,8 +159,9 @@ const BulkUpdateSmartcard = (props) => {
                     Select File to Upload
                   </CardSubtitle>
                   <Dropzone
+                    maxFiles={1}
                     onDrop={(acceptedFiles) => {
-                      setSelectedFiles(acceptedFiles);
+                      handleAcceptedFiles(acceptedFiles);
                     }}
                   >
                     {({ getRootProps, getInputProps }) => (
