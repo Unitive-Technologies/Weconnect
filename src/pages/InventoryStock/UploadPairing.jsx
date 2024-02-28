@@ -17,14 +17,14 @@ import {
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import { useDispatch } from "react-redux";
-import { addInventoryStockSmartcard as onAddInventoryStockSmartcard } from "/src/store/inventorystock/actions";
+import { addInventoryStockPairing as onAddInventoryStockPairing } from "/src/store/inventorystock/actions";
 import {
-  downloadSmartcardBulkUpdateTemplate,
-  updateSmartcardBulkUpdateByToken,
-  bulkUpdateSmartcardSubmit,
+  downloadPairingUploadTemplate,
+  updatePairingUploadByToken,
+  uploadPairingSubmit,
 } from "../../helpers/backend_helper";
 
-const BulkUpdateSmartcard = (props) => {
+const UploadParing = (props) => {
   const { isOpen, toggle } = props;
   const dispatch = useDispatch();
 
@@ -38,9 +38,9 @@ const BulkUpdateSmartcard = (props) => {
 
   function handleAcceptedFiles(files) {
     setSelectedFiles(files);
-    updateSmartcardBulkUpdateByToken(
+    updatePairingUploadByToken(
       uploadTrigger.token,
-      smartcardBulkUpdateSavedTemplatePayload
+      pairingUploadSavedTemplatePayload
     )
       .then((res) => {
         console.log(
@@ -52,23 +52,20 @@ const BulkUpdateSmartcard = (props) => {
       });
   }
 
-  const smartcardBulkUpdateSavedTemplatePayload = {
+  const pairingUploadSavedTemplatePayload = {
     meta_data: { type: null },
     url: "",
   };
 
-  const smartcardBulkUpdateDownloadTemplatePayload = {
+  const pairingUploadDownloadTemplatePayload = {
     meta_data: { type: null },
     url: "",
   };
 
   const handleDownloadSampleFile = () => {
     // Send a POST request to the server, from the json request convert data.fields array of strings as headers in a csv file
-    downloadSmartcardBulkUpdateTemplate(
-      smartcardBulkUpdateDownloadTemplatePayload
-    )
+    downloadPairingUploadTemplate(pairingUploadDownloadTemplatePayload)
       .then((res) => {
-        debugger;
         const fileName = res.data.data.type;
         const fieldStringArray = res.data.data.fields;
         //combine fieldStringArray contents into a single string seperated by commas
@@ -107,7 +104,7 @@ const BulkUpdateSmartcard = (props) => {
     const formData = new FormData();
     formData.append("qFile", selectedFiles[0]); // appending file
 
-    bulkUpdateSmartcardSubmit(uploadTrigger.token, formData)
+    uploadPairingSubmit(uploadTrigger.token, formData)
       .then((res) => {
         // debugger;
         toggleSuccessMsg();
@@ -119,7 +116,7 @@ const BulkUpdateSmartcard = (props) => {
         setSelectedFiles([]);
 
         console.log("cleared the selected files and upload trigger");
-        dispatch(onAddInventoryStockSmartcard(res.data.data));
+        dispatch(onAddInventoryStockPairing(res.data.data));
         toggle();
       })
       .catch((error) => {
@@ -133,7 +130,6 @@ const BulkUpdateSmartcard = (props) => {
         className="position-fixed top-0 end-0 p-3"
         style={{ zIndex: "1005" }}
       >
-        s
         <Toast isOpen={successMsg}>
           <ToastHeader toggle={toggleSuccessMsg}>
             <i className="mdi mdi-alert-outline me-2"></i> Upload
@@ -152,7 +148,7 @@ const BulkUpdateSmartcard = (props) => {
         toggle={toggle}
       >
         <ModalHeader toggle={toggle} tag="h4">
-          Upload Smartcards
+          Upload Pairings
         </ModalHeader>
         <ModalBody>
           <Card>
@@ -248,7 +244,7 @@ const BulkUpdateSmartcard = (props) => {
                   >
                     Upload File
                   </button>
-                  <button type="button" className="btn btn-primary ml-2 ">
+                  <button type="button" className="btn btn-primary ml-2">
                     Reset
                   </button>
                   <button
@@ -268,9 +264,9 @@ const BulkUpdateSmartcard = (props) => {
   );
 };
 
-BulkUpdateSmartcard.propTypes = {
+UploadParing.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default BulkUpdateSmartcard;
+export default UploadParing;

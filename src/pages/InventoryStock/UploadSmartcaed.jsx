@@ -532,10 +532,14 @@ const UploadSmartcard = (props) => {
                   >
                     Upload File
                   </button>
-                  <button type="button" className="btn btn-primary ml-2 ">
+                  <button type="button" className="btn btn-primary ml-2">
                     Reset
                   </button>
-                  <button type="button" className="btn btn-primary ">
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => toggleUploadModal()}
+                  >
                     Cancel
                   </button>
                 </div>
