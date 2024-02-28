@@ -10,6 +10,9 @@ import {
   ModalBody,
   Form,
   CardSubtitle,
+  Toast,
+  ToastHeader,
+  ToastBody,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
@@ -126,125 +129,139 @@ const BulkUpdateSmartcard = (props) => {
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      size="xl"
-      role="dialog"
-      autoFocus={true}
-      centered={true}
-      className="exampleModal"
-      tabIndex="-1"
-      toggle={toggle}
-    >
-      <ModalHeader toggle={toggle} tag="h4">
-        Upload Smartcards
-      </ModalHeader>
-      <ModalBody>
-        <Card>
-          <CardBody>
-            <div className="text-left mb-4 r-0" style={{ marginLeft: "78%" }}>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleDownloadSampleFile}
-              >
-                Download Sample Upload File
-              </button>
-            </div>
-            <Form>
-              <Row>
-                <Col lg={4}>
-                  <CardSubtitle className="mb-3">
-                    {" "}
-                    Select File to Upload
-                  </CardSubtitle>
-                  <Dropzone
-                    maxFiles={1}
-                    onDrop={(acceptedFiles) => {
-                      handleAcceptedFiles(acceptedFiles);
-                    }}
-                  >
-                    {({ getRootProps, getInputProps }) => (
-                      <div className="dropzone">
-                        <div
-                          className="dz-message needsclick mt-2"
-                          {...getRootProps()}
-                        >
-                          <input {...getInputProps()} />
-                          <div className="mb-3">
-                            <i className="display-4 text-muted bx bxs-cloud-upload" />
-                          </div>
-                          <h4>Drop files here or click to upload.</h4>
-                        </div>
-                      </div>
-                    )}
-                  </Dropzone>
-                  <div className="dropzone-previews mt-3" id="file-previews">
-                    {selectedFiles.map((f, i) => {
-                      return (
-                        <Card
-                          className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete"
-                          key={i + "-file"}
-                        >
-                          <div className="p-2">
-                            <Row className="align-items-center">
-                              <Col className="col-auto">
-                                <img
-                                  data-dz-thumbnail=""
-                                  height="80"
-                                  className="avatar-sm rounded bg-light"
-                                  alt={f.name}
-                                  src={f.preview}
-                                />
-                              </Col>
-                              <Col>
-                                <Link
-                                  to="#"
-                                  className="text-muted font-weight-bold"
-                                >
-                                  {f.name}
-                                </Link>
-                                <p className="mb-0">
-                                  <strong>{f.formattedSize}</strong>
-                                </p>
-                              </Col>
-                            </Row>
-                          </div>
-                        </Card>
-                      );
-                    })}
-                  </div>
-                </Col>
-              </Row>
-            </Form>
-            <div className="text-center mt-4 ">
-              <div
-                style={{
-                  display: "flex",
-                  gap: 5,
-                  textAlign: "center",
-                  justifyContent: "center",
-                }}
-              >
+    <>
+      <div
+        className="position-fixed top-0 end-0 p-3"
+        style={{ zIndex: "1005" }}
+      >
+        s
+        <Toast isOpen={successMsg}>
+          <ToastHeader toggle={toggleSuccessMsg}>
+            <i className="mdi mdi-alert-outline me-2"></i> Upload
+          </ToastHeader>
+          <ToastBody>Update Smartcard Successfully</ToastBody>
+        </Toast>
+      </div>
+      <Modal
+        isOpen={isOpen}
+        size="xl"
+        role="dialog"
+        autoFocus={true}
+        centered={true}
+        className="exampleModal"
+        tabIndex="-1"
+        toggle={toggle}
+      >
+        <ModalHeader toggle={toggle} tag="h4">
+          Upload Smartcards
+        </ModalHeader>
+        <ModalBody>
+          <Card>
+            <CardBody>
+              <div className="text-left mb-4 r-0" style={{ marginLeft: "78%" }}>
                 <button
                   type="button"
-                  className="btn btn-primary mr-2 "
-                  onClick={handleUploadFile}
+                  className="btn btn-primary"
+                  onClick={handleDownloadSampleFile}
                 >
-                  Upload File
-                </button>
-                <button type="button" className="btn btn-primary ml-2 ">
-                  Reset
-                </button>
-                <button type="button" className="btn btn-primary ">
-                  Cancel
+                  Download Sample Upload File
                 </button>
               </div>
-            </div>
-          </CardBody>
-        </Card>
-      </ModalBody>
-    </Modal>
+              <Form>
+                <Row>
+                  <Col lg={4}>
+                    <CardSubtitle className="mb-3">
+                      {" "}
+                      Select File to Upload
+                    </CardSubtitle>
+                    <Dropzone
+                      maxFiles={1}
+                      onDrop={(acceptedFiles) => {
+                        handleAcceptedFiles(acceptedFiles);
+                      }}
+                    >
+                      {({ getRootProps, getInputProps }) => (
+                        <div className="dropzone">
+                          <div
+                            className="dz-message needsclick mt-2"
+                            {...getRootProps()}
+                          >
+                            <input {...getInputProps()} />
+                            <div className="mb-3">
+                              <i className="display-4 text-muted bx bxs-cloud-upload" />
+                            </div>
+                            <h4>Drop files here or click to upload.</h4>
+                          </div>
+                        </div>
+                      )}
+                    </Dropzone>
+                    <div className="dropzone-previews mt-3" id="file-previews">
+                      {selectedFiles.map((f, i) => {
+                        return (
+                          <Card
+                            className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete"
+                            key={i + "-file"}
+                          >
+                            <div className="p-2">
+                              <Row className="align-items-center">
+                                <Col className="col-auto">
+                                  <img
+                                    data-dz-thumbnail=""
+                                    height="80"
+                                    className="avatar-sm rounded bg-light"
+                                    alt={f.name}
+                                    src={f.preview}
+                                  />
+                                </Col>
+                                <Col>
+                                  <Link
+                                    to="#"
+                                    className="text-muted font-weight-bold"
+                                  >
+                                    {f.name}
+                                  </Link>
+                                  <p className="mb-0">
+                                    <strong>{f.formattedSize}</strong>
+                                  </p>
+                                </Col>
+                              </Row>
+                            </div>
+                          </Card>
+                        );
+                      })}
+                    </div>
+                  </Col>
+                </Row>
+              </Form>
+              <div className="text-center mt-4 ">
+                <div
+                  style={{
+                    display: "flex",
+                    gap: 5,
+                    textAlign: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <button
+                    type="button"
+                    className="btn btn-primary mr-2 "
+                    onClick={handleUploadFile}
+                  >
+                    Upload File
+                  </button>
+                  <button type="button" className="btn btn-primary ml-2 ">
+                    Reset
+                  </button>
+                  <button type="button" className="btn btn-primary ">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </CardBody>
+          </Card>
+        </ModalBody>
+      </Modal>
+    </>
   );
 };
 
