@@ -964,6 +964,21 @@ export const bulkUpdateSmartcardSubmit = async (initiatedToken, formData) => {
   );
 };
 
+export const downloadStbUploadTemplate = async (data) => {
+  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_STB, data);
+};
+
+export const updateStbUploadByToken = async (token, data) => {
+  return put(url.fileUploadStb(token), data);
+};
+
+export const uploadStbSubmit = async (initiatedToken, formData) => {
+  return await postCompleteResponse(
+    url.uploadBulkStbSubmit(initiatedToken),
+    formData
+  );
+};
+
 export const downloadStbBulkUpdateTemplate = async (data) => {
   return await postCompleteResponse(url.DOWNLOAD_SAMPLE_STB_UPDATE, data);
 };

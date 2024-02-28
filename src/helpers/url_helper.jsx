@@ -683,6 +683,14 @@ export const uploadBulkUpdateSmartcardSubmit = (token) => {
   return `/smartcard-update/upload-q/${token}`;
 };
 
+export const DOWNLOAD_SAMPLE_STB = "/stb/upload-q?vr=web1.0";
+export const fileUploadStb = (token) => {
+  return `/stb/upload-q/${token}?vr=web1.0`;
+};
+export const uploadBulkStbSubmit = (token) => {
+  return `/stb/upload-q/${token}`;
+};
+
 export const DOWNLOAD_SAMPLE_STB_UPDATE = "/stb-update/upload-q?vr=web1.0";
 export const fileUploadStbUpdate = (token) => {
   return `/stb-update/upload-q/${token}?vr=web1.0`;
@@ -769,7 +777,8 @@ export const uploadBankSubmit = (token) => {
   return `/bank/upload-q/${token}`;
 };
 
-export const DOWNLOAD_SAMPLE_DISTRICT = "/administrative-division/upload-q?vr=web1.0";
+export const DOWNLOAD_SAMPLE_DISTRICT =
+  "/administrative-division/upload-q?vr=web1.0";
 
 export const fileUploadDistrict = (token) => {
   return `/administrative-division/upload-q/${token}?vr=web1.0`;
