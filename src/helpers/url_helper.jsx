@@ -787,8 +787,6 @@ export const fileUploadDistrict = (token) => {
 export const uploadDistrictSubmit = (token) => {
   return `/administrative-division/upload-q/${token}`;
 };
-<<<<<<< Updated upstream
-=======
 
 export const DOWNLOAD_SAMPLE_CITY = "/administrative-division/upload-q?vr=web1.0";
 
@@ -799,4 +797,3 @@ export const fileUploadCity = (token) => {
 export const uploadCitySubmit = (token) => {
   return `/administrative-division/upload-q/${token}`;
 };
->>>>>>> Stashed changes
