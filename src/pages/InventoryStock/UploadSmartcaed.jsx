@@ -162,18 +162,28 @@ const UploadSmartcard = (props) => {
 
     uploadSmartcardSubmit(uploadTrigger.token, formData)
       .then((res) => {
-        // debugger;
         toggleSuccessMsg();
         console.log(
           "res in uploadBrandFileForInitiatedUserUpload:" + JSON.stringify(res)
         );
-
         setUploadTrigger({});
         setSelectedFiles([]);
-
         console.log("cleared the selected files and upload trigger");
         dispatch(onAddInventoryStockSmartcard(res.data.data));
-        toggle();
+        toggleUploadModal();
+        setCas_id();
+        setBrand_id();
+        setDescription();
+        setInv_state_id();
+        setInvoice_date();
+        setInvoice_no();
+        setIs_embeded();
+        setPo_date();
+        setPo_number();
+        setState();
+        setStb_brand();
+        setStbbrand_id();
+        setWarehouse_id();
       })
       .catch((error) => {
         console.log("error in upload:" + error);
