@@ -309,7 +309,7 @@ const AddMultipleNcf = ({
               name="mrp"
               type="number"
               placeholder="0"
-              value={mrp}
+              value={parseFloat(mrp).toFixed(2)}
               disabled
             />
           </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
@@ -6,6 +6,7 @@ import {
   Row,
   Modal,
   ModalHeader,
+  ModalFooter,
   ModalBody,
   Label,
   FormFeedback,
@@ -36,9 +37,7 @@ const ViewNcf = (props) => {
     setShowHistory(!showHistory);
   };
 
-  const [additionalRates, setAdditionalRates] = useState(
-    (ncf && ncf.additional_rates) || []
-  );
+  const [additionalRates, setAdditionalRates] = useState([]);
   console.log("additionalRates in view :" + JSON.stringify(additionalRates));
   const editToggle = () => {
     setShowEditNcf(false);
@@ -62,6 +61,7 @@ const ViewNcf = (props) => {
       lmo_rate: (ncf && ncf.lmo_rate) || "",
       status_lbl: (ncf && ncf.status_lbl) || "",
       type: (ncf && ncf.type) || "",
+      additionalRates: (ncf && ncf.additional_rates) || [],
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
@@ -104,9 +104,21 @@ const ViewNcf = (props) => {
     },
   });
   const handleCancel = () => {
-    setShowEditNcf();
+    setShowEditNcf(false);
     toggleViewModal();
   };
+
+  useEffect(() => {
+    if (ncf && ncf.length > 0) {
+      // Extract additional_rates array from each ncf object and concatenate them
+      const allAdditionalRates = ncf.reduce((accumulator, currentNcf) => {
+        const additionalRatesData = currentNcf.additional_rates || [];
+        return accumulator.concat(additionalRatesData);
+      }, []);
+
+      setAdditionalRates(allAdditionalRates);
+    }
+  }, [ncf]);
   return (
     <>
       {" "}
@@ -422,7 +434,7 @@ const ViewNcf = (props) => {
                       placeholder="0"
                       onChange={validation.handleChange}
                       onBlur={validation.handleBlur}
-                      value={validation.values.mrp || ""}
+                      value={parseFloat(validation.values.mrp).toFixed(2) || ""}
                       invalid={
                         validation.touched.mrp && validation.errors.mrp
                           ? true
@@ -448,7 +460,10 @@ const ViewNcf = (props) => {
                       placeholder="0"
                       onChange={validation.handleChange}
                       onBlur={validation.handleBlur}
-                      value={validation.values.lmo_discount || ""}
+                      value={
+                        parseFloat(validation.values.lmo_discount).toFixed(2) ||
+                        ""
+                      }
                       invalid={
                         validation.touched.lmo_discount &&
                         validation.errors.lmo_discount
@@ -476,7 +491,9 @@ const ViewNcf = (props) => {
                       placeholder="0"
                       onChange={validation.handleChange}
                       onBlur={validation.handleBlur}
-                      value={validation.values.lmo_rate || ""}
+                      value={
+                        parseFloat(validation.values.lmo_rate).toFixed(2) || ""
+                      }
                       invalid={
                         validation.touched.lmo_rate &&
                         validation.errors.lmo_rate
@@ -537,40 +554,40 @@ const ViewNcf = (props) => {
                             </tr>
                           </thead>
                           <tbody>
-                            {additionalRates &&
-                              additionalRates.map((item, index) => (
-                                <tr key={index}>
-                                  <th scope="row">{index + 1}</th>
-                                  <td>{item.name}</td>
-                                  <td>{item.mrp}</td>
-                                  <td>{item.lmo_discount}</td>
-                                  <td>{item.lmo_rate}</td>
-                                  <td>
-                                    {parseInt(item.calculate_per_channel) === 1
-                                      ? "Yes"
-                                      : "No"}
-                                  </td>
-                                  <td>
-                                    {parseInt(item.is_refundable) === 1
-                                      ? "Yes"
-                                      : "No"}
-                                  </td>
-                                  {/* <td>
-                                  <h5>
-                                    <Link
-                                      className="text-dark"
-                                      to="#"
-                                      onClick={() => deleteMultipleNcf(index)}
-                                    >
-                                      <i
-                                        className="mdi mdi-delete font-size-18"
-                                        id="deletetooltip"
-                                      />
-                                    </Link>
-                                  </h5>
-                                </td> */}
-                                </tr>
-                              ))}
+                            {validation.values.additionalRates &&
+                              validation.values.additionalRates.map(
+                                (item, index) => (
+                                  <tr key={index} className="disabled-row">
+                                    <th scope="row">{index + 1}</th>
+                                    <td>{item.name}</td>
+                                    <td>{item.mrp}</td>
+                                    <td>{item.lmo_discount}</td>
+                                    <td>{item.lmo_rate}</td>
+                                    <td>
+                                      {parseInt(item.calculate_per_channel) ===
+                                      1
+                                        ? "Yes"
+                                        : "No"}
+                                    </td>
+                                    <td>
+                                      {parseInt(item.is_refundable) === 1
+                                        ? "Yes"
+                                        : "No"}
+                                    </td>
+                                    <td>
+                                      <Link
+                                        className="text-dark disabled"
+                                        onClick={() => deleteMultipleNcf(index)}
+                                      >
+                                        <i
+                                          className="mdi mdi-delete font-size-18"
+                                          id="deletetooltip"
+                                        />
+                                      </Link>
+                                    </td>
+                                  </tr>
+                                )
+                              )}
                           </tbody>
                         </Table>
                       </div>
@@ -588,7 +605,7 @@ const ViewNcf = (props) => {
                 >
                   {console.log("showEditNcf before:" + showEditNcf)}
                   <AddMultipleNcf
-                    additionalRates={additionalRates}
+                    additionalRates={validation.values.additionalRates}
                     setAdditionalRates={setAdditionalRates}
                     mrp={validation.values.mrp}
                     showEditNcf={showEditNcf}
@@ -596,15 +613,36 @@ const ViewNcf = (props) => {
                 </Row>
               )}
             </Row>
-            <Row>
-              <Col>
-                <div className="text-end">
-                  <button type="submit" className="btn btn-success save-user">
-                    Save
-                  </button>
-                </div>
-              </Col>
-            </Row>
+
+            {showEditNcf && (
+              <Row>
+                <Col>
+                  <ModalFooter>
+                    <button type="submit" className="btn btn-success save-user">
+                      Save
+                    </button>
+                    <button
+                      type="reset"
+                      className="btn btn-warning"
+                      onClick={() => validation.resetForm()}
+                    >
+                      Reset
+                    </button>
+
+                    <button
+                      type="button"
+                      className="btn btn-outline-danger"
+                      onClick={() => {
+                        validation.resetForm();
+                        handleCancel();
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </ModalFooter>
+                </Col>
+              </Row>
+            )}
           </Form>
         </ModalBody>
         {/* </Modal> */}
