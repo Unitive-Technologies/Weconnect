@@ -55,12 +55,12 @@ const UploadDistrict = (props) => {
   }
 
   const districtSavedTemplatePayload = {
-    meta_data: { type: 1, status: parseInt(status), state: parseInt(stateList) },
+    meta_data: { type: 2, status: parseInt(districtStatus), state_id: parseInt(stateList) },
     url: "",
   };
 
   const districtDownloadTemplatePayload = {
-    meta_data: { type: 1 },
+    meta_data: { type: 2 },
     url: "",
   };
 
@@ -71,6 +71,7 @@ const UploadDistrict = (props) => {
         // debugger;
         const fileName = res.data.data.type;
         const fieldStringArray = res.data.data.fields;
+        console.log("Upload District response" + res.data.data.fields)
         //combine fieldStringArray contents into a single string seperated by commas
         const headers = fieldStringArray.join(",");
         // const csvContent = data.map((row) => row.join(",")).join("\n");
@@ -198,7 +199,7 @@ const UploadDistrict = (props) => {
                   placeholder="Select status"
                   className="form-select"
                   value={districtStatus}
-                  onChange={(e) => setStatus(e.target.value)}
+                  onChange={(e) => setDistrictStatus(e.target.value)}
                 >
                   <option value="">Select Status</option>
                   {status &&
