@@ -61,6 +61,10 @@ const CreateBouquet = (props) => {
 
   const [lcoDiscount, setLcoDiscount] = useState(20);
   const [lcoRate, setLcoRate] = useState(0);
+  const [additionalLcoDiscount, setAdditionalLcoDiscount] = useState(0);
+  const [additionalLcoRate, setAdditionalLcoRate] = useState(0);
+
+  const [rate, setRate] = useState([]);
   console.log(
     "mrp, drp, lcoDiscount, lcoRate:" + mrp,
     drp,
@@ -149,6 +153,11 @@ const CreateBouquet = (props) => {
     setLcoRate(drp - totalLcoRate);
   }, [drp, lcoDiscount]);
 
+  useEffect(() => {
+    const totalAdditionalLcoRate = (drp * additionalLcoDiscount) / 100;
+
+    setAdditionalLcoRate(drp - totalAdditionalLcoRate);
+  }, [drp, additionalLcoDiscount]);
   return (
     <Modal
       isOpen={isOpen}
@@ -755,18 +764,27 @@ const CreateBouquet = (props) => {
               </div>
               <div>
                 <div style={{ marginLeft: "20px" }}>
-                  Overall Total: {totalRateAlacar + totalRatePackage}
+                  Overall Total:{" "}
+                  {parseFloat(totalRateAlacar + totalRatePackage).toFixed(2)}
                 </div>
               </div>
             </div>
             <Row>
               <Col sm="3">
                 <Label>MRP**</Label>
-                <Input disabled defaultValue={0} value={mrp} />
+                <Input
+                  disabled
+                  defaultValue={0}
+                  value={parseFloat(mrp).toFixed(2)}
+                />
               </Col>
               <Col sm="3">
                 <Label>DRP**</Label>
-                <Input type="number" defaultValue={0} value={drp} />
+                <Input
+                  type="number"
+                  defaultValue={0}
+                  value={parseFloat(drp).toFixed(2)}
+                />
               </Col>
               <Col sm="3">
                 <Label>LCO Discount(%)</Label>
@@ -774,11 +792,20 @@ const CreateBouquet = (props) => {
               </Col>
               <Col sm="3">
                 <Label>LCO Rate**</Label>
-                <Input type="number" defaultValue={0} value={lcoRate} />
+                <Input
+                  type="number"
+                  defaultValue={0}
+                  value={parseFloat(lcoRate).toFixed(2)}
+                />
               </Col>
             </Row>
             <Row>
-              <PreviewTable rechargeperiod={rechargeperiod} />
+              <PreviewTable
+                rechargeperiod={rechargeperiod}
+                lcoRate={lcoRate}
+                rate={rate}
+                setRate={setRate}
+              />
             </Row>
           </Row>
           <div
@@ -826,19 +853,37 @@ const CreateBouquet = (props) => {
             <Row>
               <Col sm="3">
                 <Label>MRP**</Label>
-                <Input disabled defaultValue={0} />
+                <Input
+                  disabled
+                  defaultValue={0}
+                  value={parseFloat(mrp).toFixed(2)}
+                />
               </Col>
               <Col sm="3">
                 <Label>DRP**</Label>
-                <Input type="number" defaultValue={0} />
+                <Input
+                  type="number"
+                  defaultValue={0}
+                  value={parseFloat(drp).toFixed(2)}
+                />
               </Col>
               <Col sm="3">
                 <Label>LCO Discount(%)</Label>
-                <Input type="number" defaultValue="20" />
+                <Input
+                  type="number"
+                  defaultValue="0"
+                  value={additionalLcoDiscount}
+                  onChange={(e) => setAdditionalLcoDiscount(e.target.value)}
+                />
               </Col>
               <Col sm="3">
                 <Label>LCO Rate**</Label>
-                <Input type="number" defaultValue={0} />
+                <Input
+                  type="number"
+                  defaultValue={0}
+                  value={parseFloat(additionalLcoRate).toFixed(2)}
+                  onChange={(e) => setAdditionalLcoRate(e.target.value)}
+                />
               </Col>
             </Row>
             <Row>

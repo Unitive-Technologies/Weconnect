@@ -8,7 +8,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 
 const PreviewTable = (props) => {
-  const { rechargeperiod } = props;
+  const { rechargeperiod, lcoRate, rate, setRate } = props;
+  const [freeDays, setFreeDays] = useState(0);
+  const [refundable, setRefundable] = useState("Yes");
+  const [price, setPrice] = useState(0);
+  console.log("@@@@@@@@@@@@refundable value:" + refundable);
+  console.log("@@@@@@@@@@@@price value:" + price);
   const dispatch = useDispatch();
   const selectBouquetState = (state) => state.bouquet;
   const BouquetProperties = createSelector(selectBouquetState, (bouquet) => ({
@@ -22,105 +27,33 @@ const PreviewTable = (props) => {
     }
   }, [dispatch, rechargeperiod]);
 
-  const columns = useMemo(
-    () => [
-      {
-        Header: "Enabled",
-        disableFilters: true,
-        filterable: true,
-        Cell: (cellProps) => {
-          return <Input type="checkbox" checked />;
-        },
-      },
-      {
-        Header: "Period",
-        accessor: "name",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <p className="text-muted mb-0">{cellProps.row.original.name}</p>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Pay Channel Rate",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <Input type="number" />
-            </>
-          );
-        },
-      },
-      {
-        Header: "Tax",
-        // accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return <Input type="number" />;
-        },
-      },
-      {
-        Header: "Total AMT",
-        // accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return <Input type="number" />;
-        },
-      },
-      {
-        Header: "Refundable",
-        // accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return <Input type="checkbox" checked />;
-        },
-      },
-      {
-        Header: "Free Days",
-        // accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return <Input type="number" />;
-        },
-      },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link to="#" className="text-success">
-                <i
-                  className="mdi mdi-content-copy font-size-18"
-                  id="edittooltip"
-                />
-              </Link>
-            </div>
-          );
-        },
-      },
-    ],
-    []
-  );
+  const updateRate = () => {
+    if (!price || !refundable || !freeDays) {
+      return;
+    }
+
+    const newItem = {
+      id: rate.length + 1,
+      price: price,
+      rent: 0,
+      is_refundable: refundable,
+      free_days: freeDays,
+      callback_amount: 0,
+    };
+
+    const updatedData = [...rate, newItem];
+    console.log("Updated Data in preview table" + updatedData);
+    setRate(updatedData);
+
+    //   setCasSelection("");
+    //   setCasCode("");
+  };
 
   return (
     <Card>
       <CardBody>
-        {console.log("recharge period: ", JSON.stringify(rechargeperiod))}
-        {/* <TableContainer
-          isPagination={true}
-          columns={columns}
-          data={rechargeperiod}
-          // isShowTableActionButtons={true}
-          isShowingPageLength={true}
-          theadClass="table-light"
-          tableClass="table-bordered align-middle nowrap mt-2"
-          paginationDiv="col-sm-12 col-md-7"
-          pagination="pagination justify-content-end pagination-rounded"
-        /> */}
+        {/* {console.log("recharge period: ", JSON.stringify(rechargeperiod))} */}
+
         <Table>
           <thead>
             <tr>
@@ -131,7 +64,7 @@ const PreviewTable = (props) => {
               <th>Total AMT</th>
               <th>Refundable</th>
               <th>Free Days</th>
-              <th>Action</th>
+              {/* <th>Action</th> */}
             </tr>
           </thead>
           <tbody>
@@ -151,31 +84,62 @@ const PreviewTable = (props) => {
               checked={isRowChecked(row.id)}
             />
           </td> */}
-                  {console.log("RRRRRRRRRRRRRRRRRRow: ", JSON.stringify(row))}
+                  {/* {console.log("RRRRRRRRRRRRRRRRRRow: ", JSON.stringify(row))} */}
                   <td>{row && row.name}</td>
                   <td>
-                    {" "}
+                    <Input
+                      type="number"
+                      disabled
+                      // onChange={setPrice(
+                      //   parseFloat(
+                      //     parseInt(row.months) === 0
+                      //       ? lcoRate / 30
+                      //       : lcoRate * row.months
+                      //   ).toFixed(2)
+                      // )}
+                      value={parseFloat(
+                        parseInt(row.months) === 0
+                          ? lcoRate / 30
+                          : lcoRate * row.months
+                      ).toFixed(2)}
+                    />
+                  </td>
+                  <td>
                     <Input type="number" />
                   </td>
                   <td>
-                    {" "}
                     <Input type="number" />
                   </td>
                   <td>
-                    {" "}
-                    <Input type="number" />
+                    <Input
+                      type="checkbox"
+                      onChange={(e) =>
+                        setRefundable(e.target.checked ? "Yes" : "No")
+                      }
+                      defaultChecked={refundable === "Yes"}
+                    />
                   </td>
                   <td>
-                    <Input type="checkbox" defaultChecked />
-                  </td>
-                  <td>
                     {" "}
-                    <Input type="number" />
+                    <Input
+                      type="number"
+                      value={freeDays}
+                      onChange={(e) => setFreeDays(e.target.value)}
+                    />
                   </td>
                 </tr>
               ))}
           </tbody>
         </Table>
+        <div className="mb-3">
+          <button
+            type="button"
+            className="btn btn-primary "
+            onClick={updateRate}
+          >
+            <i className="bx bx-right-arrow-alt" style={{ fontSize: 20 }}></i>
+          </button>
+        </div>
       </CardBody>
     </Card>
   );
