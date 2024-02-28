@@ -591,7 +591,7 @@ StockPairing.propTypes = {
   setShowDeallotPairing: PropTypes.func,
   showAllottedPairing: PropTypes.bool,
   setShowAllottedPairing: PropTypes.func,
-  selectedAllottedPairings: PropTypes.func,
+  selectedAllottedPairings: PropTypes.array,
   handleSelectedAllottedPairings: PropTypes.func,
   allottedpairinglist: PropTypes.array,
   allottedusertype: PropTypes.array,
