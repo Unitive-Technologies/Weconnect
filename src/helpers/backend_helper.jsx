@@ -580,6 +580,21 @@ export const uploadCitySubmit = async (initiatedToken, formData) => {
   );
 };
 
+export const downloadLocationUploadTemplate = async (data) => {
+  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_LOCATION, data);
+};
+
+export const updateLocationUploadByToken = async (token, data) => {
+  return put(url.fileUploadLocation(token), data);
+};
+
+export const uploadLocationSubmit = async (initiatedToken, formData) => {
+  return await postCompleteResponse(
+    url.uploadLocationSubmit(initiatedToken),
+    formData
+  );
+};
+
 // export const getDistrict = () => get(url.GET_DISTRICT);
 export const addDistrict = (district) => post(url.ADD_DISTRICT, district);
 export const getDistrictStateList = () => get(url.GET_DISTRICT_STATELIST);

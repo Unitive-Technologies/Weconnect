@@ -797,3 +797,13 @@ export const fileUploadCity = (token) => {
 export const uploadCitySubmit = (token) => {
   return `/administrative-division/upload-q/${token}`;
 };
+
+export const DOWNLOAD_SAMPLE_LOCATION = "/location/upload-q?vr=web1.0";
+
+export const fileUploadLocation = (token) => {
+  return `/location/upload-q/${token}?vr=web1.0`;
+};
+
+export const uploadLocationSubmit = (token) => {
+  return `/location/upload-q/${token}`;
+};

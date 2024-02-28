@@ -229,7 +229,7 @@ const LocationList = (props) => {
     setShowAddLocation(!showAddLocation);
   };
 
-  const handleUploadLocation = () => {
+  const toggleUploadLocation = () => {
     setShowUploadLocation(!showUploadLocation);
   };
 
@@ -258,7 +258,7 @@ const LocationList = (props) => {
         location={viewLocationData}
         lcoonlocation={lcoonlocation}
         status={status}
-        // singlelocation={singlelocation}
+      // singlelocation={singlelocation}
       />
       <AddNewLocation
         isOpen={showAddLocation}
@@ -268,9 +268,10 @@ const LocationList = (props) => {
       />
       <UploadLocation
         isOpen={showUploadLocation}
-        handleUploadLocation={handleUploadLocation}
+        toggleUploadLocation={toggleUploadLocation}
         lcoonlocation={lcoonlocation}
         status={status}
+        actiontype={"add"}
       />
       <div className="page-content">
         <Container fluid>
