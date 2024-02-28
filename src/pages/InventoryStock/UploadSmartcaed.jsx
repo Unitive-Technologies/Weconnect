@@ -272,7 +272,7 @@ const UploadSmartcard = (props) => {
                 <Row>
                   <Col lg={4}>
                     <div className="mb-3">
-                      <Label className="form-label">Smartcard Band</Label>
+                      <Label className="form-label">Smartcard Brand</Label>
                       <Input
                         name="brand_id"
                         type="select"
@@ -299,7 +299,7 @@ const UploadSmartcard = (props) => {
                   <Row>
                     <Col lg={4}>
                       <div className="mb-3">
-                        <Label className="form-label">STB Band</Label>
+                        <Label className="form-label">STB Brand</Label>
                         <Input
                           name="stbbrand_id"
                           type="select"

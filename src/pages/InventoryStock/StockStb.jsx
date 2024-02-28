@@ -13,6 +13,7 @@ import FaultyStbBlacklist from "./FaultyStbBlacklist";
 import AllottedStb from "./AllottedStb";
 import DeallotStb from "./DeallottedStb";
 import BulkUpdateStb from "./BulkUpdateStb";
+import UploadStb from "./UploadStb";
 
 const StockStb = (props) => {
   const {
@@ -56,6 +57,8 @@ const StockStb = (props) => {
     setSelectedAllottedStbs,
     showBulkUpdateStb,
     setShowBulkUpdateStb,
+    showBulkUploadStb,
+    setShowBulkUploadStb,
   } = props;
   const [showEditStb, setShowEditStb] = useState(false);
   const [editStbData, setEditStbData] = useState({});
@@ -95,6 +98,10 @@ const StockStb = (props) => {
 
   const handleShowBulkUpdateStb = () => {
     setShowBulkUpdateStb(!showBulkUpdateStb);
+  };
+
+  const handleShowBulkUploadStb = () => {
+    setShowBulkUploadStb(!showBulkUploadStb);
   };
 
   const getFilteredHandleRowClicks = (Row) => {
@@ -529,6 +536,16 @@ const StockStb = (props) => {
         isOpen={showBulkUpdateStb}
         toggle={handleShowBulkUpdateStb}
       />
+      <UploadStb
+        isOpen={showBulkUploadStb}
+        toggleUploadModal={handleShowBulkUploadStb}
+        stocksccastype={stocksccastype}
+        stockscwarehouse={stockscwarehouse}
+        stockscstatetype={stockscstatetype}
+        stockscinventorystate={stockscinventorystate}
+        brand1={brand1}
+        brand2={brand2}
+      />
       {loading ? (
         <React.Fragment>
           <Spinner
@@ -612,6 +629,8 @@ StockStb.propTypes = {
   setSelectedAllottedStbs: PropTypes.func,
   showBulkUpdateStb: PropTypes.bool,
   setShowBulkUpdateStb: PropTypes.func,
+  showBulkUploadStb: PropTypes.bool,
+  setShowBulkUploadStb: PropTypes.func,
 };
 
 export default StockStb;
