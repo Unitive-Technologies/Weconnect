@@ -133,7 +133,6 @@ const BulkUpdateSmartcard = (props) => {
         className="position-fixed top-0 end-0 p-3"
         style={{ zIndex: "1005" }}
       >
-        s
         <Toast isOpen={successMsg}>
           <ToastHeader toggle={toggleSuccessMsg}>
             <i className="mdi mdi-alert-outline me-2"></i> Upload

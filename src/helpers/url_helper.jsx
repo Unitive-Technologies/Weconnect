@@ -707,6 +707,15 @@ export const uploadBulkPairingSubmit = (token) => {
   return `/pairing/upload-q/${token}`;
 };
 
+export const DOWNLOAD_SAMPLE_SMARTCARD_ALLOTMENT =
+  "/smartcard-allotment/upload-q?vr=web1.0";
+export const fileUploadSmartcardAllotment = (token) => {
+  return `/smartcard-allotment/upload-q/${token}?vr=web1.0`;
+};
+export const uploadBulkSmartcardAllotmentSubmit = (token) => {
+  return `/smartcard-allotment/upload-q/${token}`;
+};
+
 export const DOWNLOAD_SAMPLE_USERS = "/user-bulk/upload-q?vr=web1.0";
 export const updateUserUpload = (token) => {
   return `/user-bulk/upload-q/${token}?vr=web1.0`;
