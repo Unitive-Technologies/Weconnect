@@ -58,7 +58,7 @@ const UploadBroadCaster = (props) => {
     };
 
     const broadcasterDownloadTemplatePayload = {
-        meta_data: { type: 1 },
+        meta_data: { type: 1, status: parseInt(status) },
         url: "",
     };
 

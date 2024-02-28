@@ -58,7 +58,7 @@ const UploadBrandList = (props) => {
   };
 
   const brandDownloadTemplatePayload = {
-    meta_data: { type: 1 },
+    meta_data: { type: 1, status: parseInt(status) },
     url: "",
   };
 

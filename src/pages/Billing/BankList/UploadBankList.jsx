@@ -59,7 +59,7 @@ const UploadBankList = (props) => {
   };
 
   const bankDownloadTemplatePayload = {
-    meta_data: { type: 1 },
+    meta_data: { type: 1, status: parseInt(status) },
     url: "",
   };
 
