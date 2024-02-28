@@ -112,10 +112,10 @@ const CityList = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-                // onClick={() => {
-                //   const userData = cellProps.row.original;
-                //   handleViewCity(userData);
-                // }}
+              // onClick={() => {
+              //   const userData = cellProps.row.original;
+              //   handleViewCity(userData);
+              // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -262,7 +262,7 @@ const CityList = (props) => {
     setShowAddCity(!showAddCity);
   };
 
-  const handleUploadCity = () => {
+  const toggleUploadCity = () => {
     setShowUploadCity(!showUploadCity);
   };
 
@@ -302,9 +302,10 @@ const CityList = (props) => {
       />
       <UploadCity
         isOpen={showUploadCity}
-        handleUploadCity={handleUploadCity}
+        toggleUploadCity={toggleUploadCity}
         status={status}
         statelist={statelist}
+        actiontype={"add"}
         districtlist={districtlist}
       />
       <div className="page-content">
