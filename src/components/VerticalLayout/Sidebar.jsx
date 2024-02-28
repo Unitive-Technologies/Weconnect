@@ -13,7 +13,8 @@ import logo from "../../assets/images/vdigital.png";
 import logoLightPng from "../../assets/images/logo-light.png";
 import logoLightSvg from "../../assets/images/logo-light.svg";
 import logoDark from "../../assets/images/logo-dark.png";
-import vdigitallogo from "../../assets/images/vdigital-logo.png";
+// import vdigitallogo from "../../assets/images/vdigital-logo.png";
+import vdigitallogo from "../../assets/images/logoo.jpeg";
 
 const Sidebar = (props) => {
   return (

@@ -30,7 +30,8 @@ import { loginUser } from "../../store/actions";
 import { getAdmindetails } from "../../store/actions";
 // import images
 import profile from "../../assets/images/profile-img.png";
-import logo from "../../assets/images/vdigital.png";
+// import logo from "../../assets/images/vdigital.png";
+import logo from "../../assets/images/logoo.jpeg";
 
 const Login = (props) => {
   //meta title
@@ -53,12 +54,12 @@ const Login = (props) => {
     }),
     onSubmit: (values) => {
       const numericCaptcha = captchaText.replace(/\D/g, ""); // Extract only numeric characters
-      console.log(values)
+      console.log(values);
       console.log("userInput:", userInput);
       console.log("numericCaptcha:", numericCaptcha);
 
       if (userInput === numericCaptcha) {
-        console.log("Captcha matched...")
+        console.log("Captcha matched...");
         // eslint-disable-next-line react/prop-types
         dispatch(loginUser(values, props.router.navigate));
         // dispatch(getAdmindetails());
@@ -187,12 +188,14 @@ const Login = (props) => {
                           onBlur={validation.handleBlur}
                           value={validation.values.username || ""}
                           invalid={
-                            validation.touched.username && validation.errors.username
+                            validation.touched.username &&
+                            validation.errors.username
                               ? true
                               : false
                           }
                         />
-                        {validation.touched.username && validation.errors.username ? (
+                        {validation.touched.username &&
+                        validation.errors.username ? (
                           <FormFeedback type="invalid">
                             {validation.errors.username}
                           </FormFeedback>
