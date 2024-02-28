@@ -807,3 +807,13 @@ export const fileUploadLocation = (token) => {
 export const uploadLocationSubmit = (token) => {
   return `/location/upload-q/${token}`;
 };
+
+export const DOWNLOAD_SAMPLE_SUBLOCATION = "/sublocation/upload-q?vr=web1.0";
+
+export const fileUploadSublocation = (token) => {
+  return `/sublocation/upload-q/${token}?vr=web1.0`;
+};
+
+export const uploadSublocationSubmit = (token) => {
+  return `/sublocation/upload-q/${token}`;
+};

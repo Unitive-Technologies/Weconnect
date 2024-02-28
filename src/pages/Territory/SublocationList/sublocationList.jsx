@@ -314,6 +314,7 @@ const SublocationList = (props) => {
         isOpen={showUploadSubLocation}
         toggleUploadModal={toggleUploadModal}
         status={status}
+        actiontype={"add"}
         locateonsublocate={locateonsublocate}
       />
       <div className="page-content">
