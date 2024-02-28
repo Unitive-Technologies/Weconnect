@@ -17,14 +17,14 @@ import {
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import { useDispatch } from "react-redux";
-import { addInventoryStockStb as onAddInventoryStockStb } from "/src/store/inventorystock/actions";
+import { addInventoryStockPairing as onAddInventoryStockPairing } from "/src/store/inventorystock/actions";
 import {
-  downloadStbBulkUpdateTemplate,
-  updateStbBulkUpdateByToken,
-  bulkUpdateStbSubmit,
+  downloadPairingUploadTemplate,
+  updatePairingUploadByToken,
+  uploadPairingSubmit,
 } from "../../helpers/backend_helper";
 
-const BulkUpdateStb = (props) => {
+const UploadParing = (props) => {
   const { isOpen, toggle } = props;
   const dispatch = useDispatch();
 
@@ -38,35 +38,34 @@ const BulkUpdateStb = (props) => {
 
   function handleAcceptedFiles(files) {
     setSelectedFiles(files);
-    updateStbBulkUpdateByToken(
+    updatePairingUploadByToken(
       uploadTrigger.token,
-      stbBulkUpdateSavedTemplatePayload
+      pairingUploadSavedTemplatePayload
     )
       .then((res) => {
         console.log(
-          "res in updateStbBulkUpdateByToken: " + JSON.stringify(res)
+          "res in updateSmartcardBulkUpdateByToken: " + JSON.stringify(res)
         );
       })
       .catch((error) => {
-        console.log("error in updateStbBulkUpdateByToken: " + error);
+        console.log("error in updateSmartcardBulkUpdateByToken: " + error);
       });
   }
 
-  const stbBulkUpdateSavedTemplatePayload = {
+  const pairingUploadSavedTemplatePayload = {
     meta_data: { type: null },
     url: "",
   };
 
-  const stbBulkUpdateDownloadTemplatePayload = {
+  const pairingUploadDownloadTemplatePayload = {
     meta_data: { type: null },
     url: "",
   };
 
   const handleDownloadSampleFile = () => {
     // Send a POST request to the server, from the json request convert data.fields array of strings as headers in a csv file
-    downloadStbBulkUpdateTemplate(stbBulkUpdateDownloadTemplatePayload)
+    downloadPairingUploadTemplate(pairingUploadDownloadTemplatePayload)
       .then((res) => {
-        debugger;
         const fileName = res.data.data.type;
         const fieldStringArray = res.data.data.fields;
         //combine fieldStringArray contents into a single string seperated by commas
@@ -105,7 +104,7 @@ const BulkUpdateStb = (props) => {
     const formData = new FormData();
     formData.append("qFile", selectedFiles[0]); // appending file
 
-    bulkUpdateStbSubmit(uploadTrigger.token, formData)
+    uploadPairingSubmit(uploadTrigger.token, formData)
       .then((res) => {
         // debugger;
         toggleSuccessMsg();
@@ -117,7 +116,7 @@ const BulkUpdateStb = (props) => {
         setSelectedFiles([]);
 
         console.log("cleared the selected files and upload trigger");
-        dispatch(onAddInventoryStockStb(res.data.data));
+        dispatch(onAddInventoryStockPairing(res.data.data));
         toggle();
       })
       .catch((error) => {
@@ -135,7 +134,7 @@ const BulkUpdateStb = (props) => {
           <ToastHeader toggle={toggleSuccessMsg}>
             <i className="mdi mdi-alert-outline me-2"></i> Upload
           </ToastHeader>
-          <ToastBody>Update Stb Successfully</ToastBody>
+          <ToastBody>Update Smartcard Successfully</ToastBody>
         </Toast>
       </div>
       <Modal
@@ -149,7 +148,7 @@ const BulkUpdateStb = (props) => {
         toggle={toggle}
       >
         <ModalHeader toggle={toggle} tag="h4">
-          Bulk Update STBs
+          Upload Pairings
         </ModalHeader>
         <ModalBody>
           <Card>
@@ -251,7 +250,7 @@ const BulkUpdateStb = (props) => {
                   >
                     Upload File
                   </button>
-                  <button type="button" className="btn btn-primary ml-2 ">
+                  <button type="button" className="btn btn-primary ml-2">
                     Reset
                   </button>
                   <button
@@ -271,9 +270,9 @@ const BulkUpdateStb = (props) => {
   );
 };
 
-BulkUpdateStb.propTypes = {
+UploadParing.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default BulkUpdateStb;
+export default UploadParing;

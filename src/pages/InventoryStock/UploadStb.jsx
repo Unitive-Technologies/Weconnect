@@ -530,7 +530,11 @@ const UploadStb = (props) => {
                   <button type="button" className="btn btn-primary ml-2 ">
                     Reset
                   </button>
-                  <button type="button" className="btn btn-primary ">
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => toggleUploadModal()}
+                  >
                     Cancel
                   </button>
                 </div>

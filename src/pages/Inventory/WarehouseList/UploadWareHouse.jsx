@@ -58,7 +58,7 @@ const UploadWareHouse = (props) => {
   };
 
   const warehouseDownloadTemplatePayload = {
-    meta_data: { type: 1 },
+    meta_data: { type: 1, status: parseInt(status) },
     url: "",
   };
 

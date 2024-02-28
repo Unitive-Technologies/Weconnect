@@ -30,7 +30,6 @@ const BulkUpdateSmartcard = (props) => {
 
   const [uploadTrigger, setUploadTrigger] = useState({});
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [status, setStatus] = useState("");
   const [successMsg, setSuccessMsg] = useState(false);
 
   const toggleSuccessMsg = () => {
@@ -134,7 +133,6 @@ const BulkUpdateSmartcard = (props) => {
         className="position-fixed top-0 end-0 p-3"
         style={{ zIndex: "1005" }}
       >
-        s
         <Toast isOpen={successMsg}>
           <ToastHeader toggle={toggleSuccessMsg}>
             <i className="mdi mdi-alert-outline me-2"></i> Upload
@@ -167,6 +165,12 @@ const BulkUpdateSmartcard = (props) => {
                   Download Sample Upload File
                 </button>
               </div>
+              {uploadTrigger && uploadTrigger._id && (
+                <div>
+                  <p>Token ID: {uploadTrigger.token}</p>
+                  <p>Fields: [{uploadTrigger.fields.join(", ")}]</p>
+                </div>
+              )}
               <Form>
                 <Row>
                   <Col lg={4}>
@@ -252,7 +256,11 @@ const BulkUpdateSmartcard = (props) => {
                   <button type="button" className="btn btn-primary ml-2 ">
                     Reset
                   </button>
-                  <button type="button" className="btn btn-primary ">
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => toggle()}
+                  >
                     Cancel
                   </button>
                 </div>

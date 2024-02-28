@@ -1054,6 +1054,27 @@ export const uploadPairingSubmit = async (initiatedToken, formData) => {
   );
 };
 
+export const downloadSmartcardAllotmentUploadTemplate = async (data) => {
+  return await postCompleteResponse(
+    url.DOWNLOAD_SAMPLE_SMARTCARD_ALLOTMENT,
+    data
+  );
+};
+
+export const updateSmartcardAllotmentUploadByToken = async (token, data) => {
+  return put(url.fileUploadSmartcardAllotment(token), data);
+};
+
+export const uploadSmartcardAllotmentSubmit = async (
+  initiatedToken,
+  formData
+) => {
+  return await postCompleteResponse(
+    url.uploadBulkSmartcardAllotmentSubmit(initiatedToken),
+    formData
+  );
+};
+
 export const updateInventoryStockStb = (id, stockstb) =>
   put(url.UPDATE_INVENTORYSTOCK_STB(id), stockstb);
 export const addInventoryStockSmartcard = (stocksmartcard) =>
