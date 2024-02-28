@@ -13,6 +13,9 @@ import {
   FormFeedback,
   Input,
   Label,
+  Toast,
+  ToastHeader,
+  ToastBody,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
@@ -41,8 +44,20 @@ const UploadSmartcard = (props) => {
 
   const [uploadTrigger, setUploadTrigger] = useState({});
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [status, setStatus] = useState("");
   const [successMsg, setSuccessMsg] = useState(false);
+  const [brand_id, setBrand_id] = useState();
+  const [cas_id, setCas_id] = useState("");
+  const [description, setDescription] = useState();
+  const [inv_state_id, setInv_state_id] = useState();
+  const [invoice_date, setInvoice_date] = useState();
+  const [invoice_no, setInvoice_no] = useState();
+  const [po_date, setPo_date] = useState();
+  const [po_number, setPo_number] = useState();
+  const [state, setState] = useState();
+  const [stb_brand, setStb_brand] = useState(null);
+  const [stbbrand_id, setStbbrand_id] = useState(null);
+  const [warehouse_id, setWarehouse_id] = useState();
+  const [is_embeded, setIs_embeded] = useState(false);
 
   const toggleSuccessMsg = () => {
     setSuccessMsg(!successMsg);
@@ -65,25 +80,39 @@ const UploadSmartcard = (props) => {
   }
 
   const smartcardBulkUpdateDownloadTemplatePayload = {
-    meta_data: { type: null },
+    meta_data: {
+      brand_id: parseInt(brand_id),
+      cas_id: parseInt(cas_id),
+      description: description,
+      inv_state_id: parseInt(inv_state_id),
+      invoice_date: invoice_date,
+      invoice_no: invoice_no,
+      po_date: po_date,
+      po_number: po_number,
+      state: parseInt(state),
+      stb_brand: stb_brand,
+      stbbrand_id: parseInt(stbbrand_id),
+      type: null,
+      warehouse_id: parseInt(warehouse_id),
+    },
     url: "",
   };
 
   const smartcardBulkUpdateSavedTemplatePayload = {
     meta_data: {
-      brand_id: 2,
-      cas_id: 1,
-      description: "Testing",
-      inv_state_id: 1,
-      invoice_date: "2024-02-27",
-      invoice_no: "aswwee",
-      po_date: "2024-02-26",
-      po_number: "aasdfe",
-      state: 1,
-      stb_brand: null,
-      stbbrand_id: null,
+      brand_id: parseInt(brand_id),
+      cas_id: parseInt(cas_id),
+      description: description,
+      inv_state_id: parseInt(inv_state_id),
+      invoice_date: invoice_date,
+      invoice_no: invoice_no,
+      po_date: po_date,
+      po_number: po_number,
+      state: parseInt(state),
+      stb_brand: stb_brand,
+      stbbrand_id: parseInt(stbbrand_id),
       type: null,
-      warehouse_id: 4,
+      warehouse_id: parseInt(warehouse_id),
     },
     url: "",
   };
@@ -92,7 +121,7 @@ const UploadSmartcard = (props) => {
     // Send a POST request to the server, from the json request convert data.fields array of strings as headers in a csv file
     downloadSmartcardUploadTemplate(smartcardBulkUpdateDownloadTemplatePayload)
       .then((res) => {
-        debugger;
+        // debugger;
         const fileName = res.data.data.type;
         const fieldStringArray = res.data.data.fields;
         //combine fieldStringArray contents into a single string seperated by commas
@@ -152,484 +181,360 @@ const UploadSmartcard = (props) => {
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      size="xl"
-      role="dialog"
-      autoFocus={true}
-      centered={true}
-      className="exampleModal"
-      tabIndex="-1"
-      toggle={toggleUploadModal}
-    >
-      <ModalHeader toggle={toggleUploadModal} tag="h4">
-        Upload Smartcards
-      </ModalHeader>
-      <ModalBody>
-        <Card>
-          <CardBody>
-            <div className="text-left mb-4 r-0" style={{ marginLeft: "78%" }}>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleDownloadSampleFile}
-              >
-                Download Sample Upload File
-              </button>
-            </div>
-            {/* <Form>
-              <Row>
-                <Col lg={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">CAS Type</Label>
-                    <Input
-                      name="cas_id"
-                      type="select"
-                      placeholder="Select CAS Type"
-                      onChange={validation.handleChange}
-                      onBlur={validation.handleBlur}
-                      value={validation.values.cas_id || ""}
-                      invalid={
-                        validation.touched.cas_id && validation.errors.cas_id
-                          ? true
-                          : false
-                      }
-                    >
-                      <option value="">Select CAS Type</option>
-                      {stocksccastype.map((castype) => (
-                        <option key={castype.id} value={castype.id}>
-                          {castype.name}
-                        </option>
-                      ))}
-                    </Input>
-                    {validation.touched.cas_id && validation.errors.cas_id ? (
-                      <FormFeedback type="invalid">
-                        {validation.errors.cas_id}
-                      </FormFeedback>
-                    ) : null}
-                  </div>
-                </Col>
-                <Col lg={4}>
-                  <div>
-                    <Label className="form-label">Is Embedded</Label>
-                  </div>
-                  <div>
-                    <Input
-                      name="is_embeded"
-                      type="checkbox"
-                      onChange={validation.handleChange}
-                      onBlur={validation.handleBlur}
-                      value={validation.values.is_embeded || ""}
-                      invalid={
-                        validation.touched.is_embeded &&
-                        validation.errors.is_embeded
-                          ? true
-                          : false
-                      }
-                    />
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col lg={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">Smartcard Band</Label>
-                    <Input
-                      name="brand_id"
-                      type="select"
-                      placeholder="Select smartcard brand"
-                      className="form-select"
-                      onChange={validation.handleChange}
-                      onBlur={validation.handleBlur}
-                      value={validation.values.brand_id || ""}
-                      invalid={
-                        validation.touched.brand_id &&
-                        validation.errors.brand_id
-                          ? true
-                          : false
-                      }
-                    >
-                      <option value="">Select smartcard brand</option>
-                      {validation.values.cas_id !== "" ? (
-                        <>
-                          {brand2.map((options) => (
+    <>
+      <div
+        className="position-fixed top-0 end-0 p-3"
+        style={{ zIndex: "1005" }}
+      >
+        <Toast isOpen={successMsg}>
+          <ToastHeader toggle={toggleSuccessMsg}>
+            <i className="mdi mdi-alert-outline me-2"></i> Upload
+          </ToastHeader>
+          <ToastBody>Upload Smartcard Successfully</ToastBody>
+        </Toast>
+      </div>
+      <Modal
+        isOpen={isOpen}
+        size="xl"
+        role="dialog"
+        autoFocus={true}
+        centered={true}
+        className="exampleModal"
+        tabIndex="-1"
+        toggle={toggleUploadModal}
+      >
+        <ModalHeader toggle={toggleUploadModal} tag="h4">
+          Upload Smartcards
+        </ModalHeader>
+        <ModalBody>
+          <Card>
+            <CardBody>
+              <div className="text-left mb-4 r-0" style={{ marginLeft: "78%" }}>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleDownloadSampleFile}
+                >
+                  Download Sample Upload File
+                </button>
+              </div>
+              {uploadTrigger && uploadTrigger._id && (
+                <div>
+                  <p>Token ID: {uploadTrigger.token}</p>
+                  <p>Fields: [{uploadTrigger.fields.join(", ")}]</p>
+                </div>
+              )}
+              <Form>
+                <Row>
+                  <Col lg={4}>
+                    <div className="mb-3">
+                      <Label className="form-label">CAS Type</Label>
+                      <Input
+                        name="cas_id"
+                        type="select"
+                        placeholder="Select CAS Type"
+                        onChange={(e) => setCas_id(e.target.value)}
+                        value={cas_id}
+                      >
+                        <option value="">Select CAS Type</option>
+                        {stocksccastype.map((castype) => (
+                          <option key={castype.id} value={castype.id}>
+                            {castype.name}
+                          </option>
+                        ))}
+                      </Input>
+                    </div>
+                  </Col>
+                  <Col lg={4}>
+                    <div>
+                      <Label className="form-label">Is Embedded</Label>
+                    </div>
+                    <div>
+                      <Input
+                        name="is_embeded"
+                        type="checkbox"
+                        onChange={(e) => setIs_embeded(e.target.value)}
+                        value={is_embeded}
+                      />
+                    </div>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={4}>
+                    <div className="mb-3">
+                      <Label className="form-label">Smartcard Band</Label>
+                      <Input
+                        name="brand_id"
+                        type="select"
+                        placeholder="Select smartcard brand"
+                        className="form-select"
+                        onChange={(e) => setBrand_id(e.target.value)}
+                        value={brand_id}
+                      >
+                        <option value="">Select smartcard brand</option>
+                        {cas_id !== "" ? (
+                          <>
+                            {brand2.map((options) => (
+                              <option key={options.id} value={options.id}>
+                                {options.name}
+                              </option>
+                            ))}
+                          </>
+                        ) : null}
+                      </Input>
+                    </div>
+                  </Col>
+                </Row>
+                {is_embeded ? (
+                  <Row>
+                    <Col lg={4}>
+                      <div className="mb-3">
+                        <Label className="form-label">STB Band</Label>
+                        <Input
+                          name="stbbrand_id"
+                          type="select"
+                          placeholder="Select state"
+                          className="form-select"
+                          onChange={(e) => setStbbrand_id(e.target.value)}
+                          value={stbbrand_id}
+                        >
+                          <option value="">Select stb brand</option>
+                          {brand1.map((options) => (
                             <option key={options.id} value={options.id}>
                               {options.name}
                             </option>
                           ))}
-                        </>
-                      ) : null}
-                    </Input>
-                    {validation.touched.brand_id &&
-                    validation.errors.brand_id ? (
-                      <FormFeedback type="invalid">
-                        {validation.errors.brand_id}
-                      </FormFeedback>
-                    ) : null}
-                  </div>
-                </Col>
-              </Row>
-              {validation.values.is_embeded ? (
+                        </Input>
+                      </div>
+                    </Col>
+                  </Row>
+                ) : null}
                 <Row>
                   <Col lg={4}>
                     <div className="mb-3">
-                      <Label className="form-label">STB Band</Label>
+                      <Label className="form-label">Purchase Order</Label>
                       <Input
-                        name="stbbrand_id"
+                        name="po_number"
+                        type="text"
+                        placeholder="Enter Purchase Order"
+                        onChange={(e) => setPo_number(e.target.value)}
+                        value={po_number}
+                      />
+                    </div>
+                  </Col>
+                  <Col lg={4}>
+                    <div className="mb-3">
+                      <Label className="form-label">PO Date</Label>
+                      <Input
+                        name="po_date"
+                        type="Date"
+                        placeholder="Select purchase date"
+                        onChange={(e) => setPo_date(e.target.value)}
+                        value={po_date}
+                      />
+                    </div>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={4}>
+                    <div className="mb-3">
+                      <Label className="form-label">Invoice Order</Label>
+                      <Input
+                        name="invoice_no"
+                        type="text"
+                        placeholder="Enter invoice Order"
+                        onChange={(e) => setInvoice_no(e.target.value)}
+                        value={invoice_no}
+                      />
+                    </div>
+                  </Col>
+                  <Col lg={4}>
+                    <div className="mb-3">
+                      <Label className="form-label">Invoice Date</Label>
+                      <Input
+                        name="invoice_date"
+                        type="Date"
+                        placeholder="Select invoice date"
+                        onChange={(e) => setInvoice_date(e.target.value)}
+                        value={invoice_date}
+                      />
+                    </div>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={4}>
+                    <div className="mb-3">
+                      <Label className="form-label">Warehouse</Label>
+                      <Input
+                        name="warehouse_id"
                         type="select"
-                        placeholder="Select state"
+                        placeholder="Select warehouse"
                         className="form-select"
-                        onChange={validation.handleChange}
-                        onBlur={validation.handleBlur}
-                        value={validation.values.stbbrand_id || ""}
-                        invalid={
-                          validation.touched.stbbrand_id &&
-                          validation.errors.stbbrand_id
-                            ? true
-                            : false
-                        }
+                        onChange={(e) => setWarehouse_id(e.target.value)}
+                        value={warehouse_id}
                       >
-                        <option value="">Select stb brand</option>
-                        {brand1.map((options) => (
+                        <option value="">Select warehouse</option>
+                        {stockscwarehouse.map((options) => (
                           <option key={options.id} value={options.id}>
                             {options.name}
                           </option>
                         ))}
                       </Input>
-                      {validation.touched.stbbrand_id &&
-                      validation.errors.stbbrand_id ? (
-                        <FormFeedback type="invalid">
-                          {validation.errors.stbbrand_id}
-                        </FormFeedback>
-                      ) : null}
+                    </div>
+                  </Col>
+                  <Col lg={4}>
+                    <div className="mb-3">
+                      <Label className="form-label">Stock type</Label>
+                      <Input
+                        name="inv_state_id"
+                        type="select"
+                        placeholder="Select Stock Type"
+                        className="form-select"
+                        onChange={(e) => setInv_state_id(e.target.value)}
+                        value={inv_state_id}
+                      >
+                        <option value="">Select Stock Type</option>
+                        {stockscstatetype.map((options) => (
+                          <option key={options.id} value={options.id}>
+                            {options.name}
+                          </option>
+                        ))}
+                      </Input>
                     </div>
                   </Col>
                 </Row>
-              ) : null}
-              <Row>
-                <Col lg={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">Purchase Order</Label>
-                    <Input
-                      name="po_number"
-                      type="text"
-                      placeholder="Enter Purchase Order"
-                      onChange={validation.handleChange}
-                      onBlur={validation.handleBlur}
-                      value={validation.values.po_number || ""}
-                      invalid={
-                        validation.touched.po_number &&
-                        validation.errors.po_number
-                          ? true
-                          : false
-                      }
-                    />
-                    {validation.touched.po_number &&
-                    validation.errors.po_number ? (
-                      <FormFeedback type="invalid">
-                        {validation.errors.po_number}
-                      </FormFeedback>
-                    ) : null}
-                  </div>
-                </Col>
-                <Col lg={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">PO Date</Label>
-                    <Input
-                      name="po_date"
-                      type="Date"
-                      placeholder="Select purchase date"
-                      onChange={validation.handleChange}
-                      onBlur={validation.handleBlur}
-                      value={validation.values.po_date || ""}
-                      invalid={
-                        validation.touched.po_date && validation.errors.po_date
-                          ? true
-                          : false
-                      }
-                    />
-                    {validation.touched.po_date && validation.errors.po_date ? (
-                      <FormFeedback type="invalid">
-                        {validation.errors.po_date}
-                      </FormFeedback>
-                    ) : null}
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col lg={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">Invoice Order</Label>
-                    <Input
-                      name="invoice_no"
-                      type="text"
-                      placeholder="Enter invoice Order"
-                      onChange={validation.handleChange}
-                      onBlur={validation.handleBlur}
-                      value={validation.values.invoice_no || ""}
-                      invalid={
-                        validation.touched.invoice_no &&
-                        validation.errors.invoice_no
-                          ? true
-                          : false
-                      }
-                    />
-                    {validation.touched.invoice_no &&
-                    validation.errors.invoice_no ? (
-                      <FormFeedback type="invalid">
-                        {validation.errors.invoice_no}
-                      </FormFeedback>
-                    ) : null}
-                  </div>
-                </Col>
-                <Col lg={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">Invoice Date</Label>
-                    <Input
-                      name="invoice_date"
-                      type="Date"
-                      placeholder="Select invoice date"
-                      onChange={validation.handleChange}
-                      onBlur={validation.handleBlur}
-                      value={validation.values.invoice_date || ""}
-                      invalid={
-                        validation.touched.invoice_date &&
-                        validation.errors.invoice_date
-                          ? true
-                          : false
-                      }
-                    />
-                    {validation.touched.invoice_date &&
-                    validation.errors.invoice_date ? (
-                      <FormFeedback type="invalid">
-                        {validation.errors.invoice_date}
-                      </FormFeedback>
-                    ) : null}
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col lg={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">Warehouse</Label>
-                    <Input
-                      name="warehouse_id"
-                      type="select"
-                      placeholder="Select warehouse"
-                      className="form-select"
-                      onChange={validation.handleChange}
-                      onBlur={validation.handleBlur}
-                      value={validation.values.warehouse_id || ""}
-                      invalid={
-                        validation.touched.warehouse_id &&
-                        validation.errors.warehouse_id
-                          ? true
-                          : false
-                      }
+                <Row>
+                  <Col lg={4}>
+                    <div className="mb-3">
+                      <Label className="form-label">Description</Label>
+                      <Input
+                        name="description"
+                        type="textarea"
+                        placeholder="Enter description"
+                        rows="3"
+                        onChange={(e) => setDescription(e.target.value)}
+                        value={description}
+                      />
+                    </div>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={4}>
+                    <div className="mb-3">
+                      <Label className="form-label">Inentory state</Label>
+                      <Input
+                        name="state"
+                        type="select"
+                        placeholder="Select inventory state"
+                        className="form-select"
+                        onChange={(e) => setState(e.target.value)}
+                        value={state}
+                      >
+                        <option value="">Select inventory state</option>
+                        {stockscinventorystate.map((options) => (
+                          <option key={options.id} value={options.id}>
+                            {options.name}
+                          </option>
+                        ))}
+                      </Input>
+                    </div>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={4}>
+                    <CardSubtitle className="mb-3">
+                      {" "}
+                      Select File to Upload
+                    </CardSubtitle>
+                    <Dropzone
+                      maxFiles={1}
+                      onDrop={(acceptedFiles) => {
+                        handleAcceptedFiles(acceptedFiles);
+                      }}
                     >
-                      <option value="">Select warehouse</option>
-                      {stockscwarehouse.map((options) => (
-                        <option key={options.id} value={options.id}>
-                          {options.name}
-                        </option>
-                      ))}
-                    </Input>
-                    {validation.touched.warehouse_id &&
-                    validation.errors.warehouse_id ? (
-                      <FormFeedback type="invalid">
-                        {validation.errors.warehouse_id}
-                      </FormFeedback>
-                    ) : null}
-                  </div>
-                </Col>
-                <Col lg={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">Stock type</Label>
-                    <Input
-                      name="inv_state_id"
-                      type="select"
-                      placeholder="Select Stock Type"
-                      className="form-select"
-                      onChange={validation.handleChange}
-                      onBlur={validation.handleBlur}
-                      value={validation.values.inv_state_id || ""}
-                      invalid={
-                        validation.touched.inv_state_id &&
-                        validation.errors.inv_state_id
-                          ? true
-                          : false
-                      }
-                    >
-                      <option value="">Select Stock Type</option>
-                      {stockscstatetype.map((options) => (
-                        <option key={options.id} value={options.id}>
-                          {options.name}
-                        </option>
-                      ))}
-                    </Input>
-                    {validation.touched.inv_state_id &&
-                    validation.errors.inv_state_id ? (
-                      <FormFeedback type="invalid">
-                        {validation.errors.inv_state_id}
-                      </FormFeedback>
-                    ) : null}
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col lg={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">Description</Label>
-                    <Input
-                      name="description"
-                      type="textarea"
-                      placeholder="Enter description"
-                      rows="3"
-                      onChange={validation.handleChange}
-                      onBlur={validation.handleBlur}
-                      value={validation.values.description || ""}
-                      invalid={
-                        validation.touched.description &&
-                        validation.errors.description
-                          ? true
-                          : false
-                      }
-                    />
-                    {validation.touched.description &&
-                    validation.errors.description ? (
-                      <FormFeedback type="invalid">
-                        {validation.errors.description}
-                      </FormFeedback>
-                    ) : null}
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col lg={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">Inentory state</Label>
-                    <Input
-                      name="state"
-                      type="select"
-                      placeholder="Select inventory state"
-                      className="form-select"
-                      onChange={validation.handleChange}
-                      onBlur={validation.handleBlur}
-                      value={validation.values.state || ""}
-                      invalid={
-                        validation.touched.state && validation.errors.state
-                          ? true
-                          : false
-                      }
-                    >
-                      <option value="">Select inventory state</option>
-                      {stockscinventorystate.map((options) => (
-                        <option key={options.id} value={options.id}>
-                          {options.name}
-                        </option>
-                      ))}
-                    </Input>
-                    {validation.touched.state && validation.errors.state ? (
-                      <FormFeedback type="invalid">
-                        {validation.errors.state}
-                      </FormFeedback>
-                    ) : null}
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col lg={4}>
-                  <CardSubtitle className="mb-3">
-                    {" "}
-                    Select File to Upload
-                  </CardSubtitle>
-                  <Dropzone
-                    onDrop={(acceptedFiles) => {
-                      setSelectedFiles(acceptedFiles);
-                    }}
-                  >
-                    {({ getRootProps, getInputProps }) => (
-                      <div className="dropzone">
-                        <div
-                          className="dz-message needsclick mt-2"
-                          {...getRootProps()}
-                        >
-                          <input {...getInputProps()} />
-                          <div className="mb-3">
-                            <i className="display-4 text-muted bx bxs-cloud-upload" />
+                      {({ getRootProps, getInputProps }) => (
+                        <div className="dropzone">
+                          <div
+                            className="dz-message needsclick mt-2"
+                            {...getRootProps()}
+                          >
+                            <input {...getInputProps()} />
+                            <div className="mb-3">
+                              <i className="display-4 text-muted bx bxs-cloud-upload" />
+                            </div>
+                            <h4>Drop files here or click to upload.</h4>
                           </div>
-                          <h4>Drop files here or click to upload.</h4>
                         </div>
-                      </div>
-                    )}
-                  </Dropzone>
-                  <div className="dropzone-previews mt-3" id="file-previews">
-                    {selectedFiles.map((f, i) => {
-                      return (
-                        <Card
-                          className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete"
-                          key={i + "-file"}
-                        >
-                          <div className="p-2">
-                            <Row className="align-items-center">
-                              <Col className="col-auto">
-                                <img
-                                  data-dz-thumbnail=""
-                                  height="80"
-                                  className="avatar-sm rounded bg-light"
-                                  alt={f.name}
-                                  src={f.preview}
-                                />
-                              </Col>
-                              <Col>
-                                <Link
-                                  to="#"
-                                  className="text-muted font-weight-bold"
-                                >
-                                  {f.name}
-                                </Link>
-                                <p className="mb-0">
-                                  <strong>{f.formattedSize}</strong>
-                                </p>
-                              </Col>
-                            </Row>
-                          </div>
-                        </Card>
-                      );
-                    })}
-                  </div>
-                </Col>
-              </Row>
-            </Form> */}
+                      )}
+                    </Dropzone>
+                    <div className="dropzone-previews mt-3" id="file-previews">
+                      {selectedFiles.map((f, i) => {
+                        return (
+                          <Card
+                            className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete"
+                            key={i + "-file"}
+                          >
+                            <div className="p-2">
+                              <Row className="align-items-center">
+                                <Col className="col-auto">
+                                  <img
+                                    data-dz-thumbnail=""
+                                    height="80"
+                                    className="avatar-sm rounded bg-light"
+                                    alt={f.name}
+                                    src={f.preview}
+                                  />
+                                </Col>
+                                <Col>
+                                  <Link
+                                    to="#"
+                                    className="text-muted font-weight-bold"
+                                  >
+                                    {f.name}
+                                  </Link>
+                                  <p className="mb-0">
+                                    <strong>{f.formattedSize}</strong>
+                                  </p>
+                                </Col>
+                              </Row>
+                            </div>
+                          </Card>
+                        );
+                      })}
+                    </div>
+                  </Col>
+                </Row>
+              </Form>
 
-            <div className="text-center mt-4 ">
-              <div
-                style={{
-                  display: "flex",
-                  gap: 5,
-                  textAlign: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <button
-                  type="button"
-                  className="btn btn-primary mr-2 "
-                  onClick={handleUploadFile}
+              <div className="text-center mt-4 ">
+                <div
+                  style={{
+                    display: "flex",
+                    gap: 5,
+                    textAlign: "center",
+                    justifyContent: "center",
+                  }}
                 >
-                  Upload File
-                </button>
-                <button type="button" className="btn btn-primary ml-2 ">
-                  Reset
-                </button>
-                <button type="button" className="btn btn-primary ">
-                  Cancel
-                </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary mr-2 "
+                    onClick={handleUploadFile}
+                  >
+                    Upload File
+                  </button>
+                  <button type="button" className="btn btn-primary ml-2 ">
+                    Reset
+                  </button>
+                  <button type="button" className="btn btn-primary ">
+                    Cancel
+                  </button>
+                </div>
               </div>
-            </div>
-          </CardBody>
-        </Card>
-      </ModalBody>
-    </Modal>
+            </CardBody>
+          </Card>
+        </ModalBody>
+      </Modal>
+    </>
   );
 };
 
