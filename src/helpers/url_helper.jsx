@@ -699,6 +699,14 @@ export const uploadBulkUpdateStbSubmit = (token) => {
   return `/stb-update/upload-q/${token}`;
 };
 
+export const DOWNLOAD_SAMPLE_PAIRING = "/pairing/upload-q?vr=web1.0";
+export const fileUploadPairing = (token) => {
+  return `/pairing/upload-q/${token}?vr=web1.0`;
+};
+export const uploadBulkPairingSubmit = (token) => {
+  return `/pairing/upload-q/${token}`;
+};
+
 export const DOWNLOAD_SAMPLE_USERS = "/user-bulk/upload-q?vr=web1.0";
 export const updateUserUpload = (token) => {
   return `/user-bulk/upload-q/${token}?vr=web1.0`;
@@ -788,7 +796,8 @@ export const uploadDistrictSubmit = (token) => {
   return `/administrative-division/upload-q/${token}`;
 };
 
-export const DOWNLOAD_SAMPLE_CITY = "/administrative-division/upload-q?vr=web1.0";
+export const DOWNLOAD_SAMPLE_CITY =
+  "/administrative-division/upload-q?vr=web1.0";
 
 export const fileUploadCity = (token) => {
   return `/administrative-division/upload-q/${token}?vr=web1.0`;

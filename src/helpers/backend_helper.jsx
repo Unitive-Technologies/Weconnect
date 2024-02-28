@@ -1039,6 +1039,21 @@ export const bulkUpdateStbSubmit = async (initiatedToken, formData) => {
   );
 };
 
+export const downloadPairingUploadTemplate = async (data) => {
+  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_PAIRING, data);
+};
+
+export const updatePairingUploadByToken = async (token, data) => {
+  return put(url.fileUploadPairing(token), data);
+};
+
+export const uploadPairingSubmit = async (initiatedToken, formData) => {
+  return await postCompleteResponse(
+    url.uploadBulkPairingSubmit(initiatedToken),
+    formData
+  );
+};
+
 export const updateInventoryStockStb = (id, stockstb) =>
   put(url.UPDATE_INVENTORYSTOCK_STB(id), stockstb);
 export const addInventoryStockSmartcard = (stocksmartcard) =>
