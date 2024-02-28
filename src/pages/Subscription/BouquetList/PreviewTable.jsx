@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
-import { Card, CardBody, Input } from "reactstrap";
+import { Card, CardBody, Input, Table } from "reactstrap";
 import { Link } from "react-router-dom";
 import { getRechargePeriod as onGetRechargePeriod } from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,17 +10,17 @@ import { createSelector } from "reselect";
 const PreviewTable = (props) => {
   const { rechargeperiod } = props;
   const dispatch = useDispatch();
-  // const selectBouquetState = (state) => state.bouquet;
-  // const BouquetProperties = createSelector(selectBouquetState, (bouquet) => ({
-  //   rechargeperiod: bouquet.rechargeperiod,
-  // }));
+  const selectBouquetState = (state) => state.bouquet;
+  const BouquetProperties = createSelector(selectBouquetState, (bouquet) => ({
+    periodArray: bouquet.rechargeperiod,
+  }));
 
-  // const { rechargeperiod } = useSelector(BouquetProperties);
-  // useEffect(() => {
-  //   if (rechargeperiod && !rechargeperiod.length) {
-  //     dispatch(onGetRechargePeriod());
-  //   }
-  // }, [dispatch, rechargeperiod]);
+  const { periodArray } = useSelector(BouquetProperties);
+  useEffect(() => {
+    if (rechargeperiod && !rechargeperiod.length) {
+      dispatch(onGetRechargePeriod());
+    }
+  }, [dispatch, rechargeperiod]);
 
   const columns = useMemo(
     () => [
@@ -110,7 +110,7 @@ const PreviewTable = (props) => {
     <Card>
       <CardBody>
         {console.log("recharge period: ", JSON.stringify(rechargeperiod))}
-        <TableContainer
+        {/* <TableContainer
           isPagination={true}
           columns={columns}
           data={rechargeperiod}
@@ -120,15 +120,71 @@ const PreviewTable = (props) => {
           tableClass="table-bordered align-middle nowrap mt-2"
           paginationDiv="col-sm-12 col-md-7"
           pagination="pagination justify-content-end pagination-rounded"
-        />
+        /> */}
+        <Table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Period</th>
+              <th>Pay Channel Rate**</th>
+              <th>Tax</th>
+              <th>Total AMT</th>
+              <th>Refundable</th>
+              <th>Free Days</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {console.log("period arrayyyyyyy: ", JSON.stringify(periodArray))}
+            {periodArray &&
+              periodArray.map((row, i) => (
+                <tr key={i}>
+                  <td>{i + 1}</td>
+                  {/* <td>
+            <input
+              type="checkbox"
+              onChange={() => {
+                debugger;
+                console.log("Clicked the checkbox");
+                handleCheckboxChange(row.id);
+              }}
+              checked={isRowChecked(row.id)}
+            />
+          </td> */}
+                  {console.log("RRRRRRRRRRRRRRRRRRow: ", JSON.stringify(row))}
+                  <td>{row && row.name}</td>
+                  <td>
+                    {" "}
+                    <Input type="number" />
+                  </td>
+                  <td>
+                    {" "}
+                    <Input type="number" />
+                  </td>
+                  <td>
+                    {" "}
+                    <Input type="number" />
+                  </td>
+                  <td>
+                    <Input type="checkbox" defaultChecked />
+                  </td>
+                  <td>
+                    {" "}
+                    <Input type="number" />
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </Table>
       </CardBody>
     </Card>
   );
 };
 
 PreviewTable.propTypes = {
-  toggle: PropTypes.func,
-  isOpen: PropTypes.bool,
+  // toggle: PropTypes.func,
+  // isOpen: PropTypes.bool,
+  rechargeperiod: PropTypes.array,
 };
 
 export default PreviewTable;
