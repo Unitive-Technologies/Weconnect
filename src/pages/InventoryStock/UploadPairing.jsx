@@ -162,6 +162,12 @@ const UploadParing = (props) => {
                   Download Sample Upload File
                 </button>
               </div>
+              {uploadTrigger && uploadTrigger._id && (
+                <div>
+                  <p>Token ID: {uploadTrigger.token}</p>
+                  <p>Fields: [{uploadTrigger.fields.join(", ")}]</p>
+                </div>
+              )}
               <Form>
                 <Row>
                   <Col lg={4}>
