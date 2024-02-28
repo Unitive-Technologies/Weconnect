@@ -371,8 +371,7 @@ const ViewNcf = (props) => {
                     </FormFeedback>
                   ) : null}
                 </div>
-              </Col>
-              <Col sm="3">
+
                 <div className="mb-3">
                   <Label className="form-label">
                     NCF Type<span style={{ color: "red" }}>*</span>
