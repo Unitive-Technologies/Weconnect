@@ -55,12 +55,12 @@ const UploadDistributorModal = (props) => {
   }
 
   const distributorSavedTemplatePayload = {
-    meta_data: { type: 2, status: parseInt(status), reg_phase: parseInt(distributorPhase) },
+    meta_data: { type: 2, status: parseInt(status), parentRO: parseInt(distributorPhase) },
     url: "",
   };
 
   const distributorDownloadTemplatePayload = {
-    meta_data: { type: 2, status: parseInt(status), reg_phase: parseInt(distributorsPhase) },
+    meta_data: { type: 2, status: parseInt(status), parentRO: parseInt(distributorsPhase) },
     url: "",
   };
 
@@ -174,7 +174,7 @@ const UploadDistributorModal = (props) => {
               <div className="mb-3">
                 <Label className="form-label">Parent Regional Office</Label>
                 <Input
-                  name="reg_phase"
+                  name="parentRO"
                   type="select"
                   placeholder="Select parent regional office"
                   className="form-select"
@@ -183,9 +183,9 @@ const UploadDistributorModal = (props) => {
                 >
                   <option value="">Select </option>
                   {distributorsPhase &&
-                    distributorsPhase.map((reg_phase) => (
-                      <option key={reg_phase.id} value={reg_phase.id}>
-                        {reg_phase.name}
+                    distributorsPhase.map((parentRO) => (
+                      <option key={parentRO.id} value={parentRO.id}>
+                        {parentRO.name}
                       </option>
                     ))}
                 </Input>
