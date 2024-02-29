@@ -197,7 +197,7 @@ const UploadAllottedPairing = (props) => {
           <ToastHeader toggle={toggleSuccessMsg}>
             <i className="mdi mdi-alert-outline me-2"></i> Upload
           </ToastHeader>
-          <ToastBody>Upload STB Successfully</ToastBody>
+          <ToastBody>Upload Pairing Successfully</ToastBody>
         </Toast>
       </div>
       <Modal
