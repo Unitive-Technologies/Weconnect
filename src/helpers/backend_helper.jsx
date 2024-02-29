@@ -610,6 +610,21 @@ export const uploadSublocationSubmit = async (initiatedToken, formData) => {
   );
 };
 
+export const downloadDistributorUploadTemplate = async (data) => {
+  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_DISTRIBUTOR, data);
+};
+
+export const updateDistributorUploadByToken = async (token, data) => {
+  return put(url.fileUploadDistributor(token), data);
+};
+
+export const uploadDistributorSubmit = async (initiatedToken, formData) => {
+  return await postCompleteResponse(
+    url.uploadDistributorSubmit(initiatedToken),
+    formData
+  );
+};
+
 // export const getDistrict = () => get(url.GET_DISTRICT);
 export const addDistrict = (district) => post(url.ADD_DISTRICT, district);
 export const getDistrictStateList = () => get(url.GET_DISTRICT_STATELIST);

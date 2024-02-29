@@ -835,3 +835,14 @@ export const fileUploadSublocation = (token) => {
 export const uploadSublocationSubmit = (token) => {
   return `/sublocation/upload-q/${token}`;
 };
+
+export const DOWNLOAD_SAMPLE_DISTRIBUTOR =
+  "/operator/upload-q?vr=web1.0";
+
+export const fileUploadDistributor = (token) => {
+  return `/operator/upload-q/${token}?vr=web1.0`;
+};
+
+export const uploadDistributorSubmit = (token) => {
+  return `/operator/upload-q/${token}`;
+};

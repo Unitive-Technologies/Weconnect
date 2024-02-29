@@ -336,7 +336,7 @@ const DistributorList = (props) => {
     console.log("showDistributor after: " + typeof showDistributor);
   };
 
-  const handleUploadDistributor = () => {
+  const toggleUploadDistributor = () => {
     setShowUploadDistributor(!showUploadDistributor);
   };
 
@@ -403,7 +403,9 @@ const DistributorList = (props) => {
       {showUploadDistributor && (
         <UploadDistributorModal
           isOpen={showUploadDistributor}
-          handleUploadDistributor={handleUploadDistributor}
+          toggleUploadDistributor={toggleUploadDistributor}
+          distributorsPhase={distributorsPhase}
+          distributorsStatus={distributorsStatus}
         />
       )}
       {showSetting && (
