@@ -12,6 +12,7 @@ import FaultyPairingBlacklist from "./FaultyPairingBlacklist";
 import AllottedPairing from "./AllotPairing";
 import DeallotPairing from "./DeAllotPairing";
 import UploadParing from "./UploadPairing";
+import UploadAllottedPairing from "./UploadAllottedPairing";
 
 const StockPairing = (props) => {
   const {
@@ -58,6 +59,8 @@ const StockPairing = (props) => {
     setSelectedAllottedPairings,
     showUploadPairing,
     setShowUploadPairing,
+    showUploadAllottedPairing,
+    setShowUploadAllottedPairing,
   } = props;
 
   if (
@@ -110,6 +113,10 @@ const StockPairing = (props) => {
 
   const handleShowUploadPairing = () => {
     setShowUploadPairing(!showUploadPairing);
+  };
+
+  const handleShowUploadAllottedPairing = () => {
+    setShowUploadAllottedPairing(!showUploadAllottedPairing);
   };
 
   const getFilteredHandleRowClicks = (Row) => {
@@ -534,6 +541,12 @@ const StockPairing = (props) => {
         isOpen={showUploadPairing}
         toggle={handleShowUploadPairing}
       />
+      <UploadAllottedPairing
+        isOpen={showUploadAllottedPairing}
+        toggleUploadModal={handleShowUploadAllottedPairing}
+        allottedusertype={allottedusertype}
+        allottedoperatorlist={allottedoperatorlist}
+      />
       <Row>
         <Col lg="12">
           <Card>
@@ -607,6 +620,8 @@ StockPairing.propTypes = {
   setSelectedAllottedPairings: PropTypes.func,
   showUploadPairing: PropTypes.bool,
   setShowUploadPairing: PropTypes.func,
+  showUploadAllottedPairing: PropTypes.bool,
+  setShowUploadAllottedPairing: PropTypes.func,
 };
 
 export default StockPairing;
