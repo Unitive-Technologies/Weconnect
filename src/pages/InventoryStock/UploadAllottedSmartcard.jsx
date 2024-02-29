@@ -22,11 +22,11 @@ import Dropzone from "react-dropzone";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { addInventoryStockSmartcard as onAddInventoryStockSmartcard } from "/src/store/inventorystock/actions";
+import { addInventoryAllottedSmartcard as onAddInventoryAllottedSmartcard } from "/src/store/inventoryallotted/actions";
 import {
-  downloadSmartcardUploadTemplate,
-  updateSmartcardUploadByToken,
-  uploadSmartcardSubmit,
+  downloadSmartcardAllotmentUploadTemplate,
+  updateSmartcardAllotmentUploadByToken,
+  uploadSmartcardAllotmentSubmit,
 } from "../../helpers/backend_helper";
 
 const UploadAllottedSmartcard = (props) => {
@@ -82,7 +82,7 @@ const UploadAllottedSmartcard = (props) => {
 
   function handleAcceptedFiles(files) {
     setSelectedFiles(files);
-    updateSmartcardUploadByToken(
+    updateSmartcardAllotmentUploadByToken(
       uploadTrigger.token,
       smartcardBulkUpdateSavedTemplatePayload
     )
@@ -96,23 +96,36 @@ const UploadAllottedSmartcard = (props) => {
       });
   }
 
+  let id = {};
+  if (usertype === "1") {
+    id = branch_id;
+  } else if (usertype === "2") {
+    id = distributor_id;
+  } else if (usertype === "3") {
+    id = operator;
+  }
+
   const smartcardBulkUpdateDownloadTemplatePayload = {
     meta_data: {
-      type: null,
+      type: parseInt(usertype),
+      operator_id: id,
     },
     url: "",
   };
 
   const smartcardBulkUpdateSavedTemplatePayload = {
     meta_data: {
-      type: null,
+      type: parseInt(usertype),
+      operator_id: id,
     },
     url: "",
   };
 
   const handleDownloadSampleFile = () => {
     // Send a POST request to the server, from the json request convert data.fields array of strings as headers in a csv file
-    downloadSmartcardUploadTemplate(smartcardBulkUpdateDownloadTemplatePayload)
+    downloadSmartcardAllotmentUploadTemplate(
+      smartcardBulkUpdateDownloadTemplatePayload
+    )
       .then((res) => {
         // debugger;
         const fileName = res.data.data.type;
@@ -153,7 +166,7 @@ const UploadAllottedSmartcard = (props) => {
     const formData = new FormData();
     formData.append("qFile", selectedFiles[0]); // appending file
 
-    uploadSmartcardSubmit(uploadTrigger.token, formData)
+    uploadSmartcardAllotmentSubmit(uploadTrigger.token, formData)
       .then((res) => {
         toggleSuccessMsg();
         console.log(
@@ -162,7 +175,7 @@ const UploadAllottedSmartcard = (props) => {
         setUploadTrigger({});
         setSelectedFiles([]);
         console.log("cleared the selected files and upload trigger");
-        dispatch(onAddInventoryStockSmartcard(res.data.data));
+        dispatch(onAddInventoryAllottedSmartcard(res.data.data));
         toggleUploadModal();
       })
       .catch((error) => {
@@ -245,7 +258,7 @@ const UploadAllottedSmartcard = (props) => {
                           <span style={{ color: "red" }}>*</span>
                         </Label>
                         <Input
-                          name="brand_id"
+                          name="branch_id"
                           type="select"
                           placeholder="Select Reginal office"
                           onChange={(e) => setBranch_id(e.target.value)}
@@ -273,7 +286,7 @@ const UploadAllottedSmartcard = (props) => {
                             <span style={{ color: "red" }}>*</span>
                           </Label>
                           <Input
-                            name="brand_id"
+                            name="branch_id"
                             type="select"
                             placeholder="Select Reginal office"
                             onChange={(e) => setBranch_id(e.target.value)}
@@ -331,11 +344,11 @@ const UploadAllottedSmartcard = (props) => {
                             <span style={{ color: "red" }}>*</span>
                           </Label>
                           <Input
-                            name="brand_id"
+                            name="branch_id"
                             type="select"
                             placeholder="Select Reginal office"
                             onChange={(e) => setBranch_id(e.target.value)}
-                            value={brand_id}
+                            value={branch_id}
                           >
                             <option value="">Select Reginal office</option>
                             {allottedoperatorlist.map((operatorlist) => (
