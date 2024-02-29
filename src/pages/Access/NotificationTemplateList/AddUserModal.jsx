@@ -33,7 +33,6 @@ const AddUserModal = (props) => {
   const { isOpen, onClose, users, setTargetUsers } = props;
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
 
-  const dispatch = useDispatch();
   const [tableList, setTableList] = useState([]);
 
   const [selectedUsers, setSelectedUsers] = useState([]);

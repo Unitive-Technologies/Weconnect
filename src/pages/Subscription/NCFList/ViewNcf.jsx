@@ -39,10 +39,6 @@ const ViewNcf = (props) => {
 
   const [additionalRates, setAdditionalRates] = useState([]);
   console.log("additionalRates in view :" + JSON.stringify(additionalRates));
-  const editToggle = () => {
-    setShowEditNcf(false);
-    toggleViewModal();
-  };
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -103,6 +99,7 @@ const ViewNcf = (props) => {
       validation.setValues(validation.initialValues);
     },
   });
+
   const handleCancel = () => {
     setShowEditNcf(false);
     toggleViewModal();
@@ -576,7 +573,7 @@ const ViewNcf = (props) => {
                                     <td>
                                       <Link
                                         className="text-dark disabled"
-                                        onClick={() => deleteMultipleNcf(index)}
+                                        // onClick={() => deleteMultipleNcf(index)}
                                       >
                                         <i
                                           className="mdi mdi-delete font-size-18"

@@ -1,13 +1,16 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
 import TableContainer from "../../../components/Common/TableContainer";
 import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 import AddOperators from "./AddOperator";
 
 const Operators = (props) => {
-  const { id } = props;
+  const { id: selectedRowId } = props;
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [showAddOperator, setShowAddOperator] = useState(false);
+  const [addOperatorsData, setAddOperatorsData] = useState([]);
 
   const toggleAddOperator = () => {
     setShowAddOperator(!showAddOperator);
@@ -59,9 +62,11 @@ const Operators = (props) => {
                 }}
                 className="font-size-14 mb-1"
               >
-                <Link className="text-dark" to="#">
-                  {"Name"}
-                </Link>
+                {
+                  <Link className="text-dark" to="#">
+                    {"Name"}
+                  </Link>
+                }
               </h5>
             </>
           );
@@ -152,20 +157,47 @@ const Operators = (props) => {
     ];
   };
 
-  const operators = [];
+  const getAddOperatorsData = async (e) => {
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+      const id = parseInt(selectedRowId);
+
+      const response = await axios.get(
+        `${API_URL}/operator/list?fields=id,name,code&expand=type_lbl,status_lbl,branch_lbl,distributor_lbl&notfilter[type]=0&filter[type]=3&notfilter[ncf_id]=${id}&page=1&per-page=500&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      console.log("response :" + JSON.stringify(response));
+      setAddOperatorsData(response.data.data);
+    } catch (error) {
+      console.error("Error fetching addChannels data:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedRowId) {
+      getAddOperatorsData();
+    }
+  }, [selectedRowId]);
   return (
     <React.Fragment>
-      <AddOperators
-        isOpen={showAddOperator}
-        toggle={toggleAddOperator}
-        id={id}
-      />
+      {showAddOperator && (
+        <AddOperators
+          isOpen={showAddOperator}
+          toggle={toggleAddOperator}
+          id={selectedRowId}
+          data={addOperatorsData}
+        />
+      )}
       <Card>
         <CardBody>
           <TableContainer
             isPagination={true}
             columns={columns}
-            data={operators}
+            data={addOperatorsData}
             isShowTableActionButtons={true}
             isShowingPageLength={true}
             tableActions={getTableActions()}
