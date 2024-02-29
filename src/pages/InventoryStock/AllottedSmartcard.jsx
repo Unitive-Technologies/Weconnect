@@ -46,23 +46,19 @@ function AllottedSmrtcard(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("Selected branch id: ", branch_id);
     getResponse(
       `${baseUrl}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=${parseInt(
         branch_id
       )}&filter[type]=2&vr=web1.0`
     ).then((response) => {
-      console.log("distributor response data: ", response.data);
       setAllotteddistributor(response.data.data);
     });
   }, [branch_id]);
 
   useEffect(() => {
-    console.log("Selected distributor id: ", distributor_id);
     getResponse(
       `${baseUrl}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=${branch_id}&filter[distributor_id]=${distributor_id}&filter[type]=3&vr=web1.0`
     ).then((response) => {
-      // console.log("lco response data: ", response.data.data);
       setAllottedlco(response.data.data);
     });
   }, [distributor_id]);

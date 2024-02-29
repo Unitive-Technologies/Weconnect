@@ -724,6 +724,15 @@ export const uploadBulkStbAllotmentSubmit = (token) => {
   return `/stb-allotment/upload-q/${token}`;
 };
 
+export const DOWNLOAD_SAMPLE_PAIRING_ALLOTMENT =
+  "pairing-allotment/upload-q?vr=web1.0";
+export const fileUploadPairingAllotment = (token) => {
+  return `pairing-allotment/upload-q/${token}?vr=web1.0`;
+};
+export const uploadBulkPairingAllotmentSubmit = (token) => {
+  return `pairing-allotment/upload-q/${token}`;
+};
+
 export const DOWNLOAD_SAMPLE_USERS = "/user-bulk/upload-q?vr=web1.0";
 export const updateUserUpload = (token) => {
   return `/user-bulk/upload-q/${token}?vr=web1.0`;

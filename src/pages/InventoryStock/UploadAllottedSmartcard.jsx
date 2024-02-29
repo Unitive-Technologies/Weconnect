@@ -20,7 +20,10 @@ import {
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import { useDispatch } from "react-redux";
-import { allotSmartcard as onAllotSmartcard } from "/src/store/inventoryallotted/actions";
+import {
+  allotSmartcard as onAllotSmartcard,
+  getInventoryAllottedSmartcard as onGetInventoryAllottedSmartcard,
+} from "/src/store/inventoryallotted/actions";
 import {
   downloadSmartcardAllotmentUploadTemplate,
   updateSmartcardAllotmentUploadByToken,
@@ -46,23 +49,19 @@ const UploadAllottedSmartcard = (props) => {
   const baseUrl = "https://sms.unitch.in/api/index.php/v1";
 
   useEffect(() => {
-    console.log("Selected branch id: ", branch_id);
     getResponse(
       `${baseUrl}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=${parseInt(
         branch_id
       )}&filter[type]=2&vr=web1.0`
     ).then((response) => {
-      console.log("distributor response data: ", response.data);
       setAllotteddistributor(response.data.data);
     });
   }, [branch_id]);
 
   useEffect(() => {
-    console.log("Selected distributor id: ", distributor_id);
     getResponse(
       `${baseUrl}/operator/list?fields=id,name,type,mso_id,branch_id,distributor_id&per-page=100&filter[branch_id]=${branch_id}&filter[distributor_id]=${distributor_id}&filter[type]=3&vr=web1.0`
     ).then((response) => {
-      // console.log("lco response data: ", response.data.data);
       setAllottedlco(response.data.data);
     });
   }, [distributor_id]);
@@ -175,7 +174,13 @@ const UploadAllottedSmartcard = (props) => {
         setSelectedFiles([]);
         console.log("cleared the selected files and upload trigger");
         dispatch(onAllotSmartcard(res.data.data));
+        dispatch(onGetInventoryAllottedSmartcard());
         toggleUploadModal();
+        setBranch_id("");
+        setDistributor_id("");
+        setOperator("");
+        setAllotteddistributor([]);
+        setAllottedlco([]);
       })
       .catch((error) => {
         console.log("error in upload:" + error);
