@@ -716,6 +716,15 @@ export const uploadBulkSmartcardAllotmentSubmit = (token) => {
   return `/smartcard-allotment/upload-q/${token}`;
 };
 
+export const DOWNLOAD_SAMPLE_STB_ALLOTMENT =
+  "/stb-allotment/upload-q?vr=web1.0";
+export const fileUploadStbAllotment = (token) => {
+  return `/stb-allotment/upload-q/${token}?vr=web1.0`;
+};
+export const uploadBulkStbAllotmentSubmit = (token) => {
+  return `/stb-allotment/upload-q/${token}`;
+};
+
 export const DOWNLOAD_SAMPLE_USERS = "/user-bulk/upload-q?vr=web1.0";
 export const updateUserUpload = (token) => {
   return `/user-bulk/upload-q/${token}?vr=web1.0`;
@@ -836,8 +845,7 @@ export const uploadSublocationSubmit = (token) => {
   return `/sublocation/upload-q/${token}`;
 };
 
-export const DOWNLOAD_SAMPLE_DISTRIBUTOR =
-  "/operator/upload-q?vr=web1.0";
+export const DOWNLOAD_SAMPLE_DISTRIBUTOR = "/operator/upload-q?vr=web1.0";
 
 export const fileUploadDistributor = (token) => {
   return `/operator/upload-q/${token}?vr=web1.0`;

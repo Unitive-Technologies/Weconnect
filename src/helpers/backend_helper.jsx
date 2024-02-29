@@ -1090,6 +1090,21 @@ export const uploadSmartcardAllotmentSubmit = async (
   );
 };
 
+export const downloadStbAllotmentUploadTemplate = async (data) => {
+  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_STB_ALLOTMENT, data);
+};
+
+export const updateStbAllotmentUploadByToken = async (token, data) => {
+  return put(url.fileUploadStbAllotment(token), data);
+};
+
+export const uploadStbAllotmentSubmit = async (initiatedToken, formData) => {
+  return await postCompleteResponse(
+    url.uploadBulkStbAllotmentSubmit(initiatedToken),
+    formData
+  );
+};
+
 export const updateInventoryStockStb = (id, stockstb) =>
   put(url.UPDATE_INVENTORYSTOCK_STB(id), stockstb);
 export const addInventoryStockSmartcard = (stocksmartcard) =>
