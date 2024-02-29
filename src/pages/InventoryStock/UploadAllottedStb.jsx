@@ -20,15 +20,15 @@ import {
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import { useDispatch } from "react-redux";
-import { allotSmartcard as onAllotSmartcard } from "/src/store/inventoryallotted/actions";
+import { allotStb as onAllotStb } from "/src/store/inventoryallotted/actions";
 import {
-  downloadSmartcardAllotmentUploadTemplate,
-  updateSmartcardAllotmentUploadByToken,
-  uploadSmartcardAllotmentSubmit,
+  downloadStbAllotmentUploadTemplate,
+  updateStbAllotmentUploadByToken,
+  uploadStbAllotmentSubmit,
 } from "../../helpers/backend_helper";
 import { getResponse } from "../../helpers/api_helper";
 
-const UploadAllottedSmartcard = (props) => {
+const UploadAllottedStb = (props) => {
   const { isOpen, toggleUploadModal, allottedusertype, allottedoperatorlist } =
     props;
   const dispatch = useDispatch();
@@ -81,9 +81,9 @@ const UploadAllottedSmartcard = (props) => {
 
   function handleAcceptedFiles(files) {
     setSelectedFiles(files);
-    updateSmartcardAllotmentUploadByToken(
+    updateStbAllotmentUploadByToken(
       uploadTrigger.token,
-      smartcardBulkUpdateSavedTemplatePayload
+      uploadAllottedStbSavedTemplatePayload
     )
       .then((res) => {
         console.log(
@@ -104,7 +104,7 @@ const UploadAllottedSmartcard = (props) => {
     id = operator;
   }
 
-  const smartcardBulkUpdateDownloadTemplatePayload = {
+  const uploadAllottedStbDownloadTemplatePayload = {
     meta_data: {
       type: parseInt(usertype),
       operator_id: id,
@@ -112,7 +112,7 @@ const UploadAllottedSmartcard = (props) => {
     url: "",
   };
 
-  const smartcardBulkUpdateSavedTemplatePayload = {
+  const uploadAllottedStbSavedTemplatePayload = {
     meta_data: {
       type: parseInt(usertype),
       operator_id: id,
@@ -122,9 +122,7 @@ const UploadAllottedSmartcard = (props) => {
 
   const handleDownloadSampleFile = () => {
     // Send a POST request to the server, from the json request convert data.fields array of strings as headers in a csv file
-    downloadSmartcardAllotmentUploadTemplate(
-      smartcardBulkUpdateDownloadTemplatePayload
-    )
+    downloadStbAllotmentUploadTemplate(uploadAllottedStbDownloadTemplatePayload)
       .then((res) => {
         // debugger;
         const fileName = res.data.data.type;
@@ -165,7 +163,7 @@ const UploadAllottedSmartcard = (props) => {
     const formData = new FormData();
     formData.append("qFile", selectedFiles[0]); // appending file
 
-    uploadSmartcardAllotmentSubmit(uploadTrigger.token, formData)
+    uploadStbAllotmentSubmit(uploadTrigger.token, formData)
       .then((res) => {
         toggleSuccessMsg();
         console.log(
@@ -174,7 +172,7 @@ const UploadAllottedSmartcard = (props) => {
         setUploadTrigger({});
         setSelectedFiles([]);
         console.log("cleared the selected files and upload trigger");
-        dispatch(onAllotSmartcard(res.data.data));
+        dispatch(onAllotStb(res.data.data));
         toggleUploadModal();
       })
       .catch((error) => {
@@ -192,7 +190,7 @@ const UploadAllottedSmartcard = (props) => {
           <ToastHeader toggle={toggleSuccessMsg}>
             <i className="mdi mdi-alert-outline me-2"></i> Upload
           </ToastHeader>
-          <ToastBody>Upload Smartcard Successfully</ToastBody>
+          <ToastBody>Upload STB Successfully</ToastBody>
         </Toast>
       </div>
       <Modal
@@ -206,7 +204,7 @@ const UploadAllottedSmartcard = (props) => {
         toggle={toggleUploadModal}
       >
         <ModalHeader toggle={toggleUploadModal} tag="h4">
-          Upload Smartcards to Operator
+          Upload STBs to Operator
         </ModalHeader>
         <ModalBody>
           <Card>
@@ -522,11 +520,11 @@ const UploadAllottedSmartcard = (props) => {
   );
 };
 
-UploadAllottedSmartcard.propTypes = {
+UploadAllottedStb.propTypes = {
   toggleUploadModal: PropTypes.func,
   isOpen: PropTypes.bool,
   allottedusertype: PropTypes.array,
   allottedoperatorlist: PropTypes.array,
 };
 
-export default UploadAllottedSmartcard;
+export default UploadAllottedStb;
