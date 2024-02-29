@@ -4,6 +4,7 @@ import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
 import Spinners from "../../../components/Common/Spinner";
 import {
+  Spinner,
   Card,
   CardBody,
   Col,
@@ -52,13 +53,8 @@ const NCFList = (props) => {
   const { status } = useSelector(districtProperties);
   const { ncfl, loading } = useSelector(NcfProperties);
 
-  useEffect(() => {
-    // console.log("NCF list data in component:", ncfl);
-  }, [ncfl]);
-  const [isLoading, setLoading] = useState(loading);
   const [modal, setModal] = useState(false);
   const [showAddNcf, setShowAddNcf] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
   const [showBulkAssign, setShowBulkAssign] = useState(false);
   const [showViewNcf, setShowViewNcf] = useState(false);
   const [viewNcfData, setViewNcfData] = useState({});
@@ -66,18 +62,12 @@ const NCFList = (props) => {
   const [isChecked, setIsChecked] = useState(false);
   const [selectedRow, setSelectedRow] = useState({});
   const [showWarning, setShowWarning] = useState(false);
-
+  const [showWarning2, setShowWarning2] = useState(false);
   const handleCheckboxClick = (row) => {
     setShowViewNcf(false);
     setIsChecked(true);
     setSelectedRow(row);
   };
-
-  // const handleCheckboxDeselect = (row) => {
-  //   setIsChecked(false);
-  //   setSelectedRow({});
-  //   console.log("Deselect function worked");
-  // };
 
   const handleCheckboxDeselect = (row) => {
     setShowViewNcf(false);
@@ -85,7 +75,6 @@ const NCFList = (props) => {
     setSelectedRow((prevSelectedRow) => {
       return prevSelectedRow === row ? {} : prevSelectedRow;
     });
-    console.log("selected row: ", selectedRow);
   };
 
   const toggleViewNcf = (userData) => {
@@ -110,6 +99,9 @@ const NCFList = (props) => {
     setShowWarning(!showWarning);
   };
 
+  const handleWarning2 = () => {
+    setShowWarning2(!showWarning2);
+  };
   const additionalRateTableSchema = {
     subTableArrayKeyName: "additional_rates",
     keyColumn: "_id",
@@ -325,11 +317,13 @@ const NCFList = (props) => {
       },
       {
         Header: "Status",
-        accessor: "status",
+        // accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.status}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.status_lbl}
+            </p>
           );
         },
       },
@@ -376,23 +370,6 @@ const NCFList = (props) => {
     setModal(!modal);
   };
 
-  const handleUserClick = (arg) => {
-    const user = arg;
-
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-    setIsEdit(true);
-
-    toggle();
-  };
-
-  const keyField = "id";
   const getTableActions = () => {
     return [
       {
@@ -403,10 +380,15 @@ const NCFList = (props) => {
       },
       {
         name: "Bulk Assign to Operator",
-        action:
-          Object.keys(selectedRow).length === 0
-            ? () => setShowWarning(true)
-            : () => setShowBulkAssign(true),
+        action: () => {
+          if (Object.keys(selectedRow).length === 0) {
+            setShowWarning(true);
+          } else if (parseInt(selectedRow.status) === 0) {
+            setShowWarning2(true);
+          } else {
+            setShowBulkAssign(true);
+          }
+        },
         type: "dropdown",
         dropdownName: "Action",
       },
@@ -435,16 +417,21 @@ const NCFList = (props) => {
         toggleAddNewNcf={toggleAddNcf}
         status={status}
       />
-      <BulkAssigntoOperator
-        isOpen={showBulkAssign}
-        toggle={toggleBulkAssign}
-        selectedRow={selectedRow}
-      />
+      {selectedRow && parseInt(selectedRow.status) !== 0 && showBulkAssign && (
+        <BulkAssigntoOperator
+          isOpen={showBulkAssign}
+          toggle={toggleBulkAssign}
+          selectedRow={selectedRow}
+        />
+      )}
+
       <BulkRemovalFromOperator
         isOpen={showBulkRemoval}
         toggle={toggleBulkRemoval}
         selectedRow={selectedRow}
       />
+      {console.log("@@@@@@@@@@@@@@@@@@@@selected row: ", selectedRow.status)}
+
       <div
         className="position-fixed top-0 end-0 p-3"
         style={{ zIndex: "1005" }}
@@ -456,11 +443,29 @@ const NCFList = (props) => {
           <ToastBody>Please select NCF</ToastBody>
         </Toast>
       </div>
+
+      <div
+        className="position-fixed top-0 end-0 p-3"
+        style={{ zIndex: "1005" }}
+      >
+        <Toast isOpen={showWarning2}>
+          <ToastHeader toggle={handleWarning2}>
+            <i className="mdi mdi-alert-outline me-2"></i> Warning
+          </ToastHeader>
+          <ToastBody>Cannot select inactive NCF</ToastBody>
+        </Toast>
+      </div>
+
       <div className="page-content">
         <Container fluid>
           <Breadcrumbs title="NCF" breadcrumbItem="NCF" />
-          {isLoading ? (
-            <Spinners setLoading={setLoading} />
+          {loading ? (
+            <React.Fragment>
+              <Spinner
+                color="primary"
+                className="position-absolute top-50 start-50"
+              />
+            </React.Fragment>
           ) : (
             <Row>
               <Col lg="12">

@@ -69,7 +69,7 @@ const ViewConnectionScheme = (props) => {
         description: values["description"],
         stbbrands: brands.map((single) => single.id),
       };
-      
+
       console.log("newConnectionScheme:" + updateConnectionScheme);
       dispatch(onAddConnectionscheme(updateConnectionScheme));
       validation.resetForm();
@@ -306,7 +306,9 @@ const ViewConnectionScheme = (props) => {
           >
             <Col sm="12">
               <AddBrands
-                brands={brands}
+                brands={
+                  !showEditConnectionScheme ? validation.values.brands : brands
+                }
                 setBrands={setBrands}
                 isHD={validation.values.isHD}
               />
