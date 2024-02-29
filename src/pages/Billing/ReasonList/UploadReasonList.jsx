@@ -34,8 +34,13 @@ const UploadReasonListModal = (props) => {
   const [uploadTrigger, setUploadTrigger] = useState({});
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [status, setStatus] = useState("");
-  const [type, setType] = useState("");
+  const [type, setType] = useState([]);
   const [successMsg, setSuccessMsg] = useState(false);
+
+  const handleTypeChange = (e) => {
+    const selectedOptions = Array.from(e.target.selectedOptions, (option) => parseInt(option.value));
+    setType(selectedOptions);
+  };
 
   const toggleSuccessMsg = () => {
     setSuccessMsg(!successMsg);
@@ -54,12 +59,12 @@ const UploadReasonListModal = (props) => {
   }
 
   const reasonSavedTemplatePayload = {
-    meta_data: { type: null, status: parseInt(status) },
+    meta_data: { status: parseInt(status), type: type },
     url: "",
   };
 
   const reasonDownloadTemplatePayload = {
-    meta_data: { type: null },
+    meta_data: { status: parseInt(status), type: type },
     url: "",
   };
 
@@ -178,11 +183,9 @@ const UploadReasonListModal = (props) => {
                   placeholder="Select Reason Type"
                   className="form-select"
                   value={type}
-                  onChange={(e) => setType(e.target.value)}
+                  onChange={handleTypeChange}
+                  // onChange={(e) => setType(e.target.value)}
                   multiple
-                // onChange={validation.handleChange}
-                // onBlur={validation.handleBlur}
-                // value={validation.values.grouppolicy || ""}
                 >
                   <option value="">Select Type</option>
                   {reasonReasonType &&
@@ -202,9 +205,6 @@ const UploadReasonListModal = (props) => {
                   className="form-select"
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
-                // onChange={validation.handleChange}
-                // onBlur={validation.handleBlur}
-                // value={validation.values.grouppolicy || ""}
                 >
                   <option value="">Select Status</option>
                   {reasonStatus &&
