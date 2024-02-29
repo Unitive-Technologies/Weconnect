@@ -18,9 +18,12 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addConnectionscheme as onAddConnectionscheme } from "/src/store/connectionschemelist/actions";
+import {
+  updateConnectionScheme as onUpdateConnectionscheme,
+  getConnectionScheme as onGetConnectionScheme,
+} from "/src/store/connectionschemelist/actions";
 import { useDispatch } from "react-redux";
-import AddBrands from "../BouquetList/AddBrands";
+import AddBrands from "./AddBrands";
 import ShowHistoryModal from "./ShowHistoryModal";
 
 const ViewConnectionScheme = (props) => {
@@ -38,10 +41,6 @@ const ViewConnectionScheme = (props) => {
   const toggleHistoryModal = () => {
     setShowHistory(!showHistory);
   };
-  const editToggle = () => {
-    setShowEditConnectionScheme(false);
-    toggle();
-  };
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -49,7 +48,7 @@ const ViewConnectionScheme = (props) => {
 
     initialValues: {
       name: (Connectionscheme && Connectionscheme.name) || "",
-      isHD: (Connectionscheme && Connectionscheme.boxtype_lbl) || "",
+      isHD: (Connectionscheme && Connectionscheme.isHD) || "",
       hardware_charge:
         (Connectionscheme && Connectionscheme.hardware_charge) || "",
       installation_charge:
@@ -68,6 +67,9 @@ const ViewConnectionScheme = (props) => {
       // status: Yup.string().required("select status"),
     }),
     onSubmit: (values) => {
+      const stbBrands = Array.isArray(values["brands"])
+        ? values["brands"].map((single) => single.id)
+        : [];
       console.log("Post values: ", values);
       const updateConnectionScheme = {
         id: Connectionscheme.id,
@@ -77,13 +79,14 @@ const ViewConnectionScheme = (props) => {
         hardware_charge: values["hardware_charge"],
         installation_charge: values["installation_charge"],
         description: values["description"],
-        stbbrands: brands.map((single) => single.id),
+        stbbrands: stbBrands,
       };
 
-      console.log("newConnectionScheme:" + updateConnectionScheme);
-      dispatch(onAddConnectionscheme(updateConnectionScheme));
+      console.log("UPDATED ConnectionScheme:" + updateConnectionScheme);
+      dispatch(onUpdateConnectionscheme(updateConnectionScheme));
+      dispatch(onGetConnectionScheme());
       validation.resetForm();
-      toggle();
+      handleCancel();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -394,7 +397,7 @@ const ViewConnectionScheme = (props) => {
               >
                 <Col sm="12">
                   <AddBrands
-                    brands={brands}
+                    brands={validation.values.brands}
                     setBrands={setBrands}
                     isHD={validation.values.isHD}
                   />
@@ -405,32 +408,34 @@ const ViewConnectionScheme = (props) => {
                 </p>
               </Row>
             )}
-            <Row>
-              <Col>
-                <ModalFooter>
-                  <button type="submit" className="btn btn-success save-user">
-                    Save
-                  </button>
-                  <button
-                    type="reset"
-                    className="btn btn-warning"
-                    onClick={() => validation.resetForm()}
-                  >
-                    Reset
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-outline-danger"
-                    onClick={() => {
-                      validation.resetForm();
-                      handleCancel();
-                    }}
-                  >
-                    Cancel
-                  </button>
-                </ModalFooter>
-              </Col>
-            </Row>
+            {showEditConnectionScheme && (
+              <Row>
+                <Col>
+                  <ModalFooter>
+                    <button type="submit" className="btn btn-success save-user">
+                      Save
+                    </button>
+                    <button
+                      type="reset"
+                      className="btn btn-warning"
+                      onClick={() => validation.resetForm()}
+                    >
+                      Reset
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-outline-danger"
+                      onClick={() => {
+                        validation.resetForm();
+                        handleCancel();
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </ModalFooter>
+                </Col>
+              </Row>
+            )}
           </Form>
         </ModalBody>
       </Modal>
