@@ -14,6 +14,7 @@ import AllottedStb from "./AllottedStb";
 import DeallotStb from "./DeallottedStb";
 import BulkUpdateStb from "./BulkUpdateStb";
 import UploadStb from "./UploadStb";
+import UploadAllottedStb from "./UploadAllottedStb";
 
 const StockStb = (props) => {
   const {
@@ -59,6 +60,8 @@ const StockStb = (props) => {
     setShowBulkUpdateStb,
     showBulkUploadStb,
     setShowBulkUploadStb,
+    setShowUploadAllottedStb,
+    showUploadAllottedStb,
   } = props;
   const [showEditStb, setShowEditStb] = useState(false);
   const [editStbData, setEditStbData] = useState({});
@@ -102,6 +105,10 @@ const StockStb = (props) => {
 
   const handleShowBulkUploadStb = () => {
     setShowBulkUploadStb(!showBulkUploadStb);
+  };
+
+  const handleShowUploadAllottedStb = () => {
+    setShowUploadAllottedStb(!showUploadAllottedStb);
   };
 
   const getFilteredHandleRowClicks = (Row) => {
@@ -546,6 +553,12 @@ const StockStb = (props) => {
         brand1={brand1}
         brand2={brand2}
       />
+      <UploadAllottedStb
+        isOpen={showUploadAllottedStb}
+        toggleUploadModal={handleShowUploadAllottedStb}
+        allottedoperatorlist={allottedoperatorlist}
+        allottedusertype={allottedusertype}
+      />
       {loading ? (
         <React.Fragment>
           <Spinner
@@ -631,6 +644,8 @@ StockStb.propTypes = {
   setShowBulkUpdateStb: PropTypes.func,
   showBulkUploadStb: PropTypes.bool,
   setShowBulkUploadStb: PropTypes.func,
+  showUploadAllottedStb: PropTypes.bool,
+  setShowUploadAllottedStb: PropTypes.func,
 };
 
 export default StockStb;

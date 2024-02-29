@@ -141,6 +141,7 @@ const InventoryStock = (props) => {
   const [showUploadPairing, setShowUploadPairing] = useState(false);
   const [showUploadAllottedSmartcard, setShowUploadAllottedSmartcard] =
     useState(false);
+  const [showUploadAllottedStb, setShowUploadAllottedStb] = useState(false);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -1378,6 +1379,7 @@ const InventoryStock = (props) => {
             name: "Upload",
             type: "dropdown",
             dropdownName: "Bulk",
+            action: setShowUploadAllottedStb,
           },
           {
             name: "De-Allot",
@@ -1790,6 +1792,10 @@ const InventoryStock = (props) => {
                               setShowBulkUpdateStb={setShowBulkUpdateStb}
                               showBulkUploadStb={showBulkUploadStb}
                               setShowBulkUploadStb={setShowBulkUploadStb}
+                              showUploadAllottedStb={showUploadAllottedStb}
+                              setShowUploadAllottedStb={
+                                setShowUploadAllottedStb
+                              }
                             />
                           </Col>
                         </Row>
