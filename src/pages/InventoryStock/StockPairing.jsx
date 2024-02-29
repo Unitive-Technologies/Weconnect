@@ -551,9 +551,6 @@ const StockPairing = (props) => {
                 isShowingPageLength={true}
                 tableActions={tableActions}
                 goToPage={goToPage}
-                // handleRowClick={(row) => {
-                //   handleSelectedPairings(row);
-                // }}
                 handleRowClick={(row) => {
                   getFilteredHandleRowClicks(row);
                 }}

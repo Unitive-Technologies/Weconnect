@@ -20,14 +20,13 @@ import {
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import { useDispatch } from "react-redux";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { addInventoryAllottedSmartcard as onAddInventoryAllottedSmartcard } from "/src/store/inventoryallotted/actions";
+import { allotSmartcard as onAllotSmartcard } from "/src/store/inventoryallotted/actions";
 import {
   downloadSmartcardAllotmentUploadTemplate,
   updateSmartcardAllotmentUploadByToken,
   uploadSmartcardAllotmentSubmit,
 } from "../../helpers/backend_helper";
+import { getResponse } from "../../helpers/api_helper";
 
 const UploadAllottedSmartcard = (props) => {
   const { isOpen, toggleUploadModal, allottedusertype, allottedoperatorlist } =
@@ -175,7 +174,7 @@ const UploadAllottedSmartcard = (props) => {
         setUploadTrigger({});
         setSelectedFiles([]);
         console.log("cleared the selected files and upload trigger");
-        dispatch(onAddInventoryAllottedSmartcard(res.data.data));
+        dispatch(onAllotSmartcard(res.data.data));
         toggleUploadModal();
       })
       .catch((error) => {

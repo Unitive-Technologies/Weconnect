@@ -75,6 +75,7 @@ import FaultySmartcardBlacklist from "./FaultySmartcardBlacklist";
 import AllottedSmrtcard from "./AllottedSmartcard";
 import DeallotSmartcard from "./DeallotSmartcard";
 import ToastFunction, { AllotToast, DeallotToast } from "./ToastFunction";
+import UploadAllottedSmartcard from "./UploadAllottedSmartcard";
 
 const InventoryStock = (props) => {
   document.title = "Inventory | VDigital";
@@ -138,6 +139,8 @@ const InventoryStock = (props) => {
   const [showBulkUpdateStb, setShowBulkUpdateStb] = useState(false);
   const [showBulkUploadStb, setShowBulkUploadStb] = useState(false);
   const [showUploadPairing, setShowUploadPairing] = useState(false);
+  const [showUploadAllottedSmartcard, setShowUploadAllottedSmartcard] =
+    useState(false);
 
   const selectInventoryStockState = (state) => state.stockpairing;
   const inventorystockProperties = createSelector(
@@ -1169,6 +1172,10 @@ const InventoryStock = (props) => {
     setSelectedAllottedSmartcards([]);
   };
 
+  const handleShowUploadAllottedSmartcard = () => {
+    setShowUploadAllottedSmartcard(!showUploadAllottedSmartcard);
+  };
+
   const getFilteredTableActions = () => {
     let actions = [];
     if (selectedOption === "In-stock") {
@@ -1344,6 +1351,7 @@ const InventoryStock = (props) => {
             name: "Upload",
             type: "dropdown",
             dropdownName: "Bulk",
+            action: setShowUploadAllottedSmartcard,
           },
           {
             name: "De-Allot",
@@ -1601,6 +1609,12 @@ const InventoryStock = (props) => {
       <DeallotToast
         deallotWarning={deallotWarning}
         handleDeallotWarning={handleDeallotWarning}
+      />
+      <UploadAllottedSmartcard
+        isOpen={showUploadAllottedSmartcard}
+        toggleUploadModal={handleShowUploadAllottedSmartcard}
+        allottedoperatorlist={allottedoperatorlist}
+        allottedusertype={allottedusertype}
       />
       <div className="page-content">
         <Container fluid>
