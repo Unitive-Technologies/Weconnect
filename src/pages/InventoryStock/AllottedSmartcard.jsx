@@ -259,7 +259,7 @@ function AllottedSmrtcard(props) {
                     <span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="brand_id"
+                    name="branch_id"
                     type="select"
                     placeholder="Select Reginal office"
                     onChange={(e) => setBranch_id(e.target.value)}
@@ -285,7 +285,7 @@ function AllottedSmrtcard(props) {
                       <span style={{ color: "red" }}>*</span>
                     </Label>
                     <Input
-                      name="brand_id"
+                      name="branch_id"
                       type="select"
                       placeholder="Select Reginal office"
                       onChange={(e) => {
@@ -293,10 +293,10 @@ function AllottedSmrtcard(props) {
                         setBranch_id(e.target.value);
                       }}
                       onBlur={validation.handleBlur}
-                      value={validation.values.brand_id || ""}
+                      value={validation.values.branch_id || ""}
                       invalid={
-                        validation.touched.brand_id &&
-                        validation.errors.brand_id
+                        validation.touched.branch_id &&
+                        validation.errors.branch_id
                           ? true
                           : false
                       }
@@ -308,10 +308,10 @@ function AllottedSmrtcard(props) {
                         </option>
                       ))}
                     </Input>
-                    {validation.touched.brand_id &&
-                    validation.errors.brand_id ? (
+                    {validation.touched.branch_id &&
+                    validation.errors.branch_id ? (
                       <FormFeedback type="invalid">
-                        {validation.errors.brand_id}
+                        {validation.errors.branch_id}
                       </FormFeedback>
                     ) : null}
                   </div>
@@ -367,7 +367,7 @@ function AllottedSmrtcard(props) {
                       <span style={{ color: "red" }}>*</span>
                     </Label>
                     <Input
-                      name="brand_id"
+                      name="branch_id"
                       type="select"
                       placeholder="Select Reginal office"
                       onChange={(e) => {
@@ -375,10 +375,10 @@ function AllottedSmrtcard(props) {
                         setBranch_id(e.target.value);
                       }}
                       onBlur={validation.handleBlur}
-                      value={validation.values.brand_id || ""}
+                      value={validation.values.branch_id || ""}
                       invalid={
-                        validation.touched.brand_id &&
-                        validation.errors.brand_id
+                        validation.touched.branch_id &&
+                        validation.errors.branch_id
                           ? true
                           : false
                       }
@@ -390,10 +390,10 @@ function AllottedSmrtcard(props) {
                         </option>
                       ))}
                     </Input>
-                    {validation.touched.brand_id &&
-                    validation.errors.brand_id ? (
+                    {validation.touched.branch_id &&
+                    validation.errors.branch_id ? (
                       <FormFeedback type="invalid">
-                        {validation.errors.brand_id}
+                        {validation.errors.branch_id}
                       </FormFeedback>
                     ) : null}
                   </div>
