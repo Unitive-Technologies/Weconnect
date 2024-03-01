@@ -648,7 +648,7 @@ export const updateBulkLcoUploadByToken = async (token, data) => {
   return put(url.fileUploadUpdateLco(token), data);
 };
 
-export const uploadUpdateLcoSubmit = async (initiatedToken, formData) => {
+export const uploadBulkUpdateLcoSubmit = async (initiatedToken, formData) => {
   return await postCompleteResponse(
     url.uploadUpdateLcoSubmit(initiatedToken),
     formData

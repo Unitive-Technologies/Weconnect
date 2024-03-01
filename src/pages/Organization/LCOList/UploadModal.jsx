@@ -325,7 +325,7 @@ const UploadModal = (props) => {
                   <button
                     type="button"
                     className="btn btn-primary"
-                    onClick={() => toggleUploadDistributor()}
+                    onClick={() => handleToggle()}
                   >
                     Cancel
                   </button>
