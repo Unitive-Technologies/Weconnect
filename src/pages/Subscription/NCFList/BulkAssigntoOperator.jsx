@@ -14,9 +14,7 @@ import {
   CardBody,
   Table,
 } from "reactstrap";
-import { useDispatch } from "react-redux";
-import AddMultipleNcf from "./AddMultipleNcf";
-import Operators from "./Operators";
+
 import AddOperators from "./AddOperator";
 
 const BulkAssigntoOperator = (props) => {

@@ -12,6 +12,9 @@ import {
   Table,
   UncontrolledTooltip,
   Spinner,
+  Toast,
+  ToastHeader,
+  ToastBody,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
@@ -58,6 +61,13 @@ const ConnectionSchemeList = (props) => {
     useState(false);
   const [viewConnectionSchemeData, setViewConnectionSchemeData] = useState({});
   const [showBulkRemoval, setShowBulkRemoval] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+  const [selectedRow, setSelectedRow] = useState({});
+  const [showWarning, setShowWarning] = useState(false);
+
+  const handleWarning = () => {
+    setShowWarning(!showWarning);
+  };
 
   const toggleViewConnectionScheme = (userData) => {
     console.log("User Data: ", userData);
@@ -77,6 +87,11 @@ const ConnectionSchemeList = (props) => {
     setShowBulkRemoval(!showBulkRemoval);
   };
 
+  const handleCheckboxClick = (row) => {
+    setShowViewConnectionScheme(false);
+    setIsChecked(true);
+    setSelectedRow(row);
+  };
   const stbBrandTableSchema = {
     subTableArrayKeyName: "stbbrands",
     keyColumn: "id",
@@ -131,13 +146,12 @@ const ConnectionSchemeList = (props) => {
         Header: "*",
         disableFilters: true,
         filterable: true,
-        Cell: () => {
-          return (
-            <>
-              <i className="mdi mdi-check"></i>
-            </>
-          );
-        },
+        Cell: (cellProps) => (
+          <input
+            type="checkbox"
+            onChange={() => handleCheckboxClick(cellProps.row.original)}
+          />
+        ),
       },
       {
         Header: "#",
@@ -291,30 +305,6 @@ const ConnectionSchemeList = (props) => {
     setModal(!modal);
   };
 
-  const handleUserClick = (arg) => {
-    const user = arg;
-
-    setContact({
-      id: user.id,
-      name: user.name,
-      designation: user.designation,
-      email: user.email,
-      tags: user.tags,
-      projects: user.projects,
-    });
-    setIsEdit(true);
-
-    toggle();
-  };
-
-  const [deleteModal, setDeleteModal] = useState(false);
-
-  const onClickDelete = (connectionscheme) => {
-    setContact(connectionscheme);
-    setDeleteModal(true);
-  };
-
-  const keyField = "id";
   const getTableActions = () => {
     return [
       {
@@ -325,7 +315,13 @@ const ConnectionSchemeList = (props) => {
       },
       {
         name: "Bulk Assign to Operator",
-        action: setShowBulkAssign,
+        action: () => {
+          if (Object.keys(selectedRow).length === 0) {
+            setShowWarning(true);
+          } else {
+            setShowBulkAssign(true);
+          }
+        },
         type: "dropdown",
         dropdownName: "Action",
       },
@@ -357,8 +353,23 @@ const ConnectionSchemeList = (props) => {
           connectstatus={connectstatus}
         />
       )}
-      <BulkAssign isOpen={showBulkAssign} toggle={toggleBulkAssign} />
+      <BulkAssign
+        isOpen={showBulkAssign}
+        toggle={toggleBulkAssign}
+        selectedRow={selectedRow}
+      />
       <BulkRemoval isOpen={showBulkRemoval} toggle={toggleBulkRemoval} />
+      <div
+        className="position-fixed top-0 end-0 p-3"
+        style={{ zIndex: "1005" }}
+      >
+        <Toast isOpen={showWarning}>
+          <ToastHeader toggle={handleWarning}>
+            <i className="mdi mdi-alert-outline me-2"></i> Warning
+          </ToastHeader>
+          <ToastBody>Please select atleast One Scheme</ToastBody>
+        </Toast>
+      </div>
       <div className="page-content">
         <Container fluid>
           <Breadcrumbs

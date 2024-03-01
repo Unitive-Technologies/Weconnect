@@ -172,11 +172,6 @@ const NCFList = (props) => {
         Cell: (cellProps) => (
           <input
             type="checkbox"
-            // onChange={
-            //   // isChecked
-            //   //   ? () => handleCheckboxClick(cellProps.row.original):
-            //   () => handleCheckboxDeselect(cellProps.row.original)
-            // }
             onChange={() => handleCheckboxClick(cellProps.row.original)}
           />
         ),
