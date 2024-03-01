@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
   Card,
@@ -10,7 +10,6 @@ import {
   ModalBody,
   Form,
   CardSubtitle,
-  FormFeedback,
   Input,
   Label,
   Toast,
@@ -20,8 +19,6 @@ import {
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import { useDispatch } from "react-redux";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import { addInventoryStockSmartcard as onAddInventoryStockSmartcard } from "/src/store/inventorystock/actions";
 import {
   downloadSmartcardUploadTemplate,

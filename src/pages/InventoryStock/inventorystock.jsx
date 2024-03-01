@@ -60,12 +60,14 @@ import {
   getInventoryAllottedOperatorlist as onGetInventoryAllottedOperatorlist,
   getInventoryAllottedStblist as onGetInventoryAllottedStblist,
   getInventoryAllottedPairinglist as onGetInventoryAllottedPairinglist,
+  getInventoryAllottedPairingstatus as onGetInventoryAllottedPairingstatus,
+  getInventoryAllottedMaterialstatus as onGetInventoryAllottedMaterialstaus,
 } from "/src/store/inventoryallotted/actions";
 import StockStb from "./StockStb";
 import StockPairing from "./StockPairing";
 import InventoryTrack from "./InventoryTrack";
 import AddStockSmartcard from "./AddStockSmartcard";
-import UploadSmartcard from "./UploadSmartcaed";
+import UploadSmartcard from "./UploadSmartcard";
 import StockScMarkfaulty from "./StockScMarkfaulty";
 import StockScBlacklist from "./StockScBlacklist";
 import StockActionUpdation from "./StockActionUpdation";
@@ -143,6 +145,8 @@ const InventoryStock = (props) => {
     useState(false);
   const [showUploadAllottedStb, setShowUploadAllottedStb] = useState(false);
   const [showUploadAllottedPairing, setShowUploadAllottedPairing] =
+    useState(false);
+  const [showUploadMaterialstatus, setShowUploadMaterialstatus] =
     useState(false);
 
   const selectInventoryStockState = (state) => state.stockpairing;
@@ -260,6 +264,8 @@ const InventoryStock = (props) => {
       allottedstblist: allottedpairing.allottedstblist,
       allottedpairinglist: allottedpairing.allottedpairinglist,
       allottedloading: allottedpairing.loading,
+      materialstatus: allottedpairing.materialstatus,
+      pairingstatus: allottedpairing.pairingstatus,
     })
   );
 
@@ -277,6 +283,8 @@ const InventoryStock = (props) => {
     allottedstblist,
     allottedpairinglist,
     allottedloading,
+    materialstatus,
+    pairingstatus,
   } = useSelector(inventoryallottedProperties);
 
   useEffect(() => {
@@ -289,6 +297,8 @@ const InventoryStock = (props) => {
       dispatch(onGetInventoryAllottedUsertype());
       dispatch(onGetInventoryAllottedStblist());
       dispatch(onGetInventoryAllottedPairinglist());
+      dispatch(onGetInventoryAllottedMaterialstaus());
+      dispatch(onGetInventoryAllottedPairingstatus());
     }
   }, [dispatch, allottedpairing]);
 
@@ -1301,9 +1311,10 @@ const InventoryStock = (props) => {
             action: setShowUploadPairing,
           },
           {
-            name: "Update",
-            type: "dropdown",
-            dropdownName: "Bulk",
+            name: "Upload Material Status",
+            type: "dot",
+            dropdownName: "",
+            action: setShowUploadMaterialstatus,
           },
           {
             name: "Mark Faulty",
@@ -1881,6 +1892,14 @@ const InventoryStock = (props) => {
                               }
                               setShowUploadAllottedPairing={
                                 setShowUploadAllottedPairing
+                              }
+                              materialstatus={materialstatus}
+                              pairingstatus={pairingstatus}
+                              showUploadMaterialstatus={
+                                showUploadMaterialstatus
+                              }
+                              setShowUploadMaterialstatus={
+                                setShowUploadMaterialstatus
                               }
                             />
                           </Col>

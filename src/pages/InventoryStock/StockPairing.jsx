@@ -61,6 +61,10 @@ const StockPairing = (props) => {
     setShowUploadPairing,
     showUploadAllottedPairing,
     setShowUploadAllottedPairing,
+    materialstatus,
+    pairingstatus,
+    showUploadMaterialstatus,
+    setShowUploadMaterialstatus,
   } = props;
 
   if (
@@ -117,6 +121,10 @@ const StockPairing = (props) => {
 
   const handleShowUploadAllottedPairing = () => {
     setShowUploadAllottedPairing(!showUploadAllottedPairing);
+  };
+
+  const handleShowUploadMaterialstatus = () => {
+    setShowUploadMaterialstatus(!showUploadMaterialstatus);
   };
 
   const getFilteredHandleRowClicks = (Row) => {
@@ -622,6 +630,10 @@ StockPairing.propTypes = {
   setShowUploadPairing: PropTypes.func,
   showUploadAllottedPairing: PropTypes.bool,
   setShowUploadAllottedPairing: PropTypes.func,
+  materialstatus: PropTypes.array,
+  pairingstatus: PropTypes.array,
+  showUploadMaterialstatus: PropTypes.bool,
+  setShowUploadMaterialstatus: PropTypes.func,
 };
 
 export default StockPairing;
