@@ -20,12 +20,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 
 const AddOperators = (props) => {
-  const { isOpen, toggleClose, id, setData, selectedRowId } = props;
+  const { isOpen, toggleClose, data, setData, selectedRowId } = props;
   const [selectedUsers, setSelectedUsers] = useState([]);
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
-
+  console.log("data in addoperators:" + JSON.stringify(data));
   const [tableList, setTableList] = useState([]);
-  const [expirydate, setExpiryDate] = useState("");
 
   const handleActive = (row) => {
     const isRowSelected = selectedUsers.some((user) => user.id === row.id);
@@ -207,102 +206,11 @@ const AddOperators = (props) => {
     []
   );
 
-  const userColumns = useMemo(
-    () => [
-      {
-        Header: "#",
-        disableFilters: true,
-        filterable: true,
-        Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
-
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {reverseIndex}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-
-      {
-        Header: "Name",
-        accessor: "name",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">{cellProps.row.original.name}</p>
-          );
-        },
-      },
-      {
-        Header: "Code",
-        accessor: "code",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">{cellProps.row.original.code}</p>
-          );
-        },
-      },
-      {
-        Header: "Type",
-        accessor: "type_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">{cellProps.row.original.type_lbl}</p>
-          );
-        },
-      },
-      {
-        Header: "Expiry Date",
-        // accessor: "branch_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return <input type="date" />;
-        },
-      },
-      {
-        Header: "Distributor",
-        accessor: "distributor_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.distributor_lbl}
-            </p>
-          );
-        },
-      },
-      {
-        Header: "..",
-        Cell: (cellProps) => {
-          return (
-            <i
-              className="dripicons-tag-delete"
-              onClick={() => handleRemove(cellProps.row.original)}
-            />
-          );
-        },
-      },
-    ],
-    []
-  );
-
   const handleSubmit = () => {
     console.log("add button clicked");
-    const newSelectedOperators = {
-      selectedOperators: selectedUsers.map((user) => user.id),
-      expirydate: expirydate,
-    };
-
+    const newSelectedOperators = selectedUsers.map((user) => user.id);
     console.log("newTargetUsers:", JSON.stringify(newSelectedOperators));
-    setData(newSelectedOperators);
+    setData(selectedUsers);
     toggleClose();
   };
 
@@ -402,7 +310,6 @@ const AddOperators = (props) => {
                         <th>Name</th>
                         <th>Code</th>
                         <th>Type</th>
-                        <th>Expiry Date</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -417,15 +324,6 @@ const AddOperators = (props) => {
                             <td>{row && row.name}</td>
                             <td>{row && row.code}</td>
                             <td>{row && row.type_lbl}</td>
-                            <td>
-                              <Input
-                                type="date"
-                                name="expirydate"
-                                placeholder="Select Expiry Date"
-                                onChange={(e) => setExpiryDate(e.target.value)}
-                                value={expirydate}
-                              />
-                            </td>
                           </tr>
                         ))}
                     </tbody>

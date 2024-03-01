@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
 import {
   Col,
   Row,
@@ -8,11 +9,16 @@ import {
   ModalBody,
   Form,
   Table,
+  Card,
+  CardBody,
 } from "reactstrap";
 import OperatorList from "../BouquetList/OperatorList";
 import SchemesList from "./SchemesList";
 import TableContainer from "../../../components/Common/TableContainer";
 import AddOperators from "./AddOperators";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { getConnectionScheme as onGetConnectionScheme } from "/src/store/connectionschemelist/actions";
 
 const BulkAssign = (props) => {
   const { isOpen, toggle, selectedRow } = props;
@@ -116,6 +122,55 @@ const BulkAssign = (props) => {
     []
   );
 
+  const validation = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      operator_id: [],
+      // scheme_ids:
+    },
+    validationSchema: Yup.object({
+      // setting: Yup.object({
+      //   bulk_limit: Yup.string().required("Please Enter Bulk Limit"),
+      //   allowed_ips: Yup.string().required("Please Enter allowed client ips"),
+      //   enabled_pay_modes: Yup.array()
+      //     .of(Yup.number().required("Please Select Pay Modes"))
+      //     .min(1, "Please Select at least one Pay Mode"),
+      // }),
+    }),
+
+    onSubmit: async (values) => {
+      try {
+        const newSetting = {
+          // operator_id: selectedUsers.map((user) => user.id),
+          scheme_ids: selectedRow.id,
+        };
+
+        console.log("newSetting:", JSON.stringify(newSetting));
+        const token = "Bearer " + localStorage.getItem("temptoken");
+
+        const response = await axios.put(
+          `${API_URL}/operator-scheme?vr=web1.0`,
+          newSetting,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+
+        console.log("Axios Response:", response);
+        toggle();
+        dispatch(onGetConnectionScheme());
+        validation.resetForm();
+      } catch (error) {
+        console.error("Error in onSubmit:", error);
+      }
+    },
+    onReset: () => {
+      validation.setValues(validation.initialValues);
+    },
+  });
+
   return (
     <>
       {showAddOperator && (
@@ -172,42 +227,33 @@ const BulkAssign = (props) => {
                 <p style={{ fontWeight: "bold" }}>
                   Operators<span style={{ color: "red" }}>*</span>
                 </p>
-              </div>
-              <Table>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Code</th>
-                    <th>Type</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {addOperatorsData &&
-                    addOperatorsData.map((row, i) => (
-                      <tr key={i}>
-                        <td>{i + 1}</td>
-
-                        <td>{row && row.name}</td>
-                        <td>{row && row.code}</td>
-                        <td>{row && row.type_lbl}</td>
+              </div>{" "}
+              <Card>
+                <CardBody>
+                  <Table>
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Code</th>
+                        <th>Type</th>
                       </tr>
-                    ))}
-                </tbody>
-              </Table>
-              <TableContainer
-                isPagination={true}
-                columns={columns}
-                data={addOperatorsData}
-                // isShowTableActionButtons={true}
-                isShowingPageLength={true}
-                // tableActions={getTableActions()}
-                // handleUserClick={() => setShowAddOperator(true)}
-                tableClass="table align-middle table-nowrap table-hover"
-                theadClass="table-light"
-                paginationDiv="col-sm-12 col-md-7"
-                pagination="pagination pagination-rounded justify-content-end mt-4"
-              />
+                    </thead>
+                    <tbody>
+                      {addOperatorsData &&
+                        addOperatorsData.map((row, i) => (
+                          <tr key={i}>
+                            <td>{i + 1}</td>
+
+                            <td>{row && row.name}</td>
+                            <td>{row && row.code}</td>
+                            <td>{row && row.type_lbl}</td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </Table>
+                </CardBody>
+              </Card>
             </Row>
 
             <Row>
@@ -224,7 +270,7 @@ const BulkAssign = (props) => {
               <p>
                 ** To select row, click <i className="mdi mdi-check"></i>{" "}
               </p>
-              <SchemesList />
+              <SchemesList selectedRow={selectedRow} />
             </Row>
             <Row>
               <Col sm="12">

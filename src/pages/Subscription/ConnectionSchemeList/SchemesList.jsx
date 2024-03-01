@@ -1,10 +1,11 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
-import { Card, CardBody } from "reactstrap";
+import { Card, CardBody, Table } from "reactstrap";
 import { Link } from "react-router-dom";
 
-const SchemesList = (props) => {
+const SchemesList = ({ selectedRow }) => {
+  console.log("selectedRow in schemeslist:" + JSON.stringify(selectedRow));
   const columns = useMemo(
     () => [
       {
@@ -189,16 +190,37 @@ const SchemesList = (props) => {
   return (
     <Card>
       <CardBody>
-        <TableContainer
-          isPagination={true}
-          columns={columns}
-          data={SchemesData}
-          isShowingPageLength={true}
-          tableClass="table align-middle table-nowrap table-hover"
-          theadClass="table-light"
-          paginationDiv="col-sm-12 col-md-7"
-          pagination="pagination pagination-rounded justify-content-end mt-4"
-        />
+        <Table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Code</th>
+              <th>Type</th>
+              <th>Hardware Charge</th>
+              <th>Installation Charge</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              selectedRow && (
+                // selectedRow.map((row, i) => (
+                <tr>
+                  <td>1</td>
+
+                  <td>{selectedRow.name}</td>
+                  <td>{selectedRow.code}</td>
+                  <td>{selectedRow.boxtype_lbl}</td>
+                  <td>{selectedRow.hardware_charge}</td>
+                  <td>{selectedRow.installation_charge}</td>
+                  <td>{selectedRow.status_lbl}</td>
+                </tr>
+              )
+              // ))
+            }
+          </tbody>
+        </Table>
       </CardBody>
     </Card>
   );
