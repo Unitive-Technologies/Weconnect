@@ -75,7 +75,7 @@ const Distributors = (state = INIT_STATE, action) => {
       };
 
     case GET_DISTRIBUTORS_PHASE_SUCCESS:
-      console.log("DistributorPhase data in reducer:", action.payload);
+      // console.log("DistributorPhase data in reducer:", action.payload);
       return {
         ...state,
         distributorsPhase: action.payload,
@@ -89,7 +89,7 @@ const Distributors = (state = INIT_STATE, action) => {
       };
 
     case GET_DISTRIBUTORS_STATUS_SUCCESS:
-      console.log("DistributorsStatus data in reducer:", action.payload);
+      // console.log("DistributorsStatus data in reducer:", action.payload);
       return {
         ...state,
         distributorsStatus: action.payload,
@@ -103,7 +103,7 @@ const Distributors = (state = INIT_STATE, action) => {
       };
 
     case GET_DISTRIBUTORS_SETTINGS_SUCCESS:
-      console.log("DistributorSettings data in reducer:", action.payload);
+      // console.log("DistributorSettings data in reducer:", action.payload);
       return {
         ...state,
         distributorsSettings: action.payload,
@@ -117,7 +117,7 @@ const Distributors = (state = INIT_STATE, action) => {
       };
 
     case GET_DISTRIBUTORS_OPERATOR_SUCCESS:
-      console.log("DistributorOperatpr data in reducer:", action.payload);
+      // console.log("DistributorOperatpr data in reducer:", action.payload);
       return {
         ...state,
         distributorsOperator: action.payload,

@@ -93,9 +93,9 @@ function* fetchDistributors() {
 function* fetchDistributorsPhase() {
   try {
     const response = yield call(getDistributorsPhase);
-    console.log(
-      "dddddddddd disphase response:" + JSON.stringify(response.data)
-    );
+    // console.log(
+    //   "dddddddddd disphase response:" + JSON.stringify(response.data)
+    // );
     yield put(getDistributorsPhaseSuccess(response.data));
   } catch (error) {
     yield put(getDistributorsPhaseFail(error));
@@ -105,9 +105,9 @@ function* fetchDistributorsPhase() {
 function* fetchDistributorsStatus() {
   try {
     const response = yield call(getDistributorsStatus);
-    console.log(
-      "dddddddddd disstatus response:" + JSON.stringify(response.data)
-    );
+    // console.log(
+    //   "dddddddddd disstatus response:" + JSON.stringify(response.data)
+    // );
     yield put(getDistributorsStatusSuccess(response.data));
   } catch (error) {
     yield put(getDistributorsStatusFail(error));
@@ -117,9 +117,9 @@ function* fetchDistributorsStatus() {
 function* fetchDistributorsSettings() {
   try {
     const response = yield call(getDistributorsSettings);
-    console.log(
-      "dddddddddd dissettings response:" + JSON.stringify(response.data)
-    );
+    // console.log(
+    //   "dddddddddd dissettings response:" + JSON.stringify(response.data)
+    // );
     yield put(getDistributorsSettingsSuccess(response.data));
   } catch (error) {
     yield put(getDistributorsSettingsFail(error));
@@ -129,9 +129,9 @@ function* fetchDistributorsSettings() {
 function* fetchDistributorsOperator() {
   try {
     const response = yield call(getDistributorsOperator);
-    console.log(
-      "dddddddddd disOperator response:" + JSON.stringify(response.data)
-    );
+    // console.log(
+    //   "dddddddddd disOperator response:" + JSON.stringify(response.data)
+    // );
     yield put(getDistributorsOperatorSuccess(response.data));
   } catch (error) {
     yield put(getDistributorsOperatorFail(error));

@@ -1,5 +1,4 @@
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   Card,
@@ -19,9 +18,10 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
+import { createSelector } from "reselect";
 import { addNewDistributor as onAddNewDistributor } from "/src/store/distributor/actions";
-
-import { useDispatch } from "react-redux";
+import { getRegionalOffice as onGetRegionalOffice } from "/src/store/regionaloffice/actions";
+import { useSelector, useDispatch } from "react-redux";
 import {
   downloadDistributorUploadTemplate,
   updateDistributorUploadByToken,
@@ -29,7 +29,12 @@ import {
 } from "../../../helpers/backend_helper";
 
 const UploadDistributorModal = (props) => {
-  const { isOpen, toggleUploadDistributor, distributorsPhase, distributorsStatus } = props;
+  const {
+    isOpen,
+    toggleUploadDistributor,
+    distributorsPhase,
+    distributorsStatus,
+  } = props;
 
   const dispatch = useDispatch();
   const [uploadTrigger, setUploadTrigger] = useState({});
@@ -38,6 +43,21 @@ const UploadDistributorModal = (props) => {
   const [status, setStatus] = useState("");
   const [successMsg, setSuccessMsg] = useState(false);
 
+  const selectRegionalOfficeState = (state) => state.regionaloffice;
+
+  const RegionalOfficeProperties = createSelector(
+    selectRegionalOfficeState,
+    (regionaloffice) => ({
+      regOff: regionaloffice.regionaloffice,
+    })
+  );
+  const { regOff } = useSelector(RegionalOfficeProperties);
+  useEffect(() => {
+    if (regOff && !regOff.length) {
+      dispatch(onGetRegionalOffice());
+    }
+  }, [dispatch, regOff]);
+
   const toggleSuccessMsg = () => {
     setSuccessMsg(!successMsg);
   };
@@ -45,9 +65,14 @@ const UploadDistributorModal = (props) => {
   function handleAcceptedFiles(files) {
     setSelectedFiles(files);
 
-    updateDistributorUploadByToken(uploadTrigger.token, distributorSavedTemplatePayload)
+    updateDistributorUploadByToken(
+      uploadTrigger.token,
+      distributorSavedTemplatePayload
+    )
       .then((res) => {
-        console.log("res in updateDistributorUploadByToken:" + JSON.stringify(res));
+        console.log(
+          "res in updateDistributorUploadByToken:" + JSON.stringify(res)
+        );
       })
       .catch((error) => {
         console.log("error in updateDistributorUploadByToken:" + error);
@@ -55,12 +80,20 @@ const UploadDistributorModal = (props) => {
   }
 
   const distributorSavedTemplatePayload = {
-    meta_data: { type: 2, status: parseInt(status), parentRO: parseInt(distributorPhase) },
+    meta_data: {
+      type: 2,
+      status: parseInt(status),
+      parentRO: parseInt(distributorPhase),
+    },
     url: "",
   };
 
   const distributorDownloadTemplatePayload = {
-    meta_data: { type: 2, status: parseInt(status), parentRO: parseInt(distributorsPhase) },
+    meta_data: {
+      type: 2,
+      status: parseInt(status),
+      parentRO: parseInt(distributorsPhase),
+    },
     url: "",
   };
 
@@ -112,7 +145,8 @@ const UploadDistributorModal = (props) => {
         // debugger;
         toggleSuccessMsg();
         console.log(
-          "res in uploadDistributorFileForInitiatedUserUpload:" + JSON.stringify(res)
+          "res in uploadDistributorFileForInitiatedUserUpload:" +
+            JSON.stringify(res)
         );
 
         setUploadTrigger({});
@@ -182,8 +216,8 @@ const UploadDistributorModal = (props) => {
                   onChange={(e) => setDistributorsPhase(e.target.value)}
                 >
                   <option value="">Select </option>
-                  {distributorsPhase &&
-                    distributorsPhase.map((parentRO) => (
+                  {regOff &&
+                    regOff.map((parentRO) => (
                       <option key={parentRO.id} value={parentRO.id}>
                         {parentRO.name}
                       </option>
@@ -314,4 +348,3 @@ UploadDistributorModal.propTypes = {
 };
 
 export default UploadDistributorModal;
-

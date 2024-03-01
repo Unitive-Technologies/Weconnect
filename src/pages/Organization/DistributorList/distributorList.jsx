@@ -67,7 +67,7 @@ const DistributorList = (props) => {
     distributorsOperator,
   } = useSelector(DistributorsProperties);
 
-  console.log("DistributorsPhase", distributorsPhase);
+  // console.log("DistributorsPhase", distributorsPhase);
   // console.log(`TotalCount - ${totalCount}`);
   // console.log(`PageSize - ${pageSize}`);
   // console.log(`CurrentPage - ${currentPage}`);
@@ -323,7 +323,7 @@ const DistributorList = (props) => {
   // }, [pageSize]);
 
   const goToPage = (toPage) => {
-    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    // console.log("[GOTO PAGE] Trigger to page - ", toPage);
     dispatch(onGoToPage(toPage));
     dispatch(onGetDistributors());
     // dispatch(onGetDistributorsPhase());
@@ -331,9 +331,9 @@ const DistributorList = (props) => {
   };
 
   const toggleAddDistributor = () => {
-    console.log("showDistributor before: " + typeof showDistributor);
+    // console.log("showDistributor before: " + typeof showDistributor);
     setShowDistributor(!showDistributor);
-    console.log("showDistributor after: " + typeof showDistributor);
+    // console.log("showDistributor after: " + typeof showDistributor);
   };
 
   const toggleUploadDistributor = () => {
