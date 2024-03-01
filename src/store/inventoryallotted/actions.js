@@ -48,6 +48,15 @@ import {
   DEALLOT_PAIRING,
   DEALLOT_PAIRING_SUCCESS,
   DEALLOT_PAIRING_FAIL,
+  GET_INVENTORYALLOTTED_MATERIALSTATUS,
+  GET_INVENTORYALLOTTED_MATERIALSTATUS_SUCCESS,
+  GET_INVENTORYALLOTTED_MATERIALSTATUS_FAIL,
+  GET_INVENTORYALLOTTED_PAIRINGSTATUS,
+  GET_INVENTORYALLOTTED_PAIRINGSTATUS_SUCCESS,
+  GET_INVENTORYALLOTTED_PAIRINGSTATUS_FAIL,
+  GET_INVENTORYALLOTTED_INVENTORYSTATEBYID,
+  GET_INVENTORYALLOTTED_INVENTORYSTATEBYID_SUCCESS,
+  GET_INVENTORYALLOTTED_INVENTORYSTATEBYID_FAIL,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -291,5 +300,50 @@ export const deallotPairingSuccess = (allottedpairing) => ({
 
 export const deallotPairingFail = (error) => ({
   type: DEALLOT_PAIRING_FAIL,
+  payload: error,
+});
+
+export const getInventoryAllottedMaterialstatus = () => ({
+  type: GET_INVENTORYALLOTTED_MATERIALSTATUS,
+});
+
+export const getInventoryAllottedMaterialstatusSuccess = (materialstatus) => ({
+  type: GET_INVENTORYALLOTTED_MATERIALSTATUS,
+  payload: materialstatus,
+});
+
+export const getInventoryAllottedMaterialstatusFail = (error) => ({
+  type: GET_INVENTORYALLOTTED_MATERIALSTATUS,
+  payload: error,
+});
+
+export const getInventoryAllottedPairingstatus = () => ({
+  type: GET_INVENTORYALLOTTED_PAIRINGSTATUS,
+});
+
+export const getInventoryAllottedPairingstatusSuccess = (pairingstatus) => ({
+  type: GET_INVENTORYALLOTTED_PAIRINGSTATUS,
+  payload: pairingstatus,
+});
+
+export const getInventoryAllottedPairingstatusFail = (error) => ({
+  type: GET_INVENTORYALLOTTED_PAIRINGSTATUS,
+  payload: error,
+});
+
+export const getInventoryAllottedInventoryStateById = (id) => ({
+  type: GET_INVENTORYALLOTTED_INVENTORYSTATEBYID,
+  payload: id,
+});
+
+export const getInventoryAllottedInventoryStateByIdSuccess = (
+  inventorystatebyid
+) => ({
+  type: GET_INVENTORYALLOTTED_INVENTORYSTATEBYID_SUCCESS,
+  payload: inventorystatebyid,
+});
+
+export const getInventoryAllottedInventoryStateByIdFail = (error) => ({
+  type: GET_INVENTORYALLOTTED_INVENTORYSTATEBYID_FAIL,
   payload: error,
 });

@@ -47,6 +47,12 @@ import {
   DEALLOT_PAIRING,
   DEALLOT_PAIRING_SUCCESS,
   DEALLOT_PAIRING_FAIL,
+  GET_INVENTORYALLOTTED_MATERIALSTATUS_SUCCESS,
+  GET_INVENTORYALLOTTED_MATERIALSTATUS_FAIL,
+  GET_INVENTORYALLOTTED_PAIRINGSTATUS_SUCCESS,
+  GET_INVENTORYALLOTTED_PAIRINGSTATUS_FAIL,
+  GET_INVENTORYALLOTTED_INVENTORYSTATEBYID_SUCCESS,
+  GET_INVENTORYALLOTTED_INVENTORYSTATEBYID_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -60,6 +66,9 @@ const INIT_STATE = {
   allottedsistributor: [],
   allottedlco: [],
   allottedpairinglist: [],
+  materialstatus: [],
+  pairingstatus: [],
+  inventorystatebyid: [],
   pagination: {},
   error: {},
   loading: false,
@@ -362,6 +371,32 @@ const InventoryAllotted = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
         loading: false,
+      };
+
+    case GET_INVENTORYALLOTTED_MATERIALSTATUS_SUCCESS:
+      return {
+        ...state,
+        materialstatus: action.payload,
+        loading: false,
+      };
+
+    case GET_INVENTORYALLOTTED_MATERIALSTATUS_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_INVENTORYALLOTTED_PAIRINGSTATUS_SUCCESS:
+      return {
+        ...state,
+        pairingstatus: action.payload,
+        loading: false,
+      };
+
+    case GET_INVENTORYALLOTTED_PAIRINGSTATUS_FAIL:
+      return {
+        ...state,
+        error: action.payload,
       };
 
     default:

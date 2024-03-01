@@ -631,10 +631,17 @@ export const GET_INVENTORYALLOTTED_STBLIST =
 
 export const GET_INVENTORYALLOTTED_PAIRING =
   "/pairing-allotment?expand=created_by_lbl,status_lbl,cas_lbl,brand_lbl,boxtype_lbl,is_embeded_lbl,operator_lbl,warehouse_lbl,inv_state_lbl,other_id_lbl,rsd_startdate&filter[status]=1&filter[account_id]=0&page=1&per-page=50&vr=web1.0";
-export const GET_INVENTORYBLACKLISTED_PAIRINGLIST =
+export const GET_INVENTORYALLOTTED_PAIRINGLIST =
   "/pairing?fields=id,smartcardno,stbno,status&expand=is_embeded_lbl,boxtype_lbl,cas_lbl,brand_lbl,operator_lbl,status_lbl&filter[status]=1&page=1&per-page=500&vr=web1.0";
 export const ALLOT_PAIRING = "/pairing-allotment?vr=web1.0";
 export const DEALLOT_PAIRING = "/pairing-allotment/0?vr=web1.0";
+export const GET_INVENTORYALLOTTED_MATERIALSTATUS =
+  "/list/MaterialType?fields=id,name&vr=web1.0";
+export const GET_INVENTORYALLOTTED_PAIRINGSTATUS =
+  "/list/PairingStatus?fields=id,name&vr=web1.0";
+export const GET_INVENTORYALLOTTED_INVENTORYSTATEBYID = (id) => {
+  return `/inventory-state/list?fields=id,name&filter[state_type]=${id}&vr=web1.0`;
+};
 
 export const getAllottedPairingUrl = (currPage, perPage) => {
   // console.log("current page in Allotted url - ", currPage, perPage);

@@ -16,6 +16,8 @@ import {
   GET_INVENTORYALLOTTED_PAIRINGLIST,
   ALLOT_PAIRING,
   DEALLOT_PAIRING,
+  GET_INVENTORYALLOTTED_MATERIALSTATUS,
+  GET_INVENTORYALLOTTED_PAIRINGSTATUS,
 } from "./actionTypes";
 import {
   getInventoryAllottedSmartcard as onGetInventoryAllottedSmartcard,
@@ -53,6 +55,10 @@ import {
   allotPairingFail,
   deallotPairingSuccess,
   deallotPairingFail,
+  getInventoryAllottedMaterialstatusSuccess,
+  getInventoryAllottedPairingstatusSuccess,
+  getInventoryAllottedMaterialstatusFail,
+  getInventoryAllottedPairingstatusFail,
 } from "./actions";
 import {
   getInventoryAllottedSmartcard,
@@ -71,6 +77,8 @@ import {
   getInventoryAllottedPairinglist,
   allotPairing,
   deallotPairing,
+  getInventoryAllottedMaterialstatus,
+  getInventoryAllottedPairingstatus,
 } from "../../helpers/backend_helper";
 
 export const getAllottedPairingStore = (state) => state.allottedpairing;
@@ -244,6 +252,24 @@ function* onDeallotPairing({ payload: allottedpairing }) {
   }
 }
 
+function* fetchInventoryAllottedMaterialstatus() {
+  try {
+    const response = yield call(getInventoryAllottedMaterialstatus);
+    yield put(getInventoryAllottedMaterialstatusSuccess(response.data));
+  } catch (error) {
+    yield put(getInventoryAllottedMaterialstatusFail(error));
+  }
+}
+
+function* fetchInventoryAllottedPairingstatus() {
+  try {
+    const response = yield call(getInventoryAllottedPairingstatus);
+    yield put(getInventoryAllottedPairingstatusSuccess(response.data));
+  } catch (error) {
+    yield put(getInventoryAllottedPairingstatusFail(error));
+  }
+}
+
 function* inventoryallottedSaga() {
   yield takeEvery(
     GET_INVENTORYALLOTTED_SMARTCARD,
@@ -279,6 +305,14 @@ function* inventoryallottedSaga() {
   );
   yield takeEvery(ALLOT_PAIRING, onAllotPairing);
   yield takeEvery(DEALLOT_PAIRING, onDeallotPairing);
+  yield takeEvery(
+    GET_INVENTORYALLOTTED_MATERIALSTATUS,
+    fetchInventoryAllottedMaterialstatus
+  );
+  yield takeEvery(
+    GET_INVENTORYALLOTTED_PAIRINGSTATUS,
+    fetchInventoryAllottedPairingstatus
+  );
 }
 
 export default inventoryallottedSaga;

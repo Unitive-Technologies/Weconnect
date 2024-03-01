@@ -1231,6 +1231,13 @@ export const getInventoryTrack = async (currentPage, perPage = 20) => {
   );
 };
 
+export const getInventoryAllottedMaterialstatus = () =>
+  get(url.GET_INVENTORYALLOTTED_MATERIALSTATUS);
+export const getInventoryAllottedPairingstatus = () =>
+  get(url.GET_INVENTORYALLOTTED_PAIRINGSTATUS);
+export const getInventoryAllottedInventoryStateById = (id) =>
+  get(url.GET_INVENTORYALLOTTED_INVENTORYSTATEBYID(id));
+
 export const getInventoryTrackAction = () => get(url.GET_INVENTORYTRACK_ACTION);
 export const getInventoryStockScCastype = () =>
   get(url.GET_INVENTORYSTOCK_SC_CASTYPE);
