@@ -164,6 +164,7 @@ const LCOList = (props) => {
   const [showSettings, setShowSettings] = useState(false);
   const [showAdjustColumnDownload, setShowAdjustColumnDownload] =
     useState(false);
+
   const columns = useMemo(
     () => [
       {
@@ -532,6 +533,7 @@ const LCOList = (props) => {
       <UploadModal
         isOpen={showUploadLco}
         handleUploadLco={() => setShowUploadLco(false)}
+        lcoStatus={lcoStatus}
       />
       <BulkUpdateModal
         isOpen={showBulkUpdateLco}

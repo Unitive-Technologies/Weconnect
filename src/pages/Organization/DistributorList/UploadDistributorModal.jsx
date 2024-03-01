@@ -29,17 +29,12 @@ import {
 } from "../../../helpers/backend_helper";
 
 const UploadDistributorModal = (props) => {
-  const {
-    isOpen,
-    toggleUploadDistributor,
-    distributorsPhase,
-    distributorsStatus,
-  } = props;
+  const { isOpen, toggleUploadDistributor, distributorsStatus } = props;
 
   const dispatch = useDispatch();
   const [uploadTrigger, setUploadTrigger] = useState({});
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [distributorPhase, setDistributorsPhase] = useState("");
+  const [parent_id, setParent_id] = useState("");
   const [status, setStatus] = useState("");
   const [successMsg, setSuccessMsg] = useState(false);
 
@@ -83,7 +78,7 @@ const UploadDistributorModal = (props) => {
     meta_data: {
       type: 2,
       status: parseInt(status),
-      parentRO: parseInt(distributorPhase),
+      parent_id: parseInt(parent_id),
     },
     url: "",
   };
@@ -92,7 +87,7 @@ const UploadDistributorModal = (props) => {
     meta_data: {
       type: 2,
       status: parseInt(status),
-      parentRO: parseInt(distributorsPhase),
+      parent_id: parseInt(parent_id),
     },
     url: "",
   };
@@ -101,7 +96,7 @@ const UploadDistributorModal = (props) => {
     // Send a POST request to the server, from the json request convert data.fields array of strings as headers in a csv file
     downloadDistributorUploadTemplate(distributorDownloadTemplatePayload)
       .then((res) => {
-        debugger;
+        // debugger;
         const fileName = res.data.data.type;
         const fieldStringArray = res.data.data.fields;
         //combine fieldStringArray contents into a single string seperated by commas
@@ -183,7 +178,6 @@ const UploadDistributorModal = (props) => {
         tabIndex="-1"
         toggle={toggleUploadDistributor}
       >
-        {/* <Modal isOpen={modal} toggle={toggle}> */}
         <ModalHeader toggle={toggleUploadDistributor} tag="h4">
           Upload Distributors
         </ModalHeader>
@@ -212,8 +206,8 @@ const UploadDistributorModal = (props) => {
                   type="select"
                   placeholder="Select parent regional office"
                   className="form-select"
-                  value={distributorPhase}
-                  onChange={(e) => setDistributorsPhase(e.target.value)}
+                  value={parent_id}
+                  onChange={(e) => setParent_id(e.target.value)}
                 >
                   <option value="">Select </option>
                   {regOff &&
@@ -343,8 +337,9 @@ const UploadDistributorModal = (props) => {
 };
 
 UploadDistributorModal.propTypes = {
-  toggle: PropTypes.func,
+  toggleUploadDistributor: PropTypes.func,
   isOpen: PropTypes.bool,
+  distributorsStatus: PropTypes.array,
 };
 
 export default UploadDistributorModal;

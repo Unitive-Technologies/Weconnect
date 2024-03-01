@@ -625,6 +625,21 @@ export const uploadDistributorSubmit = async (initiatedToken, formData) => {
   );
 };
 
+export const downloadLcoUploadTemplate = async (data) => {
+  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_LCO, data);
+};
+
+export const updateLcoUploadByToken = async (token, data) => {
+  return put(url.fileUploadLco(token), data);
+};
+
+export const uploadLcoSubmit = async (initiatedToken, formData) => {
+  return await postCompleteResponse(
+    url.uploadLcoSubmit(initiatedToken),
+    formData
+  );
+};
+
 // export const getDistrict = () => get(url.GET_DISTRICT);
 export const addDistrict = (district) => post(url.ADD_DISTRICT, district);
 export const getDistrictStateList = () => get(url.GET_DISTRICT_STATELIST);

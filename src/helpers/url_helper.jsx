@@ -878,3 +878,13 @@ export const fileUploadDistributor = (token) => {
 export const uploadDistributorSubmit = (token) => {
   return `/operator/upload-q/${token}`;
 };
+
+export const DOWNLOAD_SAMPLE_LCO = "/operator/upload-q?vr=web1.0";
+
+export const fileUploadLco = (token) => {
+  return `/operator/upload-q/${token}?vr=web1.0`;
+};
+
+export const uploadLcoSubmit = (token) => {
+  return `/operator/upload-q/${token}`;
+};
