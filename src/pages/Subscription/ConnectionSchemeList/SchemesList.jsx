@@ -221,6 +221,18 @@ const SchemesList = ({ selectedRow }) => {
             }
           </tbody>
         </Table>
+        {/* <TableContainer
+          isPagination={true}
+          columns={columns}
+          data={selectedRow}
+          isGlobalFilter={true}
+          isShowingPageLength={true}
+          customPageSize={8}
+          tableClass="table align-middle table-nowrap table-hover"
+          theadClass="table-light"
+          paginationDiv="col-sm-12 col-md-7"
+          pagination="pagination pagination-rounded justify-content-end mt-4"
+        /> */}
       </CardBody>
     </Card>
   );

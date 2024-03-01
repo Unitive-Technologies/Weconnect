@@ -36,7 +36,6 @@ const ConnectionSchemeList = (props) => {
   document.title = "Connection Schemes | VDigital";
 
   const dispatch = useDispatch();
-
   const selectConnectionSchemeState = (state) => state.connectionscheme;
   const ConnectionSchemeProperties = createSelector(
     selectConnectionSchemeState,
@@ -150,6 +149,8 @@ const ConnectionSchemeList = (props) => {
           <input
             type="checkbox"
             onChange={() => handleCheckboxClick(cellProps.row.original)}
+            // checked={isChecked}
+            // onClick={() => setIsChecked(!isChecked)}
           />
         ),
       },
