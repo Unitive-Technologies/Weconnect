@@ -888,3 +888,13 @@ export const fileUploadLco = (token) => {
 export const uploadLcoSubmit = (token) => {
   return `/operator/upload-q/${token}`;
 };
+
+export const DOWNLOAD_SAMPLE_UPDATELCO = "/operator-update/upload-q?vr=web1.0";
+
+export const fileUploadUpdateLco = (token) => {
+  return `/operator-update/upload-q/${token}?vr=web1.0`;
+};
+
+export const uploadUpdateLcoSubmit = (token) => {
+  return `/operator-update/upload-q/${token}`;
+};
