@@ -61,7 +61,7 @@ const ConnectionSchemeList = (props) => {
   const [viewConnectionSchemeData, setViewConnectionSchemeData] = useState({});
   const [showBulkRemoval, setShowBulkRemoval] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const [selectedRow, setSelectedRow] = useState({});
+  const [selectedRows, setSelectedRows] = useState([]);
   const [showWarning, setShowWarning] = useState(false);
 
   const handleWarning = () => {
@@ -87,10 +87,29 @@ const ConnectionSchemeList = (props) => {
   };
 
   const handleCheckboxClick = (row) => {
-    setShowViewConnectionScheme(false);
-    setIsChecked(true);
-    setSelectedRow(row);
+    console.log(
+      "Before state update - selectedRows:",
+      JSON.stringify(selectedRows)
+    );
+    const isSelected = selectedRows.some(
+      (selectedRow) => selectedRow.id === row.id
+    );
+
+    if (isSelected) {
+      // If already selected, remove it
+      setSelectedRows((prevSelectedRows) =>
+        prevSelectedRows.filter((selectedRow) => selectedRow.id !== row.id)
+      );
+    } else {
+      // If not selected, add it
+      setSelectedRows((prevSelectedRows) => [...prevSelectedRows, row]);
+    }
+    console.log(
+      "After state update - selectedRows:",
+      JSON.stringify(selectedRows)
+    );
   };
+
   const stbBrandTableSchema = {
     subTableArrayKeyName: "stbbrands",
     keyColumn: "id",
@@ -145,15 +164,21 @@ const ConnectionSchemeList = (props) => {
         Header: "*",
         disableFilters: true,
         filterable: true,
-        Cell: (cellProps) => (
-          <input
-            type="checkbox"
-            onChange={() => handleCheckboxClick(cellProps.row.original)}
-            // checked={isChecked}
-            // onClick={() => setIsChecked(!isChecked)}
-          />
-        ),
+        Cell: (cellProps) => {
+          const isSelected = selectedRows.some(
+            (selectedRow) => selectedRow.id === cellProps.row.original.id
+          );
+          console.log("isSelected:", isSelected);
+          return (
+            <input
+              type="checkbox"
+              onChange={() => handleCheckboxClick(cellProps.row.original)}
+              checked={isSelected}
+            />
+          );
+        },
       },
+
       {
         Header: "#",
         // accessor: "name",
@@ -291,7 +316,7 @@ const ConnectionSchemeList = (props) => {
         },
       },
     ],
-    []
+    [selectedRows]
   );
 
   useEffect(() => {
@@ -317,7 +342,7 @@ const ConnectionSchemeList = (props) => {
       {
         name: "Bulk Assign to Operator",
         action: () => {
-          if (Object.keys(selectedRow).length === 0) {
+          if (Object.keys(selectedRows).length === 0) {
             setShowWarning(true);
           } else {
             setShowBulkAssign(true);
@@ -357,7 +382,7 @@ const ConnectionSchemeList = (props) => {
       <BulkAssign
         isOpen={showBulkAssign}
         toggle={toggleBulkAssign}
-        selectedRow={selectedRow}
+        selectedRow={selectedRows}
       />
       <BulkRemoval isOpen={showBulkRemoval} toggle={toggleBulkRemoval} />
       <div

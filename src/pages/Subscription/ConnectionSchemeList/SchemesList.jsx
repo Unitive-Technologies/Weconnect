@@ -56,7 +56,7 @@ const SchemesList = ({ selectedRow }) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"Name"}
+                  {cellProps.row.original.name}
                 </Link>
               </h5>
             </>
@@ -79,7 +79,7 @@ const SchemesList = ({ selectedRow }) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"Code"}
+                  {cellProps.row.original.code}
                 </Link>
               </h5>
             </>
@@ -103,7 +103,7 @@ const SchemesList = ({ selectedRow }) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"LCO Discount"}
+                  {cellProps.row.original.boxtype_lbl}
                 </Link>
               </h5>
             </>
@@ -127,7 +127,7 @@ const SchemesList = ({ selectedRow }) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"Hardward charges"}
+                  {cellProps.row.original.hardware_charge}
                 </Link>
               </h5>
             </>
@@ -151,7 +151,7 @@ const SchemesList = ({ selectedRow }) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"installation charges"}
+                  {cellProps.row.original.installation_charge}
                 </Link>
               </h5>
             </>
@@ -175,7 +175,7 @@ const SchemesList = ({ selectedRow }) => {
                 className="font-size-14 mb-1"
               >
                 <Link className="text-dark" to="#">
-                  {"Status"}
+                  {cellProps.row.original.status_lbl}
                 </Link>
               </h5>
             </>
@@ -190,7 +190,7 @@ const SchemesList = ({ selectedRow }) => {
   return (
     <Card>
       <CardBody>
-        <Table>
+        {/* <Table>
           <thead>
             <tr>
               <th>#</th>
@@ -220,8 +220,8 @@ const SchemesList = ({ selectedRow }) => {
               // ))
             }
           </tbody>
-        </Table>
-        {/* <TableContainer
+        </Table> */}
+        <TableContainer
           isPagination={true}
           columns={columns}
           data={selectedRow}
@@ -232,7 +232,7 @@ const SchemesList = ({ selectedRow }) => {
           theadClass="table-light"
           paginationDiv="col-sm-12 col-md-7"
           pagination="pagination pagination-rounded justify-content-end mt-4"
-        /> */}
+        />
       </CardBody>
     </Card>
   );
