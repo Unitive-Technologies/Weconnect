@@ -21,7 +21,7 @@ import * as Yup from "yup";
 import { getConnectionScheme as onGetConnectionScheme } from "/src/store/connectionschemelist/actions";
 
 const BulkAssign = (props) => {
-  const { isOpen, toggle, selectedRow } = props;
+  const { isOpen, toggle, selectedRows } = props;
   const [showAddOperator, setShowAddOperator] = useState(false);
   const [addOperatorsData, setAddOperatorsData] = useState([]);
   const [toggleSwitch, settoggleSwitch] = useState(true);
@@ -142,7 +142,7 @@ const BulkAssign = (props) => {
       try {
         const newSetting = {
           // operator_id: selectedUsers.map((user) => user.id),
-          scheme_ids: selectedRow.id,
+          scheme_ids: selectedRows.id,
         };
 
         console.log("newSetting:", JSON.stringify(newSetting));
@@ -179,7 +179,7 @@ const BulkAssign = (props) => {
           toggleClose={toggleAddOperator}
           data={addOperatorsData}
           setData={setAddOperatorsData}
-          selectedRowId={selectedRow.id}
+          selectedRows={selectedRows}
         />
       )}
       <Modal
@@ -270,7 +270,7 @@ const BulkAssign = (props) => {
               <p>
                 ** To select row, click <i className="mdi mdi-check"></i>{" "}
               </p>
-              <SchemesList selectedRow={selectedRow} />
+              <SchemesList selectedRow={selectedRows} />
             </Row>
             <Row>
               <Col sm="12">

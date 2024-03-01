@@ -20,7 +20,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 
 const AddOperators = (props) => {
-  const { isOpen, toggleClose, data, setData, selectedRowId } = props;
+  const { isOpen, toggleClose, data, setData, selectedRows } = props;
   const [selectedUsers, setSelectedUsers] = useState([]);
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   console.log("data in addoperators:" + JSON.stringify(data));
@@ -218,9 +218,9 @@ const AddOperators = (props) => {
     const getFilteredData = async () => {
       try {
         const token = "Bearer " + localStorage.getItem("temptoken");
-
+        const schemeIds = selectedRows.map((row) => row.id).join(",");
         const response = await axios.get(
-          `${API_URL}/operator/list?fields=id,name,code&expand=type_lbl,status_lbl,branch_lbl,distributor_lbl&notfilter[type]=0&notfilter[scheme_id]=${selectedRowId}&page=1&per-page=500&vr=web1.0`,
+          `${API_URL}/operator/list?fields=id,name,code&expand=type_lbl,status_lbl,branch_lbl,distributor_lbl&notfilter[type]=0&notfilter[scheme_id]=${schemeIds}&page=1&per-page=500&vr=web1.0`,
           {
             headers: {
               Authorization: token,
@@ -237,7 +237,7 @@ const AddOperators = (props) => {
     };
 
     getFilteredData();
-  }, [selectedRowId]);
+  }, [selectedRows]);
   return (
     <Modal
       isOpen={isOpen}

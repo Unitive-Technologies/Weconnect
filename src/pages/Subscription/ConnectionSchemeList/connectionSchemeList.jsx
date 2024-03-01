@@ -173,7 +173,7 @@ const ConnectionSchemeList = (props) => {
             <input
               type="checkbox"
               onChange={() => handleCheckboxClick(cellProps.row.original)}
-              checked={isSelected}
+              // checked={isSelected}
             />
           );
         },
@@ -382,7 +382,7 @@ const ConnectionSchemeList = (props) => {
       <BulkAssign
         isOpen={showBulkAssign}
         toggle={toggleBulkAssign}
-        selectedRow={selectedRows}
+        selectedRows={selectedRows}
       />
       <BulkRemoval isOpen={showBulkRemoval} toggle={toggleBulkRemoval} />
       <div
