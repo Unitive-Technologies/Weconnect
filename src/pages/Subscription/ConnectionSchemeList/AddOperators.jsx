@@ -20,8 +20,16 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 
 const AddOperators = (props) => {
-  const { isOpen, toggleClose, data, setData, selectedRows } = props;
-  const [selectedUsers, setSelectedUsers] = useState([]);
+  const {
+    isOpen,
+    toggleClose,
+    data,
+    setData,
+    selectedRows,
+    selectedUsers,
+    setSelectedUsers,
+  } = props;
+  //   const [selectedUsers, setSelectedUsers] = useState([]);
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   console.log("data in addoperators:" + JSON.stringify(data));
   const [tableList, setTableList] = useState([]);
@@ -238,6 +246,13 @@ const AddOperators = (props) => {
 
     getFilteredData();
   }, [selectedRows]);
+
+  const deleteSelectedUser = (index) => {
+    const list = [...selectedUsers];
+    list.splice(index, 1);
+    setSelectedUsers(list);
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -324,6 +339,20 @@ const AddOperators = (props) => {
                             <td>{row && row.name}</td>
                             <td>{row && row.code}</td>
                             <td>{row && row.type_lbl}</td>
+                            <td>
+                              <h5>
+                                <Link
+                                  className="text-dark"
+                                  to="#"
+                                  onClick={() => deleteSelectedUser(index)}
+                                >
+                                  <i
+                                    className="mdi mdi-delete font-size-18"
+                                    id="deletetooltip"
+                                  />
+                                </Link>
+                              </h5>
+                            </td>
                           </tr>
                         ))}
                     </tbody>

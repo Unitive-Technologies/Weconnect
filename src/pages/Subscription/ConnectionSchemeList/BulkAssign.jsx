@@ -25,6 +25,7 @@ const BulkAssign = (props) => {
   const [showAddOperator, setShowAddOperator] = useState(false);
   const [addOperatorsData, setAddOperatorsData] = useState([]);
   const [toggleSwitch, settoggleSwitch] = useState(true);
+  const [selectedUsers, setSelectedUsers] = useState([]);
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const toggleAddOperator = () => {
     setShowAddOperator(!showAddOperator);
@@ -126,7 +127,7 @@ const BulkAssign = (props) => {
     enableReinitialize: true,
     initialValues: {
       operator_id: [],
-      // scheme_ids:
+      scheme_ids: [],
     },
     validationSchema: Yup.object({
       // setting: Yup.object({
@@ -140,17 +141,17 @@ const BulkAssign = (props) => {
 
     onSubmit: async (values) => {
       try {
-        const newSetting = {
-          // operator_id: selectedUsers.map((user) => user.id),
-          scheme_ids: selectedRows.id,
+        const newAssign = {
+          operator_id: selectedUsers.map((user) => user.id),
+          scheme_ids: selectedRows.map((user) => user.id),
         };
 
-        console.log("newSetting:", JSON.stringify(newSetting));
+        console.log("newSetting:", JSON.stringify(newAssign));
         const token = "Bearer " + localStorage.getItem("temptoken");
 
         const response = await axios.put(
           `${API_URL}/operator-scheme?vr=web1.0`,
-          newSetting,
+          newAssign,
           {
             headers: {
               Authorization: token,
@@ -180,6 +181,8 @@ const BulkAssign = (props) => {
           data={addOperatorsData}
           setData={setAddOperatorsData}
           selectedRows={selectedRows}
+          selectedUsers={selectedUsers}
+          setSelectedUsers={setSelectedUsers}
         />
       )}
       <Modal
