@@ -13,6 +13,7 @@ import AllottedPairing from "./AllotPairing";
 import DeallotPairing from "./DeAllotPairing";
 import UploadParing from "./UploadPairing";
 import UploadAllottedPairing from "./UploadAllottedPairing";
+import UploadMaterialstatus from "./UploadMaterialstatus";
 
 const StockPairing = (props) => {
   const {
@@ -554,6 +555,12 @@ const StockPairing = (props) => {
         toggleUploadModal={handleShowUploadAllottedPairing}
         allottedusertype={allottedusertype}
         allottedoperatorlist={allottedoperatorlist}
+      />
+      <UploadMaterialstatus
+        isOpen={showUploadMaterialstatus}
+        toggle={handleShowUploadMaterialstatus}
+        materialstatus={materialstatus}
+        pairingstatus={pairingstatus}
       />
       <Row>
         <Col lg="12">

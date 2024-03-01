@@ -1069,6 +1069,24 @@ export const uploadPairingSubmit = async (initiatedToken, formData) => {
   );
 };
 
+export const downloadUploadMaterialstatusTemplate = async (data) => {
+  return await postCompleteResponse(
+    url.DOWNLOAD_SAMPLE_PAIRING_MATERIALSTATUS,
+    data
+  );
+};
+
+export const uploadMaterialstatusByToken = async (token, data) => {
+  return put(url.fileUploadMaterialstatus(token), data);
+};
+
+export const uploadMaterialstatusSubmit = async (initiatedToken, formData) => {
+  return await postCompleteResponse(
+    url.uploadMaterialstatusSubmit(initiatedToken),
+    formData
+  );
+};
+
 export const downloadSmartcardAllotmentUploadTemplate = async (data) => {
   return await postCompleteResponse(
     url.DOWNLOAD_SAMPLE_SMARTCARD_ALLOTMENT,

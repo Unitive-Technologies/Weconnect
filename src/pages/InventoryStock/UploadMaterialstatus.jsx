@@ -21,9 +21,9 @@ import Dropzone from "react-dropzone";
 import { useDispatch } from "react-redux";
 import { addInventoryStockPairing as onAddInventoryStockPairing } from "/src/store/inventorystock/actions";
 import {
-  downloadSmartcardBulkUpdateTemplate,
-  updateSmartcardBulkUpdateByToken,
-  bulkUpdateSmartcardSubmit,
+  downloadUploadMaterialstatusTemplate,
+  uploadMaterialstatusByToken,
+  uploadMaterialstatusSubmit,
 } from "../../helpers/backend_helper";
 import { getResponse } from "../../helpers/api_helper";
 
@@ -57,9 +57,9 @@ const UploadMaterialstatus = (props) => {
 
   function handleAcceptedFiles(files) {
     setSelectedFiles(files);
-    updateSmartcardBulkUpdateByToken(
+    uploadMaterialstatusByToken(
       uploadTrigger.token,
-      smartcardBulkUpdateSavedTemplatePayload
+      uploadMaterialstatusSavedTemplatePayload
     )
       .then((res) => {
         console.log(
@@ -71,20 +71,20 @@ const UploadMaterialstatus = (props) => {
       });
   }
 
-  const smartcardBulkUpdateSavedTemplatePayload = {
+  const uploadMaterialstatusSavedTemplatePayload = {
     meta_data: { type: null },
     url: "",
   };
 
-  const smartcardBulkUpdateDownloadTemplatePayload = {
+  const uploadMaterialstatusDownloadTemplatePayload = {
     meta_data: { type: null },
     url: "",
   };
 
   const handleDownloadSampleFile = () => {
     // Send a POST request to the server, from the json request convert data.fields array of strings as headers in a csv file
-    downloadSmartcardBulkUpdateTemplate(
-      smartcardBulkUpdateDownloadTemplatePayload
+    downloadUploadMaterialstatusTemplate(
+      uploadMaterialstatusDownloadTemplatePayload
     )
       .then((res) => {
         debugger;
@@ -126,7 +126,7 @@ const UploadMaterialstatus = (props) => {
     const formData = new FormData();
     formData.append("qFile", selectedFiles[0]); // appending file
 
-    bulkUpdateSmartcardSubmit(uploadTrigger.token, formData)
+    uploadMaterialstatusSubmit(uploadTrigger.token, formData)
       .then((res) => {
         // debugger;
         toggleSuccessMsg();
