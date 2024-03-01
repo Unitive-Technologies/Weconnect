@@ -714,12 +714,12 @@ export const uploadBulkPairingSubmit = (token) => {
 };
 
 export const DOWNLOAD_SAMPLE_PAIRING_MATERIALSTATUS =
-  "/pairing/upload-q?vr=web1.0";
+  "/pairing-status/upload-q?vr=web1.0";
 export const fileUploadMaterialstatus = (token) => {
-  return `/pairing/upload-q/${token}?vr=web1.0`;
+  return `/pairing-status/upload-q/${token}?vr=web1.0`;
 };
 export const uploadMaterialstatusSubmit = (token) => {
-  return `/pairing/upload-q/${token}`;
+  return `/pairing-status/upload-q/${token}`;
 };
 
 export const DOWNLOAD_SAMPLE_SMARTCARD_ALLOTMENT =

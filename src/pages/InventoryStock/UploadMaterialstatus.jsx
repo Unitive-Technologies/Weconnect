@@ -39,6 +39,14 @@ const UploadMaterialstatus = (props) => {
   const [inventorystateId, setInventorystateId] = useState();
   const [inventorystate, setInventorystate] = useState([]);
 
+  const handleToggle = () => {
+    toggle();
+    setMaterialstatusId();
+    setPairingstatusId();
+    setInventorystateId();
+    setInventorystate([]);
+  };
+
   const toggleSuccessMsg = () => {
     setSuccessMsg(!successMsg);
   };
@@ -72,12 +80,22 @@ const UploadMaterialstatus = (props) => {
   }
 
   const uploadMaterialstatusSavedTemplatePayload = {
-    meta_data: { type: null },
+    meta_data: {
+      type: null,
+      material_type: parseInt(materialstatusId),
+      status_code: parseInt(pairingstatusId),
+      inventory_state: parseInt(inventorystateId),
+    },
     url: "",
   };
 
   const uploadMaterialstatusDownloadTemplatePayload = {
-    meta_data: { type: null },
+    meta_data: {
+      type: null,
+      material_type: parseInt(materialstatusId),
+      status_code: parseInt(pairingstatusId),
+      inventory_state: parseInt(inventorystateId),
+    },
     url: "",
   };
 
@@ -139,7 +157,7 @@ const UploadMaterialstatus = (props) => {
 
         console.log("cleared the selected files and upload trigger");
         dispatch(onAddInventoryStockPairing(res.data.data));
-        toggle();
+        handleToggle();
       })
       .catch((error) => {
         console.log("error in upload:" + error);
@@ -167,9 +185,9 @@ const UploadMaterialstatus = (props) => {
         centered={true}
         className="exampleModal"
         tabIndex="-1"
-        toggle={toggle}
+        toggle={handleToggle}
       >
-        <ModalHeader toggle={toggle} tag="h4">
+        <ModalHeader toggle={handleToggle} tag="h4">
           Upload Material Status
         </ModalHeader>
         <ModalBody>
@@ -194,9 +212,7 @@ const UploadMaterialstatus = (props) => {
                 <Row>
                   <Col lg={4}>
                     <div className="mb-3">
-                      <Label className="form-label">
-                        Material Status<span style={{ color: "red" }}>*</span>
-                      </Label>
+                      <Label className="form-label">Material Status</Label>
                       <Input
                         name="materialstatus"
                         type="select"
@@ -217,9 +233,7 @@ const UploadMaterialstatus = (props) => {
                 <Row>
                   <Col lg={4}>
                     <div className="mb-3">
-                      <Label className="form-label">
-                        Pairing Status<span style={{ color: "red" }}>*</span>
-                      </Label>
+                      <Label className="form-label">Pairing Status</Label>
                       <Input
                         name="pairingstatus"
                         type="select"
@@ -240,9 +254,7 @@ const UploadMaterialstatus = (props) => {
                 <Row>
                   <Col lg={4}>
                     <div className="mb-3">
-                      <Label className="form-label">
-                        Inventory State<span style={{ color: "red" }}>*</span>
-                      </Label>
+                      <Label className="form-label">Inventory State</Label>
                       <Input
                         name="inventorystate"
                         type="select"

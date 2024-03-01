@@ -255,6 +255,7 @@ function* onDeallotPairing({ payload: allottedpairing }) {
 function* fetchInventoryAllottedMaterialstatus() {
   try {
     const response = yield call(getInventoryAllottedMaterialstatus);
+    // console.log("Material status: ", response.data);
     yield put(getInventoryAllottedMaterialstatusSuccess(response.data));
   } catch (error) {
     yield put(getInventoryAllottedMaterialstatusFail(error));

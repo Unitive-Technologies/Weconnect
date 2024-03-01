@@ -308,12 +308,12 @@ export const getInventoryAllottedMaterialstatus = () => ({
 });
 
 export const getInventoryAllottedMaterialstatusSuccess = (materialstatus) => ({
-  type: GET_INVENTORYALLOTTED_MATERIALSTATUS,
+  type: GET_INVENTORYALLOTTED_MATERIALSTATUS_SUCCESS,
   payload: materialstatus,
 });
 
 export const getInventoryAllottedMaterialstatusFail = (error) => ({
-  type: GET_INVENTORYALLOTTED_MATERIALSTATUS,
+  type: GET_INVENTORYALLOTTED_MATERIALSTATUS_FAIL,
   payload: error,
 });
 
@@ -322,12 +322,12 @@ export const getInventoryAllottedPairingstatus = () => ({
 });
 
 export const getInventoryAllottedPairingstatusSuccess = (pairingstatus) => ({
-  type: GET_INVENTORYALLOTTED_PAIRINGSTATUS,
+  type: GET_INVENTORYALLOTTED_PAIRINGSTATUS_SUCCESS,
   payload: pairingstatus,
 });
 
 export const getInventoryAllottedPairingstatusFail = (error) => ({
-  type: GET_INVENTORYALLOTTED_PAIRINGSTATUS,
+  type: GET_INVENTORYALLOTTED_PAIRINGSTATUS_FAIL,
   payload: error,
 });
 

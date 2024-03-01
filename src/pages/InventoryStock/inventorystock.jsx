@@ -61,7 +61,7 @@ import {
   getInventoryAllottedStblist as onGetInventoryAllottedStblist,
   getInventoryAllottedPairinglist as onGetInventoryAllottedPairinglist,
   getInventoryAllottedPairingstatus as onGetInventoryAllottedPairingstatus,
-  getInventoryAllottedMaterialstatus as onGetInventoryAllottedMaterialstaus,
+  getInventoryAllottedMaterialstatus as onGetInventoryAllottedMaterialstatus,
 } from "/src/store/inventoryallotted/actions";
 import StockStb from "./StockStb";
 import StockPairing from "./StockPairing";
@@ -297,7 +297,7 @@ const InventoryStock = (props) => {
       dispatch(onGetInventoryAllottedUsertype());
       dispatch(onGetInventoryAllottedStblist());
       dispatch(onGetInventoryAllottedPairinglist());
-      dispatch(onGetInventoryAllottedMaterialstaus());
+      dispatch(onGetInventoryAllottedMaterialstatus());
       dispatch(onGetInventoryAllottedPairingstatus());
     }
   }, [dispatch, allottedpairing]);
@@ -1188,6 +1188,8 @@ const InventoryStock = (props) => {
   const handleShowUploadAllottedSmartcard = () => {
     setShowUploadAllottedSmartcard(!showUploadAllottedSmartcard);
   };
+
+  // console.log("Material status: ", materialstatus);
 
   const getFilteredTableActions = () => {
     let actions = [];
