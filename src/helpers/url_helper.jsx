@@ -236,6 +236,37 @@ export const getChannelListUrl = (currPage, perPage) => {
   return `/channel?expand=created_by_lbl,broadcaster_lbl,genre_lbl,language_lbl,channel_type_lbl,isAlacarte_lbl,status_lbl,isFta_lbl,isNCF_lbl&sort=name&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
 
+export const DOWNLOAD_SAMPLE_CHANNEL = "/channel/upload-q?vr=web1.0";
+
+export const fileUploadChannel = (token) => {
+  return `/channel/upload-q/${token}?vr=web1.0`;
+};
+
+export const uploadChannelSubmit = (token) => {
+  return `/channel/upload-q/${token}`;
+};
+
+export const DOWNLOAD_SAMPLE_BULKUPDATECHANNEL = "/channel-update/upload-q?vr=web1.0";
+
+export const fileUploadBulkUpdateChannel = (token) => {
+  return `/channel-update/upload-q/${token}?vr=web1.0`;
+};
+
+export const uploadBulkUpdateChannelSubmit = (token) => {
+  return `/channel-update/upload-q/${token}`;
+};
+
+export const DOWNLOAD_SAMPLE_BULKUPDATECHANNELCASCODE = "/package-channel-cascode-assoc/upload-q?vr=web1.0";
+
+export const fileUploadBulkUpdateChannelCascode = (token) => {
+  return `/package-channel-cascode-assoc/upload-q/${token}?vr=web1.0`;
+};
+
+export const uploadBulkUpdateChannelCascodeSubmit = (token) => {
+  return `/package-channel-cascode-assoc/upload-q/${token}`;
+};
+
+
 export const GET_BROADCASTERBOUQUETLIST =
   "/broadcaster-bouque?expand=created_by_lbl,status_lbl,broadcaster_lbl,channel_type_lbl,isFta_lbl,isNCF_lbl,channels&sort=name&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_BROADCASTERBOUQUETLIST = "/broadcaster-bouque?vr=web1.0";

@@ -427,9 +427,13 @@ const ChannelList = (props) => {
         channelListType={channelListType}
       />
       <UploadChannelList
+        title="Upload Channel"
         isOpen={showUploadChannelList}
         toggleUploadModal={toggleUploadModal}
+        channelListStatus={channelListStatus}
+        actiontype={"add"}
       />
+
       <BulkUpdateChannelList
         isOpen={showBulkUpdateChannelList}
         toggleUpdateModal={toggleUpdateModal}
@@ -437,6 +441,7 @@ const ChannelList = (props) => {
       <BulkUpdateCasCodeChannelList
         isOpen={showBulkUpdateCasCodeChannelList}
         handleUpdateCasCode={handleUpdateCasCode}
+        channelListCascode={channelListCascode}
       />
       <ViewChannel
         isOpen={Boolean(viewChannelList)}
