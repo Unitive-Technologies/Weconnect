@@ -26,8 +26,8 @@ const AddOperators = (props) => {
     id,
     setData,
     selectedRowId,
-    expiryDate,
-    setExpiryDate,
+    expiryDates,
+    setExpiryDates,
     selectedUsers,
     setSelectedUsers,
   } = props;
@@ -304,17 +304,30 @@ const AddOperators = (props) => {
     []
   );
 
+  const handleExpiryDateChange = (index, value) => {
+    // Update the expiry date for the specific row
+    const updatedExpiryDates = [...expiryDates];
+    updatedExpiryDates[index] = value;
+    setExpiryDates(updatedExpiryDates);
+  };
   const handleSubmit = () => {
     console.log("add button clicked");
-    const newSelectedOperators = selectedUsers.map((user) => ({
+
+    // Map selectedUsers and expiryDates to create newSelectedOperators array
+    const newSelectedOperators = selectedUsers.map((user, index) => ({
+      id: user.id,
       name: user.name || "",
       code: user.code || "",
       type_lbl: user.type_lbl || "",
-      expiryDate: expiryDate || "", // Using the expirydate state value
+      expiryDate: expiryDates[index] || "", // Using the expiryDate for the specific row
     }));
 
-    console.log("newTargetUsers:", JSON.stringify(newSelectedOperators));
+    console.log("newSelectedOperators:", JSON.stringify(newSelectedOperators));
+
+    // setData with newSelectedOperators
     setData(newSelectedOperators);
+
+    // Close the modal
     toggleClose();
   };
 
@@ -420,24 +433,24 @@ const AddOperators = (props) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {selectedUsers &&
-                        selectedUsers.map((row, i) => (
-                          <tr key={i}>
-                            <td>{i + 1}</td>
-                            <td>{row && row.name}</td>
-                            <td>{row && row.code}</td>
-                            <td>{row && row.type_lbl}</td>
-                            <td>
-                              <Input
-                                type="date"
-                                name="expiryDate"
-                                placeholder="Select Expiry Date"
-                                onChange={(e) => setExpiryDate(e.target.value)}
-                                value={expiryDate}
-                              />
-                            </td>
-                          </tr>
-                        ))}
+                      {selectedUsers.map((row, i) => (
+                        <tr key={i}>
+                          <td>{i + 1}</td>
+                          <td>{row && row.name}</td>
+                          <td>{row && row.code}</td>
+                          <td>{row && row.type_lbl}</td>
+                          <td>
+                            <input
+                              type="date"
+                              placeholder="Select Expiry Date"
+                              value={expiryDates[i]}
+                              onChange={(e) =>
+                                handleExpiryDateChange(i, e.target.value)
+                              }
+                            />
+                          </td>
+                        </tr>
+                      ))}
                     </tbody>
                   </Table>
                 </Col>

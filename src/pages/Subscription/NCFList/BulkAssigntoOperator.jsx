@@ -28,7 +28,9 @@ const BulkAssigntoOperator = (props) => {
   const [selectedRowNestedData, setSelectedRowNestedData] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [ncfData, setNcfData] = useState({});
-  const [expiryDate, setExpiryDate] = useState("");
+  const [expiryDates, setExpiryDates] = useState(
+    Array(selectedUsers.length).fill("")
+  );
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const toggleAddOperator = () => {
     setShowAddOperator(!showAddOperator);
@@ -226,23 +228,37 @@ const BulkAssigntoOperator = (props) => {
 
     onSubmit: async (values) => {
       try {
+        // Construct the new assignment object
         const newAssign = {
           default: 0,
           forceFull: 1,
           replace: 0,
           name: ncfData.name,
           ncf_id: selectedRow.id,
-          operator_expiry: addOperatorsData.reduce((acc, single) => {
-            acc[single.expiryDate] = single.id;
-            return acc;
-          }, {}),
-          // {2024-03-20: [2001], 2024-03-26: [1998]},
+          operator_expiry: {}, // Initialize an empty object
           operator_id: selectedUsers.map((user) => user.id),
         };
+        console.log("addOperatorsData:", addOperatorsData);
+        addOperatorsData.forEach((operator) => {
+          console.log("Expiry Date:", operator.expiryDate);
+          console.log("Operator ID:", operator.id);
+          if (operator.expiryDate && operator.id) {
+            // Check both expiryDate and id
+            console.log("Expiry Date:", operator.expiryDate); // Check expiry date
+            if (!newAssign.operator_expiry[operator.expiryDate]) {
+              // If expiry date key doesn't exist, create it with an array containing the operator ID
+              newAssign.operator_expiry[operator.expiryDate] = [operator.id];
+            } else {
+              // If expiry date key exists, push the operator ID to the existing array
+              newAssign.operator_expiry[operator.expiryDate].push(operator.id);
+            }
+          }
+        });
 
-        console.log("newSetting:", JSON.stringify(newAssign));
+        console.log("newAssign:", JSON.stringify(newAssign));
+
+        // Send the request to update the assignment
         const token = "Bearer " + localStorage.getItem("temptoken");
-
         const response = await axios.put(
           `${API_URL}/ncf-rates/assign?vr=web1.0`,
           newAssign,
@@ -254,13 +270,15 @@ const BulkAssigntoOperator = (props) => {
         );
 
         console.log("Axios Response:", response);
-        toggle();
+
         dispatch(onGetNcf());
+        toggle();
         validation.resetForm();
       } catch (error) {
         console.error("Error in onSubmit:", error);
       }
     },
+
     onReset: () => {
       validation.setValues(validation.initialValues);
     },
@@ -282,8 +300,8 @@ const BulkAssigntoOperator = (props) => {
           selectedRowId={selectedRow.id}
           selectedUsers={selectedUsers}
           setSelectedUsers={setSelectedUsers}
-          expiryDate={expiryDate}
-          setExpiryDate={setExpiryDate}
+          expiryDates={expiryDates}
+          setExpiryDates={setExpiryDates}
         />
       )}
       <Modal
