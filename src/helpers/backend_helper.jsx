@@ -580,6 +580,51 @@ export const uploadCitySubmit = async (initiatedToken, formData) => {
   );
 };
 
+export const downloadChannelUploadTemplate = async (data) => {
+  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_CHANNEL, data);
+};
+
+export const updateChannelUploadByToken = async (token, data) => {
+  return put(url.fileUploadChannel(token), data);
+};
+
+export const uploadChannelSubmit = async (initiatedToken, formData) => {
+  return await postCompleteResponse(
+    url.uploadChannelSubmit(initiatedToken),
+    formData
+  );
+};
+
+export const downloadBulkUpdateChannelUploadTemplate = async (data) => {
+  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_BULKUPDATECHANNEL, data);
+};
+
+export const updateBulkUpdateChannelUploadByToken = async (token, data) => {
+  return put(url.fileUploadBulkUpdateChannel(token), data);
+};
+
+export const uploadBulkUpdateChannelSubmit = async (initiatedToken, formData) => {
+  return await postCompleteResponse(
+    url.uploadBulkUpdateChannelSubmit(initiatedToken),
+    formData
+  );
+};
+
+export const downloadBulkUpdateChannelCascodeUploadTemplate = async (data) => {
+  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_BULKUPDATECHANNELCASCODE, data);
+};
+
+export const updateBulkUpdateChannelCascodeUploadByToken = async (token, data) => {
+  return put(url.fileUploadBulkUpdateChannelCascode(token), data);
+};
+
+export const uploadBulkUpdateChannelCascodeSubmit = async (initiatedToken, formData) => {
+  return await postCompleteResponse(
+    url.uploadBulkUpdateChannelCascodeSubmit(initiatedToken),
+    formData
+  );
+};
+
 export const downloadLocationUploadTemplate = async (data) => {
   return await postCompleteResponse(url.DOWNLOAD_SAMPLE_LOCATION, data);
 };
