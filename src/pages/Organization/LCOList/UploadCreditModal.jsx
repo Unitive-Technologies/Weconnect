@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
 
 import { useSelector, useDispatch } from "react-redux";
-import { getDistributors as onGetDistributors } from "/src/store/distributor/actions";
+import { getLcoPaymentmode as onGetLcoPaymentmode } from "/src/store/lcolist/actions";
 
 const UploadCreditModal = (props) => {
   const { isOpen, handleUploadCredit } = props;
@@ -45,21 +45,20 @@ const UploadCreditModal = (props) => {
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
   }
-  const selectDistributorsState = (state) => state.distributors;
-  const DistributorsProperties = createSelector(
-    selectDistributorsState,
-    (distributors) => ({
-      distributor: distributors.distributors,
-      // loading: distributors.loading,
+  const selectPaymentmodeState = (state) => state.paymentmode;
+  const paymentmodeProperties = createSelector(
+    selectPaymentmodeState,
+    (mode) => ({
+      paymentmode: mode.paymentmode,
     })
   );
 
-  const { distributor } = useSelector(DistributorsProperties);
+  const { paymentmode } = useSelector(paymentmodeProperties);
   useEffect(() => {
-    if (distributor && !distributor.length) {
-      dispatch(onGetDistributors());
+    if (paymentmode && !paymentmode.length) {
+      dispatch(onGetLcoPaymentmode());
     }
-  }, [dispatch, distributor]);
+  }, [dispatch, paymentmode]);
 
   return (
     <Modal
@@ -89,21 +88,11 @@ const UploadCreditModal = (props) => {
             </div>
             <div className="mb-3">
               <Label className="form-label">Payment Mode Values</Label>
-              <ul>
-                <li>TDS</li>
-                <li>Cash</li>
-                <li>Cheque</li>
-                <li>DD</li>
-                <li>NEFT/RTFS/IMPS</li>
-                <li>Online Transfer</li>
-                <li>Debit Card</li>
-                <li>Credit Card</li>
-                <li>Pay TM</li>
-                <li>Other</li>
-                <li>Recharge Coupon</li>
-                <li>Payment Gateway</li>
-                <li>BANK DEPOSIT</li>
-              </ul>
+              {paymentmode.map((mode) => (
+                <ul key={mode.id}>
+                  <li>{mode.name}</li>
+                </ul>
+              ))}
             </div>
             <CardSubtitle className="mb-3"> Select File to Upload</CardSubtitle>
             <Form>
@@ -192,7 +181,7 @@ const UploadCreditModal = (props) => {
 };
 
 UploadCreditModal.propTypes = {
-  toggle: PropTypes.func,
+  handleUploadCredit: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
