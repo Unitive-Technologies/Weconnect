@@ -229,6 +229,7 @@ const AddOperators = (props) => {
         const schemeIds = selectedRows.map((row) => row.id).join(",");
         const response = await axios.get(
           `${API_URL}/operator/list?fields=id,name,code&expand=type_lbl,status_lbl,branch_lbl,distributor_lbl&notfilter[type]=0&notfilter[scheme_id]=${schemeIds}&page=1&per-page=500&vr=web1.0`,
+
           {
             headers: {
               Authorization: token,

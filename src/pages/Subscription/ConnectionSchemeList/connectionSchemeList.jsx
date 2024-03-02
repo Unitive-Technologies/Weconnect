@@ -353,7 +353,13 @@ const ConnectionSchemeList = (props) => {
       },
       {
         name: "Bulk Removal from Operator",
-        action: setShowBulkRemoval,
+        action: () => {
+          if (Object.keys(selectedRows).length === 0) {
+            setShowWarning(true);
+          } else {
+            setShowBulkRemoval(true);
+          }
+        },
         type: "dropdown",
         dropdownName: "Action",
       },
@@ -384,7 +390,11 @@ const ConnectionSchemeList = (props) => {
         toggle={toggleBulkAssign}
         selectedRows={selectedRows}
       />
-      <BulkRemoval isOpen={showBulkRemoval} toggle={toggleBulkRemoval} />
+      <BulkRemoval
+        isOpen={showBulkRemoval}
+        toggle={toggleBulkRemoval}
+        selectedRows={selectedRows}
+      />
       <div
         className="position-fixed top-0 end-0 p-3"
         style={{ zIndex: "1005" }}
