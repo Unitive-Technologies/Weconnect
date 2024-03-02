@@ -11,6 +11,7 @@ import {
   GET_SINGLE_LCO,
   ADD_NEW_LCO,
   UPDATE_LCO,
+  GET_LCO_PAYMENTMODE,
 } from "./actionTypes";
 
 import {
@@ -35,6 +36,8 @@ import {
   addLcoSuccess,
   updateLcoSuccess,
   updateLcoFail,
+  getLcoPaymentmodeSuccess,
+  getLcoPaymentmodeFail,
 } from "./actions";
 
 //Include Both Helper File with needed methods
@@ -49,6 +52,7 @@ import {
   addNewLco,
   updateLco,
   getSingleLco,
+  getLcoPaymentmode,
 } from "../../helpers/backend_helper";
 
 const convertLcoListObject = (LcoList) => {
@@ -191,6 +195,16 @@ function* onGetSingleLco({ payload: lco }) {
     yield put(getSingleLcoFail(error));
   }
 }
+
+function* fetchLcoPaymentmode() {
+  try {
+    const response = yield call(getLcoPaymentmode);
+    yield put(getLcoPaymentmodeSuccess(response.data));
+  } catch (error) {
+    yield put(getLcoPaymentmodeFail(error));
+  }
+}
+
 function* lcoSaga() {
   yield takeEvery(GET_LCO, fetchLco);
   yield takeEvery(GET_LCO_BILLEDBY, fetchLcoBilledby);
@@ -202,6 +216,7 @@ function* lcoSaga() {
   yield takeEvery(ADD_NEW_LCO, onAddNewLco);
   yield takeEvery(UPDATE_LCO, onUpdateLco);
   yield takeEvery(GET_SINGLE_LCO, onGetSingleLco);
+  yield takeEvery(GET_LCO_PAYMENTMODE, fetchLcoPaymentmode);
 }
 
 export default lcoSaga;

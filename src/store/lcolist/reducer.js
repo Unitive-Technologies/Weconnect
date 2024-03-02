@@ -34,6 +34,8 @@ import {
   UPDATE_LCO_SUCCESS,
   UPDATE_LCO_FAIL,
   UPDATE_LCO_CURRENT_PAGE,
+  GET_LCO_PAYMENTMODE_SUCCESS,
+  GET_LCO_PAYMENTMODE_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -44,6 +46,7 @@ const INIT_STATE = {
   lcoStates: [],
   lcoCustomerPortal: [],
   lcoParentDistributor: [],
+  paymentmode: [],
   error: {},
   loading: false,
   currentPage: 1,
@@ -219,6 +222,19 @@ const Lco = (state = INIT_STATE, action) => {
       };
 
     case GET_SINGLE_LCO_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_LCO_PAYMENTMODE_SUCCESS:
+      return {
+        ...state,
+        paymentmode: action.payload,
+        loading: false,
+      };
+
+    case GET_LCO_PAYMENTMODE_FAIL:
       return {
         ...state,
         error: action.payload,

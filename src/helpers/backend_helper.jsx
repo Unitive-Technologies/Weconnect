@@ -596,14 +596,20 @@ export const uploadChannelSubmit = async (initiatedToken, formData) => {
 };
 
 export const downloadBulkUpdateChannelUploadTemplate = async (data) => {
-  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_BULKUPDATECHANNEL, data);
+  return await postCompleteResponse(
+    url.DOWNLOAD_SAMPLE_BULKUPDATECHANNEL,
+    data
+  );
 };
 
 export const updateBulkUpdateChannelUploadByToken = async (token, data) => {
   return put(url.fileUploadBulkUpdateChannel(token), data);
 };
 
-export const uploadBulkUpdateChannelSubmit = async (initiatedToken, formData) => {
+export const uploadBulkUpdateChannelSubmit = async (
+  initiatedToken,
+  formData
+) => {
   return await postCompleteResponse(
     url.uploadBulkUpdateChannelSubmit(initiatedToken),
     formData
@@ -611,14 +617,23 @@ export const uploadBulkUpdateChannelSubmit = async (initiatedToken, formData) =>
 };
 
 export const downloadBulkUpdateChannelCascodeUploadTemplate = async (data) => {
-  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_BULKUPDATECHANNELCASCODE, data);
+  return await postCompleteResponse(
+    url.DOWNLOAD_SAMPLE_BULKUPDATECHANNELCASCODE,
+    data
+  );
 };
 
-export const updateBulkUpdateChannelCascodeUploadByToken = async (token, data) => {
+export const updateBulkUpdateChannelCascodeUploadByToken = async (
+  token,
+  data
+) => {
   return put(url.fileUploadBulkUpdateChannelCascode(token), data);
 };
 
-export const uploadBulkUpdateChannelCascodeSubmit = async (initiatedToken, formData) => {
+export const uploadBulkUpdateChannelCascodeSubmit = async (
+  initiatedToken,
+  formData
+) => {
   return await postCompleteResponse(
     url.uploadBulkUpdateChannelCascodeSubmit(initiatedToken),
     formData
@@ -902,6 +917,7 @@ export const getLcoStates = () => get(url.GET_LCO_STATES);
 export const getLcoCustomerPortal = () => get(url.GET_LCO_CUSTOMERPORTAL);
 export const getLcoParentDistributor = () => get(url.GET_LCO_PARENTDISTRIBUTOR);
 export const getSingleLco = (id) => get(url.GET_SINGLE_LCO(id));
+export const getLcoPaymentmode = () => get(url.GET_LCO_PAYMENTMODE);
 
 export const getAppAdBanner = () => get(url.GET_APPADBANNER);
 export const addAppAdBanner = (appadbanner) =>

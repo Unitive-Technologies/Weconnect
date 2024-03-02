@@ -30,6 +30,9 @@ import {
   GET_SINGLE_LCO,
   GET_SINGLE_LCO_FAIL,
   GET_SINGLE_LCO_SUCCESS,
+  GET_LCO_PAYMENTMODE,
+  GET_LCO_PAYMENTMODE_SUCCESS,
+  GET_LCO_PAYMENTMODE_FAIL,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -200,5 +203,19 @@ export const getSingleLcoSuccess = (lco) => {
 
 export const getSingleLcoFail = (error) => ({
   type: GET_SINGLE_LCO_FAIL,
+  payload: error,
+});
+
+export const getLcoPaymentmode = () => ({
+  type: GET_LCO_PAYMENTMODE,
+});
+
+export const getLcoPaymentmodeSuccess = (paymentmode) => ({
+  type: GET_LCO_PAYMENTMODE_SUCCESS,
+  payload: paymentmode,
+});
+
+export const getLcoPaymentmodeFail = (error) => ({
+  type: GET_LCO_PAYMENTMODE_FAIL,
   payload: error,
 });
