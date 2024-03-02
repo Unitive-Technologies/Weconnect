@@ -201,7 +201,7 @@ const UploadModal = (props) => {
               {uploadTrigger && uploadTrigger._id && (
                 <div>
                   <p>Token ID: {uploadTrigger.token}</p>
-                  <p>Fields: {uploadTrigger.fields.join(", ")}</p>
+                  <p>Fields: [{uploadTrigger.fields.join(", ")}]</p>
                 </div>
               )}
               <div className="mb-3">

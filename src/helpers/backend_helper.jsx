@@ -1235,6 +1235,21 @@ export const uploadPairingAllotmentSubmit = async (
   );
 };
 
+export const downloadUploadCreditLcoTemplate = async (data) => {
+  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_UPLOADCREDITLCO, data);
+};
+
+export const updateUploadCreditLcoByToken = async (token, data) => {
+  return put(url.fileUploadCreditLco(token), data);
+};
+
+export const uploadCreditLcoSubmit = async (initiatedToken, formData) => {
+  return await postCompleteResponse(
+    url.bulkUploadCreditLcoSubmit(initiatedToken),
+    formData
+  );
+};
+
 export const updateInventoryStockStb = (id, stockstb) =>
   put(url.UPDATE_INVENTORYSTOCK_STB(id), stockstb);
 export const addInventoryStockSmartcard = (stocksmartcard) =>

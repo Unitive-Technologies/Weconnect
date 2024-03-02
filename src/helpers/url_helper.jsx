@@ -932,3 +932,14 @@ export const uploadUpdateLcoSubmit = (token) => {
 };
 
 export const GET_LCO_PAYMENTMODE = "/list/paymentMode?fields=id,name&vr=web1.0";
+
+export const DOWNLOAD_SAMPLE_UPLOADCREDITLCO =
+  "/operator-account/upload-q?vr=web1.0";
+
+export const fileUploadCreditLco = (token) => {
+  return `/operator-account/upload-q/${token}?vr=web1.0`;
+};
+
+export const bulkUploadCreditLcoSubmit = (token) => {
+  return `/operator-account/upload-q/${token}`;
+};
