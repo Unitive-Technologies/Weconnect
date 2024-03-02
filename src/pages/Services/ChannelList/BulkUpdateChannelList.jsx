@@ -54,12 +54,12 @@ const BulkUpdateChannelList = (props) => {
   }
 
   const channelSavedTemplatePayload = {
-    meta_data: { type: 1, status: parseInt(status) },
+    meta_data: {},
     url: "",
   };
 
   const bulkDownloadTemplatePayload = {
-    meta_data: { type: 1, status: parseInt(status) },
+    meta_data: {},
     url: "",
   };
 
