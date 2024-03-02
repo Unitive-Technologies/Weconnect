@@ -12,6 +12,7 @@ import {
   Toast,
   ToastHeader,
   ToastBody,
+  Table,
 } from "reactstrap";
 
 //Import Breadcrumb
@@ -45,17 +46,71 @@ const AllottedBouquet = ({ allottedBouquetData, selectedRowId }) => {
     console.log("selectedRows:", JSON.stringify(selectedRows));
   };
 
-  // const handleRowSelection = (row) => {
-  //   console.log("Row clicked:", row.original);
+  const rateTableSchema = {
+    subTableArrayKeyName: "rate",
+    keyColumn: "id",
+    columns: [
+      {
+        header: "Period",
+        accessor: "name",
+      },
+      {
+        header: "Price",
+        accessor: "price",
+      },
+      {
+        header: "Rent/NCF",
+        accessor: "rental",
+      },
+      {
+        header: "Tax",
+        accessor: "tax_amount",
+      },
+      {
+        header: "Total",
+        accessor: "amount",
+      },
+      {
+        header: "Refundable",
+        accessor: "is_refundable",
+      },
+      {
+        header: "Free days",
+        accessor: "free_days",
+      },
+      {
+        header: "MRP(Tax included)",
+        accessor: "mrp",
+      },
+    ],
+  };
 
-  //   const selectedRowIds = selectedRows.map((r) => r.id);
-  //   if (selectedRowIds.includes(row.original.id)) {
-  //     setSelectedRows(selectedRows.filter((r) => r.id !== row.original.id));
-  //   } else {
-  //     setSelectedRows([...selectedRows, row.original.id]);
-  //   }
-  //   console.log("Selected rows:", JSON.stringify(selectedRows));
-  // };
+  const renderRateTable = (row) => {
+    return (
+      <Table className="table mb-0">
+        <thead>
+          <tr>
+            {rateTableSchema.columns.map((column) => {
+              return <th key={column.accessor}>{column.header}</th>;
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {row[rateTableSchema.subTableArrayKeyName].map((object) => {
+            return (
+              <tr key={object[rateTableSchema.keyColumn]}>
+                {rateTableSchema.columns.map((column) => {
+                  return (
+                    <td key={column.accessor}>{object[column.accessor]}</td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+    );
+  };
 
   const columns = useMemo(
     () => [
@@ -282,6 +337,9 @@ const AllottedBouquet = ({ allottedBouquetData, selectedRowId }) => {
                 theadClass="table-light"
                 paginationDiv="col-sm-12 col-md-7"
                 pagination="pagination pagination-rounded justify-content-end mt-4"
+                subTableEnabled={true}
+                getRenderedSubTable={renderRateTable}
+                isSubTableContentExists={(rowData) => rowData.rate.length > 0}
               />
             </CardBody>
           </Card>
