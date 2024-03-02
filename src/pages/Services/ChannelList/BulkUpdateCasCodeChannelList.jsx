@@ -22,9 +22,9 @@ import { addNewChannelList as onAddNewChannelList } from "/src/store/channel/act
 
 import { useDispatch } from "react-redux";
 import {
-  downloadBulkUpdateChannelUploadTemplate,
-  updateBulkUpdateChannelUploadByToken,
-  uploadBulkUpdateChannelSubmit,
+  downloadBulkUpdateChannelCascodeUploadTemplate,
+  updateBulkUpdateChannelCascodeUploadByToken,
+  uploadBulkUpdateChannelCascodeSubmit,
 } from "../../../helpers/backend_helper";
 
 const BulkUpdateCasCodeChannelList = (props) => {
@@ -43,7 +43,7 @@ const BulkUpdateCasCodeChannelList = (props) => {
   function handleAcceptedFiles(files) {
     setSelectedFiles(files);
 
-    updateBulkUpdateChannelUploadByToken(uploadTrigger.token, channelSavedTemplatePayload)
+    updateBulkUpdateChannelCascodeUploadByToken(uploadTrigger.token, channelSavedTemplatePayload)
       .then((res) => {
         console.log("res in updateChannelUploadByToken:" + JSON.stringify(res));
       })
@@ -53,18 +53,18 @@ const BulkUpdateCasCodeChannelList = (props) => {
   }
 
   const channelSavedTemplatePayload = {
-    meta_data: { type: 1, status: parseInt(channelCascode) },
+    meta_data: { type: 1 },
     url: "",
   };
 
   const bulkDownloadTemplatePayload = {
-    meta_data: { type: 1, status: parseInt(channelCascode) },
+    meta_data: { type: 1 },
     url: "",
   };
 
   const handleDownloadSampleFile = () => {
     // Send a POST request to the server, from the json request convert data.fields array of strings as headers in a csv file
-    downloadBulkUpdateChannelUploadTemplate(bulkDownloadTemplatePayload)
+    downloadBulkUpdateChannelCascodeUploadTemplate(bulkDownloadTemplatePayload)
       .then((res) => {
         debugger;
         const fileName = res.data.data.type;
@@ -105,7 +105,7 @@ const BulkUpdateCasCodeChannelList = (props) => {
     const formData = new FormData();
     formData.append("qFile", selectedFiles[0]); // appending file
 
-    uploadBulkUpdateChannelSubmit(uploadTrigger.token, formData)
+    uploadBulkUpdateChannelCascodeSubmit(uploadTrigger.token, formData)
       .then((res) => {
         // debugger;
         toggleSuccessMsg();
@@ -170,7 +170,7 @@ const BulkUpdateCasCodeChannelList = (props) => {
                 </div>
               )}
               <div className="mb-3">
-                <Label className="form-label">Status</Label>
+                <Label className="form-label">CAS</Label>
                 <Input
                   name="casCodes"
                   type="select"
@@ -179,7 +179,7 @@ const BulkUpdateCasCodeChannelList = (props) => {
                   value={channelCascode}
                   onChange={(e) => setChannelListCascode(e.target.value)}
                 >
-                  <option value="">Select Status</option>
+                  <option value="">Select cas</option>
                   {channelListCascode &&
                     channelListCascode.map((casCodes) => (
                       <option key={casCodes.id} value={casCodes.id}>
