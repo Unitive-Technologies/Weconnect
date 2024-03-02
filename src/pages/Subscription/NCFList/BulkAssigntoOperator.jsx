@@ -1,7 +1,10 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import TableContainer from "../../../components/Common/TableContainer";
+import { Link } from "react-router-dom";
 import {
   Col,
   Input,
@@ -14,7 +17,7 @@ import {
   CardBody,
   Table,
 } from "reactstrap";
-
+import { getNcf as onGetNcf } from "/src/store/actions";
 import AddOperators from "./AddOperator";
 
 const BulkAssigntoOperator = (props) => {
@@ -22,9 +25,17 @@ const BulkAssigntoOperator = (props) => {
   const [showAddOperator, setShowAddOperator] = useState(false);
   const [addOperatorsData, setAddOperatorsData] = useState([]);
   const [toggleSwitch, settoggleSwitch] = useState(true);
+  const [selectedRowNestedData, setSelectedRowNestedData] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [ncfData, setNcfData] = useState({});
+  const [expiryDate, setExpiryDate] = useState("");
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const toggleAddOperator = () => {
     setShowAddOperator(!showAddOperator);
+  };
+
+  const handleRowClick = (rowData) => {
+    setNcfData(rowData);
   };
   const columns = useMemo(
     () => [
@@ -72,14 +83,14 @@ const BulkAssigntoOperator = (props) => {
                 }}
                 className="font-size-14 mb-1"
               >
-                {}
+                {cellProps.row.original.name}
               </h5>
             </>
           );
         },
       },
       {
-        Header: "Code",
+        Header: "MRP",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -92,13 +103,15 @@ const BulkAssigntoOperator = (props) => {
                   whiteSpace: "nowrap",
                 }}
                 className="font-size-14 mb-1"
-              ></h5>
+              >
+                {cellProps.row.original.mrp}
+              </h5>
             </>
           );
         },
       },
       {
-        Header: "Type",
+        Header: "LCO Discount(%)",
         // accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
@@ -112,13 +125,15 @@ const BulkAssigntoOperator = (props) => {
                   whiteSpace: "nowrap",
                 }}
                 className="font-size-14 mb-1"
-              ></h5>
+              >
+                {cellProps.row.original.lmo_discount}
+              </h5>
             </>
           );
         },
       },
       {
-        Header: "Expiry Date",
+        Header: "LCO Rate",
         // accessor: "status",
         filterable: true,
         Cell: (cellProps) => {
@@ -132,7 +147,59 @@ const BulkAssigntoOperator = (props) => {
                   whiteSpace: "nowrap",
                 }}
                 className="font-size-14 mb-1"
-              ></h5>
+              >
+                {" "}
+                {cellProps.row.original.lmo_rate}
+              </h5>
+            </>
+          );
+        },
+      },
+      {
+        Header: "Per Channel",
+        // accessor: "status",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5
+                style={{
+                  maxWidth: 200,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+                className="font-size-14 mb-1"
+              >
+                {" "}
+                {parseInt(cellProps.row.original.calculate_per_channel) === 1
+                  ? "YES"
+                  : "NO"}
+              </h5>
+            </>
+          );
+        },
+      },
+      {
+        Header: "Is Refundable",
+        // accessor: "status",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5
+                style={{
+                  maxWidth: 200,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+                className="font-size-14 mb-1"
+              >
+                {parseInt(cellProps.row.original.is_refundable) === 1
+                  ? "YES"
+                  : "NO"}
+              </h5>
             </>
           );
         },
@@ -141,6 +208,69 @@ const BulkAssigntoOperator = (props) => {
     []
   );
 
+  const validation = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      operator_id: [],
+      // scheme_ids: [],
+    },
+    validationSchema: Yup.object({
+      // setting: Yup.object({
+      //   bulk_limit: Yup.string().required("Please Enter Bulk Limit"),
+      //   allowed_ips: Yup.string().required("Please Enter allowed client ips"),
+      //   enabled_pay_modes: Yup.array()
+      //     .of(Yup.number().required("Please Select Pay Modes"))
+      //     .min(1, "Please Select at least one Pay Mode"),
+      // }),
+    }),
+
+    onSubmit: async (values) => {
+      try {
+        const newAssign = {
+          default: 0,
+          forceFull: 1,
+          replace: 0,
+          name: ncfData.name,
+          ncf_id: selectedRow.id,
+          operator_expiry: addOperatorsData.reduce((acc, single) => {
+            acc[single.expiryDate] = single.id;
+            return acc;
+          }, {}),
+          // {2024-03-20: [2001], 2024-03-26: [1998]},
+          operator_id: selectedUsers.map((user) => user.id),
+        };
+
+        console.log("newSetting:", JSON.stringify(newAssign));
+        const token = "Bearer " + localStorage.getItem("temptoken");
+
+        const response = await axios.put(
+          `${API_URL}/ncf-rates/assign?vr=web1.0`,
+          newAssign,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+
+        console.log("Axios Response:", response);
+        toggle();
+        dispatch(onGetNcf());
+        validation.resetForm();
+      } catch (error) {
+        console.error("Error in onSubmit:", error);
+      }
+    },
+    onReset: () => {
+      validation.setValues(validation.initialValues);
+    },
+  });
+
+  useEffect(() => {
+    if (selectedRow) {
+      setSelectedRowNestedData(selectedRow.additional_rates);
+    }
+  }, [selectedRow]);
   return (
     <>
       {showAddOperator && (
@@ -150,6 +280,10 @@ const BulkAssigntoOperator = (props) => {
           data={addOperatorsData}
           setData={setAddOperatorsData}
           selectedRowId={selectedRow.id}
+          selectedUsers={selectedUsers}
+          setSelectedUsers={setSelectedUsers}
+          expiryDate={expiryDate}
+          setExpiryDate={setExpiryDate}
         />
       )}
       <Modal
@@ -210,15 +344,7 @@ const BulkAssigntoOperator = (props) => {
                         <td>{row && row.name}</td>
                         <td>{row && row.code}</td>
                         <td>{row && row.type_lbl}</td>
-                        <td>
-                          <Input
-                            type="date"
-                            name="expirydate"
-                            placeholder="Select Expiry Date"
-                            onChange={(e) => setExpiryDate(e.target.value)}
-                            value={expirydate}
-                          />
-                        </td>
+                        <td>{row && row.expiryDate}</td>
                       </tr>
                     ))}
                 </tbody>
@@ -265,35 +391,38 @@ const BulkAssigntoOperator = (props) => {
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <th scope="row">1</th>
-                              <td style={{ maxWidth: 100 }}>
-                                {selectedRow.name}
-                              </td>
-                              <td
-                                style={{
-                                  maxWidth: 200,
-                                  overflow: "hidden",
-                                  textOverflow: "ellipsis",
-                                  whiteSpace: "nowrap",
-                                }}
-                              >
-                                {selectedRow.mrp}
-                              </td>
-                              <td>{selectedRow.lmo_discount}</td>
-                              <td>{selectedRow.lmo_rate}</td>
-                              <td>
-                                {parseInt(selectedRow.calculate_per_channel) ===
-                                1
-                                  ? "YES"
-                                  : "NO"}
-                              </td>
-                              <td>
-                                {parseInt(selectedRow.is_refundable) === 1
-                                  ? "YES"
-                                  : "NO"}
-                              </td>
-                            </tr>
+                            {selectedRow && (
+                              <tr>
+                                <th scope="row">1</th>
+                                <td style={{ maxWidth: 100 }}>
+                                  {selectedRow.name}
+                                </td>
+                                <td
+                                  style={{
+                                    maxWidth: 200,
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    whiteSpace: "nowrap",
+                                  }}
+                                >
+                                  {selectedRow.mrp}
+                                </td>
+                                <td>{selectedRow.lmo_discount}</td>
+                                <td>{selectedRow.lmo_rate}</td>
+                                <td>
+                                  {parseInt(
+                                    selectedRow.calculate_per_channel
+                                  ) === 1
+                                    ? "YES"
+                                    : "NO"}
+                                </td>
+                                <td>
+                                  {parseInt(selectedRow.is_refundable) === 1
+                                    ? "YES"
+                                    : "NO"}
+                                </td>
+                              </tr>
+                            )}
                           </tbody>
                         </Table>
                       </div>
@@ -331,7 +460,22 @@ const BulkAssigntoOperator = (props) => {
                 <Col lg={12}>
                   <Card>
                     <CardBody>
-                      <div className="table-responsive">
+                      <TableContainer
+                        isPagination={true}
+                        columns={columns}
+                        data={selectedRowNestedData}
+                        handleRowClick={(row) => {
+                          handleRowClick(row);
+                        }}
+                        isGlobalFilter={true}
+                        isShowingPageLength={true}
+                        customPageSize={10}
+                        tableClass="table align-middle table-nowrap table-hover"
+                        theadClass="table-light"
+                        paginationDiv="col-sm-12 col-md-7"
+                        pagination="pagination pagination-rounded justify-content-end mt-4"
+                      />
+                      {/* <div className="table-responsive">
                         <Table className="table mb-0">
                           <thead className="table-light">
                             <tr>
@@ -344,36 +488,37 @@ const BulkAssigntoOperator = (props) => {
                               <th>Is Refundable</th>
                             </tr>
                           </thead>
+                          {console.log(
+                            "selectedRow:" + JSON.stringify(selectedRow)
+                          )}
+                          {console.log(
+                            "selectedRowNestedData:" +
+                              JSON.stringify(selectedRowNestedData)
+                          )}
                           <tbody>
                             {selectedRow &&
-                              selectedRow.additional_rates.map(
-                                (item, index) => (
-                                  <tr key={index}>
-                                    <th scope="row">{index + 1}</th>
-                                    <td style={{ maxWidth: 100 }}>
-                                      {item.name}
-                                    </td>
-                                    <td>{item.mrp}</td>
-                                    <td>{selectedRow.lmo_discount}</td>
-                                    <td>{selectedRow.lmo_rate}</td>
-                                    <td>
-                                      {parseInt(
-                                        selectedRow.calculate_per_channel
-                                      ) === 1
-                                        ? "YES"
-                                        : "NO"}
-                                    </td>
-                                    <td>
-                                      {parseInt(selectedRow.is_refundable) === 1
-                                        ? "YES"
-                                        : "NO"}
-                                    </td>
-                                  </tr>
-                                )
-                              )}
+                              selectedRowNestedData.map((item, index) => (
+                                <tr key={index}>
+                                  <th scope="row">{index + 1}</th>
+                                  <td style={{ maxWidth: 100 }}>{item.name}</td>
+                                  <td>{item.mrp}</td>
+                                  <td>{item.lmo_discount}</td>
+                                  <td>{item.lmo_rate}</td>
+                                  <td>
+                                    {parseInt(item.calculate_per_channel) === 1
+                                      ? "YES"
+                                      : "NO"}
+                                  </td>
+                                  <td>
+                                    {parseInt(item.is_refundable) === 1
+                                      ? "YES"
+                                      : "NO"}
+                                  </td>
+                                </tr>
+                              ))}
                           </tbody>
                         </Table>
-                      </div>
+                      </div> */}
                     </CardBody>
                   </Card>
                 </Col>

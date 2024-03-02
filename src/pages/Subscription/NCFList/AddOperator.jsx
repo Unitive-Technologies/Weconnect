@@ -20,12 +20,22 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 
 const AddOperators = (props) => {
-  const { isOpen, toggleClose, id, setData, selectedRowId } = props;
-  const [selectedUsers, setSelectedUsers] = useState([]);
+  const {
+    isOpen,
+    toggleClose,
+    id,
+    setData,
+    selectedRowId,
+    expiryDate,
+    setExpiryDate,
+    selectedUsers,
+    setSelectedUsers,
+  } = props;
+  // const [selectedUsers, setSelectedUsers] = useState([]);
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
 
   const [tableList, setTableList] = useState([]);
-  const [expirydate, setExpiryDate] = useState("");
+  // const [expirydate, setExpiryDate] = useState("");
 
   const handleActive = (row) => {
     const isRowSelected = selectedUsers.some((user) => user.id === row.id);
@@ -296,10 +306,12 @@ const AddOperators = (props) => {
 
   const handleSubmit = () => {
     console.log("add button clicked");
-    const newSelectedOperators = {
-      selectedOperators: selectedUsers.map((user) => user.id),
-      expirydate: expirydate,
-    };
+    const newSelectedOperators = selectedUsers.map((user) => ({
+      name: user.name || "",
+      code: user.code || "",
+      type_lbl: user.type_lbl || "",
+      expiryDate: expiryDate || "", // Using the expirydate state value
+    }));
 
     console.log("newTargetUsers:", JSON.stringify(newSelectedOperators));
     setData(newSelectedOperators);
@@ -408,10 +420,6 @@ const AddOperators = (props) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {console.log(
-                        "...................selectedUsers:" +
-                          JSON.stringify(selectedUsers)
-                      )}
                       {selectedUsers &&
                         selectedUsers.map((row, i) => (
                           <tr key={i}>
@@ -422,10 +430,10 @@ const AddOperators = (props) => {
                             <td>
                               <Input
                                 type="date"
-                                name="expirydate"
+                                name="expiryDate"
                                 placeholder="Select Expiry Date"
                                 onChange={(e) => setExpiryDate(e.target.value)}
-                                value={expirydate}
+                                value={expiryDate}
                               />
                             </td>
                           </tr>
