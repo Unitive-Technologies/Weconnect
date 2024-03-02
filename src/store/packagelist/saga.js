@@ -5,6 +5,7 @@ import {
   GET_PACKAGE_TYPE,
   GET_PACKAGE_BOXTYPE,
   GET_PACKAGE_STATUS,
+  GET_PACKAGE_CASCODE,
   ADD_NEW_PACKAGELIST,
   UPDATE_PACKAGE,
 } from "./actionTypes";
@@ -23,6 +24,9 @@ import {
   addPackageListFail,
   updatePackageSuccess,
   updatePackageFail,
+  getPackageCascode,
+  getPackageCascodeSuccess,
+  getPackageCascodeFail,
 } from "./actions";
 
 //Include Both Helper File with needed methods
@@ -32,6 +36,7 @@ import {
   getPackageBoxType,
   getPackageStatus,
   addNewPackageList,
+  getChannelListCascode,
   updatePackage,
 } from "../../helpers/backend_helper";
 
@@ -65,6 +70,17 @@ function* fetchPackageList() {
     yield put(getPackageListFail(error));
   }
 }
+
+function* fetchPackageCascode() {
+  try {
+    const response = yield call(getPackageCascode);
+    console.log("Package List Cascode response:" + JSON.stringify(response));
+    yield put(getPackageCascodeSuccess(response.data));
+  } catch (error) {
+    yield put(getPackageCascodeFail(error));
+  }
+}
+
 
 function* fetchPackageType() {
   try {
@@ -130,6 +146,7 @@ function* packageListSaga() {
   yield takeEvery(GET_PACKAGELIST, fetchPackageList);
   yield takeEvery(ADD_NEW_PACKAGELIST, onAddNewPackageList);
   yield takeEvery(GET_PACKAGE_TYPE, fetchPackageType);
+  yield takeEvery(GET_PACKAGE_CASCODE, fetchPackageCascode);
   yield takeEvery(GET_PACKAGE_BOXTYPE, fetchPackageBoxType);
   yield takeEvery(GET_PACKAGE_STATUS, fetchPackageStatus);
   yield takeEvery(UPDATE_PACKAGE, onUpdatePackage);

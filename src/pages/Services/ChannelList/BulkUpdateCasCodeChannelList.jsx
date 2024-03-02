@@ -57,14 +57,14 @@ const BulkUpdateCasCodeChannelList = (props) => {
     url: "",
   };
 
-  const bulkDownloadTemplatePayload = {
+  const channelDownloadTemplatePayload = {
     meta_data: { type: 1 },
     url: "",
   };
 
   const handleDownloadSampleFile = () => {
     // Send a POST request to the server, from the json request convert data.fields array of strings as headers in a csv file
-    downloadBulkUpdateChannelCascodeUploadTemplate(bulkDownloadTemplatePayload)
+    downloadBulkUpdateChannelCascodeUploadTemplate(channelDownloadTemplatePayload)
       .then((res) => {
         debugger;
         const fileName = res.data.data.type;

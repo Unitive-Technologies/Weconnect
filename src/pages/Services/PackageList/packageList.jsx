@@ -35,6 +35,7 @@ import {
   getPackageType as onGetPackageType,
   getPackageBoxType as onGetPackageBoxType,
   getPackageStatus as onGetPackageStatus,
+  getPackageCascode as onGetPackageCascode,
 } from "/src/store/packagelist/actions";
 
 //redux
@@ -62,6 +63,7 @@ const PackageList = (props) => {
       packageType: packageList.packagetype,
       packageBoxType: packageList.packageboxtype,
       packageStatus: packageList.packagestatus,
+      packageCascode: packageList.packageCascode,
       loading: packageList.loading,
       totalPage: packageList.totalPages,
       totalCount: packageList.totalCount,
@@ -79,6 +81,7 @@ const PackageList = (props) => {
     totalCount,
     pageSize,
     currentPage,
+    packageCascode,
     loading,
   } = useSelector(PackageListProperties);
 
@@ -127,10 +130,10 @@ const PackageList = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-                // onClick={() => {
-                //   const packageData = cellProps.row.original;
-                //   handleViewPackageList(packageData);
-                // }}
+              // onClick={() => {
+              //   const packageData = cellProps.row.original;
+              //   handleViewPackageList(packageData);
+              // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -235,6 +238,7 @@ const PackageList = (props) => {
       dispatch(onGetPackageType());
       dispatch(onGetPackageBoxType());
       dispatch(onGetPackageStatus());
+      dispatch(onGetPackageCascode());
     }
   }, [dispatch, packageList]);
 
@@ -248,15 +252,15 @@ const PackageList = (props) => {
     setShowAddNewPackageList(!showAddNewPackageList);
   };
 
-  const toggle1 = () => {
+  const toggleUploadModal = () => {
     setShowUploadPackageList(!showUploadPackageList);
   };
 
-  const toggle2 = () => {
+  const toggleUpdateModal = () => {
     setShowBulkUpdatePackageList(!showBulkUpdatePackageList);
   };
 
-  const toggle3 = () => {
+  const handleUpdateCasCode = () => {
     setShowBulkUpdateCasCodePackageList(!showBulkUpdateCasCodePackageList);
   };
 
@@ -352,14 +356,20 @@ const PackageList = (props) => {
         packageBoxType={packageBoxType}
         packageStatus={packageStatus}
       />
-      <UploadPackageList isOpen={showUploadPackageList} toggle={toggle1} />
+      <UploadPackageList
+        title="Upload Package"
+        isOpen={showUploadPackageList}
+        toggleUploadModal={toggleUploadModal}
+        packageStatus={packageStatus}
+      />
       <BulkUpdatePackageList
         isOpen={showBulkUpdatePackageList}
-        toggle={toggle2}
+        toggleUpdateModal={toggleUpdateModal}
       />
       <BulkUpdateCasCodePackageList
         isOpen={showBulkUpdateCasCodePackageList}
-        toggle={toggle3}
+        handleUpdateCasCode={handleUpdateCasCode}
+        packageCascode={packageCascode}
       />
       <ViewPackageList
         isOpen={showViewPackageList}
@@ -369,6 +379,7 @@ const PackageList = (props) => {
         packageType={packageType}
         packageBoxType={packageBoxType}
         packageStatus={packageStatus}
+
       />
 
       <div className="page-content">

@@ -18,6 +18,9 @@ import {
   GET_PACKAGE_STATUS,
   GET_PACKAGE_STATUS_SUCCESS,
   GET_PACKAGE_STATUS_FAIL,
+  GET_PACKAGE_CASCODE,
+  GET_PACKAGE_CASCODE_SUCCESS,
+  GET_PACKAGE_CASCODE_FAIL,
   ADD_NEW_PACKAGELIST,
   ADD_PACKAGELIST_SUCCESS,
   ADD_PACKAGELIST_FAIL,
@@ -32,6 +35,7 @@ const INIT_STATE = {
   packagetype: [],
   packageboxtype: [],
   packagestatus: [],
+  packageCascode: [],
   pagination: {},
   error: {},
   loading: false,
@@ -46,9 +50,9 @@ const PackageList = (state = INIT_STATE, action) => {
     case UPDATE_PACKAGELIST_CURRENT_PAGE:
       return Number(action.payload) <= state.totalPages
         ? {
-            ...state,
-            currentPage: action.payload,
-          }
+          ...state,
+          currentPage: action.payload,
+        }
         : state;
 
     case GET_PACKAGELIST:
@@ -113,6 +117,26 @@ const PackageList = (state = INIT_STATE, action) => {
       };
 
     case GET_PACKAGE_STATUS_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_PACKAGE_CASCODE:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case GET_PACKAGE_CASCODE_SUCCESS:
+      // console.log("Tax status data success in reducer:", action.payload);
+      return {
+        ...state,
+        packageCascode: action.payload,
+        loading: false,
+      };
+
+    case GET_PACKAGE_CASCODE_FAIL:
       return {
         ...state,
         error: action.payload,
