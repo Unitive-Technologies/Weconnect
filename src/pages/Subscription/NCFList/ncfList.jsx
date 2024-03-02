@@ -419,13 +419,14 @@ const NCFList = (props) => {
           selectedRow={selectedRow}
         />
       )}
-
-      <BulkRemovalFromOperator
-        isOpen={showBulkRemoval}
-        toggle={toggleBulkRemoval}
-        selectedRow={selectedRow}
-      />
-      {console.log("@@@@@@@@@@@@@@@@@@@@selected row: ", selectedRow.status)}
+      {showBulkRemoval && (
+        <BulkRemovalFromOperator
+          isOpen={showBulkRemoval}
+          toggle={toggleBulkRemoval}
+          selectedRow={selectedRow}
+        />
+      )}
+      {/* {console.log("@@@@@@@@@@@@@@@@@@@@selected row: ", selectedRow.status)} */}
 
       <div
         className="position-fixed top-0 end-0 p-3"

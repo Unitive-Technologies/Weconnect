@@ -214,42 +214,28 @@ const BulkAssigntoOperator = (props) => {
     enableReinitialize: true,
     initialValues: {
       operator_id: [],
-      // scheme_ids: [],
     },
-    validationSchema: Yup.object({
-      // setting: Yup.object({
-      //   bulk_limit: Yup.string().required("Please Enter Bulk Limit"),
-      //   allowed_ips: Yup.string().required("Please Enter allowed client ips"),
-      //   enabled_pay_modes: Yup.array()
-      //     .of(Yup.number().required("Please Select Pay Modes"))
-      //     .min(1, "Please Select at least one Pay Mode"),
-      // }),
-    }),
+    validationSchema: Yup.object({}),
 
     onSubmit: async (values) => {
       try {
-        // Construct the new assignment object
         const newAssign = {
           default: 0,
           forceFull: 1,
           replace: 0,
           name: ncfData.name,
           ncf_id: selectedRow.id,
-          operator_expiry: {}, // Initialize an empty object
+          operator_expiry: {},
           operator_id: selectedUsers.map((user) => user.id),
         };
-        console.log("addOperatorsData:", addOperatorsData);
+        // console.log("addOperatorsData:", addOperatorsData);
         addOperatorsData.forEach((operator) => {
-          console.log("Expiry Date:", operator.expiryDate);
-          console.log("Operator ID:", operator.id);
+          // console.log("Expiry Date:", operator.expiryDate);
+          // console.log("Operator ID:", operator.id);
           if (operator.expiryDate && operator.id) {
-            // Check both expiryDate and id
-            console.log("Expiry Date:", operator.expiryDate); // Check expiry date
             if (!newAssign.operator_expiry[operator.expiryDate]) {
-              // If expiry date key doesn't exist, create it with an array containing the operator ID
               newAssign.operator_expiry[operator.expiryDate] = [operator.id];
             } else {
-              // If expiry date key exists, push the operator ID to the existing array
               newAssign.operator_expiry[operator.expiryDate].push(operator.id);
             }
           }
@@ -257,7 +243,6 @@ const BulkAssigntoOperator = (props) => {
 
         console.log("newAssign:", JSON.stringify(newAssign));
 
-        // Send the request to update the assignment
         const token = "Bearer " + localStorage.getItem("temptoken");
         const response = await axios.put(
           `${API_URL}/ncf-rates/assign?vr=web1.0`,
