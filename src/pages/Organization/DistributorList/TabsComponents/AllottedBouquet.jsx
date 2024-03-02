@@ -12,6 +12,7 @@ import {
   Toast,
   ToastHeader,
   ToastBody,
+  Table,
 } from "reactstrap";
 
 //Import Breadcrumb
@@ -32,6 +33,7 @@ const AllottedBouquet = ({ allottedBouquetData, selectedRowId }) => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [showAddOrUpdateModal, setShowAddOrUpdateModal] = useState(false);
   const [selectedWholeRows, setSelectedWholeRows] = useState([]);
+
   const handleRowSelection = (row) => {
     console.log("Row clicked:", row.original);
     const selectedId = row.original.id;
@@ -56,18 +58,6 @@ const AllottedBouquet = ({ allottedBouquetData, selectedRowId }) => {
     console.log("selectedRows:", JSON.stringify(selectedRows));
   };
 
-  // const handleRowSelection = (row) => {
-  //   console.log("Row clicked:", row.original);
-
-  //   const selectedRowIds = selectedRows.map((r) => r.id);
-  //   if (selectedRowIds.includes(row.original.id)) {
-  //     setSelectedRows(selectedRows.filter((r) => r.id !== row.original.id));
-  //   } else {
-  //     setSelectedRows([...selectedRows, row.original.id]);
-  //   }
-  //   console.log("Selected rows:", JSON.stringify(selectedRows));
-  // };
-
   const columns = useMemo(
     () => [
       {
@@ -78,9 +68,6 @@ const AllottedBouquet = ({ allottedBouquetData, selectedRowId }) => {
           <input
             type="checkbox"
             onClick={() => handleRowSelection(cellProps.row)}
-            // checked={selectedRows.some(
-            //   (r) => r.id === cellProps.row.original.id
-            // )}
           />
         ),
       },
@@ -247,37 +234,7 @@ const AllottedBouquet = ({ allottedBouquetData, selectedRowId }) => {
   const toggleAddOrUpdateModal = () => {
     setShowAddOrUpdateModal(!showAddOrUpdateModal);
   };
-  // const handleAddOrUpdate = async (e) => {
-  //   e.preventDefault();
 
-  //   console.log("selectedRows:" + JSON.stringify(selectedRows));
-
-  //   try {
-  //     const selectedRowsToAddOrUpdate = {
-  //       operator_id: selectedRowId,
-  //       bouque_ids: selectedRows,
-  //       commision: 0,
-  //     };
-
-  //     console.log("newUpload:", JSON.stringify(selectedRowsToAddOrUpdate));
-
-  //     const token = "Bearer " + localStorage.getItem("temptoken");
-
-  //     const response = await axios.post(
-  //       `${API_URL}/operator-bouque?vr=web1.0`,
-  //       selectedRowsToAddOrUpdate,
-  //       {
-  //         headers: {
-  //           Authorization: token,
-  //         },
-  //       }
-  //     );
-
-  //     console.log("response after submitting remove form:", response.data);
-  //   } catch (error) {
-  //     console.error("Error submitting remove form:", error);
-  //   }
-  // };
   const getTableActions = () => {
     return [
       {
@@ -294,10 +251,78 @@ const AllottedBouquet = ({ allottedBouquetData, selectedRowId }) => {
       },
     ];
   };
+
   const [showWarning, setShowWarning] = useState(false);
   const handleWarning = () => {
     setShowWarning(!showWarning);
   };
+
+  const rateTableSchema = {
+    subTableArrayKeyName: "rate",
+    keyColumn: "id",
+    columns: [
+      {
+        header: "Period",
+        accessor: "name",
+      },
+      {
+        header: "Price",
+        accessor: "price",
+      },
+      {
+        header: "Rent/NCF",
+        accessor: "rental",
+      },
+      {
+        header: "Tax",
+        accessor: "tax_amount",
+      },
+      {
+        header: "Total",
+        accessor: "amount",
+      },
+      {
+        header: "Refundable",
+        accessor: "is_refundable",
+      },
+      {
+        header: "Free days",
+        accessor: "free_days",
+      },
+      {
+        header: "MRP(Tax included)",
+        accessor: "mrp",
+      },
+    ],
+  };
+
+  const renderRateTable = (row) => {
+    return (
+      <Table className="table mb-0">
+        <thead>
+          <tr>
+            {rateTableSchema.columns.map((column) => {
+              return <th key={column.accessor}>{column.header}</th>;
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {row[rateTableSchema.subTableArrayKeyName].map((object) => {
+            return (
+              <tr key={object[rateTableSchema.keyColumn]}>
+                {rateTableSchema.columns.map((column) => {
+                  return (
+                    <td key={column.accessor}>{object[column.accessor]}</td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+    );
+  };
+
   return (
     <React.Fragment>
       <AddOrUpdateCommission
@@ -321,10 +346,6 @@ const AllottedBouquet = ({ allottedBouquetData, selectedRowId }) => {
         <Col lg="12">
           <Card>
             <CardBody>
-              {/* {console.log(
-                "bouquet details:" + JSON.stringify(allottedBouquetData)
-              )} */}
-
               <TableContainer
                 isPagination={true}
                 columns={columns}
@@ -340,6 +361,9 @@ const AllottedBouquet = ({ allottedBouquetData, selectedRowId }) => {
                 theadClass="table-light"
                 paginationDiv="col-sm-12 col-md-7"
                 pagination="pagination pagination-rounded justify-content-end mt-4"
+                subTableEnabled={true}
+                getRenderedSubTable={renderRateTable}
+                isSubTableContentExists={(rowData) => rowData.rate.length > 0}
               />
             </CardBody>
           </Card>
