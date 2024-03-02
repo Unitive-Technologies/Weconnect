@@ -11,6 +11,9 @@ import {
   GET_PACKAGE_STATUS,
   GET_PACKAGE_STATUS_FAIL,
   GET_PACKAGE_STATUS_SUCCESS,
+  GET_PACKAGE_CASCODE,
+  GET_PACKAGE_CASCODE_FAIL,
+  GET_PACKAGE_CASCODE_SUCCESS,
   ADD_NEW_PACKAGELIST,
   ADD_PACKAGELIST_SUCCESS,
   ADD_PACKAGELIST_FAIL,
@@ -35,6 +38,23 @@ export const getPackageListSuccess = (packagelist) => {
     payload: packagelist,
   };
 };
+
+export const getPackageCascode = () => ({
+  type: GET_PACKAGE_CASCODE,
+});
+
+export const getPackageCascodeSuccess = (packageCascode) => {
+  console.log("Received Package List Cascode:", packageCascode);
+  return {
+    type: GET_PACKAGE_CASCODE_SUCCESS,
+    payload: packageCascode,
+  };
+};
+
+export const getPackageCascodeFail = (error) => ({
+  type: GET_PACKAGE_CASCODE_FAIL,
+  payload: error,
+});
 
 export const getPackageListFail = (error) => ({
   type: GET_PACKAGELIST_FAIL,

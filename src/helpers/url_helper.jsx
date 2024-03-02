@@ -236,6 +236,36 @@ export const getChannelListUrl = (currPage, perPage) => {
   return `/channel?expand=created_by_lbl,broadcaster_lbl,genre_lbl,language_lbl,channel_type_lbl,isAlacarte_lbl,status_lbl,isFta_lbl,isNCF_lbl&sort=name&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
 
+export const DOWNLOAD_SAMPLE_PACKAGE = "/package/upload-q?vr=web1.0";
+
+export const fileUploadPackage = (token) => {
+  return `/package/upload-q/${token}?vr=web1.0`;
+};
+
+export const uploadPackageSubmit = (token) => {
+  return `/package/upload-q/${token}`;
+};
+
+export const DOWNLOAD_SAMPLE_BULKUPDATEPACKAGE = "/package-update/upload-q?vr=web1.0";
+
+export const fileUploadBulkUpdatePackage = (token) => {
+  return `/package-update/upload-q/${token}?vr=web1.0`;
+};
+
+export const uploadBulkUpdatePackageSubmit = (token) => {
+  return `/package-update/upload-q/${token}`;
+};
+
+export const DOWNLOAD_SAMPLE_BULKUPDATECHANNELPACKAGE = "/package-channel-cascode-assoc/upload-q?vr=web1.0";
+
+export const fileUploadBulkUpdatePackageCascode = (token) => {
+  return `/package-channel-cascode-assoc/upload-q/${token}?vr=web1.0`;
+};
+
+export const uploadBulkUpdatePackageCascodeSubmit = (token) => {
+  return `/package-channel-cascode-assoc/upload-q/${token}`;
+};
+
 export const DOWNLOAD_SAMPLE_CHANNEL = "/channel/upload-q?vr=web1.0";
 
 export const fileUploadChannel = (token) => {
