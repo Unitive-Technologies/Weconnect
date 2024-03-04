@@ -9,15 +9,13 @@ import { createSelector } from "reselect";
 
 const PreviewTable = (props) => {
   const { rechargeperiod, lcoRate, rate, setRate } = props;
-  const [freeDays, setFreeDays] = useState(0);
+  const [freeDays, setFreeDays] = useState("");
   const [refundable, setRefundable] = useState("Yes");
-  const [price, setPrice] = useState(0);
-  const [payChannelRate, setPayChannelRate] = useState(0);
-  const [tax, setTax] = useState(0);
-  const [totalamount, setTotalAmount] = useState(0);
+  const [price, setPrice] = useState("");
 
-  console.log("@@@@@@@@@@@@refundable value:" + refundable);
-  console.log("@@@@@@@@@@@@price value:" + price);
+  // console.log("@@@@@@@@@@@@refundable value:" + refundable);
+  // console.log("@@@@@@@@@@@@price value:" + price);
+  console.log("@@@@@@@@@@@@rate value:" + JSON.stringify(rate));
   const dispatch = useDispatch();
   const selectBouquetState = (state) => state.bouquet;
   const BouquetProperties = createSelector(selectBouquetState, (bouquet) => ({
@@ -31,29 +29,37 @@ const PreviewTable = (props) => {
     }
   }, [dispatch, rechargeperiod]);
 
+  // Initialize arrays to hold indices of rows with different properties
+  const refundableRows = [];
+  const freeDaysRows = [];
+
   const updateRate = () => {
-    if (!price || !refundable || !freeDays) {
-      return;
-    }
+    const updatedRate = periodArray.map((row, i) => {
+      const price =
+        parseFloat(row.months) === 0 ? lcoRate / 30 : lcoRate * row.months;
+      const totalAmount = price + (price * 30.3) / 100;
 
-    const newItem = {
-      id: rate.length + 1,
-      price: price,
-      rent: 0,
-      is_refundable: refundable,
-      free_days: freeDays,
-      callback_amount: 0,
-    };
+      // Check if the row index is in refundableRows array
+      const isRefundable = refundableRows.includes(i + 1);
+      // Check if the row index is in freeDaysRows array, set free_days to 10 if included
+      const freeDays = freeDaysRows.includes(i + 1) ? 10 : 0;
 
-    const updatedData = [...rate, newItem];
-    console.log("Updated Data in preview table" + updatedData);
-    setRate(updatedData);
+      return {
+        id: i + 1,
+        price: parseFloat(price.toFixed(2)),
+        rent: 0,
+        is_refundable: isRefundable,
+        free_days: freeDays,
+        callback_amount: 0,
+        total_amount: parseFloat(totalAmount.toFixed(2)),
+      };
+    });
 
-    //   setCasSelection("");
-    //   setCasCode("");
+    // Assuming setRate is passed as a prop
+    setRate(updatedRate);
   };
 
-  console.log("periodArray: " + JSON.stringify(periodArray));
+  // console.log("periodArray: " + JSON.stringify(periodArray));
   return (
     <Card>
       <CardBody>
@@ -92,7 +98,7 @@ const PreviewTable = (props) => {
                   <td>{row && row.name}</td>
                   <td>
                     <Input
-                      name="payChannelRate"
+                      name="price"
                       type="number"
                       disabled
                       value={parseFloat(
@@ -102,7 +108,6 @@ const PreviewTable = (props) => {
                       ).toFixed(2)}
                     />
                   </td>
-                  {console.log("payChannelRate:" + payChannelRate)}
                   <td>
                     <Input
                       name="tax"
@@ -115,7 +120,6 @@ const PreviewTable = (props) => {
                       ).toFixed(2)}
                     />
                   </td>
-                  {console.log("tax:" + tax)}
                   <td>
                     <Input
                       name="totalamount"
@@ -129,22 +133,27 @@ const PreviewTable = (props) => {
                       ).toFixed(2)}
                     />
                   </td>
-                  {console.log("totalAmount:" + totalamount)}
                   <td>
                     <Input
                       type="checkbox"
-                      checked={refundable === "Yes"}
-                      onChange={(e) =>
-                        setRefundable(e.target.checked ? "Yes" : "No")
-                      }
+                      checked={refundable[i] === "Yes"}
+                      onChange={(e) => {
+                        const updatedRefundable = [...refundable];
+                        updatedRefundable[i] = e.target.checked ? "Yes" : "No";
+                        setRefundable(updatedRefundable);
+                      }}
                     />
                   </td>
                   <td>
                     <Input
-                      name="freeDays"
+                      name={`freeDays-${i}`} // Use unique name for each input
                       type="number"
-                      value={freeDays}
-                      onChange={(e) => setFreeDays(e.target.value)}
+                      value={freeDays[i] || ""}
+                      onChange={(e) => {
+                        const updatedFreeDays = [...freeDays];
+                        updatedFreeDays[i] = e.target.value;
+                        setFreeDays(updatedFreeDays);
+                      }}
                     />
                   </td>
                 </tr>
