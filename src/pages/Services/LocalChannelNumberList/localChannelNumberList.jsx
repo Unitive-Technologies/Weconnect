@@ -213,7 +213,7 @@ const LocalChannelNumberList = (props) => {
     setModal(!modal);
   };
 
-  const toggle1 = () => {
+  const toggleUploadModal = () => {
     setModal1(!modal1);
   };
   const handleUserClick = (arg) => {
@@ -273,7 +273,7 @@ const LocalChannelNumberList = (props) => {
 
   return (
     <React.Fragment>
-      <UploadLocalChannelNumberList isOpen={modal1} toggle={toggle1} />
+      <UploadLocalChannelNumberList isOpen={modal1} toggleUploadModal={toggleUploadModal} />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}

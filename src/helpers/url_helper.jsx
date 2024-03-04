@@ -332,6 +332,7 @@ export const getPackageListUrl = (currPage, perPage) => {
 export const GET_PACKAGE_TYPE = "/list/packageType?fields=id,name&vr=web1.0";
 export const GET_PACKAGE_BOXTYPE = "/list/boxtype?fields=id,name&vr=web1.0";
 export const GET_PACKAGE_STATUS = "/list/status?fields=id,name&vr=web1.0";
+export const GET_PACKAGE_CASCODE = "/casvendor/list?fields=id,name&vr=web1.0";
 export const UPDATE_PACKAGE = (id) => `/package/${id}?vr=web1.0`;
 
 export const GET_OSDCONFIGURATIONLIST =
@@ -827,6 +828,16 @@ export const fileUploadRegionalOffice = (token) => {
 
 export const uploadRegionalOfficeSubmit = (token) => {
   return `/operator/upload-q/${token}`;
+};
+
+export const DOWNLOAD_SAMPLE_LCN = "/channel-local-number/upload-q?vr=web1.0";
+
+export const fileUploadLCN = (token) => {
+  return `/channel-local-number/upload-q/${token}?vr=web1.0`;
+};
+
+export const uploadLCNSubmit = (token) => {
+  return `/channel-local-number/upload-q/${token}`;
 };
 
 export const DOWNLOAD_SAMPLE_BRAND = "/brand/upload-q?vr=web1.0";

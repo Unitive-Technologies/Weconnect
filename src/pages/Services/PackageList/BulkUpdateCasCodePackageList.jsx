@@ -33,7 +33,7 @@ const BulkUpdateCasCodePackageList = (props) => {
   const dispatch = useDispatch();
   const [uploadTrigger, setUploadTrigger] = useState({});
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [packageCascodes, setPackageCascode] = useState("");
+  const [packageListCascode, setPackageCascode] = useState("");
   const [successMsg, setSuccessMsg] = useState(false);
 
   const toggleSuccessMsg = () => {
@@ -53,12 +53,12 @@ const BulkUpdateCasCodePackageList = (props) => {
   }
 
   const packageSavedTemplatePayload = {
-    meta_data: { type: 1 },
+    meta_data: { type: 2 },
     url: "",
   };
 
   const packageDownloadTemplatePayload = {
-    meta_data: { type: 1 },
+    meta_data: { type: 2 },
     url: "",
   };
 
@@ -176,7 +176,7 @@ const BulkUpdateCasCodePackageList = (props) => {
                   type="select"
                   placeholder="Select"
                   className="form-select"
-                  value={packageCascodes}
+                  value={packageListCascode}
                   onChange={(e) => setPackageCascode(e.target.value)}
                 >
                   <option value="">Select cas</option>

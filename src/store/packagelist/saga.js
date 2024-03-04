@@ -24,7 +24,6 @@ import {
   addPackageListFail,
   updatePackageSuccess,
   updatePackageFail,
-  getPackageCascode,
   getPackageCascodeSuccess,
   getPackageCascodeFail,
 } from "./actions";
@@ -36,7 +35,7 @@ import {
   getPackageBoxType,
   getPackageStatus,
   addNewPackageList,
-  getChannelListCascode,
+  getPackageCascode,
   updatePackage,
 } from "../../helpers/backend_helper";
 

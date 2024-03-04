@@ -241,6 +241,8 @@ const PackageList = (props) => {
       dispatch(onGetPackageCascode());
     }
   }, [dispatch, packageList]);
+  console.log("PackageCasCode in packagelist" + JSON.stringify(packageCascode))
+
 
   const goToPage = (toPage) => {
     console.log("[GOTO PAGE] Trigger to page - ", toPage);

@@ -475,6 +475,21 @@ export const uploadBrandSubmit = async (initiatedToken, formData) => {
   );
 };
 
+export const downloadLCNUploadTemplate = async (data) => {
+  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_LCN, data);
+};
+
+export const updateLCNUploadByToken = async (token, data) => {
+  return put(url.fileUploadLCN(token), data);
+};
+
+export const uploadLCNSubmit = async (initiatedToken, formData) => {
+  return await postCompleteResponse(
+    url.uploadLCNSubmit(initiatedToken),
+    formData
+  );
+};
+
 export const downloadWarehouseUploadTemplate = async (data) => {
   return await postCompleteResponse(url.DOWNLOAD_SAMPLE_WAREHOUSE, data);
 };
@@ -888,6 +903,7 @@ export const addNewPackageList = (packlist) =>
 export const getPackageType = () => get(url.GET_PACKAGE_TYPE);
 export const getPackageBoxType = () => get(url.GET_PACKAGE_BOXTYPE);
 export const getPackageStatus = () => get(url.GET_PACKAGE_STATUS);
+export const getPackageCascode = () => get(url.GET_PACKAGE_CASCODE);
 export const updatePackage = (packlist, id) =>
   put(url.UPDATE_PACKAGE(id), packlist);
 
