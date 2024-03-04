@@ -142,13 +142,11 @@ const AddNewChannelList = (props) => {
         code: values["code"],
         description: values["description"],
         genre_id: parseInt(values["genre"]),
-        isAlacarte: parseInt(values["isalacarte"]),
+        isAlacarte: values["isalacarte"],
         isFta: values["isFta"],
         isHD: parseInt(values["definition"]),
         isNCF: values["isNCF"],
         language_id: values["language_id"],
-        // language_id: selectedLanguages,
-        // logo: { name: "", type: "", ext: "", data: "" },
         logo: values["logo"],
         name: values["name"],
         revenue_share: {
@@ -212,8 +210,7 @@ const AddNewChannelList = (props) => {
                   name="code"
                   type="text"
                   placeholder="Enter code"
-                  disabled={!isCustomEnabled} // Disable if isCustomEnabled is false
-                  // disabled
+                  disabled={toggleSwitch}
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.code || ""}
@@ -569,7 +566,9 @@ const AddNewChannelList = (props) => {
                   onChange={handleInputChange}
                   onKeyDown={handleArrowKeyPress}
                   placeholder="0"
-                  disabled={selectedType === "1"}
+                  disabled={
+                    selectedType === "1" || validation.values.isalacarte === "0"
+                  }
                   value={selectedRate}
                   onBlur={validation.handleBlur}
                 ></Input>
