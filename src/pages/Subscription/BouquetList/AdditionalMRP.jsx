@@ -4,7 +4,7 @@ import TableContainer from "../../../components/Common/TableContainer";
 import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 
-const AdditionalMRP = (props) => {
+const AdditionalMRP = ({ additionalRates }) => {
   const columns = useMemo(
     () => [
       {
@@ -149,14 +149,13 @@ const AdditionalMRP = (props) => {
     []
   );
 
-  const AdditionalData = [];
   return (
     <Card>
       <CardBody>
         <TableContainer
           isPagination={true}
           columns={columns}
-          data={AdditionalData}
+          data={additionalRates}
           // isGlobalFilter={true}
           isShowingPageLength={true}
           // customPageSize={50}

@@ -7,15 +7,21 @@ import { getRechargePeriod as onGetRechargePeriod } from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 
-const PreviewTable = (props) => {
-  const { rechargeperiod, lcoRate, rate, setRate } = props;
+const AdditionalMrpTable = (props) => {
+  const {
+    rechargeperiod,
+    additionalLcoRate,
+    additionalRates,
+    setAdditionalRates,
+    additionalLcoDiscount,
+    additionalName,
+  } = props;
   const [freeDays, setFreeDays] = useState("");
   const [refundable, setRefundable] = useState("Yes");
-  const [price, setPrice] = useState("");
 
-  // console.log("@@@@@@@@@@@@refundable value:" + refundable);
-  // console.log("@@@@@@@@@@@@price value:" + price);
-  console.log("@@@@@@@@@@@@rate value:" + JSON.stringify(rate));
+  console.log(
+    "AAAAAAAAAAAAAAAdditionalrates value:" + JSON.stringify(additionalRates)
+  );
   const dispatch = useDispatch();
   const selectBouquetState = (state) => state.bouquet;
   const BouquetProperties = createSelector(selectBouquetState, (bouquet) => ({
@@ -34,9 +40,11 @@ const PreviewTable = (props) => {
   const freeDaysRows = [];
 
   const updateRate = () => {
-    const updatedRate = periodArray.map((row, i) => {
+    const updatedRates = periodArray.map((row, i) => {
       const price =
-        parseFloat(row.months) === 0 ? lcoRate / 30 : lcoRate * row.months;
+        parseFloat(row.months) === 0
+          ? additionalLcoRate / 30
+          : additionalLcoRate * row.months;
       const totalAmount = price + (price * 30.3) / 100;
 
       // Check if the row index is in refundableRows array
@@ -45,18 +53,27 @@ const PreviewTable = (props) => {
       const freeDays = freeDaysRows.includes(i + 1) ? freeDays : 0;
 
       return {
-        id: i + 1,
-        price: parseFloat(price.toFixed(2)),
-        rent: 0,
-        is_refundable: isRefundable,
-        free_days: freeDays,
-        callback_amount: 0,
-        total_amount: parseFloat(totalAmount.toFixed(2)),
+        rate_code: additionalName,
+        mrp_data: {
+          dis_pcc: additionalLcoDiscount,
+          lmo_pcc: additionalLcoRate,
+        },
+        rate: [
+          {
+            id: i + 1,
+            price: parseFloat(price.toFixed(2)) || 0, // Ensure it defaults to 0 if undefined
+            rent: 0,
+            is_refundable: isRefundable ? "Yes" : "No", // Convert boolean to string "Yes" or "No"
+            free_days: freeDays,
+            callback_amount: 0,
+            total_amount: parseFloat(totalAmount.toFixed(2)) || 0, // Ensure it defaults to 0 if undefined
+          },
+        ],
       };
     });
 
-    // Assuming setRate is passed as a prop
-    setRate(updatedRate);
+    // Assuming setAdditionalRates is passed as a prop
+    setAdditionalRates(updatedRates);
   };
 
   // console.log("periodArray: " + JSON.stringify(periodArray));
@@ -103,8 +120,8 @@ const PreviewTable = (props) => {
                       disabled
                       value={parseFloat(
                         parseInt(row.months) === 0
-                          ? lcoRate / 30
-                          : lcoRate * row.months
+                          ? additionalLcoRate / 30
+                          : additionalLcoRate * row.months
                       ).toFixed(2)}
                     />
                   </td>
@@ -115,8 +132,8 @@ const PreviewTable = (props) => {
                       disabled
                       value={parseFloat(
                         parseInt(row.months) === 0
-                          ? ((lcoRate / 30) * 30.3) / 100
-                          : (lcoRate * row.months * 30.3) / 100
+                          ? ((additionalLcoRate / 30) * 30.3) / 100
+                          : (additionalLcoRate * row.months * 30.3) / 100
                       ).toFixed(2)}
                     />
                   </td>
@@ -127,9 +144,10 @@ const PreviewTable = (props) => {
                       disabled
                       value={parseFloat(
                         parseInt(row.months) === 0
-                          ? lcoRate / 30 + ((lcoRate / 30) * 30.3) / 100
-                          : lcoRate * row.months +
-                              (lcoRate * row.months * 30.3) / 100
+                          ? additionalLcoRate / 30 +
+                              ((additionalLcoRate / 30) * 30.3) / 100
+                          : additionalLcoRate * row.months +
+                              (additionalLcoRate * row.months * 30.3) / 100
                       ).toFixed(2)}
                     />
                   </td>
@@ -174,10 +192,10 @@ const PreviewTable = (props) => {
   );
 };
 
-PreviewTable.propTypes = {
+AdditionalMrpTable.propTypes = {
   // toggle: PropTypes.func,
   // isOpen: PropTypes.bool,
   rechargeperiod: PropTypes.array,
 };
 
-export default PreviewTable;
+export default AdditionalMrpTable;

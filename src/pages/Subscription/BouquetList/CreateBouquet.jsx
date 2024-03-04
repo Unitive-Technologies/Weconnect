@@ -23,6 +23,7 @@ import Count from "./Count";
 import PreviewTable from "./PreviewTable";
 import AdditionalMRP from "./AdditionalMRP";
 import AddBrands from "./AddBrands";
+import AdditionalMrpTable from "./AdditionalMrpTable";
 
 const CreateBouquet = (props) => {
   const {
@@ -61,16 +62,12 @@ const CreateBouquet = (props) => {
 
   const [lcoDiscount, setLcoDiscount] = useState(20);
   const [lcoRate, setLcoRate] = useState(0);
-  const [additionalLcoDiscount, setAdditionalLcoDiscount] = useState(0);
-  const [additionalLcoRate, setAdditionalLcoRate] = useState(0);
-
+  const [additionalLcoDiscount, setAdditionalLcoDiscount] = useState("");
+  const [additionalLcoRate, setAdditionalLcoRate] = useState("");
+  const [additionalRates, setAdditionalRates] = useState([]);
   const [rate, setRate] = useState([]);
-  console.log(
-    "mrp, drp, lcoDiscount, lcoRate:" + mrp,
-    drp,
-    lcoDiscount,
-    lcoRate
-  );
+  const [additionalName, setAdditionalName] = useState("");
+
   const handleIsHDChange = async (e) => {
     const selectValue = e.target.value;
     setSelectedIsHD(selectValue);
@@ -788,7 +785,12 @@ const CreateBouquet = (props) => {
               </Col>
               <Col sm="3">
                 <Label>LCO Discount(%)</Label>
-                <Input type="number" defaultValue="20" value={lcoDiscount} />
+                <Input
+                  type="number"
+                  defaultValue="20"
+                  value={lcoDiscount}
+                  onChange={(e) => setLcoDiscount(e.target.value)}
+                />
               </Col>
               <Col sm="3">
                 <Label>LCO Rate**</Label>
@@ -843,6 +845,8 @@ const CreateBouquet = (props) => {
                     placeholder="Enter additional name"
                     type="text"
                     style={{ width: "210px" }}
+                    value={additionalName}
+                    onChange={(e) => setAdditionalName(e.target.value)}
                   />
                 </div>
                 <div>
@@ -863,7 +867,8 @@ const CreateBouquet = (props) => {
                 <Label>DRP**</Label>
                 <Input
                   type="number"
-                  defaultValue={0}
+                  disabled
+                  // defaultValue={0}
                   value={parseFloat(drp).toFixed(2)}
                 />
               </Col>
@@ -871,7 +876,7 @@ const CreateBouquet = (props) => {
                 <Label>LCO Discount(%)</Label>
                 <Input
                   type="number"
-                  defaultValue="0"
+                  // defaultValue="0"
                   value={additionalLcoDiscount}
                   onChange={(e) => setAdditionalLcoDiscount(e.target.value)}
                 />
@@ -880,17 +885,24 @@ const CreateBouquet = (props) => {
                 <Label>LCO Rate**</Label>
                 <Input
                   type="number"
-                  defaultValue={0}
+                  // defaultValue={0}
                   value={parseFloat(additionalLcoRate).toFixed(2)}
                   onChange={(e) => setAdditionalLcoRate(e.target.value)}
                 />
               </Col>
             </Row>
             <Row>
-              <PreviewTable />
+              <AdditionalMrpTable
+                rechargeperiod={rechargeperiod}
+                additionalLcoDiscount={additionalLcoDiscount}
+                additionalLcoRate={additionalLcoRate}
+                additionalRates={additionalRates}
+                setAdditionalRates={setAdditionalRates}
+                additionalName={additionalName}
+              />
             </Row>
             <Row>
-              <AdditionalMRP />
+              <AdditionalMRP additionalRates={additionalRates} />
             </Row>
           </Row>
           <div>**Applicable NCF and Taxes Additional</div>
