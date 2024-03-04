@@ -373,16 +373,17 @@ const PackageList = (props) => {
         handleUpdateCasCode={handleUpdateCasCode}
         packageCascode={packageCascode}
       />
-      <ViewPackageList
-        isOpen={showViewPackageList}
-        handleViewPackageList={handleViewPackageList}
-        packageList={viewData}
-        selectedRowId={selectedRowId}
-        packageType={packageType}
-        packageBoxType={packageBoxType}
-        packageStatus={packageStatus}
-
-      />
+      {showViewPackageList && (
+        <ViewPackageList
+          isOpen={showViewPackageList}
+          handleViewPackageList={handleViewPackageList}
+          packageList={viewData}
+          selectedRowId={selectedRowId}
+          packageType={packageType}
+          packageBoxType={packageBoxType}
+          packageStatus={packageStatus}
+        />
+      )}
 
       <div className="page-content">
         <Container fluid>
