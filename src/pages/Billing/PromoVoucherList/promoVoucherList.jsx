@@ -78,8 +78,22 @@ const PromoVoucherList = (props) => {
     setShowScrapPromoVoucher(!showScrapPromoVoucher);
   };
 
+
+
   const columns = useMemo(
     () => [
+      {
+        Header: "*",
+        disableFilters: true,
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <>
+              <input type="checkbox" />
+            </>
+          );
+        },
+      },
       {
         Header: "#",
         disableFilters: true,
