@@ -139,7 +139,6 @@ const ViewChannel = (props) => {
         name: values.name,
         description: values.description,
         definition: values.definition,
-        // type: values.type,
         broadcaster_id: values.broadcaster_id,
         genre_id: values.genre_id,
         language_id: values.language_id,
@@ -557,8 +556,8 @@ const ViewChannel = (props) => {
                     value={validation.values.isalacarte || ""}
                     disabled={!showEditChannel}
                   >
-                    <option value="201">Yes</option>
-                    <option value="202">No</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
                   </Input>
                   {validation.touched.isalacarte &&
                   validation.errors.isalacarte ? (
@@ -575,17 +574,11 @@ const ViewChannel = (props) => {
                     name="rate"
                     type="number"
                     step="0.01"
-                    // placeholder="Enter channel code"
-                    // className="form-select"
-                    // onChange={validation.handleChange}
-                    // onBlur={validation.handleBlur}
-                    // value={validation.values.rate || ""}
                     onChange={handleInputChange}
                     onKeyDown={handleArrowKeyPress}
                     placeholder="0"
                     disabled={!showEditChannel || selectedType === "1"}
                     value={selectedRate}
-                    // disabled={!showEditChannel}
                   ></Input>
                   {validation.touched.rate && validation.errors.rate ? (
                     <FormFeedback type="invalid">
