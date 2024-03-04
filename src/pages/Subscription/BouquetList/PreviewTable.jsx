@@ -12,6 +12,10 @@ const PreviewTable = (props) => {
   const [freeDays, setFreeDays] = useState(0);
   const [refundable, setRefundable] = useState("Yes");
   const [price, setPrice] = useState(0);
+  const [payChannelRate, setPayChannelRate] = useState(0);
+  const [tax, setTax] = useState(0);
+  const [totalamount, setTotalAmount] = useState(0);
+
   console.log("@@@@@@@@@@@@refundable value:" + refundable);
   console.log("@@@@@@@@@@@@price value:" + price);
   const dispatch = useDispatch();
@@ -49,6 +53,7 @@ const PreviewTable = (props) => {
     //   setCasCode("");
   };
 
+  console.log("periodArray: " + JSON.stringify(periodArray));
   return (
     <Card>
       <CardBody>
@@ -67,13 +72,8 @@ const PreviewTable = (props) => {
               {/* <th>Action</th> */}
             </tr>
           </thead>
-          <tbody>
-            {console.log("period arrayyyyyyy: ", JSON.stringify(periodArray))}
-            {periodArray &&
-              periodArray.map((row, i) => (
-                <tr key={i}>
-                  <td>{i + 1}</td>
-                  {/* <td>
+
+          {/* <td>
             <input
               type="checkbox"
               onChange={() => {
@@ -84,19 +84,17 @@ const PreviewTable = (props) => {
               checked={isRowChecked(row.id)}
             />
           </td> */}
-                  {/* {console.log("RRRRRRRRRRRRRRRRRRow: ", JSON.stringify(row))} */}
+          <tbody>
+            {periodArray &&
+              periodArray.map((row, i) => (
+                <tr key={i}>
+                  <td>{i + 1}</td>
                   <td>{row && row.name}</td>
                   <td>
                     <Input
+                      name="payChannelRate"
                       type="number"
                       disabled
-                      // onChange={setPrice(
-                      //   parseFloat(
-                      //     parseInt(row.months) === 0
-                      //       ? lcoRate / 30
-                      //       : lcoRate * row.months
-                      //   ).toFixed(2)
-                      // )}
                       value={parseFloat(
                         parseInt(row.months) === 0
                           ? lcoRate / 30
@@ -104,24 +102,46 @@ const PreviewTable = (props) => {
                       ).toFixed(2)}
                     />
                   </td>
+                  {console.log("payChannelRate:" + payChannelRate)}
                   <td>
-                    <Input type="number" />
+                    <Input
+                      name="tax"
+                      type="number"
+                      disabled
+                      value={parseFloat(
+                        parseInt(row.months) === 0
+                          ? ((lcoRate / 30) * 30.3) / 100
+                          : (lcoRate * row.months * 30.3) / 100
+                      ).toFixed(2)}
+                    />
                   </td>
+                  {console.log("tax:" + tax)}
                   <td>
-                    <Input type="number" />
+                    <Input
+                      name="totalamount"
+                      type="number"
+                      disabled
+                      value={parseFloat(
+                        parseInt(row.months) === 0
+                          ? lcoRate / 30 + ((lcoRate / 30) * 30.3) / 100
+                          : lcoRate * row.months +
+                              (lcoRate * row.months * 30.3) / 100
+                      ).toFixed(2)}
+                    />
                   </td>
+                  {console.log("totalAmount:" + totalamount)}
                   <td>
                     <Input
                       type="checkbox"
+                      checked={refundable === "Yes"}
                       onChange={(e) =>
                         setRefundable(e.target.checked ? "Yes" : "No")
                       }
-                      defaultChecked={refundable === "Yes"}
                     />
                   </td>
                   <td>
-                    {" "}
                     <Input
+                      name="freeDays"
                       type="number"
                       value={freeDays}
                       onChange={(e) => setFreeDays(e.target.value)}
