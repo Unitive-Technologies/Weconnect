@@ -103,10 +103,6 @@ const ChannelList = (props) => {
     currentPage,
   } = useSelector(ChannelProperties);
 
-  useEffect(() => {
-    // console.log("Channel List data in component:", channel);
-  }, [channel]);
-
   const [viewChannelList, setViewChannelList] = useState(false);
   const [showAddNewChannelList, setShowAddNewChannelList] = useState(false);
   const [showUploadChannelList, setShowUploadChannelList] = useState(false);
@@ -129,7 +125,7 @@ const ChannelList = (props) => {
     //   setSelectedData(data[0]);
     // }
   };
-  console.log("Channel Lists:" + JSON.stringify(channel));
+
   const columns = useMemo(
     () => [
       {
@@ -411,8 +407,6 @@ const ChannelList = (props) => {
     ];
   };
 
-  console.log("View in Channel List Type " + channelListType);
-
   return (
     <React.Fragment>
       <AddNewChannelList
@@ -473,33 +467,6 @@ const ChannelList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {/* {console.log("Channel List:" + JSON.stringify(channel))} */}
-                    {/* <TableContainer
-                      isPagination={true}
-                      columns={columns}
-                      data={channel}
-                      isGlobalFilter={true}
-                      isShowTableActionButtons={true}
-                      isShowingPageLength={true}
-                      tableActions={getTableActions()}
-                      handleAddNewChannelList={() =>
-                        setShowAddNewChannelList(true)
-                      }
-                      handleUploadChannelList={() =>
-                        setShowUploadChannelList(true)
-                      }
-                      handleBulkUpdateCasCodeChannelList={() =>
-                        setShowBulkUpdateCasCodeChannelList(true)
-                      }
-                      handleBulkUpdateChannelList={() =>
-                        setShowBulkUpdateChannelList(true)
-                      }
-                      customPageSize={50}
-                      tableClass="table align-middle table-nowrap table-hover"
-                      theadClass="table-light"
-                      paginationDiv="col-sm-12 col-md-7"
-                      pagination="pagination pagination-rounded justify-content-end mt-4"
-                    /> */}
                     <TableContainerX
                       columns={columns}
                       data={channel}

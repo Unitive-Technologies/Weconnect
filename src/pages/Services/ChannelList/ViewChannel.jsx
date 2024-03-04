@@ -42,7 +42,7 @@ const ViewChannel = (props) => {
   } = props;
   const dispatch = useDispatch();
   const [showEditChannel, setShowEditChannel] = useState(false);
-  console.log("selected row in view:" + JSON.stringify(channel));
+
   const [casCodeList, setCasCodeList] = useState([]);
   const [revenueData, setRevenueData] = useState({});
   const [broadPercent, setBroadPercent] = useState();
@@ -713,7 +713,6 @@ const ViewChannel = (props) => {
                 />
               </Col>
             </Row>
-            {console.log("" + showEditChannel)}
             {showEditChannel && (
               <Row>
                 <Col>

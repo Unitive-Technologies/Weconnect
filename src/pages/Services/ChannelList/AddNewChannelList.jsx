@@ -47,11 +47,13 @@ const AddNewChannelList = (props) => {
   const [casCodeList, setCasCodeList] = useState([]);
   const [selectedType, setSelectedType] = useState("");
   const [toggleNcfSwitch, setToggleNcfSwitch] = useState(true);
-  const [selectedRate, setSelectedRate] = useState("");
+  const [selectedRate, setSelectedRate] = useState(0);
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
-    setSelectedRate(inputValue >= 0 ? inputValue : 0);
+    // setSelectedRate(inputValue >= 0 ? inputValue : 0);
+    console.log("Input value: ", inputValue);
+    setSelectedRate(inputValue);
   };
 
   const handleChangeLogo = (e) => {
@@ -77,14 +79,12 @@ const AddNewChannelList = (props) => {
   const [selectedLanguages, setSelectedLanguages] = useState([]);
 
   const handleChangeLanguages = (e) => {
-    const selectedOptions = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
+    const selectedOptions = Array.from(e.target.selectedOptions, (option) =>
+      parseInt(option.value)
     );
 
     setSelectedLanguages(selectedOptions);
   };
-  console.log("lang handle:" + selectedLanguages);
 
   const handleArrowKeyPress = (e) => {
     if (e.key === "ArrowUp" || e.key === "ArrowDown") {
@@ -93,9 +93,14 @@ const AddNewChannelList = (props) => {
       const increment = e.key === "ArrowUp" ? 1 : -1;
       const currentRate = parseFloat(selectedRate) || 0;
       const newRate = Math.max(0, currentRate + increment * 0.01);
-
+      console.log("Rate: ", newRate.toFixed(2));
       setSelectedRate(newRate.toFixed(2));
     }
+  };
+
+  const handleToggle = () => {
+    toggleAddModal();
+    // toggleNcfSwitch()
   };
 
   const validation = useFormik({
@@ -114,9 +119,11 @@ const AddNewChannelList = (props) => {
       broadcaster: "",
       genre: "",
       language_id: [],
-      isalacarte: "",
+      isalacarte: 1,
       rate: "",
       status: "",
+      isHD: "",
+      revenue_share: {},
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter channel name"),
@@ -130,7 +137,7 @@ const AddNewChannelList = (props) => {
     }),
     onSubmit: (values) => {
       const newChannelList = {
-        broadcasterRate: values["rate"],
+        broadcasterRate: parseInt(selectedRate),
         broadcaster_id: parseInt(values["broadcaster"]),
         casCodes: casCodeList.map((single) => {
           return {
@@ -142,11 +149,11 @@ const AddNewChannelList = (props) => {
         code: values["code"],
         description: values["description"],
         genre_id: parseInt(values["genre"]),
-        isAlacarte: values["isalacarte"],
-        isFta: values["isFta"],
+        isAlacarte: parseInt(values["isalacarte"]),
+        isFta: parseInt(values["isFta"]),
         isHD: parseInt(values["definition"]),
-        isNCF: values["isNCF"],
-        language_id: values["language_id"],
+        isNCF: toggleNcfSwitch === true ? 1 : 0,
+        language_id: selectedLanguages,
         logo: values["logo"],
         name: values["name"],
         revenue_share: {
@@ -163,6 +170,7 @@ const AddNewChannelList = (props) => {
       dispatch(onGetChannelList());
       validation.resetForm();
       toggleAddModal();
+      settoggleSwitch(!toggleSwitch);
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -250,11 +258,11 @@ const AddNewChannelList = (props) => {
                     </label>
                   </div>
                 </div>
-                {validation.touched.ifFixNCF && validation.errors.ifFixNCF ? (
+                {/* {validation.touched.ifFixNCF && validation.errors.ifFixNCF ? (
                   <FormFeedback type="invalid">
                     {validation.errors.ifFixNCF}
                   </FormFeedback>
-                ) : null}
+                ) : null} */}
               </div>
             </Col>
             <Col sm="3">
@@ -288,11 +296,11 @@ const AddNewChannelList = (props) => {
                     </label>
                   </div>
                 </div>
-                {validation.touched.ifFixNCF && validation.errors.ifFixNCF ? (
+                {/* {validation.touched.ifFixNCF && validation.errors.ifFixNCF ? (
                   <FormFeedback type="invalid">
                     {validation.errors.ifFixNCF}
                   </FormFeedback>
-                ) : null}
+                ) : null} */}
               </div>
             </Col>
           </Row>
@@ -310,11 +318,11 @@ const AddNewChannelList = (props) => {
                   type="file"
                   onChange={handleChangeLogo}
                 ></input>
-                {validation.touched.logo && validation.errors.logo ? (
+                {/* {validation.touched.logo && validation.errors.logo ? (
                   <FormFeedback type="invalid">
                     {validation.errors.logo}
                   </FormFeedback>
-                ) : null}
+                ) : null} */}
                 <button
                   type="button"
                   className="btn btn-primary "
@@ -324,7 +332,6 @@ const AddNewChannelList = (props) => {
                 </button>
               </div>
             </Col>
-            {console.log("logo:" + JSON.stringify(validation.values.logo))}
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
@@ -345,8 +352,6 @@ const AddNewChannelList = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-              {/* </Col>
-            <Col lg={4}> */}
               <div className="mb-3">
                 <Label className="form-label">
                   Description<span style={{ color: "red" }}>*</span>
@@ -389,7 +394,7 @@ const AddNewChannelList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.definition || ""}
                 >
-                  <option value="">Select channel definition</option>
+                  <option value="">Select definition</option>
                   {channelListDefinition &&
                     channelListDefinition.map((definition) => (
                       <option key={definition.id} value={definition.id}>
@@ -420,6 +425,7 @@ const AddNewChannelList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.isFta || ""}
                 >
+                  <option>Select Type</option>
                   {channelListType &&
                     channelListType.map((isFta) => (
                       <option key={isFta.id} value={isFta.id}>
@@ -507,11 +513,9 @@ const AddNewChannelList = (props) => {
                   placeholder="Select language"
                   className="form-select"
                   aria-label="multiple select example"
-                  onChange={validation.handleChange}
+                  onChange={handleChangeLanguages}
                   onBlur={validation.handleBlur}
-                  value={validation.values.language_id || []}
-                  // onChange={handleChangeLanguages}
-                  // value={selectedLanguages}
+                  value={selectedLanguages}
                 >
                   <option value="">Select Language</option>
                   {channelListLanguage &&
@@ -529,9 +533,6 @@ const AddNewChannelList = (props) => {
                 ) : null}
               </div>
             </Col>
-            {console.log(
-              "languages: " + JSON.stringify(validation.values.language_id)
-            )}
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">IsAlacarte</Label>
@@ -539,7 +540,7 @@ const AddNewChannelList = (props) => {
                   name="isalacarte"
                   type="select"
                   // placeholder="Enter channel code"
-                  // className="form-select"
+                  className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.isalacarte || ""}

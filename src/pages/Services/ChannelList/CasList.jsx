@@ -26,8 +26,6 @@ const CasList = ({
   channelListCascode,
   showEditChannel,
 }) => {
-  console.log("Cas List Data" + JSON.stringify(data));
-
   const updateCasList = () => {
     if (!casSelection || !casCode || !serviceId) {
       return;
@@ -41,9 +39,7 @@ const CasList = ({
     };
 
     const updatedData = [...data, newItem];
-    console.log("Updated Data in CasList" + updatedData);
     updateList(updatedData);
-
     setCasSelection("");
     setCasCode("");
     setServiceId("");
