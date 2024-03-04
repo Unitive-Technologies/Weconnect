@@ -46,7 +46,7 @@ const AddNewChannelList = (props) => {
   const [toggleSwitch, settoggleSwitch] = useState(true);
   const [casCodeList, setCasCodeList] = useState([]);
   const [selectedType, setSelectedType] = useState("");
-
+  const [toggleNcfSwitch, setToggleNcfSwitch] = useState(true);
   const [selectedRate, setSelectedRate] = useState("");
 
   const handleInputChange = (e) => {
@@ -225,26 +225,47 @@ const AddNewChannelList = (props) => {
                 ) : null}
               </div>
             </Col>
-
-            <Col lg={2}>
-              <div className="form-check form-switch form-switch-lg mt-3">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitchsizelg1"
-                  defaultChecked
-                  onChange={handleChange} // Handle switch change
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="customSwitchsizelg1"
+            <Col sm="3">
+              <div className="mb-3">
+                <Label className="form-label"></Label>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
                 >
-                  Custom / Auto
-                </label>
+                  <label style={{ marginRight: "10px" }}>Custom</label>
+                  <div className="form-check form-switch form-switch-lg mb-2">
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id="customSwitchsizelg"
+                      defaultChecked
+                      onClick={(e) => {
+                        settoggleSwitch(!toggleSwitch);
+                      }}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="customSwitchsizelg"
+                    >
+                      Auto
+                    </label>
+                  </div>
+                </div>
+                {validation.touched.ifFixNCF && validation.errors.ifFixNCF ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.ifFixNCF}
+                  </FormFeedback>
+                ) : null}
               </div>
             </Col>
-            <Col lg={2}>
-              <div className="mt-3 ">
+            <Col sm="3">
+              <div className="mb-3">
+                <Label className="form-label">
+                  NCF
+                  <i className="mdi mdi-information"></i>
+                </Label>
                 <div
                   style={{
                     display: "flex",
@@ -253,21 +274,15 @@ const AddNewChannelList = (props) => {
                 >
                   <label style={{ marginRight: "10px" }}>No</label>
                   <div className="form-check form-switch form-switch-lg mb-2">
-                    <Input
+                    <input
                       type="checkbox"
                       className="form-check-input"
                       id="customSwitchsizelg"
-                      // defaultChecked={!!validation.values.isNCF}
                       defaultChecked
                       onClick={(e) => {
-                        // Toggle the state of isNCF (if checked, set to 0; if unchecked, set to 1)
-                        const newValue = e.target.checked ? 1 : 0;
-                        validation.setFieldValue("isNCF", newValue); // Set the new value in Formik
-                        // Other logic if needed...
-                        settoggleSwitch(!toggleSwitch);
+                        setToggleNcfSwitch(!toggleNcfSwitch);
                       }}
                     />
-
                     <label
                       className="form-check-label"
                       htmlFor="customSwitchsizelg"
@@ -276,45 +291,15 @@ const AddNewChannelList = (props) => {
                     </label>
                   </div>
                 </div>
-                {/* {validation.touched.isNCF &&
-                      validation.errors.isNCF ? (
-                        <FormFeedback type="invalid">
-                          {validation.errors.isNCF}
-                        </FormFeedback>
-                      ) : null} */}
+                {validation.touched.ifFixNCF && validation.errors.ifFixNCF ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.ifFixNCF}
+                  </FormFeedback>
+                ) : null}
               </div>
             </Col>
           </Row>
           <Row>
-            {/* <Col lg={2}>
-              <div className="mb-3">
-                <Label className="form-label">Logo</Label>
-                <Input
-                  style={{
-                    width: "170px",
-                    height: "150px",
-                    borderRadius: "10px",
-                  }}
-                  name="logo"
-                  type="text"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.logo || ""}
-                ></Input>
-                {validation.touched.logo && validation.errors.logo ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.logo}
-                  </FormFeedback>
-                ) : null}
-                <button
-                  type="button"
-                  className="btn btn-primary "
-                  style={{ marginTop: "10px" }}
-                >
-                  Upload Logo
-                </button>
-              </div>
-            </Col> */}
             <Col lg={2}>
               <div className="mb-3">
                 <Label className="form-label">Logo</Label>
@@ -379,13 +364,13 @@ const AddNewChannelList = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -416,7 +401,7 @@ const AddNewChannelList = (props) => {
                     ))}
                 </Input>
                 {validation.touched.definition &&
-                  validation.errors.definition ? (
+                validation.errors.definition ? (
                   <FormFeedback type="invalid">
                     {validation.errors.definition}
                   </FormFeedback>
@@ -477,7 +462,7 @@ const AddNewChannelList = (props) => {
                     ))}
                 </Input>
                 {validation.touched.broadcaster &&
-                  validation.errors.broadcaster ? (
+                validation.errors.broadcaster ? (
                   <FormFeedback type="invalid">
                     {validation.errors.broadcaster}
                   </FormFeedback>
@@ -528,8 +513,8 @@ const AddNewChannelList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.language_id || []}
-                // onChange={handleChangeLanguages}
-                // value={selectedLanguages}
+                  // onChange={handleChangeLanguages}
+                  // value={selectedLanguages}
                 >
                   <option value="">Select Language</option>
                   {channelListLanguage &&
@@ -539,7 +524,8 @@ const AddNewChannelList = (props) => {
                       </option>
                     ))}
                 </Input>
-                {validation.touched.language_id && validation.errors.language_id ? (
+                {validation.touched.language_id &&
+                validation.errors.language_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.language_id}
                   </FormFeedback>
@@ -565,7 +551,7 @@ const AddNewChannelList = (props) => {
                   <option value="0">No</option>
                 </Input>
                 {validation.touched.isalacarte &&
-                  validation.errors.isalacarte ? (
+                validation.errors.isalacarte ? (
                   <FormFeedback type="invalid">
                     {validation.errors.isalacarte}
                   </FormFeedback>
@@ -655,8 +641,6 @@ const AddNewChannelList = (props) => {
                       setDiscountPercent={setDiscountPercent}
                     />
                   </Col>
-
-                  {/* {console.log("select rate value" + validation.values.rate, selectedRate, selectedType)} */}
                   {selectedType === "0" && selectedRate !== "" ? (
                     // <Row>
                     <Col lg={6}>

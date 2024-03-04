@@ -51,6 +51,7 @@ const ViewChannel = (props) => {
   const [showHistory, setShowHistory] = useState(false);
   const [selectedRate, setSelectedRate] = useState("");
   const [selectedType, setSelectedType] = useState("");
+  const [toggleNcfSwitch, setToggleNcfSwitch] = useState(true);
 
   const handleChangeLogo = (e) => {
     const file = e.target.files[0];
@@ -92,7 +93,6 @@ const ViewChannel = (props) => {
       setSelectedRate(newRate.toFixed(2));
     }
   };
-
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -275,75 +275,46 @@ const ViewChannel = (props) => {
                   ) : null}
                 </div>
               </Col>
-
-              <Col lg={2}>
-                <div className="form-check form-switch form-switch-lg mb-3">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="customSwitchsizelg"
-                    defaultChecked
-                  />
-                  <label
-                    className="form-check-label"
-                    htmlFor="customSwitchsizelg"
+              <Col sm="3">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    NCF
+                    <i className="mdi mdi-information"></i>
+                  </Label>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
                   >
-                    Custom / Auto
-                  </label>
-                </div>
-              </Col>
-
-              <Col lg={2}>
-                <div className="form-check form-switch form-switch-lg mb-3">
-                  NCF:
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="customSwitchsizelg"
-                    defaultChecked
-                  />
-                  <label
-                    className="form-check-label"
-                    htmlFor="customSwitchsizelg"
-                  >
-                    No / Yes
-                  </label>
+                    <label style={{ marginRight: "10px" }}>No</label>
+                    <div className="form-check form-switch form-switch-lg mb-2">
+                      <input
+                        type="checkbox"
+                        className="form-check-input"
+                        id="customSwitchsizelg"
+                        defaultChecked
+                        onClick={(e) => {
+                          setToggleNcfSwitch(!toggleNcfSwitch);
+                        }}
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="customSwitchsizelg"
+                      >
+                        Yes
+                      </label>
+                    </div>
+                  </div>
+                  {validation.touched.ifFixNCF && validation.errors.ifFixNCF ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.ifFixNCF}
+                    </FormFeedback>
+                  ) : null}
                 </div>
               </Col>
             </Row>
             <Row>
-              {/* <Col lg={2}>
-                <div className="mb-3">
-                  <Label className="form-label">Logo</Label>
-                  <Input
-                    style={{
-                      width: "170px",
-                      height: "150px",
-                      borderRadius: "10px",
-                    }}
-                    name="logo"
-                    type="text"
-                    disabled={!showEditChannel}
-                    // placeholder="Enter channel code"
-                    // className="form-select"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.logo || ""}
-                  ></Input>
-                  {validation.touched.logo && validation.errors.logo ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.logo}
-                    </FormFeedback>
-                  ) : null}
-                  <button
-                    type="button"
-                    className="btn btn-primary "
-                    style={{ marginTop: "10px" }}
-                  >
-                    Upload Logo
-                  </button>
-                </div>
-              </Col> */}
               <Col lg={2}>
                 <div className="mb-3">
                   <Label className="form-label">Logo</Label>
@@ -409,13 +380,13 @@ const ViewChannel = (props) => {
                     value={validation.values.description || ""}
                     invalid={
                       validation.touched.description &&
-                        validation.errors.description
+                      validation.errors.description
                         ? true
                         : false
                     }
                   />
                   {validation.touched.description &&
-                    validation.errors.description ? (
+                  validation.errors.description ? (
                     <FormFeedback type="invalid">
                       {validation.errors.description}
                     </FormFeedback>
@@ -445,7 +416,7 @@ const ViewChannel = (props) => {
                     ))}
                   </Input>
                   {validation.touched.definition &&
-                    validation.errors.definition ? (
+                  validation.errors.definition ? (
                     <FormFeedback type="invalid">
                       {validation.errors.definition}
                     </FormFeedback>
@@ -478,7 +449,7 @@ const ViewChannel = (props) => {
                       ))}
                   </Input>
                   {validation.touched.channel_type_lbl &&
-                    validation.errors.channel_type_lbl ? (
+                  validation.errors.channel_type_lbl ? (
                     <FormFeedback type="invalid">
                       {validation.errors.channel_type_lbl}
                     </FormFeedback>
@@ -509,7 +480,7 @@ const ViewChannel = (props) => {
                     ))}
                   </Input>
                   {validation.touched.broadcaster_id &&
-                    validation.errors.broadcaster_id ? (
+                  validation.errors.broadcaster_id ? (
                     <FormFeedback type="invalid">
                       {validation.errors.broadcaster_id}
                     </FormFeedback>
@@ -544,45 +515,16 @@ const ViewChannel = (props) => {
                   ) : null}
                 </div>
               </Col>
-              {/* <Col sm="4">
+              <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">
                     Language<span style={{ color: "red" }}>*</span>
                   </Label>
-                  <Input
-                    name="language"
-                    type="text"
-                    placeholder="Select language"
-                    // className="form-select"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.language || ""}
-                    disabled={!showEditChannel}
-                  >
-                    {channelListLanguage.map((language) => (
-                      <option key={language.id} value={language.id}>
-                        {language.name}
-                      </option>
-                    ))}
-                  </Input>
-                  {validation.touched.language && validation.errors.language ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.language}
-                    </FormFeedback>
-                  ) : null}
-                </div>
-              </Col> */}
-              <Col sm="4">
-                <div className="mb-3">
-                  <Label className="form-label">Language<span style={{ color: "red" }}>*</span></Label>
                   <Select
                     name="language_id"
                     placeholder="Select at least one Reason Type"
                     onChange={(selectedOptions) => {
-                      validation.setFieldValue(
-                        "language_id",
-                        selectedOptions
-                      );
+                      validation.setFieldValue("language_id", selectedOptions);
                     }}
                     onBlur={validation.handleBlur}
                     value={validation.values.language_id}
@@ -595,7 +537,7 @@ const ViewChannel = (props) => {
                   />
                 </div>
                 {validation.touched.language_id &&
-                  validation.errors.language_id ? (
+                validation.errors.language_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.language_id}
                   </FormFeedback>
@@ -619,7 +561,7 @@ const ViewChannel = (props) => {
                     <option value="202">No</option>
                   </Input>
                   {validation.touched.isalacarte &&
-                    validation.errors.isalacarte ? (
+                  validation.errors.isalacarte ? (
                     <FormFeedback type="invalid">
                       {validation.errors.isalacarte}
                     </FormFeedback>
@@ -643,7 +585,7 @@ const ViewChannel = (props) => {
                     placeholder="0"
                     disabled={!showEditChannel || selectedType === "1"}
                     value={selectedRate}
-                  // disabled={!showEditChannel}
+                    // disabled={!showEditChannel}
                   ></Input>
                   {validation.touched.rate && validation.errors.rate ? (
                     <FormFeedback type="invalid">
@@ -715,65 +657,9 @@ const ViewChannel = (props) => {
                   showEditChannel={showEditChannel}
                 />
               </Col>
-              {/* {console.log(
-              "XXXXXXXX:" + channel.isFta,
-              channel.broadcasterRate,
-              channel.mso_discount
-            )}
-            {console.log(
-              "XXXTYPE:" + typeof channel.isFta,
-              typeof parseInt(channel.broadcasterRate)
-            )} */}
-              {/* {channel &&
-                channel.isFta === 0 &&
-                parseInt(channel.broadcasterRate) !== "" ? (
-                <Col lg={6}>
-                  <Card>
-                    <CardBody>
-                      <span>Graphical representation of SHARE</span>
-                      <CardTitle className="mb-4">
-                        (MRP: {channel.broadcasterRate}){" "}
-                      </CardTitle>
-                      <ViewPieChart
-                        broadPercent={broadPercent}
-                        msoPercent={msoPercent}
-                        discountPercent={discountPercent}
-                        selectedRate={parseInt(channel.broadcasterRate)}
-                        dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
-                      />
-                    </CardBody>
-                  </Card>
-                </Col>
-              ) : (
-                <></>
-              )} */}
-              {/* {channel &&
-                channel.isFta === 0 &&
-                parseInt(channel.broadcasterRate) !== "" ? (
-                // <Row>
-                <Col lg={6}>
-                  <Card>
-                    <CardBody>
-                      <span>Graphical representation of SHARE</span>
-                      <CardTitle className="mb-4">
-                        (MRP: {selectedRate}){" "}
-                      </CardTitle>
-                      <ViewPieChart
-                        broadPercent={broadPercent}
-                        msoPercent={msoPercent}
-                        discountPercent={discountPercent}
-                        selectedRate={selectedRate}
-                        dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
-                      />
-                    </CardBody>
-                  </Card>
-                </Col>
-              ) : (
-                <></>
-              )} */}
               {channel &&
-                channel.isFta === 0 &&
-                parseInt(channel.broadcasterRate) !== "" ? (
+              channel.isFta === 0 &&
+              parseInt(channel.broadcasterRate) !== "" ? (
                 // <Row>
                 <Col lg={6}>
                   <Card>
