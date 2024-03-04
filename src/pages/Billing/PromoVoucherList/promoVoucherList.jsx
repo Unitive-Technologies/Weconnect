@@ -78,7 +78,8 @@ const PromoVoucherList = (props) => {
     setShowScrapPromoVoucher(!showScrapPromoVoucher);
   };
 
-
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [showWarning, setShowWarning] = useState(false);
 
   const columns = useMemo(
     () => [
@@ -121,7 +122,13 @@ const PromoVoucherList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
+            <p className="text-muted mb-0"
+              style={{
+                maxWidth: 100,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}>
               {cellProps.row.original.operator_lbl}
             </p>
           );
@@ -145,7 +152,12 @@ const PromoVoucherList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.code}</p>
+            <p className="text-muted mb-0" style={{
+              maxWidth: 100,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}>{cellProps.row.original.code}</p>
           );
         },
       },
@@ -162,62 +174,6 @@ const PromoVoucherList = (props) => {
         },
       },
       {
-        Header: "Applied On",
-        accessor: "apply_on_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.apply_on_lbl}
-            </p>
-          );
-        },
-      },
-      {
-        Header: "Recharge Period",
-        accessor: "rperiod_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.rperiod_lbl}
-            </p>
-          );
-        },
-      },
-      {
-        Header: "Amount",
-        accessor: "amount",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">{cellProps.row.original.amount}</p>
-          );
-        },
-      },
-      {
-        Header: "MRP",
-        accessor: "mrp",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">{cellProps.row.original.mrp}</p>
-          );
-        },
-      },
-      {
-        Header: "Bouquets",
-        accessor: "bouque_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.bouque_lbl}
-            </p>
-          );
-        },
-      },
-      {
         Header: "Status",
         accessor: "status_lbl",
         filterable: true,
@@ -229,6 +185,88 @@ const PromoVoucherList = (props) => {
           );
         },
       },
+      {
+        Header: "Applied On",
+        accessor: "apply_on_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0" style={{
+              maxWidth: 50,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}>
+              {cellProps.row.original.apply_on_lbl}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Recharge Period",
+        accessor: "rperiod_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0" style={{
+              maxWidth: 50,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}>
+              {cellProps.row.original.rperiod_lbl}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Amount",
+        accessor: "amount",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0" style={{
+              maxWidth: 50,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}>{cellProps.row.original.amount}</p>
+          );
+        },
+      },
+      {
+        Header: "MRP",
+        accessor: "mrp",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0" style={{
+              maxWidth: 50,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}>{cellProps.row.original.mrp}</p>
+          );
+        },
+      },
+      {
+        Header: "Bouquets",
+        accessor: "bouque_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0" style={{
+              maxWidth: 100,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}>
+              {cellProps.row.original.bouque_lbl}
+            </p>
+          );
+        },
+      },
+
       {
         Header: "Smartcard No",
         accessor: "smartcardno",
@@ -318,6 +356,10 @@ const PromoVoucherList = (props) => {
         action: setShowScrapPromoVoucher,
         type: "normal",
         icon: "upload",
+        action:
+          Object.keys(selectedRows).length === 0
+            ? () => setShowWarning(true)
+            : () => setShowScrapPromoVoucher(true),
       },
     ];
   };
@@ -383,9 +425,6 @@ const PromoVoucherList = (props) => {
                       isGlobalFilter={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      // handleRowClick={(row) => {
-                      //   handleViewUser(row);
-                      // }}
                       goToPage={goToPage}
                     />
                   </CardBody>
