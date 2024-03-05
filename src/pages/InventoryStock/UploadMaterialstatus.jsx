@@ -156,7 +156,7 @@ const UploadMaterialstatus = (props) => {
         setSelectedFiles([]);
 
         console.log("cleared the selected files and upload trigger");
-        dispatch(onAddInventoryStockPairing(res.data.data));
+        // dispatch(onAddInventoryStockPairing(res.data.data));
         handleToggle();
       })
       .catch((error) => {

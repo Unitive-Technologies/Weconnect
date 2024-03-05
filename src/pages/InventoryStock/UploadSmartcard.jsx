@@ -19,7 +19,7 @@ import {
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import { useDispatch } from "react-redux";
-import { addInventoryStockSmartcard as onAddInventoryStockSmartcard } from "/src/store/inventorystock/actions";
+import { getInventoryStockSmartcard as onGetInventoryStockSmartcard } from "/src/store/inventorystock/actions";
 import {
   downloadSmartcardUploadTemplate,
   updateSmartcardUploadByToken,
@@ -166,7 +166,7 @@ const UploadSmartcard = (props) => {
         setUploadTrigger({});
         setSelectedFiles([]);
         console.log("cleared the selected files and upload trigger");
-        dispatch(onAddInventoryStockSmartcard(res.data.data));
+        dispatch(onGetInventoryStockSmartcard());
         toggleUploadModal();
         setCas_id();
         setBrand_id();

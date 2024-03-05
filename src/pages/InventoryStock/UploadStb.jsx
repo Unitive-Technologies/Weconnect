@@ -19,7 +19,7 @@ import {
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import { useDispatch } from "react-redux";
-import { addInventoryStockStb as onAddInventoryStockStb } from "/src/store/inventorystock/actions";
+import { getInventoryStockStb as onGetInventoryStockStb } from "/src/store/inventorystock/actions";
 import {
   downloadStbUploadTemplate,
   updateStbUploadByToken,
@@ -164,7 +164,7 @@ const UploadStb = (props) => {
         setUploadTrigger({});
         setSelectedFiles([]);
         console.log("cleared the selected files and upload trigger");
-        dispatch(onAddInventoryStockStb(res.data.data));
+        dispatch(onGetInventoryStockStb());
         toggleUploadModal();
         setCas_id();
         setBrand_id();

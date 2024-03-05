@@ -20,10 +20,7 @@ import {
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import { useDispatch } from "react-redux";
-import {
-  allotStb as onAllotStb,
-  getInventoryAllottedStb as onGetInventoryAllottedStb,
-} from "/src/store/inventoryallotted/actions";
+import { getInventoryAllottedStb as onGetInventoryAllottedStb } from "/src/store/inventoryallotted/actions";
 import {
   downloadStbAllotmentUploadTemplate,
   updateStbAllotmentUploadByToken,
@@ -171,7 +168,6 @@ const UploadAllottedStb = (props) => {
         setUploadTrigger({});
         setSelectedFiles([]);
         console.log("cleared the selected files and upload trigger");
-        dispatch(onAllotStb(res.data.data));
         dispatch(onGetInventoryAllottedStb());
         toggleUploadModal();
         setBranch_id("");

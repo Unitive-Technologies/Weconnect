@@ -119,7 +119,7 @@ const BulkUpdateSmartcard = (props) => {
         setSelectedFiles([]);
 
         console.log("cleared the selected files and upload trigger");
-        dispatch(onAddInventoryStockSmartcard(res.data.data));
+        // dispatch(onAddInventoryStockSmartcard(res.data.data));
         toggle();
       })
       .catch((error) => {

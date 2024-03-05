@@ -20,10 +20,7 @@ import {
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import { useDispatch } from "react-redux";
-import {
-  allotSmartcard as onAllotSmartcard,
-  getInventoryAllottedSmartcard as onGetInventoryAllottedSmartcard,
-} from "/src/store/inventoryallotted/actions";
+import { getInventoryAllottedSmartcard as onGetInventoryAllottedSmartcard } from "/src/store/inventoryallotted/actions";
 import {
   downloadSmartcardAllotmentUploadTemplate,
   updateSmartcardAllotmentUploadByToken,
@@ -173,7 +170,6 @@ const UploadAllottedSmartcard = (props) => {
         setUploadTrigger({});
         setSelectedFiles([]);
         console.log("cleared the selected files and upload trigger");
-        dispatch(onAllotSmartcard(res.data.data));
         dispatch(onGetInventoryAllottedSmartcard());
         toggleUploadModal();
         setBranch_id("");

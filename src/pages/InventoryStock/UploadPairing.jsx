@@ -17,7 +17,7 @@ import {
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import { useDispatch } from "react-redux";
-import { addInventoryStockPairing as onAddInventoryStockPairing } from "/src/store/inventorystock/actions";
+import { GetInventoryStockPairing as onGetInventoryStockPairing } from "/src/store/inventorystock/actions";
 import {
   downloadPairingUploadTemplate,
   updatePairingUploadByToken,
@@ -116,7 +116,7 @@ const UploadParing = (props) => {
         setSelectedFiles([]);
 
         console.log("cleared the selected files and upload trigger");
-        dispatch(onAddInventoryStockPairing(res.data.data));
+        dispatch(onGetInventoryStockPairing());
         toggle();
       })
       .catch((error) => {

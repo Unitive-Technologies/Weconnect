@@ -117,7 +117,7 @@ const BulkUpdateStb = (props) => {
         setSelectedFiles([]);
 
         console.log("cleared the selected files and upload trigger");
-        dispatch(onAddInventoryStockStb(res.data.data));
+        // dispatch(onAddInventoryStockStb(res.data.data));
         toggle();
       })
       .catch((error) => {

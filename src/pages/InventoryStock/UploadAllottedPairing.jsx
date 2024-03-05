@@ -20,10 +20,7 @@ import {
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import { useDispatch } from "react-redux";
-import {
-  allotPairing as onAllotPairing,
-  getInventoryAllottedPairing as onGetInventoryAllottedPairing,
-} from "/src/store/inventoryallotted/actions";
+import { getInventoryAllottedPairing as onGetInventoryAllottedPairing } from "/src/store/inventoryallotted/actions";
 import {
   downloadPairingAllotmentUploadTemplate,
   updatePairingAllotmentUploadByToken,
@@ -173,7 +170,6 @@ const UploadAllottedPairing = (props) => {
         setUploadTrigger({});
         setSelectedFiles([]);
         console.log("cleared the selected files and upload trigger");
-        dispatch(onAllotPairing(res.data.data));
         dispatch(onGetInventoryAllottedPairing());
         toggleUploadModal();
         setBranch_id("");
