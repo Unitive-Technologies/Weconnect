@@ -540,6 +540,10 @@ const ViewChannel = (props) => {
                     }))}
                     isMulti
                     isDisabled={!showEditChannel}
+                    styles={{
+                      menu: provided => ({ ...provided, maxHeight: "300px" }),
+                      menuList: provided => ({ ...provided, maxHeight: "300px" })
+                    }}
                   />
                 </div>
                 {validation.touched.language_id && validation.errors.language_id ? (
