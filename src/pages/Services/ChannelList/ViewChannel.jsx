@@ -530,10 +530,10 @@ const ViewChannel = (props) => {
                       );
                     }}
                     onBlur={validation.handleBlur}
-                    value={validation.values.language_id.map(id => ({
+                    value={Array.isArray(validation.values.language_id) ? validation.values.language_id.map(id => ({
                       value: id,
                       label: channelListLanguage.find(language => language.id === id)?.name
-                    }))}
+                    })) : [{ value: validation.values.language_id, label: channelListLanguage.find(language => language.id === validation.values.language_id)?.name }]}
                     options={channelListLanguage.map((language) => ({
                       value: language.id,
                       label: language.name,
