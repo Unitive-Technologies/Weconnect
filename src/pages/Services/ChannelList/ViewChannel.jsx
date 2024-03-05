@@ -93,7 +93,7 @@ const ViewChannel = (props) => {
       setSelectedRate(newRate.toFixed(2));
     }
   };
-
+  // console.log("Channel language id: ", channel.language_id, channel.status);
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -108,7 +108,7 @@ const ViewChannel = (props) => {
       type: (channel && channel.isFta) || "",
       broadcaster_id: (channel && channel.broadcaster_id) || "",
       genre_id: (channel && channel.genre_id) || "",
-      language_id: (channel && channel.language_id) || "",
+      language_id: (channel && channel.language_id) || [],
       isalacarte: (channel && channel.isalacarte) || "",
       rate: (channel && channel.broadcasterRate) || "",
       status: (channel && channel.status) || "",
@@ -528,7 +528,7 @@ const ViewChannel = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.language_id}
                     options={channelListLanguage.map((language_id) => ({
-                      value: language_id.name,
+                      value: language_id.id,
                       label: language_id.name,
                     }))}
                     isMulti
