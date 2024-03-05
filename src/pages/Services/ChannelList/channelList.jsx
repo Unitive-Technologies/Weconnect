@@ -119,11 +119,6 @@ const ChannelList = (props) => {
 
   const handlePlusClick = () => {
     console.log("button clicked" + handlePlusClick);
-    // setIsTableVisible(true);
-    // if (data.length > 0) {
-    //   // Show details of the first item
-    //   setSelectedData(data[0]);
-    // }
   };
 
   const columns = useMemo(
@@ -133,8 +128,6 @@ const ChannelList = (props) => {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          // const totalRows = cellProps.rows.length;
-          // const reverseIndex = totalRows - cellProps.row.index;
           const startIndex = (currentPage - 1) * pageSize;
           const index = startIndex + cellProps.row.index + 1;
 
@@ -162,14 +155,17 @@ const ChannelList = (props) => {
                   const channelData = cellProps.row.original;
                   toggleViewModal(channelData);
                 }}
+                style={{
+                  maxWidth: 100,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
               </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
             </>
           );
         },
@@ -187,7 +183,19 @@ const ChannelList = (props) => {
         accessor: "broadcaster_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          return <Broadcaster {...cellProps} />;
+          return (
+            <p
+              className="font-size-14 mb-1"
+              style={{
+                maxWidth: 100,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {cellProps.row.original.broadcaster_lbl}
+            </p>
+          );
         },
       },
       {
@@ -195,7 +203,19 @@ const ChannelList = (props) => {
         accessor: "genre_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          return <Genre {...cellProps} />;
+          return (
+            <p
+              className="font-size-14 mb-1"
+              style={{
+                maxWidth: 50,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {cellProps.row.original.genre_lbl}
+            </p>
+          );
         },
       },
       {
@@ -203,7 +223,19 @@ const ChannelList = (props) => {
         accessor: "language_lbl",
         filterable: true,
         Cell: (cellProps) => {
-          return <Language {...cellProps} />;
+          return (
+            <p
+              className="font-size-14 mb-1"
+              style={{
+                maxWidth: 50,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {cellProps.row.original.language_lbl}
+            </p>
+          );
         },
       },
       {
@@ -257,7 +289,7 @@ const ChannelList = (props) => {
       },
       {
         Header: "Rate",
-        accessor: "drp",
+        accessor: "broadcasterRate",
         filterable: true,
         Cell: (cellProps) => {
           return <Rate {...cellProps} />;

@@ -19,9 +19,7 @@ import {
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import { addNewRegionalOffice as onAddNewRegionalOffice } from "/src/store/regionaloffice/actions";
-
 import { useDispatch } from "react-redux";
-import { updateUser as onUpdateUser } from "/src/store/users/actions";
 import {
   downloadRegOffUploadTemplate,
   updateRegOffUploadByToken,
@@ -29,7 +27,7 @@ import {
 } from "../../../helpers/backend_helper";
 
 const UploadRegionalOfficeModal = (props) => {
-  const { isOpen, toggleUploadRegionalOffice, statusList, actiontype } = props;
+  const { isOpen, toggleUploadRegionalOffice, statusList } = props;
 
   const dispatch = useDispatch();
   const [uploadTrigger, setUploadTrigger] = useState({});
@@ -298,8 +296,9 @@ const UploadRegionalOfficeModal = (props) => {
 };
 
 UploadRegionalOfficeModal.propTypes = {
-  toggle: PropTypes.func,
+  toggleUploadRegionalOffice: PropTypes.func,
   isOpen: PropTypes.bool,
+  statusList: PropTypes.array,
 };
 
 export default UploadRegionalOfficeModal;

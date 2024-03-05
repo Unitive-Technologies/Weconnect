@@ -138,7 +138,6 @@ const UploadCreditModal = (props) => {
         setSelectedFiles([]);
 
         console.log("cleared the selected files and upload trigger");
-        // dispatch(onAddNewLco(res.data.data));
         handleUploadCredit();
       })
       .catch((error) => {

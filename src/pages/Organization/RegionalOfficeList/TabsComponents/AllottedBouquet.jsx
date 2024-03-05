@@ -111,9 +111,6 @@ const AllottedBouquet = ({ allottedBouquetData, selectedRowId }) => {
           <input
             type="checkbox"
             onClick={() => handleRowSelection(cellProps.row)}
-            // checked={selectedRows.some(
-            //   (r) => r.id === cellProps.row.original.id
-            // )}
           />
         ),
       },

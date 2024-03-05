@@ -1,23 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import {
-  Card,
-  CardBody,
-  CardText,
-  CardTitle,
   Col,
-  Collapse,
-  Container,
   Form,
   Input,
-  Button,
   Nav,
   NavItem,
   NavLink,
   Row,
   TabContent,
   TabPane,
-  UncontrolledCollapse,
 } from "reactstrap";
 import classnames from "classnames";
 import OperatorAccountDetails from "./TabsComponents/OperatorAccountDetails";
