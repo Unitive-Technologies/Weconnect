@@ -12,6 +12,7 @@ const PreviewTable = (props) => {
   const [freeDays, setFreeDays] = useState("");
   const [refundable, setRefundable] = useState("Yes");
   const [price, setPrice] = useState("");
+  const [newArray, setNewArray] = useState([]);
 
   // console.log("@@@@@@@@@@@@refundable value:" + refundable);
   // console.log("@@@@@@@@@@@@price value:" + price);
@@ -29,6 +30,20 @@ const PreviewTable = (props) => {
     }
   }, [dispatch, rechargeperiod]);
 
+  // For the refundable checkbox
+  const handleRefundableChange = (e, index) => {
+    const updatedPeriodArray = [...newArray];
+    updatedPeriodArray[index].is_refundable = e.target.checked;
+    setNewArray(updatedPeriodArray);
+  };
+
+  // For the free days input field
+  const handleFreeDaysChange = (e, index) => {
+    const updatedPeriodArray = [...newArray];
+    updatedPeriodArray[index].free_days = parseInt(e.target.value) || 0;
+    setNewArray(updatedPeriodArray);
+  };
+
   // Initialize arrays to hold indices of rows with different properties
   const updateRate = () => {
     const updatedRate = periodArray.map((row, i) => {
@@ -36,10 +51,10 @@ const PreviewTable = (props) => {
         parseFloat(row.months) === 0 ? lcoRate / 30 : lcoRate * row.months;
       const totalAmount = price + (price * 30.3) / 100;
 
-      // Check if the row is refundable
+      // Get is_refundable from periodArray
       const isRefundable = row.is_refundable || false;
 
-      // Set free days
+      // Get free days from periodArray
       const freeDays = parseInt(row.free_days) || 0;
 
       // Calculate cashback amount (assuming it's 0 for now)
@@ -60,6 +75,11 @@ const PreviewTable = (props) => {
     setRate(updatedRate);
   };
 
+  useEffect(() => {
+    if (periodArray) {
+      setNewArray(periodArray);
+    }
+  }, [periodArray]);
   // console.log("periodArray: " + JSON.stringify(periodArray));
   return (
     <Card>
@@ -80,8 +100,8 @@ const PreviewTable = (props) => {
           </thead>
 
           <tbody>
-            {periodArray &&
-              periodArray.map((row, i) => (
+            {newArray &&
+              newArray.map((row, i) => (
                 <tr key={i}>
                   <td>{i + 1}</td>
                   <td>{row && row.name}</td>
@@ -125,26 +145,16 @@ const PreviewTable = (props) => {
                   <td>
                     <Input
                       type="checkbox"
-                      defaultChecked={refundable[i] === "Yes"}
-                      onChange={(e) => {
-                        const updatedRefundable = [...refundable];
-                        updatedRefundable[i] = e.target.defaultChecked
-                          ? "Yes"
-                          : "No";
-                        setRefundable(updatedRefundable);
-                      }}
+                      checked={row.is_refundable}
+                      onChange={(e) => handleRefundableChange(e, i)}
                     />
                   </td>
                   <td>
                     <Input
-                      name={`freeDays-${i}`} // Use unique name for each input
+                      name={`freeDays-${i}`}
                       type="number"
-                      value={freeDays[i] || ""}
-                      onChange={(e) => {
-                        const updatedFreeDays = [...freeDays];
-                        updatedFreeDays[i] = e.target.value;
-                        setFreeDays(updatedFreeDays);
-                      }}
+                      value={row.free_days}
+                      onChange={(e) => handleFreeDaysChange(e, i)}
                     />
                   </td>
                 </tr>
