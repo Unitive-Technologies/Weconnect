@@ -110,7 +110,7 @@ const ViewChannel = (props) => {
       genre_id: (channel && channel.genre_id) || "",
       language_id: (channel && channel.language_id) || [],
       isalacarte: (channel && channel.isalacarte) || "",
-      rate: (channel && channel.broadcasterRate) || "",
+      broadcasterRate: (channel && channel.broadcasterRate) || "",
       status: (channel && channel.status) || "",
       // revenue: (channel && channel.revenue_share) || {},
     },
@@ -143,7 +143,7 @@ const ViewChannel = (props) => {
         genre_id: values.genre_id,
         language_id: values.language_id,
         isalacarte: values.isalacarte,
-        rate: values.rate,
+        broadcasterRate: values.broadcasterRate,
         status: values.status,
         cas: values.cas,
         cascode: values.cascode,
@@ -555,6 +555,7 @@ const ViewChannel = (props) => {
 
 
 
+
               <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">IsAlacarte</Label>
@@ -583,18 +584,20 @@ const ViewChannel = (props) => {
                 <div className="mb-3">
                   <Label className="form-label">MRP Rate(INR)</Label>
                   <Input
-                    name="rate"
+                    name="broadcasterRate"
                     type="number"
                     step="0.01"
                     onChange={handleInputChange}
                     onKeyDown={handleArrowKeyPress}
                     placeholder="0"
-                    disabled={!showEditChannel || selectedType === "1"}
+                    disabled={
+                      !showEditChannel || selectedType === "1" || validation.values.isalacarte === "0"
+                    }
                     value={selectedRate}
                   ></Input>
-                  {validation.touched.rate && validation.errors.rate ? (
+                  {validation.touched.broadcasterRate && validation.errors.broadcasterRate ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.rate}
+                      {validation.errors.broadcasterRate}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -749,7 +752,7 @@ const ViewChannel = (props) => {
             )}
           </Form>
         </ModalBody>
-      </Modal>
+      </Modal >
     </>
   );
 };

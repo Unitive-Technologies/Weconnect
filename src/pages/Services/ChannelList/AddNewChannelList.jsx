@@ -550,10 +550,6 @@ const AddNewChannelList = (props) => {
                     );
                   }}
                   onBlur={validation.handleBlur}
-                  // value={validation.values.language_id.map(id => ({
-                  //   value: id,
-                  //   label: channelListLanguage.find(language => language.id === id)?.name
-                  // }))}
                   options={channelListLanguage.map((language) => ({
                     value: language.id,
                     label: language.name,
