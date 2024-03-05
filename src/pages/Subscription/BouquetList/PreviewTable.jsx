@@ -30,27 +30,28 @@ const PreviewTable = (props) => {
   }, [dispatch, rechargeperiod]);
 
   // Initialize arrays to hold indices of rows with different properties
-  const refundableRows = [];
-  const freeDaysRows = [];
-
   const updateRate = () => {
     const updatedRate = periodArray.map((row, i) => {
       const price =
         parseFloat(row.months) === 0 ? lcoRate / 30 : lcoRate * row.months;
       const totalAmount = price + (price * 30.3) / 100;
 
-      // Check if the row index is in refundableRows array
-      const isRefundable = refundableRows.includes(i + 1);
-      // Check if the row index is in freeDaysRows array, set free_days to 10 if included
-      const freeDays = freeDaysRows.includes(i + 1) ? freeDays : 0;
+      // Check if the row is refundable
+      const isRefundable = row.is_refundable || false;
+
+      // Set free days
+      const freeDays = parseInt(row.free_days) || 0;
+
+      // Calculate cashback amount (assuming it's 0 for now)
+      const cashbackAmount = 0;
 
       return {
-        id: i + 1,
+        id: row.id,
         price: parseFloat(price.toFixed(2)),
         rent: 0,
-        is_refundable: isRefundable,
+        is_refundable: isRefundable ? 1 : 0,
         free_days: freeDays,
-        callback_amount: 0,
+        cashback_amount: cashbackAmount,
         total_amount: parseFloat(totalAmount.toFixed(2)),
       };
     });
@@ -63,7 +64,7 @@ const PreviewTable = (props) => {
   return (
     <Card>
       <CardBody>
-        {/* {console.log("recharge period: ", JSON.stringify(rechargeperiod))} */}
+        {console.log("recharge period: ", JSON.stringify(rechargeperiod))}
 
         <Table>
           <thead>
@@ -75,21 +76,9 @@ const PreviewTable = (props) => {
               <th>Total AMT</th>
               <th>Refundable</th>
               <th>Free Days</th>
-              {/* <th>Action</th> */}
             </tr>
           </thead>
 
-          {/* <td>
-            <input
-              type="checkbox"
-              onChange={() => {
-                debugger;
-                console.log("Clicked the checkbox");
-                handleCheckboxChange(row.id);
-              }}
-              checked={isRowChecked(row.id)}
-            />
-          </td> */}
           <tbody>
             {periodArray &&
               periodArray.map((row, i) => (
@@ -136,10 +125,12 @@ const PreviewTable = (props) => {
                   <td>
                     <Input
                       type="checkbox"
-                      checked={refundable[i] === "Yes"}
+                      defaultChecked={refundable[i] === "Yes"}
                       onChange={(e) => {
                         const updatedRefundable = [...refundable];
-                        updatedRefundable[i] = e.target.checked ? "Yes" : "No";
+                        updatedRefundable[i] = e.target.defaultChecked
+                          ? "Yes"
+                          : "No";
                         setRefundable(updatedRefundable);
                       }}
                     />
