@@ -379,13 +379,13 @@ const ViewChannel = (props) => {
                     value={validation.values.description || ""}
                     invalid={
                       validation.touched.description &&
-                      validation.errors.description
+                        validation.errors.description
                         ? true
                         : false
                     }
                   />
                   {validation.touched.description &&
-                  validation.errors.description ? (
+                    validation.errors.description ? (
                     <FormFeedback type="invalid">
                       {validation.errors.description}
                     </FormFeedback>
@@ -415,7 +415,7 @@ const ViewChannel = (props) => {
                     ))}
                   </Input>
                   {validation.touched.definition &&
-                  validation.errors.definition ? (
+                    validation.errors.definition ? (
                     <FormFeedback type="invalid">
                       {validation.errors.definition}
                     </FormFeedback>
@@ -448,7 +448,7 @@ const ViewChannel = (props) => {
                       ))}
                   </Input>
                   {validation.touched.channel_type_lbl &&
-                  validation.errors.channel_type_lbl ? (
+                    validation.errors.channel_type_lbl ? (
                     <FormFeedback type="invalid">
                       {validation.errors.channel_type_lbl}
                     </FormFeedback>
@@ -479,7 +479,7 @@ const ViewChannel = (props) => {
                     ))}
                   </Input>
                   {validation.touched.broadcaster_id &&
-                  validation.errors.broadcaster_id ? (
+                    validation.errors.broadcaster_id ? (
                     <FormFeedback type="invalid">
                       {validation.errors.broadcaster_id}
                     </FormFeedback>
@@ -514,6 +514,7 @@ const ViewChannel = (props) => {
                   ) : null}
                 </div>
               </Col>
+              {console.log("View Channel Language:" + validation.values.language_id)};
               <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">
@@ -523,26 +524,33 @@ const ViewChannel = (props) => {
                     name="language_id"
                     placeholder="Select at least one Reason Type"
                     onChange={(selectedOptions) => {
-                      validation.setFieldValue("language_id", selectedOptions);
+                      validation.setFieldValue(
+                        "language_id",
+                        selectedOptions ? selectedOptions.map(option => option.value) : []
+                      );
                     }}
                     onBlur={validation.handleBlur}
-                    value={validation.values.language_id}
-                    options={channelListLanguage.map((language_id) => ({
-                      value: language_id.id,
-                      label: language_id.name,
+                    value={validation.values.language_id.map(id => ({
+                      value: id,
+                      label: channelListLanguage.find(language => language.id === id)?.name
+                    }))}
+                    options={channelListLanguage.map((language) => ({
+                      value: language.id,
+                      label: language.name,
                     }))}
                     isMulti
                     isDisabled={!showEditChannel}
                   />
                 </div>
-                {validation.touched.language_id &&
-                validation.errors.language_id ? (
+                {validation.touched.language_id && validation.errors.language_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.language_id}
                   </FormFeedback>
                 ) : null}
-                {/* </div> */}
               </Col>
+
+
+
               <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">IsAlacarte</Label>
@@ -560,7 +568,7 @@ const ViewChannel = (props) => {
                     <option value="0">No</option>
                   </Input>
                   {validation.touched.isalacarte &&
-                  validation.errors.isalacarte ? (
+                    validation.errors.isalacarte ? (
                     <FormFeedback type="invalid">
                       {validation.errors.isalacarte}
                     </FormFeedback>
@@ -651,8 +659,8 @@ const ViewChannel = (props) => {
                 />
               </Col>
               {channel &&
-              channel.isFta === 0 &&
-              parseInt(channel.broadcasterRate) !== "" ? (
+                channel.isFta === 0 &&
+                parseInt(channel.broadcasterRate) !== "" ? (
                 // <Row>
                 <Col lg={6}>
                   <Card>
