@@ -594,6 +594,7 @@ const ViewChannel = (props) => {
                       !showEditChannel || selectedType === "1" || validation.values.isalacarte === "0"
                     }
                     value={selectedRate}
+                    onBlur={validation.handleBlur}
                   ></Input>
                   {validation.touched.broadcasterRate && validation.errors.broadcasterRate ? (
                     <FormFeedback type="invalid">
@@ -752,7 +753,7 @@ const ViewChannel = (props) => {
             )}
           </Form>
         </ModalBody>
-      </Modal >
+      </Modal>
     </>
   );
 };
