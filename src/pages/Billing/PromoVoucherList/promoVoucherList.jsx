@@ -32,6 +32,7 @@ import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddNewPromoVoucher from "./AddNewPromoVoucherList";
 import TableContainerX from "../../../components/Common/TableContainerX";
+import PromoVoucherListStatus from "./PromoVoucherListStatus"
 
 const PromoVoucherList = (props) => {
   //meta title
@@ -73,22 +74,13 @@ const PromoVoucherList = (props) => {
 
   const [showAddNewPromoVoucher, setShowAddNewPromoVoucher] = useState(false);
   const [showScrapPromoVoucher, setShowScrapPromoVoucher] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
 
-  const handleScrapPromoVoucher = () => {
-    setShowScrapPromoVoucher(!showScrapPromoVoucher);
+  const handleWarning = () => {
+    setShowWarning(!showWarning);
   };
 
   const [selectedRows, setSelectedRows] = useState([]);
-  const [showWarning, setShowWarning] = useState(false);
-
-  const [toggleOpen, setToggleOpen] = useState(false);
-  const [message, setMessage] = useState('');
-
-  const handleCheckboxClick = (row) => {
-    setToggleOpen(true);
-    setMessage(`Voucher ${row.original.code} scrapped for 1 out of 1`);
-  };
-
 
   const columns = useMemo(
     () => [
@@ -99,7 +91,7 @@ const PromoVoucherList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <input type="checkbox" onClick={() => handleCheckboxClick(cellProps.row)} />
+              <input type="checkbox" />
             </>
           );
         },
@@ -362,26 +354,19 @@ const PromoVoucherList = (props) => {
       },
       {
         name: "Scrap",
-        action: setShowScrapPromoVoucher,
+        // action: setShowScrapPromoVoucher,
         type: "normal",
         icon: "upload",
-        // action:
-        //   Object.keys(selectedRows).length === 0
-        //     ? () => setShowWarning(true)
-        //     : () => setShowScrapPromoVoucher(true),
+        action:
+          Object.keys(selectedRows).length === 0
+            ? () => setShowWarning(true)
+            : () => setShowScrapPromoVoucher(true),
       },
     ];
   };
 
   return (
     <React.Fragment>
-      {toggleOpen && (
-        <div>
-          {/* Your toggle content */}
-          <p>{message}</p>
-        </div>
-      )}
-
       <AddNewPromoVoucher
         isOpen={showAddNewPromoVoucher}
         handleAddPromoVoucher={handleAddPromoVoucher}
@@ -390,12 +375,16 @@ const PromoVoucherList = (props) => {
         promovoucherLCO={provoucherLCO}
         promovoucherRecharge={provoucherRecharge}
       />
+      <PromoVoucherListStatus isOpen={showScrapPromoVoucher}
+      // voucher_type={voucher_type}
+      />
+
       <div
         className="position-fixed top-0 end-0 p-3"
         style={{ zIndex: "1005" }}
       >
-        <Toast isOpen={showScrapPromoVoucher}>
-          <ToastHeader toggle={handleScrapPromoVoucher}>
+        <Toast isOpen={showWarning}>
+          <ToastHeader toggle={handleWarning}>
             <i className="mdi mdi-alert-outline me-2"></i> Warning
           </ToastHeader>
           <ToastBody>Please select atleast one promo voucher </ToastBody>
