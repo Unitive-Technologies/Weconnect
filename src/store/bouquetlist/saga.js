@@ -13,6 +13,7 @@ import {
   GET_OPERATOR_FORBOUQUET,
 } from "./actionTypes";
 import {
+  getBouquet as fetchAllBouquets,
   getBouquetSuccess,
   getBouquetFail,
   addBouquetSuccess,
@@ -83,6 +84,7 @@ function* onAddBouquet({ payload: bouquet }) {
   try {
     const response = yield call(addBouquet, bouquet);
     yield put(addBouquetSuccess(response));
+    yield put(fetchAllBouquets());
   } catch (error) {
     yield put(addBouquetFail(error));
   }

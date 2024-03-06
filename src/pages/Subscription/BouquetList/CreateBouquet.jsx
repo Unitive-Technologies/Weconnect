@@ -95,36 +95,43 @@ const CreateBouquet = (props) => {
       sort_by: "",
     },
     validationSchema: Yup.object({
-      // code: Yup.string().required("Enter Channel Code"),
       // name: Yup.string().required("Enter channel name"),
-      // type: Yup.string().required("Enter bouquet type"),
-      // isHD: Yup.string().required("Enter box type"),
-      // type: Yup.string().required("Enter channel type"),
-      // status: Yup.string().required("Enter status"),
-      // description: Yup.string().required("Enter description"),
-      // is_promotional: Yup.string(),
-      // ifFixNCF: Yup.string(),
-      // max_ncf_channels: Yup.string(),
-      // is_online_app: Yup.string(),
-      // sort_by: Yup.string(),
     }),
     onSubmit: (values) => {
       const newbouquet = {
-        // id: Math.floor(Math.random() * (30 - 20)) + 20,
-        // code: values["code"],
-        // name: values["name"],
-        // type: values["type"],
-        // isHD: values["isHD"],
-        // type: values["type"],
-        // status: values["status"],
-        // description: values["description"],
-        // is_promotional: values["is_promotional"],
-        // ifFixNCF: values["ifFixNCF"],
-        // max_ncf_channels: values["max_ncf_channels"],
-        // created_at: new Date(),
-        // created_by: values["created_by"],
-        // is_online_app: values["is_online_app"],
-        // sort_by: values["sort_by"],
+        alacarte: alacarteData.map((single) => {
+          return single.id;
+        }),
+        package: packagesData.map((single) => {
+          return single.id;
+        }),
+        stbbrands: stbbrands.map((single) => {
+          return single.id;
+        }),
+        name: values["name"],
+        code: values["code"],
+        description: values["description"],
+        isHD: parseInt(values["isHD"]),
+        is_exclusive: parseInt(values["is_exclusive"]),
+        is_online_app: parseInt(values["is_online_app"]),
+        sort_by: parseInt(values["sort_by"]),
+        status: parseInt(values["status"]),
+        type: parseInt(values["type"]),
+
+        mrp: parseInt(mrp),
+        mrp_data: {
+          pcc: parseInt(mrp),
+          drp: parseInt(drp),
+          dis_pcc: parseInt(lcoDiscount),
+          lmo_pcc: parseInt(lcoRate),
+          is_promotional: parseInt(values["is_promotional"]),
+          max_ncf_channels: parseInt(values["max_ncf_channels"]),
+          is_loner: parseInt(values["is_loner"]),
+        },
+
+        rate: rate,
+
+        additional_rates: additionalRates,
       };
       console.log("New Bouquet List:" + newbouquet);
       dispatch(onAddBouquet(newbouquet));

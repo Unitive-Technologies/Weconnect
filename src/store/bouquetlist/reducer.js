@@ -8,6 +8,7 @@ import {
   GET_BOUQUET,
   GET_BOUQUET_SUCCESS,
   GET_BOUQUET_FAIL,
+  ADD_BOUQUET,
   ADD_BOUQUET_SUCCESS,
   ADD_BOUQUET_FAIL,
   GET_BOUQUETTYPE_SUCCESS,
@@ -81,6 +82,11 @@ const Bouquet = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+    case ADD_BOUQUET:
+      return {
+        ...state,
+        loading: true,
       };
 
     case ADD_BOUQUET_SUCCESS:

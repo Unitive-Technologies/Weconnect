@@ -123,11 +123,9 @@ function* onAddNewDesignation({ payload: designation }) {
     const response = yield call(addNewDesignation, designation);
 
     yield put(addDesignationSuccess(response.data));
-    // toast.success("Designation Added Successfully", { autoClose: 2000 });
     yield put(fetchdesignation());
   } catch (error) {
     yield put(addDesignationFail(error));
-    // toast.error("Designation Added Failed", { autoClose: 2000 });
   }
 }
 
