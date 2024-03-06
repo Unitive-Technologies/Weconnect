@@ -66,10 +66,8 @@ const AddAlacarteTableList = (props) => {
           return (
             <input
               type="checkbox"
-              // disabled={
-              //   definition === "0" &&
-              //   cellProps.row.original.channel_type_lbl === "HD"
-              // }
+              disabled={cellProps.row.original.channel_type_lbl === "HD"}
+              // onClick={handleSelectedRows(cellProps.row)}
             />
           );
         },
@@ -171,12 +169,10 @@ const AddAlacarteTableList = (props) => {
           return (
             <>
               <h5
-                // style={{
-                //   color:
-                //     definition === "0" &&
-                //     cellProps.row.original.channel_type_lbl === "HD" &&
-                //     "red",
-                // }}
+                style={{
+                  color:
+                    cellProps.row.original.channel_type_lbl === "HD" && "red",
+                }}
                 className="font-size-14 mb-1"
               >
                 {cellProps.row.original.channel_type_lbl}
@@ -291,14 +287,13 @@ const AddAlacarteTableList = (props) => {
               isPagination={true}
               columns={columns}
               data={data}
-              // getRowProps={(row) => ({
-              //   style: {
-              //     background:
-              //       definition === "0" && row.original.channel_type_lbl === "HD"
-              //         ? "red"
-              //         : "inherit",
-              //   },
-              // })}
+              getRowProps={(row) => ({
+                style: {
+                  disabled: row.original.channel_type_lbl === "HD",
+                  // background:
+                  //   row.original.channel_type_lbl === "HD" ? "red" : "inherit",
+                },
+              })}
               handleRowClick={(row) => handleSelectedRows(row)}
               isGlobalFilter={true}
               isShowingPageLength={true}
