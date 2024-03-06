@@ -101,6 +101,12 @@ const ViewChannel = (props) => {
     }
   };
 
+  const handleCancel = () => {
+    toggleViewModal();
+    setShowEditChannel(false);
+    resetSelection();
+  };
+
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -120,7 +126,7 @@ const ViewChannel = (props) => {
       broadcasterRate: (channel && channel.broadcasterRate) || "",
       status: (channel && channel.status) || "",
       casCodes: (channel && channel.casCodes) || [],
-      // revenue: (channel && channel.revenue_share) || {},
+      revenue_share: (channel && channel.revenue_share) || {},
     },
     validationSchema: Yup.object({
       code: Yup.string().required("Enter Channel Code"),
@@ -164,24 +170,23 @@ const ViewChannel = (props) => {
         serviceid: values.serviceid,
         created_at: new Date(),
         created_by: values.created_by,
+        revenue_share: {
+          mso_share: msoPercent,
+          mso_discount: discountPercent,
+          broadcaster_share: broadPercent,
+        },
       };
       console.log("newChannelList:" + updateChannelList);
       // save new user
       dispatch(onUpdateChannelList(updateChannelList));
       validation.resetForm();
-      toggleViewModal();
+      handleCancel();
       resetSelection();
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
     },
   });
-
-  const handleCancel = () => {
-    toggleViewModal();
-    setShowEditChannel(false);
-    resetSelection();
-  };
 
   useEffect(() => {
     if (channel) {
