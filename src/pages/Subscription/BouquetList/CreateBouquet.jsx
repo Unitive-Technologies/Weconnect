@@ -70,11 +70,13 @@ const CreateBouquet = (props) => {
 
   const handleIsHDChange = async (e) => {
     const selectValue = e.target.value;
+    validation.handleChange(e);
     setSelectedIsHD(selectValue);
   };
 
   const handleTypeChange = async (e) => {
     const selectValue = e.target.value;
+    validation.handleChange(e);
     setSelectedType(selectValue);
   };
   const validation = useFormik({
