@@ -23,14 +23,14 @@ const AdditionalMrpTable = (props) => {
     additionalRates,
     setAdditionalRates,
     additionalLcoDiscount,
-    additionalName,
-    setAdditionalName,
+    // additionalName,
+    // setAdditionalName,
     setAdditionalLcoDiscount,
     setAdditionalLcoRate,
     mrp,
     drp,
   } = props;
-
+  const [additionalName, setAdditionalName] = useState("");
   const [newArray, setNewArray] = useState([]);
   console.log("newArray:" + JSON.stringify(newArray));
   const handleRefundableChange = (e, index) => {
@@ -76,21 +76,23 @@ const AdditionalMrpTable = (props) => {
       };
     });
 
-    const updatedRate = [
-      {
-        rate_code: additionalName,
-        mrp_data: {
-          dis_pcc: additionalLcoDiscount,
-          lmo_pcc: additionalLcoRate,
-        },
-        rate: rateArray,
+    const newRateObject = {
+      rate_code: additionalName,
+      mrp_data: {
+        dis_pcc: additionalLcoDiscount,
+        lmo_pcc: additionalLcoRate,
       },
-    ];
-    console.log(
-      "additionalRatessssssssssssssss:" + JSON.stringify(updatedRate)
-    );
-    setAdditionalRates(updatedRate);
+      rate: rateArray,
+    };
+    console.log("New Added Objectsssssssss: " + JSON.stringify(newRateObject));
+    // Append the new object to the existing additionalRates array
+
+    setAdditionalRates((prevRates) => [...prevRates, newRateObject]);
+    // setAdditionalRates([...additionalRates, newRateObject]);
   };
+  console.log(
+    "additional Ratessssssssssssss:" + JSON.stringify(additionalRates)
+  );
 
   useEffect(() => {
     setNewArray(rechargeperiod);
