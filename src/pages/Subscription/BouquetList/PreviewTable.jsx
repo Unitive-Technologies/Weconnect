@@ -9,26 +9,24 @@ import { createSelector } from "reselect";
 
 const PreviewTable = (props) => {
   const { rechargeperiod, lcoRate, rate, setRate } = props;
-  const [freeDays, setFreeDays] = useState("");
-  const [refundable, setRefundable] = useState("Yes");
-  const [price, setPrice] = useState("");
-  const [newArray, setNewArray] = useState([]);
 
+  const [newArray, setNewArray] = useState([]);
+  // console.log("@@@@@@@@@@@@rate value:" + JSON.stringify(rate));
   // console.log("@@@@@@@@@@@@refundable value:" + refundable);
   // console.log("@@@@@@@@@@@@price value:" + price);
-  console.log("@@@@@@@@@@@@rate value:" + JSON.stringify(rate));
-  const dispatch = useDispatch();
-  const selectBouquetState = (state) => state.bouquet;
-  const BouquetProperties = createSelector(selectBouquetState, (bouquet) => ({
-    periodArray: bouquet.rechargeperiod,
-  }));
 
-  const { periodArray } = useSelector(BouquetProperties);
-  useEffect(() => {
-    if (rechargeperiod && !rechargeperiod.length) {
-      dispatch(onGetRechargePeriod());
-    }
-  }, [dispatch, rechargeperiod]);
+  // const dispatch = useDispatch();
+  // const selectBouquetState = (state) => state.bouquet;
+  // const BouquetProperties = createSelector(selectBouquetState, (bouquet) => ({
+  //   periodArray: bouquet.rechargeperiod,
+  // }));
+
+  // const { periodArray } = useSelector(BouquetProperties);
+  // useEffect(() => {
+  //   if (rechargeperiod && !rechargeperiod.length) {
+  //     dispatch(onGetRechargePeriod());
+  //   }
+  // }, [dispatch, rechargeperiod]);
 
   // For the refundable checkbox
   const handleRefundableChange = (e, index) => {
@@ -44,17 +42,14 @@ const PreviewTable = (props) => {
     setNewArray(updatedPeriodArray);
   };
 
-  // Initialize arrays to hold indices of rows with different properties
   const updateRate = () => {
-    const updatedRate = periodArray.map((row, i) => {
+    const updatedRate = newArray.map((row, i) => {
       const price =
         parseFloat(row.months) === 0 ? lcoRate / 30 : lcoRate * row.months;
       const totalAmount = price + (price * 30.3) / 100;
 
-      // Get is_refundable from periodArray
       const isRefundable = row.is_refundable || false;
 
-      // Get free days from periodArray
       const freeDays = parseInt(row.free_days) || 0;
 
       // Calculate cashback amount (assuming it's 0 for now)
@@ -70,21 +65,20 @@ const PreviewTable = (props) => {
         total_amount: parseFloat(totalAmount.toFixed(2)),
       };
     });
-
-    // Assuming setRate is passed as a prop
+    // console.log("updatedRateeeeeeeeee: " + JSON.stringify(updatedRate));
     setRate(updatedRate);
   };
 
   useEffect(() => {
-    if (periodArray) {
-      setNewArray(periodArray);
-    }
-  }, [periodArray]);
+    setNewArray(rechargeperiod);
+  }, [rechargeperiod]);
+
   // console.log("periodArray: " + JSON.stringify(periodArray));
   return (
     <Card>
       <CardBody>
-        {console.log("recharge period: ", JSON.stringify(rechargeperiod))}
+        {/* {console.log("recharge period: ", JSON.stringify(rechargeperiod))}
+        {console.log("newArray: ", JSON.stringify(newArray))} */}
 
         <Table>
           <thead>

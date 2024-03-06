@@ -5,6 +5,9 @@ import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const AdditionalMRP = ({ additionalRates }) => {
+  // console.log(
+  //   "additionalRates in additionalMrpTable:" + JSON.stringify(additionalRates)
+  // );
   const columns = useMemo(
     () => [
       {

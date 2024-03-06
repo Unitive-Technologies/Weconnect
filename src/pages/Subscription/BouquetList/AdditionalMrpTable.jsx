@@ -1,7 +1,16 @@
 import React, { useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
-import { Card, CardBody, Input, Table } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  Input,
+  Table,
+  Row,
+  Button,
+  Label,
+  Col,
+} from "reactstrap";
 import { Link } from "react-router-dom";
 import { getRechargePeriod as onGetRechargePeriod } from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
@@ -15,180 +24,212 @@ const AdditionalMrpTable = (props) => {
     setAdditionalRates,
     additionalLcoDiscount,
     additionalName,
+    setAdditionalName,
+    setAdditionalLcoDiscount,
+    setAdditionalLcoRate,
+    mrp,
+    drp,
   } = props;
-  const [freeDays, setFreeDays] = useState("");
-  const [refundable, setRefundable] = useState("Yes");
 
-  console.log(
-    "AAAAAAAAAAAAAAAdditionalrates value:" + JSON.stringify(additionalRates)
-  );
-  const dispatch = useDispatch();
-  const selectBouquetState = (state) => state.bouquet;
-  const BouquetProperties = createSelector(selectBouquetState, (bouquet) => ({
-    periodArray: bouquet.rechargeperiod,
-  }));
+  const [newArray, setNewArray] = useState([]);
+  console.log("newArray:" + JSON.stringify(newArray));
+  const handleRefundableChange = (e, index) => {
+    const updatedPeriodArray = [...newArray];
+    updatedPeriodArray[index].is_refundable = e.target.checked;
+    setNewArray(updatedPeriodArray);
+  };
 
-  const { periodArray } = useSelector(BouquetProperties);
-  useEffect(() => {
-    if (rechargeperiod && !rechargeperiod.length) {
-      dispatch(onGetRechargePeriod());
-    }
-  }, [dispatch, rechargeperiod]);
-
-  // Initialize arrays to hold indices of rows with different properties
-  const refundableRows = [];
-  const freeDaysRows = [];
+  const handleFreeDaysChange = (e, index) => {
+    const updatedPeriodArray = [...newArray];
+    updatedPeriodArray[index].free_days = parseInt(e.target.value) || 0;
+    setNewArray(updatedPeriodArray);
+  };
 
   const updateRate = () => {
-    const updatedRates = periodArray.map((row, i) => {
-      const price =
-        parseFloat(row.months) === 0
-          ? additionalLcoRate / 30
-          : additionalLcoRate * row.months;
-      const totalAmount = price + (price * 30.3) / 100;
-
-      // Check if the row index is in refundableRows array
-      const isRefundable = refundableRows.includes(i + 1);
-      // Check if the row index is in freeDaysRows array, set free_days to 10 if included
-      const freeDays = freeDaysRows.includes(i + 1) ? freeDays : 0;
-
+    const rateArray = newArray.map((rateData) => {
       return {
+        id: rateData.id,
+        price:
+          parseFloat(rateData.months) === 0
+            ? additionalLcoRate / 30
+            : additionalLcoRate * rateData.months,
+        rent: 0,
+        is_refundable: rateData.is_refundable ? 1 : 0,
+        free_days: rateData.free_days || 0,
+        cashback_amount: 0,
+        total_amount: parseFloat(
+          (
+            parseFloat(
+              parseFloat(rateData.months) === 0
+                ? additionalLcoRate / 30
+                : additionalLcoRate * rateData.months
+            ) +
+            (parseFloat(
+              parseFloat(rateData.months) === 0
+                ? additionalLcoRate / 30
+                : additionalLcoRate * rateData.months
+            ) *
+              30.3) /
+              100
+          ).toFixed(2)
+        ),
+      };
+    });
+
+    const updatedRate = [
+      {
         rate_code: additionalName,
         mrp_data: {
           dis_pcc: additionalLcoDiscount,
           lmo_pcc: additionalLcoRate,
         },
-        rate: [
-          {
-            id: i + 1,
-            price: parseFloat(price.toFixed(2)) || 0, // Ensure it defaults to 0 if undefined
-            rent: 0,
-            is_refundable: isRefundable ? "Yes" : "No", // Convert boolean to string "Yes" or "No"
-            free_days: freeDays,
-            callback_amount: 0,
-            total_amount: parseFloat(totalAmount.toFixed(2)) || 0, // Ensure it defaults to 0 if undefined
-          },
-        ],
-      };
-    });
-
-    // Assuming setAdditionalRates is passed as a prop
-    setAdditionalRates(updatedRates);
+        rate: rateArray,
+      },
+    ];
+    console.log(
+      "additionalRatessssssssssssssss:" + JSON.stringify(updatedRate)
+    );
+    setAdditionalRates(updatedRate);
   };
 
-  // console.log("periodArray: " + JSON.stringify(periodArray));
+  useEffect(() => {
+    setNewArray(rechargeperiod);
+  }, [rechargeperiod]);
+
   return (
-    <Card>
-      <CardBody>
-        {/* {console.log("recharge period: ", JSON.stringify(rechargeperiod))} */}
-
-        <Table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Period</th>
-              <th>Pay Channel Rate**</th>
-              <th>Tax</th>
-              <th>Total AMT</th>
-              <th>Refundable</th>
-              <th>Free Days</th>
-              {/* <th>Action</th> */}
-            </tr>
-          </thead>
-
-          {/* <td>
-            <input
-              type="checkbox"
-              onChange={() => {
-                debugger;
-                console.log("Clicked the checkbox");
-                handleCheckboxChange(row.id);
-              }}
-              checked={isRowChecked(row.id)}
+    <>
+      <Row>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Label style={{ marginRight: "10px" }}>Additional Name: </Label>
+            <Input
+              placeholder="Enter additional name"
+              type="text"
+              style={{ width: "210px" }}
+              value={additionalName}
+              onChange={(e) => setAdditionalName(e.target.value)}
             />
-          </td> */}
-          <tbody>
-            {periodArray &&
-              periodArray.map((row, i) => (
-                <tr key={i}>
-                  <td>{i + 1}</td>
-                  <td>{row && row.name}</td>
-                  <td>
-                    <Input
-                      name="price"
-                      type="number"
-                      disabled
-                      value={parseFloat(
-                        parseInt(row.months) === 0
-                          ? additionalLcoRate / 30
-                          : additionalLcoRate * row.months
-                      ).toFixed(2)}
-                    />
-                  </td>
-                  <td>
-                    <Input
-                      name="tax"
-                      type="number"
-                      disabled
-                      value={parseFloat(
-                        parseInt(row.months) === 0
-                          ? ((additionalLcoRate / 30) * 30.3) / 100
-                          : (additionalLcoRate * row.months * 30.3) / 100
-                      ).toFixed(2)}
-                    />
-                  </td>
-                  <td>
-                    <Input
-                      name="totalamount"
-                      type="number"
-                      disabled
-                      value={parseFloat(
-                        parseInt(row.months) === 0
-                          ? additionalLcoRate / 30 +
-                              ((additionalLcoRate / 30) * 30.3) / 100
-                          : additionalLcoRate * row.months +
-                              (additionalLcoRate * row.months * 30.3) / 100
-                      ).toFixed(2)}
-                    />
-                  </td>
-                  <td>
-                    <Input
-                      type="checkbox"
-                      checked={refundable[i] === "Yes"}
-                      onChange={(e) => {
-                        const updatedRefundable = [...refundable];
-                        updatedRefundable[i] = e.target.checked ? "Yes" : "No";
-                        setRefundable(updatedRefundable);
-                      }}
-                    />
-                  </td>
-                  <td>
-                    <Input
-                      name={`freeDays-${i}`} // Use unique name for each input
-                      type="number"
-                      value={freeDays[i] || ""}
-                      onChange={(e) => {
-                        const updatedFreeDays = [...freeDays];
-                        updatedFreeDays[i] = e.target.value;
-                        setFreeDays(updatedFreeDays);
-                      }}
-                    />
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </Table>
-        <div className="mb-3">
-          <button
-            type="button"
-            className="btn btn-primary "
-            onClick={updateRate}
-          >
-            <i className="bx bx-right-arrow-alt" style={{ fontSize: 20 }}></i>
-          </button>
+          </div>
+          <div>
+            <button
+              type="button"
+              className="btn btn-primary "
+              onClick={updateRate}
+            >
+              + Add Pricing
+            </button>
+          </div>
         </div>
-      </CardBody>
-    </Card>
+      </Row>
+      <Row>
+        <Col sm="3">
+          <Label>MRP**</Label>
+          <Input disabled defaultValue={0} value={parseFloat(mrp).toFixed(2)} />
+        </Col>
+        <Col sm="3">
+          <Label>DRP**</Label>
+          <Input type="number" disabled value={parseFloat(drp).toFixed(2)} />
+        </Col>
+        <Col sm="3">
+          <Label>LCO Discount(%)</Label>
+          <Input
+            type="number"
+            value={additionalLcoDiscount}
+            onChange={(e) => setAdditionalLcoDiscount(e.target.value)}
+          />
+        </Col>
+        <Col sm="3">
+          <Label>LCO Rate**</Label>
+          <Input
+            type="number"
+            value={parseFloat(additionalLcoRate).toFixed(2)}
+            onChange={(e) => setAdditionalLcoRate(e.target.value)}
+          />
+        </Col>
+      </Row>
+
+      <Row>
+        <Card>
+          <CardBody>
+            <Table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Period</th>
+                  <th>Pay Channel Rate**</th>
+                  <th>Tax</th>
+                  <th>Total AMT</th>
+                  <th>Refundable</th>
+                  <th>Free Days</th>
+                </tr>
+              </thead>
+              <tbody>
+                {newArray &&
+                  newArray.map((row, i) => (
+                    <tr key={i}>
+                      <td>{i + 1}</td>
+                      <td>{row && row.name}</td>
+                      <td>
+                        <Input
+                          name="price"
+                          type="number"
+                          disabled
+                          value={parseFloat(
+                            parseInt(row.months) === 0
+                              ? additionalLcoRate / 30
+                              : additionalLcoRate * row.months
+                          ).toFixed(2)}
+                        />
+                      </td>
+                      <td>
+                        <Input
+                          name="tax"
+                          type="number"
+                          disabled
+                          value={parseFloat(
+                            parseInt(row.months) === 0
+                              ? ((additionalLcoRate / 30) * 30.3) / 100
+                              : (additionalLcoRate * row.months * 30.3) / 100
+                          ).toFixed(2)}
+                        />
+                      </td>
+                      <td>
+                        <Input
+                          name="totalamount"
+                          type="number"
+                          disabled
+                          value={parseFloat(
+                            parseInt(row.months) === 0
+                              ? additionalLcoRate / 30 +
+                                  ((additionalLcoRate / 30) * 30.3) / 100
+                              : additionalLcoRate * row.months +
+                                  (additionalLcoRate * row.months * 30.3) / 100
+                          ).toFixed(2)}
+                        />
+                      </td>
+                      <td>
+                        <Input
+                          type="checkbox"
+                          checked={row.is_refundable}
+                          onChange={(e) => handleRefundableChange(e, i)}
+                        />
+                      </td>
+                      <td>
+                        <Input
+                          name={`freeDays-${i}`}
+                          type="number"
+                          value={row.free_days}
+                          onChange={(e) => handleFreeDaysChange(e, i)}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </Table>
+          </CardBody>
+        </Card>
+      </Row>
+    </>
   );
 };
 
