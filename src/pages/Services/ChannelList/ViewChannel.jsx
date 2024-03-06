@@ -51,6 +51,10 @@ const ViewChannel = (props) => {
   const [selectedType, setSelectedType] = useState("");
   const [toggleNcfSwitch, setToggleNcfSwitch] = useState(true);
 
+  useEffect(() => {
+    setSelectedRate(channel.broadcasterRate);
+  }, [channel.broadcasterRate]);
+
   const handleChangeLogo = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -76,8 +80,8 @@ const ViewChannel = (props) => {
   };
 
   const handleInputChange = (e) => {
-    const inputValue = e.target.value;
-    setSelectedRate(inputValue >= 0 ? inputValue : 0);
+    const inputValue = parseFloat(e.target.value);
+    setSelectedRate(isNaN(inputValue) ? 0 : inputValue);
   };
 
   const handleArrowKeyPress = (e) => {
@@ -91,7 +95,7 @@ const ViewChannel = (props) => {
       setSelectedRate(newRate.toFixed(2));
     }
   };
-  // console.log("Channel language id: ", channel.language_id, channel.status);
+
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -360,8 +364,6 @@ const ViewChannel = (props) => {
                     </FormFeedback>
                   ) : null}
                 </div>
-                {/* </Col>
-            <Col lg={4}> */}
                 <div className="mb-3">
                   <Label className="form-label">
                     Description<span style={{ color: "red" }}>*</span>
@@ -600,10 +602,7 @@ const ViewChannel = (props) => {
                     name="broadcasterRate"
                     type="number"
                     step="0.01"
-                    onChange={() => {
-                      handleInputChange();
-                      validation.handleChange();
-                    }}
+                    onChange={handleInputChange}
                     onKeyDown={handleArrowKeyPress}
                     placeholder="0"
                     disabled={
@@ -611,7 +610,7 @@ const ViewChannel = (props) => {
                       selectedType === "1" ||
                       validation.values.isalacarte === "0"
                     }
-                    value={validation.values.broadcasterRate}
+                    value={selectedRate}
                     onBlur={validation.handleBlur}
                   ></Input>
                   {validation.touched.broadcasterRate &&
@@ -694,13 +693,13 @@ const ViewChannel = (props) => {
                     <CardBody>
                       <span>Graphical representation of SHARE</span>
                       <CardTitle className="mb-4">
-                        (MRP: {validation.values.broadcasterRate}){" "}
+                        (MRP: {selectedRate}){" "}
                       </CardTitle>
                       <ViewPieChart
                         broadPercent={broadPercent}
                         msoPercent={msoPercent}
                         discountPercent={discountPercent}
-                        selectedRate={validation.values.broadcasterRate}
+                        selectedRate={selectedRate}
                         dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
                       />
                     </CardBody>
