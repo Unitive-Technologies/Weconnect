@@ -5,6 +5,9 @@ import {
   ADD_NEW_PROMOVOUCHER,
   ADD_PROMOVOUCHER_SUCCESS,
   ADD_PROMOVOUCHER_FAIL,
+  ADD_PROMOVOUCHER_SCRAP,
+  ADD_PROMOVOUCHER_SCRAP_SUCCESS,
+  ADD_PROMOVOUCHER_SCRAP_FAIL,
   GET_PROMOVOUCHER_LCO,
   GET_PROMOVOUCHER_LCO_FAIL,
   GET_PROMOVOUCHER_LCO_SUCCESS,
@@ -126,5 +129,25 @@ export const addPromoVoucherSuccess = (
 
 export const addPromoVoucherFail = (error) => ({
   type: ADD_PROMOVOUCHER_FAIL,
+  payload: error,
+});
+
+
+export const addPromoVoucherScrap = (
+  promovoucherScrap
+) => ({
+  type: ADD_PROMOVOUCHER_SCRAP,
+  payload: promovoucherScrap,
+});
+
+export const addPromoVoucherScrapSuccess = (
+  promovoucherScrap
+) => ({
+  type: ADD_PROMOVOUCHER_SCRAP_SUCCESS,
+  payload: promovoucherScrap,
+});
+
+export const addPromoVoucherScrapFail = (error) => ({
+  type: ADD_PROMOVOUCHER_SCRAP_FAIL,
   payload: error,
 });

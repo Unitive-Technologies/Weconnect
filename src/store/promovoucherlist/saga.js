@@ -7,6 +7,7 @@ import {
   GET_PROMOVOUCHER_BOUQUET,
   GET_PROMOVOUCHER_RECHARGE,
   ADD_NEW_PROMOVOUCHER,
+  ADD_PROMOVOUCHER_SCRAP,
 } from "./actionTypes";
 
 import {
@@ -23,6 +24,8 @@ import {
   getPromoVoucherRechargeSuccess,
   addPromoVoucherFail,
   addPromoVoucherSuccess,
+  addPromoVoucherScrapFail,
+  addPromoVoucherScrapSuccess,
 } from "./actions";
 
 //Include Both Helper File with needed methods
@@ -33,6 +36,7 @@ import {
   getPromoVoucherBouquet,
   getPromoVoucherRecharge,
   addNewPromoVoucher,
+  addPromoVoucherScrap,
 } from "../../helpers/backend_helper";
 
 export const getPromoVoucherStore = (state) => state.promovoucher;
@@ -107,8 +111,22 @@ function* onAddNewPromoVoucher({ payload: promovoucher }) {
   }
 }
 
+function* onAddPromoVoucherScrap({ payload: promovoucherScrap }) {
+  try {
+    const response = yield call(addPromoVoucherScrap, promovoucherScrap);
+    console.log("response in saga:" + JSON.stringify(response));
+    yield put(addPromoVoucherScrapSuccess(response));
+    yield put(fetchPromoVoucherScrap());
+    // toast.success("Promo Voucher Added Successfully", { autoClose: 2000 });
+  } catch (error) {
+    yield put(addPromoVoucherScrapFail(error));
+    // toast.error("PromoVoucher Added Failed", { autoClose: 2000 });
+  }
+}
+
 function* promoVoucherSaga() {
   yield takeEvery(GET_PROMOVOUCHER, fetchPromoVoucher);
+  yield takeEvery(ADD_PROMOVOUCHER_SCRAP, onAddPromoVoucherScrap);
   yield takeEvery(GET_PROMOVOUCHER_LCO, fetchPromoVoucherLCO);
   yield takeEvery(GET_PROMOVOUCHER_APPLY, fetchPromoVoucherApply);
   yield takeEvery(GET_PROMOVOUCHER_RECHARGE, fetchPromoVoucherRecharge);

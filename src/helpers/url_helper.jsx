@@ -560,8 +560,8 @@ export const getPromoVoucherUrl = (currPage, perPage) => {
   console.log("current page in Reason List url - ", currPage, perPage);
   return `/promo-voucher?expand=status_lbl,bouque_lbl,expiry_date_lbl,apply_on_lbl,rperiod_lbl,operator_lbl,operator_code_lbl,smartcardno,stbno,created_at_lbl,created_by_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
-
 export const ADD_NEW_PROMOVOUCHER = "/promo-voucher?vr=web1.0";
+export const ADD_PROMOVOUCHER_SCRAP = "/promo-voucher/scrap-voucher?vr=web1.0";
 
 export const GET_USERS =
   "/user?expand=setting,group_lbl,access_level,role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[role]=4&page=1&per-page=500&vr=web1.0";

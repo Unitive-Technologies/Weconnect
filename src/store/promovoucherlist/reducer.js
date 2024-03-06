@@ -11,6 +11,9 @@ import {
   ADD_NEW_PROMOVOUCHER,
   ADD_PROMOVOUCHER_SUCCESS,
   ADD_PROMOVOUCHER_FAIL,
+  ADD_PROMOVOUCHER_SCRAP,
+  ADD_PROMOVOUCHER_SCRAP_SUCCESS,
+  ADD_PROMOVOUCHER_SCRAP_FAIL,
   GET_PROMOVOUCHER_LCO_FAIL,
   GET_PROMOVOUCHER_LCO_SUCCESS,
   GET_PROMOVOUCHER_APPLY_FAIL,
@@ -27,6 +30,7 @@ import {
 
 const INIT_STATE = {
   promovoucher: [],
+  promovoucherScrap: [],
   promovoucherApply: [],
   promovoucherLCO: [],
   promovoucherRecharge: [],
@@ -174,6 +178,29 @@ const PromoVoucher = (state = INIT_STATE, action) => {
       };
 
     case ADD_PROMOVOUCHER_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+    case ADD_PROMOVOUCHER_SCRAP:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case ADD_PROMOVOUCHER_SCRAP_SUCCESS:
+      return {
+        ...state,
+        promovoucherScrap: [
+          ...state.promovoucherScrap,
+          action.payload,
+        ],
+        loading: false,
+      };
+
+    case ADD_PROMOVOUCHER_SCRAP_FAIL:
       return {
         ...state,
         error: action.payload,

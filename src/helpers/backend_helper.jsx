@@ -1129,6 +1129,9 @@ export const getPromoVoucherBouquet = () => get(url.GET_PROMOVOUCHER_BOUQUET);
 export const addNewPromoVoucher = (provoucher) =>
   post(url.ADD_NEW_PROMOVOUCHER, provoucher);
 
+export const addPromoVoucherScrap = (provoucher) =>
+  post(url.ADD_PROMOVOUCHER_SCRAP, provoucher);
+
 // export const getSMSMessageTempList = () => get(url.GET_SMSMESSAGETEMPLIST);
 export const addNewSMSMessageTempList = (smsmsg) =>
   post(url.ADD_NEW_SMSMESSAGETEMPLIST, smsmsg);
