@@ -600,7 +600,10 @@ const ViewChannel = (props) => {
                     name="broadcasterRate"
                     type="number"
                     step="0.01"
-                    onChange={handleInputChange}
+                    onChange={() => {
+                      handleInputChange();
+                      validation.handleChange();
+                    }}
                     onKeyDown={handleArrowKeyPress}
                     placeholder="0"
                     disabled={
@@ -691,13 +694,13 @@ const ViewChannel = (props) => {
                     <CardBody>
                       <span>Graphical representation of SHARE</span>
                       <CardTitle className="mb-4">
-                        (MRP: {selectedRate}){" "}
+                        (MRP: {validation.values.broadcasterRate}){" "}
                       </CardTitle>
                       <ViewPieChart
                         broadPercent={broadPercent}
                         msoPercent={msoPercent}
                         discountPercent={discountPercent}
-                        selectedRate={selectedRate}
+                        selectedRate={validation.values.broadcasterRate}
                         dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
                       />
                     </CardBody>
