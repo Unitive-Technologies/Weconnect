@@ -81,6 +81,15 @@ const PromoVoucherList = (props) => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [showWarning, setShowWarning] = useState(false);
 
+  const [toggleOpen, setToggleOpen] = useState(false);
+  const [message, setMessage] = useState('');
+
+  const handleCheckboxClick = (row) => {
+    setToggleOpen(true);
+    setMessage(`Voucher ${row.original.code} scrapped for 1 out of 1`);
+  };
+
+
   const columns = useMemo(
     () => [
       {
@@ -90,7 +99,7 @@ const PromoVoucherList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <input type="checkbox" />
+              <input type="checkbox" onClick={() => handleCheckboxClick(cellProps.row)} />
             </>
           );
         },
@@ -366,6 +375,13 @@ const PromoVoucherList = (props) => {
 
   return (
     <React.Fragment>
+      {toggleOpen && (
+        <div>
+          {/* Your toggle content */}
+          <p>{message}</p>
+        </div>
+      )}
+
       <AddNewPromoVoucher
         isOpen={showAddNewPromoVoucher}
         handleAddPromoVoucher={handleAddPromoVoucher}
@@ -395,24 +411,6 @@ const PromoVoucherList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {/* {console.log(
-                      "Promo Voucher List:" + JSON.stringify(provoucher)
-                    )} */}
-                    {/* <TableContainer
-                      isPagination={true}
-                      columns={columns}
-                      data={provoucher}
-                      isGlobalFilter={true}
-                      isShowTableActionButtons={true}
-                      isShowingPageLength={true}
-                      // iscustomPageSizeOptions={true}
-                      customPageSize={8}
-                      tableActions={getTableActions()}
-                      tableClass="table align-middle table-nowrap table-hover"
-                      theadClass="table-light"
-                      paginationDiv="col-sm-12 col-md-7"
-                      pagination="pagination pagination-rounded justify-content-end mt-4"
-                    /> */}
                     <TableContainerX
                       columns={columns}
                       data={provoucher}
