@@ -76,11 +76,28 @@ const PromoVoucherList = (props) => {
   const [showScrapPromoVoucher, setShowScrapPromoVoucher] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
 
+  const [filterVoucher, setFilterVoucher] = useState(false);
+
+
   const handleWarning = () => {
     setShowWarning(!showWarning);
   };
 
   const [selectedRows, setSelectedRows] = useState([]);
+
+  const handleSelectedRows = (row) => {
+    const isSelected = selectedRows.some(
+      (selectedRow) => selectedRow.id === row.id
+    );
+    if (isSelected) {
+      const updatedSelectedRows = selectedRows.filter(
+        (selectedRow) => selectedRow.id !== row.id
+      );
+      setSelectedRows(updatedSelectedRows);
+    } else {
+      setSelectedRows([...selectedRows, row]);
+    }
+  };
 
   const columns = useMemo(
     () => [
@@ -342,6 +359,25 @@ const PromoVoucherList = (props) => {
     setShowAddNewPromoVoucher(!showAddNewPromoVoucher);
   };
 
+  const handlePromoVoucherScrap = () => {
+    setShowScrapPromoVoucher(!showScrapPromoVoucher);
+  };
+
+
+  useEffect(() => {
+    // console.log("Selected filtered smartcards: ", selectedRows);
+    const activeVoucher = selectedRows.filter(
+      (row) => row.status_lbl === "Active"
+    );
+
+    if (activeVoucher) {
+      setFilterVoucher(activeVoucher);
+      console.log("Status with Active: ", activeVoucher);
+    }
+
+  }, [selectedRows]);
+
+
   const keyField = "id";
 
   const getTableActions = () => {
@@ -376,7 +412,8 @@ const PromoVoucherList = (props) => {
         promovoucherRecharge={provoucherRecharge}
       />
       <PromoVoucherListStatus isOpen={showScrapPromoVoucher}
-      // voucher_type={voucher_type}
+        handlePromoVoucherScrap={handlePromoVoucherScrap}
+        selectedData={filterVoucher}
       />
 
       <div
@@ -413,6 +450,9 @@ const PromoVoucherList = (props) => {
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
                       goToPage={goToPage}
+                      handleRowClick={(row) => {
+                        handleSelectedRows(row);
+                      }}
                     />
                   </CardBody>
                 </Card>
