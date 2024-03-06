@@ -356,10 +356,10 @@ const PromoVoucherList = (props) => {
         action: setShowScrapPromoVoucher,
         type: "normal",
         icon: "upload",
-        action:
-          Object.keys(selectedRows).length === 0
-            ? () => setShowWarning(true)
-            : () => setShowScrapPromoVoucher(true),
+        // action:
+        //   Object.keys(selectedRows).length === 0
+        //     ? () => setShowWarning(true)
+        //     : () => setShowScrapPromoVoucher(true),
       },
     ];
   };
