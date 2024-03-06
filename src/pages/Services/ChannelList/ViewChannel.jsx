@@ -57,8 +57,12 @@ const ViewChannel = (props) => {
     if (channel && channel.broadcasterRate !== undefined) {
       setSelectedRate(channel.broadcasterRate);
       setCasCodeList(channel.casCodes);
+      setMsoPercent(channel.revenue_share.mso_share);
+      setDiscountPercent(channel.revenue_share.mso_discount);
+      setBroadPercent(channel.revenue_share.broadcaster_share);
     }
   }, [channel]);
+  console.log("Selected mso percent: ", msoPercent);
 
   const handleChangeLogo = (e) => {
     const file = e.target.files[0];
