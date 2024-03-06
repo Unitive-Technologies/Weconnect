@@ -101,7 +101,7 @@ const ViewChannel = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      //BroadCaster: "",
+      id: (channel && channel.id) || "",
       code: (channel && channel.code) || "",
       // logo: (channel && channel.logo) || "",
       name: (channel && channel.name) || "",
@@ -145,7 +145,7 @@ const ViewChannel = (props) => {
         genre_id: values.genre_id,
         language_id: values.language_id,
         isalacarte: values.isalacarte,
-        broadcasterRate: values.broadcasterRate,
+        broadcasterRate: selectedRate,
         status: values.status,
         cas: values.cas,
         cascode: values.cascode,

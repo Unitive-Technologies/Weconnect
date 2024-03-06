@@ -611,14 +611,20 @@ export const uploadPackageSubmit = async (initiatedToken, formData) => {
 };
 
 export const downloadBulkUpdatePackageUploadTemplate = async (data) => {
-  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_BULKUPDATEPACKAGE, data);
+  return await postCompleteResponse(
+    url.DOWNLOAD_SAMPLE_BULKUPDATEPACKAGE,
+    data
+  );
 };
 
 export const updateBulkUpdatePackageUploadByToken = async (token, data) => {
   return put(url.fileUploadBulkUpdatePackage(token), data);
 };
 
-export const uploadBulkUpdatePackageSubmit = async (initiatedToken, formData) => {
+export const uploadBulkUpdatePackageSubmit = async (
+  initiatedToken,
+  formData
+) => {
   return await postCompleteResponse(
     url.uploadBulkUpdatePackageSubmit(initiatedToken),
     formData
@@ -626,20 +632,28 @@ export const uploadBulkUpdatePackageSubmit = async (initiatedToken, formData) =>
 };
 
 export const downloadBulkUpdatePackageCascodeUploadTemplate = async (data) => {
-  return await postCompleteResponse(url.DOWNLOAD_SAMPLE_BULKUPDATECHANNELPACKAGE, data);
+  return await postCompleteResponse(
+    url.DOWNLOAD_SAMPLE_BULKUPDATECHANNELPACKAGE,
+    data
+  );
 };
 
-export const updateBulkUpdatePackageCascodeUploadByToken = async (token, data) => {
+export const updateBulkUpdatePackageCascodeUploadByToken = async (
+  token,
+  data
+) => {
   return put(url.fileUploadBulkUpdatePackageCascode(token), data);
 };
 
-export const uploadBulkUpdatePackageCascodeSubmit = async (initiatedToken, formData) => {
+export const uploadBulkUpdatePackageCascodeSubmit = async (
+  initiatedToken,
+  formData
+) => {
   return await postCompleteResponse(
     url.uploadBulkUpdatePackageCascodeSubmit(initiatedToken),
     formData
   );
 };
-
 
 export const downloadChannelUploadTemplate = async (data) => {
   return await postCompleteResponse(url.DOWNLOAD_SAMPLE_CHANNEL, data);
@@ -877,7 +891,7 @@ export const getChannelListCascode = () => get(url.GET_CHANNELLIST_CASCODE);
 // export const getChannelListCascode = () => get(url.GET_CHANNELLIST_CASCODE);
 export const getChannelListGenre = () => get(url.GET_CHANNELLIST_GENRE);
 export const getChannelListLanguage = () => get(url.GET_CHANNELLIST_LANGUAGE);
-export const updateChannelList = (channelList, id) =>
+export const updateChannelList = (id, channelList) =>
   put(url.UPDATE_CHANNELLIST(id), channelList);
 
 // export const getBroadcasterBouquetList = () =>

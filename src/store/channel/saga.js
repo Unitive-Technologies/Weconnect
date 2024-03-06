@@ -97,10 +97,10 @@ function* onAddNewChannelList({ payload: channelList }) {
   }
 }
 
-function* onUpdateChannelList({ payload: channelList }) {
-  console.log("Tax in onUpdate:" + JSON.stringify(channelList));
+function* onUpdateChannelList({ payload: channellist }) {
+  console.log("Channel in onUpdate:" + JSON.stringify(channellist));
   try {
-    const response = yield call(updateChannelList, channelList.id, tax);
+    const response = yield call(updateChannelList, channellist.id, channellist);
     yield put(updateChannelListSuccess(response));
     console.log("update response:" + JSON.stringify(response));
     yield put(fetchchannellists());
