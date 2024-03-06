@@ -4,7 +4,7 @@ import TableContainer from "../../../components/Common/TableContainer";
 import { Card, CardBody, Table } from "reactstrap";
 import { Link } from "react-router-dom";
 
-const AdditionalMRP = ({ additionalRates }) => {
+const AdditionalMRP = ({ additionalRates, rechargeperiod }) => {
   console.log(
     "additionalRates in additionalMrpTable:" + JSON.stringify(additionalRates)
   );
@@ -170,37 +170,39 @@ const AdditionalMRP = ({ additionalRates }) => {
 
           <tbody>
             {additionalRates &&
-              additionalRates.map((row, i) => (
-                <tr key={i}>
-                  <td>{i + 1}</td>
+              additionalRates.map((row, index) => (
+                <tr key={row.rate_code}>
+                  <td>{index + 1}</td>
                   <td>{row.rate_code}</td>
                   <td>{row.mrp_data.dis_pcc}</td>
                   <td>{row.mrp_data.lmo_pcc}</td>
                   <td>
-                    {row.mrp_data.rate && (
+                    {row.rate && (
                       <Table>
                         <thead>
                           <tr>
-                            <th>#</th>
+                            {/* <th>#</th> */}
                             <th>Period</th>
                             <th>Price</th>
                             <th>Tax</th>
                             <th>Total</th>
                             <th>Refundable</th>
                             <th>Free Days</th>
-                            <th>$</th>
                           </tr>
                         </thead>
-
                         <tbody>
-                          {row.mrp_data.rate.map((insideRow, i) => (
+                          {row.rate.map((insideRow, i) => (
                             <tr key={i}>
-                              <td>1Year</td>
-                              <td>{insideRow.price}</td>
-                              <td></td>
-                              <td>{insideRow.total_amount}</td>
-                              <td>{insideRow.is_refundable}</td>
+                              {/* <td>{i + 1}</td> */}
+                              <td>{insideRow.period}</td>
+                              <td>{parseFloat(insideRow.price).toFixed(2)}</td>
+                              <td>{parseFloat(insideRow.tax).toFixed(2)}</td>
+                              <td>
+                                {parseFloat(insideRow.total_amount).toFixed(2)}
+                              </td>
+                              <td>{insideRow.is_refundable ? "Yes" : "No"}</td>
                               <td>{insideRow.free_days}</td>
+                              <td>{/* Render $ value */}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -211,18 +213,6 @@ const AdditionalMRP = ({ additionalRates }) => {
               ))}
           </tbody>
         </Table>
-        <TableContainer
-          isPagination={true}
-          columns={columns}
-          data={additionalRates && additionalRates}
-          // isGlobalFilter={true}
-          isShowingPageLength={true}
-          // customPageSize={50}
-          tableClass="table align-middle table-nowrap table-hover"
-          theadClass="table-light"
-          paginationDiv="col-sm-12 col-md-7"
-          pagination="pagination pagination-rounded justify-content-end mt-4"
-        />
       </CardBody>
     </Card>
   );

@@ -49,10 +49,15 @@ const AdditionalMrpTable = (props) => {
     const rateArray = newArray.map((rateData) => {
       return {
         id: rateData.id,
+        period: rateData.name,
         price:
           parseFloat(rateData.months) === 0
             ? additionalLcoRate / 30
             : additionalLcoRate * rateData.months,
+        tax:
+          parseFloat(rateData.months) === 0
+            ? ((additionalLcoRate / 30) * 30.3) / 100
+            : (additionalLcoRate * rateData.months * 30.3) / 100,
         rent: 0,
         is_refundable: rateData.is_refundable ? 1 : 0,
         free_days: rateData.free_days || 0,

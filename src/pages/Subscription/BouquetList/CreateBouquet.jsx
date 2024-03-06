@@ -850,7 +850,10 @@ const CreateBouquet = (props) => {
               />
             </Row>
             <Row>
-              <AdditionalMRP additionalRates={additionalRates} />
+              <AdditionalMRP
+                additionalRates={additionalRates}
+                rechargeperiod={rechargeperiod}
+              />
             </Row>
           </Row>
           <div>**Applicable NCF and Taxes Additional</div>
