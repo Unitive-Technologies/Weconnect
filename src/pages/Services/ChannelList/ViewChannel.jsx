@@ -50,10 +50,14 @@ const ViewChannel = (props) => {
   const [selectedRate, setSelectedRate] = useState();
   const [selectedType, setSelectedType] = useState("");
   const [toggleNcfSwitch, setToggleNcfSwitch] = useState(true);
+  const [casCodeList, setCasCodeList] = useState([]);
 
+  console.log("Selected channel list: ", channel);
   useEffect(() => {
-    setSelectedRate(channel.broadcasterRate);
-  }, [channel.broadcasterRate]);
+    if (channel && channel.broadcasterRate !== undefined) {
+      setSelectedRate(channel.broadcasterRate);
+    }
+  }, [channel]);
 
   const handleChangeLogo = (e) => {
     const file = e.target.files[0];
@@ -77,6 +81,11 @@ const ViewChannel = (props) => {
 
   const toggleHistoryModal = () => {
     setShowHistory(!showHistory);
+  };
+
+  const handleToggle = () => {
+    toggleViewModal();
+    setShowEditChannel(!showEditChannel);
   };
 
   const handleInputChange = (e) => {
@@ -114,6 +123,7 @@ const ViewChannel = (props) => {
       isalacarte: (channel && channel.isalacarte) || "",
       broadcasterRate: (channel && channel.broadcasterRate) || "",
       status: (channel && channel.status) || "",
+      casCodes: (channel && channel.casCodes) || [],
       // revenue: (channel && channel.revenue_share) || {},
     },
     validationSchema: Yup.object({
@@ -148,7 +158,7 @@ const ViewChannel = (props) => {
         broadcasterRate: selectedRate,
         status: values.status,
         cas: values.cas,
-        cascode: values.cascode,
+        casCodes: values.casCodes,
         serviceid: values.serviceid,
         created_at: new Date(),
         created_by: values.created_by,
@@ -736,7 +746,9 @@ const ViewChannel = (props) => {
               <Col sm="12">
                 <CasList
                   showEditChannel={showEditChannel}
-                  data={channel && channel.casCodes}
+                  data={validation.values.casCodes}
+                  channelListCascode={channelListCascode}
+                  updateList={setCasCodeList}
                 />
               </Col>
             </Row>
