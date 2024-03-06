@@ -56,6 +56,7 @@ const ViewChannel = (props) => {
   useEffect(() => {
     if (channel && channel.broadcasterRate !== undefined) {
       setSelectedRate(channel.broadcasterRate);
+      setCasCodeList(channel.casCodes);
     }
   }, [channel]);
 
@@ -81,11 +82,6 @@ const ViewChannel = (props) => {
 
   const toggleHistoryModal = () => {
     setShowHistory(!showHistory);
-  };
-
-  const handleToggle = () => {
-    toggleViewModal();
-    setShowEditChannel(!showEditChannel);
   };
 
   const handleInputChange = (e) => {
@@ -158,7 +154,13 @@ const ViewChannel = (props) => {
         broadcasterRate: selectedRate,
         status: values.status,
         cas: values.cas,
-        casCodes: values.casCodes,
+        casCodes: casCodeList.map((single) => {
+          return {
+            cas_id: single.cas_id,
+            cascode: single.cascode,
+            serviceid: single.serviceid,
+          };
+        }),
         serviceid: values.serviceid,
         created_at: new Date(),
         created_by: values.created_by,
@@ -176,9 +178,9 @@ const ViewChannel = (props) => {
   });
 
   const handleCancel = () => {
+    toggleViewModal();
     setShowEditChannel(false);
     resetSelection();
-    toggleViewModal();
   };
 
   useEffect(() => {
@@ -746,7 +748,7 @@ const ViewChannel = (props) => {
               <Col sm="12">
                 <CasList
                   showEditChannel={showEditChannel}
-                  data={validation.values.casCodes}
+                  data={casCodeList}
                   channelListCascode={channelListCascode}
                   updateList={setCasCodeList}
                 />
