@@ -59,9 +59,11 @@ const CreateBouquet = (props) => {
   const [totalRatePackage, setTotalRatePackage] = useState(0);
   const [mrp, setMrp] = useState(0);
   const [drp, setDrp] = useState(0);
-
+  const [ncfdrp, setNcfdrp] = useState(130);
   const [lcoDiscount, setLcoDiscount] = useState(20);
+  const [ncfLcoDiscount, setNcfLcoDiscount] = useState(20);
   const [lcoRate, setLcoRate] = useState(0);
+  const [ncfLcoRate, setNcfLcoRate] = useState(0);
   const [additionalName, setAdditionalName] = useState("");
   const [additionalLcoDiscount, setAdditionalLcoDiscount] = useState("");
   const [additionalLcoRate, setAdditionalLcoRate] = useState("");
@@ -155,9 +157,11 @@ const CreateBouquet = (props) => {
 
   useEffect(() => {
     const totalLcoRate = (drp * lcoDiscount) / 100;
+    const totalNcfLcoRate = (ncfdrp * ncfLcoDiscount) / 100;
 
     setLcoRate(drp - totalLcoRate);
-  }, [drp, lcoDiscount]);
+    setNcfLcoRate(ncfdrp - totalNcfLcoRate);
+  }, [drp, lcoDiscount, ncfdrp, ncfLcoDiscount]);
 
   useEffect(() => {
     const totalAdditionalLcoRate = (drp * additionalLcoDiscount) / 100;
@@ -775,6 +779,44 @@ const CreateBouquet = (props) => {
                 </div>
               </div>
             </div>
+            <Row className="mb-3 mt-3">
+              <Col sm="3">
+                {/* <Label>MRP**</Label>
+                <Input
+                  disabled
+                  defaultValue={0}
+                  value={parseFloat(mrp).toFixed(2)}
+                /> */}
+                <h4>FIX NCF</h4>
+              </Col>
+              <Col sm="3">
+                <Label>Rate**</Label>
+                <Input
+                  type="number"
+                  defaultValue="130"
+                  value={parseFloat(ncfdrp).toFixed(2)}
+                  onChange={(e) => setNcfdrp(e.target.value)}
+                />
+              </Col>
+              <Col sm="3">
+                <Label>LCO Discount(%)</Label>
+                <Input
+                  type="number"
+                  defaultValue="20"
+                  value={ncfLcoDiscount}
+                  onChange={(e) => setNcfLcoDiscount(e.target.value)}
+                />
+              </Col>
+              <Col sm="3">
+                <Label>LCO Rate**</Label>
+                <Input
+                  type="number"
+                  // defaultValue={0}
+                  value={parseFloat(ncfLcoRate).toFixed(2)}
+                  onChange={(e) => setNcfLcoRate(e.target.value)}
+                />
+              </Col>
+            </Row>
             <Row>
               <Col sm="3">
                 <Label>MRP**</Label>
@@ -814,6 +856,7 @@ const CreateBouquet = (props) => {
               <PreviewTable
                 rechargeperiod={rechargeperiod}
                 lcoRate={lcoRate}
+                ncfLcoRate={ncfLcoRate}
                 rate={rate}
                 setRate={setRate}
               />

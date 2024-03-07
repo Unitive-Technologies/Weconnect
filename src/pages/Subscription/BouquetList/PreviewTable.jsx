@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 
 const PreviewTable = (props) => {
-  const { rechargeperiod, lcoRate, rate, setRate } = props;
+  const { rechargeperiod, lcoRate, ncfLcoRate, rate, setRate } = props;
 
   const [newArray, setNewArray] = useState([]);
   // console.log("@@@@@@@@@@@@rate value:" + JSON.stringify(rate));
@@ -86,6 +86,7 @@ const PreviewTable = (props) => {
               <th>#</th>
               <th>Period</th>
               <th>Pay Channel Rate**</th>
+              <th>NCF</th>
               <th>Tax</th>
               <th>Total AMT</th>
               <th>Refundable</th>
@@ -108,6 +109,18 @@ const PreviewTable = (props) => {
                         parseInt(row.months) === 0
                           ? lcoRate / 30
                           : lcoRate * row.months
+                      ).toFixed(2)}
+                    />
+                  </td>
+                  <td>
+                    <Input
+                      name="ncf"
+                      type="number"
+                      disabled
+                      value={parseFloat(
+                        parseInt(row.months) === 0
+                          ? ncfLcoRate / 30
+                          : ncfLcoRate * row.months
                       ).toFixed(2)}
                     />
                   </td>
