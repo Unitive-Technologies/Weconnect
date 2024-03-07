@@ -70,9 +70,6 @@ const AddNewScheduleCustomerNotification = (props) => {
       created_by: "Admin",
     },
     validationSchema: Yup.object({
-      schedulecustomernotification: Yup.string().required(
-        "Enter schedulecustomernotification Name"
-      ),
       name: Yup.string().required("Select name"),
       type_lbl: Yup.string().required("Select type"),
       schedule_days: Yup.string().required("Select schedule days"),
@@ -82,8 +79,8 @@ const AddNewScheduleCustomerNotification = (props) => {
       osd_template_id_lbl: Yup.string().required("Select osd template"),
       // bmail_template_id_lbl: Yup.string().required("Select bmail template"),
       sms_template_id_lbl: Yup.string().required("Select sms template"),
-      // start_date: Yup.string().required("Select start date"),
-      // end_date: Yup.string().required("Select end date"),
+      start_date: Yup.string().required("Select start date"),
+      end_date: Yup.string().required("Select end date"),
       description: Yup.string().required("Select description"),
       status_lbl: Yup.string().required("Select status"),
     }),
@@ -208,7 +205,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.schedule_days || ""}
-                  // multiple
+                // multiple
                 >
                   <option value="11">Select schedule days</option>
                   <option value="12">1</option>
@@ -241,7 +238,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                   <option value="39">28</option>
                 </Input>
                 {validation.touched.schedule_days &&
-                validation.errors.schedule_days ? (
+                  validation.errors.schedule_days ? (
                   <FormFeedback type="invalid">
                     {validation.errors.schedule_days}
                   </FormFeedback>
@@ -282,7 +279,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                 </Input>
 
                 {validation.touched.osd_configuration_id_lbl &&
-                validation.errors.osd_configuration_id_lbl ? (
+                  validation.errors.osd_configuration_id_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.osd_configuration_id_lbl}
                   </FormFeedback>
@@ -315,7 +312,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                     ))}
                 </Input>
                 {validation.touched.osd_template_id_lbl &&
-                validation.errors.osd_template_id_lbl ? (
+                  validation.errors.osd_template_id_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.osd_template_id_lbl}
                   </FormFeedback>
@@ -346,7 +343,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                     ))} */}
                 </Input>
                 {validation.touched.bmail_template_id_lbl &&
-                validation.errors.bmail_template_id_lbl ? (
+                  validation.errors.bmail_template_id_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.bmail_template_id_lbl}
                   </FormFeedback>
@@ -377,7 +374,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                     ))}
                 </Input>
                 {validation.touched.sms_template_id_lbl &&
-                validation.errors.sms_template_id_lbl ? (
+                  validation.errors.sms_template_id_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.sms_template_id_lbl}
                   </FormFeedback>
@@ -401,13 +398,13 @@ const AddNewScheduleCustomerNotification = (props) => {
                   value={validation.values.start_date || ""}
                   invalid={
                     validation.touched.start_date &&
-                    validation.errors.start_date
+                      validation.errors.start_date
                       ? true
                       : false
                   }
                 />
                 {validation.touched.start_date &&
-                validation.errors.start_date ? (
+                  validation.errors.start_date ? (
                   <FormFeedback type="invalid">
                     {validation.errors.start_date}
                   </FormFeedback>
@@ -455,13 +452,13 @@ const AddNewScheduleCustomerNotification = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -491,7 +488,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                     ))}
                 </Input>
                 {validation.touched.status_lbl &&
-                validation.errors.status_lbl ? (
+                  validation.errors.status_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.status_lbl}
                   </FormFeedback>
