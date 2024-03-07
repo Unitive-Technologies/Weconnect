@@ -142,7 +142,7 @@ const UploadUserModal = (props) => {
                 <p>Fields: {uploadTrigger.fields.join(", ")}</p>
               </div>
             )}
-            <CardSubtitle className="mb-3"> Select File to Upload</CardSubtitle>
+            <CardSubtitle className="mb-3"> Select File to Upload<span style={{ color: "red" }}>*</span></CardSubtitle>
             <Form>
               <Dropzone
                 maxFiles={1}

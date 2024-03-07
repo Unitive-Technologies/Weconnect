@@ -355,7 +355,7 @@ const ViewUserModal = (props) => {
             <Row>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Name</Label>
+                  <Label className="form-label">Name<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="name"
                     type="text"
@@ -379,7 +379,7 @@ const ViewUserModal = (props) => {
               </Col>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Email</Label>
+                  <Label className="form-label">Email<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="email"
                     label="Email"
@@ -404,7 +404,7 @@ const ViewUserModal = (props) => {
               </Col>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Mobile No.</Label>
+                  <Label className="form-label">Mobile No.<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="mobile"
                     label="Mobile No."
@@ -489,7 +489,7 @@ const ViewUserModal = (props) => {
                   <Col lg={4}>
                     <div className="mb-3">
                       <Label className="form-label">
-                        User of {user && user.type_lbl}
+                        User of {user && user.type_lbl}<span style={{ color: "red" }}>*</span>
                       </Label>
                       <Input
                         name="mso"
@@ -845,7 +845,7 @@ const ViewUserModal = (props) => {
               <Col lg={4}>
                 <div className="mb-3">
                   <Label className="form-label">
-                    Login ID<span style={{ color: "red" }}>*</span>
+                    Login ID
                   </Label>
                   <Input
                     name="username"
