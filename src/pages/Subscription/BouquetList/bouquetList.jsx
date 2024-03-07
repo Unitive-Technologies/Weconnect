@@ -524,7 +524,7 @@ const BouquetList = () => {
         bouquettype={bouquettype}
         bouquex={bouquex}
         rechargeperiod={rechargeperiod}
-        selectedRowId={viewBouquetData.id}
+        selectedRowId={viewBouquetData && viewBouquetData.id}
       />
       {showCreateBouquet && (
         <CreateBouquet

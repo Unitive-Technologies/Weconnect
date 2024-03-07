@@ -182,9 +182,9 @@ const AddAlacarte = ({
                 <th>$</th>
               </tr>
             </thead>
-            {/* {console.log(
+            {console.log(
               "alacarteData after add:" + JSON.stringify(alacarteData)
-            )} */}
+            )}
             <tbody>
               {alacarteData &&
                 alacarteData.map((item, index) => (

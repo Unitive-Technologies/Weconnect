@@ -47,7 +47,7 @@ const ViewBouquet = (props) => {
   } = props;
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const dispatch = useDispatch();
-  const [selectedRowDetails, setSelectedRowDetails] = useState([]);
+  const [selectedRowDetails, setSelectedRowDetails] = useState({});
   const [showHistory, setShowHistory] = useState(false);
   const [showEditBouquet, setShowEditBouquet] = useState(false);
   const [toggleSwitch, settoggleSwitch] = useState(true);
@@ -108,8 +108,8 @@ const ViewBouquet = (props) => {
     initialValues: {
       code: (selectedRowDetails && selectedRowDetails.code) || "",
       name: (selectedRowDetails && selectedRowDetails.name) || "",
-      type_lbl: (selectedRowDetails && selectedRowDetails.type_lbl) || "",
-      boxtype_lbl: (selectedRowDetails && selectedRowDetails.boxtype_lbl) || "",
+      // type_lbl: (selectedRowDetails && selectedRowDetails.type_lbl) || "",
+      // boxtype_lbl: (selectedRowDetails && selectedRowDetails.isHD) || "",
       type: (selectedRowDetails && selectedRowDetails.type) || "",
       status: (selectedRowDetails && selectedRowDetails.status) || "",
       description: (selectedRowDetails && selectedRowDetails.description) || "",
@@ -132,7 +132,7 @@ const ViewBouquet = (props) => {
         (selectedRowDetails && selectedRowDetails.is_online_app) || "",
       sort_by: (selectedRowDetails && selectedRowDetails.sort_by) || "",
 
-      mrp: (selectedRowDetails && selectedRowDetails.mrp) || "",
+      mrp: (selectedRowDetails && parseInt(selectedRowDetails.mrp)) || "",
       mrp_data: {
         pcc: (selectedRowDetails && selectedRowDetails.mrp) || "",
         drp: (selectedRowDetails && selectedRowDetails.drp) || "",
@@ -387,7 +387,7 @@ const ViewBouquet = (props) => {
                     value={selectedIsHD}
                     disabled={!showEditBouquet}
                   >
-                    <option value="">Select Box type</option>
+                    {/* <option value="">Select Box type</option> */}
                     {bouquetboxtype &&
                       bouquetboxtype.map((options) => (
                         <option key={options.id} value={options.id}>
@@ -425,7 +425,7 @@ const ViewBouquet = (props) => {
                     onChange={handleTypeChange}
                     value={selectedType}
                   >
-                    <option value="">Select bouquet type</option>
+                    {/* <option value="">Select bouquet type</option> */}
                     {bouquettype &&
                       bouquettype.map((options) => (
                         <option key={options.id} value={options.id}>
