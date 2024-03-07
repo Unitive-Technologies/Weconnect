@@ -77,8 +77,8 @@ const ViewScheduleCustomerNotification = (props) => {
       osd_template_id_lbl: Yup.string().required("Select osd template"),
       // bmail_template_id_lbl: Yup.string().required("Select bmail template"),
       sms_template_id_lbl: Yup.string().required("Select sms template"),
-      // start_date: Yup.string().required("Select start date"),
-      // end_date: Yup.string().required("Select end date"),
+      start_date: Yup.string().required("Select start date"),
+      end_date: Yup.string().required("Select end date"),
       description: Yup.string().required("Select description"),
       status_lbl: Yup.string().required("Select status"),
     }),
@@ -159,7 +159,7 @@ const ViewScheduleCustomerNotification = (props) => {
             <Row>
               <Col lg={3}>
                 <div className="mb-3">
-                  <Label className="form-label">Name</Label>
+                  <Label className="form-label">Name<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="name"
                     type="text"
@@ -179,7 +179,7 @@ const ViewScheduleCustomerNotification = (props) => {
               </Col>
               <Col lg={3}>
                 <div className="mb-3">
-                  <Label className="form-label">Type</Label>
+                  <Label className="form-label">Type<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="type_lbl"
                     type="select"
@@ -206,7 +206,7 @@ const ViewScheduleCustomerNotification = (props) => {
               </Col>
               <Col lg={3}>
                 <div className="mb-3">
-                  <Label className="form-label">Schedule Days</Label>
+                  <Label className="form-label">Schedule Days<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="schedule_days"
                     label="scheduledays"
@@ -388,7 +388,7 @@ const ViewScheduleCustomerNotification = (props) => {
             <Row>
               <Col lg={3}>
                 <div className="mb-3">
-                  <Label className="form-label">Start Date</Label>
+                  <Label className="form-label">Start Date<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="start_date"
                     label="start_date"
@@ -415,7 +415,7 @@ const ViewScheduleCustomerNotification = (props) => {
               </Col>
               <Col lg={3}>
                 <div className="mb-3">
-                  <Label className="form-label">End date</Label>
+                  <Label className="form-label">End date<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="end_date"
                     label="end_date"
@@ -440,7 +440,7 @@ const ViewScheduleCustomerNotification = (props) => {
               </Col>
               <Col lg={3}>
                 <div className="mb-3">
-                  <Label className="form-label">Description</Label>
+                  <Label className="form-label">Description<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="description"
                     type="textarea"
@@ -467,7 +467,7 @@ const ViewScheduleCustomerNotification = (props) => {
               </Col>
               <Col lg={3}>
                 <div className="mb-3">
-                  <Label className="form-label">Status</Label>
+                  <Label className="form-label">Status<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="status_lbl"
                     type="select"
