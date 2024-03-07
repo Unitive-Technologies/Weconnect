@@ -241,7 +241,7 @@ const ViewBrandList = (props) => {
               <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">
-                    CAS Type<span style={{ color: "red" }}>*</span>
+                    CAS Type
                   </Label>
                   <Input
                     name="cas_lbl"

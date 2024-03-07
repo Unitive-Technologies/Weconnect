@@ -191,7 +191,7 @@ const UploadLanguageList = (props) => {
                             </div>
                             <CardSubtitle className="mb-3">
                                 {" "}
-                                Select File to Upload
+                                Select File to Upload<span style={{ color: "red" }}>*</span>
                             </CardSubtitle>
                             <Form>
                                 <Dropzone

@@ -190,7 +190,7 @@ const ViewGenreList = (props) => {
                                     ) : null}
                                 </div>
                                 <div className="mb-3">
-                                    <Label className="form-label">Description</Label>
+                                    <Label className="form-label">Description<span style={{ color: "red" }}>*</span></Label>
                                     <Input
                                         name="description"
                                         type="textarea"

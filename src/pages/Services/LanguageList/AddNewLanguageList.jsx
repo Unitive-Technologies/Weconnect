@@ -44,7 +44,7 @@ const AddNewLanguageList = (props) => {
             name: Yup.string().required("Enter language"),
             code: Yup.string().required("Enter language code"),
             status: Yup.string().required("Select status"),
-            description: Yup.string().required("Enter description"),
+
         }),
         onSubmit: (values) => {
             const newLanguageList = {
