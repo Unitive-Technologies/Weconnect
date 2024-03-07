@@ -177,9 +177,9 @@ const UploadRegionalOfficeModal = (props) => {
                   className="form-select"
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
-                  // onChange={validation.handleChange}
-                  // onBlur={validation.handleBlur}
-                  // value={validation.values.grouppolicy || ""}
+                // onChange={validation.handleChange}
+                // onBlur={validation.handleBlur}
+                // value={validation.values.grouppolicy || ""}
                 >
                   <option value="">Select Status</option>
                   {statusList &&
@@ -198,7 +198,7 @@ const UploadRegionalOfficeModal = (props) => {
               </div>
               <CardSubtitle className="mb-3">
                 {" "}
-                Select File to Upload
+                Select File to Upload<span style={{ color: "red" }}>*</span>
               </CardSubtitle>
               <Form>
                 <Dropzone

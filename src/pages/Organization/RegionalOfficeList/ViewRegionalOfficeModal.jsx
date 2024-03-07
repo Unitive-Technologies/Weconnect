@@ -372,13 +372,13 @@ const ViewRegionalOfficeModal = (props) => {
                             value={validation.values.contact_person || ""}
                             invalid={
                               validation.touched.contact_person &&
-                              validation.errors.contact_person
+                                validation.errors.contact_person
                                 ? true
                                 : false
                             }
                           />
                           {validation.touched.contact_person &&
-                          validation.errors.contact_person ? (
+                            validation.errors.contact_person ? (
                             <FormFeedback type="invalid">
                               {validation.errors.contact_person}
                             </FormFeedback>
@@ -399,13 +399,13 @@ const ViewRegionalOfficeModal = (props) => {
                             value={validation.values.mobile_no || ""}
                             invalid={
                               validation.touched.mobile_no &&
-                              validation.errors.mobile_no
+                                validation.errors.mobile_no
                                 ? true
                                 : false
                             }
                           />
                           {validation.touched.mobile_no &&
-                          validation.errors.mobile_no ? (
+                            validation.errors.mobile_no ? (
                             <FormFeedback type="invalid">
                               {validation.errors.mobile_no}
                             </FormFeedback>
@@ -476,13 +476,13 @@ const ViewRegionalOfficeModal = (props) => {
                             value={validation.values.mso_lbl || ""}
                             invalid={
                               validation.touched.mso_lbl &&
-                              validation.errors.mso_lbl
+                                validation.errors.mso_lbl
                                 ? true
                                 : false
                             }
                           />
                           {validation.touched.mso_lbl &&
-                          validation.errors.mso_lbl ? (
+                            validation.errors.mso_lbl ? (
                             <FormFeedback type="invalid">
                               {validation.errors.mso_lbl}
                             </FormFeedback>
