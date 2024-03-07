@@ -62,7 +62,6 @@ const ViewChannel = (props) => {
       setBroadPercent(channel.revenue_share.broadcaster_share);
     }
   }, [channel]);
-  console.log("Selected mso percent: ", msoPercent);
 
   const handleChangeLogo = (e) => {
     const file = e.target.files[0];
@@ -131,6 +130,9 @@ const ViewChannel = (props) => {
       status: (channel && channel.status) || "",
       casCodes: (channel && channel.casCodes) || [],
       revenue_share: (channel && channel.revenue_share) || {},
+      isHD: (channel && channel.isHD) || "",
+      isFta: (channel && channel.isFta) || "",
+      isNcf: (channel && channel.isNcf) || "",
     },
     validationSchema: Yup.object({
       code: Yup.string().required("Enter Channel Code"),
@@ -150,6 +152,9 @@ const ViewChannel = (props) => {
       // serviceid: Yup.string().required("serviceid"),
     }),
     onSubmit: (values) => {
+      console.log("broadPercent:", broadPercent);
+      console.log("msoPercent:", msoPercent);
+      console.log("discountPercent:", discountPercent);
       const updateChannelList = {
         id: values.id,
         code: values.code,
@@ -453,25 +458,24 @@ const ViewChannel = (props) => {
                     type="select"
                     placeholder="Select type"
                     className="form-select"
-                    onChange={validation.handleChange}
+                    onChange={(e) => {
+                      validation.handleChange(e);
+                      setSelectedType(e.target.value);
+                    }}
                     onBlur={validation.handleBlur}
-                    value={validation.values.channel_type_lbl || ""}
+                    value={validation.values.isFta || ""}
                     disabled={!showEditChannel}
                   >
                     {channelListType &&
-                      channelListType.map((channel_type_lbl) => (
-                        <option
-                          key={channel_type_lbl.id}
-                          value={channel_type_lbl.id}
-                        >
-                          {channel_type_lbl.name}
+                      channelListType.map((list) => (
+                        <option key={list.id} value={list.id}>
+                          {list.name}
                         </option>
                       ))}
                   </Input>
-                  {validation.touched.channel_type_lbl &&
-                  validation.errors.channel_type_lbl ? (
+                  {validation.touched.isFta && validation.errors.isFta ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.channel_type_lbl}
+                      {validation.errors.isFta}
                     </FormFeedback>
                   ) : null}
                 </div>
