@@ -25,7 +25,13 @@ import Dropzone from "react-dropzone";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
-import { getLco as onGetLco } from "/src/store/lcolist/actions";
+import { createSelector } from "reselect";
+import {
+  getLco as onGetLco,
+  getLcoAddcredit as onGetLcoAddcredit,
+  goToPage as onGoToPage,
+} from "/src/store/lcolist/actions";
+import TableContainerX from "../../../components/Common/TableContainerX";
 
 const BulkAddCreditModal = (props) => {
   const { isOpen, toggleAddCreditModal, lco } = props;
@@ -33,7 +39,49 @@ const BulkAddCreditModal = (props) => {
   // const [tableData, setTableData] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [tableList, setTableList] = useState([]);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [totalPages, setTotalPages] = useState(1);
   const dispatch = useDispatch();
+
+  const goToPage = (toPage) => {
+    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    dispatch(onGoToPage(toPage));
+    dispatch(onGetLcoAddcredit());
+  };
+
+  const selectLcoState = (state) => state.lcoaddcredit;
+  const LcoProperties = createSelector(selectLcoState, (lco) => ({
+    lcoaddcredit: lco.lcoaddcredit,
+    loading: lco.loading,
+    totalPage: lco.totalPages,
+    totalCount: lco.totalCount,
+    pageSize: lco.perPage,
+    currentPage: lco.currentPage,
+  }));
+
+  const {
+    lcoaddcredit,
+    loading,
+    totalPage,
+    totalCount,
+    pageSize,
+    currentPage,
+  } = useSelector(LcoProperties);
+
+  useEffect(() => {
+    if (lcoaddcredit && !lcoaddcredit.length) {
+      dispatch(onGetLcoAddcredit());
+    }
+  }, [dispatch, lcoaddcredit]);
+
+  console.log(
+    "Lco on Credit: ",
+    totalPage,
+    totalCount,
+    pageSize,
+    currentPage,
+    lcoaddcredit
+  );
 
   const handleActive = (row) => {
     const isRowSelected = selectedUsers.some((user) => user.id === row.id);
@@ -352,11 +400,13 @@ const BulkAddCreditModal = (props) => {
     ],
     []
   );
-  const getAllLCO = async (e) => {
+  const getAllLCO = async (page) => {
     try {
       const token = "Bearer " + localStorage.getItem("temptoken");
+      const perPage = 50;
 
       const response = await axios.get(
+        // `${API_URL}/operator?expand=balance,balance_h,created_by_lbl,distributor_lbl,status_lbl,branch_lbl,username&filter[type]=3&page=${page}&per-page=${perPage}&vr=web1.0`,
         `${API_URL}/operator?expand=balance,balance_h,created_by_lbl,distributor_lbl,status_lbl,branch_lbl,username&filter[type]=3&page=1&per-page=50&vr=web1.0`,
         {
           headers: {
@@ -365,6 +415,11 @@ const BulkAddCreditModal = (props) => {
         }
       );
       setTableList(response.data.data);
+      // console.log(
+      //   "Total Page: ",
+      //   Math.ceil(response.data.total_count / perPage)
+      // );
+      // setTotalPages(Math.ceil(response.data.total_count / perPage));
       console.log("response in useEffect:" + JSON.stringify(response));
     } catch (error) {
       console.error("Error fetching history data:", error);
@@ -373,12 +428,14 @@ const BulkAddCreditModal = (props) => {
   useEffect(() => {
     getAllLCO();
   }, []);
-
   // useEffect(() => {
-  //   if (lco) {
-  //     setTableList(lco);
-  //   }
-  // }, []);
+  //   getAllLCO(currentPage);
+  // }, [currentPage]);
+
+  // // Handle pagination change
+  // const handlePageChange = (page) => {
+  //   setCurrentPage(page);
+  // };
   return (
     <Modal
       isOpen={isOpen}
@@ -457,13 +514,13 @@ const BulkAddCreditModal = (props) => {
                   </div>
                 </Col>
               </Row>
-              <TableContainer
+              {/* <TableContainer
                 isPagination={true}
                 columns={columns}
-                data={tableList && tableList}
+                data={tableList}
                 //   isGlobalFilter={true}
                 isShowingPageLength={true}
-                customPageSize={5}
+                customPageSize={10}
                 handleRowClick={(row) => {
                   handleActive(row);
                 }}
@@ -471,6 +528,21 @@ const BulkAddCreditModal = (props) => {
                 theadClass="table-light"
                 paginationDiv="col-sm-12 col-md-7"
                 pagination="pagination pagination-rounded justify-content-end mt-4"
+              /> */}
+              <TableContainerX
+                columns={columns}
+                data={lcoaddcredit}
+                isLoading={loading}
+                isPagination={true}
+                totalCount={Number(totalCount)}
+                pageSize={Number(pageSize)}
+                currentPage={Number(currentPage)}
+                totalPage={Number(totalPage)}
+                isShowingPageLength={true}
+                goToPage={goToPage}
+                handleRowClick={(row) => {
+                  handleActive(row);
+                }}
               />
               <div
                 style={{

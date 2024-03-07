@@ -33,6 +33,9 @@ import {
   GET_LCO_PAYMENTMODE,
   GET_LCO_PAYMENTMODE_SUCCESS,
   GET_LCO_PAYMENTMODE_FAIL,
+  GET_LCO_ADDCREDIT,
+  GET_LCO_ADDCREDIT_SUCCESS,
+  GET_LCO_ADDCREDIT_FAIL,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -217,5 +220,19 @@ export const getLcoPaymentmodeSuccess = (paymentmode) => ({
 
 export const getLcoPaymentmodeFail = (error) => ({
   type: GET_LCO_PAYMENTMODE_FAIL,
+  payload: error,
+});
+
+export const getLcoAddcredit = () => ({
+  type: GET_LCO_ADDCREDIT,
+});
+
+export const getLcoAddcreditSuccess = (lcoaddcredit) => ({
+  type: GET_LCO_ADDCREDIT_SUCCESS,
+  payload: lcoaddcredit,
+});
+
+export const getLcoAddcreditFail = (error) => ({
+  type: GET_LCO_ADDCREDIT_FAIL,
   payload: error,
 });

@@ -12,6 +12,7 @@ import {
   ADD_NEW_LCO,
   UPDATE_LCO,
   GET_LCO_PAYMENTMODE,
+  GET_LCO_ADDCREDIT,
 } from "./actionTypes";
 
 import {
@@ -38,6 +39,8 @@ import {
   updateLcoFail,
   getLcoPaymentmodeSuccess,
   getLcoPaymentmodeFail,
+  getLcoAddcreditSuccess,
+  getLcoAddcreditFail,
 } from "./actions";
 
 //Include Both Helper File with needed methods
@@ -53,6 +56,7 @@ import {
   updateLco,
   getSingleLco,
   getLcoPaymentmode,
+  getLcoAddcredit,
 } from "../../helpers/backend_helper";
 
 const convertLcoListObject = (LcoList) => {
@@ -205,6 +209,25 @@ function* fetchLcoPaymentmode() {
   }
 }
 
+function* fetchLcoAddcredit() {
+  try {
+    let lcoStore = yield select(getLcoStore);
+
+    const pageSize = lcoStore.pageSize;
+    const currentPage = lcoStore.currentPage;
+    console.log("currentPage in saga -", pageSize);
+    console.log("pageSize in saga -", currentPage);
+
+    const response = yield call(getLcoAddcredit, currentPage, pageSize);
+    console.log("Response from API -", response);
+    // debugger;
+    yield put(getLcoAddcreditSuccess(response));
+  } catch (error) {
+    console.error("Error fetching lco list:", error);
+    yield put(getLcoAddcreditFail(error));
+  }
+}
+
 function* lcoSaga() {
   yield takeEvery(GET_LCO, fetchLco);
   yield takeEvery(GET_LCO_BILLEDBY, fetchLcoBilledby);
@@ -217,6 +240,7 @@ function* lcoSaga() {
   yield takeEvery(UPDATE_LCO, onUpdateLco);
   yield takeEvery(GET_SINGLE_LCO, onGetSingleLco);
   yield takeEvery(GET_LCO_PAYMENTMODE, fetchLcoPaymentmode);
+  yield takeEvery(GET_LCO_ADDCREDIT, fetchLcoAddcredit);
 }
 
 export default lcoSaga;
