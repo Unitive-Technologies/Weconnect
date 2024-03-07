@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
@@ -25,13 +25,63 @@ import PreviewTable from "./PreviewTable";
 import AdditionalMRP from "./AdditionalMRP";
 import AddBrands from "./AddBrands";
 import ShowHistoryModal from "./ShowHistoryModal";
+import AdditionalMrpTable from "./AdditionalMrpTable";
 
 const ViewBouquet = (props) => {
-  const { isOpen, toggle, bouquet } = props;
+  const {
+    isOpen,
+    toggle,
+    bouquet,
+    bouquetboxtype,
+    bouquetstatus,
+    // bouquetpackages,
+    bouquettaxlist,
+    bouquettype,
+    bouquex,
+    rechargeperiod,
+  } = props;
   const dispatch = useDispatch();
   const [showHistory, setShowHistory] = useState(false);
   const [showEditBouquet, setShowEditBouquet] = useState(false);
+  const [toggleSwitch, settoggleSwitch] = useState(true);
+  const [toggleNcfSwitch, setToggleNcfSwitch] = useState(true);
+  const [selectedType, setSelectedType] = useState("");
+  const [selectedIsHD, setSelectedIsHD] = useState("");
+  const [alacarteData, setAlacarteData] = useState([]);
+  const [packagesData, setPackagesData] = useState([]);
+  const [stbbrands, setStbbrands] = useState([]);
+  const [ftaCountAlacar, setFtaCountAlacar] = useState(0);
+  const [paychannelCountAlacar, setPaychannelCountAlacar] = useState(0);
+  const [ncfCountAlacar, setNcfCountAlacar] = useState(0);
+  const [totalChannelAlacar, setTotalChannelAlacar] = useState(0);
+  const [totalRateAlacar, setTotalRateAlacar] = useState(0);
+  const [ftaCountPackage, setFtaCountPackage] = useState(0);
+  const [paychannelCountPackage, setPaychannelCountPackage] = useState(0);
+  const [ncfCountPackage, setNcfCountPackage] = useState(0);
+  const [totalChannelPackage, setTotalChannelPackage] = useState(0);
+  const [totalRatePackage, setTotalRatePackage] = useState(0);
+  const [mrp, setMrp] = useState(0);
+  const [drp, setDrp] = useState(0);
 
+  const [lcoDiscount, setLcoDiscount] = useState(20);
+  const [lcoRate, setLcoRate] = useState(0);
+  const [additionalName, setAdditionalName] = useState("");
+  const [additionalLcoDiscount, setAdditionalLcoDiscount] = useState("");
+  const [additionalLcoRate, setAdditionalLcoRate] = useState("");
+  const [additionalRates, setAdditionalRates] = useState([]);
+  const [rate, setRate] = useState([]);
+
+  const handleIsHDChange = async (e) => {
+    const selectValue = e.target.value;
+    validation.handleChange(e);
+    setSelectedIsHD(selectValue);
+  };
+
+  const handleTypeChange = async (e) => {
+    const selectValue = e.target.value;
+    validation.handleChange(e);
+    setSelectedType(selectValue);
+  };
   const toggleHistoryModal = () => {
     setShowHistory(!showHistory);
   };
@@ -106,6 +156,25 @@ const ViewBouquet = (props) => {
     },
   });
 
+  useEffect(() => {
+    if (totalRateAlacar || totalRatePackage) {
+      const mrpTotal = totalRateAlacar + totalRatePackage;
+      setMrp(mrpTotal);
+      setDrp(mrpTotal);
+    }
+  }, [totalRateAlacar, totalRatePackage]);
+
+  useEffect(() => {
+    const totalLcoRate = (drp * lcoDiscount) / 100;
+
+    setLcoRate(drp - totalLcoRate);
+  }, [drp, lcoDiscount]);
+
+  useEffect(() => {
+    const totalAdditionalLcoRate = (drp * additionalLcoDiscount) / 100;
+
+    setAdditionalLcoRate(drp - totalAdditionalLcoRate);
+  }, [drp, additionalLcoDiscount]);
   return (
     <>
       {showHistory && (
@@ -177,13 +246,43 @@ const ViewBouquet = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.code || ""}
-                    disabled={!showEditBouquet}
+                    disabled={toggleSwitch}
                   ></Input>
                   {validation.touched.code && validation.errors.code ? (
                     <FormFeedback type="invalid">
                       {validation.errors.code}
                     </FormFeedback>
                   ) : null}
+                </div>
+              </Col>
+
+              <Col lg={2}>
+                <label></label>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-around",
+                    alignItems: "center",
+                  }}
+                >
+                  <label>Custom</label>
+                  <div className="form-check form-switch form-switch-lg mb-2">
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id="customSwitchsizelg"
+                      defaultChecked
+                      onClick={(e) => {
+                        settoggleSwitch(!toggleSwitch);
+                      }}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="customSwitchsizelg"
+                    >
+                      Auto
+                    </label>
+                  </div>
                 </div>
               </Col>
             </Row>
@@ -215,23 +314,28 @@ const ViewBouquet = (props) => {
                     Box Type<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="boxtype_lbl"
+                    name="isHD"
                     type="select"
-                    placeholder="Select boxtype_lbl"
+                    placeholder="Select BoxType"
                     className="form-select"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.boxtype_lbl || ""}
+                    // onChange={validation.handleChange}
+                    // onBlur={validation.handleBlur}
+                    // value={validation.values.isHD || ""}
+                    onChange={handleIsHDChange}
+                    value={selectedIsHD}
                     disabled={!showEditBouquet}
                   >
-                    <option value="">Select box type</option>
-                    <option value="SD">Standard Definition(SD)</option>
-                    <option value="HD">High Definition(HD)</option>
+                    <option value="">Select Box type</option>
+                    {bouquetboxtype &&
+                      bouquetboxtype.map((options) => (
+                        <option key={options.id} value={options.id}>
+                          {options.name}
+                        </option>
+                      ))}
                   </Input>
-                  {validation.touched.boxtype_lbl &&
-                  validation.errors.boxtype_lbl ? (
+                  {validation.touched.isHD && validation.errors.isHD ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.boxtype_lbl}
+                      {validation.errors.isHD}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -242,29 +346,34 @@ const ViewBouquet = (props) => {
                     Bouquet Type<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="type_lbl"
+                    name="type"
                     type="select"
-                    placeholder="Select bouquet type"
+                    placeholder="Select Bouquet type"
                     rows="3"
                     className="form-select"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.type_lbl || ""}
+                    disabled={!showEditBouquet}
+                    // onChange={validation.handleChange}
+                    // onBlur={validation.handleBlur}
+                    // value={validation.values.type || ""}
                     invalid={
-                      validation.touched.type_lbl && validation.errors.type_lbl
+                      validation.touched.type && validation.errors.type
                         ? true
                         : false
                     }
-                    disabled={!showEditBouquet}
+                    onChange={handleTypeChange}
+                    value={selectedType}
                   >
                     <option value="">Select bouquet type</option>
-                    <option value="Base">Base</option>
-                    <option value="Addon">Addon</option>
-                    <option value="Alacarte">Alacarte</option>
+                    {bouquettype &&
+                      bouquettype.map((options) => (
+                        <option key={options.id} value={options.id}>
+                          {options.name}
+                        </option>
+                      ))}
                   </Input>
-                  {validation.touched.type_lbl && validation.errors.type_lbl ? (
+                  {validation.touched.type && validation.errors.type ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.type_lbl}
+                      {validation.errors.type}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -277,9 +386,10 @@ const ViewBouquet = (props) => {
                   <Input
                     name="status"
                     type="select"
-                    placeholder="select status"
+                    placeholder="Select Status"
                     rows="3"
                     className="form-select"
+                    disabled={!showEditBouquet}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.status || ""}
@@ -288,11 +398,14 @@ const ViewBouquet = (props) => {
                         ? true
                         : false
                     }
-                    disabled={!showEditBouquet}
                   >
                     <option value="">Select status</option>
-                    <option value="Active">Active</option>
-                    <option value="In-active">In-active</option>
+                    {bouquetstatus &&
+                      bouquetstatus.map((options) => (
+                        <option key={options.id} value={options.id}>
+                          {options.name}
+                        </option>
+                      ))}
                   </Input>
                   {validation.touched.status && validation.errors.status ? (
                     <FormFeedback type="invalid">
@@ -313,6 +426,7 @@ const ViewBouquet = (props) => {
                     type="textarea"
                     placeholder="Enter description"
                     rows="3"
+                    disabled={!showEditBouquet}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.description || ""}
@@ -322,7 +436,6 @@ const ViewBouquet = (props) => {
                         ? true
                         : false
                     }
-                    disabled={!showEditBouquet}
                   />
                   {validation.touched.description &&
                   validation.errors.description ? (
@@ -339,25 +452,25 @@ const ViewBouquet = (props) => {
                     <i className="mdi mdi-information"></i>
                   </Label>
                   <Input
-                    name="is_exclusive_lbl"
+                    name="is_exclusive"
                     type="select"
-                    placeholder="Select Status"
+                    placeholder="Select Is Exclusive"
                     className="form-select"
+                    disabled={!showEditBouquet}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.is_exclusive_lbl || ""}
-                    disabled={!showEditBouquet}
+                    value={validation.values.is_exclusive || ""}
                   >
-                    <option value="Not Exclusive">Not Exclusive</option>
-                    <option value="Only MSO user can Assign and Renew">
-                      Only MSO user can Assign and Renew
-                    </option>
-                    <option value="LCO can Renew">LCO can Renew </option>
+                    {bouquex.map((options) => (
+                      <option key={options.id} value={options.id}>
+                        {options.name}
+                      </option>
+                    ))}
                   </Input>
-                  {validation.touched.is_exclusive_lbl &&
-                  validation.errors.is_exclusive_lbl ? (
+                  {validation.touched.is_exclusive &&
+                  validation.errors.is_exclusive ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.is_exclusive_lbl}
+                      {validation.errors.is_exclusive}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -371,15 +484,15 @@ const ViewBouquet = (props) => {
                   <Input
                     name="is_promotional"
                     type="select"
-                    placeholder="Select Status"
+                    placeholder="Select Is Promotional"
                     className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.is_promotional || ""}
-                    disabled
+                    disabled={!showEditBouquet}
                   >
-                    <option value="1">No</option>
-                    <option value="0">Yes</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
                   </Input>
                   {validation.touched.is_promotional &&
                   validation.errors.is_promotional ? (
@@ -408,6 +521,9 @@ const ViewBouquet = (props) => {
                         className="form-check-input"
                         id="customSwitchsizelg"
                         defaultChecked
+                        onClick={(e) => {
+                          setToggleNcfSwitch(!toggleNcfSwitch);
+                        }}
                       />
                       <label
                         className="form-check-label"
@@ -441,7 +557,7 @@ const ViewBouquet = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.max_ncf_channels || ""}
-                    disabled={!showEditBouquet}
+                    disabled={!toggleNcfSwitch || !showEditBouquet}
                   />
                   {validation.touched.max_ncf_channels &&
                   validation.errors.max_ncf_channels ? (
@@ -457,22 +573,22 @@ const ViewBouquet = (props) => {
                     Show On Portal<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="showon_portal"
+                    name="is_online_app"
                     type="select"
-                    placeholder="Select Status"
+                    placeholder="Select Show On Portal"
                     className="form-select"
+                    disabled={!showEditBouquet}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.showon_portal || ""}
-                    disabled={!showEditBouquet}
+                    value={validation.values.is_online_app || ""}
                   >
-                    <option value="No">No</option>
-                    <option value="Yes">Yes</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
                   </Input>
-                  {validation.touched.showon_portal &&
-                  validation.errors.showon_portal ? (
+                  {validation.touched.is_online_app &&
+                  validation.errors.is_online_app ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.showon_portal}
+                      {validation.errors.is_online_app}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -483,24 +599,21 @@ const ViewBouquet = (props) => {
                     Bouquet Category<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="category_lbl"
+                    name="sort_by"
                     type="select"
                     placeholder="Select Status"
                     className="form-select"
+                    disabled={!showEditBouquet}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.category_lbl || ""}
-                    disabled={!showEditBouquet}
+                    value={validation.values.sort_by || ""}
                   >
-                    <option value="MSO Bouquet">MSO Bouquet</option>
-                    <option value="Broadcaster Bouquet">
-                      Broadcaster Bouquet
-                    </option>
+                    <option value="1">MSO Bouquet</option>
+                    <option value="2">Broadcaster Bouquet</option>
                   </Input>
-                  {validation.touched.category_lbl &&
-                  validation.errors.category_lbl ? (
+                  {validation.touched.sort_by && validation.errors.sort_by ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.category_lbl}
+                      {validation.errors.sort_by}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -512,22 +625,21 @@ const ViewBouquet = (props) => {
                     <span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="showon_portal"
+                    name="is_loner"
                     type="select"
-                    placeholder="Select Status"
+                    placeholder="Select Stop Other"
                     className="form-select"
+                    disabled={!showEditBouquet}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.showon_portal || ""}
-                    disabled={!showEditBouquet}
+                    value={validation.values.is_loner || ""}
                   >
-                    <option value="No">No</option>
-                    <option value="Yes">Yes</option>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
                   </Input>
-                  {validation.touched.showon_portal &&
-                  validation.errors.showon_portal ? (
+                  {validation.touched.is_loner && validation.errors.is_loner ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.showon_portal}
+                      {validation.errors.is_loner}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -536,18 +648,16 @@ const ViewBouquet = (props) => {
             <Row>
               <Col sm="3">
                 <div className="mb-3">
-                  <Label className="form-label">
-                    Select EPBX<span style={{ color: "red" }}>*</span>
-                  </Label>
+                  <Label className="form-label">Select EPBX</Label>
                   <Input
                     name="epbx"
                     type="select"
                     placeholder="Select Status"
                     className="form-select"
+                    disabled={!showEditBouquet}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.epbx || ""}
-                    disabled={!showEditBouquet}
                   >
                     <option value="">Select epbx</option>
                   </Input>
@@ -592,8 +702,30 @@ const ViewBouquet = (props) => {
                 }}
               >
                 <Col sm="12" style={{ width: "500px" }}>
-                  <AddAlacarte />
-                  <Count />
+                  <AddAlacarte
+                    showEditBouquet={showEditBouquet}
+                    alacarteData={alacarteData}
+                    setAlacarteData={setAlacarteData}
+                    selectedType={selectedType}
+                    selectedIsHD={selectedIsHD}
+                    ftaCount={ftaCountAlacar}
+                    paychannelCount={paychannelCountAlacar}
+                    ncfCount={ncfCountAlacar}
+                    totalChannel={totalChannelAlacar}
+                    totalRate={totalRateAlacar}
+                    setFtaCount={setFtaCountAlacar}
+                    setPaychannelCount={setPaychannelCountAlacar}
+                    setNcfCount={setNcfCountAlacar}
+                    setTotalChannel={setTotalChannelAlacar}
+                    setTotalRate={setTotalRateAlacar}
+                  />
+                  <Count
+                    ftaCount={ftaCountAlacar}
+                    paychannelCount={paychannelCountAlacar}
+                    ncfCount={ncfCountAlacar}
+                    totalChannel={totalChannelAlacar}
+                    totalRate={totalRateAlacar}
+                  />
                 </Col>
               </Row>
               <div
@@ -621,8 +753,30 @@ const ViewBouquet = (props) => {
                 }}
               >
                 <Col sm="8" style={{ width: "500px" }}>
-                  <AddPackages />
-                  <Count />
+                  <AddPackages
+                    showEditBouquet={showEditBouquet}
+                    packagesData={packagesData}
+                    selectedType={selectedType}
+                    selectedIsHD={selectedIsHD}
+                    setPackagesData={setPackagesData}
+                    ftaCount={ftaCountPackage}
+                    paychannelCount={paychannelCountPackage}
+                    ncfCount={ncfCountPackage}
+                    totalChannel={totalChannelPackage}
+                    totalRate={totalRatePackage}
+                    setFtaCount={setFtaCountPackage}
+                    setPaychannelCount={setPaychannelCountPackage}
+                    setNcfCount={setNcfCountPackage}
+                    setTotalChannel={setTotalChannelPackage}
+                    setTotalRate={setTotalRatePackage}
+                  />
+                  <Count
+                    ftaCount={ftaCountPackage}
+                    paychannelCount={paychannelCountPackage}
+                    ncfCount={ncfCountPackage}
+                    totalChannel={totalChannelPackage}
+                    totalRate={totalRatePackage}
+                  />
                 </Col>
               </Row>
             </div>
@@ -668,33 +822,65 @@ const ViewBouquet = (props) => {
                     paddingRight: "20px",
                   }}
                 >
-                  <div>Total FTA Count: 0 | Total Pay Channel Count: 0</div>
-                  <div>Total NCF Channels: 0 | Total Channels: 0</div>
+                  <div>
+                    Total FTA Count: {ftaCountAlacar + ftaCountPackage} | Total
+                    Pay Channel Count:
+                    {paychannelCountAlacar + paychannelCountPackage}
+                  </div>
+                  <div>
+                    Total NCF Channels: {ncfCountAlacar + ncfCountPackage} |
+                    Total Channels: {totalChannelAlacar + totalChannelPackage}
+                  </div>
                 </div>
                 <div>
-                  <div style={{ marginLeft: "20px" }}>Overall Total: 0**</div>
+                  <div style={{ marginLeft: "20px" }}>
+                    Overall Total:{" "}
+                    {parseFloat(totalRateAlacar + totalRatePackage).toFixed(2)}
+                  </div>
                 </div>
               </div>
               <Row>
                 <Col sm="3">
                   <Label>MRP**</Label>
-                  <Input disabled defaultValue={0} />
+                  <Input
+                    disabled
+                    defaultValue={0}
+                    value={parseFloat(mrp).toFixed(2)}
+                  />
                 </Col>
                 <Col sm="3">
                   <Label>DRP**</Label>
-                  <Input type="number" defaultValue={0} />
+                  <Input
+                    type="number"
+                    defaultValue={0}
+                    value={parseFloat(drp).toFixed(2)}
+                  />
                 </Col>
                 <Col sm="3">
                   <Label>LCO Discount(%)</Label>
-                  <Input type="number" defaultValue="20" />
+                  <Input
+                    type="number"
+                    defaultValue="20"
+                    value={lcoDiscount}
+                    onChange={(e) => setLcoDiscount(e.target.value)}
+                  />
                 </Col>
                 <Col sm="3">
                   <Label>LCO Rate**</Label>
-                  <Input type="number" defaultValue={0} />
+                  <Input
+                    type="number"
+                    defaultValue={0}
+                    value={parseFloat(lcoRate).toFixed(2)}
+                  />
                 </Col>
               </Row>
               <Row>
-                <PreviewTable />
+                <PreviewTable
+                  rechargeperiod={rechargeperiod}
+                  lcoRate={lcoRate}
+                  rate={rate}
+                  setRate={setRate}
+                />
               </Row>
             </Row>
             <div
@@ -723,47 +909,24 @@ const ViewBouquet = (props) => {
               }}
             >
               <Row>
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <Label style={{ marginRight: "10px" }}>
-                      Additional Name:{" "}
-                    </Label>
-                    <Input
-                      placeholder="Enter additional name"
-                      type="text"
-                      style={{ width: "210px" }}
-                    />
-                  </div>
-                  <div>
-                    <Button>+ Add Pricing</Button>
-                  </div>
-                </div>
+                <AdditionalMrpTable
+                  rechargeperiod={rechargeperiod}
+                  additionalLcoDiscount={additionalLcoDiscount}
+                  additionalLcoRate={additionalLcoRate}
+                  additionalRates={additionalRates}
+                  setAdditionalRates={setAdditionalRates}
+                  setAdditionalName={setAdditionalName}
+                  setAdditionalLcoDiscount={setAdditionalLcoDiscount}
+                  setAdditionalLcoRate={setAdditionalLcoRate}
+                  mrp={mrp}
+                  drp={drp}
+                />
               </Row>
               <Row>
-                <Col sm="3">
-                  <Label>MRP**</Label>
-                  <Input disabled defaultValue={0} />
-                </Col>
-                <Col sm="3">
-                  <Label>DRP**</Label>
-                  <Input type="number" defaultValue={0} />
-                </Col>
-                <Col sm="3">
-                  <Label>LCO Discount(%)</Label>
-                  <Input type="number" defaultValue="20" />
-                </Col>
-                <Col sm="3">
-                  <Label>LCO Rate**</Label>
-                  <Input type="number" defaultValue={0} />
-                </Col>
-              </Row>
-              <Row>
-                <PreviewTable />
-              </Row>
-              <Row>
-                <AdditionalMRP />
+                <AdditionalMRP
+                  additionalRates={additionalRates}
+                  rechargeperiod={rechargeperiod}
+                />
               </Row>
             </Row>
             <div>**Applicable NCF and Taxes Additional</div>
@@ -792,39 +955,46 @@ const ViewBouquet = (props) => {
                 margin: "30px 0px",
               }}
             >
-              <AddBrands />
+              <AddBrands
+                showEditBouquet={showEditBouquet}
+                stbbrands={stbbrands}
+                setStbbrands={setStbbrands}
+                selectedType={selectedType}
+              />
               <p>
                 *If no brand selected, this bouquet will be available for all
                 STB brands
               </p>
             </Row>
-            <Row>
-              <Col>
-                <ModalFooter>
-                  <button type="submit" className="btn btn-success save-user">
-                    Save
-                  </button>
-                  <button
-                    type="reset"
-                    className="btn btn-warning"
-                    onClick={() => validation.resetForm()}
-                  >
-                    Reset
-                  </button>
+            {showEditBouquet && (
+              <Row>
+                <Col>
+                  <ModalFooter>
+                    <button type="submit" className="btn btn-success save-user">
+                      Save
+                    </button>
+                    <button
+                      type="reset"
+                      className="btn btn-warning"
+                      onClick={() => validation.resetForm()}
+                    >
+                      Reset
+                    </button>
 
-                  <button
-                    type="button"
-                    className="btn btn-outline-danger"
-                    onClick={() => {
-                      validation.resetForm();
-                      handleCancel();
-                    }}
-                  >
-                    Cancel
-                  </button>
-                </ModalFooter>
-              </Col>
-            </Row>
+                    <button
+                      type="button"
+                      className="btn btn-outline-danger"
+                      onClick={() => {
+                        validation.resetForm();
+                        toggleCreateBouquet();
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </ModalFooter>
+                </Col>
+              </Row>
+            )}
           </Form>
         </ModalBody>
       </Modal>

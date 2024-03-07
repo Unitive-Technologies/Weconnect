@@ -17,6 +17,7 @@ import AddPackagesTableList from "./AddPackagesTableList";
 import Count from "./Count";
 
 const AddPackages = ({
+  showEditBouquet,
   packagesData,
   setPackagesData,
   selectedType,
@@ -164,7 +165,7 @@ const AddPackages = ({
                   }
                   type="button"
                   className="btn btn-primary"
-                  disabled={parseInt(selectedType) === 3}
+                  disabled={parseInt(selectedType) === 3 || !showEditBouquet}
                 >
                   Add Package
                 </button>

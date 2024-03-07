@@ -17,6 +17,7 @@ import AddAlacarteTableList from "./AddAlacarteTableList";
 import Count from "./Count";
 
 const AddAlacarte = ({
+  showEditBouquet,
   alacarteData,
   setAlacarteData,
   selectedType,
@@ -139,6 +140,7 @@ const AddAlacarte = ({
                 {console.log("selectedIsHD: " + selectedIsHD)}
                 {console.log("selectedType: " + selectedType)}
                 <button
+                  disabled={!showEditBouquet}
                   onClick={
                     !selectedType
                       ? handleAddAlacarteWarning

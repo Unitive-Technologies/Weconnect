@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 import AddBrandsTableList from "./AddBrandsTableList";
 
 const AddBrands = (props) => {
-  const { stbbrands, setStbbrands, selectedType } = props;
+  const { stbbrands, setStbbrands, selectedType, showEditBouquet } = props;
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [showBrandsModal, setShowBrandsModal] = useState(false);
   const columns = useMemo(
@@ -236,6 +236,7 @@ const AddBrands = (props) => {
                   }
                   type="button"
                   className="btn btn-primary"
+                  disabled={!showEditBouquet}
                 >
                   Add Brands
                 </button>
