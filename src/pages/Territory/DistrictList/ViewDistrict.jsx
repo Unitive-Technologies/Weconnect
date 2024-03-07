@@ -139,7 +139,7 @@ const ViewDistrict = (props) => {
             <Row>
               <Col lg={6}>
                 <div className="mb-3">
-                  <Label className="form-label">District Name</Label>
+                  <Label className="form-label">District Name<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="name"
                     type="text"
@@ -163,7 +163,7 @@ const ViewDistrict = (props) => {
               </Col>
               <Col lg={6}>
                 <div className="mb-3">
-                  <Label className="form-label">Select State</Label>
+                  <Label className="form-label">Select State<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="state_id"
                     type="select"
@@ -189,7 +189,7 @@ const ViewDistrict = (props) => {
               </Col>
               <Col lg={6}>
                 <div className="mb-3">
-                  <Label className="form-label">Description</Label>
+                  <Label className="form-label">Description<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="description"
                     type="textarea"
@@ -216,7 +216,7 @@ const ViewDistrict = (props) => {
               </Col>
               <Col lg={6}>
                 <div className="mb-3">
-                  <Label className="form-label">Status</Label>
+                  <Label className="form-label">Status<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="status"
                     type="select"
