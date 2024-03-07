@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import {
   Col,
   Row,
@@ -13,6 +14,9 @@ import {
   Form,
   ModalFooter,
   Button,
+  Card,
+  CardBody,
+  Table,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -39,8 +43,11 @@ const ViewBouquet = (props) => {
     bouquettype,
     bouquex,
     rechargeperiod,
+    selectedRowId,
   } = props;
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const dispatch = useDispatch();
+  const [selectedRowDetails, setSelectedRowDetails] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
   const [showEditBouquet, setShowEditBouquet] = useState(false);
   const [toggleSwitch, settoggleSwitch] = useState(true);
@@ -99,19 +106,49 @@ const ViewBouquet = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      code: (bouquet && bouquet.code) || "",
-      name: (bouquet && bouquet.name) || "",
-      type_lbl: (bouquet && bouquet.type_lbl) || "",
-      boxtype_lbl: (bouquet && bouquet.boxtype_lbl) || "",
-      type: (bouquet && bouquet.type) || "",
-      status: (bouquet && bouquet.status) || "",
-      description: (bouquet && bouquet.description) || "",
-      is_promotional: (bouquet && bouquet.is_promotional) || "",
-      ifFixNCF: (bouquet && bouquet.ifFixNCF) || "",
-      max_ncf_channels: (bouquet && bouquet.max_ncf_channels) || "",
-      showon_portal: (bouquet && bouquet.showon_portal) || "",
-      category_lbl: (bouquet && bouquet.category_lbl) || "",
-      created_by: (bouquet && bouquet.created_by) || "Admin",
+      code: (selectedRowDetails && selectedRowDetails.code) || "",
+      name: (selectedRowDetails && selectedRowDetails.name) || "",
+      type_lbl: (selectedRowDetails && selectedRowDetails.type_lbl) || "",
+      boxtype_lbl: (selectedRowDetails && selectedRowDetails.boxtype_lbl) || "",
+      type: (selectedRowDetails && selectedRowDetails.type) || "",
+      status: (selectedRowDetails && selectedRowDetails.status) || "",
+      description: (selectedRowDetails && selectedRowDetails.description) || "",
+      is_promotional:
+        (selectedRowDetails && selectedRowDetails.is_promotional) || "",
+      ifFixNCF: (selectedRowDetails && selectedRowDetails.ifFixNCF) || "",
+      max_ncf_channels:
+        (selectedRowDetails && selectedRowDetails.max_ncf_channels) || "",
+      showon_portal:
+        (selectedRowDetails && selectedRowDetails.showon_portal) || "",
+      category_lbl:
+        (selectedRowDetails && selectedRowDetails.category_lbl) || "",
+      alacarteData: (selectedRowDetails && selectedRowDetails.alacarte) || [],
+      packagesData: (selectedRowDetails && selectedRowDetails.package) || [],
+      stbbrands: (selectedRowDetails && selectedRowDetails.stbbrands) || [],
+      isHD: (selectedRowDetails && selectedRowDetails.isHD) || "",
+      is_exclusive:
+        (selectedRowDetails && selectedRowDetails.is_exclusive) || "",
+      is_online_app:
+        (selectedRowDetails && selectedRowDetails.is_online_app) || "",
+      sort_by: (selectedRowDetails && selectedRowDetails.sort_by) || "",
+
+      mrp: (selectedRowDetails && selectedRowDetails.mrp) || "",
+      mrp_data: {
+        pcc: (selectedRowDetails && selectedRowDetails.mrp) || "",
+        drp: (selectedRowDetails && selectedRowDetails.drp) || "",
+        lcoDiscount: (selectedRowDetails && selectedRowDetails.dis_pcc) || "",
+        lcoRate: (selectedRowDetails && selectedRowDetails.lmo_pcc) || "",
+        is_promotional:
+          (selectedRowDetails && selectedRowDetails.is_promotional) || "",
+        max_ncf_channels:
+          (selectedRowDetails && selectedRowDetails.max_ncf_channels) || "",
+        is_loner: (selectedRowDetails && selectedRowDetails.is_loner) || "",
+      },
+
+      rate: (selectedRowDetails && selectedRowDetails.rate) || [],
+
+      additionalRates:
+        (selectedRowDetails && selectedRowDetails.additional_rates) || [],
     },
     validationSchema: Yup.object({
       code: Yup.string().required("Enter Channel Code"),
@@ -175,6 +212,31 @@ const ViewBouquet = (props) => {
 
     setAdditionalLcoRate(drp - totalAdditionalLcoRate);
   }, [drp, additionalLcoDiscount]);
+
+  const getSingleRowDetails = async (e) => {
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/bouque/${selectedRowId}?expand=status_lbl,type_lbl,boxtype_lbl,stbbrands,package,alacarte,rate,additional_rates&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setSelectedRowDetails(response.data.data);
+      console.log("response in useEffect:" + JSON.stringify(response));
+    } catch (error) {
+      console.error("Error fetching history data:", error);
+    }
+  };
+  useEffect(() => {
+    if (selectedRowId) {
+      getSingleRowDetails();
+    }
+  }, [selectedRowId]);
+  console.log("selectedRowDetails: " + JSON.stringify(selectedRowDetails));
   return (
     <>
       {showHistory && (
@@ -947,25 +1009,78 @@ const ViewBouquet = (props) => {
                 <span style={{ color: "red" }}>*</span>
               </p>
             </div>
-            <Row
-              style={{
-                position: "relative",
-                border: "1px solid #ced4da",
-                padding: "20px 0px",
-                margin: "30px 0px",
-              }}
-            >
-              <AddBrands
-                showEditBouquet={showEditBouquet}
-                stbbrands={stbbrands}
-                setStbbrands={setStbbrands}
-                selectedType={selectedType}
-              />
-              <p>
-                *If no brand selected, this bouquet will be available for all
-                STB brands
-              </p>
-            </Row>
+            {!showEditBouquet ? (
+              <Row
+                style={{
+                  position: "relative",
+                  border: "1px solid #ced4da",
+                  padding: "20px 0px",
+                  margin: "30px 0px",
+                }}
+              >
+                <Card>
+                  <CardBody>
+                    <div className="table-responsive">
+                      <Table className="table mb-0">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Brand Name</th>
+                            <th>Box Type</th>
+                            <th>CAS</th>
+                            <th>Brand Type</th>
+                            <th>$</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {validation.values.stbbrands &&
+                            validation.values.stbbrands.map((item, index) => (
+                              <tr key={index} className="disabled-row">
+                                <th scope="row">{index + 1}</th>
+                                <td>{item.name}</td>
+                                <td>{item.box_type_lbl}</td>
+                                <td>{item.cas_lbl}</td>
+                                <td>{item.type_lbl}</td>
+                                <td>
+                                  <Link
+                                    className="text-dark disabled"
+                                    // onClick={() => deleteMultipleNcf(index)}
+                                  >
+                                    <i
+                                      className="mdi mdi-delete font-size-18"
+                                      id="deletetooltip"
+                                    />
+                                  </Link>
+                                </td>
+                              </tr>
+                            ))}
+                        </tbody>
+                      </Table>
+                    </div>
+                  </CardBody>
+                </Card>
+              </Row>
+            ) : (
+              <Row
+                style={{
+                  position: "relative",
+                  border: "1px solid #ced4da",
+                  padding: "20px 0px",
+                  margin: "30px 0px",
+                }}
+              >
+                <AddBrands
+                  showEditBouquet={showEditBouquet}
+                  stbbrands={stbbrands}
+                  setStbbrands={setStbbrands}
+                  selectedType={selectedType}
+                />
+                <p>
+                  *If no brand selected, this bouquet will be available for all
+                  STB brands
+                </p>
+              </Row>
+            )}
             {showEditBouquet && (
               <Row>
                 <Col>
