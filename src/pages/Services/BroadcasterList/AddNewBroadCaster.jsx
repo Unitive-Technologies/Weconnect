@@ -51,7 +51,6 @@ const AddNewBroadCaster = (props) => {
       addr: Yup.string().required("Select address"),
       contact_person: Yup.string().required("Select contact person"),
       mobile_no: Yup.string().required("Select mobile no"),
-      phone_no: Yup.string().required("Select phone number"),
       email: Yup.string().required("Select email"),
       status: Yup.string().required("Select status"),
       description: Yup.string().required("Select description"),

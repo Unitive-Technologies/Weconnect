@@ -63,7 +63,6 @@ const ViewBroadcasterModal = (props) => {
       fullname: Yup.string().required("Please Enter Full Name"),
       contact_person: Yup.string().required("Please Enter Contact Person"),
       mobile_no: Yup.string().required("Please Enter mobile Number"),
-      phone_no: Yup.string().required("Please Enter Phone"),
       email: Yup.string()
         .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
         .required("Please Enter Your Email"),
