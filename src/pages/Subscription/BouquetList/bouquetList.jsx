@@ -75,10 +75,8 @@ const BouquetList = () => {
     pageSize,
     currentPage,
   } = useSelector(BouquetProperties);
+  console.log("Bouquet list data in component:", JSON.stringify(bouquets));
 
-  useEffect(() => {
-    // console.log("Bouquet list data in component:", bouquets)
-  }, [bouquets]);
   const [isLoading, setLoading] = useState(loading);
   const [showCreateBouquet, setShowCreateBouquet] = useState(false);
   const [showBulkAssign, setShowBulkAssign] = useState(false);
@@ -226,6 +224,12 @@ const BouquetList = () => {
             <>
               <h5
                 className="font-size-14 mb-1"
+                style={{
+                  maxWidth: 200,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
                 onClick={() => {
                   const userData = cellProps.row.original;
                   toggleViewBouquet(userData);
@@ -289,7 +293,15 @@ const BouquetList = () => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 150,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.description}
             </p>
           );
@@ -301,10 +313,126 @@ const BouquetList = () => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.status}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.status_lbl}
+            </p>
           );
         },
       },
+      {
+        Header: "Broadcaster MRP",
+        // accessor: "status_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {parseFloat(cellProps.row.original.br_mrp).toFixed(2)}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "MRP/DRP",
+        // accessor: "status_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {parseFloat(cellProps.row.original.mrp).toFixed(2)}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Customer MRP",
+        // accessor: "status_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {parseFloat(
+                parseInt(cellProps.row.original.mrp) +
+                  parseInt(cellProps.row.original.tax)
+              ).toFixed(2)}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "LCO Price",
+        // accessor: "status_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {parseFloat(cellProps.row.original.lco_rate).toFixed(2)}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Is Exclusive",
+        // accessor: "status_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.is_exclusive_lbl}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Is Promotional",
+        // accessor: "status_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.is_promotional_lbl}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "NCF Type",
+        // accessor: "status_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.ifFixNCF === "true"
+                ? "Fix NCF"
+                : "Dynamic NCF"}
+            </p>
+          );
+        },
+      },
+      {
+        Header: "Settings",
+        filterable: true,
+        Cell: (cellProps) => {
+          const settingData = cellProps.row.original.setting;
+          const settingString = Object.keys(settingData)
+            .map((key) => `${key}: ${settingData[key]}`)
+            .join(" ");
+
+          return (
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 200,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {settingString}
+            </p>
+          );
+        },
+      },
+
       {
         Header: "Created At",
         accessor: "created_at",
@@ -324,29 +452,8 @@ const BouquetList = () => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.created_by}
+              {cellProps.row.original.created_by_lbl}
             </p>
-          );
-        },
-      },
-      {
-        Header: "Action",
-        Cell: (cellProps) => {
-          return (
-            <div className="d-flex gap-3">
-              <Link to="#" className="text-success">
-                <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-                <UncontrolledTooltip placement="top" target="edittooltip">
-                  Edit
-                </UncontrolledTooltip>
-              </Link>
-              <Link to="#" className="text-danger">
-                <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-                <UncontrolledTooltip placement="top" target="deletetooltip">
-                  Delete
-                </UncontrolledTooltip>
-              </Link>
-            </div>
           );
         },
       },
