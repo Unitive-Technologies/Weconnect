@@ -176,7 +176,7 @@ const ViewNotificationTemplateModal = (props) => {
             <Row>
               <Col lg={3}>
                 <div className="mb-3">
-                  <Label className="form-label">Name</Label>
+                  <Label className="form-label">Name<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="name"
                     type="text"
@@ -200,7 +200,7 @@ const ViewNotificationTemplateModal = (props) => {
               </Col>
               <Col lg={3}>
                 <div className="mb-3">
-                  <Label className="form-label">Type</Label>
+                  <Label className="form-label">Type<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="type"
                     type="select"
@@ -227,7 +227,7 @@ const ViewNotificationTemplateModal = (props) => {
 
               <Col lg={3}>
                 <div className="mb-3">
-                  <Label className="form-label">Status</Label>
+                  <Label className="form-label">Status<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="status"
                     type="select"
@@ -255,7 +255,7 @@ const ViewNotificationTemplateModal = (props) => {
             <Row>
               <Col lg={3}>
                 <div className="mb-3">
-                  <Label className="form-label">Font Size</Label>
+                  <Label className="form-label">Font Size<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="fontsize"
                     type="select"
@@ -281,7 +281,7 @@ const ViewNotificationTemplateModal = (props) => {
               </Col>
               <Col lg={3}>
                 <div className="mb-3">
-                  <Label className="form-label">Font Color</Label>
+                  <Label className="form-label">Font Color<span style={{ color: "red" }}>*</span></Label>
                   <div>
                     <Input
                       name="fontcolor"
@@ -319,7 +319,7 @@ const ViewNotificationTemplateModal = (props) => {
 
               <Col lg={3}>
                 <div className="mb-3">
-                  <Label className="form-label">Font Background Color</Label>
+                  <Label className="form-label">Font Background Color<span style={{ color: "red" }}>*</span></Label>
                   <div>
                     <Input
                       name="fontbgcolor"
@@ -356,7 +356,7 @@ const ViewNotificationTemplateModal = (props) => {
               </Col>
               <Col lg={3}>
                 <div className="mb-3">
-                  <Label className="form-label">Font Family</Label>
+                  <Label className="form-label">Font Family<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="fontfamily"
                     type="select"
@@ -385,7 +385,7 @@ const ViewNotificationTemplateModal = (props) => {
             <Row>
               <Col lg={6}>
                 <div className="mb-3">
-                  <Label className="form-label">Content</Label>
+                  <Label className="form-label">Content<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="content"
                     type="textarea"
