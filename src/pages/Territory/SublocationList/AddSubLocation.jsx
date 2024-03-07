@@ -148,7 +148,7 @@ const AddSubLocation = (props) => {
                   styles={customStyles}
                 />
                 {validation.touched.location_id &&
-                validation.errors.location_id ? (
+                  validation.errors.location_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.location_id}
                   </FormFeedback>

@@ -160,7 +160,7 @@ const ViewSubLocation = (props) => {
             <Row>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Sub Location Name</Label>
+                  <Label className="form-label">Sub Location Name<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="name"
                     type="text"
@@ -184,7 +184,7 @@ const ViewSubLocation = (props) => {
               </Col>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Select Location</Label>
+                  <Label className="form-label">Select Location<span style={{ color: "red" }}>*</span></Label>
                   {/* <Select
                   name="location_id"
                   options={options}
@@ -226,7 +226,7 @@ const ViewSubLocation = (props) => {
               </Col>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Status</Label>
+                  <Label className="form-label">Status<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="status"
                     type="select"
