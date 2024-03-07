@@ -268,7 +268,7 @@ const ViewCustomerUserModal = (props) => {
               </Col>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Status</Label>
+                  <Label className="form-label">Status<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="status"
                     type="select"
@@ -359,7 +359,7 @@ const ViewCustomerUserModal = (props) => {
                   <Col lg={4}>
                     <div className="mb-3">
                       <Label className="form-label">
-                        Password<span style={{ color: "red" }}>*</span>
+                        Password
                       </Label>
                       <Input
                         name="password"
@@ -387,7 +387,7 @@ const ViewCustomerUserModal = (props) => {
                   <Col lg={4}>
                     <div className="mb-3">
                       <Label className="form-label">
-                        Confirm-Password<span style={{ color: "red" }}>*</span>
+                        Confirm-Password
                       </Label>
                       <Input
                         name="confirmpassword"
