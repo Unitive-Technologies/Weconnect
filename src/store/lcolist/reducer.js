@@ -36,6 +36,9 @@ import {
   UPDATE_LCO_CURRENT_PAGE,
   GET_LCO_PAYMENTMODE_SUCCESS,
   GET_LCO_PAYMENTMODE_FAIL,
+  GET_LCO_ADDCREDIT,
+  GET_LCO_ADDCREDIT_SUCCESS,
+  GET_LCO_ADDCREDIT_FAIL,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -47,6 +50,7 @@ const INIT_STATE = {
   lcoCustomerPortal: [],
   lcoParentDistributor: [],
   paymentmode: [],
+  lcoaddcredit: [],
   error: {},
   loading: false,
   currentPage: 1,
@@ -238,6 +242,31 @@ const Lco = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+
+    case GET_LCO_ADDCREDIT:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_LCO_ADDCREDIT_SUCCESS:
+      console.log("lco credit data in reducer:", action.payload);
+      return {
+        ...state,
+        lco: action.payload.data.data,
+        currentPage: action.payload.headers[RESPONSE_HEADER_CURRENT_PAGE],
+        perPage: action.payload.headers[RESPONSE_HEADER_PER_PAGE],
+        totalCount: action.payload.headers[RESPONSE_HEADER_TOTAL_COUNT],
+        totalPages: action.payload.headers[RESPONSE_HEADER_PAGE_COUNT],
+        loading: false,
+      };
+
+    case GET_LCO_ADDCREDIT_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        pagination: {},
+        loading: false,
       };
 
     default:

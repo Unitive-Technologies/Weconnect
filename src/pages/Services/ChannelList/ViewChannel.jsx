@@ -117,20 +117,18 @@ const ViewChannel = (props) => {
     initialValues: {
       id: (channel && channel.id) || "",
       code: (channel && channel.code) || "",
-      // logo: (channel && channel.logo) || "",
+      logo: (channel && channel.logo) || "",
       name: (channel && channel.name) || "",
       description: (channel && channel.description) || "",
       definition: (channel && channel.isHD) || "",
-      type: (channel && channel.isFta) || "",
       broadcaster_id: (channel && channel.broadcaster_id) || "",
       genre_id: (channel && channel.genre_id) || "",
       language_id: (channel && channel.language_id) || [],
-      isalacarte: (channel && channel.isalacarte) || "",
+      isAlacarte: (channel && channel.isAlacarte) || "",
       broadcasterRate: (channel && channel.broadcasterRate) || "",
       status: (channel && channel.status) || "",
       casCodes: (channel && channel.casCodes) || [],
       revenue_share: (channel && channel.revenue_share) || {},
-      isHD: (channel && channel.isHD) || "",
       isFta: (channel && channel.isFta) || "",
       isNcf: (channel && channel.isNcf) || "",
     },
@@ -161,14 +159,12 @@ const ViewChannel = (props) => {
         logo: values.logo,
         name: values.name,
         description: values.description,
-        definition: values.definition,
         broadcaster_id: values.broadcaster_id,
         genre_id: values.genre_id,
         language_id: values.language_id,
-        isalacarte: values.isalacarte,
+        isAlacarte: values.isAlacarte,
         broadcasterRate: selectedRate,
         status: values.status,
-        cas: values.cas,
         casCodes: casCodeList.map((single) => {
           return {
             cas_id: single.cas_id,
@@ -184,6 +180,9 @@ const ViewChannel = (props) => {
           mso_discount: discountPercent,
           broadcaster_share: broadPercent,
         },
+        isFta: values.isFta,
+        isHD: parseInt(values["definition"]),
+        isNcf: toggleNcfSwitch === true ? 1 : 0,
       };
       console.log("newChannelList:" + updateChannelList);
       // save new user
@@ -379,7 +378,6 @@ const ViewChannel = (props) => {
                     type="text"
                     placeholder="Enter name"
                     disabled={!showEditChannel}
-                    // className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.name || ""}
@@ -447,14 +445,12 @@ const ViewChannel = (props) => {
                     </FormFeedback>
                   ) : null}
                 </div>
-                {/* </Col>
-            <Col sm="4"> */}
                 <div className="mb-3">
                   <Label className="form-label">
                     Type<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="type"
+                    name="isFta"
                     type="select"
                     placeholder="Select type"
                     className="form-select"
@@ -497,9 +493,9 @@ const ViewChannel = (props) => {
                     value={validation.values.broadcaster_id || ""}
                     disabled={!showEditChannel}
                   >
-                    {channelListBroadcaster.map((broadcaster_id) => (
-                      <option key={broadcaster_id.id} value={broadcaster_id.id}>
-                        {broadcaster_id.name}
+                    {channelListBroadcaster.map((list) => (
+                      <option key={list.id} value={list.id}>
+                        {list.name}
                       </option>
                     ))}
                   </Input>
@@ -526,9 +522,9 @@ const ViewChannel = (props) => {
                     value={validation.values.genre_id || ""}
                     disabled={!showEditChannel}
                   >
-                    {channelListGenre.map((genre_id) => (
-                      <option key={genre_id.id} value={genre_id.id}>
-                        {genre_id.name}
+                    {channelListGenre.map((list) => (
+                      <option key={list.id} value={list.id}>
+                        {list.name}
                       </option>
                     ))}
                   </Input>
@@ -600,22 +596,20 @@ const ViewChannel = (props) => {
                 <div className="mb-3">
                   <Label className="form-label">IsAlacarte</Label>
                   <Input
-                    name="isalacarte"
+                    name="isAlacarte"
                     type="select"
-                    // placeholder="Enter channel code"
-                    // className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.isalacarte || ""}
+                    value={validation.values.isAlacarte || "1"}
                     disabled={!showEditChannel}
                   >
                     <option value="1">Yes</option>
                     <option value="0">No</option>
                   </Input>
-                  {validation.touched.isalacarte &&
-                  validation.errors.isalacarte ? (
+                  {validation.touched.isAlacarte &&
+                  validation.errors.isAlacarte ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.isalacarte}
+                      {validation.errors.isAlacarte}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -633,7 +627,7 @@ const ViewChannel = (props) => {
                     disabled={
                       !showEditChannel ||
                       selectedType === "1" ||
-                      validation.values.isalacarte === "0"
+                      validation.values.isAlacarte === "0"
                     }
                     value={selectedRate}
                     onBlur={validation.handleBlur}
@@ -661,9 +655,9 @@ const ViewChannel = (props) => {
                     value={validation.values.status || ""}
                     disabled={!showEditChannel}
                   >
-                    {channelListStatus.map((status) => (
-                      <option key={status.id} value={status.id}>
-                        {status.name}
+                    {channelListStatus.map((list) => (
+                      <option key={list.id} value={list.id}>
+                        {list.name}
                       </option>
                     ))}
                   </Input>

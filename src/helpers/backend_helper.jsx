@@ -994,6 +994,9 @@ export const getLcoCustomerPortal = () => get(url.GET_LCO_CUSTOMERPORTAL);
 export const getLcoParentDistributor = () => get(url.GET_LCO_PARENTDISTRIBUTOR);
 export const getSingleLco = (id) => get(url.GET_SINGLE_LCO(id));
 export const getLcoPaymentmode = () => get(url.GET_LCO_PAYMENTMODE);
+export const getLcoAddcredit = async (currentPage, perPage = 20) => {
+  return await getCompleteResponse(url.GET_LCO_ADDCREDIT(currentPage, perPage));
+};
 
 export const getAppAdBanner = () => get(url.GET_APPADBANNER);
 export const addAppAdBanner = (appadbanner) =>

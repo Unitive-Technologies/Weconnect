@@ -111,7 +111,7 @@ const AddNewChannelList = (props) => {
     initialValues: {
       code: "",
       type: "",
-      // logo: { name: "", type: "", ext: "", data: "" },
+      logo: { name: "", type: "", ext: "", data: "" },
       name: "",
       description: "",
       definition: "",

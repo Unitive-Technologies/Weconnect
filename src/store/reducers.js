@@ -75,6 +75,7 @@ import allottedlco from "./inventoryallotted/reducer";
 import materialstatus from "./inventoryallotted/reducer";
 import pairingstatus from "./inventoryallotted/reducer";
 import paymentmode from "./lcolist/reducer";
+import lcoaddcredit from "./lcolist/reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -150,6 +151,7 @@ const rootReducer = combineReducers({
   materialstatus,
   pairingstatus,
   paymentmode,
+  lcoaddcredit,
 });
 
 export default rootReducer;
