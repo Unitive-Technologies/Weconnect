@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Row, Col } from "reactstrap";
 import Slider from "react-rangeslider";
 import "react-rangeslider/lib/index.css";
 
-const RevenueShare = ({
+const ViewRevenueShare = ({
   broadPercent,
   msoPercent,
   discountPercent,
@@ -16,6 +16,7 @@ const RevenueShare = ({
     setBroadPercent(newValue);
 
     const RevisedMsoValue = 100 - newValue - discountPercent;
+    console.log("Revised Mso Value: ", RevisedMsoValue);
     setMsoPercent(RevisedMsoValue);
   };
 
@@ -41,6 +42,13 @@ const RevenueShare = ({
       setBroadPercent(RevisedBroadCastValue);
     }
   };
+
+  // useEffect(() => {
+  //   // This effect runs whenever broadPercent, msoPercent, or discountPercent changes
+  //   console.log("Updated broadPercent:", broadPercent);
+  //   console.log("Updated msoPercent:", msoPercent);
+  //   console.log("Updated discountPercent:", discountPercent);
+  // }, [broadPercent, msoPercent, discountPercent]);
 
   return (
     <div>
@@ -96,4 +104,4 @@ const RevenueShare = ({
   );
 };
 
-export default RevenueShare;
+export default ViewRevenueShare;

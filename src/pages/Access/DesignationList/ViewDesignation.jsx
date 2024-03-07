@@ -150,7 +150,7 @@ const ViewDesignation = (props) => {
             <Row>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Designation</Label>
+                  <Label className="form-label">Designation<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="name"
                     type="text"
@@ -174,7 +174,7 @@ const ViewDesignation = (props) => {
               </Col>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Code</Label>
+                  <Label className="form-label">Code<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="code"
                     label="code"
@@ -199,7 +199,7 @@ const ViewDesignation = (props) => {
               </Col>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Status</Label>
+                  <Label className="form-label">Status<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="status"
                     type="select"
@@ -228,7 +228,7 @@ const ViewDesignation = (props) => {
             <Row>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Type</Label>
+                  <Label className="form-label">Type<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="type"
                     type="select"
@@ -255,7 +255,7 @@ const ViewDesignation = (props) => {
               </Col>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Parent designation</Label>
+                  <Label className="form-label">Parent designation<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="parent"
                     type="select"
@@ -282,7 +282,7 @@ const ViewDesignation = (props) => {
               </Col>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Description</Label>
+                  <Label className="form-label">Description<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="description"
                     type="textarea"

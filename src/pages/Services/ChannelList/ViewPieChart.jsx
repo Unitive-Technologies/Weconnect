@@ -1,24 +1,26 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 import getChartColorsArray from "../../../components/Common/ChartDynamicColor";
+import PropTypes from "prop-types";
 
-const PieChart = ({
+const ViewPieChart = ({
   dataColors,
   selectedRate,
   broadPercent,
   msoPercent,
   discountPercent,
 }) => {
-  // console.log(
-  //   "selectedRate in piechart: " + typeof selectedRate,
-  //   selectedRate,
-  //   typeof broadPercent,
-  //   broadPercent,
-  //   typeof msoPercent,
-  //   msoPercent,
-  //   typeof discountPercent,
-  //   discountPercent
-  // );
+  console.log(
+    "selectedRate in piechart: " + typeof selectedRate,
+    selectedRate,
+    typeof broadPercent,
+    broadPercent,
+    typeof msoPercent,
+    msoPercent,
+    typeof discountPercent,
+    discountPercent,
+    typeof dataColors
+  );
 
   const PieApexChartColors = getChartColorsArray(dataColors);
 
@@ -64,4 +66,12 @@ const PieChart = ({
   );
 };
 
-export default PieChart;
+ViewPieChart.propTypes = {
+  selectedRate: PropTypes.string,
+  broadPercent: PropTypes.number,
+  msoPercent: PropTypes.number,
+  discountPercent: PropTypes.number,
+  dataColors: PropTypes.string,
+};
+
+export default ViewPieChart;
