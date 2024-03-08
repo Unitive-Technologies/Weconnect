@@ -43,10 +43,10 @@ const AddNewBankList = (props) => {
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
-      ifscode: Yup.string().required("Enter IFSC code"),
-      branch: Yup.string().required("Enter branch"),
-      // account_no: Yup.string().required("Enter account no"),
-      address: Yup.string().required("Enter branch address"),
+      // ifscode: Yup.string().required("Enter IFSC code"),
+      // branch: Yup.string().required("Enter branch"),
+      account_no: Yup.string().required("Enter account no"),
+      // address: Yup.string().required("Enter branch address"),
       ismso: Yup.string().required("Select for mso"),
       status: Yup.string().required("Select status"),
     }),
@@ -126,7 +126,7 @@ const AddNewBankList = (props) => {
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
-                  IFSC Code<span style={{ color: "red" }}>*</span>
+                  IFSC Code
                 </Label>
                 <Input
                   name="ifscode"
@@ -147,7 +147,7 @@ const AddNewBankList = (props) => {
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
-                  Branch<span style={{ color: "red" }}>*</span>
+                  Branch
                 </Label>
                 <Input
                   name="branch"
@@ -201,7 +201,7 @@ const AddNewBankList = (props) => {
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
-                  Branch Address<span style={{ color: "red" }}>*</span>
+                  Branch Address
                 </Label>
                 <Input
                   name="address"

@@ -214,7 +214,7 @@ const ViewReason = (props) => {
               )}
               <Col sm="4">
                 <div className="mb-3">
-                  <Label className="form-label">Reason Type</Label>
+                  <Label className="form-label">Reason Type<span style={{ color: "red" }}>*</span></Label>
                   {/* <div className="d-flex align-items-center"> */}
                   <Select
                     name="type_display_lbl"
