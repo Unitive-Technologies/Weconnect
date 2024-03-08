@@ -140,7 +140,7 @@ const AddAlacarte = ({
                 {console.log("selectedIsHD: " + selectedIsHD)}
                 {console.log("selectedType: " + selectedType)}
                 <button
-                  disabled={!showEditBouquet}
+                  // disabled={!showEditBouquet}
                   onClick={
                     !selectedType
                       ? handleAddAlacarteWarning

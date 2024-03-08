@@ -18,7 +18,7 @@ import { createSelector } from "reselect";
 
 const AdditionalMrpTable = (props) => {
   const {
-    rechargeperiod,
+    // rechargeperiod,
     additionalLcoRate,
     additionalRates,
     setAdditionalRates,
@@ -30,23 +30,32 @@ const AdditionalMrpTable = (props) => {
     mrp,
     drp,
   } = props;
+  const rechargeperiod = [
+    { id: 6, name: "1Year", months: 12, days: 0 },
+    { id: 5, name: "6months", months: 6, days: 0 },
+    { id: 4, name: "3month", months: 3, days: 0 },
+    { id: 3, name: "2months", months: 2, days: 0 },
+    { id: 2, name: "1month", months: 1, days: 0 },
+    { id: 1, name: "1day", months: 0, days: 1 },
+  ];
   const [additionalName, setAdditionalName] = useState("");
-  const [newArray, setNewArray] = useState([]);
-  console.log("newArray:" + JSON.stringify(newArray));
+  const [newArray1, setNewArray1] = useState(rechargeperiod || []);
+  console.log("newArray1111:" + JSON.stringify(newArray1));
+
   const handleRefundableChange = (e, index) => {
-    const updatedPeriodArray = [...newArray];
+    const updatedPeriodArray = [...newArray1];
     updatedPeriodArray[index].is_refundable = e.target.checked;
-    setNewArray(updatedPeriodArray);
+    setNewArray1(updatedPeriodArray);
   };
 
   const handleFreeDaysChange = (e, index) => {
-    const updatedPeriodArray = [...newArray];
+    const updatedPeriodArray = [...newArray1];
     updatedPeriodArray[index].free_days = parseInt(e.target.value) || 0;
-    setNewArray(updatedPeriodArray);
+    setNewArray1(updatedPeriodArray);
   };
 
   const updateRate = () => {
-    const rateArray = newArray.map((rateData) => {
+    const rateArray = newArray1.map((rateData) => {
       return {
         id: rateData.id,
         period: rateData.name,
@@ -94,14 +103,15 @@ const AdditionalMrpTable = (props) => {
 
     setAdditionalRates((prevRates) => [...prevRates, newRateObject]);
     // setAdditionalRates([...additionalRates, newRateObject]);
+    setAdditionalName("");
   };
   console.log(
     "additional Ratessssssssssssss:" + JSON.stringify(additionalRates)
   );
 
-  useEffect(() => {
-    setNewArray(rechargeperiod);
-  }, [rechargeperiod]);
+  // useEffect(() => {
+  //   setNewArray1(rechargeperiod);
+  // }, [rechargeperiod]);
 
   return (
     <>
@@ -171,8 +181,8 @@ const AdditionalMrpTable = (props) => {
                 </tr>
               </thead>
               <tbody>
-                {newArray &&
-                  newArray.map((row, i) => (
+                {newArray1 &&
+                  newArray1.map((row, i) => (
                     <tr key={i}>
                       <td>{i + 1}</td>
                       <td>{row && row.name}</td>

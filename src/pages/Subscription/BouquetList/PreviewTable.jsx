@@ -84,8 +84,8 @@ const PreviewTable = (props) => {
   return (
     <Card>
       <CardBody>
-        {/* {console.log("recharge period: ", JSON.stringify(rechargeperiod))}
-        {console.log("newArray: ", JSON.stringify(newArray))} */}
+        {/* {console.log("recharge period: ", JSON.stringify(rechargeperiod))}*/}
+        {console.log("newArray: ", JSON.stringify(newArray))}
 
         <Table>
           <thead>

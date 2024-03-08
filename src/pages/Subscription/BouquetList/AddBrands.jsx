@@ -236,7 +236,7 @@ const AddBrands = (props) => {
                   }
                   type="button"
                   className="btn btn-primary"
-                  disabled={!showEditBouquet}
+                  // disabled={!showEditBouquet}
                 >
                   Add Brands
                 </button>

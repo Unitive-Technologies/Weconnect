@@ -165,7 +165,8 @@ const AddPackages = ({
                   }
                   type="button"
                   className="btn btn-primary"
-                  disabled={parseInt(selectedType) === 3 || !showEditBouquet}
+                  disabled={parseInt(selectedType) === 3}
+                  // || !showEditBouquet
                 >
                   Add Package
                 </button>
