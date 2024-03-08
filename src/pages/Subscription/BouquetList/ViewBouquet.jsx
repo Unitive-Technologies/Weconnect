@@ -731,131 +731,139 @@ const ViewBouquet = (props) => {
                 </div>
               </Col>
             </Row>
-            <div
-              style={{
-                display: "flex",
-                width: "1000px",
-              }}
-            >
-              <div
-                style={{
-                  // margin: "20px 0px",
-                  marginTop: "20px",
-                  marginBottom: "18px",
-                  zIndex: 12000,
-                  backgroundColor: "#fff",
-                  width: "fit-content",
-                  marginLeft: "20%",
+            <Row>
+              <Col lg={12}>
+                <div
+                  style={{
+                    display: "flex",
+                    // width: "1000px",
+                  }}
+                >
+                  <Col lg={6}>
+                    <div
+                      style={{
+                        // margin: "20px 0px",
+                        marginTop: "20px",
+                        marginBottom: "18px",
+                        zIndex: 12000,
+                        backgroundColor: "#fff",
+                        width: "fit-content",
+                        marginLeft: "20%",
 
-                  position: "absolute",
-                  padding: "0px 10px",
-                }}
-              >
-                <p style={{ fontWeight: "bold" }}>
-                  Add Alacarte<span style={{ color: "red" }}>*</span>
-                </p>
-              </div>
-              <Row
-                style={{
-                  position: "relative",
-                  border: "1px solid #ced4da",
-                  padding: "20px 0px",
-                  margin: "30px 0px",
-                }}
-              >
-                <Col sm="12" style={{ width: "500px" }}>
-                  {console.log(
-                    "alacarteData:" +
-                      JSON.stringify(selectedRowDetails.alacarte)
-                  )}
-                  <AddAlacarte
-                    showEditBouquet={showEditBouquet}
-                    alacarteData={
-                      selectedRowDetails
-                        ? selectedRowDetails.alacarte
-                        : alacarteData
-                    }
-                    setAlacarteData={setAlacarteData}
-                    selectedType={selectedType}
-                    selectedIsHD={selectedIsHD}
-                    ftaCount={ftaCountAlacar}
-                    paychannelCount={paychannelCountAlacar}
-                    ncfCount={ncfCountAlacar}
-                    totalChannel={totalChannelAlacar}
-                    totalRate={totalRateAlacar}
-                    setFtaCount={setFtaCountAlacar}
-                    setPaychannelCount={setPaychannelCountAlacar}
-                    setNcfCount={setNcfCountAlacar}
-                    setTotalChannel={setTotalChannelAlacar}
-                    setTotalRate={setTotalRateAlacar}
-                    toggleNcfSwitch={toggleNcfSwitch}
-                  />
-                  <Count
-                    ftaCount={ftaCountAlacar}
-                    paychannelCount={paychannelCountAlacar}
-                    ncfCount={ncfCountAlacar}
-                    totalChannel={totalChannelAlacar}
-                    totalRate={totalRateAlacar}
-                  />
-                </Col>
-              </Row>
-              <div
-                style={{
-                  marginTop: "20px",
-                  marginBottom: "18px",
-                  zIndex: 12000,
-                  backgroundColor: "#fff",
-                  width: "fit-content",
-                  marginLeft: "50%",
-                  position: "absolute",
-                  padding: "0px 10px",
-                }}
-              >
-                <p style={{ fontWeight: "bold" }}>
-                  Add Packages<span style={{ color: "red" }}>*</span>
-                </p>
-              </div>
-              <Row
-                style={{
-                  position: "relative",
-                  border: "1px solid #ced4da",
-                  padding: "20px 0px",
-                  margin: "30px 0px",
-                }}
-              >
-                <Col sm="8" style={{ width: "500px" }}>
-                  <AddPackages
-                    showEditBouquet={showEditBouquet}
-                    packagesData={
-                      selectedRowDetails
-                        ? selectedRowDetails.package
-                        : packagesData
-                    }
-                    selectedType={selectedType}
-                    selectedIsHD={selectedIsHD}
-                    setPackagesData={setPackagesData}
-                    ftaCount={ftaCountPackage}
-                    paychannelCount={paychannelCountPackage}
-                    ncfCount={ncfCountPackage}
-                    totalChannel={totalChannelPackage}
-                    totalRate={totalRatePackage}
-                    setFtaCount={setFtaCountPackage}
-                    setPaychannelCount={setPaychannelCountPackage}
-                    setNcfCount={setNcfCountPackage}
-                    setTotalChannel={setTotalChannelPackage}
-                    setTotalRate={setTotalRatePackage}
-                    toggleNcfSwitch={toggleNcfSwitch}
-                  />
-                  <Count
-                    ftaCount={ftaCountPackage}
-                    paychannelCount={paychannelCountPackage}
-                    ncfCount={ncfCountPackage}
-                    totalChannel={totalChannelPackage}
-                    totalRate={totalRatePackage}
-                  />
-                </Col>
-              </Row>
-            </div>
+                        position: "absolute",
+                        padding: "0px 10px",
+                      }}
+                    >
+                      <p style={{ fontWeight: "bold" }}>
+                        Add Alacarte<span style={{ color: "red" }}>*</span>
+                      </p>
+                    </div>
+                    <Row
+                      style={{
+                        position: "relative",
+                        border: "1px solid #ced4da",
+                        padding: "20px 0px",
+                        margin: "30px 0px",
+                      }}
+                    >
+                      <Col sm="12">
+                        {console.log(
+                          "alacarteData:" +
+                            JSON.stringify(selectedRowDetails.alacarte)
+                        )}
+                        <AddAlacarte
+                          showEditBouquet={showEditBouquet}
+                          alacarteData={
+                            selectedRowDetails
+                              ? selectedRowDetails.alacarte
+                              : alacarteData
+                          }
+                          setAlacarteData={setAlacarteData}
+                          selectedType={selectedType}
+                          selectedIsHD={selectedIsHD}
+                          ftaCount={ftaCountAlacar}
+                          paychannelCount={paychannelCountAlacar}
+                          ncfCount={ncfCountAlacar}
+                          totalChannel={totalChannelAlacar}
+                          totalRate={totalRateAlacar}
+                          setFtaCount={setFtaCountAlacar}
+                          setPaychannelCount={setPaychannelCountAlacar}
+                          setNcfCount={setNcfCountAlacar}
+                          setTotalChannel={setTotalChannelAlacar}
+                          setTotalRate={setTotalRateAlacar}
+                          toggleNcfSwitch={toggleNcfSwitch}
+                        />
+                        <Count
+                          ftaCount={ftaCountAlacar}
+                          paychannelCount={paychannelCountAlacar}
+                          ncfCount={ncfCountAlacar}
+                          totalChannel={totalChannelAlacar}
+                          totalRate={totalRateAlacar}
+                        />
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col lg={6}>
+                    <div
+                      style={{
+                        marginTop: "20px",
+                        marginBottom: "18px",
+                        zIndex: 12000,
+                        backgroundColor: "#fff",
+                        width: "fit-content",
+                        marginLeft: "15%",
+                        position: "absolute",
+                        padding: "0px 10px",
+                      }}
+                    >
+                      <p style={{ fontWeight: "bold" }}>
+                        Add Packages<span style={{ color: "red" }}>*</span>
+                      </p>
+                    </div>
+                    <Row
+                      style={{
+                        position: "relative",
+                        border: "1px solid #ced4da",
+                        padding: "20px 0px",
+                        margin: "30px 0px",
+                      }}
+                    >
+                      <Col sm="12">
+                        <AddPackages
+                          showEditBouquet={showEditBouquet}
+                          packagesData={
+                            selectedRowDetails
+                              ? selectedRowDetails.package
+                              : packagesData
+                          }
+                          selectedType={selectedType}
+                          selectedIsHD={selectedIsHD}
+                          setPackagesData={setPackagesData}
+                          ftaCount={ftaCountPackage}
+                          paychannelCount={paychannelCountPackage}
+                          ncfCount={ncfCountPackage}
+                          totalChannel={totalChannelPackage}
+                          totalRate={totalRatePackage}
+                          setFtaCount={setFtaCountPackage}
+                          setPaychannelCount={setPaychannelCountPackage}
+                          setNcfCount={setNcfCountPackage}
+                          setTotalChannel={setTotalChannelPackage}
+                          setTotalRate={setTotalRatePackage}
+                          toggleNcfSwitch={toggleNcfSwitch}
+                        />
+                        <Count
+                          ftaCount={ftaCountPackage}
+                          paychannelCount={paychannelCountPackage}
+                          ncfCount={ncfCountPackage}
+                          totalChannel={totalChannelPackage}
+                          totalRate={totalRatePackage}
+                        />
+                      </Col>
+                    </Row>
+                  </Col>
+                </div>
+              </Col>
+            </Row>
             <div
               style={{
                 marginTop: "20px",
@@ -873,6 +881,7 @@ const ViewBouquet = (props) => {
                 <span style={{ color: "red" }}>*</span>
               </p>
             </div>
+
             <Row
               style={{
                 position: "relative",
@@ -1025,58 +1034,7 @@ const ViewBouquet = (props) => {
                 <span style={{ color: "red" }}>*</span>
               </p>
             </div>
-            {/* {!showEditBouquet ? (
-              <Row
-                style={{
-                  position: "relative",
-                  border: "1px solid #ced4da",
-                  padding: "20px 0px",
-                  margin: "30px 0px",
-                }}
-              >
-                <Card>
-                  <CardBody>
-                    <div className="table-responsive">
-                      <Table className="table mb-0">
-                        <thead>
-                          <tr>
-                            <th>#</th>
-                            <th>Brand Name</th>
-                            <th>Box Type</th>
-                            <th>CAS</th>
-                            <th>Brand Type</th>
-                            <th>$</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {validation.values.stbbrands &&
-                            validation.values.stbbrands.map((item, index) => (
-                              <tr key={index} className="disabled-row">
-                                <th scope="row">{index + 1}</th>
-                                <td>{item.name}</td>
-                                <td>{item.box_type_lbl}</td>
-                                <td>{item.cas_lbl}</td>
-                                <td>{item.type_lbl}</td>
-                                <td>
-                                  <Link
-                                    className="text-dark disabled"
-                                    // onClick={() => deleteMultipleNcf(index)}
-                                  >
-                                    <i
-                                      className="mdi mdi-delete font-size-18"
-                                      id="deletetooltip"
-                                    />
-                                  </Link>
-                                </td>
-                              </tr>
-                            ))}
-                        </tbody>
-                      </Table>
-                    </div>
-                  </CardBody>
-                </Card>
-              </Row>
-            ) : ( */}
+
             <Row
               style={{
                 position: "relative",
@@ -1098,7 +1056,7 @@ const ViewBouquet = (props) => {
                 STB brands
               </p>
             </Row>
-            {/* )} */}
+
             {showEditBouquet && (
               <Row>
                 <Col>

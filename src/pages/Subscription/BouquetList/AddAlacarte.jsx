@@ -168,6 +168,7 @@ const AddAlacarte = ({
               minHeight: "200px",
               maxHeight: "200px",
               overflowY: "hidden",
+              marginLeft: "-20px",
             }}
           >
             <thead>
