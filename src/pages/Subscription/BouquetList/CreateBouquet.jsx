@@ -97,7 +97,7 @@ const CreateBouquet = (props) => {
       status: "",
       description: "",
       is_promotional: "",
-      // ifFixNCF: "",
+      ifFixNCF: "",
       max_ncf_channels: "",
       is_online_app: "",
       sort_by: "",
@@ -125,7 +125,7 @@ const CreateBouquet = (props) => {
         sort_by: parseInt(values["sort_by"]),
         status: parseInt(values["status"]),
         type: parseInt(values["type"]),
-
+        ifFixNCF: values(["ifFixNCF"]),
         mrp: parseInt(mrp),
         mrp_data: {
           pcc: parseInt(mrp),
@@ -473,10 +473,12 @@ const CreateBouquet = (props) => {
                   <label style={{ marginRight: "10px" }}>Fix NCF</label>
                   <div className="form-check form-switch form-switch-lg mb-2">
                     <input
+                      name="ifFixNCF"
                       type="checkbox"
                       className="form-check-input"
                       id="customSwitchsizelg"
-                      defaultChecked
+                      defaultChecked={validation.values.ifFixNCF}
+                      onChange={validation.handleChange}
                       onClick={(e) => {
                         setToggleNcfSwitch(!toggleNcfSwitch);
                       }}
@@ -624,7 +626,7 @@ const CreateBouquet = (props) => {
           <div
             style={{
               display: "flex",
-              width: "1000px",
+              // width: "1000px",
             }}
           >
             <div
@@ -653,7 +655,7 @@ const CreateBouquet = (props) => {
                 margin: "30px 0px",
               }}
             >
-              <Col sm="12" style={{ width: "500px" }}>
+              <Col sm="12">
                 <AddAlacarte
                   alacarteData={alacarteData}
                   setAlacarteData={setAlacarteData}
@@ -704,7 +706,7 @@ const CreateBouquet = (props) => {
                 margin: "30px 0px",
               }}
             >
-              <Col sm="8" style={{ width: "500px" }}>
+              <Col sm="12">
                 <AddPackages
                   packagesData={packagesData}
                   selectedType={selectedType}

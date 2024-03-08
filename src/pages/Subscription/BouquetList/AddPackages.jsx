@@ -199,10 +199,37 @@ const AddPackages = ({
                         >
                           #
                         </th>
-                        <th>Name</th>
-                        <th>Code</th>
+                        <th
+                          style={{
+                            maxWidth: 50,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          Name
+                        </th>
+                        <th
+                          style={{
+                            maxWidth: 50,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          Code
+                        </th>
 
-                        <th>Type</th>
+                        <th
+                          style={{
+                            maxWidth: 50,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          Type
+                        </th>
                         <th
                           style={{
                             maxWidth: 50,

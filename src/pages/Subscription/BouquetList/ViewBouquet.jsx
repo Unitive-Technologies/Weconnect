@@ -579,10 +579,12 @@ const ViewBouquet = (props) => {
                     <label style={{ marginRight: "10px" }}>Fix NCF</label>
                     <div className="form-check form-switch form-switch-lg mb-2">
                       <input
+                        name="ifFixNCF"
                         type="checkbox"
                         className="form-check-input"
                         id="customSwitchsizelg"
-                        defaultChecked
+                        defaultChecked={validation.values.ifFixNCF}
+                        onChange={validation.handleChange}
                         onClick={(e) => {
                           setToggleNcfSwitch(!toggleNcfSwitch);
                         }}
