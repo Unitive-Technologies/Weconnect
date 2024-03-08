@@ -49,7 +49,7 @@ const AddNewSubCategoryList = (props) => {
       status: Yup.string().required("Select status"),
       showonweb: Yup.string().required("Select showonweb"),
       description: Yup.string().required("Enter description"),
-      // escalations: Yup.array().min(1, "Enter time"),
+      escalations: Yup.array().min(1, "Enter time"),
     }),
     onSubmit: (values) => {
       const newComplaintSubCategory = {
@@ -108,6 +108,12 @@ const AddNewSubCategoryList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}
+                  invalid={
+                    validation.touched.name &&
+                      validation.errors.name
+                      ? true
+                      : false
+                  }
                 ></Input>
                 {validation.touched.name && validation.errors.name ? (
                   <FormFeedback type="invalid">
@@ -129,6 +135,12 @@ const AddNewSubCategoryList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.category_lbl || ""}
+                  invalid={
+                    validation.touched.category_lbl &&
+                      validation.errors.category_lbl
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Category</option>
                   {complaintsubcateCategory &&
@@ -139,7 +151,7 @@ const AddNewSubCategoryList = (props) => {
                     ))}
                 </Input>
                 {validation.touched.category_lbl &&
-                validation.errors.category_lbl ? (
+                  validation.errors.category_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.category_lbl}
                   </FormFeedback>
@@ -159,6 +171,12 @@ const AddNewSubCategoryList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  invalid={
+                    validation.touched.status &&
+                      validation.errors.status
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Status</option>
                   {complaintsubcateStatus &&
@@ -190,6 +208,12 @@ const AddNewSubCategoryList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.showonweb || ""}
+                  invalid={
+                    validation.touched.showonweb &&
+                      validation.errors.showonweb
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">{validation.values.showonweb}</option>
                   <option value="1">Active</option>
@@ -217,13 +241,13 @@ const AddNewSubCategoryList = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>

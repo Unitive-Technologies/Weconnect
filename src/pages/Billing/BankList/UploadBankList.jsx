@@ -25,6 +25,7 @@ import {
   updateBankUploadByToken,
   uploadBankSubmit,
 } from "../../../helpers/backend_helper";
+import * as Yup from 'yup';
 
 const UploadBankList = (props) => {
   const { isOpen, toggleUploadModal, actiontype } = props;
