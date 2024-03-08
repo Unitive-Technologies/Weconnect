@@ -60,10 +60,11 @@ const ViewChannel = (props) => {
     if (channel && channel.broadcasterRate !== undefined) {
       setSelectedRate(channel.broadcasterRate);
       setCasCodeList(channel.casCodes);
-      setSelectedRate(channel.isFta);
+      setSelectedType(channel.isFta);
       setSelectedAlcarte(channel.isAlacarte);
     }
   }, [channel]);
+  console.log("channel list type: ", channelListType);
 
   useEffect(() => {
     if (channel && channel.revenue_share !== undefined) {
@@ -134,7 +135,7 @@ const ViewChannel = (props) => {
       broadcaster_id: (channel && channel.broadcaster_id) || "",
       genre_id: (channel && channel.genre_id) || "",
       language_id: (channel && channel.language_id) || [],
-      isAlacarte: (channel && channel.isAlacarte) || "1",
+      isAlacarte: (channel && channel.isAlacarte) || "",
       broadcasterRate: (channel && channel.broadcasterRate) || "",
       status: (channel && channel.status) || "",
       casCodes: (channel && channel.casCodes) || [],
@@ -172,7 +173,7 @@ const ViewChannel = (props) => {
         broadcaster_id: values.broadcaster_id,
         genre_id: values.genre_id,
         language_id: values.language_id,
-        isAlacarte: parseInt(values.isAlacarte),
+        isAlacarte: parseInt(selectedAlcarte),
         broadcasterRate: selectedRate,
         status: values.status,
         casCodes: casCodeList.map((single) => {
@@ -190,7 +191,7 @@ const ViewChannel = (props) => {
           mso_discount: discountPercent,
           broadcaster_share: broadPercent,
         },
-        isFta: parseInt(values.isFta),
+        isFta: parseInt(selectedType),
         isHD: parseInt(values["definition"]),
         isNcf: toggleNcfSwitch === true ? 1 : 0,
       };
@@ -468,7 +469,7 @@ const ViewChannel = (props) => {
                       setSelectedType(e.target.value);
                     }}
                     onBlur={validation.handleBlur}
-                    value={validation.values.isFta || ""}
+                    value={selectedType}
                     disabled={!showEditChannel}
                   >
                     {channelListType &&
@@ -607,9 +608,12 @@ const ViewChannel = (props) => {
                   <Input
                     name="isAlacarte"
                     type="select"
-                    onChange={validation.handleChange}
+                    onChange={(e) => {
+                      validation.handleChange(e);
+                      setSelectedAlcarte(e.target.value);
+                    }}
                     onBlur={validation.handleBlur}
-                    value={validation.values.isAlacarte || "1"}
+                    value={selectedAlcarte}
                     disabled={!showEditChannel}
                   >
                     <option value="1">Yes</option>
@@ -662,7 +666,11 @@ const ViewChannel = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.status || ""}
-                    disabled={!showEditChannel}
+                    disabled={
+                      !showEditChannel ||
+                      selectedType === "1" ||
+                      selectedAlcarte === "0"
+                    }
                   >
                     {channelListStatus.map((list) => (
                       <option key={list.id} value={list.id}>
@@ -679,9 +687,9 @@ const ViewChannel = (props) => {
               </Col>
             </Row>
             {channel &&
-            channel.isFta === "0" &&
-            channel.isAlcarte === "1" &&
-            parseInt(channel.broadcasterRate) !== "" ? (
+            selectedType === 0 &&
+            selectedAlcarte === 1 &&
+            selectedRate !== "" ? (
               <>
                 <div
                   style={{
