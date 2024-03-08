@@ -75,9 +75,9 @@ function* onAddNewChannelList({ payload: channelList }) {
   }
 }
 
-function* onUpdateChannelList({ payload: channellist }) {
+function* onUpdateChannelList({ payload: channelList }) {
   try {
-    const response = yield call(updateChannelList, channellist.id, channellist);
+    const response = yield call(updateChannelList, channelList.id, channelList);
     yield put(updateChannelListSuccess(response));
     yield put(fetchchannellists());
   } catch (error) {

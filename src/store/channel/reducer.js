@@ -248,10 +248,10 @@ const ChannelList = (state = INIT_STATE, action) => {
       return {
         ...state,
         loading: false,
-        channelList: state.channelList.map((channelList) =>
-          channelList.id === action.payload.id
-            ? { ...channelList, ...action.payload }
-            : channelList
+        channelList: state.channelList.map((channel) =>
+          channel.id === action.payload.id
+            ? { ...channel, ...action.payload }
+            : channel
         ),
       };
 

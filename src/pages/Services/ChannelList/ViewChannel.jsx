@@ -25,6 +25,8 @@ import { useDispatch } from "react-redux";
 import CasList from "./CasList";
 import ViewPieChart from "./ViewPieChart";
 import ShowHistoryModal from "./ShowHistoryModal";
+import PieChart from "./PieChart";
+import RevenueShare from "./RevenueShare";
 
 const ViewChannel = (props) => {
   const {
@@ -51,12 +53,20 @@ const ViewChannel = (props) => {
   const [selectedType, setSelectedType] = useState("");
   const [toggleNcfSwitch, setToggleNcfSwitch] = useState(true);
   const [casCodeList, setCasCodeList] = useState([]);
+  const [selectedAlcarte, setSelectedAlcarte] = useState();
 
   console.log("Selected channel list: ", channel);
   useEffect(() => {
     if (channel && channel.broadcasterRate !== undefined) {
       setSelectedRate(channel.broadcasterRate);
       setCasCodeList(channel.casCodes);
+      setSelectedRate(channel.isFta);
+      setSelectedAlcarte(channel.isAlacarte);
+    }
+  }, [channel]);
+
+  useEffect(() => {
+    if (channel && channel.revenue_share !== undefined) {
       setMsoPercent(channel.revenue_share.mso_share);
       setDiscountPercent(channel.revenue_share.mso_discount);
       setBroadPercent(channel.revenue_share.broadcaster_share);
@@ -124,7 +134,7 @@ const ViewChannel = (props) => {
       broadcaster_id: (channel && channel.broadcaster_id) || "",
       genre_id: (channel && channel.genre_id) || "",
       language_id: (channel && channel.language_id) || [],
-      isAlacarte: (channel && channel.isAlacarte) || "",
+      isAlacarte: (channel && channel.isAlacarte) || "1",
       broadcasterRate: (channel && channel.broadcasterRate) || "",
       status: (channel && channel.status) || "",
       casCodes: (channel && channel.casCodes) || [],
@@ -162,7 +172,7 @@ const ViewChannel = (props) => {
         broadcaster_id: values.broadcaster_id,
         genre_id: values.genre_id,
         language_id: values.language_id,
-        isAlacarte: values.isAlacarte,
+        isAlacarte: parseInt(values.isAlacarte),
         broadcasterRate: selectedRate,
         status: values.status,
         casCodes: casCodeList.map((single) => {
@@ -180,12 +190,11 @@ const ViewChannel = (props) => {
           mso_discount: discountPercent,
           broadcaster_share: broadPercent,
         },
-        isFta: values.isFta,
+        isFta: parseInt(values.isFta),
         isHD: parseInt(values["definition"]),
         isNcf: toggleNcfSwitch === true ? 1 : 0,
       };
-      console.log("newChannelList:" + updateChannelList);
-      // save new user
+      console.log("newChannelList:" + JSON.stringify(updateChannelList));
       dispatch(onUpdateChannelList(updateChannelList));
       validation.resetForm();
       handleCancel();
@@ -669,66 +678,67 @@ const ViewChannel = (props) => {
                 </div>
               </Col>
             </Row>
-            <div
-              style={{
-                // margin: "20px 0px",
-                marginTop: "20px",
-                marginBottom: "18px",
-                zIndex: 12000,
-                backgroundColor: "#fff",
-                width: "fit-content",
-                marginLeft: "40%",
-                position: "absolute",
-                padding: "0px 10px",
-              }}
-            >
-              <h5 style={{}}>MRP Revenue Share</h5>
-            </div>
-            <Row
-              style={{
-                position: "relative",
-                border: "1px solid #ced4da",
-                padding: "20px 0px",
-                margin: "30px 0px",
-              }}
-            >
-              <Col lg={6}>
-                <ViewRevenueShare
-                  broadPercent={broadPercent}
-                  msoPercent={msoPercent}
-                  discountPercent={discountPercent}
-                  setBroadPercent={setBroadPercent}
-                  setMsoPercent={setMsoPercent}
-                  setDiscountPercent={setDiscountPercent}
-                  showEditChannel={showEditChannel}
-                />
-              </Col>
-              {channel &&
-              channel.isFta === 0 &&
-              parseInt(channel.broadcasterRate) !== "" ? (
-                // <Row>
-                <Col lg={6}>
-                  <Card>
-                    <CardBody>
-                      <span>Graphical representation of SHARE</span>
-                      <CardTitle className="mb-4">
-                        (MRP: {selectedRate}){" "}
-                      </CardTitle>
-                      <ViewPieChart
-                        broadPercent={broadPercent}
-                        msoPercent={msoPercent}
-                        discountPercent={discountPercent}
-                        selectedRate={selectedRate}
-                        dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
-                      />
-                    </CardBody>
-                  </Card>
-                </Col>
-              ) : (
-                <></>
-              )}
-            </Row>
-
+            {channel &&
+            channel.isFta === "0" &&
+            channel.isAlcarte === "1" &&
+            parseInt(channel.broadcasterRate) !== "" ? (
+              <>
+                <div
+                  style={{
+                    // margin: "20px 0px",
+                    marginTop: "20px",
+                    marginBottom: "18px",
+                    zIndex: 12000,
+                    backgroundColor: "#fff",
+                    width: "fit-content",
+                    marginLeft: "40%",
+                    position: "absolute",
+                    padding: "0px 10px",
+                  }}
+                >
+                  <h5 style={{}}>MRP Revenue Share</h5>
+                </div>
+                <Row
+                  style={{
+                    position: "relative",
+                    border: "1px solid #ced4da",
+                    padding: "20px 0px",
+                    margin: "30px 0px",
+                  }}
+                >
+                  <Col lg={6}>
+                    <RevenueShare
+                      broadPercent={broadPercent}
+                      msoPercent={msoPercent}
+                      discountPercent={discountPercent}
+                      setBroadPercent={setBroadPercent}
+                      setMsoPercent={setMsoPercent}
+                      setDiscountPercent={setDiscountPercent}
+                      showEditChannel={showEditChannel}
+                    />
+                  </Col>
+                  <Col lg={6}>
+                    <Card>
+                      <CardBody>
+                        <span>Graphical representation of SHARE</span>
+                        <CardTitle className="mb-4">
+                          (MRP: {selectedRate}){" "}
+                        </CardTitle>
+                        <PieChart
+                          broadPercent={broadPercent}
+                          msoPercent={msoPercent}
+                          discountPercent={discountPercent}
+                          selectedRate={selectedRate}
+                          dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
+                        />
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+              </>
+            ) : (
+              <></>
+            )}
             <div
               style={{
                 // margin: "20px 0px",

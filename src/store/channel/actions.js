@@ -30,7 +30,8 @@ import {
   ADD_CHANNELLIST_SUCCESS,
   ADD_CHANNELLIST_FAIL,
   UPDATE_CHANNELLIST,
-  UPDATE_CHANNELLIST_FAIL, UPDATE_CHANNELLIST_SUCCESS,
+  UPDATE_CHANNELLIST_FAIL,
+  UPDATE_CHANNELLIST_SUCCESS,
   UPDATE_CHANNELLIST_CURRENT_PAGE,
 } from "./actionTypes";
 
@@ -194,14 +195,14 @@ export const getChannelListGenreFail = (error) => ({
   payload: error,
 });
 
-export const updateChannelList = (channellist) => ({
+export const updateChannelList = (channelList) => ({
   type: UPDATE_CHANNELLIST,
-  payload: channellist,
+  payload: channelList,
 });
 
-export const updateChannelListSuccess = (channellist) => ({
+export const updateChannelListSuccess = (channelList) => ({
   type: UPDATE_CHANNELLIST_SUCCESS,
-  payload: channellist,
+  payload: channelList,
 });
 
 export const updateChannelListFail = (error) => ({
