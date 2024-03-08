@@ -35,7 +35,10 @@ const AddAlacarte = ({
   setTotalRate,
   toggleNcfSwitch,
 }) => {
-  // console.log("Alacarte channels in add alacarte:", alacartechannels);
+  console.log(
+    "Alacarte channels in add alacarte:",
+    JSON.stringify(alacarteData)
+  );
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [addAlacarteList, setAddAlacarteList] = useState([]);
   const [showAddAlacartePlus, setShowAddAlacartePlus] = useState(false);

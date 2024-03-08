@@ -764,9 +764,17 @@ const ViewBouquet = (props) => {
                 }}
               >
                 <Col sm="12" style={{ width: "500px" }}>
+                  {console.log(
+                    "alacarteData:" +
+                      JSON.stringify(selectedRowDetails.alacarte)
+                  )}
                   <AddAlacarte
                     showEditBouquet={showEditBouquet}
-                    alacarteData={alacarteData}
+                    alacarteData={
+                      selectedRowDetails
+                        ? selectedRowDetails.alacarte
+                        : alacarteData
+                    }
                     setAlacarteData={setAlacarteData}
                     selectedType={selectedType}
                     selectedIsHD={selectedIsHD}
@@ -818,7 +826,11 @@ const ViewBouquet = (props) => {
                 <Col sm="8" style={{ width: "500px" }}>
                   <AddPackages
                     showEditBouquet={showEditBouquet}
-                    packagesData={packagesData}
+                    packagesData={
+                      selectedRowDetails
+                        ? selectedRowDetails.package
+                        : packagesData
+                    }
                     selectedType={selectedType}
                     selectedIsHD={selectedIsHD}
                     setPackagesData={setPackagesData}
@@ -1013,7 +1025,7 @@ const ViewBouquet = (props) => {
                 <span style={{ color: "red" }}>*</span>
               </p>
             </div>
-            {!showEditBouquet ? (
+            {/* {!showEditBouquet ? (
               <Row
                 style={{
                   position: "relative",
@@ -1064,27 +1076,29 @@ const ViewBouquet = (props) => {
                   </CardBody>
                 </Card>
               </Row>
-            ) : (
-              <Row
-                style={{
-                  position: "relative",
-                  border: "1px solid #ced4da",
-                  padding: "20px 0px",
-                  margin: "30px 0px",
-                }}
-              >
-                <AddBrands
-                  showEditBouquet={showEditBouquet}
-                  stbbrands={stbbrands}
-                  setStbbrands={setStbbrands}
-                  selectedType={selectedType}
-                />
-                <p>
-                  *If no brand selected, this bouquet will be available for all
-                  STB brands
-                </p>
-              </Row>
-            )}
+            ) : ( */}
+            <Row
+              style={{
+                position: "relative",
+                border: "1px solid #ced4da",
+                padding: "20px 0px",
+                margin: "30px 0px",
+              }}
+            >
+              <AddBrands
+                showEditBouquet={showEditBouquet}
+                stbbrands={
+                  selectedRowDetails ? selectedRowDetails.stbbrands : stbbrands
+                }
+                setStbbrands={setStbbrands}
+                selectedType={selectedType}
+              />
+              <p>
+                *If no brand selected, this bouquet will be available for all
+                STB brands
+              </p>
+            </Row>
+            {/* )} */}
             {showEditBouquet && (
               <Row>
                 <Col>
