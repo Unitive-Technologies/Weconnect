@@ -780,6 +780,7 @@ const ViewBouquet = (props) => {
                     setNcfCount={setNcfCountAlacar}
                     setTotalChannel={setTotalChannelAlacar}
                     setTotalRate={setTotalRateAlacar}
+                    toggleNcfSwitch={toggleNcfSwitch}
                   />
                   <Count
                     ftaCount={ftaCountAlacar}
@@ -831,6 +832,7 @@ const ViewBouquet = (props) => {
                     setNcfCount={setNcfCountPackage}
                     setTotalChannel={setTotalChannelPackage}
                     setTotalRate={setTotalRatePackage}
+                    toggleNcfSwitch={toggleNcfSwitch}
                   />
                   <Count
                     ftaCount={ftaCountPackage}
@@ -982,6 +984,7 @@ const ViewBouquet = (props) => {
                   setAdditionalLcoRate={setAdditionalLcoRate}
                   mrp={mrp}
                   drp={drp}
+                  toggleNcfSwitch={toggleNcfSwitch}
                 />
               </Row>
               <Row>

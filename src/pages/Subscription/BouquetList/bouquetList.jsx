@@ -512,20 +512,22 @@ const BouquetList = () => {
 
   return (
     <React.Fragment>
-      <ViewBouquet
-        isOpen={showViewBouquet}
-        toggle={toggleViewBouquet}
-        bouquet={viewBouquetData}
-        alacartechannels={alacartechannels}
-        bouquetstatus={bouquetstatus}
-        bouquetboxtype={bouquetboxtype}
-        bouquetpackages={bouquetpackages}
-        bouquettaxlist={bouquettaxlist}
-        bouquettype={bouquettype}
-        bouquex={bouquex}
-        rechargeperiod={rechargeperiod}
-        selectedRowId={viewBouquetData && viewBouquetData.id}
-      />
+      {showViewBouquet && (
+        <ViewBouquet
+          isOpen={showViewBouquet}
+          toggle={toggleViewBouquet}
+          bouquet={viewBouquetData}
+          alacartechannels={alacartechannels}
+          bouquetstatus={bouquetstatus}
+          bouquetboxtype={bouquetboxtype}
+          bouquetpackages={bouquetpackages}
+          bouquettaxlist={bouquettaxlist}
+          bouquettype={bouquettype}
+          bouquex={bouquex}
+          rechargeperiod={rechargeperiod}
+          selectedRowId={viewBouquetData && viewBouquetData.id}
+        />
+      )}
       {showCreateBouquet && (
         <CreateBouquet
           isOpen={Boolean(showCreateBouquet)}

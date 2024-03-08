@@ -31,7 +31,7 @@ const AddAlacarte = ({
   setPaychannelCount,
   setNcfCount,
   setTotalChannel,
-  setTotalRate,
+  setTotalRate, toggleNcfSwitch
 }) => {
   // console.log("Alacarte channels in add alacarte:", alacartechannels);
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
