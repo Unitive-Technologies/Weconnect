@@ -60,6 +60,7 @@ const CreateBouquet = (props) => {
   const [mrp, setMrp] = useState(0);
   const [drp, setDrp] = useState(0);
   const [ncfdrp, setNcfdrp] = useState(130);
+
   const [lcoDiscount, setLcoDiscount] = useState(20);
   const [ncfLcoDiscount, setNcfLcoDiscount] = useState(20);
   const [lcoRate, setLcoRate] = useState(0);
@@ -67,6 +68,9 @@ const CreateBouquet = (props) => {
   const [additionalName, setAdditionalName] = useState("");
   const [additionalLcoDiscount, setAdditionalLcoDiscount] = useState("");
   const [additionalLcoRate, setAdditionalLcoRate] = useState("");
+  // const [ncfAdditionaldrp, setNcfAdditionaldrp] = useState(130);
+  // const [ncfAdditionalLcoDiscount, setNcfAdditionalLcoDiscount] = useState("");
+  // const [ncfAdditionalLcoRate, setNcfAdditionalLcoRate] = useState("");
   const [additionalRates, setAdditionalRates] = useState([]);
   const [rate, setRate] = useState([]);
 
@@ -126,8 +130,11 @@ const CreateBouquet = (props) => {
         mrp_data: {
           pcc: parseInt(mrp),
           drp: parseInt(drp),
+          ncf: parseInt(ncfdrp),
           dis_pcc: parseInt(lcoDiscount),
           lmo_pcc: parseInt(lcoRate),
+          dis_ncf: parseInt(ncfLcoDiscount),
+          lmo_ncf: parseInt(ncfLcoRate),
           is_promotional: parseInt(values["is_promotional"]),
           max_ncf_channels: parseInt(values["max_ncf_channels"]),
           is_loner: parseInt(values["is_loner"]),
@@ -892,6 +899,7 @@ const CreateBouquet = (props) => {
           >
             <Row>
               <AdditionalMrpTable
+                toggleNcfSwitch={toggleNcfSwitch}
                 rechargeperiod={rechargeperiod}
                 additionalLcoDiscount={additionalLcoDiscount}
                 additionalLcoRate={additionalLcoRate}
@@ -902,6 +910,13 @@ const CreateBouquet = (props) => {
                 setAdditionalLcoRate={setAdditionalLcoRate}
                 mrp={mrp}
                 drp={drp}
+                ncfdrp={ncfdrp}
+                // ncfAdditionaldrp={ncfAdditionaldrp}
+                // setNcfAdditionaldrp={setNcfAdditionaldrp}
+                // ncfAdditionalLcoDiscount={ncfAdditionalLcoDiscount}
+                // setNcAdditionalLcoDiscount={setNcfAdditionalLcoDiscount}
+                // ncfAdditionalLcoRate={ncfAdditionalLcoRate}
+                // setNcfAdditionalLcoRate={setNcfAdditionalLcoRate}
               />
             </Row>
             <Row>

@@ -18,15 +18,21 @@ import { createSelector } from "reselect";
 
 const AdditionalMrpTable = (props) => {
   const {
+    toggleNcfSwitch,
+    ncfdrp,
     // rechargeperiod,
     additionalLcoRate,
     additionalRates,
     setAdditionalRates,
     additionalLcoDiscount,
-    // additionalName,
-    // setAdditionalName,
     setAdditionalLcoDiscount,
     setAdditionalLcoRate,
+    // ncfAdditionaldrp,
+    // setNcfAdditionaldrp,
+    // ncfAdditionalLcoDiscount,
+    // setNcfAdditionalLcoDiscount,
+    // ncfAdditionalLcoRate,
+    // setNcfAdditionalLcoRate,
     mrp,
     drp,
   } = props;
@@ -39,6 +45,9 @@ const AdditionalMrpTable = (props) => {
     { id: 1, name: "1day", months: 0, days: 1 },
   ];
   const [additionalName, setAdditionalName] = useState("");
+  const [ncfAdditionaldrp, setNcfAdditionaldrp] = useState(130);
+  const [ncfAdditionalLcoDiscount, setNcfAdditionalLcoDiscount] = useState("");
+  const [ncfAdditionalLcoRate, setNcfAdditionalLcoRate] = useState("");
   const [newArray1, setNewArray1] = useState(rechargeperiod || []);
   console.log("newArray1111:" + JSON.stringify(newArray1));
 
@@ -95,6 +104,8 @@ const AdditionalMrpTable = (props) => {
       mrp_data: {
         dis_pcc: additionalLcoDiscount,
         lmo_pcc: additionalLcoRate,
+        dis_ncf: ncfAdditionalLcoDiscount,
+        lmo_ncf: ncfAdditionalLcoRate,
       },
       rate: rateArray,
     };
@@ -113,6 +124,11 @@ const AdditionalMrpTable = (props) => {
   //   setNewArray1(rechargeperiod);
   // }, [rechargeperiod]);
 
+  useEffect(() => {
+    const totalNcfAdditionalLcoRate = (ncfdrp * ncfAdditionalLcoDiscount) / 100;
+
+    setNcfAdditionalLcoRate(ncfdrp - totalNcfAdditionalLcoRate);
+  }, [ncfdrp, ncfAdditionalLcoDiscount]);
   return (
     <>
       <Row>
@@ -138,6 +154,47 @@ const AdditionalMrpTable = (props) => {
           </div>
         </div>
       </Row>
+      {!toggleNcfSwitch && (
+        <Row className="mb-3 mt-3">
+          <Col sm="3">
+            {/* <Label>MRP**</Label>
+        <Input
+          disabled
+          defaultValue={0}
+          value={parseFloat(mrp).toFixed(2)}
+        /> */}
+            <h4>FIX NCF</h4>
+          </Col>
+          <Col sm="3">
+            <Label>Rate**</Label>
+            <Input
+              type="number"
+              defaultValue="130"
+              disabled
+              value={parseFloat(ncfAdditionaldrp).toFixed(2)}
+              onChange={(e) => setNcfAdditionaldrp(e.target.value)}
+            />
+          </Col>
+          <Col sm="3">
+            <Label>LCO Discount(%)</Label>
+            <Input
+              type="number"
+              defaultValue="20"
+              value={ncfAdditionalLcoDiscount}
+              onChange={(e) => setNcfAdditionalLcoDiscount(e.target.value)}
+            />
+          </Col>
+          <Col sm="3">
+            <Label>LCO Rate**</Label>
+            <Input
+              type="number"
+              // defaultValue={0}
+              value={parseFloat(ncfAdditionalLcoRate).toFixed(2)}
+              onChange={(e) => setNcfAdditionalLcoRate(e.target.value)}
+            />
+          </Col>
+        </Row>
+      )}
       <Row>
         <Col sm="3">
           <Label>MRP**</Label>
@@ -174,6 +231,7 @@ const AdditionalMrpTable = (props) => {
                   <th>#</th>
                   <th>Period</th>
                   <th>Pay Channel Rate**</th>
+                  {!toggleNcfSwitch && <th>NCF</th>}
                   <th>Tax</th>
                   <th>Total AMT</th>
                   <th>Refundable</th>
@@ -198,6 +256,20 @@ const AdditionalMrpTable = (props) => {
                           ).toFixed(2)}
                         />
                       </td>
+                      {!toggleNcfSwitch && (
+                        <td>
+                          <Input
+                            name="ncf"
+                            type="number"
+                            disabled
+                            value={parseFloat(
+                              parseInt(row.months) === 0
+                                ? ncfAdditionalLcoRate / 30
+                                : ncfAdditionalLcoRate * row.months
+                            ).toFixed(2)}
+                          />
+                        </td>
+                      )}
                       <td>
                         <Input
                           name="tax"
