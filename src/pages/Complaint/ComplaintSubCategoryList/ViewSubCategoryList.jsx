@@ -175,6 +175,12 @@ const ViewSubCategoryList = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.name || ""}
                     disabled={!showEditSubCategory}
+                    invalid={
+                      validation.touched.name &&
+                        validation.errors.name
+                        ? true
+                        : false
+                    }
                   ></Input>
                   {validation.touched.name && validation.errors.name ? (
                     <FormFeedback type="invalid">
@@ -197,6 +203,12 @@ const ViewSubCategoryList = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.category || ""}
                     disabled={!showEditSubCategory}
+                    invalid={
+                      validation.touched.category &&
+                        validation.errors.category
+                        ? true
+                        : false
+                    }
                   >
                     {complaintsubcateCategory &&
                       complaintsubcateCategory.map((category) => (
@@ -226,6 +238,12 @@ const ViewSubCategoryList = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.status || ""}
                     disabled={!showEditSubCategory}
+                    invalid={
+                      validation.touched.status &&
+                        validation.errors.status
+                        ? true
+                        : false
+                    }
                   >
                     {complaintsubcateStatus &&
                       complaintsubcateStatus.map((status) => (
@@ -257,6 +275,12 @@ const ViewSubCategoryList = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.showonweb || ""}
                     disabled={!showEditSubCategory}
+                    invalid={
+                      validation.touched.showonweb &&
+                        validation.errors.showonweb
+                        ? true
+                        : false
+                    }
                   >
                     {/* {!showEditSubCategory ? (
                       <option>{validation.values.showonweb_lbl}</option>
