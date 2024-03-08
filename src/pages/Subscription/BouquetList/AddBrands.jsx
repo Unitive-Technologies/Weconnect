@@ -16,7 +16,8 @@ import { Link } from "react-router-dom";
 import AddBrandsTableList from "./AddBrandsTableList";
 
 const AddBrands = (props) => {
-  const { stbbrands, setStbbrands, selectedType, showEditBouquet } = props;
+  const { stbbrands, setStbbrands, selectedType, showEditBouquet, isOpen } =
+    props;
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [showBrandsModal, setShowBrandsModal] = useState(false);
   const columns = useMemo(
@@ -228,18 +229,20 @@ const AddBrands = (props) => {
               <div className="mb-3 d-flex justify-content-end">
                 {/* {console.log("selectedIsHD: " + selectedIsHD)}
                 {console.log("selectedType: " + selectedType)} */}
-                <button
-                  onClick={
-                    !selectedType
-                      ? handleAddBrandsWarning
-                      : handleAddBrandsTable
-                  }
-                  type="button"
-                  className="btn btn-primary"
-                  // disabled={!showEditBouquet}
-                >
-                  Add Brands
-                </button>
+                {(showEditBouquet || isOpen) && (
+                  <button
+                    onClick={
+                      !selectedType
+                        ? handleAddBrandsWarning
+                        : handleAddBrandsTable
+                    }
+                    type="button"
+                    className="btn btn-primary"
+                    // disabled={!showEditBouquet}
+                  >
+                    Add Brands
+                  </button>
+                )}
               </div>
             </Col>
           </Row>

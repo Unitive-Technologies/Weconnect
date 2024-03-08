@@ -17,6 +17,7 @@ import AddAlacarteTableList from "./AddAlacarteTableList";
 import Count from "./Count";
 
 const AddAlacarte = ({
+  isOpen,
   showEditBouquet,
   alacarteData,
   setAlacarteData,
@@ -31,7 +32,8 @@ const AddAlacarte = ({
   setPaychannelCount,
   setNcfCount,
   setTotalChannel,
-  setTotalRate, toggleNcfSwitch
+  setTotalRate,
+  toggleNcfSwitch,
 }) => {
   // console.log("Alacarte channels in add alacarte:", alacartechannels);
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
@@ -139,18 +141,20 @@ const AddAlacarte = ({
               <div className="mb-3 d-flex justify-content-end">
                 {console.log("selectedIsHD: " + selectedIsHD)}
                 {console.log("selectedType: " + selectedType)}
-                <button
-                  // disabled={!showEditBouquet}
-                  onClick={
-                    !selectedType
-                      ? handleAddAlacarteWarning
-                      : handleAddAlacarteTable
-                  }
-                  type="button"
-                  className="btn btn-primary"
-                >
-                  Add Alacarte
-                </button>
+                {(showEditBouquet || isOpen) && (
+                  <button
+                    // disabled={!showEditBouquet && !isOpen}
+                    onClick={
+                      !selectedType
+                        ? handleAddAlacarteWarning
+                        : handleAddAlacarteTable
+                    }
+                    type="button"
+                    className="btn btn-primary"
+                  >
+                    Add Alacarte
+                  </button>
+                )}
               </div>
             </Col>
           </Row>

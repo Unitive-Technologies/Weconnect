@@ -514,7 +514,7 @@ const BouquetList = () => {
     <React.Fragment>
       {showViewBouquet && (
         <ViewBouquet
-          isOpen={showViewBouquet}
+          isOpen={Boolean(showViewBouquet)}
           toggle={toggleViewBouquet}
           bouquet={viewBouquetData}
           alacartechannels={alacartechannels}
@@ -526,6 +526,8 @@ const BouquetList = () => {
           bouquex={bouquex}
           rechargeperiod={rechargeperiod}
           selectedRowId={viewBouquetData && viewBouquetData.id}
+          showCreateBouquet={showCreateBouquet}
+          showViewBouquet={showViewBouquet}
         />
       )}
       {showCreateBouquet && (
@@ -540,6 +542,8 @@ const BouquetList = () => {
           bouquettype={bouquettype}
           bouquex={bouquex}
           rechargeperiod={rechargeperiod}
+          showCreateBouquet={showCreateBouquet}
+          showViewBouquet={showViewBouquet}
         />
       )}
       <BulkAssign

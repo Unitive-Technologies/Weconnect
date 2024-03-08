@@ -17,6 +17,7 @@ import AddPackagesTableList from "./AddPackagesTableList";
 import Count from "./Count";
 
 const AddPackages = ({
+  isOpen,
   showEditBouquet,
   packagesData,
   setPackagesData,
@@ -155,21 +156,22 @@ const AddPackages = ({
             <Col lg={8}></Col>
             <Col lg={4}>
               <div className="mb-3 d-flex justify-content-end">
-                {console.log("selectedIsHD: " + selectedIsHD)}
-                {console.log("selectedType: " + selectedType)}
-                <button
-                  onClick={
-                    !selectedType
-                      ? handleAddPackageWarning
-                      : handleAddPackageTable
-                  }
-                  type="button"
-                  className="btn btn-primary"
-                  disabled={parseInt(selectedType) === 3}
-                  // || !showEditBouquet
-                >
-                  Add Package
-                </button>
+                {/* {console.log("selectedIsHD: " + selectedIsHD)}
+                {console.log("selectedType: " + selectedType)} */}
+                {(showEditBouquet || isOpen) && (
+                  <button
+                    onClick={
+                      !selectedType
+                        ? handleAddPackageWarning
+                        : handleAddPackageTable
+                    }
+                    type="button"
+                    className="btn btn-primary"
+                    disabled={parseInt(selectedType) === 3}
+                  >
+                    Add Package
+                  </button>
+                )}
               </div>
             </Col>
           </Row>

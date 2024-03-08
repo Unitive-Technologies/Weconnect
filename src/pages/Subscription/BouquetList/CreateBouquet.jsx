@@ -669,6 +669,7 @@ const CreateBouquet = (props) => {
                   setNcfCount={setNcfCountAlacar}
                   setTotalChannel={setTotalChannelAlacar}
                   setTotalRate={setTotalRateAlacar}
+                  isOpen={isOpen}
                 />
                 <Count
                   ftaCount={ftaCountAlacar}
@@ -719,6 +720,7 @@ const CreateBouquet = (props) => {
                   setNcfCount={setNcfCountPackage}
                   setTotalChannel={setTotalChannelPackage}
                   setTotalRate={setTotalRatePackage}
+                  isOpen={isOpen}
                 />
                 <Count
                   ftaCount={ftaCountPackage}
@@ -899,6 +901,7 @@ const CreateBouquet = (props) => {
           >
             <Row>
               <AdditionalMrpTable
+                isOpen={isOpen}
                 toggleNcfSwitch={toggleNcfSwitch}
                 rechargeperiod={rechargeperiod}
                 additionalLcoDiscount={additionalLcoDiscount}
@@ -956,6 +959,7 @@ const CreateBouquet = (props) => {
               stbbrands={stbbrands}
               setStbbrands={setStbbrands}
               selectedType={selectedType}
+              isOpen={isOpen}
             />
             <p>
               *If no brand selected, this bouquet will be available for all STB

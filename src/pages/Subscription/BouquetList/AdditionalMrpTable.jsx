@@ -18,6 +18,8 @@ import { createSelector } from "reselect";
 
 const AdditionalMrpTable = (props) => {
   const {
+    isOpen,
+    showEditBouquet,
     toggleNcfSwitch,
     ncfdrp,
     // rechargeperiod,
@@ -143,15 +145,17 @@ const AdditionalMrpTable = (props) => {
               onChange={(e) => setAdditionalName(e.target.value)}
             />
           </div>
-          <div>
-            <button
-              type="button"
-              className="btn btn-primary "
-              onClick={updateRate}
-            >
-              + Add Pricing
-            </button>
-          </div>
+          {(showEditBouquet || isOpen) && (
+            <div>
+              <button
+                type="button"
+                className="btn btn-primary "
+                onClick={updateRate}
+              >
+                + Add Pricing
+              </button>
+            </div>
+          )}
         </div>
       </Row>
       {!toggleNcfSwitch && (

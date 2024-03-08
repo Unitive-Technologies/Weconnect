@@ -974,6 +974,7 @@ const ViewBouquet = (props) => {
             >
               <Row>
                 <AdditionalMrpTable
+                  showEditBouquet={showEditBouquet}
                   rechargeperiod={rechargeperiod}
                   additionalLcoDiscount={additionalLcoDiscount}
                   additionalLcoRate={additionalLcoRate}
