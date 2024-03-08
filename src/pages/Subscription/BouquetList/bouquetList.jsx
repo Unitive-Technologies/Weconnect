@@ -401,7 +401,7 @@ const BouquetList = () => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.ifFixNCF === "true"
+              {cellProps.row.original.ifFixNCF === true
                 ? "Fix NCF"
                 : "Dynamic NCF"}
             </p>

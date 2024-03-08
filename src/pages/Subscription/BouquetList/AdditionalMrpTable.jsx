@@ -78,7 +78,10 @@ const AdditionalMrpTable = (props) => {
           parseFloat(rateData.months) === 0
             ? ((additionalLcoRate / 30) * 30.3) / 100
             : (additionalLcoRate * rateData.months * 30.3) / 100,
-        rent: 0,
+        rent:
+          (parseFloat(rateData.months) === 0
+            ? ncfAdditionalLcoRate / 30
+            : ncfAdditionalLcoRate * rateData.months) || 0,
         is_refundable: rateData.is_refundable ? 1 : 0,
         free_days: rateData.free_days || 0,
         cashback_amount: 0,

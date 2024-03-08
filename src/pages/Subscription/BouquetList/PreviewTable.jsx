@@ -53,8 +53,14 @@ const PreviewTable = (props) => {
     const updatedRate = newArray.map((row, i) => {
       const price =
         parseFloat(row.months) === 0 ? lcoRate / 30 : lcoRate * row.months;
-      const totalAmount = price + (price * 30.3) / 100;
 
+      const ncfPrice =
+        parseFloat(row.months) === 0
+          ? ncfLcoRate / 30
+          : ncfLcoRate * row.months;
+      const totalAmount = price + (price * 30.3) / 100;
+      const totalwithNcf = price + ncfPrice;
+      const ncfTotalAmount = totalwithNcf + (totalwithNcf * 30.3) / 100;
       const isRefundable = row.is_refundable || false;
 
       const freeDays = parseInt(row.free_days) || 0;
@@ -65,11 +71,13 @@ const PreviewTable = (props) => {
       return {
         id: row.id,
         price: parseFloat(price.toFixed(2)),
-        rent: 0,
+        rent: parseFloat(ncfPrice.toFixed(2)) || 0,
         is_refundable: isRefundable ? 1 : 0,
         free_days: freeDays,
         cashback_amount: cashbackAmount,
-        total_amount: parseFloat(totalAmount.toFixed(2)),
+        total_amount: !toggleNcfSwitch
+          ? parseFloat(ncfTotalAmount.toFixed(2))
+          : parseFloat(totalAmount.toFixed(2)),
       };
     });
     // console.log("updatedRateeeeeeeeee: " + JSON.stringify(updatedRate));

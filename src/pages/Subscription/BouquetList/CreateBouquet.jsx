@@ -42,6 +42,7 @@ const CreateBouquet = (props) => {
   const dispatch = useDispatch();
   const [toggleSwitch, settoggleSwitch] = useState(true);
   const [toggleNcfSwitch, setToggleNcfSwitch] = useState(true);
+  const [ifFixNCF, setIfFixNCF] = useState(false);
   const [selectedType, setSelectedType] = useState("");
   const [selectedIsHD, setSelectedIsHD] = useState("");
   const [alacarteData, setAlacarteData] = useState([]);
@@ -97,7 +98,7 @@ const CreateBouquet = (props) => {
       status: "",
       description: "",
       is_promotional: "",
-      ifFixNCF: "",
+      ifFixNCF: false,
       max_ncf_channels: "",
       is_online_app: "",
       sort_by: "",
@@ -125,7 +126,7 @@ const CreateBouquet = (props) => {
         sort_by: parseInt(values["sort_by"]),
         status: parseInt(values["status"]),
         type: parseInt(values["type"]),
-        ifFixNCF: values(["ifFixNCF"]),
+        ifFixNCF: values["ifFixNCF"],
         mrp: parseInt(mrp),
         mrp_data: {
           pcc: parseInt(mrp),
@@ -477,12 +478,13 @@ const CreateBouquet = (props) => {
                       type="checkbox"
                       className="form-check-input"
                       id="customSwitchsizelg"
-                      defaultChecked={validation.values.ifFixNCF}
-                      onChange={validation.handleChange}
-                      onClick={(e) => {
+                      defaultChecked={!ifFixNCF} // Check ifFixNCF is false by default
+                      onChange={(e) => setIfFixNCF(!e.target.checked)} // Toggle ifFixNCF when checkbox is changed
+                      onClick={() => {
                         setToggleNcfSwitch(!toggleNcfSwitch);
                       }}
                     />
+
                     <label
                       className="form-check-label"
                       htmlFor="customSwitchsizelg"
@@ -623,6 +625,7 @@ const CreateBouquet = (props) => {
               </div>
             </Col>
           </Row>
+          {console.log("fixNCF Value:" + ifFixNCF)}
           <div
             style={{
               display: "flex",

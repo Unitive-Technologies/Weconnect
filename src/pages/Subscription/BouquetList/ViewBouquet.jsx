@@ -52,6 +52,7 @@ const ViewBouquet = (props) => {
   const [showEditBouquet, setShowEditBouquet] = useState(false);
   const [toggleSwitch, settoggleSwitch] = useState(true);
   const [toggleNcfSwitch, setToggleNcfSwitch] = useState(true);
+  const [ifFixNCF, setIfFixNCF] = useState(false);
   const [selectedType, setSelectedType] = useState("");
   const [selectedIsHD, setSelectedIsHD] = useState("");
   const [alacarteData, setAlacarteData] = useState([]);
@@ -131,7 +132,7 @@ const ViewBouquet = (props) => {
       is_online_app:
         (selectedRowDetails && selectedRowDetails.is_online_app) || "",
       sort_by: (selectedRowDetails && selectedRowDetails.sort_by) || "",
-
+      ifFixNCF: (selectedRowDetails && selectedRowDetails.ifFixNCF) || "",
       mrp: (selectedRowDetails && parseInt(selectedRowDetails.mrp)) || "",
       mrp_data: {
         pcc: (selectedRowDetails && selectedRowDetails.mrp) || "",
@@ -926,6 +927,38 @@ const ViewBouquet = (props) => {
                   </div>
                 </div>
               </div>
+              {!toggleNcfSwitch && (
+                <Row>
+                  <Col sm="3">
+                    <h4>FIX NCF</h4>
+                  </Col>
+                  <Col sm="3">
+                    <Label>DRP**</Label>
+                    <Input
+                      type="number"
+                      defaultValue={0}
+                      value={parseFloat(drp).toFixed(2)}
+                    />
+                  </Col>
+                  <Col sm="3">
+                    <Label>LCO Discount(%)</Label>
+                    <Input
+                      type="number"
+                      defaultValue="20"
+                      value={lcoDiscount}
+                      onChange={(e) => setLcoDiscount(e.target.value)}
+                    />
+                  </Col>
+                  <Col sm="3">
+                    <Label>LCO Rate**</Label>
+                    <Input
+                      type="number"
+                      defaultValue={0}
+                      value={parseFloat(lcoRate).toFixed(2)}
+                    />
+                  </Col>
+                </Row>
+              )}
               <Row>
                 <Col sm="3">
                   <Label>MRP**</Label>
