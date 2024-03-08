@@ -9,8 +9,6 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  Label,
-  Input,
   Form,
   CardSubtitle,
   Toast,
@@ -170,28 +168,9 @@ const UploadBankList = (props) => {
                   <p>Fields: {uploadTrigger.fields.join(", ")}</p>
                 </div>
               )}
-              {/* <div className="mb-3">
-                <Label className="form-label">Status</Label>
-                <Input
-                  name="status"
-                  type="select"
-                  placeholder="Select status"
-                  className="form-select"
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
-                >
-                  <option value="">Select Status</option>
-                  {langlistStatus &&
-                    langlistStatus.map((status) => (
-                      <option key={status.id} value={status.id}>
-                        {status.name}
-                      </option>
-                    ))}
-                </Input>
-              </div> */}
               <CardSubtitle className="mb-3">
                 {" "}
-                Select File to Upload
+                Select File to Upload<span style={{ color: "red" }}>*</span>
               </CardSubtitle>
               <Form>
                 <Dropzone
