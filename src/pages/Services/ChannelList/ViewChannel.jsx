@@ -639,8 +639,8 @@ const ViewChannel = (props) => {
                     placeholder="0"
                     disabled={
                       !showEditChannel ||
-                      selectedType === "1" ||
-                      validation.values.isAlacarte === "0"
+                      selectedType === 1 ||
+                      selectedAlcarte === 0
                     }
                     value={selectedRate}
                     onBlur={validation.handleBlur}
@@ -666,11 +666,7 @@ const ViewChannel = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.status || ""}
-                    disabled={
-                      !showEditChannel ||
-                      selectedType === "1" ||
-                      selectedAlcarte === "0"
-                    }
+                    disabled={!showEditChannel}
                   >
                     {channelListStatus.map((list) => (
                       <option key={list.id} value={list.id}>
