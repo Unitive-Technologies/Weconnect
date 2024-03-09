@@ -47,10 +47,8 @@ const AddNewPromoVoucher = (props) => {
     validationSchema: Yup.object({
       operator: Yup.string().required("Select Ico"),
       operator_code: Yup.string().required("Enter voucher count"),
-      amount: Yup.string().required("Enter voucher amount"),
-      mrp: Yup.string().required("Exter voucher mrp"),
       expiry_date: Yup.string().required("Select expiry date"),
-      // bouquets_ids: Yup.string().required("Select bouquet"),
+      bouquets_ids: Yup.string().required("Select bouquet"),
       applied_on: Yup.string().required("Select apply on"),
       recharge_period: Yup.string().required("Select recharge periods"),
     }),
@@ -125,6 +123,12 @@ const AddNewPromoVoucher = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.operator || ""}
+                  invalid={
+                    validation.touched.operator &&
+                      validation.errors.operator
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select LCO</option>
                   {promovoucherLCO &&
@@ -158,6 +162,12 @@ const AddNewPromoVoucher = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.operator_code || ""}
+                  invalid={
+                    validation.touched.operator_code &&
+                      validation.errors.operator_code
+                      ? true
+                      : false
+                  }
                 ></Input>
                 {validation.touched.operator_code &&
                   validation.errors.operator_code ? (
@@ -228,6 +238,12 @@ const AddNewPromoVoucher = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.expiry_date || ""}
+                  invalid={
+                    validation.touched.expiry_date &&
+                      validation.errors.expiry_date
+                      ? true
+                      : false
+                  }
                 ></Input>
                 {validation.touched.expiry_date &&
                   validation.errors.expiry_date ? (
@@ -267,13 +283,28 @@ const AddNewPromoVoucher = (props) => {
                     value: bouquet.id,
                     label: bouquet.name
                   }))}
+                  invalid={
+                    validation.touched.bouquets_ids &&
+                      validation.errors.bouquets_ids
+                      ? true
+                      : false
+                  }
+                  styles={{
+                    menu: (provided) => ({ ...provided, maxHeight: "300px" }),
+                    menuList: (provided) => ({
+                      ...provided,
+                      maxHeight: "300px",
+                    }),
+                  }}
                 />
-                {validation.touched.bouquets_ids &&
+                {
+                  validation.touched.bouquets_ids &&
                   validation.errors.bouquets_ids && (
                     <FormFeedback type="invalid">
                       {validation.errors.bouquets_ids}
                     </FormFeedback>
-                  )}
+                  )
+                }
               </div>
             </Col>
 
@@ -290,6 +321,12 @@ const AddNewPromoVoucher = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.applied_on || ""}
+                  invalid={
+                    validation.touched.applied_on &&
+                      validation.errors.applied_on
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select apply on</option>
                   {promovoucherApply &&
@@ -325,6 +362,12 @@ const AddNewPromoVoucher = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.recharge_period || ""}
+                  invalid={
+                    validation.touched.recharge_period &&
+                      validation.errors.recharge_period
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Recharge</option>
                   {promovoucherRecharge &&
