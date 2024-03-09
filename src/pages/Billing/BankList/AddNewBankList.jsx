@@ -115,6 +115,12 @@ const AddNewBankList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}
+                  invalid={
+                    validation.touched.name &&
+                      validation.errors.name
+                      ? true
+                      : false
+                  }
                 ></Input>
                 {validation.touched.name && validation.errors.name ? (
                   <FormFeedback type="invalid">
@@ -181,6 +187,12 @@ const AddNewBankList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  invalid={
+                    validation.touched.status &&
+                      validation.errors.status
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Status</option>
                   {bankStatus &&
@@ -262,6 +274,12 @@ const AddNewBankList = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.account_no || ""}
+                    invalid={
+                      validation.touched.account_no &&
+                        validation.errors.account_no
+                        ? true
+                        : false
+                    }
                   ></Input>
                   {validation.touched.account_no &&
                     validation.errors.account_no && (

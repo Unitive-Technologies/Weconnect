@@ -55,8 +55,6 @@ const ViewBankList = (props) => {
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
       ifscode: Yup.string().required(""),
-      branch: Yup.string().required("Select branch type"),
-      address: Yup.string().required("Enter address"),
       ismso: Yup.string().required("selecct for mso"),
       status_lbl: Yup.string().required("Select status"),
     }),
@@ -180,7 +178,7 @@ const ViewBankList = (props) => {
               <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">
-                    IFSC Code<span style={{ color: "red" }}>*</span>
+                    IFSC Code
                   </Label>
                   <Input
                     name="ifscode"
@@ -203,7 +201,7 @@ const ViewBankList = (props) => {
               <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">
-                    Branch<span style={{ color: "red" }}>*</span>
+                    Branch
                   </Label>
                   <Input
                     name="branch"
@@ -240,6 +238,12 @@ const ViewBankList = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.status_lbl || ""}
                     disabled={!showEditBank}
+                    invalid={
+                      validation.touched.status_lbl &&
+                        validation.errors.status_lbl
+                        ? true
+                        : false
+                    }
                   >
                     {bankStatus.map((status_lbl) => (
                       <option key={status_lbl.id} value={status_lbl.id}>
@@ -257,7 +261,7 @@ const ViewBankList = (props) => {
               <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">
-                    Branch Address<span style={{ color: "red" }}>*</span>
+                    Branch Address
                   </Label>
                   <Input
                     name="address"
@@ -309,7 +313,7 @@ const ViewBankList = (props) => {
                 {showAccountNo && (
                   <div className="mb-3">
                     <Label className="form-label">
-                      Account No
+                      Account No<span style={{ color: "red" }}>*</span>
                     </Label>
                     <Input
                       name="account_no"

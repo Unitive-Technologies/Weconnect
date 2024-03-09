@@ -36,8 +36,6 @@ const UploadReasonListModal = (props) => {
   const [status, setStatus] = useState("");
   const [type, setType] = useState([]);
   const [successMsg, setSuccessMsg] = useState(false);
-  const [fileValidationError, setFileValidationError] = useState("");
-
 
   const handleTypeChange = (e) => {
     const selectedOptions = Array.from(e.target.selectedOptions, (option) => parseInt(option.value));
@@ -100,10 +98,9 @@ const UploadReasonListModal = (props) => {
 
   const handleUploadFile = () => {
     if (selectedFiles.length === 0) {
-      setFileValidationError("Please select a file to upload.");
+      console.log("No files selected to upload, handle accordingly");
+      // No files selected, handle accordingly
       return;
-    } else {
-      setFileValidationError(""); // Clear any previous validation error
     }
 
     if (!uploadTrigger || !uploadTrigger.token) {
@@ -133,8 +130,6 @@ const UploadReasonListModal = (props) => {
         console.log("error in upload:" + error);
       });
   };
-
-
   return (
     <>
       <div
