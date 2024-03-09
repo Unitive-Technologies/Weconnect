@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import ViewRevenueShare from "./ViewRevenueShare";
 import Select from "react-select";
 import {
   Col,
@@ -23,7 +22,6 @@ import { useFormik } from "formik";
 import { updateChannelList as onUpdateChannelList } from "/src/store/channel/actions";
 import { useDispatch } from "react-redux";
 import CasList from "./CasList";
-import ViewPieChart from "./ViewPieChart";
 import ShowHistoryModal from "./ShowHistoryModal";
 import PieChart from "./PieChart";
 import RevenueShare from "./RevenueShare";

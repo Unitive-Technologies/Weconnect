@@ -128,12 +128,12 @@ const AddNewChannelList = (props) => {
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter channel name"),
-      // description: Yup.string().required("Enter description"),
-      // definition: Yup.string().required("Enter channel definition"),
-      // isFta: Yup.string().required("Enter channel type"),
-      // broadcaster: Yup.string().required("select broadcaster"),
-      // genre: Yup.string().required("Enter genre"),
-      // language: Yup.array().min(1, "Select language"),
+      description: Yup.string().required("Enter description"),
+      definition: Yup.string().required("Enter channel definition"),
+      isFta: Yup.string().required("Enter channel type"),
+      broadcaster: Yup.string().required("select broadcaster"),
+      genre: Yup.string().required("Enter genre"),
+      language: Yup.array().min(1, "Select Atleat one language"),
       status: Yup.string().required("Enter status"),
     }),
     onSubmit: (values) => {
@@ -164,9 +164,7 @@ const AddNewChannelList = (props) => {
         },
         status: parseInt(values["status"]),
       };
-
       console.log("newChannelList:" + newChannelList);
-      // save new user
       dispatch(onAddNewChannelList(newChannelList));
       dispatch(onGetChannelList());
       validation.resetForm();
@@ -180,13 +178,6 @@ const AddNewChannelList = (props) => {
 
   const handleUpdateCasList = (casList) => {
     setCasCodeList(casList);
-  };
-
-  const [isCustomEnabled, setIsCustomEnabled] = useState(false);
-
-  const handleChange = (e) => {
-    // Handle switch change
-    setIsCustomEnabled(e.target.checked);
   };
 
   return (
@@ -259,11 +250,6 @@ const AddNewChannelList = (props) => {
                     </label>
                   </div>
                 </div>
-                {/* {validation.touched.ifFixNCF && validation.errors.ifFixNCF ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.ifFixNCF}
-                  </FormFeedback>
-                ) : null} */}
               </div>
             </Col>
             <Col sm="3">
@@ -297,11 +283,6 @@ const AddNewChannelList = (props) => {
                     </label>
                   </div>
                 </div>
-                {/* {validation.touched.ifFixNCF && validation.errors.ifFixNCF ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.ifFixNCF}
-                  </FormFeedback>
-                ) : null} */}
               </div>
             </Col>
           </Row>
@@ -319,11 +300,6 @@ const AddNewChannelList = (props) => {
                   type="file"
                   onChange={handleChangeLogo}
                 ></input>
-                {/* {validation.touched.logo && validation.errors.logo ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.logo}
-                  </FormFeedback>
-                ) : null} */}
                 <button
                   type="button"
                   className="btn btn-primary "
@@ -342,10 +318,14 @@ const AddNewChannelList = (props) => {
                   name="name"
                   type="text"
                   placeholder="Enter name"
-                  // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}
+                  invalid={
+                    validation.touched.name && validation.errors.name
+                      ? true
+                      : false
+                  }
                 ></Input>
                 {validation.touched.name && validation.errors.name ? (
                   <FormFeedback type="invalid">
@@ -394,6 +374,12 @@ const AddNewChannelList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.definition || ""}
+                  invalid={
+                    validation.touched.definition &&
+                    validation.errors.definition
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select definition</option>
                   {channelListDefinition &&
@@ -425,6 +411,11 @@ const AddNewChannelList = (props) => {
                   }}
                   onBlur={validation.handleBlur}
                   value={validation.values.isFta || ""}
+                  invalid={
+                    validation.touched.isFta && validation.errors.isFta
+                      ? true
+                      : false
+                  }
                 >
                   <option>Select Type</option>
                   {channelListType &&
@@ -456,6 +447,12 @@ const AddNewChannelList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.broadcaster || ""}
+                  invalid={
+                    validation.touched.broadcaster &&
+                    validation.errors.broadcaster
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Broadcaster</option>
                   {channelListBroadcaster &&
@@ -486,6 +483,11 @@ const AddNewChannelList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.genre || ""}
+                  invalid={
+                    validation.touched.genre && validation.errors.genre
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Genre</option>
                   {channelListGenre &&
@@ -502,39 +504,6 @@ const AddNewChannelList = (props) => {
                 ) : null}
               </div>
             </Col>
-            {/* <Col sm="4">
-              <div className="mb-3">
-                <Label className="form-label">
-                  Language<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="language_id"
-                  type="select"
-                  multiple
-                  placeholder="Select language"
-                  className="form-select"
-                  aria-label="multiple select example"
-                  onChange={handleChangeLanguages}
-                  onBlur={validation.handleBlur}
-                  value={selectedLanguages}
-                >
-                  <option value="">Select Language</option>
-                  {channelListLanguage &&
-                    channelListLanguage.map((language_id) => (
-                      <option key={language_id.id} value={language_id.id}>
-                        {language_id.name}
-                      </option>
-                    ))}
-                </Input>
-                {validation.touched.language_id &&
-                  validation.errors.language_id ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.language_id}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col> */}
-
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
@@ -542,7 +511,7 @@ const AddNewChannelList = (props) => {
                 </Label>
                 <Select
                   name="language_id"
-                  placeholder="Select at least one Reason Type"
+                  placeholder="Select at least one Language"
                   onChange={(selectedOptions) => {
                     validation.setFieldValue(
                       "language_id",
@@ -552,10 +521,6 @@ const AddNewChannelList = (props) => {
                     );
                   }}
                   onBlur={validation.handleBlur}
-                  // value={validation.values.language_id.map(id => ({
-                  //   value: id,
-                  //   label: channelListLanguage.find(language => language.id === id)?.name
-                  // }))}
                   options={channelListLanguage.map((language) => ({
                     value: language.id,
                     label: language.name,
@@ -568,6 +533,12 @@ const AddNewChannelList = (props) => {
                       maxHeight: "300px",
                     }),
                   }}
+                  invalid={
+                    validation.touched.language_id &&
+                    validation.errors.language_id
+                      ? true
+                      : false
+                  }
                 />
               </div>
               {validation.touched.language_id &&
@@ -633,6 +604,11 @@ const AddNewChannelList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  invalid={
+                    validation.touched.status && validation.errors.status
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Status</option>
                   {channelListStatus &&
