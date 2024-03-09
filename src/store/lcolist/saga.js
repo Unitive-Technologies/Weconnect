@@ -209,21 +209,23 @@ function* fetchLcoPaymentmode() {
   }
 }
 
+export const getLcocreditStore = (state) => state.lcoaddcredit;
+
 function* fetchLcoAddcredit() {
   try {
-    let lcoStore = yield select(getLcoStore);
+    let lcocreditStore = yield select(getLcocreditStore);
 
-    const pageSize = lcoStore.pageSize;
-    const currentPage = lcoStore.currentPage;
-    console.log("currentPage in saga -", pageSize);
-    console.log("pageSize in saga -", currentPage);
+    const pageSize = lcocreditStore.pageSize;
+    const currentPage = lcocreditStore.currentPage;
+    console.log("currentPage in credit saga -", pageSize);
+    console.log("pageSize in credit saga -", currentPage);
 
     const response = yield call(getLcoAddcredit, currentPage, pageSize);
-    console.log("Response from API -", response);
+    console.log("Credit Response from API -", response);
     // debugger;
     yield put(getLcoAddcreditSuccess(response));
   } catch (error) {
-    console.error("Error fetching lco list:", error);
+    console.error("Error fetching lco credit list:", error);
     yield put(getLcoAddcreditFail(error));
   }
 }

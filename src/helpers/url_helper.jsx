@@ -178,7 +178,8 @@ export const GET_LCO_PARENTDISTRIBUTOR =
 export const GET_SINGLE_LCO = (id) =>
   `/operator-account/${id}?expand=logo,type_lbl,mso_lbl,branch_lbl,distributor_lbl,igst,cgst,sgst,name,balance,credit,debit,balance_h,credit_h,debit_h&vr=web1.0`;
 export const GET_LCO_ADDCREDIT = (currPage, perPage) => {
-  return `${API_URL}/operator?expand=balance,balance_h,created_by_lbl,distributor_lbl,status_lbl,branch_lbl,username&filter[type]=3&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+  return `/operator?expand=balance,balance_h,created_by_lbl,distributor_lbl,status_lbl,branch_lbl,username&filter[type]=3&page=${currPage}&per-page=${perPage}&vr=web1.0`;
+  // return `/operator?expand=balance,balance_h,created_by_lbl,distributor_lbl,status_lbl,branch_lbl,username&filter[type]=3&page=1&per-page=50&vr=web1.0`
 };
 
 export const GET_APPADBANNER = "/appadbanner";

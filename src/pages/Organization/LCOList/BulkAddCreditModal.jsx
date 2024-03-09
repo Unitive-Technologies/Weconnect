@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import TableContainer from "../../../components/Common/TableContainer";
@@ -6,7 +6,6 @@ import {
   Card,
   CardBody,
   Col,
-  Container,
   Row,
   Modal,
   ModalHeader,
@@ -14,14 +13,10 @@ import {
   ModalBody,
   Label,
   FormFeedback,
-  UncontrolledTooltip,
   Input,
   Form,
-  CardTitle,
-  CardSubtitle,
 } from "reactstrap";
 import { Link } from "react-router-dom";
-import Dropzone from "react-dropzone";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
@@ -29,18 +24,15 @@ import { createSelector } from "reselect";
 import {
   getLco as onGetLco,
   getLcoAddcredit as onGetLcoAddcredit,
-  goToPage as onGoToPage,
+  goToPage1 as onGoToPage,
 } from "/src/store/lcolist/actions";
 import TableContainerX from "../../../components/Common/TableContainerX";
 
 const BulkAddCreditModal = (props) => {
   const { isOpen, toggleAddCreditModal, lco } = props;
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
-  // const [tableData, setTableData] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [tableList, setTableList] = useState([]);
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [totalPages, setTotalPages] = useState(1);
   const dispatch = useDispatch();
 
   const goToPage = (toPage) => {
@@ -73,15 +65,6 @@ const BulkAddCreditModal = (props) => {
       dispatch(onGetLcoAddcredit());
     }
   }, [dispatch, lcoaddcredit]);
-
-  console.log(
-    "Lco on Credit: ",
-    totalPage,
-    totalCount,
-    pageSize,
-    currentPage,
-    lcoaddcredit
-  );
 
   const handleActive = (row) => {
     const isRowSelected = selectedUsers.some((user) => user.id === row.id);
@@ -170,6 +153,7 @@ const BulkAddCreditModal = (props) => {
       validation.setValues(validation.initialValues);
     },
   });
+
   const columns = useMemo(
     () => [
       {
@@ -177,14 +161,14 @@ const BulkAddCreditModal = (props) => {
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+          const startIndex = (currentPage - 1) * pageSize;
+          const index = startIndex + cellProps.row.index + 1;
 
           return (
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {reverseIndex}
+                  {index}
                 </Link>
               </h5>
             </>
@@ -194,7 +178,7 @@ const BulkAddCreditModal = (props) => {
 
       {
         Header: "Name",
-        // accessor: "name",
+        accessor: "name",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -207,10 +191,6 @@ const BulkAddCreditModal = (props) => {
                   whiteSpace: "nowrap",
                 }}
                 className="font-size-14 mb-1"
-                // onClick={() => {
-                //   const userData = cellProps.row.original;
-                //   toggleViewModal(userData);
-                // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -222,65 +202,45 @@ const BulkAddCreditModal = (props) => {
       },
       {
         Header: "Code",
-        // accessor: "login",
+        accessor: "code",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.username}
-                </Link>
-              </h5>
-            </>
+            <p className="text-muted mb-0">{cellProps.row.original.code}</p>
           );
         },
       },
       {
         Header: "Distributor",
-        // accessor: "status",
+        accessor: "distributor_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.status}
-                </Link>
-              </h5>
-            </>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.distributor_lbl}
+            </p>
           );
         },
       },
       {
         Header: "Regional Office",
-        // accessor: "type",
+        accessor: "branch_lbl",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.status}
-                </Link>
-              </h5>
-            </>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.branch_lbl}
+            </p>
           );
         },
       },
       {
         Header: "Balance",
-        // accessor: "role",
+        accessor: "balance",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.balance}
-                </Link>
-              </h5>
-            </>
+            <p className="text-muted mb-0">{cellProps.row.original.balance}</p>
           );
         },
       },
@@ -400,42 +360,12 @@ const BulkAddCreditModal = (props) => {
     ],
     []
   );
-  const getAllLCO = async (page) => {
-    try {
-      const token = "Bearer " + localStorage.getItem("temptoken");
-      const perPage = 50;
 
-      const response = await axios.get(
-        // `${API_URL}/operator?expand=balance,balance_h,created_by_lbl,distributor_lbl,status_lbl,branch_lbl,username&filter[type]=3&page=${page}&per-page=${perPage}&vr=web1.0`,
-        `${API_URL}/operator?expand=balance,balance_h,created_by_lbl,distributor_lbl,status_lbl,branch_lbl,username&filter[type]=3&page=1&per-page=50&vr=web1.0`,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
-      setTableList(response.data.data);
-      // console.log(
-      //   "Total Page: ",
-      //   Math.ceil(response.data.total_count / perPage)
-      // );
-      // setTotalPages(Math.ceil(response.data.total_count / perPage));
-      console.log("response in useEffect:" + JSON.stringify(response));
-    } catch (error) {
-      console.error("Error fetching history data:", error);
-    }
+  const handleToggle = () => {
+    toggleAddCreditModal();
+    setSelectedUsers([]);
   };
-  useEffect(() => {
-    getAllLCO();
-  }, []);
-  // useEffect(() => {
-  //   getAllLCO(currentPage);
-  // }, [currentPage]);
 
-  // // Handle pagination change
-  // const handlePageChange = (page) => {
-  //   setCurrentPage(page);
-  // };
   return (
     <Modal
       isOpen={isOpen}
@@ -514,21 +444,6 @@ const BulkAddCreditModal = (props) => {
                   </div>
                 </Col>
               </Row>
-              {/* <TableContainer
-                isPagination={true}
-                columns={columns}
-                data={tableList}
-                //   isGlobalFilter={true}
-                isShowingPageLength={true}
-                customPageSize={10}
-                handleRowClick={(row) => {
-                  handleActive(row);
-                }}
-                tableClass="table align-middle table-nowrap table-hover"
-                theadClass="table-light"
-                paginationDiv="col-sm-12 col-md-7"
-                pagination="pagination pagination-rounded justify-content-end mt-4"
-              /> */}
               <TableContainerX
                 columns={columns}
                 data={lcoaddcredit}
@@ -543,6 +458,7 @@ const BulkAddCreditModal = (props) => {
                 handleRowClick={(row) => {
                   handleActive(row);
                 }}
+                tableActions={() => {}}
               />
               <div
                 style={{
@@ -573,7 +489,6 @@ const BulkAddCreditModal = (props) => {
                     isPagination={true}
                     columns={selOperColumn}
                     data={selectedUsers}
-                    //   isGlobalFilter={true}
                     isShowingPageLength={true}
                     customPageSize={50}
                     tableClass="table align-middle table-nowrap table-hover"
@@ -604,21 +519,6 @@ const BulkAddCreditModal = (props) => {
           </CardBody>
         </Card>
       </ModalBody>
-      {/* <ModalFooter>
-        <button type="submit" className="btn btn-success save-user">
-          Save
-        </button>
-        <button
-          type="button"
-          className="btn btn-outline-danger"
-          onClick={() => {
-            validation.resetForm();
-            toggleAddCreditModal();
-          }}
-        >
-          Cancel
-        </button>
-      </ModalFooter> */}
     </Modal>
   );
 };

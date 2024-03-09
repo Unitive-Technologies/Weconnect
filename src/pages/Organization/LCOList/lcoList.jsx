@@ -528,7 +528,12 @@ const LCOList = (props) => {
       <BulkAddCreditModal
         isOpen={showBulkCredit}
         toggleAddCreditModal={toggleAddCreditModal}
-        lco={lcoData}
+        lco={lcos}
+        totalCount={totalCount}
+        pageSize={pageSize}
+        currentPage={currentPage}
+        totalPage={totalPage}
+        loading={loading}
       />
       <UploadModal
         isOpen={showUploadLco}

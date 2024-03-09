@@ -36,10 +36,16 @@ import {
   GET_LCO_ADDCREDIT,
   GET_LCO_ADDCREDIT_SUCCESS,
   GET_LCO_ADDCREDIT_FAIL,
+  UPDATE_LCO_ADDCREDIT_CURRENT_PAGE,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
   type: UPDATE_LCO_CURRENT_PAGE,
+  payload: Number(toPage),
+});
+
+export const goToPage1 = (toPage) => ({
+  type: UPDATE_LCO_ADDCREDIT_CURRENT_PAGE,
   payload: Number(toPage),
 });
 

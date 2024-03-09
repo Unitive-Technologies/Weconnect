@@ -39,6 +39,7 @@ import {
   GET_LCO_ADDCREDIT,
   GET_LCO_ADDCREDIT_SUCCESS,
   GET_LCO_ADDCREDIT_FAIL,
+  UPDATE_LCO_ADDCREDIT_CURRENT_PAGE,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -68,13 +69,22 @@ const Lco = (state = INIT_STATE, action) => {
             currentPage: action.payload,
           }
         : state;
+
+    case UPDATE_LCO_ADDCREDIT_CURRENT_PAGE:
+      return Number(action.payload) <= state.totalPages
+        ? {
+            ...state,
+            currentPage: action.payload,
+          }
+        : state;
+
     case GET_LCO:
       return {
         ...state,
         loading: true,
       };
     case GET_LCO_SUCCESS:
-      console.log("lco data in reducer:", action.payload);
+      // console.log("lco data in reducer:", action.payload);
       return {
         ...state,
         lco: action.payload.data.data,
@@ -250,10 +260,9 @@ const Lco = (state = INIT_STATE, action) => {
         loading: true,
       };
     case GET_LCO_ADDCREDIT_SUCCESS:
-      console.log("lco credit data in reducer:", action.payload);
       return {
         ...state,
-        lco: action.payload.data.data,
+        lcoaddcredit: action.payload.data.data,
         currentPage: action.payload.headers[RESPONSE_HEADER_CURRENT_PAGE],
         perPage: action.payload.headers[RESPONSE_HEADER_PER_PAGE],
         totalCount: action.payload.headers[RESPONSE_HEADER_TOTAL_COUNT],

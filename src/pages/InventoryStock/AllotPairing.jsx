@@ -94,6 +94,7 @@ function AllottedPairing(props) {
     },
     validationSchema: Yup.object({
       usertype: Yup.string().required("Select user Type"),
+      // pairing_ids:
     }),
     onSubmit: (values) => {
       let id = {};
