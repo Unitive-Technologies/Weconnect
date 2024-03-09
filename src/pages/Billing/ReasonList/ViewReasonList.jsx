@@ -54,10 +54,10 @@ const ViewReason = (props) => {
       applicableon: (reason && reason.applicableon) || "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required(""),
+      name: Yup.string().required("Select Name"),
       status: Yup.string().required("Select Status"),
-      // type: Yup.array().min(1, "Select at least one Reason Type"),
-      applicableon: Yup.array().required(""),
+      type: Yup.array().min(1, "Select at least one Reason Type"),
+      // applicableon: Yup.array().required(""),
     }),
     onSubmit: (values) => {
       const applicableonArray = values["applicableon"] || [];
@@ -195,6 +195,12 @@ const ViewReason = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.status || ""}
+                    invalid={
+                      validation.touched.status &&
+                        validation.errors.status
+                        ? true
+                        : false
+                    }
                   >
                     {reasonStatus.map((status) => (
                       <option key={status.id} value={status.id}>
@@ -233,6 +239,19 @@ const ViewReason = (props) => {
                     }))}
                     isMulti
                     isDisabled={!showEditReason}
+                    invalid={
+                      validation.touched.type_display_lbl &&
+                        validation.errors.type_display_lbl
+                        ? true
+                        : false
+                    }
+                    styles={{
+                      menu: (provided) => ({ ...provided, maxHeight: "300px" }),
+                      menuList: (provided) => ({
+                        ...provided,
+                        maxHeight: "300px",
+                      }),
+                    }}
                   />
                 </div>
                 {validation.touched.type_display_lbl &&

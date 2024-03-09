@@ -243,7 +243,7 @@ const ViewTaxList = (props) => {
               <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">
-                    Value In<span style={{ color: "red" }}>*</span>
+                    Value In
                   </Label>
                   <Input
                     name="valuetype_lbl"
@@ -272,7 +272,7 @@ const ViewTaxList = (props) => {
               <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">
-                    TaxOnTax<span style={{ color: "red" }}>*</span>
+                    TaxOnTax
                   </Label>
                   <Input
                     name="parent_lbl"
@@ -339,7 +339,7 @@ const ViewTaxList = (props) => {
               <Col sm="8">
                 <div className="mb-3">
                   <Label className="form-label">
-                    Description<span style={{ color: "red" }}>*</span>
+                    Description
                   </Label>
                   <Input
                     name="description"

@@ -101,6 +101,12 @@ const AddNewReason = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}
+                  invalid={
+                    validation.touched.name &&
+                      validation.errors.name
+                      ? true
+                      : false
+                  }
                 ></Input>
                 {validation.touched.name && validation.errors.name ? (
                   <FormFeedback type="invalid">
@@ -109,6 +115,7 @@ const AddNewReason = (props) => {
                 ) : null}
               </div>
             </Col>
+
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
@@ -123,6 +130,12 @@ const AddNewReason = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.type || []}
                   multiple
+                  invalid={
+                    validation.touched.type &&
+                      validation.errors.type
+                      ? true
+                      : false
+                  }
                 >
                   <option value=""></option>
                   {reasonReasonType &&
@@ -152,6 +165,12 @@ const AddNewReason = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  invalid={
+                    validation.touched.status &&
+                      validation.errors.status
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Status</option>
                   {reasonStatus &&
