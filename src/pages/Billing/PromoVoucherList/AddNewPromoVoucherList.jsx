@@ -48,7 +48,9 @@ const AddNewPromoVoucher = (props) => {
       operator: Yup.string().required("Select Ico"),
       operator_code: Yup.string().required("Enter voucher count"),
       expiry_date: Yup.string().required("Select expiry date"),
-      bouquets_ids: Yup.string().required("Select bouquet"),
+      bouquets_ids: Yup.array().required(
+        "Select at least one Applicable On option"
+      ),
       applied_on: Yup.string().required("Select apply on"),
       recharge_period: Yup.string().required("Select recharge periods"),
     }),
@@ -59,13 +61,13 @@ const AddNewPromoVoucher = (props) => {
 
       const selectedBouquets = validation.values.bouquets_ids || [];
 
-
       const newPromoVoucher = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         operator_id: parseInt(values["operator"]),
         voucher_count: values["operator_code"],
         amount: values["amount"],
         mrp: values["mrp"],
+
         // bouque_ids: promovoucherBouquet.map((single) => parseInt(single.id)),
         bouque_ids: values["bouquets_ids"],
         expiry_date: values["expiry_date"],

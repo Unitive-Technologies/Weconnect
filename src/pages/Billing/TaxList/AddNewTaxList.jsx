@@ -47,13 +47,13 @@ const AddNewTaxList = (props) => {
       code: Yup.string().required("Enter tax code"),
       status: Yup.string().required("Select status"),
       taxvalue: Yup.string().required("Exter Tax Value"),
-      valuetype: Yup.string().required("Select value-in"),
-      parent_id: Yup.string().required(""),
+      // valuetype: Yup.string().required("Select value-in"),
+      // parent_id: Yup.string().required(""),
       // applicableon: Yup.string().required(""),
       applicableon: Yup.array().required(
         "Select at least one Applicable On option"
       ),
-      description: Yup.string().required("Enter description"),
+
     }),
     onSubmit: (values) => {
       const applicableonArray = values["applicableon"] || [];
@@ -127,6 +127,12 @@ const AddNewTaxList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}
+                  invalid={
+                    validation.touched.name &&
+                      validation.errors.name
+                      ? true
+                      : false
+                  }
                 ></Input>
                 {validation.touched.name && validation.errors.name ? (
                   <FormFeedback type="invalid">
@@ -148,6 +154,12 @@ const AddNewTaxList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.code || ""}
+                  invalid={
+                    validation.touched.code &&
+                      validation.errors.code
+                      ? true
+                      : false
+                  }
                 ></Input>
                 {validation.touched.code && validation.errors.code ? (
                   <FormFeedback type="invalid">
@@ -169,6 +181,12 @@ const AddNewTaxList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  invalid={
+                    validation.touched.status &&
+                      validation.errors.status
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Status</option>
                   {taxStatus &&
@@ -200,6 +218,12 @@ const AddNewTaxList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.taxvalue || ""}
+                  invalid={
+                    validation.touched.taxvalue &&
+                      validation.errors.taxvalue
+                      ? true
+                      : false
+                  }
                 ></Input>
                 {validation.touched.taxvalue && validation.errors.taxvalue ? (
                   <FormFeedback type="invalid">
@@ -281,6 +305,12 @@ const AddNewTaxList = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.applicableon || []}
                   multiple
+                  invalid={
+                    validation.touched.applicableon &&
+                      validation.errors.applicableon
+                      ? true
+                      : false
+                  }
                 >
                   <option value=""></option>
                   {taxApply &&

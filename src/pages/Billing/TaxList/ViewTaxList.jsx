@@ -44,12 +44,9 @@ const ViewTaxList = (props) => {
       code: Yup.string().required("Enter tax code"),
       status: Yup.string().required("Select status"),
       taxvalue: Yup.string().required("Exter Tax Value"),
-      valuetype_lbl: Yup.string().required("Select value-in"),
-      parent_lbl: Yup.string().required(""),
       applicableon: Yup.array().required(
         ""
       ),
-      description: Yup.string().required("Enter description"),
     }),
     onSubmit: (values) => {
       const applicableonArray = values["applicableon"] || [];
@@ -137,6 +134,12 @@ const ViewTaxList = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.name || ""}
                     disabled={!showEditTax}
+                    invalid={
+                      validation.touched.name &&
+                        validation.errors.name
+                        ? true
+                        : false
+                    }
                   ></Input>
                   {validation.touched.name && validation.errors.name ? (
                     <FormFeedback type="invalid">
@@ -159,6 +162,12 @@ const ViewTaxList = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.code || ""}
                     disabled={!showEditTax}
+                    invalid={
+                      validation.touched.name &&
+                        validation.errors.name
+                        ? true
+                        : false
+                    }
                   ></Input>
                   {validation.touched.code && validation.errors.code ? (
                     <FormFeedback type="invalid">
@@ -181,6 +190,12 @@ const ViewTaxList = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.status || ""}
                     disabled={!showEditTax}
+                    invalid={
+                      validation.touched.name &&
+                        validation.errors.name
+                        ? true
+                        : false
+                    }
                   >
                     {taxStatus.map((status) => (
                       <option key={status.id} value={status.id}>
@@ -211,6 +226,12 @@ const ViewTaxList = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.taxvalue || ""}
                     disabled={!showEditTax}
+                    invalid={
+                      validation.touched.name &&
+                        validation.errors.name
+                        ? true
+                        : false
+                    }
                   ></Input>
                   {validation.touched.taxvalue && validation.errors.taxvalue ? (
                     <FormFeedback type="invalid">
@@ -294,6 +315,12 @@ const ViewTaxList = (props) => {
                     value={validation.values.applicableon || []}
                     disabled={!showEditTax}
                     multiple
+                    invalid={
+                      validation.touched.applicableon &&
+                        validation.errors.applicableon
+                        ? true
+                        : false
+                    }
                   >
                     {taxApply.map((applicableon) => (
                       <option key={applicableon.id} value={applicableon.id}>
