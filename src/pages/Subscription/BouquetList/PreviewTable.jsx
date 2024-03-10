@@ -146,11 +146,23 @@ const PreviewTable = (props) => {
                       name="tax"
                       type="number"
                       disabled
-                      value={parseFloat(
-                        parseInt(row.months) === 0
-                          ? ((lcoRate / 30) * 30.3) / 100
-                          : (lcoRate * row.months * 30.3) / 100
-                      ).toFixed(2)}
+                      value={
+                        !toggleNcfSwitch
+                          ? parseFloat(
+                              parseInt(row.months) === 0
+                                ? ((lcoRate / 30 + ncfLcoRate / 30) * 30.3) /
+                                    100
+                                : ((lcoRate * row.months +
+                                    ncfLcoRate * row.months) *
+                                    30.3) /
+                                    100
+                            ).toFixed(2)
+                          : parseFloat(
+                              parseInt(row.months) === 0
+                                ? ((lcoRate / 30) * 30.3) / 100
+                                : (lcoRate * row.months * 30.3) / 100
+                            ).toFixed(2)
+                      }
                     />
                   </td>
                   <td>
@@ -158,12 +170,28 @@ const PreviewTable = (props) => {
                       name="totalamount"
                       type="number"
                       disabled
-                      value={parseFloat(
-                        parseInt(row.months) === 0
-                          ? lcoRate / 30 + ((lcoRate / 30) * 30.3) / 100
-                          : lcoRate * row.months +
-                              (lcoRate * row.months * 30.3) / 100
-                      ).toFixed(2)}
+                      value={
+                        !toggleNcfSwitch
+                          ? parseFloat(
+                              parseInt(row.months) === 0
+                                ? lcoRate / 30 +
+                                    ncfLcoRate / 30 +
+                                    ((lcoRate / 30 + ncfLcoRate / 30) * 30.3) /
+                                      100
+                                : lcoRate * row.months +
+                                    ncfLcoRate * row.months +
+                                    ((lcoRate * row.months +
+                                      ncfLcoRate * row.months) *
+                                      30.3) /
+                                      100
+                            ).toFixed(2)
+                          : parseFloat(
+                              parseInt(row.months) === 0
+                                ? lcoRate / 30 + ((lcoRate / 30) * 30.3) / 100
+                                : lcoRate * row.months +
+                                    (lcoRate * row.months * 30.3) / 100
+                            ).toFixed(2)
+                      }
                     />
                   </td>
                   <td>

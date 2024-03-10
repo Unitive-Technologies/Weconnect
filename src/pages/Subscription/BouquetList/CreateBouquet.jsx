@@ -94,14 +94,16 @@ const CreateBouquet = (props) => {
       code: "",
       name: "",
       type: "",
-      isHD: "",
+      isHD: "0",
       status: "",
       description: "",
-      is_promotional: "",
+      is_exclusive: "0",
+      is_promotional: "0",
+      is_loner: "0",
       ifFixNCF: false,
-      max_ncf_channels: "",
-      is_online_app: "",
-      sort_by: "",
+      max_ncf_channels: "0",
+      is_online_app: "0",
+      sort_by: "1",
     },
     validationSchema: Yup.object({
       // name: Yup.string().required("Enter channel name"),
@@ -127,7 +129,9 @@ const CreateBouquet = (props) => {
         status: parseInt(values["status"]),
         type: parseInt(values["type"]),
         ifFixNCF: values["ifFixNCF"],
-        mrp: parseInt(mrp),
+        mrp: !toggleNcfSwitch
+          ? parseInt(mrp) + parseInt(ncfdrp)
+          : parseInt(mrp),
         mrp_data: {
           pcc: parseInt(mrp),
           drp: parseInt(drp),
@@ -478,8 +482,8 @@ const CreateBouquet = (props) => {
                       type="checkbox"
                       className="form-check-input"
                       id="customSwitchsizelg"
-                      defaultChecked={!ifFixNCF} // Check ifFixNCF is false by default
-                      onChange={(e) => setIfFixNCF(!e.target.checked)} // Toggle ifFixNCF when checkbox is changed
+                      defaultChecked={!ifFixNCF}
+                      onChange={(e) => setIfFixNCF(!e.target.checked)}
                       onClick={() => {
                         setToggleNcfSwitch(!toggleNcfSwitch);
                       }}

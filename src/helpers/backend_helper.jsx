@@ -1015,6 +1015,8 @@ export const addBulkAssignNcf = (assignncf) =>
 export const updateNcf = (ncf, id) => put(url.UPDATE_NCF(id), ncf);
 // export const getBouquet = () => get(url.GET_BOUQUET);
 export const addBouquet = (bouquet) => post(url.ADD_BOUQUET, bouquet);
+export const updateBouquet = (bouquet, id) =>
+  put(url.UPDATE_BOUQUET(id), bouquet);
 export const getBouquetStatus = () => get(url.GET_BOUQUET_STATUS);
 export const getBouquetBoxtype = () => get(url.GET_BOUQUET_BOXTYPE);
 export const getBouquetType = () => get(url.GET_BOUQUETTYPE);

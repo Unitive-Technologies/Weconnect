@@ -33,6 +33,9 @@ import {
   GET_OPERATOR_FORBOUQUET_SUCCESS,
   GET_OPERATOR_FORBOUQUET_FAIL,
   UPDATE_BOUQUET_CURRENT_PAGE,
+  UPDATE_BOUQUET,
+  UPDATE_BOUQUET_FAIL,
+  UPDATE_BOUQUET_SUCCESS,
 } from "./actionTypes";
 
 export const goToPage = (toPage) => ({
@@ -195,5 +198,20 @@ export const getOperatorForBouquetSuccess = (operatorforbouquet) => ({
 
 export const getOperatorForBouquetFail = (error) => ({
   type: GET_OPERATOR_FORBOUQUET_FAIL,
+  payload: error,
+});
+
+export const updateBouquet = (bouquet) => ({
+  type: UPDATE_BOUQUET,
+  payload: bouquet,
+});
+
+export const updateBouquetSuccess = (bouquet) => ({
+  type: UPDATE_BOUQUET_SUCCESS,
+  payload: bouquet,
+});
+
+export const updateBouquetFail = (error) => ({
+  type: UPDATE_BOUQUET_FAIL,
   payload: error,
 });

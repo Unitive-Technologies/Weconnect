@@ -2,6 +2,7 @@ import { call, put, select, takeEvery } from "redux-saga/effects";
 import {
   GET_BOUQUET,
   ADD_BOUQUET,
+  UPDATE_BOUQUET,
   GET_BOUQUETTYPE,
   GET_BOUQUET_STATUS,
   GET_BOUQUET_BOXTYPE,
@@ -18,6 +19,8 @@ import {
   getBouquetFail,
   addBouquetSuccess,
   addBouquetFail,
+  updateBouquetFail,
+  updateBouquetSuccess,
   getAlacarteChannelsSuccess,
   getAlacarteChannelsFail,
   getBouquetBoxtypeSuccess,
@@ -40,6 +43,7 @@ import {
 import {
   getBouquet,
   addBouquet,
+  updateBouquet,
   getAlacarteChannels,
   getBouquetBoxtype,
   getBouquetPackages,
@@ -180,6 +184,16 @@ function* fetchOperatorForBouquet({ payload: id }) {
   }
 }
 
+function* onUpdateBouquet({ payload: bouquet }) {
+  try {
+    const response = yield call(updateBouquet, bouquet, bouquet.id);
+    yield put(updateBouquetSuccess(response));
+    yield put(fetchAllBouquets());
+  } catch (error) {
+    yield put(updateBouquetFail(error));
+  }
+}
+
 function* bouquetSaga() {
   yield takeEvery(GET_BOUQUET, fetchBouquet);
   yield takeEvery(ADD_BOUQUET, onAddBouquet);
@@ -192,6 +206,7 @@ function* bouquetSaga() {
   yield takeEvery(GET_ALACARTECHANNELS, fetchAlacarteChannels);
   yield takeEvery(GET_OPERATOR_FORBOUQUET, fetchOperatorForBouquet);
   yield takeEvery(GET_BOUQUET_STATUS, fetchBouquetStatus);
+  yield takeEvery(UPDATE_BOUQUET, onUpdateBouquet);
 }
 
 export default bouquetSaga;

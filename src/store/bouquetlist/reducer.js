@@ -11,6 +11,9 @@ import {
   ADD_BOUQUET,
   ADD_BOUQUET_SUCCESS,
   ADD_BOUQUET_FAIL,
+  UPDATE_BOUQUET,
+  UPDATE_BOUQUET_FAIL,
+  UPDATE_BOUQUET_SUCCESS,
   GET_BOUQUETTYPE_SUCCESS,
   GET_BOUQUETTYPE_FAIL,
   GET_BOUQUET_STATUS_SUCCESS,
@@ -216,6 +219,28 @@ const Bouquet = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+
+    case UPDATE_BOUQUET:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPDATE_BOUQUET_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        bouquet: state.bouquet.map((item) =>
+          item.id === action.payload.id ? { ...item, ...action.payload } : item
+        ),
+      };
+
+    case UPDATE_BOUQUET_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
       };
 
     default:

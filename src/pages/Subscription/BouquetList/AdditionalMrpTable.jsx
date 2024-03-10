@@ -22,6 +22,7 @@ const AdditionalMrpTable = (props) => {
     showEditBouquet,
     toggleNcfSwitch,
     ncfdrp,
+    ifFixNCF,
     // rechargeperiod,
     additionalLcoRate,
     additionalRates,
@@ -282,11 +283,26 @@ const AdditionalMrpTable = (props) => {
                           name="tax"
                           type="number"
                           disabled
-                          value={parseFloat(
-                            parseInt(row.months) === 0
-                              ? ((additionalLcoRate / 30) * 30.3) / 100
-                              : (additionalLcoRate * row.months * 30.3) / 100
-                          ).toFixed(2)}
+                          value={
+                            !toggleNcfSwitch
+                              ? parseFloat(
+                                  parseInt(row.months) === 0
+                                    ? ((additionalLcoRate / 30 +
+                                        ncfAdditionalLcoRate / 30) *
+                                        30.3) /
+                                        100
+                                    : ((additionalLcoRate * row.months +
+                                        ncfAdditionalLcoRate * row.months) *
+                                        30.3) /
+                                        100
+                                ).toFixed(2)
+                              : parseFloat(
+                                  parseInt(row.months) === 0
+                                    ? ((additionalLcoRate / 30) * 30.3) / 100
+                                    : (additionalLcoRate * row.months * 30.3) /
+                                        100
+                                ).toFixed(2)
+                          }
                         />
                       </td>
                       <td>
@@ -294,13 +310,34 @@ const AdditionalMrpTable = (props) => {
                           name="totalamount"
                           type="number"
                           disabled
-                          value={parseFloat(
-                            parseInt(row.months) === 0
-                              ? additionalLcoRate / 30 +
-                                  ((additionalLcoRate / 30) * 30.3) / 100
-                              : additionalLcoRate * row.months +
-                                  (additionalLcoRate * row.months * 30.3) / 100
-                          ).toFixed(2)}
+                          value={
+                            !toggleNcfSwitch
+                              ? parseFloat(
+                                  parseInt(row.months) === 0
+                                    ? additionalLcoRate / 30 +
+                                        ncfAdditionalLcoRate / 30 +
+                                        ((additionalLcoRate / 30 +
+                                          ncfAdditionalLcoRate / 30) *
+                                          30.3) /
+                                          100
+                                    : additionalLcoRate * row.months +
+                                        ncfAdditionalLcoRate * row.months +
+                                        ((additionalLcoRate * row.months +
+                                          ncfAdditionalLcoRate * row.months) *
+                                          30.3) /
+                                          100
+                                ).toFixed(2)
+                              : parseFloat(
+                                  parseInt(row.months) === 0
+                                    ? additionalLcoRate / 30 +
+                                        ((additionalLcoRate / 30) * 30.3) / 100
+                                    : additionalLcoRate * row.months +
+                                        (additionalLcoRate *
+                                          row.months *
+                                          30.3) /
+                                          100
+                                ).toFixed(2)
+                          }
                         />
                       </td>
                       <td>

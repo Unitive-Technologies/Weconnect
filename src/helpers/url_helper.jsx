@@ -466,7 +466,7 @@ export const getBouquetUrl = (currPage, perPage) => {
   console.log("current page in users url - ", currPage, perPage);
   return `/bouque?expand=setting,created_by_lbl,lco_rate,type_lbl,status_lbl,boxtype_lbl,rate,category_lbl,is_exclusive_lbl,is_promotional_lbl,additional_rates,is_online_app_lbl&page=${currPage}&per-page=${perPage}&vr=web1.0`;
 };
-
+export const UPDATE_BOUQUET = (id) => `/bouque/${id}?vr=web1.0`;
 export const GET_CONNECTIONSCHEME =
   "/scheme?expand=created_by_lbl,boxtype_lbl,status_lbl,stock_type_lbl&vr=web1.0";
 export const ADD_CONNECTIONSCHEME = "/scheme?vr=web1.0";

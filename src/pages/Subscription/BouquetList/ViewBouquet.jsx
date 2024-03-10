@@ -20,7 +20,7 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { addBouquet as onAddBouquet } from "/src/store/bouquetlist/actions";
+import { updateBouquet as onUpdateBouquet } from "/src/store/bouquetlist/actions";
 import { useDispatch } from "react-redux";
 import AddAlacarte from "./AddAlacarte";
 import AddPackages from "./AddPackages";
@@ -70,9 +70,11 @@ const ViewBouquet = (props) => {
   const [totalRatePackage, setTotalRatePackage] = useState(0);
   const [mrp, setMrp] = useState(0);
   const [drp, setDrp] = useState(0);
-
+  const [ncfdrp, setNcfdrp] = useState(130);
   const [lcoDiscount, setLcoDiscount] = useState(20);
+  const [ncfLcoDiscount, setNcfLcoDiscount] = useState(20);
   const [lcoRate, setLcoRate] = useState(0);
+  const [ncfLcoRate, setNcfLcoRate] = useState(0);
   const [additionalName, setAdditionalName] = useState("");
   const [additionalLcoDiscount, setAdditionalLcoDiscount] = useState("");
   const [additionalLcoRate, setAdditionalLcoRate] = useState("");
@@ -134,11 +136,16 @@ const ViewBouquet = (props) => {
       sort_by: (selectedRowDetails && selectedRowDetails.sort_by) || "",
       ifFixNCF: (selectedRowDetails && selectedRowDetails.ifFixNCF) || "",
       mrp: (selectedRowDetails && parseInt(selectedRowDetails.mrp)) || "",
+
       mrp_data: {
         pcc: (selectedRowDetails && selectedRowDetails.mrp) || "",
         drp: (selectedRowDetails && selectedRowDetails.drp) || "",
+        ncf: (selectedRowDetails && selectedRowDetails.ncf) || "",
         lcoDiscount: (selectedRowDetails && selectedRowDetails.dis_pcc) || "",
+        ncfLcoDiscount:
+          (selectedRowDetails && selectedRowDetails.dis_ncf) || "",
         lcoRate: (selectedRowDetails && selectedRowDetails.lmo_pcc) || "",
+        ncfLcoRate: (selectedRowDetails && selectedRowDetails.lmo_ncf) || "",
         is_promotional:
           (selectedRowDetails && selectedRowDetails.is_promotional) || "",
         max_ncf_channels:
@@ -154,19 +161,19 @@ const ViewBouquet = (props) => {
     validationSchema: Yup.object({
       code: Yup.string().required("Enter Channel Code"),
       name: Yup.string().required("Enter channel name"),
-      type_lbl: Yup.string().required("Enter bouquet type"),
-      boxtype_lbl: Yup.string().required("Enter box type"),
-      type: Yup.string().required("Enter channel type"),
-      status: Yup.string().required("Enter status"),
-      description: Yup.string().required("Enter description"),
-      is_promotional: Yup.string(),
-      ifFixNCF: Yup.string(),
-      max_ncf_channels: Yup.string(),
-      showon_portal: Yup.string(),
-      category_lbl: Yup.string(),
+      // type_lbl: Yup.string().required("Enter bouquet type"),
+      // boxtype_lbl: Yup.string().required("Enter box type"),
+      // type: Yup.string().required("Enter channel type"),
+      // status: Yup.string().required("Enter status"),
+      // description: Yup.string().required("Enter description"),
+      // is_promotional: Yup.string(),
+      // ifFixNCF: Yup.string(),
+      // max_ncf_channels: Yup.string(),
+      // showon_portal: Yup.string(),
+      // category_lbl: Yup.string(),
     }),
     onSubmit: (values) => {
-      const newbouquet = {
+      const updatedBouquet = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         code: values["code"],
         name: values["name"],
@@ -183,9 +190,9 @@ const ViewBouquet = (props) => {
         showon_portal: values["showon_portal"],
         category_lbl: values["category_lbl"],
       };
-      console.log("New Bouquet List:" + newbouquet);
+      console.log("Updated Bouquet List:" + updatedBouquet);
       // save new user
-      dispatch(onAddBouquet(newbouquet));
+      dispatch(onUpdateBouquet(updatedBouquet));
       validation.resetForm();
       toggle();
     },
@@ -204,9 +211,11 @@ const ViewBouquet = (props) => {
 
   useEffect(() => {
     const totalLcoRate = (drp * lcoDiscount) / 100;
+    const totalNcfLcoRate = (ncfdrp * ncfLcoDiscount) / 100;
 
     setLcoRate(drp - totalLcoRate);
-  }, [drp, lcoDiscount]);
+    setNcfLcoRate(ncfdrp - totalNcfLcoRate);
+  }, [drp, lcoDiscount, ncfdrp, ncfLcoDiscount]);
 
   useEffect(() => {
     const totalAdditionalLcoRate = (drp * additionalLcoDiscount) / 100;
@@ -584,12 +593,13 @@ const ViewBouquet = (props) => {
                         type="checkbox"
                         className="form-check-input"
                         id="customSwitchsizelg"
-                        defaultChecked={validation.values.ifFixNCF}
-                        onChange={validation.handleChange}
-                        onClick={(e) => {
+                        defaultChecked={!ifFixNCF}
+                        onChange={(e) => setIfFixNCF(!e.target.checked)}
+                        onClick={() => {
                           setToggleNcfSwitch(!toggleNcfSwitch);
                         }}
                       />
+
                       <label
                         className="form-check-label"
                         htmlFor="customSwitchsizelg"
@@ -927,17 +937,24 @@ const ViewBouquet = (props) => {
                   </div>
                 </div>
               </div>
-              {!toggleNcfSwitch && (
-                <Row>
+              {!ifFixNCF === true && (
+                <Row className="mb-3 mt-3">
                   <Col sm="3">
+                    {/* <Label>MRP**</Label>
+                <Input
+                  disabled
+                  defaultValue={0}
+                  value={parseFloat(mrp).toFixed(2)}
+                /> */}
                     <h4>FIX NCF</h4>
                   </Col>
                   <Col sm="3">
-                    <Label>DRP**</Label>
+                    <Label>Rate**</Label>
                     <Input
                       type="number"
-                      defaultValue={0}
-                      value={parseFloat(drp).toFixed(2)}
+                      defaultValue="130"
+                      value={parseFloat(ncfdrp).toFixed(2)}
+                      onChange={(e) => setNcfdrp(e.target.value)}
                     />
                   </Col>
                   <Col sm="3">
@@ -945,16 +962,17 @@ const ViewBouquet = (props) => {
                     <Input
                       type="number"
                       defaultValue="20"
-                      value={lcoDiscount}
-                      onChange={(e) => setLcoDiscount(e.target.value)}
+                      value={ncfLcoDiscount}
+                      onChange={(e) => setNcfLcoDiscount(e.target.value)}
                     />
                   </Col>
                   <Col sm="3">
                     <Label>LCO Rate**</Label>
                     <Input
                       type="number"
-                      defaultValue={0}
-                      value={parseFloat(lcoRate).toFixed(2)}
+                      // defaultValue={0}
+                      value={parseFloat(ncfLcoRate).toFixed(2)}
+                      onChange={(e) => setNcfLcoRate(e.target.value)}
                     />
                   </Col>
                 </Row>
@@ -996,8 +1014,10 @@ const ViewBouquet = (props) => {
               </Row>
               <Row>
                 <PreviewTable
+                  toggleNcfSwitch={toggleNcfSwitch}
                   rechargeperiod={rechargeperiod}
                   lcoRate={lcoRate}
+                  ncfLcoRate={ncfLcoRate}
                   rate={rate}
                   setRate={setRate}
                 />
@@ -1030,23 +1050,33 @@ const ViewBouquet = (props) => {
             >
               <Row>
                 <AdditionalMrpTable
-                  showEditBouquet={showEditBouquet}
+                  isOpen={isOpen}
+                  toggleNcfSwitch={toggleNcfSwitch}
                   rechargeperiod={rechargeperiod}
                   additionalLcoDiscount={additionalLcoDiscount}
                   additionalLcoRate={additionalLcoRate}
-                  additionalRates={additionalRates}
+                  additionalRates={
+                    selectedRowDetails
+                      ? selectedRowDetails.additional_rates
+                      : additionalRates
+                  }
                   setAdditionalRates={setAdditionalRates}
                   setAdditionalName={setAdditionalName}
                   setAdditionalLcoDiscount={setAdditionalLcoDiscount}
                   setAdditionalLcoRate={setAdditionalLcoRate}
                   mrp={mrp}
                   drp={drp}
-                  toggleNcfSwitch={toggleNcfSwitch}
+                  ncfdrp={ncfdrp}
+                  ifFixNCF={ifFixNCF}
                 />
               </Row>
               <Row>
                 <AdditionalMRP
-                  additionalRates={additionalRates}
+                  additionalRates={
+                    selectedRowDetails
+                      ? selectedRowDetails.additional_rates
+                      : additionalRates
+                  }
                   rechargeperiod={rechargeperiod}
                 />
               </Row>
