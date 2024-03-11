@@ -54,9 +54,10 @@ const ViewBankList = (props) => {
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
-      ifscode: Yup.string().required(""),
+      // ifscode: Yup.string().required(""),
       ismso: Yup.string().required("selecct for mso"),
       status_lbl: Yup.string().required("Select status"),
+      account_no: Yup.string().required("Enter account no"),
     }),
     onSubmit: (values) => {
       const updateBank = {
