@@ -69,22 +69,41 @@ const NSTVList = (props) => {
         backgroundColor: "",
       },
     },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Enter Your Name"),
-      //   status: Yup.string().required("Select status"),
-      // start_time: Yup.string().required(""),
-      // end_time: Yup.string().required(""),
-      //   enable: Yup.string().required("Send OSD"),
-      //   forceddisplay: Yup.string().required("Select forced display"),
-      //   displaytype: Yup.string().required("Select display type"),
-      //   duration: Yup.string().required("duration"),
-      //   interval: Yup.string().required("interval"),
-      //   repetition: Yup.string().required("repetition"),
-      //   fontSize: Yup.string().required("Select font size"),
-      //   fontcolor: Yup.string().required("Select font color"),
-      //   backgroundColor: Yup.string().required("Select back color"),
-      //   backgroundarea: Yup.string().required("Select background area"),
+    validationSchema: Yup.object().shape({
+      name: Yup.string().required("Enter name"),
+      status: Yup.string().required("Select status"),
+      start_time: Yup.string().required(""),
+      end_time: Yup.string().required(""),
+      config: Yup.object().shape({
+        enable: Yup.string().required("Send OSD"),
+        forceddisplay: Yup.string().when('enable', {
+          is: '00',
+          then: Yup.string().required("Select forced display"),
+        }),
+        displaytype: Yup.string().when('enable', {
+          is: '00',
+          then: Yup.string().required("Select display type"),
+        }),
+        fontSize: Yup.string().when('enable', {
+          is: '00',
+          then: Yup.string().required("Select font size"),
+        }),
+        fontcolor: Yup.string().when('enable', {
+          is: '00',
+          then: Yup.string().required("Select font color"),
+        }),
+        backgroundColor: Yup.string().when('enable', {
+          is: '00',
+          then: Yup.string().required("Select back color"),
+        }),
+        backgroundarea: Yup.string().when('enable', {
+          is: '00',
+          then: Yup.string().required("Select background area"),
+        }),
+      }),
     }),
+
+
     onSubmit: (values) => {
       const newOSDConfiguration = {
         name: values["name"],
@@ -153,6 +172,11 @@ const NSTVList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}
+                  invalid={
+                    validation.touched.name && validation.errors.name
+                      ? true
+                      : false
+                  }
                 ></Input>
                 {validation.touched.name && validation.errors.name ? (
                   <FormFeedback type="invalid">
@@ -175,6 +199,11 @@ const NSTVList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  invalid={
+                    validation.touched.status && validation.errors.status
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Status</option>
                   {osdConfigStatus &&
@@ -194,7 +223,7 @@ const NSTVList = (props) => {
             {/* {console.log("Status:", validation.values.status)} */}
             <Col sm="4">
               <div className="form-group mb-0">
-                <label>Start Time</label>
+                <label>Start Time<span style={{ color: "red" }}>*</span></label>
                 <div className="input-group">
                   <Flatpickr
                     className="form-control d-block"
@@ -214,6 +243,11 @@ const NSTVList = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.start_time || ""}
                     name="start_time"
+                    invalid={
+                      validation.touched.start_time && validation.errors.start_time
+                        ? true
+                        : false
+                    }
                   />
                   <div className="input-group-append">
                     <span className="input-group-text">
@@ -223,31 +257,10 @@ const NSTVList = (props) => {
                 </div>
               </div>
 
-              {/* <div className="mb-3">
-                <Label className="form-label">
-                  Start Time<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="start_time"
-                  type="time"
-                  // placeholder="Enter channel code"
-                  // className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.start_time || ""}
-                ></Input>
-                {validation.touched.start_time &&
-                validation.errors.start_time ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.start_time}
-                  </FormFeedback>
-                ) : null}
-              </div> */}
             </Col>
-            {/* {console.log("Start time:", validation.values.start_time)} */}
             <Col sm="4">
               <div className="form-group mb-0">
-                <label>End Time</label>
+                <label>End Time<span style={{ color: "red" }}>*</span></label>
                 <div className="input-group">
                   <Flatpickr
                     className="form-control d-block"
@@ -267,6 +280,11 @@ const NSTVList = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.end_time || ""}
                     name="end_time"
+                    invalid={
+                      validation.touched.end_time && validation.errors.end_time
+                        ? true
+                        : false
+                    }
                   />
                   <div className="input-group-append">
                     <span className="input-group-text">
@@ -275,25 +293,6 @@ const NSTVList = (props) => {
                   </div>
                 </div>
               </div>
-              {/* <div className="mb-3">
-                <Label className="form-label">
-                  End Time<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="end_time"
-                  type="time"
-                  // placeholder="Enter name"
-                  // className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.end_time || ""}
-                ></Input>
-                {validation.touched.end_time && validation.errors.end_time ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.end_time}
-                  </FormFeedback>
-                ) : null}
-              </div> */}
             </Col>
             {console.log("endeeeeeeeeeee time", validation.values.end_time)}
             {console.log("startsssssssss time", validation.values.start_time)}
@@ -309,6 +308,11 @@ const NSTVList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.enable || ""}
+                  invalid={
+                    validation.touched.enable && validation.errors.enable
+                      ? true
+                      : false
+                  }
                 >
                   {/* <option value=""></option> */}
                   {osdConfigEnable &&
@@ -342,6 +346,11 @@ const NSTVList = (props) => {
                         onChange={validation.handleChange}
                         onBlur={validation.handleBlur}
                         value={validation.values.forceddisplay || ""}
+                        invalid={
+                          validation.touched.forceddisplay && validation.errors.forceddisplay
+                            ? true
+                            : false
+                        }
                       >
                         <option value="">Select forced display</option>
                         {osdConfigForcedDisplay &&
@@ -355,7 +364,7 @@ const NSTVList = (props) => {
                           ))}
                       </Input>
                       {validation.touched.forceddisplay &&
-                      validation.errors.forceddisplay ? (
+                        validation.errors.forceddisplay ? (
                         <FormFeedback type="invalid">
                           {validation.errors.forceddisplay}
                         </FormFeedback>
@@ -363,10 +372,6 @@ const NSTVList = (props) => {
                     </div>
                   </Col>
 
-                  {/* {console.log("ForcedDisplay:", validation.values.forceddisplay)}
-                        {console.log("forced display: " + validation.values.forceddisplay)}
-                        {console.log(
-                            "forced display: " + typeof validation.values.forceddisplay)} */}
                   <Col sm="4">
                     <div className="mb-3">
                       <Label className="form-label">
@@ -380,6 +385,11 @@ const NSTVList = (props) => {
                         onChange={validation.handleChange}
                         onBlur={validation.handleBlur}
                         value={validation.values.displaytype || ""}
+                        invalid={
+                          validation.touched.displaytype && validation.errors.displaytype
+                            ? true
+                            : false
+                        }
                       >
                         <option value="">Select Display Type</option>
                         {osdConfigDisplay &&
@@ -390,7 +400,7 @@ const NSTVList = (props) => {
                           ))}
                       </Input>
                       {validation.touched.displaytype &&
-                      validation.errors.displaytype ? (
+                        validation.errors.displaytype ? (
                         <FormFeedback type="invalid">
                           {validation.errors.displaytype}
                         </FormFeedback>
@@ -412,7 +422,7 @@ const NSTVList = (props) => {
                         value={validation.values.duration || ""}
                       ></Input>
                       {validation.touched.duration &&
-                      validation.errors.duration ? (
+                        validation.errors.duration ? (
                         <FormFeedback type="invalid">
                           {validation.errors.duration}
                         </FormFeedback>
@@ -435,7 +445,7 @@ const NSTVList = (props) => {
                         value={validation.values.interval || ""}
                       ></Input>
                       {validation.touched.interval &&
-                      validation.errors.interval ? (
+                        validation.errors.interval ? (
                         <FormFeedback type="invalid">
                           {validation.errors.interval}
                         </FormFeedback>
@@ -464,11 +474,10 @@ const NSTVList = (props) => {
                         style={{
                           width: "100%",
                           height: "100%",
-                          border: `solid 3px ${
-                            rangeValue === validation.values.repetition
-                              ? "green"
-                              : "blue"
-                          }`,
+                          border: `solid 3px ${rangeValue === validation.values.repetition
+                            ? "green"
+                            : "blue"
+                            }`,
                           cursor: "pointer",
                           borderRadius: "5px",
                         }}
@@ -478,7 +487,7 @@ const NSTVList = (props) => {
                       </div>
                       <div>
                         {validation.touched.repetition &&
-                        validation.errors.repetition ? (
+                          validation.errors.repetition ? (
                           <FormFeedback type="invalid">
                             {validation.errors.repetition}
                           </FormFeedback>
@@ -505,6 +514,11 @@ const NSTVList = (props) => {
                         onChange={validation.handleChange}
                         onBlur={validation.handleBlur}
                         value={validation.values.fontSize || ""}
+                        invalid={
+                          validation.touched.fontSize && validation.errors.fontSize
+                            ? true
+                            : false
+                        }
                       >
                         <option value="">Select Font Size</option>
                         {osdConfigFontSize &&
@@ -515,18 +529,13 @@ const NSTVList = (props) => {
                           ))}
                       </Input>
                       {validation.touched.fontSize &&
-                      validation.errors.fontSize ? (
+                        validation.errors.fontSize ? (
                         <FormFeedback type="invalid">
                           {validation.errors.fontSize}
                         </FormFeedback>
                       ) : null}
                     </div>
                   </Col>
-                  {/* {console.log("Font Size:", validation.values.fontSize)}
-                        {console.log("font size: " + validation.values.fontSize)}
-                        {console.log(
-                            "font size: " + typeof validation.values.fontSize
-                        )} */}
                   <Col sm="4">
                     <div className="mb-3">
                       <Label className="form-label">
@@ -540,6 +549,11 @@ const NSTVList = (props) => {
                         onChange={validation.handleChange}
                         onBlur={validation.handleBlur}
                         value={validation.values.fontcolor || ""}
+                        invalid={
+                          validation.touched.fontcolor && validation.errors.fontcolor
+                            ? true
+                            : false
+                        }
                       >
                         <option value="">Select Font Color</option>
                         {osdConfigFontColor &&
@@ -550,7 +564,7 @@ const NSTVList = (props) => {
                           ))}
                       </Input>
                       {validation.touched.fontcolor &&
-                      validation.errors.fontcolor ? (
+                        validation.errors.fontcolor ? (
                         <FormFeedback type="invalid">
                           {validation.errors.fontcolor}
                         </FormFeedback>
@@ -576,6 +590,11 @@ const NSTVList = (props) => {
                         onChange={validation.handleChange}
                         onBlur={validation.handleBlur}
                         value={validation.values.backgroundColor || ""}
+                        invalid={
+                          validation.touched.backgroundColor && validation.errors.backgroundColor
+                            ? true
+                            : false
+                        }
                       >
                         <option value="">Select back color</option>
                         {osdConfigBackgroundColor &&
@@ -589,7 +608,7 @@ const NSTVList = (props) => {
                           ))}
                       </Input>
                       {validation.touched.backgroundColor &&
-                      validation.errors.backgroundColor ? (
+                        validation.errors.backgroundColor ? (
                         <FormFeedback type="invalid">
                           {validation.errors.backgroundColor}
                         </FormFeedback>
@@ -614,6 +633,11 @@ const NSTVList = (props) => {
                         onChange={validation.handleChange}
                         onBlur={validation.handleBlur}
                         value={validation.values.backgroundarea || ""}
+                        invalid={
+                          validation.touched.backgroundarea && validation.errors.backgroundarea
+                            ? true
+                            : false
+                        }
                       >
                         <option value="">Select background area</option>
                         {osdConfigBackgroundArea &&
@@ -627,7 +651,7 @@ const NSTVList = (props) => {
                           ))}
                       </Input>
                       {validation.touched.backgroundarea &&
-                      validation.errors.backgroundarea ? (
+                        validation.errors.backgroundarea ? (
                         <FormFeedback type="invalid">
                           {validation.errors.backgroundarea}
                         </FormFeedback>

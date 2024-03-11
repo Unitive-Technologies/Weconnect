@@ -248,6 +248,12 @@ const AddNewBankList = (props) => {
                   }}
                   onBlur={validation.handleBlur}
                   value={validation.values.ismso || ""}
+                  invalid={
+                    validation.touched.ismso &&
+                      validation.errors.ismso
+                      ? true
+                      : false
+                  }
                 >
                   <option value="101">Select for MSO</option>
                   <option value="102">Yes</option>
