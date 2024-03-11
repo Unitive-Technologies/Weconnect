@@ -23,7 +23,6 @@ const PreviewTable = (props) => {
   // const [newArray, setNewArray] = useState([]);
   // console.log("@@@@@@@@@@@@rate value:" + JSON.stringify(rate));
   // console.log("@@@@@@@@@@@@refundable value:" + refundable);
-  // console.log("@@@@@@@@@@@@price value:" + price);
 
   // const dispatch = useDispatch();
   // const selectBouquetState = (state) => state.bouquet;

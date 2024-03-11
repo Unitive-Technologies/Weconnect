@@ -857,7 +857,7 @@ const ViewBouquet = (props) => {
                               : alacarteData
                           }
                           setAlacarteData={setAlacarteData}
-                          selectedType={selectedType}
+                          selectedType={validation.values.type}
                           selectedIsHD={selectedIsHD}
                           ftaCount={ftaCountAlacar}
                           paychannelCount={paychannelCountAlacar}
@@ -914,7 +914,7 @@ const ViewBouquet = (props) => {
                               ? selectedRowDetails.package
                               : packagesData
                           }
-                          selectedType={selectedType}
+                          selectedType={validation.values.type}
                           selectedIsHD={selectedIsHD}
                           setPackagesData={setPackagesData}
                           ftaCount={ftaCountPackage}
@@ -1182,7 +1182,7 @@ const ViewBouquet = (props) => {
                   selectedRowDetails ? selectedRowDetails.stbbrands : stbbrands
                 }
                 setStbbrands={setStbbrands}
-                selectedType={selectedType}
+                selectedType={validation.values.type}
               />
               <p>
                 *If no brand selected, this bouquet will be available for all
