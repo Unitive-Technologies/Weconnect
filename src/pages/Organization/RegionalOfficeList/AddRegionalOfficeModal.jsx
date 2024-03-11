@@ -17,7 +17,6 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewRegionalOffice as onAddNewRegionalOffice } from "/src/store/regionaloffice/actions";
-
 import { getStateUsers as onGetStateUsers } from "../../../store/stateusers/actions";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -65,18 +64,13 @@ const AddRegionalOfficeModal = (props) => {
       setSelectedState(stateName);
 
       validation.handleChange(e);
-      {
-        console.log("selectedState:" + typeof selectedState);
-      }
-
-      // Assuming you have a token stored in localStorage
       const token = "Bearer " + localStorage.getItem("temptoken");
 
       const response = await axios.get(
-        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${selectedState}&filter[type]=2&vr=web1.0`,
+        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${stateName}&filter[type]=2&vr=web1.0`,
         {
           headers: {
-            Authorization: token, // Include your token here
+            Authorization: token,
           },
         }
       );
@@ -98,24 +92,15 @@ const AddRegionalOfficeModal = (props) => {
       setSelectedDistrict(districtName);
 
       validation.handleChange(e);
-      {
-        console.log("selectedDistrict:" + typeof selectedDistrict);
-      }
-
-      // Assuming you have a token stored in localStorage
       const token = "Bearer " + localStorage.getItem("temptoken");
 
       const response = await axios.get(
-        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${selectedState}&filter[district_id]=${selectedDistrict}&filter[type]=3&vr=web1.0`,
+        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${selectedState}&filter[district_id]=${districtName}&filter[type]=3&vr=web1.0`,
         {
           headers: {
             Authorization: token,
           },
         }
-      );
-
-      console.log(
-        "cityList after selection : " + JSON.stringify(response.data.data)
       );
       setCityList(response.data.data);
     } catch (error) {
@@ -133,7 +118,7 @@ const AddRegionalOfficeModal = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      name: "",
+      roname: "",
       code: "",
       addr1: "",
       addr2: "",
@@ -164,12 +149,9 @@ const AddRegionalOfficeModal = (props) => {
     },
 
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter name"),
+      roname: Yup.string().required("Enter name"),
       addr1: Yup.string().required("Enter address 1"),
       contact_person: Yup.string().required("Enter contact person name"),
-      // mobile_no: Yup.string()
-      //   .required("Enter mobile number")
-      //   .matches(/^[0-9]{10,}$/, "Min 10 digit number"),
       mobile_no: Yup.string()
         .required("Enter mobile number")
         .matches(/^[0-9]/, "Enter valid number")
@@ -179,6 +161,7 @@ const AddRegionalOfficeModal = (props) => {
       district: Yup.string().required("Select District"),
       city: Yup.string().required("Select City"),
       username: Yup.string().required("Enter loginid"),
+      password: Yup.string().required("Enter Password"),
       confirmpassword: Yup.string().required("Retype password"),
       email: Yup.string().email(
         "Your email address must be of the format name@domain.com"
@@ -189,31 +172,36 @@ const AddRegionalOfficeModal = (props) => {
         .max(12, "Max 12 digit number"),
       pincode: Yup.string().matches(/^[0-9]{6,}$/, "Length to be 6 digits"),
       fax_no: Yup.string().matches(/^[0-9]{2,}$/, "Minimum length 2 character"),
-      gstno: Yup.string().matches(
-        /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[0-9A-Z]{1}$/,
-        "Minimum length 15 character"
-      ),
+      // gstno: Yup.string().matches(
+      //   /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[0-9A-Z]{1}$/,
+      //   "Max length 15 character"
+      // ),
       panno: Yup.string().matches(
         /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
         "Min 10 digit number"
       ),
+      credit_limit: Yup.string().matches(
+        /^[0-9]+$/,
+        "Please enter a value greater than or equal to 0."
+      ),
+      area_id: Yup.string().matches(/^\d{1,10}$/, "Enter valid number"),
     }),
     onSubmit: (values) => {
       // debugger;
       const newRegionalOffice = {
-        name: values["name"],
+        name: values["roname"],
         addr: `${values["addr1"]}, ${values["addr2"]}, ${values["addr3"]}`,
         addr1: values["addr1"],
         addr2: values["addr2"],
         addr3: values["addr3"],
-        agreement_data: {
-          name: values["upload"].name,
-          type: values["upload"].type,
-          ext: values["upload"].ext,
-          data: values["upload"].data,
-          start_date: values["agreestart"],
-          end_date: values["agreeend"],
-        },
+        // agreement_data: {
+        //   name: values["upload"].name,
+        //   type: values["upload"].type,
+        //   ext: values["upload"].ext,
+        //   data: values["upload"].data,
+        //   start_date: values["agreestart"],
+        //   end_date: values["agreeend"],
+        // },
         area_id: values["area_id"],
         city_id: parseInt(values["city"]),
         code: values["code"],
@@ -280,18 +268,8 @@ const AddRegionalOfficeModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.code || ""}
-                  invalid={
-                    validation.touched.code && validation.errors.code
-                      ? true
-                      : false
-                  }
-                  disabled
+                  disabled={toggleSwitch}
                 />
-                {validation.touched.code && validation.errors.code ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.code}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
             <Col lg={2}>
@@ -321,11 +299,6 @@ const AddRegionalOfficeModal = (props) => {
                     </label>
                   </div>
                 </div>
-                {/* {validation.touched.ifFixNCF && validation.errors.ifFixNCF ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.ifFixNCF}
-                  </FormFeedback>
-                ) : null} */}
               </div>
             </Col>
           </Row>
@@ -336,22 +309,22 @@ const AddRegionalOfficeModal = (props) => {
                   Name<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="name"
+                  name="roname"
                   label="Regional Office Name"
                   type="text"
                   placeholder="Enter Name"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.name || ""}
+                  value={validation.values.roname || ""}
                   invalid={
-                    validation.touched.name && validation.errors.name
+                    validation.touched.roname && validation.errors.roname
                       ? true
                       : false
                   }
                 />
-                {validation.touched.name && validation.errors.name ? (
+                {validation.touched.roname && validation.errors.roname ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.name}
+                    {validation.errors.roname}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -636,11 +609,6 @@ const AddRegionalOfficeModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.addr2 || ""}
                 />
-                {validation.touched.addr2 && validation.errors.addr2 ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.addr2}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
 
@@ -656,11 +624,6 @@ const AddRegionalOfficeModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.addr3 || ""}
                 />
-                {validation.touched.addr3 && validation.errors.addr3 ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.addr3}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
           </Row>
@@ -703,12 +666,6 @@ const AddRegionalOfficeModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.por_number || ""}
                 />
-                {validation.touched.por_number &&
-                validation.errors.por_number ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.por_number}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
             <Col lg={4}>
@@ -731,11 +688,6 @@ const AddRegionalOfficeModal = (props) => {
                       </option>
                     ))}
                 </Input>
-                {validation.touched.reg_phase && validation.errors.reg_phase ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.reg_phase}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
           </Row>
@@ -750,19 +702,7 @@ const AddRegionalOfficeModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.reg_startdate || ""}
-                  invalid={
-                    validation.touched.reg_startdate &&
-                    validation.errors.reg_startdate
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.reg_startdate &&
-                validation.errors.reg_startdate ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.reg_startdate}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
 
@@ -777,11 +717,6 @@ const AddRegionalOfficeModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.enddate || ""}
                 />
-                {validation.touched.enddate && validation.errors.enddate ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.enddate}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
 
@@ -845,11 +780,6 @@ const AddRegionalOfficeModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.gst_date || ""}
                 />
-                {validation.touched.gst_date && validation.errors.gst_date ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.gst_date}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
 
@@ -933,7 +863,6 @@ const AddRegionalOfficeModal = (props) => {
           </Row>
           <div
             style={{
-              // margin: "20px 0px",
               marginTop: "20px",
               marginBottom: "-18px",
               zIndex: 12000,
@@ -957,7 +886,6 @@ const AddRegionalOfficeModal = (props) => {
           >
             <Col lg={4}>
               <div className="mb-3">
-                {/* <Label className="form-label">Logo</Label> */}
                 <input
                   style={{
                     width: "170px",
@@ -968,11 +896,6 @@ const AddRegionalOfficeModal = (props) => {
                   type="file"
                   onChange={handleChangeUploadFile}
                 ></input>
-                {validation.touched.upload && validation.errors.upload ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.upload}
-                  </FormFeedback>
-                ) : null}
                 <button
                   type="button"
                   className="btn btn-primary "
@@ -993,19 +916,7 @@ const AddRegionalOfficeModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.agreestart || ""}
-                  invalid={
-                    validation.touched.agreestart &&
-                    validation.errors.agreestart
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.agreestart &&
-                validation.errors.agreestart ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.agreestart}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
             <Col lg={4}>
@@ -1020,11 +931,6 @@ const AddRegionalOfficeModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.agreeend || ""}
                 />
-                {validation.touched.agreeend && validation.errors.agreeend ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.agreeend}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
           </Row>
@@ -1058,11 +964,13 @@ const AddRegionalOfficeModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Password</Label>
+                <Label className="form-label">
+                  Password<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="password"
                   label="Password"
-                  type="text"
+                  type="password"
                   placeholder="Password"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
@@ -1082,11 +990,13 @@ const AddRegionalOfficeModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Confirm-Password</Label>
+                <Label className="form-label">
+                  Confirm-Password<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="confirmpassword"
                   label="Confirm Password"
-                  type="text"
+                  type="password"
                   placeholder="Retype Password"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
