@@ -34,6 +34,7 @@ import BulkAssign from "./BulkAssign";
 import BulkRemoval from "./BulkRemoval";
 import BulkSettings from "./BulkSettings";
 import TableContainerX from "../../../components/Common/TableContainerX";
+import BulkAssignBouquets from "./BulkAssignBouquets";
 
 const BouquetList = () => {
   //meta title
@@ -87,12 +88,29 @@ const BouquetList = () => {
   const [isChecked, setIsChecked] = useState(true);
   const [selectedRow, setSelectedRow] = useState({});
   const [showWarning, setShowWarning] = useState(false);
-
+  const [selectedRows, setSelectedRows] = useState([]);
   const handleCheckboxClick = (row) => {
-    console.log("Clicked row: ", row);
-    setShowViewBouquet(false);
-    setIsChecked(!isChecked);
-    setSelectedRow(row);
+    console.log(
+      "Before state update - selectedRows:",
+      JSON.stringify(selectedRows)
+    );
+    const isSelected = selectedRows.some(
+      (selectedRow) => selectedRow.id === row.id
+    );
+
+    if (isSelected) {
+      // If already selected, remove it
+      setSelectedRows((prevSelectedRows) =>
+        prevSelectedRows.filter((selectedRow) => selectedRow.id !== row.id)
+      );
+    } else {
+      // If not selected, add it
+      setSelectedRows((prevSelectedRows) => [...prevSelectedRows, row]);
+    }
+    console.log(
+      "After state update - selectedRows:",
+      JSON.stringify(selectedRows)
+    );
   };
 
   const toggleViewBouquet = (userData) => {
@@ -546,11 +564,18 @@ const BouquetList = () => {
           showViewBouquet={showViewBouquet}
         />
       )}
-      <BulkAssign
+      {/* <BulkAssign
         isOpen={showBulkAssign}
         toggle={toggleBulkAssign}
-        selectedRow={selectedRow}
-      />
+        selectedRows={selectedRows}
+      /> */}
+      {selectedRow && showBulkAssign && (
+        <BulkAssignBouquets
+          isOpen={showBulkAssign}
+          toggle={toggleBulkAssign}
+          selectedRows={selectedRows}
+        />
+      )}
       <BulkRemoval
         isOpen={showBulkRemoval}
         toggle={toggleBulkRemoval}
