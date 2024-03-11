@@ -49,16 +49,24 @@ const AddNewBroadCaster = (props) => {
       name: Yup.string().required("Select name"),
       fullname: Yup.string().required("Select full name"),
       addr: Yup.string().required("Select address"),
-      contact_person: Yup.string().required("Select contact person"),
+      contact_person: Yup.string().required("Select contact person name"),
       phone_no: Yup.string()
         .matches(/^[0-9]/, "Enter valid number")
         .min(8, "Min 8 digit number")
         .max(12, "Max 12 digit number"),
+      // mobile_no: Yup.string()
+      //   .required("Enter mobile number")
+      //   .matches(/^[0-9]/, "Enter valid number")
+      //   .max(10, "Min 10 digit number")f,
       mobile_no: Yup.string()
-        .required("Enter mobile number")
         .matches(/^[0-9]/, "Enter valid number")
-        .max(10, "Min 10 digit number"),
-      email: Yup.string().required("Select email"),
+        .required("Enter mobile number")
+        .min(8, "Min 10 digit number")
+        .max(12, "Max 12 digit number"),
+      email: Yup.string()
+        .email(
+          "Your email address must be of the format name@domain.com"
+        ).required("Enter email"),
       status: Yup.string().required("Select status"),
       description: Yup.string().required("Select description"),
     }),
@@ -200,14 +208,13 @@ const AddNewBroadCaster = (props) => {
                 <Input
                   name="mobile_no"
                   type="text"
-                  placeholder="Enter mobile  number"
+                  placeholder="Enter mobile number"
                   // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.mobile_no || ""}
                   invalid={
-                    validation.touched.mobile_no &&
-                      validation.errors.mobile_no
+                    validation.touched.mobile_no && validation.errors.mobile_no
                       ? true
                       : false
                   }
@@ -287,7 +294,7 @@ const AddNewBroadCaster = (props) => {
                       : false
                   }
                 ></Input>
-                {validation.touched.addr && validation.errors.add ? (
+                {validation.touched.addr && validation.errors.addr ? (
                   <FormFeedback type="invalid">
                     {validation.errors.addr}
                   </FormFeedback>
