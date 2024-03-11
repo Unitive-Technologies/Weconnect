@@ -149,7 +149,7 @@ const BulkAssign = (props) => {
         console.log("newSetting:", JSON.stringify(newAssign));
         const token = "Bearer " + localStorage.getItem("temptoken");
 
-        const response = await axios.put(
+        const response = await axios.post(
           `${API_URL}/operator-scheme?vr=web1.0`,
           newAssign,
           {

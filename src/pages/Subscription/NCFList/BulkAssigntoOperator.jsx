@@ -244,7 +244,7 @@ const BulkAssigntoOperator = (props) => {
         console.log("newAssign:", JSON.stringify(newAssign));
 
         const token = "Bearer " + localStorage.getItem("temptoken");
-        const response = await axios.put(
+        const response = await axios.post(
           `${API_URL}/ncf-rates/assign?vr=web1.0`,
           newAssign,
           {
