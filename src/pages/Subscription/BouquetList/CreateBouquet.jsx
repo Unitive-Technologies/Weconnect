@@ -100,7 +100,7 @@ const CreateBouquet = (props) => {
       is_exclusive: "0",
       is_promotional: "0",
       is_loner: "0",
-      ifFixNCF: false,
+      ifFixNCF: "",
       max_ncf_channels: "0",
       is_online_app: "0",
       sort_by: "1",
@@ -135,7 +135,7 @@ const CreateBouquet = (props) => {
           free_days: freeDays,
           cashback_amount: cashbackAmount,
           total_amount:
-            ifFixNCF !== true
+            ifFixNCF === true
               ? parseFloat(ncfTotalAmount.toFixed(2))
               : parseFloat(totalAmount.toFixed(2)),
         };
@@ -160,9 +160,8 @@ const CreateBouquet = (props) => {
         status: parseInt(values["status"]),
         type: parseInt(values["type"]),
         ifFixNCF: values["ifFixNCF"],
-        mrp: !toggleNcfSwitch
-          ? parseInt(mrp) + parseInt(ncfdrp)
-          : parseInt(mrp),
+        mrp:
+          ifFixNCF !== true ? parseInt(mrp) + parseInt(ncfdrp) : parseInt(mrp),
         mrp_data: {
           pcc: parseInt(mrp),
           drp: parseInt(drp),
@@ -513,7 +512,9 @@ const CreateBouquet = (props) => {
                       type="checkbox"
                       className="form-check-input"
                       id="customSwitchsizelg"
-                      defaultChecked={!ifFixNCF}
+                      value={ifFixNCF}
+                      // checked={ifFixNCF === true ? false : true}
+                      defaultChecked={ifFixNCF !== true}
                       onChange={(e) => setIfFixNCF(!e.target.checked)}
                       onClick={() => {
                         setToggleNcfSwitch(!toggleNcfSwitch);
@@ -536,6 +537,7 @@ const CreateBouquet = (props) => {
               </div>
             </Col>
           </Row>
+          {console.log("value of ifFixNCF : " + ifFixNCF)}
           <Row>
             <Col sm="3">
               <div className="mb-3">
@@ -552,7 +554,7 @@ const CreateBouquet = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.max_ncf_channels || ""}
-                  disabled={!toggleNcfSwitch}
+                  disabled={ifFixNCF !== true}
                 />
                 {validation.touched.max_ncf_channels &&
                 validation.errors.max_ncf_channels ? (
@@ -828,7 +830,7 @@ const CreateBouquet = (props) => {
                 </div>
               </div>
             </div>
-            {!toggleNcfSwitch && (
+            {ifFixNCF === true && (
               <Row className="mb-3 mt-3">
                 <Col sm="3">
                   {/* <Label>MRP**</Label>
@@ -913,6 +915,7 @@ const CreateBouquet = (props) => {
                 setRate={setRate}
                 newArray={newArray}
                 setNewArray={setNewArray}
+                ifFixNCF={ifFixNCF}
               />
             </Row>
           </Row>
@@ -956,6 +959,7 @@ const CreateBouquet = (props) => {
                 mrp={mrp}
                 drp={drp}
                 ncfdrp={ncfdrp}
+                ifFixNCF={ifFixNCF}
                 // ncfAdditionaldrp={ncfAdditionaldrp}
                 // setNcfAdditionaldrp={setNcfAdditionaldrp}
                 // ncfAdditionalLcoDiscount={ncfAdditionalLcoDiscount}

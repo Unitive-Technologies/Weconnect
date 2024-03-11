@@ -105,7 +105,7 @@ const PreviewTable = (props) => {
               <th>#</th>
               <th>Period</th>
               <th>Pay Channel Rate**</th>
-              {ifFixNCF !== true && <th>NCF</th>}
+              {ifFixNCF === true && <th>NCF</th>}
               <th>Tax</th>
               <th>Total AMT</th>
               <th>Refundable</th>
@@ -131,7 +131,7 @@ const PreviewTable = (props) => {
                       ).toFixed(2)}
                     />
                   </td>
-                  {ifFixNCF !== true && (
+                  {ifFixNCF === true && (
                     <td>
                       <Input
                         name="ncf"
@@ -151,7 +151,7 @@ const PreviewTable = (props) => {
                       type="number"
                       disabled
                       value={
-                        ifFixNCF !== true
+                        ifFixNCF === true
                           ? parseFloat(
                               parseInt(row.months) === 0
                                 ? ((lcoRate / 30 + ncfLcoRate / 30) * 30.3) /
@@ -175,7 +175,7 @@ const PreviewTable = (props) => {
                       type="number"
                       disabled
                       value={
-                        ifFixNCF !== true
+                        ifFixNCF === true
                           ? parseFloat(
                               parseInt(row.months) === 0
                                 ? lcoRate / 30 +

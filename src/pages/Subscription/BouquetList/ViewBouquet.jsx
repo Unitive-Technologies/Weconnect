@@ -1002,7 +1002,7 @@ const ViewBouquet = (props) => {
                   </div>
                 </div>
               </div>
-              {ifFixNCF !== true && (
+              {validation.values.ifFixNCF === true && (
                 <Row className="mb-3 mt-3">
                   <Col sm="3">
                     {/* <Label>MRP**</Label>
@@ -1085,7 +1085,7 @@ const ViewBouquet = (props) => {
                   ncfLcoRate={ncfLcoRate}
                   rate={rate}
                   setRate={setRate}
-                  ifFixNCF={ifFixNCF}
+                  ifFixNCF={validation.values.ifFixNCF}
                   newArray={newArray}
                   setNewArray={setNewArray}
                 />
@@ -1135,7 +1135,7 @@ const ViewBouquet = (props) => {
                   mrp={mrp}
                   drp={drp}
                   ncfdrp={ncfdrp}
-                  ifFixNCF={ifFixNCF}
+                  ifFixNCF={validation.values.ifFixNCF}
                 />
               </Row>
               <Row>
