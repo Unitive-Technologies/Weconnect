@@ -28,8 +28,8 @@ const AddOperators = (props) => {
     selectedRows,
     expiryDates,
     setExpiryDates,
-    selectedUsers,
-    setSelectedUsers,
+    selectedOperators,
+    setSelectedOperators,
   } = props;
   // const [selectedUsers, setSelectedUsers] = useState([]);
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
@@ -38,18 +38,18 @@ const AddOperators = (props) => {
   // const [expirydate, setExpiryDate] = useState("");
 
   const handleActive = (row) => {
-    const isRowSelected = selectedUsers.some((user) => user.id === row.id);
+    const isRowSelected = selectedOperators.some((user) => user.id === row.id);
 
     setTableList((prevTableList) =>
       prevTableList.filter((user) => user.id !== row.id)
     );
 
     if (isRowSelected) {
-      setSelectedUsers((prevSelectedUsers) =>
+      setSelectedOperators((prevSelectedUsers) =>
         prevSelectedUsers.filter((user) => user.id !== row.id)
       );
     } else {
-      setSelectedUsers((prevSelectedUsers) => [...prevSelectedUsers, row]);
+      setSelectedOperators((prevSelectedUsers) => [...prevSelectedUsers, row]);
     }
 
     // Ensure that row.original exists before accessing its properties
@@ -59,8 +59,8 @@ const AddOperators = (props) => {
   };
 
   const handleRemove = (row) => {
-    if (selectedUsers) {
-      setSelectedUsers((prevSelectedUsers) =>
+    if (selectedOperators) {
+      setSelectedOperators((prevSelectedUsers) =>
         prevSelectedUsers.filter((user) => user.id !== row.id)
       );
       setTableList((prevTableList) =>
@@ -314,7 +314,7 @@ const AddOperators = (props) => {
     console.log("add button clicked");
 
     // Map selectedUsers and expiryDates to create newSelectedOperators array
-    const newSelectedOperators = selectedUsers.map((user, index) => ({
+    const newSelectedOperators = selectedOperators.map((user, index) => ({
       id: user.id,
       name: user.name || "",
       code: user.code || "",
@@ -358,9 +358,9 @@ const AddOperators = (props) => {
   }, [selectedRows]);
 
   const deleteSelectedUser = (index) => {
-    const list = [...selectedUsers];
+    const list = [...selectedOperators];
     list.splice(index, 1);
-    setSelectedUsers(list);
+    setSelectedOperators(list);
   };
 
   return (
@@ -439,8 +439,8 @@ const AddOperators = (props) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {selectedUsers &&
-                        selectedUsers.map((row, i) => (
+                      {selectedOperators &&
+                        selectedOperators.map((row, i) => (
                           <tr key={i}>
                             <td>{i + 1}</td>
                             <td>{row && row.name}</td>

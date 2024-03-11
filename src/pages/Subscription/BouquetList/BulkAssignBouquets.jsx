@@ -27,10 +27,12 @@ const BulkAssignBouquets = (props) => {
   const [addOperatorsData, setAddOperatorsData] = useState([]);
   const [toggleSwitch, settoggleSwitch] = useState(true);
   const [selectedRowNestedData, setSelectedRowNestedData] = useState([]);
-  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [selectedOperators, setSelectedOperators] = useState([]);
   const [ncfData, setNcfData] = useState({});
+  const [rate, setRate] = useState("");
+  const [isRefundable, setIsRefundable] = useState("");
   const [expiryDates, setExpiryDates] = useState(
-    Array(selectedUsers.length).fill("")
+    Array(selectedOperators.length).fill("")
   );
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const toggleAddOperator = () => {
@@ -221,14 +223,13 @@ const BulkAssignBouquets = (props) => {
     onSubmit: async (values) => {
       try {
         const newAssign = {
-          // bouque_data: selectedUsers.map((user) =>  {
-          //   "bouque_id":user.id,
-          //   "rate_code": "",
-          //   "is_refundable": 1 ,
-          // }),
-          bouque_data: [],
-          bouque_ids: selectedRows.map((user) => user.id),
-          operator_id: selectedUsers.map((user) => user.id),
+          bouque_data: selectedRows.map((bouque) => ({
+            bouque_id: bouque.id,
+            rate_code: rate,
+            is_refundable: isRefundable,
+          })),
+          bouque_ids: selectedRows.map((bouque) => bouque.id),
+          operator_id: selectedOperators.map((operator) => operator.id),
         };
 
         console.log("newAssign:", JSON.stringify(newAssign));
@@ -273,8 +274,8 @@ const BulkAssignBouquets = (props) => {
           data={addOperatorsData}
           setData={setAddOperatorsData}
           selectedRows={selectedRows}
-          selectedUsers={selectedUsers}
-          setSelectedUsers={setSelectedUsers}
+          selectedOperators={selectedOperators}
+          setSelectedOperators={setSelectedOperators}
           expiryDates={expiryDates}
           setExpiryDates={setExpiryDates}
         />
@@ -368,7 +369,13 @@ const BulkAssignBouquets = (props) => {
               <p>
                 ** To select row, click <i className="mdi mdi-check"></i>{" "}
               </p>
-              <Bouquets selectedRows={selectedRows} />
+              <Bouquets
+                selectedRows={selectedRows}
+                rate={rate}
+                setRate={setRate}
+                isRefundable={isRefundable}
+                setIsRefundable={setIsRefundable}
+              />
             </Row>
 
             <Row>

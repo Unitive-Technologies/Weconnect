@@ -4,7 +4,13 @@ import TableContainer from "../../../components/Common/TableContainer";
 import { Card, CardBody, Table, Input } from "reactstrap";
 import { Link } from "react-router-dom";
 
-const Bouquets = ({ selectedRows }) => {
+const Bouquets = ({
+  selectedRows,
+  rate,
+  setRate,
+  isRefundable,
+  setIsRefundable,
+}) => {
   console.log("selectedRows in Bouquets:" + JSON.stringify(selectedRows));
   const columns = useMemo(
     () => [
@@ -166,13 +172,12 @@ const Bouquets = ({ selectedRows }) => {
           return (
             <>
               <Input
-                name="is_loner"
+                name="rate"
                 type="select"
                 placeholder="Select Stop Other"
                 className="form-select"
-                // onChange={validation.handleChange}
-                // onBlur={validation.handleBlur}
-                // value={validation.values.is_loner || ""}
+                onChange={(e) => setRate(e.target.value)}
+                value={rate}
               >
                 <option value="0">No</option>
                 <option value="1">Yes</option>
@@ -189,13 +194,12 @@ const Bouquets = ({ selectedRows }) => {
           return (
             <>
               <Input
-                name="is_loner"
+                name="isRefundable"
                 type="select"
                 placeholder="Select Stop Other"
                 className="form-select"
-                // onChange={validation.handleChange}
-                // onBlur={validation.handleBlur}
-                // value={validation.values.is_loner || ""}
+                onChange={(e) => setIsRefundable(e.target.value)}
+                value={isRefundable}
               >
                 <option value="0">No</option>
                 <option value="1">Yes</option>
