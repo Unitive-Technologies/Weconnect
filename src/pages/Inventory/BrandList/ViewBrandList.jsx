@@ -192,6 +192,11 @@ const ViewBrandList = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.brand_type_lbl || ""}
                     disabled={!showEditBrand}
+                    invalid={
+                      validation.touched.brand_type_lbl && validation.errors.brand_type_lbl
+                        ? true
+                        : false
+                    }
                   >
                     {brandBrandType.map((brand_type_lbl) => (
                       <option key={brand_type_lbl.id} value={brand_type_lbl.id}>
@@ -221,6 +226,11 @@ const ViewBrandList = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.box_type_lbl || ""}
                     disabled={!showEditBrand}
+                    invalid={
+                      validation.touched.box_type_lbl && validation.errors.box_type_lbl
+                        ? true
+                        : false
+                    }
                   >
                     {brandBoxType.map((box_type_lbl) => (
                       <option key={box_type_lbl.id} value={box_type_lbl.id}>
@@ -252,6 +262,11 @@ const ViewBrandList = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.cas_lbl || ""}
                     disabled={!showEditBrand}
+                    invalid={
+                      validation.touched.cas_lbl && validation.errors.cas_lbl
+                        ? true
+                        : false
+                    }
                   >
                     {brandCasType.map((cas_lbl) => (
                       <option key={cas_lbl.id} value={cas_lbl.id}>
@@ -336,6 +351,11 @@ const ViewBrandList = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.char_allowed_lbl || ""}
                     disabled={!showEditBrand}
+                    invalid={
+                      validation.touched.char_allowed_lbl && validation.errors.char_allowed_lbl
+                        ? true
+                        : false
+                    }
                   >
                     {brandCharacters.map((char_allowed_lbl) => (
                       <option key={char_allowed_lbl.id} value={char_allowed_lbl.id}>
