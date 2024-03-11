@@ -33,6 +33,7 @@ const EditRegionalOfficeModal = (props) => {
   const [selectedState, setSelectedState] = useState("");
   const [cityList, setCityList] = useState([]);
   const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [toggleSwitch, settoggleSwitch] = useState(true);
   console.log("state value:" + selectedState);
   console.log("district value:" + selectedDistrict);
   // console.log("city value:" + validation.values.city);
