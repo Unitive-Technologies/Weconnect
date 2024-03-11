@@ -73,6 +73,11 @@ const ViewSMSMessageTemplateList = (props) => {
     enableReinitialize: true,
     initialValues,
     validationSchema: Yup.object({
+      template: Yup.string().required("Enter template"),
+      template_id: Yup.string().required("Enter template id"),
+      cat_id: Yup.string().required("Enter category"),
+      sub_cat_id: Yup.string().required("Enter sub-category"),
+      sender_id: Yup.string().required("Enter sender"),
       status: Yup.string().required("Enter status"),
     }),
     onSubmit: (values) => {
@@ -248,7 +253,7 @@ const ViewSMSMessageTemplateList = (props) => {
             <Row>
               <Col sm="4">
                 <div className="mb-3">
-                  <Label className="form-label">Template</Label>
+                  <Label className="form-label">Template<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="template"
                     type="text"
@@ -258,6 +263,11 @@ const ViewSMSMessageTemplateList = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.template || ""}
+                    invalid={
+                      validation.touched.template && validation.errors.template
+                        ? true
+                        : false
+                    }
                   ></Input>
                   {validation.touched.template && validation.errors.template ? (
                     <FormFeedback type="invalid">
@@ -274,7 +284,7 @@ const ViewSMSMessageTemplateList = (props) => {
                     Template ID<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="Template ID"
+                    name="template_id"
                     type="text"
                     placeholder="Enter template ID"
                     disabled={!showEditSMS}
@@ -282,6 +292,11 @@ const ViewSMSMessageTemplateList = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.template_id || ""}
+                    invalid={
+                      validation.touched.template_id && validation.errors.template_id
+                        ? true
+                        : false
+                    }
                   ></Input>
                   {validation.touched.template_id &&
                     validation.errors.template_id ? (
@@ -306,7 +321,12 @@ const ViewSMSMessageTemplateList = (props) => {
                     // onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={selectedCategory}
-                  // value={validation.values.cat_id || ""}
+                    // value={validation.values.cat_id || ""}
+                    invalid={
+                      validation.touched.cat_id && validation.errors.cat_id
+                        ? true
+                        : false
+                    }
                   >
                     {smsmessagetempCategory.map((cat_id) => (
                       <option key={cat_id.id} value={cat_id.id}>
@@ -340,6 +360,11 @@ const ViewSMSMessageTemplateList = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.sub_cat_id || ""}
+                    invalid={
+                      validation.touched.sub_cat_id && validation.errors.sub_cat_id
+                        ? true
+                        : false
+                    }
                   >
                     {subCategory &&
                       subCategory.map((sub_cat_id) => (
@@ -372,6 +397,11 @@ const ViewSMSMessageTemplateList = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.sender_id || ""}
+                    invalid={
+                      validation.touched.sender_id && validation.errors.sender_id
+                        ? true
+                        : false
+                    }
                   >
                     {smsmessagetempSender.map((sender_id) => (
                       <option key={sender_id.id} value={sender_id.id}>
@@ -401,6 +431,11 @@ const ViewSMSMessageTemplateList = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.status || ""}
+                    invalid={
+                      validation.touched.status && validation.errors.status
+                        ? true
+                        : false
+                    }
                   >
                     {smsmessagetempStatus.map((status_lbl) => (
                       <option key={status_lbl.id} value={status_lbl.id}>

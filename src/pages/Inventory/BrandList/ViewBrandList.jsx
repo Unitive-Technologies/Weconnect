@@ -385,6 +385,11 @@ const ViewBrandList = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.status || ""}
                     disabled={!showEditBrand}
+                    invalid={
+                      validation.touched.status && validation.errors.status
+                        ? true
+                        : false
+                    }
                   >
                     {brandStatus.map((status) => (
                       <option key={status.id} value={status.id}>
