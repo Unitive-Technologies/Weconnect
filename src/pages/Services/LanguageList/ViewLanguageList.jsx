@@ -56,10 +56,10 @@ const ViewLanguageList = (props) => {
             description: (language && language.description) || "",
         },
         validationSchema: Yup.object({
-            name: Yup.string().required("Please Enter Language"),
-            code: Yup.string().required("Please Enter Code"),
-            status: Yup.string().required("Please Enter status"),
-            description: Yup.string().required("Please Enter description"),
+            name: Yup.string().required("Enter Language"),
+            code: Yup.string().required("Enter Code"),
+            status: Yup.string().required("Enter status"),
+            description: Yup.string().required("Enter description"),
         }),
         onSubmit: (values) => {
             const updateLanguageList = {
@@ -208,6 +208,12 @@ const ViewLanguageList = (props) => {
                                         onBlur={validation.handleBlur}
                                         value={selectedStatus}
                                         disabled={!showEditLanguageList}
+                                        invalid={
+                                            validation.touched.status &&
+                                                validation.errors.status
+                                                ? true
+                                                : false
+                                        }
                                     >
                                         {langlistStatus.map((status) => (
                                             <option key={status.id} value={status.id}>
@@ -233,12 +239,6 @@ const ViewLanguageList = (props) => {
                                         onChange={validation.handleChange}
                                         onBlur={validation.handleBlur}
                                         value={validation.values.description || ""}
-                                        invalid={
-                                            validation.touched.description &&
-                                                validation.errors.description
-                                                ? true
-                                                : false
-                                        }
                                         disabled={!showEditLanguageList}
                                     />
                                     {validation.touched.description &&

@@ -55,9 +55,9 @@ const ViewGenreList = (props) => {
             description: (genre && genre.description) || "",
         },
         validationSchema: Yup.object({
-            name: Yup.string().required("Please Enter Title"),
-            status: Yup.string().required("Please Enter status"),
-            description: Yup.string().required("Please Enter description"),
+            name: Yup.string().required("Enter Title"),
+            status: Yup.string().required("Enter status"),
+            description: Yup.string().required("Enter description"),
         }),
         onSubmit: (values) => {
             const updateGenreList = {

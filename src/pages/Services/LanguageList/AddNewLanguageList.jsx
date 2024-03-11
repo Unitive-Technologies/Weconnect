@@ -105,6 +105,12 @@ const AddNewLanguageList = (props) => {
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
                                     value={validation.values.name || ""}
+                                    invalid={
+                                        validation.touched.name &&
+                                            validation.errors.name
+                                            ? true
+                                            : false
+                                    }
                                 ></Input>
                                 {validation.touched.name && validation.errors.name ? (
                                     <FormFeedback type="invalid">
@@ -124,6 +130,12 @@ const AddNewLanguageList = (props) => {
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
                                     value={validation.values.code || ""}
+                                    invalid={
+                                        validation.touched.code &&
+                                            validation.errors.code
+                                            ? true
+                                            : false
+                                    }
                                 >
                                 </Input>
                                 {validation.touched.code && validation.errors.code ? (
@@ -146,6 +158,12 @@ const AddNewLanguageList = (props) => {
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
                                     value={validation.values.status || ""}
+                                    invalid={
+                                        validation.touched.status &&
+                                            validation.errors.status
+                                            ? true
+                                            : false
+                                    }
                                 >
                                     <option value="">Select Status</option>
                                     {langlistStatus &&

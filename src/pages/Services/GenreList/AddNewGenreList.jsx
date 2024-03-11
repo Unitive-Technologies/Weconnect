@@ -40,7 +40,7 @@ const AddNewGenreList = (props) => {
             created_by: "Admin",
         },
         validationSchema: Yup.object({
-            name: Yup.string().required("Enter genre title"),
+            name: Yup.string().required("Enter title"),
             status: Yup.string().required("Select status"),
             description: Yup.string().required("Enter description"),
         }),
@@ -102,6 +102,12 @@ const AddNewGenreList = (props) => {
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
                                     value={validation.values.name || ""}
+                                    invalid={
+                                        validation.touched.name &&
+                                            validation.errors.name
+                                            ? true
+                                            : false
+                                    }
                                 ></Input>
                                 {validation.touched.name && validation.errors.name ? (
                                     <FormFeedback type="invalid">
@@ -120,6 +126,12 @@ const AddNewGenreList = (props) => {
                                     onChange={validation.handleChange}
                                     onBlur={validation.handleBlur}
                                     value={validation.values.status || ""}
+                                    invalid={
+                                        validation.touched.status &&
+                                            validation.errors.status
+                                            ? true
+                                            : false
+                                    }
                                 >
                                     <option value="">Select Status</option>
                                     {genreListStatus &&
