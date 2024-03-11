@@ -162,7 +162,7 @@ const AdditionalMrpTable = (props) => {
           )}
         </div>
       </Row>
-      {!toggleNcfSwitch && (
+      {ifFixNCF !== true && (
         <Row className="mb-3 mt-3">
           <Col sm="3">
             {/* <Label>MRP**</Label>
@@ -239,7 +239,7 @@ const AdditionalMrpTable = (props) => {
                   <th>#</th>
                   <th>Period</th>
                   <th>Pay Channel Rate**</th>
-                  {!toggleNcfSwitch && <th>NCF</th>}
+                  {ifFixNCF !== true && <th>NCF</th>}
                   <th>Tax</th>
                   <th>Total AMT</th>
                   <th>Refundable</th>
@@ -264,7 +264,7 @@ const AdditionalMrpTable = (props) => {
                           ).toFixed(2)}
                         />
                       </td>
-                      {!toggleNcfSwitch && (
+                      {ifFixNCF !== true && (
                         <td>
                           <Input
                             name="ncf"
@@ -284,7 +284,7 @@ const AdditionalMrpTable = (props) => {
                           type="number"
                           disabled
                           value={
-                            !toggleNcfSwitch
+                            ifFixNCF !== true
                               ? parseFloat(
                                   parseInt(row.months) === 0
                                     ? ((additionalLcoRate / 30 +
@@ -311,7 +311,7 @@ const AdditionalMrpTable = (props) => {
                           type="number"
                           disabled
                           value={
-                            !toggleNcfSwitch
+                            ifFixNCF !== true
                               ? parseFloat(
                                   parseInt(row.months) === 0
                                     ? additionalLcoRate / 30 +

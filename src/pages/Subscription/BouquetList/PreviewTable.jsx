@@ -10,6 +10,7 @@ import { createSelector } from "reselect";
 const PreviewTable = (props) => {
   const {
     rechargeperiod,
+    ifFixNCF,
     lcoRate,
     ncfLcoRate,
     rate,
@@ -75,9 +76,10 @@ const PreviewTable = (props) => {
         is_refundable: isRefundable ? 1 : 0,
         free_days: freeDays,
         cashback_amount: cashbackAmount,
-        total_amount: !toggleNcfSwitch
-          ? parseFloat(ncfTotalAmount.toFixed(2))
-          : parseFloat(totalAmount.toFixed(2)),
+        total_amount:
+          ifFixNCF !== true
+            ? parseFloat(ncfTotalAmount.toFixed(2))
+            : parseFloat(totalAmount.toFixed(2)),
       };
     });
     // console.log("updatedRateeeeeeeeee: " + JSON.stringify(updatedRate));
@@ -101,7 +103,7 @@ const PreviewTable = (props) => {
               <th>#</th>
               <th>Period</th>
               <th>Pay Channel Rate**</th>
-              {!toggleNcfSwitch && <th>NCF</th>}
+              {ifFixNCF !== true && <th>NCF</th>}
               <th>Tax</th>
               <th>Total AMT</th>
               <th>Refundable</th>
@@ -127,7 +129,7 @@ const PreviewTable = (props) => {
                       ).toFixed(2)}
                     />
                   </td>
-                  {!toggleNcfSwitch && (
+                  {ifFixNCF !== true && (
                     <td>
                       <Input
                         name="ncf"
@@ -147,7 +149,7 @@ const PreviewTable = (props) => {
                       type="number"
                       disabled
                       value={
-                        !toggleNcfSwitch
+                        ifFixNCF !== true
                           ? parseFloat(
                               parseInt(row.months) === 0
                                 ? ((lcoRate / 30 + ncfLcoRate / 30) * 30.3) /
@@ -171,7 +173,7 @@ const PreviewTable = (props) => {
                       type="number"
                       disabled
                       value={
-                        !toggleNcfSwitch
+                        ifFixNCF !== true
                           ? parseFloat(
                               parseInt(row.months) === 0
                                 ? lcoRate / 30 +
