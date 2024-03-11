@@ -20,7 +20,10 @@ import {
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { updateBouquet as onUpdateBouquet } from "/src/store/bouquetlist/actions";
+import {
+  updateBouquet as onUpdateBouquet,
+  getBouquet as onGetBouquet,
+} from "/src/store/bouquetlist/actions";
 import { useDispatch } from "react-redux";
 import AddAlacarte from "./AddAlacarte";
 import AddPackages from "./AddPackages";
@@ -193,6 +196,7 @@ const ViewBouquet = (props) => {
       console.log("Updated Bouquet List:" + updatedBouquet);
       // save new user
       dispatch(onUpdateBouquet(updatedBouquet));
+      dispatch(onGetBouquet());
       validation.resetForm();
       toggle();
     },
@@ -593,7 +597,11 @@ const ViewBouquet = (props) => {
                         type="checkbox"
                         className="form-check-input"
                         id="customSwitchsizelg"
-                        defaultChecked={!ifFixNCF}
+                        value={validation.values.ifFixNCF}
+                        checked={
+                          validation.values.ifFixNCF === true ? false : true
+                        }
+                        // defaultChecked={!ifFixNCF}
                         onChange={(e) => setIfFixNCF(!e.target.checked)}
                         onClick={() => {
                           setToggleNcfSwitch(!toggleNcfSwitch);
@@ -616,6 +624,9 @@ const ViewBouquet = (props) => {
                 </div>
               </Col>
             </Row>
+            {console.log(
+              "validation.values.ifFixNCF: " + validation.values.ifFixNCF
+            )}
             <Row>
               <Col sm="3">
                 <div className="mb-3">
