@@ -42,7 +42,7 @@ const AddNewBrandList = (props) => {
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
       box_type_lbl: Yup.string().required("Select box type"),
-      type: Yup.string().required("Select brand type"),
+      type: Yup.string().required("Select brand"),
       cas_id: Yup.string().required("Select CAS"),
       length: Yup.string().required("Enter character length"),
       significant_length: Yup.string().required("Enter significant length"),
@@ -136,6 +136,11 @@ const AddNewBrandList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.type || ""}
+                  invalid={
+                    validation.touched.type && validation.errors.type
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select brand type</option>
                   {brandBrandType &&
@@ -170,6 +175,11 @@ const AddNewBrandList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.box_type_lbl || ""}
+                  invalid={
+                    validation.touched.box_type_lbl && validation.errors.box_type_lbl
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select box type</option>
                   {brandBoxType &&
@@ -202,6 +212,11 @@ const AddNewBrandList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.cas_id || ""}
+                  invalid={
+                    validation.touched.cas_id && validation.errors.cas_id
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Cas</option>
                   {brandCasType &&
@@ -285,6 +300,11 @@ const AddNewBrandList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.char_allowed || ""}
+                  invalid={
+                    validation.touched.char_allowed && validation.errors.char_allowed
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select allowed characters</option>
                   {brandCharacters &&
@@ -315,6 +335,11 @@ const AddNewBrandList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  invalid={
+                    validation.touched.status && validation.errors.status
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Status</option>
                   {brandStatus &&

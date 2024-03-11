@@ -40,8 +40,8 @@ const AddNewWareHouse = (props) => {
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
       contact_person: Yup.string().required("Enter contact person"),
-      mobile_no: Yup.string().required("Enter contact number"),
-      operator_id: Yup.string().required("Select operator_id"),
+      mobile_no: Yup.string().required("Enter mobile number"),
+      operator_id: Yup.string().required("Select operator"),
       description: Yup.string().required("Enter description"),
       address: Yup.string().required("Enter address"),
       status: Yup.string().required("Select status"),
@@ -184,6 +184,11 @@ const AddNewWareHouse = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  invalid={
+                    validation.touched.status && validation.errors.status
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Status</option>
                   {warehouseStatus &&
@@ -215,8 +220,13 @@ const AddNewWareHouse = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.operator_id || ""}
+                  invalid={
+                    validation.touched.operator_id && validation.errors.operator_id
+                      ? true
+                      : false
+                  }
                 >
-                  <option value="">Select Status</option>
+                  <option value="">Select Operator</option>
                   {warehouseOperator &&
                     warehouseOperator.map((operator_id) => (
                       <option key={operator_id.id} value={operator_id.id}>
