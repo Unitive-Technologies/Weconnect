@@ -726,7 +726,7 @@ const AddRegionalOfficeModal = (props) => {
                 <Input
                   name="fax_no"
                   type="text"
-                  placeholder="Select Fax No."
+                  placeholder="Enter Fax No."
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.fax_no || ""}
@@ -751,7 +751,7 @@ const AddRegionalOfficeModal = (props) => {
                 <Input
                   name="gstno"
                   type="text"
-                  placeholder="Select GST No."
+                  placeholder="Enter GST No."
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.gstno || ""}
@@ -789,7 +789,7 @@ const AddRegionalOfficeModal = (props) => {
                 <Input
                   name="panno"
                   type="text"
-                  placeholder="Select PAN No."
+                  placeholder="Enter PAN No."
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.panno || ""}
