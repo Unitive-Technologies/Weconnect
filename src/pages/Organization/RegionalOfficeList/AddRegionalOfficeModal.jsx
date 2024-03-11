@@ -167,22 +167,35 @@ const AddRegionalOfficeModal = (props) => {
       name: Yup.string().required("Enter name"),
       addr1: Yup.string().required("Enter address 1"),
       contact_person: Yup.string().required("Enter contact person name"),
+      // mobile_no: Yup.string()
+      //   .required("Enter mobile number")
+      //   .matches(/^[0-9]{10,}$/, "Min 10 digit number"),
       mobile_no: Yup.string()
         .required("Enter mobile number")
-        .matches(/^[0-9]min{10}$/, "Min 10 digit number"),
+        .matches(/^[0-9]/, "Enter valid number")
+        .max(10, "Min 10 digit number"),
       status: Yup.string().required("Select status"),
       state: Yup.string().required("Select state"),
       district: Yup.string().required("Select District"),
       city: Yup.string().required("Select City"),
       username: Yup.string().required("Enter loginid"),
       confirmpassword: Yup.string().required("Retype password"),
-      email: Yup.string()
-        .required("Your email address must be of the format name@domain.com")
-        .email("Invalid email address format"),
-      // phone_no: Yup.string().matches(/^[0-9]min{8}$/, "Enter valid number"),
-      phone_no: Yup.string().matches(
-        /^[0-9]{8,}$/,
-        "Enter valid number (min 8 digits)"
+      email: Yup.string().email(
+        "Your email address must be of the format name@domain.com"
+      ),
+      phone_no: Yup.string()
+        .matches(/^[0-9]/, "Enter valid number")
+        .min(8, "Min 8 digit number")
+        .max(12, "Max 12 digit number"),
+      pincode: Yup.string().matches(/^[0-9]{6,}$/, "Length to be 6 digits"),
+      fax_no: Yup.string().matches(/^[0-9]{2,}$/, "Minimum length 2 character"),
+      gstno: Yup.string().matches(
+        /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[0-9A-Z]{1}$/,
+        "Minimum length 15 character"
+      ),
+      panno: Yup.string().matches(
+        /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
+        "Min 10 digit number"
       ),
     }),
     onSubmit: (values) => {
@@ -663,6 +676,11 @@ const AddRegionalOfficeModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.pincode || ""}
+                  invalid={
+                    validation.touched.pincode && validation.errors.pincode
+                      ? true
+                      : false
+                  }
                 />
                 {validation.touched.pincode && validation.errors.pincode ? (
                   <FormFeedback type="invalid">
@@ -758,11 +776,6 @@ const AddRegionalOfficeModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.enddate || ""}
-                  invalid={
-                    validation.touched.enddate && validation.errors.enddate
-                      ? true
-                      : false
-                  }
                 />
                 {validation.touched.enddate && validation.errors.enddate ? (
                   <FormFeedback type="invalid">
@@ -782,6 +795,11 @@ const AddRegionalOfficeModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.fax_no || ""}
+                  invalid={
+                    validation.touched.fax_no && validation.errors.fax_no
+                      ? true
+                      : false
+                  }
                 />
                 {validation.touched.fax_no && validation.errors.fax_no ? (
                   <FormFeedback type="invalid">
@@ -802,6 +820,11 @@ const AddRegionalOfficeModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.gstno || ""}
+                  invalid={
+                    validation.touched.gstno && validation.errors.gstno
+                      ? true
+                      : false
+                  }
                 />
                 {validation.touched.gstno && validation.errors.gstno ? (
                   <FormFeedback type="invalid">
@@ -840,6 +863,11 @@ const AddRegionalOfficeModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.panno || ""}
+                  invalid={
+                    validation.touched.panno && validation.errors.panno
+                      ? true
+                      : false
+                  }
                 />
                 {validation.touched.panno && validation.errors.panno ? (
                   <FormFeedback type="invalid">
