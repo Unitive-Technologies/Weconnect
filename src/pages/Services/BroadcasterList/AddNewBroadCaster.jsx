@@ -46,11 +46,18 @@ const AddNewBroadCaster = (props) => {
       created_by: "Admin",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Select broadcaster name"),
-      fullname: Yup.string().required("Select broadcaster full name"),
+      name: Yup.string().required("Select name"),
+      fullname: Yup.string().required("Select full name"),
       addr: Yup.string().required("Select address"),
       contact_person: Yup.string().required("Select contact person"),
-      mobile_no: Yup.string().required("Select mobile no"),
+      phone_no: Yup.string()
+        .matches(/^[0-9]/, "Enter valid number")
+        .min(8, "Min 8 digit number")
+        .max(12, "Max 12 digit number"),
+      mobile_no: Yup.string()
+        .required("Enter mobile number")
+        .matches(/^[0-9]/, "Enter valid number")
+        .max(10, "Min 10 digit number"),
       email: Yup.string().required("Select email"),
       status: Yup.string().required("Select status"),
       description: Yup.string().required("Select description"),
@@ -115,6 +122,11 @@ const AddNewBroadCaster = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}
+                  invalid={
+                    validation.touched.name && validation.errors.name
+                      ? true
+                      : false
+                  }
                 ></Input>
                 {validation.touched.name && validation.errors.name ? (
                   <FormFeedback type="invalid">
@@ -137,6 +149,11 @@ const AddNewBroadCaster = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.fullname || ""}
+                  invalid={
+                    validation.touched.fullname && validation.errors.fullname
+                      ? true
+                      : false
+                  }
                 ></Input>
                 {validation.touched.fullname && validation.errors.fullname ? (
                   <FormFeedback type="invalid">
@@ -213,6 +230,11 @@ const AddNewBroadCaster = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.phone_no || ""}
+                  invalid={
+                    validation.touched.phone_no && validation.errors.phone_no
+                      ? true
+                      : false
+                  }
                 ></Input>
                 {validation.touched.phone_no && validation.errors.phone_no ? (
                   <FormFeedback type="invalid">
@@ -232,6 +254,11 @@ const AddNewBroadCaster = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.email || ""}
+                  invalid={
+                    validation.touched.email && validation.errors.email
+                      ? true
+                      : false
+                  }
                 ></Input>
                 {validation.touched.email &&
                   validation.errors.email ? (
@@ -304,6 +331,11 @@ const AddNewBroadCaster = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  invalid={
+                    validation.touched.status && validation.errors.status
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Status</option>
                   {brodcastStatus &&
