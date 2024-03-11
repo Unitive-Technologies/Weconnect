@@ -16,9 +16,11 @@ const PreviewTable = (props) => {
     rate,
     setRate,
     toggleNcfSwitch,
+    newArray,
+    setNewArray,
   } = props;
 
-  const [newArray, setNewArray] = useState([]);
+  // const [newArray, setNewArray] = useState([]);
   // console.log("@@@@@@@@@@@@rate value:" + JSON.stringify(rate));
   // console.log("@@@@@@@@@@@@refundable value:" + refundable);
   // console.log("@@@@@@@@@@@@price value:" + price);
@@ -50,41 +52,41 @@ const PreviewTable = (props) => {
     setNewArray(updatedPeriodArray);
   };
 
-  const updateRate = () => {
-    const updatedRate = newArray.map((row, i) => {
-      const price =
-        parseFloat(row.months) === 0 ? lcoRate / 30 : lcoRate * row.months;
+  // const updateRate = () => {
+  //   const updatedRate = newArray.map((row, i) => {
+  //     const price =
+  //       parseFloat(row.months) === 0 ? lcoRate / 30 : lcoRate * row.months;
 
-      const ncfPrice =
-        parseFloat(row.months) === 0
-          ? ncfLcoRate / 30
-          : ncfLcoRate * row.months;
-      const totalAmount = price + (price * 30.3) / 100;
-      const totalwithNcf = price + ncfPrice;
-      const ncfTotalAmount = totalwithNcf + (totalwithNcf * 30.3) / 100;
-      const isRefundable = row.is_refundable || false;
+  //     const ncfPrice =
+  //       parseFloat(row.months) === 0
+  //         ? ncfLcoRate / 30
+  //         : ncfLcoRate * row.months;
+  //     const totalAmount = price + (price * 30.3) / 100;
+  //     const totalwithNcf = price + ncfPrice;
+  //     const ncfTotalAmount = totalwithNcf + (totalwithNcf * 30.3) / 100;
+  //     const isRefundable = row.is_refundable || false;
 
-      const freeDays = parseInt(row.free_days) || 0;
+  //     const freeDays = parseInt(row.free_days) || 0;
 
-      // Calculate cashback amount (assuming it's 0 for now)
-      const cashbackAmount = 0;
+  //     // Calculate cashback amount (assuming it's 0 for now)
+  //     const cashbackAmount = 0;
 
-      return {
-        id: row.id,
-        price: parseFloat(price.toFixed(2)),
-        rent: parseFloat(ncfPrice.toFixed(2)) || 0,
-        is_refundable: isRefundable ? 1 : 0,
-        free_days: freeDays,
-        cashback_amount: cashbackAmount,
-        total_amount:
-          ifFixNCF !== true
-            ? parseFloat(ncfTotalAmount.toFixed(2))
-            : parseFloat(totalAmount.toFixed(2)),
-      };
-    });
-    // console.log("updatedRateeeeeeeeee: " + JSON.stringify(updatedRate));
-    setRate(updatedRate);
-  };
+  //     return {
+  //       id: row.id,
+  //       price: parseFloat(price.toFixed(2)),
+  //       rent: parseFloat(ncfPrice.toFixed(2)) || 0,
+  //       is_refundable: isRefundable ? 1 : 0,
+  //       free_days: freeDays,
+  //       cashback_amount: cashbackAmount,
+  //       total_amount:
+  //         ifFixNCF !== true
+  //           ? parseFloat(ncfTotalAmount.toFixed(2))
+  //           : parseFloat(totalAmount.toFixed(2)),
+  //     };
+  //   });
+  //   // console.log("updatedRateeeeeeeeee: " + JSON.stringify(updatedRate));
+  //   setRate(updatedRate);
+  // };
 
   useEffect(() => {
     setNewArray(rechargeperiod);
@@ -215,7 +217,7 @@ const PreviewTable = (props) => {
               ))}
           </tbody>
         </Table>
-        <div className="mb-3">
+        {/* <div className="mb-3">
           <button
             type="button"
             className="btn btn-primary "
@@ -223,7 +225,7 @@ const PreviewTable = (props) => {
           >
             <i className="bx bx-right-arrow-alt" style={{ fontSize: 20 }}></i>
           </button>
-        </div>
+        </div> */}
       </CardBody>
     </Card>
   );

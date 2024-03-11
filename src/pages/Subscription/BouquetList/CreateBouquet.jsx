@@ -61,7 +61,7 @@ const CreateBouquet = (props) => {
   const [mrp, setMrp] = useState(0);
   const [drp, setDrp] = useState(0);
   const [ncfdrp, setNcfdrp] = useState(130);
-
+  const [newArray, setNewArray] = useState([]);
   const [lcoDiscount, setLcoDiscount] = useState(20);
   const [ncfLcoDiscount, setNcfLcoDiscount] = useState(20);
   const [lcoRate, setLcoRate] = useState(0);
@@ -109,6 +109,37 @@ const CreateBouquet = (props) => {
       // name: Yup.string().required("Enter channel name"),
     }),
     onSubmit: (values) => {
+      const rateArray = newArray.map((row, i) => {
+        const price =
+          parseFloat(row.months) === 0 ? lcoRate / 30 : lcoRate * row.months;
+
+        const ncfPrice =
+          parseFloat(row.months) === 0
+            ? ncfLcoRate / 30
+            : ncfLcoRate * row.months;
+        const totalAmount = price + (price * 30.3) / 100;
+        const totalwithNcf = price + ncfPrice;
+        const ncfTotalAmount = totalwithNcf + (totalwithNcf * 30.3) / 100;
+        const isRefundable = row.is_refundable || false;
+
+        const freeDays = parseInt(row.free_days) || 0;
+
+        // Calculate cashback amount (assuming it's 0 for now)
+        const cashbackAmount = 0;
+
+        return {
+          id: row.id,
+          price: parseFloat(price.toFixed(2)),
+          rent: parseFloat(ncfPrice.toFixed(2)) || 0,
+          is_refundable: isRefundable ? 1 : 0,
+          free_days: freeDays,
+          cashback_amount: cashbackAmount,
+          total_amount:
+            ifFixNCF !== true
+              ? parseFloat(ncfTotalAmount.toFixed(2))
+              : parseFloat(totalAmount.toFixed(2)),
+        };
+      });
       const newbouquet = {
         alacarte: alacarteData.map((single) => {
           return single.id;
@@ -145,7 +176,7 @@ const CreateBouquet = (props) => {
           is_loner: parseInt(values["is_loner"]),
         },
 
-        rate: rate,
+        rate: rateArray,
 
         additional_rates: additionalRates,
       };
@@ -880,6 +911,8 @@ const CreateBouquet = (props) => {
                 ncfLcoRate={ncfLcoRate}
                 rate={rate}
                 setRate={setRate}
+                newArray={newArray}
+                setNewArray={setNewArray}
               />
             </Row>
           </Row>

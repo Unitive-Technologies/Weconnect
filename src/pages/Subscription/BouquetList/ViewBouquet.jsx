@@ -83,7 +83,7 @@ const ViewBouquet = (props) => {
   const [additionalLcoRate, setAdditionalLcoRate] = useState("");
   const [additionalRates, setAdditionalRates] = useState([]);
   const [rate, setRate] = useState([]);
-
+  const [newArray, setNewArray] = useState([]);
   const handleIsHDChange = async (e) => {
     const selectValue = e.target.value;
     validation.handleChange(e);
@@ -176,23 +176,77 @@ const ViewBouquet = (props) => {
       // category_lbl: Yup.string(),
     }),
     onSubmit: (values) => {
+      const rateArray = newArray.map((row, i) => {
+        const price =
+          parseFloat(row.months) === 0 ? lcoRate / 30 : lcoRate * row.months;
+
+        const ncfPrice =
+          parseFloat(row.months) === 0
+            ? ncfLcoRate / 30
+            : ncfLcoRate * row.months;
+        const totalAmount = price + (price * 30.3) / 100;
+        const totalwithNcf = price + ncfPrice;
+        const ncfTotalAmount = totalwithNcf + (totalwithNcf * 30.3) / 100;
+        const isRefundable = row.is_refundable || false;
+
+        const freeDays = parseInt(row.free_days) || 0;
+
+        // Calculate cashback amount (assuming it's 0 for now)
+        const cashbackAmount = 0;
+
+        return {
+          id: row.id,
+          price: parseFloat(price.toFixed(2)),
+          rent: parseFloat(ncfPrice.toFixed(2)) || 0,
+          is_refundable: isRefundable ? 1 : 0,
+          free_days: freeDays,
+          cashback_amount: cashbackAmount,
+          total_amount:
+            ifFixNCF !== true
+              ? parseFloat(ncfTotalAmount.toFixed(2))
+              : parseFloat(totalAmount.toFixed(2)),
+        };
+      });
+
       const updatedBouquet = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
-        code: values["code"],
+        id: selectedRowDetails.id,
+        alacarte: alacarteData.map((single) => {
+          return single.id;
+        }),
+        package: packagesData.map((single) => {
+          return single.id;
+        }),
+        stbbrands: stbbrands.map((single) => {
+          return single.id;
+        }),
         name: values["name"],
-        type_lbl: values["type_lbl"],
-        boxtype_lbl: values["boxtype_lbl"],
-        type: values["type"],
-        status: values["status"],
+        code: values["code"],
         description: values["description"],
-        is_promotional: values["is_promotional"],
+        isHD: parseInt(values["isHD"]),
+        is_exclusive: parseInt(values["is_exclusive"]),
+        is_online_app: parseInt(values["is_online_app"]),
+        sort_by: parseInt(values["sort_by"]),
+        status: parseInt(values["status"]),
+        type: parseInt(values["type"]),
         ifFixNCF: values["ifFixNCF"],
-        max_ncf_channels: values["max_ncf_channels"],
-        created_at: new Date(),
-        created_by: values["created_by"],
-        showon_portal: values["showon_portal"],
-        category_lbl: values["category_lbl"],
+        mrp:
+          ifFixNCF === true ? parseInt(mrp) + parseInt(ncfdrp) : parseInt(mrp),
+        mrp_data: {
+          pcc: parseInt(mrp),
+          drp: parseInt(drp),
+          ncf: parseInt(ncfdrp),
+          dis_pcc: parseInt(lcoDiscount),
+          lmo_pcc: parseInt(lcoRate),
+          dis_ncf: parseInt(ncfLcoDiscount),
+          lmo_ncf: parseInt(ncfLcoRate),
+          is_promotional: parseInt(values["is_promotional"]),
+          max_ncf_channels: parseInt(values["max_ncf_channels"]),
+          is_loner: parseInt(values["is_loner"]),
+        },
+        rate: rateArray,
+        additional_rates: additionalRates,
       };
+
       console.log("Updated Bouquet List:" + updatedBouquet);
       // save new user
       dispatch(onUpdateBouquet(updatedBouquet));
@@ -1032,6 +1086,8 @@ const ViewBouquet = (props) => {
                   rate={rate}
                   setRate={setRate}
                   ifFixNCF={ifFixNCF}
+                  newArray={newArray}
+                  setNewArray={setNewArray}
                 />
               </Row>
             </Row>
