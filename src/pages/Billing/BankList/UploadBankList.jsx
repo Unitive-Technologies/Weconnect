@@ -35,6 +35,8 @@ const UploadBankList = (props) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [status, setStatus] = useState("");
   const [successMsg, setSuccessMsg] = useState(false);
+  const [errorMessage, setErrorMessage] = useState();
+
 
   const toggleSuccessMsg = () => {
     setSuccessMsg(!successMsg);
@@ -94,6 +96,7 @@ const UploadBankList = (props) => {
     if (selectedFiles.length === 0) {
       console.log("No files selected to upload, handle accordingly");
       // No files selected, handle accordingly
+      setErrorMessage("No files selected to upload, handle accordingly");
       return;
     }
 
@@ -173,6 +176,9 @@ const UploadBankList = (props) => {
                 {" "}
                 Select File to Upload<span style={{ color: "red" }}>*</span>
               </CardSubtitle>
+              {selectedFiles.length === 0 && errorMessage && (
+                <div className="text-danger mt-2">{errorMessage}</div>
+              )}
               <Form>
                 <Dropzone
                   maxFiles={1}
