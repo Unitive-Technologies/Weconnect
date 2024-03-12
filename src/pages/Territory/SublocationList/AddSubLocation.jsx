@@ -49,12 +49,14 @@ const AddSubLocation = (props) => {
 
     initialValues: {
       name: "",
-      location_id: null,
+      location_id: "",
+      // location_id: null,
       status: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
-      location_id: Yup.string().nullable().required("Select location"),
+      // location_id: Yup.string().nullable().required("Select location"),
+      location_id: Yup.string().required("Select location"),
       status: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
@@ -141,6 +143,11 @@ const AddSubLocation = (props) => {
                       },
                     });
                   }}
+                  invalid={
+                    validation.touched.location_id && validation.errors.location_id
+                      ? true
+                      : false
+                  }
                   onBlur={validation.handleBlur}
                   value={options.find(
                     (opt) => opt.value === validation.values.location_id
@@ -169,6 +176,12 @@ const AddSubLocation = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  invalid={
+                    validation.touched.status
+                      && validation.errors.status
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Status</option>
                   {status.map((options) => (
