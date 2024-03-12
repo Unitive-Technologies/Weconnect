@@ -87,10 +87,6 @@ const ConnectionSchemeList = (props) => {
   };
 
   const handleCheckboxClick = (row) => {
-    console.log(
-      "Before state update - selectedRows:",
-      JSON.stringify(selectedRows)
-    );
     const isSelected = selectedRows.some(
       (selectedRow) => selectedRow.id === row.id
     );
@@ -164,19 +160,12 @@ const ConnectionSchemeList = (props) => {
         Header: "*",
         disableFilters: true,
         filterable: true,
-        Cell: (cellProps) => {
-          const isSelected = selectedRows.some(
-            (selectedRow) => selectedRow.id === cellProps.row.original.id
-          );
-          console.log("isSelected:", isSelected);
-          return (
-            <input
-              type="checkbox"
-              onChange={() => handleCheckboxClick(cellProps.row.original)}
-              // checked={isSelected}
-            />
-          );
-        },
+        Cell: (cellProps) => (
+          <input
+            type="checkbox"
+            onChange={() => handleCheckboxClick(cellProps.row.original)}
+          />
+        ),
       },
 
       {

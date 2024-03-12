@@ -25,7 +25,7 @@ const BulkAssign = (props) => {
   const [showAddOperator, setShowAddOperator] = useState(false);
   const [addOperatorsData, setAddOperatorsData] = useState([]);
   const [toggleSwitch, settoggleSwitch] = useState(true);
-  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [selectedOperators, setSelectedOperators] = useState([]);
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const toggleAddOperator = () => {
     setShowAddOperator(!showAddOperator);
@@ -142,8 +142,8 @@ const BulkAssign = (props) => {
     onSubmit: async (values) => {
       try {
         const newAssign = {
-          operator_id: selectedUsers.map((user) => user.id),
-          scheme_ids: selectedRows.map((user) => user.id),
+          operator_id: selectedOperators.map((operator) => operator.id),
+          scheme_ids: selectedRows.map((scheme) => scheme.id),
         };
 
         console.log("newSetting:", JSON.stringify(newAssign));
@@ -181,8 +181,8 @@ const BulkAssign = (props) => {
           data={addOperatorsData}
           setData={setAddOperatorsData}
           selectedRows={selectedRows}
-          selectedUsers={selectedUsers}
-          setSelectedUsers={setSelectedUsers}
+          selectedOperators={selectedOperators}
+          setSelectedOperators={setSelectedOperators}
         />
       )}
       <Modal
@@ -273,7 +273,7 @@ const BulkAssign = (props) => {
               <p>
                 ** To select row, click <i className="mdi mdi-check"></i>{" "}
               </p>
-              <SchemesList selectedRow={selectedRows} />
+              <SchemesList selectedRows={selectedRows} />
             </Row>
             <Row>
               <Col sm="12">
