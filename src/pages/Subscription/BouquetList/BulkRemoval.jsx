@@ -16,7 +16,7 @@ import TableContainer from "../../../components/Common/TableContainer";
 import AddOperators from "./AddOperator";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { getConnectionScheme as onGetConnectionScheme } from "/src/store/connectionschemelist/actions";
+import { getBouquet as onGetBouquet } from "/src/store/bouquetlist/actions";
 import Bouquets from "./Bouquets";
 import BouquetsForRemoval from "./BouquetsForRemoval";
 
@@ -127,7 +127,7 @@ const BulkRemoval = (props) => {
     enableReinitialize: true,
     initialValues: {
       operator_id: [],
-      scheme_ids: [],
+      bouque_ids: [],
     },
     validationSchema: Yup.object({
       // setting: Yup.object({
@@ -140,18 +140,18 @@ const BulkRemoval = (props) => {
     }),
 
     onSubmit: async (values) => {
-      // const schemeIds = selectedRows.map((row) => row.id).join(",");
       try {
         const newAssign = {
-          operator_id: selectedOperators.map((user) => user.id),
-          scheme_ids: selectedRows.map((user) => user.id),
+          bouque_data: [],
+          operator_id: selectedOperators.map((operator) => operator.id),
+          bouque_ids: selectedRows.map((bouquet) => bouquet.id),
         };
 
-        console.log("newSetting:", JSON.stringify(newAssign));
+        console.log("newAssign:", JSON.stringify(newAssign));
         const token = "Bearer " + localStorage.getItem("temptoken");
 
         const response = await axios.put(
-          `${API_URL}/operator-scheme/0?vr=web1.0`,
+          `${API_URL}/operator-bouque/0?vr=web1.0`,
           newAssign,
           {
             headers: {
@@ -162,7 +162,7 @@ const BulkRemoval = (props) => {
 
         console.log("Axios Response:", response);
         toggle();
-        dispatch(onGetConnectionScheme());
+        dispatch(onGetBouquet());
         validation.resetForm();
       } catch (error) {
         console.error("Error in onSubmit:", error);
@@ -274,7 +274,7 @@ const BulkRemoval = (props) => {
               <p>
                 ** To select row, click <i className="mdi mdi-check"></i>{" "}
               </p>
-              <BouquetsForRemoval selectedRow={selectedRows} />
+              <BouquetsForRemoval selectedRows={selectedRows} />
             </Row>
             <Row>
               <Col sm="12">
