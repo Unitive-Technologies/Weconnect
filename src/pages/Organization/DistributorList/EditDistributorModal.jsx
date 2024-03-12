@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
+import { createSelector } from "reselect";
 import {
   Col,
   Row,
@@ -15,55 +16,42 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
-import { getRegionalOffice as onGetRegionalOffices } from "/src/store/regionaloffice/actions";
 import {
-  updateDistributors as onUpdateDistributor,
-  getDistributors as onGetDistributors,
-} from "/src/store/distributor/actions";
+  updateRegionalOffice as onUpdateRegionalOffice,
+  getRegionalOffice as onGetRegionalOffice,
+} from "/src/store/regionaloffice/actions";
+import { resetSection } from "redux-form";
 import { getStateUsers as onGetStateUsers } from "../../../store/stateusers/actions";
-import { createSelector } from "reselect";
 
-const EditDistributorModal = (props) => {
-  const {
-    toggleCloseModal,
-    distributor,
-    distributorsPhase,
-    distributorsStatus,
-  } = props;
-  // console.log("distributor in edit modal:" + JSON.stringify(distributor));
-  const API_URL = "https://sms.unitch.in/api/index.php/v1";
+const EditRegionalOfficeModal = (props) => {
+  const { toggleCloseModal, regionalOffData, phaseList, statusList } = props;
+  //   console.log("user in viewuser modal:" + JSON.stringify(user));
   const dispatch = useDispatch();
-
-  const handleCancel = () => {
-    toggleCloseModal();
-  };
-
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
+  const [showEditRegionalOffice, setShowEditRegionalOffice] = useState(false);
   const [districtsList, setDistrictsList] = useState([]);
   const [selectedState, setSelectedState] = useState("");
   const [cityList, setCityList] = useState([]);
   const [selectedDistrict, setSelectedDistrict] = useState("");
-
-  const selectRegionalOfficeState = (state) => state.regionaloffice;
+  const [toggleSwitch, settoggleSwitch] = useState(true);
+  console.log("state value:" + selectedState);
+  console.log("district value:" + selectedDistrict);
+  // console.log("city value:" + validation.values.city);
   const selectStatesState = (state) => state.stateUsers;
 
-  const RegionalOfficeProperties = createSelector(
-    selectRegionalOfficeState,
-    (regionaloffice) => ({
-      regOff: regionaloffice.regionaloffice,
-    })
-  );
   const StatesProperties = createSelector(selectStatesState, (states) => ({
     statesList: states.stateUsers,
   }));
 
-  const { regOff } = useSelector(RegionalOfficeProperties);
   const { statesList } = useSelector(StatesProperties);
+  const handleCancel = () => {
+    toggleCloseModal();
+    // closeEditModal();
+  };
 
   useEffect(() => {
     dispatch(onGetStateUsers());
-    dispatch(onGetRegionalOffices());
   }, [dispatch]);
-
   const handleChangeUploadFile = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -89,15 +77,10 @@ const EditDistributorModal = (props) => {
       setSelectedState(stateName);
 
       validation.handleChange(e);
-      {
-        console.log("selectedState:" + typeof selectedState);
-      }
-
-      // Assuming you have a token stored in localStorage
       const token = "Bearer " + localStorage.getItem("temptoken");
 
       const response = await axios.get(
-        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${selectedState}&filter[type]=2&vr=web1.0`,
+        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${stateName}&filter[type]=2&vr=web1.0`,
         {
           headers: {
             Authorization: token, // Include your token here
@@ -122,15 +105,10 @@ const EditDistributorModal = (props) => {
       setSelectedDistrict(districtName);
 
       validation.handleChange(e);
-      {
-        console.log("selectedDistrict:" + typeof selectedDistrict);
-      }
-
-      // Assuming you have a token stored in localStorage
       const token = "Bearer " + localStorage.getItem("temptoken");
 
       const response = await axios.get(
-        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${selectedState}&filter[district_id]=${selectedDistrict}&filter[type]=3&vr=web1.0`,
+        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${selectedState}&filter[district_id]=${districtName}&filter[type]=3&vr=web1.0`,
         {
           headers: {
             Authorization: token,
@@ -153,119 +131,160 @@ const EditDistributorModal = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      // id: (distributor && distributor.id) || "",
-      name: (distributor && distributor.name) || "",
-      code: (distributor && distributor.code) || "",
-      branch_lbl: (distributor && distributor.branch_id) || "",
-      addr1: (distributor && distributor.addr1) || "",
-      addr2: (distributor && distributor.addr2) || "",
-      addr3: (distributor && distributor.addr3) || "",
-      contact_person: (distributor && distributor.contact_person) || "",
-      mobile_no: (distributor && distributor.mobile_no) || "",
-      phone_no: (distributor && distributor.phone_no) || "",
-      fax_no: (distributor && distributor.fax_no) || "",
-      state_lbl: (distributor && distributor.state_id) || "",
-      district_lbl: (distributor && distributor.district_id) || "",
-      city_lbl: (distributor && distributor.city_id) || "",
-      gstno: (distributor && distributor.gstno) || "",
-      panno: (distributor && distributor.panno) || "",
-      username: (distributor && distributor.username) || "",
-      status_lbl: (distributor && distributor.status) || "",
-      email: (distributor && distributor.email) || "",
-      pincode: (distributor && distributor.pincode) || "",
-      por_number: (distributor && distributor.por_number) || "",
-      reg_phase: (distributor && distributor.reg_phase) || "",
-      reg_startdate: (distributor && distributor.reg_startdate) || "",
-      reg_enddate: (distributor && distributor.reg_enddate) || "",
-      gst_date: (distributor && distributor.gst_date) || "",
-      credit_limit: (distributor && distributor.credit_limit) || "",
-      area_id: (distributor && distributor.area_id) || "",
+      name: (regionalOffData && regionalOffData.name) || "",
+      code: (regionalOffData && regionalOffData.code) || "",
+      addr1: (regionalOffData && regionalOffData.addr1) || "",
+      addr2: (regionalOffData && regionalOffData.addr2) || "",
+      addr3: (regionalOffData && regionalOffData.addr3) || "",
+      contact_person: (regionalOffData && regionalOffData.contact_person) || "",
+      mobile_no: (regionalOffData && regionalOffData.mobile_no) || "",
+      phone_no: (regionalOffData && regionalOffData.phone_no) || "",
+      fax_no: (regionalOffData && regionalOffData.fax_no) || "",
+      state: (regionalOffData && regionalOffData.state_id) || "",
+      district: (regionalOffData && regionalOffData.district_id) || "",
+      city: (regionalOffData && regionalOffData.city_id) || "",
+      gstno: (regionalOffData && regionalOffData.gstno) || "",
+      panno: (regionalOffData && regionalOffData.panno) || "",
+      status: (regionalOffData && regionalOffData.status) || "",
+      email: (regionalOffData && regionalOffData.email) || "",
+      pincode: (regionalOffData && regionalOffData.pincodef) || "",
+      por_number: (regionalOffData && regionalOffData.por_number) || "",
+      reg_phase: (regionalOffData && regionalOffData.reg_phase) || "",
+      reg_startdate: (regionalOffData && regionalOffData.reg_startdate) || "",
+      reg_enddate: (regionalOffData && regionalOffData.reg_enddate) || "",
+      gst_date: (regionalOffData && regionalOffData.gst_date) || "",
+      credit_limit: (regionalOffData && regionalOffData.credit_limit) || "",
+      area_id: (regionalOffData && regionalOffData.area_id) || "",
+      // upload: {
+      //   name:
+      //     (regionalOffData &&
+      //       regionalOffData.agreement_data &&
+      //       regionalOffData.agreement_data.name) ||
+      //     "",
+      //   type:
+      //     (regionalOffData &&
+      //       regionalOffData.agreement_data &&
+      //       regionalOffData.agreement_data.type) ||
+      //     "",
+      //   ext:
+      //     (regionalOffData &&
+      //       regionalOffData.agreement_data &&
+      //       regionalOffData.agreement_data.ext) ||
+      //     "",
+      //   data:
+      //     (regionalOffData &&
+      //       regionalOffData.agreement_data &&
+      //       regionalOffData.agreement_data.data) ||
+      //     "",
+      //   // agreestart:
+      //   //   (regionalOffData &&
+      //   //     regionalOffData.agreement_data &&
+      //   //     regionalOffData.agreement_data.start_date) ||
+      //   //   "",
+      //   // agreeend:
+      //   //   (regionalOffData &&
+      //   //     regionalOffData.agreement_data &&
+      //   //     regionalOffData.agreement_data.end_date) ||
+      //   //   "",
+      // },
       agreestart:
-        (distributor &&
-          distributor.agreement_data &&
-          distributor.agreement_data.start_date) ||
+        (regionalOffData &&
+          regionalOffData.agreement_data &&
+          regionalOffData.agreement_data.start_date) ||
         "",
       agreeend:
-        (distributor &&
-          distributor.agreement_data &&
-          distributor.agreement_data.end_date) ||
+        (regionalOffData &&
+          regionalOffData.agreement_data &&
+          regionalOffData.agreement_data.end_date) ||
         "",
     },
-
     validationSchema: Yup.object({
-      // name: Yup.string().required("Please Enter Your Name"),
-      // email: Yup.string()
-      // .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-      // .required("Please Enter Your Email"),
-      // mobile: Yup.array().required("Please Enter mobile"),
-      // mobile: Yup.string().required("Please Enter mobile Number"),
-      // usertype: Yup.string().required("Please Enter User Type"),
-      // status: Yup.string().required("Please Enter Status"),
-      // message: Yup.string().required("Please Enter Message"),
-      // role: Yup.string().required("Please Enter Role"),
-      // designation: Yup.string().required("Please Enter Designation"),
-      // grouppolicy: Yup.string().required("Please Enter Group Policy"),
-      // loginid: Yup.string().required("Please Enter Login ID"),
-      // password: Yup.string().required("Please Enter Password"),
-      // confirmpassword: Yup.string().required("Please Enter Confirm Password"),
+      name: Yup.string().required("Enter name"),
+      addr1: Yup.string().required("Enter address 1"),
+      contact_person: Yup.string().required("Enter contact person name"),
+      mobile_no: Yup.string()
+        .required("Enter mobile number")
+        .matches(/^[0-9]/, "Enter valid number")
+        .max(10, "Min 10 digit number"),
+      status: Yup.string().required("Select status"),
+      state: Yup.string().required("Select state"),
+      district: Yup.string().required("Select District"),
+      city: Yup.string().required("Select City"),
+      email: Yup.string().email(
+        "Your email address must be of the format name@domain.com"
+      ),
+      phone_no: Yup.string()
+        .matches(/^[0-9]/, "Enter valid number")
+        .min(8, "Min 8 digit number")
+        .max(12, "Max 12 digit number"),
+      pincode: Yup.string().matches(/^[0-9]{6,}$/, "Length to be 6 digits"),
+      fax_no: Yup.string().matches(/^[0-9]{2,}$/, "Minimum length 2 character"),
+      // gstno: Yup.string().matches(
+      //   /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[0-9A-Z]{1}$/,
+      //   "Max length 15 character"
+      // ),
+      panno: Yup.string().matches(
+        /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
+        "Min 10 digit number"
+      ),
+      credit_limit: Yup.string().matches(
+        /^[0-9]+$/,
+        "Please enter a value greater than or equal to 0."
+      ),
+      area_id: Yup.string().matches(/^\d{1,10}$/, "Enter valid number"),
     }),
-    onSubmit: async (values) => {
-      try {
-        console.log("name in initially:" + values.name);
-        const updateDistributor = {
-          id: distributor.id,
-          name: values["name"],
-          code: values["code"],
-          addr: values["addr1"],
-          // addr1: values["addr1"],
-          addr2: values["addr2"],
-          addr3: values["addr3"],
-          agreement_data: {
-            name: values["upload"] ? values["upload"].name : "",
-            type: values["upload"] ? values["upload"].type : "",
-            ext: values["upload"] ? values["upload"].ext : "",
-            data: values["upload"] ? values["upload"].data : "",
-            start_date: values["agreestart"],
-            end_date: values["agreeend"],
-          },
-          area_id: parseInt(values["area_id"]),
-          state_id: parseInt(values["state_lbl"]),
-          district_id: parseInt(values["district_lbl"]),
-          city_id: parseInt(values["city_lbl"]),
+    onSubmit: (values) => {
+      // debugger;
+      const updatedRegionalOffice = {
+        id: regionalOffData.id,
+        name: values["name"],
+        addr: `${values["addr1"]}, ${values["addr2"]}, ${values["addr3"]}`,
+        addr1: values["addr1"],
+        addr2: values["addr2"],
+        addr3: values["addr3"],
+        agreement_data: {
+          name: values["upload"] ? values["upload"].name : "", // Handle undefined case
+          type: values["upload"] ? values["upload"].type : "",
+          ext: values["upload"] ? values["upload"].ext : "",
+          data: values["upload"] ? values["upload"].data : "",
+          start_date: values["agreestart"],
+          end_date: values["agreeend"],
+        },
+        area_id: values["area_id"],
+        city_id: parseInt(values["city"]),
+        code: values["code"],
+        contact_person: values["contact_person"],
+        credit_limit: values["credit_limit"],
+        district_id: parseInt(values["district"]),
+        email: values["email"],
+        gst_date: values["gst_date"],
+        gstno: values["gstno"],
+        mobile_no: values["mobile_no"],
+        phone_no: values["phone_no"],
+        faxno: values["faxno"],
+        panno: values["panno"],
+        reg_startdate: values["reg_startdate"],
+        reg_enddate: values["reg_enddate"],
+        state_id: parseInt(values["state"]),
+        status: parseInt(values["status"]),
+        pincode: values["pincode"],
+        por_number: values["por_number"],
+        reg_phase: values["reg_phase"],
+        type: 1,
+      };
+      console.log("updatedRO:" + updatedRegionalOffice);
 
-          contact_person: values["contact_person"],
-          credit_limit: values["credit_limit"],
-          status: parseInt(values["status_lbl"]),
-          mobile_no: values["mobile_no"],
-          phone_no: values["phone_no"],
-          email: values["email"],
-          parent_id: parseInt(values["branch_lbl"]),
-          gstno: values["gstno"],
-          gst_date: values["gst_date"],
-          panno: values["panno"],
-          pincode: values["pincode"],
-          por_number: values["por_number"],
-          // reg_phase: values["reg_phase"],
-          // reg_startdate: values["reg_startdate"],
-          // reg_enddate: values["reg_enddate"],
-
-          type: 2,
-        };
-
-        console.log("Axios Response:", updateDistributor);
-        dispatch(onUpdateDistributor(updateDistributor));
-        dispatch(onGetDistributors());
-        validation.resetForm();
-        handleCancel();
-      } catch (error) {
-        console.error("Error in onSubmit:", error);
-      }
+      // save new user
+      dispatch(onUpdateRegionalOffice(updatedRegionalOffice));
+      dispatch(onGetRegionalOffice());
+      validation.resetForm();
+      resetSection();
+      handleCancel();
     },
-    // onReset: () => {
+    // onReset: (values) => {
     //   validation.setValues(validation.initialValues);
     // },
   });
-
   const getDistrictValue = async (e) => {
     try {
       // Assuming you have a token stored in localStorage
@@ -315,25 +334,23 @@ const EditDistributorModal = (props) => {
     // };
   };
   useEffect(() => {
-    if (distributor && distributor.state_id) {
-      setSelectedState(distributor.state_id);
-      setSelectedDistrict(distributor.district_id);
+    if (regionalOffData && regionalOffData.state_id) {
+      setSelectedState(regionalOffData.state_id);
+      setSelectedDistrict(regionalOffData.district_id);
     }
     getDistrictValue();
     getCityValue();
-  }, [distributor]);
-
+  }, [regionalOffData]);
   return (
     <>
       <ModalHeader tag="h4" toggle={handleCancel}>
-        <h4>Edit - {distributor.name}</h4>
+        <h4>Edit - {regionalOffData.name}</h4>
       </ModalHeader>
 
       <ModalBody>
         <Form
           onSubmit={(e) => {
             e.preventDefault();
-            // debugger;
             validation.handleSubmit();
             return false;
           }}
@@ -349,34 +366,37 @@ const EditDistributorModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.code || ""}
-                  invalid={
-                    validation.touched.code && validation.errors.code
-                      ? true
-                      : false
-                  }
-                  disabled
+                  disabled={toggleSwitch}
                 />
-                {validation.touched.code && validation.errors.code ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.code}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
             <Col lg={2}>
-              <div className="form-check form-switch form-switch-lg mb-3">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitchsizelg"
-                  defaultChecked
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="customSwitchsizelg"
+              <div className="mt-3">
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
                 >
-                  Custom / Auto
-                </label>
+                  <label style={{ marginRight: "10px" }}>Custom</label>
+                  <div className="form-check form-switch form-switch-lg mb-2">
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id="customSwitchsizelg"
+                      defaultChecked
+                      onClick={(e) => {
+                        settoggleSwitch(!toggleSwitch);
+                      }}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="customSwitchsizelg"
+                    >
+                      Auto
+                    </label>
+                  </div>
+                </div>
               </div>
             </Col>
           </Row>
@@ -407,7 +427,6 @@ const EditDistributorModal = (props) => {
                 ) : null}
               </div>
             </Col>
-            {console.log("name validationvalue:" + validation.values.name)}
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
@@ -436,49 +455,46 @@ const EditDistributorModal = (props) => {
                 ) : null}
               </div>
             </Col>
-            {console.log(
-              "contact person validationvalue:" +
-                validation.values.contact_person
-            )}
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
-                  Parent Regional Office<span style={{ color: "red" }}>*</span>
+                  Status<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="branch_lbl"
+                  name="status"
                   type="select"
-                  placeholder="Select Parent Regional Office"
+                  placeholder="Select Status"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.branch_lbl || ""}
-                  disabled
+                  value={validation.values.status || ""}
+                  invalid={
+                    validation.touched.status && validation.errors.status
+                      ? true
+                      : false
+                  }
                 >
-                  {/* <option value="">{validation.values.branch_lbl}</option> */}
-                  {/* {console.log("regoff:" + JSON.stringify(regOff))} */}
-                  {regOff.map((item) => (
-                    <option key={item.id} value={item.code}>
-                      {item.name}
-                    </option>
-                  ))}
+                  {statusList &&
+                    statusList.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
                 </Input>
-                {validation.touched.branch_lbl &&
-                validation.errors.branch_lbl ? (
+                {validation.touched.status && validation.errors.status ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.branch_lbl}
+                    {validation.errors.status}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
-            {console.log(
-              "branch validationvalue:" + validation.values.branch_lbl
-            )}
           </Row>
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Mobile No.</Label>
+                <Label className="form-label">
+                  Mobile No.<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="mobile_no"
                   label="Mobile No."
@@ -500,9 +516,6 @@ const EditDistributorModal = (props) => {
                 ) : null}
               </div>
             </Col>
-            {console.log(
-              "mobileno validationvalue:" + validation.values.mobile_no
-            )}
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Phone No.</Label>
@@ -527,9 +540,6 @@ const EditDistributorModal = (props) => {
                 ) : null}
               </div>
             </Col>
-            {console.log(
-              "phoneno validationvalue:" + validation.values.phone_no
-            )}
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">Email Address</Label>
@@ -554,42 +564,6 @@ const EditDistributorModal = (props) => {
                 ) : null}
               </div>
             </Col>
-            {console.log("email validationvalue:" + validation.values.email)}
-          </Row>
-          <Row>
-            <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">
-                  Status<span style={{ color: "red" }}>*</span>
-                </Label>
-                <Input
-                  name="status_lbl"
-                  type="select"
-                  placeholder="Select Status"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.status_lbl || ""}
-                >
-                  {/* <option value="">Select Status</option> */}
-                  {distributorsStatus &&
-                    distributorsStatus.map((status) => (
-                      <option key={status.id} value={status.id}>
-                        {status.name}
-                      </option>
-                    ))}
-                </Input>
-                {validation.touched.status_lbl &&
-                validation.errors.status_lbl ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.status_lbl}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            {console.log(
-              "status validationvalue:" + validation.values.status_lbl
-            )}
           </Row>
           <Row>
             <Col lg={4}>
@@ -598,14 +572,18 @@ const EditDistributorModal = (props) => {
                   State<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="state_lbl"
+                  name="state"
                   type="select"
                   placeholder="Select State"
                   className="form-select"
                   onChange={handleStateChange}
                   onBlur={validation.handleBlur}
                   value={selectedState}
-                  // value={validation.values.state_lbl || ""}
+                  invalid={
+                    validation.touched.state && validation.errors.state
+                      ? true
+                      : false
+                  }
                 >
                   {/* <option value="">Select State</option> */}
                   {statesList.map((state) => (
@@ -614,9 +592,9 @@ const EditDistributorModal = (props) => {
                     </option>
                   ))}
                 </Input>
-                {validation.touched.state_lbl && validation.errors.state_lbl ? (
+                {validation.touched.state && validation.errors.state ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.state_lbl}
+                    {validation.errors.state}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -627,25 +605,28 @@ const EditDistributorModal = (props) => {
                   District<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="district_lbl"
+                  name="district"
                   type="select"
                   placeholder="Select District"
                   className="form-select"
                   onChange={handleDistrictChange}
                   onBlur={validation.handleBlur}
                   value={selectedDistrict}
+                  invalid={
+                    validation.touched.district && validation.errors.district
+                      ? true
+                      : false
+                  }
                 >
-                  {/* <option value="">Select District</option> */}
                   {districtsList.map((district) => (
                     <option key={district.id} value={district.id}>
                       {district.name}
                     </option>
                   ))}
                 </Input>
-                {validation.touched.district_lbl &&
-                validation.errors.district_lbl ? (
+                {validation.touched.district && validation.errors.district ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.district_lbl}
+                    {validation.errors.district}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -656,24 +637,28 @@ const EditDistributorModal = (props) => {
                   City<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="city_lbl"
+                  name="city"
                   type="select"
                   placeholder="Select City"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.city_lbl || ""}
+                  value={validation.values.city || ""}
+                  invalid={
+                    validation.touched.city && validation.errors.city
+                      ? true
+                      : false
+                  }
                 >
-                  {/* <option value="">Select City</option> */}
                   {cityList.map((city) => (
                     <option key={city.id} value={city.id}>
                       {city.name}
                     </option>
                   ))}
                 </Input>
-                {validation.touched.city_lbl && validation.errors.city_lbl ? (
+                {validation.touched.city && validation.errors.city ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.city_lbl}
+                    {validation.errors.city}
                   </FormFeedback>
                 ) : null}
               </div>
@@ -718,17 +703,7 @@ const EditDistributorModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.addr2 || ""}
-                  invalid={
-                    validation.touched.addr2 && validation.errors.addr2
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.addr2 && validation.errors.addr2 ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.addr2}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
 
@@ -743,17 +718,7 @@ const EditDistributorModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.addr3 || ""}
-                  invalid={
-                    validation.touched.addr3 && validation.errors.addr3
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.addr3 && validation.errors.addr3 ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.addr3}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
           </Row>
@@ -795,19 +760,7 @@ const EditDistributorModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.por_number || ""}
-                  invalid={
-                    validation.touched.por_number &&
-                    validation.errors.por_number
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.por_number &&
-                validation.errors.por_number ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.por_number}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
             <Col lg={4}>
@@ -822,19 +775,13 @@ const EditDistributorModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.reg_phase || ""}
                 >
-                  {/* <option value="">Select Phase</option> */}
-                  {distributorsPhase &&
-                    distributorsPhase.map((phase) => (
+                  {phaseList &&
+                    phaseList.map((phase) => (
                       <option key={phase.id} value={phase.id}>
                         {phase.name}
                       </option>
                     ))}
                 </Input>
-                {validation.touched.reg_phase && validation.errors.reg_phase ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.reg_phase}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
           </Row>
@@ -849,19 +796,7 @@ const EditDistributorModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.reg_startdate || ""}
-                  invalid={
-                    validation.touched.reg_startdate &&
-                    validation.errors.reg_startdate
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.reg_startdate &&
-                validation.errors.reg_startdate ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.reg_startdate}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
 
@@ -875,21 +810,35 @@ const EditDistributorModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.reg_enddate || ""}
+                />
+              </div>
+            </Col>
+
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">Fax No.</Label>
+                <Input
+                  name="fax_no"
+                  type="text"
+                  placeholder="Select Fax No."
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.fax_no || ""}
                   invalid={
-                    validation.touched.reg_enddate &&
-                    validation.errors.reg_enddate
+                    validation.touched.fax_no && validation.errors.fax_no
                       ? true
                       : false
                   }
                 />
-                {validation.touched.reg_enddate &&
-                validation.errors.reg_enddate ? (
+                {validation.touched.fax_no && validation.errors.fax_no ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.reg_enddate}
+                    {validation.errors.fax_no}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
+          </Row>
+          <Row>
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">GST No.</Label>
@@ -913,8 +862,7 @@ const EditDistributorModal = (props) => {
                 ) : null}
               </div>
             </Col>
-          </Row>
-          <Row>
+
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">GST Reg. Date</Label>
@@ -925,17 +873,7 @@ const EditDistributorModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.gst_date || ""}
-                  invalid={
-                    validation.touched.gst_date && validation.errors.gst_date
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.gst_date && validation.errors.gst_date ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.gst_date}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
 
@@ -962,6 +900,8 @@ const EditDistributorModal = (props) => {
                 ) : null}
               </div>
             </Col>
+          </Row>
+          <Row>
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
@@ -988,12 +928,7 @@ const EditDistributorModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-              {console.log(
-                "creditlimit validationvalue:" + validation.values.credit_limit
-              )}
             </Col>
-          </Row>
-          <Row>
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
@@ -1018,14 +953,10 @@ const EditDistributorModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-              {console.log(
-                "areaID validationvalue:" + validation.values.area_id
-              )}
             </Col>
           </Row>
           <div
             style={{
-              // margin: "20px 0px",
               marginTop: "20px",
               marginBottom: "-18px",
               zIndex: 12000,
@@ -1049,7 +980,6 @@ const EditDistributorModal = (props) => {
           >
             <Col lg={4}>
               <div className="mb-3">
-                {/* <Label className="form-label">Upload</Label> */}
                 <input
                   style={{
                     width: "170px",
@@ -1078,19 +1008,7 @@ const EditDistributorModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.agreestart || ""}
-                  invalid={
-                    validation.touched.agreestart &&
-                    validation.errors.agreestart
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.agreestart &&
-                validation.errors.agreestart ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.agreestart}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
             <Col lg={4}>
@@ -1104,20 +1022,11 @@ const EditDistributorModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.agreeend || ""}
-                  invalid={
-                    validation.touched.agreeend && validation.errors.agreeend
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.agreeend && validation.errors.agreeend ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.agreeend}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
           </Row>
+
           <Row>
             <Col>
               <ModalFooter>
@@ -1151,9 +1060,9 @@ const EditDistributorModal = (props) => {
   );
 };
 
-EditDistributorModal.propTypes = {
+EditRegionalOfficeModal.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 
-export default EditDistributorModal;
+export default EditRegionalOfficeModal;

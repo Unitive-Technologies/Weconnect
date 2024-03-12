@@ -33,7 +33,7 @@ const AddDistributorModal = (props) => {
     distributorsPhase,
     distributorsStatus,
   } = props;
-  console.log("distributorsStatus" + JSON.stringify(distributorsStatus));
+
   const dispatch = useDispatch();
   const [toggleSwitch, settoggleSwitch] = useState(true);
   const [districtsList, setDistrictsList] = useState([]);
@@ -82,15 +82,10 @@ const AddDistributorModal = (props) => {
       setSelectedState(stateName);
 
       validation.handleChange(e);
-      {
-        console.log("selectedState:" + typeof selectedState);
-      }
-
-      // Assuming you have a token stored in localStorage
       const token = "Bearer " + localStorage.getItem("temptoken");
 
       const response = await axios.get(
-        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${selectedState}&filter[type]=2&vr=web1.0`,
+        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${stateName}&filter[type]=2&vr=web1.0`,
         {
           headers: {
             Authorization: token, // Include your token here
@@ -123,16 +118,12 @@ const AddDistributorModal = (props) => {
       const token = "Bearer " + localStorage.getItem("temptoken");
 
       const response = await axios.get(
-        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${selectedState}&filter[district_id]=${selectedDistrict}&filter[type]=3&vr=web1.0`,
+        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${selectedState}&filter[district_id]=${districtName}&filter[type]=3&vr=web1.0`,
         {
           headers: {
             Authorization: token,
           },
         }
-      );
-
-      console.log(
-        "cityList after selection : " + JSON.stringify(response.data.data)
       );
       setCityList(response.data.data);
     } catch (error) {
@@ -145,11 +136,9 @@ const AddDistributorModal = (props) => {
     if (regOff && !regOff.length) {
       dispatch(onGetRegionalOffice());
       dispatch(onGetStateUsers());
-      // dispatch(onGetDistributorsPhase());
-      // dispatch(onGetReasonStatus());
     }
   }, [dispatch, regOff]);
-  // console.log("regOfficelist:" + JSON.stringify(regOff));
+
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -184,18 +173,47 @@ const AddDistributorModal = (props) => {
       password: "",
       confirmpassword: "",
     },
+
     validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
-      // code: Yup.string().required("Please Enter Code"),
-      addr1: Yup.string().required("Please Address"),
-      contact_person: Yup.string().required("Please Enter Contact Person"),
-      mobile_no: Yup.string().required("Please Enter Mobile"),
-      status: Yup.string().required("Please Enter Status"),
-      state: Yup.string().required("Please Enter State"),
-      district: Yup.string().required("Please Enter District"),
-      city: Yup.string().required("Please Enter City"),
-      username: Yup.string().required("Please Enter LoginID"),
+      name: Yup.string().required("Enter name"),
+      addr1: Yup.string().required("Enter address 1"),
+      contact_person: Yup.string().required("Enter contact person name"),
+      mobile_no: Yup.string()
+        .required("Enter mobile number")
+        .matches(/^[0-9]/, "Enter valid number")
+        .max(10, "Min 10 digit number"),
+      status: Yup.string().required("Select status"),
+      state: Yup.string().required("Select state"),
+      district: Yup.string().required("Select District"),
+      city: Yup.string().required("Select City"),
+      username: Yup.string().required("Enter loginid"),
+      password: Yup.string().required("Enter Password"),
+      confirmpassword: Yup.string().required("Retype password"),
+      email: Yup.string().email(
+        "Your email address must be of the format name@domain.com"
+      ),
+      phone_no: Yup.string()
+        .matches(/^[0-9]/, "Enter valid number")
+        .min(8, "Min 8 digit number")
+        .max(12, "Max 12 digit number"),
+      pincode: Yup.string().matches(/^[0-9]{6,}$/, "Length to be 6 digits"),
+      fax_no: Yup.string().matches(/^[0-9]{2,}$/, "Minimum length 2 character"),
+      // gstno: Yup.string().matches(
+      //   /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[0-9A-Z]{1}$/,
+      //   "Max length 15 character"
+      // ),
+      panno: Yup.string().matches(
+        /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
+        "Min 10 digit number"
+      ),
+      credit_limit: Yup.string().matches(
+        /^[0-9]+$/,
+        "Please enter a value greater than or equal to 0."
+      ),
+      area_id: Yup.string().matches(/^\d{1,10}$/, "Enter valid number"),
+      parentRO: Yup.string().required("Select regional office"),
     }),
+
     onSubmit: (values) => {
       const newDistributor = {
         name: values["name"],
@@ -281,7 +299,7 @@ const AddDistributorModal = (props) => {
                       ? true
                       : false
                   }
-                  disabled
+                  disabled={toggleSwitch}
                 />
                 {validation.touched.code && validation.errors.code ? (
                   <FormFeedback type="invalid">
@@ -393,22 +411,13 @@ const AddDistributorModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.parentRO || ""}
+                  invalid={
+                    validation.touched.parentRO && validation.errors.parentRO
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Parent Regional Office</option>
-                  {/* {regOff.map((item) => (
-                    <optgroup
-                      key={item.id}
-                      value={item.id}
-                      label={`${item.name}`}
-                    >
-                      <option value={item.parentRO}>{item.code}</option>
-                    </optgroup>
-                  ))}
-                  {regOff.map((item) => (
-                    <option key={item.id} value={item.code}>
-                      {item.name}
-                    </option>
-                  ))} */}
                   {regOff &&
                     regOff.map((item) => (
                       <option key={item.id} value={item.id}>
@@ -484,17 +493,7 @@ const AddDistributorModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.email || ""}
-                  invalid={
-                    validation.touched.email && validation.errors.email
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.email && validation.errors.email ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.email}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
           </Row>
@@ -512,6 +511,11 @@ const AddDistributorModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  invalid={
+                    validation.touched.status && validation.errors.status
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Status</option>
                   {distributorsStatus &&
@@ -540,12 +544,14 @@ const AddDistributorModal = (props) => {
                   type="select"
                   placeholder="Select State"
                   className="form-select"
-                  // onChange={validation.handleChange}
-                  // onBlur={validation.handleBlur}
-                  // value={validation.values.state || ""}
                   onChange={handleStateChange}
                   onBlur={validation.handleBlur}
                   value={selectedState}
+                  invalid={
+                    validation.touched.state && validation.errors.state
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select State</option>
                   {statesList.map((state) => (
@@ -574,6 +580,11 @@ const AddDistributorModal = (props) => {
                   onChange={handleDistrictChange}
                   onBlur={validation.handleBlur}
                   value={selectedDistrict}
+                  invalid={
+                    validation.touched.district && validation.errors.district
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select District</option>
                   {districtsList.map((district) => (
@@ -602,6 +613,11 @@ const AddDistributorModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.city || ""}
+                  invalid={
+                    validation.touched.city && validation.errors.city
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select City</option>
                   {cityList.map((city) => (
@@ -657,17 +673,7 @@ const AddDistributorModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.addr2 || ""}
-                  invalid={
-                    validation.touched.addr2 && validation.errors.addr2
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.addr2 && validation.errors.addr2 ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.addr2}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
 
@@ -682,17 +688,7 @@ const AddDistributorModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.addr3 || ""}
-                  invalid={
-                    validation.touched.addr3 && validation.errors.addr3
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.addr3 && validation.errors.addr3 ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.addr3}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
           </Row>
@@ -769,11 +765,6 @@ const AddDistributorModal = (props) => {
                       </option>
                     ))}
                 </Input>
-                {validation.touched.reg_phase && validation.errors.reg_phase ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.reg_phase}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
           </Row>
@@ -788,19 +779,7 @@ const AddDistributorModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.reg_startdate || ""}
-                  invalid={
-                    validation.touched.reg_startdate &&
-                    validation.errors.reg_startdate
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.reg_startdate &&
-                validation.errors.reg_startdate ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.reg_startdate}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
 
@@ -814,17 +793,7 @@ const AddDistributorModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.enddate || ""}
-                  invalid={
-                    validation.touched.enddate && validation.errors.enddate
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.enddate && validation.errors.enddate ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.enddate}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
             <Col lg={4}>
@@ -862,17 +831,7 @@ const AddDistributorModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.gst_date || ""}
-                  invalid={
-                    validation.touched.gst_date && validation.errors.gst_date
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.gst_date && validation.errors.gst_date ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.gst_date}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
 
@@ -1056,9 +1015,6 @@ const AddDistributorModal = (props) => {
               </div>
             </Col>
           </Row>
-          {console.log(
-            "agreement upload:" + JSON.stringify(validation.values.upload)
-          )}
           <Row>
             <Col lg={4}>
               <div className="mb-3">
@@ -1092,7 +1048,7 @@ const AddDistributorModal = (props) => {
                 <Input
                   name="password"
                   label="Password"
-                  type="text"
+                  type="password"
                   placeholder="Password"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
@@ -1116,7 +1072,7 @@ const AddDistributorModal = (props) => {
                 <Input
                   name="confirmpassword"
                   label="Confirm Password"
-                  type="text"
+                  type="password"
                   placeholder="Retype Password"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}

@@ -34,9 +34,6 @@ const DistributorList = (props) => {
   const [showSetting, setShowSetting] = useState(false);
 
   const selectDistributorsState = (state) => state.distributors;
-  // console.log(
-  //   "$$$$$$$$$$$$$$$$$$$$$$state: " + JSON.stringify(state.distributors)
-  // );
 
   const DistributorsProperties = createSelector(
     selectDistributorsState,
@@ -67,12 +64,6 @@ const DistributorList = (props) => {
     distributorsOperator,
   } = useSelector(DistributorsProperties);
 
-  // console.log("DistributorsPhase", distributorsPhase);
-  // console.log(`TotalCount - ${totalCount}`);
-  // console.log(`PageSize - ${pageSize}`);
-  // console.log(`CurrentPage - ${currentPage}`);
-  // console.log(`TotalPage - ${totalPage}`);
-  // const [isLoading, setLoading] = useState(loading);
   const [showDistributor, setShowDistributor] = useState(false);
   const [viewDistributor, setViewDistributor] = useState(false);
   const [showUploadDistributor, setShowUploadDistributor] = useState(false);
@@ -81,11 +72,9 @@ const DistributorList = (props) => {
     () => [
       {
         Header: "#",
-        // accessor: "name",
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          // const totalRows = cellProps.rows.length;
           const startIndex = (currentPage - 1) * pageSize;
           const index = startIndex + cellProps.row.index + 1;
 
@@ -113,14 +102,17 @@ const DistributorList = (props) => {
                   const userData = cellProps.row.original;
                   toggleViewModal(userData);
                 }}
+                style={{
+                  maxWidth: 150,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
               </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
             </>
           );
         },
@@ -141,7 +133,17 @@ const DistributorList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.addr1}</p>
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 150,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {cellProps.row.original.addr1}
+            </p>
           );
         },
       },
@@ -151,7 +153,15 @@ const DistributorList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 100,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.contact_person}
             </p>
           );
@@ -175,7 +185,15 @@ const DistributorList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 100,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.state_lbl}
             </p>
           );
@@ -187,7 +205,15 @@ const DistributorList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 100,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.district_lbl}
             </p>
           );
@@ -199,7 +225,17 @@ const DistributorList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.city_lbl}</p>
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 100,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {cellProps.row.original.city_lbl}
+            </p>
           );
         },
       },
@@ -209,7 +245,17 @@ const DistributorList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.gstno}</p>
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 50,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {cellProps.row.original.gstno}
+            </p>
           );
         },
       },
@@ -219,7 +265,17 @@ const DistributorList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.panno}</p>
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 50,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {cellProps.row.original.panno}
+            </p>
           );
         },
       },
@@ -251,7 +307,15 @@ const DistributorList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 100,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.created_at}
             </p>
           );
@@ -263,47 +327,20 @@ const DistributorList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 100,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.created_by_lbl}
             </p>
           );
         },
       },
-      // {
-      //   Header: "Action",
-      //   Cell: (cellProps) => {
-      //     return (
-      //       <div className="d-flex gap-3">
-      //         <Link
-      //           to="#"
-      //           className="text-success"
-      //           onClick={() => {
-      //             const userData = cellProps.row.original;
-      //             handleUserClick(userData);
-      //           }}
-      //         >
-      //           <i className="mdi mdi-pencil font-size-18" id="edittooltip" />
-      //           <UncontrolledTooltip placement="top" target="edittooltip">
-      //             Edit
-      //           </UncontrolledTooltip>
-      //         </Link>
-      //         <Link
-      //           to="#"
-      //           className="text-danger"
-      //           onClick={() => {
-      //             const userData = cellProps.row.original;
-      //             onClickDelete(userData);
-      //           }}
-      //         >
-      //           <i className="mdi mdi-delete font-size-18" id="deletetooltip" />
-      //           <UncontrolledTooltip placement="top" target="deletetooltip">
-      //             Delete
-      //           </UncontrolledTooltip>
-      //         </Link>
-      //       </div>
-      //     );
-      //   },
-      // },
     ],
     [pageSize, currentPage]
   );
@@ -318,22 +355,14 @@ const DistributorList = (props) => {
     }
   }, [distributor]);
 
-  // useEffect(() => {
-  //   dispatch(onGetDistributors());
-  // }, [pageSize]);
-
   const goToPage = (toPage) => {
-    // console.log("[GOTO PAGE] Trigger to page - ", toPage);
     dispatch(onGoToPage(toPage));
     dispatch(onGetDistributors());
-    // dispatch(onGetDistributorsPhase());
     dis;
   };
 
   const toggleAddDistributor = () => {
-    // console.log("showDistributor before: " + typeof showDistributor);
     setShowDistributor(!showDistributor);
-    // console.log("showDistributor after: " + typeof showDistributor);
   };
 
   const toggleUploadDistributor = () => {
@@ -345,7 +374,6 @@ const DistributorList = (props) => {
   const toggleViewModal = (userData) => {
     setViewDistributor(!viewDistributor);
     setSelectedDistributor(userData);
-    // setSelectedRowId(userData.id);
   };
   const resetSelection = () => {
     setSelectedDistributor({});
