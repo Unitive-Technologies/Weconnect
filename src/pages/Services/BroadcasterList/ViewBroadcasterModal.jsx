@@ -62,14 +62,22 @@ const ViewBroadcasterModal = (props) => {
       name: Yup.string().required("Please Enter Your Name"),
       fullname: Yup.string().required("Please Enter Full Name"),
       contact_person: Yup.string().required("Please Enter Contact Person"),
-      mobile_no: Yup.string().required("Please Enter mobile Number"),
+      mobile_no: Yup.string()
+        .matches(/^[0-9]/, "Enter valid number")
+        .required("Enter mobile number")
+        .min(8, "Min 10 digit number")
+        .max(12, "Max 12 digit number"),
       email: Yup.string()
         .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
         .required("Please Enter Your Email"),
       // mobile: Yup.array().required("Please Enter mobile"),
       addr: Yup.string().required("Please Enter Address"),
       description: Yup.string().required("Please Enter description"),
-      status: Yup.string().required("Please Enter status"),
+      // status: Yup.string().required("Please Enter status"),
+      phone_no: Yup.string()
+        .matches(/^[0-9]/, "Enter valid number")
+        .min(8, "Min 8 digit number")
+        .max(12, "Max 12 digit number"),
     }),
     onSubmit: (values) => {
       const updateBroadCaster = {
@@ -287,6 +295,11 @@ const ViewBroadcasterModal = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.phone_no || ""}
+                    invalid={
+                      validation.touched.phone_no && validation.errors.phone_no
+                        ? true
+                        : false
+                    }
                   ></Input>
                   {validation.touched.phone_no && validation.errors.phone_no ? (
                     <FormFeedback type="invalid">
@@ -365,6 +378,11 @@ const ViewBroadcasterModal = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.description || ""}
+                    invalid={
+                      validation.touched.description && validation.errors.description
+                        ? true
+                        : false
+                    }
                   />
                   {validation.touched.description &&
                     validation.errors.description ? (
