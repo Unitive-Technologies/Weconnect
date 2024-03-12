@@ -35,6 +35,11 @@ const ViewCity = (props) => {
     setShowHistory(!showHistory);
   };
 
+  const handleCancel = () => {
+    setShowEditCity(false);
+    handleViewCity();
+  };
+
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -77,18 +82,13 @@ const ViewCity = (props) => {
       dispatch(onUpdateCity(updateCity));
       dispatch(onGetCity());
       validation.resetForm();
-      handleViewCity();
+      handleCancel();
     },
   });
 
   useEffect(() => {
     dispatch(onGetDistrictByStateid(validation.values.state_id));
   }, [dispatch, validation.values.state_id]);
-
-  const handleCancel = () => {
-    setShowEditCity(false);
-    handleViewCity();
-  };
 
   return (
     <>
@@ -227,7 +227,7 @@ const ViewCity = (props) => {
                     ))}
                   </Input>
                   {validation.touched.district_id &&
-                    validation.errors.district_id ? (
+                  validation.errors.district_id ? (
                     <FormFeedback type="invalid">
                       {validation.errors.district_id}
                     </FormFeedback>
@@ -249,14 +249,14 @@ const ViewCity = (props) => {
                     value={validation.values.description || ""}
                     invalid={
                       validation.touched.description &&
-                        validation.errors.description
+                      validation.errors.description
                         ? true
                         : false
                     }
                     disabled={!showEditCity}
                   />
                   {validation.touched.description &&
-                    validation.errors.description ? (
+                  validation.errors.description ? (
                     <FormFeedback type="invalid">
                       {validation.errors.description}
                     </FormFeedback>
