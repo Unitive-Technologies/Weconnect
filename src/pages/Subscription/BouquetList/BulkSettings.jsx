@@ -40,6 +40,11 @@ const BulkSettings = (props) => {
     is_online_app: "",
   });
 
+  const handleChangeSettingValue = (event) => {
+    const { name, value } = event.target;
+    setSetting({ ...setting, [name]: value });
+  };
+
   const handleActive = (row) => {
     const isRowSelected = selectedBouquets.some((user) => user.id === row.id);
     setTableList((prevTableList) =>
@@ -60,17 +65,17 @@ const BulkSettings = (props) => {
 
   const columns = useMemo(
     () => [
-      {
-        Header: "*",
-        disableFilters: true,
-        filterable: true,
-        Cell: (cellProps) => (
-          <input
-            type="checkbox"
-            onChange={() => handleCheckboxClick(cellProps.row.original)}
-          />
-        ),
-      },
+      // {
+      //   Header: "*",
+      //   disableFilters: true,
+      //   filterable: true,
+      //   Cell: (cellProps) => (
+      //     <input
+      //       type="checkbox"
+      //       onChange={() => handleCheckboxClick(cellProps.row.original)}
+      //     />
+      //   ),
+      // },
       {
         Header: "#",
         disableFilters: true,
@@ -415,8 +420,8 @@ const BulkSettings = (props) => {
                           placeholder="Select Status"
                           rows="3"
                           className="form-select"
-                          // onChange={handleChangeSettingValue}
-                          // value={setting}
+                          onChange={handleChangeSettingValue}
+                          value={setting}
                         >
                           {settingTableList[settingName].data &&
                             settingTableList[settingName].data.map(
