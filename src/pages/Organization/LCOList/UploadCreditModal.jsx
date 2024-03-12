@@ -32,6 +32,7 @@ const UploadCreditModal = (props) => {
   const [uploadTrigger, setUploadTrigger] = useState({});
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [successMsg, setSuccessMsg] = useState(false);
+  const [errorMessage, setErrorMessage] = useState();
 
   const selectPaymentmodeState = (state) => state.paymentmode;
   const paymentmodeProperties = createSelector(
@@ -113,7 +114,7 @@ const UploadCreditModal = (props) => {
   const handleUploadFile = () => {
     if (selectedFiles.length === 0) {
       console.log("No files selected to upload, handle accordingly");
-      // No files selected, handle accordingly
+      setErrorMessage("No files selected to upload, handle accordingly");
       return;
     }
 
@@ -200,8 +201,11 @@ const UploadCreditModal = (props) => {
               </div>
               <CardSubtitle className="mb-3">
                 {" "}
-                Select File to Upload
+                Select File to Upload<span style={{ color: "red" }}>*</span>
               </CardSubtitle>
+              {selectedFiles.length === 0 && errorMessage && (
+                <div className="text-danger mt-2">{errorMessage}</div>
+              )}
               <Form>
                 <Dropzone
                   maxFiles={1}

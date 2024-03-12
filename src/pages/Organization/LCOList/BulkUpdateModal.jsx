@@ -32,6 +32,7 @@ const BulkUpdateModal = (props) => {
   const [uploadTrigger, setUploadTrigger] = useState({});
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [successMsg, setSuccessMsg] = useState(false);
+  const [errorMessage, setErrorMessage] = useState();
 
   const toggleSuccessMsg = () => {
     setSuccessMsg(!successMsg);
@@ -99,7 +100,7 @@ const BulkUpdateModal = (props) => {
   const handleUploadFile = () => {
     if (selectedFiles.length === 0) {
       console.log("No files selected to upload, handle accordingly");
-      // No files selected, handle accordingly
+      setErrorMessage("No files selected to upload, handle accordingly");
       return;
     }
 
@@ -192,8 +193,11 @@ const BulkUpdateModal = (props) => {
               )}
               <CardSubtitle className="mb-3">
                 {" "}
-                Select File to Upload
+                Select File to Upload<span style={{ color: "red" }}>*</span>
               </CardSubtitle>
+              {selectedFiles.length === 0 && errorMessage && (
+                <div className="text-danger mt-2">{errorMessage}</div>
+              )}
               <Form>
                 <Dropzone
                   maxFiles={1}

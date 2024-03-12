@@ -37,6 +37,7 @@ const UploadDistributorModal = (props) => {
   const [parent_id, setParent_id] = useState("");
   const [status, setStatus] = useState("");
   const [successMsg, setSuccessMsg] = useState(false);
+  const [errorMessage, setErrorMessage] = useState();
 
   const selectRegionalOfficeState = (state) => state.regionaloffice;
 
@@ -123,7 +124,7 @@ const UploadDistributorModal = (props) => {
   const handleUploadFile = () => {
     if (selectedFiles.length === 0) {
       console.log("No files selected to upload, handle accordingly");
-      // No files selected, handle accordingly
+      setErrorMessage("No files selected to upload, handle accordingly");
       return;
     }
 
@@ -141,7 +142,7 @@ const UploadDistributorModal = (props) => {
         toggleSuccessMsg();
         console.log(
           "res in uploadDistributorFileForInitiatedUserUpload:" +
-          JSON.stringify(res)
+            JSON.stringify(res)
         );
 
         setUploadTrigger({});
@@ -241,6 +242,9 @@ const UploadDistributorModal = (props) => {
                 {" "}
                 Select File to Upload<span style={{ color: "red" }}>*</span>
               </CardSubtitle>
+              {selectedFiles.length === 0 && errorMessage && (
+                <div className="text-danger mt-2">{errorMessage}</div>
+              )}
               <Form>
                 <Dropzone
                   maxFiles={1}
