@@ -12,6 +12,7 @@ import {
   ModalHeader,
   Row,
   Table,
+  Input,
   Form,
 } from "reactstrap";
 import { getBouquet as onGetBouquet } from "/src/store/actions";
@@ -20,6 +21,7 @@ import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import SelectedBouquets from "./SelectedBouquets";
 import SettingTable from "./SettingTable";
+import { faHandsAmericanSignLanguageInterpreting } from "@fortawesome/free-solid-svg-icons";
 
 const BulkSettings = (props) => {
   const { isOpen, toggle, bouquets } = props;
@@ -156,96 +158,6 @@ const BulkSettings = (props) => {
     []
   );
 
-  const columns1 = useMemo(
-    () => [
-      {
-        Header: "*",
-        disableFilters: true,
-        filterable: true,
-        Cell: () => {
-          return (
-            <>
-              <i className="mdi mdi-check"></i>
-            </>
-          );
-        },
-      },
-      {
-        Header: "#",
-        disableFilters: true,
-        filterable: true,
-        Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
-
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {reverseIndex}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Name",
-        accessor: "name",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.name}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Code",
-        accessor: "code",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">{cellProps.row.original.code}</p>
-          );
-        },
-      },
-      {
-        Header: "Type",
-        // accessor: "bouquettype",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">{cellProps.row.original.type_lbl}</p>
-          );
-        },
-      },
-      {
-        Header: "Settings",
-        accessor: "setting",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">{cellProps.row.original.setting}</p>
-          );
-        },
-      },
-      {
-        Header: "$",
-        // accessor: "is_exclusive_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return <i className="mdi mdi-delete"></i>;
-        },
-      },
-    ],
-    []
-  );
   useEffect(() => {
     const getSettingData = async () => {
       try {
@@ -270,6 +182,7 @@ const BulkSettings = (props) => {
 
     getSettingData();
   }, []);
+
   useEffect(() => {
     if (bouquets) {
       setTableList(bouquets);
@@ -338,19 +251,6 @@ const BulkSettings = (props) => {
               margin: "30px 0px",
             }}
           >
-            {/* <SelectedBouquets selectedBouquets={selectedBouquets} /> */}
-            {/* <TableContainer
-              isPagination={true}
-              columns={columns1}
-              data={selectedBouquets}
-              // isGlobalFilter={true}
-              isShowingPageLength={true}
-              // customPageSize={50}
-              tableClass="table align-middle table-nowrap table-hover"
-              theadClass="table-light"
-              paginationDiv="col-sm-12 col-md-7"
-              pagination="pagination pagination-rounded justify-content-end mt-4"
-            /> */}
             <Table>
               <thead>
                 <tr>
@@ -369,18 +269,6 @@ const BulkSettings = (props) => {
                   selectedBouquets.map((row, i) => (
                     <tr key={i}>
                       <td>{i + 1}</td>
-                      {/* <td>
-                            <input
-                              type="checkbox"
-                              onChange={() => {
-                                debugger;
-                                console.log("Clicked the checkbox");
-                                handleCheckboxChange(row.id);
-                              }}
-                              checked={isRowChecked(row.id)}
-                            />
-                          </td> */}
-
                       <td>{row && row.name}</td>
                       <td>{row && row.code}</td>
                       <td>{row && row.type_lbl}</td>
@@ -408,7 +296,7 @@ const BulkSettings = (props) => {
           </Row>
           <div
             style={{
-              marginTop: "20px",
+              marginTop: "-10px",
               marginBottom: "18px",
               zIndex: 12000,
               backgroundColor: "#fff",
@@ -429,6 +317,46 @@ const BulkSettings = (props) => {
             }}
           >
             {/* <SettingTable settingTableList={settingTableList} /> */}
+            <Table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Setting Name</th>
+                  <th>Description</th>
+                  <th>Note</th>
+                  <th>Set Data</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.keys(settingTableList).map((settingName, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{settingName}</td>
+                    <td>{settingTableList[settingName].description}</td>
+                    <td>{settingTableList[settingName].comment}</td>
+                    <td>
+                      <Input
+                        name="status"
+                        type="select"
+                        placeholder="Select Status"
+                        rows="3"
+                        className="form-select"
+                        // onChange={validation.handleChange}
+                        // onBlur={validation.handleBlur}
+                        // value={validation.values.status || ""}
+                      >
+                        {settingTableList[settingName].data &&
+                          settingTableList[settingName].data.map((options) => (
+                            <option key={options.id} value={options.id}>
+                              {options.name}
+                            </option>
+                          ))}
+                      </Input>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
           </Row>
           <Row>
             <Col sm="12">
