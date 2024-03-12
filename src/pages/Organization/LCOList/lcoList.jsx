@@ -169,11 +169,9 @@ const LCOList = (props) => {
     () => [
       {
         Header: "#",
-        // accessor: "name",
         disableFilters: true,
         filterable: true,
         Cell: (cellProps) => {
-          // const totalRows = cellProps.rows.length;
           const startIndex = (currentPage - 1) * pageSize;
           const index = startIndex + cellProps.row.index + 1;
 
@@ -201,14 +199,17 @@ const LCOList = (props) => {
                   const lcoData = cellProps.row.original;
                   toggleViewLco(lcoData);
                 }}
+                style={{
+                  maxWidth: 150,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
               </h5>
-              <p className="text-muted mb-0">
-                {cellProps.row.original.designation}
-              </p>
             </>
           );
         },
@@ -229,7 +230,15 @@ const LCOList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 100,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.distributor_lbl}
             </p>
           );
@@ -265,7 +274,17 @@ const LCOList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.addr}</p>
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 100,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {cellProps.row.original.addr}
+            </p>
           );
         },
       },
@@ -275,7 +294,15 @@ const LCOList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 100,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.contact_person}
             </p>
           );
@@ -369,16 +396,6 @@ const LCOList = (props) => {
           );
         },
       },
-      // {
-      //   Header: "Settings",
-      //   accessor: "balance",
-      //   filterable: true,
-      //   Cell: (cellProps) => {
-      //     return (
-      //       <p className="text-muted mb-0">{cellProps.row.original.balance}</p>
-      //     );
-      //   },
-      // },
       {
         Header: "Balance",
         accessor: "balance",
@@ -395,7 +412,15 @@ const LCOList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 100,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.created_at}
             </p>
           );
@@ -407,7 +432,15 @@ const LCOList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 100,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.created_by_lbl}
             </p>
           );

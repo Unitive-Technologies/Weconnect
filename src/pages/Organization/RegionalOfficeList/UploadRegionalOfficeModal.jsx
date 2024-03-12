@@ -34,6 +34,7 @@ const UploadRegionalOfficeModal = (props) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [status, setStatus] = useState("");
   const [successMsg, setSuccessMsg] = useState(false);
+  const [errorMessage, setErrorMessage] = useState();
 
   const toggleSuccessMsg = () => {
     setSuccessMsg(!successMsg);
@@ -92,7 +93,7 @@ const UploadRegionalOfficeModal = (props) => {
   const handleUploadFile = () => {
     if (selectedFiles.length === 0) {
       console.log("No files selected to upload, handle accordingly");
-      // No files selected, handle accordingly
+      setErrorMessage("No files selected to upload, handle accordingly");
       return;
     }
 
@@ -177,9 +178,6 @@ const UploadRegionalOfficeModal = (props) => {
                   className="form-select"
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
-                // onChange={validation.handleChange}
-                // onBlur={validation.handleBlur}
-                // value={validation.values.grouppolicy || ""}
                 >
                   <option value="">Select Status</option>
                   {statusList &&
@@ -189,17 +187,14 @@ const UploadRegionalOfficeModal = (props) => {
                       </option>
                     ))}
                 </Input>
-                {/* {validation.touched.grouppolicy &&
-              validation.errors.grouppolicy ? (
-                <FormFeedback type="invalid">
-                  {validation.errors.grouppolicy}
-                </FormFeedback>
-              ) : null} */}
               </div>
               <CardSubtitle className="mb-3">
                 {" "}
                 Select File to Upload<span style={{ color: "red" }}>*</span>
               </CardSubtitle>
+              {selectedFiles.length === 0 && errorMessage && (
+                <div className="text-danger mt-2">{errorMessage}</div>
+              )}
               <Form>
                 <Dropzone
                   maxFiles={1}

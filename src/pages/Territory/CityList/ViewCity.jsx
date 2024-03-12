@@ -332,6 +332,10 @@ const ViewCity = (props) => {
 ViewCity.propTypes = {
   handleViewCity: PropTypes.func,
   isOpen: PropTypes.bool,
+  city: PropTypes.array,
+  status: PropTypes.array,
+  statelist: PropTypes.array,
+  districtlist: PropTypes.array,
 };
 
 export default ViewCity;
