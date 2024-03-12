@@ -68,10 +68,14 @@ const ViewSubLocation = (props) => {
       status: (sublocation && sublocation.status) || "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter district name"),
+      name: Yup.string()
+        .required("Enter district name")
+        .min(2, "Minimum length 2 characters")
+        .max(12, "Maximum length 12 characters"),
       location_id: Yup.string().required("Select location"),
       status: Yup.string().required("Select status"),
     }),
+
     onSubmit: (values) => {
       const updateSubLocation = {
         id: values["id"],
