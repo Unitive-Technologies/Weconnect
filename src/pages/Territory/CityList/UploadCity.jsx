@@ -19,6 +19,7 @@ import {
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import { addCity as onAddCity } from "/src/store/city/actions";
+import axios from "axios";
 
 import { useDispatch } from "react-redux";
 import {
@@ -28,16 +29,47 @@ import {
 } from "../../../helpers/backend_helper";
 
 const UploadCity = (props) => {
-  const { isOpen, toggleUploadCity, status, statelist, districtlist } = props;
+  const { isOpen, toggleUploadCity, status, statelist } = props;
 
   const dispatch = useDispatch();
   const [uploadTrigger, setUploadTrigger] = useState({});
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [districtList, setDistrictList] = useState("");
+  const [districtList, setDistrictList] = useState([]);
   const [cityStatus, setCityStatus] = useState("");
   const [stateList, setStateList] = useState("");
   const [successMsg, setSuccessMsg] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
+  const [selectedState, setSelectedState] = useState();
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
+
+  const handleStateChange = async (e) => {
+    try {
+      const stateName = e.target.value;
+      setSelectedState(stateName);
+
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/administrative-division?fields=id,name&filter[state_id]=${stateName}&filter[type]=2&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token, // Include your token here
+          },
+        }
+      );
+
+      console.log(
+        "districtlist after selection : " + JSON.stringify(response.data.data)
+      );
+      setDistrictList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching policy data:", error);
+      // Handle error if necessary
+    }
+    // };
+  };
 
   const toggleSuccessMsg = () => {
     setSuccessMsg(!successMsg);
@@ -62,7 +94,7 @@ const UploadCity = (props) => {
       type: 3,
       status: parseInt(cityStatus),
       state_id: parseInt(stateList),
-      district_id: parseInt(districtList),
+      district_id: parseInt(selectedDistrict),
     },
     url: "",
   };
@@ -72,7 +104,7 @@ const UploadCity = (props) => {
       type: 3,
       status: parseInt(cityStatus),
       state_id: parseInt(stateList),
-      district_id: parseInt(districtList),
+      district_id: parseInt(selectedDistrict),
     },
     url: "",
   };
@@ -192,8 +224,8 @@ const UploadCity = (props) => {
                   type="select"
                   placeholder="Select State"
                   className="form-select"
-                  value={stateList}
-                  onChange={(e) => setStateList(e.target.value)}
+                  value={selectedState}
+                  onChange={handleStateChange}
                 >
                   <option value="">Select State</option>
                   {statelist &&
@@ -211,12 +243,12 @@ const UploadCity = (props) => {
                   type="select"
                   placeholder="Select District"
                   className="form-select"
-                  value={districtList}
-                  onChange={(e) => setDistrictList(e.target.value)}
+                  value={selectedDistrict}
+                  onChange={(e) => setSelectedDistrict(e.target.value)}
                 >
                   <option value="">Select District</option>
-                  {districtlist &&
-                    districtlist.map((district_id) => (
+                  {districtList &&
+                    districtList.map((district_id) => (
                       <option key={district_id.id} value={district_id.id}>
                         {district_id.name}
                       </option>
@@ -349,7 +381,6 @@ UploadCity.propTypes = {
   toggleUploadCity: PropTypes.func,
   status: PropTypes.array,
   statelist: PropTypes.array,
-  districtlist: PropTypes.array,
 };
 
 export default UploadCity;
