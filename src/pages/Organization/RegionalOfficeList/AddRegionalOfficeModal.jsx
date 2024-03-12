@@ -194,14 +194,14 @@ const AddRegionalOfficeModal = (props) => {
         addr1: values["addr1"],
         addr2: values["addr2"],
         addr3: values["addr3"],
-        // agreement_data: {
-        //   name: values["upload"].name,
-        //   type: values["upload"].type,
-        //   ext: values["upload"].ext,
-        //   data: values["upload"].data,
-        //   start_date: values["agreestart"],
-        //   end_date: values["agreeend"],
-        // },
+        agreement_data: {
+          name: values["upload"].name,
+          type: values["upload"].type,
+          ext: values["upload"].ext,
+          data: values["upload"].data,
+          start_date: values["agreestart"],
+          end_date: values["agreeend"],
+        },
         area_id: values["area_id"],
         city_id: parseInt(values["city"]),
         code: values["code"],
@@ -344,13 +344,13 @@ const AddRegionalOfficeModal = (props) => {
                   value={validation.values.contact_person || ""}
                   invalid={
                     validation.touched.contact_person &&
-                      validation.errors.contact_person
+                    validation.errors.contact_person
                       ? true
                       : false
                   }
                 />
                 {validation.touched.contact_person &&
-                  validation.errors.contact_person ? (
+                validation.errors.contact_person ? (
                   <FormFeedback type="invalid">
                     {validation.errors.contact_person}
                   </FormFeedback>
@@ -822,13 +822,13 @@ const AddRegionalOfficeModal = (props) => {
                   value={validation.values.credit_limit || ""}
                   invalid={
                     validation.touched.credit_limit &&
-                      validation.errors.credit_limit
+                    validation.errors.credit_limit
                       ? true
                       : false
                   }
                 />
                 {validation.touched.credit_limit &&
-                  validation.errors.credit_limit ? (
+                validation.errors.credit_limit ? (
                   <FormFeedback type="invalid">
                     {validation.errors.credit_limit}
                   </FormFeedback>
@@ -1003,13 +1003,13 @@ const AddRegionalOfficeModal = (props) => {
                   value={validation.values.confirmpassword || ""}
                   invalid={
                     validation.touched.confirmpassword &&
-                      validation.errors.confirmpassword
+                    validation.errors.confirmpassword
                       ? true
                       : false
                   }
                 />
                 {validation.touched.confirmpassword &&
-                  validation.errors.confirmpassword ? (
+                validation.errors.confirmpassword ? (
                   <FormFeedback type="invalid">
                     {validation.errors.confirmpassword}
                   </FormFeedback>
