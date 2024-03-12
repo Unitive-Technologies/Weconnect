@@ -12,7 +12,8 @@ import {
   Row,
 } from "reactstrap";
 
-const SelectedBouquets = () => {
+const SelectedBouquets = ({ selectedBouquets }) => {
+  console.log("selectedBouquets:" + JSON.stringify(selectedBouquets));
   const columns = useMemo(
     () => [
       {
@@ -101,17 +102,8 @@ const SelectedBouquets = () => {
         },
       },
     ],
-    []
+    [selectedBouquets]
   );
-
-  // {
-  //   name: "check",
-  //   hex: "F012C",
-  //   version: "1.5.54"
-  // mdi-check   mdi-delete
-  // },
-
-  const selectedBouquet = [];
 
   return (
     <Card>
@@ -119,7 +111,7 @@ const SelectedBouquets = () => {
         <TableContainer
           isPagination={true}
           columns={columns}
-          data={selectedBouquet}
+          data={selectedBouquets}
           isGlobalFilter={true}
           isShowingPageLength={true}
           // customPageSize={50}

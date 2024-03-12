@@ -34,7 +34,6 @@ import BulkAssign from "./BulkAssign";
 import BulkRemoval from "./BulkRemoval";
 import BulkSettings from "./BulkSettings";
 import TableContainerX from "../../../components/Common/TableContainerX";
-import BulkAssignBouquets from "./BulkAssignBouquets";
 
 const BouquetList = () => {
   //meta title
@@ -564,24 +563,27 @@ const BouquetList = () => {
           showViewBouquet={showViewBouquet}
         />
       )}
-      {/* <BulkAssign
-        isOpen={showBulkAssign}
-        toggle={toggleBulkAssign}
-        selectedRows={selectedRows}
-      /> */}
       {selectedRow && showBulkAssign && (
-        <BulkAssignBouquets
-          isOpen={showBulkAssign}
+        <BulkAssign
+          isOpen={Boolean(showBulkAssign)}
           toggle={toggleBulkAssign}
           selectedRows={selectedRows}
         />
       )}
-      <BulkRemoval
-        isOpen={showBulkRemoval}
-        toggle={toggleBulkRemoval}
-        selectedRows={selectedRows}
-      />
-      <BulkSettings isOpen={showBulkSettings} toggle={toggleBulkSettings} />
+      {showBulkRemoval && (
+        <BulkRemoval
+          isOpen={Boolean(showBulkRemoval)}
+          toggle={toggleBulkRemoval}
+          selectedRows={selectedRows}
+        />
+      )}
+      {showBulkSettings && (
+        <BulkSettings
+          isOpen={Boolean(showBulkSettings)}
+          toggle={toggleBulkSettings}
+          bouquets={bouquets}
+        />
+      )}
       <div className="page-content">
         <Container fluid>
           <Breadcrumbs title="Subscription" breadcrumbItem="Bouquet List" />

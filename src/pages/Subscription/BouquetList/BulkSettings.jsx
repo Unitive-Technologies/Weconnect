@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
@@ -16,20 +17,37 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import SelectedBouquets from "./SelectedBouquets";
+import SettingTable from "./SettingTable";
 
 const BulkSettings = (props) => {
-  const { isOpen, toggle } = props;
+  const { isOpen, toggle, bouquets } = props;
   //meta title
-  document.title = "Bouquet List | VDigital";
+  document.title = "Bouquets | VDigital";
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
+  const [settingTableList, setSettingTableList] = useState([]);
+  const [tableList, setTableList] = useState([]);
+  const [selectedBouquets, setSelectedBouquets] = useState([]);
 
-  const dispatch = useDispatch();
+  const handleActive = (row) => {
+    const isRowSelected = selectedBouquets.some((user) => user.id === row.id);
 
-  const selectBouquetState = (state) => state.bouquet;
-  const BouquetProperties = createSelector(selectBouquetState, (bouquet) => ({
-    bouquets: bouquet.bouquet,
-  }));
+    setTableList((prevTableList) =>
+      prevTableList.filter((user) => user.id !== row.id)
+    );
 
-  const { bouquets } = useSelector(BouquetProperties);
+    if (isRowSelected) {
+      setSelectedBouquets((prevSelectedUsers) =>
+        prevSelectedUsers.filter((user) => user.id !== row.id)
+      );
+    } else {
+      setSelectedBouquets((prevSelectedUsers) => [...prevSelectedUsers, row]);
+    }
+
+    // Ensure that row.original exists before accessing its properties
+    if (row.original) {
+      row.original.isSelected = !isRowSelected;
+    }
+  };
 
   const columns = useMemo(
     () => [
@@ -37,13 +55,12 @@ const BulkSettings = (props) => {
         Header: "*",
         disableFilters: true,
         filterable: true,
-        Cell: () => {
-          return (
-            <>
-              <i className="mdi mdi-check"></i>
-            </>
-          );
-        },
+        Cell: (cellProps) => (
+          <input
+            type="checkbox"
+            onChange={() => handleCheckboxClick(cellProps.row.original)}
+          />
+        ),
       },
       {
         Header: "#",
@@ -123,14 +140,38 @@ const BulkSettings = (props) => {
         },
       },
     ],
-    []
+    [bouquets]
   );
 
   useEffect(() => {
-    if (bouquets && !bouquets.length) {
-      dispatch(onGetBouquet());
+    const getSettingData = async () => {
+      try {
+        const token = "Bearer " + localStorage.getItem("temptoken");
+        const response = await axios.get(
+          `${API_URL}/bouque/setting?fields=id,name&vr=web1.0`,
+
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        console.log(
+          "tableList in useEffect: " + JSON.stringify(response.data.data)
+        );
+        setSettingTableList(response.data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    getSettingData();
+  }, []);
+  useEffect(() => {
+    if (bouquets) {
+      setTableList(bouquets);
     }
-  }, [dispatch, bouquets]);
+  }, [bouquets]);
 
   return (
     <React.Fragment>
@@ -155,9 +196,10 @@ const BulkSettings = (props) => {
                   <TableContainer
                     isPagination={true}
                     columns={columns}
-                    data={bouquets}
+                    data={tableList}
                     isGlobalFilter={true}
                     isShowingPageLength={true}
+                    handleRowClick={(row) => handleActive(row)}
                     customPageSize={8}
                     tableClass="table align-middle table-nowrap table-hover"
                     theadClass="table-light"
@@ -190,7 +232,7 @@ const BulkSettings = (props) => {
               margin: "30px 0px",
             }}
           >
-            <SelectedBouquets />
+            <SelectedBouquets selectedBouquets={selectedBouquets} />
           </Row>
           <div
             style={{
@@ -213,7 +255,9 @@ const BulkSettings = (props) => {
               padding: "20px 0px",
               margin: "30px 0px",
             }}
-          ></Row>
+          >
+            <SettingTable settingTableList={settingTableList} />
+          </Row>
           <Row>
             <Col sm="12">
               <div className="d-flex flex-wrap gap-2">
