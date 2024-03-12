@@ -3,6 +3,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
+import * as Yup from "yup";
+import { useFormik } from "formik";
 import {
   Card,
   CardBody,
@@ -31,6 +33,12 @@ const BulkSettings = (props) => {
   const [settingTableList, setSettingTableList] = useState({});
   const [tableList, setTableList] = useState([]);
   const [selectedBouquets, setSelectedBouquets] = useState([]);
+  const [setting, setSetting] = useState({
+    family_id: "",
+    is_exclusive: "",
+    is_promotional: "",
+    is_online_app: "",
+  });
 
   const handleActive = (row) => {
     const isRowSelected = selectedBouquets.some((user) => user.id === row.id);
@@ -158,6 +166,64 @@ const BulkSettings = (props) => {
     []
   );
 
+  const validation = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      setting: setting,
+    },
+    validationSchema: Yup.object({
+      // setting: Yup.object({
+      //   bulk_limit: Yup.string().required("Please Enter Bulk Limit"),
+      //   allowed_ips: Yup.string().required("Please Enter allowed client ips"),
+      //   enabled_pay_modes: Yup.array()
+      //     .of(Yup.number().required("Please Select Pay Modes"))
+      //     .min(1, "Please Select at least one Pay Mode"),
+      // }),
+    }),
+
+    onSubmit: async (values) => {
+      try {
+        const nonEmptySettings = Object.entries(values.setting).reduce(
+          (acc, [key, value]) => {
+            if (value !== "") {
+              acc[key] = value;
+            }
+            return acc;
+          },
+          {}
+        );
+
+        const newSetting = {
+          ids: selectedBouquets.map((bouquet) => bouquet.id),
+          setting: nonEmptySettings,
+        };
+
+        console.log("newSetting:", JSON.stringify(newSetting));
+        const token = "Bearer " + localStorage.getItem("temptoken");
+
+        const response = await axios.put(
+          `${API_URL}/bouque/setting?vr=web1.0`,
+          newSetting,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+
+        console.log("Axios Response:", response);
+        toggle();
+        dispatch(onGetBouquet());
+
+        validation.resetForm();
+      } catch (error) {
+        console.error("Error in onSubmit:", error);
+      }
+    },
+    onReset: () => {
+      validation.setValues(validation.initialValues);
+    },
+  });
   useEffect(() => {
     const getSettingData = async () => {
       try {
@@ -205,178 +271,188 @@ const BulkSettings = (props) => {
           Bulk Bouquet Settings
         </ModalHeader>
         <ModalBody>
-          <Row>
-            <Col lg="12">
-              <Card>
-                <CardBody>
+          <Form
+            onSubmit={(e) => {
+              e.preventDefault();
+              validation.handleSubmit();
+              return false;
+            }}
+          >
+            <Row>
+              <Col lg="12">
+                <Card>
+                  <CardBody>
+                    {console.log(
+                      "tableList in bulksettings:" + JSON.stringify(tableList)
+                    )}
+
+                    <TableContainer
+                      isPagination={true}
+                      columns={columns}
+                      data={tableList}
+                      isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      handleRowClick={(row) => handleActive(row)}
+                      customPageSize={8}
+                      tableClass="table align-middle table-nowrap table-hover"
+                      theadClass="table-light"
+                      paginationDiv="col-sm-12 col-md-7"
+                      pagination="pagination pagination-rounded justify-content-end mt-4"
+                    />
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+            <div
+              style={{
+                marginTop: "20px",
+                marginBottom: "18px",
+                zIndex: 12000,
+                backgroundColor: "#fff",
+                width: "fit-content",
+                marginLeft: "40%",
+                position: "absolute",
+                padding: "0px 10px",
+              }}
+            >
+              <p style={{ fontWeight: "bold" }}>Selected Bouquets</p>
+            </div>
+            <Row
+              style={{
+                position: "relative",
+                border: "1px solid #ced4da",
+                padding: "20px 0px",
+                margin: "30px 0px",
+              }}
+            >
+              <Table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Code</th>
+                    <th>Type</th>
+                    <th>Settings</th>
+                  </tr>
+                </thead>
+                <tbody>
                   {console.log(
-                    "tableList in bulksettings:" + JSON.stringify(tableList)
+                    "selectedBouquets : " + JSON.stringify(selectedBouquets)
                   )}
-                  <TableContainer
-                    isPagination={true}
-                    columns={columns}
-                    data={tableList}
-                    isGlobalFilter={true}
-                    isShowingPageLength={true}
-                    handleRowClick={(row) => handleActive(row)}
-                    customPageSize={8}
-                    tableClass="table align-middle table-nowrap table-hover"
-                    theadClass="table-light"
-                    paginationDiv="col-sm-12 col-md-7"
-                    pagination="pagination pagination-rounded justify-content-end mt-4"
-                  />
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-          <div
-            style={{
-              marginTop: "20px",
-              marginBottom: "18px",
-              zIndex: 12000,
-              backgroundColor: "#fff",
-              width: "fit-content",
-              marginLeft: "40%",
-              position: "absolute",
-              padding: "0px 10px",
-            }}
-          >
-            <p style={{ fontWeight: "bold" }}>Selected Bouquets</p>
-          </div>
-          <Row
-            style={{
-              position: "relative",
-              border: "1px solid #ced4da",
-              padding: "20px 0px",
-              margin: "30px 0px",
-            }}
-          >
-            <Table>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>Code</th>
-                  <th>Type</th>
-                  <th>Settings</th>
-                </tr>
-              </thead>
-              <tbody>
-                {console.log(
-                  "selectedBouquets : " + JSON.stringify(selectedBouquets)
-                )}
-                {selectedBouquets &&
-                  selectedBouquets.map((row, i) => (
-                    <tr key={i}>
-                      <td>{i + 1}</td>
-                      <td>{row && row.name}</td>
-                      <td>{row && row.code}</td>
-                      <td>{row && row.type_lbl}</td>
+                  {selectedBouquets &&
+                    selectedBouquets.map((row, i) => (
+                      <tr key={i}>
+                        <td>{i + 1}</td>
+                        <td>{row && row.name}</td>
+                        <td>{row && row.code}</td>
+                        <td>{row && row.type_lbl}</td>
+                        <td>
+                          {row && (
+                            <p
+                              className="text-muted mb-0"
+                              style={{
+                                maxWidth: 200,
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                              }}
+                            >
+                              {Object.keys(row.setting)
+                                .map((key) => `${key}: ${row.setting[key]}`)
+                                .join(" ")}
+                            </p>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </Table>
+            </Row>
+            <div
+              style={{
+                marginTop: "-10px",
+                marginBottom: "18px",
+                zIndex: 12000,
+                backgroundColor: "#fff",
+                width: "fit-content",
+                marginLeft: "40%",
+                position: "absolute",
+                padding: "0px 10px",
+              }}
+            >
+              <p style={{ fontWeight: "bold" }}>Bouquet settings</p>
+            </div>
+            <Row
+              style={{
+                position: "relative",
+                border: "1px solid #ced4da",
+                padding: "20px 0px",
+                margin: "30px 0px",
+              }}
+            >
+              {/* <SettingTable settingTableList={settingTableList} /> */}
+              <Table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Setting Name</th>
+                    <th>Description</th>
+                    <th>Note</th>
+                    <th>Set Data</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {Object.keys(settingTableList).map((settingName, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{settingName}</td>
+                      <td>{settingTableList[settingName].description}</td>
+                      <td>{settingTableList[settingName].comment}</td>
                       <td>
-                        {row && (
-                          <p
-                            className="text-muted mb-0"
-                            style={{
-                              maxWidth: 200,
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              whiteSpace: "nowrap",
-                            }}
-                          >
-                            {Object.keys(row.setting)
-                              .map((key) => `${key}: ${row.setting[key]}`)
-                              .join(" ")}
-                          </p>
-                        )}
+                        <Input
+                          name="status"
+                          type="select"
+                          placeholder="Select Status"
+                          rows="3"
+                          className="form-select"
+                          // onChange={handleChangeSettingValue}
+                          // value={setting}
+                        >
+                          {settingTableList[settingName].data &&
+                            settingTableList[settingName].data.map(
+                              (options) => (
+                                <option key={options.id} value={options.id}>
+                                  {options.name}
+                                </option>
+                              )
+                            )}
+                        </Input>
                       </td>
                     </tr>
                   ))}
-              </tbody>
-            </Table>
-          </Row>
-          <div
-            style={{
-              marginTop: "-10px",
-              marginBottom: "18px",
-              zIndex: 12000,
-              backgroundColor: "#fff",
-              width: "fit-content",
-              marginLeft: "40%",
-              position: "absolute",
-              padding: "0px 10px",
-            }}
-          >
-            <p style={{ fontWeight: "bold" }}>Bouquet settings</p>
-          </div>
-          <Row
-            style={{
-              position: "relative",
-              border: "1px solid #ced4da",
-              padding: "20px 0px",
-              margin: "30px 0px",
-            }}
-          >
-            {/* <SettingTable settingTableList={settingTableList} /> */}
-            <Table>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Setting Name</th>
-                  <th>Description</th>
-                  <th>Note</th>
-                  <th>Set Data</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.keys(settingTableList).map((settingName, index) => (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{settingName}</td>
-                    <td>{settingTableList[settingName].description}</td>
-                    <td>{settingTableList[settingName].comment}</td>
-                    <td>
-                      <Input
-                        name="status"
-                        type="select"
-                        placeholder="Select Status"
-                        rows="3"
-                        className="form-select"
-                        // onChange={validation.handleChange}
-                        // onBlur={validation.handleBlur}
-                        // value={validation.values.status || ""}
-                      >
-                        {settingTableList[settingName].data &&
-                          settingTableList[settingName].data.map((options) => (
-                            <option key={options.id} value={options.id}>
-                              {options.name}
-                            </option>
-                          ))}
-                      </Input>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </Row>
-          <Row>
-            <Col sm="12">
-              <div className="d-flex flex-wrap gap-2">
-                <button type="submit" className="btn btn-success save-user">
-                  Save
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-danger"
-                  onClick={() => {
-                    validation.resetForm();
-                    toggle();
-                  }}
-                >
-                  Cancel
-                </button>
-              </div>
-            </Col>
-          </Row>
+                </tbody>
+              </Table>
+            </Row>
+            <Row>
+              <Col sm="12">
+                <div className="d-flex flex-wrap gap-2">
+                  <button type="submit" className="btn btn-success save-user">
+                    Save
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-outline-danger"
+                    onClick={() => {
+                      validation.resetForm();
+                      toggle();
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </Col>
+            </Row>
+          </Form>
         </ModalBody>
       </Modal>
       <ToastContainer />
