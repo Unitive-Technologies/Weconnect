@@ -28,7 +28,7 @@ import {
 } from "../../../helpers/backend_helper";
 
 const UploadCity = (props) => {
-  const { isOpen, toggleUploadCity, status, statelist, districtlist, actiontype } = props;
+  const { isOpen, toggleUploadCity, status, statelist, districtlist } = props;
 
   const dispatch = useDispatch();
   const [uploadTrigger, setUploadTrigger] = useState({});
@@ -37,6 +37,7 @@ const UploadCity = (props) => {
   const [cityStatus, setCityStatus] = useState("");
   const [stateList, setStateList] = useState("");
   const [successMsg, setSuccessMsg] = useState(false);
+  const [errorMessage, setErrorMessage] = useState();
 
   const toggleSuccessMsg = () => {
     setSuccessMsg(!successMsg);
@@ -47,7 +48,9 @@ const UploadCity = (props) => {
 
     updateCityUploadByToken(uploadTrigger.token, districtSavedTemplatePayload)
       .then((res) => {
-        console.log("res in updateDistrictUploadByToken:" + JSON.stringify(res));
+        console.log(
+          "res in updateDistrictUploadByToken:" + JSON.stringify(res)
+        );
       })
       .catch((error) => {
         console.log("error in updateDistrictUploadByToken:" + error);
@@ -55,12 +58,22 @@ const UploadCity = (props) => {
   }
 
   const districtSavedTemplatePayload = {
-    meta_data: { type: 3, status: parseInt(cityStatus), state_id: parseInt(stateList), district_id: parseInt(districtList) },
+    meta_data: {
+      type: 3,
+      status: parseInt(cityStatus),
+      state_id: parseInt(stateList),
+      district_id: parseInt(districtList),
+    },
     url: "",
   };
 
   const cityDownloadTemplatePayload = {
-    meta_data: { type: 3, status: parseInt(cityStatus), state_id: parseInt(stateList), district_id: parseInt(districtList) },
+    meta_data: {
+      type: 3,
+      status: parseInt(cityStatus),
+      state_id: parseInt(stateList),
+      district_id: parseInt(districtList),
+    },
     url: "",
   };
 
@@ -71,7 +84,7 @@ const UploadCity = (props) => {
         // debugger;
         const fileName = res.data.data.type;
         const fieldStringArray = res.data.data.fields;
-        console.log("Upload District response" + res.data.data.fields)
+        console.log("Upload District response" + res.data.data.fields);
         //combine fieldStringArray contents into a single string seperated by commas
         const headers = fieldStringArray.join(",");
         // const csvContent = data.map((row) => row.join(",")).join("\n");
@@ -96,7 +109,7 @@ const UploadCity = (props) => {
   const handleUploadFile = () => {
     if (selectedFiles.length === 0) {
       console.log("No files selected to upload, handle accordingly");
-      // No files selected, handle accordingly
+      setErrorMessage("No files selected to upload, handle accordingly");
       return;
     }
 
@@ -233,6 +246,9 @@ const UploadCity = (props) => {
                 {" "}
                 Select File to Upload<span style={{ color: "red" }}>*</span>
               </CardSubtitle>
+              {selectedFiles.length === 0 && errorMessage && (
+                <div className="text-danger mt-2">{errorMessage}</div>
+              )}
               <Form>
                 <Dropzone
                   maxFiles={1}
@@ -329,11 +345,11 @@ const UploadCity = (props) => {
 };
 
 UploadCity.propTypes = {
-  toggle: PropTypes.func,
   isOpen: PropTypes.bool,
+  toggleUploadCity: PropTypes.func,
+  status: PropTypes.array,
+  statelist: PropTypes.array,
+  districtlist: PropTypes.array,
 };
 
 export default UploadCity;
-
-
-
