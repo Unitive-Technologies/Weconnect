@@ -319,7 +319,6 @@ const AddOperators = (props) => {
       name: user.name || "",
       code: user.code || "",
       type_lbl: user.type_lbl || "",
-      expiryDate: expiryDates[index] || "", // Using the expiryDate for the specific row
     }));
 
     console.log("newSelectedOperators:", JSON.stringify(newSelectedOperators));

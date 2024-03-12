@@ -579,7 +579,7 @@ const BouquetList = () => {
       <BulkRemoval
         isOpen={showBulkRemoval}
         toggle={toggleBulkRemoval}
-        selectedRow={selectedRow}
+        selectedRows={selectedRows}
       />
       <BulkSettings isOpen={showBulkSettings} toggle={toggleBulkSettings} />
       <div className="page-content">
