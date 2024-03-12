@@ -5,6 +5,11 @@ import { Card, CardBody, Table, Input } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const SettingTable = ({ settingTableList }) => {
+  {
+    console.log(
+      "settingTableList in bulksettings:" + JSON.stringify(settingTableList)
+    );
+  }
   const columns = useMemo(
     () => [
       {

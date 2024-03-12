@@ -74,8 +74,8 @@ const SelectedBouquets = ({ selectedBouquets }) => {
         },
       },
       {
-        Header: "Bouquet Type",
-        accessor: "bouquettype",
+        Header: "Type",
+        // accessor: "bouquettype",
         filterable: true,
         Cell: (cellProps) => {
           return (
@@ -108,11 +108,14 @@ const SelectedBouquets = ({ selectedBouquets }) => {
   return (
     <Card>
       <CardBody>
+        {console.log(
+          "selectedBouquets in bulksettings:" + JSON.stringify(selectedBouquets)
+        )}
         <TableContainer
           isPagination={true}
           columns={columns}
           data={selectedBouquets}
-          isGlobalFilter={true}
+          // isGlobalFilter={true}
           isShowingPageLength={true}
           // customPageSize={50}
           tableClass="table align-middle table-nowrap table-hover"

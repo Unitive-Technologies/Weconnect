@@ -11,6 +11,8 @@ import {
   ModalBody,
   ModalHeader,
   Row,
+  Table,
+  Form,
 } from "reactstrap";
 import { getBouquet as onGetBouquet } from "/src/store/actions";
 import { useSelector, useDispatch } from "react-redux";
@@ -24,17 +26,15 @@ const BulkSettings = (props) => {
   //meta title
   document.title = "Bouquets | VDigital";
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
-  const [settingTableList, setSettingTableList] = useState([]);
+  const [settingTableList, setSettingTableList] = useState({});
   const [tableList, setTableList] = useState([]);
   const [selectedBouquets, setSelectedBouquets] = useState([]);
 
   const handleActive = (row) => {
     const isRowSelected = selectedBouquets.some((user) => user.id === row.id);
-
     setTableList((prevTableList) =>
       prevTableList.filter((user) => user.id !== row.id)
     );
-
     if (isRowSelected) {
       setSelectedBouquets((prevSelectedUsers) =>
         prevSelectedUsers.filter((user) => user.id !== row.id)
@@ -42,7 +42,6 @@ const BulkSettings = (props) => {
     } else {
       setSelectedBouquets((prevSelectedUsers) => [...prevSelectedUsers, row]);
     }
-
     // Ensure that row.original exists before accessing its properties
     if (row.original) {
       row.original.isSelected = !isRowSelected;
@@ -108,7 +107,7 @@ const BulkSettings = (props) => {
         },
       },
       {
-        Header: "Bouquet Type",
+        Header: "Type",
         accessor: "bouquettype",
         filterable: true,
         Cell: (cellProps) => {
@@ -123,26 +122,130 @@ const BulkSettings = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.status}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.status_lbl}
+            </p>
           );
         },
       },
       {
         Header: "Settings",
-        accessor: "is_exclusive_lbl",
         filterable: true,
         Cell: (cellProps) => {
+          const settingData = cellProps.row.original.setting;
+          const settingString = Object.keys(settingData)
+            .map((key) => `${key}: ${settingData[key]}`)
+            .join(" ");
+
           return (
-            <p className="text-muted mb-0">
-              IS EXCLUSIVE:{cellProps.row.original.is_exclusive_lbl}
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 200,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {settingString}
             </p>
           );
         },
       },
     ],
-    [bouquets]
+    []
   );
 
+  const columns1 = useMemo(
+    () => [
+      {
+        Header: "*",
+        disableFilters: true,
+        filterable: true,
+        Cell: () => {
+          return (
+            <>
+              <i className="mdi mdi-check"></i>
+            </>
+          );
+        },
+      },
+      {
+        Header: "#",
+        disableFilters: true,
+        filterable: true,
+        Cell: (cellProps) => {
+          const totalRows = cellProps.rows.length;
+          const reverseIndex = totalRows - cellProps.row.index;
+
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {reverseIndex}
+                </Link>
+              </h5>
+            </>
+          );
+        },
+      },
+      {
+        Header: "Name",
+        accessor: "name",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <>
+              <h5 className="font-size-14 mb-1">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.name}
+                </Link>
+              </h5>
+            </>
+          );
+        },
+      },
+      {
+        Header: "Code",
+        accessor: "code",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.code}</p>
+          );
+        },
+      },
+      {
+        Header: "Type",
+        // accessor: "bouquettype",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.type_lbl}</p>
+          );
+        },
+      },
+      {
+        Header: "Settings",
+        accessor: "setting",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.setting}</p>
+          );
+        },
+      },
+      {
+        Header: "$",
+        // accessor: "is_exclusive_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return <i className="mdi mdi-delete"></i>;
+        },
+      },
+    ],
+    []
+  );
   useEffect(() => {
     const getSettingData = async () => {
       try {
@@ -186,13 +289,16 @@ const BulkSettings = (props) => {
         size="xl"
       >
         <ModalHeader toggle={toggle} tag="h4">
-          Bulk Assign Bouquet
+          Bulk Bouquet Settings
         </ModalHeader>
         <ModalBody>
           <Row>
             <Col lg="12">
               <Card>
                 <CardBody>
+                  {console.log(
+                    "tableList in bulksettings:" + JSON.stringify(tableList)
+                  )}
                   <TableContainer
                     isPagination={true}
                     columns={columns}
@@ -232,7 +338,73 @@ const BulkSettings = (props) => {
               margin: "30px 0px",
             }}
           >
-            <SelectedBouquets selectedBouquets={selectedBouquets} />
+            {/* <SelectedBouquets selectedBouquets={selectedBouquets} /> */}
+            {/* <TableContainer
+              isPagination={true}
+              columns={columns1}
+              data={selectedBouquets}
+              // isGlobalFilter={true}
+              isShowingPageLength={true}
+              // customPageSize={50}
+              tableClass="table align-middle table-nowrap table-hover"
+              theadClass="table-light"
+              paginationDiv="col-sm-12 col-md-7"
+              pagination="pagination pagination-rounded justify-content-end mt-4"
+            /> */}
+            <Table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Code</th>
+                  <th>Type</th>
+                  <th>Settings</th>
+                </tr>
+              </thead>
+              <tbody>
+                {console.log(
+                  "selectedBouquets : " + JSON.stringify(selectedBouquets)
+                )}
+                {selectedBouquets &&
+                  selectedBouquets.map((row, i) => (
+                    <tr key={i}>
+                      <td>{i + 1}</td>
+                      {/* <td>
+                            <input
+                              type="checkbox"
+                              onChange={() => {
+                                debugger;
+                                console.log("Clicked the checkbox");
+                                handleCheckboxChange(row.id);
+                              }}
+                              checked={isRowChecked(row.id)}
+                            />
+                          </td> */}
+
+                      <td>{row && row.name}</td>
+                      <td>{row && row.code}</td>
+                      <td>{row && row.type_lbl}</td>
+                      <td>
+                        {row && (
+                          <p
+                            className="text-muted mb-0"
+                            style={{
+                              maxWidth: 200,
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              whiteSpace: "nowrap",
+                            }}
+                          >
+                            {Object.keys(row.setting)
+                              .map((key) => `${key}: ${row.setting[key]}`)
+                              .join(" ")}
+                          </p>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </Table>
           </Row>
           <div
             style={{
@@ -256,7 +428,7 @@ const BulkSettings = (props) => {
               margin: "30px 0px",
             }}
           >
-            <SettingTable settingTableList={settingTableList} />
+            {/* <SettingTable settingTableList={settingTableList} /> */}
           </Row>
           <Row>
             <Col sm="12">
