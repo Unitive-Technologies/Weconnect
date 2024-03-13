@@ -182,20 +182,18 @@ const BulkSettings = (props) => {
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
+      ids: [],
       setting: setting,
     },
-    validationSchema: Yup.object({
-      // setting: Yup.object({
-      //   bulk_limit: Yup.string().required("Please Enter Bulk Limit"),
-      //   allowed_ips: Yup.string().required("Please Enter allowed client ips"),
-      //   enabled_pay_modes: Yup.array()
-      //     .of(Yup.number().required("Please Select Pay Modes"))
-      //     .min(1, "Please Select at least one Pay Mode"),
-      // }),
-    }),
+    validationSchema: Yup.object({}),
 
     onSubmit: async (values) => {
       try {
+        if (selectedBouquets.length === 0) {
+          window.alert("Please Select one bouquet");
+          return;
+        }
+
         const nonEmptySettings = Object.entries(values.setting).reduce(
           (acc, [key, value]) => {
             if (value !== "") {
