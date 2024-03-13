@@ -34,7 +34,9 @@ const AddNewLocation = (props) => {
     label: (
       <div>
         <h6>{option.name}</h6>
-        <p>LCO {option.operator_lbl}</p>
+        <p>{option.code}</p>
+        <p>Regional Office: {option.branch_lbl}</p>
+        <p>Distributor: {option.distributor_lbl}</p>
       </div>
     ),
   }));
