@@ -46,7 +46,9 @@ const ViewDistrict = (props) => {
       type: (district && district.type) || "2",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter district name"),
+      name: Yup.string()
+        .required("Enter District")
+        .min(2, "Minimum length 2 character"),
       description: Yup.string().required("Enter description"),
     }),
     onSubmit: (values) => {

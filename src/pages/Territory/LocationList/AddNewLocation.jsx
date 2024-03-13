@@ -27,6 +27,24 @@ const AddNewLocation = (props) => {
   console.log("locations:" + JSON.stringify(lcoonlocation));
   console.log("status:" + JSON.stringify(status));
   const dispatch = useDispatch();
+  const [selectedLocation, setSelectedLocation] = useState(null);
+
+  const options = lcoonlocation.map((option) => ({
+    value: option.id,
+    label: (
+      <div>
+        <h6>{option.name}</h6>
+        <p>LCO {option.operator_lbl}</p>
+      </div>
+    ),
+  }));
+
+  const customStyles = {
+    option: (provided) => ({
+      ...provided,
+      backgroundColor: "white",
+    }),
+  };
 
   // const options = lcoonlocation.map((option) => ({
   //   value: option.id,
@@ -126,7 +144,7 @@ const AddNewLocation = (props) => {
                 ) : null}
               </div>
             </Col>
-            <Col lg={4}>
+            {/* <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Select LCO<span style={{ color: "red" }}>*</span>
@@ -139,6 +157,11 @@ const AddNewLocation = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.operator_id || ""}
+                  invalid={
+                    validation.touched.name && validation.errors.name
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select LCO</option>
                   {lcoonlocation.map((options) => (
@@ -147,6 +170,43 @@ const AddNewLocation = (props) => {
                     </option>
                   ))}
                 </Input>
+                {validation.touched.operator_id &&
+                  validation.errors.operator_id ? (
+                  <FormFeedback type="invalid">
+                    {validation.errors.operator_id}
+                  </FormFeedback>
+                ) : null}
+              </div>
+            </Col> */}
+            <Col lg={4}>
+              <div className="mb-3">
+                <Label className="form-label">
+                  Select Leo<span style={{ color: "red" }}>*</span>
+                </Label>
+                <Select
+                  name="operator_id"
+                  options={options}
+                  onChange={(selectedOption) => {
+                    console.log("SelectedOption: ", selectedOption);
+                    setSelectedLocation(selectedOption);
+                    validation.handleChange({
+                      target: {
+                        name: "opeartor_id",
+                        value: selectedOption.value,
+                      },
+                    });
+                  }}
+                  invalid={
+                    validation.touched.operator_id && validation.errors.operator_id
+                      ? true
+                      : false
+                  }
+                  onBlur={validation.handleBlur}
+                  value={options.find(
+                    (opt) => opt.value === validation.values.operator_id
+                  )}
+                  styles={customStyles}
+                />
                 {validation.touched.operator_id &&
                   validation.errors.operator_id ? (
                   <FormFeedback type="invalid">
@@ -168,6 +228,11 @@ const AddNewLocation = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  invalid={
+                    validation.touched.status && validation.errors.status
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select status</option>
                   {status.map((options) => (
