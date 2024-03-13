@@ -43,7 +43,14 @@ const BulkSettings = (props) => {
 
   const handleChangeSettingValue = (event) => {
     const { name, value } = event.target;
-    setSetting({ ...setting, [name]: value });
+    let parsedValue;
+    // Parse the value to an integer for specific fields
+    if (["is_exclusive", "is_promotional", "is_online_app"].includes(name)) {
+      parsedValue = parseInt(value);
+    } else {
+      parsedValue = value;
+    }
+    setSetting({ ...setting, [name]: parsedValue });
   };
 
   const handleActive = (row) => {
@@ -192,7 +199,14 @@ const BulkSettings = (props) => {
         const nonEmptySettings = Object.entries(values.setting).reduce(
           (acc, [key, value]) => {
             if (value !== "") {
-              acc[key] = value;
+              // Parse the value to an integer for specific fields
+              acc[key] = [
+                "is_exclusive",
+                "is_promotional",
+                "is_online_app",
+              ].includes(key)
+                ? parseInt(value)
+                : value;
             }
             return acc;
           },
@@ -226,6 +240,7 @@ const BulkSettings = (props) => {
         console.error("Error in onSubmit:", error);
       }
     },
+
     onReset: () => {
       validation.setValues(validation.initialValues);
     },
