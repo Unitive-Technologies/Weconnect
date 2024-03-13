@@ -37,18 +37,21 @@ const ViewLocation = (props) => {
   const [showEditLocation, setShowEditLocation] = useState(false);
 
   const [showHistory, setShowHistory] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState(null);
+
 
   const toggleHistoryModal = () => {
     setShowHistory(!showHistory);
   };
 
   console.log("Single location: ", JSON.stringify(location));
+
   const options = lcoonlocation.map((option) => ({
-    value: option.name,
+    value: option.id,
     label: (
       <div>
         <h6>{option.name}</h6>
-        <h6>{option.username}</h6>
+        <p>{option.code}</p>
         <p>Regional Office: {option.branch_lbl}</p>
         <p>Distributor: {option.distributor_lbl}</p>
       </div>
@@ -61,10 +64,6 @@ const ViewLocation = (props) => {
       backgroundColor: "white",
     }),
   };
-  // const lcoName = lcoonlocation
-  //   .filter((singlelco) => singlelco.id === location.operator_id)
-  //   .map((filteredLco) => filteredLco.distributor_lbl);
-  // console.log("lcoName: " + lcoName);
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -77,7 +76,10 @@ const ViewLocation = (props) => {
       status: (location && location.status) || "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter district name"),
+      name: Yup.string()
+        .required("Enter location")
+        .min(2, "Minimum length 2 character"),
+      // name: Yup.string().required("Enter district name"),
       operator_id: Yup.string().required("Select lco"),
       status: Yup.string().required("Select status"),
     }),
@@ -186,7 +188,7 @@ const ViewLocation = (props) => {
                   ) : null}
                 </div>
               </Col>
-              <Col lg={4}>
+              {/* <Col lg={4}>
                 <div className="mb-3">
                   <Label className="form-label">Select LCO<span style={{ color: "red" }}>*</span></Label>
 
@@ -207,6 +209,45 @@ const ViewLocation = (props) => {
                       </option>
                     ))}
                   </Input>
+                  {validation.touched.operator_id &&
+                    validation.errors.operator_id ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.operator_id}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col> */}
+              <Col lg={4}>
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Select Leo<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Select
+                    name="operator_id"
+                    options={options}
+                    onChange={(selectedOption) => {
+                      console.log("SelectedOption: ", selectedOption);
+                      setSelectedLocation(selectedOption);
+                      validation.handleChange({
+                        target: {
+                          name: "operator_id",
+                          value: selectedOption.value,
+                        },
+                      });
+                    }}
+                    disabled={!showEditLocation}
+                    invalid={
+                      validation.touched.operator_id && validation.errors.operator_id
+                        ? true
+                        : false
+                    }
+                    onBlur={validation.handleBlur}
+                    value={options.find(
+                      (opt) => opt.value === validation.values.operator_id
+                    )}
+                    styles={customStyles}
+                  />
+
                   {validation.touched.operator_id &&
                     validation.errors.operator_id ? (
                     <FormFeedback type="invalid">
