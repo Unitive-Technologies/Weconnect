@@ -193,6 +193,7 @@ const AddLcoModal = (props) => {
       parent_id: "",
       password: "",
       uid: "",
+      confirmpassword: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
@@ -206,6 +207,9 @@ const AddLcoModal = (props) => {
       state: Yup.string().required("Select state"),
       district: Yup.string().required("Select District"),
       city: Yup.string().required("Select City"),
+      username: Yup.string().required("Enter loginid"),
+      password: Yup.string().required("Enter Password"),
+      confirmpassword: Yup.string().required("Retype password"),
       email: Yup.string()
         .email("Your email address must be of the format name@domain.com")
         .required("Enter Email"),
@@ -261,7 +265,6 @@ const AddLcoModal = (props) => {
         phone_no: values["phone_no"],
         fax_no: values["fax_no"],
         panno: values["panno"],
-
         username: values["username"],
         password: values["password"],
         reg_startdate: values["reg_startdate"],
@@ -278,6 +281,7 @@ const AddLcoModal = (props) => {
         parent_id: parseInt(values["parent_id"]),
         uid: values["uid"],
         type: 3,
+        confirmpassword: values["confirmpassword"],
       };
       console.log("newLco:" + newLco);
       // save new user
