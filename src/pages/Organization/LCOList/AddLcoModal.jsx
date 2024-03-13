@@ -201,9 +201,9 @@ const AddLcoModal = (props) => {
       status: Yup.string().required("Please Enter Status"),
       mobile_no: Yup.string().required("Please Enter Mobile"),
       email: Yup.string().required("Please Enter Email"),
-      // state: Yup.string().required("Please Enter State"),
-      // district: Yup.string().required("Please Enter District"),
-      // city: Yup.string().required("Please Enter City"),
+      state: Yup.string().required("Please Enter State"),
+      district: Yup.string().required("Please Enter District"),
+      city: Yup.string().required("Please Enter City"),
       addr1: Yup.string().required("Please Address"),
 
       billed_by: Yup.string().required("Please Select BilledBy"),
@@ -305,17 +305,7 @@ const AddLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.code || ""}
-                  invalid={
-                    validation.touched.code && validation.errors.code
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.code && validation.errors.code ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.code}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
             <Col lg={2}>
@@ -345,11 +335,6 @@ const AddLcoModal = (props) => {
                     </label>
                   </div>
                 </div>
-                {/* {validation.touched.ifFixNCF && validation.errors.ifFixNCF ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.ifFixNCF}
-                  </FormFeedback>
-                ) : null} */}
               </div>
             </Col>
           </Row>
@@ -361,11 +346,6 @@ const AddLcoModal = (props) => {
               >
                 <Label className="form-label">Logo</Label>
                 <input
-                  // style={{
-                  //   width: "170px",
-                  //   height: "150px",
-                  //   borderRadius: "10px",
-                  // }}
                   name="logo"
                   type="file"
                   onChange={handleChangeLogo}
@@ -398,6 +378,11 @@ const AddLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}
+                  invalid={
+                    validation.touched.name && validation.errors.name
+                      ? true
+                      : false
+                  }
                 ></Input>
                 {validation.touched.name && validation.errors.name ? (
                   <FormFeedback type="invalid">
@@ -405,11 +390,10 @@ const AddLcoModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-              {/* </Col>
-            <Col lg={4}> */}
-
               <div className="mb-3">
-                <Label className="form-label">Contact Person</Label>
+                <Label className="form-label">
+                  Contact Person<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="contact_person"
                   label="Contact Person"
@@ -447,6 +431,11 @@ const AddLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.parent_id || ""}
+                  invalid={
+                    validation.touched.parent_id && validation.errors.parent_id
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Parent Distributor</option>
                   {lcoParentDistributor &&
@@ -464,7 +453,9 @@ const AddLcoModal = (props) => {
               </div>
 
               <div className="mb-3">
-                <Label className="form-label">Status</Label>
+                <Label className="form-label">
+                  Status<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="status"
                   type="select"
@@ -473,6 +464,11 @@ const AddLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  invalid={
+                    validation.touched.status && validation.errors.status
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Status</option>
                   {lcoStatus &&
@@ -494,7 +490,9 @@ const AddLcoModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Mobile No.</Label>
+                <Label className="form-label">
+                  Mobile No.<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="mobile_no"
                   label="Mobile No."
@@ -542,7 +540,9 @@ const AddLcoModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Email Address</Label>
+                <Label className="form-label">
+                  Email Address<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="email"
                   label="Email Address"
@@ -568,7 +568,9 @@ const AddLcoModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">State</Label>
+                <Label className="form-label">
+                  State<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="state"
                   type="select"
@@ -577,6 +579,11 @@ const AddLcoModal = (props) => {
                   onChange={handleStateChange}
                   onBlur={validation.handleBlur}
                   value={selectedState}
+                  invalid={
+                    validation.touched.state && validation.errors.state
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select State</option>
                   {lcoStates &&
@@ -595,7 +602,9 @@ const AddLcoModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">District</Label>
+                <Label className="form-label">
+                  District<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="district"
                   type="select"
@@ -604,6 +613,11 @@ const AddLcoModal = (props) => {
                   onChange={handleDistrictChange}
                   onBlur={validation.handleBlur}
                   value={selectedDistrict}
+                  invalid={
+                    validation.touched.district && validation.errors.district
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select District</option>
                   {districtsList.map((district) => (
@@ -621,7 +635,9 @@ const AddLcoModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">City</Label>
+                <Label className="form-label">
+                  City<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="city"
                   type="select"
@@ -630,6 +646,11 @@ const AddLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.city || ""}
+                  invalid={
+                    validation.touched.city && validation.errors.city
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select City</option>
                   {cityList.map((city) => (
@@ -649,7 +670,9 @@ const AddLcoModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Address1</Label>
+                <Label className="form-label">
+                  Address1<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="addr1"
                   label="Address1"
@@ -683,17 +706,7 @@ const AddLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.addr2 || ""}
-                  invalid={
-                    validation.touched.addr2 && validation.errors.addr2
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.addr2 && validation.errors.addr2 ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.addr2}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
 
@@ -708,17 +721,7 @@ const AddLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.addr3 || ""}
-                  invalid={
-                    validation.touched.addr3 && validation.errors.addr3
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.addr3 && validation.errors.addr3 ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.addr3}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
           </Row>
@@ -760,19 +763,7 @@ const AddLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.por_number || ""}
-                  invalid={
-                    validation.touched.por_number &&
-                    validation.errors.por_number
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.por_number &&
-                validation.errors.por_number ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.por_number}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
             <Col lg={4}>
@@ -795,11 +786,6 @@ const AddLcoModal = (props) => {
                       </option>
                     ))}
                 </Input>
-                {validation.touched.reg_phase && validation.errors.reg_phase ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.reg_phase}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
           </Row>
@@ -814,19 +800,7 @@ const AddLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.reg_startdate || ""}
-                  invalid={
-                    validation.touched.reg_startdate &&
-                    validation.errors.reg_startdate
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.reg_startdate &&
-                validation.errors.reg_startdate ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.reg_startdate}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
 
@@ -840,19 +814,7 @@ const AddLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.reg_enddate || ""}
-                  invalid={
-                    validation.touched.reg_enddate &&
-                    validation.errors.reg_enddate
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.reg_enddate &&
-                validation.errors.reg_enddate ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.reg_enddate}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
 
@@ -915,17 +877,7 @@ const AddLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.gst_date || ""}
-                  invalid={
-                    validation.touched.gst_date && validation.errors.gst_date
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.gst_date && validation.errors.gst_date ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.gst_date}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
 
@@ -956,7 +908,9 @@ const AddLcoModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Billed By</Label>
+                <Label className="form-label">
+                  Billed By<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="billed_by"
                   type="select"
@@ -965,6 +919,11 @@ const AddLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.billed_by || ""}
+                  invalid={
+                    validation.touched.billed_by && validation.errors.billed_by
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Billed By</option>
                   {lcoBilledby &&
@@ -983,7 +942,10 @@ const AddLcoModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Enable Customer Collection</Label>
+                <Label className="form-label">
+                  Enable Customer Collection
+                  <span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="collection_enabled"
                   type="select"
@@ -992,6 +954,12 @@ const AddLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.collection_enabled || ""}
+                  invalid={
+                    validation.touched.collection_enabled &&
+                    validation.errors.collection_enabled
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Enable Customer Collection</option>
                   <option value="1">Yes</option>
@@ -1007,7 +975,9 @@ const AddLcoModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Credit Limit</Label>
+                <Label className="form-label">
+                  Credit Limit<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="credit_limit"
                   type="text"
@@ -1034,7 +1004,9 @@ const AddLcoModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Area ID</Label>
+                <Label className="form-label">
+                  Area ID<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="area_id"
                   type="text"
@@ -1109,7 +1081,6 @@ const AddLcoModal = (props) => {
           </Row>
           <div
             style={{
-              // margin: "20px 0px",
               marginTop: "20px",
               marginBottom: "-18px",
               zIndex: 12000,
@@ -1211,7 +1182,9 @@ const AddLcoModal = (props) => {
           <Row>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Login ID</Label>
+                <Label className="form-label">
+                  Login ID<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="username"
                   label="Login ID"
@@ -1235,11 +1208,13 @@ const AddLcoModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Password</Label>
+                <Label className="form-label">
+                  Password<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="password"
                   label="Password"
-                  type="text"
+                  type="password"
                   placeholder="Password"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
@@ -1259,7 +1234,9 @@ const AddLcoModal = (props) => {
             </Col>
             <Col lg={4}>
               <div className="mb-3">
-                <Label className="form-label">Confirm-Password</Label>
+                <Label className="form-label">
+                  Confirm-Password<span style={{ color: "red" }}>*</span>
+                </Label>
                 <Input
                   name="confirmpassword"
                   label="Confirm Password"
@@ -1320,7 +1297,6 @@ const AddLcoModal = (props) => {
 AddLcoModal.propTypes = {
   toggleAddLco: PropTypes.func,
   isOpen: PropTypes.bool,
-
   lcoBilledby: PropTypes.array,
   lcoStatus: PropTypes.array,
   lcoPhase: PropTypes.array,
