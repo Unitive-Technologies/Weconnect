@@ -44,15 +44,15 @@ const BulkAssignBouquets = (props) => {
   };
   const columns = useMemo(
     () => [
-      {
-        Header: "*",
-        disableFilters: true,
-        id: "*",
-        filterable: true,
-        Cell: (cellProps) => {
-          return <input type="checkbox" />;
-        },
-      },
+      // {
+      //   Header: "*",
+      //   disableFilters: true,
+      //   id: "*",
+      //   filterable: true,
+      //   Cell: (cellProps) => {
+      //     return <input type="checkbox" />;
+      //   },
+      // },
       {
         Header: "#",
         disableFilters: true,
@@ -369,13 +369,78 @@ const BulkAssignBouquets = (props) => {
               <p>
                 ** To select row, click <i className="mdi mdi-check"></i>{" "}
               </p>
-              <Bouquets
+              {/* <Bouquets
                 selectedRows={selectedRows}
                 rate={rate}
                 setRate={setRate}
                 isRefundable={isRefundable}
                 setIsRefundable={setIsRefundable}
-              />
+              /> */}
+              <Table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Code</th>
+                    <th>Type</th>
+                    <th>HD/SD</th>
+                    <th>Status</th>
+                    <th>SelectRate</th>
+                    <th>Is Refundable</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {console.log(
+                    "...................selectedOperatorsdata from AddOperator:" +
+                      JSON.stringify(addOperatorsData)
+                  )}
+                  {selectedRows &&
+                    selectedRows.map((row, i) => (
+                      <tr key={i}>
+                        <td>{i + 1}</td>
+
+                        <td>{row && row.name}</td>
+                        <td>{row && row.code}</td>
+                        <td>{row && row.boxtype_lbl}</td>
+                        <td>{row && row.type_lbl}</td>
+                        <td>{row && row.status_lbl}</td>
+                        <td>
+                          {" "}
+                          <Input
+                            name="rate"
+                            type="select"
+                            placeholder={row.placeholder}
+                            className="form-select"
+                            onChange={(e) => setRate(e.target.value)}
+                            value={rate}
+                          >
+                            <option value="">Default</option>
+                            {row.additional_rates &&
+                              row.additional_rates.map((rate) => (
+                                <option key={rate.id} value={rate.rate_code}>
+                                  {rate.rate_code}
+                                </option>
+                              ))}
+                          </Input>
+                        </td>
+                        <td>
+                          {" "}
+                          <Input
+                            name="isRefundable"
+                            type="select"
+                            placeholder="Select Stop Other"
+                            className="form-select"
+                            onChange={(e) => setIsRefundable(e.target.value)}
+                            value={isRefundable}
+                          >
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                          </Input>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </Table>
             </Row>
 
             <Row>

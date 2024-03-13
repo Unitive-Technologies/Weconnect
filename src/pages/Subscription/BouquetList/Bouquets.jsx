@@ -14,18 +14,18 @@ const Bouquets = ({
   console.log("selectedRows in Bouquets:" + JSON.stringify(selectedRows));
   const columns = useMemo(
     () => [
-      {
-        Header: "*",
-        disableFilters: true,
-        filterable: true,
-        Cell: () => {
-          return (
-            <>
-              <i className="mdi mdi-check"></i>
-            </>
-          );
-        },
-      },
+      // {
+      //   Header: "*",
+      //   disableFilters: true,
+      //   filterable: true,
+      //   Cell: () => {
+      //     return (
+      //       <>
+      //         <i className="mdi mdi-check"></i>
+      //       </>
+      //     );
+      //   },
+      // },
       {
         Header: "#",
         disableFilters: true,
