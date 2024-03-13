@@ -400,17 +400,7 @@ const EditLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.code || ""}
-                  invalid={
-                    validation.touched.code && validation.errors.code
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.code && validation.errors.code ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.code}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
             <Col lg={2}>
@@ -440,11 +430,6 @@ const EditLcoModal = (props) => {
                     </label>
                   </div>
                 </div>
-                {/* {validation.touched.ifFixNCF && validation.errors.ifFixNCF ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.ifFixNCF}
-                  </FormFeedback>
-                ) : null} */}
               </div>
             </Col>
           </Row>
@@ -456,27 +441,10 @@ const EditLcoModal = (props) => {
               >
                 <Label className="form-label">Logo</Label>
                 <input
-                  // style={{
-                  //   width: "170px",
-                  //   height: "150px",
-                  //   borderRadius: "10px",
-                  // }}
                   name="logo"
                   type="file"
                   onChange={handleChangeLogo}
                 ></input>
-                {validation.touched.logo && validation.errors.logo ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.logo}
-                  </FormFeedback>
-                ) : null}
-                {/* <button
-                  type="button"
-                  className="btn btn-primary "
-                  style={{ marginTop: "10px", width: "50%" }}
-                >
-                  Upload Logo
-                </button> */}
               </div>
             </Col>
             {console.log("logo:" + JSON.stringify(validation.values.logo))}
@@ -489,10 +457,14 @@ const EditLcoModal = (props) => {
                   name="name"
                   type="text"
                   placeholder="Enter name"
-                  // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}
+                  invalid={
+                    validation.touched.name && validation.errors.name
+                      ? true
+                      : false
+                  }
                 ></Input>
                 {validation.touched.name && validation.errors.name ? (
                   <FormFeedback type="invalid">
@@ -500,9 +472,6 @@ const EditLcoModal = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-              {/* </Col>
-            <Col lg={4}> */}
-
               <div className="mb-3">
                 <Label className="form-label">
                   Contact Person<span style={{ color: "red" }}>*</span>
@@ -544,8 +513,12 @@ const EditLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.parent_id || ""}
+                  invalid={
+                    validation.touched.parent_id && validation.errors.parent_id
+                      ? true
+                      : false
+                  }
                 >
-                  {/* <option value="">Select Parent Distributor</option> */}
                   {lcoParentDistributor &&
                     lcoParentDistributor.map((parent) => (
                       <option key={parent.id} value={parent.id}>
@@ -572,6 +545,11 @@ const EditLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  invalid={
+                    validation.touched.status && validation.errors.status
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Status</option>
                   {lcoStatus &&
@@ -628,17 +606,7 @@ const EditLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.phone_no || ""}
-                  invalid={
-                    validation.touched.phone_no && validation.errors.phone_no
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.phone_no && validation.errors.phone_no ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.phone_no}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
             <Col lg={4}>
@@ -682,8 +650,12 @@ const EditLcoModal = (props) => {
                   onChange={handleStateChange}
                   onBlur={validation.handleBlur}
                   value={selectedState}
+                  invalid={
+                    validation.touched.state && validation.errors.state
+                      ? true
+                      : false
+                  }
                 >
-                  {/* <option value="">Select State</option> */}
                   {lcoStates &&
                     lcoStates.map((state) => (
                       <option key={state.id} value={state.id}>
@@ -711,8 +683,12 @@ const EditLcoModal = (props) => {
                   onChange={handleDistrictChange}
                   onBlur={validation.handleBlur}
                   value={selectedDistrict}
+                  invalid={
+                    validation.touched.district && validation.errors.district
+                      ? true
+                      : false
+                  }
                 >
-                  {/* <option value="">Select District</option> */}
                   {districtsList.map((district) => (
                     <option key={district.id} value={district.id}>
                       {district.name}
@@ -739,8 +715,12 @@ const EditLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.city || ""}
+                  invalid={
+                    validation.touched.city && validation.errors.city
+                      ? true
+                      : false
+                  }
                 >
-                  {/* <option value="">Select City</option> */}
                   {cityList.map((city) => (
                     <option key={city.id} value={city.id}>
                       {city.name}
@@ -794,17 +774,7 @@ const EditLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.addr2 || ""}
-                  invalid={
-                    validation.touched.addr2 && validation.errors.addr2
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.addr2 && validation.errors.addr2 ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.addr2}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
 
@@ -819,17 +789,7 @@ const EditLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.addr3 || ""}
-                  invalid={
-                    validation.touched.addr3 && validation.errors.addr3
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.addr3 && validation.errors.addr3 ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.addr3}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
           </Row>
@@ -871,19 +831,7 @@ const EditLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.por_number || ""}
-                  invalid={
-                    validation.touched.por_number &&
-                    validation.errors.por_number
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.por_number &&
-                validation.errors.por_number ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.por_number}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
             <Col lg={4}>
@@ -906,11 +854,6 @@ const EditLcoModal = (props) => {
                       </option>
                     ))}
                 </Input>
-                {validation.touched.reg_phase && validation.errors.reg_phase ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.reg_phase}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
           </Row>
@@ -925,19 +868,7 @@ const EditLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.reg_startdate || ""}
-                  invalid={
-                    validation.touched.reg_startdate &&
-                    validation.errors.reg_startdate
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.reg_startdate &&
-                validation.errors.reg_startdate ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.reg_startdate}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
 
@@ -951,19 +882,7 @@ const EditLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.reg_enddate || ""}
-                  invalid={
-                    validation.touched.reg_enddate &&
-                    validation.errors.reg_enddate
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.reg_enddate &&
-                validation.errors.reg_enddate ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.reg_enddate}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
 
@@ -1026,17 +945,7 @@ const EditLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.gst_date || ""}
-                  invalid={
-                    validation.touched.gst_date && validation.errors.gst_date
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.gst_date && validation.errors.gst_date ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.gst_date}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
 
@@ -1078,8 +987,12 @@ const EditLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.billed_by || ""}
+                  invalid={
+                    validation.touched.billed_by && validation.errors.billed_by
+                      ? true
+                      : false
+                  }
                 >
-                  <option value="">Select Billed By</option>
                   {lcoBilledby &&
                     lcoBilledby.map((billedby) => (
                       <option key={billedby.id} value={billedby.id}>
@@ -1105,6 +1018,12 @@ const EditLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.collection_enabled || ""}
+                  invalid={
+                    validation.touched.collection_enabled &&
+                    validation.errors.collection_enabled
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Enable Customer Collection</option>
                   <option value="1">Yes</option>
@@ -1192,12 +1111,6 @@ const EditLcoModal = (props) => {
                       </option>
                     ))}
                 </Input>
-                {validation.touched.customer_portal_config &&
-                validation.errors.customer_portal_config ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.customer_portal_config}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
             <Col lg={4}>
@@ -1210,23 +1123,12 @@ const EditLcoModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.uid || ""}
-                  invalid={
-                    validation.touched.uid && validation.errors.uid
-                      ? true
-                      : false
-                  }
                 />
-                {validation.touched.uid && validation.errors.uid ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.uid}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
           </Row>
           <div
             style={{
-              // margin: "20px 0px",
               marginTop: "20px",
               marginBottom: "-18px",
               zIndex: 12000,
