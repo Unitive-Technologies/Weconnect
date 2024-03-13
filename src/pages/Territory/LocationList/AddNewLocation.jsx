@@ -48,25 +48,6 @@ const AddNewLocation = (props) => {
     }),
   };
 
-  // const options = lcoonlocation.map((option) => ({
-  //   value: option.id,
-  //   label: (
-  //     <div>
-  //       <h6>{option.name}</h6>
-  //       <h6>{option.username}</h6>
-  //       <p>Regional Office: {option.branch_lbl}</p>
-  //       <p>Distributor: {option.distributor_lbl}</p>
-  //     </div>
-  //   ),
-  // }));
-
-  // const customStyles = {
-  //   option: (provided) => ({
-  //     ...provided,
-  //     backgroundColor: "white",
-  //   }),
-  // };
-
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -193,7 +174,7 @@ const AddNewLocation = (props) => {
                     setSelectedLocation(selectedOption);
                     validation.handleChange({
                       target: {
-                        name: "opeartor_id",
+                        name: "operator_id",
                         value: selectedOption.value,
                       },
                     });
@@ -209,6 +190,7 @@ const AddNewLocation = (props) => {
                   )}
                   styles={customStyles}
                 />
+
                 {validation.touched.operator_id &&
                   validation.errors.operator_id ? (
                   <FormFeedback type="invalid">

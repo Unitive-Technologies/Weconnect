@@ -71,14 +71,14 @@ const ViewNotificationTemplateModal = (props) => {
       content: (notiTemplate && notiTemplate.msg_content) || "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
-      type: Yup.string().required("Please Select Type"),
-      fontsize: Yup.string().required("Please Select Font Size"),
-      fontcolor: Yup.string().required("Please Select Font Color"),
-      fontbgcolor: Yup.string().required("Please Select Font Background Color"),
-      fontfamily: Yup.string().required("Please Select Font Family"),
-      status: Yup.string().required("Please Enter Status"),
-      content: Yup.string().required("Please Enter Content"),
+      name: Yup.string().required("Enter Name"),
+      // type: Yup.string().required("Please Select Type"),
+      // fontsize: Yup.string().required("Please Select Font Size"),
+      // fontcolor: Yup.string().required("Please Select Font Color"),
+      // fontbgcolor: Yup.string().required("Please Select Font Background Color"),
+      // fontfamily: Yup.string().required("Please Select Font Family"),
+      // status: Yup.string().required("Please Enter Status"),
+      content: Yup.string().required("Enter Content"),
     }),
     onSubmit: (values) => {
       const updateNotification = {

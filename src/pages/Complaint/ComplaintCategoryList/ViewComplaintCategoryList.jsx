@@ -58,9 +58,9 @@ const ViewComplaintCategoryList = (props) => {
       description: (complaintcategory && complaintcategory.description) || "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter Name"),
-      status: Yup.string().required("Select status"),
-      showonweb_lbl: Yup.string().required("Enter Show"),
+      name: Yup.string().required("Enter name"),
+      // status: Yup.string().required("Select status"),
+      // showonweb_lbl: Yup.string().required("Enter Show"),
       description: Yup.string().required("Enter description"),
     }),
     onSubmit: (values) => {
@@ -161,6 +161,12 @@ const ViewComplaintCategoryList = (props) => {
                     onBlur={validation.handleBlur}
                     disabled={!showEditComplaintCategory}
                     value={validation.values.name || ""}
+                    invalid={
+                      validation.touched.name &&
+                        validation.errors.name
+                        ? true
+                        : false
+                    }
                   ></Input>
                   {validation.touched.name && validation.errors.name ? (
                     <FormFeedback type="invalid">

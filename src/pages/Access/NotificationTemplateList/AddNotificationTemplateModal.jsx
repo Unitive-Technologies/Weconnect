@@ -55,16 +55,16 @@ const AddNotificationTemplateModal = (props) => {
       status: "",
     },
     validationSchema: Yup.object({
-      msg_head: Yup.string().required("Please Enter Your Name"),
-      msg_content: Yup.string().required("Please Enter Content"),
-      msg_type: Yup.string().required("Please Enter Type"),
-      msg_fontsize: Yup.string().required("Please Select Font Size"),
-      msg_fontcolor: Yup.string().required("Please Select Color"),
-      msg_fontbackgroundcolor: Yup.string().required(
-        "Please Select Background Color"
-      ),
-      msg_fontfamily: Yup.string().required("Please Enter Designation"),
-      status: Yup.string().required("Please Enter Group Policy"),
+      msg_head: Yup.string().required("Enter Your Name"),
+      msg_content: Yup.string().required("Enter Content"),
+      msg_type: Yup.string().required("Enter Type"),
+      // msg_fontsize: Yup.string().required("Select Font Size"),
+      // msg_fontcolor: Yup.string().required("Select Color"),
+      // msg_fontbackgroundcolor: Yup.string().required(
+      //   "Select Background Color"
+      // ),
+      // msg_fontfamily: Yup.string().required("Enter Designation"),
+      status: Yup.string().required("Enter Group Policy"),
     }),
     onSubmit: (values) => {
       console.log("post values in notification Template" + values);
@@ -154,6 +154,11 @@ const AddNotificationTemplateModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.msg_type || ""}
+                  invalid={
+                    validation.touched.msg_type && validation.errors.msg_type
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Type</option>
                   {noTemplateType.map((msg_type) => (
@@ -182,6 +187,11 @@ const AddNotificationTemplateModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  invalid={
+                    validation.touched.status && validation.errors.status
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Status</option>
                   {noTemplateStatus.map((status) => (
