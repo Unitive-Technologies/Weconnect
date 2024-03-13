@@ -219,10 +219,7 @@ const EditRegionalOfficeModal = (props) => {
         .max(12, "Max 12 digit number"),
       pincode: Yup.string().matches(/^[0-9]{6,}$/, "Length to be 6 digits"),
       fax_no: Yup.string().matches(/^[0-9]{2,}$/, "Minimum length 2 character"),
-      // gstno: Yup.string().matches(
-      //   /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[0-9A-Z]{1}$/,
-      //   "Max length 15 character"
-      // ),
+      gstno: Yup.string().matches(/^[1-9A-Z]{15}$/, "Max length 15 character"),
       panno: Yup.string().matches(
         /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
         "Min 10 digit number"
