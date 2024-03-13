@@ -47,8 +47,6 @@ const ViewDistrict = (props) => {
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter district name"),
-      state_id: Yup.string().required("Select state"),
-      status: Yup.string().required("Select status"),
       description: Yup.string().required("Enter description"),
     }),
     onSubmit: (values) => {
@@ -226,6 +224,7 @@ const ViewDistrict = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.status || ""}
                     disabled={!showEditDistrict}
+
                   >
                     {status.map((options) => (
                       <option key={options.id} value={options.id}>

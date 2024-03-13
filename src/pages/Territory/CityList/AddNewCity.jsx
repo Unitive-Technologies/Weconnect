@@ -48,7 +48,10 @@ const AddNewCity = (props) => {
       type: 3,
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter city name"),
+      name: Yup.string()
+        .required("Enter District")
+        .min(2, "Minimum length 2 character"),
+
       state_id: Yup.string().required("Select state"),
       district_id: Yup.string().required("select district"),
       status: Yup.string().required("Select status"),
@@ -141,6 +144,11 @@ const AddNewCity = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.state_id || ""}
+                  invalid={
+                    validation.touched.state_id && validation.errors.state_id
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select state</option>
                   {statelist.map((options) => (
@@ -170,7 +178,7 @@ const AddNewCity = (props) => {
                   value={validation.values.district_id || ""}
                   invalid={
                     validation.touched.district_id &&
-                    validation.errors.district_id
+                      validation.errors.district_id
                       ? true
                       : false
                   }
@@ -183,7 +191,7 @@ const AddNewCity = (props) => {
                   ))}
                 </Input>
                 {validation.touched.district_id &&
-                validation.errors.district_id ? (
+                  validation.errors.district_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.district_id}
                   </FormFeedback>
@@ -205,13 +213,13 @@ const AddNewCity = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -231,6 +239,11 @@ const AddNewCity = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  invalid={
+                    validation.touched.status && validation.errors.status
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Status</option>
                   {status.map((options) => (

@@ -58,7 +58,9 @@ const ViewCity = (props) => {
       district_id: (city && city.district_id) || "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter district name"),
+      name: Yup.string()
+        .required("Enter District")
+        .min(2, "Minimum length 2 character"),
       state_id: Yup.string().required("Select state"),
       district_id: Yup.string().required("Select district"),
       status: Yup.string().required("Select status"),
@@ -227,7 +229,7 @@ const ViewCity = (props) => {
                     ))}
                   </Input>
                   {validation.touched.district_id &&
-                  validation.errors.district_id ? (
+                    validation.errors.district_id ? (
                     <FormFeedback type="invalid">
                       {validation.errors.district_id}
                     </FormFeedback>
@@ -249,14 +251,14 @@ const ViewCity = (props) => {
                     value={validation.values.description || ""}
                     invalid={
                       validation.touched.description &&
-                      validation.errors.description
+                        validation.errors.description
                         ? true
                         : false
                     }
                     disabled={!showEditCity}
                   />
                   {validation.touched.description &&
-                  validation.errors.description ? (
+                    validation.errors.description ? (
                     <FormFeedback type="invalid">
                       {validation.errors.description}
                     </FormFeedback>

@@ -120,6 +120,11 @@ const AddNewDistrict = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.state_id || ""}
+                  invalid={
+                    validation.touched.state_id && validation.errors.state_id
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select state</option>
                   {statelist.map((options) => (
@@ -150,13 +155,13 @@ const AddNewDistrict = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -176,6 +181,11 @@ const AddNewDistrict = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  invalid={
+                    validation.touched.status && validation.errors.status
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Status</option>
                   {status.map((options) => (
@@ -184,10 +194,10 @@ const AddNewDistrict = (props) => {
                     </option>
                   ))}
                 </Input>
-                {validation.touched.status_lbl &&
-                validation.errors.status_lbl ? (
+                {validation.touched.status &&
+                  validation.errors.status ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.status_lbl}
+                    {validation.errors.status}
                   </FormFeedback>
                 ) : null}
               </div>
