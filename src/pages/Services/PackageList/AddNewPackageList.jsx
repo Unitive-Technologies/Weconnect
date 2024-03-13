@@ -41,6 +41,8 @@ const AddNewPackageList = (props) => {
   const [totalChannelsInBouquets, setTotalChannelsInBouquets] = useState(0);
   const [totalPackageRateInBouquets, setTotalPackageRateInBouquets] =
     useState(0);
+  const [toggleSwitch, setToggleSwitch] = useState(true);
+
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   console.log(
     "Totals in Channel" + totalChannelsInChannels,
@@ -180,7 +182,7 @@ const AddNewPackageList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.code || ""}
-                  disabled
+                  disabled={toggleSwitch}
                 ></Input>
                 {validation.touched.code && validation.errors.code ? (
                   <FormFeedback type="invalid">
@@ -191,19 +193,32 @@ const AddNewPackageList = (props) => {
             </Col>
 
             <Col lg={2}>
-              <div className="form-check form-switch form-switch-lg mb-3">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitchsizelg"
-                  defaultChecked
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="customSwitchsizelg"
+              <div className="mt-3">
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
                 >
-                  Custom / Auto
-                </label>
+                  <label style={{ marginRight: "10px" }}>Custom</label>
+                  <div className="form-check form-switch form-switch-lg mb-2">
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id="customSwitchsizelg"
+                      defaultChecked
+                      onClick={(e) => {
+                        settoggleSwitch(!toggleSwitch);
+                      }}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="customSwitchsizelg"
+                    >
+                      Auto
+                    </label>
+                  </div>
+                </div>
               </div>
             </Col>
           </Row>

@@ -17,15 +17,11 @@ import { useFormik } from "formik";
 import { addLocation as onAddLocation } from "/src/store/location/actions";
 import { useSelector, useDispatch } from "react-redux";
 import Select from "react-select";
-import {
-  getLocation as onGetLocation,
-
-} from "/src/store/actions";
+import { getLocation as onGetLocation } from "/src/store/actions";
 
 const AddNewLocation = (props) => {
   const { isOpen, toggleAddLocation, lcoonlocation, status } = props;
-  console.log("locations:" + JSON.stringify(lcoonlocation));
-  console.log("status:" + JSON.stringify(status));
+
   const dispatch = useDispatch();
   const [selectedLocation, setSelectedLocation] = useState(null);
 
@@ -47,7 +43,12 @@ const AddNewLocation = (props) => {
       backgroundColor: "white",
     }),
   };
-
+  // const schema = Yup.object({
+  //   operator_id: Yup.mixed()
+  //     .required()
+  //     .oneOf([lcoonlocation])
+  //     .label("Selected location"),
+  // });
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -59,10 +60,15 @@ const AddNewLocation = (props) => {
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter location name"),
-      operator_id: Yup.string().required("Select LCO"),
+      // operator_id: Yup.string().required("Select LCO"),
+      // operator_id: Yup.object().shape({
+      //   // value: Yup.string().required("Required"),
+      //   label: Yup.string().required("Required"),
+      // }),
       status: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
+      console.log("values", values);
       const newLocation = {
         name: values["name"],
         operator_id: values["operator_id"],
@@ -179,20 +185,21 @@ const AddNewLocation = (props) => {
                       },
                     });
                   }}
-                  invalid={
-                    validation.touched.operator_id && validation.errors.operator_id
-                      ? true
-                      : false
-                  }
                   onBlur={validation.handleBlur}
                   value={options.find(
                     (opt) => opt.value === validation.values.operator_id
                   )}
                   styles={customStyles}
+                  invalid={
+                    validation.touched.operator_id &&
+                    validation.errors.operator_id
+                      ? true
+                      : false
+                  }
                 />
 
                 {validation.touched.operator_id &&
-                  validation.errors.operator_id ? (
+                validation.errors.operator_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.operator_id}
                   </FormFeedback>
