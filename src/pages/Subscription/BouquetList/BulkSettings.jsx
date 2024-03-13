@@ -33,6 +33,7 @@ const BulkSettings = (props) => {
   const [settingTableList, setSettingTableList] = useState({});
   const [tableList, setTableList] = useState([]);
   const [selectedBouquets, setSelectedBouquets] = useState([]);
+  const [settingTable, setSettingTable] = useState([]);
   const [setting, setSetting] = useState({
     family_id: "",
     is_exclusive: "",
@@ -258,8 +259,33 @@ const BulkSettings = (props) => {
     if (bouquets) {
       setTableList(bouquets);
     }
-  }, [bouquets]);
-
+    if (settingTableList) {
+      const bulkArray = [
+        {
+          key: "family_id",
+          value: settingTableList.family_id,
+          placeholder: "Enter Family ID",
+        },
+        {
+          key: "is_exclusive",
+          value: settingTableList.is_exclusive,
+          placeholder: "Select Is Exclusive",
+        },
+        {
+          key: "is_promotional",
+          value: settingTableList.is_promotional,
+          placeholder: "Select Is Promotional",
+        },
+        {
+          key: "is_online_app",
+          value: settingTableList.is_online_app,
+          placeholder: "Select Is Online App",
+        },
+      ];
+      setSettingTable(bulkArray);
+    }
+    console.log("settingTable:" + JSON.stringify(settingTable));
+  }, [settingTableList, bouquets]);
   return (
     <React.Fragment>
       <Modal
@@ -407,34 +433,98 @@ const BulkSettings = (props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {Object.keys(settingTableList).map((settingName, index) => (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>{settingName}</td>
-                      <td>{settingTableList[settingName].description}</td>
-                      <td>{settingTableList[settingName].comment}</td>
-                      <td>
-                        <Input
-                          name="status"
-                          type="select"
-                          placeholder="Select Status"
-                          rows="3"
-                          className="form-select"
-                          onChange={handleChangeSettingValue}
-                          value={setting}
-                        >
-                          {settingTableList[settingName].data &&
-                            settingTableList[settingName].data.map(
-                              (options) => (
-                                <option key={options.id} value={options.id}>
-                                  {options.name}
-                                </option>
-                              )
-                            )}
-                        </Input>
-                      </td>
-                    </tr>
-                  ))}
+                  {console.log(
+                    "...................settingTable:" +
+                      JSON.stringify(settingTable)
+                  )}
+                  {settingTable &&
+                    settingTable.map((row, i) => (
+                      <tr key={i}>
+                        <td>{i + 1}</td>
+                        {/* <td>
+                            <input
+                              type="checkbox"
+                              onChange={() => {
+                                debugger;
+                                console.log("Clicked the checkbox");
+                                handleCheckboxChange(row.id);
+                              }}
+                              checked={isRowChecked(row.id)}
+                            />
+                          </td> */}
+                        <td>{row.value && row.value.label}</td>
+                        <td>{row.value && row.value.description}</td>
+                        <td>{row.value && row.value.comment}</td>
+                        <td>
+                          {row.key === "family_id" ? (
+                            <Input
+                              type="text"
+                              name="family_id"
+                              placeholder={row.placeholder}
+                              onChange={handleChangeSettingValue}
+                              value={setting.family_id}
+                            />
+                          ) : row.key === "is_exclusive" ? (
+                            <Input
+                              name="is_exclusive"
+                              type="select"
+                              placeholder={row.placeholder}
+                              className="form-select"
+                              onChange={handleChangeSettingValue}
+                              value={setting.is_exclusive}
+                            >
+                              <option value="">Select Is Exclusive</option>
+                              {row.value &&
+                                row.value.data.map((exclusive) => (
+                                  <option
+                                    key={exclusive.id}
+                                    value={exclusive.id}
+                                  >
+                                    {exclusive.name}
+                                  </option>
+                                ))}
+                            </Input>
+                          ) : row.key === "is_promotional" ? (
+                            <Input
+                              name="is_promotional"
+                              type="select"
+                              placeholder={row.placeholder}
+                              className="form-select"
+                              onChange={handleChangeSettingValue}
+                              value={setting.is_promotional}
+                            >
+                              <option value="">Select Is Promotional</option>
+                              {row.value &&
+                                row.value.data.map((promotional) => (
+                                  <option
+                                    key={promotional.id}
+                                    value={promotional.id}
+                                  >
+                                    {promotional.name}
+                                  </option>
+                                ))}
+                            </Input>
+                          ) : (
+                            <Input
+                              name="is_online_app"
+                              type="select"
+                              placeholder={row.placeholder}
+                              className="form-select"
+                              onChange={handleChangeSettingValue}
+                              value={setting.is_online_app}
+                            >
+                              <option value="">Select Is Online App</option>
+                              {row.value &&
+                                row.value.data.map((online) => (
+                                  <option key={online.id} value={online.id}>
+                                    {online.name}
+                                  </option>
+                                ))}
+                            </Input>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </Table>
             </Row>
