@@ -260,9 +260,11 @@ const BulkAssignBouquets = (props) => {
 
         console.log("Axios Response:", response);
 
-        dispatch(onGetBouquets());
         toggle();
         validation.resetForm();
+        // selectedRows([]);
+        // selectedOperators([]);
+        dispatch(onGetBouquets());
       } catch (error) {
         console.error("Error in onSubmit:", error);
       }
@@ -281,10 +283,10 @@ const BulkAssignBouquets = (props) => {
 
   useEffect(() => {
     setBouquetData(
-      data.map((row) => ({
+      data.map((row, i) => ({
         bouque_id: row.id,
-        rate_code: "",
-        is_refundable: "",
+        rate_code: rates[i],
+        is_refundable: parseInt(refundables[i]),
       }))
     );
   }, [data]);
