@@ -34,7 +34,10 @@ const AddNewDistrict = (props) => {
       state_id: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter district name"),
+      name: Yup.string()
+        .required("Enter District")
+        .min(2, "Minimum length 2 character"),
+
       state_id: Yup.string().required("Select state"),
       status: Yup.string().required("Select status"),
       description: Yup.string().required("Enter description"),
