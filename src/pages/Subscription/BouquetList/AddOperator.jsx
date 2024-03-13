@@ -23,11 +23,8 @@ const AddOperators = (props) => {
   const {
     isOpen,
     toggleClose,
-    id,
     setData,
     selectedRows,
-    expiryDates,
-    setExpiryDates,
     selectedOperators,
     setSelectedOperators,
   } = props;
@@ -304,16 +301,9 @@ const AddOperators = (props) => {
     []
   );
 
-  const handleExpiryDateChange = (index, value) => {
-    // Update the expiry date for the specific row
-    const updatedExpiryDates = [...expiryDates];
-    updatedExpiryDates[index] = value;
-    setExpiryDates(updatedExpiryDates);
-  };
   const handleSubmit = () => {
     console.log("add button clicked");
 
-    // Map selectedUsers and expiryDates to create newSelectedOperators array
     const newSelectedOperators = selectedOperators.map((user, index) => ({
       id: user.id,
       name: user.name || "",

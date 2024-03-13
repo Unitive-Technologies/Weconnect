@@ -17,11 +17,12 @@ import {
   CardBody,
   Table,
 } from "reactstrap";
-import { getNcf as onGetNcf } from "/src/store/actions";
+import { getBouquet as onGetBouquets } from "/src/store/actions";
 import AddOperators from "./AddOperator";
 import Bouquets from "./Bouquets";
 
 const BulkAssignBouquets = (props) => {
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const { isOpen, toggle, ncf, selectedRows } = props;
   const [showAddOperator, setShowAddOperator] = useState(false);
   const [addOperatorsData, setAddOperatorsData] = useState([]);
@@ -29,12 +30,28 @@ const BulkAssignBouquets = (props) => {
   const [selectedRowNestedData, setSelectedRowNestedData] = useState([]);
   const [selectedOperators, setSelectedOperators] = useState([]);
   const [ncfData, setNcfData] = useState({});
-  const [rate, setRate] = useState("");
-  const [isRefundable, setIsRefundable] = useState("");
-  const [expiryDates, setExpiryDates] = useState(
-    Array(selectedOperators.length).fill("")
-  );
-  const API_URL = "https://sms.unitch.in/api/index.php/v1";
+  const [rates, setRates] = useState({});
+  const [refundables, setRefundables] = useState({});
+  const [data, setData] = useState([]);
+  const [bouquetData, setBouquetData] = useState([]);
+
+  const handleRateChange = (e, index) => {
+    const { value } = e.target;
+    console.log("Selected Rate:", value);
+    console.log("Row Index:", index);
+    setRates((prevRates) => ({ ...prevRates, [index]: value }));
+  };
+
+  const handleIsRefundableChange = (e, index) => {
+    const { value } = e.target;
+    console.log("Selected IsRefundable:", typeof value, value);
+    console.log("Row Index:", index);
+    setRefundables((prevRefundables) => ({
+      ...prevRefundables,
+      [index]: value,
+    }));
+  };
+
   const toggleAddOperator = () => {
     setShowAddOperator(!showAddOperator);
   };
@@ -223,12 +240,8 @@ const BulkAssignBouquets = (props) => {
     onSubmit: async (values) => {
       try {
         const newAssign = {
-          bouque_data: selectedRows.map((bouque) => ({
-            bouque_id: bouque.id,
-            rate_code: rate,
-            is_refundable: isRefundable,
-          })),
-          bouque_ids: selectedRows.map((bouque) => bouque.id),
+          bouque_data: bouquetData,
+          bouque_ids: selectedRows.map((row) => row.id),
           operator_id: selectedOperators.map((operator) => operator.id),
         };
 
@@ -247,7 +260,7 @@ const BulkAssignBouquets = (props) => {
 
         console.log("Axios Response:", response);
 
-        dispatch(onGetNcf());
+        dispatch(onGetBouquets());
         toggle();
         validation.resetForm();
       } catch (error) {
@@ -260,11 +273,21 @@ const BulkAssignBouquets = (props) => {
     },
   });
 
-  // useEffect(() => {
-  //   if (selectedRows) {
-  //     setSelectedRowNestedData(selectedRows.additional_rates);
-  //   }
-  // }, [selectedRows]);
+  useEffect(() => {
+    if (selectedRows) {
+      setData(selectedRows);
+    }
+  }, [selectedRows]);
+
+  useEffect(() => {
+    setBouquetData(
+      data.map((row) => ({
+        bouque_id: row.id,
+        rate_code: "",
+        is_refundable: "",
+      }))
+    );
+  }, [data]);
   return (
     <>
       {showAddOperator && (
@@ -276,8 +299,6 @@ const BulkAssignBouquets = (props) => {
           selectedRows={selectedRows}
           selectedOperators={selectedOperators}
           setSelectedOperators={setSelectedOperators}
-          expiryDates={expiryDates}
-          setExpiryDates={setExpiryDates}
         />
       )}
       <Modal
@@ -390,10 +411,6 @@ const BulkAssignBouquets = (props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {console.log(
-                    "...................selectedOperatorsdata from AddOperator:" +
-                      JSON.stringify(addOperatorsData)
-                  )}
                   {selectedRows &&
                     selectedRows.map((row, i) => (
                       <tr key={i}>
@@ -405,14 +422,13 @@ const BulkAssignBouquets = (props) => {
                         <td>{row && row.type_lbl}</td>
                         <td>{row && row.status_lbl}</td>
                         <td>
-                          {" "}
                           <Input
                             name="rate"
                             type="select"
                             placeholder={row.placeholder}
                             className="form-select"
-                            onChange={(e) => setRate(e.target.value)}
-                            value={rate}
+                            onChange={(e) => handleRateChange(e, i)}
+                            value={rates[i] || ""}
                           >
                             <option value="">Default</option>
                             {row.additional_rates &&
@@ -424,14 +440,13 @@ const BulkAssignBouquets = (props) => {
                           </Input>
                         </td>
                         <td>
-                          {" "}
                           <Input
                             name="isRefundable"
                             type="select"
                             placeholder="Select Stop Other"
                             className="form-select"
-                            onChange={(e) => setIsRefundable(e.target.value)}
-                            value={isRefundable}
+                            onChange={(e) => handleIsRefundableChange(e, i)}
+                            value={refundables[i] || ""}
                           >
                             <option value="0">No</option>
                             <option value="1">Yes</option>
