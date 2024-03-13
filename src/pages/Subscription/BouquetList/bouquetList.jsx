@@ -10,6 +10,9 @@ import {
   Container,
   Row,
   Table,
+  Toast,
+  ToastHeader,
+  ToastBody,
   UncontrolledTooltip,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -88,6 +91,10 @@ const BouquetList = () => {
   const [selectedRow, setSelectedRow] = useState({});
   const [showWarning, setShowWarning] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
+
+  const handleWarning = () => {
+    setShowWarning(!showWarning);
+  };
   const handleCheckboxClick = (row) => {
     console.log(
       "Before state update - selectedRows:",
@@ -508,13 +515,25 @@ const BouquetList = () => {
       },
       {
         name: "Bulk assign to Operator",
-        action: selectedRow.length === 0 ? setShowWarning : setShowBulkAssign,
+        action: () => {
+          if (Object.keys(selectedRows).length === 0) {
+            setShowWarning(true);
+          } else {
+            setShowBulkAssign(true);
+          }
+        },
         type: "dropdown",
         dropdownName: "Action",
       },
       {
         name: "Bulk removal from Operator",
-        action: selectedRow.length === 0 ? setShowWarning : setShowBulkRemoval,
+        action: () => {
+          if (Object.keys(selectedRows).length === 0) {
+            setShowWarning(true);
+          } else {
+            setShowBulkAssign(true);
+          }
+        },
         type: "dropdown",
         dropdownName: "Action",
       },
@@ -584,6 +603,17 @@ const BouquetList = () => {
           bouquets={bouquets}
         />
       )}
+      <div
+        className="position-fixed top-0 end-0 p-3"
+        style={{ zIndex: "1005" }}
+      >
+        <Toast isOpen={showWarning}>
+          <ToastHeader toggle={handleWarning}>
+            <i className="mdi mdi-alert-outline me-2"></i> Warning
+          </ToastHeader>
+          <ToastBody>Please select atleast One Bouquet</ToastBody>
+        </Toast>
+      </div>
       <div className="page-content">
         <Container fluid>
           <Breadcrumbs title="Subscription" breadcrumbItem="Bouquet List" />
