@@ -195,26 +195,42 @@ const AddLcoModal = (props) => {
       uid: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
-      parent_id: Yup.string().required("Please Select Your Parent Distributor"),
-      contact_person: Yup.string().required("Please Enter Contact Person"),
-      status: Yup.string().required("Please Enter Status"),
-      mobile_no: Yup.string().required("Please Enter Mobile"),
-      email: Yup.string().required("Please Enter Email"),
-      state: Yup.string().required("Please Enter State"),
-      district: Yup.string().required("Please Enter District"),
-      city: Yup.string().required("Please Enter City"),
-      addr1: Yup.string().required("Please Address"),
-
+      name: Yup.string().required("Enter name"),
+      addr1: Yup.string().required("Enter address 1"),
+      contact_person: Yup.string().required("Enter contact person name"),
+      mobile_no: Yup.string()
+        .required("Enter mobile number")
+        .matches(/^[0-9]/, "Enter valid number")
+        .max(10, "Min 10 digit number"),
+      status: Yup.string().required("Select status"),
+      state: Yup.string().required("Select state"),
+      district: Yup.string().required("Select District"),
+      city: Yup.string().required("Select City"),
+      email: Yup.string()
+        .email("Your email address must be of the format name@domain.com")
+        .required("Enter Email"),
+      phone_no: Yup.string()
+        .matches(/^[0-9]/, "Enter valid number")
+        .min(8, "Min 8 digit number")
+        .max(12, "Max 12 digit number"),
+      pincode: Yup.string().matches(/^[0-9]{6,}$/, "Length to be 6 digits"),
+      fax_no: Yup.string().matches(/^[0-9]{2,}$/, "Minimum length 2 character"),
+      gstno: Yup.string().matches(/^[1-9A-Z]{15}$/, "Max length 15 character"),
+      panno: Yup.string().matches(
+        /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
+        "Min 10 digit number"
+      ),
+      credit_limit: Yup.string()
+        .matches(/^[0-9]+$/, "Please enter a value greater than or equal to 0.")
+        .required("Enter Credit Limit"),
+      area_id: Yup.string()
+        .matches(/^\d{1,10}$/, "Enter valid number")
+        .required("Enter Area id"),
       billed_by: Yup.string().required("Please Select BilledBy"),
       collection_enabled: Yup.string().required(
         "Please Select Enable Customer Collection"
       ),
-      credit_limit: Yup.string().required("Please Enter Credit Limit"),
-      area_id: Yup.string().required("Please Enter Area ID"),
-      username: Yup.string().required("Please Enter LoginID"),
-      password: Yup.string().required("Please Enter Password"),
-      confirmpassword: Yup.string().required("Please Enter Confirm Password"),
+      parent_id: Yup.string().required("Select Parent Distributor"),
     }),
     onSubmit: (values) => {
       const newLco = {
