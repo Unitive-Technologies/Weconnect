@@ -34,9 +34,9 @@ const AddNewComplaintCategoryList = (props) => {
       description: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter category name"),
+      name: Yup.string().required("Enter name"),
       status: Yup.string().required("Select status"),
-      showonweb_lbl: Yup.string().required("Select show on portal"),
+      showonweb_lbl: Yup.string().required("Select Show On Web"),
       description: Yup.string().required("Enter description"),
     }),
     onSubmit: (values) => {
@@ -94,6 +94,12 @@ const AddNewComplaintCategoryList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}
+                  invalid={
+                    validation.touched.name &&
+                      validation.errors.name
+                      ? true
+                      : false
+                  }
                 ></Input>
                 {validation.touched.name && validation.errors.name ? (
                   <FormFeedback type="invalid">
@@ -115,6 +121,12 @@ const AddNewComplaintCategoryList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  invalid={
+                    validation.touched.status &&
+                      validation.errors.status
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Status</option>
                   {complaintcateStatus &&
@@ -146,13 +158,19 @@ const AddNewComplaintCategoryList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.showonweb_lbl || ""}
+                  invalid={
+                    validation.touched.showonweb_lbl &&
+                      validation.errors.showonweb_lbl
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select to show on portal</option>
                   <option value="1">Active</option>
                   <option value="0">In-Active</option>
                 </Input>
                 {validation.touched.showonweb_lbl &&
-                validation.errors.showonweb_lbl ? (
+                  validation.errors.showonweb_lbl ? (
                   <FormFeedback type="invalid">
                     {validation.errors.showonweb_lbl}
                   </FormFeedback>
@@ -175,13 +193,13 @@ const AddNewComplaintCategoryList = (props) => {
                 value={validation.values.description || ""}
                 invalid={
                   validation.touched.description &&
-                  validation.errors.description
+                    validation.errors.description
                     ? true
                     : false
                 }
               />
               {validation.touched.description &&
-              validation.errors.description ? (
+                validation.errors.description ? (
                 <FormFeedback type="invalid">
                   {validation.errors.description}
                 </FormFeedback>

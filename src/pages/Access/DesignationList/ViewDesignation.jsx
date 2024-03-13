@@ -56,10 +56,10 @@ const ViewDesignation = (props) => {
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter designation name"),
-      type: Yup.string().required("Select Type"),
+      // type: Yup.string().required("Select Type"),
       code: Yup.string().required("Enter Code"),
-      parent: Yup.string().required("Select Parent Designation"),
-      status: Yup.string().required("Select status"),
+      // parent: Yup.string().required("Select Parent Designation"),
+      // status: Yup.string().required("Select status"),
       description: Yup.string().required("Enter Description"),
     }),
     onSubmit: (values) => {
@@ -209,6 +209,12 @@ const ViewDesignation = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.status || ""}
                     disabled={!showEditDesignation}
+                    invalid={
+                      validation.touched.status &&
+                        validation.errors.status
+                        ? true
+                        : false
+                    }
                   >
                     {desigStatus &&
                       desigStatus.map((status) => (
@@ -238,6 +244,12 @@ const ViewDesignation = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.type || ""}
                     disabled={!showEditDesignation}
+                    invalid={
+                      validation.touched.type &&
+                        validation.errors.type
+                        ? true
+                        : false
+                    }
                   >
                     {desigType &&
                       desigType.map((type) => (

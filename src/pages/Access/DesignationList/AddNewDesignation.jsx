@@ -106,13 +106,13 @@ const AddNewDesignation = (props) => {
                   value={validation.values.designation || ""}
                   invalid={
                     validation.touched.designation &&
-                    validation.errors.designation
+                      validation.errors.designation
                       ? true
                       : false
                   }
                 />
                 {validation.touched.designation &&
-                validation.errors.designation ? (
+                  validation.errors.designation ? (
                   <FormFeedback type="invalid">
                     {validation.errors.designation}
                   </FormFeedback>
@@ -159,6 +159,12 @@ const AddNewDesignation = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  invalid={
+                    validation.touched.status &&
+                      validation.errors.status
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Status</option>
                   {desigStatus &&
@@ -191,6 +197,12 @@ const AddNewDesignation = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.type || ""}
+                  invalid={
+                    validation.touched.type &&
+                      validation.errors.type
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Type</option>
                   {desigType &&
@@ -221,6 +233,12 @@ const AddNewDesignation = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.parent || ""}
+                  invalid={
+                    validation.touched.parent &&
+                      validation.errors.parent
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Parent designation</option>
                   {desigParent &&
@@ -252,13 +270,13 @@ const AddNewDesignation = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
