@@ -54,7 +54,7 @@ const AddNewNcf = (props) => {
       calculate_per_channel: "",
       from_channel_no: "",
       to_channel_no: "",
-      is_refundable: "",
+      is_refundable: 1,
       mrp: 0,
       lmo_discount: 0,
       lmo_rate: 0,
@@ -63,13 +63,14 @@ const AddNewNcf = (props) => {
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
       code: Yup.string().required("Enter code"),
-      // status: Yup.string().required("Select status"),
-      // calculate_per_channel: Yup.string().required(
-      //   "Select calculate per channel"
-      // ),
-      // from_channel_no: Yup.string().required("Enter from channel"),
-      // to_channel_no: Yup.string().required("Enter to channel"),
-      // is_refundable: Yup.string().required("Select refundable"),
+      status: Yup.string().required("Select status"),
+      calculate_per_channel: Yup.string().required(
+        "Select calculate per channel"
+      ),
+      from_channel_no: Yup.string().required("Enter from channel"),
+      to_channel_no: Yup.string().required("Enter to channel"),
+      is_refundable: Yup.string().required("Select refundable"),
+      type: Yup.string().required("Select ncf Type"),
       // mrp: Yup.string(),
       // lmo_discount: Yup.string(),
       // lmo_rate: Yup.string(),
