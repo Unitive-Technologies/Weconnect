@@ -17,7 +17,7 @@ import TableContainer from "../../../components/Common/TableContainer";
 import AddOperators from "./AddOperators";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { getConnectionScheme as onGetConnectionScheme } from "/src/store/connectionschemelist/actions";
+import { getOSDTemplate as onGetOSDTemplate } from "/src/store/OSDTemplate/actions";
 
 const BulkRemoval = (props) => {
   const { isOpen, toggle, selectedRows } = props;
@@ -150,7 +150,7 @@ const BulkRemoval = (props) => {
         const token = "Bearer " + localStorage.getItem("temptoken");
 
         const response = await axios.put(
-          `${API_URL}/operator-scheme/0?vr=web1.0`,
+          `${API_URL}/operator-mapping/0?vr=web1.0`,
           newAssign,
           {
             headers: {
@@ -161,7 +161,7 @@ const BulkRemoval = (props) => {
 
         console.log("Axios Response:", response);
         toggle();
-        dispatch(onGetConnectionScheme());
+        dispatch(onGetOSDTemplate());
         validation.resetForm();
       } catch (error) {
         console.error("Error in onSubmit:", error);
@@ -268,12 +268,12 @@ const BulkRemoval = (props) => {
                   justifyContent: "center",
                 }}
               >
-                Schemes<span style={{ color: "red" }}>*</span>
+                OSD Templates<span style={{ color: "red" }}>*</span>
               </h6>
               <p>
                 ** To select row, click <i className="mdi mdi-check"></i>{" "}
               </p>
-              <Templates selectedRow={selectedRows} />
+              <Templates selectedRows={selectedRows} />
             </Row>
             <Row>
               <Col sm="12">

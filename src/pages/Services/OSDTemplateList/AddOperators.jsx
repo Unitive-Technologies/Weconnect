@@ -228,8 +228,8 @@ const AddOperators = (props) => {
         const token = "Bearer " + localStorage.getItem("temptoken");
         const osdIds = selectedRows.map((row) => row.id).join(",");
         const response = await axios.get(
-          `${API_URL}/operator/list?fields=id,name,code&expand=type_lbl,status_lbl,branch_lbl,distributor_lbl&notfilter[type]=0&notfilter[osd_id]=${osdIds}&page=1&per-page=500&vr=web1.0`,
-
+          // `${API_URL}/operator/list?fields=id,name,code&expand=type_lbl,status_lbl,branch_lbl,distributor_lbl&notfilter[type]=0&notfilter[osd_id]=${osdIds}&page=1&per-page=500&vr=web1.0`,
+          `${API_URL}/operator/list?fields=id,name,code&expand=type_lbl,status_lbl,branch_lbl,distributor_lbl&notfilter[type]=0&filter[osd_id]=${osdIds}&page=1&per-page=500&vr=web1.0`,
           {
             headers: {
               Authorization: token,
