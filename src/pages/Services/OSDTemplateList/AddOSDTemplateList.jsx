@@ -28,9 +28,9 @@ const AddNewOSDTemplateList = (props) => {
     osdTempTemplateFor,
   } = props;
 
-  console.log(
-    "Add OSD Templatee List of osdTempTemplateFor" + JSON.stringify(osdTempOSD)
-  );
+  // console.log(
+  //   "Add OSD Templatee List of osdTempTemplateFor" + JSON.stringify(osdTempOSD)
+  // );
   const dispatch = useDispatch();
   const [user, setUser] = useState();
 
@@ -80,7 +80,7 @@ const AddNewOSDTemplateList = (props) => {
           })),
       };
 
-      console.log("newOSDTemplate:", newOSDTemplate);
+      // console.log("newOSDTemplate:", newOSDTemplate);
 
       dispatch(onAddNewOSDTemplate(newOSDTemplate));
       dispatch(onGetOSDTemplate());
@@ -289,7 +289,7 @@ const AddNewOSDTemplateList = (props) => {
                 </Row>
               )}
             </div>
-            {console.log("config_id:" + validation.values.template_config_id)}
+            {/* {console.log("config_id:" + validation.values.template_config_id)} */}
             <div>
               {parseInt(validation.values.template_for) === 3 && (
                 <>

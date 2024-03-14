@@ -27,7 +27,6 @@ import {
   getOSDTemplateTemplateFor as onGetOSDTemplateTemplateFor,
 } from "/src/store/OSDTemplate/actions";
 
-
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
@@ -35,10 +34,12 @@ import { ToastContainer } from "react-toastify";
 import AddNewOSDTemplate from "./AddOSDTemplateList";
 import ViewOSDTemplateList from "./ViewOSDTemplateList";
 import TableContainerX from "../../../components/Common/TableContainerX";
+import BulkAssign from "./BulkAssign";
+import BulkRemoval from "./BulkRemoval";
 
 const OSDTemplateList = (props) => {
   //meta title
-  document.title = "OSD Template List | VDigital";
+  document.title = "OSD Templates | VDigital";
 
   const dispatch = useDispatch();
 
@@ -61,26 +62,76 @@ const OSDTemplateList = (props) => {
     })
   );
 
-  const { osdTemp, osdTempOSD, osdTempTemplateFor, osdTempStatus, loading, totalPage,
+  const {
+    osdTemp,
+    osdTempOSD,
+    osdTempTemplateFor,
+    osdTempStatus,
+    loading,
+    totalPage,
     totalCount,
     pageSize,
-    currentPage } =
-    useSelector(osdTemplateProperties);
+    currentPage,
+  } = useSelector(osdTemplateProperties);
 
-  useEffect(() => {
-    console.log("OSD Temp data in component:", osdTemp);
-  }, [osdTemp]);
+  // useEffect(() => {
+  //   console.log("OSD Temp data in component:", osdTemp);
+  // }, [osdTemp]);
 
   const [isLoading, setLoading] = useState(loading);
-
+  const [selectedRows, setSelectedRows] = useState([]);
   const [userList, setUserList] = useState([]);
   const [showAddOSDTemplateList, setShowAddOSDTemplateList] = useState(false);
+  const [showBulkRemoval, setShowBulkRemoval] = useState(false);
+  const [showBulkAssign, setShowBulkAssign] = useState(false);
   const [showViewOSDTemplateList, setShowViewOSDTemplateList] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
 
-  const [isEdit, setIsEdit] = useState(false);
+  const handleWarning = () => {
+    setShowWarning(!showWarning);
+  };
+
+  const toggleBulkAssign = () => {
+    setShowBulkAssign(!showBulkAssign);
+  };
+
+  const toggleBulkRemoval = () => {
+    setShowBulkRemoval(!showBulkRemoval);
+  };
+
+  const handleCheckboxClick = (row) => {
+    const isSelected = selectedRows.some(
+      (selectedRow) => selectedRow.id === row.id
+    );
+
+    if (isSelected) {
+      // If already selected, remove it
+      setSelectedRows((prevSelectedRows) =>
+        prevSelectedRows.filter((selectedRow) => selectedRow.id !== row.id)
+      );
+    } else {
+      // If not selected, add it
+      setSelectedRows((prevSelectedRows) => [...prevSelectedRows, row]);
+    }
+    console.log(
+      "After state update - selectedRows:",
+      JSON.stringify(selectedRows)
+    );
+  };
 
   const columns = useMemo(
     () => [
+      {
+        Header: "*",
+        disableFilters: true,
+        filterable: true,
+        Cell: (cellProps) => (
+          <input
+            type="checkbox"
+            onChange={() => handleCheckboxClick(cellProps.row.original)}
+          />
+        ),
+      },
       {
         Header: "#",
         // accessor: "name",
@@ -109,7 +160,12 @@ const OSDTemplateList = (props) => {
           return (
             <>
               <h5
-                className="font-size-14 mb-1">
+                className="font-size-14 mb-1"
+                onClick={() => {
+                  const userData = cellProps.row.original;
+                  toggleViewModal(userData);
+                }}
+              >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
                 </Link>
@@ -192,7 +248,7 @@ const OSDTemplateList = (props) => {
   }, [dispatch, osdTemp]);
 
   const goToPage = (toPage) => {
-    console.log("[GOTO PAGE] Trigger to page - ", toPage);
+    // console.log("[GOTO PAGE] Trigger to page - ", toPage);
     dispatch(onGoToPage(toPage));
     dispatch(onGetOSDTemplate());
   };
@@ -230,13 +286,25 @@ const OSDTemplateList = (props) => {
       },
       {
         name: "Bulk Assign to Operator",
-        action: toggleToast,
+        action: () => {
+          if (Object.keys(selectedRows).length === 0) {
+            setShowWarning(true);
+          } else {
+            setShowBulkAssign(true);
+          }
+        },
         type: "dropdown",
         dropdownName: "Actions",
       },
       {
-        name: "Bulk Removel from Operator",
-        action: toggleToast,
+        name: "Bulk Removal from Operator",
+        action: () => {
+          if (Object.keys(selectedRows).length === 0) {
+            setShowWarning(true);
+          } else {
+            setShowBulkRemoval(true);
+          }
+        },
         type: "dropdown",
         dropdownName: "Actions",
       },
@@ -261,7 +329,28 @@ const OSDTemplateList = (props) => {
         osdTempStatus={osdTempStatus}
         osdTempTemplateFor={osdTempTemplateFor}
       />
+      <BulkAssign
+        isOpen={showBulkAssign}
+        toggle={toggleBulkAssign}
+        selectedRows={selectedRows}
+      />
 
+      <BulkRemoval
+        isOpen={showBulkRemoval}
+        toggle={toggleBulkRemoval}
+        selectedRows={selectedRows}
+      />
+      <div
+        className="position-fixed top-0 end-0 p-3"
+        style={{ zIndex: "1005" }}
+      >
+        <Toast isOpen={showWarning}>
+          <ToastHeader toggle={handleWarning}>
+            <i className="mdi mdi-alert-outline me-2"></i> Warning
+          </ToastHeader>
+          <ToastBody>Please select atleast Osd Template</ToastBody>
+        </Toast>
+      </div>
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -296,7 +385,7 @@ const OSDTemplateList = (props) => {
                   </CardBody>
 
                   <CardBody>
-                    {console.log("OSDTemp:" + JSON.stringify(osdTemp))}
+                    {/* {console.log("OSDTemp:" + JSON.stringify(osdTemp))} */}
                     <TableContainerX
                       columns={columns}
                       data={osdTemp}
@@ -313,9 +402,9 @@ const OSDTemplateList = (props) => {
                       handleAddOSDTemplateList={() =>
                         setShowAddOSDTemplateList(true)
                       }
-                      handleRowClick={(row) => {
-                        toggleViewModal(row);
-                      }}
+                      // handleRowClick={(row) => {
+                      //   toggleViewModal(row);
+                      // }}
                       goToPage={goToPage}
                     />
                   </CardBody>

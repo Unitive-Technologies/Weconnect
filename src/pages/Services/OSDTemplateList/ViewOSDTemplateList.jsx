@@ -32,7 +32,7 @@ const ViewOSDTemplateList = (props) => {
     osdTempStatus,
     osdTempTemplateFor,
   } = props;
-  console.log("OOOOOOOOOOOOOOOOOOOOsd in view:" + JSON.stringify(osdTemplate));
+  // console.log("OOOOOOOOOOOOOOOOOOOOsd in view:" + JSON.stringify(osdTemplate));
   const dispatch = useDispatch();
   const [showEditosdTemplate, setShowEditosdTemplate] = useState(false);
   const options = osdTempOSD.map((template_config_id) => ({
@@ -106,7 +106,7 @@ const ViewOSDTemplateList = (props) => {
           })),
       };
 
-      console.log("updatedOSDTemplate:", updatedOSDTemplate);
+      // console.log("updatedOSDTemplate:", updatedOSDTemplate);
       // update user
       dispatch(onUpdateOSDTemplate(updatedOSDTemplate));
       dispatch(onGetOSDTemplate());
@@ -121,7 +121,7 @@ const ViewOSDTemplateList = (props) => {
     resetSelection();
   };
 
-  console.log("View OSD Template Data" + typeof validation.values.template_for);
+  // console.log("View OSD Template Data" + typeof validation.values.template_for);
 
   return (
     <>
@@ -246,11 +246,11 @@ const ViewOSDTemplateList = (props) => {
                   ) : null}
                 </div>
               </Col>
-              {console.log(
+              {/* {console.log(
                 "templateFor value & type:" + validation.values.template_for,
                 typeof validation.values.template_for,
                 typeof parseInt(validation.values.template_for)
-              )}
+              )} */}
               <div>
                 {parseInt(validation.values.template_for) === 1 && (
                   <Col sm="4">
