@@ -18,9 +18,11 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { getOSDTemplate as onGetOSDTemplate } from "/src/store/OSDTemplate/actions";
 import Templates from "./Templates";
+import { useDispatch } from "react-redux";
 
 const BulkAssign = (props) => {
   const { isOpen, toggle, selectedRows } = props;
+  const dispatch = useDispatch();
   const [showAddOperator, setShowAddOperator] = useState(false);
   const [addOperatorsData, setAddOperatorsData] = useState([]);
   const [toggleSwitch, settoggleSwitch] = useState(true);

@@ -87,9 +87,8 @@ const BouquetList = () => {
   const [viewBouquetData, setViewBouquetData] = useState({});
   const [showBulkRemoval, setShowBulkRemoval] = useState(false);
   const [showBulkSettings, setShowBulkSettings] = useState(false);
-  const [isChecked, setIsChecked] = useState(true);
-  const [selectedRow, setSelectedRow] = useState({});
   const [showWarning, setShowWarning] = useState(false);
+
   const [selectedRows, setSelectedRows] = useState([]);
 
   const handleWarning = () => {
@@ -582,7 +581,7 @@ const BouquetList = () => {
           showViewBouquet={showViewBouquet}
         />
       )}
-      {selectedRow && showBulkAssign && (
+      {selectedRows && showBulkAssign && (
         <BulkAssign
           isOpen={Boolean(showBulkAssign)}
           toggle={toggleBulkAssign}
@@ -603,6 +602,7 @@ const BouquetList = () => {
           bouquets={bouquets}
         />
       )}
+
       <div
         className="position-fixed top-0 end-0 p-3"
         style={{ zIndex: "1005" }}

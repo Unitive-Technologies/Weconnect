@@ -18,9 +18,11 @@ import AddOperators from "./AddOperators";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { getOSDTemplate as onGetOSDTemplate } from "/src/store/OSDTemplate/actions";
+import { useDispatch } from "react-redux";
 
 const BulkRemoval = (props) => {
   const { isOpen, toggle, selectedRows } = props;
+  const dispatch = useDispatch();
   const [showAddOperator, setShowAddOperator] = useState(false);
   const [addOperatorsData, setAddOperatorsData] = useState([]);
   const [toggleSwitch, settoggleSwitch] = useState(true);
