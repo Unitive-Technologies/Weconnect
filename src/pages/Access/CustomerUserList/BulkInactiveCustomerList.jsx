@@ -78,15 +78,15 @@ const BulkInactiveCustomerList = (props) => {
       statustoset: "active",
       block_message: "",
     },
-    validationSchema: Yup.object({
+    validationSchema: Yup.object().shape({
       statustoset: Yup.string()
         .required("Please Enter Status")
         .oneOf(['In-Active', 'Block'], "Invalid status"), // Adjusted to accept only "In-Active" and "Block" values
-      block_message: Yup.string().required("statustoset", {
-        is: "Block", // Conditionally require block_message only when statustoset is "Block"
-        then: Yup.string().required("Please Enter Message"),
-        otherwise: Yup.string().notRequired(),
-      }),
+      block_message: Yup.string().when('statustoset', {
+        is: (value) => value === "In-Active" || value === "Block",
+        then: Yup.string().required("Enter message"),
+        otherwise: Yup.string() // If statustoset is not "In-Active" or "Block", no additional validation is applied
+      })
     }),
 
 
@@ -505,6 +505,13 @@ const BulkInactiveCustomerList = (props) => {
                       onChange={handleStatusChange}
                       onBlur={validation.handleBlur}
                       value={selectedStatusToSet}
+                      invalid={
+                        validation.touched.statustoset &&
+                          validation.errors.statustoset
+                          ? true
+                          : false
+                      }
+
                     >
                       <option defaultValue="active">ACTIVE</option>
                       <option value="inactive">In-Active</option>
