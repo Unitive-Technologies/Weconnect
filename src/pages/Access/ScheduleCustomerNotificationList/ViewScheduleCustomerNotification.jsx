@@ -68,19 +68,12 @@ const ViewScheduleCustomerNotification = (props) => {
     },
     validationSchema: Yup.object({
       // schedulecustomernotification: Yup.string().required("Enter schedulecustomernotification Name"),
-      name: Yup.string().required("Select name"),
-      type_lbl: Yup.string().required("Select type"),
-      schedule_days: Yup.string().required("Select schedule days"),
-      osd_configuration_id_lbl: Yup.string().required(
-        "Select osd configuaration"
-      ),
-      osd_template_id_lbl: Yup.string().required("Select osd template"),
-      // bmail_template_id_lbl: Yup.string().required("Select bmail template"),
-      sms_template_id_lbl: Yup.string().required("Select sms template"),
-      start_date: Yup.string().required("Select start date"),
-      end_date: Yup.string().required("Select end date"),
-      description: Yup.string().required("Select description"),
-      status_lbl: Yup.string().required("Select status"),
+      name: Yup.string()
+        .required("Enter name")
+        .min(2, "Minimum length 2 character"),
+      description: Yup.string()
+        .required("Enter description")
+        .min(2, "Minimum length 2 character"),
     }),
     onSubmit: (values) => {
       const newScheduleCustomerNotification = {
@@ -169,6 +162,12 @@ const ViewScheduleCustomerNotification = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.name || ""}
                     disabled={!showEditSchedule}
+                    invalid={
+                      validation.touched.name &&
+                        validation.errors.name
+                        ? true
+                        : false
+                    }
                   ></Input>
                   {validation.touched.name && validation.errors.name ? (
                     <FormFeedback type="invalid">

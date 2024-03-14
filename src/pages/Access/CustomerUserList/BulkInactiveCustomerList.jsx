@@ -79,17 +79,16 @@ const BulkInactiveCustomerList = (props) => {
       block_message: "",
     },
     validationSchema: Yup.object({
-      statustoset: Yup.string().test("isRequired", "Enter Status", function (value) {
-        const { is_embeded } = this.parent;
-        return is_embeded ? !!value : true;
+      statustoset: Yup.string()
+        .required("Please Enter Status")
+        .oneOf(['In-Active', 'Block'], "Invalid status"), // Adjusted to accept only "In-Active" and "Block" values
+      block_message: Yup.string().required("statustoset", {
+        is: "Block", // Conditionally require block_message only when statustoset is "Block"
+        then: Yup.string().required("Please Enter Message"),
+        otherwise: Yup.string().notRequired(),
       }),
-      // statustoset: Yup.string().required("Please Enter Status"),
-      // block_message: Yup.string().when(["statustoset"], {
-      //   is: (statustoset) => statustoset && statustoset !== "active",
-      //   then: Yup.string().required("Please Enter Message"),
-      //   otherwise: Yup.string(),
-      // }),
     }),
+
 
     onSubmit: async (values) => {
       try {
