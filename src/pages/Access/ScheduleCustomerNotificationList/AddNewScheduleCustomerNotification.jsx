@@ -70,18 +70,16 @@ const AddNewScheduleCustomerNotification = (props) => {
       created_by: "Admin",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Select name"),
+      name: Yup.string()
+        .required("Enter name")
+        .min(2, "Minimum length 2 character"),
       type_lbl: Yup.string().required("Select type"),
       schedule_days: Yup.string().required("Select schedule days"),
-      osd_configuration_id_lbl: Yup.string().required(
-        "Select osd configuaration"
-      ),
-      osd_template_id_lbl: Yup.string().required("Select osd template"),
-      // bmail_template_id_lbl: Yup.string().required("Select bmail template"),
-      sms_template_id_lbl: Yup.string().required("Select sms template"),
       start_date: Yup.string().required("Select start date"),
       end_date: Yup.string().required("Select end date"),
-      description: Yup.string().required("Select description"),
+      description: Yup.string()
+        .required("Enter description")
+        .min(2, "Minimum length 2 character"),
       status_lbl: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
@@ -155,6 +153,12 @@ const AddNewScheduleCustomerNotification = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}
+                  invalid={
+                    validation.touched.name &&
+                      validation.errors.name
+                      ? true
+                      : false
+                  }
                 ></Input>
                 {validation.touched.name && validation.errors.name ? (
                   <FormFeedback type="invalid">
@@ -176,6 +180,12 @@ const AddNewScheduleCustomerNotification = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.type_lbl || ""}
+                  invalid={
+                    validation.touched.type_lbl &&
+                      validation.errors.type_lbl
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select type</option>
                   {SchCusNotType &&
@@ -205,6 +215,12 @@ const AddNewScheduleCustomerNotification = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.schedule_days || ""}
+                  invalid={
+                    validation.touched.schedule_days &&
+                      validation.errors.schedule_days
+                      ? true
+                      : false
+                  }
                 // multiple
                 >
                   <option value="11">Select schedule days</option>
@@ -258,6 +274,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                   onChange={validation.handleChange}
                   value={validation.values.osd_configuration_id_lbl}
                 >
+                  <option value="">Select osd configuration</option>
                   {SchCusNotBmail &&
                     SchCusNotBmail.map((osd_configuration_id_lbl) => (
                       <option
@@ -332,7 +349,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                   value={validation.values.bmail_template_id_lbl || ""}
                 >
                   <option value="">Select bmail template</option>
-                  {/* {SchCusNotBmail &&
+                  {SchCusNotBmail &&
                     SchCusNotBmail.map((bmail_template_id_lbl) => (
                       <option
                         key={bmail_template_id_lbl.id}
@@ -340,7 +357,7 @@ const AddNewScheduleCustomerNotification = (props) => {
                       >
                         {bmail_template_id_lbl.name}
                       </option>
-                    ))} */}
+                    ))}
                 </Input>
                 {validation.touched.bmail_template_id_lbl &&
                   validation.errors.bmail_template_id_lbl ? (
@@ -478,6 +495,12 @@ const AddNewScheduleCustomerNotification = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status_lbl || ""}
+                  invalid={
+                    validation.touched.status_lbl &&
+                      validation.errors.status_lbl
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Status</option>
                   {SchCusNotStatus &&
