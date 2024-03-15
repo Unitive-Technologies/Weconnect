@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
-import TableContainer from "../../../components/Common/TableContainer";
 import { Card, CardBody, Col, Container, Row, Spinner } from "reactstrap";
 import Spinners from "../../../components/Common/Spinner";
 import { Email } from "./customerUserlistCol";
@@ -242,7 +241,7 @@ const CustomerUserList = (props) => {
     dispatch(onGetCustomerUsers());
   };
 
-  const handleShowBulkActiveUser = () => {
+  const toggleShowBulkActiveUser = () => {
     setShowBulkActiveModal(!showBulkActiveModal);
   };
   const [viewCustomerUser, setViewCustomerUser] = useState({});
@@ -292,7 +291,7 @@ const CustomerUserList = (props) => {
       />
       <BulkInactiveCustomerList
         isOpen={showBulkActiveModal}
-        handleShowBulkActiveUser={handleShowBulkActiveUser}
+        toggleShowBulkActiveUser={toggleShowBulkActiveUser}
         users={filteredUsers}
         cusUsersSettings={cusUsersSettings}
       />
@@ -312,24 +311,6 @@ const CustomerUserList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {/* <TableContainer
-                      isPagination={true}
-                      columns={columns}
-                      data={cusUsers}
-                      isGlobalFilter={true}
-                      isShowTableActionButtons={true}
-                      isShowingPageLength={true}
-                      tableActions={getTableActions()}
-                      handleRowClick={(row) => {
-                        handleViewCustomerUser(row);
-                      }}
-                      // iscustomPageSizeOptions={true}
-                      customPageSize={5}
-                      tableClass="table align-middle table-nowrap table-hover"
-                      theadClass="table-light"
-                      paginationDiv="col-sm-12 col-md-7"
-                      pagination="pagination pagination-rounded justify-content-end mt-4"
-                    /> */}
                     <TableContainerX
                       columns={columns}
                       data={cusUsers}

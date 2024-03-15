@@ -14,18 +14,32 @@ import {
   Label,
   Input,
   FormFeedback,
+  Toast,
+  ToastBody,
+  ToastHeader,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { getCustomerUsers as onGetCustomerUsers } from "/src/store/customerusers/actions";
+import { useDispatch } from "react-redux";
 
 const BulkInactiveCustomerList = (props) => {
-  const { isOpen, handleShowBulkActiveUser, users, cusUsersSettings } = props;
+  const { isOpen, toggleShowBulkActiveUser, users, cusUsersSettings } = props;
+  console.log("cusUsersSettings:" + JSON.stringify(cusUsersSettings));
+  const dispatch = useDispatch();
   const [tableList, setTableList] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [selectedStatusToSet, setSelectedStatusToSet] = useState("active");
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
+  const [showWarning, setShowWarning] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const handleError = () => {
+    setShowError(!showError);
+  };
+  const handleWarning = () => {
+    setShowWarning(!showWarning);
+  };
 
   const handleStatusChange = async (e) => {
     try {
@@ -36,7 +50,7 @@ const BulkInactiveCustomerList = (props) => {
 
       const token = "Bearer " + localStorage.getItem("temptoken");
       let statusFilters = "";
-      switch (selectedStatusToSet) {
+      switch (selectedStatus) {
         case "active":
           statusFilters = "0";
           break;
@@ -46,10 +60,12 @@ const BulkInactiveCustomerList = (props) => {
         case "block":
           statusFilters = "0,1";
           break;
-        default:
+        case "unblock":
           statusFilters = "-7";
+          break;
+        default:
+          statusFilters = "0";
       }
-
       const response = await axios.get(
         `${API_URL}/user?expand=role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[id]=2&filter[status]=${statusFilters}&filter[role]=4&page=1&per-page=500&vr=web1.0`,
         {
@@ -123,17 +139,14 @@ const BulkInactiveCustomerList = (props) => {
       console.log("selectedUsers:" + JSON.stringify(selectedUsers));
       try {
         if (selectedUsers.length === 0) {
-          window.alert("Please select at least one user");
-          return; // Added return statement to prevent API call if no users are selected
+          handleWarning();
         }
         if (
           values.statustoset === "inactive" ||
           values.statustoset === "block"
         ) {
           if (!values.block_message) {
-            // Check if block_message is empty
-            window.alert("Please enter message");
-            return; // Added return statement to prevent API call if message is not entered
+            handleError();
           }
         }
 
@@ -165,8 +178,7 @@ const BulkInactiveCustomerList = (props) => {
 
         console.log("Axios Response:", response);
         dispatch(onGetCustomerUsers());
-        handleShowBulkActiveUser();
-        setSelectedUsers({});
+        handleCancel();
         validation.resetForm();
       } catch (error) {
         console.error("Error in onSubmit:", error);
@@ -229,10 +241,6 @@ const BulkInactiveCustomerList = (props) => {
                   whiteSpace: "nowrap",
                 }}
                 className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  toggleViewModal(userData);
-                }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -377,10 +385,6 @@ const BulkInactiveCustomerList = (props) => {
                   whiteSpace: "nowrap",
                 }}
                 className="font-size-14 mb-1"
-                onClick={() => {
-                  const userData = cellProps.row.original;
-                  toggleViewModal(userData);
-                }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -479,191 +483,214 @@ const BulkInactiveCustomerList = (props) => {
     getInitialData();
   }, []);
 
+  const handleCancel = () => {
+    toggleShowBulkActiveUser();
+    setSelectedUsers({});
+    // setSelectedStatusToSet("active");
+  };
   return (
-    <Modal
-      isOpen={isOpen}
-      size="xl"
-      role="dialog"
-      autoFocus={true}
-      centered={true}
-      className="exampleModal"
-      tabIndex="-1"
-      toggle={handleShowBulkActiveUser}
-    >
-      <ModalHeader toggle={handleShowBulkActiveUser} tag="h4">
-        Bulk Active/Inactive User
-      </ModalHeader>
-      <ModalBody>
-        <Card>
-          <CardBody>
-            <Form
-              onSubmit={(e) => {
-                e.preventDefault();
-                validation.handleSubmit();
-                return false;
-              }}
-            >
-              <Row>
-                <Col lg={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">
-                      Select Status To Set
-                      <span style={{ color: "red" }}>*</span>
-                    </Label>
-                    <Input
-                      name="statustoset"
-                      type="select"
-                      placeholder="Select Status to set"
-                      className="form-select"
-                      onChange={handleStatusChange}
-                      onBlur={validation.handleBlur}
-                      value={selectedStatusToSet}
-                      invalid={
-                        validation.touched.statustoset &&
-                        validation.errors.statustoset
-                          ? true
-                          : false
-                      }
-                    >
-                      <option defaultValue="active">ACTIVE</option>
-                      <option value="inactive">In-Active</option>
-                      <option value="block">BLOCK</option>
-                      <option value="unblock">UNBLOCK</option>
-                    </Input>
+    <>
+      <div
+        className="position-fixed top-0 end-0 p-3"
+        style={{ zIndex: "1500" }}
+      >
+        <Toast isOpen={showWarning}>
+          <ToastHeader toggle={handleWarning}>
+            <i className="mdi mdi-alert-outline me-2"></i> Error
+          </ToastHeader>
+          <ToastBody>Please select at least one user</ToastBody>
+        </Toast>
+      </div>
+      <div
+        className="position-fixed top-0 end-0 p-3"
+        style={{ zIndex: "1500" }}
+      >
+        <Toast isOpen={showError}>
+          <ToastHeader toggle={handleError}>
+            <i className="mdi mdi-alert-outline me-2"></i> Error
+          </ToastHeader>
+          <ToastBody>Please enter message</ToastBody>
+        </Toast>
+      </div>
+      <Modal
+        isOpen={isOpen}
+        size="xl"
+        role="dialog"
+        autoFocus={true}
+        centered={true}
+        className="exampleModal"
+        tabIndex="-1"
+        toggle={handleCancel}
+      >
+        <ModalHeader toggle={handleCancel} tag="h4">
+          Bulk Active/Inactive User
+        </ModalHeader>
+        <ModalBody>
+          <Card>
+            <CardBody>
+              <Form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  validation.handleSubmit();
+                  return false;
+                }}
+              >
+                <Row>
+                  <Col lg={4}>
+                    <div className="mb-3">
+                      <Label className="form-label">
+                        Select Status To Set
+                        <span style={{ color: "red" }}>*</span>
+                      </Label>
+                      <Input
+                        name="statustoset"
+                        type="select"
+                        placeholder="Select Status to set"
+                        className="form-select"
+                        onChange={handleStatusChange}
+                        onBlur={validation.handleBlur}
+                        value={selectedStatusToSet}
+                        invalid={
+                          validation.touched.statustoset &&
+                          validation.errors.statustoset
+                            ? true
+                            : false
+                        }
+                      >
+                        <option defaultValue="active">ACTIVE</option>
+                        <option value="inactive">In-Active</option>
+                        <option value="block">BLOCK</option>
+                        <option value="unblock">UNBLOCK</option>
+                      </Input>
 
-                    {validation.touched.statustoset &&
-                    validation.errors.statustoset ? (
-                      <FormFeedback type="invalid">
-                        {validation.errors.statustoset}
-                      </FormFeedback>
-                    ) : null}
-                  </div>
-                </Col>
-                {console.log("status: " + selectedStatusToSet)}
-                <Col lg={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">
-                      Inactive/Block Message
-                      <span style={{ color: "red" }}>*</span>
-                    </Label>
-                    <Input
-                      name="block_message"
-                      type="textarea"
-                      placeholder="Enter Message"
-                      rows="3"
-                      onChange={validation.handleChange}
-                      onBlur={validation.handleBlur}
-                      value={validation.values.block_message || ""}
-                      invalid={
-                        validation.touched.block_message &&
-                        validation.errors.block_message
-                          ? true
-                          : false
-                      }
-                      disabled={
-                        selectedStatusToSet === "inactive" ||
-                        selectedStatusToSet === "block"
-                          ? false
-                          : true
-                      }
-                    />
-                    {validation.touched.block_message &&
-                    validation.errors.block_message ? (
-                      <FormFeedback type="invalid">
-                        {validation.errors.block_message}
-                      </FormFeedback>
-                    ) : null}
-                  </div>
-                </Col>
-              </Row>
-              {/* {console.log("tableList: " + JSON.stringify(tableList))} */}
-              <TableContainer
-                isPagination={true}
-                columns={columns}
-                data={tableList}
-                handleRowClick={(row) => {
-                  // console.log("row:" + JSON.stringify(row));
-                  handleActive(row);
-                }}
-                isGlobalFilter={true}
-                isShowingPageLength={true}
-                customPageSize={10}
-                tableClass="table align-middle table-nowrap table-hover"
-                theadClass="table-light"
-                paginationDiv="col-sm-12 col-md-7"
-                pagination="pagination pagination-rounded justify-content-end mt-4"
-              />
-              <div
-                style={{
-                  // margin: "20px 0px",
-                  marginTop: "20px",
-                  marginBottom: "-18px",
-                  zIndex: 12000,
-                  backgroundColor: "#fff",
-                  width: "fit-content",
-                  marginLeft: "40%",
-                  position: "absolute",
-                  padding: "0px 10px",
-                }}
-              >
-                {" "}
-                <h5 style={{}}>Selected Users</h5>
-              </div>
-              <Row
-                style={{
-                  position: "relative",
-                  border: "1px solid #ced4da",
-                  padding: "20px 0px",
-                  margin: "30px 0px",
-                }}
-              >
-                <Col lg={12}>
-                  <TableContainer
-                    isPagination={true}
-                    columns={selUsersColumn}
-                    data={selectedUsers}
-                    //   isGlobalFilter={true}
-                    isShowingPageLength={true}
-                    customPageSize={50}
-                    tableClass="table align-middle table-nowrap table-hover"
-                    theadClass="table-light"
-                    paginationDiv="col-sm-12 col-md-7"
-                    pagination="pagination pagination-rounded justify-content-end mt-4"
-                  />
-                </Col>
-              </Row>
-              <div className="text-center mt-4 ">
+                      {validation.touched.statustoset &&
+                      validation.errors.statustoset ? (
+                        <FormFeedback type="invalid">
+                          {validation.errors.statustoset}
+                        </FormFeedback>
+                      ) : null}
+                    </div>
+                  </Col>
+                  {console.log("status: " + selectedStatusToSet)}
+                  <Col lg={4}>
+                    <div className="mb-3">
+                      <Label className="form-label">
+                        Inactive/Block Message
+                        <span style={{ color: "red" }}>*</span>
+                      </Label>
+                      <Input
+                        name="block_message"
+                        type="textarea"
+                        placeholder="Enter Message"
+                        rows="3"
+                        onChange={validation.handleChange}
+                        onBlur={validation.handleBlur}
+                        value={validation.values.block_message || ""}
+                        invalid={
+                          validation.touched.block_message &&
+                          validation.errors.block_message
+                            ? true
+                            : false
+                        }
+                        disabled={
+                          selectedStatusToSet === "inactive" ||
+                          selectedStatusToSet === "block"
+                            ? false
+                            : true
+                        }
+                      />
+                      {validation.touched.block_message &&
+                      validation.errors.block_message ? (
+                        <FormFeedback type="invalid">
+                          {validation.errors.block_message}
+                        </FormFeedback>
+                      ) : null}
+                    </div>
+                  </Col>
+                </Row>
+                {/* {console.log("tableList: " + JSON.stringify(tableList))} */}
+                <TableContainer
+                  isPagination={true}
+                  columns={columns}
+                  data={tableList}
+                  handleRowClick={(row) => {
+                    // console.log("row:" + JSON.stringify(row));
+                    handleActive(row);
+                  }}
+                  isGlobalFilter={true}
+                  isShowingPageLength={true}
+                  customPageSize={10}
+                  tableClass="table align-middle table-nowrap table-hover"
+                  theadClass="table-light"
+                  paginationDiv="col-sm-12 col-md-7"
+                  pagination="pagination pagination-rounded justify-content-end mt-4"
+                />
                 <div
                   style={{
-                    display: "flex",
-                    gap: 5,
-                    textAlign: "center",
-                    justifyContent: "center",
+                    // margin: "20px 0px",
+                    marginTop: "20px",
+                    marginBottom: "-18px",
+                    zIndex: 12000,
+                    backgroundColor: "#fff",
+                    width: "fit-content",
+                    marginLeft: "40%",
+                    position: "absolute",
+                    padding: "0px 10px",
                   }}
                 >
-                  <button
-                    type="submit"
-                    className="btn btn-primary ml-2 "
-                    // onClick={() => {
-                    //   validation.handleSubmit();
-                    // }}
-                  >
-                    Save
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-primary "
-                    onClick={handleShowBulkActiveUser}
-                  >
-                    Cancel
-                  </button>
+                  {" "}
+                  <h5 style={{}}>Selected Users</h5>
                 </div>
-              </div>
-            </Form>
-          </CardBody>
-        </Card>
-      </ModalBody>
-    </Modal>
+                <Row
+                  style={{
+                    position: "relative",
+                    border: "1px solid #ced4da",
+                    padding: "20px 0px",
+                    margin: "30px 0px",
+                  }}
+                >
+                  <Col lg={12}>
+                    <TableContainer
+                      isPagination={true}
+                      columns={selUsersColumn}
+                      data={selectedUsers}
+                      //   isGlobalFilter={true}
+                      isShowingPageLength={true}
+                      customPageSize={50}
+                      tableClass="table align-middle table-nowrap table-hover"
+                      theadClass="table-light"
+                      paginationDiv="col-sm-12 col-md-7"
+                      pagination="pagination pagination-rounded justify-content-end mt-4"
+                    />
+                  </Col>
+                </Row>
+                <div className="text-center mt-4 ">
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: 5,
+                      textAlign: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <button type="submit" className="btn btn-primary ml-2 ">
+                      Save
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-primary "
+                      onClick={handleCancel}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </Form>
+            </CardBody>
+          </Card>
+        </ModalBody>
+      </Modal>
+    </>
   );
 };
 
