@@ -40,13 +40,10 @@ const CreateConnectionScheme = (props) => {
       description: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter name"),
-      // code: Yup.string().required("Enter code"),
-      // boxtype_lbl: Yup.string().required("Select scheme type"),
-      // hardware_charge: Yup.string().required("Enter hardware charge"),
-      // installation_charge: Yup.string().required("Enter installation charge"),
-      // description: Yup.string().required("Enter description"),
-      // status: Yup.string().required("select status"),
+      name: Yup.string().required("Enter Scheme name"),
+      isHD: Yup.string().required("Select type"),
+      description: Yup.string().required("Enter Scheme description"),
+      status: Yup.string().required("Select Status"),
     }),
     onSubmit: (values) => {
       console.log("Post values: ", values);
@@ -107,6 +104,11 @@ const CreateConnectionScheme = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}
+                  invalid={
+                    validation.touched.name && validation.errors.name
+                      ? true
+                      : false
+                  }
                 ></Input>
                 {validation.touched.name && validation.errors.name ? (
                   <FormFeedback type="invalid">
@@ -128,6 +130,11 @@ const CreateConnectionScheme = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.isHD || ""}
+                  invalid={
+                    validation.touched.isHD && validation.errors.isHD
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Scheme type</option>
                   {connectboxtype &&
@@ -157,6 +164,11 @@ const CreateConnectionScheme = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  invalid={
+                    validation.touched.status && validation.errors.status
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Status</option>
                   {connectstatus &&
@@ -177,9 +189,7 @@ const CreateConnectionScheme = (props) => {
           <Row>
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">
-                  Hardware Charge<span style={{ color: "red" }}>*</span>
-                </Label>
+                <Label className="form-label">Hardware Charge</Label>
                 <Input
                   name="hardware_charge"
                   type="text"
@@ -199,9 +209,7 @@ const CreateConnectionScheme = (props) => {
             </Col>
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">
-                  Installation Charge<span style={{ color: "red" }}>*</span>
-                </Label>
+                <Label className="form-label">Installation Charge</Label>
                 <Input
                   name="installation_charge"
                   type="text"
@@ -219,9 +227,8 @@ const CreateConnectionScheme = (props) => {
                 ) : null}
               </div>
             </Col>
-          </Row>
-          <Row>
-            <Col sm="8">
+
+            <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
                   Description<span style={{ color: "red" }}>*</span>
@@ -230,7 +237,7 @@ const CreateConnectionScheme = (props) => {
                   name="description"
                   type="textarea"
                   placeholder="Enter description"
-                  rows="3"
+                  rows="2"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.description || ""}
@@ -291,7 +298,7 @@ const CreateConnectionScheme = (props) => {
             <Col>
               <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
-                  Save
+                  Create
                 </button>
                 <button
                   type="reset"
