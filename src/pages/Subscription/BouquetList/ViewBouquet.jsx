@@ -114,13 +114,11 @@ const ViewBouquet = (props) => {
     initialValues: {
       code: (selectedRowDetails && selectedRowDetails.code) || "",
       name: (selectedRowDetails && selectedRowDetails.name) || "",
-      // type_lbl: (selectedRowDetails && selectedRowDetails.type_lbl) || "",
-      // boxtype_lbl: (selectedRowDetails && selectedRowDetails.isHD) || "",
       type: (selectedRowDetails && selectedRowDetails.type) || "",
       status: (selectedRowDetails && selectedRowDetails.status) || "",
       description: (selectedRowDetails && selectedRowDetails.description) || "",
       is_promotional:
-        (selectedRowDetails && selectedRowDetails.is_promotional) || "",
+        (selectedRowDetails && selectedRowDetails.is_promotional) || "0",
       ifFixNCF: (selectedRowDetails && selectedRowDetails.ifFixNCF) || "",
       max_ncf_channels:
         (selectedRowDetails && selectedRowDetails.max_ncf_channels) || "",
@@ -131,12 +129,12 @@ const ViewBouquet = (props) => {
       alacarteData: (selectedRowDetails && selectedRowDetails.alacarte) || [],
       packagesData: (selectedRowDetails && selectedRowDetails.package) || [],
       stbbrands: (selectedRowDetails && selectedRowDetails.stbbrands) || [],
-      isHD: (selectedRowDetails && selectedRowDetails.isHD) || "",
+      isHD: (selectedRowDetails && selectedRowDetails.isHD) || "0",
       is_exclusive:
-        (selectedRowDetails && selectedRowDetails.is_exclusive) || "",
+        (selectedRowDetails && selectedRowDetails.is_exclusive) || "0",
       is_online_app:
-        (selectedRowDetails && selectedRowDetails.is_online_app) || "",
-      sort_by: (selectedRowDetails && selectedRowDetails.sort_by) || "",
+        (selectedRowDetails && selectedRowDetails.is_online_app) || "0",
+      sort_by: (selectedRowDetails && selectedRowDetails.sort_by) || "1",
       ifFixNCF: (selectedRowDetails && selectedRowDetails.ifFixNCF) || "",
       mrp: (selectedRowDetails && parseInt(selectedRowDetails.mrp)) || "",
 
@@ -152,8 +150,8 @@ const ViewBouquet = (props) => {
         is_promotional:
           (selectedRowDetails && selectedRowDetails.is_promotional) || "",
         max_ncf_channels:
-          (selectedRowDetails && selectedRowDetails.max_ncf_channels) || "",
-        is_loner: (selectedRowDetails && selectedRowDetails.is_loner) || "",
+          (selectedRowDetails && selectedRowDetails.max_ncf_channels) || "0",
+        is_loner: (selectedRowDetails && selectedRowDetails.is_loner) || "0",
       },
 
       rate: (selectedRowDetails && selectedRowDetails.rate) || [],
@@ -162,18 +160,19 @@ const ViewBouquet = (props) => {
         (selectedRowDetails && selectedRowDetails.additional_rates) || [],
     },
     validationSchema: Yup.object({
-      code: Yup.string().required("Enter Channel Code"),
-      name: Yup.string().required("Enter channel name"),
-      // type_lbl: Yup.string().required("Enter bouquet type"),
-      // boxtype_lbl: Yup.string().required("Enter box type"),
-      // type: Yup.string().required("Enter channel type"),
-      // status: Yup.string().required("Enter status"),
-      // description: Yup.string().required("Enter description"),
-      // is_promotional: Yup.string(),
-      // ifFixNCF: Yup.string(),
-      // max_ncf_channels: Yup.string(),
-      // showon_portal: Yup.string(),
-      // category_lbl: Yup.string(),
+      name: Yup.string().required("Enter Bouquet name"),
+      type: Yup.string().required("Select Bouquet Type"),
+      isHD: Yup.string().required("Select Box Type"),
+      status: Yup.string().required("Select Status"),
+      description: Yup.string().required("Enter description"),
+      is_exclusive: Yup.string().required("Select Is Exclusive"),
+      is_promotional: Yup.string().required("Select Is Promotional"),
+      max_ncf_channels: Yup.string().required(
+        "Enter Max Channels for NCf Charges"
+      ),
+      is_online_app: Yup.string().required("select Show On Portal"),
+      sort_by: Yup.string().required("Select Bouquet Category"),
+      is_loner: Yup.string().required("Select Stop Other Bouquet Activation"),
     }),
     onSubmit: (values) => {
       const rateArray = newArray.map((row, i) => {
@@ -430,6 +429,11 @@ const ViewBouquet = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.name || ""}
                     disabled={!showEditBouquet}
+                    invalid={
+                      validation.touched.name && validation.errors.name
+                        ? true
+                        : false
+                    }
                   ></Input>
                   {validation.touched.name && validation.errors.name ? (
                     <FormFeedback type="invalid">
@@ -438,6 +442,7 @@ const ViewBouquet = (props) => {
                   ) : null}
                 </div>
               </Col>
+              {console.log("values of Name:" + validation.values.name)}
               <Col sm="3">
                 <div className="mb-3">
                   <Label className="form-label">
@@ -448,12 +453,14 @@ const ViewBouquet = (props) => {
                     type="select"
                     placeholder="Select BoxType"
                     className="form-select"
-                    // onChange={validation.handleChange}
-                    // onBlur={validation.handleBlur}
-                    // value={validation.values.isHD || ""}
                     onChange={handleIsHDChange}
                     value={selectedIsHD}
                     disabled={!showEditBouquet}
+                    invalid={
+                      validation.touched.isHD && validation.errors.isHD
+                        ? true
+                        : false
+                    }
                   >
                     {/* <option value="">Select Box type</option> */}
                     {bouquetboxtype &&
@@ -620,6 +627,12 @@ const ViewBouquet = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.is_promotional || ""}
                     disabled={!showEditBouquet}
+                    invalid={
+                      validation.touched.is_promotional &&
+                      validation.errors.is_promotional
+                        ? true
+                        : false
+                    }
                   >
                     <option value="1">Yes</option>
                     <option value="0">No</option>
@@ -721,6 +734,12 @@ const ViewBouquet = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.is_online_app || ""}
+                    invalid={
+                      validation.touched.is_online_app &&
+                      validation.errors.is_online_app
+                        ? true
+                        : false
+                    }
                   >
                     <option value="1">Yes</option>
                     <option value="0">No</option>
@@ -741,12 +760,17 @@ const ViewBouquet = (props) => {
                   <Input
                     name="sort_by"
                     type="select"
-                    placeholder="Select Status"
+                    placeholder=""
                     className="form-select"
                     disabled={!showEditBouquet}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.sort_by || ""}
+                    invalid={
+                      validation.touched.sort_by && validation.errors.sort_by
+                        ? true
+                        : false
+                    }
                   >
                     <option value="1">MSO Bouquet</option>
                     <option value="2">Broadcaster Bouquet</option>
