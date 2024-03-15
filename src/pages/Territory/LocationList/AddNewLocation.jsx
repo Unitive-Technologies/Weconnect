@@ -60,7 +60,7 @@ const AddNewLocation = (props) => {
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter location name"),
-      // operator_id: Yup.string().required("Select LCO"),
+      operator_id: Yup.string().required("Select LCO"),
       // operator_id: Yup.object().shape({
       //   // value: Yup.string().required("Required"),
       //   label: Yup.string().required("Required"),
@@ -133,7 +133,7 @@ const AddNewLocation = (props) => {
                 ) : null}
               </div>
             </Col>
-            {/* <Col lg={4}>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Select LCO<span style={{ color: "red" }}>*</span>
@@ -153,11 +153,15 @@ const AddNewLocation = (props) => {
                   }
                 >
                   <option value="">Select LCO</option>
-                  {lcoonlocation.map((options) => (
-                    <option key={options.id} value={options.id}>
-                      {options.name}, {options.distributor_lbl}, {options.branch_lbl}, {options.code}
-                    </option>
+                  {lcoonlocation.map((option) => (
+                    <React.Fragment key={option.id} className="customStyles">
+                      <option value={option.id}>{option.name}</option>
+                      <option value={option.id}>{option.distributor_lbl}</option>
+                      <option value={option.id}>{option.branch_lbl}</option>
+                      <option value={option.id}>{option.code}</option>
+                    </React.Fragment>
                   ))}
+
                 </Input>
                 {validation.touched.operator_id &&
                   validation.errors.operator_id ? (
@@ -166,8 +170,8 @@ const AddNewLocation = (props) => {
                   </FormFeedback>
                 ) : null}
               </div>
-            </Col> */}
-            <Col lg={4}>
+            </Col>
+            {/* <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
                   Select Leo<span style={{ color: "red" }}>*</span>
@@ -192,20 +196,20 @@ const AddNewLocation = (props) => {
                   styles={customStyles}
                   invalid={
                     validation.touched.operator_id &&
-                    validation.errors.operator_id
+                      validation.errors.operator_id
                       ? true
                       : false
                   }
                 />
 
                 {validation.touched.operator_id &&
-                validation.errors.operator_id ? (
+                  validation.errors.operator_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.operator_id}
                   </FormFeedback>
                 ) : null}
               </div>
-            </Col>
+            </Col> */}
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
