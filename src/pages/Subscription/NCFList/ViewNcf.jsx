@@ -51,10 +51,10 @@ const ViewNcf = (props) => {
       calculate_per_channel: (ncf && ncf.calculate_per_channel) || "",
       from_channel_no: (ncf && ncf.from_channel_no) || "",
       to_channel_no: (ncf && ncf.to_channel_no) || "",
-      is_refundable: (ncf && ncf.is_refundable) || "",
-      mrp: (ncf && ncf.mrp) || "",
-      lmo_discount: (ncf && ncf.lmo_discount) || "",
-      lmo_rate: (ncf && ncf.lmo_rate) || "",
+      is_refundable: (ncf && ncf.is_refundable) || "1",
+      mrp: (ncf && ncf.mrp) || "0",
+      lmo_discount: (ncf && ncf.lmo_discount) || "0",
+      lmo_rate: (ncf && ncf.lmo_rate) || "0",
       status_lbl: (ncf && ncf.status_lbl) || "",
       type: (ncf && ncf.type) || "",
       additionalRates: (ncf && ncf.additional_rates) || [],
@@ -62,16 +62,14 @@ const ViewNcf = (props) => {
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
       code: Yup.string().required("Enter code"),
-      // status: Yup.string().required("Select status"),
-      // calculate_per_channel: Yup.string().required(
-      //   "Select calculate per channel"
-      // ),
-      // from_channel_no: Yup.string().required("Enter from channel"),
-      // to_channel_no: Yup.string().required("Enter to channel"),
-      // is_refundable: Yup.string().required("Select refundable"),
-      // mrp: Yup.string(),
-      // lmo_discount: Yup.string(),
-      // lmo_rate: Yup.string(),
+      status: Yup.string().required("Select status"),
+      calculate_per_channel: Yup.string().required(
+        "Select calculate per channel"
+      ),
+      from_channel_no: Yup.string().required("Enter from channel"),
+      to_channel_no: Yup.string().required("Enter to channel"),
+      is_refundable: Yup.string().required("Select refundable"),
+      type: Yup.string().required("Select ncf Type"),
     }),
     onSubmit: (values) => {
       const updateNcf = {
@@ -301,6 +299,11 @@ const ViewNcf = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.status || ""}
                     disabled={!showEditNcf}
+                    invalid={
+                      validation.touched.status && validation.errors.status
+                        ? true
+                        : false
+                    }
                   >
                     {/* <option value="">Select status</option> */}
                     {status.map((options) => (
@@ -356,6 +359,12 @@ const ViewNcf = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.calculate_per_channel || ""}
                     disabled={!showEditNcf}
+                    invalid={
+                      validation.touched.calculate_per_channel &&
+                      validation.errors.calculate_per_channel
+                        ? true
+                        : false
+                    }
                   >
                     {/* <option value="">Select calculate per channel</option> */}
                     <option value="1">Yes</option>
