@@ -233,11 +233,17 @@ const ViewUserModal = (props) => {
       username: (user && user.username) || "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
+      name: Yup.string()
+        .required("Enter name")
+        .min(2, "Minimum length 2 character"),
       email: Yup.string()
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-        .required("Please Enter Your Email"),
-      mobile: Yup.string().required("Please Enter mobile Number"),
+        .email("Your email address must be of the format name@domain.com")
+        .required("Enter Email"),
+      mobile: Yup.string()
+        .required("Enter mobile number")
+        .matches(/^[0-9]/, "Enter valid number")
+        .min(8, "Min 10 digit number")
+        .max(12, "Max 12 digit number"),
       type: Yup.string().required("Please Enter User Type"),
       status: Yup.string().required("Please Enter Status"),
       role: Yup.string().required("Please Enter Role"),
