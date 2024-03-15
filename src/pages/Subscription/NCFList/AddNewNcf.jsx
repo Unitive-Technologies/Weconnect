@@ -238,6 +238,11 @@ const AddNewNcf = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  invalid={
+                    validation.touched.status && validation.errors.status
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select status</option>
                   {status.map((options) => (
@@ -291,6 +296,12 @@ const AddNewNcf = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.calculate_per_channel || ""}
+                  invalid={
+                    validation.touched.calculate_per_channel &&
+                    validation.errors.calculate_per_channel
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select calculate per channel</option>
                   <option value="1">Yes</option>
@@ -315,6 +326,11 @@ const AddNewNcf = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.type || ""}
+                  invalid={
+                    validation.touched.type && validation.errors.type
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select NCF Type</option>
                   <option value="1">Primary</option>
@@ -463,7 +479,7 @@ const AddNewNcf = (props) => {
             <Col sm="8">
               <div className="d-flex flex-wrap gap-2">
                 <button type="submit" className="btn btn-success save-user">
-                  Save
+                  Create
                 </button>
                 <button
                   type="reset"
