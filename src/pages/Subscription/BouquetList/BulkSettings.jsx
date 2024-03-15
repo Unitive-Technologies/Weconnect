@@ -189,11 +189,6 @@ const BulkSettings = (props) => {
 
     onSubmit: async (values) => {
       try {
-        if (selectedBouquets.length === 0) {
-          window.alert("Please Select one bouquet");
-          return;
-        }
-
         const nonEmptySettings = Object.entries(values.setting).reduce(
           (acc, [key, value]) => {
             if (value !== "") {
@@ -210,6 +205,14 @@ const BulkSettings = (props) => {
           },
           {}
         );
+
+        if (selectedBouquets.length === 0) {
+          window.alert("Please Select atleast one bouquet");
+          return;
+        }
+        if (!nonEmptySettings || Object.keys(nonEmptySettings).length === 0) {
+          window.alert("Please fill atleast one setting");
+        }
 
         const newSetting = {
           ids: selectedBouquets.map((bouquet) => bouquet.id),
