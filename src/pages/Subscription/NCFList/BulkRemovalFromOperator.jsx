@@ -219,6 +219,9 @@ const BulkRemovalFromOperator = (props) => {
 
     onSubmit: async (values) => {
       try {
+        if (selectedUsers.length === 0) {
+          window.alert("Please Select atleast one operator");
+        }
         const newRemoveAssign = {
           default: 1,
           forceFull: 1,
@@ -323,6 +326,17 @@ const BulkRemovalFromOperator = (props) => {
               </Col>
             </Row>
             <Row>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <p style={{ fontWeight: "bold" }}>
+                  Operators<span style={{ color: "red" }}>*</span>
+                </p>
+              </div>{" "}
               <Table>
                 <thead>
                   <tr>

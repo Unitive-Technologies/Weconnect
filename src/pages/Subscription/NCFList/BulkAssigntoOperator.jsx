@@ -219,6 +219,13 @@ const BulkAssigntoOperator = (props) => {
 
     onSubmit: async (values) => {
       try {
+        if (selectedUsers.length === 0) {
+          window.alert("Please Select atleast one operator");
+        }
+        console.log("ncfData:" + JSON.stringify(ncfData));
+        if (!ncfData || Object.keys(ncfData).length === 0) {
+          window.alert("Please Select NCF");
+        }
         const newAssign = {
           default: 0,
           forceFull: 1,
@@ -324,6 +331,17 @@ const BulkAssigntoOperator = (props) => {
               </Col>
             </Row>
             <Row>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <p style={{ fontWeight: "bold" }}>
+                  Operators<span style={{ color: "red" }}>*</span>
+                </p>
+              </div>{" "}
               <Table>
                 <thead>
                   <tr>
@@ -470,7 +488,7 @@ const BulkAssigntoOperator = (props) => {
                         handleRowClick={(row) => {
                           handleRowClick(row);
                         }}
-                        isGlobalFilter={true}
+                        // isGlobalFilter={true}
                         isShowingPageLength={true}
                         customPageSize={10}
                         tableClass="table align-middle table-nowrap table-hover"
