@@ -142,7 +142,7 @@ const AddUserModal = (props) => {
 
       console.log(
         "distributorList after selection : " +
-          JSON.stringify(response.data.data)
+        JSON.stringify(response.data.data)
       );
       setDistributorList(response.data.data);
     } catch (error) {
@@ -187,7 +187,7 @@ const AddUserModal = (props) => {
 
       console.log(
         "distributorList after selection : " +
-          JSON.stringify(response.data.data)
+        JSON.stringify(response.data.data)
       );
       setLcoList(response.data.data);
     } catch (error) {
@@ -247,23 +247,37 @@ const AddUserModal = (props) => {
       designation: "",
       username: "",
       password: "",
-      // confirmpassword: "",
+      confirmpassword: "",
       // created_at: "",
       // created_by_lbl: "my mso(mso)",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Please Enter Your Name"),
+      name: Yup.string()
+        .required("Enter name")
+        .min(2, "Minimum length 2 character"),
       email: Yup.string()
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please Enter Valid Email")
-        .required("Please Enter Your Email"),
-      mobile: Yup.string().required("Please Enter mobile Number"),
-      type: Yup.string().required("Please Enter User Type"),
-      status: Yup.string().required("Please Enter Status"),
-      role: Yup.string().required("Please Enter Role"),
-      designation: Yup.string().required("Please Enter Designation"),
-      username: Yup.string().required("Please Enter Login ID"),
-      password: Yup.string().required("Please Enter Password"),
-      // confirmpassword: Yup.string().required("Please Enter Confirm Password"),
+        .email("Your email address must be of the format name@domain.com")
+        .required("Enter Email"),
+      mobile: Yup.string()
+        .required("Enter mobile number")
+        .matches(/^[0-9]/, "Enter valid number")
+        .min(8, "Min 10 digit number")
+        .max(12, "Max 12 digit number"),
+      type: Yup.string().required("Select User Type"),
+      status: Yup.string().required("Select Status"),
+      role: Yup.string().required("Select Role"),
+      designation: Yup.string().required("Select Designation"),
+      username: Yup.string()
+        .required("Enter Login ID")
+        .min(2, "Minimum length 2 character"),
+      password: Yup.string()
+        .required("Enter password")
+        .min(2, "Minimum length 2 characters"),
+      confirmpassword: Yup.string()
+        .required("Retype Password")
+        .oneOf([Yup.ref('password'), null], 'Passwords must match'),
+      block_message: Yup.string().required("Enter message"),
+
     }),
     onSubmit: (values) => {
       const newUser = {
@@ -278,10 +292,10 @@ const AddUserModal = (props) => {
           parseInt(values["type"]) === 0
             ? parseInt(values["mso"])
             : parseInt(values["type"]) === 1
-            ? parseInt(values["regional"])
-            : parseInt(values["type"]) === 2
-            ? parseInt(values["distributor"])
-            : parseInt(values["lco"]),
+              ? parseInt(values["regional"])
+              : parseInt(values["type"]) === 2
+                ? parseInt(values["distributor"])
+                : parseInt(values["lco"]),
         status: parseInt(values["status"]),
         role: parseInt(values["role"]),
         username: values["username"],
@@ -439,6 +453,11 @@ const AddUserModal = (props) => {
                     onChange={handleTypeChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.type || ""}
+                    invalid={
+                      validation.touched.type && validation.errors.type
+                        ? true
+                        : false
+                    }
                   >
                     <option value="">Select User Type</option>
                     {userType.map((type) => (
@@ -490,7 +509,7 @@ const AddUserModal = (props) => {
                 {(parseInt(selectedType) === 1 ||
                   parseInt(selectedType) === 2 ||
                   parseInt(selectedType) === 3) &&
-                parseInt(validation.values.mso) == 1 ? (
+                  parseInt(validation.values.mso) == 1 ? (
                   <div className="mb-3">
                     <Label className="form-label">
                       Select Regional Office
@@ -514,7 +533,7 @@ const AddUserModal = (props) => {
                         ))}
                     </Input>
                     {validation.touched.regional &&
-                    validation.errors.regional ? (
+                      validation.errors.regional ? (
                       <FormFeedback type="invalid">
                         {validation.errors.regional}
                       </FormFeedback>
@@ -529,10 +548,10 @@ const AddUserModal = (props) => {
               )} */}
               <Col lg={4}>
                 {validation.values.regional &&
-                // (parseInt(selectedType) === 1 ||
-                (parseInt(selectedType) === 2 ||
-                  parseInt(selectedType) === 3) &&
-                parseInt(validation.values.mso) == 1 ? (
+                  // (parseInt(selectedType) === 1 ||
+                  (parseInt(selectedType) === 2 ||
+                    parseInt(selectedType) === 3) &&
+                  parseInt(validation.values.mso) == 1 ? (
                   <div className="mb-3">
                     <Label className="form-label">
                       Select Distributor
@@ -556,7 +575,7 @@ const AddUserModal = (props) => {
                         ))}
                     </Input>
                     {validation.touched.distributor &&
-                    validation.errors.distributor ? (
+                      validation.errors.distributor ? (
                       <FormFeedback type="invalid">
                         {validation.errors.distributor}
                       </FormFeedback>
@@ -621,6 +640,11 @@ const AddUserModal = (props) => {
                   // value={validation.values.role || ""}
                   onChange={handleRoleChange}
                   value={selectedRole}
+                  invalid={
+                    validation.touched.role && validation.errors.role
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Role</option>
                   {userRole.map((role) => (
@@ -649,6 +673,7 @@ const AddUserModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.policy || ""}
                   disabled={!selectedType && !selectedRole}
+
                 >
                   <option value="">Select Group Policy</option>
                   {/* {console.log("selectedType:" + selectedType)}
@@ -683,6 +708,11 @@ const AddUserModal = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.designation || ""}
+                  invalid={
+                    validation.touched.designation && validation.errors.designation
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Designation</option>
                   {userDesignation.map((desig) => (
@@ -692,7 +722,7 @@ const AddUserModal = (props) => {
                   ))}
                 </Input>
                 {validation.touched.designation &&
-                validation.errors.designation ? (
+                  validation.errors.designation ? (
                   <FormFeedback type="invalid">
                     {validation.errors.designation}
                   </FormFeedback>
@@ -714,6 +744,11 @@ const AddUserModal = (props) => {
                   onChange={handleStatusChange}
                   onBlur={validation.handleBlur}
                   value={selectedStatus}
+                  invalid={
+                    validation.touched.status && validation.errors.status
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Status</option>
                   {userStatus.map((status) => (
@@ -744,7 +779,7 @@ const AddUserModal = (props) => {
                   value={validation.values.block_message || ""}
                   invalid={
                     validation.touched.block_message &&
-                    validation.errors.block_message
+                      validation.errors.block_message
                       ? true
                       : false
                   }
@@ -755,7 +790,7 @@ const AddUserModal = (props) => {
                   }
                 />
                 {validation.touched.block_message &&
-                validation.errors.block_message ? (
+                  validation.errors.block_message ? (
                   <FormFeedback type="invalid">
                     {validation.errors.block_message}
                   </FormFeedback>
@@ -831,13 +866,13 @@ const AddUserModal = (props) => {
                   value={validation.values.confirmpassword || ""}
                   invalid={
                     validation.touched.confirmpassword &&
-                    validation.errors.confirmpassword
+                      validation.errors.confirmpassword
                       ? true
                       : false
                   }
                 />
                 {validation.touched.confirmpassword &&
-                validation.errors.confirmpassword ? (
+                  validation.errors.confirmpassword ? (
                   <FormFeedback type="invalid">
                     {validation.errors.confirmpassword}
                   </FormFeedback>
