@@ -87,6 +87,10 @@ const ConnectionSchemeList = (props) => {
   };
 
   const handleCheckboxClick = (row) => {
+    console.log(
+      "Before state update - selectedRows:",
+      JSON.stringify(selectedRows)
+    );
     const isSelected = selectedRows.some(
       (selectedRow) => selectedRow.id === row.id
     );
@@ -105,7 +109,6 @@ const ConnectionSchemeList = (props) => {
       JSON.stringify(selectedRows)
     );
   };
-
   const stbBrandTableSchema = {
     subTableArrayKeyName: "stbbrands",
     keyColumn: "id",
@@ -421,10 +424,10 @@ const ConnectionSchemeList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleUserClick={() =>
-                        setShowCreateConnectionScheme(true)
-                      }
-                      handleUploadUser={() => setShowBulkAssign(true)}
+                      // handleUserClick={() =>
+                      //   setShowCreateConnectionScheme(true)
+                      // }
+                      // handleUploadUser={() => setShowBulkAssign(true)}
                       customPageSize={8}
                       tableClass="table align-middle table-nowrap table-hover"
                       theadClass="table-light"

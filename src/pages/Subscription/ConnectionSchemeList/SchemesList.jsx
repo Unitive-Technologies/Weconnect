@@ -4,8 +4,8 @@ import TableContainer from "../../../components/Common/TableContainer";
 import { Card, CardBody, Table } from "reactstrap";
 import { Link } from "react-router-dom";
 
-const SchemesList = ({ selectedRow }) => {
-  console.log("selectedRow in schemeslist:" + JSON.stringify(selectedRow));
+const SchemesList = ({ selectedRows }) => {
+  console.log("selectedRow in schemeslist:" + JSON.stringify(selectedRows));
   const columns = useMemo(
     () => [
       {
@@ -186,7 +186,6 @@ const SchemesList = ({ selectedRow }) => {
     []
   );
 
-  const SchemesData = [];
   return (
     <Card>
       <CardBody>
@@ -224,8 +223,8 @@ const SchemesList = ({ selectedRow }) => {
         <TableContainer
           isPagination={true}
           columns={columns}
-          data={selectedRow}
-          isGlobalFilter={true}
+          data={selectedRows}
+          // isGlobalFilter={true}
           isShowingPageLength={true}
           customPageSize={8}
           tableClass="table align-middle table-nowrap table-hover"
