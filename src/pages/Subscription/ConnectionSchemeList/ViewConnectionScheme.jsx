@@ -58,13 +58,10 @@ const ViewConnectionScheme = (props) => {
       brands: (Connectionscheme && Connectionscheme.stbbrands) || [],
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter name"),
-      // code: Yup.string().required("Enter code"),
-      // boxtype_lbl: Yup.string().required("Select scheme type"),
-      // hardware_charge: Yup.string().required("Enter hardware charge"),
-      // installation_charge: Yup.string().required("Enter installation charge"),
-      // description: Yup.string().required("Enter description"),
-      // status: Yup.string().required("select status"),
+      name: Yup.string().required("Enter Scheme name"),
+      isHD: Yup.string().required("Select type"),
+      description: Yup.string().required("Enter Scheme description"),
+      status: Yup.string().required("Select Status"),
     }),
     onSubmit: (values) => {
       const stbBrands = Array.isArray(values["brands"])
@@ -173,6 +170,11 @@ const ViewConnectionScheme = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.name || ""}
                     disabled={!showEditConnectionScheme}
+                    invalid={
+                      validation.touched.name && validation.errors.name
+                        ? true
+                        : false
+                    }
                   ></Input>
                   {validation.touched.name && validation.errors.name ? (
                     <FormFeedback type="invalid">
@@ -195,6 +197,11 @@ const ViewConnectionScheme = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.isHD || ""}
                     disabled={!showEditConnectionScheme}
+                    invalid={
+                      validation.touched.type && validation.errors.type
+                        ? true
+                        : false
+                    }
                   >
                     {connectboxtype &&
                       connectboxtype.map((type) => (
@@ -224,6 +231,11 @@ const ViewConnectionScheme = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.status || ""}
                     disabled={!showEditConnectionScheme}
+                    invalid={
+                      validation.touched.status && validation.errors.status
+                        ? true
+                        : false
+                    }
                   >
                     {connectstatus &&
                       connectstatus.map((status) => (
