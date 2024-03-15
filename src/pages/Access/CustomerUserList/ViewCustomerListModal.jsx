@@ -278,7 +278,13 @@ const ViewCustomerUserModal = (props) => {
                     onBlur={validation.handleBlur}
                     value={selectedStatus}
                     disabled={!showEditCustomerUser}
+                    invalid={
+                      validation.touched.status && validation.errors.status
+                        ? true
+                        : false
+                    }
                   >
+                    <option value="">Select Status</option>
                     {userStatus.map((status) => (
                       <option key={status.id} value={status.id}>
                         {status.name}
