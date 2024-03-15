@@ -129,18 +129,13 @@ const BulkRemoval = (props) => {
       operator_id: [],
       scheme_ids: [],
     },
-    validationSchema: Yup.object({
-      // setting: Yup.object({
-      //   bulk_limit: Yup.string().required("Please Enter Bulk Limit"),
-      //   allowed_ips: Yup.string().required("Please Enter allowed client ips"),
-      //   enabled_pay_modes: Yup.array()
-      //     .of(Yup.number().required("Please Select Pay Modes"))
-      //     .min(1, "Please Select at least one Pay Mode"),
-      // }),
-    }),
+    validationSchema: Yup.object({}),
 
     onSubmit: async (values) => {
       try {
+        if (selectedOperators.length === 0) {
+          window.alert("Please Select atleast one operator");
+        }
         const newAssign = {
           operator_id: selectedOperators.map((operator) => operator.id),
           scheme_ids: selectedRows.map((scheme) => scheme.id),
@@ -273,7 +268,7 @@ const BulkRemoval = (props) => {
               <p>
                 ** To select row, click <i className="mdi mdi-check"></i>{" "}
               </p>
-              <SchemesList selectedRow={selectedRows} />
+              <SchemesList selectedRows={selectedRows} />
             </Row>
             <Row>
               <Col sm="12">
