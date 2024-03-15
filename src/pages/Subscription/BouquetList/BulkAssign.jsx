@@ -239,6 +239,9 @@ const BulkAssignBouquets = (props) => {
 
     onSubmit: async (values) => {
       try {
+        if (selectedOperators.length === 0) {
+          window.alert("Please select atleast one operator");
+        }
         const newAssign = {
           bouque_data: bouquetData,
           bouque_ids: selectedRows.map((row) => row.id),
