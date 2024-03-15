@@ -26,13 +26,43 @@ const BulkInactiveCustomerList = (props) => {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [selectedStatusToSet, setSelectedStatusToSet] = useState("active");
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
-  const handleStatusChange = (e) => {
-    const selectedStatus = e.target.value;
-    setSelectedStatusToSet(selectedStatus);
 
-    validation.handleChange(e);
+  const handleStatusChange = async (e) => {
+    try {
+      const selectedStatus = e.target.value;
+      setSelectedStatusToSet(selectedStatus);
+      validation.handleChange(e);
+      console.log("selectedStatus:", selectedStatus);
 
-    console.log("selectedStatus:" + selectedStatus);
+      const token = "Bearer " + localStorage.getItem("temptoken");
+      let statusFilters = "";
+      switch (selectedStatusToSet) {
+        case "active":
+          statusFilters = "0";
+          break;
+        case "inactive":
+          statusFilters = "1,-7";
+          break;
+        case "block":
+          statusFilters = "0,1";
+          break;
+        default:
+          statusFilters = "-7";
+      }
+
+      const response = await axios.get(
+        `${API_URL}/user?expand=role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[id]=2&filter[status]=${statusFilters}&filter[role]=4&page=1&per-page=500&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      setTableList(response.data.data);
+    } catch (error) {
+      console.error("Error in handleStatusChange:", error);
+    }
   };
 
   const handleActive = (row) => {
@@ -93,14 +123,20 @@ const BulkInactiveCustomerList = (props) => {
       console.log("selectedUsers:" + JSON.stringify(selectedUsers));
       try {
         if (selectedUsers.length === 0) {
-          window.alert("Please select atleast one user");
+          window.alert("Please select at least one user");
+          return; // Added return statement to prevent API call if no users are selected
         }
         if (
           values.statustoset === "inactive" ||
           values.statustoset === "block"
         ) {
-          window.alert("Please enter message");
+          if (!values.block_message) {
+            // Check if block_message is empty
+            window.alert("Please enter message");
+            return; // Added return statement to prevent API call if message is not entered
+          }
         }
+
         const newStatus = {
           user_id: selectedUsers.map((user) => user.id),
           block_message: values.block_message,
@@ -129,13 +165,14 @@ const BulkInactiveCustomerList = (props) => {
 
         console.log("Axios Response:", response);
         dispatch(onGetCustomerUsers());
-
-        validation.resetForm();
         handleShowBulkActiveUser();
+        setSelectedUsers({});
+        validation.resetForm();
       } catch (error) {
         console.error("Error in onSubmit:", error);
       }
     },
+
     onReset: (values) => {
       validation.setValues(validation.initialValues);
     },
@@ -417,63 +454,30 @@ const BulkInactiveCustomerList = (props) => {
   );
 
   useEffect(() => {
-    console.log("status in useEffect: " + selectedStatusToSet);
-
-    const getFilteredData = async () => {
+    const getInitialData = async () => {
       try {
         const token = "Bearer " + localStorage.getItem("temptoken");
-        if (selectedStatusToSet === "active") {
-          const response = await axios.get(
-            `${API_URL}/user?expand=role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[id]=2&filter[status]=0&filter[role]=4&page=1&per-page=500&vr=web1.0`,
-            {
-              headers: {
-                Authorization: token,
-              },
-            }
-          );
 
-          setTableList(response.data.data);
-        } else if (selectedStatusToSet === "inactive") {
-          const response = await axios.get(
-            `${API_URL}/user?expand=role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[id]=2&filter[status]=1,-7&filter[role]=4&page=1&per-page=500&vr=web1.0`,
-            {
-              headers: {
-                Authorization: token,
-              },
-            }
-          );
+        const response = await axios.get(
+          `${API_URL}/user?expand=role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[id]=2&filter[status]=0&filter[role]=4&page=1&per-page=500&vr=web1.0`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
 
-          setTableList(response.data.data);
-        } else if (selectedStatusToSet === "block") {
-          const response = await axios.get(
-            `${API_URL}/user?expand=role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[id]=2&filter[status]=0,1&filter[role]=4&page=1&per-page=500&vr=web1.0`,
-            {
-              headers: {
-                Authorization: token,
-              },
-            }
-          );
-
-          setTableList(response.data.data);
-        } else {
-          const response = await axios.get(
-            `${API_URL}/user?expand=role_lbl,status_lbl,type_lbl,operator_lbl,created_by_lbl,parent_lbl&notfilter[id]=2&filter[status]=-7&filter[role]=4&page=1&per-page=500&vr=web1.0`,
-            {
-              headers: {
-                Authorization: token,
-              },
-            }
-          );
-
-          setTableList(response.data.data);
-        }
+        // Set the table list after fetching data
+        setTableList(response.data.data);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching initial data:", error);
+        // Handle errors here if needed
       }
     };
 
-    getFilteredData();
-  }, [selectedStatusToSet]);
+    // Call the async function to fetch initial data
+    getInitialData();
+  }, []);
 
   return (
     <Modal
