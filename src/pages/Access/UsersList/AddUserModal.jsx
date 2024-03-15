@@ -276,7 +276,10 @@ const AddUserModal = (props) => {
       confirmpassword: Yup.string()
         .required("Retype Password")
         .oneOf([Yup.ref('password'), null], 'Passwords must match'),
-      block_message: Yup.string().required("Enter message"),
+      block_message: Yup.string().required('status', {
+        is: '0',
+        then: Yup.string().required("Enter message for status ID 0")
+      }),
 
     }),
     onSubmit: (values) => {
