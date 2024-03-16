@@ -1,5 +1,6 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
 import TableContainer from "../../../components/Common/TableContainer";
 import {
   Card,
@@ -14,258 +15,75 @@ import {
   ModalHeader,
   ToastBody,
   ModalFooter,
+  Table,
   Form,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const ViewChannelsTableList = (props) => {
   // const { isOpen } = props
-  const { isOpen, handleAddChannelsTable, } = props;
-  const columns = useMemo(
-    () => [
-      {
-        Header: "*",
-        disableFilters: true,
-        filterable: true,
-        Cell: () => {
-          return (
-            <>
-              <i className="bx bx-bx bx-check"></i>
-            </>
-          );
-        },
-      },
-      {
-        Header: "#",
-        disableFilters: true,
-        filterable: true,
-        Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+  const { isOpen, toggle, selectedBroadcaster, selectedType, definition } =
+    props;
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
+  const [addChannelsList, setAddChannelsList] = useState([]);
+  const [selectedRows, setSelectedRows] = useState([]);
 
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {reverseIndex}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
+  const handleSelectRows = (row) => {
+    const isSelected = selectedRows.some(
+      (selectedRow) => selectedRow.id === row.id
+    );
 
-      {
-        Header: "Name",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"Name"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Broadcaster",
-        // accessor: "login",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"Broadcaster"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Type",
-        // accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"Type"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Alacarte",
-        // accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"Channel Count"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "FTA",
-        // accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"FTA"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Rate",
-        // accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"rate"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-    ],
-    []
+    const channel_type_lbl = row.channel_type_lbl;
+
+    if (
+      (isSelected && channel_type_lbl === "HD" && definition === 1) ||
+      !isSelected
+    ) {
+      const updatedSelectedRows = isSelected
+        ? selectedRows.filter((selectedRow) => selectedRow.id !== row.id)
+        : [...selectedRows, row];
+
+      setSelectedRows(updatedSelectedRows);
+    }
+  };
+  console.log(
+    "selectedRows on addChannelTableList:" + JSON.stringify(selectedRows)
   );
-
   const [showAddChannelsPlus, setShowAddChannelsPlus] = useState(false);
 
   const handleAddChannelsPlus = () => {
     setShowAddChannelsPlus(!showAddChannelsPlus);
   };
 
-  const columns1 = useMemo(
-    () => [
-      {
-        Header: "$",
-        // accessor: "type",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"Total Channels:"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "$",
-        // accessor: "type",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <h5
-              style={{
-                maxWidth: 200,
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-              }}
-              className="font-size-14 mb-1"
-            >
-              <Link className="text-dark" to="#">
-                {"Total"}
-              </Link>
-            </h5>
-          );
-        },
-      },
-    ],
-    []
-  );
+  useEffect(() => {
+    const getAddChannelsTable = async (e) => {
+      try {
+        const token = "Bearer " + localStorage.getItem("temptoken");
+        // console.log("type in handle:" + selectedType, typeof selectedType);
+        const type = parseInt(selectedType);
+        const broadcaster = parseInt(selectedBroadcaster);
+        console.log("checking of broadcaster" + JSON.stringify(broadcaster));
+        console.log("type in handle:" + type, typeof type);
+        console.log("broadcaster in handle:" + type, typeof broadcaster);
 
-  // const allColumns = useMemo(() => columns.concat(columns1), [columns, columns1]);
+        const response = await axios.get(
+          `${API_URL}/channel/list?fields=id,name,broadcasterRate&expand=broadcaster_lbl,channel_type_lbl,isFta_lbl,isAlacarte_lbl&sort=name&filter[isFta]=${type}&filter[broadcaster_id]=${broadcaster}&vr=web1.0`,
 
-  const casData = [];
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        setAddChannelsList(response.data.data);
+      } catch (error) {
+        console.error("Error fetching addChannels data:", error);
+      }
+    };
+    getAddChannelsTable();
+  }, [selectedType, selectedBroadcaster]);
 
   return (
-
     <Modal
       isOpen={isOpen}
       role="dialog"
@@ -274,17 +92,18 @@ const ViewChannelsTableList = (props) => {
       className="exampleModal"
       tabIndex="-1"
       size="xl"
-      toggle={handleAddChannelsTable}
-    // toggle={toggle}
+      toggle={toggle}
+      // toggle={toggle}
     >
-      <ModalHeader toggle={handleAddChannelsTable} tag="h4">
+      <ModalHeader toggle={toggle} tag="h4">
         Add Channels
       </ModalHeader>
-      <ModalHeader tag="h6">**To Select row, Click <i className="bx bx-bx bx-check"></i></ModalHeader>
+      <ModalHeader tag="h6">
+        **To Select row, Click <i className="bx bx-bx bx-check"></i>
+      </ModalHeader>
       <ModalBody>
         <Card>
           <CardBody>
-
             <div
               className="position-fixed top-0 end-0 p-3"
               style={{ zIndex: "1005" }}
@@ -296,17 +115,89 @@ const ViewChannelsTableList = (props) => {
                 <ToastBody>Please select package definition</ToastBody>
               </Toast>
             </div>
+            {console.log("addChannelsList:" + JSON.stringify(addChannelsList))}
 
-            <TableContainer
-              // isPagination={true}
-              columns={columns}
-              data={casData}
-              tableClass="table align-middle table-nowrap table-hover"
-              theadClass="table-light"
-            // paginationDiv="col-sm-12 col-md-7"
-            // pagination="pagination pagination-rounded justify-content-end mt-4"
-            />
-
+            <Table
+              className="table mb-0"
+              style={{
+                minHeight: "200px",
+                maxHeight: "200px",
+                overflowY: "hidden",
+              }}
+            >
+              <thead>
+                <tr>
+                  <th
+                    style={{
+                      maxWidth: 10,
+                    }}
+                  >
+                    #
+                  </th>
+                  <th>Name</th>
+                  <th>BroadCaster</th>
+                  <th>Type</th>
+                  <th>Alacarte</th>
+                  <th>FTA</th>
+                  <th>Rate</th>
+                </tr>
+              </thead>
+              {addChannelsList && (
+                <tbody>
+                  {addChannelsList.map((item, index) => (
+                    <tr key={index}>
+                      <th>
+                        <input
+                          type="checkbox"
+                          onChange={handleSelectRows(item)}
+                        />
+                      </th>
+                      <td
+                        scope="row"
+                        style={{
+                          maxWidth: 10,
+                        }}
+                      >
+                        {index + 1}
+                      </td>
+                      <td
+                        style={{
+                          maxWidth: 100,
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {item.name}
+                      </td>
+                      <td
+                        style={{
+                          maxWidth: 50,
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {item.broadcaster_lbl}
+                      </td>
+                      <td>{item.channel_type_lbl}</td>
+                      <td>{item.isAlacarte_lbl}</td>
+                      <td>{item.isFta_lbl}</td>
+                      <td
+                        style={{
+                          maxWidth: 50,
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {parseFloat(item.broadcasterRate).toFixed(2)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              )}
+            </Table>
           </CardBody>
 
           <div
@@ -327,7 +218,9 @@ const ViewChannelsTableList = (props) => {
               boxSizing: "border-box",
             }}
           >
-            <h6 style={{ textAlign: "left", margin: 0 }}>*Click tick to select channels</h6>
+            <h6 style={{ textAlign: "left", margin: 0 }}>
+              *Click tick to select channels
+            </h6>
           </div>
           <div
             style={{
@@ -337,7 +230,9 @@ const ViewChannelsTableList = (props) => {
               boxSizing: "border-box",
             }}
           >
-            <h6 style={{ textAlign: "left", margin: 0 }}>**HD packages can contain both types(HD & SD)</h6>
+            <h6 style={{ textAlign: "left", margin: 0 }}>
+              **HD packages can contain both types(HD & SD)
+            </h6>
           </div>
           <Row>
             <Col>
@@ -348,9 +243,9 @@ const ViewChannelsTableList = (props) => {
               </ModalFooter>
             </Col>
           </Row>
-        </Card >
+        </Card>
       </ModalBody>
-    </Modal >
+    </Modal>
   );
 };
 

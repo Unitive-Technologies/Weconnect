@@ -22,10 +22,6 @@ const AddChannels = (props) => {
     selectedBroadcaster,
     channels,
     setChannels,
-    data,
-    updateList,
-    broadcasterBouquetAddchannels,
-    showEditBroadcast,
   } = props;
 
   console.log("type after:" + selectedType, typeof selectedType);
@@ -35,212 +31,17 @@ const AddChannels = (props) => {
   );
 
   const [addChannelsList, setAddChannelsList] = useState([]);
-  // const [channels, setChannels] = useState([]);
+
   {
     console.log("Channels:" + JSON.stringify(channels));
   }
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
-
-  const columns = useMemo(
-    () => [
-      {
-        Header: "#",
-        disableFilters: true,
-        filterable: true,
-        Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
-
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {reverseIndex}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-
-      {
-        Header: "Channel Name",
-        accessor: "name",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.name}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Broadcaster",
-        accessor: "brocaster_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.broadcaster_lbl}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Type",
-        accessor: "channel_type_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.channel_type_lbl}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Alacarte",
-        accessor: "isAlacarte_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.isAlacarte_lbl}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "FTA",
-        accessor: "isFta_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.isFta_lbl}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Rate",
-        accessor: "broadcasterRate",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.broadcasterRate}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "$",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"$"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-    ],
-    []
-  );
 
   const deleteChannel = (index) => {
     const list = [...channels];
     list.splice(index, 1);
     setChannels(list);
   };
-
-  const addChannelsData = [];
 
   const [showAddChannelsPlus, setShowAddChannelsPlus] = useState(false);
   const [showChannelTableList, setShowChannelTableList] = useState(false);
@@ -332,18 +133,6 @@ const AddChannels = (props) => {
 
           <Card>
             <CardBody>
-              {/* <TableContainer
-                isPagination={true}
-                columns={columns}
-                data={addChannelsData}
-                // isGlobalFilter={true}
-                // isShowingPageLength={true}
-                // customPageSize={50}
-                tableClass="table align-middle table-nowrap table-hover"
-                theadClass="table-light"
-                paginationDiv="col-sm-12 col-md-7"
-                pagination="pagination pagination-rounded justify-content-end mt-4"
-              /> */}
               <Table className="table mb-0">
                 <thead>
                   <tr>
@@ -364,66 +153,67 @@ const AddChannels = (props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {channels.map((item, index) => (
-                    <tr key={index}>
-                      <th
-                        scope="row"
-                        style={{
-                          maxWidth: 10,
-                        }}
-                      >
-                        {index + 1}
-                      </th>
-                      <td
-                        style={{
-                          maxWidth: 100,
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        {item.name}
-                      </td>
-                      <td
-                        style={{
-                          maxWidth: 50,
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        {item.broadcaster_lbl}
-                      </td>
-                      <td>{item.channel_type_lbl}</td>
-                      <td>{item.isAlacarte_lbl}</td>
-                      <td>{item.isFta_lbl}</td>
-                      <td
-                        style={{
-                          maxWidth: 50,
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        {" "}
-                        <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td>
-                      </td>
-                      <td>
-                        <h5>
-                          <Link
-                            className="text-dark"
-                            to="#"
-                            onClick={() => deleteChannel(index)}
-                          >
-                            <i
-                              className="mdi mdi-delete font-size-18"
-                              id="deletetooltip"
-                            />
-                          </Link>
-                        </h5>
-                      </td>
-                    </tr>
-                  ))}
+                  {channels &&
+                    channels.map((item, index) => (
+                      <tr key={index}>
+                        <th
+                          scope="row"
+                          style={{
+                            maxWidth: 10,
+                          }}
+                        >
+                          {index + 1}
+                        </th>
+                        <td
+                          style={{
+                            maxWidth: 100,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          {item.name}
+                        </td>
+                        <td
+                          style={{
+                            maxWidth: 50,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          {item.broadcaster_lbl}
+                        </td>
+                        <td>{item.channel_type_lbl}</td>
+                        <td>{item.isAlacarte_lbl}</td>
+                        <td>{item.isFta_lbl}</td>
+                        <td
+                          style={{
+                            maxWidth: 50,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          {" "}
+                          <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td>
+                        </td>
+                        <td>
+                          <h5>
+                            <Link
+                              className="text-dark"
+                              to="#"
+                              onClick={() => deleteChannel(index)}
+                            >
+                              <i
+                                className="mdi mdi-delete font-size-18"
+                                id="deletetooltip"
+                              />
+                            </Link>
+                          </h5>
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </Table>
             </CardBody>

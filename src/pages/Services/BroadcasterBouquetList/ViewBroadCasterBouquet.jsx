@@ -34,6 +34,7 @@ const ViewBroadCasterBouquet = (props) => {
   const {
     isOpen,
     selectedRowId,
+    broadcasterBouquetAddchannels,
     broadcasterBouquetType,
     broadcasterBouquetBroadcaster,
     broadcasterBouquetDefinition,
@@ -57,31 +58,15 @@ const ViewBroadCasterBouquet = (props) => {
   const [msoPercent, setMsoPercent] = useState(20);
   const [discountPercent, setDiscountPercent] = useState(0);
   const [toggleSwitch, settoggleSwitch] = useState(true);
+
+  const [selectedRowDetails, setSelectedRowDetails] = useState({});
   const [channels, setChannels] = useState([]);
   const [selectedType, setSelectedType] = useState("");
   const [selectedBroadcaster, setSelectedBroadcaster] = useState("");
-  const [selectedRowDetails, setSelectedRowDetails] = useState({});
-
   const [selectedRate, setSelectedRate] = useState("");
+  const [definition, setDefinition] = useState("");
 
-  const handleInputChange = (e) => {
-    const inputValue = e.target.value;
-    setSelectedRate(inputValue >= 0 ? inputValue : 0);
-  };
-
-  console.log("View broadcast" + JSON.stringify(broadcast));
-
-  const handleArrowKeyPress = (e) => {
-    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-      e.preventDefault(); // Prevent the default behavior of arrow keys in number input
-
-      const increment = e.key === "ArrowUp" ? 1 : -1;
-      const currentRate = parseFloat(selectedRate) || 0;
-      const newRate = Math.max(0, currentRate + increment * 0.01);
-
-      setSelectedRate(newRate.toFixed(2));
-    }
-  };
+  // console.log("View broadcast" + JSON.stringify(broadcast));
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -91,10 +76,10 @@ const ViewBroadCasterBouquet = (props) => {
       //BroadCaster: "",
       code: (broadcast && broadcast.code) || "",
       name: (broadcast && broadcast.name) || "",
-      isHD: (broadcast && broadcast.isHD) || "",
+      isHD: broadcast && broadcast.isHD,
       description: (broadcast && broadcast.description) || "",
-      type: (broadcast && broadcast.isFta) || "",
-      broadcaster_id: (broadcast && broadcast.broadcaster_id) || "",
+      type: broadcast && broadcast.isFta,
+      broadcaster_id: broadcast && broadcast.broadcaster_id,
       status: (broadcast && broadcast.status) || "",
       rate: (broadcast && broadcast.broadcasterRate) || "",
       channels: (broadcast && broadcast.channels) || "",
@@ -151,7 +136,18 @@ const ViewBroadCasterBouquet = (props) => {
     resetSection();
     toggleViewModal();
   };
-
+  useEffect(() => {
+    if (selectedRowDetails) {
+      console.log(
+        "selectedRowDetails.channel_type_lbl:" +
+          selectedRowDetails.channel_type_lbl
+      );
+      setChannels(selectedRowDetails.channels);
+      setDefinition(selectedRowDetails.isHD);
+      setSelectedType(selectedRowDetails.isFta);
+      setSelectedBroadcaster(selectedRowDetails.broadcaster_id);
+    }
+  }, [selectedRowDetails]);
   useEffect(() => {
     const getSelectedRowDetails = async (e) => {
       try {
@@ -629,7 +625,12 @@ const ViewBroadCasterBouquet = (props) => {
               <Col sm="12">
                 <ViewChannels
                   showEditBroadcast={showEditBroadcast}
-                  channels={selectedRowDetails.channels}
+                  channels={channels}
+                  setChannels={setChannels}
+                  definition={validation.values.isHD}
+                  selectedType={validation.values.type}
+                  selectedBroadcaster={validation.values.broadcaster_id}
+                  broadcasterBouquetAddchannels={broadcasterBouquetAddchannels}
                 />
               </Col>
             </Row>
