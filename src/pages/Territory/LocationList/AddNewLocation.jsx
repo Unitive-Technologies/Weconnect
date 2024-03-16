@@ -127,20 +127,27 @@ const AddNewLocation = (props) => {
                   name="operator_id"
                   options={options}
                   onChange={(selectedOption) => {
-                    validation.setFieldValue('operator_id', selectedOption.value);
+                    validation.setFieldValue('operator_id', selectedOption ? selectedOption.value : ''); // Set the value of operator_id
                   }}
                   onBlur={validation.handleBlur}
-                  styles={customStyles}
-                  isInvalid={
-                    validation.touched.operator_id &&
-                    validation.errors.operator_id
-                  }
+                  styles={{
+                    control: (provided, state) => ({
+                      ...provided,
+                      borderColor: state.isFocused ? (validation.touched.operator_id && validation.errors.operator_id ? 'red' : '') : (validation.touched.operator_id && validation.errors.operator_id ? 'red' : ''),
+                      // boxShadow: state.isFocused ? (validation.touched.operator_id && validation.errors.operator_id ? '0 0 0 0.2rem rgba(220, 53, 69, 0.25)' : '') : (validation.touched.operator_id && validation.errors.operator_id ? '0 0 0 0.2rem rgba(220, 53, 69, 0.25)' : ''),
+                    }),
+                  }}
+                  classNamePrefix="react-select"
                 />
-                <FormFeedback type="invalid">
-                  {validation.errors.operator_id}
-                </FormFeedback>
+                {validation.touched.operator_id && validation.errors.operator_id && (
+                  <FormFeedback style={{ display: 'block' }}>
+                    {validation.errors.operator_id}
+                  </FormFeedback>
+                )}
               </div>
             </Col>
+
+
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
