@@ -55,7 +55,7 @@ const AddSubLocation = (props) => {
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
-      location_id: Yup.string().nullable().required("Select location"),
+      location_id: Yup.string().required("Select location"),
       status: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
@@ -153,12 +153,12 @@ const AddSubLocation = (props) => {
                   )}
                   styles={customStyles}
                 />
-                {validation.touched.location_id &&
+                {
                   validation.errors.location_id ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.location_id}
-                  </FormFeedback>
-                ) : null}
+                    <FormFeedback type="invalid">
+                      {validation.errors.location_id}
+                    </FormFeedback>
+                  ) : null}
               </div>
             </Col>
 
