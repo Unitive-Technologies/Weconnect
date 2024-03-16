@@ -31,7 +31,7 @@ const AddSubLocation = (props) => {
     label: (
       <div>
         <h6>{option.name}</h6>
-        <p>LCO {option.location_id}</p>
+        <p>LCO {option.operator_lbl}</p>
       </div>
     ),
   }));
@@ -141,8 +141,13 @@ const AddSubLocation = (props) => {
                       ...provided,
                       borderColor: state.isFocused ? (validation.touched.location_id && validation.errors.location_id ? 'red' : '') : (validation.touched.location_id && validation.errors.location_id ? 'red' : ''),
                     }),
+                    option: (provided) => ({
+                      ...provided,
+                      backgroundColor: "white",
+                    }),
+
                   }}
-                  classNamePrefix="react-select"
+                // classNamePrefix="react-select"
                 />
                 {validation.touched.location_id && validation.errors.location_id && (
                   <FormFeedback style={{ display: 'block' }}>

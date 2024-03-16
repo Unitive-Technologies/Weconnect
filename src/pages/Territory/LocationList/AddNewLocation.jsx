@@ -136,8 +136,11 @@ const AddNewLocation = (props) => {
                       borderColor: state.isFocused ? (validation.touched.operator_id && validation.errors.operator_id ? 'red' : '') : (validation.touched.operator_id && validation.errors.operator_id ? 'red' : ''),
                       // boxShadow: state.isFocused ? (validation.touched.operator_id && validation.errors.operator_id ? '0 0 0 0.2rem rgba(220, 53, 69, 0.25)' : '') : (validation.touched.operator_id && validation.errors.operator_id ? '0 0 0 0.2rem rgba(220, 53, 69, 0.25)' : ''),
                     }),
+                    option: (provided) => ({
+                      ...provided,
+                      backgroundColor: "white",
+                    }),
                   }}
-                  classNamePrefix="react-select"
                 />
                 {validation.touched.operator_id && validation.errors.operator_id && (
                   <FormFeedback style={{ display: 'block' }}>
