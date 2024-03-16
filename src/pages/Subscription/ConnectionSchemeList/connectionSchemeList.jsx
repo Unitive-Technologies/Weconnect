@@ -94,14 +94,16 @@ const ConnectionSchemeList = (props) => {
     const isSelected = selectedRows.some(
       (selectedRow) => selectedRow.id === row.id
     );
-
+    debugger;
     if (isSelected) {
       // If already selected, remove it
+
       setSelectedRows((prevSelectedRows) =>
         prevSelectedRows.filter((selectedRow) => selectedRow.id !== row.id)
       );
     } else {
       // If not selected, add it
+      console.log("prevSelectedRows: " + JSON.stringify(selectedRows));
       setSelectedRows((prevSelectedRows) => [...prevSelectedRows, row]);
     }
     console.log(
@@ -167,6 +169,9 @@ const ConnectionSchemeList = (props) => {
           <input
             type="checkbox"
             onChange={() => handleCheckboxClick(cellProps.row.original)}
+            checked={selectedRows.some(
+              (selectedRow) => selectedRow.id === cellProps.row.original.id
+            )}
           />
         ),
       },

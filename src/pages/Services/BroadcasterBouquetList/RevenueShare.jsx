@@ -4,12 +4,21 @@ import Slider from "react-rangeslider";
 import PieChart from "./PieChart";
 import "react-rangeslider/lib/index.css";
 
-const RevenueShare = ({ broadPercent,
+const RevenueShare = ({
+  broadPercent,
   msoPercent,
   discountPercent,
   setBroadPercent,
   setMsoPercent,
-  setDiscountPercent, showEditBroadcast }) => {
+  setDiscountPercent,
+  showEditBroadcast,
+}) => {
+  console.log(
+    "broadPercent, msoPercent, discountPercent:" + broadPercent,
+    msoPercent,
+    discountPercent,
+    showEditBroadcast
+  );
   const handleBroadCastShare = (newValue) => {
     setBroadPercent(newValue);
 
@@ -40,7 +49,6 @@ const RevenueShare = ({ broadPercent,
     }
   };
 
-
   return (
     <div>
       <Row>
@@ -53,10 +61,11 @@ const RevenueShare = ({ broadPercent,
               min={65}
               max={100}
               orientation="horizontal"
-              onChange={(newValue) =>
-                showEditBroadcast && handleBroadCastShare(newValue)
+              onChange={
+                (newValue) => handleBroadCastShare(newValue)
+                // showEditBroadcast && handleBroadCastShare(newValue)
               }
-              disabled={!showEditBroadcast}
+              // disabled={!showEditBroadcast}
             />
             <span className="float-right  mt-4">Value: {broadPercent} %</span>
           </div>
@@ -68,8 +77,9 @@ const RevenueShare = ({ broadPercent,
               min={0}
               max={35}
               orientation="horizontal"
-              onChange={(newValue) =>
-                showEditBroadcast && handleMsoShare(newValue)
+              onChange={
+                (newValue) => handleMsoShare(newValue)
+                // showEditBroadcast && handleMsoShare(newValue)
               }
             />
             <span className="float-right  mt-4">Value: {msoPercent} %</span>
@@ -82,8 +92,9 @@ const RevenueShare = ({ broadPercent,
               min={0}
               max={15}
               orientation="horizontal"
-              onChange={(newValue) =>
-                showEditBroadcast && handleDiscount(newValue)
+              onChange={
+                (newValue) => handleDiscount(newValue)
+                // showEditBroadcast && handleDiscount(newValue)
               }
             />
             <span className="float-right  mt-4">

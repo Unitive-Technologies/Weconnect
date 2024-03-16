@@ -244,7 +244,10 @@ const TableContainer = ({
                           {isSubTableContentExists(row.original) && (
                             <span
                               id={row.id}
-                              onClick={(e) => toggleRowOpen(e, row.id)}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                toggleRowOpen(e, row.id);
+                              }}
                             >
                               <FontAwesomeIcon
                                 icon={open === row.id ? faMinus : faPlus}
