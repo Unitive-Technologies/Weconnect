@@ -300,7 +300,9 @@ const AddChannels = (props) => {
           <ToastBody>
             {!definition
               ? "Please select Channel Definition"
-              : "Please select Channel Type"}{" "}
+              : !selectedType
+              ? "Please select Channel Type"
+              : "Please select Broadcaster"}
           </ToastBody>
         </Toast>
       </div>
@@ -314,7 +316,7 @@ const AddChannels = (props) => {
                 <button
                   onClick={
                     // {handleAddChannelsTable}
-                    selectedType
+                    definition && selectedType && selectedBroadcaster
                       ? handleAddChannelsTable
                       : handleAddChannelsWarning
                   }
