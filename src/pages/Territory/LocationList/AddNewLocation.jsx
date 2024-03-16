@@ -15,7 +15,7 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addLocation as onAddLocation } from "/src/store/location/actions";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import Select from "react-select";
 import { getLocation as onGetLocation } from "/src/store/actions";
 
@@ -43,16 +43,9 @@ const AddNewLocation = (props) => {
       backgroundColor: "white",
     }),
   };
-  // const schema = Yup.object({
-  //   operator_id: Yup.mixed()
-  //     .required()
-  //     .oneOf([lcoonlocation])
-  //     .label("Selected location"),
-  // });
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
 
+  const validation = useFormik({
+    enableReinitialize: true,
     initialValues: {
       name: "",
       operator_id: "",
@@ -61,10 +54,6 @@ const AddNewLocation = (props) => {
     validationSchema: Yup.object({
       name: Yup.string().required("Enter location name"),
       operator_id: Yup.string().required("Select LCO"),
-      // operator_id: Yup.object().shape({
-      //   // value: Yup.string().required("Required"),
-      //   label: Yup.string().required("Required"),
-      // }),
       status: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
@@ -122,15 +111,11 @@ const AddNewLocation = (props) => {
                   value={validation.values.name || ""}
                   invalid={
                     validation.touched.name && validation.errors.name
-                      ? true
-                      : false
                   }
                 />
-                {validation.touched.name && validation.errors.name ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.name}
-                  </FormFeedback>
-                ) : null}
+                <FormFeedback type="invalid">
+                  {validation.errors.name}
+                </FormFeedback>
               </div>
             </Col>
             <Col lg={4}>
@@ -138,78 +123,24 @@ const AddNewLocation = (props) => {
                 <Label className="form-label">
                   Select LCO<span style={{ color: "red" }}>*</span>
                 </Label>
-                <Input
-                  name="operator_id"
-                  type="select"
-                  placeholder="Select LCO"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.operator_id || ""}
-                  invalid={
-                    validation.touched.name && validation.errors.name
-                      ? true
-                      : false
-                  }
-                >
-                  <option value="">Select LCO</option>
-                  {lcoonlocation.map((option) => (
-                    <React.Fragment key={option.id} className="customStyles">
-                      <option value={option.id}>{option.name}</option>
-                      <option value={option.id}>{option.distributor_lbl}</option>
-                      <option value={option.id}>{option.branch_lbl}</option>
-                      <option value={option.id}>{option.code}</option>
-                    </React.Fragment>
-                  ))}
-
-                </Input>
-                {validation.touched.operator_id &&
-                  validation.errors.operator_id ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.operator_id}
-                  </FormFeedback>
-                ) : null}
-              </div>
-            </Col>
-            {/* <Col lg={4}>
-              <div className="mb-3">
-                <Label className="form-label">
-                  Select Leo<span style={{ color: "red" }}>*</span>
-                </Label>
                 <Select
                   name="operator_id"
                   options={options}
                   onChange={(selectedOption) => {
-                    console.log("SelectedOption: ", selectedOption);
-                    setSelectedLocation(selectedOption);
-                    validation.handleChange({
-                      target: {
-                        name: "operator_id",
-                        value: selectedOption.value,
-                      },
-                    });
+                    validation.setFieldValue('operator_id', selectedOption.value);
                   }}
                   onBlur={validation.handleBlur}
-                  value={options.find(
-                    (opt) => opt.value === validation.values.operator_id
-                  )}
                   styles={customStyles}
-                  invalid={
+                  isInvalid={
                     validation.touched.operator_id &&
-                      validation.errors.operator_id
-                      ? true
-                      : false
+                    validation.errors.operator_id
                   }
                 />
-
-                {validation.touched.operator_id &&
-                  validation.errors.operator_id ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.operator_id}
-                  </FormFeedback>
-                ) : null}
+                <FormFeedback type="invalid">
+                  {validation.errors.operator_id}
+                </FormFeedback>
               </div>
-            </Col> */}
+            </Col>
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
@@ -219,28 +150,23 @@ const AddNewLocation = (props) => {
                   name="status"
                   type="select"
                   placeholder="Select Status"
-                  className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
                   invalid={
                     validation.touched.status && validation.errors.status
-                      ? true
-                      : false
                   }
                 >
                   <option value="">Select status</option>
-                  {status.map((options) => (
-                    <option key={options.id} value={options.id}>
-                      {options.name}
+                  {status.map((option) => (
+                    <option key={option.id} value={option.id}>
+                      {option.name}
                     </option>
                   ))}
                 </Input>
-                {validation.touched.status && validation.errors.status ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.status}
-                  </FormFeedback>
-                ) : null}
+                <FormFeedback type="invalid">
+                  {validation.errors.status}
+                </FormFeedback>
               </div>
             </Col>
           </Row>
@@ -257,7 +183,6 @@ const AddNewLocation = (props) => {
                 >
                   Reset
                 </button>
-
                 <button
                   type="button"
                   className="btn btn-outline-danger"
