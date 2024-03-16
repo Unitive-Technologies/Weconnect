@@ -28,10 +28,19 @@ import RevenueShare from "./RevenueShare";
 import PieChart from "./PieChart";
 import { resetSection } from "redux-form";
 import ShowHistoryModal from "./ShowHistoryModal";
+import RevenueShareForEdit from "./RevenueShareForEdit";
 
 const ViewBroadCasterBouquet = (props) => {
-  const { isOpen, selectedRowId,
-    broadcasterBouquetType, broadcasterBouquetBroadcaster, broadcasterBouquetDefinition, broadcasterBouquetStatus, toggleViewModal, broadcast } = props;
+  const {
+    isOpen,
+    selectedRowId,
+    broadcasterBouquetType,
+    broadcasterBouquetBroadcaster,
+    broadcasterBouquetDefinition,
+    broadcasterBouquetStatus,
+    toggleViewModal,
+    broadcast,
+  } = props;
   const dispatch = useDispatch();
 
   const [showHistory, setShowHistory] = useState(false);
@@ -39,7 +48,6 @@ const ViewBroadCasterBouquet = (props) => {
   const toggleHistoryModal = () => {
     setShowHistory(!showHistory);
   };
-
 
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
 
@@ -61,7 +69,7 @@ const ViewBroadCasterBouquet = (props) => {
     setSelectedRate(inputValue >= 0 ? inputValue : 0);
   };
 
-  console.log("View broadcast" + JSON.stringify(broadcast))
+  console.log("View broadcast" + JSON.stringify(broadcast));
 
   const handleArrowKeyPress = (e) => {
     if (e.key === "ArrowUp" || e.key === "ArrowDown") {
@@ -340,8 +348,7 @@ const ViewBroadCasterBouquet = (props) => {
                         </option>
                       ))}
                   </Input>
-                  {validation.touched.isHD &&
-                    validation.errors.isHD ? (
+                  {validation.touched.isHD && validation.errors.isHD ? (
                     <FormFeedback type="invalid">
                       {validation.errors.isHD}
                     </FormFeedback>
@@ -365,13 +372,13 @@ const ViewBroadCasterBouquet = (props) => {
                     disabled={!showEditBroadcast}
                     invalid={
                       validation.touched.description &&
-                        validation.errors.description
+                      validation.errors.description
                         ? true
                         : false
                     }
                   />
                   {validation.touched.description &&
-                    validation.errors.description ? (
+                  validation.errors.description ? (
                     <FormFeedback type="invalid">
                       {validation.errors.description}
                     </FormFeedback>
@@ -402,12 +409,16 @@ const ViewBroadCasterBouquet = (props) => {
                   >
                     {broadcasterBouquetType &&
                       broadcasterBouquetType.map((channel_type_lbl) => (
-                        <option key={channel_type_lbl.id} value={channel_type_lbl.id}>
+                        <option
+                          key={channel_type_lbl.id}
+                          value={channel_type_lbl.id}
+                        >
                           {channel_type_lbl.name}
                         </option>
                       ))}
                   </Input>
-                  {validation.touched.channel_type_lbl && validation.errors.channel_type_lbl ? (
+                  {validation.touched.channel_type_lbl &&
+                  validation.errors.channel_type_lbl ? (
                     <FormFeedback type="invalid">
                       {validation.errors.channel_type_lbl}
                     </FormFeedback>
@@ -436,13 +447,16 @@ const ViewBroadCasterBouquet = (props) => {
                     {/* <option value="">Select Type</option> */}
                     {broadcasterBouquetBroadcaster &&
                       broadcasterBouquetBroadcaster.map((broadcaster_id) => (
-                        <option key={broadcaster_id.id} value={broadcaster_id.id}>
+                        <option
+                          key={broadcaster_id.id}
+                          value={broadcaster_id.id}
+                        >
                           {broadcaster_id.name}
                         </option>
                       ))}
                   </Input>
                   {validation.touched.broadcaster_id &&
-                    validation.errors.broadcaster_id ? (
+                  validation.errors.broadcaster_id ? (
                     <FormFeedback type="invalid">
                       {validation.errors.broadcaster_id}
                     </FormFeedback>
@@ -535,7 +549,7 @@ const ViewBroadCasterBouquet = (props) => {
                     }}
                   >
                     <Col lg="6">
-                      <RevenueShare
+                      <RevenueShareForEdit
                         // disabled={!showEditBroadcast}
                         showEditBroadcast={showEditBroadcast}
                         broadPercent={broadPercent}
@@ -543,31 +557,45 @@ const ViewBroadCasterBouquet = (props) => {
                         discountPercent={discountPercent}
                         setBroadPercent={setBroadPercent}
                         setMsoPercent={setMsoPercent}
-                        setDiscountPercent={setDiscountPercent} />
+                        setDiscountPercent={setDiscountPercent}
+                      />
                     </Col>
                     {broadcast && (
                       <>
-                        {broadcast.isFta === 0 && parseInt(broadcast.broadcasterRate) !== "" && (
-                          <Col lg={6}>
-                            <Card>
-                              <CardBody>
-                                <span>Graphical representation of SHARE</span>
-                                <CardTitle className="mb-4">
-                                  (MRP: {!showEditBroadcast ? (parseFloat(broadcast.broadcasterRate).toFixed(2)) : parseFloat(validation.values.rate).toFixed(2)}){" "}
-                                  {/* parseFloat(validation.values.rate).toFixed(2) */}
-                                </CardTitle>
-                                <PieChart
-                                  broadPercent={broadPercent}
-                                  msoPercent={msoPercent}
-                                  discountPercent={discountPercent}
-                                  // selectedRate={selectedRate}
-                                  selectedRate={!showEditBroadcast ? parseInt(broadcast.broadcasterRate) : validation.values.rate}
-                                  dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
-                                />
-                              </CardBody>
-                            </Card>
-                          </Col>
-                        )}
+                        {broadcast.isFta === 0 &&
+                          parseInt(broadcast.broadcasterRate) !== "" && (
+                            <Col lg={6}>
+                              <Card>
+                                <CardBody>
+                                  <span>Graphical representation of SHARE</span>
+                                  <CardTitle className="mb-4">
+                                    (MRP:{" "}
+                                    {!showEditBroadcast
+                                      ? parseFloat(
+                                          broadcast.broadcasterRate
+                                        ).toFixed(2)
+                                      : parseFloat(
+                                          validation.values.rate
+                                        ).toFixed(2)}
+                                    ){" "}
+                                    {/* parseFloat(validation.values.rate).toFixed(2) */}
+                                  </CardTitle>
+                                  <PieChart
+                                    broadPercent={broadPercent}
+                                    msoPercent={msoPercent}
+                                    discountPercent={discountPercent}
+                                    // selectedRate={selectedRate}
+                                    selectedRate={
+                                      !showEditBroadcast
+                                        ? parseInt(broadcast.broadcasterRate)
+                                        : validation.values.rate
+                                    }
+                                    dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
+                                  />
+                                </CardBody>
+                              </Card>
+                            </Col>
+                          )}
                       </>
                     )}
                   </Row>
@@ -605,33 +633,35 @@ const ViewBroadCasterBouquet = (props) => {
                 />
               </Col>
             </Row>
-            <Row>
-              <Col>
-                <ModalFooter>
-                  <button type="submit" className="btn btn-success save-user">
-                    Save
-                  </button>
-                  <button
-                    type="reset"
-                    className="btn btn-warning"
-                    onClick={() => validation.resetForm()}
-                  >
-                    Reset
-                  </button>
+            {showEditBroadcast && (
+              <Row>
+                <Col>
+                  <ModalFooter>
+                    <button type="submit" className="btn btn-success save-user">
+                      Save
+                    </button>
+                    <button
+                      type="reset"
+                      className="btn btn-warning"
+                      onClick={() => validation.resetForm()}
+                    >
+                      Reset
+                    </button>
 
-                  <button
-                    type="button"
-                    className="btn btn-outline-danger"
-                    onClick={() => {
-                      validation.resetForm();
-                      handleCancel();
-                    }}
-                  >
-                    Cancel
-                  </button>
-                </ModalFooter>
-              </Col>
-            </Row>
+                    <button
+                      type="button"
+                      className="btn btn-outline-danger"
+                      onClick={() => {
+                        validation.resetForm();
+                        handleCancel();
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </ModalFooter>
+                </Col>
+              </Row>
+            )}
           </Form>
         </ModalBody>
         {/* </Modal> */}
