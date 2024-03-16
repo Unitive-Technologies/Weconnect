@@ -31,7 +31,7 @@ const AddSubLocation = (props) => {
     label: (
       <div>
         <h6>{option.name}</h6>
-        <p>LCO {option.operator_lbl}</p>
+        <p>LCO {option.location_id}</p>
       </div>
     ),
   }));
@@ -127,40 +127,31 @@ const AddSubLocation = (props) => {
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
-                  Select Location<span style={{ color: "red" }}>*</span>
+                  Select LCO<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Select
                   name="location_id"
                   options={options}
                   onChange={(selectedOption) => {
-                    console.log("SelectedOption: ", selectedOption);
-                    setSelectedLocation(selectedOption);
-                    validation.handleChange({
-                      target: {
-                        name: "location_id",
-                        value: selectedOption.value,
-                      },
-                    });
+                    validation.setFieldValue('location_id', selectedOption ? selectedOption.value : ''); // Set the value of operator_id
                   }}
-                  invalid={
-                    validation.touched.location_id && validation.errors.location_id
-                      ? true
-                      : false
-                  }
                   onBlur={validation.handleBlur}
-                  value={options.find(
-                    (opt) => opt.value === validation.values.location_id
-                  )}
-                  styles={customStyles}
+                  styles={{
+                    control: (provided, state) => ({
+                      ...provided,
+                      borderColor: state.isFocused ? (validation.touched.location_id && validation.errors.location_id ? 'red' : '') : (validation.touched.location_id && validation.errors.location_id ? 'red' : ''),
+                    }),
+                  }}
+                  classNamePrefix="react-select"
                 />
-                {
-                  validation.errors.location_id ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.location_id}
-                    </FormFeedback>
-                  ) : null}
+                {validation.touched.location_id && validation.errors.location_id && (
+                  <FormFeedback style={{ display: 'block' }}>
+                    {validation.errors.location_id}
+                  </FormFeedback>
+                )}
               </div>
             </Col>
+
 
             <Col lg={4}>
               <div className="mb-3">
