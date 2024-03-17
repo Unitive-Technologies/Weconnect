@@ -72,17 +72,25 @@ const NSTVList = (props) => {
     validationSchema: Yup.object().shape({
       name: Yup.string().required("Enter name"),
       status: Yup.string().required("Select status"),
-      start_time: Yup.string().required(""),
-      end_time: Yup.string().required(""),
-      config: Yup.string().required(""),
-      enable: Yup.string().required("Send OSD"),
-      forceddisplay: Yup.string().required("Select forced dispplay"),
-      displaytype: Yup.string().required("Select display type"),
-      fontSize: Yup.string().required("Select font size"),
-      fontcolor: Yup.string().required("fontcolor"),
-      backgroundColor: Yup.string().required("enable"),
-      backgroundarea: Yup.string().required("backgroundarea"),
-      // }),
+      start_time: Yup.string().required("Enter start time"),
+      end_time: Yup.string().required("Enter end time"),
+      config: Yup.object().shape({
+        // config: Yup.boolean(),
+        enable: Yup.boolean(),
+        // enable: Yup.string().required("Select enable"),
+        forceddisplay: Yup.string().when('enable', {
+          is: true,
+          then: Yup.string().required('License number is required'),
+        }),
+        displaytype: Yup.string().required("Select display type"),
+        duration: Yup.number().required("Enter duration").positive().integer(),
+        interval: Yup.number().required("Enter interval").positive().integer(),
+        repetition: Yup.number().required("Enter repetition").min(1).max(10).integer(),
+        fontSize: Yup.string().required("Select font size"),
+        fontcolor: Yup.string().required("Select font color"),
+        backgroundColor: Yup.string().required("Select background color"),
+        backgroundarea: Yup.string().required("Select background area"),
+      }),
     }),
 
 
@@ -345,14 +353,14 @@ const NSTVList = (props) => {
                             </option>
                           ))}
                       </Input>
-                      {validation.touched.forceddisplay &&
-                        validation.errors.forceddisplay ? (
+                      {validation.touched.forceddisplay && validation.errors.forceddisplay ? (
                         <FormFeedback type="invalid">
                           {validation.errors.forceddisplay}
                         </FormFeedback>
                       ) : null}
                     </div>
                   </Col>
+
 
                   <Col sm="4">
                     <div className="mb-3">
@@ -671,7 +679,7 @@ const NSTVList = (props) => {
             </Col>
           </Row>
         </Form>
-      </ModalBody>
+      </ModalBody >
       {/* </Modal> */}
     </Modal >
   );
