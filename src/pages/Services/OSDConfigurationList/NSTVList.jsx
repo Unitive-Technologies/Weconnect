@@ -74,33 +74,15 @@ const NSTVList = (props) => {
       status: Yup.string().required("Select status"),
       start_time: Yup.string().required(""),
       end_time: Yup.string().required(""),
-      config: Yup.object().shape({
-        enable: Yup.string().required("Send OSD"),
-        forceddisplay: Yup.string().when('enable', {
-          is: '00',
-          then: Yup.string().required("Select forced display"),
-        }),
-        displaytype: Yup.string().when('enable', {
-          is: '00',
-          then: Yup.string().required("Select display type"),
-        }),
-        fontSize: Yup.string().when('enable', {
-          is: '00',
-          then: Yup.string().required("Select font size"),
-        }),
-        fontcolor: Yup.string().when('enable', {
-          is: '00',
-          then: Yup.string().required("Select font color"),
-        }),
-        backgroundColor: Yup.string().when('enable', {
-          is: '00',
-          then: Yup.string().required("Select back color"),
-        }),
-        backgroundarea: Yup.string().when('enable', {
-          is: '00',
-          then: Yup.string().required("Select background area"),
-        }),
-      }),
+      config: Yup.string().required(""),
+      enable: Yup.string().required("Send OSD"),
+      forceddisplay: Yup.string().required("Select forced dispplay"),
+      displaytype: Yup.string().required("Select display type"),
+      fontSize: Yup.string().required("Select font size"),
+      fontcolor: Yup.string().required("fontcolor"),
+      backgroundColor: Yup.string().required("enable"),
+      backgroundarea: Yup.string().required("backgroundarea"),
+      // }),
     }),
 
 
@@ -691,7 +673,7 @@ const NSTVList = (props) => {
         </Form>
       </ModalBody>
       {/* </Modal> */}
-    </Modal>
+    </Modal >
   );
 };
 
