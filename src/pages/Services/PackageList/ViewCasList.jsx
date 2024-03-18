@@ -107,7 +107,7 @@ const ViewCasList = (props) => {
                   onChange={(e) => setCasSelection(e.target.value)}
                   // disabled={data.length === 0 ? false : true}
                   // value={validation.values.cas || casSelection}
-                  disabled={!showEditChannel}
+                  disabled={!showEditChannel || data.length > 0}
                 >
                   <option value="">Select cascode</option>
                   {casSelectList &&
@@ -136,7 +136,7 @@ const ViewCasList = (props) => {
                     value={casCode}
                     onChange={(e) => setCasCode(e.target.value)}
                     // value={validation.values.cascode || casCode}
-                    disabled={!showEditChannel}
+                    disabled={!showEditChannel || !casSelection}
                   />
                 </div>
               </Col>
@@ -147,7 +147,7 @@ const ViewCasList = (props) => {
                     onClick={updateCasList}
                     type="button"
                     className="btn btn-primary "
-                    disabled={!showEditChannel}
+                    disabled={!showEditChannel || !casCode}
                   >
                     <i
                       className="bx bx-right-arrow-alt"

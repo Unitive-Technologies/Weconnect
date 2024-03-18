@@ -153,7 +153,7 @@ const ViewPackageList = (props) => {
     }),
     onSubmit: (values) => {
       const updatedPackage = {
-        code: values["code"],
+        id: selectedRowDetails.id,
         name: values["name"],
         description: values["description"],
         isHD: parseInt(values["definition"]),
