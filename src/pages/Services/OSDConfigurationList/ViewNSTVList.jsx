@@ -118,7 +118,7 @@ const ViewNSTVList = (props) => {
         "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required(""),
+      name: Yup.string().required("Enter conf name"),
       //   status_lbl: Yup.string().required(""),
       //   start_time: Yup.string().required(""),
       //   end_time: Yup.string().required(""),
@@ -245,6 +245,11 @@ const ViewNSTVList = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.name || ""}
                     disabled={!showEditosdConfiguration}
+                    invalid={
+                      validation.touched.name && validation.errors.name
+                        ? true
+                        : false
+                    }
                   ></Input>
                   {validation.touched.name && validation.errors.name ? (
                     <FormFeedback type="invalid">
