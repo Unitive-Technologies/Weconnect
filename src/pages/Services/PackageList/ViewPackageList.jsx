@@ -563,7 +563,7 @@ const ViewPackageList = (props) => {
                   zIndex: 12000,
                   backgroundColor: "#fff",
                   width: "fit-content",
-                  marginLeft: "50%",
+                  marginLeft: "60%",
                   position: "absolute",
                   padding: "0px 10px",
                 }}

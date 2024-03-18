@@ -254,17 +254,18 @@ const ViewBroadcasterBouquets = (props) => {
           <Col lg={10}></Col>
           <Col lg={2}>
             <div className="mb-3">
-              <button
-                disabled={!showEditChannel}
-                type="button"
-                onClick={handleViewChannelsPlus}
-                className="btn btn-primary d-flex justify-content-end"
-              >
-                <i
-                  className="mdi mdi-plus ms-1"
-                  style={{ fontSize: 20, textAlign: "right" }}
-                ></i>
-              </button>
+              {showEditChannel && (
+                <button
+                  onClick={handleViewChannelsPlus}
+                  type="button"
+                  className="btn btn-primary "
+                >
+                  <i
+                    className="bx bx-right-arrow-alt"
+                    style={{ fontSize: 20 }}
+                  ></i>
+                </button>
+              )}
             </div>
           </Col>
         </Row>
@@ -310,10 +311,10 @@ const ViewBroadcasterBouquets = (props) => {
               <th>Name</th>
               <th>BroadCaster</th>
               <th>Type</th>
-              <th>Channel Count</th>
+              <th>Chan.Count</th>
               <th>FTA</th>
               <th>Rate</th>
-              <th>$</th>
+              {showEditChannel && <th>$</th>}
             </tr>
           </thead>
           {data && (
@@ -362,20 +363,16 @@ const ViewBroadcasterBouquets = (props) => {
                     {" "}
                     <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td>
                   </td>
-                  <td>
-                    <h5>
-                      <Link
-                        className="text-dark"
-                        to="#"
+                  {showEditChannel && (
+                    <td>
+                      <i
+                        style={{ cursor: "pointer" }}
                         onClick={() => deleteChannel(index)}
-                      >
-                        <i
-                          className="mdi mdi-delete font-size-18"
-                          id="deletetooltip"
-                        />
-                      </Link>
-                    </h5>
-                  </td>
+                        className="mdi mdi-delete font-size-18"
+                        id="deletetooltip"
+                      />
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>
