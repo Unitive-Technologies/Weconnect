@@ -28,7 +28,7 @@ import ShowHistoryModal from "./ShowHistoryModal";
 const ViewPackageList = (props) => {
   const {
     isOpen,
-    handleViewPackageList,
+    toggleViewModal,
     packageList,
     selectedRowId,
     packageType,
@@ -37,14 +37,14 @@ const ViewPackageList = (props) => {
     resetSelection,
   } = props;
   // console.log("selectedRowId:" + selectedRowId);
-  // console.log("selectedRow by useEffect:" + JSON.stringify(selectedRowDetails));
+  console.log("selectedRow by useEffect:" + JSON.stringify(packageList));
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const dispatch = useDispatch();
   const [showEditChannel, setShowEditChannel] = useState(false);
   const [selectedRowDetails, setSelectedRowDetails] = useState({});
   const [casCodeList, setCasCodeList] = useState([]);
-
   const [casSelectList, setCasSelectList] = useState([]);
+  const [selectedType, setSelectedType] = useState("");
 
   const [totalChannelsInChannels, setTotalChannelsInChannels] = useState(0);
   const [totalPackageRateInChannels, setTotalPackageRateInChannels] =
@@ -59,6 +59,77 @@ const ViewPackageList = (props) => {
     setShowHistory(!showHistory);
   };
 
+  const handleTypeChange = async (e) => {
+    const selectValue = e.target.value;
+    setSelectedType(selectValue);
+    console.log(
+      "SSSSSSSSSSSSSSSSSSSSelectedType:" + selectedType,
+      typeof selectedType
+    );
+
+    try {
+      validation.handleChange(e);
+      // console.log("type of selectType:" + typeof selectedType);
+      const token = "Bearer " + localStorage.getItem("temptoken");
+      if (selectValue === "1") {
+        const response = await axios.get(
+          `${API_URL}/casvendor/list?fields=id,name&filter[package_type]=1&vr=web1.0`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        setCasSelectList(response.data.data);
+      } else if (selectValue === "0") {
+        const response = await axios.get(
+          `${API_URL}/casvendor/list?fields=id,name&filter[package_type]=0&vr=web1.0`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        setCasSelectList(response.data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching CasSelectList data:", error);
+    }
+  };
+
+  const getCasSelectList = async (e) => {
+    console.log(
+      "SSSSSSSSSSSSSSSSSSSSelectedType:" + selectedType,
+      typeof selectedType
+    );
+
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+      if (selectedType === "1") {
+        const response = await axios.get(
+          `${API_URL}/casvendor/list?fields=id,name&filter[package_type]=1&vr=web1.0`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        setCasSelectList(response.data.data);
+      } else if (selectedType === "0") {
+        const response = await axios.get(
+          `${API_URL}/casvendor/list?fields=id,name&filter[package_type]=0&vr=web1.0`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        setCasSelectList(response.data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching CasSelectList data:", error);
+    }
+  };
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -111,20 +182,31 @@ const ViewPackageList = (props) => {
       validation.resetForm();
       resetSelection();
       setShowEditChannel(false);
-      handleViewPackageList();
+      toggleViewModal();
     },
   });
 
   const handleCancel = () => {
     setShowEditChannel(false);
     resetSelection();
-    handleViewPackageList();
+    toggleViewModal();
   };
 
   const handleUpdateCasList = (casList) => {
     setCasCodeList(casList);
   };
 
+  useEffect(() => {
+    if (packageList) {
+      setCasCodeList(packageList.casCodes);
+      setSelectedType(parseInt(packageList.isFta));
+      console.log(
+        "selectedRowDetails.isFta:" + packageList.isFta,
+        typeof packageList.isFta
+      );
+      getCasSelectList();
+    }
+  }, [packageList]);
   useEffect(() => {
     const getSelectedRowDetails = async (e) => {
       try {
@@ -149,7 +231,8 @@ const ViewPackageList = (props) => {
       getSelectedRowDetails();
     }
   }, [selectedRowId]);
-  console.log("selectedRowDetails:" + JSON.stringify(selectedRowDetails));
+  console.log("casCodeList:" + JSON.stringify(casCodeList));
+  console.log("casSelectList:" + JSON.stringify(casSelectList));
 
   return (
     <>
@@ -282,7 +365,7 @@ const ViewPackageList = (props) => {
                       ))}
                   </Input>
                   {validation.touched.definition &&
-                    validation.errors.definition ? (
+                  validation.errors.definition ? (
                     <FormFeedback type="invalid">
                       {validation.errors.definition}
                     </FormFeedback>
@@ -305,13 +388,13 @@ const ViewPackageList = (props) => {
                     value={validation.values.description || ""}
                     invalid={
                       validation.touched.description &&
-                        validation.errors.description
+                      validation.errors.description
                         ? true
                         : false
                     }
                   />
                   {validation.touched.description &&
-                    validation.errors.description ? (
+                  validation.errors.description ? (
                     <FormFeedback type="invalid">
                       {validation.errors.description}
                     </FormFeedback>
@@ -331,13 +414,11 @@ const ViewPackageList = (props) => {
                     placeholder="Select type"
                     className="form-select"
                     disabled={!showEditChannel}
-                    onChange={validation.handleChange}
+                    onChange={handleTypeChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.type || ""}
+                    value={validation.values.type || selectedType}
+                    // value={selectedType}
                   >
-                    {/* <option value="104">Select channel type</option>
-                  <option value="105">Pay Channel</option>
-                  <option value="106">FTA</option> */}
                     {packageType &&
                       packageType.map((type) => (
                         <option key={type.id} value={type.id}>
@@ -412,10 +493,13 @@ const ViewPackageList = (props) => {
               <Col sm="12">
                 {console.log("casCodeList:" + JSON.stringify(casCodeList))}
                 <ViewCasList
-                  data={selectedRowDetails.casCodes}
+                  isOpen={Boolean(handleUpdateCasList)}
+                  data={casCodeList}
                   showEditChannel={showEditChannel}
                   updateList={setCasCodeList}
                   casSelectList={casSelectList}
+                  setCasSelectList={setCasSelectList}
+                  selectedType={selectedType}
                 />
                 {/* <CasList
                 isOpen={Boolean(handleUpdateCasList)}
@@ -463,7 +547,9 @@ const ViewPackageList = (props) => {
                     showEditChannel={showEditChannel}
                     data={selectedRowDetails.channels}
                     setTotalChannelsInChannels={setTotalChannelsInChannels}
-                    setTotalPackageRateInChannels={setTotalPackageRateInChannels}
+                    setTotalPackageRateInChannels={
+                      setTotalPackageRateInChannels
+                    }
                     totalChannelsInChannels={totalChannelsInChannels}
                     totalPackageRateInChannels={totalPackageRateInChannels}
                   />
@@ -497,7 +583,9 @@ const ViewPackageList = (props) => {
                     showEditChannel={showEditChannel}
                     data={selectedRowDetails.brdBouques}
                     setTotalChannelsInBouquets={setTotalChannelsInBouquets}
-                    setTotalPackageRateInBouquets={setTotalPackageRateInBouquets}
+                    setTotalPackageRateInBouquets={
+                      setTotalPackageRateInBouquets
+                    }
                     totalChannelsInBouquets={totalChannelsInBouquets}
                     totalPackageRateInBouquets={totalPackageRateInBouquets}
                   />

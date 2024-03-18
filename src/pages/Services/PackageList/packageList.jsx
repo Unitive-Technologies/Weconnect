@@ -130,10 +130,10 @@ const PackageList = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-              // onClick={() => {
-              //   const packageData = cellProps.row.original;
-              //   handleViewPackageList(packageData);
-              // }}
+                // onClick={() => {
+                //   const packageData = cellProps.row.original;
+                //   handleViewPackageList(packageData);
+                // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -241,8 +241,7 @@ const PackageList = (props) => {
       dispatch(onGetPackageCascode());
     }
   }, [dispatch, packageList]);
-  console.log("PackageCasCode in packagelist" + JSON.stringify(packageCascode))
-
+  console.log("PackageCasCode in packagelist" + JSON.stringify(packageCascode));
 
   const goToPage = (toPage) => {
     console.log("[GOTO PAGE] Trigger to page - ", toPage);
@@ -271,13 +270,15 @@ const PackageList = (props) => {
   const [viewData, setViewData] = useState({});
   const [selectedRowId, setSelectedRowId] = useState("");
 
-  const handleViewPackageList = (packageData) => {
+  const toggleViewModal = (packageData) => {
     setShowViewPackageList(!showViewPackageList);
     setViewData(packageData);
     setSelectedRowId(packageData.id);
   };
 
-  const keyField = "id";
+  const resetSelection = () => {
+    setViewData({});
+  };
 
   const renderChannelBBQTable = (row) => {
     const { channels, brdBouques } = row;
@@ -376,12 +377,13 @@ const PackageList = (props) => {
       {showViewPackageList && (
         <ViewPackageList
           isOpen={showViewPackageList}
-          handleViewPackageList={handleViewPackageList}
+          toggleViewModal={toggleViewModal}
           packageList={viewData}
           selectedRowId={selectedRowId}
           packageType={packageType}
           packageBoxType={packageBoxType}
           packageStatus={packageStatus}
+          resetSelection={resetSelection}
         />
       )}
 
@@ -396,7 +398,7 @@ const PackageList = (props) => {
               <Col lg="12">
                 <Card>
                   <CardBody>
-                    {console.log("packageList:" + JSON.stringify(packageList))}
+                    {/* {console.log("packageList:" + JSON.stringify(packageList))} */}
                     {/* <TableContainer
                       isPagination={true}
                       columns={columns}
@@ -435,7 +437,7 @@ const PackageList = (props) => {
                       isGlobalFilter={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
-                      handleRowClick={(row) => handleViewPackageList(row)}
+                      handleRowClick={(row) => toggleViewModal(row)}
                       handleAddNewPackageList={() =>
                         setShowAddNewPackageList(true)
                       }

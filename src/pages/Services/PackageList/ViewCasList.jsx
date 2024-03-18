@@ -1,5 +1,6 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
 import TableContainer from "../../../components/Common/TableContainer";
 import {
   Card,
@@ -19,146 +20,69 @@ import { addNewPackageList as onAddNewPackageList } from "/src/store/packagelist
 import { Link } from "react-router-dom";
 
 const ViewCasList = (props) => {
-  const { data, showEditChannel } = props;
-
+  const {
+    data,
+    showEditChannel,
+    updateList,
+    casSelectList,
+    selectedType,
+    setCasSelectList,
+  } = props;
+  console.log("casSelectList in ViewCasList:" + JSON.stringify(casSelectList));
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
+  const [casSelection, setCasSelection] = useState("");
+  const [casCode, setCasCode] = useState("");
   console.log("data in viewcaslist:" + JSON.stringify(data));
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
 
-    initialValues: {
-      //BroadCaster: "",
-      cas: "",
-      cascode: "",
-      created_by: "Admin",
-    },
-    validationSchema: Yup.object({
-      cas: Yup.string().required("Enter Select Cas"),
-      cascode: Yup.string().required("Enter cascode"),
-      // serviceid: Yup.string().required("serviceid"),
-    }),
-    onSubmit: (values) => {
-      const newPackageList = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
-        cas: values["cas"],
-        cascode: values["cascode"],
-        created_at: new Date(),
-        created_by: values["created_by"],
-      };
-      console.log("newPackageList:" + newPackageList);
-      // save new user
-      dispatch(onAddNewPackageList(newPackageList));
-      validation.resetForm();
-      toggle();
-    },
-    onReset: (values) => {
-      validation.setValues(validation.initialValues);
-    },
-  });
+  const updateCasList = () => {
+    if (!casSelection || !casCode) {
+      return;
+    }
 
-  const columns = useMemo(
-    () => [
-      {
-        Header: "#",
-        accessor: "cas_id",
-        disableFilters: true,
-        filterable: true,
-        Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
+    const newItem = {
+      cas_id: data.length + 1,
+      cas_lbl: casSelection,
+      cascode: casCode,
+    };
 
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {/* {reverseIndex} */}
-                  {cellProps.row.original.cas_id}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
+    const updatedData = [...data, newItem];
+    console.log("Updated Data in CasList" + updatedData);
+    updateList(updatedData);
 
-      {
-        Header: "CAS",
-        accessor: "cas_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.cas_lbl}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "CAS CODE",
-        accessor: "cascode",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.cascode}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "$",
-        // accessor: "type",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"$"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-    ],
-    []
-  );
-  const deleteCasList = (index) => {
-    const list = [...data];
-    list.splice(index, 1);
-    updateList(list);
+    setCasSelection("");
+    setCasCode("");
+  };
+
+  // const deleteCasList = (index) => {
+  //   const list = [...data];
+  //   list.splice(index, 1);
+  //   updateList(list);
+  // };
+  const deleteCasList = async (index) => {
+    console.log("delete btn clicked");
+    console.log(
+      "selectedType on deleteCasList:" + selectedType,
+      typeof selectedType
+    );
+    const updatedCasList = data.filter((_, i) => i !== index);
+    updateList(updatedCasList);
+
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/casvendor/list?fields=id,name&filter[package_type]=${selectedType}&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      // Assuming `setCasSelectList` is a function that updates the state or performs the necessary action based on the response data.
+      setCasSelectList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching CasSelectList data:", error);
+    }
   };
 
   return (
@@ -175,24 +99,24 @@ const ViewCasList = (props) => {
             <Col lg={12}>
               <div className="mb-3">
                 <Input
-                  name="type"
+                  name="casSelection"
                   type="select"
-                  placeholder="Select type"
+                  placeholder="Select CAS"
                   className="form-select"
-                  // disabled={!showEditChannel}
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  value={validation.values.cas || ""}
+                  value={casSelection}
+                  onChange={(e) => setCasSelection(e.target.value)}
+                  // disabled={data.length === 0 ? false : true}
+                  // value={validation.values.cas || casSelection}
                   disabled={!showEditChannel}
                 >
-                  <option value="104">Select CAS</option>
-                  <option value="105">FTA</option>
+                  <option value="">Select cascode</option>
+                  {casSelectList &&
+                    casSelectList.map((options) => (
+                      <option key={options.id} value={options.name}>
+                        {options.name}
+                      </option>
+                    ))}
                 </Input>
-                {validation.touched.cas && validation.errors.cas ? (
-                  <FormFeedback type="invalid">
-                    {validation.errors.cas}
-                  </FormFeedback>
-                ) : null}
               </div>
             </Col>
             <div
@@ -202,29 +126,26 @@ const ViewCasList = (props) => {
                 justifyContent: "space-between",
               }}
             >
-              <Col lg={12} style={{ marginRight: "20px" }}>
+              <Col lg={5} style={{ marginRight: "20px" }}>
                 <div className="mb-3">
+                  {/* <TODO>Add handlechange and update cascode</TODO> */}
                   <Input
-                    name="cascode"
+                    name="casCode"
                     type="text"
-                    placeholder="Cascode"
-                    // className="form-select"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.cascode || ""}
+                    placeholder="CAS Code"
+                    value={casCode}
+                    onChange={(e) => setCasCode(e.target.value)}
+                    // value={validation.values.cascode || casCode}
                     disabled={!showEditChannel}
-                  ></Input>
-                  {validation.touched.cascode && validation.errors.cascode ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.cascode}
-                    </FormFeedback>
-                  ) : null}
+                  />
                 </div>
               </Col>
+
               <Col lg={2}>
                 <div className="mb-3">
                   <button
-                    type="submit"
+                    onClick={updateCasList}
+                    type="button"
                     className="btn btn-primary "
                     disabled={!showEditChannel}
                   >
@@ -257,7 +178,7 @@ const ViewCasList = (props) => {
                   <th>#</th>
                   <th>CAS</th>
                   <th>CAS CODE</th>
-                  <th>$</th>
+                  {showEditChannel && <th>$</th>}
                 </tr>
               </thead>
               {data && (
@@ -274,20 +195,17 @@ const ViewCasList = (props) => {
                       </th>
                       <td>{item.cas_lbl}</td>
                       <td>{item.cascode}</td>
-                      <td>
-                        <h5>
-                          <Link
-                            className="text-dark"
-                            to="#"
+
+                      {showEditChannel && (
+                        <td>
+                          <i
+                            style={{ cursor: "pointer" }}
                             onClick={() => deleteCasList(index)}
-                          >
-                            <i
-                              className="mdi mdi-delete font-size-18"
-                              id="deletetooltip"
-                            />
-                          </Link>
-                        </h5>
-                      </td>
+                            className="mdi mdi-delete font-size-18"
+                            id="deletetooltip"
+                          />
+                        </td>
+                      )}
                     </tr>
                   ))}
                 </tbody>

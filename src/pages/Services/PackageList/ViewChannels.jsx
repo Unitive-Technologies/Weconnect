@@ -25,7 +25,7 @@ const ViewChannels = (props) => {
     totalChannelsInChannels,
     totalPackageRateInChannels,
   } = props;
-  console.log("data in viewchannels:" + JSON.stringify(data));
+  // console.log("data in viewchannels:" + JSON.stringify(data));
   const columns = useMemo(
     () => [
       {

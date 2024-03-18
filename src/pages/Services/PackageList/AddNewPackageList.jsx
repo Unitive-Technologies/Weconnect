@@ -268,9 +268,6 @@ const AddNewPackageList = (props) => {
                       : false
                   }
                 >
-                  {/* <option value="101">Select channel definition</option>
-                  <option value="102">Standard Definition(SD)</option>
-                  <option value="103">High Definition(HD)</option> */}
                   <option value="">Select channel definition</option>
                   {packageBoxType &&
                     packageBoxType.map((boxtype) => (
@@ -340,8 +337,6 @@ const AddNewPackageList = (props) => {
                   }
                 >
                   <option value="">Select channel type</option>
-                  {/* <option value="105">Pay Channel</option>
-                  <option value="106">FTA</option> */}
                   {packageType &&
                     packageType.map((type) => (
                       <option key={type.id} value={type.id}>
@@ -376,8 +371,6 @@ const AddNewPackageList = (props) => {
                   }
                 >
                   <option value="">Select Status</option>
-                  {/* <option value="102">Active</option>
-                  <option value="103">In-Active</option> */}
                   {packageStatus &&
                     packageStatus.map((status) => (
                       <option key={status.id} value={status.id}>
