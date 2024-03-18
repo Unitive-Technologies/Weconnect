@@ -274,15 +274,13 @@ const DistrictList = (props) => {
           status={status}
         />
       )}
-      {showUploadDistrict && (
-        <UploadDistrict
-          isOpen={showUploadDistrict}
-          toggleUploadModal={toggleUploadModal}
-          status={status}
-          actiontype={"add"}
-          statelist={statelist}
-        />
-      )}
+      <UploadDistrict
+        isOpen={showUploadDistrict}
+        toggleUploadModal={toggleUploadModal}
+        status={status}
+        actiontype={"add"}
+        statelist={statelist}
+      />
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
