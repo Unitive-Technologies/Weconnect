@@ -103,12 +103,11 @@ const AddNewPackageList = (props) => {
       status: "",
     },
     validationSchema: Yup.object({
-      // code: Yup.string().required("Enter Channel Code"),
-      name: Yup.string().required("Enter channel name"),
-      description: Yup.string().required("Enter description"),
-      // definition: Yup.string().required("Enter channel definition"),
-      // type: Yup.string().required("Enter channel type"),
-      // status: Yup.string().required("Enter status"),
+      name: Yup.string().required("Enter package name"),
+      description: Yup.string().required("Enter package description"),
+      definition: Yup.string().required("Select package definition"),
+      type: Yup.string().required("Select package type"),
+      status: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
       const newPackageList = {
@@ -236,6 +235,11 @@ const AddNewPackageList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}
+                  invalid={
+                    validation.touched.name && validation.errors.name
+                      ? true
+                      : false
+                  }
                 ></Input>
                 {validation.touched.name && validation.errors.name ? (
                   <FormFeedback type="invalid">
@@ -257,6 +261,12 @@ const AddNewPackageList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.definition || ""}
+                  invalid={
+                    validation.touched.definition &&
+                    validation.errors.definition
+                      ? true
+                      : false
+                  }
                 >
                   {/* <option value="101">Select channel definition</option>
                   <option value="102">Standard Definition(SD)</option>
@@ -323,6 +333,11 @@ const AddNewPackageList = (props) => {
                   onChange={handleTypeChange}
                   onBlur={validation.handleBlur}
                   value={selectedType}
+                  invalid={
+                    validation.touched.type && validation.errors.type
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select channel type</option>
                   {/* <option value="105">Pay Channel</option>
@@ -354,6 +369,11 @@ const AddNewPackageList = (props) => {
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
+                  invalid={
+                    validation.touched.status && validation.errors.status
+                      ? true
+                      : false
+                  }
                 >
                   <option value="">Select Status</option>
                   {/* <option value="102">Active</option>
