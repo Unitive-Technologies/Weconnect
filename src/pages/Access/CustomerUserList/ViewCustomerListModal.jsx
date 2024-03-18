@@ -58,7 +58,7 @@ const ViewCustomerUserModal = (props) => {
     },
     validationSchema: Yup.object({
       status: Yup.string().required("Please Enter Status"),
-      // block_message: Yup.string().required("Please Enter Block Message"),
+      block_message: Yup.string().required("Please Enter Block Message"),
     }),
     onSubmit: (values) => {
       const updateCustomerUser = {
@@ -313,16 +313,11 @@ const ViewCustomerUserModal = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.block_message || ""}
                     invalid={
-                      validation.touched.block_message &&
-                        validation.errors.block_message
-                        ? true
-                        : false
+                      // (validation.touched.block_message && validation.errors.block_message) ||
+                      (selectedStatus === "0" && validation.values.block_message.trim() === "") ||
+                      (selectedStatus === "-7" && validation.values.block_message.trim() === "")
                     }
-                    disabled={
-                      selectedStatus === "0" || selectedStatus === "-7"
-                        ? false
-                        : true
-                    }
+                    disabled={selectedStatus !== "0" && selectedStatus !== "-7"}
                   />
                   {validation.touched.block_message &&
                     validation.errors.block_message ? (

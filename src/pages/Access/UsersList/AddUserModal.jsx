@@ -276,10 +276,7 @@ const AddUserModal = (props) => {
       confirmpassword: Yup.string()
         .required("Retype Password")
         .oneOf([Yup.ref('password'), null], 'Passwords must match'),
-      block_message: Yup.string().when('status', {
-        is: '0',
-        then: Yup.string().required("Enter message for status ID 0")
-      }),
+      block_message: Yup.string().required("Enter message")
 
     }),
     onSubmit: (values) => {
@@ -781,16 +778,11 @@ const AddUserModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.block_message || ""}
                   invalid={
-                    validation.touched.block_message &&
-                      validation.errors.block_message
-                      ? true
-                      : false
+                    // (validation.touched.block_message && validation.errors.block_message) ||
+                    (selectedStatus === "0" && validation.values.block_message.trim() === "") ||
+                    (selectedStatus === "-7" && validation.values.block_message.trim() === "")
                   }
-                  disabled={
-                    selectedStatus === "0" || selectedStatus === "-7"
-                      ? false
-                      : true
-                  }
+                  disabled={selectedStatus !== "0" && selectedStatus !== "-7"}
                 />
                 {validation.touched.block_message &&
                   validation.errors.block_message ? (
@@ -800,6 +792,7 @@ const AddUserModal = (props) => {
                 ) : null}
               </div>
             </Col>
+
           </Row>
           <Row>
             <Col lg={4}>

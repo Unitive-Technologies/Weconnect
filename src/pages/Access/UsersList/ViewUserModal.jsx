@@ -250,6 +250,7 @@ const ViewUserModal = (props) => {
       designation: Yup.string().required("Please Enter Designation"),
       confirmpassword: Yup.string().required("Please Enter Confirm Password"),
       password: Yup.string().required("Please Enter Password"),
+      block_message: Yup.string().required("Enter message")
     }),
     onSubmit: (values) => {
       const updateUser = {
@@ -827,16 +828,11 @@ const ViewUserModal = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.block_message || ""}
                     invalid={
-                      validation.touched.block_message &&
-                        validation.errors.block_message
-                        ? true
-                        : false
+                      // (validation.touched.block_message && validation.errors.block_message) ||
+                      (selectedStatus === "0" && validation.values.block_message.trim() === "") ||
+                      (selectedStatus === "-7" && validation.values.block_message.trim() === "")
                     }
-                    disabled={
-                      selectedStatus === "0" || selectedStatus === "-7"
-                        ? false
-                        : true
-                    }
+                    disabled={selectedStatus !== "0" && selectedStatus !== "-7"}
                   />
                   {validation.touched.block_message &&
                     validation.errors.block_message ? (
