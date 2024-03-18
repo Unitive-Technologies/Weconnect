@@ -129,9 +129,10 @@ const ViewChannels = (props) => {
                     type="button"
                     // onClick={toggleShowChannelTableList}
                     onClick={
-                      definition && selectedType && selectedBroadcaster
-                        ? handleAddChannelsTable
-                        : handleAddChannelsWarning
+                      handleAddChannelsTable
+                      // definition && selectedType && selectedBroadcaster
+                      //   ? handleAddChannelsTable
+                      //   : handleAddChannelsWarning
                     }
                     className="btn btn-primary d-flex justify-content-end"
                   >

@@ -72,6 +72,11 @@ const AddChannels = (props) => {
     list.splice(index, 1);
     setChannels(list);
   };
+  // const deleteChannel = (index) => {
+  //   console.log("delete btn clicked");
+  //   const updatedChannels = channels.filter((_, i) => i !== index);
+  //   setChannels(updatedChannels);
+  // };
 
   useEffect(() => {
     let totalRate = 0;
@@ -95,6 +100,7 @@ const AddChannels = (props) => {
         isOpen={showChannelTableList}
         data={addChannelsList}
         toggleClose={() => setShowChannelTableList(false)}
+        channels={channels}
         setChannels={setChannels}
         definition={definition}
       />
@@ -170,66 +176,67 @@ const AddChannels = (props) => {
               </tr>
             </thead>
             <tbody>
-              {channels.map((item, index) => (
-                <tr key={index}>
-                  <th
-                    scope="row"
-                    style={{
-                      maxWidth: 10,
-                    }}
-                  >
-                    {index + 1}
-                  </th>
-                  <td
-                    style={{
-                      maxWidth: 100,
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {item.name}
-                  </td>
-                  <td
-                    style={{
-                      maxWidth: 50,
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {item.broadcaster_lbl}
-                  </td>
-                  <td>{item.channel_type_lbl}</td>
-                  <td>{item.isAlacarte_lbl}</td>
-                  <td>{item.isFta_lbl}</td>
-                  <td
-                    style={{
-                      maxWidth: 50,
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {" "}
-                    <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td>
-                  </td>
-                  <td>
-                    <h5>
-                      <Link
-                        className="text-dark"
-                        to="#"
-                        onClick={() => deleteChannel(index)}
-                      >
-                        <i
-                          className="mdi mdi-delete font-size-18"
-                          id="deletetooltip"
-                        />
-                      </Link>
-                    </h5>
-                  </td>
-                </tr>
-              ))}
+              {channels &&
+                channels.map((item, index) => (
+                  <tr key={index}>
+                    <th
+                      scope="row"
+                      style={{
+                        maxWidth: 10,
+                      }}
+                    >
+                      {index + 1}
+                    </th>
+                    <td
+                      style={{
+                        maxWidth: 100,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {item.name}
+                    </td>
+                    <td
+                      style={{
+                        maxWidth: 50,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {item.broadcaster_lbl}
+                    </td>
+                    <td>{item.channel_type_lbl}</td>
+                    <td>{item.isAlacarte_lbl}</td>
+                    <td>{item.isFta_lbl}</td>
+                    <td
+                      style={{
+                        maxWidth: 50,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {" "}
+                      <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td>
+                    </td>
+                    <td>
+                      <h5>
+                        <Link
+                          className="text-dark"
+                          to="#"
+                          onClick={() => deleteChannel(index)}
+                        >
+                          <i
+                            className="mdi mdi-delete font-size-18"
+                            id="deletetooltip"
+                          />
+                        </Link>
+                      </h5>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </Table>
         </CardBody>

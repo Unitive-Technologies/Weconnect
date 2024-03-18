@@ -226,57 +226,6 @@ const AddBroadcasterBouquetsTableList = (props) => {
     setBouquets(selectedRows);
     toggleClose();
   };
-  const columns1 = useMemo(
-    () => [
-      {
-        Header: "$",
-        // accessor: "type",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"Total Channels:"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "$",
-        // accessor: "type",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <h5
-              style={{
-                maxWidth: 200,
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-              }}
-              className="font-size-14 mb-1"
-            >
-              <Link className="text-dark" to="#">
-                {"Total"}
-              </Link>
-            </h5>
-          );
-        },
-      },
-    ],
-    []
-  );
 
   return (
     <Modal

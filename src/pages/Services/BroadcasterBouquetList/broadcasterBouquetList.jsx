@@ -357,27 +357,31 @@ const BroadcasterBouquetList = (props) => {
 
   return (
     <React.Fragment>
-      <AddNewBroadcasterBouquetList
-        isOpen={showAddNewBroadcasterBouquetList}
-        toggleAddModal={toggleAddModal}
-        broadcasterBouquetAddchannels={brodcastbouquetAddchannels}
-        broadcasterBouquetBroadcaster={brodcastbouquetBroadcaster}
-        broadcasterBouquetDefinition={brodcastbouquetDefinition}
-        broadcasterBouquetStatus={brodcastbouquetStatus}
-        broadcasterBouquetType={brodcastbouquetType}
-      />
-      <ViewBroadCasterBouquet
-        isOpen={viewBroadcastBouq}
-        toggleViewModal={toggleViewModal}
-        broadcast={viewBrocast}
-        broadcasterBouquetAddchannels={brodcastbouquetAddchannels}
-        broadcasterBouquetBroadcaster={brodcastbouquetBroadcaster}
-        broadcasterBouquetDefinition={brodcastbouquetDefinition}
-        broadcasterBouquetStatus={brodcastbouquetStatus}
-        broadcasterBouquetType={brodcastbouquetType}
-        resetSelection={resetSelection}
-        selectedRowId={selectedRowId}
-      />
+      {showAddNewBroadcasterBouquetList && (
+        <AddNewBroadcasterBouquetList
+          isOpen={Boolean(showAddNewBroadcasterBouquetList)}
+          toggleAddModal={toggleAddModal}
+          broadcasterBouquetAddchannels={brodcastbouquetAddchannels}
+          broadcasterBouquetBroadcaster={brodcastbouquetBroadcaster}
+          broadcasterBouquetDefinition={brodcastbouquetDefinition}
+          broadcasterBouquetStatus={brodcastbouquetStatus}
+          broadcasterBouquetType={brodcastbouquetType}
+        />
+      )}
+      {viewBroadcastBouq && (
+        <ViewBroadCasterBouquet
+          isOpen={Boolean(viewBroadcastBouq)}
+          toggleViewModal={toggleViewModal}
+          broadcast={viewBrocast}
+          broadcasterBouquetAddchannels={brodcastbouquetAddchannels}
+          broadcasterBouquetBroadcaster={brodcastbouquetBroadcaster}
+          broadcasterBouquetDefinition={brodcastbouquetDefinition}
+          broadcasterBouquetStatus={brodcastbouquetStatus}
+          broadcasterBouquetType={brodcastbouquetType}
+          resetSelection={resetSelection}
+          selectedRowId={selectedRowId}
+        />
+      )}
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}

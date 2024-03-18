@@ -20,7 +20,8 @@ import { Link } from "react-router-dom";
 import TableContainerX from "../../../components/Common/TableContainerX";
 
 const AddChannelsTableList = (props) => {
-  const { isOpen, data, toggleClose, setChannels, definition } = props;
+  const { isOpen, data, toggleClose, channels, setChannels, definition } =
+    props;
 
   console.log("definition:" + definition);
 
@@ -38,6 +39,7 @@ const AddChannelsTableList = (props) => {
         (selectedRow) => selectedRow.id !== row.id
       );
       setSelectedRows(updatedSelectedRows);
+      // setChannels([...channels, updatedSelectedRows]);
     } else {
       // If the row is not selected, add it to the selected rows array
       setSelectedRows([...selectedRows, row]);
@@ -47,6 +49,7 @@ const AddChannelsTableList = (props) => {
 
   const handleAddButtonClick = () => {
     setChannels(selectedRows);
+    // setChannels([...channels, ...selectedRows]);
     toggleClose();
   };
 
