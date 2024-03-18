@@ -45,6 +45,8 @@ const ViewPackageList = (props) => {
   const [casCodeList, setCasCodeList] = useState([]);
   const [casSelectList, setCasSelectList] = useState([]);
   const [selectedType, setSelectedType] = useState("");
+  const [channels, setChannels] = useState([]);
+  const [bouquets, setBouquets] = useState([]);
 
   const [totalChannelsInChannels, setTotalChannelsInChannels] = useState(0);
   const [totalPackageRateInChannels, setTotalPackageRateInChannels] =
@@ -200,11 +202,12 @@ const ViewPackageList = (props) => {
     if (packageList) {
       setCasCodeList(packageList.casCodes);
       setSelectedType(parseInt(packageList.isFta));
-      console.log(
-        "selectedRowDetails.isFta:" + packageList.isFta,
-        typeof packageList.isFta
-      );
-      getCasSelectList();
+      setChannels(packageList.channels);
+      // console.log(
+      //   "selectedRowDetails.isFta:" + packageList.isFta,
+      //   typeof packageList.isFta
+      // );
+      // getCasSelectList();
     }
   }, [packageList]);
   useEffect(() => {
@@ -545,7 +548,9 @@ const ViewPackageList = (props) => {
                 <Col sm="12" style={{ width: "550px" }}>
                   <ViewChannels
                     showEditChannel={showEditChannel}
-                    data={selectedRowDetails.channels}
+                    data={channels}
+                    setChannels={setChannels}
+                    selectedType={selectedType}
                     setTotalChannelsInChannels={setTotalChannelsInChannels}
                     setTotalPackageRateInChannels={
                       setTotalPackageRateInChannels
@@ -582,6 +587,7 @@ const ViewPackageList = (props) => {
                   <ViewBroadcasterBouquets
                     showEditChannel={showEditChannel}
                     data={selectedRowDetails.brdBouques}
+                    setBouquets={setBouquets}
                     setTotalChannelsInBouquets={setTotalChannelsInBouquets}
                     setTotalPackageRateInBouquets={
                       setTotalPackageRateInBouquets
@@ -649,7 +655,7 @@ const ViewPackageList = (props) => {
               </Row>
             </div>
 
-            {!showEditChannel && (
+            {showEditChannel && (
               <Row>
                 <Col>
                   <ModalFooter>

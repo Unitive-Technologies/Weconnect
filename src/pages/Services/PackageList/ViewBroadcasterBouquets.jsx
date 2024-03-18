@@ -260,10 +260,7 @@ const ViewBroadcasterBouquets = (props) => {
                   type="button"
                   className="btn btn-primary "
                 >
-                  <i
-                    className="bx bx-right-arrow-alt"
-                    style={{ fontSize: 20 }}
-                  ></i>
+                  <i className="bx bx-plus" style={{ fontSize: 20 }}></i>
                 </button>
               )}
             </div>

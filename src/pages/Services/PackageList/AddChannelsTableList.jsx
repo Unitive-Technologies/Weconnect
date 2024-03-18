@@ -20,10 +20,9 @@ import { Link } from "react-router-dom";
 import TableContainerX from "../../../components/Common/TableContainerX";
 
 const AddChannelsTableList = (props) => {
-  const { isOpen, data, toggleClose, channels, setChannels, definition } =
-    props;
-
-  console.log("definition:" + definition);
+  const { isOpen, data, toggleClose, channels, setChannels } = props;
+  // definition
+  // console.log("definition:" + definition);
 
   const [selectedRows, setSelectedRows] = useState([]);
 
@@ -64,29 +63,29 @@ const AddChannelsTableList = (props) => {
           return (
             <input
               type="checkbox"
-              disabled={
-                definition === "0" &&
-                cellProps.row.original.channel_type_lbl === "HD"
-              }
+              // disabled={
+              //   definition === "0" &&
+              //   cellProps.row.original.channel_type_lbl === "HD"
+              // }
             />
           );
         },
-        getRowProps: (row) => {
-          if (definition === "0" && row.original.channel_type_lbl === "HD") {
-            return {
-              style: {
-                background: "red",
-                pointerEvents: "none", // Disable clicking
-              },
-            };
-          } else {
-            return {
-              style: {
-                background: "inherit", // Use default background color
-              },
-            };
-          }
-        },
+        // getRowProps: (row) => {
+        //   if (definition === "0" && row.original.channel_type_lbl === "HD") {
+        //     return {
+        //       style: {
+        //         background: "red",
+        //         pointerEvents: "none", // Disable clicking
+        //       },
+        //     };
+        //   } else {
+        //     return {
+        //       style: {
+        //         background: "inherit", // Use default background color
+        //       },
+        //     };
+        //   }
+        // },
       },
       {
         Header: "#",
@@ -163,12 +162,12 @@ const AddChannelsTableList = (props) => {
           return (
             <>
               <h5
-                style={{
-                  color:
-                    definition === "0" &&
-                    cellProps.row.original.channel_type_lbl === "HD" &&
-                    "red",
-                }}
+                // style={{
+                //   color:
+                //     definition === "0" &&
+                //     cellProps.row.original.channel_type_lbl === "HD" &&
+                //     "red",
+                // }}
                 className="font-size-14 mb-1"
               >
                 {cellProps.row.original.channel_type_lbl}
@@ -251,7 +250,8 @@ const AddChannelsTableList = (props) => {
         },
       },
     ],
-    [definition]
+    []
+    // [definition]
   );
 
   return (
