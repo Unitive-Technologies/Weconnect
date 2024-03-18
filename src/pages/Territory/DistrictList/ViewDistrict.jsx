@@ -49,7 +49,7 @@ const ViewDistrict = (props) => {
       name: Yup.string()
         .required("Enter District")
         .min(2, "Minimum length 2 character"),
-      description: Yup.string().required("Enter description"),
+      description: Yup.string().required("Enter Description"),
     }),
     onSubmit: (values) => {
       console.log("Update District values: ", values);
