@@ -61,9 +61,9 @@ const ViewCity = (props) => {
       name: Yup.string()
         .required("Enter District")
         .min(2, "Minimum length 2 character"),
-      state_id: Yup.string().required("Select state"),
-      district_id: Yup.string().required("Select district"),
-      status: Yup.string().required("Select status"),
+      state_id: Yup.string().required("Select State"),
+      district_id: Yup.string().required("Select District"),
+      status: Yup.string().required("Select Status"),
       description: Yup.string().required("Enter Description"),
     }),
     onSubmit: (values) => {

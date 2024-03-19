@@ -168,7 +168,7 @@ const UploadCity = (props) => {
         dispatch(onAddCity(res.data.data));
         setCityStatus(false);
         setStateList(false);
-        set
+        setDistrictList(false);
         toggleUploadCity();
       })
       .catch((error) => {

@@ -52,10 +52,10 @@ const AddNewCity = (props) => {
         .required("Enter District")
         .min(2, "Minimum length 2 character"),
 
-      state_id: Yup.string().required("Select state"),
-      district_id: Yup.string().required("select district"),
-      status: Yup.string().required("Select status"),
-      description: Yup.string().required("Enter description"),
+      state_id: Yup.string().required("Select State"),
+      district_id: Yup.string().required("select District"),
+      status: Yup.string().required("Select Status"),
+      description: Yup.string().required("Enter Description"),
     }),
     onSubmit: (values) => {
       const newCity = {
