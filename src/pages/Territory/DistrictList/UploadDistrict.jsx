@@ -125,6 +125,7 @@ const UploadDistrict = (props) => {
         dispatch(onAddDistrict(res.data.data));
         setDistrictStatus(false);
         setStateList(false);
+        setCityStatus(false);
         toggleUploadModal();
       })
       .catch((error) => {

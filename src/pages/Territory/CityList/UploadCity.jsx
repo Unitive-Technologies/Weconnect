@@ -166,6 +166,9 @@ const UploadCity = (props) => {
 
         console.log("cleared the selected files and upload trigger");
         dispatch(onAddCity(res.data.data));
+        setCityStatus(false);
+        setStateList(false);
+        set
         toggleUploadCity();
       })
       .catch((error) => {
