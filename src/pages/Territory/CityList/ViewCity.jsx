@@ -64,7 +64,7 @@ const ViewCity = (props) => {
       state_id: Yup.string().required("Select state"),
       district_id: Yup.string().required("Select district"),
       status: Yup.string().required("Select status"),
-      description: Yup.string().required("Enter description"),
+      description: Yup.string().required("Enter Description"),
     }),
     onSubmit: (values) => {
       const updateCity = {

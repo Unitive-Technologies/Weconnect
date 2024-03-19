@@ -123,12 +123,16 @@ const UploadDistrict = (props) => {
 
         console.log("cleared the selected files and upload trigger");
         dispatch(onAddDistrict(res.data.data));
+        setDistrictStatus(false);
+        setStateList(false);
         toggleUploadModal();
       })
       .catch((error) => {
         console.log("error in upload:" + error);
       });
   };
+
+
   return (
     <>
       <div
