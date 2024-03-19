@@ -31,12 +31,12 @@ const ViewBroadcasterBouquets = (props) => {
   } = props;
   console.log("data in viewbrodcastBouquets:" + JSON.stringify(data));
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
-  const [showViewChannelsPlus, setShowViewChannelsPlus] = useState(false);
-  const [addChannelsList, setAddChannelsList] = useState([]);
-  const [showChannelTableList, setShowChannelTableList] = useState(false);
+  const [showViewBouquetPlus, setShowViewBouquetPlus] = useState(false);
+  const [addBouquetsList, setAddBouquetsList] = useState([]);
+  const [showBouquetTableList, setShowBouquetTableList] = useState(false);
 
-  const handleViewChannelsPlus = async () => {
-    setShowChannelTableList(!showChannelTableList);
+  const handleViewBouquetsPlus = async () => {
+    setShowBouquetTableList(!showBouquetTableList);
     try {
       const token = "Bearer " + localStorage.getItem("temptoken");
 
@@ -49,16 +49,16 @@ const ViewBroadcasterBouquets = (props) => {
         }
       );
 
-      setAddChannelsList(response.data.data);
+      setAddBouquetsList(response.data.data);
     } catch (error) {
       console.error("Error fetching Channels data:", error);
     }
   };
 
-  const deleteChannel = (id) => {
+  const deleteBouquet = (id) => {
     console.log("delete btn clicked" + id);
-    const updatedChannels = data.filter((channel) => channel.id !== id);
-    setBouquets(updatedChannels);
+    const updatedBouquets = data.filter((bouquet) => bouquet.id !== id);
+    setBouquets(updatedBouquets);
   };
   useEffect(() => {
     let totalRate = 0;
@@ -85,9 +85,9 @@ const ViewBroadcasterBouquets = (props) => {
   return (
     <>
       <AddBroadcasterBouquetsTableList
-        isOpen={showChannelTableList}
-        data={addChannelsList}
-        toggleClose={() => setShowChannelTableList(false)}
+        isOpen={showBouquetTableList}
+        data={addBouquetsList}
+        toggleClose={() => setShowBouquetTableList(false)}
         bouquets={data}
         setBouquets={setBouquets}
       />
@@ -99,7 +99,7 @@ const ViewBroadcasterBouquets = (props) => {
               <div className="mb-3">
                 {showEditChannel && (
                   <button
-                    onClick={handleViewChannelsPlus}
+                    onClick={handleViewBouquetsPlus}
                     type="button"
                     className="btn btn-primary "
                   >
@@ -110,115 +110,110 @@ const ViewBroadcasterBouquets = (props) => {
             </Col>
           </Row>
           <ViewBroadcasterBouquetsTableList
-            isOpen={showViewChannelsPlus}
-            handleAddChannelsTable={() => setShowViewChannelsPlus(false)}
+            isOpen={showViewBouquetPlus}
+            toggleViewBouquetPlus={() => setShowViewBouquetPlus(false)}
           />
-          {/* <div
-          className="position-fixed top-0 end-0 p-3"
-          style={{ zIndex: "1005" }}
-        >
-          <Toast isOpen={showAddChannelsPlus}>
-            <ToastHeader toggle={handleAddChannelsPlus}>
-              <i className="mdi mdi-alert-outline me-2"></i> Warning
-            </ToastHeader>
-            <ToastBody>Please select package definition</ToastBody>
-          </Toast>
-        </div> */}
 
-          {/* <TableContainer
-          columns={columns}
-          data={data}
-          tableClass="table align-middle table-nowrap table-hover"
-          theadClass="table-light"
-        /> */}
-          <Table
-            className="table mb-0"
-            style={{
-              minHeight: "200px",
-              maxHeight: "200px",
-              overflowY: "hidden",
-            }}
-          >
-            <thead>
-              <tr>
-                <th
-                  style={{
-                    maxWidth: 10,
-                  }}
-                >
-                  #
-                </th>
-                <th>Name</th>
-                <th>BroadCaster</th>
-                <th>Type</th>
-                <th>Chan.Count</th>
-                <th>FTA</th>
-                <th>Rate</th>
-                {showEditChannel && <th>$</th>}
-              </tr>
-            </thead>
-            {data && (
-              <tbody>
-                {data.map((item, index) => (
-                  <tr key={index}>
+          <Row>
+            <Col lg={12}>
+              <Table
+                className="table mb-0"
+                style={{
+                  minHeight: "200px",
+                  maxHeight: "200px",
+                  overflowY: "hidden",
+                }}
+              >
+                <thead>
+                  <tr>
                     <th
-                      scope="row"
                       style={{
                         maxWidth: 10,
                       }}
                     >
-                      {index + 1}
+                      #
                     </th>
-                    <td
+                    <th>Name</th>
+                    <th>BroadCaster</th>
+                    <th>Type</th>
+                    <th
                       style={{
-                        maxWidth: 100,
+                        maxWidth: 80,
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap",
                       }}
                     >
-                      {item.name}
-                    </td>
-                    <td
-                      style={{
-                        maxWidth: 50,
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {item.broadcaster_lbl}
-                    </td>
-                    <td>{item.channel_type_lbl}</td>
-                    <td>{item.channelsGroup.length}</td>
-                    <td>{item.isFta_lbl}</td>
-                    <td
-                      style={{
-                        maxWidth: 50,
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {" "}
-                      <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td>
-                    </td>
-                    {showEditChannel && (
-                      <td>
-                        <i
-                          style={{ cursor: "pointer" }}
-                          onClick={() => deleteChannel(item.id)}
-                          className="mdi mdi-delete font-size-18"
-                          id="deletetooltip"
-                        />
-                        s
-                      </td>
-                    )}
+                      Channel Count
+                    </th>
+                    <th>FTA</th>
+                    <th>Rate</th>
+                    {showEditChannel && <th>$</th>}
                   </tr>
-                ))}
-              </tbody>
-            )}
-          </Table>
+                </thead>
+                {data && (
+                  <tbody>
+                    {data.map((item, index) => (
+                      <tr key={index}>
+                        <th
+                          scope="row"
+                          style={{
+                            maxWidth: 10,
+                          }}
+                        >
+                          {index + 1}
+                        </th>
+                        <td
+                          style={{
+                            maxWidth: 100,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          {item.name}
+                        </td>
+                        <td
+                          style={{
+                            maxWidth: 50,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          {item.broadcaster_lbl}
+                        </td>
+                        <td>{item.channel_type_lbl}</td>
+                        <td>{item.channelsGroup.length}</td>
+                        <td>{item.isFta_lbl}</td>
+                        <td
+                          style={{
+                            maxWidth: 50,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          {" "}
+                          <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td>
+                        </td>
+                        {showEditChannel && (
+                          <td>
+                            <i
+                              style={{ cursor: "pointer" }}
+                              onClick={() => deleteBouquet(item.id)}
+                              className="mdi mdi-delete font-size-18"
+                              id="deletetooltip"
+                            />
+                          </td>
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                )}
+              </Table>
+            </Col>
+          </Row>
         </CardBody>
         <CardFooter className="fixed">
           <div style={{ display: "flex" }}>
@@ -275,8 +270,8 @@ const ViewBroadcasterBouquets = (props) => {
 };
 
 ViewBroadcasterBouquets.propTypes = {
-  toggle: PropTypes.func,
-  isOpen: PropTypes.bool,
+  data: PropTypes.array,
+  showEditChannel: PropTypes.bool,
 };
 
 export default ViewBroadcasterBouquets;

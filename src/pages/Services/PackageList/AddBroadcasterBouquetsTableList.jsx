@@ -253,18 +253,6 @@ const AddBroadcasterBouquetsTableList = (props) => {
       <ModalBody>
         <Card>
           <CardBody>
-            {/* <div
-              className="position-fixed top-0 end-0 p-3"
-              style={{ zIndex: "1005" }}
-            >
-              <Toast isOpen={showAddChannelsPlus}>
-                <ToastHeader toggle={handleAddChannelsPlus}>
-                  <i className="mdi mdi-alert-outline me-2"></i> Warning
-                </ToastHeader>
-                <ToastBody>Please select package definition</ToastBody>
-              </Toast>
-            </div> */}
-
             <TableContainer
               isPagination={true}
               columns={columns}
@@ -272,7 +260,7 @@ const AddBroadcasterBouquetsTableList = (props) => {
               handleRowClick={(row) => {
                 handleSelectedRows(row);
               }}
-              isGlobalFilter={true}
+              // isGlobalFilter={true}
               isShowingPageLength={true}
               customPageSize={50}
               tableClass="table align-middle table-nowrap table-hover"
@@ -323,7 +311,7 @@ const AddBroadcasterBouquetsTableList = (props) => {
                   type="submit"
                   className="btn btn-success save-user"
                   onClick={handleAddButtonClick}
-                  // disabled={!selectedRows}
+                  disabled={!selectedRows}
                 >
                   ADD
                 </button>
@@ -337,8 +325,9 @@ const AddBroadcasterBouquetsTableList = (props) => {
 };
 
 AddBroadcasterBouquetsTableList.propTypes = {
-  toggle: PropTypes.func,
+  toggleClose: PropTypes.func,
   isOpen: PropTypes.bool,
+  data: PropTypes.array,
 };
 
 export default AddBroadcasterBouquetsTableList;

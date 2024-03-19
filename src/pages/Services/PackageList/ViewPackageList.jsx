@@ -203,6 +203,7 @@ const ViewPackageList = (props) => {
       setCasCodeList(packageList.casCodes);
       setSelectedType(parseInt(packageList.isFta));
       setChannels(packageList.channels);
+      setBouquets(packageList.brdBouques);
       // console.log(
       //   "selectedRowDetails.isFta:" + packageList.isFta,
       //   typeof packageList.isFta
@@ -693,7 +694,7 @@ const ViewPackageList = (props) => {
 };
 
 ViewPackageList.propTypes = {
-  handleViewPackageList: PropTypes.func,
+  toggleViewModal: PropTypes.func,
   isOpen: PropTypes.bool,
 };
 

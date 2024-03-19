@@ -51,7 +51,7 @@ const AddChannelsTableList = (props) => {
     const filteredSelectedRows = selectedRows.filter((row) =>
       data.find((item) => item.id === row.id)
     );
-    const updatedChannels = [...channels, ...selectedRows];
+
     setChannels(filteredSelectedRows);
     toggleClose();
   };

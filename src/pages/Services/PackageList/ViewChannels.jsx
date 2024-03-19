@@ -272,8 +272,8 @@ const ViewChannels = (props) => {
 };
 
 ViewChannels.propTypes = {
-  toggle: PropTypes.func,
-  isOpen: PropTypes.bool,
+  data: PropTypes.array,
+  showEditChannel: PropTypes.bool,
 };
 
 export default ViewChannels;
