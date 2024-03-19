@@ -53,7 +53,7 @@ const ViewWareHouse = (props) => {
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
       contact_person: Yup.string().required("Enter contact person"),
-      mobile_no: Yup.string().required("Enter contact number"),
+      mobile_no: Yup.string().required("Enter mobile number"),
       operator_id: Yup.string().required("Select operator"),
       description: Yup.string().required("Enter description"),
       address: Yup.string().required("Enter address"),
@@ -149,7 +149,7 @@ const ViewWareHouse = (props) => {
               <Col sm="3">
                 <div className="mb-3">
                   <Label className="form-label">
-                    Name<span style={{ color: "red" }}>*</span>
+                    Warehouse Name<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
                     name="name"

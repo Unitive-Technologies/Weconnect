@@ -114,10 +114,6 @@ const WarehouseList = (props) => {
             <>
               <h5
                 className="font-size-14 mb-1"
-              // onClick={() => {
-              //   const userData = cellProps.row.original;
-              //   handleViewWarehouse(userData);
-              // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -159,7 +155,14 @@ const WarehouseList = (props) => {
         accessor: "address",
         filterable: true,
         Cell: (cellProps) => {
-          return <Address {...cellProps} />;
+          return (
+            <p className="text-muted mb-0" style={{
+              maxWidth: 150,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}>{cellProps.row.original.address}</p>
+          );
         },
       },
       {
@@ -279,7 +282,7 @@ const WarehouseList = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Billing" breadcrumbItem="Warehouse" />
+          <Breadcrumbs title="Billing" breadcrumbItem="Warehouses" />
           {loading ? (
             <React.Fragment>
               <Spinner

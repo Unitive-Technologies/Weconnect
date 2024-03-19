@@ -101,12 +101,12 @@ const AddNewBrandList = (props) => {
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
-                  Name<span style={{ color: "red" }}>*</span>
+                  Brand Name<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
                   name="name"
                   type="text"
-                  placeholder="Enter name"
+                  placeholder="Enter brand name"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}

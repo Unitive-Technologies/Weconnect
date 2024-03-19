@@ -120,6 +120,7 @@ const UploadBrandList = (props) => {
 
         console.log("cleared the selected files and upload trigger");
         dispatch(onAddBrandList(res.data.data));
+        setStatus(false);
         toggleUploadBrand();
       })
       .catch((error) => {
