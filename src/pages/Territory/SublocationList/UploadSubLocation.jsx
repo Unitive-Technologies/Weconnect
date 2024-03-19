@@ -123,6 +123,8 @@ const UploadSubLocation = (props) => {
 
         console.log("cleared the selected files and upload trigger");
         dispatch(onAddSubLocation(res.data.data));
+        setSublocationStatus(false);
+        setLocateonSublocate(false)
         toggleUploadModal();
       })
       .catch((error) => {

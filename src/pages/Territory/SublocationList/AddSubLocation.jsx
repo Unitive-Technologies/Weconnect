@@ -54,7 +54,7 @@ const AddSubLocation = (props) => {
       status: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter name"),
+      name: Yup.string().required("Enter sublocation"),
       location_id: Yup.string().required("Select location"),
       status: Yup.string().required("Select status"),
     }),
@@ -102,12 +102,12 @@ const AddSubLocation = (props) => {
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
-                  Sub Location Name<span style={{ color: "red" }}>*</span>
+                  Sublocation Name<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
                   name="name"
                   type="text"
-                  placeholder="Enter name"
+                  placeholder="Enter sublocation name"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name}
@@ -127,7 +127,7 @@ const AddSubLocation = (props) => {
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
-                  Select LCO<span style={{ color: "red" }}>*</span>
+                  Location<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Select
                   name="location_id"
@@ -166,7 +166,7 @@ const AddSubLocation = (props) => {
                 <Input
                   name="status"
                   type="select"
-                  placeholder="Select Status"
+                  placeholder="Select status"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}

@@ -278,7 +278,7 @@ const BrandList = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Billing" breadcrumbItem="Brand" />
+          <Breadcrumbs title="Billing" breadcrumbItem="Brands" />
           {loading ? (
             <React.Fragment>
               <Spinner

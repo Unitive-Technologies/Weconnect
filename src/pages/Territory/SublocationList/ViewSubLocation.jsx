@@ -69,11 +69,11 @@ const ViewSubLocation = (props) => {
     },
     validationSchema: Yup.object({
       name: Yup.string()
-        .required("Enter district name")
+        .required("Enter Sublocation")
         .min(2, "Minimum length 2 characters")
         .max(12, "Maximum length 12 characters"),
-      location_id: Yup.string().required("Select location"),
-      status: Yup.string().required("Select status"),
+      // location_id: Yup.string().required("Select location"),
+      // status: Yup.string().required("Select status"),
     }),
 
     onSubmit: (values) => {
@@ -164,7 +164,7 @@ const ViewSubLocation = (props) => {
             <Row>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Sub Location Name<span style={{ color: "red" }}>*</span></Label>
+                  <Label className="form-label">Sublocation Name<span style={{ color: "red" }}>*</span></Label>
                   <Input
                     name="name"
                     type="text"
@@ -188,7 +188,7 @@ const ViewSubLocation = (props) => {
               </Col>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Select Location<span style={{ color: "red" }}>*</span></Label>
+                  <Label className="form-label">Location<span style={{ color: "red" }}>*</span></Label>
                   {/* <Select
                   name="location_id"
                   options={options}
