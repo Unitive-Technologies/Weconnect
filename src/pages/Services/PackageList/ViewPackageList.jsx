@@ -586,8 +586,9 @@ const ViewPackageList = (props) => {
                 <Col sm="12" style={{ width: "550px" }}>
                   <ViewBroadcasterBouquets
                     showEditChannel={showEditChannel}
-                    data={selectedRowDetails.brdBouques}
+                    data={bouquets}
                     setBouquets={setBouquets}
+                    selectedType={selectedType}
                     setTotalChannelsInBouquets={setTotalChannelsInBouquets}
                     setTotalPackageRateInBouquets={
                       setTotalPackageRateInBouquets

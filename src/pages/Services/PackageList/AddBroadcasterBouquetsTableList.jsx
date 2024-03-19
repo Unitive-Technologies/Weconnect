@@ -20,7 +20,7 @@ import { Link } from "react-router-dom";
 
 const AddBroadcasterBouquetsTableList = (props) => {
   // const { isOpen } = props
-  const { isOpen, data, toggleClose, setBouquets } = props;
+  const { isOpen, data, toggleClose, bouquets, setBouquets } = props;
   console.log("data in inside table:" + JSON.stringify(data));
   const columns = useMemo(
     () => [
@@ -204,26 +204,32 @@ const AddBroadcasterBouquetsTableList = (props) => {
   const [selectedRows, setSelectedRows] = useState([]);
 
   const handleSelectedRows = (row) => {
-    // Check if the row is already selected
+    // debugger;
+    setSelectedRows([]);
+
     const isSelected = selectedRows.some(
       (selectedRow) => selectedRow.id === row.id
     );
 
-    // If the row is selected, remove it from the selected rows array
     if (isSelected) {
       const updatedSelectedRows = selectedRows.filter(
         (selectedRow) => selectedRow.id !== row.id
       );
       setSelectedRows(updatedSelectedRows);
     } else {
-      // If the row is not selected, add it to the selected rows array
       setSelectedRows([...selectedRows, row]);
     }
   };
-  console.log("selectedRows:" + JSON.stringify(selectedRows));
 
   const handleAddButtonClick = () => {
-    setBouquets(selectedRows);
+    // debugger;
+
+    console.log("selectedRows:" + JSON.stringify(selectedRows));
+    const filteredSelectedRows = selectedRows.filter((row) =>
+      data.find((item) => item.id === row.id)
+    );
+
+    setBouquets(filteredSelectedRows);
     toggleClose();
   };
 
@@ -317,6 +323,7 @@ const AddBroadcasterBouquetsTableList = (props) => {
                   type="submit"
                   className="btn btn-success save-user"
                   onClick={handleAddButtonClick}
+                  // disabled={!selectedRows}
                 >
                   ADD
                 </button>

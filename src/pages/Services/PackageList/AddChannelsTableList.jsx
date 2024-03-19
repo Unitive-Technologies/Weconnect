@@ -27,8 +27,7 @@ const AddChannelsTableList = (props) => {
   const [selectedRows, setSelectedRows] = useState([]);
 
   const handleSelectedRows = (row) => {
-    // Reset selectedRows to an empty array
-    debugger;
+    // debugger;
     setSelectedRows([]);
 
     const isSelected = selectedRows.some(
@@ -45,14 +44,8 @@ const AddChannelsTableList = (props) => {
     }
   };
 
-  // const handleAddButtonClick = () => {
-  //   setChannels(selectedRows);
-  //   toggleClose();
-  // };
-
   const handleAddButtonClick = () => {
-    // Filter out deleted rows from selectedRows
-    debugger;
+    // debugger;
 
     console.log("selectedRows:" + JSON.stringify(selectedRows));
     const filteredSelectedRows = selectedRows.filter((row) =>

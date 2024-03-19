@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
 import TableContainer from "../../../components/Common/TableContainer";
 import {
   Card,
@@ -14,215 +15,50 @@ import {
   CardFooter,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import AddBroadcasterBouquetsTableList from "./AddBroadcasterBouquetsTableList";
 import ViewBroadcasterBouquetsTableList from "./ViewBroadcasterBouquetsTableList";
 
 const ViewBroadcasterBouquets = (props) => {
   const {
     showEditChannel,
+    selectedType,
     data,
+    setBouquets,
     setTotalChannelsInBouquets,
     setTotalPackageRateInBouquets,
     totalChannelsInBouquets,
     totalPackageRateInBouquets,
   } = props;
   console.log("data in viewbrodcastBouquets:" + JSON.stringify(data));
-  const columns = useMemo(
-    () => [
-      {
-        Header: "#",
-        disableFilters: true,
-        filterable: true,
-        Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
-
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {reverseIndex}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-
-      {
-        Header: "Name",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.name}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Broadcaster",
-        // accessor: "login",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.broadcaster_lbl}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Type",
-        // accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.channel_type_lbl}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Channel Count",
-        // accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.channelsGroup.length}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "FTA",
-        // accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.isFta_lbl}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Rate",
-        // accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {cellProps.row.original.broadcasterRate}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "$",
-        // accessor: "type",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"$"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-    ],
-    []
-  );
-
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [showViewChannelsPlus, setShowViewChannelsPlus] = useState(false);
+  const [addChannelsList, setAddChannelsList] = useState([]);
+  const [showChannelTableList, setShowChannelTableList] = useState(false);
 
-  const handleViewChannelsPlus = () => {
-    setShowViewChannelsPlus(!showViewChannelsPlus);
+  const handleViewChannelsPlus = async () => {
+    setShowChannelTableList(!showChannelTableList);
+    try {
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.get(
+        `${API_URL}/broadcaster-bouque/list?fields=id,name,broadcasterRate,channelsGroup&expand=broadcaster_lbl,channel_type_lbl,isFta_lbl&sort=name&filter[isFta]=${selectedType}&vr=web1.0`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      setAddChannelsList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching Channels data:", error);
+    }
+  };
+
+  const deleteChannel = (id) => {
+    console.log("delete btn clicked" + id);
+    const updatedChannels = data.filter((channel) => channel.id !== id);
+    setBouquets(updatedChannels);
   };
   useEffect(() => {
     let totalRate = 0;
@@ -246,31 +82,38 @@ const ViewBroadcasterBouquets = (props) => {
       setTotalChannelsInBouquets(totalCount);
     }
   }, [data]);
-  const casData = [];
   return (
-    <Card>
-      <CardBody>
-        <Row>
-          <Col lg={10}></Col>
-          <Col lg={2}>
-            <div className="mb-3">
-              {showEditChannel && (
-                <button
-                  onClick={handleViewChannelsPlus}
-                  type="button"
-                  className="btn btn-primary "
-                >
-                  <i className="bx bx-plus" style={{ fontSize: 20 }}></i>
-                </button>
-              )}
-            </div>
-          </Col>
-        </Row>
-        <ViewBroadcasterBouquetsTableList
-          isOpen={showViewChannelsPlus}
-          handleAddChannelsTable={() => setShowViewChannelsPlus(false)}
-        />
-        {/* <div
+    <>
+      <AddBroadcasterBouquetsTableList
+        isOpen={showChannelTableList}
+        data={addChannelsList}
+        toggleClose={() => setShowChannelTableList(false)}
+        bouquets={data}
+        setBouquets={setBouquets}
+      />
+      <Card>
+        <CardBody>
+          <Row>
+            <Col lg={10}></Col>
+            <Col lg={2}>
+              <div className="mb-3">
+                {showEditChannel && (
+                  <button
+                    onClick={handleViewChannelsPlus}
+                    type="button"
+                    className="btn btn-primary "
+                  >
+                    <i className="bx bx-plus" style={{ fontSize: 20 }}></i>
+                  </button>
+                )}
+              </div>
+            </Col>
+          </Row>
+          <ViewBroadcasterBouquetsTableList
+            isOpen={showViewChannelsPlus}
+            handleAddChannelsTable={() => setShowViewChannelsPlus(false)}
+          />
+          {/* <div
           className="position-fixed top-0 end-0 p-3"
           style={{ zIndex: "1005" }}
         >
@@ -282,150 +125,152 @@ const ViewBroadcasterBouquets = (props) => {
           </Toast>
         </div> */}
 
-        {/* <TableContainer
+          {/* <TableContainer
           columns={columns}
           data={data}
           tableClass="table align-middle table-nowrap table-hover"
           theadClass="table-light"
         /> */}
-        <Table
-          className="table mb-0"
-          style={{
-            minHeight: "200px",
-            maxHeight: "200px",
-            overflowY: "hidden",
-          }}
-        >
-          <thead>
-            <tr>
-              <th
+          <Table
+            className="table mb-0"
+            style={{
+              minHeight: "200px",
+              maxHeight: "200px",
+              overflowY: "hidden",
+            }}
+          >
+            <thead>
+              <tr>
+                <th
+                  style={{
+                    maxWidth: 10,
+                  }}
+                >
+                  #
+                </th>
+                <th>Name</th>
+                <th>BroadCaster</th>
+                <th>Type</th>
+                <th>Chan.Count</th>
+                <th>FTA</th>
+                <th>Rate</th>
+                {showEditChannel && <th>$</th>}
+              </tr>
+            </thead>
+            {data && (
+              <tbody>
+                {data.map((item, index) => (
+                  <tr key={index}>
+                    <th
+                      scope="row"
+                      style={{
+                        maxWidth: 10,
+                      }}
+                    >
+                      {index + 1}
+                    </th>
+                    <td
+                      style={{
+                        maxWidth: 100,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {item.name}
+                    </td>
+                    <td
+                      style={{
+                        maxWidth: 50,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {item.broadcaster_lbl}
+                    </td>
+                    <td>{item.channel_type_lbl}</td>
+                    <td>{item.channelsGroup.length}</td>
+                    <td>{item.isFta_lbl}</td>
+                    <td
+                      style={{
+                        maxWidth: 50,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {" "}
+                      <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td>
+                    </td>
+                    {showEditChannel && (
+                      <td>
+                        <i
+                          style={{ cursor: "pointer" }}
+                          onClick={() => deleteChannel(item.id)}
+                          className="mdi mdi-delete font-size-18"
+                          id="deletetooltip"
+                        />
+                        s
+                      </td>
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            )}
+          </Table>
+        </CardBody>
+        <CardFooter className="fixed">
+          <div style={{ display: "flex" }}>
+            <Row
+              style={{
+                border: "1px solid #ced4da",
+                padding: "5px 0px",
+                margin: "1px 0px",
+                width: "450px",
+                height: "50px",
+                display: "flex",
+              }}
+            >
+              <div
                 style={{
-                  maxWidth: 10,
+                  backgroundColor: "#fff",
+                  padding: "10px",
+                  width: "100%",
+                  boxSizing: "border-box",
                 }}
               >
-                #
-              </th>
-              <th>Name</th>
-              <th>BroadCaster</th>
-              <th>Type</th>
-              <th>Chan.Count</th>
-              <th>FTA</th>
-              <th>Rate</th>
-              {showEditChannel && <th>$</th>}
-            </tr>
-          </thead>
-          {data && (
-            <tbody>
-              {data.map((item, index) => (
-                <tr key={index}>
-                  <th
-                    scope="row"
-                    style={{
-                      maxWidth: 10,
-                    }}
-                  >
-                    {index + 1}
-                  </th>
-                  <td
-                    style={{
-                      maxWidth: 100,
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {item.name}
-                  </td>
-                  <td
-                    style={{
-                      maxWidth: 50,
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {item.broadcaster_lbl}
-                  </td>
-                  <td>{item.channel_type_lbl}</td>
-                  <td>{item.channelsGroup.length}</td>
-                  <td>{item.isFta_lbl}</td>
-                  <td
-                    style={{
-                      maxWidth: 50,
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {" "}
-                    <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td>
-                  </td>
-                  {showEditChannel && (
-                    <td>
-                      <i
-                        style={{ cursor: "pointer" }}
-                        onClick={() => deleteChannel(index)}
-                        className="mdi mdi-delete font-size-18"
-                        id="deletetooltip"
-                      />
-                    </td>
-                  )}
-                </tr>
-              ))}
-            </tbody>
-          )}
-        </Table>
-      </CardBody>
-      <CardFooter className="fixed">
-        <div style={{ display: "flex" }}>
-          <Row
-            style={{
-              border: "1px solid #ced4da",
-              padding: "5px 0px",
-              margin: "1px 0px",
-              width: "450px",
-              height: "50px",
-              display: "flex",
-            }}
-          >
-            <div
+                <h6 style={{ textAlign: "left", margin: 0 }}>
+                  Total Channels: {totalChannelsInBouquets}
+                </h6>
+              </div>
+            </Row>
+            <Row
               style={{
-                backgroundColor: "#fff",
-                padding: "10px",
-                width: "100%",
-                boxSizing: "border-box",
+                border: "1px solid #ced4da",
+                padding: "5px 0px",
+                margin: "1px 0px",
+                width: "250px",
+                display: "flex",
               }}
             >
-              <h6 style={{ textAlign: "left", margin: 0 }}>
-                Total Channels: {totalChannelsInBouquets}
-              </h6>
-            </div>
-          </Row>
-          <Row
-            style={{
-              border: "1px solid #ced4da",
-              padding: "5px 0px",
-              margin: "1px 0px",
-              width: "250px",
-              display: "flex",
-            }}
-          >
-            <div
-              style={{
-                backgroundColor: "#fff",
-                padding: "10px",
-                width: "100%",
-                boxSizing: "border-box",
-              }}
-            >
-              <h6 style={{ textAlign: "center", margin: 0 }}>
-                Total: {parseFloat(totalPackageRateInBouquets).toFixed(2)}
-              </h6>
-            </div>
-          </Row>
-        </div>
-      </CardFooter>
-    </Card>
+              <div
+                style={{
+                  backgroundColor: "#fff",
+                  padding: "10px",
+                  width: "100%",
+                  boxSizing: "border-box",
+                }}
+              >
+                <h6 style={{ textAlign: "center", margin: 0 }}>
+                  Total: {parseFloat(totalPackageRateInBouquets).toFixed(2)}
+                </h6>
+              </div>
+            </Row>
+          </div>
+        </CardFooter>
+      </Card>
+    </>
   );
 };
 
