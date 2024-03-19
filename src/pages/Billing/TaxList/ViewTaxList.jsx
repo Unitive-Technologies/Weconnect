@@ -40,13 +40,9 @@ const ViewTaxList = (props) => {
       description: (tax && tax.description) || "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter tax title"),
-      code: Yup.string().required("Enter tax code"),
-      status: Yup.string().required("Select status"),
-      taxvalue: Yup.string().required("Exter Tax Value"),
-      applicableon: Yup.array().required(
-        ""
-      ),
+      name: Yup.string().required("Enter title"),
+      code: Yup.string().required("Enter code"),
+      taxvalue: Yup.string().required("Exter tax Value"),
     }),
     onSubmit: (values) => {
       const applicableonArray = values["applicableon"] || [];
@@ -123,12 +119,12 @@ const ViewTaxList = (props) => {
               <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">
-                    Title<span style={{ color: "red" }}>*</span>
+                    Tax Title<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
                     name="name"
                     type="text"
-                    placeholder="Enter title"
+                    placeholder="Enter tax title"
                     // className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
@@ -151,12 +147,12 @@ const ViewTaxList = (props) => {
               <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">
-                    Code<span style={{ color: "red" }}>*</span>
+                    Tax Code<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
                     name="code"
                     type="text"
-                    placeholder="Enter code"
+                    placeholder="Enter tax code"
                     // className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
@@ -190,12 +186,6 @@ const ViewTaxList = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.status || ""}
                     disabled={!showEditTax}
-                    invalid={
-                      validation.touched.name &&
-                        validation.errors.name
-                        ? true
-                        : false
-                    }
                   >
                     {taxStatus.map((status) => (
                       <option key={status.id} value={status.id}>
@@ -272,7 +262,7 @@ const ViewTaxList = (props) => {
               <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">
-                    TaxOnTax
+                    TaxOn Tax
                   </Label>
                   <Input
                     name="parent_lbl"
