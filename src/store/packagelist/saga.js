@@ -80,7 +80,6 @@ function* fetchPackageCascode() {
   }
 }
 
-
 function* fetchPackageType() {
   try {
     const response = yield call(getPackageType);

@@ -67,16 +67,11 @@ const AddChannels = (props) => {
   };
   console.log("ShowChannelTableList:" + JSON.stringify(addChannelsList));
 
-  const deleteChannel = (index) => {
-    const list = [...channels];
-    list.splice(index, 1);
-    setChannels(list);
+  const deleteChannel = (id) => {
+    console.log("delete btn clicked" + id);
+    const updatedChannels = data.filter((channel) => channel.id !== id);
+    setChannels(updatedChannels);
   };
-  // const deleteChannel = (index) => {
-  //   console.log("delete btn clicked");
-  //   const updatedChannels = channels.filter((_, i) => i !== index);
-  //   setChannels(updatedChannels);
-  // };
 
   useEffect(() => {
     let totalRate = 0;
@@ -143,12 +138,6 @@ const AddChannels = (props) => {
             </Col>
           </Row>
 
-          {/* <TableContainer
-            columns={columns}
-            data={channels && channels}
-            tableClass="table align-middle table-nowrap table-hover"
-            theadClass="table-light"
-          /> */}
           <Table
             className="table mb-0"
             style={{
@@ -222,18 +211,12 @@ const AddChannels = (props) => {
                       <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td>
                     </td>
                     <td>
-                      <h5>
-                        <Link
-                          className="text-dark"
-                          to="#"
-                          onClick={() => deleteChannel(index)}
-                        >
-                          <i
-                            className="mdi mdi-delete font-size-18"
-                            id="deletetooltip"
-                          />
-                        </Link>
-                      </h5>
+                      <i
+                        style={{ cursor: "pointer" }}
+                        onClick={() => deleteChannel(item.id)}
+                        className="mdi mdi-delete font-size-18"
+                        id="deletetooltip"
+                      />
                     </td>
                   </tr>
                 ))}

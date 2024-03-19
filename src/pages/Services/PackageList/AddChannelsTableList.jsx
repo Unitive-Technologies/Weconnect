@@ -20,7 +20,8 @@ import { Link } from "react-router-dom";
 import TableContainerX from "../../../components/Common/TableContainerX";
 
 const AddChannelsTableList = (props) => {
-  const { isOpen, data, toggleClose, channels, setChannels } = props;
+  const { isOpen, data, toggleClose, channels, setChannels, definition } =
+    props;
   // definition
   // console.log("definition:" + definition);
 
@@ -67,10 +68,10 @@ const AddChannelsTableList = (props) => {
           return (
             <input
               type="checkbox"
-              // disabled={
-              //   definition === "0" &&
-              //   cellProps.row.original.channel_type_lbl === "HD"
-              // }
+              disabled={
+                definition === "0" &&
+                cellProps.row.original.channel_type_lbl === "HD"
+              }
             />
           );
         },
@@ -166,12 +167,12 @@ const AddChannelsTableList = (props) => {
           return (
             <>
               <h5
-                // style={{
-                //   color:
-                //     definition === "0" &&
-                //     cellProps.row.original.channel_type_lbl === "HD" &&
-                //     "red",
-                // }}
+                style={{
+                  color:
+                    definition === "0" &&
+                    cellProps.row.original.channel_type_lbl === "HD" &&
+                    "red",
+                }}
                 className="font-size-14 mb-1"
               >
                 {cellProps.row.original.channel_type_lbl}
@@ -254,8 +255,8 @@ const AddChannelsTableList = (props) => {
         },
       },
     ],
-    []
-    // [definition]
+    // []
+    [definition]
   );
 
   return (

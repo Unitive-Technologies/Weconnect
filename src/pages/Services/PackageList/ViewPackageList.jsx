@@ -99,41 +99,7 @@ const ViewPackageList = (props) => {
     }
   };
 
-  const getCasSelectList = async (e) => {
-    console.log(
-      "SSSSSSSSSSSSSSSSSSSSelectedType:" + selectedType,
-      typeof selectedType
-    );
-
-    try {
-      const token = "Bearer " + localStorage.getItem("temptoken");
-      if (selectedType === "1") {
-        const response = await axios.get(
-          `${API_URL}/casvendor/list?fields=id,name&filter[package_type]=1&vr=web1.0`,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
-        setCasSelectList(response.data.data);
-      } else if (selectedType === "0") {
-        const response = await axios.get(
-          `${API_URL}/casvendor/list?fields=id,name&filter[package_type]=0&vr=web1.0`,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
-        setCasSelectList(response.data.data);
-      }
-    } catch (error) {
-      console.error("Error fetching CasSelectList data:", error);
-    }
-  };
   const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
@@ -143,48 +109,46 @@ const ViewPackageList = (props) => {
       definition: (selectedRowDetails && selectedRowDetails.isHD) || "",
       type: (selectedRowDetails && selectedRowDetails.isFta) || "",
       status: (selectedRowDetails && selectedRowDetails.status) || "",
-      // casCodeArray: (selectedRowDetails && selectedRowDetails.casCodes) || [],
     },
     validationSchema: Yup.object({
-      code: Yup.string().required("Enter Channel Code"),
-      name: Yup.string().required("Enter channel name"),
-      description: Yup.string().required("Enter description"),
-      // definition: Yup.string().required("Enter channel definition"),
-      // packagetype: Yup.string().required("Enter channel type"),
-      // status: Yup.string().required("Enter status"),
+      name: Yup.string().required("Enter package name"),
+      description: Yup.string().required("Enter package description"),
+      definition: Yup.string().required("Select package definition"),
+      type: Yup.string().required("Select package type"),
+      status: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
+      console.log("packageListID: " + packageList.id);
       const updatedPackage = {
-        id: selectedRowDetails.id,
+        id: packageList.id,
         name: values["name"],
+        code: values["code"],
         description: values["description"],
         isHD: parseInt(values["definition"]),
         isFta: parseInt(values["type"]),
         status: parseInt(values["status"]),
 
-        broadcasterRate:
-          totalPackageRateInChannels + totalPackageRateInBouquets,
-        casCodes: casCodeList.map((single) => {
-          return {
-            cas_id: single.cas_id,
-            cascode: single.cascode,
-          };
-        }),
-        channels: channels.map((single) => {
-          return single.id;
-        }),
-        brd_bouques: bouquets.map((single) => {
-          return single.id;
-        }),
+        // broadcasterRate:
+        //   totalPackageRateInChannels + totalPackageRateInBouquets,
+        // casCodes: casCodeList.map((single) => {
+        //   return {
+        //     cas_id: single.cas_id,
+        //     cascode: single.cascode,
+        //   };
+        // }),
+        // channels: channels.map((single) => {
+        //   return single.id;
+        // }),
+        // brd_bouques: bouquets.map((single) => {
+        //   return single.id;
+        // }),
       };
-      console.log("newPackageList:" + updatedPackage);
+      console.log("ViewPackageList:" + updatedPackage);
       // save new user
       dispatch(onUpdatePackage(updatedPackage));
       dispatch(onGetPackageList());
       validation.resetForm();
-      resetSelection();
-      setShowEditChannel(false);
-      toggleViewModal();
+      handleCancel();
     },
   });
 
@@ -204,11 +168,6 @@ const ViewPackageList = (props) => {
       setSelectedType(parseInt(packageList.isFta));
       setChannels(packageList.channels);
       setBouquets(packageList.brdBouques);
-      // console.log(
-      //   "selectedRowDetails.isFta:" + packageList.isFta,
-      //   typeof packageList.isFta
-      // );
-      // getCasSelectList();
     }
   }, [packageList]);
   useEffect(() => {
@@ -552,6 +511,7 @@ const ViewPackageList = (props) => {
                     data={channels}
                     setChannels={setChannels}
                     selectedType={selectedType}
+                    definition={packageList.isHD}
                     setTotalChannelsInChannels={setTotalChannelsInChannels}
                     setTotalPackageRateInChannels={
                       setTotalPackageRateInChannels

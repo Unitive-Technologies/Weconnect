@@ -257,10 +257,15 @@ const AddBroadcasterBouquets = (props) => {
     }
   };
 
-  const deleteChannel = (index) => {
-    const list = [...bouquets];
-    list.splice(index, 1);
-    setBouquets(list);
+  // const deleteChannel = (index) => {
+  //   const list = [...bouquets];
+  //   list.splice(index, 1);
+  //   setBouquets(list);
+  // };
+  const deleteChannel = (id) => {
+    console.log("delete btn clicked" + id);
+    const updatedBouquets = bouquets.filter((bouquet) => bouquet.id !== id);
+    setBouquets(updatedBouquets);
   };
   // let totalRate = 0;
   // let totalCount = 0;
@@ -412,18 +417,12 @@ const AddBroadcasterBouquets = (props) => {
                     <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td>
                   </td>
                   <td>
-                    <h5>
-                      <Link
-                        className="text-dark"
-                        to="#"
-                        onClick={() => deleteChannel(index)}
-                      >
-                        <i
-                          className="mdi mdi-delete font-size-18"
-                          id="deletetooltip"
-                        />
-                      </Link>
-                    </h5>
+                    <i
+                      style={{ cursor: "pointer" }}
+                      onClick={() => deleteChannel(item.id)}
+                      className="mdi mdi-delete font-size-18"
+                      id="deletetooltip"
+                    />
                   </td>
                 </tr>
               ))}

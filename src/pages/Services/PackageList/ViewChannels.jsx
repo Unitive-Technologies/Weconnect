@@ -23,6 +23,7 @@ const ViewChannels = (props) => {
     showEditChannel,
     setChannels,
     data,
+    definition,
     selectedType,
     setTotalChannelsInChannels,
     setTotalPackageRateInChannels,
@@ -84,7 +85,7 @@ const ViewChannels = (props) => {
         toggleClose={() => setShowChannelTableList(false)}
         channels={data}
         setChannels={setChannels}
-        // definition={definition}
+        definition={definition}
       />
       <Card>
         <CardBody>
