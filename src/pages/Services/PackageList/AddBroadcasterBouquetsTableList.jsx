@@ -201,31 +201,31 @@ const AddBroadcasterBouquetsTableList = (props) => {
     ],
     []
   );
-  const [selectedRows, setSelectedRows] = useState([]);
+  const [selectedBroadcasterRows, setSelectedBroadcasterRows] = useState([]);
 
   const handleSelectedRows = (row) => {
-    // debugger;
-    setSelectedRows([]);
+    debugger;
+    setSelectedBroadcasterRows([]);
 
-    const isSelected = selectedRows.some(
+    const isSelected = selectedBroadcasterRows.some(
       (selectedRow) => selectedRow.id === row.id
     );
 
     if (isSelected) {
-      const updatedSelectedRows = selectedRows.filter(
+      const updatedSelectedRows = selectedBroadcasterRows.filter(
         (selectedRow) => selectedRow.id !== row.id
       );
-      setSelectedRows(updatedSelectedRows);
+      setSelectedBroadcasterRows(updatedSelectedRows);
     } else {
-      setSelectedRows([...selectedRows, row]);
+      setSelectedBroadcasterRows([...selectedBroadcasterRows, row]);
     }
   };
 
   const handleAddButtonClick = () => {
-    // debugger;
+    debugger;
+    console.log("selectedRows:" + JSON.stringify(selectedBroadcasterRows));
 
-    console.log("selectedRows:" + JSON.stringify(selectedRows));
-    const filteredSelectedRows = selectedRows.filter((row) =>
+    const filteredSelectedRows = selectedBroadcasterRows.filter((row) =>
       data.find((item) => item.id === row.id)
     );
 
@@ -311,7 +311,7 @@ const AddBroadcasterBouquetsTableList = (props) => {
                   type="submit"
                   className="btn btn-success save-user"
                   onClick={handleAddButtonClick}
-                  disabled={!selectedRows}
+                  disabled={!selectedBroadcasterRows}
                 >
                   ADD
                 </button>

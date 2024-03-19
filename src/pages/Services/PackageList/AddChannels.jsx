@@ -32,7 +32,7 @@ const AddChannels = (props) => {
   const [addChannelsList, setAddChannelsList] = useState([]);
   // const [channels, setChannels] = useState([]);
   {
-    console.log("Channels:" + JSON.stringify(channels));
+    console.log("Channelaaaaaaaaaaaaaaaaaaaa:" + JSON.stringify(channels));
   }
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
 
@@ -69,7 +69,7 @@ const AddChannels = (props) => {
 
   const deleteChannel = (id) => {
     console.log("delete btn clicked" + id);
-    const updatedChannels = data.filter((channel) => channel.id !== id);
+    const updatedChannels = channels.filter((channel) => channel.id !== id);
     setChannels(updatedChannels);
   };
 

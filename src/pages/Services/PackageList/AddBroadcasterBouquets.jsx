@@ -31,211 +31,19 @@ const AddBroadcasterBouquets = (props) => {
   const [addBouquetsList, setAddBouquetsList] = useState([]);
   // const [channels, setChannels] = useState([]);
   {
-    console.log("bouquets:" + JSON.stringify(bouquets));
+    console.log("bouquetsbbbbbbbbbbbbbbbbbb:" + JSON.stringify(bouquets));
   }
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
-  const columns = useMemo(
-    () => [
-      {
-        Header: "#",
-        disableFilters: true,
-        filterable: true,
-        Cell: (cellProps) => {
-          const totalRows = cellProps.rows.length;
-          const reverseIndex = totalRows - cellProps.row.index;
 
-          return (
-            <>
-              <h5 className="font-size-14 mb-1">
-                <Link className="text-dark" to="#">
-                  {reverseIndex}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
+  const [showAddBouquetsPlus, setShowAddBouquetsPlus] = useState(false);
+  const [showBouquetsTableList, setShowBouquetsTableList] = useState(false);
 
-      {
-        Header: "Name",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"Name"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Broadcaster",
-        // accessor: "login",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"Broadcaster"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Type",
-        // accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"Type"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Channel Count",
-        // accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"Channel Count"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "FTA",
-        // accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"FTA"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "Rate",
-        // accessor: "status",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"rate"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-      {
-        Header: "$",
-        // accessor: "type",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <>
-              <h5
-                style={{
-                  maxWidth: 200,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="font-size-14 mb-1"
-              >
-                <Link className="text-dark" to="#">
-                  {"$"}
-                </Link>
-              </h5>
-            </>
-          );
-        },
-      },
-    ],
-    []
-  );
-
-  const [showAddChannelsPlus, setShowAddChannelsPlus] = useState(false);
-  const [showChannelTableList, setShowChannelTableList] = useState(false);
-
-  const handleAddChannelsWarning = () => {
-    setShowAddChannelsPlus(!showAddChannelsPlus);
+  const handleAddBouquetsWarning = () => {
+    setShowAddBouquetsPlus(!showAddBouquetsPlus);
   };
 
-  const handleAddChannelsTable = async (e) => {
-    setShowChannelTableList(true);
+  const handleAddBouquetsTable = async (e) => {
+    setShowBouquetsTableList(true);
     try {
       const token = "Bearer " + localStorage.getItem("temptoken");
       // console.log("type in handle:" + selectedType, typeof selectedType);
@@ -257,18 +65,11 @@ const AddBroadcasterBouquets = (props) => {
     }
   };
 
-  // const deleteChannel = (index) => {
-  //   const list = [...bouquets];
-  //   list.splice(index, 1);
-  //   setBouquets(list);
-  // };
   const deleteChannel = (id) => {
     console.log("delete btn clicked" + id);
     const updatedBouquets = bouquets.filter((bouquet) => bouquet.id !== id);
     setBouquets(updatedBouquets);
   };
-  // let totalRate = 0;
-  // let totalCount = 0;
 
   useEffect(() => {
     let totalRate = 0;
@@ -298,17 +99,18 @@ const AddBroadcasterBouquets = (props) => {
   return (
     <>
       <AddBroadcasterBouquetsTableList
-        isOpen={showChannelTableList}
+        isOpen={showBouquetsTableList}
         data={addBouquetsList}
-        toggleClose={() => setShowChannelTableList(false)}
+        toggleClose={() => setShowBouquetsTableList(false)}
         setBouquets={setBouquets}
+        bouquets={bouquets}
       />
       <div
         className="position-fixed top-0 end-0 p-3"
         style={{ zIndex: "1005" }}
       >
-        <Toast isOpen={showAddChannelsPlus}>
-          <ToastHeader toggle={handleAddChannelsWarning}>
+        <Toast isOpen={showAddBouquetsPlus}>
+          <ToastHeader toggle={handleAddBouquetsWarning}>
             <i className="mdi mdi-alert-outline me-2"></i> Warning
           </ToastHeader>
           <ToastBody>
@@ -327,8 +129,8 @@ const AddBroadcasterBouquets = (props) => {
                 <button
                   onClick={
                     selectedType
-                      ? handleAddChannelsTable
-                      : handleAddChannelsWarning
+                      ? handleAddBouquetsTable
+                      : handleAddBouquetsWarning
                   }
                   type="button"
                   className="btn btn-primary d-flex justify-content-end"
@@ -372,60 +174,61 @@ const AddBroadcasterBouquets = (props) => {
               </tr>
             </thead>
             <tbody>
-              {bouquets.map((item, index) => (
-                <tr key={index}>
-                  <th
-                    scope="row"
-                    style={{
-                      maxWidth: 10,
-                    }}
-                  >
-                    {index + 1}
-                  </th>
-                  <td
-                    style={{
-                      maxWidth: 100,
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {item.name}
-                  </td>
-                  <td
-                    style={{
-                      maxWidth: 50,
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {item.broadcaster_lbl}
-                  </td>
-                  <td>{item.channel_type_lbl}</td>
-                  <td>{item.channelsGroup.length}</td>
-                  <td>{item.isFta_lbl}</td>
-                  <td
-                    style={{
-                      maxWidth: 50,
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {" "}
-                    <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td>
-                  </td>
-                  <td>
-                    <i
-                      style={{ cursor: "pointer" }}
-                      onClick={() => deleteChannel(item.id)}
-                      className="mdi mdi-delete font-size-18"
-                      id="deletetooltip"
-                    />
-                  </td>
-                </tr>
-              ))}
+              {bouquets &&
+                bouquets.map((item, index) => (
+                  <tr key={index}>
+                    <th
+                      scope="row"
+                      style={{
+                        maxWidth: 10,
+                      }}
+                    >
+                      {index + 1}
+                    </th>
+                    <td
+                      style={{
+                        maxWidth: 100,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {item.name}
+                    </td>
+                    <td
+                      style={{
+                        maxWidth: 50,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {item.broadcaster_lbl}
+                    </td>
+                    <td>{item.channel_type_lbl}</td>
+                    <td>{item.channelsGroup.length}</td>
+                    <td>{item.isFta_lbl}</td>
+                    <td
+                      style={{
+                        maxWidth: 50,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {" "}
+                      <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td>
+                    </td>
+                    <td>
+                      <i
+                        style={{ cursor: "pointer" }}
+                        onClick={() => deleteChannel(item.id)}
+                        className="mdi mdi-delete font-size-18"
+                        id="deletetooltip"
+                      />
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </Table>
         </CardBody>
