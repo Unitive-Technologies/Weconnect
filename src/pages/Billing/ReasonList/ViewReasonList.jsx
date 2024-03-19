@@ -54,7 +54,7 @@ const ViewReason = (props) => {
       applicableon: (reason && reason.applicableon) || "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Select Name"),
+      name: Yup.string().required("Enter reason"),
       status: Yup.string().required("Select Status"),
       type: Yup.array().min(1, "Select at least one Reason Type"),
       // applicableon: Yup.array().required(""),
@@ -181,43 +181,7 @@ const ViewReason = (props) => {
                 </div>
               </Col>
 
-              <Col sm="4">
-                <div className="mb-3">
-                  <Label className="form-label">
-                    Status<span style={{ color: "red" }}>*</span>
-                  </Label>
-                  <Input
-                    name="status"
-                    type="select"
-                    placeholder="Select Status"
-                    className="form-select"
-                    disabled={!showEditReason}
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.status || ""}
-                    invalid={
-                      validation.touched.status &&
-                        validation.errors.status
-                        ? true
-                        : false
-                    }
-                  >
-                    {reasonStatus.map((status) => (
-                      <option key={status.id} value={status.id}>
-                        {status.name}
-                      </option>
-                    ))}
-                  </Input>
-                  {validation.touched.status && validation.errors.status ? (
-                    <FormFeedback type="invalid">
-                      {validation.errors.status}
-                    </FormFeedback>
-                  ) : null}
-                </div>
-              </Col>
-              {console.log(
-                "View Reason List type_lbl" + validation.values.type_display_lbl
-              )}
+
               <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">Reason Type<span style={{ color: "red" }}>*</span></Label>
@@ -262,6 +226,44 @@ const ViewReason = (props) => {
                 ) : null}
                 {/* </div> */}
               </Col>
+
+              <Col sm="4">
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Status<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Input
+                    name="status"
+                    type="select"
+                    placeholder="Select Status"
+                    className="form-select"
+                    disabled={!showEditReason}
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.status || ""}
+                    invalid={
+                      validation.touched.status &&
+                        validation.errors.status
+                        ? true
+                        : false
+                    }
+                  >
+                    {reasonStatus.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
+                  </Input>
+                  {validation.touched.status && validation.errors.status ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.status}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col>
+              {console.log(
+                "View Reason List type_lbl" + validation.values.type_display_lbl
+              )}
             </Row>
 
             {showEditReason && (

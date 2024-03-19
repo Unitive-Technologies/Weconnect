@@ -43,15 +43,15 @@ const AddNewTaxList = (props) => {
     },
     validationSchema: Yup.object({
       // tax: Yup.string().required("Enter tax Name"),
-      name: Yup.string().required("Enter tax title"),
-      code: Yup.string().required("Enter tax code"),
+      name: Yup.string().required("Enter title"),
+      code: Yup.string().required("Enter code"),
       status: Yup.string().required("Select status"),
       taxvalue: Yup.string().required("Exter Tax Value"),
       // valuetype: Yup.string().required("Select value-in"),
       // parent_id: Yup.string().required(""),
       // applicableon: Yup.string().required(""),
       applicableon: Yup.array().required(
-        "Select at least one Applicable On option"
+        "Select applicable on"
       ),
 
     }),
@@ -117,12 +117,12 @@ const AddNewTaxList = (props) => {
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
-                  Title<span style={{ color: "red" }}>*</span>
+                  Tax Title<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
                   name="name"
                   type="text"
-                  placeholder="Enter title"
+                  placeholder="Enter tax title"
                   // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
@@ -144,12 +144,12 @@ const AddNewTaxList = (props) => {
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
-                  Code<span style={{ color: "red" }}>*</span>
+                  Tax Code<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
                   name="code"
                   type="text"
-                  placeholder="Enter code"
+                  placeholder="Enter tax code"
                   // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
