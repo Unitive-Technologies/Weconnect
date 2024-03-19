@@ -122,6 +122,8 @@ const UploadLocation = (props) => {
 
         console.log("cleared the selected files and upload trigger");
         dispatch(onAddLocation(res.data.data));
+        setLcoonLocation(false);
+        setLocationStatus(false);
         toggleUploadLocation();
       })
       .catch((error) => {

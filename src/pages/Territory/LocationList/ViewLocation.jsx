@@ -220,7 +220,7 @@ const ViewLocation = (props) => {
               <Col lg={4}>
                 <div className="mb-3">
                   <Label className="form-label">
-                    Select Leo<span style={{ color: "red" }}>*</span>
+                    LCO<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Select
                     name="operator_id"

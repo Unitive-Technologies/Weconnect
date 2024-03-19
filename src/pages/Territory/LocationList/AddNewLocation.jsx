@@ -52,7 +52,7 @@ const AddNewLocation = (props) => {
       status: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter location name"),
+      name: Yup.string().required("Enter location"),
       operator_id: Yup.string().required("Select LCO"),
       status: Yup.string().required("Select status"),
     }),
