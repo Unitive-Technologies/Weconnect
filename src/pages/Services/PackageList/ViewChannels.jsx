@@ -35,8 +35,8 @@ const ViewChannels = (props) => {
   const [showChannelTableList, setShowChannelTableList] = useState(false);
 
   const handleViewChannelsPlus = async () => {
-    setShowViewChannelsPlus(!showViewChannelsPlus);
-
+    // setShowViewChannelsPlus(!showViewChannelsPlus);
+    setShowChannelTableList(!showChannelTableList);
     try {
       const token = "Bearer " + localStorage.getItem("temptoken");
 
@@ -49,15 +49,20 @@ const ViewChannels = (props) => {
         }
       );
 
-      setChannels(response.data.data);
+      setAddChannelsList(response.data.data);
     } catch (error) {
       console.error("Error fetching Channels data:", error);
     }
   };
 
-  const deleteChannel = (index) => {
-    console.log("delete btn clicked");
-    const updatedChannels = data.filter((_, i) => i !== index);
+  // const deleteChannel = (index) => {
+  //   console.log("delete btn clicked");
+  //   const updatedChannels = data.filter((_, i) => i !== index);
+  //   setChannels(updatedChannels);
+  // };
+  const deleteChannel = (id) => {
+    console.log("delete btn clicked" + id);
+    const updatedChannels = data.filter((channel) => channel.id !== id);
     setChannels(updatedChannels);
   };
 
@@ -393,25 +398,11 @@ const ViewChannels = (props) => {
                       {" "}
                       <td>{parseFloat(item.broadcasterRate).toFixed(2)}</td>
                     </td>
-                    {/* <td>
-                    <h5>
-                      <Link
-                        className="text-dark"
-                        to="#"
-                        onClick={() => deleteChannel(index)}
-                      >
-                        <i
-                          className="mdi mdi-delete font-size-18"
-                          id="deletetooltip"
-                        />
-                      </Link>
-                    </h5>
-                  </td> */}
                     {showEditChannel && (
                       <td>
                         <i
                           style={{ cursor: "pointer" }}
-                          onClick={() => deleteChannel(index)}
+                          onClick={() => deleteChannel(item.id)}
                           className="mdi mdi-delete font-size-18"
                           id="deletetooltip"
                         />

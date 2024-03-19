@@ -27,28 +27,39 @@ const AddChannelsTableList = (props) => {
   const [selectedRows, setSelectedRows] = useState([]);
 
   const handleSelectedRows = (row) => {
-    // Check if the row is already selected
+    // Reset selectedRows to an empty array
+    debugger;
+    setSelectedRows([]);
+
     const isSelected = selectedRows.some(
       (selectedRow) => selectedRow.id === row.id
     );
 
-    // If the row is selected, remove it from the selected rows array
     if (isSelected) {
       const updatedSelectedRows = selectedRows.filter(
         (selectedRow) => selectedRow.id !== row.id
       );
       setSelectedRows(updatedSelectedRows);
-      // setChannels([...channels, updatedSelectedRows]);
     } else {
-      // If the row is not selected, add it to the selected rows array
       setSelectedRows([...selectedRows, row]);
     }
   };
-  console.log("selectedRows:" + JSON.stringify(selectedRows));
+
+  // const handleAddButtonClick = () => {
+  //   setChannels(selectedRows);
+  //   toggleClose();
+  // };
 
   const handleAddButtonClick = () => {
-    setChannels(selectedRows);
-    // setChannels([...channels, ...selectedRows]);
+    // Filter out deleted rows from selectedRows
+    debugger;
+
+    console.log("selectedRows:" + JSON.stringify(selectedRows));
+    const filteredSelectedRows = selectedRows.filter((row) =>
+      data.find((item) => item.id === row.id)
+    );
+    const updatedChannels = [...channels, ...selectedRows];
+    setChannels(filteredSelectedRows);
     toggleClose();
   };
 
@@ -281,14 +292,6 @@ const AddChannelsTableList = (props) => {
               isPagination={true}
               columns={columns}
               data={data}
-              // getRowProps={(row) => ({
-              //   style: {
-              //     background:
-              //       definition === "0" && row.original.channel_type_lbl === "HD"
-              //         ? "red"
-              //         : "inherit",
-              //   },
-              // })}
               handleRowClick={(row) => handleSelectedRows(row)}
               isGlobalFilter={true}
               isShowingPageLength={true}

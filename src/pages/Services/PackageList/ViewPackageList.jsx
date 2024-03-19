@@ -47,7 +47,7 @@ const ViewPackageList = (props) => {
   const [selectedType, setSelectedType] = useState("");
   const [channels, setChannels] = useState([]);
   const [bouquets, setBouquets] = useState([]);
-
+  console.log("Channelssssssssssssssssssssssssss: " + JSON.stringify(channels));
   const [totalChannelsInChannels, setTotalChannelsInChannels] = useState(0);
   const [totalPackageRateInChannels, setTotalPackageRateInChannels] =
     useState(0);
