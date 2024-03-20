@@ -120,7 +120,7 @@ const AddNewPromoVoucher = (props) => {
                 <Input
                   name="operator"
                   type="select"
-                  placeholder="Select Ico"
+                  placeholder="Select lco"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
@@ -132,7 +132,7 @@ const AddNewPromoVoucher = (props) => {
                       : false
                   }
                 >
-                  <option value="">Select LCO</option>
+                  <option value="">Select lco</option>
                   {promovoucherLCO &&
                     promovoucherLCO.map((operator) => (
                       <option key={operator.id} value={operator.id}>
@@ -159,7 +159,7 @@ const AddNewPromoVoucher = (props) => {
                 <Input
                   name="operator_code"
                   type="text"
-                  placeholder="Enter Voucher count"
+                  placeholder="Enter voucher count"
                   // className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
@@ -371,7 +371,7 @@ const AddNewPromoVoucher = (props) => {
                       : false
                   }
                 >
-                  <option value="">Select Recharge</option>
+                  <option value="">Select recharge period</option>
                   {promovoucherRecharge &&
                     promovoucherRecharge.map((recharge_period) => (
                       <option

@@ -192,18 +192,6 @@ const PromoVoucherList = (props) => {
         },
       },
       {
-        Header: "Status",
-        accessor: "status_lbl",
-        filterable: true,
-        Cell: (cellProps) => {
-          return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.status_lbl}
-            </p>
-          );
-        },
-      },
-      {
         Header: "Applied On",
         accessor: "apply_on_lbl",
         filterable: true,
@@ -284,7 +272,18 @@ const PromoVoucherList = (props) => {
           );
         },
       },
-
+      {
+        Header: "Status",
+        accessor: "status_lbl",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.status_lbl}
+            </p>
+          );
+        },
+      },
       {
         Header: "Smartcard No",
         accessor: "smartcardno",
