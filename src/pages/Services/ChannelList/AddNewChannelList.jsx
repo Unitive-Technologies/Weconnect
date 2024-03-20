@@ -127,14 +127,14 @@ const AddNewChannelList = (props) => {
       revenue_share: {},
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter channel name"),
-      description: Yup.string().required("Enter description"),
-      definition: Yup.string().required("Enter channel definition"),
-      isFta: Yup.string().required("Enter channel type"),
-      broadcaster: Yup.string().required("select broadcaster"),
-      genre: Yup.string().required("Enter genre"),
-      language: Yup.array().min(1, "Select Atleat one language"),
-      status: Yup.string().required("Enter status"),
+      name: Yup.string().required("Enter channel name").min(2, "Minimum length 2 character"),
+      description: Yup.string().required("Enter channel description").min(2, "Please enter at least 2 characters"),
+      definition: Yup.string().required("Select channel definition"),
+      isFta: Yup.string().required("Select channel type"),
+      broadcaster: Yup.string().required("Select broadcaster"),
+      genre: Yup.string().required("Select genre"),
+      // language: Yup.array().min(1, "Select Atleat one language"),
+      status: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {
       const newChannelList = {
@@ -205,11 +205,11 @@ const AddNewChannelList = (props) => {
           <Row>
             <Col sm="4">
               <div className="mb-3">
-                <Label className="form-label">Code</Label>
+                <Label className="form-label">Channel Code</Label>
                 <Input
                   name="code"
                   type="text"
-                  placeholder="Enter code"
+                  placeholder="Enter channnel code"
                   disabled={toggleSwitch}
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
@@ -312,12 +312,12 @@ const AddNewChannelList = (props) => {
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
-                  Name<span style={{ color: "red" }}>*</span>
+                  Channel Name<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
                   name="name"
                   type="text"
-                  placeholder="Enter name"
+                  placeholder="Enter channel name"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.name || ""}
@@ -340,20 +340,20 @@ const AddNewChannelList = (props) => {
                 <Input
                   name="description"
                   type="textarea"
-                  placeholder="Enter Description"
+                  placeholder="Enter description"
                   rows="3"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                    validation.errors.description
+                      validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                validation.errors.description ? (
+                  validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -364,24 +364,24 @@ const AddNewChannelList = (props) => {
             <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
-                  Definition<span style={{ color: "red" }}>*</span>
+                  Channel Definition<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
                   name="definition"
                   type="select"
-                  placeholder="Select Definition"
+                  placeholder="Select channel definition"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.definition || ""}
                   invalid={
                     validation.touched.definition &&
-                    validation.errors.definition
+                      validation.errors.definition
                       ? true
                       : false
                   }
                 >
-                  <option value="">Select definition</option>
+                  <option value="">Select channel definition</option>
                   {channelListDefinition &&
                     channelListDefinition.map((definition) => (
                       <option key={definition.id} value={definition.id}>
@@ -390,7 +390,7 @@ const AddNewChannelList = (props) => {
                     ))}
                 </Input>
                 {validation.touched.definition &&
-                validation.errors.definition ? (
+                  validation.errors.definition ? (
                   <FormFeedback type="invalid">
                     {validation.errors.definition}
                   </FormFeedback>
@@ -398,12 +398,12 @@ const AddNewChannelList = (props) => {
               </div>
               <div className="mb-3">
                 <Label className="form-label">
-                  Type<span style={{ color: "red" }}>*</span>
+                  Channel Type<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
                   name="isFta"
                   type="select"
-                  placeholder="Select"
+                  placeholder="Select channel type"
                   className="form-select"
                   onChange={(e) => {
                     validation.handleChange(e);
@@ -417,7 +417,7 @@ const AddNewChannelList = (props) => {
                       : false
                   }
                 >
-                  <option>Select Type</option>
+                  <option>Select channel type</option>
                   {channelListType &&
                     channelListType.map((isFta) => (
                       <option key={isFta.id} value={isFta.id}>
@@ -449,12 +449,12 @@ const AddNewChannelList = (props) => {
                   value={validation.values.broadcaster || ""}
                   invalid={
                     validation.touched.broadcaster &&
-                    validation.errors.broadcaster
+                      validation.errors.broadcaster
                       ? true
                       : false
                   }
                 >
-                  <option value="">Select Broadcaster</option>
+                  <option value="">Select broadcaster</option>
                   {channelListBroadcaster &&
                     channelListBroadcaster.map((broadcaster) => (
                       <option key={broadcaster.id} value={broadcaster.id}>
@@ -463,7 +463,7 @@ const AddNewChannelList = (props) => {
                     ))}
                 </Input>
                 {validation.touched.broadcaster &&
-                validation.errors.broadcaster ? (
+                  validation.errors.broadcaster ? (
                   <FormFeedback type="invalid">
                     {validation.errors.broadcaster}
                   </FormFeedback>
@@ -489,7 +489,7 @@ const AddNewChannelList = (props) => {
                       : false
                   }
                 >
-                  <option value="">Select Genre</option>
+                  <option value="">Select genre</option>
                   {channelListGenre &&
                     channelListGenre.map((genre) => (
                       <option key={genre.id} value={genre.id}>
@@ -511,7 +511,7 @@ const AddNewChannelList = (props) => {
                 </Label>
                 <Select
                   name="language_id"
-                  placeholder="Select at least one Language"
+                  placeholder="Select language"
                   onChange={(selectedOptions) => {
                     validation.setFieldValue(
                       "language_id",
@@ -535,14 +535,14 @@ const AddNewChannelList = (props) => {
                   }}
                   invalid={
                     validation.touched.language_id &&
-                    validation.errors.language_id
+                      validation.errors.language_id
                       ? true
                       : false
                   }
                 />
               </div>
               {validation.touched.language_id &&
-              validation.errors.language_id ? (
+                validation.errors.language_id ? (
                 <FormFeedback type="invalid">
                   {validation.errors.language_id}
                 </FormFeedback>
@@ -565,7 +565,7 @@ const AddNewChannelList = (props) => {
                   <option value="0">No</option>
                 </Input>
                 {validation.touched.isalacarte &&
-                validation.errors.isalacarte ? (
+                  validation.errors.isalacarte ? (
                   <FormFeedback type="invalid">
                     {validation.errors.isalacarte}
                   </FormFeedback>
@@ -599,7 +599,7 @@ const AddNewChannelList = (props) => {
                 <Input
                   name="status"
                   type="select"
-                  placeholder="Select Status"
+                  placeholder="Select status"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
@@ -610,7 +610,7 @@ const AddNewChannelList = (props) => {
                       : false
                   }
                 >
-                  <option value="">Select Status</option>
+                  <option value="">Select status</option>
                   {channelListStatus &&
                     channelListStatus.map((status) => (
                       <option key={status.id} value={status.id}>

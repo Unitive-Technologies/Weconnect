@@ -86,7 +86,7 @@ const CasList = ({
               onChange={(e) => setCasSelection(e.target.value)}
               disabled={!data}
             >
-              <option value="">Select cascode</option>
+              <option value="">Select CAS</option>
               {channelListCascode &&
                 channelListCascode.map((options) => (
                   <option key={options.id} value={options.name}>
@@ -109,7 +109,7 @@ const CasList = ({
               <Input
                 name="casCode"
                 type="text"
-                placeholder="CAS Code"
+                placeholder="Cascode"
                 value={casCode}
                 onChange={(e) => setCasCode(e.target.value)}
               />
@@ -120,7 +120,7 @@ const CasList = ({
               <Input
                 name="serviceId"
                 type="text"
-                placeholder="service id"
+                placeholder="Serviceid"
                 value={serviceId}
                 onChange={(e) => setServiceId(e.target.value)}
               />
@@ -152,7 +152,7 @@ const CasList = ({
                     <th>#</th>
                     <th>CAS</th>
                     <th>CAS CODE</th>
-                    <th>SERVICE ID</th>
+                    <th>SERVICE-ID</th>
                     <th>$</th>
                   </tr>
                 </thead>

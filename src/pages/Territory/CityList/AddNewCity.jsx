@@ -51,7 +51,6 @@ const AddNewCity = (props) => {
       name: Yup.string()
         .required("Enter District")
         .min(2, "Minimum length 2 character"),
-
       state_id: Yup.string().required("Select State"),
       district_id: Yup.string().required("select District"),
       status: Yup.string().required("Select Status"),
