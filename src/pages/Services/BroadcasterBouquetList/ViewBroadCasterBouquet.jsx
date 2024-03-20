@@ -288,7 +288,7 @@ const ViewBroadCasterBouquet = (props) => {
           <Form
             onSubmit={(e) => {
               e.preventDefault();
-              debugger;
+              // debugger;
               validation.handleSubmit();
               return false;
             }}
