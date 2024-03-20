@@ -63,6 +63,9 @@ const ViewNcf = (props) => {
       name: Yup.string().required("Enter name"),
       code: Yup.string().required("Enter code"),
       status: Yup.string().required("Select status"),
+      mrp: Yup.string().required("Enter mrp"),
+      lmo_discount: Yup.string().required("Enter discount"),
+      lmo_rate: Yup.string().required("Enter rate"),
       calculate_per_channel: Yup.string().required(
         "Select calculate per channel"
       ),
@@ -215,7 +218,7 @@ const ViewNcf = (props) => {
                     value={validation.values.from_channel_no || ""}
                     invalid={
                       validation.touched.from_channel_no &&
-                      validation.errors.from_channel_no
+                        validation.errors.from_channel_no
                         ? true
                         : false
                     }
@@ -223,7 +226,7 @@ const ViewNcf = (props) => {
                     disabled
                   />
                   {validation.touched.from_channel_no &&
-                  validation.errors.from_channel_no ? (
+                    validation.errors.from_channel_no ? (
                     <FormFeedback type="invalid">
                       {validation.errors.from_channel_no}
                     </FormFeedback>
@@ -270,7 +273,7 @@ const ViewNcf = (props) => {
                     value={validation.values.to_channel_no || ""}
                     invalid={
                       validation.touched.to_channel_no &&
-                      validation.errors.to_channel_no
+                        validation.errors.to_channel_no
                         ? true
                         : false
                     }
@@ -278,7 +281,7 @@ const ViewNcf = (props) => {
                     disabled
                   />
                   {validation.touched.to_channel_no &&
-                  validation.errors.to_channel_no ? (
+                    validation.errors.to_channel_no ? (
                     <FormFeedback type="invalid">
                       {validation.errors.to_channel_no}
                     </FormFeedback>
@@ -338,7 +341,7 @@ const ViewNcf = (props) => {
                     <option value="0">No</option>
                   </Input>
                   {validation.touched.is_refundable &&
-                  validation.errors.is_refundable ? (
+                    validation.errors.is_refundable ? (
                     <FormFeedback type="invalid">
                       {validation.errors.is_refundable}
                     </FormFeedback>
@@ -361,7 +364,7 @@ const ViewNcf = (props) => {
                     disabled={!showEditNcf}
                     invalid={
                       validation.touched.calculate_per_channel &&
-                      validation.errors.calculate_per_channel
+                        validation.errors.calculate_per_channel
                         ? true
                         : false
                     }
@@ -371,7 +374,7 @@ const ViewNcf = (props) => {
                     <option value="0">No</option>
                   </Input>
                   {validation.touched.calculate_per_channel &&
-                  validation.errors.calculate_per_channel ? (
+                    validation.errors.calculate_per_channel ? (
                     <FormFeedback type="invalid">
                       {validation.errors.calculate_per_channel}
                     </FormFeedback>
@@ -471,14 +474,14 @@ const ViewNcf = (props) => {
                       }
                       invalid={
                         validation.touched.lmo_discount &&
-                        validation.errors.lmo_discount
+                          validation.errors.lmo_discount
                           ? true
                           : false
                       }
                       disabled={!showEditNcf}
                     />
                     {validation.touched.lmo_discount &&
-                    validation.errors.lmo_discount ? (
+                      validation.errors.lmo_discount ? (
                       <FormFeedback type="invalid">
                         {validation.errors.lmo_discount}
                       </FormFeedback>
@@ -501,14 +504,14 @@ const ViewNcf = (props) => {
                       }
                       invalid={
                         validation.touched.lmo_rate &&
-                        validation.errors.lmo_rate
+                          validation.errors.lmo_rate
                           ? true
                           : false
                       }
                       disabled={!showEditNcf}
                     />
                     {validation.touched.lmo_rate &&
-                    validation.errors.lmo_rate ? (
+                      validation.errors.lmo_rate ? (
                       <FormFeedback type="invalid">
                         {validation.errors.lmo_rate}
                       </FormFeedback>
@@ -570,7 +573,7 @@ const ViewNcf = (props) => {
                                     <td>{item.lmo_rate}</td>
                                     <td>
                                       {parseInt(item.calculate_per_channel) ===
-                                      1
+                                        1
                                         ? "Yes"
                                         : "No"}
                                     </td>
@@ -582,7 +585,7 @@ const ViewNcf = (props) => {
                                     <td>
                                       <Link
                                         className="text-dark disabled"
-                                        // onClick={() => deleteMultipleNcf(index)}
+                                      // onClick={() => deleteMultipleNcf(index)}
                                       >
                                         <i
                                           className="mdi mdi-delete font-size-18"

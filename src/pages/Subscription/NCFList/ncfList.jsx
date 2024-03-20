@@ -323,6 +323,18 @@ const NCFList = (props) => {
         },
       },
       {
+        Header: "NCF Type",
+        // accessor: "status",
+        filterable: true,
+        Cell: (cellProps) => {
+          return (
+            <p className="text-muted mb-0">
+              {cellProps.row.original.type_lbl}
+            </p>
+          );
+        },
+      },
+      {
         Header: "Created At",
         accessor: "created_at",
         filterable: true,
