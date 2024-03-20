@@ -126,6 +126,8 @@ const UploadReasonListModal = (props) => {
 
         console.log("cleared the selected files and upload trigger");
         dispatch(onAddNewReason(res.data.data));
+        setStatus(false);
+        setType(false);
         toggleUploadModal();
       })
       .catch((error) => {

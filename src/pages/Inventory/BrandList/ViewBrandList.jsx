@@ -53,7 +53,9 @@ const ViewBrandList = (props) => {
       created_by: (brand && brand.created_by) || "my mso(mso)",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter name"),
+      name: Yup.string()
+        .required("Enter name")
+        .min(2, "Minimum length 2 character"),
       box_type_lbl: Yup.string().required("Select box type"),
       brand_type_lbl: Yup.string().required("Select brand type"),
       cas_lbl: Yup.string().required("Select CAS"),

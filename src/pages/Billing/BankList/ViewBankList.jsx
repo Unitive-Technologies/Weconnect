@@ -53,7 +53,9 @@ const ViewBankList = (props) => {
       created_by: (banks && banks.created_by) || "my mso(mso)",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter name"),
+      name: Yup.string()
+        .required("Enter name")
+        .min(2, "Minimum length 2 character"),
       // ifscode: Yup.string().required(""),
       ismso: Yup.string().required("selecct for mso"),
       status_lbl: Yup.string().required("Select status"),
@@ -153,7 +155,7 @@ const ViewBankList = (props) => {
               <Col sm="4">
                 <div className="mb-3">
                   <Label className="form-label">
-                    Name<span style={{ color: "red" }}>*</span>
+                    Bank Name<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
                     name="name"
@@ -267,7 +269,7 @@ const ViewBankList = (props) => {
                   <Input
                     name="address"
                     type="textarea"
-                    placeholder="Enter character length"
+                    placeholder="Enter branch address"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.address || ""}
@@ -319,7 +321,7 @@ const ViewBankList = (props) => {
                     <Input
                       name="account_no"
                       type="text"
-                      placeholder="Enter Account No"
+                      placeholder="Enter account no"
                       onChange={validation.handleChange}
                       onBlur={validation.handleBlur}
                       value={validation.values.account_no || ""}

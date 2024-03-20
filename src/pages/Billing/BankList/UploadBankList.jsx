@@ -152,7 +152,7 @@ const UploadBankList = (props) => {
       >
         {/* <Modal isOpen={modal} toggle={toggle}> */}
         <ModalHeader toggle={toggleUploadModal} tag="h4">
-          Upload Bank
+          Upload Banks
         </ModalHeader>
         <ModalBody>
           <Card>

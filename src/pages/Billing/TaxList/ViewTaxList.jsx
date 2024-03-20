@@ -40,8 +40,12 @@ const ViewTaxList = (props) => {
       description: (tax && tax.description) || "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter title"),
-      code: Yup.string().required("Enter code"),
+      name: Yup.string()
+        .required("Enter title")
+        .min(2, "Minimum length 2 character"),
+      code: Yup.string().
+        required("Enter code")
+        .min(2, "Minimum length 2 character"),
       taxvalue: Yup.string().required("Exter tax Value"),
     }),
     onSubmit: (values) => {

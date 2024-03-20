@@ -35,7 +35,9 @@ const AddNewReason = (props) => {
       created_by: "Admin",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter reason"),
+      name: Yup.string()
+        .required("Enter reason")
+        .min(2, "Minimum length 2 character"),
       type: Yup.array().required("Enter reason type"),
       status: Yup.string().required("Select status"),
     }),

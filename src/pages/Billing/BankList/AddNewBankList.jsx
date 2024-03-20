@@ -42,11 +42,12 @@ const AddNewBankList = (props) => {
       // created_by: "Admin",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter name"),
-      // ifscode: Yup.string().required("Enter IFSC code"),
-      // branch: Yup.string().required("Enter branch"),
-      account_no: Yup.string().required("Enter account no"),
-      // address: Yup.string().required("Enter branch address"),
+      name: Yup.string()
+        .required("Enter name")
+        .min(2, "Minimum length 2 character"),
+      account_no: Yup.string()
+        .required("Enter account no")
+        .min(2, "Minimum length 6 character"),
       ismso: Yup.string().required("Select for mso"),
       status: Yup.string().required("Select status"),
     }),
@@ -105,7 +106,7 @@ const AddNewBankList = (props) => {
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">
-                  Name<span style={{ color: "red" }}>*</span>
+                  Bank Name<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
                   name="name"
@@ -181,7 +182,7 @@ const AddNewBankList = (props) => {
                 <Input
                   name="status"
                   type="select"
-                  placeholder="Select Status"
+                  placeholder="Select status"
                   className="form-select"
                   // onChange={handleStatusChange}
                   onChange={validation.handleChange}
@@ -194,7 +195,7 @@ const AddNewBankList = (props) => {
                       : false
                   }
                 >
-                  <option value="">Select Status</option>
+                  <option value="">Select status</option>
                   {bankStatus &&
                     bankStatus.map((status) => (
                       <option key={status.id} value={status.id}>

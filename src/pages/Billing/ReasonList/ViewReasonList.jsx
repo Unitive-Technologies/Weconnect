@@ -54,7 +54,9 @@ const ViewReason = (props) => {
       applicableon: (reason && reason.applicableon) || "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter reason"),
+      name: Yup.string()
+        .required("Enter reason")
+        .min(2, "Minimum length 2 character"),
       status: Yup.string().required("Select Status"),
       type: Yup.array().min(1, "Select at least one Reason Type"),
       // applicableon: Yup.array().required(""),
