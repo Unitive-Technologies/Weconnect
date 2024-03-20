@@ -328,12 +328,12 @@ const BroadcasterBouquetList = (props) => {
     setShowAddNewBroadcasterBouquetList(!showAddNewBroadcasterBouquetList);
   };
   const [viewBrocast, setViewBrocast] = useState({});
-  const [selectedRowId, setSelectedRowId] = useState("");
+  // const [selectedRowId, setSelectedRowId] = useState("");
 
   const toggleViewModal = (broadData) => {
     setViewBroadcastBouq(!viewBroadcastBouq);
     setViewBrocast(broadData);
-    setSelectedRowId(broadData.id);
+    // setSelectedRowId(broadData.id);
   };
 
   const resetSelection = () => {
@@ -379,7 +379,7 @@ const BroadcasterBouquetList = (props) => {
           broadcasterBouquetStatus={brodcastbouquetStatus}
           broadcasterBouquetType={brodcastbouquetType}
           resetSelection={resetSelection}
-          selectedRowId={selectedRowId}
+          // selectedRowId={selectedRowId}
         />
       )}
       <div className="page-content">

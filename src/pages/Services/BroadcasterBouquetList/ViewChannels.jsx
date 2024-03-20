@@ -25,7 +25,7 @@ const ViewChannels = (props) => {
     definition,
     selectedType,
     selectedBroadcaster,
-    broadcasterBouquetAddchannels,
+    // broadcasterBouquetAddchannels,
   } = props;
   // console.log("data in viewchannels:" + JSON.stringify(channels));
   console.log(
@@ -52,9 +52,10 @@ const ViewChannels = (props) => {
   //   list.splice(index, 1);
   //   setChannels(list);
   // };
-  const deleteChannel = (index) => {
-    console.log("delete btn clicked");
-    const updatedChannels = channels.filter((_, i) => i !== index);
+
+  const deleteChannel = (id) => {
+    console.log("delete btn clicked" + id);
+    const updatedChannels = channels.filter((channel) => channel.id !== id);
     setChannels(updatedChannels);
   };
 
@@ -94,13 +95,15 @@ const ViewChannels = (props) => {
   };
   return (
     <>
-      <AddChannelsTableList
-        isOpen={showChannelTableList}
-        data={addChannelsList}
-        toggleClose={toggleShowChannelTableList}
-        setChannels={setChannels}
-        definition={definition}
-      />
+      {showChannelTableList && (
+        <AddChannelsTableList
+          isOpen={Boolean(showChannelTableList)}
+          data={addChannelsList}
+          toggleClose={toggleShowChannelTableList}
+          setChannels={setChannels}
+          definition={definition}
+        />
+      )}
       <div
         className="position-fixed top-0 end-0 p-3"
         style={{ zIndex: "1005" }}
@@ -236,7 +239,7 @@ const ViewChannels = (props) => {
                       <td>
                         <i
                           style={{ cursor: "pointer" }}
-                          onClick={() => deleteChannel(index)}
+                          onClick={() => deleteChannel(item.id)}
                           className="mdi mdi-delete font-size-18"
                           id="deletetooltip"
                         />
@@ -253,9 +256,9 @@ const ViewChannels = (props) => {
   );
 };
 
-ViewChannels.propTypes = {
-  toggle: PropTypes.func,
-  isOpen: PropTypes.bool,
-};
+// ViewChannels.propTypes = {
+//   toggle: PropTypes.func,
+//   isOpen: PropTypes.bool,
+// };
 
 export default ViewChannels;

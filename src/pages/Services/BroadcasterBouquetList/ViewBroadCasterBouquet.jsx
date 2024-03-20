@@ -33,8 +33,8 @@ import RevenueShareForEdit from "./RevenueShareForEdit";
 const ViewBroadCasterBouquet = (props) => {
   const {
     isOpen,
-    selectedRowId,
-    broadcasterBouquetAddchannels,
+    // selectedRowId,
+    // broadcasterBouquetAddchannels,
     broadcasterBouquetType,
     broadcasterBouquetBroadcaster,
     broadcasterBouquetDefinition,
@@ -82,50 +82,81 @@ const ViewBroadCasterBouquet = (props) => {
       broadcaster_id: broadcast && broadcast.broadcaster_id,
       status: (broadcast && broadcast.status) || "",
       rate: (broadcast && broadcast.broadcasterRate) || "",
-      channels: (broadcast && broadcast.channels) || "",
-      created_by: "Admin",
+      // channels: (broadcast && broadcast.channels) || "",
     },
     validationSchema: Yup.object({
       // code: Yup.string().required("Enter Code"),
       name: Yup.string().required("Enter name"),
-      // definition: Yup.string().required("Select definition"),
+      definition: Yup.string().required("Select definition"),
       description: Yup.string().required("Enter description"),
-      // type: Yup.string().required("Select type"),
-      // broadcaster_id: Yup.string().required("select broadcaster_id"),
-      // status: Yup.string().required("Enter status"),
-      // rate: Yup.string().required(""),
-      // channels: Yup.string().required("channels"),
-      // serviceid: Yup.string().required("serviceid"),
+      isFta: Yup.string().required("Select type"),
+      broadcaster_id: Yup.string().required("select broadcaster"),
+      status: Yup.string().required("Enter status"),
+      broadcasterRate: Yup.string().required(""),
     }),
-    onSubmit: (values) => {
-      const updateBroadcasterBouque = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
-        code: values["code"],
-        name: values["name"],
-        // definition: values["definition"],
-        description: values["description"],
-        isHD: parseInt(values["isHD"]),
-        type: values["type"],
-        // isFta: parseInt(values["isFta"]),
-        broadcaster_id: parseInt(values["broadcaster_id"]),
-        status: parseInt(values["status"]),
-        rate: values["rate"],
-        // broadcasterRate: values["broadcasterRate"],
-        channelsGroup: channels.map((single) => {
-          return single.id;
-        }),
-        revenue_share: {
-          mso_share: msoPercent,
-          mso_discount: discountPercent,
-          broadcaster_share: broadPercent,
-        },
-      };
-      console.log(
-        "newBroadcasterBouquetList:" + JSON.stringify(updateBroadcasterBouque)
-      );
-      dispatch(onUpdateBroadcasterBouquet(updateBroadcasterBouque));
-      validation.resetForm();
-      toggleViewModal();
+    onSubmit: async (values) => {
+      try {
+        const updateBroadcasterBouque = {
+          id: broadcast.id,
+          code: values["code"],
+          name: values["name"],
+          description: values["description"],
+          isHD: values["isHD"],
+          isFta: values["type"],
+          broadcaster_id: values["broadcaster_id"],
+          status: values["status"],
+          broadcasterRate: values["rate"],
+          // channelsGroup: channels.map((single) => {
+          //   return single.id;
+          // }),
+          // revenue_share: {
+          //   mso_share: msoPercent,
+          //   mso_discount: discountPercent,
+          //   broadcaster_share: broadPercent,
+          // },
+          // channels: channels.map((single) => {
+          //   return {
+          //     broadcasterRate: single.broadcasterRate,
+          //     broadcaster_lbl: single.broadcaster_lbl,
+          //     channel_type_lbl: single.channel_type_lbl,
+          //     id: single.id,
+          //     isAlacarte: single.isAlacarte,
+          //     isAlacarte_lbl: single.isAlacarte,
+          //     isFta: single.isFta,
+          //     isFta_lbl: single.isFta_lbl,
+          //     isNCF: single.isNCF,
+          //     isNCF_lbl: single.isNCF_lbl,
+          //     name: single.name,
+          //   };
+          // }),
+        };
+
+        console.log(
+          "updateBroadcasterBouque:",
+          JSON.stringify(updateBroadcasterBouque)
+        );
+        const token = "Bearer " + localStorage.getItem("temptoken");
+
+        const response = await axios.put(
+          `${API_URL}/broadcaster-bouque/${broadcast.id}?vr=web1.0`,
+          updateBroadcasterBouque,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+
+        console.log(
+          "newBroadcasterBouquetList:" + JSON.stringify(updateBroadcasterBouque)
+        );
+        console.log("API Response:", response.data);
+        // dispatch(onUpdateBroadcasterBouquet(updateBroadcasterBouque));
+        validation.resetForm();
+        toggleViewModal();
+      } catch (error) {
+        console.error("Error in onSubmit:", error);
+      }
     },
     onReset: (values) => {
       validation.setValues(validation.initialValues);
@@ -154,7 +185,7 @@ const ViewBroadCasterBouquet = (props) => {
         const token = "Bearer " + localStorage.getItem("temptoken");
 
         const response = await axios.get(
-          `${API_URL}/broadcaster-bouque/${selectedRowId}?expand=channels&vr=web1.0`,
+          `${API_URL}/broadcaster-bouque/${broadcast.id}?expand=channels&vr=web1.0`,
           {
             headers: {
               Authorization: token,
@@ -168,10 +199,10 @@ const ViewBroadCasterBouquet = (props) => {
         console.error("Error fetching addChannels data:", error);
       }
     };
-    if (selectedRowId) {
+    if (broadcast) {
       getSelectedRowDetails();
     }
-  }, [selectedRowId]);
+  }, [broadcast]);
   console.log("selectedRowDetails:" + JSON.stringify(selectedRowDetails));
 
   useEffect(() => {
@@ -254,6 +285,7 @@ const ViewBroadCasterBouquet = (props) => {
           <Form
             onSubmit={(e) => {
               e.preventDefault();
+              // debugger;
               validation.handleSubmit();
               return false;
             }}
@@ -392,15 +424,15 @@ const ViewBroadCasterBouquet = (props) => {
                     type="select"
                     placeholder="Select Channel type"
                     className="form-select"
-                    // onChange={(e) => {
-                    //   validation.handleChange(e);
-                    //   setSelectedType(e.target.value);
-                    // }}
-                    onChange={validation.handleChange}
+                    onChange={(e) => {
+                      validation.handleChange(e);
+                      setSelectedType(e.target.value);
+                    }}
+                    // onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     // value={selectedType}
-                    value={validation.values.channel_type_lbl || ""}
-                    // value={validation.values.type || ""}
+                    // value={validation.values.channel_type_lbl || ""}
+                    value={validation.values.type || ""}
                     disabled={!showEditBroadcast}
                   >
                     {broadcasterBouquetType &&
@@ -413,10 +445,9 @@ const ViewBroadCasterBouquet = (props) => {
                         </option>
                       ))}
                   </Input>
-                  {validation.touched.channel_type_lbl &&
-                  validation.errors.channel_type_lbl ? (
+                  {validation.touched.type && validation.errors.type ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.channel_type_lbl}
+                      {validation.errors.type}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -505,9 +536,13 @@ const ViewBroadCasterBouquet = (props) => {
                     // disabled={selectedType === "1"}
                     // value={selectedRate}
 
-                    value={parseFloat(validation.values.rate).toFixed(2) || ""}
+                    value={
+                      selectedType === "1"
+                        ? 0
+                        : parseFloat(validation.values.rate).toFixed(2) || ""
+                    }
                     onBlur={validation.handleBlur}
-                    disabled={!showEditBroadcast}
+                    disabled={!showEditBroadcast || selectedType === "1"}
                   ></Input>
 
                   {validation.touched.rate && validation.errors.rate ? (
@@ -630,10 +665,19 @@ const ViewBroadCasterBouquet = (props) => {
                   definition={validation.values.isHD}
                   selectedType={validation.values.type}
                   selectedBroadcaster={validation.values.broadcaster_id}
-                  broadcasterBouquetAddchannels={broadcasterBouquetAddchannels}
+                  // broadcasterBouquetAddchannels={broadcasterBouquetAddchannels}
                 />
               </Col>
             </Row>
+            {console.log(
+              "validataion valuesssssssssssssss:" + validation.values.name,
+              validation.values.isHD,
+              validation.values.description,
+              validation.values.type,
+              validation.values.broadcaster_id,
+              validation.values.status,
+              validation.values.rate
+            )}
             {showEditBroadcast && (
               <Row>
                 <Col>
@@ -676,12 +720,12 @@ ViewBroadCasterBouquet.propTypes = {
   // resetSelection: PropTypes.func,
   isOpen: PropTypes.bool,
 
-  // broadcast: PropTypes.object,
+  broadcast: PropTypes.object,
   // broadcasterBouquetAddchannels: PropTypes.object,
-  // broadcasterBouquetBroadcaster: PropTypes.object,
-  // broadcasterBouquetDefinition: PropTypes.object,
-  // broadcasterBouquetStatus: PropTypes.object,
-  // broadcasterBouquetType: PropTypes.object,
+  broadcasterBouquetBroadcaster: PropTypes.array,
+  broadcasterBouquetDefinition: PropTypes.array,
+  broadcasterBouquetStatus: PropTypes.array,
+  broadcasterBouquetType: PropTypes.array,
 };
 
 export default ViewBroadCasterBouquet;

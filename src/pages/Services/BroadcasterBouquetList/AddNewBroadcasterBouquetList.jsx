@@ -105,20 +105,20 @@ const AddNewBroadcasterBouquetList = (props) => {
       name: "",
       definition: "",
       description: "",
-      // isFta: "",
-      // broadcaster: "",
+      isFta: "",
+      broadcaster_id: "",
       status: "",
-      // rate: "",
+      broadcasterRate: "",
     },
     validationSchema: Yup.object({
       // code: Yup.string().required("Enter Code"),
       name: Yup.string().required("Enter name"),
-      // definition: Yup.string().required("Select definition"),
+      definition: Yup.string().required("Select definition"),
       description: Yup.string().required("Enter description"),
-      // isFta: Yup.string().required("Select type"),
-      // broadcaster: Yup.string().required("select broadcaster"),
-      // status: Yup.string().required("Enter status"),
-      // rate: Yup.string().required(""),
+      isFta: Yup.string().required("Select type"),
+      broadcaster_id: Yup.string().required("select broadcaster"),
+      status: Yup.string().required("Enter status"),
+      broadcasterRate: Yup.string().required(""),
       // serviceid: Yup.string().required("serviceid"),
     }),
     onSubmit: (values) => {
@@ -180,7 +180,9 @@ const AddNewBroadcasterBouquetList = (props) => {
     setIsCustomEnabled(e.target.checked);
   };
 
-  console.log("AddNewBroadcasterBouquetList definition" + validation.values.isHD)
+  console.log(
+    "AddNewBroadcasterBouquetList definition" + validation.values.isHD
+  );
 
   return (
     <Modal
@@ -200,6 +202,7 @@ const AddNewBroadcasterBouquetList = (props) => {
         <Form
           onSubmit={(e) => {
             e.preventDefault();
+            // debugger;
             validation.handleSubmit();
             return false;
           }}
@@ -289,7 +292,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                     ))}
                 </Input>
                 {validation.touched.definition &&
-                  validation.errors.definition ? (
+                validation.errors.definition ? (
                   <FormFeedback type="invalid">
                     {validation.errors.definition}
                   </FormFeedback>
@@ -312,13 +315,13 @@ const AddNewBroadcasterBouquetList = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -385,7 +388,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                     ))}
                 </Input>
                 {validation.touched.broadcaster_id &&
-                  validation.errors.broadcaster_id ? (
+                validation.errors.broadcaster_id ? (
                   <FormFeedback type="invalid">
                     {validation.errors.broadcaster_id}
                   </FormFeedback>
@@ -476,7 +479,11 @@ const AddNewBroadcasterBouquetList = (props) => {
                     />
                   </Col>
 
-                  {/* {console.log("select rate value" + validation.values.rate, selectedRate, selectedType)} */}
+                  {console.log(
+                    "select rate value" + validation.values.rate,
+                    selectedRate,
+                    selectedType
+                  )}
                   {selectedType === "0" && selectedRate !== "" ? (
                     // <Row>
                     <Col lg={6}>
@@ -526,7 +533,6 @@ const AddNewBroadcasterBouquetList = (props) => {
               margin: "30px 0px",
             }}
           >
-
             <Col sm="12">
               <AddChannels
                 channels={channels}
@@ -537,9 +543,7 @@ const AddNewBroadcasterBouquetList = (props) => {
                 broadcasterBouquetAddchannels={broadcasterBouquetAddchannels}
                 definition={validation.values.definition}
               />
-
             </Col>
-
           </Row>
 
           <Row>

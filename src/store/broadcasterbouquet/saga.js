@@ -85,7 +85,8 @@ function* onUpdateBroadcasterBouquet({ payload: broadcasterBouquetList }) {
   try {
     const response = yield call(
       updateBroadcasterBouquet,
-      broadcasterBouquetList
+      broadcasterBouquetList,
+      broadcasterBouquetList.id
     );
     yield put(updateBroadcasterBouquetSuccess(response));
     yield put(fetchbroadcasterbouquetLists());

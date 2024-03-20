@@ -182,8 +182,8 @@ const ViewChannel = (props) => {
           };
         }),
         serviceid: values.serviceid,
-        created_at: new Date(),
-        created_by: values.created_by,
+        // created_at: new Date(),
+        // created_by: values.created_by,
         revenue_share: {
           mso_share: msoPercent,
           mso_discount: discountPercent,

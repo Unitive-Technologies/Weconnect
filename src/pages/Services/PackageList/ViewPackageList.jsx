@@ -253,6 +253,7 @@ const ViewPackageList = (props) => {
           <Form
             onSubmit={(e) => {
               e.preventDefault();
+              debugger;
               validation.handleSubmit();
               return false;
             }}

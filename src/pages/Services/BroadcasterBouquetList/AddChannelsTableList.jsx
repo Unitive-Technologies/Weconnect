@@ -27,6 +27,7 @@ const AddChannelsTableList = (props) => {
   const [selectedRows, setSelectedRows] = useState([]);
 
   const handleSelectedRows = (row) => {
+    setSelectedRows([]);
     const isSelected = selectedRows.some(
       (selectedRow) => selectedRow.id === row.id
     );
@@ -47,7 +48,10 @@ const AddChannelsTableList = (props) => {
   console.log("selectedRows:" + JSON.stringify(selectedRows));
 
   const handleAddButtonClick = () => {
-    setChannels(selectedRows);
+    const filteredSelectedRows = selectedRows.filter((row) =>
+      data.find((item) => item.id === row.id)
+    );
+    setChannels(filteredSelectedRows);
     toggleClose();
   };
 
