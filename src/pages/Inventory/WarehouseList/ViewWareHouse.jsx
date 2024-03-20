@@ -51,12 +51,12 @@ const ViewWareHouse = (props) => {
       created_by: (warehouse && warehouse.created_by) || "NIKHIL REDDY(nikky)",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter name"),
-      contact_person: Yup.string().required("Enter contact person"),
-      mobile_no: Yup.string().required("Enter mobile number"),
+      name: Yup.string().required("Enter name").min(2, "Minimum length 2 character"),
+      contact_person: Yup.string().required("Enter contact person").min(2, "Minimum length 2 character"),
+      mobile_no: Yup.string().required("Enter mobile number").min(10, "Min 10 digit number"),
       operator_id: Yup.string().required("Select operator"),
-      description: Yup.string().required("Enter description"),
-      address: Yup.string().required("Enter address"),
+      description: Yup.string().required("Enter description").min(2, "Please enter at least 2 characters"),
+      address: Yup.string().required("Enter address").min(2, "Please enter at least 2 characters"),
       status: Yup.string().required("Select status"),
     }),
     onSubmit: (values) => {

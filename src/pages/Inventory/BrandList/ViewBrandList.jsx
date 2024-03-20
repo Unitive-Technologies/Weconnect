@@ -59,8 +59,18 @@ const ViewBrandList = (props) => {
       box_type_lbl: Yup.string().required("Select box type"),
       brand_type_lbl: Yup.string().required("Select brand type"),
       cas_lbl: Yup.string().required("Select CAS"),
-      length: Yup.string().required("Enter character length"),
-      significant_length: Yup.string().required("Enter significant length"),
+      length: Yup.string()
+        .required("Enter character length")
+        .test('is-number', 'Number must be greater than or equal to 5', value => {
+          // Check if the input is a number and greater than or equal to 5
+          return !isNaN(value) && parseInt(value) >= 5;
+        }),
+      significant_length: Yup.string()
+        .required("Enter significant length")
+        .test('is-number', 'Number must be greater than or equal to 5', value => {
+          // Check if the input is a number and greater than or equal to 5
+          return !isNaN(value) && parseInt(value) >= 5;
+        }),
       char_allowed_lbl: Yup.string().required("Enter allowed characters"),
       status: Yup.string().required("Select status"),
     }),
