@@ -66,33 +66,36 @@ const ViewBroadCasterBouquet = (props) => {
   const [selectedRate, setSelectedRate] = useState("");
   const [definition, setDefinition] = useState("");
 
-  // console.log("View broadcast" + JSON.stringify(broadcast));
+  console.log("View broadcasttttttttttttttttttt" + JSON.stringify(broadcast));
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
-      //BroadCaster: "",
-      code: (broadcast && broadcast.code) || "",
-      name: (broadcast && broadcast.name) || "",
-      isHD: broadcast && broadcast.isHD,
-      description: (broadcast && broadcast.description) || "",
-      type: broadcast && broadcast.isFta,
-      broadcaster_id: broadcast && broadcast.broadcaster_id,
-      status: (broadcast && broadcast.status) || "",
-      rate: (broadcast && broadcast.broadcasterRate) || "",
-      // channels: (broadcast && broadcast.channels) || "",
+      code: broadcast?.code || "",
+      name: broadcast?.name || "",
+      isHD: broadcast?.isHD || 0,
+      description: broadcast?.description || "",
+      isFta: broadcast?.isFta || 0,
+      broadcaster_id: broadcast?.broadcaster_id || "",
+      status: broadcast?.status || "",
+      broadcasterRate: broadcast?.broadcasterRate || "",
+      // channels: broadcast?.channelsGroup || [],
+      // broadcaster_share: broadcast?.revenue_share?.broadcaster_share || "",
+      // mso_share: broadcast?.revenue_share?.mso_share || "",
+      // mso_discount: broadcast?.revenue_share?.mso_discount || "",
     },
+
     validationSchema: Yup.object({
       // code: Yup.string().required("Enter Code"),
       name: Yup.string().required("Enter name"),
-      definition: Yup.string().required("Select definition"),
+      isHD: Yup.string().required("Select definition"),
       description: Yup.string().required("Enter description"),
       isFta: Yup.string().required("Select type"),
       broadcaster_id: Yup.string().required("select broadcaster"),
-      status: Yup.string().required("Enter status"),
-      broadcasterRate: Yup.string().required(""),
+      status: Yup.string().required("Select status"),
+      broadcasterRate: Yup.string().required("Enter Rate"),
     }),
     onSubmit: async (values) => {
       try {
@@ -102,33 +105,33 @@ const ViewBroadCasterBouquet = (props) => {
           name: values["name"],
           description: values["description"],
           isHD: values["isHD"],
-          isFta: values["type"],
+          isFta: values["isFta"],
           broadcaster_id: values["broadcaster_id"],
           status: values["status"],
           broadcasterRate: values["rate"],
-          // channelsGroup: channels.map((single) => {
-          //   return single.id;
-          // }),
-          // revenue_share: {
-          //   mso_share: msoPercent,
-          //   mso_discount: discountPercent,
-          //   broadcaster_share: broadPercent,
-          // },
-          // channels: channels.map((single) => {
-          //   return {
-          //     broadcasterRate: single.broadcasterRate,
-          //     broadcaster_lbl: single.broadcaster_lbl,
-          //     channel_type_lbl: single.channel_type_lbl,
-          //     id: single.id,
-          //     isAlacarte: single.isAlacarte,
-          //     isAlacarte_lbl: single.isAlacarte,
-          //     isFta: single.isFta,
-          //     isFta_lbl: single.isFta_lbl,
-          //     isNCF: single.isNCF,
-          //     isNCF_lbl: single.isNCF_lbl,
-          //     name: single.name,
-          //   };
-          // }),
+          channelsGroup: channels.map((single) => {
+            return single.id;
+          }),
+          revenue_share: {
+            mso_share: msoPercent,
+            mso_discount: discountPercent,
+            broadcaster_share: broadPercent,
+          },
+          channels: channels.map((single) => {
+            return {
+              broadcasterRate: single.broadcasterRate,
+              broadcaster_lbl: single.broadcaster_lbl,
+              channel_type_lbl: single.channel_type_lbl,
+              id: single.id,
+              isAlacarte: single.isAlacarte,
+              isAlacarte_lbl: single.isAlacarte,
+              isFta: single.isFta,
+              isFta_lbl: single.isFta_lbl,
+              isNCF: single.isNCF,
+              isNCF_lbl: single.isNCF_lbl,
+              name: single.name,
+            };
+          }),
         };
 
         console.log(
@@ -285,7 +288,7 @@ const ViewBroadCasterBouquet = (props) => {
           <Form
             onSubmit={(e) => {
               e.preventDefault();
-              // debugger;
+              debugger;
               validation.handleSubmit();
               return false;
             }}
@@ -420,7 +423,7 @@ const ViewBroadCasterBouquet = (props) => {
                     Type<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="type"
+                    name="isFta"
                     type="select"
                     placeholder="Select Channel type"
                     className="form-select"
@@ -432,7 +435,7 @@ const ViewBroadCasterBouquet = (props) => {
                     onBlur={validation.handleBlur}
                     // value={selectedType}
                     // value={validation.values.channel_type_lbl || ""}
-                    value={validation.values.type || ""}
+                    value={validation.values.isFta || ""}
                     disabled={!showEditBroadcast}
                   >
                     {broadcasterBouquetType &&
@@ -445,9 +448,9 @@ const ViewBroadCasterBouquet = (props) => {
                         </option>
                       ))}
                   </Input>
-                  {validation.touched.type && validation.errors.type ? (
+                  {validation.touched.isFta && validation.errors.isFta ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.type}
+                      {validation.errors.isFta}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -526,7 +529,7 @@ const ViewBroadCasterBouquet = (props) => {
                     MRP Rate(INR)<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="rate"
+                    name="broadcasterRate"
                     type="number"
                     step="0.01"
                     onChange={validation.handleChange}
@@ -539,15 +542,18 @@ const ViewBroadCasterBouquet = (props) => {
                     value={
                       selectedType === "1"
                         ? 0
-                        : parseFloat(validation.values.rate).toFixed(2) || ""
+                        : parseFloat(validation.values.broadcasterRate).toFixed(
+                            2
+                          ) || ""
                     }
                     onBlur={validation.handleBlur}
                     disabled={!showEditBroadcast || selectedType === "1"}
                   ></Input>
 
-                  {validation.touched.rate && validation.errors.rate ? (
+                  {validation.touched.broadcasterRate &&
+                  validation.errors.broadcasterRate ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.rate}
+                      {validation.errors.broadcasterRate}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -606,7 +612,7 @@ const ViewBroadCasterBouquet = (props) => {
                                           broadcast.broadcasterRate
                                         ).toFixed(2)
                                       : parseFloat(
-                                          validation.values.rate
+                                          validation.values.broadcasterRate
                                         ).toFixed(2)}
                                     ){" "}
                                     {/* parseFloat(validation.values.rate).toFixed(2) */}
@@ -619,7 +625,7 @@ const ViewBroadCasterBouquet = (props) => {
                                     selectedRate={
                                       !showEditBroadcast
                                         ? parseInt(broadcast.broadcasterRate)
-                                        : validation.values.rate
+                                        : validation.values.broadcasterRate
                                     }
                                     dataColors='["--bs-success","--bs-primary", "--bs-danger","--bs-info", "--bs-warning"]'
                                   />
@@ -633,7 +639,6 @@ const ViewBroadCasterBouquet = (props) => {
                 </Col>
               </Col>
             </Row>
-
             <div
               style={{
                 // margin: "20px 0px",
@@ -663,20 +668,45 @@ const ViewBroadCasterBouquet = (props) => {
                   channels={channels}
                   setChannels={setChannels}
                   definition={validation.values.isHD}
-                  selectedType={validation.values.type}
+                  selectedType={validation.values.isFta}
                   selectedBroadcaster={validation.values.broadcaster_id}
                   // broadcasterBouquetAddchannels={broadcasterBouquetAddchannels}
                 />
               </Col>
             </Row>
             {console.log(
-              "validataion valuesssssssssssssss:" + validation.values.name,
+              "validation values:",
+              "name:",
+              validation.values.name,
+              typeof validation.values.name,
+              "isHD:",
               validation.values.isHD,
+              typeof validation.values.isHD,
+              "description:",
               validation.values.description,
-              validation.values.type,
+              typeof validation.values.description,
+              "isFta:",
+              validation.values.isFta,
+              typeof validation.values.isFta,
+              "broadcaster_id:",
               validation.values.broadcaster_id,
+              typeof validation.values.broadcaster_id,
+              "status:",
               validation.values.status,
-              validation.values.rate
+              typeof validation.values.status,
+              "broadcasterRate:",
+              validation.values.broadcasterRate,
+              typeof validation.values.broadcasterRate
+            )}
+            {console.log(
+              "isHD:",
+              validation.values.isHD,
+              typeof validation.values.isHD
+            )}
+            {console.log(
+              "isFta:",
+              validation.values.isFta,
+              typeof validation.values.isFta
             )}
             {showEditBroadcast && (
               <Row>
@@ -709,7 +739,6 @@ const ViewBroadCasterBouquet = (props) => {
             )}
           </Form>
         </ModalBody>
-        {/* </Modal> */}
       </Modal>
     </>
   );
@@ -717,7 +746,7 @@ const ViewBroadCasterBouquet = (props) => {
 
 ViewBroadCasterBouquet.propTypes = {
   toggleViewModal: PropTypes.func,
-  // resetSelection: PropTypes.func,
+  resetSelection: PropTypes.func,
   isOpen: PropTypes.bool,
 
   broadcast: PropTypes.object,

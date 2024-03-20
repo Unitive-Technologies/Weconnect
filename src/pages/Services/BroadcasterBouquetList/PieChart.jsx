@@ -2,23 +2,26 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 import getChartColorsArray from "../../../components/Common/ChartDynamicColor";
 
-const PieChart = ({ dataColors, selectedRate,
+const PieChart = ({
+  dataColors,
+  selectedRate,
   broadPercent,
   msoPercent,
-  discountPercent, }) => {
+  discountPercent,
+}) => {
   const PieApexChartColors = getChartColorsArray(dataColors);
 
   const BroadCasterShare = (broadPercent * selectedRate) / 100;
   const MSOShare = (msoPercent * selectedRate) / 100;
   const MSODiscount = (discountPercent * selectedRate) / 100;
 
-  const series = [MSOShare, BroadCasterShare, MSODiscount];
+  const series = [BroadCasterShare, MSOShare, MSODiscount];
   const options = {
     chart: {
       height: 320,
       type: "pie",
     },
-    series: [MSOShare, BroadCasterShare, MSODiscount],
+    series: [BroadCasterShare, MSOShare, MSODiscount],
     labels: ["Broadcaster Share", "MSO  Share", "MSO Discount"],
     colors: PieApexChartColors,
     legend: {
