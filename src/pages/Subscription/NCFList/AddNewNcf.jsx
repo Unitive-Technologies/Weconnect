@@ -10,6 +10,7 @@ import {
   FormFeedback,
   Input,
   Form,
+  ModalFooter,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -162,13 +163,13 @@ const AddNewNcf = (props) => {
                   value={validation.values.from_channel_no || ""}
                   invalid={
                     validation.touched.from_channel_no &&
-                    validation.errors.from_channel_no
+                      validation.errors.from_channel_no
                       ? true
                       : false
                   }
                 />
                 {validation.touched.from_channel_no &&
-                validation.errors.from_channel_no ? (
+                  validation.errors.from_channel_no ? (
                   <FormFeedback type="invalid">
                     {validation.errors.from_channel_no}
                   </FormFeedback>
@@ -212,13 +213,13 @@ const AddNewNcf = (props) => {
                   value={validation.values.to_channel_no || ""}
                   invalid={
                     validation.touched.to_channel_no &&
-                    validation.errors.to_channel_no
+                      validation.errors.to_channel_no
                       ? true
                       : false
                   }
                 />
                 {validation.touched.to_channel_no &&
-                validation.errors.to_channel_no ? (
+                  validation.errors.to_channel_no ? (
                   <FormFeedback type="invalid">
                     {validation.errors.to_channel_no}
                   </FormFeedback>
@@ -276,7 +277,7 @@ const AddNewNcf = (props) => {
                   <option value="0">No</option>
                 </Input>
                 {validation.touched.is_refundable &&
-                validation.errors.is_refundable ? (
+                  validation.errors.is_refundable ? (
                   <FormFeedback type="invalid">
                     {validation.errors.is_refundable}
                   </FormFeedback>
@@ -298,7 +299,7 @@ const AddNewNcf = (props) => {
                   value={validation.values.calculate_per_channel || ""}
                   invalid={
                     validation.touched.calculate_per_channel &&
-                    validation.errors.calculate_per_channel
+                      validation.errors.calculate_per_channel
                       ? true
                       : false
                   }
@@ -308,7 +309,7 @@ const AddNewNcf = (props) => {
                   <option value="0">No</option>
                 </Input>
                 {validation.touched.calculate_per_channel &&
-                validation.errors.calculate_per_channel ? (
+                  validation.errors.calculate_per_channel ? (
                   <FormFeedback type="invalid">
                     {validation.errors.calculate_per_channel}
                   </FormFeedback>
@@ -409,13 +410,13 @@ const AddNewNcf = (props) => {
                     // value={validation.values.lmo_discount || ""}
                     invalid={
                       validation.touched.lmo_discount &&
-                      validation.errors.lmo_discount
+                        validation.errors.lmo_discount
                         ? true
                         : false
                     }
                   />
                   {validation.touched.lmo_discount &&
-                  validation.errors.lmo_discount ? (
+                    validation.errors.lmo_discount ? (
                     <FormFeedback type="invalid">
                       {validation.errors.lmo_discount}
                     </FormFeedback>
@@ -476,10 +477,10 @@ const AddNewNcf = (props) => {
             </Row>
           </Row>
           <Row>
-            <Col sm="8">
-              <div className="d-flex flex-wrap gap-2">
+            <Col>
+              <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
-                  Create
+                  Save
                 </button>
                 <button
                   type="reset"
@@ -499,7 +500,7 @@ const AddNewNcf = (props) => {
                 >
                   Cancel
                 </button>
-              </div>
+              </ModalFooter>
             </Col>
           </Row>
         </Form>
