@@ -76,7 +76,11 @@ import ConfigurationUploadLogs from "../pages/UploadLogs/ConfigurationUploadLogs
 import InventoryStock from "../pages/InventoryStock/inventorystock";
 
 const authProtectedRoutes = [
-  { path: "/dashboard", component: <Dashboard /> },
+  {
+    path: "/dashboard",
+    component: <div className="page-content">oksss</div>,
+  },
+  // { path: "/dashboard", component: <Dashboard /> },
 
   //   // //profile
   { path: "/profile", component: <UserProfile /> },
