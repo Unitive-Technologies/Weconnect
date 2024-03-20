@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
 import Spinners from "../../../components/Common/Spinner";
@@ -32,12 +33,12 @@ import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import AddNewPromoVoucher from "./AddNewPromoVoucherList";
 import TableContainerX from "../../../components/Common/TableContainerX";
-import PromoVoucherListStatus from "./PromoVoucherListStatus"
+import PromoVoucherListStatus from "./PromoVoucherListStatus";
 
 const PromoVoucherList = (props) => {
   //meta title
   document.title = "Promo Vouchers | VDigital";
-
+  const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const dispatch = useDispatch();
 
   const selectPromoVoucherState = (state) => state.promovoucher;
@@ -67,7 +68,7 @@ const PromoVoucherList = (props) => {
     totalPage,
     totalCount,
     pageSize,
-    currentPage
+    currentPage,
   } = useSelector(PromoVoucherProperties);
 
   const [isLoading, setLoading] = useState(loading);
@@ -76,9 +77,7 @@ const PromoVoucherList = (props) => {
   const [showScrapPromoVoucher, setShowScrapPromoVoucher] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
 
-  const [filterVoucher, setFilterVoucher] = useState(false);
-
-
+  const [filterVouchers, setFilterVouchers] = useState([]);
   const handleWarning = () => {
     setShowWarning(!showWarning);
   };
@@ -86,9 +85,13 @@ const PromoVoucherList = (props) => {
   const [selectedRows, setSelectedRows] = useState([]);
 
   const handleSelectedRows = (row) => {
+    // debugger;
+    setSelectedRows([]);
+
     const isSelected = selectedRows.some(
       (selectedRow) => selectedRow.id === row.id
     );
+
     if (isSelected) {
       const updatedSelectedRows = selectedRows.filter(
         (selectedRow) => selectedRow.id !== row.id
@@ -96,6 +99,39 @@ const PromoVoucherList = (props) => {
       setSelectedRows(updatedSelectedRows);
     } else {
       setSelectedRows([...selectedRows, row]);
+    }
+  };
+
+  const handleClickScrap = async () => {
+    try {
+      const activeVouchers = selectedRows.filter(
+        (row) => row.status_lbl === "Active"
+      );
+      setFilterVouchers(activeVouchers);
+      const voucherIds = activeVouchers.map((voucher) => voucher.id);
+
+      const newStatus = {
+        voucher_id: voucherIds,
+        remark: "Scrapping Vouchers",
+      };
+
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.post(
+        `${API_URL}/promo-voucher/scrap-voucher?vr=web1.0`,
+        newStatus,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      console.log("Axios Response:", response);
+      dispatch(onGetPromoVoucher());
+      setShowScrapPromoVoucher(true);
+    } catch (error) {
+      console.error("Error in handleClickScrap:", error);
     }
   };
 
@@ -140,13 +176,15 @@ const PromoVoucherList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0"
+            <p
+              className="text-muted mb-0"
               style={{
                 maxWidth: 100,
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
-              }}>
+              }}
+            >
               {cellProps.row.original.operator_lbl}
             </p>
           );
@@ -170,12 +208,17 @@ const PromoVoucherList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0" style={{
-              maxWidth: 100,
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-            }}>{cellProps.row.original.code}</p>
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 100,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {cellProps.row.original.code}
+            </p>
           );
         },
       },
@@ -197,12 +240,15 @@ const PromoVoucherList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0" style={{
-              maxWidth: 50,
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-            }}>
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 50,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.apply_on_lbl}
             </p>
           );
@@ -214,12 +260,15 @@ const PromoVoucherList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0" style={{
-              maxWidth: 50,
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-            }}>
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 50,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.rperiod_lbl}
             </p>
           );
@@ -231,12 +280,17 @@ const PromoVoucherList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0" style={{
-              maxWidth: 50,
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-            }}>{cellProps.row.original.amount}</p>
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 50,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {cellProps.row.original.amount}
+            </p>
           );
         },
       },
@@ -246,12 +300,17 @@ const PromoVoucherList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0" style={{
-              maxWidth: 50,
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-            }}>{cellProps.row.original.mrp}</p>
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 50,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {cellProps.row.original.mrp}
+            </p>
           );
         },
       },
@@ -261,12 +320,15 @@ const PromoVoucherList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0" style={{
-              maxWidth: 100,
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-            }}>
+            <p
+              className="text-muted mb-0"
+              style={{
+                maxWidth: 100,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {cellProps.row.original.bouque_lbl}
             </p>
           );
@@ -350,10 +412,6 @@ const PromoVoucherList = (props) => {
     dispatch(onGetPromoVoucher());
   };
 
-  const handleAddNewPromoVoucher = () => {
-    setShowAddNewPromoVoucher(!showAddNewPromoVoucher);
-  };
-
   const handleAddPromoVoucher = () => {
     setShowAddNewPromoVoucher(!showAddNewPromoVoucher);
   };
@@ -361,23 +419,6 @@ const PromoVoucherList = (props) => {
   const handlePromoVoucherScrap = () => {
     setShowScrapPromoVoucher(!showScrapPromoVoucher);
   };
-
-
-  useEffect(() => {
-    // console.log("Selected filtered smartcards: ", selectedRows);
-    const activeVoucher = selectedRows.filter(
-      (row) => row.status_lbl === "Active"
-    );
-
-    if (activeVoucher) {
-      setFilterVoucher(activeVoucher);
-      console.log("Status with Active: ", activeVoucher);
-    }
-
-  }, [selectedRows]);
-
-
-  const keyField = "id";
 
   const getTableActions = () => {
     return [
@@ -395,7 +436,7 @@ const PromoVoucherList = (props) => {
         action:
           Object.keys(selectedRows).length === 0
             ? () => setShowWarning(true)
-            : () => setShowScrapPromoVoucher(true),
+            : handleClickScrap,
       },
     ];
   };
@@ -410,9 +451,11 @@ const PromoVoucherList = (props) => {
         promovoucherLCO={provoucherLCO}
         promovoucherRecharge={provoucherRecharge}
       />
-      <PromoVoucherListStatus isOpen={showScrapPromoVoucher}
+      <PromoVoucherListStatus
+        isOpen={showScrapPromoVoucher}
         handlePromoVoucherScrap={handlePromoVoucherScrap}
-        selectedData={filterVoucher}
+        selectedData={filterVouchers}
+        selectedRows={selectedRows}
       />
 
       <div

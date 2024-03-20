@@ -1,21 +1,14 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import {
-  Modal,
-  ModalBody,
-  ModalHeader,
-} from "reactstrap";
+import { Modal, ModalBody, ModalHeader } from "reactstrap";
 import { useDispatch } from "react-redux";
 
 const PromoVoucherListStatus = (props) => {
-  const {
-    isOpen,
-    selectedData,
-    handlePromoVoucherScrap,
-    voucher_type,
-  } = props;
-  console.log("PPPPPPromo Voucher Scrap Data" + JSON.stringify(selectedData))
-
+  const { isOpen, selectedRows, selectedData, handlePromoVoucherScrap } = props;
+  console.log("PPPPPPromo Voucher Scrap Data" + JSON.stringify(selectedData));
+  console.log(
+    "Selected Rows on Promovoucherliststatus:" + JSON.stringify(selectedRows)
+  );
   const dispatch = useDispatch();
 
   return (
@@ -33,7 +26,13 @@ const PromoVoucherListStatus = (props) => {
         Voucher Scrapped for 1 out 1
       </ModalHeader>
       <ModalBody>
-        *  Voucher Scrapped
+        <ul>
+          {selectedData.map((single, index) => (
+            <li key={index} style={{ paddingBottom: "10px" }}>
+              {index > 0 && " "} {single.code} Voucher Scrapped
+            </li>
+          ))}
+        </ul>
       </ModalBody>
     </Modal>
   );
