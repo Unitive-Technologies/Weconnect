@@ -62,8 +62,8 @@ const AddNewNcf = (props) => {
       type: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter name"),
-      code: Yup.string().required("Enter code"),
+      name: Yup.string().required("Enter name").min(2, "Minimum length 2 character"),
+      code: Yup.string().required("Enter code").min(2, "4 character required"),
       status: Yup.string().required("Select status"),
       calculate_per_channel: Yup.string().required(
         "Select calculate per channel"
@@ -71,7 +71,7 @@ const AddNewNcf = (props) => {
       from_channel_no: Yup.string().required("Enter from channel"),
       to_channel_no: Yup.string().required("Enter to channel"),
       is_refundable: Yup.string().required("Select refundable"),
-      type: Yup.string().required("Select ncf Type"),
+      type: Yup.string().required("Select ncf type"),
       // mrp: Yup.string(),
       // lmo_discount: Yup.string(),
       // lmo_rate: Yup.string(),
@@ -322,7 +322,7 @@ const AddNewNcf = (props) => {
                 <Input
                   name="type"
                   type="select"
-                  placeholder="Select NCF Type"
+                  placeholder="Select ncf type"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
@@ -333,7 +333,7 @@ const AddNewNcf = (props) => {
                       : false
                   }
                 >
-                  <option value="">Select NCF Type</option>
+                  <option value="">Select ncf type</option>
                   <option value="1">Primary</option>
                   <option value="0">Secondary</option>
                 </Input>
