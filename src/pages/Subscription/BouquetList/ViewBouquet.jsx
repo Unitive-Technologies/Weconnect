@@ -391,7 +391,7 @@ const ViewBouquet = (props) => {
                 </div>
               </Col>
 
-              {/* <Col lg={2}>
+              <Col lg={2}>
                 <label></label>
                 <div
                   style={{
@@ -419,7 +419,7 @@ const ViewBouquet = (props) => {
                     </label>
                   </div>
                 </div>
-              </Col> */}
+              </Col>
             </Row>
             <Row>
               <Col sm="3">
