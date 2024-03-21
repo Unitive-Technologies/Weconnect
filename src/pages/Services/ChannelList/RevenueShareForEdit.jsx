@@ -1,17 +1,24 @@
-import React from "react";
-import { Row, Col } from "reactstrap";
+import React, { useState } from "react";
+import { Row, Col, Card, CardBody, CardTitle, Container } from "reactstrap";
 import Slider from "react-rangeslider";
+import PieChart from "./PieChart";
 import "react-rangeslider/lib/index.css";
 
-const RevenueShare = ({
+const RevenueShareForEdit = ({
   broadPercent,
   msoPercent,
   discountPercent,
   setBroadPercent,
   setMsoPercent,
   setDiscountPercent,
-  showEditChannel,
+  showEditBroadcast,
 }) => {
+  console.log(
+    "broadPercent, msoPercent, discountPercent:" + broadPercent,
+    msoPercent,
+    discountPercent,
+    showEditBroadcast
+  );
   const handleBroadCastShare = (newValue) => {
     setBroadPercent(newValue);
 
@@ -48,17 +55,16 @@ const RevenueShare = ({
         <Col md={6}>
           <div className="p-3">
             <h5 className="font-size-14 mb-3 mt-0">Brodcaster Share</h5>
-            {console.log("showEditChannel:" + showEditChannel)}
+
             <Slider
               value={broadPercent}
               min={65}
               max={100}
               orientation="horizontal"
-              onChange={
-                (newValue) => handleBroadCastShare(newValue)
-                // showEditChannel && handleBroadCastShare(newValue)
+              onChange={(newValue) =>
+                showEditBroadcast && handleBroadCastShare(newValue)
               }
-              // disabled={!showEditChannel}
+              disabled={!showEditBroadcast}
             />
             <span className="float-right  mt-4">Value: {broadPercent} %</span>
           </div>
@@ -70,11 +76,10 @@ const RevenueShare = ({
               min={0}
               max={35}
               orientation="horizontal"
-              onChange={
-                (newValue) => handleMsoShare(newValue)
-                // showEditChannel && handleMsoShare(newValue)
+              onChange={(newValue) =>
+                showEditBroadcast && handleMsoShare(newValue)
               }
-              // disabled={!showEditChannel}
+              disabled={!showEditBroadcast}
             />
             <span className="float-right  mt-4">Value: {msoPercent} %</span>
           </div>
@@ -86,11 +91,10 @@ const RevenueShare = ({
               min={0}
               max={15}
               orientation="horizontal"
-              onChange={
-                (newValue) => handleDiscount(newValue)
-                // showEditChannel && handleDiscount(newValue)
+              onChange={(newValue) =>
+                showEditBroadcast && handleDiscount(newValue)
               }
-              // disabled={!showEditChannel}
+              disabled={!showEditBroadcast}
             />
             <span className="float-right  mt-4">
               Value: {discountPercent} %
@@ -103,4 +107,4 @@ const RevenueShare = ({
   );
 };
 
-export default RevenueShare;
+export default RevenueShareForEdit;

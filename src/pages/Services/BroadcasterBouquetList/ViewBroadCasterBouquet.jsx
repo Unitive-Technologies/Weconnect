@@ -549,7 +549,7 @@ const ViewBroadCasterBouquet = (props) => {
                           ) || ""
                     }
                     onBlur={validation.handleBlur}
-                    disabled={!showEditBroadcast || selectedType === "1"}
+                    disabled={!showEditBroadcast || selectedType === 1}
                   ></Input>
 
                   {validation.touched.broadcasterRate &&

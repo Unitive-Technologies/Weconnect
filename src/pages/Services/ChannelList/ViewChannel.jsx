@@ -25,6 +25,7 @@ import CasList from "./CasList";
 import ShowHistoryModal from "./ShowHistoryModal";
 import PieChart from "./PieChart";
 import RevenueShare from "./RevenueShare";
+import RevenueShareForEdit from "./RevenueShareForEdit";
 
 const ViewChannel = (props) => {
   const {
@@ -637,10 +638,10 @@ const ViewChannel = (props) => {
                     placeholder="0"
                     disabled={
                       !showEditChannel ||
-                      selectedType === 1 ||
-                      selectedAlcarte === 0
+                      parseInt(selectedType) === 1 ||
+                      parseInt(selectedAlcarte) === 0
                     }
-                    value={selectedRate}
+                    value={parseInt(selectedAlcarte) === 1 ? 0 : selectedRate}
                     onBlur={validation.handleBlur}
                   ></Input>
                   {validation.touched.broadcasterRate &&
@@ -681,8 +682,8 @@ const ViewChannel = (props) => {
               </Col>
             </Row>
             {channel &&
-            selectedType === 0 &&
-            selectedAlcarte === 1 &&
+            parseInt(selectedType) === 0 &&
+            parseInt(selectedAlcarte) === 1 &&
             selectedRate !== "" ? (
               <>
                 <div
@@ -709,7 +710,7 @@ const ViewChannel = (props) => {
                   }}
                 >
                   <Col lg={6}>
-                    <RevenueShare
+                    <RevenueShareForEdit
                       broadPercent={broadPercent}
                       msoPercent={msoPercent}
                       discountPercent={discountPercent}
