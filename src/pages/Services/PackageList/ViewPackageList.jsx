@@ -37,7 +37,8 @@ const ViewPackageList = (props) => {
     resetSelection,
   } = props;
   // console.log("selectedRowId:" + selectedRowId);
-  console.log("selectedRow by useEffect:" + JSON.stringify(packageList));
+  console.log("packageList by Props:" + JSON.stringify(packageList));
+
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const dispatch = useDispatch();
   const [showEditChannel, setShowEditChannel] = useState(false);
@@ -103,50 +104,62 @@ const ViewPackageList = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      code: (selectedRowDetails && selectedRowDetails.code) || "",
-      name: (selectedRowDetails && selectedRowDetails.name) || "",
-      description: (selectedRowDetails && selectedRowDetails.description) || "",
-      definition: (selectedRowDetails && selectedRowDetails.isHD) || "",
-      type: (selectedRowDetails && selectedRowDetails.isFta) || "",
-      status: (selectedRowDetails && selectedRowDetails.status) || "",
+      code: packageList?.code || "",
+      name: packageList?.name || "",
+      description: packageList?.description || "",
+      isHD: packageList?.isHD || 0,
+      isFta: packageList?.isFta || 0,
+      status: packageList?.status || "",
+      broadcasterRate: packageList?.broadcasterRate || "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter package name"),
       description: Yup.string().required("Enter package description"),
-      definition: Yup.string().required("Select package definition"),
-      type: Yup.string().required("Select package type"),
+      isHD: Yup.string().required("Select package definition"),
+      isFta: Yup.string().required("Select package type"),
       status: Yup.string().required("Select status"),
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       console.log("packageListID: " + packageList.id);
       const updatedPackage = {
         id: packageList.id,
         name: values["name"],
         code: values["code"],
         description: values["description"],
-        isHD: parseInt(values["definition"]),
-        isFta: parseInt(values["type"]),
-        status: parseInt(values["status"]),
-
-        // broadcasterRate:
-        //   totalPackageRateInChannels + totalPackageRateInBouquets,
-        // casCodes: casCodeList.map((single) => {
-        //   return {
-        //     cas_id: single.cas_id,
-        //     cascode: single.cascode,
-        //   };
-        // }),
-        // channels: channels.map((single) => {
-        //   return single.id;
-        // }),
-        // brd_bouques: bouquets.map((single) => {
-        //   return single.id;
-        // }),
+        isHD: values["isHD"],
+        isFta: values["isFta"],
+        status: values["status"],
+        broadcasterRate:
+          totalPackageRateInChannels + totalPackageRateInBouquets,
+        casCodes: casCodeList.map((single) => {
+          return {
+            cas_id: single.cas_id,
+            cascode: single.cascode,
+          };
+        }),
+        channels: channels.map((single) => {
+          return single.id;
+        }),
+        brd_bouques: bouquets.map((single) => {
+          return single.id;
+        }),
       };
       console.log("ViewPackageList:" + updatedPackage);
+      const token = "Bearer " + localStorage.getItem("temptoken");
+
+      const response = await axios.put(
+        `${API_URL}/package/${packageList.id}?vr=web1.0`,
+        updatedPackage,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
       // save new user
-      dispatch(onUpdatePackage(updatedPackage));
-      dispatch(onGetPackageList());
+      // dispatch(onUpdatePackage(updatedPackage));
+      // dispatch(onGetPackageList());
+      console.log("API Response:", response.data);
       validation.resetForm();
       handleCancel();
     },
@@ -170,33 +183,35 @@ const ViewPackageList = (props) => {
       setBouquets(packageList.brdBouques);
     }
   }, [packageList]);
-  useEffect(() => {
-    const getSelectedRowDetails = async (e) => {
-      try {
-        const token = "Bearer " + localStorage.getItem("temptoken");
+  // useEffect(() => {
+  //   const getSelectedRowDetails = async (e) => {
+  //     try {
+  //       const token = "Bearer " + localStorage.getItem("temptoken");
 
-        const response = await axios.get(
-          `${API_URL}/package/${selectedRowId}?expand=channels,brdBouques&vr=web1.0`,
+  //       const response = await axios.get(
+  //         `${API_URL}/package/${selectedRowId}?expand=channels,brdBouques&vr=web1.0`,
 
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
-        setSelectedRowDetails(response.data.data);
-        console.log("response in useEffect:" + JSON.stringify(response));
-      } catch (error) {
-        console.error("Error fetching addChannels data:", error);
-      }
-    };
-    if (selectedRowId) {
-      getSelectedRowDetails();
-    }
-  }, [selectedRowId]);
+  //         {
+  //           headers: {
+  //             Authorization: token,
+  //           },
+  //         }
+  //       );
+  //       setSelectedRowDetails(response.data.data);
+  //       console.log("response in useEffect:" + JSON.stringify(response));
+  //     } catch (error) {
+  //       console.error("Error fetching addChannels data:", error);
+  //     }
+  //   };
+  //   if (selectedRowId) {
+  //     getSelectedRowDetails();
+  //   }
+  // }, [selectedRowId]);
   console.log("casCodeList:" + JSON.stringify(casCodeList));
   console.log("casSelectList:" + JSON.stringify(casSelectList));
-
+  // console.log(
+  //   "selectedRowDetails by API:" + JSON.stringify(selectedRowDetails)
+  // );
   return (
     <>
       {showHistory && (
@@ -309,18 +324,15 @@ const ViewPackageList = (props) => {
                     Definition<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="definition"
+                    name="isHD"
                     type="select"
                     disabled={!showEditChannel}
                     placeholder="Select Definition"
                     className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.definition || ""}
+                    value={validation.values.isHD || ""}
                   >
-                    {/* <option value="101">Select channel definition</option>
-                  <option value="102">Standard Definition(SD)</option>
-                  <option value="103">High Definition(HD)</option> */}
                     {packageBoxType &&
                       packageBoxType.map((boxtype) => (
                         <option key={boxtype.id} value={boxtype.id}>
@@ -328,10 +340,9 @@ const ViewPackageList = (props) => {
                         </option>
                       ))}
                   </Input>
-                  {validation.touched.definition &&
-                  validation.errors.definition ? (
+                  {validation.touched.isHD && validation.errors.isHD ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.definition}
+                      {validation.errors.isHD}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -373,14 +384,14 @@ const ViewPackageList = (props) => {
                     Type<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Input
-                    name="type"
+                    name="isFta"
                     type="select"
                     placeholder="Select type"
                     className="form-select"
                     disabled={!showEditChannel}
                     onChange={handleTypeChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.type || selectedType}
+                    value={validation.values.isFta || selectedType}
                     // value={selectedType}
                   >
                     {packageType &&
@@ -390,9 +401,9 @@ const ViewPackageList = (props) => {
                         </option>
                       ))}
                   </Input>
-                  {validation.touched.type && validation.errors.type ? (
+                  {validation.touched.isFta && validation.errors.isFta ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.type}
+                      {validation.errors.isFta}
                     </FormFeedback>
                   ) : null}
                 </div>
@@ -617,7 +628,28 @@ const ViewPackageList = (props) => {
                 </div>
               </Row>
             </div>
+            {console.log(
+              "validation values:",
+              "name:",
+              validation.values.name,
+              typeof validation.values.name,
+              "isHD:",
+              validation.values.isHD,
+              typeof validation.values.isHD,
+              "description:",
+              validation.values.description,
+              typeof validation.values.description,
+              "isFta:",
+              validation.values.isFta,
+              typeof validation.values.isFta,
 
+              "status:",
+              validation.values.status,
+              typeof validation.values.status,
+              "broadcasterRate:",
+              validation.values.broadcasterRate,
+              typeof validation.values.broadcasterRate
+            )}
             {showEditChannel && (
               <Row>
                 <Col>
