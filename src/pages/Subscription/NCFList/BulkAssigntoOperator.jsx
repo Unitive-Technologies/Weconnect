@@ -12,6 +12,7 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
+  ModalFooter,
   Form,
   Card,
   CardBody,
@@ -355,7 +356,7 @@ const BulkAssigntoOperator = (props) => {
                 <tbody>
                   {console.log(
                     "...................selectedOperatorsdata from AddOperator:" +
-                      JSON.stringify(addOperatorsData)
+                    JSON.stringify(addOperatorsData)
                   )}
                   {addOperatorsData &&
                     addOperatorsData.map((row, i) => (
@@ -546,10 +547,10 @@ const BulkAssigntoOperator = (props) => {
               </Row>
             </Row>
             <Row>
-              <Col sm="12">
-                <div className="d-flex flex-wrap gap-2">
+              <Col>
+                <ModalFooter>
                   <button type="submit" className="btn btn-success save-user">
-                    Assign
+                    Save
                   </button>
                   <button
                     type="button"
@@ -561,7 +562,7 @@ const BulkAssigntoOperator = (props) => {
                   >
                     Cancel
                   </button>
-                </div>
+                </ModalFooter>
               </Col>
             </Row>
           </Form>
