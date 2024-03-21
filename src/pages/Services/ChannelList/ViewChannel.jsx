@@ -48,13 +48,22 @@ const ViewChannel = (props) => {
   const [msoPercent, setMsoPercent] = useState(20);
   const [discountPercent, setDiscountPercent] = useState(0);
   const [showHistory, setShowHistory] = useState(false);
-  const [selectedRate, setSelectedRate] = useState();
+
   const [selectedType, setSelectedType] = useState("");
   const [toggleNcfSwitch, setToggleNcfSwitch] = useState(true);
   const [casCodeList, setCasCodeList] = useState([]);
   const [selectedAlcarte, setSelectedAlcarte] = useState();
-
-  console.log("Selected channel list: ", channel);
+  const initialRateValue = 0;
+  const [selectedRate, setSelectedRate] = useState(
+    channel && parseInt(selectedAlcarte) === 1
+      ? initialRateValue
+      : channel.broadcasterRate
+  );
+  console.log(
+    "SelectedselectedAlcarte, selectedRate: ",
+    selectedAlcarte,
+    selectedRate
+  );
   useEffect(() => {
     if (channel && channel.broadcasterRate !== undefined) {
       setSelectedRate(channel.broadcasterRate);
@@ -109,6 +118,7 @@ const ViewChannel = (props) => {
 
   const handleInputChange = (e) => {
     const inputValue = parseFloat(e.target.value);
+    console.log("inputValue for selectedRate :" + inputValue);
     setSelectedRate(isNaN(inputValue) ? 0 : inputValue);
   };
 
@@ -656,7 +666,7 @@ const ViewChannel = (props) => {
                       parseInt(selectedType) === 1 ||
                       parseInt(selectedAlcarte) === 0
                     }
-                    value={parseInt(selectedAlcarte) === 1 ? 0 : selectedRate}
+                    value={selectedRate}
                     onBlur={validation.handleBlur}
                   ></Input>
                   {validation.touched.broadcasterRate &&
@@ -745,8 +755,7 @@ const ViewChannel = (props) => {
                       <CardBody>
                         <span>Graphical representation of SHARE</span>
                         <CardTitle className="mb-4">
-                          (MRP:{" "}
-                          {parseInt(selectedAlcarte) === 1 ? 0 : selectedRate})
+                          (MRP: {selectedRate})
                         </CardTitle>
                         <PieChart
                           broadPercent={broadPercent}
