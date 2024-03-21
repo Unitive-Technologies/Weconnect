@@ -375,7 +375,7 @@ const BouquetList = () => {
             <p className="text-muted mb-0">
               {parseFloat(
                 parseInt(cellProps.row.original.mrp) +
-                  parseInt(cellProps.row.original.tax)
+                parseInt(cellProps.row.original.tax)
               ).toFixed(2)}
             </p>
           );

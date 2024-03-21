@@ -160,6 +160,7 @@ const ViewBouquet = (props) => {
         (selectedRowDetails && selectedRowDetails.additional_rates) || [],
     },
     validationSchema: Yup.object({
+      code: Yup.string().required("Enter code"),
       name: Yup.string().required("Enter Bouquet name"),
       type: Yup.string().required("Select Bouquet Type"),
       isHD: Yup.string().required("Select Box Type"),
@@ -376,6 +377,11 @@ const ViewBouquet = (props) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.code || ""}
                     disabled={toggleSwitch}
+                    invalid={
+                      validation.touched.code && validation.errors.code
+                        ? true
+                        : false
+                    }
                   ></Input>
                   {validation.touched.code && validation.errors.code ? (
                     <FormFeedback type="invalid">
@@ -385,7 +391,7 @@ const ViewBouquet = (props) => {
                 </div>
               </Col>
 
-              <Col lg={2}>
+              {/* <Col lg={2}>
                 <label></label>
                 <div
                   style={{
@@ -413,7 +419,7 @@ const ViewBouquet = (props) => {
                     </label>
                   </div>
                 </div>
-              </Col>
+              </Col> */}
             </Row>
             <Row>
               <Col sm="3">
@@ -569,13 +575,13 @@ const ViewBouquet = (props) => {
                     value={validation.values.description || ""}
                     invalid={
                       validation.touched.description &&
-                      validation.errors.description
+                        validation.errors.description
                         ? true
                         : false
                     }
                   />
                   {validation.touched.description &&
-                  validation.errors.description ? (
+                    validation.errors.description ? (
                     <FormFeedback type="invalid">
                       {validation.errors.description}
                     </FormFeedback>
@@ -605,7 +611,7 @@ const ViewBouquet = (props) => {
                     ))}
                   </Input>
                   {validation.touched.is_exclusive &&
-                  validation.errors.is_exclusive ? (
+                    validation.errors.is_exclusive ? (
                     <FormFeedback type="invalid">
                       {validation.errors.is_exclusive}
                     </FormFeedback>
@@ -629,7 +635,7 @@ const ViewBouquet = (props) => {
                     disabled={!showEditBouquet}
                     invalid={
                       validation.touched.is_promotional &&
-                      validation.errors.is_promotional
+                        validation.errors.is_promotional
                         ? true
                         : false
                     }
@@ -638,7 +644,7 @@ const ViewBouquet = (props) => {
                     <option value="0">No</option>
                   </Input>
                   {validation.touched.is_promotional &&
-                  validation.errors.is_promotional ? (
+                    validation.errors.is_promotional ? (
                     <FormFeedback type="invalid">
                       {validation.errors.is_promotional}
                     </FormFeedback>
@@ -713,7 +719,7 @@ const ViewBouquet = (props) => {
                     disabled={!toggleNcfSwitch || !showEditBouquet}
                   />
                   {validation.touched.max_ncf_channels &&
-                  validation.errors.max_ncf_channels ? (
+                    validation.errors.max_ncf_channels ? (
                     <FormFeedback type="invalid">
                       {validation.errors.max_ncf_channels}
                     </FormFeedback>
@@ -736,7 +742,7 @@ const ViewBouquet = (props) => {
                     value={validation.values.is_online_app || ""}
                     invalid={
                       validation.touched.is_online_app &&
-                      validation.errors.is_online_app
+                        validation.errors.is_online_app
                         ? true
                         : false
                     }
@@ -745,7 +751,7 @@ const ViewBouquet = (props) => {
                     <option value="0">No</option>
                   </Input>
                   {validation.touched.is_online_app &&
-                  validation.errors.is_online_app ? (
+                    validation.errors.is_online_app ? (
                     <FormFeedback type="invalid">
                       {validation.errors.is_online_app}
                     </FormFeedback>
@@ -871,7 +877,7 @@ const ViewBouquet = (props) => {
                       <Col sm="12">
                         {console.log(
                           "alacarteData:" +
-                            JSON.stringify(selectedRowDetails.alacarte)
+                          JSON.stringify(selectedRowDetails.alacarte)
                         )}
                         <AddAlacarte
                           showEditBouquet={showEditBouquet}
