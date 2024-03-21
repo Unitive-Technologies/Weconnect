@@ -13,6 +13,7 @@ import {
   ModalHeader,
   ModalBody,
   Form,
+  ModalFooter,
   Card,
   CardBody,
   Table,
@@ -449,8 +450,8 @@ const BulkRemovalFromOperator = (props) => {
             </Row>
 
             <Row>
-              <Col sm="12">
-                <div className="d-flex flex-wrap gap-2">
+              <Col>
+                <ModalFooter>
                   <button type="submit" className="btn btn-success save-user">
                     Remove
                   </button>
@@ -464,7 +465,7 @@ const BulkRemovalFromOperator = (props) => {
                   >
                     Cancel
                   </button>
-                </div>
+                </ModalFooter>
               </Col>
             </Row>
           </Form>
