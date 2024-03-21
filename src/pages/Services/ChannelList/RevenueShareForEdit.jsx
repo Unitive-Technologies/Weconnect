@@ -11,13 +11,13 @@ const RevenueShareForEdit = ({
   setBroadPercent,
   setMsoPercent,
   setDiscountPercent,
-  showEditBroadcast,
+  showEditChannel,
 }) => {
   console.log(
     "broadPercent, msoPercent, discountPercent:" + broadPercent,
     msoPercent,
     discountPercent,
-    showEditBroadcast
+    showEditChannel
   );
   const handleBroadCastShare = (newValue) => {
     setBroadPercent(newValue);
@@ -62,9 +62,9 @@ const RevenueShareForEdit = ({
               max={100}
               orientation="horizontal"
               onChange={(newValue) =>
-                showEditBroadcast && handleBroadCastShare(newValue)
+                showEditChannel && handleBroadCastShare(newValue)
               }
-              disabled={!showEditBroadcast}
+              disabled={!showEditChannel}
             />
             <span className="float-right  mt-4">Value: {broadPercent} %</span>
           </div>
@@ -77,9 +77,9 @@ const RevenueShareForEdit = ({
               max={35}
               orientation="horizontal"
               onChange={(newValue) =>
-                showEditBroadcast && handleMsoShare(newValue)
+                showEditChannel && handleMsoShare(newValue)
               }
-              disabled={!showEditBroadcast}
+              disabled={!showEditChannel}
             />
             <span className="float-right  mt-4">Value: {msoPercent} %</span>
           </div>
@@ -92,9 +92,9 @@ const RevenueShareForEdit = ({
               max={15}
               orientation="horizontal"
               onChange={(newValue) =>
-                showEditBroadcast && handleDiscount(newValue)
+                showEditChannel && handleDiscount(newValue)
               }
-              disabled={!showEditBroadcast}
+              disabled={!showEditChannel}
             />
             <span className="float-right  mt-4">
               Value: {discountPercent} %

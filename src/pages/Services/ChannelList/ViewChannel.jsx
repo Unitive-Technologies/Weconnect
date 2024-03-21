@@ -44,9 +44,9 @@ const ViewChannel = (props) => {
   const dispatch = useDispatch();
   const [showEditChannel, setShowEditChannel] = useState(false);
   const [revenueData, setRevenueData] = useState({});
-  const [broadPercent, setBroadPercent] = useState();
-  const [msoPercent, setMsoPercent] = useState();
-  const [discountPercent, setDiscountPercent] = useState();
+  const [broadPercent, setBroadPercent] = useState(80);
+  const [msoPercent, setMsoPercent] = useState(20);
+  const [discountPercent, setDiscountPercent] = useState(0);
   const [showHistory, setShowHistory] = useState(false);
   const [selectedRate, setSelectedRate] = useState();
   const [selectedType, setSelectedType] = useState("");
@@ -64,14 +64,24 @@ const ViewChannel = (props) => {
     }
   }, [channel]);
   console.log("channel list type: ", channelListType);
-
-  useEffect(() => {
-    if (channel && channel.revenue_share !== undefined) {
-      setMsoPercent(channel.revenue_share.mso_share);
-      setDiscountPercent(channel.revenue_share.mso_discount);
-      setBroadPercent(channel.revenue_share.broadcaster_share);
-    }
-  }, [channel]);
+  // useEffect(() => {
+  //   if (channel && typeof channel.revenue_share === "object") {
+  //     const { revenue_share } = channel;
+  //     setMsoPercent(
+  //       revenue_share.mso_share !== undefined ? revenue_share.mso_share : 20
+  //     );
+  //     setDiscountPercent(
+  //       revenue_share.mso_discount !== undefined
+  //         ? revenue_share.mso_discount
+  //         : 0
+  //     );
+  //     setBroadPercent(
+  //       revenue_share.broadcaster_share !== undefined
+  //         ? revenue_share.broadcaster_share
+  //         : 80
+  //     );
+  //   }
+  // }, [channel]);
 
   const handleChangeLogo = (e) => {
     const file = e.target.files[0];
@@ -214,18 +224,23 @@ const ViewChannel = (props) => {
   }, [channel]);
 
   useEffect(() => {
+    console.log("revenueData: " + JSON.stringify(revenueData));
     if (revenueData) {
-      setBroadPercent(revenueData.broadcaster_share);
+      setBroadPercent(
+        revenueData.broadcaster_share === 0 ? 80 : revenueData.broadcaster_share
+      );
     }
     if (revenueData) {
-      setMsoPercent(revenueData.mso_share);
+      setMsoPercent(revenueData.mso_share === 0 ? 20 : revenueData.mso_share);
     }
     if (revenueData) {
       console.log(
         "discountPercent:" + typeof revenueData.mso_discount,
         revenueData.mso_discount
       );
-      setDiscountPercent(revenueData.mso_discount);
+      setDiscountPercent(
+        revenueData.mso_discount === 0 ? 0 : revenueData.mso_discount
+      );
     }
   }, [revenueData]);
 
@@ -701,6 +716,11 @@ const ViewChannel = (props) => {
                 >
                   <h5 style={{}}>MRP Revenue Share</h5>
                 </div>
+                {console.log(
+                  "broadPercent, msoPercent, discountPercent:" + broadPercent,
+                  msoPercent,
+                  discountPercent
+                )}
                 <Row
                   style={{
                     position: "relative",
@@ -725,7 +745,8 @@ const ViewChannel = (props) => {
                       <CardBody>
                         <span>Graphical representation of SHARE</span>
                         <CardTitle className="mb-4">
-                          (MRP: {selectedRate}){" "}
+                          (MRP:{" "}
+                          {parseInt(selectedAlcarte) === 1 ? 0 : selectedRate})
                         </CardTitle>
                         <PieChart
                           broadPercent={broadPercent}
