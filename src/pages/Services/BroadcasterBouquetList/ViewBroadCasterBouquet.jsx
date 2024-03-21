@@ -22,6 +22,7 @@ import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { updateBroadcasterBouquet as onUpdateBroadcasterBouquet } from "/src/store/broadcasterbouquet/actions";
+import { getBroadcasterBouquetList as onGetBroadcasterBouquet } from "/src/store/broadcasterbouquet/actions";
 import { useDispatch } from "react-redux";
 import ViewChannels from "./ViewChannels";
 import RevenueShare from "./RevenueShare";
@@ -155,6 +156,7 @@ const ViewBroadCasterBouquet = (props) => {
         );
         console.log("API Response:", response.data);
         // dispatch(onUpdateBroadcasterBouquet(updateBroadcasterBouque));
+        dispatch(onGetBroadcasterBouquet());
         validation.resetForm();
         toggleViewModal();
       } catch (error) {

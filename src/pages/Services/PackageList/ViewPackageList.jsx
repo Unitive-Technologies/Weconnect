@@ -158,7 +158,7 @@ const ViewPackageList = (props) => {
       );
       // save new user
       // dispatch(onUpdatePackage(updatedPackage));
-      // dispatch(onGetPackageList());
+      dispatch(onGetPackageList());
       console.log("API Response:", response.data);
       validation.resetForm();
       handleCancel();
