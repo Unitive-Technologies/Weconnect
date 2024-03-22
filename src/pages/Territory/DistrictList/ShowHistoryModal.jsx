@@ -36,13 +36,18 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, district }) => {
 
   const getRateTableRendered = (rowData) => {
     return (
-      <div className="table-container" style={{ maxHeight: '180px', overflow: 'auto' }}>
+      <div style={{ maxHeight: "200px", overflowY: "auto" }}>
         <Table className="table mb-0">
           <thead>
             <tr>
-              {rateTableSchema.columns.map((column) => {
-                return <th key={column.header}>{column.header}</th>;
-              })}
+              {rateTableSchema.columns.map((column) => (
+                <th
+                  key={column.header}
+                  style={{ position: "sticky", top: 0, background: "white" }}
+                >
+                  {column.header}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
