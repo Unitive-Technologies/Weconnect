@@ -49,12 +49,11 @@ const AddNewDesignation = (props) => {
     }),
     onSubmit: (values) => {
       const newDesignation = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["designation"],
-        type: values["type"],
+        type: parseInt(values["type"]),
         code: values["code"],
-        parent_id: values["parent"],
-        status: values["status"],
+        parent_id: parseInt(values["parent"]),
+        status: parseInt(values["status"]),
         description: values["description"],
       };
       console.log("newDesignation:" + newDesignation);
@@ -106,13 +105,13 @@ const AddNewDesignation = (props) => {
                   value={validation.values.designation || ""}
                   invalid={
                     validation.touched.designation &&
-                      validation.errors.designation
+                    validation.errors.designation
                       ? true
                       : false
                   }
                 />
                 {validation.touched.designation &&
-                  validation.errors.designation ? (
+                validation.errors.designation ? (
                   <FormFeedback type="invalid">
                     {validation.errors.designation}
                   </FormFeedback>
@@ -160,8 +159,7 @@ const AddNewDesignation = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.status || ""}
                   invalid={
-                    validation.touched.status &&
-                      validation.errors.status
+                    validation.touched.status && validation.errors.status
                       ? true
                       : false
                   }
@@ -198,8 +196,7 @@ const AddNewDesignation = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.type || ""}
                   invalid={
-                    validation.touched.type &&
-                      validation.errors.type
+                    validation.touched.type && validation.errors.type
                       ? true
                       : false
                   }
@@ -234,8 +231,7 @@ const AddNewDesignation = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.parent || ""}
                   invalid={
-                    validation.touched.parent &&
-                      validation.errors.parent
+                    validation.touched.parent && validation.errors.parent
                       ? true
                       : false
                   }
@@ -270,13 +266,13 @@ const AddNewDesignation = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
