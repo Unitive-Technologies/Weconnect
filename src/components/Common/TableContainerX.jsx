@@ -326,7 +326,7 @@ const TableContainerX = ({
                     justifyContent: "space-between",
                     gap: "10px",
                     height: "30px",
-                    width: "30%",
+                    width: "45%",
                   }}
                 >
                   <Input

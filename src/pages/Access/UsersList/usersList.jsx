@@ -461,29 +461,33 @@ const ContactsList = (props) => {
   // console.log("policy-mso:" + userMsoPolicy);
   return (
     <React.Fragment>
-      <ViewUserModal
-        isOpen={showViewUser}
-        // handleViewUser={toggleViewModal}
-        user={viewUser}
-        userType={userType}
-        userStatus={userStatus}
-        userRole={userRole}
-        userDesignation={userDesignation}
-        resetSelection={resetSelection}
-        toggleModal={toggleViewModal}
-      />
-      <AddUserModal
-        isOpen={showAddUser}
-        toggleAddModal={toggleAddModal}
-        userType={userType}
-        userStatus={userStatus}
-        userRole={userRole}
-        userDesignation={userDesignation}
-        userMsoPolicy={userMsoPolicy}
-        // userRegional={userRegional}
-        // userMsoDetails={userMsoDetails}
-        // userDistributor={userDistributor}
-      />
+      {showViewUser && (
+        <ViewUserModal
+          isOpen={Boolean(showViewUser)}
+          // handleViewUser={toggleViewModal}
+          user={viewUser}
+          userType={userType}
+          userStatus={userStatus}
+          userRole={userRole}
+          userDesignation={userDesignation}
+          resetSelection={resetSelection}
+          toggleModal={toggleViewModal}
+        />
+      )}
+      {showAddUser && (
+        <AddUserModal
+          isOpen={Boolean(showAddUser)}
+          toggleAddModal={toggleAddModal}
+          userType={userType}
+          userStatus={userStatus}
+          userRole={userRole}
+          userDesignation={userDesignation}
+          userMsoPolicy={userMsoPolicy}
+          // userRegional={userRegional}
+          // userMsoDetails={userMsoDetails}
+          // userDistributor={userDistributor}
+        />
+      )}
       <UploadUserModal
         title="Upload User"
         isOpen={showUploadUser}

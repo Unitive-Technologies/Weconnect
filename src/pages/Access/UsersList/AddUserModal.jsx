@@ -142,7 +142,7 @@ const AddUserModal = (props) => {
 
       console.log(
         "distributorList after selection : " +
-        JSON.stringify(response.data.data)
+          JSON.stringify(response.data.data)
       );
       setDistributorList(response.data.data);
     } catch (error) {
@@ -187,7 +187,7 @@ const AddUserModal = (props) => {
 
       console.log(
         "distributorList after selection : " +
-        JSON.stringify(response.data.data)
+          JSON.stringify(response.data.data)
       );
       setLcoList(response.data.data);
     } catch (error) {
@@ -248,8 +248,6 @@ const AddUserModal = (props) => {
       username: "",
       password: "",
       confirmpassword: "",
-      // created_at: "",
-      // created_by_lbl: "my mso(mso)",
     },
     validationSchema: Yup.object({
       name: Yup.string()
@@ -275,9 +273,10 @@ const AddUserModal = (props) => {
         .min(2, "Minimum length 2 characters"),
       confirmpassword: Yup.string()
         .required("Retype Password")
-        .oneOf([Yup.ref('password'), null], 'Passwords must match'),
-      block_message: Yup.string().required("Enter message")
-
+        .oneOf([Yup.ref("password"), null], "Passwords must match"),
+      // block_message: Yup.string()
+      //   .required("Enter message")
+      //   .oneOf([Yup.ref("status"), -7 || 0], "Enter message"),
     }),
     onSubmit: (values) => {
       const newUser = {
@@ -292,16 +291,14 @@ const AddUserModal = (props) => {
           parseInt(values["type"]) === 0
             ? parseInt(values["mso"])
             : parseInt(values["type"]) === 1
-              ? parseInt(values["regional"])
-              : parseInt(values["type"]) === 2
-                ? parseInt(values["distributor"])
-                : parseInt(values["lco"]),
+            ? parseInt(values["regional"])
+            : parseInt(values["type"]) === 2
+            ? parseInt(values["distributor"])
+            : parseInt(values["lco"]),
         status: parseInt(values["status"]),
         role: parseInt(values["role"]),
         username: values["username"],
         password: values["password"],
-        // created_at: new Date(),
-        // created_by_lbl: values["created_by_lbl"],
       };
       console.log("newUser:" + JSON.stringify(newUser));
       dispatch(onAddNewUser(newUser));
@@ -332,6 +329,7 @@ const AddUserModal = (props) => {
         <Form
           onSubmit={(e) => {
             e.preventDefault();
+            debugger;
             validation.handleSubmit();
             return false;
           }}
@@ -509,7 +507,7 @@ const AddUserModal = (props) => {
                 {(parseInt(selectedType) === 1 ||
                   parseInt(selectedType) === 2 ||
                   parseInt(selectedType) === 3) &&
-                  parseInt(validation.values.mso) == 1 ? (
+                parseInt(validation.values.mso) == 1 ? (
                   <div className="mb-3">
                     <Label className="form-label">
                       Select Regional Office
@@ -533,7 +531,7 @@ const AddUserModal = (props) => {
                         ))}
                     </Input>
                     {validation.touched.regional &&
-                      validation.errors.regional ? (
+                    validation.errors.regional ? (
                       <FormFeedback type="invalid">
                         {validation.errors.regional}
                       </FormFeedback>
@@ -548,10 +546,10 @@ const AddUserModal = (props) => {
               )} */}
               <Col lg={4}>
                 {validation.values.regional &&
-                  // (parseInt(selectedType) === 1 ||
-                  (parseInt(selectedType) === 2 ||
-                    parseInt(selectedType) === 3) &&
-                  parseInt(validation.values.mso) == 1 ? (
+                // (parseInt(selectedType) === 1 ||
+                (parseInt(selectedType) === 2 ||
+                  parseInt(selectedType) === 3) &&
+                parseInt(validation.values.mso) == 1 ? (
                   <div className="mb-3">
                     <Label className="form-label">
                       Select Distributor
@@ -575,7 +573,7 @@ const AddUserModal = (props) => {
                         ))}
                     </Input>
                     {validation.touched.distributor &&
-                      validation.errors.distributor ? (
+                    validation.errors.distributor ? (
                       <FormFeedback type="invalid">
                         {validation.errors.distributor}
                       </FormFeedback>
@@ -673,7 +671,6 @@ const AddUserModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.policy || ""}
                   disabled={!selectedType && !selectedRole}
-
                 >
                   <option value="">Select Group Policy</option>
                   {/* {console.log("selectedType:" + selectedType)}
@@ -709,7 +706,8 @@ const AddUserModal = (props) => {
                   onBlur={validation.handleBlur}
                   value={validation.values.designation || ""}
                   invalid={
-                    validation.touched.designation && validation.errors.designation
+                    validation.touched.designation &&
+                    validation.errors.designation
                       ? true
                       : false
                   }
@@ -722,7 +720,7 @@ const AddUserModal = (props) => {
                   ))}
                 </Input>
                 {validation.touched.designation &&
-                  validation.errors.designation ? (
+                validation.errors.designation ? (
                   <FormFeedback type="invalid">
                     {validation.errors.designation}
                   </FormFeedback>
@@ -779,20 +777,21 @@ const AddUserModal = (props) => {
                   value={validation.values.block_message || ""}
                   invalid={
                     // (validation.touched.block_message && validation.errors.block_message) ||
-                    (selectedStatus === "0" && validation.values.block_message.trim() === "") ||
-                    (selectedStatus === "-7" && validation.values.block_message.trim() === "")
+                    (selectedStatus === "0" &&
+                      validation.values.block_message.trim() === "") ||
+                    (selectedStatus === "-7" &&
+                      validation.values.block_message.trim() === "")
                   }
                   disabled={selectedStatus !== "0" && selectedStatus !== "-7"}
                 />
                 {validation.touched.block_message &&
-                  validation.errors.block_message ? (
+                validation.errors.block_message ? (
                   <FormFeedback type="invalid">
                     {validation.errors.block_message}
                   </FormFeedback>
                 ) : null}
               </div>
             </Col>
-
           </Row>
           <Row>
             <Col lg={4}>
@@ -829,7 +828,7 @@ const AddUserModal = (props) => {
                 <Input
                   name="password"
                   label="Password"
-                  type="text"
+                  type="password"
                   placeholder="Password"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
@@ -855,20 +854,20 @@ const AddUserModal = (props) => {
                 <Input
                   name="confirmpassword"
                   label="Confirm Password"
-                  type="text"
+                  type="password"
                   placeholder="Retype Password"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
                   value={validation.values.confirmpassword || ""}
                   invalid={
                     validation.touched.confirmpassword &&
-                      validation.errors.confirmpassword
+                    validation.errors.confirmpassword
                       ? true
                       : false
                   }
                 />
                 {validation.touched.confirmpassword &&
-                  validation.errors.confirmpassword ? (
+                validation.errors.confirmpassword ? (
                   <FormFeedback type="invalid">
                     {validation.errors.confirmpassword}
                   </FormFeedback>
@@ -876,7 +875,23 @@ const AddUserModal = (props) => {
               </div>
             </Col>
           </Row>
-
+          {console.log(
+            "Validationnnnnnnnnnnnnnn: " + validation.values.policy,
+            validation.values.block_message,
+            validation.values.designation,
+            validation.values.name,
+            validation.values.email,
+            validation.values.mobile,
+            validation.values.type,
+            validation.values.mso,
+            validation.values.regional,
+            validation.values.distributor,
+            validation.values.lco,
+            validation.values.status,
+            validation.values.role,
+            validation.values.username,
+            validation.values.password
+          )}
           <Row>
             <Col>
               <ModalFooter>
