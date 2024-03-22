@@ -10,6 +10,10 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, brand }) => {
   const [historyData, setHistoryData] = useState([]);
   const [year, setYear] = useState("2024");
 
+  const reversedHistoryData = useMemo(() => {
+    return [...historyData].reverse();
+  }, [historyData]);
+
   const rateTableSchema = {
     subTableArrayKeyName: "nData",
     keyColumn: "id",
@@ -31,28 +35,31 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, brand }) => {
 
   const getRateTableRendered = (rowData) => {
     return (
-      <Table className="table mb-0">
-        <thead>
-          <tr>
-            {rateTableSchema.columns.map((column) => {
-              return <th key={column.header}>{column.header}</th>;
+      <div className="table-container" style={{ maxHeight: '180px', overflow: 'auto' }}>
+        <Table className="table mb-0">
+          <thead>
+            <tr>
+              {rateTableSchema.columns.map((column) => {
+                return <th key={column.header}>{column.header}</th>;
+              })}
+            </tr>
+          </thead>
+          <tbody>
+            {rowData[rateTableSchema.subTableArrayKeyName].map((object) => {
+              return (
+                <tr key={object.id}>
+                  {rateTableSchema.columns.map((column) => {
+                    return <td key={column.header}>{column.accessor(object)}</td>;
+                  })}
+                </tr>
+              );
             })}
-          </tr>
-        </thead>
-        <tbody>
-          {rowData[rateTableSchema.subTableArrayKeyName].map((object) => {
-            return (
-              <tr key={object.id}>
-                {rateTableSchema.columns.map((column) => {
-                  return <td key={column.header}>{column.accessor(object)}</td>;
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
+          </tbody>
+        </Table>
+      </div>
     );
   };
+
 
 
 
@@ -251,7 +258,7 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, brand }) => {
             <TableContainer
               isPagination={true}
               columns={columns}
-              data={historyData}
+              data={reversedHistoryData}
               //   isGlobalFilter={true}
               isShowingPageLength={true}
               customPageSize={50}
