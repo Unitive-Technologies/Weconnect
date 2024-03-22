@@ -60,10 +60,6 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, brand }) => {
     );
   };
 
-
-
-
-
   const columns = useMemo(
     () => [
 
