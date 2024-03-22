@@ -246,9 +246,25 @@ const NotificationTemplateList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.status_lbl}
-            </p>
+            <h5 className="font-size-14 ">
+              <Link className="text-dark" to="#">
+                {cellProps.row.original.status === 1 ? (
+                  "Active"
+                ) : (
+                  // cellProps.row.original.status === 0 ?
+                  <p
+                    style={{
+                      background: "#f46a6a",
+                      padding: "5px",
+                      color: "white",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    In-Active
+                  </p>
+                )}
+              </Link>
+            </h5>
           );
         },
       },

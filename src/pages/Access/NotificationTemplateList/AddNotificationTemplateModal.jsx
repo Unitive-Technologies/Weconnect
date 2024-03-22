@@ -16,9 +16,11 @@ import {
 import * as Yup from "yup";
 import { optionsList } from "./optionsList";
 import { useFormik } from "formik";
-import { addNewNotificationTemplate as onAddNewNotificationTemplate } from "/src/store/notificationtemplate/actions";
+import {
+  addNewNotificationTemplate as onAddNewNotificationTemplate,
+  getNotificationTemplate as onGetNotificationTemplate,
+} from "/src/store/notificationtemplate/actions";
 import { useDispatch } from "react-redux";
-import { getNotificationTemplate as onGetNotificationTemplate } from "/src/store/actions";
 
 const AddNotificationTemplateModal = (props) => {
   const {
@@ -50,7 +52,7 @@ const AddNotificationTemplateModal = (props) => {
       msg_type: "",
       msg_fontsize: "",
       msg_fontcolor: "#000000",
-      msg_fontbgcolor: "#000000",
+      msg_fontbgcolor: "#121314",
       msg_fontbackgroundcolor: "",
       status: "",
     },
@@ -58,27 +60,25 @@ const AddNotificationTemplateModal = (props) => {
       msg_head: Yup.string().required("Enter Your Name"),
       msg_content: Yup.string().required("Enter Content"),
       msg_type: Yup.string().required("Enter Type"),
-      // msg_fontsize: Yup.string().required("Select Font Size"),
-      // msg_fontcolor: Yup.string().required("Select Color"),
-      // msg_fontbackgroundcolor: Yup.string().required(
-      //   "Select Background Color"
-      // ),
-      // msg_fontfamily: Yup.string().required("Enter Designation"),
-      status: Yup.string().required("Enter Group Policy"),
+      msg_fontsize: Yup.string().required("Select Font Size"),
+      msg_fontcolor: Yup.string().required("Select Color"),
+      msg_fontbackgroundcolor: Yup.string().required("Select Background Color"),
+      msg_fontfamily: Yup.string().required("Select Fontfamily"),
+      status: Yup.string().required("Select Status"),
     }),
     onSubmit: (values) => {
       console.log("post values in notification Template" + values);
       const newNotification = {
-        id: Math.floor(Math.random() * (30 - 20)) + 20,
+        // id: Math.floor(Math.random() * (30 - 20)) + 20,
         msg_head: values["msg_head"],
         msg_content: values["msg_content"],
-        msg_type: values["msg_type"],
-        msg_fontsize: values["msg_fontsize"],
+        msg_type: parseInt(values["msg_type"]),
+        msg_fontsize: parseInt(values["msg_fontsize"]),
         msg_fontcolor: values["msg_fontcolor"],
         msg_fontbgcolor: values["msg_fontbgcolor"],
         msg_fontfamily: values["msg_fontfamily"],
         msg_fontbackgroundcolor: values["msg_fontbackgroundcolor"],
-        status: values["status"],
+        status: parseInt(values["status"]),
       };
       console.log("newNotification:" + newNotification);
       dispatch(onAddNewNotificationTemplate(newNotification));
@@ -231,7 +231,7 @@ const AddNotificationTemplateModal = (props) => {
                   ))}
                 </Input>
                 {validation.touched.msg_fontsize &&
-                  validation.errors.msg_fontsize ? (
+                validation.errors.msg_fontsize ? (
                   <FormFeedback type="invalid">
                     {validation.errors.msg_fontsize}
                   </FormFeedback>
@@ -249,6 +249,7 @@ const AddNotificationTemplateModal = (props) => {
                     type="color"
                     className="form-control"
                     onFocus={toggleColorPicker}
+                    onBlur={toggleColorPicker}
                     value={validation.values.msg_fontcolor || "#000000"}
                     onChange={(e) =>
                       validation.setFieldValue("msg_fontcolor", e.target.value)
@@ -266,7 +267,7 @@ const AddNotificationTemplateModal = (props) => {
                 <p>Value: {validation.values.msg_fontcolor}</p>
 
                 {validation.touched.msg_fontcolor &&
-                  validation.errors.msg_fontcolor ? (
+                validation.errors.msg_fontcolor ? (
                   <FormFeedback type="invalid">
                     {validation.errors.msg_fontcolor}
                   </FormFeedback>
@@ -314,7 +315,7 @@ const AddNotificationTemplateModal = (props) => {
                 <p>Value: {validation.values.msg_fontbackgroundcolor}</p>
 
                 {validation.touched.msg_fontbackgroundcolor &&
-                  validation.errors.msg_fontbackgroundcolor ? (
+                validation.errors.msg_fontbackgroundcolor ? (
                   <FormFeedback type="invalid">
                     {validation.errors.msg_fontbackgroundcolor}
                   </FormFeedback>
@@ -343,7 +344,7 @@ const AddNotificationTemplateModal = (props) => {
                   ))}
                 </Input>
                 {validation.touched.msg_fontfamily &&
-                  validation.errors.msg_fontfamily ? (
+                validation.errors.msg_fontfamily ? (
                   <FormFeedback type="invalid">
                     {validation.errors.msg_fontfamily}
                   </FormFeedback>
@@ -368,13 +369,13 @@ const AddNotificationTemplateModal = (props) => {
                   value={validation.values.msg_content || ""}
                   invalid={
                     validation.touched.msg_content &&
-                      validation.errors.msg_content
+                    validation.errors.msg_content
                       ? true
                       : false
                   }
                 />
                 {validation.touched.msg_content &&
-                  validation.errors.msg_content ? (
+                validation.errors.msg_content ? (
                   <FormFeedback type="invalid">
                     {validation.errors.msg_content}
                   </FormFeedback>
