@@ -1,11 +1,19 @@
 import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { Modal, ModalBody, ModalHeader, Row, Col, Input } from "reactstrap";
+import {
+  Modal,
+  ModalBody,
+  ModalHeader,
+  Row,
+  Col,
+  Input,
+  Table,
+} from "reactstrap";
 import TableContainer from "../../../components/Common/TableContainer";
 
 const ShowHistoryModal = ({ isOpen, toggleHistoryModal, customeruser }) => {
-  console.log("Show History Modal in ReasonList" + customeruser)
+  console.log("Show History Modal in ReasonList" + customeruser);
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [historyData, setHistoryData] = useState([]);
   const [year, setYear] = useState("2024");
@@ -112,7 +120,8 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, customeruser }) => {
       const token = "Bearer " + localStorage.getItem("temptoken");
 
       const response = await axios.get(
-        `${API_URL}/user/${customeruser.id
+        `${API_URL}/user/${
+          customeruser.id
         }/audit?fields=id,name,_metadata,model,_remark&expand=nData&page=1&per-page=50&filter[year]=${parseInt(
           year
         )}&vr=web1.0`,
@@ -133,6 +142,55 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, customeruser }) => {
       getHistoryDetails();
     }
   }, [customeruser, year]);
+
+  const rateTableSchema = {
+    subTableArrayKeyName: "nData",
+    keyColumn: "key", // Assuming "key" can serve as a unique identifier for sub-table rows
+    columns: [
+      {
+        header: "Column Name",
+        accessor: "key",
+      },
+      {
+        header: "Updated Value",
+        accessor: "new",
+      },
+      {
+        header: "Previous Value",
+        accessor: "old",
+      },
+    ],
+  };
+
+  const renderRateTable = (row) => {
+    return (
+      <div style={{ maxHeight: "200px", overflowY: "auto" }}>
+        <Table className="table mb-0">
+          <thead>
+            <tr>
+              {rateTableSchema.columns.map((column) => (
+                <th
+                  key={column.accessor}
+                  style={{ position: "sticky", top: 0, background: "white" }}
+                >
+                  {column.header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {row[rateTableSchema.subTableArrayKeyName].map((object, index) => (
+              <tr key={`${row.id}_${index}`}>
+                {rateTableSchema.columns.map((column) => (
+                  <td key={column.accessor}>{object[column.accessor]}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
+    );
+  };
   return (
     <Modal
       isOpen={isOpen}
@@ -211,6 +269,9 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, customeruser }) => {
               theadClass="table-light"
               paginationDiv="col-sm-12 col-md-7"
               pagination="pagination pagination-rounded justify-content-end mt-4"
+              subTableEnabled={true}
+              getRenderedSubTable={renderRateTable}
+              isSubTableContentExists={(rowData) => rowData.nData.length > 0}
             />
           </Col>
         </Row>

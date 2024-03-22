@@ -50,26 +50,26 @@ const ViewDesignation = (props) => {
       name: (designation && designation.name) || "",
       type: (designation && designation.type) || "",
       code: (designation && designation.code) || "",
-      parent: (designation && designation.parent) || "",
-      status: (designation && designation.status) || "",
+      parent_id: (designation && designation.parent_id) || "",
+      status: (designation && designation.status) || 0,
       description: (designation && designation.description) || "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter designation name"),
-      // type: Yup.string().required("Select Type"),
+      name: Yup.string().required("Enter designation Name"),
+      type: Yup.string().required("Select Type"),
       code: Yup.string().required("Enter Code"),
-      // parent: Yup.string().required("Select Parent Designation"),
-      // status: Yup.string().required("Select status"),
+      parent_id: Yup.string().required("Select Parent Designation"),
+      status: Yup.string().required("Select status"),
       description: Yup.string().required("Enter Description"),
     }),
     onSubmit: (values) => {
       const updateDesignation = {
         id: designation.id,
         name: values["name"],
-        type: parseInt(values["type"]),
+        type: values["type"],
         code: values["code"],
-        parent_id: parseInt(values["parent"]),
-        status: parseInt(values["status"]),
+        parent_id: values["parent_id"],
+        status: values["status"],
         description: values["description"],
       };
 
@@ -150,7 +150,9 @@ const ViewDesignation = (props) => {
             <Row>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Designation<span style={{ color: "red" }}>*</span></Label>
+                  <Label className="form-label">
+                    Designation<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="name"
                     type="text"
@@ -174,7 +176,9 @@ const ViewDesignation = (props) => {
               </Col>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Code<span style={{ color: "red" }}>*</span></Label>
+                  <Label className="form-label">
+                    Code<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="code"
                     label="code"
@@ -199,7 +203,9 @@ const ViewDesignation = (props) => {
               </Col>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Status<span style={{ color: "red" }}>*</span></Label>
+                  <Label className="form-label">
+                    Status<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="status"
                     type="select"
@@ -210,8 +216,7 @@ const ViewDesignation = (props) => {
                     value={validation.values.status || ""}
                     disabled={!showEditDesignation}
                     invalid={
-                      validation.touched.status &&
-                        validation.errors.status
+                      validation.touched.status && validation.errors.status
                         ? true
                         : false
                     }
@@ -234,7 +239,9 @@ const ViewDesignation = (props) => {
             <Row>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Type<span style={{ color: "red" }}>*</span></Label>
+                  <Label className="form-label">
+                    Type<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="type"
                     type="select"
@@ -245,8 +252,7 @@ const ViewDesignation = (props) => {
                     value={validation.values.type || ""}
                     disabled={!showEditDesignation}
                     invalid={
-                      validation.touched.type &&
-                        validation.errors.type
+                      validation.touched.type && validation.errors.type
                         ? true
                         : false
                     }
@@ -267,15 +273,17 @@ const ViewDesignation = (props) => {
               </Col>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Parent designation<span style={{ color: "red" }}>*</span></Label>
+                  <Label className="form-label">
+                    Parent designation<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
-                    name="parent"
+                    name="parent_id"
                     type="select"
                     placeholder="Select Parent designation"
                     className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.parent || ""}
+                    value={validation.values.parent_id || ""}
                     disabled={!showEditDesignation}
                   >
                     {desigParent &&
@@ -285,16 +293,19 @@ const ViewDesignation = (props) => {
                         </option>
                       ))}
                   </Input>
-                  {validation.touched.parent && validation.errors.parent ? (
+                  {validation.touched.parent_id &&
+                  validation.errors.parent_id ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.parent}
+                      {validation.errors.parent_id}
                     </FormFeedback>
                   ) : null}
                 </div>
               </Col>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Description<span style={{ color: "red" }}>*</span></Label>
+                  <Label className="form-label">
+                    Description<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="description"
                     type="textarea"
@@ -305,14 +316,14 @@ const ViewDesignation = (props) => {
                     value={validation.values.description || ""}
                     invalid={
                       validation.touched.description &&
-                        validation.errors.description
+                      validation.errors.description
                         ? true
                         : false
                     }
                     disabled={!showEditDesignation}
                   />
                   {validation.touched.description &&
-                    validation.errors.description ? (
+                  validation.errors.description ? (
                     <FormFeedback type="invalid">
                       {validation.errors.description}
                     </FormFeedback>
@@ -320,6 +331,17 @@ const ViewDesignation = (props) => {
                 </div>
               </Col>
             </Row>
+            {console.log(
+              "Validationnnnnnnnn: " + validation.values.name,
+              validation.values.type,
+              typeof validation.values.type,
+              validation.values.code,
+              validation.values.parent_id,
+              typeof validation.values.parent_id,
+              validation.values.status,
+              typeof validation.values.status,
+              validation.values.description
+            )}
             {showEditDesignation && (
               <Row>
                 <Col>
