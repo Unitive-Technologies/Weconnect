@@ -132,7 +132,6 @@ const BulkInactiveUserModal = (props) => {
     }
   };
 
-
   // useEffect(() => {
   //   if (selectedStatusToSet === "inactive") {
   //     const filteredActiveBlockData = users.filter(
@@ -190,10 +189,10 @@ const BulkInactiveUserModal = (props) => {
             values.statustoset === "active"
               ? 1
               : values.statustoset === "inactive"
-                ? 0
-                : values.statustoset === "block"
-                  ? -7
-                  : 2,
+              ? 0
+              : values.statustoset === "block"
+              ? -7
+              : 2,
         };
 
         console.log("newStatus:", JSON.stringify(newStatus));
@@ -235,7 +234,7 @@ const BulkInactiveUserModal = (props) => {
             type="checkbox"
             disabled
             checked
-          // onClick={() => handleActive(cellProps.row.original)}
+            // onClick={() => handleActive(cellProps.row.original)}
           />
         ),
       },
@@ -313,11 +312,22 @@ const BulkInactiveUserModal = (props) => {
             <>
               <h5 className="font-size-14 mb-1">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.status === 1
-                    ? "Active"
-                    : cellProps.row.original.status === 0
-                      ? "In-Active"
-                      : "Blocked"}
+                  {cellProps.row.original.status === 1 ? (
+                    "Active"
+                  ) : cellProps.row.original.status === 0 ? (
+                    <p
+                      style={{
+                        background: "red",
+                        padding: "5px",
+                        color: "white",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      In-Active
+                    </p>
+                  ) : (
+                    "Blocked"
+                  )}
                 </Link>
               </h5>
             </>
@@ -425,10 +435,10 @@ const BulkInactiveUserModal = (props) => {
                   whiteSpace: "nowrap",
                 }}
                 className="font-size-14 mb-1"
-              // onClick={() => {
-              //   const userData = cellProps.row.original;
-              //   toggleViewModal(userData);
-              // }}
+                // onClick={() => {
+                //   const userData = cellProps.row.original;
+                //   toggleViewModal(userData);
+                // }}
               >
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.name}
@@ -630,7 +640,7 @@ const BulkInactiveUserModal = (props) => {
                       </Input>
 
                       {validation.touched.statustoset &&
-                        validation.errors.statustoset ? (
+                      validation.errors.statustoset ? (
                         <FormFeedback type="invalid">
                           {validation.errors.statustoset}
                         </FormFeedback>
@@ -654,19 +664,19 @@ const BulkInactiveUserModal = (props) => {
                         value={validation.values.block_message || ""}
                         invalid={
                           validation.touched.block_message &&
-                            validation.errors.block_message
+                          validation.errors.block_message
                             ? true
                             : false
                         }
                         disabled={
                           selectedStatusToSet === "inactive" ||
-                            selectedStatusToSet === "block"
+                          selectedStatusToSet === "block"
                             ? false
                             : true
                         }
                       />
                       {validation.touched.block_message &&
-                        validation.errors.block_message ? (
+                      validation.errors.block_message ? (
                         <FormFeedback type="invalid">
                           {validation.errors.block_message}
                         </FormFeedback>
@@ -759,9 +769,9 @@ const BulkInactiveUserModal = (props) => {
                     <button
                       type="submit"
                       className="btn btn-primary ml-2 "
-                    // onClick={() => {
-                    //   validation.handleSubmit();
-                    // }}
+                      // onClick={() => {
+                      //   validation.handleSubmit();
+                      // }}
                     >
                       Save
                     </button>

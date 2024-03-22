@@ -124,7 +124,7 @@ const ViewUserModal = (props) => {
 
       console.log(
         "distributorList after selection : " +
-        JSON.stringify(response.data.data)
+          JSON.stringify(response.data.data)
       );
       setDistributorList(response.data.data);
     } catch (error) {
@@ -164,7 +164,7 @@ const ViewUserModal = (props) => {
 
       console.log(
         "distributorList after selection : " +
-        JSON.stringify(response.data.data)
+          JSON.stringify(response.data.data)
       );
       setLcoList(response.data.data);
     } catch (error) {
@@ -215,8 +215,7 @@ const ViewUserModal = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      // id: (user && user.id) || "",
-      id: (user && Number(user.id)) || -1,
+      // id: (user && Number(user.id)) || -1,
       name: (user && user.name) || "",
       email: (user && user.email) || "",
       mobile: (user && user.mobile_no) || "",
@@ -248,9 +247,9 @@ const ViewUserModal = (props) => {
       status: Yup.string().required("Please Enter Status"),
       role: Yup.string().required("Please Enter Role"),
       designation: Yup.string().required("Please Enter Designation"),
-      confirmpassword: Yup.string().required("Please Enter Confirm Password"),
-      password: Yup.string().required("Please Enter Password"),
-      block_message: Yup.string().required("Enter message")
+      // block_message: Yup.string()
+      //   .required("Enter message")
+      //   .oneOf([Yup.ref("status"), -7 || 0], "Enter message"),
     }),
     onSubmit: (values) => {
       const updateUser = {
@@ -266,16 +265,14 @@ const ViewUserModal = (props) => {
           parseInt(values["type"]) === 0
             ? parseInt(values["mso"])
             : parseInt(values["type"]) === 1
-              ? parseInt(values["regional"])
-              : parseInt(values["type"]) === 2
-                ? parseInt(values["distributor"])
-                : parseInt(values["lco"]),
+            ? parseInt(values["regional"])
+            : parseInt(values["type"]) === 2
+            ? parseInt(values["distributor"])
+            : parseInt(values["lco"]),
         status: parseInt(values["status"]),
         role: parseInt(values["role"]),
         username: values["username"],
-        password: values["password"],
-        // created_at: new Date(),
-        // created_by_lbl: values["created_by_lbl"],
+        // password: values["password"],
       };
 
       // update user
@@ -362,7 +359,9 @@ const ViewUserModal = (props) => {
             <Row>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Name<span style={{ color: "red" }}>*</span></Label>
+                  <Label className="form-label">
+                    Name<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="name"
                     type="text"
@@ -386,7 +385,9 @@ const ViewUserModal = (props) => {
               </Col>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Email<span style={{ color: "red" }}>*</span></Label>
+                  <Label className="form-label">
+                    Email<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="email"
                     label="Email"
@@ -411,7 +412,9 @@ const ViewUserModal = (props) => {
               </Col>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Mobile No.<span style={{ color: "red" }}>*</span></Label>
+                  <Label className="form-label">
+                    Mobile No.<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="mobile"
                     label="Mobile No."
@@ -496,7 +499,8 @@ const ViewUserModal = (props) => {
                   <Col lg={4}>
                     <div className="mb-3">
                       <Label className="form-label">
-                        User of {user && user.type_lbl}<span style={{ color: "red" }}>*</span>
+                        User of {user && user.type_lbl}
+                        <span style={{ color: "red" }}>*</span>
                       </Label>
                       <Input
                         name="mso"
@@ -550,7 +554,7 @@ const ViewUserModal = (props) => {
                       {(parseInt(selectedType) === 1 ||
                         parseInt(selectedType) === 2 ||
                         parseInt(selectedType) === 3) &&
-                        parseInt(validation.values.mso) == 1 ? (
+                      parseInt(validation.values.mso) == 1 ? (
                         <div className="mb-3">
                           <Label className="form-label">
                             Select Regional Office
@@ -574,7 +578,7 @@ const ViewUserModal = (props) => {
                               ))}
                           </Input>
                           {validation.touched.regional &&
-                            validation.errors.regional ? (
+                          validation.errors.regional ? (
                             <FormFeedback type="invalid">
                               {validation.errors.regional}
                             </FormFeedback>
@@ -589,10 +593,10 @@ const ViewUserModal = (props) => {
               )} */}
                     <Col lg={4}>
                       {validation.values.regional &&
-                        // (parseInt(selectedType) === 1 ||
-                        (parseInt(selectedType) === 2 ||
-                          parseInt(selectedType) === 3) &&
-                        parseInt(validation.values.mso) == 1 ? (
+                      // (parseInt(selectedType) === 1 ||
+                      (parseInt(selectedType) === 2 ||
+                        parseInt(selectedType) === 3) &&
+                      parseInt(validation.values.mso) == 1 ? (
                         <div className="mb-3">
                           <Label className="form-label">
                             Select Distributor
@@ -619,7 +623,7 @@ const ViewUserModal = (props) => {
                               ))}
                           </Input>
                           {validation.touched.distributor &&
-                            validation.errors.distributor ? (
+                          validation.errors.distributor ? (
                             <FormFeedback type="invalid">
                               {validation.errors.distributor}
                             </FormFeedback>
@@ -730,7 +734,7 @@ const ViewUserModal = (props) => {
                       onChange={validation.handleChange}
                       onBlur={validation.handleBlur}
                       value={validation.values.policy || ""}
-                    // disabled={!selectedType && !selectedRole}
+                      // disabled={!selectedType && !selectedRole}
                     >
                       <option value="">Select Group Policy</option>
                       {selectedType &&
@@ -775,7 +779,7 @@ const ViewUserModal = (props) => {
                       ))}
                   </Input>
                   {validation.touched.designation &&
-                    validation.errors.designation ? (
+                  validation.errors.designation ? (
                     <FormFeedback type="invalid">
                       {validation.errors.designation}
                     </FormFeedback>
@@ -829,13 +833,15 @@ const ViewUserModal = (props) => {
                     value={validation.values.block_message || ""}
                     invalid={
                       // (validation.touched.block_message && validation.errors.block_message) ||
-                      (selectedStatus === "0" && validation.values.block_message.trim() === "") ||
-                      (selectedStatus === "-7" && validation.values.block_message.trim() === "")
+                      (selectedStatus === "0" &&
+                        validation.values.block_message.trim() === "") ||
+                      (selectedStatus === "-7" &&
+                        validation.values.block_message.trim() === "")
                     }
                     disabled={selectedStatus !== "0" && selectedStatus !== "-7"}
                   />
                   {validation.touched.block_message &&
-                    validation.errors.block_message ? (
+                  validation.errors.block_message ? (
                     <FormFeedback type="invalid">
                       {validation.errors.block_message}
                     </FormFeedback>
@@ -846,9 +852,7 @@ const ViewUserModal = (props) => {
             <Row>
               <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">
-                    Login ID
-                  </Label>
+                  <Label className="form-label">Login ID</Label>
                   <Input
                     name="username"
                     label="Login ID"
@@ -876,9 +880,7 @@ const ViewUserModal = (props) => {
                   {" "}
                   <Col lg={4}>
                     <div className="mb-3">
-                      <Label className="form-label">
-                        Password<span style={{ color: "red" }}>*</span>
-                      </Label>
+                      <Label className="form-label">Password</Label>
                       <Input
                         name="password"
                         label="Password"
@@ -889,13 +891,13 @@ const ViewUserModal = (props) => {
                         value={validation.values.password || ""}
                         invalid={
                           validation.touched.password &&
-                            validation.errors.password
+                          validation.errors.password
                             ? true
                             : false
                         }
                       />
                       {validation.touched.password &&
-                        validation.errors.password ? (
+                      validation.errors.password ? (
                         <FormFeedback type="invalid">
                           {validation.errors.password}
                         </FormFeedback>
@@ -904,9 +906,7 @@ const ViewUserModal = (props) => {
                   </Col>
                   <Col lg={4}>
                     <div className="mb-3">
-                      <Label className="form-label">
-                        Confirm-Password<span style={{ color: "red" }}>*</span>
-                      </Label>
+                      <Label className="form-label">Confirm-Password</Label>
                       <Input
                         name="confirmpassword"
                         label="Confirm Password"
@@ -917,13 +917,13 @@ const ViewUserModal = (props) => {
                         value={validation.values.confirmpassword || ""}
                         invalid={
                           validation.touched.confirmpassword &&
-                            validation.errors.confirmpassword
+                          validation.errors.confirmpassword
                             ? true
                             : false
                         }
                       />
                       {validation.touched.confirmpassword &&
-                        validation.errors.confirmpassword ? (
+                      validation.errors.confirmpassword ? (
                         <FormFeedback type="invalid">
                           {validation.errors.confirmpassword}
                         </FormFeedback>
