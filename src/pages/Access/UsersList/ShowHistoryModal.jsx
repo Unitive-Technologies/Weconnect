@@ -164,26 +164,31 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, user }) => {
 
   const renderRateTable = (row) => {
     return (
-      <Table className="table mb-0">
-        <thead>
-          <tr>
-            {rateTableSchema.columns.map((column) => (
-              <th key={column.accessor}>{column.header}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {row[rateTableSchema.subTableArrayKeyName].map((object, index) => (
-            <tr key={`${row.id}_${index}`}>
-              {" "}
-              {/* Using a unique key */}
+      <div style={{ maxHeight: "200px", overflowY: "auto" }}>
+        <Table className="table mb-0">
+          <thead>
+            <tr>
               {rateTableSchema.columns.map((column) => (
-                <td key={column.accessor}>{object[column.accessor]}</td>
+                <th
+                  key={column.accessor}
+                  style={{ position: "sticky", top: 0, background: "white" }}
+                >
+                  {column.header}
+                </th>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {row[rateTableSchema.subTableArrayKeyName].map((object, index) => (
+              <tr key={`${row.id}_${index}`}>
+                {rateTableSchema.columns.map((column) => (
+                  <td key={column.accessor}>{object[column.accessor]}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
     );
   };
 
@@ -257,7 +262,7 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, user }) => {
             <TableContainer
               isPagination={true}
               columns={columns}
-              data={historyData}
+              data={historyData.slice().reverse()}
               //   isGlobalFilter={true}
               isShowingPageLength={true}
               customPageSize={50}
