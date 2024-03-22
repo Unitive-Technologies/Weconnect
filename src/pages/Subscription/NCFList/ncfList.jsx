@@ -102,6 +102,7 @@ const NCFList = (props) => {
   const handleWarning2 = () => {
     setShowWarning2(!showWarning2);
   };
+
   const additionalRateTableSchema = {
     subTableArrayKeyName: "additional_rates",
     keyColumn: "_id",
