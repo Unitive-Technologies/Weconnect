@@ -111,11 +111,11 @@ const CustomerUserList = (props) => {
       },
       {
         Header: "Login ID",
-        accessor: "login_id",
+        // accessor: "login_id",
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.login_id}</p>
+            <p className="text-muted mb-0">{cellProps.row.original.username}</p>
           );
         },
       },
@@ -136,7 +136,9 @@ const CustomerUserList = (props) => {
         accessor: "email",
         filterable: true,
         Cell: (cellProps) => {
-          return <Email {...cellProps} />;
+          return (
+            <p className="text-muted mb-0">{cellProps.row.original.email}</p>
+          );
         },
       },
       {
@@ -147,11 +149,31 @@ const CustomerUserList = (props) => {
           return (
             <h5 className="font-size-14 mb-1">
               <Link className="text-dark" to="#">
-                {cellProps.row.original.status === 1
-                  ? "Active"
-                  : cellProps.row.original.status === 0
-                  ? "In-Active"
-                  : "Blocked"}
+                {cellProps.row.original.status === 1 ? (
+                  "Active"
+                ) : cellProps.row.original.status === 0 ? (
+                  <p
+                    style={{
+                      background: "red",
+                      padding: "5px",
+                      color: "white",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    In-Active
+                  </p>
+                ) : (
+                  <p
+                    style={{
+                      background: "red",
+                      padding: "5px",
+                      color: "white",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    Blocked
+                  </p>
+                )}
               </Link>
             </h5>
           );
@@ -169,7 +191,9 @@ const CustomerUserList = (props) => {
           //   console.log("lco2:" + JSON.stringify(cellProps.row.original.lco));
           // }
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.lco}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.operator.name}
+            </p>
           );
         },
       },
@@ -179,7 +203,9 @@ const CustomerUserList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.lco_code}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.operator.code}
+            </p>
           );
         },
       },
