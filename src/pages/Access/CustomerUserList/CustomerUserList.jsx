@@ -154,7 +154,7 @@ const CustomerUserList = (props) => {
                 ) : cellProps.row.original.status === 0 ? (
                   <p
                     style={{
-                      background: "red",
+                      background: "#f46a6a",
                       padding: "5px",
                       color: "white",
                       borderRadius: "5px",
@@ -165,7 +165,7 @@ const CustomerUserList = (props) => {
                 ) : (
                   <p
                     style={{
-                      background: "red",
+                      background: "#f46a6a",
                       padding: "5px",
                       color: "white",
                       borderRadius: "5px",

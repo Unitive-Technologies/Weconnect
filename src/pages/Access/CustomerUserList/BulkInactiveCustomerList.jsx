@@ -124,16 +124,7 @@ const BulkInactiveCustomerList = (props) => {
       statustoset: "active",
       block_message: "",
     },
-    validationSchema: Yup.object().shape({
-      // statustoset: Yup.string()
-      //   .required("Please Enter Status")
-      //   .oneOf(["In-Active", "Block"], "Invalid status"), // Adjusted to accept only "In-Active" and "Block" values
-      // block_message: Yup.string().when("statustoset", {
-      //   is: (value) => value === "In-Active" || value === "Block",
-      //   then: Yup.string().required("Enter message"),
-      //   otherwise: Yup.string(), // If statustoset is not "In-Active" or "Block", no additional validation is applied
-      // }),
-    }),
+    validationSchema: Yup.object().shape({}),
 
     onSubmit: async (values) => {
       console.log("selectedUsers:" + JSON.stringify(selectedUsers));
@@ -157,10 +148,10 @@ const BulkInactiveCustomerList = (props) => {
             values.statustoset === "active"
               ? 1
               : values.statustoset === "inactive"
-                ? 0
-                : values.statustoset === "block"
-                  ? -7
-                  : 2,
+              ? 0
+              : values.statustoset === "block"
+              ? -7
+              : 2,
         };
 
         console.log("newStatus:", JSON.stringify(newStatus));
@@ -178,8 +169,9 @@ const BulkInactiveCustomerList = (props) => {
 
         console.log("Axios Response:", response);
         dispatch(onGetCustomerUsers());
-        handleCancel();
+
         validation.resetForm();
+        toggleShowBulkActiveUser();
       } catch (error) {
         console.error("Error in onSubmit:", error);
       }
@@ -202,7 +194,7 @@ const BulkInactiveCustomerList = (props) => {
             type="checkbox"
             disabled
             checked
-          // onClick={() => handleActive(cellProps.row.original)}
+            // onClick={() => handleActive(cellProps.row.original)}
           />
         ),
       },
@@ -278,8 +270,8 @@ const BulkInactiveCustomerList = (props) => {
                   {cellProps.row.original.status === 1
                     ? "Active"
                     : cellProps.row.original.status === 0
-                      ? "In-Active"
-                      : "Blocked"}
+                    ? "In-Active"
+                    : "Blocked"}
                 </Link>
               </h5>
             </>
@@ -298,10 +290,10 @@ const BulkInactiveCustomerList = (props) => {
                   {cellProps.row.original.status === 0
                     ? "MSO"
                     : cellProps.row.original.status === 1
-                      ? "RO"
-                      : cellProps.row.original.status === 2
-                        ? "DISTRIBUTOR"
-                        : "LCO"}
+                    ? "RO"
+                    : cellProps.row.original.status === 2
+                    ? "DISTRIBUTOR"
+                    : "LCO"}
                 </Link>
               </h5>
             </>
@@ -320,8 +312,8 @@ const BulkInactiveCustomerList = (props) => {
                   {cellProps.row.original.status === 1
                     ? "Administrator"
                     : cellProps.row.original.status === 2
-                      ? "Staff"
-                      : "User"}
+                    ? "Staff"
+                    : "User"}
                 </Link>
               </h5>
             </>
@@ -520,9 +512,9 @@ const BulkInactiveCustomerList = (props) => {
         centered={true}
         className="exampleModal"
         tabIndex="-1"
-        toggle={handleCancel}
+        toggle={toggleShowBulkActiveUser}
       >
-        <ModalHeader toggle={handleCancel} tag="h4">
+        <ModalHeader toggle={toggleShowBulkActiveUser} tag="h4">
           Bulk Active/Inactive User
         </ModalHeader>
         <ModalBody>
@@ -552,7 +544,7 @@ const BulkInactiveCustomerList = (props) => {
                         value={selectedStatusToSet}
                         invalid={
                           validation.touched.statustoset &&
-                            validation.errors.statustoset
+                          validation.errors.statustoset
                             ? true
                             : false
                         }
@@ -564,7 +556,7 @@ const BulkInactiveCustomerList = (props) => {
                       </Input>
 
                       {validation.touched.statustoset &&
-                        validation.errors.statustoset ? (
+                      validation.errors.statustoset ? (
                         <FormFeedback type="invalid">
                           {validation.errors.statustoset}
                         </FormFeedback>
@@ -588,19 +580,19 @@ const BulkInactiveCustomerList = (props) => {
                         value={validation.values.block_message || ""}
                         invalid={
                           validation.touched.block_message &&
-                            validation.errors.block_message
+                          validation.errors.block_message
                             ? true
                             : false
                         }
                         disabled={
                           selectedStatusToSet === "inactive" ||
-                            selectedStatusToSet === "block"
+                          selectedStatusToSet === "block"
                             ? false
                             : true
                         }
                       />
                       {validation.touched.block_message &&
-                        validation.errors.block_message ? (
+                      validation.errors.block_message ? (
                         <FormFeedback type="invalid">
                           {validation.errors.block_message}
                         </FormFeedback>
@@ -679,7 +671,7 @@ const BulkInactiveCustomerList = (props) => {
                     <button
                       type="button"
                       className="btn btn-primary "
-                      onClick={handleCancel}
+                      onClick={toggleShowBulkActiveUser}
                     >
                       Cancel
                     </button>

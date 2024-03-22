@@ -191,7 +191,7 @@ const ContactsList = (props) => {
                   ) : cellProps.row.original.status === 0 ? (
                     <p
                       style={{
-                        background: "red",
+                        background: "#f46a6a",
                         padding: "5px",
                         color: "white",
                         borderRadius: "5px",

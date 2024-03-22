@@ -159,14 +159,7 @@ const BulkInactiveUserModal = (props) => {
       statustoset: "active",
       block_message: "",
     },
-    validationSchema: Yup.object().shape({
-      // statustoset: Yup.string().required("Please Enter Status"),
-      // block_message: Yup.string().when(["statustoset"], {
-      //   is: (statustoset) => statustoset && statustoset !== "active",
-      //   then: Yup.string().required("Please Enter Message"),
-      //   otherwise: Yup.string(),
-      // }),
-    }),
+    validationSchema: Yup.object().shape({}),
 
     onSubmit: async (values) => {
       try {
@@ -317,7 +310,7 @@ const BulkInactiveUserModal = (props) => {
                   ) : cellProps.row.original.status === 0 ? (
                     <p
                       style={{
-                        background: "red",
+                        background: "#f46a6a",
                         padding: "5px",
                         color: "white",
                         borderRadius: "5px",
