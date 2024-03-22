@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { Modal, ModalBody, ModalHeader, Row, Col, Input } from "reactstrap";
+import { Modal, Table, ModalBody, ModalHeader, Row, Col, Input } from "reactstrap";
 import TableContainer from "../../../components/Common/TableContainer";
 
 const ShowHistoryModal = ({ isOpen, toggleHistoryModal, packageList }) => {
@@ -9,6 +9,61 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, packageList }) => {
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [historyData, setHistoryData] = useState([]);
   const [year, setYear] = useState("2024");
+
+  const reversedHistoryData = useMemo(() => {
+    return [...historyData].reverse();
+  }, [historyData]);
+
+  const rateTableSchema = {
+    subTableArrayKeyName: "nData",
+    keyColumn: "id",
+    columns: [
+      {
+        header: "Column Name",
+        accessor: (rowData) => rowData.key,
+      },
+      {
+        header: "Updated Value",
+        accessor: (rowData) => rowData.new,
+      },
+      {
+        header: "Previous Value",
+        accessor: (rowData) => rowData.old,
+      },
+    ],
+  };
+
+  const getRateTableRendered = (rowData) => {
+    return (
+      <div style={{ maxHeight: "200px", overflowY: "auto" }}>
+        <Table className="table mb-0">
+          <thead>
+            <tr>
+              {rateTableSchema.columns.map((column) => (
+                <th
+                  key={column.header}
+                  style={{ position: "sticky", top: 0, background: "white" }}
+                >
+                  {column.header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {rowData[rateTableSchema.subTableArrayKeyName].map((object) => {
+              return (
+                <tr key={object.id}>
+                  {rateTableSchema.columns.map((column) => {
+                    return <td key={column.header}>{column.accessor(object)}</td>;
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      </div>
+    );
+  };
 
   const columns = useMemo(
     () => [
@@ -145,7 +200,7 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, packageList }) => {
       toggle={toggleHistoryModal}
     >
       <ModalHeader toggle={toggleHistoryModal} tag="h4" position="relative">
-        <h4>District History ({packageList.name})</h4>
+        <h4>Package History ({packageList.name})</h4>
       </ModalHeader>
       <ModalBody>
         <div
@@ -203,7 +258,7 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, packageList }) => {
             <TableContainer
               isPagination={true}
               columns={columns}
-              data={historyData}
+              data={reversedHistoryData}
               //   isGlobalFilter={true}
               isShowingPageLength={true}
               customPageSize={50}
@@ -211,6 +266,11 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, packageList }) => {
               theadClass="table-light"
               paginationDiv="col-sm-12 col-md-7"
               pagination="pagination pagination-rounded justify-content-end mt-4"
+              subTableEnabled={true}
+              getRenderedSubTable={getRateTableRendered}
+              isSubTableContentExists={(rowData) =>
+                rowData.nData.length > 0
+              }
             />
           </Col>
         </Row>
