@@ -261,7 +261,7 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, customeruser }) => {
             <TableContainer
               isPagination={true}
               columns={columns}
-              data={historyData}
+              data={historyData.slice().reverse()}
               //   isGlobalFilter={true}
               isShowingPageLength={true}
               customPageSize={50}
