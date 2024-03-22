@@ -184,13 +184,24 @@ const ContactsList = (props) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5 className="font-size-14 ">
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.status === 1
-                    ? "Active"
-                    : cellProps.row.original.status === 0
-                    ? "In-Active"
-                    : "Blocked"}
+                  {cellProps.row.original.status === 1 ? (
+                    "Active"
+                  ) : cellProps.row.original.status === 0 ? (
+                    <p
+                      style={{
+                        background: "red",
+                        padding: "5px",
+                        color: "white",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      In-Active
+                    </p>
+                  ) : (
+                    "Blocked"
+                  )}
                 </Link>
               </h5>
             </>
