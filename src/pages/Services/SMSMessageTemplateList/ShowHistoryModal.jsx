@@ -26,7 +26,9 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, SMSMsgTemp }) => {
       {
         header: "Updated Value",
         accessor: (rowData) => {
-          if (typeof rowData.new === 'string') {
+          if (rowData.new === null) {
+            return ""; // Return an empty string if rowData.old is null
+          } else if (typeof rowData.new === 'string') {
             return rowData.new;
           } else {
             return JSON.stringify(rowData.new) || "0";
@@ -36,10 +38,12 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, SMSMsgTemp }) => {
       {
         header: "Previous Value",
         accessor: (rowData) => {
-          if (typeof rowData.old === 'string') {
-            return rowData.old;
+          if (rowData.new === null) {
+            return ""; // Return an empty string if rowData.old is null
+          } else if (typeof rowData.new === 'string') {
+            return rowData.new;
           } else {
-            return JSON.stringify(rowData.old) || "0";
+            return JSON.stringify(rowData.new) || "0";
           }
         },
       },
