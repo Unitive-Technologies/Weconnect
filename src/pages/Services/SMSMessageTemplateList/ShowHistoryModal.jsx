@@ -35,7 +35,13 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, SMSMsgTemp }) => {
       },
       {
         header: "Previous Value",
-        accessor: (rowData) => rowData.old,
+        accessor: (rowData) => {
+          if (typeof rowData.old === 'string') {
+            return rowData.old;
+          } else {
+            return JSON.stringify(rowData.old) || "0";
+          }
+        },
       },
     ],
   };
@@ -61,7 +67,12 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, SMSMsgTemp }) => {
               return (
                 <tr key={object.id}>
                   {rateTableSchema.columns.map((column) => {
-                    return <td key={column.header}>{column.accessor(object)}</td>;
+                    return <td key={column.header} style={{
+                      maxWidth: 100,
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}>{column.accessor(object)}</td>;
                   })}
                 </tr>
               );
