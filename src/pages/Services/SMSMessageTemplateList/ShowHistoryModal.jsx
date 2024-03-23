@@ -25,7 +25,13 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, SMSMsgTemp }) => {
       },
       {
         header: "Updated Value",
-        accessor: (rowData) => rowData.new,
+        accessor: (rowData) => {
+          if (typeof rowData.new === 'string') {
+            return rowData.new;
+          } else {
+            return JSON.stringify(rowData.new) || "0";
+          }
+        },
       },
       {
         header: "Previous Value",

@@ -28,8 +28,13 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, osdConfiguration }) => {
       },
       {
         header: "Updated Value",
-        accessor: (rowData) => (rowData.new && rowData.new[0]?.field) || (rowData.new ? JSON.stringify(rowData.new) : "0"),
-
+        accessor: (rowData) => {
+          if (typeof rowData.new === 'string') {
+            return rowData.new;
+          } else {
+            return JSON.stringify(rowData.new) || "0";
+          }
+        },
       },
       {
         header: "Previous Value",
