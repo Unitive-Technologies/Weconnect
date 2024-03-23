@@ -15,9 +15,11 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, osdConfiguration }) => {
     return [...historyData].reverse();
   }, [historyData]);
 
+  // { console.log("Updated Value" + rowData.new[0]?.field) }
+
   const rateTableSchema = {
     subTableArrayKeyName: "nData",
-    keyColumn: "id",
+    keyColumn: "key",
     columns: [
       {
         header: "Column Name",
@@ -27,8 +29,8 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, osdConfiguration }) => {
       {
         header: "Updated Value",
         accessor: (rowData) => (rowData.new && rowData.new[0]?.field) || (rowData.new ? JSON.stringify(rowData.new) : "0"),
-      },
 
+      },
       {
         header: "Previous Value",
         accessor: (rowData) => rowData.old,
@@ -38,7 +40,7 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, osdConfiguration }) => {
 
   const getRateTableRendered = (rowData) => {
     return (
-      <div style={{ maxHeight: "200px", maxWidth: "1000px", overflowY: "auto" }}>
+      <div style={{ maxHeight: "200px", maxWidth: "1200px", overflowY: "auto" }}>
         <Table className="table mb-0">
           <thead>
             <tr>
@@ -57,7 +59,13 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, osdConfiguration }) => {
               return (
                 <tr key={object.id}>
                   {rateTableSchema.columns.map((column) => {
-                    return <td key={column.header}>{column.accessor(object)}</td>;
+                    return <td key={column.header}
+                      style={{
+                        maxWidth: 100,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}>{column.accessor(object)}</td>;
                   })}
                 </tr>
               );

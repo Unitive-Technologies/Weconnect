@@ -393,7 +393,7 @@ const InventoryTrack = (props) => {
     const tableData = [{ smartcard: scCurrentStatus, stb: stbCurrentStatus }];
     console.log("Table data: ", tableData);
     return (
-      <div>
+      <div style={{ maxWidth: "1000px" }}>
         <Table className="table mb-0">
           <thead>
             <tr>
