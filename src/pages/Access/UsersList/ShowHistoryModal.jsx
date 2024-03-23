@@ -145,7 +145,7 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, user }) => {
   console.log("history DATAAAAAAAAAA:" + JSON.stringify(historyData));
   const rateTableSchema = {
     subTableArrayKeyName: "nData",
-    keyColumn: "key", // Assuming "key" can serve as a unique identifier for sub-table rows
+    keyColumn: "key",
     columns: [
       {
         header: "Column Name",
