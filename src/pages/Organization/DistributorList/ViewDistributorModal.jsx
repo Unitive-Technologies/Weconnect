@@ -250,9 +250,7 @@ const ViewDistributorModal = (props) => {
           <>
             <ModalHeader toggle={handleCancel} tag="h4" position="relative">
               {/* <h4> */}
-              View - {distributor && distributor.name}, Balance:{" "}
-              {selectedRowData.balance}, Credit Limit:{" "}
-              {selectedRowData.credit_limit}
+              View - {distributor && distributor.name}
               {/* </h4> */}
             </ModalHeader>
             <Link
@@ -374,13 +372,13 @@ const ViewDistributorModal = (props) => {
                             value={validation.values.contact_person || ""}
                             invalid={
                               validation.touched.contact_person &&
-                              validation.errors.contact_person
+                                validation.errors.contact_person
                                 ? true
                                 : false
                             }
                           />
                           {validation.touched.contact_person &&
-                          validation.errors.contact_person ? (
+                            validation.errors.contact_person ? (
                             <FormFeedback type="invalid">
                               {validation.errors.contact_person}
                             </FormFeedback>
@@ -401,13 +399,13 @@ const ViewDistributorModal = (props) => {
                             value={validation.values.mobile_no || ""}
                             invalid={
                               validation.touched.mobile_no &&
-                              validation.errors.mobile_no
+                                validation.errors.mobile_no
                                 ? true
                                 : false
                             }
                           />
                           {validation.touched.mobile_no &&
-                          validation.errors.mobile_no ? (
+                            validation.errors.mobile_no ? (
                             <FormFeedback type="invalid">
                               {validation.errors.mobile_no}
                             </FormFeedback>
@@ -478,13 +476,13 @@ const ViewDistributorModal = (props) => {
                             value={validation.values.branch_lbl || ""}
                             invalid={
                               validation.touched.branch_lbl &&
-                              validation.errors.branch_lbl
+                                validation.errors.branch_lbl
                                 ? true
                                 : false
                             }
                           />
                           {validation.touched.branch_lbl &&
-                          validation.errors.branch_lbl ? (
+                            validation.errors.branch_lbl ? (
                             <FormFeedback type="invalid">
                               {validation.errors.branch_lbl}
                             </FormFeedback>
