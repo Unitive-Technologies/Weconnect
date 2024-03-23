@@ -93,7 +93,7 @@ const GroupPolicyList = (props) => {
                 }}
               >
                 <Link className="text-dark" to="#">
-                  {cellProps.row.original.name}
+                  {cellProps.row.original.user_id}
                 </Link>
               </h5>
             </>
@@ -112,10 +112,10 @@ const GroupPolicyList = (props) => {
                   {cellProps.row.original.status === 0
                     ? "MSO"
                     : cellProps.row.original.status === 1
-                      ? "RO"
-                      : cellProps.row.original.status === 2
-                        ? "DISTRIBUTOR"
-                        : "LCO"}
+                    ? "RO"
+                    : cellProps.row.original.status === 2
+                    ? "DISTRIBUTOR"
+                    : "LCO"}
                 </Link>
               </h5>
             </>
@@ -134,8 +134,8 @@ const GroupPolicyList = (props) => {
                   {cellProps.row.original.status === 1
                     ? "Administrator"
                     : cellProps.row.original.status === 2
-                      ? "Staff"
-                      : "User"}
+                    ? "Staff"
+                    : "User"}
                 </Link>
               </h5>
             </>
@@ -168,7 +168,9 @@ const GroupPolicyList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">{cellProps.row.original.count}</p>
+            <p className="text-muted mb-0">
+              {cellProps.row.original.user_count}
+            </p>
           );
         },
       },
@@ -193,7 +195,7 @@ const GroupPolicyList = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.created_at}
+              {cellProps.row.original.insert_timestamp}
             </p>
           );
         },
@@ -205,7 +207,7 @@ const GroupPolicyList = (props) => {
         Cell: (cellProps) => {
           return (
             <p className="text-muted mb-0">
-              {cellProps.row.original.created_by}
+              {cellProps.row.original.inserted_by}
             </p>
           );
         },
