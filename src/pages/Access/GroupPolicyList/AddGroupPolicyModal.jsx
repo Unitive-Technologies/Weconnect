@@ -17,6 +17,7 @@ import { useFormik } from "formik";
 import { addNewGroupPolicy as onAddNewGroupPolicy } from "/src/store/grouppolicy/actions";
 import { useDispatch } from "react-redux";
 import DashboardPolicy from "./DashboardPolicy";
+import ConfigurationPolicy from "./ConfigurationPolicy";
 
 const AddGroupPolicyModal = (props) => {
   const { isOpen, toggleAddPolicyModal, policyRole, policyType } = props;
@@ -290,6 +291,9 @@ const AddGroupPolicyModal = (props) => {
           </Row>
           <Row>
             <DashboardPolicy />
+          </Row>
+          <Row>
+            <ConfigurationPolicy />
           </Row>
           <Row>
             <Col>
