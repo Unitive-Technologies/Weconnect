@@ -26,9 +26,7 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, broadcast }) => {
       {
         header: "Updated Value",
         accessor: (rowData) => {
-          if (rowData.new === null) {
-            return ""; // Return an empty string if rowData.old is null
-          } else if (typeof rowData.new === 'string') {
+          if (typeof rowData.new === 'string') {
             return rowData.new;
           } else {
             return JSON.stringify(rowData.new) || "0";
