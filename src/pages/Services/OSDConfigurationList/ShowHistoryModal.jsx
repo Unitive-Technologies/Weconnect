@@ -25,8 +25,9 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, osdConfiguration }) => {
       },
       {
         header: "Updated Value",
-        accessor: (rowData) => rowData.new,
+        accessor: (rowData) => (rowData.new && rowData.new[0]?.field) || (rowData.new ? JSON.stringify(rowData.new) : "0"),
       },
+
       {
         header: "Previous Value",
         accessor: (rowData) => rowData.old,
@@ -36,7 +37,7 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, osdConfiguration }) => {
 
   const getRateTableRendered = (rowData) => {
     return (
-      <div style={{ maxHeight: "200px", overflowY: "auto" }}>
+      <div style={{ maxHeight: "200px", maxWidth: "1000px", overflowY: "auto" }}>
         <Table className="table mb-0">
           <thead>
             <tr>
