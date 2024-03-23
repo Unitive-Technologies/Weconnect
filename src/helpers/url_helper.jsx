@@ -21,6 +21,9 @@ export const GET_CUSTOMERUSERS_SETTINGS =
 export const GET_GROUPPOLICY =
   "/menu-access-right?filter[type]=2&expand=user_count,user_type_lbl&page=1&per-page=50&vr=web1.0";
 export const ADD_NEW_GROUPPOLICY = "/add/grouppolicy";
+export const GET_POLICY_TYPE = "/list/usertype?fields=id,name&vr=web1.0";
+export const GET_POLICY_ROLE = "/list/policyrole?fields=id,name&vr=web1.0";
+
 export const GET_DESIGNATION =
   "/user-designation?expand=created_by_lbl,status_lbl,parent_lbl,type_lbl&page=1&per-page=50&vr=web1.0";
 export const GET_DESIGNATION_STATUS = "/list/status?fields=id,name&vr=web1.0";

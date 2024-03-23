@@ -1,18 +1,29 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { GET_GROUPPOLICY, ADD_NEW_GROUPPOLICY } from "./actionTypes";
+import {
+  GET_GROUPPOLICY,
+  ADD_NEW_GROUPPOLICY,
+  GET_POLICY_TYPE,
+  GET_POLICY_ROLE,
+} from "./actionTypes";
 
 import {
   getGroupPolicySuccess,
   getGroupPolicyFail,
   addGroupPolicyFail,
   addGroupPolicySuccess,
+  getPolicyTypeFail,
+  getPolicyTypeSuccess,
+  getPolicyRoleFail,
+  getPolicyRoleSuccess,
 } from "./actions";
 
 //Include Both Helper File with needed methods
 import {
   getGroupPolicy,
   addNewGroupPolicy,
+  getPolicyType,
+  getPolicyRole,
 } from "../../helpers/backend_helper";
 
 const convertGroupPolicyListObject = (groupPolicyList) => {
@@ -57,6 +68,26 @@ function* fetchGroupPolicy() {
   }
 }
 
+function* fetchPolicyType() {
+  try {
+    const response = yield call(getPolicyType);
+    // console.log("response:" + JSON.stringify(response));
+    yield put(getPolicyTypeSuccess(response.data));
+  } catch (error) {
+    yield put(getPolicyTypeFail(error));
+  }
+}
+
+function* fetchPolicyRole() {
+  try {
+    const response = yield call(getPolicyRole);
+    // console.log("response:" + JSON.stringify(response));
+    yield put(getPolicyRoleSuccess(response.data));
+  } catch (error) {
+    yield put(getPolicyRoleFail(error));
+  }
+}
+
 function* onAddNewGroupPolicy({ payload: groupPolicy }) {
   try {
     const response = yield call(addNewGroupPolicy, groupPolicy);
@@ -72,6 +103,8 @@ function* onAddNewGroupPolicy({ payload: groupPolicy }) {
 function* groupPolicySaga() {
   yield takeEvery(GET_GROUPPOLICY, fetchGroupPolicy);
   yield takeEvery(ADD_NEW_GROUPPOLICY, onAddNewGroupPolicy);
+  yield takeEvery(GET_POLICY_TYPE, fetchPolicyType);
+  yield takeEvery(GET_POLICY_ROLE, fetchPolicyRole);
 }
 
 export default groupPolicySaga;

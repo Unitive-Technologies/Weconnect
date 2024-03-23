@@ -1,7 +1,15 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
-import { Card, CardBody, Col, Container, Row, Spinner } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  Col,
+  Container,
+  Row,
+  Spinner,
+  Badge,
+} from "reactstrap";
 import Spinners from "../../../components/Common/Spinner";
 import { Email } from "./customerUserlistCol";
 
@@ -152,27 +160,9 @@ const CustomerUserList = (props) => {
                 {cellProps.row.original.status === 1 ? (
                   "Active"
                 ) : cellProps.row.original.status === 0 ? (
-                  <p
-                    style={{
-                      background: "#f46a6a",
-                      padding: "5px",
-                      color: "white",
-                      borderRadius: "5px",
-                    }}
-                  >
-                    In-Active
-                  </p>
+                  <Badge className="bg-danger font-size-14">In-Active</Badge>
                 ) : (
-                  <p
-                    style={{
-                      background: "#f46a6a",
-                      padding: "5px",
-                      color: "white",
-                      borderRadius: "5px",
-                    }}
-                  >
-                    Blocked
-                  </p>
+                  <Badge className="bg-danger font-size-14">Blocked</Badge>
                 )}
               </Link>
             </h5>

@@ -378,6 +378,8 @@ export const getConfigurationUploadLogs = async (currentPage, perPage = 20) => {
 export const getGroupPolicy = () => get(url.GET_GROUPPOLICY);
 export const addNewGroupPolicy = (groupPolicy) =>
   post(url.ADD_NEW_GROUPPOLICY, groupPolicy);
+export const getPolicyType = () => get(url.GET_POLICY_TYPE);
+export const getPolicyRole = () => get(url.GET_POLICY_ROLE);
 
 export const getDesignation = () => get(url.GET_DESIGNATION);
 export const addNewDesignation = (designation) =>

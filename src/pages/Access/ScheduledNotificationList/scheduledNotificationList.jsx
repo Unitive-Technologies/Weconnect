@@ -3,7 +3,15 @@ import { Link } from "react-router-dom";
 import withRouter from "../../../components/Common/withRouter";
 import TableContainer from "../../../components/Common/TableContainer";
 import Spinners from "../../../components/Common/Spinner";
-import { Card, CardBody, Col, Container, Row, Spinner } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  Col,
+  Container,
+  Row,
+  Spinner,
+  Badge,
+} from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -142,16 +150,7 @@ const ScheduledNotificationList = (props) => {
                   {cellProps.row.original.status === 1 ? (
                     "Active"
                   ) : (
-                    <p
-                      style={{
-                        background: "#f46a6a",
-                        padding: "2px 5px",
-                        color: "white",
-                        borderRadius: "5px",
-                      }}
-                    >
-                      In-Active
-                    </p>
+                    <Badge className="bg-danger font-size-14">In-Active</Badge>
                   )}
                 </Link>
               </h5>
@@ -169,16 +168,7 @@ const ScheduledNotificationList = (props) => {
               <h5 className="font-size-14 ">
                 <Link className="text-dark" to="#">
                   {cellProps.row.original.broadcast_status_lbl === "Stopped" ? (
-                    <p
-                      style={{
-                        background: "#f46a6a",
-                        padding: "2px 5px",
-                        color: "white",
-                        borderRadius: "5px",
-                      }}
-                    >
-                      STOPPED
-                    </p>
+                    <Badge className="bg-danger font-size-14">STOPPED</Badge>
                   ) : (
                     <span style={{ animation: "blinking 1s infinite" }}>
                       RUNNING

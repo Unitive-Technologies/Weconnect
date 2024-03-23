@@ -20,7 +20,11 @@ import { Email, Tags, Projects } from "./groupPolicyListCol";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import DeleteModal from "/src/components/Common/DeleteModal";
 
-import { getGroupPolicy as onGetGroupPolicy } from "/src/store/actions";
+import {
+  getGroupPolicy as onGetGroupPolicy,
+  getPolicyType as onGetPolicyType,
+  getPolicyRole as onGetPolicyRole,
+} from "/src/store/actions";
 
 import { isEmpty } from "lodash";
 
@@ -42,10 +46,14 @@ const GroupPolicyList = (props) => {
     selectGroupPolicyState,
     (groupPolicy) => ({
       gpPolicy: groupPolicy.groupPolicy,
+      policyType: groupPolicy.policyType,
+      policyRole: groupPolicy.policyRole,
       loading: groupPolicy.loading,
     })
   );
-  const { gpPolicy, loading } = useSelector(groupPolicyProperties);
+  const { gpPolicy, policyRole, policyType, loading } = useSelector(
+    groupPolicyProperties
+  );
 
   const [isLoading, setLoading] = useState(loading);
 
@@ -89,7 +97,7 @@ const GroupPolicyList = (props) => {
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
-                  handleViewGroupPolicy(userData);
+                  toggleViewPolicyModal(userData);
                 }}
               >
                 <Link className="text-dark" to="#">
@@ -224,15 +232,17 @@ const GroupPolicyList = (props) => {
   useEffect(() => {
     if (gpPolicy && !gpPolicy.length) {
       dispatch(onGetGroupPolicy());
+      dispatch(onGetPolicyType());
+      dispatch(onGetPolicyRole());
     }
   }, [dispatch, gpPolicy]);
 
-  const handleAddGroupPolicy = () => {
+  const toggleAddPolicyModal = () => {
     setShowAddGroupPolicy(!showAddGroupPolicy);
   };
   const [viewGroupPolicy, setViewGroupPolicy] = useState({});
 
-  const handleViewGroupPolicy = (groupPolicy) => {
+  const toggleViewPolicyModal = (groupPolicy) => {
     setViewGroupPolicyModal(!viewGroupPolicyModal);
     setViewGroupPolicy(groupPolicy);
   };
@@ -261,13 +271,17 @@ const GroupPolicyList = (props) => {
     <React.Fragment>
       <ViewGroupPolicyModal
         isOpen={viewGroupPolicyModal}
-        handleViewGroupPolicy={handleViewGroupPolicy}
+        handleViewGroupPolicy={toggleViewPolicyModal}
         groupPolicy={viewGroupPolicy}
       />
-      <AddGroupPolicyModal
-        isOpen={showAddGroupPolicy}
-        handleAddGroupPolicy={handleAddGroupPolicy}
-      />
+      {showAddGroupPolicy && (
+        <AddGroupPolicyModal
+          isOpen={Boolean(showAddGroupPolicy)}
+          toggleAddPolicyModal={toggleAddPolicyModal}
+          policyRole={policyRole}
+          policyType={policyType}
+        />
+      )}
       <div
         className="position-fixed top-0 end-0 p-3"
         style={{ zIndex: "1005" }}

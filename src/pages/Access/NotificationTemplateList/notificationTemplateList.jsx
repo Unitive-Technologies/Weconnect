@@ -15,6 +15,7 @@ import {
   ToastHeader,
   ToastBody,
   Spinner,
+  Badge,
 } from "reactstrap";
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import {
@@ -252,16 +253,7 @@ const NotificationTemplateList = (props) => {
                   "Active"
                 ) : (
                   // cellProps.row.original.status === 0 ?
-                  <p
-                    style={{
-                      background: "#f46a6a",
-                      padding: "5px",
-                      color: "white",
-                      borderRadius: "5px",
-                    }}
-                  >
-                    In-Active
-                  </p>
+                  <Badge className="bg-danger font-size-14">In-Active</Badge>
                 )}
               </Link>
             </h5>

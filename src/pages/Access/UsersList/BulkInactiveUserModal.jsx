@@ -3,6 +3,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import TableContainer from "../../../components/Common/TableContainer";
 import {
+  Badge,
   Card,
   CardBody,
   Col,
@@ -308,16 +309,7 @@ const BulkInactiveUserModal = (props) => {
                   {cellProps.row.original.status === 1 ? (
                     "Active"
                   ) : cellProps.row.original.status === 0 ? (
-                    <p
-                      style={{
-                        background: "#f46a6a",
-                        padding: "5px",
-                        color: "white",
-                        borderRadius: "5px",
-                      }}
-                    >
-                      In-Active
-                    </p>
+                    <Badge className="bg-danger font-size-14">In-Active</Badge>
                   ) : (
                     "Blocked"
                   )}

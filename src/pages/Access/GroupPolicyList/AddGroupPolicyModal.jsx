@@ -16,9 +16,12 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewGroupPolicy as onAddNewGroupPolicy } from "/src/store/grouppolicy/actions";
 import { useDispatch } from "react-redux";
+import DashboardPolicy from "./DashboardPolicy";
 
 const AddGroupPolicyModal = (props) => {
-  const { isOpen, handleAddGroupPolicy } = props;
+  const { isOpen, toggleAddPolicyModal, policyRole, policyType } = props;
+  console.log("typeeeeeeeeee:" + JSON.stringify(policyType));
+  console.log("Roleeeeeeeeee:" + JSON.stringify(policyRole));
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -58,7 +61,7 @@ const AddGroupPolicyModal = (props) => {
       // save new user
       dispatch(onAddNewGroupPolicy(newGroupPolicy));
       validation.resetForm();
-      handleAddGroupPolicy();
+      toggleAddPolicyModal();
     },
   });
   return (
@@ -70,9 +73,9 @@ const AddGroupPolicyModal = (props) => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={handleAddGroupPolicy}
+      toggle={toggleAddPolicyModal}
     >
-      <ModalHeader tag="h4" toggle={handleAddGroupPolicy}>
+      <ModalHeader tag="h4" toggle={toggleAddPolicyModal}>
         Create Group Policy
       </ModalHeader>
       <ModalBody>
@@ -124,10 +127,12 @@ const AddGroupPolicyModal = (props) => {
                   value={validation.values.type || ""}
                 >
                   <option value="">Select User Type</option>
-                  <option value="1">MSO</option>
-                  <option value="2">RO</option>
-                  <option value="3">Distributor</option>
-                  <option value="4">LCO</option>
+                  {policyType &&
+                    policyType.map((type) => (
+                      <option key={type.id} value={type.id}>
+                        {type.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.type && validation.errors.type ? (
                   <FormFeedback type="invalid">
@@ -151,9 +156,12 @@ const AddGroupPolicyModal = (props) => {
                   value={validation.values.role || ""}
                 >
                   <option value="">Select Role</option>
-                  <option value="21">Administrator</option>
-                  <option value="22">Staff</option>
-                  <option value="23">User</option>
+                  {policyRole &&
+                    policyRole.map((role) => (
+                      <option key={role.id} value={role.id}>
+                        {role.name}
+                      </option>
+                    ))}
                 </Input>
                 {validation.touched.role && validation.errors.role ? (
                   <FormFeedback type="invalid">
@@ -281,6 +289,9 @@ const AddGroupPolicyModal = (props) => {
             </Col>
           </Row>
           <Row>
+            <DashboardPolicy />
+          </Row>
+          <Row>
             <Col>
               <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
@@ -299,7 +310,7 @@ const AddGroupPolicyModal = (props) => {
                   className="btn btn-outline-danger"
                   onClick={() => {
                     validation.resetForm();
-                    handleAddGroupPolicy();
+                    toggleAddPolicyModal();
                   }}
                 >
                   Cancel
