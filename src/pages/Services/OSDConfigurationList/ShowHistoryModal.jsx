@@ -22,6 +22,7 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, osdConfiguration }) => {
       {
         header: "Column Name",
         accessor: (rowData) => rowData.key,
+
       },
       {
         header: "Updated Value",
