@@ -145,24 +145,40 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, customeruser }) => {
 
   const rateTableSchema = {
     subTableArrayKeyName: "nData",
-    keyColumn: "key", // Assuming "key" can serve as a unique identifier for sub-table rows
+    keyColumn: "id",
     columns: [
       {
         header: "Column Name",
-        accessor: "key",
+        accessor: (rowData) => rowData.key,
       },
       {
         header: "Updated Value",
-        accessor: "new",
+        accessor: (rowData) => {
+          if (rowData.new === null) {
+            return "";
+          } else if (typeof rowData.new === "string") {
+            return rowData.new;
+          } else {
+            return JSON.stringify(rowData.new) || "0";
+          }
+        },
       },
       {
         header: "Previous Value",
-        accessor: "old",
+        accessor: (rowData) => {
+          if (rowData.old === null) {
+            return "";
+          } else if (typeof rowData.old === "string") {
+            return rowData.old;
+          } else {
+            return JSON.stringify(rowData.old) || "0";
+          }
+        },
       },
     ],
   };
 
-  const renderRateTable = (row) => {
+  const renderRateTable = (rowData) => {
     return (
       <div style={{ maxHeight: "200px", overflowY: "auto" }}>
         <Table className="table mb-0">
@@ -170,7 +186,7 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, customeruser }) => {
             <tr>
               {rateTableSchema.columns.map((column) => (
                 <th
-                  key={column.accessor}
+                  key={column.header}
                   style={{ position: "sticky", top: 0, background: "white" }}
                 >
                   {column.header}
@@ -179,13 +195,27 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, customeruser }) => {
             </tr>
           </thead>
           <tbody>
-            {row[rateTableSchema.subTableArrayKeyName].map((object, index) => (
-              <tr key={`${row.id}_${index}`}>
-                {rateTableSchema.columns.map((column) => (
-                  <td key={column.accessor}>{object[column.accessor]}</td>
-                ))}
-              </tr>
-            ))}
+            {rowData[rateTableSchema.subTableArrayKeyName].map((object) => {
+              return (
+                <tr key={object.id}>
+                  {rateTableSchema.columns.map((column) => {
+                    return (
+                      <td
+                        key={column.header}
+                        style={{
+                          maxWidth: 100,
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {column.accessor(object)}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
           </tbody>
         </Table>
       </div>

@@ -1,11 +1,19 @@
 import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { Modal, ModalBody, ModalHeader, Row, Col, Input } from "reactstrap";
+import {
+  Modal,
+  ModalBody,
+  ModalHeader,
+  Row,
+  Col,
+  Input,
+  Table,
+} from "reactstrap";
 import TableContainer from "../../../components/Common/TableContainer";
 
 const ShowHistoryModal = ({ isOpen, toggleHistoryModal, notiTemplate }) => {
-  console.log("Show History Modal in ReasonList" + notiTemplate)
+  console.log("Show History Modal in ReasonList" + notiTemplate);
 
   const API_URL = "https://sms.unitch.in/api/index.php/v1";
   const [historyData, setHistoryData] = useState([]);
@@ -114,7 +122,8 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, notiTemplate }) => {
       const token = "Bearer " + localStorage.getItem("temptoken");
 
       const response = await axios.get(
-        `${API_URL}/announcement-template/${notiTemplate.id
+        `${API_URL}/announcement-template/${
+          notiTemplate.id
         }/audit?fields=id,name,_metadata,model,_remark&expand=nData&page=1&per-page=50&filter[year]=${parseInt(
           year
         )}&vr=web1.0`,
@@ -135,6 +144,85 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, notiTemplate }) => {
       getHistoryDetails();
     }
   }, [notiTemplate, year]);
+
+  const rateTableSchema = {
+    subTableArrayKeyName: "nData",
+    keyColumn: "id",
+    columns: [
+      {
+        header: "Column Name",
+        accessor: (rowData) => rowData.key,
+      },
+      {
+        header: "Updated Value",
+        accessor: (rowData) => {
+          if (rowData.new === null) {
+            return "";
+          } else if (typeof rowData.new === "string") {
+            return rowData.new;
+          } else {
+            return JSON.stringify(rowData.new) || "0";
+          }
+        },
+      },
+      {
+        header: "Previous Value",
+        accessor: (rowData) => {
+          if (rowData.old === null) {
+            return "";
+          } else if (typeof rowData.old === "string") {
+            return rowData.old;
+          } else {
+            return JSON.stringify(rowData.old) || "0";
+          }
+        },
+      },
+    ],
+  };
+
+  const renderRateTable = (rowData) => {
+    return (
+      <div style={{ maxHeight: "200px", overflowY: "auto" }}>
+        <Table className="table mb-0">
+          <thead>
+            <tr>
+              {rateTableSchema.columns.map((column) => (
+                <th
+                  key={column.header}
+                  style={{ position: "sticky", top: 0, background: "white" }}
+                >
+                  {column.header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {rowData[rateTableSchema.subTableArrayKeyName].map((object) => {
+              return (
+                <tr key={object.id}>
+                  {rateTableSchema.columns.map((column) => {
+                    return (
+                      <td
+                        key={column.header}
+                        style={{
+                          maxWidth: 100,
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {column.accessor(object)}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      </div>
+    );
+  };
 
   return (
     <Modal
@@ -214,6 +302,9 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, notiTemplate }) => {
               theadClass="table-light"
               paginationDiv="col-sm-12 col-md-7"
               pagination="pagination pagination-rounded justify-content-end mt-4"
+              subTableEnabled={true}
+              getRenderedSubTable={renderRateTable}
+              isSubTableContentExists={(rowData) => rowData.nData.length > 0}
             />
           </Col>
         </Row>
