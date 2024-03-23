@@ -216,6 +216,11 @@ const GroupPolicyList = (props) => {
     []
   );
 
+  const toggleViewModal = (row) => {
+    // console.log("Row data:", row);
+    setViewGroupPolicyModal(!ViewGroupPolicyModal);
+    setViewGroupPolicy(row);
+  };
   useEffect(() => {
     if (gpPolicy && !gpPolicy.length) {
       dispatch(onGetGroupPolicy());
@@ -257,7 +262,7 @@ const GroupPolicyList = (props) => {
       <ViewGroupPolicyModal
         isOpen={viewGroupPolicyModal}
         handleViewGroupPolicy={handleViewGroupPolicy}
-        groupPolicy={viewGroupPolicyModal}
+        groupPolicy={viewGroupPolicy}
       />
       <AddGroupPolicyModal
         isOpen={showAddGroupPolicy}
@@ -292,6 +297,9 @@ const GroupPolicyList = (props) => {
                       isShowTableActionButtons={true}
                       isShowingPageLength={true}
                       tableActions={getTableActions()}
+                      handleRowClick={(row) => {
+                        toggleViewModal(row);
+                      }}
                       // iscustomPageSizeOptions={true}
                       customPageSize={50}
                       tableClass="table align-middle table-nowrap table-hover"

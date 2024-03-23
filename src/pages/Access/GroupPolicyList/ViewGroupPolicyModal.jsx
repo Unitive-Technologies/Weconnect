@@ -19,7 +19,7 @@ import { updateUser as onUpdateUser } from "/src/store/users/actions";
 
 const ViewGroupPolicyModal = (props) => {
   const { isOpen, handleViewGroupPolicy, groupPolicy } = props;
-  // console.log("Customeruser in view modal:" + JSON.stringify(user));
+  console.log("grouppolicy in view modal:" + JSON.stringify(groupPolicy));
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -28,13 +28,13 @@ const ViewGroupPolicyModal = (props) => {
 
     initialValues: {
       id: (groupPolicy && groupPolicy.id) || "",
-      name: (groupPolicy && groupPolicy.name) || "",
+      name: (groupPolicy && groupPolicy.user_id) || "",
       type: (groupPolicy && groupPolicy.type) || "",
       role: (groupPolicy && groupPolicy.role) || "",
       description: (groupPolicy && groupPolicy.description) || "",
-      count: (groupPolicy && groupPolicy.count) || "",
-      createdat: (groupPolicy && groupPolicy.created_at) || "",
-      createdby: (groupPolicy && groupPolicy.created_by) || "",
+      count: (groupPolicy && groupPolicy.user_count) || "",
+      createdat: (groupPolicy && groupPolicy.insert_timestamp) || "",
+      createdby: (groupPolicy && groupPolicy.inserted_by) || "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter Your Name"),
@@ -250,7 +250,8 @@ const ViewGroupPolicyModal = (props) => {
               </div>
             </Col>
           </Row>
-          <Row>
+
+          {/* <Row>
             <Col>
               <ModalFooter>
                 <button type="submit" className="btn btn-success save-user">
@@ -276,7 +277,7 @@ const ViewGroupPolicyModal = (props) => {
                 </button>
               </ModalFooter>
             </Col>
-          </Row>
+          </Row> */}
         </Form>
       </ModalBody>
     </Modal>
