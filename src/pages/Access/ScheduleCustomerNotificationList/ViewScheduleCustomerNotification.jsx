@@ -17,6 +17,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { updateUser as onUpdateUser } from "/src/store/users/actions";
+import ShowHistoryModal from "./ShowHistoryModal";
 
 const ViewScheduleCustomerNotification = (props) => {
   const {
@@ -33,6 +34,11 @@ const ViewScheduleCustomerNotification = (props) => {
   const dispatch = useDispatch();
   const [showEditSchedule, setShowEditSchedule] = useState(false);
   const [selectedOSDValues, setSelectedOSDValues] = useState([]);
+  const [showHistory, setShowHistory] = useState(false);
+
+  const toggleHistoryModal = () => {
+    setShowHistory(!showHistory);
+  };
 
   const handleChangeOSD = (e) => {
     const selectedOptions = Array.from(
@@ -112,6 +118,13 @@ const ViewScheduleCustomerNotification = (props) => {
   };
   return (
     <>
+      {showHistory && (
+        <ShowHistoryModal
+          isOpen={showHistory}
+          toggleHistoryModal={toggleHistoryModal}
+          viewScheduleNoti={viewScheduleNoti}
+        />
+      )}
       <Modal
         isOpen={isOpen}
         size="xl"
@@ -128,18 +141,32 @@ const ViewScheduleCustomerNotification = (props) => {
             : `Edit ${(viewScheduleNoti && viewScheduleNoti.name) || ""}`}
         </ModalHeader>
         {!showEditSchedule && (
-          <Link
-            style={{
-              position: "absolute",
-              marginLeft: "92%",
-              marginTop: "1%",
-            }}
-            to="#!"
-            className="btn btn-light me-1"
-            onClick={() => setShowEditSchedule(true)}
-          >
-            <i className="mdi mdi-pencil-outline"></i>
-          </Link>
+          <>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "92%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowHistory(true)}
+            >
+              <i className="dripicons-briefcase" />
+            </Link>
+            <Link
+              style={{
+                position: "absolute",
+                marginLeft: "87%",
+                marginTop: "1%",
+              }}
+              to="#!"
+              className="btn btn-light me-1"
+              onClick={() => setShowEditSchedule(true)}
+            >
+              <i className="mdi mdi-pencil-outline"></i>
+            </Link>
+          </>
         )}
         <ModalBody>
           <Form
@@ -152,7 +179,9 @@ const ViewScheduleCustomerNotification = (props) => {
             <Row>
               <Col lg={3}>
                 <div className="mb-3">
-                  <Label className="form-label">Name<span style={{ color: "red" }}>*</span></Label>
+                  <Label className="form-label">
+                    Name<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="name"
                     type="text"
@@ -163,8 +192,7 @@ const ViewScheduleCustomerNotification = (props) => {
                     value={validation.values.name || ""}
                     disabled={!showEditSchedule}
                     invalid={
-                      validation.touched.name &&
-                        validation.errors.name
+                      validation.touched.name && validation.errors.name
                         ? true
                         : false
                     }
@@ -178,7 +206,9 @@ const ViewScheduleCustomerNotification = (props) => {
               </Col>
               <Col lg={3}>
                 <div className="mb-3">
-                  <Label className="form-label">Type<span style={{ color: "red" }}>*</span></Label>
+                  <Label className="form-label">
+                    Type<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="type_lbl"
                     type="select"
@@ -187,7 +217,8 @@ const ViewScheduleCustomerNotification = (props) => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.type_lbl || ""}
-                    disabled={!showEditSchedule}
+                    // disabled={!showEditSchedule}
+                    disabled
                   >
                     {SchCusNotType &&
                       SchCusNotType.map((type_lbl) => (
@@ -205,7 +236,9 @@ const ViewScheduleCustomerNotification = (props) => {
               </Col>
               <Col lg={3}>
                 <div className="mb-3">
-                  <Label className="form-label">Schedule Days<span style={{ color: "red" }}>*</span></Label>
+                  <Label className="form-label">
+                    Schedule Days<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="schedule_days"
                     label="scheduledays"
@@ -247,7 +280,7 @@ const ViewScheduleCustomerNotification = (props) => {
                     <option value="39">28</option>
                   </Input>
                   {validation.touched.schedule_days &&
-                    validation.errors.schedule_days ? (
+                  validation.errors.schedule_days ? (
                     <FormFeedback type="invalid">
                       {validation.errors.schedule_days}
                     </FormFeedback>
@@ -266,7 +299,7 @@ const ViewScheduleCustomerNotification = (props) => {
                     className="form-select"
                     onChange={handleChangeOSD}
                     value={selectedOSDValues}
-                  // multiple
+                    // multiple
                   >
                     {SchCusNotBmail &&
                       SchCusNotBmail.map((osd_configuration_id_lbl) => (
@@ -288,7 +321,7 @@ const ViewScheduleCustomerNotification = (props) => {
                       ))}
                   </Input>
                   {validation.touched.osd_configuration_id_lbl &&
-                    validation.errors.osd_configuration_id_lbl ? (
+                  validation.errors.osd_configuration_id_lbl ? (
                     <FormFeedback type="invalid">
                       {validation.errors.osd_configuration_id_lbl}
                     </FormFeedback>
@@ -322,7 +355,7 @@ const ViewScheduleCustomerNotification = (props) => {
                       ))}
                   </Input>
                   {validation.touched.osd_template_id_lbl &&
-                    validation.errors.osd_template_id_lbl ? (
+                  validation.errors.osd_template_id_lbl ? (
                     <FormFeedback type="invalid">
                       {validation.errors.osd_template_id_lbl}
                     </FormFeedback>
@@ -345,7 +378,7 @@ const ViewScheduleCustomerNotification = (props) => {
                     <option value="">Select bmail template</option>
                   </Input>
                   {validation.touched.bmail_template_id_lbl &&
-                    validation.errors.bmail_template_id_lbl ? (
+                  validation.errors.bmail_template_id_lbl ? (
                     <FormFeedback type="invalid">
                       {validation.errors.bmail_template_id_lbl}
                     </FormFeedback>
@@ -376,7 +409,7 @@ const ViewScheduleCustomerNotification = (props) => {
                       ))}
                   </Input>
                   {validation.touched.sms_template_id_lbl &&
-                    validation.errors.sms_template_id_lbl ? (
+                  validation.errors.sms_template_id_lbl ? (
                     <FormFeedback type="invalid">
                       {validation.errors.sms_template_id_lbl}
                     </FormFeedback>
@@ -387,7 +420,9 @@ const ViewScheduleCustomerNotification = (props) => {
             <Row>
               <Col lg={3}>
                 <div className="mb-3">
-                  <Label className="form-label">Start Date<span style={{ color: "red" }}>*</span></Label>
+                  <Label className="form-label">
+                    Start Date<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="start_date"
                     label="start_date"
@@ -398,14 +433,14 @@ const ViewScheduleCustomerNotification = (props) => {
                     value={validation.values.start_date || ""}
                     invalid={
                       validation.touched.start_date &&
-                        validation.errors.start_date
+                      validation.errors.start_date
                         ? true
                         : false
                     }
                     disabled={!showEditSchedule}
                   />
                   {validation.touched.start_date &&
-                    validation.errors.start_date ? (
+                  validation.errors.start_date ? (
                     <FormFeedback type="invalid">
                       {validation.errors.start_date}
                     </FormFeedback>
@@ -414,7 +449,9 @@ const ViewScheduleCustomerNotification = (props) => {
               </Col>
               <Col lg={3}>
                 <div className="mb-3">
-                  <Label className="form-label">End date<span style={{ color: "red" }}>*</span></Label>
+                  <Label className="form-label">
+                    End date<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="end_date"
                     label="end_date"
@@ -439,7 +476,9 @@ const ViewScheduleCustomerNotification = (props) => {
               </Col>
               <Col lg={3}>
                 <div className="mb-3">
-                  <Label className="form-label">Description<span style={{ color: "red" }}>*</span></Label>
+                  <Label className="form-label">
+                    Description<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="description"
                     type="textarea"
@@ -450,14 +489,14 @@ const ViewScheduleCustomerNotification = (props) => {
                     value={validation.values.description || ""}
                     invalid={
                       validation.touched.description &&
-                        validation.errors.description
+                      validation.errors.description
                         ? true
                         : false
                     }
                     disabled={!showEditSchedule}
                   />
                   {validation.touched.description &&
-                    validation.errors.description ? (
+                  validation.errors.description ? (
                     <FormFeedback type="invalid">
                       {validation.errors.description}
                     </FormFeedback>
@@ -466,7 +505,9 @@ const ViewScheduleCustomerNotification = (props) => {
               </Col>
               <Col lg={3}>
                 <div className="mb-3">
-                  <Label className="form-label">Status<span style={{ color: "red" }}>*</span></Label>
+                  <Label className="form-label">
+                    Status<span style={{ color: "red" }}>*</span>
+                  </Label>
                   <Input
                     name="status_lbl"
                     type="select"
@@ -486,7 +527,7 @@ const ViewScheduleCustomerNotification = (props) => {
                       ))}
                   </Input>
                   {validation.touched.status_lbl &&
-                    validation.errors.status_lbl ? (
+                  validation.errors.status_lbl ? (
                     <FormFeedback type="invalid">
                       {validation.errors.status_lbl}
                     </FormFeedback>
