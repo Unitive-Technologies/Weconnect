@@ -136,9 +136,26 @@ const ScheduledNotificationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.status_lbl}
-            </p>
+            <>
+              <h5 className="font-size-14 ">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.status === 1 ? (
+                    "Active"
+                  ) : (
+                    <p
+                      style={{
+                        background: "#f46a6a",
+                        padding: "2px 5px",
+                        color: "white",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      In-Active
+                    </p>
+                  )}
+                </Link>
+              </h5>
+            </>
           );
         },
       },
@@ -148,9 +165,37 @@ const ScheduledNotificationList = (props) => {
         filterable: true,
         Cell: (cellProps) => {
           return (
-            <p className="text-muted mb-0">
-              {cellProps.row.original.broadcast_status_lbl}
-            </p>
+            <>
+              <h5 className="font-size-14 ">
+                <Link className="text-dark" to="#">
+                  {cellProps.row.original.broadcast_status_lbl === "Stopped" ? (
+                    <p
+                      style={{
+                        background: "#f46a6a",
+                        padding: "2px 5px",
+                        color: "white",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      STOPPED
+                    </p>
+                  ) : (
+                    <span style={{ animation: "blinking 1s infinite" }}>
+                      RUNNING
+                    </span>
+                  )}
+                </Link>
+              </h5>
+              <style>
+                {`
+          @keyframes blinking {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+          }
+        `}
+              </style>
+            </>
           );
         },
       },
