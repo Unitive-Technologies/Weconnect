@@ -171,7 +171,12 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, reason }) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5 className="font-size-14 mb-1" style={{
+                maxWidth: 200,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}>
                 <Link className="text-dark" to="#">
                   {cellProps.row.original._remark}
                 </Link>

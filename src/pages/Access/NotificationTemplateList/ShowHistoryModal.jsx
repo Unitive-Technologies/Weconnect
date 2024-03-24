@@ -104,7 +104,12 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, notiTemplate }) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5 className="font-size-14 mb-1" style={{
+                maxWidth: 200,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}>
                 <Link className="text-dark" to="#">
                   {cellProps.row.original._remark}
                 </Link>
@@ -122,8 +127,7 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, notiTemplate }) => {
       const token = "Bearer " + localStorage.getItem("temptoken");
 
       const response = await axios.get(
-        `${API_URL}/announcement-template/${
-          notiTemplate.id
+        `${API_URL}/announcement-template/${notiTemplate.id
         }/audit?fields=id,name,_metadata,model,_remark&expand=nData&page=1&per-page=50&filter[year]=${parseInt(
           year
         )}&vr=web1.0`,
