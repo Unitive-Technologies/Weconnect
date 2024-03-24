@@ -24,11 +24,27 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, packageList }) => {
       },
       {
         header: "Updated Value",
-        accessor: (rowData) => rowData.new,
+        accessor: (rowData) => {
+          if (rowData.new === null) {
+            return "";
+          } else if (typeof rowData.new === 'string') {
+            return rowData.new;
+          } else {
+            return JSON.stringify(rowData.new) || "0";
+          }
+        },
       },
       {
         header: "Previous Value",
-        accessor: (rowData) => rowData.old,
+        accessor: (rowData) => {
+          if (rowData.old === null) {
+            return "";
+          } else if (typeof rowData.old === 'string') {
+            return rowData.old;
+          } else {
+            return JSON.stringify(rowData.old) || "0";
+          }
+        },
       },
     ],
   };
@@ -54,7 +70,12 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, packageList }) => {
               return (
                 <tr key={object.id}>
                   {rateTableSchema.columns.map((column) => {
-                    return <td key={column.header}>{column.accessor(object)}</td>;
+                    return <td key={column.header} style={{
+                      maxWidth: 100,
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}>{column.accessor(object)}</td>;
                   })}
                 </tr>
               );
@@ -150,7 +171,12 @@ const ShowHistoryModal = ({ isOpen, toggleHistoryModal, packageList }) => {
         Cell: (cellProps) => {
           return (
             <>
-              <h5 className="font-size-14 mb-1">
+              <h5 className="font-size-14 mb-1" style={{
+                maxWidth: 200,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}>
                 <Link className="text-dark" to="#">
                   {cellProps.row.original._remark}
                 </Link>
