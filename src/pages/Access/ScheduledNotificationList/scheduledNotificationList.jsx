@@ -68,7 +68,13 @@ const ScheduledNotificationList = (props) => {
   // };
 
   const handleCheckboxClick = (row) => {
-    setSelectedRow(row);
+    const newIsChecked = !isChecked;
+    setIsChecked(newIsChecked);
+    if (newIsChecked) {
+      setSelectedRow(row);
+    } else {
+      setSelectedRow({});
+    }
   };
 
   const selectScheduledNotificationState = (state) =>
@@ -95,9 +101,6 @@ const ScheduledNotificationList = (props) => {
         Cell: (cellProps) => (
           <input
             type="checkbox"
-            // checked={isChecked}
-            // onClick={() => handleCheckboxClick(cellProps.row.original)}
-            // disabled={!isChecked}
             onChange={() => handleCheckboxClick(cellProps.row.original)}
           />
         ),
@@ -351,11 +354,11 @@ const ScheduledNotificationList = (props) => {
   const getTableActions = () => {
     return [
       {
-        name: "Turn Active/InActive",
+        name: selectedRow.status === 0 ? "Turn On Active" : "Turn On In-Active",
         action:
           selectedRow.status === 0 ? handleTurnOnActive : handleTurnOnInActive,
         type: "normal",
-        // icon: "create",
+        icon: selectedRow.status === 0 ? "active" : "inactive",
       },
     ];
   };

@@ -54,6 +54,10 @@ const TableActionButtons = ({ tableActions }) => {
         return "mdi mdi-dots-vertical";
       case "download":
         return "bx bx-download me-1";
+      case "active":
+        return "fas fa-play-circle me-1";
+      case "inactive":
+        return "fas fa-ban me-1";
       default:
         return "";
     }
