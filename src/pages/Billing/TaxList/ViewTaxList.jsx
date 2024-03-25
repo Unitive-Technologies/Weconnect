@@ -35,7 +35,7 @@ const ViewTaxList = (props) => {
       status: (tax && tax.status) || "",
       taxvalue: (tax && tax.taxvalue) || "",
       valuetype_lbl: (tax && tax.valuetype_lbl) || "",
-      parent_lbl: (tax && tax.parent_lbl) || "",
+      parent_id: (tax && tax.parent_id) || "",
       applicableon: (tax && tax.applicableon) || "",
       description: (tax && tax.description) || "",
     },
@@ -61,7 +61,7 @@ const ViewTaxList = (props) => {
         status: values.status,
         taxvalue: values.taxvalue,
         valuetype_lbl: values.valuetype_lbl,
-        parent_lbl: values.parent_lbl,
+        parent_id: values.parent_id,
         applicableon: applicableonIntegers,
         description: values.description,
       };
@@ -269,25 +269,25 @@ const ViewTaxList = (props) => {
                     TaxOn Tax
                   </Label>
                   <Input
-                    name="parent_lbl"
+                    name="parent_id"
                     type="select"
                     placeholder=""
                     className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.parent_lbl || ""}
+                    value={validation.values.parent_id || ""}
                     disabled={!showEditTax}
                   >
-                    {taxTaxOnTax.map((parent_lbl) => (
-                      <option key={parent_lbl.id} value={parent_lbl.id}>
-                        {parent_lbl.name}
+                    {taxTaxOnTax.map((parent_id) => (
+                      <option key={parent_id.id} value={parent_id.id}>
+                        {parent_id.name}
                       </option>
                     ))}
                   </Input>
-                  {validation.touched.parent_lbl &&
-                    validation.errors.parent_lbl ? (
+                  {validation.touched.parent_id &&
+                    validation.errors.parent_id ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.parent_lbl}
+                      {validation.errors.parent_id}
                     </FormFeedback>
                   ) : null}
                 </div>
