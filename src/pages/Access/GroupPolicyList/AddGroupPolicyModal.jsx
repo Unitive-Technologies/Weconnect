@@ -18,6 +18,12 @@ import { addNewGroupPolicy as onAddNewGroupPolicy } from "/src/store/grouppolicy
 import { useDispatch } from "react-redux";
 import DashboardPolicy from "./DashboardPolicy";
 import ConfigurationPolicy from "./ConfigurationPolicy";
+import InventoryPolicy from "./InventoryPolicy";
+import CustomerPolicy from "./CustomerPolicy";
+import CasPolicy from "./CasPolicy";
+import NonCasPolicy from "./NonCasPolicy";
+import AccountingPolicy from "./AccountingPolicy";
+import ReportingPolicy from "./ReportingPolicy";
 
 const AddGroupPolicyModal = (props) => {
   const { isOpen, toggleAddPolicyModal, policyRole, policyType } = props;
@@ -294,6 +300,24 @@ const AddGroupPolicyModal = (props) => {
           </Row>
           <Row>
             <ConfigurationPolicy />
+          </Row>
+          <Row>
+            <InventoryPolicy />
+          </Row>
+          <Row>
+            <CustomerPolicy />
+          </Row>
+          <Row>
+            <CasPolicy />
+          </Row>
+          <Row>
+            <NonCasPolicy />
+          </Row>
+          <Row>
+            <AccountingPolicy />
+          </Row>
+          <Row>
+            <ReportingPolicy />
           </Row>
           <Row>
             <Col>

@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Row } from "reactstrap";
 import { useState } from "react";
 
-const ConfigurationPolicy = () => {
+const AccountingPolicy = () => {
   const [toggleSwitch, settoggleSwitch] = useState(true);
   return (
     <Row
@@ -21,7 +21,7 @@ const ConfigurationPolicy = () => {
           borderBottom: "1px solid #ced4da",
         }}
       >
-        <h4>CONFIGURATION</h4>
+        <h4>ACCOUNTING</h4>
         <div
           style={{
             display: "flex",
@@ -84,7 +84,7 @@ const ConfigurationPolicy = () => {
               borderBottom: "1px solid #ced4da",
             }}
           >
-            <h5>User</h5>
+            <h5>Billing & Accounting</h5>
             <div
               style={{
                 display: "flex",
@@ -122,7 +122,7 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                View
+                LCO Credit
               </label>
             </Col>
             <Col lg={3} className=" mb-3">
@@ -138,7 +138,7 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                Edit
+                LCO Top-Up
               </label>
             </Col>
             <Col lg={3} className=" mb-3">
@@ -154,7 +154,7 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                Create
+                LCO Effective Collection
               </label>
             </Col>
             <Col lg={3} className=" mb-3">
@@ -170,7 +170,91 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                History
+                LCO Balance
+              </label>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={3} className=" mb-3">
+              <div className="form-check form-switch">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="customSwitch2"
+                  defaultChecked
+                  onClick={(e) => {
+                    settoggleSwitch(!toggleSwitch);
+                  }}
+                />
+              </div>
+              <label className="form-check-label" htmlFor="customSwitch2">
+                LCO Online Recharge
+              </label>
+            </Col>
+            <Col lg={3} className=" mb-3">
+              <div className="form-check form-switch">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="customSwitch2"
+                  defaultChecked
+                  onClick={(e) => {
+                    settoggleSwitch(!toggleSwitch);
+                  }}
+                />
+              </div>
+              <label className="form-check-label" htmlFor="customSwitch2">
+                Online Payment Reconcile
+              </label>
+            </Col>
+            <Col lg={3} className=" mb-3">
+              <div className="form-check form-switch">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="customSwitch2"
+                  defaultChecked
+                  onClick={(e) => {
+                    settoggleSwitch(!toggleSwitch);
+                  }}
+                />
+              </div>
+              <label className="form-check-label" htmlFor="customSwitch2">
+                Set Off
+              </label>
+            </Col>
+            <Col lg={3} className=" mb-3">
+              <div className="form-check form-switch">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="customSwitch2"
+                  defaultChecked
+                  onClick={(e) => {
+                    settoggleSwitch(!toggleSwitch);
+                  }}
+                />
+              </div>
+              <label className="form-check-label" htmlFor="customSwitch2">
+                LCO Ledger
+              </label>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={3} className=" mb-3">
+              <div className="form-check form-switch">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="customSwitch2"
+                  defaultChecked
+                  onClick={(e) => {
+                    settoggleSwitch(!toggleSwitch);
+                  }}
+                />
+              </div>
+              <label className="form-check-label" htmlFor="customSwitch2">
+                LCO Ledger Print
               </label>
             </Col>
           </Row>
@@ -193,7 +277,7 @@ const ConfigurationPolicy = () => {
               borderBottom: "1px solid #ced4da",
             }}
           >
-            <h5>Customer User</h5>
+            <h5>Customer</h5>
             <div
               style={{
                 display: "flex",
@@ -231,7 +315,7 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                View
+                Customer Ledger
               </label>
             </Col>
             <Col lg={3} className=" mb-3">
@@ -247,7 +331,7 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                Edit
+                Customer Transaction Detail
               </label>
             </Col>
             <Col lg={3} className=" mb-3">
@@ -263,7 +347,7 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                History
+                Customer Payment
               </label>
             </Col>
             <Col lg={3} className=" mb-3">
@@ -279,304 +363,7 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                Bulk Active Inactive
-              </label>
-            </Col>
-          </Row>
-        </Col>
-        <Col
-          lg={4}
-          className="mt-3"
-          style={{
-            border: "1px solid #ced4da",
-            // padding: "20px 0px",
-            // margin: "30px 0px",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              borderBottom: "1px solid #ced4da",
-            }}
-          >
-            <h5>Group Policy</h5>
-            <div
-              style={{
-                display: "flex",
-                gap: "20px",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <h6>Tabs: 1, Total: 19, Selected: 19</h6>
-
-              <div className="form-check form-switch">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitch2"
-                  // defaultChecked
-                  onClick={(e) => {
-                    settoggleSwitch(!toggleSwitch);
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-          <Row>
-            <Col lg={3} className=" mb-3">
-              <div className="form-check form-switch">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitch2"
-                  defaultChecked
-                  onClick={(e) => {
-                    settoggleSwitch(!toggleSwitch);
-                  }}
-                />
-              </div>
-              <label className="form-check-label" htmlFor="customSwitch2">
-                View
-              </label>
-            </Col>
-            <Col lg={3} className=" mb-3">
-              <div className="form-check form-switch">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitch2"
-                  defaultChecked
-                  onClick={(e) => {
-                    settoggleSwitch(!toggleSwitch);
-                  }}
-                />
-              </div>
-              <label className="form-check-label" htmlFor="customSwitch2">
-                Create
-              </label>
-            </Col>
-            <Col lg={3} className=" mb-3">
-              <div className="form-check form-switch">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitch2"
-                  defaultChecked
-                  onClick={(e) => {
-                    settoggleSwitch(!toggleSwitch);
-                  }}
-                />
-              </div>
-              <label className="form-check-label" htmlFor="customSwitch2">
-                Edit
-              </label>
-            </Col>
-            <Col lg={3} className=" mb-3">
-              <div className="form-check form-switch">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitch2"
-                  defaultChecked
-                  onClick={(e) => {
-                    settoggleSwitch(!toggleSwitch);
-                  }}
-                />
-              </div>
-              <label className="form-check-label" htmlFor="customSwitch2">
-                Assign GP
-              </label>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-      <Row>
-        <Col
-          lg={4}
-          className="mt-3"
-          style={{
-            border: "1px solid #ced4da",
-            // padding: "20px 0px",
-            // margin: "30px 0px",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              borderBottom: "1px solid #ced4da",
-            }}
-          >
-            <h5>LCO</h5>
-            <div
-              style={{
-                display: "flex",
-                gap: "20px",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <h6>Tabs: 1, Total: 19, Selected: 19</h6>
-
-              <div className="form-check form-switch">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitch2"
-                  // defaultChecked
-                  onClick={(e) => {
-                    settoggleSwitch(!toggleSwitch);
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-          <Row>
-            <Col lg={3} className=" mb-3">
-              <div className="form-check form-switch">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitch2"
-                  defaultChecked
-                  onClick={(e) => {
-                    settoggleSwitch(!toggleSwitch);
-                  }}
-                />
-              </div>
-              <label className="form-check-label" htmlFor="customSwitch2">
-                View
-              </label>
-            </Col>
-            <Col lg={3} className=" mb-3">
-              <div className="form-check form-switch">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitch2"
-                  defaultChecked
-                  onClick={(e) => {
-                    settoggleSwitch(!toggleSwitch);
-                  }}
-                />
-              </div>
-              <label className="form-check-label" htmlFor="customSwitch2">
-                History
-              </label>
-            </Col>
-          </Row>
-        </Col>
-        <Col
-          lg={4}
-          className="mt-3"
-          style={{
-            border: "1px solid #ced4da",
-            // padding: "20px 0px",
-            // margin: "30px 0px",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              borderBottom: "1px solid #ced4da",
-            }}
-          >
-            <h5>Location</h5>
-            <div
-              style={{
-                display: "flex",
-                gap: "20px",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <h6>Tabs: 1, Total: 19, Selected: 19</h6>
-
-              <div className="form-check form-switch">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitch2"
-                  // defaultChecked
-                  onClick={(e) => {
-                    settoggleSwitch(!toggleSwitch);
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-          <Row>
-            <Col lg={3} className=" mb-3">
-              <div className="form-check form-switch">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitch2"
-                  defaultChecked
-                  onClick={(e) => {
-                    settoggleSwitch(!toggleSwitch);
-                  }}
-                />
-              </div>
-              <label className="form-check-label" htmlFor="customSwitch2">
-                View
-              </label>
-            </Col>
-            <Col lg={3} className=" mb-3">
-              <div className="form-check form-switch">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitch2"
-                  defaultChecked
-                  onClick={(e) => {
-                    settoggleSwitch(!toggleSwitch);
-                  }}
-                />
-              </div>
-              <label className="form-check-label" htmlFor="customSwitch2">
-                Edit
-              </label>
-            </Col>
-            <Col lg={3} className=" mb-3">
-              <div className="form-check form-switch">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitch2"
-                  defaultChecked
-                  onClick={(e) => {
-                    settoggleSwitch(!toggleSwitch);
-                  }}
-                />
-              </div>
-              <label className="form-check-label" htmlFor="customSwitch2">
-                Create
-              </label>
-            </Col>
-            <Col lg={3} className=" mb-3">
-              <div className="form-check form-switch">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitch2"
-                  defaultChecked
-                  onClick={(e) => {
-                    settoggleSwitch(!toggleSwitch);
-                  }}
-                />
-              </div>
-              <label className="form-check-label" htmlFor="customSwitch2">
-                History
+                Advance Renewals
               </label>
             </Col>
           </Row>
@@ -594,68 +381,7 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                Upload
-              </label>
-            </Col>
-          </Row>
-        </Col>
-        <Col
-          lg={4}
-          className="mt-3"
-          style={{
-            border: "1px solid #ced4da",
-            // padding: "20px 0px",
-            // margin: "30px 0px",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              borderBottom: "1px solid #ced4da",
-            }}
-          >
-            <h5>Sub Location</h5>
-            <div
-              style={{
-                display: "flex",
-                gap: "20px",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <h6>Tabs: 1, Total: 19, Selected: 19</h6>
-
-              <div className="form-check form-switch">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitch2"
-                  // defaultChecked
-                  onClick={(e) => {
-                    settoggleSwitch(!toggleSwitch);
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-          <Row>
-            <Col lg={3} className=" mb-3">
-              <div className="form-check form-switch">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitch2"
-                  defaultChecked
-                  onClick={(e) => {
-                    settoggleSwitch(!toggleSwitch);
-                  }}
-                />
-              </div>
-              <label className="form-check-label" htmlFor="customSwitch2">
-                View
+                Monthly Bill Statement
               </label>
             </Col>
             <Col lg={3} className=" mb-3">
@@ -671,7 +397,7 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                Edit
+                Customer Billing
               </label>
             </Col>
             <Col lg={3} className=" mb-3">
@@ -687,7 +413,7 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                Create
+                Customer Collection
               </label>
             </Col>
             <Col lg={3} className=" mb-3">
@@ -703,7 +429,7 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                History
+                Upload Customer Collection
               </label>
             </Col>
           </Row>
@@ -721,55 +447,58 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                Upload
+                Collection Report
               </label>
             </Col>
-          </Row>
-        </Col>
-      </Row>
-      <Row>
-        <Col
-          lg={4}
-          className="mt-3"
-          style={{
-            border: "1px solid #ced4da",
-            // padding: "20px 0px",
-            // margin: "30px 0px",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              borderBottom: "1px solid #ced4da",
-            }}
-          >
-            <h5>OSD Configuration</h5>
-            <div
-              style={{
-                display: "flex",
-                gap: "20px",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <h6>Tabs: 1, Total: 19, Selected: 19</h6>
-
+            <Col lg={3} className=" mb-3">
               <div className="form-check form-switch">
                 <input
                   type="checkbox"
                   className="form-check-input"
                   id="customSwitch2"
-                  // defaultChecked
+                  defaultChecked
                   onClick={(e) => {
                     settoggleSwitch(!toggleSwitch);
                   }}
                 />
               </div>
-            </div>
-          </div>
+              <label className="form-check-label" htmlFor="customSwitch2">
+                Customer Discount
+              </label>
+            </Col>
+            <Col lg={3} className=" mb-3">
+              <div className="form-check form-switch">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="customSwitch2"
+                  defaultChecked
+                  onClick={(e) => {
+                    settoggleSwitch(!toggleSwitch);
+                  }}
+                />
+              </div>
+              <label className="form-check-label" htmlFor="customSwitch2">
+                Discount Report
+              </label>
+            </Col>
+            <Col lg={3} className=" mb-3">
+              <div className="form-check form-switch">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="customSwitch2"
+                  defaultChecked
+                  onClick={(e) => {
+                    settoggleSwitch(!toggleSwitch);
+                  }}
+                />
+              </div>
+              <label className="form-check-label" htmlFor="customSwitch2">
+                Recurring Discount Report
+              </label>
+            </Col>
+          </Row>
           <Row>
             <Col lg={3} className=" mb-3">
               <div className="form-check form-switch">
@@ -784,7 +513,7 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                View
+                Customer Additional Charges
               </label>
             </Col>
             <Col lg={3} className=" mb-3">
@@ -800,7 +529,7 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                Create
+                Additional Charges Report
               </label>
             </Col>
             <Col lg={3} className=" mb-3">
@@ -816,7 +545,7 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                Edit
+                Recurring Additional Charges Report
               </label>
             </Col>
             <Col lg={3} className=" mb-3">
@@ -832,53 +561,10 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                History
+                Customer Previous Dues
               </label>
             </Col>
           </Row>
-        </Col>
-        <Col
-          lg={4}
-          className="mt-3"
-          style={{
-            border: "1px solid #ced4da",
-            // padding: "20px 0px",
-            // margin: "30px 0px",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              borderBottom: "1px solid #ced4da",
-            }}
-          >
-            <h5>OSD Template</h5>
-            <div
-              style={{
-                display: "flex",
-                gap: "20px",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <h6>Tabs: 1, Total: 19, Selected: 19</h6>
-
-              <div className="form-check form-switch">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitch2"
-                  // defaultChecked
-                  onClick={(e) => {
-                    settoggleSwitch(!toggleSwitch);
-                  }}
-                />
-              </div>
-            </div>
-          </div>
           <Row>
             <Col lg={3} className=" mb-3">
               <div className="form-check form-switch">
@@ -893,7 +579,7 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                View
+                Upload Customer Previous Dues
               </label>
             </Col>
             <Col lg={3} className=" mb-3">
@@ -909,7 +595,7 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                Edit
+                Previous Dues Report
               </label>
             </Col>
             <Col lg={3} className=" mb-3">
@@ -925,7 +611,7 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                Create
+                Customer Bad Debt
               </label>
             </Col>
             <Col lg={3} className=" mb-3">
@@ -941,53 +627,10 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                Action
+                Collection Bad Debt Report
               </label>
             </Col>
           </Row>
-        </Col>
-        <Col
-          lg={4}
-          className="mt-3"
-          style={{
-            border: "1px solid #ced4da",
-            // padding: "20px 0px",
-            // margin: "30px 0px",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              borderBottom: "1px solid #ced4da",
-            }}
-          >
-            <h5>Promo Voucher</h5>
-            <div
-              style={{
-                display: "flex",
-                gap: "20px",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <h6>Tabs: 1, Total: 19, Selected: 19</h6>
-
-              <div className="form-check form-switch">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="customSwitch2"
-                  // defaultChecked
-                  onClick={(e) => {
-                    settoggleSwitch(!toggleSwitch);
-                  }}
-                />
-              </div>
-            </div>
-          </div>
           <Row>
             <Col lg={3} className=" mb-3">
               <div className="form-check form-switch">
@@ -1002,7 +645,7 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                View
+                Payment Deposit List
               </label>
             </Col>
             <Col lg={3} className=" mb-3">
@@ -1018,55 +661,42 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                Generate
+                Payment Deposit
               </label>
             </Col>
-          </Row>
-        </Col>
-      </Row>
-      <Row>
-        <Col
-          lg={4}
-          className="mt-3"
-          style={{
-            border: "1px solid #ced4da",
-            // padding: "20px 0px",
-            margin: "30px 0px",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              borderBottom: "1px solid #ced4da",
-            }}
-          >
-            <h5>NCF</h5>
-            <div
-              style={{
-                display: "flex",
-                gap: "20px",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <h6>Tabs: 1, Total: 19, Selected: 19</h6>
-
+            <Col lg={3} className=" mb-3">
               <div className="form-check form-switch">
                 <input
                   type="checkbox"
                   className="form-check-input"
                   id="customSwitch2"
-                  // defaultChecked
+                  defaultChecked
                   onClick={(e) => {
                     settoggleSwitch(!toggleSwitch);
                   }}
                 />
               </div>
-            </div>
-          </div>
+              <label className="form-check-label" htmlFor="customSwitch2">
+                Payment Cancel
+              </label>
+            </Col>
+            <Col lg={3} className=" mb-3">
+              <div className="form-check form-switch">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="customSwitch2"
+                  defaultChecked
+                  onClick={(e) => {
+                    settoggleSwitch(!toggleSwitch);
+                  }}
+                />
+              </div>
+              <label className="form-check-label" htmlFor="customSwitch2">
+                Payment Reconcile List
+              </label>
+            </Col>
+          </Row>
           <Row>
             <Col lg={3} className=" mb-3">
               <div className="form-check form-switch">
@@ -1081,7 +711,7 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                View
+                Payment Reconcile
               </label>
             </Col>
             <Col lg={3} className=" mb-3">
@@ -1097,53 +727,42 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                History
+                Payment Un-Reconcile List
               </label>
             </Col>
-          </Row>
-        </Col>
-        <Col
-          lg={4}
-          className="mt-3"
-          style={{
-            border: "1px solid #ced4da",
-            // padding: "20px 0px",
-            margin: "30px 0px",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              borderBottom: "1px solid #ced4da",
-            }}
-          >
-            <h5>Configuration Uploads</h5>
-            <div
-              style={{
-                display: "flex",
-                gap: "20px",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <h6>Tabs: 1, Total: 19, Selected: 19</h6>
-
+            <Col lg={3} className=" mb-3">
               <div className="form-check form-switch">
                 <input
                   type="checkbox"
                   className="form-check-input"
                   id="customSwitch2"
-                  // defaultChecked
+                  defaultChecked
                   onClick={(e) => {
                     settoggleSwitch(!toggleSwitch);
                   }}
                 />
               </div>
-            </div>
-          </div>
+              <label className="form-check-label" htmlFor="customSwitch2">
+                Payment Un-Reconcile
+              </label>
+            </Col>
+            <Col lg={3} className=" mb-3">
+              <div className="form-check form-switch">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="customSwitch2"
+                  defaultChecked
+                  onClick={(e) => {
+                    settoggleSwitch(!toggleSwitch);
+                  }}
+                />
+              </div>
+              <label className="form-check-label" htmlFor="customSwitch2">
+                Reconciliation Report
+              </label>
+            </Col>
+          </Row>
           <Row>
             <Col lg={3} className=" mb-3">
               <div className="form-check form-switch">
@@ -1158,7 +777,39 @@ const ConfigurationPolicy = () => {
                 />
               </div>
               <label className="form-check-label" htmlFor="customSwitch2">
-                View
+                Online Payment Reconcile
+              </label>
+            </Col>
+            <Col lg={3} className=" mb-3">
+              <div className="form-check form-switch">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="customSwitch2"
+                  defaultChecked
+                  onClick={(e) => {
+                    settoggleSwitch(!toggleSwitch);
+                  }}
+                />
+              </div>
+              <label className="form-check-label" htmlFor="customSwitch2">
+                Customer Renewal Report
+              </label>
+            </Col>
+            <Col lg={3} className=" mb-3">
+              <div className="form-check form-switch">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="customSwitch2"
+                  defaultChecked
+                  onClick={(e) => {
+                    settoggleSwitch(!toggleSwitch);
+                  }}
+                />
+              </div>
+              <label className="form-check-label" htmlFor="customSwitch2">
+                Customer Outstanding Report
               </label>
             </Col>
           </Row>
@@ -1168,4 +819,4 @@ const ConfigurationPolicy = () => {
   );
 };
 
-export default ConfigurationPolicy;
+export default AccountingPolicy;
