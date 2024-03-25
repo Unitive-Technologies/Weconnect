@@ -67,7 +67,7 @@ const ViewSubLocation = (props) => {
     initialValues: {
       id: (sublocation && sublocation.id) || "",
       name: (sublocation && sublocation.name) || "",
-      operator_id: (sublocation && sublocation.operator_id) || "",
+      location_id: (sublocation && sublocation.location_id) || "",
       status: (sublocation && sublocation.status) || "",
     },
     validationSchema: Yup.object({
@@ -85,7 +85,7 @@ const ViewSubLocation = (props) => {
         code: values["code"],
         discount_value: {},
         name: values["name"],
-        operator_id: values["operator_id"],
+        location_id: values["location_id"],
         status: values["status"],
       };
       console.log("Updated Sublocation:" + JSON.stringify(updateSubLocation));
@@ -237,32 +237,32 @@ const ViewSubLocation = (props) => {
                     Location<span style={{ color: "red" }}>*</span>
                   </Label>
                   <Select
-                    name="operator_id"
+                    name="location_id"
                     options={options}
                     onChange={(selectedOption) => {
                       console.log("SelectedOption: ", selectedOption);
                       setSelectedLocation(selectedOption);
                       validation.handleChange({
                         target: {
-                          name: "operator_id",
+                          name: "location_id",
                           value: selectedOption.value,
                         },
                       });
                     }}
                     disabled={!showEditSubLocation}
                     invalid={
-                      validation.touched.operator_id && validation.errors.operator_id
+                      validation.touched.location_id && validation.errors.location_id
                         ? true
                         : false
                     }
                     onBlur={validation.handleBlur}
-                    value={options.find((opt) => opt.value === validation.values.operator_id)}
+                    value={options.find((opt) => opt.value === validation.values.location_id)}
                     styles={customStyles}
                   />
 
-                  {validation.touched.operator_id && validation.errors.operator_id ? (
+                  {validation.touched.location_id && validation.errors.location_id ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.operator_id}
+                      {validation.errors.location_id}
                     </FormFeedback>
                   ) : null}
                 </div>
