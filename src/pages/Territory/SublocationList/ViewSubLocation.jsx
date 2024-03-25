@@ -13,6 +13,7 @@ import {
   Input,
   Form,
 } from "reactstrap";
+import Select from "react-select";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
@@ -37,6 +38,8 @@ const ViewSubLocation = (props) => {
 
   const [showHistory, setShowHistory] = useState(false);
 
+  const [selectedLocation, setSelectedLocation] = useState(null);
+
   const toggleHistoryModal = () => {
     setShowHistory(!showHistory);
   };
@@ -46,7 +49,7 @@ const ViewSubLocation = (props) => {
     label: (
       <div>
         <h6>{option.name}</h6>
-        <p>LCO {option.operator_lbl}</p>
+        <p>LCO: {option.operator_lbl}</p>
       </div>
     ),
   }));
@@ -64,7 +67,7 @@ const ViewSubLocation = (props) => {
     initialValues: {
       id: (sublocation && sublocation.id) || "",
       name: (sublocation && sublocation.name) || "",
-      location_id: (sublocation && sublocation.location_id) || "",
+      operator_id: (sublocation && sublocation.operator_id) || "",
       status: (sublocation && sublocation.status) || "",
     },
     validationSchema: Yup.object({
@@ -82,7 +85,7 @@ const ViewSubLocation = (props) => {
         code: values["code"],
         discount_value: {},
         name: values["name"],
-        location_id: values["location_id"],
+        operator_id: values["operator_id"],
         status: values["status"],
       };
       console.log("Updated Sublocation:" + JSON.stringify(updateSubLocation));
@@ -186,10 +189,10 @@ const ViewSubLocation = (props) => {
                   ) : null}
                 </div>
               </Col>
-              <Col lg={4}>
+              {/* <Col lg={4}>
                 <div className="mb-3">
-                  <Label className="form-label">Location<span style={{ color: "red" }}>*</span></Label>
-                  {/* <Select
+                  <Label className="form-label">Location<span style={{ color: "red" }}>*</span></Label> */}
+              {/* <Select
                   name="location_id"
                   options={options}
                   onChange={(selectedOption) =>
@@ -203,31 +206,68 @@ const ViewSubLocation = (props) => {
                   styles={customStyles}
                   // value={validation.values.location_id || ""}
                 /> */}
-                  <Input
-                    name="location_id"
+              {/* <Input
+                    name="operator_id"
                     type="select"
                     placeholder="Select location"
                     className="form-select"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.location_id || ""}
+                    value={validation.values.operator_id || ""}
                     disabled={!showEditSubLocation}
-                  >
-                    {/* <option value="">Select lco</option> */}
-                    {locateonsublocate.map((options) => (
+                  > */}
+              {/* <option value="">Select lco</option> */}
+              {/* {locateonsublocate.map((options) => (
                       <option key={options.id} value={options.id}>
-                        {options.name}
+                        {options.name} {options.operator_lbl}
                       </option>
                     ))}
                   </Input>
-                  {validation.touched.location_id &&
-                    validation.errors.location_id ? (
+                  {validation.touched.operator_id &&
+                    validation.errors.operator_id ? (
                     <FormFeedback type="invalid">
-                      {validation.errors.location_id}
+                      {validation.errors.operator_id}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </Col> */}
+              <Col lg={4}>
+                <div className="mb-3">
+                  <Label className="form-label">
+                    Location<span style={{ color: "red" }}>*</span>
+                  </Label>
+                  <Select
+                    name="operator_id"
+                    options={options}
+                    onChange={(selectedOption) => {
+                      console.log("SelectedOption: ", selectedOption);
+                      setSelectedLocation(selectedOption);
+                      validation.handleChange({
+                        target: {
+                          name: "operator_id",
+                          value: selectedOption.value,
+                        },
+                      });
+                    }}
+                    disabled={!showEditSubLocation}
+                    invalid={
+                      validation.touched.operator_id && validation.errors.operator_id
+                        ? true
+                        : false
+                    }
+                    onBlur={validation.handleBlur}
+                    value={options.find((opt) => opt.value === validation.values.operator_id)}
+                    styles={customStyles}
+                  />
+
+                  {validation.touched.operator_id && validation.errors.operator_id ? (
+                    <FormFeedback type="invalid">
+                      {validation.errors.operator_id}
                     </FormFeedback>
                   ) : null}
                 </div>
               </Col>
+
               <Col lg={4}>
                 <div className="mb-3">
                   <Label className="form-label">Status<span style={{ color: "red" }}>*</span></Label>
