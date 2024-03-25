@@ -54,6 +54,7 @@ function* fetchSublocation() {
 // }
 
 function* onUpdateSubLocation({ payload: sublocation }) {
+  console.log("Sublocation in Saga" + JSON.stringify(sublocation))
   try {
     const response = yield call(updateSublocation, sublocation.id, sublocation);
     console.log("Response data in saga: ", response);
