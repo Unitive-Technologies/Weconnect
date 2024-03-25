@@ -16,6 +16,7 @@ import {
   Form,
   ModalFooter,
 } from "reactstrap";
+import Select from "react-select";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { addNewScheduleCustomerNotification as onAddNewScheduleCustomerNotification } from "/src/store/schedulecustomernotification/actions";
@@ -40,6 +41,16 @@ const AddNewScheduleCustomerNotification = (props) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState();
   const [selectedOSDValues, setSelectedOSDValues] = useState([]);
+
+  const options = SchCusNotBmail.map((option) => ({
+    value: option.id,
+    label: (
+      <div>
+        <h6>{option.name}</h6>
+        <p>CAS: {option.cas_code}</p>
+      </div>
+    ),
+  }));
 
   const handleChangeOSD = (e) => {
     const selectedOptions = Array.from(
@@ -207,102 +218,61 @@ const AddNewScheduleCustomerNotification = (props) => {
                 <Label className="form-label">
                   Schedule Days<span style={{ color: "red" }}>*</span>
                 </Label>
-                <Input
+                <select
                   name="schedule_days"
-                  label="scheduledays"
-                  type="select"
-                  placeholder="Select schedule days"
+                  className="form-select"
+                  multiple
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.schedule_days || ""}
-                  invalid={
-                    validation.touched.schedule_days &&
-                      validation.errors.schedule_days
-                      ? true
-                      : false
-                  }
-                // multiple
+                  value={validation.values.schedule_days || []}
+                  invalid={validation.touched.schedule_days && validation.errors.schedule_days}
                 >
-                  <option value="11">Select schedule days</option>
-                  <option value="12">1</option>
-                  <option value="13">2</option>
-                  <option value="14">3</option>
-                  <option value="15">4</option>
-                  <option value="16">5</option>
-                  <option value="17">6</option>
-                  <option value="18">7</option>
-                  <option value="19">8</option>
-                  <option value="20">9</option>
-                  <option value="21">10</option>
-                  <option value="22">11</option>
-                  <option value="23">12</option>
-                  <option value="24">13</option>
-                  <option value="25">14</option>
-                  <option value="26">15</option>
-                  <option value="27">16</option>
-                  <option value="28">17</option>
-                  <option value="29">18</option>
-                  <option value="30">19</option>
-                  <option value="31">20</option>
-                  <option value="32">21</option>
-                  <option value="33">22</option>
-                  <option value="34">23</option>
-                  <option value="35">24</option>
-                  <option value="36">25</option>
-                  <option value="37">26</option>
-                  <option value="38">27</option>
-                  <option value="39">28</option>
-                </Input>
-                {validation.touched.schedule_days &&
-                  validation.errors.schedule_days ? (
+                  <option value="">Select schedule days</option>
+                  {/* Populate options dynamically */}
+                  {[...Array(28)].map((_, index) => (
+                    <option key={index + 1} value={index + 1}>{index + 1}</option>
+                  ))}
+                </select>
+                {validation.touched.schedule_days && validation.errors.schedule_days && (
                   <FormFeedback type="invalid">
                     {validation.errors.schedule_days}
                   </FormFeedback>
-                ) : null}
+                )}
               </div>
             </Col>
-            <Col lg={3}>
+            <Col lg={4}>
               <div className="mb-3">
                 <Label className="form-label">
-                  OSD Config (Select 1 config per CAS)
+                  OSD Config (Select 1 config per CAS)<span style={{ color: "red" }}>*</span>
                 </Label>
-                <Input
+                <Select
                   name="osd_configuration_id_lbl"
-                  type="select"
-                  placeholder="Select osd configuration"
-                  className="form-select"
-                  onChange={validation.handleChange}
-                  value={validation.values.osd_configuration_id_lbl}
-                >
-                  <option value="">Select osd configuration</option>
-                  {SchCusNotBmail &&
-                    SchCusNotBmail.map((osd_configuration_id_lbl) => (
-                      <option
-                        key={osd_configuration_id_lbl.id}
-                        value={osd_configuration_id_lbl.id}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            width: "20px",
-                          }}
-                        >
-                          {osd_configuration_id_lbl.name} &nbsp; <br /> &nbsp;
-                          <p style={{ fontSize: 5 }}>CAS: NSTV</p>
-                        </div>
-                      </option>
-                    ))}
-                </Input>
-
-                {validation.touched.osd_configuration_id_lbl &&
-                  validation.errors.osd_configuration_id_lbl ? (
-                  <FormFeedback type="invalid">
+                  options={options}
+                  onChange={(selectedOption) => {
+                    validation.setFieldValue('osd_configuration_id_lbl', selectedOption ? selectedOption.value : ''); // Set the value of operator_id
+                  }}
+                  isMulti
+                  onBlur={validation.handleBlur}
+                  styles={{
+                    control: (provided, state) => ({
+                      ...provided,
+                      borderColor: state.isFocused ? (validation.touched.osd_configuration_id_lbl && validation.errors.osd_configuration_id_lbl ? 'red' : '') : (validation.touched.osd_configuration_id_lbl && validation.errors.osd_configuration_id_lbl ? 'red' : ''),
+                      // boxShadow: state.isFocused ? (validation.touched.operator_id && validation.errors.operator_id ? '0 0 0 0.2rem rgba(220, 53, 69, 0.25)' : '') : (validation.touched.operator_id && validation.errors.operator_id ? '0 0 0 0.2rem rgba(220, 53, 69, 0.25)' : ''),
+                    }),
+                    option: (provided) => ({
+                      ...provided,
+                      backgroundColor: "white",
+                    }),
+                  }}
+                />
+                {validation.touched.osd_configuration_id_lbl && validation.errors.osd_configuration_id_lbl && (
+                  <FormFeedback style={{ display: 'block' }}>
                     {validation.errors.osd_configuration_id_lbl}
                   </FormFeedback>
-                ) : null}
+                )}
               </div>
             </Col>
+
           </Row>
           <Row>
             <Col lg={3}>
