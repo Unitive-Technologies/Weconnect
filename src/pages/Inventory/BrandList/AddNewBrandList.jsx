@@ -29,8 +29,8 @@ const AddNewBrandList = (props) => {
     initialValues: {
       name: "",
       //   code: "",
-      box_type_lbl: "",
       type: "",
+      // type: "",
       length: "",
       significant_length: "",
       char_allowed: "",
@@ -41,7 +41,7 @@ const AddNewBrandList = (props) => {
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter name"),
-      box_type_lbl: Yup.string().required("Select box type"),
+      // box_type_lbl: Yup.string().required("Select box type"),
       type: Yup.string().required("Select brand"),
       cas_id: Yup.string().required("Select CAS"),
       length: Yup.string().required("Enter character length"),
@@ -53,7 +53,7 @@ const AddNewBrandList = (props) => {
       const newBrand = {
         id: Math.floor(Math.random() * (30 - 20)) + 20,
         name: values["name"],
-        box_type_lbl: values["box_type_lbl"],
+        // box_type_lbl: values["type"],
         type: parseInt(values["type"]),
         status: values["status"],
         cas_id: values["cas_id"],
@@ -168,31 +168,31 @@ const AddNewBrandList = (props) => {
                   Box Type<span style={{ color: "red" }}>*</span>
                 </Label>
                 <Input
-                  name="box_type_lbl"
+                  name="type"
                   type="select"
                   placeholder="Select box type"
                   className="form-select"
                   onChange={validation.handleChange}
                   onBlur={validation.handleBlur}
-                  value={validation.values.box_type_lbl || ""}
+                  value={validation.values.type || ""}
                   invalid={
-                    validation.touched.box_type_lbl && validation.errors.box_type_lbl
+                    validation.touched.type && validation.errors.type
                       ? true
                       : false
                   }
                 >
                   <option value="">Select box type</option>
                   {brandBoxType &&
-                    brandBoxType.map((box_type_lbl) => (
-                      <option key={box_type_lbl.id} value={box_type_lbl.id}>
-                        {box_type_lbl.name}
+                    brandBoxType.map((type) => (
+                      <option key={type.id} value={type.id}>
+                        {type.name}
                       </option>
                     ))}
                 </Input>
-                {validation.touched.box_type_lbl &&
-                  validation.errors.box_type_lbl ? (
+                {validation.touched.type &&
+                  validation.errors.type ? (
                   <FormFeedback type="invalid">
-                    {validation.errors.box_type_lbl}
+                    {validation.errors.type}
                   </FormFeedback>
                 ) : null}
               </div>
