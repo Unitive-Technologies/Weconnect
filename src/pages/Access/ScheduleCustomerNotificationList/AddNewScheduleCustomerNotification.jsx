@@ -85,7 +85,7 @@ const AddNewScheduleCustomerNotification = (props) => {
         .required("Enter name")
         .min(2, "Minimum length 2 character"),
       type_lbl: Yup.string().required("Select type"),
-      schedule_days: Yup.string().required("Select schedule days"),
+      // schedule_days: Yup.string().required("Select schedule days"),
       start_date: Yup.string().required("Select start date"),
       end_date: Yup.string().required("Select end date"),
       description: Yup.string()
