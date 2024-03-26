@@ -34,6 +34,7 @@ import { createSelector } from "reselect";
 import { ToastContainer } from "react-toastify";
 import ViewGroupPolicyModal from "./ViewGroupPolicyModal";
 import AddGroupPolicyModal from "./AddGroupPolicyModal";
+import CreateGroupPolicy from "./CreateGroupPolicy";
 
 const GroupPolicyList = (props) => {
   //meta title
@@ -275,7 +276,7 @@ const GroupPolicyList = (props) => {
         groupPolicy={viewGroupPolicy}
       />
       {showAddGroupPolicy && (
-        <AddGroupPolicyModal
+        <CreateGroupPolicy
           isOpen={Boolean(showAddGroupPolicy)}
           toggleAddPolicyModal={toggleAddPolicyModal}
           policyRole={policyRole}
