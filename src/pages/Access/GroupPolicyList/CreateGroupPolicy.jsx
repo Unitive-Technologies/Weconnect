@@ -213,6 +213,7 @@ const CreateGroupPolicy = (props) => {
         totalHasPermTrue: 0,
         totalSubGroups: 0,
       },
+      groups: [],
     };
 
     // Iterate over the groupPolicyMenu array
@@ -222,10 +223,16 @@ const CreateGroupPolicy = (props) => {
         totalCounts[singleGroup.groupName] = {
           totalHasPerm: 0,
           totalHasPermTrue: 0,
-          // totalSubGroups: 0,
           subGroups: {},
         };
       }
+
+      const group = {
+        name: singleGroup.groupName,
+        totalHasPerm: 0,
+        totalHasPermTrue: 0,
+        subGroups: [],
+      };
 
       // Iterate over the subGroup array
       singleGroup.subGroup.forEach((single) => {
@@ -237,37 +244,45 @@ const CreateGroupPolicy = (props) => {
           };
         }
 
-        // Iterate over the access array and count the hasPerm
-        single.access.forEach((item) => {
-          if (item.has_perm) {
-            // Increment the total count for the groupName
-            totalCounts[singleGroup.groupName].totalHasPerm++;
-            // Increment the total count for the subGroup.name
-            totalCounts[singleGroup.groupName].subGroups[single.name]
-              .totalHasPerm++;
-            // Increment the overall total count
-            totalCounts.overall.totalHasPerm++;
-            // Increment the total count for the subGroup.name with hasPerm as true
-            totalCounts[singleGroup.groupName].totalHasPermTrue++;
-            // Increment the total count for the subGroup.name with hasPerm as true
-            totalCounts[singleGroup.groupName].subGroups[single.name]
-              .totalHasPermTrue++;
-            // Increment the overall total count with hasPerm as true
-            totalCounts.overall.totalHasPermTrue++;
-          }
-        });
+        const subGroup = {
+          name: single.name,
+          totalHasPerm: single.access.length,
+          totalHasPermTrue: single.access.filter((item) => item.has_perm)
+            .length,
+        };
 
-        // Increment the totalSubGroups count for the overall object
-        totalCounts.overall.totalSubGroups++;
+        // Increment the total count for the groupName
+        totalCounts[singleGroup.groupName].totalHasPerm +=
+          subGroup.totalHasPerm;
+        group.totalHasPerm += subGroup.totalHasPerm;
+        // Increment the total count for the subGroup.name
+        totalCounts[singleGroup.groupName].subGroups[
+          single.name
+        ].totalHasPerm += subGroup.totalHasPerm;
+        // Increment the total count for the groupName
+        totalCounts[singleGroup.groupName].totalHasPermTrue +=
+          subGroup.totalHasPermTrue;
+        group.totalHasPermTrue += subGroup.totalHasPermTrue;
+        // Increment the total count for the subGroup.name with hasPerm as true
+        totalCounts[singleGroup.groupName].subGroups[
+          single.name
+        ].totalHasPermTrue += subGroup.totalHasPermTrue;
+        // Increment the overall total count with hasPerm as true
+        totalCounts.overall.totalHasPermTrue += subGroup.totalHasPermTrue;
+
+        group.subGroups.push(subGroup);
       });
+
+      group.totalSubGroups = group.subGroups.length;
+      totalCounts.groups.push(group);
+      totalCounts.overall.totalSubGroups += group.totalSubGroups;
     });
-    Object.keys(totalCounts).forEach((groupName) => {
-      const group = totalCounts[groupName];
-      if (groupName !== "overall") {
-        group.totalSubGroups = Object.keys(group.subGroups).length;
-      }
-    });
-    setTotals(totalCounts);
+
+    // Calculate overall totalHasPerm
+    totalCounts.overall.totalHasPerm = Object.values(totalCounts.groups)
+      .map((group) => group.totalHasPerm)
+      .reduce((acc, val) => acc + val, 0);
+
     console.log("TotalCounts:", JSON.stringify(totalCounts));
   }, [groupPolicyMenu]);
 

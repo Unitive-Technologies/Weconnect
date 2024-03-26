@@ -127,8 +127,12 @@ const AddNewChannelList = (props) => {
       revenue_share: {},
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter channel name").min(2, "Minimum length 2 character"),
-      description: Yup.string().required("Enter channel description").min(2, "Please enter at least 2 characters"),
+      name: Yup.string()
+        .required("Enter channel name")
+        .min(2, "Minimum length 2 character"),
+      description: Yup.string()
+        .required("Enter channel description")
+        .min(2, "Please enter at least 2 characters"),
       definition: Yup.string().required("Select channel definition"),
       isFta: Yup.string().required("Select channel type"),
       broadcaster: Yup.string().required("Select broadcaster"),
@@ -154,7 +158,7 @@ const AddNewChannelList = (props) => {
         isFta: parseInt(values["isFta"]),
         isHD: parseInt(values["definition"]),
         isNCF: toggleNcfSwitch === true ? 1 : 0,
-        language_id: selectedLanguages,
+        language_id: values["language_id"],
         logo: values["logo"],
         name: values["name"],
         revenue_share: {
@@ -164,7 +168,7 @@ const AddNewChannelList = (props) => {
         },
         status: parseInt(values["status"]),
       };
-      console.log("newChannelList:" + newChannelList);
+      console.log("newChannelList:" + JSON.stringify(newChannelList));
       dispatch(onAddNewChannelList(newChannelList));
       dispatch(onGetChannelList());
       validation.resetForm();
@@ -347,13 +351,13 @@ const AddNewChannelList = (props) => {
                   value={validation.values.description || ""}
                   invalid={
                     validation.touched.description &&
-                      validation.errors.description
+                    validation.errors.description
                       ? true
                       : false
                   }
                 />
                 {validation.touched.description &&
-                  validation.errors.description ? (
+                validation.errors.description ? (
                   <FormFeedback type="invalid">
                     {validation.errors.description}
                   </FormFeedback>
@@ -376,7 +380,7 @@ const AddNewChannelList = (props) => {
                   value={validation.values.definition || ""}
                   invalid={
                     validation.touched.definition &&
-                      validation.errors.definition
+                    validation.errors.definition
                       ? true
                       : false
                   }
@@ -390,7 +394,7 @@ const AddNewChannelList = (props) => {
                     ))}
                 </Input>
                 {validation.touched.definition &&
-                  validation.errors.definition ? (
+                validation.errors.definition ? (
                   <FormFeedback type="invalid">
                     {validation.errors.definition}
                   </FormFeedback>
@@ -449,7 +453,7 @@ const AddNewChannelList = (props) => {
                   value={validation.values.broadcaster || ""}
                   invalid={
                     validation.touched.broadcaster &&
-                      validation.errors.broadcaster
+                    validation.errors.broadcaster
                       ? true
                       : false
                   }
@@ -463,7 +467,7 @@ const AddNewChannelList = (props) => {
                     ))}
                 </Input>
                 {validation.touched.broadcaster &&
-                  validation.errors.broadcaster ? (
+                validation.errors.broadcaster ? (
                   <FormFeedback type="invalid">
                     {validation.errors.broadcaster}
                   </FormFeedback>
@@ -535,20 +539,20 @@ const AddNewChannelList = (props) => {
                   }}
                   invalid={
                     validation.touched.language_id &&
-                      validation.errors.language_id
+                    validation.errors.language_id
                       ? true
                       : false
                   }
                 />
               </div>
               {validation.touched.language_id &&
-                validation.errors.language_id ? (
+              validation.errors.language_id ? (
                 <FormFeedback type="invalid">
                   {validation.errors.language_id}
                 </FormFeedback>
               ) : null}
             </Col>
-
+            {console.log("language_id:" + validation.values.language_id)}
             <Col sm="4">
               <div className="mb-3">
                 <Label className="form-label">IsAlacarte</Label>
@@ -565,7 +569,7 @@ const AddNewChannelList = (props) => {
                   <option value="0">No</option>
                 </Input>
                 {validation.touched.isalacarte &&
-                  validation.errors.isalacarte ? (
+                validation.errors.isalacarte ? (
                   <FormFeedback type="invalid">
                     {validation.errors.isalacarte}
                   </FormFeedback>

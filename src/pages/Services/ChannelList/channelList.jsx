@@ -113,10 +113,6 @@ const ChannelList = (props) => {
     setShowBulkUpdateCasCodeChannelList,
   ] = useState(false);
 
-  // const [isTableVisible, setIsTableVisible] = useState(false);
-  const [data, setData] = useState([]); // Assuming you have data state
-  const [selectedData, setSelectedData] = useState(null);
-
   const handlePlusClick = () => {
     console.log("button clicked" + handlePlusClick);
   };
