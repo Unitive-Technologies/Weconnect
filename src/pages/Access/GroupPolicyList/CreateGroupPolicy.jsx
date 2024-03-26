@@ -35,6 +35,7 @@ const CreateGroupPolicy = (props) => {
   const [selectedRole, setSelectedRole] = useState("");
   const [groupPolicyList, setGroupPolicyList] = useState([]);
   const [groupPolicyMenu, setGroupPolicyMenu] = useState([]);
+  const [totalTapOfSubGroup, setTotalTapOfSubGroup] = useState();
   const [groupName, setGroupName] = useState();
 
   console.log("typeeeeeeeeee:" + JSON.stringify(selectedType));
@@ -207,16 +208,21 @@ const CreateGroupPolicy = (props) => {
   useEffect(() => {
     // Define an object to store the counts
     const totalCounts = {
-      selectedPermission: 0,
-      groups: {},
+      overall: {
+        totalHasPerm: 0,
+        totalHasPermTrue: 0,
+        totalSubGroups: 0,
+      },
     };
 
     // Iterate over the groupPolicyMenu array
     groupPolicyMenu.forEach((singleGroup) => {
       // Initialize counts for the groupName if it doesn't exist
-      if (!totalCounts.groups[singleGroup.groupName]) {
-        totalCounts.groups[singleGroup.groupName] = {
+      if (!totalCounts[singleGroup.groupName]) {
+        totalCounts[singleGroup.groupName] = {
           totalHasPerm: 0,
+          totalHasPermTrue: 0,
+          // totalSubGroups: 0,
           subGroups: {},
         };
       }
@@ -224,28 +230,44 @@ const CreateGroupPolicy = (props) => {
       // Iterate over the subGroup array
       singleGroup.subGroup.forEach((single) => {
         // Initialize counts for the subGroup.name if it doesn't exist
-        if (!totalCounts.groups[singleGroup.groupName].subGroups[single.name]) {
-          totalCounts.groups[singleGroup.groupName].subGroups[single.name] = {
+        if (!totalCounts[singleGroup.groupName].subGroups[single.name]) {
+          totalCounts[singleGroup.groupName].subGroups[single.name] = {
             totalHasPerm: 0,
+            totalHasPermTrue: 0,
           };
         }
 
-        // Iterate over the access array and count the has_perm
+        // Iterate over the access array and count the hasPerm
         single.access.forEach((item) => {
           if (item.has_perm) {
             // Increment the total count for the groupName
-            totalCounts.groups[singleGroup.groupName].totalHasPerm++;
+            totalCounts[singleGroup.groupName].totalHasPerm++;
             // Increment the total count for the subGroup.name
-            totalCounts.groups[singleGroup.groupName].subGroups[single.name]
+            totalCounts[singleGroup.groupName].subGroups[single.name]
               .totalHasPerm++;
             // Increment the overall total count
-            totalCounts.selectedPermission++;
+            totalCounts.overall.totalHasPerm++;
+            // Increment the total count for the subGroup.name with hasPerm as true
+            totalCounts[singleGroup.groupName].totalHasPermTrue++;
+            // Increment the total count for the subGroup.name with hasPerm as true
+            totalCounts[singleGroup.groupName].subGroups[single.name]
+              .totalHasPermTrue++;
+            // Increment the overall total count with hasPerm as true
+            totalCounts.overall.totalHasPermTrue++;
           }
         });
+
+        // Increment the totalSubGroups count for the overall object
+        totalCounts.overall.totalSubGroups++;
       });
     });
-
-    console.log("TotalCounts:" + JSON.stringify(totalCounts));
+    Object.keys(totalCounts).forEach((groupName) => {
+      const group = totalCounts[groupName];
+      if (groupName !== "overall") {
+        group.totalSubGroups = Object.keys(group.subGroups).length;
+      }
+    });
+    console.log("TotalCounts:", JSON.stringify(totalCounts));
   }, [groupPolicyMenu]);
 
   return (
@@ -463,7 +485,7 @@ const CreateGroupPolicy = (props) => {
               <div>
                 <h6>
                   Available Permissions:
-                  <b> 159</b>
+                  {/* <b> {totalCountHasPerm && totalCountHasPerm}</b> */}
                 </h6>
               </div>
             </Col>
@@ -471,7 +493,7 @@ const CreateGroupPolicy = (props) => {
               <div>
                 <h6>
                   Selected Permissions:
-                  <b> 155</b>
+                  {/* <b> {trueCountHasPerm && trueCountHasPerm}</b> */}
                 </h6>
               </div>
             </Col>
