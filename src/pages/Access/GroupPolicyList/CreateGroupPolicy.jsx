@@ -204,6 +204,50 @@ const CreateGroupPolicy = (props) => {
     }
   }, [groupPolicyList]);
 
+  useEffect(() => {
+    // Define an object to store the counts
+    const totalCounts = {
+      selectedPermission: 0,
+      groups: {},
+    };
+
+    // Iterate over the groupPolicyMenu array
+    groupPolicyMenu.forEach((singleGroup) => {
+      // Initialize counts for the groupName if it doesn't exist
+      if (!totalCounts.groups[singleGroup.groupName]) {
+        totalCounts.groups[singleGroup.groupName] = {
+          totalHasPerm: 0,
+          subGroups: {},
+        };
+      }
+
+      // Iterate over the subGroup array
+      singleGroup.subGroup.forEach((single) => {
+        // Initialize counts for the subGroup.name if it doesn't exist
+        if (!totalCounts.groups[singleGroup.groupName].subGroups[single.name]) {
+          totalCounts.groups[singleGroup.groupName].subGroups[single.name] = {
+            totalHasPerm: 0,
+          };
+        }
+
+        // Iterate over the access array and count the has_perm
+        single.access.forEach((item) => {
+          if (item.has_perm) {
+            // Increment the total count for the groupName
+            totalCounts.groups[singleGroup.groupName].totalHasPerm++;
+            // Increment the total count for the subGroup.name
+            totalCounts.groups[singleGroup.groupName].subGroups[single.name]
+              .totalHasPerm++;
+            // Increment the overall total count
+            totalCounts.selectedPermission++;
+          }
+        });
+      });
+    });
+
+    console.log("TotalCounts:" + JSON.stringify(totalCounts));
+  }, [groupPolicyMenu]);
+
   return (
     <Modal
       isOpen={isOpen}
@@ -544,7 +588,7 @@ const CreateGroupPolicy = (props) => {
                               type="checkbox"
                               className="form-check-input"
                               id="customSwitch2"
-                              defaultChecked
+                              checked={item.has_perm === true}
                               onClick={(e) => {
                                 settoggleSwitch(!toggleSwitch);
                               }}
