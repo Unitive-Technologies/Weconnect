@@ -206,7 +206,7 @@ const ViewBroadcasterModal = (props) => {
                   <Input
                     name="fullname"
                     label="fullname"
-                    type="fullname"
+                    type="text"
                     placeholder="Insert Full Name"
                     disabled={!showEditViewBroadCaster}
                     onChange={validation.handleChange}
@@ -233,7 +233,7 @@ const ViewBroadcasterModal = (props) => {
                   <Input
                     name="contact_person"
                     label="contactperson"
-                    type="contactperson"
+                    type="text"
                     placeholder="Insert Contact Person"
                     disabled={!showEditViewBroadCaster}
                     onChange={validation.handleChange}
@@ -288,7 +288,7 @@ const ViewBroadcasterModal = (props) => {
                   <Label className="form-label">Phone No.</Label>
                   <Input
                     name="phone_no"
-                    type="phone"
+                    type="text"
                     placeholder="Enter Phone No."
                     disabled={!showEditViewBroadCaster}
                     // className="form-select"
@@ -316,7 +316,7 @@ const ViewBroadcasterModal = (props) => {
                   <Input
                     name="email"
                     label="Email"
-                    type="email"
+                    type="text"
                     placeholder="Insert Email"
                     disabled={!showEditViewBroadCaster}
                     onChange={validation.handleChange}
@@ -345,7 +345,7 @@ const ViewBroadcasterModal = (props) => {
                   <Input
                     name="addr"
                     label="address"
-                    type="address"
+                    type="text"
                     placeholder="Enter Address"
                     disabled={!showEditViewBroadCaster}
                     onChange={validation.handleChange}
@@ -372,7 +372,7 @@ const ViewBroadcasterModal = (props) => {
                   <Input
                     name="description"
                     label="Description"
-                    type="description"
+                    type="text"
                     placeholder="Insert Description"
                     disabled={!showEditViewBroadCaster}
                     onChange={validation.handleChange}
