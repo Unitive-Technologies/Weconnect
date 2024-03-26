@@ -34,6 +34,8 @@ const CreateGroupPolicy = (props) => {
   const [selectedType, setSelectedType] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
   const [groupPolicyList, setGroupPolicyList] = useState([]);
+  const [groupPolicyMenu, setGroupPolicyMenu] = useState([]);
+  const [groupName, setGroupName] = useState();
 
   console.log("typeeeeeeeeee:" + JSON.stringify(selectedType));
   console.log("Roleeeeeeeeee:" + JSON.stringify(selectedRole));
@@ -140,6 +142,8 @@ const CreateGroupPolicy = (props) => {
   };
 
   console.log("groupPolicyList: " + JSON.stringify(groupPolicyList));
+  console.log("groupPolicyMenu: " + JSON.stringify(groupPolicyMenu));
+  //   console.log("groupName: " + JSON.stringify(groupName));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -172,6 +176,33 @@ const CreateGroupPolicy = (props) => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (Array.isArray(groupPolicyList)) {
+      const groupedMenuIds = {};
+
+      groupPolicyList.forEach((group) => {
+        group.menu_ids.forEach((item) => {
+          if (!groupedMenuIds[item.group_name]) {
+            groupedMenuIds[item.group_name] = [];
+          }
+          groupedMenuIds[item.group_name].push({
+            name: item.name,
+            access: item.access,
+          });
+        });
+      });
+      console.log("groupedMenuIds:", JSON.stringify(groupedMenuIds));
+      const formattedMenuIds = Object.entries(groupedMenuIds).map(
+        ([groupName, subGroup]) => ({
+          groupName,
+          subGroup,
+        })
+      );
+      setGroupPolicyMenu(formattedMenuIds);
+      console.log("formattedMenuIds:", JSON.stringify(formattedMenuIds));
+    }
+  }, [groupPolicyList]);
 
   return (
     <Modal
@@ -401,30 +432,137 @@ const CreateGroupPolicy = (props) => {
               </div>
             </Col>
           </Row>
-          <Row>
-            <DashboardPolicy />
-          </Row>
-          <Row>
-            <ConfigurationPolicy />
-          </Row>
-          <Row>
-            <InventoryPolicy />
-          </Row>
-          <Row>
-            <CustomerPolicy />
-          </Row>
-          <Row>
-            <CasPolicy />
-          </Row>
-          <Row>
-            <NonCasPolicy />
-          </Row>
-          <Row>
-            <AccountingPolicy />
-          </Row>
-          <Row>
-            <ReportingPolicy />
-          </Row>
+          {groupPolicyMenu &&
+            groupPolicyMenu.map((singleGroup) => (
+              <Row
+                key={singleGroup.groupName}
+                style={{
+                  border: "1px solid #ced4da",
+                  margin: "30px 0px",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderBottom: "1px solid #ced4da",
+                  }}
+                >
+                  <h4>{singleGroup.groupName}</h4>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "20px",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <h6>Tabs: 1, Total: 19, Selected: 19</h6>
+                    <div>
+                      <div className="form-check form-switch">
+                        <input
+                          type="checkbox"
+                          className="form-check-input"
+                          id="customSwitch2"
+                          // defaultChecked
+                          onClick={(e) => {
+                            settoggleSwitch(!toggleSwitch);
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-check form-switch">
+                      <input
+                        type="checkbox"
+                        className="form-check-input"
+                        id="customSwitch2"
+                        // defaultChecked
+                        onClick={(e) => {
+                          settoggleSwitch(!toggleSwitch);
+                        }}
+                      />
+
+                      <label
+                        className="form-check-label"
+                        htmlFor="customSwitch2"
+                      >
+                        View Only
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                {singleGroup.subGroup.map((single) => (
+                  <Col
+                    key={single.name}
+                    sm="4"
+                    className="mt-3"
+                    style={{
+                      border: "1px solid #ced4da",
+                      margin: "30px 0px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        borderBottom: "1px solid #ced4da",
+                      }}
+                    >
+                      <h5>{single.name}</h5>
+                      <div
+                        style={{
+                          display: "flex",
+                          gap: "20px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <h6>Tabs: 1, Total: 19, Selected: 19</h6>
+
+                        <div className="form-check form-switch">
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            id="customSwitch2"
+                            onClick={(e) => {
+                              settoggleSwitch(!toggleSwitch);
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <Row>
+                      {single.access.map((item) => (
+                        <Col lg={3} className=" mb-3" key={item.id}>
+                          <div className="form-check form-switch">
+                            <input
+                              type="checkbox"
+                              className="form-check-input"
+                              id="customSwitch2"
+                              defaultChecked
+                              onClick={(e) => {
+                                settoggleSwitch(!toggleSwitch);
+                              }}
+                            />
+                          </div>
+                          <label
+                            className="form-check-label"
+                            htmlFor="customSwitch2"
+                          >
+                            {item.name}
+                          </label>
+                        </Col>
+                      ))}
+                    </Row>
+                  </Col>
+                ))}
+              </Row>
+            ))}
           <Row>
             <Col>
               <ModalFooter>

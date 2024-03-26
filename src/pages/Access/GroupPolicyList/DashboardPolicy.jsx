@@ -43,9 +43,6 @@ const DashboardPolicy = () => {
                 }}
               />
             </div>
-            {/* <label className="form-check-label" htmlFor="customSwitch2">
-              Smartcard Search
-            </label> */}
           </div>
 
           <div className="form-check form-switch">
