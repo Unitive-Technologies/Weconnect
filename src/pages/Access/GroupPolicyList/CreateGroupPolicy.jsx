@@ -35,7 +35,7 @@ const CreateGroupPolicy = (props) => {
   const [selectedRole, setSelectedRole] = useState("");
   const [groupPolicyList, setGroupPolicyList] = useState([]);
   const [groupPolicyMenu, setGroupPolicyMenu] = useState([]);
-  const [totalTapOfSubGroup, setTotalTapOfSubGroup] = useState();
+  const [totals, setTotals] = useState();
   const [groupName, setGroupName] = useState();
 
   console.log("typeeeeeeeeee:" + JSON.stringify(selectedType));
@@ -267,6 +267,7 @@ const CreateGroupPolicy = (props) => {
         group.totalSubGroups = Object.keys(group.subGroups).length;
       }
     });
+    setTotals(totalCounts);
     console.log("TotalCounts:", JSON.stringify(totalCounts));
   }, [groupPolicyMenu]);
 
@@ -477,7 +478,7 @@ const CreateGroupPolicy = (props) => {
               <div>
                 <h6>
                   Total Permission tab count:
-                  <b> 48</b>
+                  <b> {totals && totals.overall.totalSubGroups}</b>
                 </h6>
               </div>
             </Col>
@@ -485,7 +486,7 @@ const CreateGroupPolicy = (props) => {
               <div>
                 <h6>
                   Available Permissions:
-                  {/* <b> {totalCountHasPerm && totalCountHasPerm}</b> */}
+                  <b> {totals && totals.overall.totalHasPerm}</b>
                 </h6>
               </div>
             </Col>
@@ -493,7 +494,7 @@ const CreateGroupPolicy = (props) => {
               <div>
                 <h6>
                   Selected Permissions:
-                  {/* <b> {trueCountHasPerm && trueCountHasPerm}</b> */}
+                  <b> {totals && totals.overall.totalHasPermTrue}</b>
                 </h6>
               </div>
             </Col>
