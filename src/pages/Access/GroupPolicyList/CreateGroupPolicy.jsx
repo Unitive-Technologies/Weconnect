@@ -185,23 +185,48 @@ const CreateGroupPolicy = (props) => {
       groupPolicyList.forEach((group) => {
         group.menu_ids.forEach((item) => {
           if (!groupedMenuIds[item.group_name]) {
-            groupedMenuIds[item.group_name] = [];
+            groupedMenuIds[item.group_name] = {
+              totalTabs: 0,
+              totalHasTrue: 0,
+              totalHasPerm: 0,
+              subGroup: [],
+            };
           }
-          groupedMenuIds[item.group_name].push({
+          groupedMenuIds[item.group_name].totalTabs += 1; // Increment totalTabs for the group
+          groupedMenuIds[item.group_name].totalHasPerm += item.access.length; // Increment totalHasPerm for the group
+          groupedMenuIds[item.group_name].totalHasTrue += item.access.filter(
+            (accessItem) => accessItem.has_perm
+          ).length; // Increment totalHasTrue for the group
+          groupedMenuIds[item.group_name].subGroup.push({
             name: item.name,
+            totalTabs: 1, // Each subGroup initially has 1 tab
+            totalHasPerm: item.access.length,
+            totalTruePerm: item.access.filter(
+              (accessItem) => accessItem.has_perm
+            ).length,
             access: item.access,
           });
         });
       });
+
       console.log("groupedMenuIds:", JSON.stringify(groupedMenuIds));
+
       const formattedMenuIds = Object.entries(groupedMenuIds).map(
-        ([groupName, subGroup]) => ({
+        ([groupName, groupData]) => ({
           groupName,
-          subGroup,
+          totalTabs: groupData.totalTabs,
+          totalHasTrue: groupData.totalHasTrue,
+          totalHasPerm: groupData.totalHasPerm,
+          subGroup: groupData.subGroup,
         })
       );
+
       setGroupPolicyMenu(formattedMenuIds);
-      console.log("formattedMenuIds:", JSON.stringify(formattedMenuIds));
+
+      console.log(
+        "Group Policy MenuUUUUUUUUUU:",
+        JSON.stringify(formattedMenuIds)
+      );
     }
   }, [groupPolicyList]);
 
@@ -541,7 +566,11 @@ const CreateGroupPolicy = (props) => {
                       justifyContent: "center",
                     }}
                   >
-                    <h6>Tabs: 1, Total: 19, Selected: 19</h6>
+                    <h6>
+                      Tabs: {singleGroup.totalTabs}, Total:{" "}
+                      {singleGroup.totalHasPerm}, Selected:{" "}
+                      {singleGroup.totalHasTrue}
+                    </h6>
                     <div>
                       <div className="form-check form-switch">
                         <input
@@ -604,7 +633,10 @@ const CreateGroupPolicy = (props) => {
                           justifyContent: "center",
                         }}
                       >
-                        <h6>Tabs: 1, Total: 19, Selected: 19</h6>
+                        <h6>
+                          Tabs: {single.totalSubGroups}, Total:{" "}
+                          {single.totalHasPerm}, Selected:{single.totalTruePerm}
+                        </h6>
 
                         <div className="form-check form-switch">
                           <input
