@@ -125,6 +125,7 @@ const OSDConfigurationList = (props) => {
           return (
             <>
               <h5
+
                 className="font-size-14 mb-1"
                 onClick={() => {
                   const userData = cellProps.row.original;
