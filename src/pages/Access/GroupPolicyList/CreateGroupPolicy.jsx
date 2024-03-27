@@ -35,12 +35,11 @@ const CreateGroupPolicy = (props) => {
   const [selectedRole, setSelectedRole] = useState("");
   const [groupPolicyList, setGroupPolicyList] = useState([]);
   const [groupPolicyMenu, setGroupPolicyMenu] = useState([]);
-  const [totals, setTotals] = useState();
-  const [groupName, setGroupName] = useState();
-
-  console.log("typeeeeeeeeee:" + JSON.stringify(selectedType));
-  console.log("Roleeeeeeeeee:" + JSON.stringify(selectedRole));
-
+  const [overallTotals, setOverallTotals] = useState();
+  const [toggleSwitch, settoggleSwitch] = useState(true);
+  // console.log("typeeeeeeeeee:" + JSON.stringify(selectedType));
+  // console.log("Roleeeeeeeeee:" + JSON.stringify(selectedRole));
+  const [permission, setPermission] = useState();
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -142,7 +141,7 @@ const CreateGroupPolicy = (props) => {
     }
   };
 
-  console.log("groupPolicyList: " + JSON.stringify(groupPolicyList));
+  // console.log("groupPolicyList: " + JSON.stringify(groupPolicyList));
   console.log("groupPolicyMenu: " + JSON.stringify(groupPolicyMenu));
   //   console.log("groupName: " + JSON.stringify(groupName));
 
@@ -231,86 +230,35 @@ const CreateGroupPolicy = (props) => {
   }, [groupPolicyList]);
 
   useEffect(() => {
-    // Define an object to store the counts
-    const totalCounts = {
-      overall: {
-        totalHasPerm: 0,
-        totalHasPermTrue: 0,
-        totalSubGroups: 0,
-      },
-      groups: [],
+    // Define an object to store the overall counts
+    const overallCounts = {
+      totalHasPerm: 0,
+      totalHasPermTrue: 0,
+      totalSubGroups: 0,
     };
 
     // Iterate over the groupPolicyMenu array
     groupPolicyMenu.forEach((singleGroup) => {
-      // Initialize counts for the groupName if it doesn't exist
-      if (!totalCounts[singleGroup.groupName]) {
-        totalCounts[singleGroup.groupName] = {
-          totalHasPerm: 0,
-          totalHasPermTrue: 0,
-          subGroups: {},
-        };
-      }
-
-      const group = {
-        name: singleGroup.groupName,
-        totalHasPerm: 0,
-        totalHasPermTrue: 0,
-        subGroups: [],
-      };
-
       // Iterate over the subGroup array
       singleGroup.subGroup.forEach((single) => {
-        // Initialize counts for the subGroup.name if it doesn't exist
-        if (!totalCounts[singleGroup.groupName].subGroups[single.name]) {
-          totalCounts[singleGroup.groupName].subGroups[single.name] = {
-            totalHasPerm: 0,
-            totalHasPermTrue: 0,
-          };
-        }
-
-        const subGroup = {
-          name: single.name,
-          totalHasPerm: single.access.length,
-          totalHasPermTrue: single.access.filter((item) => item.has_perm)
-            .length,
-        };
-
-        // Increment the total count for the groupName
-        totalCounts[singleGroup.groupName].totalHasPerm +=
-          subGroup.totalHasPerm;
-        group.totalHasPerm += subGroup.totalHasPerm;
-        // Increment the total count for the subGroup.name
-        totalCounts[singleGroup.groupName].subGroups[
-          single.name
-        ].totalHasPerm += subGroup.totalHasPerm;
-        // Increment the total count for the groupName
-        totalCounts[singleGroup.groupName].totalHasPermTrue +=
-          subGroup.totalHasPermTrue;
-        group.totalHasPermTrue += subGroup.totalHasPermTrue;
-        // Increment the total count for the subGroup.name with hasPerm as true
-        totalCounts[singleGroup.groupName].subGroups[
-          single.name
-        ].totalHasPermTrue += subGroup.totalHasPermTrue;
-        // Increment the overall total count with hasPerm as true
-        totalCounts.overall.totalHasPermTrue += subGroup.totalHasPermTrue;
-
-        group.subGroups.push(subGroup);
+        // Increment the total count for totalHasPerm and totalHasPermTrue
+        overallCounts.totalHasPerm += single.access.length;
+        overallCounts.totalHasPermTrue += single.access.filter(
+          (item) => item.has_perm
+        ).length;
       });
 
-      group.totalSubGroups = group.subGroups.length;
-      totalCounts.groups.push(group);
-      totalCounts.overall.totalSubGroups += group.totalSubGroups;
+      // Increment the total count for totalSubGroups
+      overallCounts.totalSubGroups += singleGroup.subGroup.length;
     });
 
-    // Calculate overall totalHasPerm
-    totalCounts.overall.totalHasPerm = Object.values(totalCounts.groups)
-      .map((group) => group.totalHasPerm)
-      .reduce((acc, val) => acc + val, 0);
+    // Update the state with the overall counts
+    setOverallTotals(overallCounts);
 
-    console.log("TotalCounts:", JSON.stringify(totalCounts));
+    console.log("Overall Counts:", JSON.stringify(overallCounts));
   }, [groupPolicyMenu]);
 
+  console.log("permission:" + permission);
   return (
     <Modal
       isOpen={isOpen}
@@ -518,7 +466,7 @@ const CreateGroupPolicy = (props) => {
               <div>
                 <h6>
                   Total Permission tab count:
-                  <b> {totals && totals.overall.totalSubGroups}</b>
+                  <b> {overallTotals && overallTotals.totalSubGroups}</b>
                 </h6>
               </div>
             </Col>
@@ -526,7 +474,7 @@ const CreateGroupPolicy = (props) => {
               <div>
                 <h6>
                   Available Permissions:
-                  <b> {totals && totals.overall.totalHasPerm}</b>
+                  <b> {overallTotals && overallTotals.totalHasPerm}</b>
                 </h6>
               </div>
             </Col>
@@ -534,7 +482,7 @@ const CreateGroupPolicy = (props) => {
               <div>
                 <h6>
                   Selected Permissions:
-                  <b> {totals && totals.overall.totalHasPermTrue}</b>
+                  <b> {overallTotals && overallTotals.totalHasPermTrue}</b>
                 </h6>
               </div>
             </Col>
@@ -637,7 +585,7 @@ const CreateGroupPolicy = (props) => {
                           Tabs: {single.totalSubGroups}, Total:{" "}
                           {single.totalHasPerm}, Selected:{single.totalTruePerm}
                         </h6>
-
+                        {/* {console.log("True Count: " + single.totalTruePerm)} */}
                         <div className="form-check form-switch">
                           <input
                             type="checkbox"
@@ -652,21 +600,80 @@ const CreateGroupPolicy = (props) => {
                     </div>
                     <Row>
                       {single.access.map((item) => (
-                        <Col lg={3} className=" mb-3" key={item.id}>
+                        <Col lg={3} className="mb-3" key={item.id}>
                           <div className="form-check form-switch">
                             <input
                               type="checkbox"
                               className="form-check-input"
-                              id="customSwitch2"
-                              checked={item.has_perm === true}
-                              onClick={(e) => {
+                              id={`customSwitch_${item.id}`}
+                              // checked={item.has_perm === true}
+                              // onClick={(e) => {
+                              //   settoggleSwitch(!toggleSwitch);
+                              // }}
+                              // onChange={(e) => {
+                              //   const updatedAccess = single.access.map(
+                              //     (accessItem) => {
+                              //       if (accessItem.id === item.id) {
+                              //         return {
+                              //           ...accessItem,
+                              //           has_perm: !accessItem.has_perm, // toggle the value
+                              //         };
+                              //       }
+                              //       return accessItem;
+                              //     }
+                              //   );
+                              //   console.log(
+                              //     "updatedAccess: " +
+                              //       JSON.stringify(updatedAccess)
+                              //   );
+                              //   const totalTruePermCount = updatedAccess.filter(
+                              //     (accessItem) => accessItem.has_perm
+                              //   ).length;
+
+                              //   const updatedSubGroup =
+                              //     singleGroup.subGroup.map((subItem) => {
+                              //       if (subItem.name === single.name) {
+                              //         return {
+                              //           ...subItem,
+                              //           access: updatedAccess,
+                              //           totalTruePerm: totalTruePermCount,
+                              //         };
+                              //       }
+                              //       return subItem;
+                              //     });
+
+                              //   const updatedSingleGroup = {
+                              //     ...singleGroup,
+                              //     subGroup: updatedSubGroup,
+                              //   };
+
+                              //   const updatedGroupPolicyMenu =
+                              //     groupPolicyMenu.map((group) => {
+                              //       if (
+                              //         group.groupName === singleGroup.groupName
+                              //       ) {
+                              //         return updatedSingleGroup;
+                              //       }
+                              //       return group;
+                              //     });
+
+                              //   setGroupPolicyMenu(updatedGroupPolicyMenu);
+                              //   console.log(
+                              //     "updatedGroupPolicyMenu: ",
+                              //     updatedGroupPolicyMenu
+                              //   );
+                              // }}
+                              value={item.has_perm}
+                              checked={item.has_perm === true ? true : false}
+                              onChange={(e) => setPermission(!e.target.checked)}
+                              onClick={() => {
                                 settoggleSwitch(!toggleSwitch);
                               }}
                             />
                           </div>
                           <label
                             className="form-check-label"
-                            htmlFor="customSwitch2"
+                            htmlFor={`customSwitch_${item.id}`}
                           >
                             {item.name}
                           </label>
